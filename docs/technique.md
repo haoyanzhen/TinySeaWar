@@ -166,6 +166,7 @@ MVP 只实现：
 规则：
 
 - 我方旗舰被击沉则失败。
+- 旗舰必须从舰队里的最高等级舰船中选择。
 - 敌方旗舰被击沉则胜利。
 - 非旗舰舰娘被击沉不会立刻结束战斗。
 - MVP 阶段先不做撤退、俘获、士气崩溃等附加规则。
@@ -201,7 +202,10 @@ MVP 初期包含六大舰种：
 等级影响：
 
 - 最大生命值。
-- 伤害。
+- 火炮能力。
+- 鱼雷能力。
+- 防空能力。
+- 航空能力。
 - 航速。
 - 装填速度。
 - 侦查能力。
@@ -443,75 +447,7 @@ MVP 规则：
 
 ## 8. 数据设计
 
-### 8.1 舰娘配置
-
-建议使用 Godot Resource 或 JSON 配置舰娘数据。MVP 阶段推荐先使用 Resource，便于在编辑器中调参。
-
-基础字段：
-
-```text
-id
-display_name
-ship_class
-level
-cost
-max_hp
-armor
-speed
-turn_speed
-detection_range
-detectability
-evasion
-main_weapon
-torpedo_weapon
-air_wing
-skill_id
-is_flagship_candidate
-```
-
-### 8.2 舰种枚举
-
-```text
-Destroyer
-LightCruiser
-HeavyCruiser
-Battleship
-Carrier
-Submarine
-```
-
-### 8.3 关卡配置
-
-基础字段：
-
-```text
-id
-display_name
-battle_mode
-resource_limit
-max_player_units
-enemy_fleet
-enemy_flagship_id
-map_id
-difficulty_index
-```
-
-MVP 中 `battle_mode` 固定为 `OpenSeaEqualBattle`。
-
-### 8.4 技能配置
-
-基础字段：
-
-```text
-id
-display_name
-cooldown
-target_type
-effect_type
-effect_value
-duration
-vfx_id
-```
+详细数据结构已迁移到 `docs/data_schema.md`。本文档只保留技术系统说明，舰娘配置、装备底座、舰种枚举、关卡配置和技能配置字段以数据结构设计文档为准。
 
 ## 9. AI 设计
 

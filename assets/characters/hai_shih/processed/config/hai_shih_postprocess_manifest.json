@@ -1,0 +1,701 @@
+{
+  "character_id": "hai_shih",
+  "pipeline_stage": "postprocess_trial_sheet_v1",
+  "source_alpha": [
+    {
+      "source": "assets/characters/hai_shih/battle/hai_shih_anim_keyframes_sheet.png",
+      "file": "assets/characters/hai_shih/processed/source_alpha/hai_shih_anim_keyframes_sheet_alpha.png",
+      "size": [
+        1774,
+        887
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "source": "assets/characters/hai_shih/battle/hai_shih_battle_asset_sheet.png",
+      "file": "assets/characters/hai_shih/processed/source_alpha/hai_shih_battle_asset_sheet_alpha.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "source": "assets/characters/hai_shih/concept/hai_shih_concept_full.png",
+      "file": "assets/characters/hai_shih/processed/source_alpha/hai_shih_concept_full_alpha.png",
+      "size": [
+        1024,
+        1536
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "source": "assets/characters/hai_shih/ui/hai_shih_illust_half.png",
+      "file": "assets/characters/hai_shih/processed/source_alpha/hai_shih_illust_half_alpha.png",
+      "size": [
+        1024,
+        1536
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "source": "assets/characters/hai_shih/ui/hai_shih_illust_skill_cutin.png",
+      "file": "assets/characters/hai_shih/processed/source_alpha/hai_shih_illust_skill_cutin_alpha.png",
+      "size": [
+        1717,
+        916
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "source": "assets/characters/hai_shih/ui/hai_shih_ui_sheet.png",
+      "file": "assets/characters/hai_shih/processed/source_alpha/hai_shih_ui_sheet_alpha.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "source": "assets/characters/hai_shih/vfx/hai_shih_vfx_reference_sheet.png",
+      "file": "assets/characters/hai_shih/processed/source_alpha/hai_shih_vfx_reference_sheet_alpha.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA"
+    }
+  ],
+  "components": [
+    {
+      "file": "assets/characters/hai_shih/processed/ui/hai_shih_illust_half_alpha.png",
+      "size": [
+        995,
+        1462
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        0,
+        0,
+        1024,
+        1536
+      ],
+      "source": "assets/characters/hai_shih/ui/hai_shih_illust_half.png",
+      "tags": [
+        "illustration"
+      ]
+    },
+    {
+      "file": "assets/characters/hai_shih/processed/ui/hai_shih_illust_skill_cutin_alpha.png",
+      "size": [
+        1749,
+        948
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        0,
+        0,
+        1717,
+        916
+      ],
+      "source": "assets/characters/hai_shih/ui/hai_shih_illust_skill_cutin.png",
+      "tags": [
+        "cutin"
+      ]
+    },
+    {
+      "file": "assets/characters/hai_shih/processed/ui/hai_shih_ui_portrait.png",
+      "size": [
+        532,
+        622
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        10,
+        0,
+        520,
+        615
+      ],
+      "source": "assets/characters/hai_shih/ui/hai_shih_ui_sheet.png",
+      "tags": [
+        "ui",
+        "portrait"
+      ]
+    },
+    {
+      "file": "assets/characters/hai_shih/processed/ui/hai_shih_ui_portrait_small.png",
+      "size": [
+        297,
+        327
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        600,
+        160,
+        885,
+        455
+      ],
+      "source": "assets/characters/hai_shih/ui/hai_shih_ui_sheet.png",
+      "tags": [
+        "ui",
+        "portrait_small"
+      ]
+    },
+    {
+      "file": "assets/characters/hai_shih/processed/ui/hai_shih_ui_chibi_head.png",
+      "size": [
+        340,
+        352
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        1035,
+        135,
+        1360,
+        455
+      ],
+      "source": "assets/characters/hai_shih/ui/hai_shih_ui_sheet.png",
+      "tags": [
+        "ui",
+        "chibi"
+      ]
+    },
+    {
+      "file": "assets/characters/hai_shih/processed/ui/hai_shih_expr_default.png",
+      "size": [
+        307,
+        342
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        105,
+        650,
+        380,
+        960
+      ],
+      "source": "assets/characters/hai_shih/ui/hai_shih_ui_sheet.png",
+      "tags": [
+        "ui",
+        "expression"
+      ]
+    },
+    {
+      "file": "assets/characters/hai_shih/processed/ui/hai_shih_expr_alert.png",
+      "size": [
+        322,
+        382
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        470,
+        620,
+        760,
+        970
+      ],
+      "source": "assets/characters/hai_shih/ui/hai_shih_ui_sheet.png",
+      "tags": [
+        "ui",
+        "expression"
+      ]
+    },
+    {
+      "file": "assets/characters/hai_shih/processed/ui/hai_shih_ui_skill_torpedo.png",
+      "size": [
+        309,
+        325
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        840,
+        625,
+        1120,
+        925
+      ],
+      "source": "assets/characters/hai_shih/ui/hai_shih_ui_sheet.png",
+      "tags": [
+        "ui",
+        "skill"
+      ]
+    },
+    {
+      "file": "assets/characters/hai_shih/processed/ui/hai_shih_ui_class_submarine.png",
+      "size": [
+        307,
+        326
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        1190,
+        620,
+        1465,
+        925
+      ],
+      "source": "assets/characters/hai_shih/ui/hai_shih_ui_sheet.png",
+      "tags": [
+        "ui",
+        "class_icon"
+      ]
+    },
+    {
+      "file": "assets/characters/hai_shih/processed/battle/hai_shih_battle_body_r.png",
+      "size": [
+        512,
+        357
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        60,
+        130,
+        540,
+        455
+      ],
+      "source": "assets/characters/hai_shih/battle/hai_shih_battle_asset_sheet.png",
+      "tags": [
+        "battle",
+        "body"
+      ]
+    },
+    {
+      "file": "assets/characters/hai_shih/processed/battle/hai_shih_battle_rig_base.png",
+      "size": [
+        482,
+        292
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        630,
+        180,
+        1080,
+        440
+      ],
+      "source": "assets/characters/hai_shih/battle/hai_shih_battle_asset_sheet.png",
+      "tags": [
+        "battle",
+        "rig"
+      ]
+    },
+    {
+      "file": "assets/characters/hai_shih/processed/battle/hai_shih_battle_torpedo_tube_01.png",
+      "size": [
+        265,
+        112
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        1205,
+        85,
+        1450,
+        250
+      ],
+      "source": "assets/characters/hai_shih/battle/hai_shih_battle_asset_sheet.png",
+      "tags": [
+        "battle",
+        "torpedo"
+      ]
+    },
+    {
+      "file": "assets/characters/hai_shih/processed/battle/hai_shih_battle_periscope_node.png",
+      "size": [
+        148,
+        199
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        1215,
+        285,
+        1365,
+        500
+      ],
+      "source": "assets/characters/hai_shih/battle/hai_shih_battle_asset_sheet.png",
+      "tags": [
+        "battle",
+        "periscope"
+      ]
+    },
+    {
+      "file": "assets/characters/hai_shih/processed/battle/hai_shih_battle_sonar_node.png",
+      "size": [
+        170,
+        237
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        1200,
+        520,
+        1390,
+        760
+      ],
+      "source": "assets/characters/hai_shih/battle/hai_shih_battle_asset_sheet.png",
+      "tags": [
+        "battle",
+        "sonar"
+      ]
+    },
+    {
+      "file": "assets/characters/hai_shih/processed/vfx/hai_shih_vfx_wake_strip.png",
+      "size": [
+        702,
+        153
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        40,
+        590,
+        710,
+        735
+      ],
+      "source": "assets/characters/hai_shih/battle/hai_shih_battle_asset_sheet.png",
+      "tags": [
+        "vfx",
+        "wake"
+      ]
+    },
+    {
+      "file": "assets/characters/hai_shih/processed/vfx/hai_shih_vfx_underwater_shadow.png",
+      "size": [
+        667,
+        129
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        45,
+        745,
+        690,
+        900
+      ],
+      "source": "assets/characters/hai_shih/battle/hai_shih_battle_asset_sheet.png",
+      "tags": [
+        "vfx",
+        "shadow"
+      ]
+    },
+    {
+      "file": "assets/characters/hai_shih/processed/vfx/hai_shih_vfx_bubbles_01.png",
+      "size": [
+        142,
+        162
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        765,
+        745,
+        875,
+        920
+      ],
+      "source": "assets/characters/hai_shih/battle/hai_shih_battle_asset_sheet.png",
+      "tags": [
+        "vfx",
+        "bubble"
+      ]
+    },
+    {
+      "file": "assets/characters/hai_shih/processed/vfx/hai_shih_vfx_bubbles_02.png",
+      "size": [
+        153,
+        191
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        930,
+        730,
+        1075,
+        930
+      ],
+      "source": "assets/characters/hai_shih/battle/hai_shih_battle_asset_sheet.png",
+      "tags": [
+        "vfx",
+        "bubble"
+      ]
+    },
+    {
+      "file": "assets/characters/hai_shih/processed/vfx/hai_shih_vfx_bubbles_03.png",
+      "size": [
+        199,
+        217
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        1100,
+        710,
+        1270,
+        930
+      ],
+      "source": "assets/characters/hai_shih/battle/hai_shih_battle_asset_sheet.png",
+      "tags": [
+        "vfx",
+        "bubble"
+      ]
+    },
+    {
+      "file": "assets/characters/hai_shih/processed/vfx/hai_shih_vfx_bubbles_04.png",
+      "size": [
+        216,
+        257
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        1300,
+        705,
+        1490,
+        930
+      ],
+      "source": "assets/characters/hai_shih/battle/hai_shih_battle_asset_sheet.png",
+      "tags": [
+        "vfx",
+        "bubble"
+      ]
+    },
+    {
+      "file": "assets/characters/hai_shih/processed/vfx/hai_shih_vfx_torpedo_trail.png",
+      "size": [
+        1068,
+        149
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        60,
+        50,
+        1260,
+        190
+      ],
+      "source": "assets/characters/hai_shih/vfx/hai_shih_vfx_reference_sheet.png",
+      "tags": [
+        "vfx",
+        "torpedo"
+      ]
+    },
+    {
+      "file": "assets/characters/hai_shih/processed/vfx/hai_shih_vfx_torpedo_launch_flash.png",
+      "size": [
+        425,
+        167
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        55,
+        305,
+        570,
+        455
+      ],
+      "source": "assets/characters/hai_shih/vfx/hai_shih_vfx_reference_sheet.png",
+      "tags": [
+        "vfx",
+        "torpedo"
+      ]
+    },
+    {
+      "file": "assets/characters/hai_shih/processed/vfx/hai_shih_vfx_sonar_pulse.png",
+      "size": [
+        364,
+        311
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        590,
+        225,
+        950,
+        560
+      ],
+      "source": "assets/characters/hai_shih/vfx/hai_shih_vfx_reference_sheet.png",
+      "tags": [
+        "vfx",
+        "sonar"
+      ]
+    },
+    {
+      "file": "assets/characters/hai_shih/processed/vfx/hai_shih_vfx_bubble_trail.png",
+      "size": [
+        329,
+        214
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        1100,
+        270,
+        1450,
+        470
+      ],
+      "source": "assets/characters/hai_shih/vfx/hai_shih_vfx_reference_sheet.png",
+      "tags": [
+        "vfx",
+        "bubble"
+      ]
+    },
+    {
+      "file": "assets/characters/hai_shih/processed/vfx/hai_shih_vfx_shadow_fade.png",
+      "size": [
+        625,
+        196
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        65,
+        530,
+        760,
+        720
+      ],
+      "source": "assets/characters/hai_shih/vfx/hai_shih_vfx_reference_sheet.png",
+      "tags": [
+        "vfx",
+        "shadow"
+      ]
+    },
+    {
+      "file": "assets/characters/hai_shih/processed/vfx/hai_shih_vfx_periscope_glint.png",
+      "size": [
+        241,
+        228
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        1070,
+        500,
+        1320,
+        730
+      ],
+      "source": "assets/characters/hai_shih/vfx/hai_shih_vfx_reference_sheet.png",
+      "tags": [
+        "vfx",
+        "periscope"
+      ]
+    },
+    {
+      "file": "assets/characters/hai_shih/processed/vfx/hai_shih_vfx_water_ripple.png",
+      "size": [
+        477,
+        175
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        85,
+        790,
+        620,
+        960
+      ],
+      "source": "assets/characters/hai_shih/vfx/hai_shih_vfx_reference_sheet.png",
+      "tags": [
+        "vfx",
+        "ripple"
+      ]
+    },
+    {
+      "file": "assets/characters/hai_shih/processed/vfx/hai_shih_vfx_stealth_shimmer.png",
+      "size": [
+        513,
+        196
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        850,
+        800,
+        1380,
+        965
+      ],
+      "source": "assets/characters/hai_shih/vfx/hai_shih_vfx_reference_sheet.png",
+      "tags": [
+        "vfx",
+        "stealth"
+      ]
+    },
+    {
+      "file": "assets/characters/hai_shih/processed/anim/hai_shih_anim_idle_keyframe.png",
+      "size": [
+        484,
+        392
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        80,
+        50,
+        600,
+        410
+      ],
+      "source": "assets/characters/hai_shih/battle/hai_shih_anim_keyframes_sheet.png",
+      "tags": [
+        "anim",
+        "idle"
+      ]
+    },
+    {
+      "file": "assets/characters/hai_shih/processed/anim/hai_shih_anim_move_keyframe.png",
+      "size": [
+        537,
+        290
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        610,
+        120,
+        1120,
+        410
+      ],
+      "source": "assets/characters/hai_shih/battle/hai_shih_anim_keyframes_sheet.png",
+      "tags": [
+        "anim",
+        "move"
+      ]
+    },
+    {
+      "file": "assets/characters/hai_shih/processed/anim/hai_shih_anim_attack_keyframe.png",
+      "size": [
+        490,
+        397
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        1220,
+        40,
+        1750,
+        405
+      ],
+      "source": "assets/characters/hai_shih/battle/hai_shih_anim_keyframes_sheet.png",
+      "tags": [
+        "anim",
+        "attack"
+      ]
+    },
+    {
+      "file": "assets/characters/hai_shih/processed/anim/hai_shih_anim_hit_keyframe.png",
+      "size": [
+        442,
+        406
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        330,
+        430,
+        845,
+        850
+      ],
+      "source": "assets/characters/hai_shih/battle/hai_shih_anim_keyframes_sheet.png",
+      "tags": [
+        "anim",
+        "hit"
+      ]
+    },
+    {
+      "file": "assets/characters/hai_shih/processed/anim/hai_shih_anim_firepower_keyframe.png",
+      "size": [
+        746,
+        354
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        900,
+        490,
+        1700,
+        820
+      ],
+      "source": "assets/characters/hai_shih/battle/hai_shih_anim_keyframes_sheet.png",
+      "tags": [
+        "anim",
+        "firepower"
+      ]
+    }
+  ],
+  "config": {
+    "bind_points": "assets/characters/hai_shih/processed/config/hai_shih_meta_bind_points.json",
+    "animation": "assets/characters/hai_shih/processed/config/hai_shih_anim_config.json",
+    "vfx": "assets/characters/hai_shih/processed/config/hai_shih_vfx_config.json"
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "character_id": "hindenburg",
+  "coordinate_system": "pixel_top_left_per_split_asset",
+  "notes": "Initial binding points from trial sheet postprocess; verify manually before engine import.",
+  "assets": {
+    "hindenburg_battle_body_r.png": {
+      "origin": {
+        "x": 260,
+        "y": 325,
+        "note": "battle body sea contact"
+      },
+      "rig_mount": {
+        "x": 135,
+        "y": 210,
+        "note": "rear heavy-cruiser rig mount"
+      },
+      "fire_control_point": {
+        "x": 340,
+        "y": 155,
+        "note": "rangefinder visor direction"
+      }
+    },
+    "hindenburg_battle_rig_base.png": {
+      "origin": {
+        "x": 250,
+        "y": 315,
+        "note": "heavy cruiser rig center"
+      },
+      "turret_mount_01": {
+        "x": 405,
+        "y": 235,
+        "note": "front heavy turret mount"
+      },
+      "fire_control_point": {
+        "x": 320,
+        "y": 105,
+        "note": "central fire-control tower"
+      }
+    },
+    "hindenburg_battle_turret_main_01.png": {
+      "origin": {
+        "x": 165,
+        "y": 105,
+        "note": "turret rotation center"
+      },
+      "muzzle_01": {
+        "x": 300,
+        "y": 72,
+        "note": "upper barrel muzzle"
+      },
+      "muzzle_02": {
+        "x": 300,
+        "y": 115,
+        "note": "lower barrel muzzle"
+      }
+    },
+    "hindenburg_battle_fire_control_node.png": {
+      "origin": {
+        "x": 92,
+        "y": 86,
+        "note": "fire-control node center"
+      },
+      "scan_origin": {
+        "x": 112,
+        "y": 78,
+        "note": "optical scan origin"
+      }
+    }
+  }
+}

@@ -1,0 +1,6014 @@
+{
+  "character_id": "hindenburg",
+  "pipeline_stage": "postprocess_trial_sheet_v1",
+  "source_alpha": [
+    {
+      "source": "assets/characters/hindenburg/battle/hindenburg_anim_keyframes_sheet.png",
+      "file": "assets/characters/hindenburg/processed/source_alpha/hindenburg_anim_keyframes_sheet_alpha.png",
+      "size": [
+        1774,
+        887
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "source": "assets/characters/hindenburg/battle/hindenburg_battle_asset_sheet.png",
+      "file": "assets/characters/hindenburg/processed/source_alpha/hindenburg_battle_asset_sheet_alpha.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "source": "assets/characters/hindenburg/concept/hindenburg_concept_full.png",
+      "file": "assets/characters/hindenburg/processed/source_alpha/hindenburg_concept_full_alpha.png",
+      "size": [
+        1024,
+        1536
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "source": "assets/characters/hindenburg/ui/hindenburg_illust_half.png",
+      "file": "assets/characters/hindenburg/processed/source_alpha/hindenburg_illust_half_alpha.png",
+      "size": [
+        1402,
+        1122
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "source": "assets/characters/hindenburg/ui/hindenburg_illust_skill_cutin.png",
+      "file": "assets/characters/hindenburg/processed/source_alpha/hindenburg_illust_skill_cutin_alpha.png",
+      "size": [
+        1774,
+        887
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "source": "assets/characters/hindenburg/ui/hindenburg_ui_sheet.png",
+      "file": "assets/characters/hindenburg/processed/source_alpha/hindenburg_ui_sheet_alpha.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "source": "assets/characters/hindenburg/vfx/hindenburg_vfx_reference_sheet.png",
+      "file": "assets/characters/hindenburg/processed/source_alpha/hindenburg_vfx_reference_sheet_alpha.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA"
+    }
+  ],
+  "components": [
+    {
+      "file": "assets/characters/hindenburg/processed/ui/hindenburg_illust_full_alpha.png",
+      "size": [
+        1109,
+        1432
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        0,
+        47,
+        1024,
+        1445
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          0,
+          0,
+          1024,
+          1536
+        ],
+        "final_box": [
+          0,
+          47,
+          1024,
+          1445
+        ],
+        "expanded": {
+          "left": 0,
+          "top": -47,
+          "right": 0,
+          "bottom": -91
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 1,
+        "selected_component_count": 1,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              5,
+              63,
+              1018,
+              1429
+            ],
+            "pixel_count": 701327,
+            "overlap_pixels": 701327
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 5,
+          "top": 16,
+          "right": 6,
+          "bottom": 16
+        },
+        "edge_warnings": [
+          "left",
+          "right"
+        ]
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          1013,
+          1366
+        ],
+        "centroid_before_padding": [
+          530.51,
+          692.05
+        ],
+        "padding": {
+          "left": 24,
+          "top": 24,
+          "right": 72,
+          "bottom": 42
+        },
+        "centroid_offset_after_padding": {
+          "x": 0.01,
+          "y": 0.05
+        }
+      },
+      "source": "assets/characters/hindenburg/concept/hindenburg_concept_full.png",
+      "tags": [
+        "illustration",
+        "full_body"
+      ]
+    },
+    {
+      "file": "assets/characters/hindenburg/processed/ui/hindenburg_illust_half_alpha.png",
+      "size": [
+        1496,
+        1323
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        0,
+        0,
+        1402,
+        1122
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          0,
+          0,
+          1402,
+          1122
+        ],
+        "final_box": [
+          0,
+          0,
+          1402,
+          1122
+        ],
+        "expanded": {
+          "left": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 2,
+        "selected_component_count": 2,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              0,
+              1396,
+              1115
+            ],
+            "pixel_count": 1012789,
+            "overlap_pixels": 1012789
+          },
+          {
+            "bbox": [
+              443,
+              304,
+              444,
+              306
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 0,
+          "top": 0,
+          "right": 6,
+          "bottom": 7
+        },
+        "edge_warnings": [
+          "left",
+          "top",
+          "right",
+          "bottom"
+        ]
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          1396,
+          1115
+        ],
+        "centroid_before_padding": [
+          724.0,
+          694.96
+        ],
+        "padding": {
+          "left": 24,
+          "top": 24,
+          "right": 76,
+          "bottom": 184
+        },
+        "centroid_offset_after_padding": {
+          "x": -0.0,
+          "y": 57.46
+        }
+      },
+      "source": "assets/characters/hindenburg/ui/hindenburg_illust_half.png",
+      "tags": [
+        "illustration"
+      ]
+    },
+    {
+      "file": "assets/characters/hindenburg/processed/ui/hindenburg_illust_skill_cutin_alpha.png",
+      "size": [
+        1823,
+        936
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        0,
+        0,
+        1774,
+        887
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          0,
+          0,
+          1774,
+          887
+        ],
+        "final_box": [
+          0,
+          0,
+          1774,
+          887
+        ],
+        "expanded": {
+          "left": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 1,
+        "selected_component_count": 1,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              0,
+              1774,
+              887
+            ],
+            "pixel_count": 1573061,
+            "overlap_pixels": 1573061
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0
+        },
+        "edge_warnings": [
+          "left",
+          "top",
+          "right",
+          "bottom"
+        ]
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          1774,
+          887
+        ],
+        "centroid_before_padding": [
+          886.65,
+          442.95
+        ],
+        "padding": {
+          "left": 25,
+          "top": 25,
+          "right": 24,
+          "bottom": 24
+        },
+        "centroid_offset_after_padding": {
+          "x": 0.15,
+          "y": -0.05
+        }
+      },
+      "source": "assets/characters/hindenburg/ui/hindenburg_illust_skill_cutin.png",
+      "tags": [
+        "cutin"
+      ]
+    },
+    {
+      "file": "assets/characters/hindenburg/processed/ui/hindenburg_ui_portrait.png",
+      "size": [
+        559,
+        545
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        19,
+        32,
+        561,
+        528
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          35,
+          50,
+          545,
+          510
+        ],
+        "final_box": [
+          19,
+          32,
+          561,
+          528
+        ],
+        "expanded": {
+          "left": 16,
+          "top": 18,
+          "right": 16,
+          "bottom": 18
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 21,
+        "selected_component_count": 1,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              35,
+              48,
+              545,
+              512
+            ],
+            "pixel_count": 236445,
+            "overlap_pixels": 234436
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 16,
+          "top": 16,
+          "right": 16,
+          "bottom": 0
+        },
+        "edge_warnings": [
+          "bottom"
+        ]
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          510,
+          480
+        ],
+        "centroid_before_padding": [
+          254.71,
+          231.5
+        ],
+        "padding": {
+          "left": 25,
+          "top": 41,
+          "right": 24,
+          "bottom": 24
+        },
+        "centroid_offset_after_padding": {
+          "x": 0.21,
+          "y": 0.0
+        }
+      },
+      "source": "assets/characters/hindenburg/ui/hindenburg_ui_sheet.png",
+      "tags": [
+        "ui",
+        "portrait"
+      ]
+    },
+    {
+      "file": "assets/characters/hindenburg/processed/ui/hindenburg_ui_portrait_small.png",
+      "size": [
+        368,
+        339
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        555,
+        113,
+        875,
+        435
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          575,
+          100,
+          820,
+          420
+        ],
+        "final_box": [
+          555,
+          113,
+          875,
+          435
+        ],
+        "expanded": {
+          "left": 20,
+          "top": -13,
+          "right": 55,
+          "bottom": 15
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 17,
+        "selected_component_count": 1,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              571,
+              129,
+              859,
+              419
+            ],
+            "pixel_count": 65742,
+            "overlap_pixels": 60141
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 16,
+          "top": 16,
+          "right": 0,
+          "bottom": 16
+        },
+        "edge_warnings": [
+          "right"
+        ]
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          304,
+          290
+        ],
+        "centroid_before_padding": [
+          144.05,
+          144.67
+        ],
+        "padding": {
+          "left": 40,
+          "top": 25,
+          "right": 24,
+          "bottom": 24
+        },
+        "centroid_offset_after_padding": {
+          "x": 0.05,
+          "y": 0.17
+        }
+      },
+      "source": "assets/characters/hindenburg/ui/hindenburg_ui_sheet.png",
+      "tags": [
+        "ui",
+        "portrait_small"
+      ]
+    },
+    {
+      "file": "assets/characters/hindenburg/processed/ui/hindenburg_ui_chibi_head.png",
+      "size": [
+        281,
+        278
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        856,
+        176,
+        1120,
+        423
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          920,
+          190,
+          1090,
+          420
+        ],
+        "final_box": [
+          856,
+          176,
+          1120,
+          423
+        ],
+        "expanded": {
+          "left": 64,
+          "top": 14,
+          "right": 30,
+          "bottom": 3
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 7,
+        "selected_component_count": 1,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              872,
+              192,
+              1104,
+              407
+            ],
+            "pixel_count": 40476,
+            "overlap_pixels": 33543
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 0,
+          "top": 16,
+          "right": 16,
+          "bottom": 16
+        },
+        "edge_warnings": [
+          "left"
+        ]
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          232,
+          215
+        ],
+        "centroid_before_padding": [
+          116.34,
+          115.18
+        ],
+        "padding": {
+          "left": 24,
+          "top": 24,
+          "right": 25,
+          "bottom": 39
+        },
+        "centroid_offset_after_padding": {
+          "x": -0.16,
+          "y": 0.18
+        }
+      },
+      "source": "assets/characters/hindenburg/ui/hindenburg_ui_sheet.png",
+      "tags": [
+        "ui",
+        "chibi",
+        "remove_small_islands"
+      ]
+    },
+    {
+      "file": "assets/characters/hindenburg/processed/ui/hindenburg_expr_default.png",
+      "size": [
+        415,
+        534
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        20,
+        506,
+        400,
+        952
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          35,
+          545,
+          385,
+          940
+        ],
+        "final_box": [
+          20,
+          506,
+          400,
+          952
+        ],
+        "expanded": {
+          "left": 15,
+          "top": 39,
+          "right": 15,
+          "bottom": 12
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 20,
+        "selected_component_count": 1,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              36,
+              522,
+              384,
+              936
+            ],
+            "pixel_count": 122110,
+            "overlap_pixels": 121643
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 15,
+          "top": 0,
+          "right": 0,
+          "bottom": 15
+        },
+        "edge_warnings": [
+          "left",
+          "top",
+          "right",
+          "bottom"
+        ]
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          365,
+          431
+        ],
+        "centroid_before_padding": [
+          183.43,
+          243.12
+        ],
+        "padding": {
+          "left": 24,
+          "top": 24,
+          "right": 26,
+          "bottom": 79
+        },
+        "centroid_offset_after_padding": {
+          "x": -0.07,
+          "y": 0.12
+        }
+      },
+      "source": "assets/characters/hindenburg/ui/hindenburg_ui_sheet.png",
+      "tags": [
+        "ui",
+        "expression",
+        "default"
+      ]
+    },
+    {
+      "file": "assets/characters/hindenburg/processed/ui/hindenburg_expr_serious.png",
+      "size": [
+        420,
+        540
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        379,
+        506,
+        749,
+        953
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          395,
+          545,
+          735,
+          940
+        ],
+        "final_box": [
+          379,
+          506,
+          749,
+          953
+        ],
+        "expanded": {
+          "left": 16,
+          "top": 39,
+          "right": 14,
+          "bottom": 13
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 38,
+        "selected_component_count": 18,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              395,
+              522,
+              733,
+              937
+            ],
+            "pixel_count": 119319,
+            "overlap_pixels": 118935
+          },
+          {
+            "bbox": [
+              496,
+              554,
+              498,
+              555
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              488,
+              558,
+              490,
+              559
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              487,
+              559,
+              488,
+              560
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              480,
+              562,
+              484,
+              565
+            ],
+            "pixel_count": 6,
+            "overlap_pixels": 6
+          },
+          {
+            "bbox": [
+              479,
+              565,
+              480,
+              566
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              478,
+              566,
+              479,
+              567
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              476,
+              567,
+              478,
+              569
+            ],
+            "pixel_count": 3,
+            "overlap_pixels": 3
+          },
+          {
+            "bbox": [
+              468,
+              569,
+              469,
+              570
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              460,
+              578,
+              461,
+              579
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              459,
+              579,
+              460,
+              580
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              458,
+              580,
+              459,
+              581
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              454,
+              581,
+              455,
+              582
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              457,
+              581,
+              458,
+              582
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              453,
+              582,
+              454,
+              583
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              456,
+              582,
+              457,
+              583
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              455,
+              583,
+              456,
+              584
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              454,
+              584,
+              455,
+              585
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 16
+        },
+        "edge_warnings": [
+          "left",
+          "top",
+          "right"
+        ]
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          370,
+          431
+        ],
+        "centroid_before_padding": [
+          186.19,
+          246.11
+        ],
+        "padding": {
+          "left": 24,
+          "top": 24,
+          "right": 26,
+          "bottom": 85
+        },
+        "centroid_offset_after_padding": {
+          "x": 0.19,
+          "y": 0.11
+        }
+      },
+      "source": "assets/characters/hindenburg/ui/hindenburg_ui_sheet.png",
+      "tags": [
+        "ui",
+        "expression",
+        "serious"
+      ]
+    },
+    {
+      "file": "assets/characters/hindenburg/processed/ui/hindenburg_expr_hit.png",
+      "size": [
+        452,
+        517
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        727,
+        506,
+        1116,
+        953
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          745,
+          545,
+          1100,
+          940
+        ],
+        "final_box": [
+          727,
+          506,
+          1116,
+          953
+        ],
+        "expanded": {
+          "left": 18,
+          "top": 39,
+          "right": 16,
+          "bottom": 13
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 21,
+        "selected_component_count": 16,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              743,
+              522,
+              1100,
+              937
+            ],
+            "pixel_count": 122029,
+            "overlap_pixels": 121488
+          },
+          {
+            "bbox": [
+              821,
+              588,
+              822,
+              589
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              820,
+              589,
+              821,
+              590
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              819,
+              590,
+              820,
+              591
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              813,
+              591,
+              819,
+              597
+            ],
+            "pixel_count": 11,
+            "overlap_pixels": 11
+          },
+          {
+            "bbox": [
+              812,
+              597,
+              813,
+              598
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              809,
+              598,
+              812,
+              602
+            ],
+            "pixel_count": 6,
+            "overlap_pixels": 6
+          },
+          {
+            "bbox": [
+              806,
+              602,
+              809,
+              606
+            ],
+            "pixel_count": 6,
+            "overlap_pixels": 6
+          },
+          {
+            "bbox": [
+              805,
+              606,
+              806,
+              608
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              804,
+              608,
+              805,
+              609
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              803,
+              609,
+              804,
+              611
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              802,
+              611,
+              803,
+              612
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              801,
+              613,
+              802,
+              614
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              800,
+              614,
+              801,
+              616
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              798,
+              616,
+              800,
+              620
+            ],
+            "pixel_count": 5,
+            "overlap_pixels": 5
+          },
+          {
+            "bbox": [
+              797,
+              620,
+              798,
+              622
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 0,
+          "top": 16,
+          "right": 16,
+          "bottom": 16
+        },
+        "edge_warnings": [
+          "left"
+        ]
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          373,
+          415
+        ],
+        "centroid_before_padding": [
+          202.22,
+          234.74
+        ],
+        "padding": {
+          "left": 24,
+          "top": 24,
+          "right": 55,
+          "bottom": 78
+        },
+        "centroid_offset_after_padding": {
+          "x": 0.22,
+          "y": 0.24
+        }
+      },
+      "source": "assets/characters/hindenburg/ui/hindenburg_ui_sheet.png",
+      "tags": [
+        "ui",
+        "expression",
+        "hit"
+      ]
+    },
+    {
+      "file": "assets/characters/hindenburg/processed/ui/hindenburg_ui_skill_fire_control.png",
+      "size": [
+        405,
+        409
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        1123,
+        82,
+        1511,
+        474
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          1140,
+          100,
+          1490,
+          420
+        ],
+        "final_box": [
+          1123,
+          82,
+          1511,
+          474
+        ],
+        "expanded": {
+          "left": 17,
+          "top": 18,
+          "right": 21,
+          "bottom": 54
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 6,
+        "selected_component_count": 1,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              1139,
+              98,
+              1495,
+              458
+            ],
+            "pixel_count": 126549,
+            "overlap_pixels": 111468
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 16,
+          "top": 16,
+          "right": 16,
+          "bottom": 16
+        },
+        "edge_warnings": []
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          356,
+          360
+        ],
+        "centroid_before_padding": [
+          177.46,
+          179.55
+        ],
+        "padding": {
+          "left": 25,
+          "top": 25,
+          "right": 24,
+          "bottom": 24
+        },
+        "centroid_offset_after_padding": {
+          "x": -0.04,
+          "y": 0.05
+        }
+      },
+      "source": "assets/characters/hindenburg/ui/hindenburg_ui_sheet.png",
+      "tags": [
+        "ui",
+        "skill"
+      ]
+    },
+    {
+      "file": "assets/characters/hindenburg/processed/ui/hindenburg_ui_class_heavy_cruiser.png",
+      "size": [
+        409,
+        457
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        1116,
+        511,
+        1507,
+        944
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          1185,
+          525,
+          1515,
+          920
+        ],
+        "final_box": [
+          1116,
+          511,
+          1507,
+          944
+        ],
+        "expanded": {
+          "left": 69,
+          "top": 14,
+          "right": -8,
+          "bottom": 24
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 4,
+        "selected_component_count": 1,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              1132,
+              527,
+              1491,
+              928
+            ],
+            "pixel_count": 84962,
+            "overlap_pixels": 81217
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 16,
+          "top": 16,
+          "right": 16,
+          "bottom": 16
+        },
+        "edge_warnings": []
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          359,
+          401
+        ],
+        "centroid_before_padding": [
+          178.73,
+          196.42
+        ],
+        "padding": {
+          "left": 26,
+          "top": 32,
+          "right": 24,
+          "bottom": 24
+        },
+        "centroid_offset_after_padding": {
+          "x": 0.23,
+          "y": -0.08
+        }
+      },
+      "source": "assets/characters/hindenburg/ui/hindenburg_ui_sheet.png",
+      "tags": [
+        "ui",
+        "class_icon"
+      ]
+    },
+    {
+      "file": "assets/characters/hindenburg/processed/battle/hindenburg_battle_body_r.png",
+      "size": [
+        598,
+        513
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        25,
+        31,
+        586,
+        463
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          45,
+          45,
+          570,
+          445
+        ],
+        "final_box": [
+          25,
+          31,
+          586,
+          463
+        ],
+        "expanded": {
+          "left": 20,
+          "top": 14,
+          "right": 16,
+          "bottom": 18
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 131,
+        "selected_component_count": 1,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              41,
+              47,
+              570,
+              447
+            ],
+            "pixel_count": 118700,
+            "overlap_pixels": 118626
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 16,
+          "top": 16,
+          "right": 16,
+          "bottom": 16
+        },
+        "edge_warnings": []
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          529,
+          400
+        ],
+        "centroid_before_padding": [
+          254.11,
+          232.62
+        ],
+        "padding": {
+          "left": 45,
+          "top": 24,
+          "right": 24,
+          "bottom": 89
+        },
+        "centroid_offset_after_padding": {
+          "x": 0.11,
+          "y": 0.12
+        }
+      },
+      "source": "assets/characters/hindenburg/battle/hindenburg_battle_asset_sheet.png",
+      "tags": [
+        "battle",
+        "body"
+      ]
+    },
+    {
+      "file": "assets/characters/hindenburg/processed/battle/hindenburg_battle_rig_base.png",
+      "size": [
+        621,
+        631
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        614,
+        13,
+        1195,
+        489
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          610,
+          35,
+          1120,
+          450
+        ],
+        "final_box": [
+          614,
+          13,
+          1195,
+          489
+        ],
+        "expanded": {
+          "left": -4,
+          "top": 22,
+          "right": 75,
+          "bottom": 39
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 63,
+        "selected_component_count": 1,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              630,
+              29,
+              1179,
+              473
+            ],
+            "pixel_count": 109391,
+            "overlap_pixels": 104406
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 16,
+          "top": 16,
+          "right": 16,
+          "bottom": 16
+        },
+        "edge_warnings": []
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          549,
+          444
+        ],
+        "centroid_before_padding": [
+          262.7,
+          291.42
+        ],
+        "padding": {
+          "left": 48,
+          "top": 24,
+          "right": 24,
+          "bottom": 163
+        },
+        "centroid_offset_after_padding": {
+          "x": 0.2,
+          "y": -0.08
+        }
+      },
+      "source": "assets/characters/hindenburg/battle/hindenburg_battle_asset_sheet.png",
+      "tags": [
+        "battle",
+        "rig"
+      ]
+    },
+    {
+      "file": "assets/characters/hindenburg/processed/battle/hindenburg_battle_turret_main_01.png",
+      "size": [
+        385,
+        213
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        1211,
+        51,
+        1531,
+        247
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          1195,
+          70,
+          1505,
+          250
+        ],
+        "final_box": [
+          1211,
+          51,
+          1531,
+          247
+        ],
+        "expanded": {
+          "left": -16,
+          "top": 19,
+          "right": 26,
+          "bottom": -3
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 3,
+        "selected_component_count": 1,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              1227,
+              67,
+              1515,
+              231
+            ],
+            "pixel_count": 28079,
+            "overlap_pixels": 27891
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 16,
+          "top": 16,
+          "right": 16,
+          "bottom": 16
+        },
+        "edge_warnings": []
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          288,
+          164
+        ],
+        "centroid_before_padding": [
+          119.68,
+          82.5
+        ],
+        "padding": {
+          "left": 73,
+          "top": 24,
+          "right": 24,
+          "bottom": 25
+        },
+        "centroid_offset_after_padding": {
+          "x": 0.18,
+          "y": 0.0
+        }
+      },
+      "source": "assets/characters/hindenburg/battle/hindenburg_battle_asset_sheet.png",
+      "tags": [
+        "battle",
+        "turret"
+      ]
+    },
+    {
+      "file": "assets/characters/hindenburg/processed/battle/hindenburg_battle_turret_main_02.png",
+      "size": [
+        370,
+        200
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        1226,
+        242,
+        1529,
+        423
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          1220,
+          285,
+          1485,
+          410
+        ],
+        "final_box": [
+          1226,
+          242,
+          1529,
+          423
+        ],
+        "expanded": {
+          "left": -6,
+          "top": 43,
+          "right": 44,
+          "bottom": 13
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 6,
+        "selected_component_count": 1,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              1242,
+              258,
+              1513,
+              407
+            ],
+            "pixel_count": 24262,
+            "overlap_pixels": 21558
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 16,
+          "top": 16,
+          "right": 16,
+          "bottom": 16
+        },
+        "edge_warnings": []
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          271,
+          149
+        ],
+        "centroid_before_padding": [
+          109.79,
+          76.23
+        ],
+        "padding": {
+          "left": 75,
+          "top": 24,
+          "right": 24,
+          "bottom": 27
+        },
+        "centroid_offset_after_padding": {
+          "x": -0.21,
+          "y": 0.23
+        }
+      },
+      "source": "assets/characters/hindenburg/battle/hindenburg_battle_asset_sheet.png",
+      "tags": [
+        "battle",
+        "turret"
+      ]
+    },
+    {
+      "file": "assets/characters/hindenburg/processed/battle/hindenburg_battle_fire_control_node.png",
+      "size": [
+        220,
+        368
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        1258,
+        409,
+        1456,
+        737
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          1230,
+          455,
+          1415,
+          620
+        ],
+        "final_box": [
+          1258,
+          409,
+          1456,
+          737
+        ],
+        "expanded": {
+          "left": -28,
+          "top": 46,
+          "right": 41,
+          "bottom": 117
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 11,
+        "selected_component_count": 2,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              1274,
+              425,
+              1418,
+              589
+            ],
+            "pixel_count": 14432,
+            "overlap_pixels": 13878
+          },
+          {
+            "bbox": [
+              1283,
+              606,
+              1440,
+              721
+            ],
+            "pixel_count": 12730,
+            "overlap_pixels": 596
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 16,
+          "top": 16,
+          "right": 16,
+          "bottom": 0
+        },
+        "edge_warnings": [
+          "bottom"
+        ]
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          166,
+          312
+        ],
+        "centroid_before_padding": [
+          80.08,
+          160.11
+        ],
+        "padding": {
+          "left": 30,
+          "top": 24,
+          "right": 24,
+          "bottom": 32
+        },
+        "centroid_offset_after_padding": {
+          "x": 0.08,
+          "y": 0.11
+        }
+      },
+      "source": "assets/characters/hindenburg/battle/hindenburg_battle_asset_sheet.png",
+      "tags": [
+        "battle",
+        "fire_control"
+      ]
+    },
+    {
+      "file": "assets/characters/hindenburg/processed/vfx/hindenburg_vfx_reticle_01.png",
+      "size": [
+        283,
+        248
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        17,
+        508,
+        279,
+        735
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          45,
+          540,
+          260,
+          730
+        ],
+        "final_box": [
+          17,
+          508,
+          279,
+          735
+        ],
+        "expanded": {
+          "left": 28,
+          "top": 32,
+          "right": 19,
+          "bottom": 5
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 280,
+        "selected_component_count": 70,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              33,
+              524,
+              263,
+              719
+            ],
+            "pixel_count": 19016,
+            "overlap_pixels": 18980
+          },
+          {
+            "bbox": [
+              115,
+              543,
+              117,
+              544
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              113,
+              544,
+              115,
+              545
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              200,
+              544,
+              204,
+              547
+            ],
+            "pixel_count": 7,
+            "overlap_pixels": 7
+          },
+          {
+            "bbox": [
+              112,
+              545,
+              113,
+              546
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              110,
+              546,
+              111,
+              547
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              199,
+              546,
+              200,
+              548
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              108,
+              547,
+              110,
+              548
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              107,
+              548,
+              108,
+              549
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              105,
+              549,
+              107,
+              550
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              102,
+              550,
+              105,
+              552
+            ],
+            "pixel_count": 4,
+            "overlap_pixels": 4
+          },
+          {
+            "bbox": [
+              212,
+              551,
+              224,
+              563
+            ],
+            "pixel_count": 30,
+            "overlap_pixels": 30
+          },
+          {
+            "bbox": [
+              101,
+              552,
+              102,
+              553
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              96,
+              553,
+              101,
+              557
+            ],
+            "pixel_count": 8,
+            "overlap_pixels": 8
+          },
+          {
+            "bbox": [
+              179,
+              555,
+              181,
+              559
+            ],
+            "pixel_count": 5,
+            "overlap_pixels": 5
+          },
+          {
+            "bbox": [
+              95,
+              557,
+              96,
+              558
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              94,
+              558,
+              95,
+              559
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              93,
+              559,
+              94,
+              560
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              92,
+              560,
+              93,
+              561
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              91,
+              561,
+              92,
+              562
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 16,
+          "top": 16,
+          "right": 16,
+          "bottom": 16
+        },
+        "edge_warnings": []
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          230,
+          195
+        ],
+        "centroid_before_padding": [
+          117.66,
+          99.99
+        ],
+        "padding": {
+          "left": 24,
+          "top": 24,
+          "right": 29,
+          "bottom": 29
+        },
+        "centroid_offset_after_padding": {
+          "x": 0.16,
+          "y": -0.01
+        }
+      },
+      "source": "assets/characters/hindenburg/battle/hindenburg_battle_asset_sheet.png",
+      "tags": [
+        "vfx",
+        "reticle"
+      ]
+    },
+    {
+      "file": "assets/characters/hindenburg/processed/vfx/hindenburg_vfx_reticle_02.png",
+      "size": [
+        263,
+        280
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        270,
+        498,
+        515,
+        745
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          300,
+          540,
+          515,
+          730
+        ],
+        "final_box": [
+          270,
+          498,
+          515,
+          745
+        ],
+        "expanded": {
+          "left": 30,
+          "top": 42,
+          "right": 0,
+          "bottom": 15
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 390,
+        "selected_component_count": 136,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              286,
+              514,
+              499,
+              729
+            ],
+            "pixel_count": 19923,
+            "overlap_pixels": 19720
+          },
+          {
+            "bbox": [
+              359,
+              540,
+              361,
+              541
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              356,
+              541,
+              359,
+              542
+            ],
+            "pixel_count": 3,
+            "overlap_pixels": 3
+          },
+          {
+            "bbox": [
+              354,
+              542,
+              356,
+              543
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              352,
+              543,
+              354,
+              544
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              350,
+              544,
+              352,
+              545
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              345,
+              545,
+              350,
+              548
+            ],
+            "pixel_count": 7,
+            "overlap_pixels": 7
+          },
+          {
+            "bbox": [
+              343,
+              548,
+              345,
+              549
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              342,
+              549,
+              343,
+              550
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              339,
+              550,
+              342,
+              552
+            ],
+            "pixel_count": 4,
+            "overlap_pixels": 4
+          },
+          {
+            "bbox": [
+              338,
+              552,
+              339,
+              553
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              336,
+              553,
+              338,
+              554
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              335,
+              554,
+              336,
+              555
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              334,
+              555,
+              335,
+              556
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              333,
+              556,
+              334,
+              557
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              329,
+              557,
+              333,
+              560
+            ],
+            "pixel_count": 6,
+            "overlap_pixels": 6
+          },
+          {
+            "bbox": [
+              328,
+              560,
+              329,
+              561
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              325,
+              561,
+              328,
+              565
+            ],
+            "pixel_count": 6,
+            "overlap_pixels": 6
+          },
+          {
+            "bbox": [
+              324,
+              565,
+              325,
+              566
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              323,
+              566,
+              324,
+              567
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 16,
+          "top": 16,
+          "right": 16,
+          "bottom": 16
+        },
+        "edge_warnings": []
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          213,
+          215
+        ],
+        "centroid_before_padding": [
+          107.69,
+          98.98
+        ],
+        "padding": {
+          "left": 24,
+          "top": 41,
+          "right": 26,
+          "bottom": 24
+        },
+        "centroid_offset_after_padding": {
+          "x": 0.19,
+          "y": -0.02
+        }
+      },
+      "source": "assets/characters/hindenburg/battle/hindenburg_battle_asset_sheet.png",
+      "tags": [
+        "vfx",
+        "reticle"
+      ]
+    },
+    {
+      "file": "assets/characters/hindenburg/processed/vfx/hindenburg_vfx_reticle_03.png",
+      "size": [
+        273,
+        275
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        509,
+        495,
+        763,
+        751
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          555,
+          540,
+          760,
+          730
+        ],
+        "final_box": [
+          509,
+          495,
+          763,
+          751
+        ],
+        "expanded": {
+          "left": 46,
+          "top": 45,
+          "right": 3,
+          "bottom": 21
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 266,
+        "selected_component_count": 59,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              525,
+              511,
+              747,
+              735
+            ],
+            "pixel_count": 19173,
+            "overlap_pixels": 18950
+          },
+          {
+            "bbox": [
+              582,
+              545,
+              586,
+              549
+            ],
+            "pixel_count": 9,
+            "overlap_pixels": 9
+          },
+          {
+            "bbox": [
+              682,
+              546,
+              683,
+              547
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              581,
+              547,
+              582,
+              548
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              580,
+              548,
+              581,
+              549
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              578,
+              549,
+              580,
+              550
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              577,
+              550,
+              578,
+              551
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              576,
+              551,
+              577,
+              552
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              574,
+              552,
+              576,
+              553
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              573,
+              553,
+              574,
+              554
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              673,
+              553,
+              675,
+              556
+            ],
+            "pixel_count": 4,
+            "overlap_pixels": 4
+          },
+          {
+            "bbox": [
+              572,
+              554,
+              573,
+              555
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              571,
+              555,
+              572,
+              556
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              570,
+              556,
+              571,
+              557
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              569,
+              557,
+              570,
+              558
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              672,
+              557,
+              673,
+              558
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              568,
+              558,
+              569,
+              559
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              566,
+              559,
+              568,
+              561
+            ],
+            "pixel_count": 3,
+            "overlap_pixels": 3
+          },
+          {
+            "bbox": [
+              671,
+              559,
+              672,
+              560
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              669,
+              560,
+              671,
+              563
+            ],
+            "pixel_count": 4,
+            "overlap_pixels": 4
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 16,
+          "top": 16,
+          "right": 16,
+          "bottom": 16
+        },
+        "edge_warnings": []
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          222,
+          224
+        ],
+        "centroid_before_padding": [
+          109.73,
+          113.34
+        ],
+        "padding": {
+          "left": 27,
+          "top": 24,
+          "right": 24,
+          "bottom": 27
+        },
+        "centroid_offset_after_padding": {
+          "x": 0.23,
+          "y": -0.16
+        }
+      },
+      "source": "assets/characters/hindenburg/battle/hindenburg_battle_asset_sheet.png",
+      "tags": [
+        "vfx",
+        "reticle"
+      ]
+    },
+    {
+      "file": "assets/characters/hindenburg/processed/vfx/hindenburg_vfx_muzzle_flash.png",
+      "size": [
+        503,
+        296
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        784,
+        520,
+        1215,
+        776
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          780,
+          505,
+          1200,
+          705
+        ],
+        "final_box": [
+          784,
+          520,
+          1215,
+          776
+        ],
+        "expanded": {
+          "left": -4,
+          "top": -15,
+          "right": 15,
+          "bottom": 71
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 96,
+        "selected_component_count": 15,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              845,
+              536,
+              870,
+              588
+            ],
+            "pixel_count": 290,
+            "overlap_pixels": 290
+          },
+          {
+            "bbox": [
+              800,
+              536,
+              1181,
+              760
+            ],
+            "pixel_count": 46389,
+            "overlap_pixels": 38890
+          },
+          {
+            "bbox": [
+              1102,
+              554,
+              1117,
+              562
+            ],
+            "pixel_count": 44,
+            "overlap_pixels": 44
+          },
+          {
+            "bbox": [
+              904,
+              556,
+              908,
+              561
+            ],
+            "pixel_count": 9,
+            "overlap_pixels": 9
+          },
+          {
+            "bbox": [
+              903,
+              561,
+              904,
+              562
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              854,
+              588,
+              860,
+              597
+            ],
+            "pixel_count": 30,
+            "overlap_pixels": 30
+          },
+          {
+            "bbox": [
+              841,
+              593,
+              842,
+              594
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              840,
+              595,
+              841,
+              597
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              846,
+              601,
+              856,
+              611
+            ],
+            "pixel_count": 67,
+            "overlap_pixels": 67
+          },
+          {
+            "bbox": [
+              1182,
+              606,
+              1199,
+              612
+            ],
+            "pixel_count": 49,
+            "overlap_pixels": 49
+          },
+          {
+            "bbox": [
+              811,
+              620,
+              815,
+              631
+            ],
+            "pixel_count": 29,
+            "overlap_pixels": 29
+          },
+          {
+            "bbox": [
+              1151,
+              666,
+              1153,
+              668
+            ],
+            "pixel_count": 3,
+            "overlap_pixels": 3
+          },
+          {
+            "bbox": [
+              1149,
+              668,
+              1158,
+              672
+            ],
+            "pixel_count": 27,
+            "overlap_pixels": 27
+          },
+          {
+            "bbox": [
+              1139,
+              674,
+              1152,
+              681
+            ],
+            "pixel_count": 75,
+            "overlap_pixels": 75
+          },
+          {
+            "bbox": [
+              811,
+              699,
+              817,
+              711
+            ],
+            "pixel_count": 25,
+            "overlap_pixels": 11
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 10,
+          "top": 16,
+          "right": 16,
+          "bottom": 0
+        },
+        "edge_warnings": [
+          "left",
+          "bottom"
+        ]
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          405,
+          240
+        ],
+        "centroid_before_padding": [
+          177.39,
+          115.87
+        ],
+        "padding": {
+          "left": 74,
+          "top": 32,
+          "right": 24,
+          "bottom": 24
+        },
+        "centroid_offset_after_padding": {
+          "x": -0.11,
+          "y": -0.13
+        }
+      },
+      "source": "assets/characters/hindenburg/battle/hindenburg_battle_asset_sheet.png",
+      "tags": [
+        "vfx",
+        "muzzle_flash"
+      ]
+    },
+    {
+      "file": "assets/characters/hindenburg/processed/vfx/hindenburg_vfx_wake_wide.png",
+      "size": [
+        589,
+        251
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        45,
+        746,
+        616,
+        969
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          65,
+          775,
+          610,
+          965
+        ],
+        "final_box": [
+          45,
+          746,
+          616,
+          969
+        ],
+        "expanded": {
+          "left": 20,
+          "top": 29,
+          "right": 6,
+          "bottom": 4
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 434,
+        "selected_component_count": 207,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              281,
+              762,
+              344,
+              837
+            ],
+            "pixel_count": 947,
+            "overlap_pixels": 908
+          },
+          {
+            "bbox": [
+              61,
+              771,
+              98,
+              781
+            ],
+            "pixel_count": 83,
+            "overlap_pixels": 59
+          },
+          {
+            "bbox": [
+              230,
+              771,
+              239,
+              779
+            ],
+            "pixel_count": 42,
+            "overlap_pixels": 21
+          },
+          {
+            "bbox": [
+              295,
+              772,
+              298,
+              778
+            ],
+            "pixel_count": 10,
+            "overlap_pixels": 6
+          },
+          {
+            "bbox": [
+              318,
+              772,
+              329,
+              784
+            ],
+            "pixel_count": 76,
+            "overlap_pixels": 61
+          },
+          {
+            "bbox": [
+              75,
+              776,
+              600,
+              952
+            ],
+            "pixel_count": 24617,
+            "overlap_pixels": 24617
+          },
+          {
+            "bbox": [
+              185,
+              776,
+              189,
+              779
+            ],
+            "pixel_count": 6,
+            "overlap_pixels": 6
+          },
+          {
+            "bbox": [
+              293,
+              777,
+              294,
+              778
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              205,
+              779,
+              210,
+              781
+            ],
+            "pixel_count": 6,
+            "overlap_pixels": 6
+          },
+          {
+            "bbox": [
+              98,
+              781,
+              99,
+              782
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              206,
+              781,
+              216,
+              786
+            ],
+            "pixel_count": 27,
+            "overlap_pixels": 27
+          },
+          {
+            "bbox": [
+              122,
+              782,
+              125,
+              783
+            ],
+            "pixel_count": 3,
+            "overlap_pixels": 3
+          },
+          {
+            "bbox": [
+              299,
+              783,
+              300,
+              784
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              300,
+              784,
+              303,
+              787
+            ],
+            "pixel_count": 5,
+            "overlap_pixels": 5
+          },
+          {
+            "bbox": [
+              374,
+              786,
+              429,
+              858
+            ],
+            "pixel_count": 921,
+            "overlap_pixels": 921
+          },
+          {
+            "bbox": [
+              218,
+              787,
+              219,
+              788
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              255,
+              787,
+              257,
+              789
+            ],
+            "pixel_count": 3,
+            "overlap_pixels": 3
+          },
+          {
+            "bbox": [
+              304,
+              787,
+              308,
+              790
+            ],
+            "pixel_count": 7,
+            "overlap_pixels": 7
+          },
+          {
+            "bbox": [
+              155,
+              788,
+              157,
+              789
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              222,
+              788,
+              225,
+              789
+            ],
+            "pixel_count": 3,
+            "overlap_pixels": 3
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 16,
+          "top": 16,
+          "right": 16,
+          "bottom": 16
+        },
+        "edge_warnings": []
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          539,
+          191
+        ],
+        "centroid_before_padding": [
+          268.64,
+          101.34
+        ],
+        "padding": {
+          "left": 26,
+          "top": 24,
+          "right": 24,
+          "bottom": 36
+        },
+        "centroid_offset_after_padding": {
+          "x": 0.14,
+          "y": -0.16
+        }
+      },
+      "source": "assets/characters/hindenburg/battle/hindenburg_battle_asset_sheet.png",
+      "tags": [
+        "vfx",
+        "wake"
+      ]
+    },
+    {
+      "file": "assets/characters/hindenburg/processed/vfx/hindenburg_vfx_water_impact.png",
+      "size": [
+        381,
+        359
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        607,
+        730,
+        939,
+        980
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          620,
+          760,
+          940,
+          980
+        ],
+        "final_box": [
+          607,
+          730,
+          939,
+          980
+        ],
+        "expanded": {
+          "left": 13,
+          "top": 30,
+          "right": -1,
+          "bottom": 0
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 239,
+        "selected_component_count": 117,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              798,
+              746,
+              808,
+              774
+            ],
+            "pixel_count": 141,
+            "overlap_pixels": 42
+          },
+          {
+            "bbox": [
+              719,
+              751,
+              727,
+              768
+            ],
+            "pixel_count": 61,
+            "overlap_pixels": 23
+          },
+          {
+            "bbox": [
+              795,
+              768,
+              797,
+              771
+            ],
+            "pixel_count": 5,
+            "overlap_pixels": 5
+          },
+          {
+            "bbox": [
+              794,
+              771,
+              796,
+              776
+            ],
+            "pixel_count": 9,
+            "overlap_pixels": 9
+          },
+          {
+            "bbox": [
+              796,
+              778,
+              798,
+              781
+            ],
+            "pixel_count": 4,
+            "overlap_pixels": 4
+          },
+          {
+            "bbox": [
+              873,
+              778,
+              878,
+              784
+            ],
+            "pixel_count": 16,
+            "overlap_pixels": 16
+          },
+          {
+            "bbox": [
+              641,
+              780,
+              900,
+              961
+            ],
+            "pixel_count": 18204,
+            "overlap_pixels": 18204
+          },
+          {
+            "bbox": [
+              710,
+              781,
+              717,
+              802
+            ],
+            "pixel_count": 55,
+            "overlap_pixels": 55
+          },
+          {
+            "bbox": [
+              730,
+              781,
+              734,
+              792
+            ],
+            "pixel_count": 27,
+            "overlap_pixels": 27
+          },
+          {
+            "bbox": [
+              790,
+              783,
+              795,
+              794
+            ],
+            "pixel_count": 17,
+            "overlap_pixels": 17
+          },
+          {
+            "bbox": [
+              747,
+              784,
+              749,
+              790
+            ],
+            "pixel_count": 9,
+            "overlap_pixels": 9
+          },
+          {
+            "bbox": [
+              746,
+              786,
+              747,
+              787
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              714,
+              787,
+              715,
+              789
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              853,
+              787,
+              871,
+              813
+            ],
+            "pixel_count": 186,
+            "overlap_pixels": 186
+          },
+          {
+            "bbox": [
+              721,
+              788,
+              728,
+              804
+            ],
+            "pixel_count": 61,
+            "overlap_pixels": 61
+          },
+          {
+            "bbox": [
+              786,
+              793,
+              791,
+              802
+            ],
+            "pixel_count": 22,
+            "overlap_pixels": 22
+          },
+          {
+            "bbox": [
+              683,
+              797,
+              685,
+              800
+            ],
+            "pixel_count": 4,
+            "overlap_pixels": 4
+          },
+          {
+            "bbox": [
+              773,
+              798,
+              788,
+              823
+            ],
+            "pixel_count": 74,
+            "overlap_pixels": 74
+          },
+          {
+            "bbox": [
+              685,
+              801,
+              688,
+              805
+            ],
+            "pixel_count": 7,
+            "overlap_pixels": 7
+          },
+          {
+            "bbox": [
+              748,
+              804,
+              754,
+              823
+            ],
+            "pixel_count": 73,
+            "overlap_pixels": 73
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 16,
+          "top": 0,
+          "right": 0,
+          "bottom": 16
+        },
+        "edge_warnings": [
+          "top",
+          "right"
+        ]
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          316,
+          234
+        ],
+        "centroid_before_padding": [
+          149.29,
+          155.43
+        ],
+        "padding": {
+          "left": 41,
+          "top": 24,
+          "right": 24,
+          "bottom": 101
+        },
+        "centroid_offset_after_padding": {
+          "x": -0.21,
+          "y": -0.07
+        }
+      },
+      "source": "assets/characters/hindenburg/battle/hindenburg_battle_asset_sheet.png",
+      "tags": [
+        "vfx",
+        "impact"
+      ]
+    },
+    {
+      "file": "assets/characters/hindenburg/processed/vfx/hindenburg_vfx_heavy_muzzle_cone.png",
+      "size": [
+        539,
+        282
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        29,
+        32,
+        545,
+        276
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          45,
+          45,
+          555,
+          220
+        ],
+        "final_box": [
+          29,
+          32,
+          545,
+          276
+        ],
+        "expanded": {
+          "left": 16,
+          "top": 13,
+          "right": -10,
+          "bottom": 56
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 106,
+        "selected_component_count": 22,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              358,
+              48,
+              401,
+              64
+            ],
+            "pixel_count": 132,
+            "overlap_pixels": 132
+          },
+          {
+            "bbox": [
+              45,
+              51,
+              529,
+              260
+            ],
+            "pixel_count": 65360,
+            "overlap_pixels": 59114
+          },
+          {
+            "bbox": [
+              201,
+              56,
+              207,
+              60
+            ],
+            "pixel_count": 10,
+            "overlap_pixels": 10
+          },
+          {
+            "bbox": [
+              286,
+              57,
+              293,
+              61
+            ],
+            "pixel_count": 12,
+            "overlap_pixels": 12
+          },
+          {
+            "bbox": [
+              404,
+              57,
+              466,
+              76
+            ],
+            "pixel_count": 226,
+            "overlap_pixels": 226
+          },
+          {
+            "bbox": [
+              164,
+              60,
+              165,
+              61
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              198,
+              61,
+              199,
+              62
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              354,
+              64,
+              358,
+              66
+            ],
+            "pixel_count": 5,
+            "overlap_pixels": 5
+          },
+          {
+            "bbox": [
+              84,
+              66,
+              106,
+              104
+            ],
+            "pixel_count": 124,
+            "overlap_pixels": 124
+          },
+          {
+            "bbox": [
+              265,
+              67,
+              273,
+              71
+            ],
+            "pixel_count": 14,
+            "overlap_pixels": 14
+          },
+          {
+            "bbox": [
+              402,
+              76,
+              404,
+              77
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              234,
+              84,
+              235,
+              85
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              158,
+              86,
+              160,
+              87
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              111,
+              89,
+              112,
+              90
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              110,
+              90,
+              111,
+              91
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              106,
+              95,
+              107,
+              96
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              455,
+              99,
+              461,
+              100
+            ],
+            "pixel_count": 6,
+            "overlap_pixels": 6
+          },
+          {
+            "bbox": [
+              64,
+              103,
+              71,
+              123
+            ],
+            "pixel_count": 39,
+            "overlap_pixels": 39
+          },
+          {
+            "bbox": [
+              507,
+              115,
+              520,
+              120
+            ],
+            "pixel_count": 29,
+            "overlap_pixels": 29
+          },
+          {
+            "bbox": [
+              62,
+              128,
+              63,
+              129
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 16,
+          "top": 16,
+          "right": 16,
+          "bottom": 0
+        },
+        "edge_warnings": [
+          "bottom"
+        ]
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          484,
+          228
+        ],
+        "centroid_before_padding": [
+          238.27,
+          110.86
+        ],
+        "padding": {
+          "left": 31,
+          "top": 30,
+          "right": 24,
+          "bottom": 24
+        },
+        "centroid_offset_after_padding": {
+          "x": -0.23,
+          "y": -0.14
+        }
+      },
+      "source": "assets/characters/hindenburg/vfx/hindenburg_vfx_reference_sheet.png",
+      "tags": [
+        "vfx",
+        "muzzle_flash"
+      ]
+    },
+    {
+      "file": "assets/characters/hindenburg/processed/vfx/hindenburg_vfx_smoke_burst.png",
+      "size": [
+        309,
+        290
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        539,
+        22,
+        813,
+        270
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          565,
+          45,
+          780,
+          235
+        ],
+        "final_box": [
+          539,
+          22,
+          813,
+          270
+        ],
+        "expanded": {
+          "left": 26,
+          "top": 23,
+          "right": 33,
+          "bottom": 35
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 192,
+        "selected_component_count": 21,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              556,
+              38,
+              797,
+              254
+            ],
+            "pixel_count": 31180,
+            "overlap_pixels": 29267
+          },
+          {
+            "bbox": [
+              592,
+              80,
+              597,
+              87
+            ],
+            "pixel_count": 21,
+            "overlap_pixels": 21
+          },
+          {
+            "bbox": [
+              612,
+              90,
+              614,
+              93
+            ],
+            "pixel_count": 4,
+            "overlap_pixels": 4
+          },
+          {
+            "bbox": [
+              753,
+              109,
+              757,
+              114
+            ],
+            "pixel_count": 11,
+            "overlap_pixels": 11
+          },
+          {
+            "bbox": [
+              575,
+              115,
+              585,
+              131
+            ],
+            "pixel_count": 85,
+            "overlap_pixels": 85
+          },
+          {
+            "bbox": [
+              766,
+              120,
+              778,
+              137
+            ],
+            "pixel_count": 126,
+            "overlap_pixels": 126
+          },
+          {
+            "bbox": [
+              569,
+              140,
+              574,
+              146
+            ],
+            "pixel_count": 11,
+            "overlap_pixels": 11
+          },
+          {
+            "bbox": [
+              574,
+              146,
+              575,
+              147
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              759,
+              147,
+              760,
+              148
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              779,
+              150,
+              785,
+              156
+            ],
+            "pixel_count": 16,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              555,
+              155,
+              571,
+              178
+            ],
+            "pixel_count": 188,
+            "overlap_pixels": 41
+          },
+          {
+            "bbox": [
+              774,
+              164,
+              775,
+              165
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              773,
+              165,
+              774,
+              166
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              571,
+              178,
+              572,
+              179
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              779,
+              181,
+              787,
+              188
+            ],
+            "pixel_count": 32,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              574,
+              182,
+              576,
+              185
+            ],
+            "pixel_count": 5,
+            "overlap_pixels": 5
+          },
+          {
+            "bbox": [
+              577,
+              187,
+              579,
+              190
+            ],
+            "pixel_count": 4,
+            "overlap_pixels": 4
+          },
+          {
+            "bbox": [
+              579,
+              190,
+              580,
+              191
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              775,
+              190,
+              776,
+              191
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              565,
+              193,
+              566,
+              195
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 16,
+          "top": 16,
+          "right": 7,
+          "bottom": 0
+        },
+        "edge_warnings": [
+          "right",
+          "bottom"
+        ]
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          251,
+          232
+        ],
+        "centroid_before_padding": [
+          120.59,
+          120.93
+        ],
+        "padding": {
+          "left": 34,
+          "top": 24,
+          "right": 24,
+          "bottom": 34
+        },
+        "centroid_offset_after_padding": {
+          "x": 0.09,
+          "y": -0.07
+        }
+      },
+      "source": "assets/characters/hindenburg/vfx/hindenburg_vfx_reference_sheet.png",
+      "tags": [
+        "vfx",
+        "smoke"
+      ]
+    },
+    {
+      "file": "assets/characters/hindenburg/processed/vfx/hindenburg_vfx_scan_beam.png",
+      "size": [
+        760,
+        284
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        816,
+        257,
+        1486,
+        490
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          800,
+          275,
+          1490,
+          485
+        ],
+        "final_box": [
+          816,
+          257,
+          1486,
+          490
+        ],
+        "expanded": {
+          "left": -16,
+          "top": 18,
+          "right": -4,
+          "bottom": 5
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 523,
+        "selected_component_count": 196,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              832,
+              273,
+              1437,
+              474
+            ],
+            "pixel_count": 61230,
+            "overlap_pixels": 61213
+          },
+          {
+            "bbox": [
+              1272,
+              289,
+              1275,
+              290
+            ],
+            "pixel_count": 3,
+            "overlap_pixels": 3
+          },
+          {
+            "bbox": [
+              1370,
+              292,
+              1371,
+              293
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              1244,
+              294,
+              1249,
+              295
+            ],
+            "pixel_count": 5,
+            "overlap_pixels": 5
+          },
+          {
+            "bbox": [
+              895,
+              296,
+              901,
+              298
+            ],
+            "pixel_count": 7,
+            "overlap_pixels": 7
+          },
+          {
+            "bbox": [
+              887,
+              298,
+              894,
+              301
+            ],
+            "pixel_count": 12,
+            "overlap_pixels": 12
+          },
+          {
+            "bbox": [
+              877,
+              303,
+              881,
+              305
+            ],
+            "pixel_count": 5,
+            "overlap_pixels": 5
+          },
+          {
+            "bbox": [
+              1393,
+              305,
+              1394,
+              306
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              920,
+              306,
+              921,
+              307
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              923,
+              306,
+              926,
+              308
+            ],
+            "pixel_count": 5,
+            "overlap_pixels": 5
+          },
+          {
+            "bbox": [
+              1391,
+              307,
+              1392,
+              308
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              871,
+              308,
+              872,
+              309
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              927,
+              308,
+              930,
+              310
+            ],
+            "pixel_count": 4,
+            "overlap_pixels": 4
+          },
+          {
+            "bbox": [
+              863,
+              309,
+              871,
+              316
+            ],
+            "pixel_count": 14,
+            "overlap_pixels": 14
+          },
+          {
+            "bbox": [
+              931,
+              309,
+              934,
+              311
+            ],
+            "pixel_count": 4,
+            "overlap_pixels": 4
+          },
+          {
+            "bbox": [
+              935,
+              311,
+              937,
+              313
+            ],
+            "pixel_count": 3,
+            "overlap_pixels": 3
+          },
+          {
+            "bbox": [
+              904,
+              312,
+              906,
+              314
+            ],
+            "pixel_count": 3,
+            "overlap_pixels": 3
+          },
+          {
+            "bbox": [
+              915,
+              312,
+              919,
+              314
+            ],
+            "pixel_count": 7,
+            "overlap_pixels": 7
+          },
+          {
+            "bbox": [
+              938,
+              312,
+              946,
+              318
+            ],
+            "pixel_count": 13,
+            "overlap_pixels": 13
+          },
+          {
+            "bbox": [
+              1387,
+              312,
+              1388,
+              313
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 16,
+          "top": 0,
+          "right": 16,
+          "bottom": 0
+        },
+        "edge_warnings": [
+          "top",
+          "bottom"
+        ]
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          638,
+          233
+        ],
+        "centroid_before_padding": [
+          355.94,
+          118.18
+        ],
+        "padding": {
+          "left": 24,
+          "top": 24,
+          "right": 98,
+          "bottom": 27
+        },
+        "centroid_offset_after_padding": {
+          "x": -0.06,
+          "y": 0.18
+        }
+      },
+      "source": "assets/characters/hindenburg/vfx/hindenburg_vfx_reference_sheet.png",
+      "tags": [
+        "vfx",
+        "scan"
+      ]
+    },
+    {
+      "file": "assets/characters/hindenburg/processed/vfx/hindenburg_vfx_suppression_ring.png",
+      "size": [
+        1035,
+        521
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        608,
+        499,
+        1493,
+        908
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          635,
+          520,
+          1405,
+          750
+        ],
+        "final_box": [
+          608,
+          499,
+          1493,
+          908
+        ],
+        "expanded": {
+          "left": 27,
+          "top": 21,
+          "right": 88,
+          "bottom": 158
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 569,
+        "selected_component_count": 120,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              691,
+              515,
+              1473,
+              715
+            ],
+            "pixel_count": 109050,
+            "overlap_pixels": 104317
+          },
+          {
+            "bbox": [
+              1127,
+              516,
+              1131,
+              521
+            ],
+            "pixel_count": 12,
+            "overlap_pixels": 4
+          },
+          {
+            "bbox": [
+              890,
+              517,
+              903,
+              530
+            ],
+            "pixel_count": 92,
+            "overlap_pixels": 77
+          },
+          {
+            "bbox": [
+              1102,
+              520,
+              1103,
+              521
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              1176,
+              521,
+              1182,
+              524
+            ],
+            "pixel_count": 11,
+            "overlap_pixels": 11
+          },
+          {
+            "bbox": [
+              1308,
+              521,
+              1314,
+              528
+            ],
+            "pixel_count": 25,
+            "overlap_pixels": 25
+          },
+          {
+            "bbox": [
+              922,
+              522,
+              926,
+              526
+            ],
+            "pixel_count": 7,
+            "overlap_pixels": 7
+          },
+          {
+            "bbox": [
+              1187,
+              523,
+              1198,
+              525
+            ],
+            "pixel_count": 15,
+            "overlap_pixels": 15
+          },
+          {
+            "bbox": [
+              1017,
+              524,
+              1018,
+              525
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              1384,
+              524,
+              1388,
+              527
+            ],
+            "pixel_count": 9,
+            "overlap_pixels": 9
+          },
+          {
+            "bbox": [
+              1019,
+              525,
+              1021,
+              527
+            ],
+            "pixel_count": 3,
+            "overlap_pixels": 3
+          },
+          {
+            "bbox": [
+              1023,
+              525,
+              1024,
+              526
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              1021,
+              526,
+              1022,
+              527
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              736,
+              527,
+              737,
+              529
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              1340,
+              527,
+              1354,
+              539
+            ],
+            "pixel_count": 99,
+            "overlap_pixels": 99
+          },
+          {
+            "bbox": [
+              793,
+              529,
+              804,
+              536
+            ],
+            "pixel_count": 58,
+            "overlap_pixels": 58
+          },
+          {
+            "bbox": [
+              853,
+              529,
+              855,
+              531
+            ],
+            "pixel_count": 3,
+            "overlap_pixels": 3
+          },
+          {
+            "bbox": [
+              928,
+              529,
+              929,
+              531
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              1304,
+              529,
+              1305,
+              530
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              740,
+              531,
+              743,
+              533
+            ],
+            "pixel_count": 4,
+            "overlap_pixels": 4
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0
+        },
+        "edge_warnings": [
+          "left",
+          "top",
+          "right",
+          "bottom"
+        ]
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          885,
+          409
+        ],
+        "centroid_before_padding": [
+          493.64,
+          172.45
+        ],
+        "padding": {
+          "left": 24,
+          "top": 88,
+          "right": 126,
+          "bottom": 24
+        },
+        "centroid_offset_after_padding": {
+          "x": 0.14,
+          "y": -0.05
+        }
+      },
+      "source": "assets/characters/hindenburg/vfx/hindenburg_vfx_reference_sheet.png",
+      "tags": [
+        "vfx",
+        "area"
+      ]
+    },
+    {
+      "file": "assets/characters/hindenburg/processed/vfx/hindenburg_vfx_shell_trail.png",
+      "size": [
+        757,
+        111
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        37,
+        737,
+        704,
+        829
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          55,
+          760,
+          690,
+          845
+        ],
+        "final_box": [
+          37,
+          737,
+          704,
+          829
+        ],
+        "expanded": {
+          "left": 18,
+          "top": 23,
+          "right": 14,
+          "bottom": -16
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 164,
+        "selected_component_count": 15,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              53,
+              753,
+              688,
+              812
+            ],
+            "pixel_count": 22490,
+            "overlap_pixels": 21936
+          },
+          {
+            "bbox": [
+              155,
+              761,
+              156,
+              762
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              617,
+              770,
+              621,
+              772
+            ],
+            "pixel_count": 5,
+            "overlap_pixels": 5
+          },
+          {
+            "bbox": [
+              674,
+              777,
+              676,
+              778
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              659,
+              779,
+              664,
+              780
+            ],
+            "pixel_count": 5,
+            "overlap_pixels": 5
+          },
+          {
+            "bbox": [
+              659,
+              787,
+              662,
+              790
+            ],
+            "pixel_count": 6,
+            "overlap_pixels": 6
+          },
+          {
+            "bbox": [
+              672,
+              788,
+              674,
+              789
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              675,
+              788,
+              678,
+              789
+            ],
+            "pixel_count": 3,
+            "overlap_pixels": 3
+          },
+          {
+            "bbox": [
+              571,
+              796,
+              576,
+              797
+            ],
+            "pixel_count": 5,
+            "overlap_pixels": 5
+          },
+          {
+            "bbox": [
+              161,
+              802,
+              162,
+              803
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              466,
+              804,
+              482,
+              807
+            ],
+            "pixel_count": 31,
+            "overlap_pixels": 31
+          },
+          {
+            "bbox": [
+              276,
+              807,
+              294,
+              812
+            ],
+            "pixel_count": 51,
+            "overlap_pixels": 51
+          },
+          {
+            "bbox": [
+              198,
+              808,
+              199,
+              809
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              199,
+              809,
+              202,
+              810
+            ],
+            "pixel_count": 3,
+            "overlap_pixels": 3
+          },
+          {
+            "bbox": [
+              349,
+              812,
+              350,
+              813
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 16,
+          "top": 14,
+          "right": 16,
+          "bottom": 16
+        },
+        "edge_warnings": [
+          "top"
+        ]
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          635,
+          62
+        ],
+        "centroid_before_padding": [
+          280.69,
+          31.4
+        ],
+        "padding": {
+          "left": 98,
+          "top": 24,
+          "right": 24,
+          "bottom": 25
+        },
+        "centroid_offset_after_padding": {
+          "x": 0.19,
+          "y": -0.1
+        }
+      },
+      "source": "assets/characters/hindenburg/vfx/hindenburg_vfx_reference_sheet.png",
+      "tags": [
+        "vfx",
+        "shell"
+      ]
+    },
+    {
+      "file": "assets/characters/hindenburg/processed/vfx/hindenburg_vfx_wake.png",
+      "size": [
+        858,
+        232
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        744,
+        726,
+        1493,
+        908
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          790,
+          765,
+          1400,
+          870
+        ],
+        "final_box": [
+          744,
+          726,
+          1493,
+          908
+        ],
+        "expanded": {
+          "left": 46,
+          "top": 39,
+          "right": 93,
+          "bottom": 38
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 368,
+        "selected_component_count": 95,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              760,
+              742,
+              1477,
+              892
+            ],
+            "pixel_count": 36326,
+            "overlap_pixels": 30165
+          },
+          {
+            "bbox": [
+              1247,
+              760,
+              1256,
+              768
+            ],
+            "pixel_count": 46,
+            "overlap_pixels": 19
+          },
+          {
+            "bbox": [
+              1156,
+              762,
+              1226,
+              794
+            ],
+            "pixel_count": 642,
+            "overlap_pixels": 632
+          },
+          {
+            "bbox": [
+              1129,
+              763,
+              1136,
+              768
+            ],
+            "pixel_count": 14,
+            "overlap_pixels": 9
+          },
+          {
+            "bbox": [
+              1366,
+              763,
+              1368,
+              767
+            ],
+            "pixel_count": 5,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              1213,
+              764,
+              1221,
+              772
+            ],
+            "pixel_count": 15,
+            "overlap_pixels": 13
+          },
+          {
+            "bbox": [
+              1159,
+              765,
+              1164,
+              771
+            ],
+            "pixel_count": 13,
+            "overlap_pixels": 13
+          },
+          {
+            "bbox": [
+              1180,
+              765,
+              1181,
+              766
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              1182,
+              765,
+              1191,
+              772
+            ],
+            "pixel_count": 23,
+            "overlap_pixels": 23
+          },
+          {
+            "bbox": [
+              1035,
+              766,
+              1036,
+              767
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              1037,
+              766,
+              1044,
+              768
+            ],
+            "pixel_count": 10,
+            "overlap_pixels": 10
+          },
+          {
+            "bbox": [
+              1316,
+              767,
+              1329,
+              780
+            ],
+            "pixel_count": 70,
+            "overlap_pixels": 70
+          },
+          {
+            "bbox": [
+              1050,
+              769,
+              1051,
+              770
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              1044,
+              770,
+              1050,
+              772
+            ],
+            "pixel_count": 9,
+            "overlap_pixels": 9
+          },
+          {
+            "bbox": [
+              1051,
+              770,
+              1052,
+              771
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              1389,
+              770,
+              1392,
+              776
+            ],
+            "pixel_count": 12,
+            "overlap_pixels": 12
+          },
+          {
+            "bbox": [
+              1259,
+              771,
+              1269,
+              781
+            ],
+            "pixel_count": 25,
+            "overlap_pixels": 25
+          },
+          {
+            "bbox": [
+              1221,
+              772,
+              1227,
+              776
+            ],
+            "pixel_count": 10,
+            "overlap_pixels": 10
+          },
+          {
+            "bbox": [
+              1052,
+              773,
+              1056,
+              776
+            ],
+            "pixel_count": 7,
+            "overlap_pixels": 7
+          },
+          {
+            "bbox": [
+              1274,
+              773,
+              1278,
+              777
+            ],
+            "pixel_count": 8,
+            "overlap_pixels": 8
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 2,
+          "top": 0,
+          "right": 0,
+          "bottom": 0
+        },
+        "edge_warnings": [
+          "left",
+          "top",
+          "right",
+          "bottom"
+        ]
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          747,
+          182
+        ],
+        "centroid_before_padding": [
+          404.91,
+          92.23
+        ],
+        "padding": {
+          "left": 24,
+          "top": 24,
+          "right": 87,
+          "bottom": 26
+        },
+        "centroid_offset_after_padding": {
+          "x": -0.09,
+          "y": 0.23
+        }
+      },
+      "source": "assets/characters/hindenburg/vfx/hindenburg_vfx_reference_sheet.png",
+      "tags": [
+        "vfx",
+        "wake"
+      ]
+    },
+    {
+      "file": "assets/characters/hindenburg/processed/anim/hindenburg_anim_idle_keyframe.png",
+      "size": [
+        631,
+        449
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        11,
+        51,
+        573,
+        427
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          70,
+          50,
+          540,
+          410
+        ],
+        "final_box": [
+          11,
+          51,
+          573,
+          427
+        ],
+        "expanded": {
+          "left": 59,
+          "top": -1,
+          "right": 33,
+          "bottom": 17
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 38,
+        "selected_component_count": 1,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              27,
+              67,
+              557,
+              411
+            ],
+            "pixel_count": 102166,
+            "overlap_pixels": 98705
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 16,
+          "top": 16,
+          "right": 0,
+          "bottom": 16
+        },
+        "edge_warnings": [
+          "right"
+        ]
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          546,
+          344
+        ],
+        "centroid_before_padding": [
+          254.48,
+          200.57
+        ],
+        "padding": {
+          "left": 61,
+          "top": 24,
+          "right": 24,
+          "bottom": 81
+        },
+        "centroid_offset_after_padding": {
+          "x": -0.02,
+          "y": 0.07
+        }
+      },
+      "source": "assets/characters/hindenburg/battle/hindenburg_anim_keyframes_sheet.png",
+      "tags": [
+        "anim",
+        "idle"
+      ]
+    },
+    {
+      "file": "assets/characters/hindenburg/processed/anim/hindenburg_anim_move_keyframe.png",
+      "size": [
+        739,
+        432
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        553,
+        63,
+        1173,
+        441
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          640,
+          55,
+          1120,
+          420
+        ],
+        "final_box": [
+          553,
+          63,
+          1173,
+          441
+        ],
+        "expanded": {
+          "left": 87,
+          "top": -8,
+          "right": 53,
+          "bottom": 21
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 107,
+        "selected_component_count": 79,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              569,
+              79,
+              1157,
+              425
+            ],
+            "pixel_count": 97175,
+            "overlap_pixels": 94920
+          },
+          {
+            "bbox": [
+              638,
+              320,
+              644,
+              326
+            ],
+            "pixel_count": 13,
+            "overlap_pixels": 9
+          },
+          {
+            "bbox": [
+              644,
+              323,
+              645,
+              324
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              645,
+              324,
+              646,
+              325
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              644,
+              326,
+              645,
+              327
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              645,
+              327,
+              646,
+              328
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              647,
+              328,
+              648,
+              329
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              648,
+              329,
+              651,
+              330
+            ],
+            "pixel_count": 3,
+            "overlap_pixels": 3
+          },
+          {
+            "bbox": [
+              651,
+              330,
+              652,
+              331
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              670,
+              331,
+              675,
+              335
+            ],
+            "pixel_count": 8,
+            "overlap_pixels": 8
+          },
+          {
+            "bbox": [
+              675,
+              335,
+              676,
+              336
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              628,
+              343,
+              641,
+              350
+            ],
+            "pixel_count": 32,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              794,
+              343,
+              795,
+              344
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              795,
+              344,
+              796,
+              345
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              799,
+              347,
+              800,
+              348
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              691,
+              348,
+              692,
+              349
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              800,
+              348,
+              801,
+              349
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              692,
+              349,
+              701,
+              356
+            ],
+            "pixel_count": 25,
+            "overlap_pixels": 25
+          },
+          {
+            "bbox": [
+              801,
+              349,
+              802,
+              350
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              640,
+              350,
+              641,
+              351
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 0,
+          "top": 16,
+          "right": 16,
+          "bottom": 16
+        },
+        "edge_warnings": [
+          "left"
+        ]
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          604,
+          346
+        ],
+        "centroid_before_padding": [
+          345.62,
+          191.88
+        ],
+        "padding": {
+          "left": 24,
+          "top": 24,
+          "right": 111,
+          "bottom": 62
+        },
+        "centroid_offset_after_padding": {
+          "x": 0.12,
+          "y": -0.12
+        }
+      },
+      "source": "assets/characters/hindenburg/battle/hindenburg_anim_keyframes_sheet.png",
+      "tags": [
+        "anim",
+        "move"
+      ]
+    },
+    {
+      "file": "assets/characters/hindenburg/processed/anim/hindenburg_anim_attack_keyframe.png",
+      "size": [
+        572,
+        406
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        1201,
+        78,
+        1736,
+        428
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          1180,
+          50,
+          1720,
+          420
+        ],
+        "final_box": [
+          1201,
+          78,
+          1736,
+          428
+        ],
+        "expanded": {
+          "left": -21,
+          "top": -28,
+          "right": 16,
+          "bottom": 8
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 17,
+        "selected_component_count": 12,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              1217,
+              94,
+              1720,
+              412
+            ],
+            "pixel_count": 94520,
+            "overlap_pixels": 94520
+          },
+          {
+            "bbox": [
+              1670,
+              130,
+              1682,
+              139
+            ],
+            "pixel_count": 21,
+            "overlap_pixels": 21
+          },
+          {
+            "bbox": [
+              1655,
+              139,
+              1669,
+              146
+            ],
+            "pixel_count": 26,
+            "overlap_pixels": 26
+          },
+          {
+            "bbox": [
+              1682,
+              139,
+              1683,
+              140
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              1683,
+              140,
+              1684,
+              141
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              1684,
+              141,
+              1695,
+              157
+            ],
+            "pixel_count": 26,
+            "overlap_pixels": 26
+          },
+          {
+            "bbox": [
+              1671,
+              146,
+              1672,
+              147
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              1661,
+              155,
+              1682,
+              196
+            ],
+            "pixel_count": 120,
+            "overlap_pixels": 120
+          },
+          {
+            "bbox": [
+              1695,
+              157,
+              1699,
+              166
+            ],
+            "pixel_count": 13,
+            "overlap_pixels": 13
+          },
+          {
+            "bbox": [
+              1669,
+              257,
+              1676,
+              262
+            ],
+            "pixel_count": 11,
+            "overlap_pixels": 11
+          },
+          {
+            "bbox": [
+              1667,
+              262,
+              1669,
+              263
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              1665,
+              263,
+              1667,
+              264
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 16,
+          "top": 16,
+          "right": 2,
+          "bottom": 16
+        },
+        "edge_warnings": [
+          "right"
+        ]
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          517,
+          318
+        ],
+        "centroid_before_padding": [
+          261.93,
+          178.94
+        ],
+        "padding": {
+          "left": 24,
+          "top": 24,
+          "right": 31,
+          "bottom": 64
+        },
+        "centroid_offset_after_padding": {
+          "x": -0.07,
+          "y": -0.06
+        }
+      },
+      "source": "assets/characters/hindenburg/battle/hindenburg_anim_keyframes_sheet.png",
+      "tags": [
+        "anim",
+        "attack"
+      ]
+    },
+    {
+      "file": "assets/characters/hindenburg/processed/anim/hindenburg_anim_hit_keyframe.png",
+      "size": [
+        563,
+        418
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        175,
+        467,
+        711,
+        820
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          260,
+          465,
+          800,
+          855
+        ],
+        "final_box": [
+          175,
+          467,
+          711,
+          820
+        ],
+        "expanded": {
+          "left": 85,
+          "top": -2,
+          "right": -89,
+          "bottom": -35
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 124,
+        "selected_component_count": 10,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              191,
+              483,
+              695,
+              804
+            ],
+            "pixel_count": 97128,
+            "overlap_pixels": 90904
+          },
+          {
+            "bbox": [
+              588,
+              590,
+              593,
+              601
+            ],
+            "pixel_count": 37,
+            "overlap_pixels": 37
+          },
+          {
+            "bbox": [
+              274,
+              611,
+              276,
+              613
+            ],
+            "pixel_count": 4,
+            "overlap_pixels": 4
+          },
+          {
+            "bbox": [
+              655,
+              616,
+              659,
+              619
+            ],
+            "pixel_count": 8,
+            "overlap_pixels": 8
+          },
+          {
+            "bbox": [
+              634,
+              622,
+              645,
+              632
+            ],
+            "pixel_count": 79,
+            "overlap_pixels": 79
+          },
+          {
+            "bbox": [
+              664,
+              632,
+              667,
+              634
+            ],
+            "pixel_count": 5,
+            "overlap_pixels": 5
+          },
+          {
+            "bbox": [
+              649,
+              637,
+              653,
+              641
+            ],
+            "pixel_count": 9,
+            "overlap_pixels": 9
+          },
+          {
+            "bbox": [
+              652,
+              649,
+              657,
+              653
+            ],
+            "pixel_count": 9,
+            "overlap_pixels": 9
+          },
+          {
+            "bbox": [
+              239,
+              771,
+              296,
+              783
+            ],
+            "pixel_count": 343,
+            "overlap_pixels": 198
+          },
+          {
+            "bbox": [
+              259,
+              784,
+              276,
+              788
+            ],
+            "pixel_count": 50,
+            "overlap_pixels": 48
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 16,
+          "top": 16,
+          "right": 16,
+          "bottom": 16
+        },
+        "edge_warnings": []
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          504,
+          321
+        ],
+        "centroid_before_padding": [
+          257.66,
+          184.89
+        ],
+        "padding": {
+          "left": 24,
+          "top": 24,
+          "right": 35,
+          "bottom": 73
+        },
+        "centroid_offset_after_padding": {
+          "x": 0.16,
+          "y": -0.11
+        }
+      },
+      "source": "assets/characters/hindenburg/battle/hindenburg_anim_keyframes_sheet.png",
+      "tags": [
+        "anim",
+        "hit"
+      ]
+    },
+    {
+      "file": "assets/characters/hindenburg/processed/anim/hindenburg_anim_firepower_keyframe.png",
+      "size": [
+        808,
+        416
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        786,
+        448,
+        1575,
+        804
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          930,
+          450,
+          1675,
+          865
+        ],
+        "final_box": [
+          786,
+          448,
+          1575,
+          804
+        ],
+        "expanded": {
+          "left": 144,
+          "top": 2,
+          "right": -100,
+          "bottom": -61
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 97,
+        "selected_component_count": 35,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              802,
+              464,
+              1558,
+              788
+            ],
+            "pixel_count": 101164,
+            "overlap_pixels": 96339
+          },
+          {
+            "bbox": [
+              953,
+              529,
+              958,
+              537
+            ],
+            "pixel_count": 18,
+            "overlap_pixels": 18
+          },
+          {
+            "bbox": [
+              1001,
+              529,
+              1007,
+              538
+            ],
+            "pixel_count": 39,
+            "overlap_pixels": 39
+          },
+          {
+            "bbox": [
+              954,
+              540,
+              961,
+              554
+            ],
+            "pixel_count": 34,
+            "overlap_pixels": 34
+          },
+          {
+            "bbox": [
+              1001,
+              555,
+              1004,
+              561
+            ],
+            "pixel_count": 11,
+            "overlap_pixels": 11
+          },
+          {
+            "bbox": [
+              924,
+              557,
+              932,
+              568
+            ],
+            "pixel_count": 38,
+            "overlap_pixels": 9
+          },
+          {
+            "bbox": [
+              959,
+              564,
+              960,
+              565
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              964,
+              569,
+              968,
+              578
+            ],
+            "pixel_count": 17,
+            "overlap_pixels": 17
+          },
+          {
+            "bbox": [
+              1002,
+              574,
+              1007,
+              582
+            ],
+            "pixel_count": 25,
+            "overlap_pixels": 25
+          },
+          {
+            "bbox": [
+              975,
+              588,
+              981,
+              598
+            ],
+            "pixel_count": 41,
+            "overlap_pixels": 41
+          },
+          {
+            "bbox": [
+              1014,
+              588,
+              1015,
+              589
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              1352,
+              600,
+              1356,
+              604
+            ],
+            "pixel_count": 11,
+            "overlap_pixels": 11
+          },
+          {
+            "bbox": [
+              1363,
+              612,
+              1366,
+              616
+            ],
+            "pixel_count": 8,
+            "overlap_pixels": 8
+          },
+          {
+            "bbox": [
+              1485,
+              614,
+              1491,
+              620
+            ],
+            "pixel_count": 21,
+            "overlap_pixels": 21
+          },
+          {
+            "bbox": [
+              1437,
+              621,
+              1443,
+              626
+            ],
+            "pixel_count": 21,
+            "overlap_pixels": 21
+          },
+          {
+            "bbox": [
+              1408,
+              623,
+              1411,
+              627
+            ],
+            "pixel_count": 9,
+            "overlap_pixels": 9
+          },
+          {
+            "bbox": [
+              1416,
+              632,
+              1419,
+              636
+            ],
+            "pixel_count": 8,
+            "overlap_pixels": 8
+          },
+          {
+            "bbox": [
+              1429,
+              636,
+              1437,
+              643
+            ],
+            "pixel_count": 30,
+            "overlap_pixels": 30
+          },
+          {
+            "bbox": [
+              1445,
+              636,
+              1447,
+              638
+            ],
+            "pixel_count": 3,
+            "overlap_pixels": 3
+          },
+          {
+            "bbox": [
+              1488,
+              637,
+              1492,
+              640
+            ],
+            "pixel_count": 6,
+            "overlap_pixels": 6
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 16,
+          "top": 16,
+          "right": 16,
+          "bottom": 16
+        },
+        "edge_warnings": []
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          757,
+          324
+        ],
+        "centroid_before_padding": [
+          376.86,
+          183.79
+        ],
+        "padding": {
+          "left": 27,
+          "top": 24,
+          "right": 24,
+          "bottom": 68
+        },
+        "centroid_offset_after_padding": {
+          "x": -0.14,
+          "y": -0.21
+        }
+      },
+      "source": "assets/characters/hindenburg/battle/hindenburg_anim_keyframes_sheet.png",
+      "tags": [
+        "anim",
+        "firepower"
+      ]
+    }
+  ],
+  "config": {
+    "bind_points": "assets/characters/hindenburg/processed/config/hindenburg_meta_bind_points.json",
+    "animation": "assets/characters/hindenburg/processed/config/hindenburg_anim_config.json",
+    "vfx": "assets/characters/hindenburg/processed/config/hindenburg_vfx_config.json"
+  }
+}

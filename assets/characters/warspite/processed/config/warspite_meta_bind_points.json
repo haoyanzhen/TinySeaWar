@@ -1,0 +1,70 @@
+{
+  "character_id": "warspite",
+  "coordinate_system": "pixel_top_left_per_split_asset",
+  "notes": "Initial binding points from trial sheet postprocess; verify manually before engine import.",
+  "assets": {
+    "warspite_battle_body_r.png": {
+      "origin": {
+        "x": 190,
+        "y": 275,
+        "note": "battle body sea contact"
+      },
+      "rig_mount": {
+        "x": 90,
+        "y": 190,
+        "note": "battleship rig mount"
+      },
+      "muzzle_group": {
+        "x": 310,
+        "y": 185,
+        "note": "side gun direction"
+      }
+    },
+    "warspite_battle_rig_base.png": {
+      "origin": {
+        "x": 430,
+        "y": 285,
+        "note": "battleship hull center"
+      },
+      "turret_mount_01": {
+        "x": 470,
+        "y": 185,
+        "note": "forward main turret mount"
+      },
+      "turret_mount_02": {
+        "x": 710,
+        "y": 180,
+        "note": "aft main turret mount"
+      }
+    },
+    "warspite_battle_turret_main_01.png": {
+      "origin": {
+        "x": 115,
+        "y": 80,
+        "note": "turret rotation center"
+      },
+      "muzzle_01": {
+        "x": 220,
+        "y": 68,
+        "note": "upper barrel muzzle"
+      },
+      "muzzle_02": {
+        "x": 220,
+        "y": 102,
+        "note": "lower barrel muzzle"
+      }
+    },
+    "warspite_battle_rangefinder_node.png": {
+      "origin": {
+        "x": 65,
+        "y": 82,
+        "note": "rangefinder pivot"
+      },
+      "scan_origin": {
+        "x": 70,
+        "y": 55,
+        "note": "optical scan origin"
+      }
+    }
+  }
+}

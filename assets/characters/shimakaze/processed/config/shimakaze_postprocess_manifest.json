@@ -1,0 +1,5493 @@
+{
+  "character_id": "shimakaze",
+  "pipeline_stage": "postprocess_trial_sheet_v1",
+  "source_alpha": [
+    {
+      "source": "assets/characters/shimakaze/battle/shimakaze_anim_keyframes_sheet.png",
+      "file": "assets/characters/shimakaze/processed/source_alpha/shimakaze_anim_keyframes_sheet_alpha.png",
+      "size": [
+        1774,
+        887
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "source": "assets/characters/shimakaze/battle/shimakaze_battle_asset_sheet.png",
+      "file": "assets/characters/shimakaze/processed/source_alpha/shimakaze_battle_asset_sheet_alpha.png",
+      "size": [
+        1717,
+        916
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "source": "assets/characters/shimakaze/concept/shimakaze_concept_full.png",
+      "file": "assets/characters/shimakaze/processed/source_alpha/shimakaze_concept_full_alpha.png",
+      "size": [
+        1024,
+        1536
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "source": "assets/characters/shimakaze/ui/shimakaze_illust_half.png",
+      "file": "assets/characters/shimakaze/processed/source_alpha/shimakaze_illust_half_alpha.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "source": "assets/characters/shimakaze/ui/shimakaze_illust_skill_cutin.png",
+      "file": "assets/characters/shimakaze/processed/source_alpha/shimakaze_illust_skill_cutin_alpha.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "source": "assets/characters/shimakaze/ui/shimakaze_ui_sheet.png",
+      "file": "assets/characters/shimakaze/processed/source_alpha/shimakaze_ui_sheet_alpha.png",
+      "size": [
+        1774,
+        887
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "source": "assets/characters/shimakaze/vfx/shimakaze_vfx_reference_sheet.png",
+      "file": "assets/characters/shimakaze/processed/source_alpha/shimakaze_vfx_reference_sheet_alpha.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "mode": "RGBA"
+    }
+  ],
+  "components": [
+    {
+      "file": "assets/characters/shimakaze/processed/ui/shimakaze_illust_full_alpha.png",
+      "size": [
+        1052,
+        1596
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        30,
+        0,
+        1010,
+        1473
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          0,
+          0,
+          1024,
+          1536
+        ],
+        "final_box": [
+          30,
+          0,
+          1010,
+          1473
+        ],
+        "expanded": {
+          "left": -30,
+          "top": 0,
+          "right": -14,
+          "bottom": -63
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 17,
+        "selected_component_count": 17,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              46,
+              11,
+              994,
+              1457
+            ],
+            "pixel_count": 581208,
+            "overlap_pixels": 581208
+          },
+          {
+            "bbox": [
+              393,
+              279,
+              396,
+              281
+            ],
+            "pixel_count": 4,
+            "overlap_pixels": 4
+          },
+          {
+            "bbox": [
+              813,
+              306,
+              831,
+              323
+            ],
+            "pixel_count": 163,
+            "overlap_pixels": 163
+          },
+          {
+            "bbox": [
+              743,
+              309,
+              745,
+              312
+            ],
+            "pixel_count": 4,
+            "overlap_pixels": 4
+          },
+          {
+            "bbox": [
+              243,
+              408,
+              247,
+              410
+            ],
+            "pixel_count": 5,
+            "overlap_pixels": 5
+          },
+          {
+            "bbox": [
+              245,
+              410,
+              246,
+              411
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              244,
+              411,
+              245,
+              412
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              243,
+              412,
+              244,
+              413
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              242,
+              413,
+              243,
+              414
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              241,
+              415,
+              242,
+              416
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              240,
+              416,
+              241,
+              417
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              235,
+              417,
+              238,
+              426
+            ],
+            "pixel_count": 15,
+            "overlap_pixels": 15
+          },
+          {
+            "bbox": [
+              239,
+              417,
+              240,
+              418
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              956,
+              479,
+              968,
+              488
+            ],
+            "pixel_count": 67,
+            "overlap_pixels": 67
+          },
+          {
+            "bbox": [
+              226,
+              523,
+              237,
+              530
+            ],
+            "pixel_count": 51,
+            "overlap_pixels": 51
+          },
+          {
+            "bbox": [
+              881,
+              1015,
+              889,
+              1020
+            ],
+            "pixel_count": 31,
+            "overlap_pixels": 31
+          },
+          {
+            "bbox": [
+              176,
+              1075,
+              191,
+              1087
+            ],
+            "pixel_count": 98,
+            "overlap_pixels": 98
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 16,
+          "top": 11,
+          "right": 16,
+          "bottom": 16
+        },
+        "edge_warnings": [
+          "top"
+        ]
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          948,
+          1446
+        ],
+        "centroid_before_padding": [
+          502.02,
+          671.82
+        ],
+        "padding": {
+          "left": 24,
+          "top": 126,
+          "right": 80,
+          "bottom": 24
+        },
+        "centroid_offset_after_padding": {
+          "x": 0.02,
+          "y": -0.18
+        }
+      },
+      "source": "assets/characters/shimakaze/concept/shimakaze_concept_full.png",
+      "tags": [
+        "illustration",
+        "full_body"
+      ]
+    },
+    {
+      "file": "assets/characters/shimakaze/processed/ui/shimakaze_illust_half_alpha.png",
+      "size": [
+        1566,
+        1229
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        28,
+        0,
+        1532,
+        1024
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          0,
+          0,
+          1536,
+          1024
+        ],
+        "final_box": [
+          28,
+          0,
+          1532,
+          1024
+        ],
+        "expanded": {
+          "left": -28,
+          "top": 0,
+          "right": -4,
+          "bottom": 0
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 6,
+        "selected_component_count": 6,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              44,
+              3,
+              1516,
+              1024
+            ],
+            "pixel_count": 851252,
+            "overlap_pixels": 851252
+          },
+          {
+            "bbox": [
+              433,
+              293,
+              434,
+              294
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              693,
+              1018,
+              711,
+              1024
+            ],
+            "pixel_count": 41,
+            "overlap_pixels": 41
+          },
+          {
+            "bbox": [
+              707,
+              1019,
+              717,
+              1022
+            ],
+            "pixel_count": 16,
+            "overlap_pixels": 16
+          },
+          {
+            "bbox": [
+              713,
+              1019,
+              715,
+              1020
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              712,
+              1023,
+              714,
+              1024
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 16,
+          "top": 3,
+          "right": 16,
+          "bottom": 0
+        },
+        "edge_warnings": [
+          "top",
+          "bottom"
+        ]
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          1472,
+          1021
+        ],
+        "centroid_before_padding": [
+          713.04,
+          595.02
+        ],
+        "padding": {
+          "left": 70,
+          "top": 24,
+          "right": 24,
+          "bottom": 184
+        },
+        "centroid_offset_after_padding": {
+          "x": 0.04,
+          "y": 4.52
+        }
+      },
+      "source": "assets/characters/shimakaze/ui/shimakaze_illust_half.png",
+      "tags": [
+        "illustration"
+      ]
+    },
+    {
+      "file": "assets/characters/shimakaze/processed/ui/shimakaze_illust_skill_cutin_alpha.png",
+      "size": [
+        1744,
+        1225
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        0,
+        0,
+        1536,
+        1024
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          0,
+          0,
+          1536,
+          1024
+        ],
+        "final_box": [
+          0,
+          0,
+          1536,
+          1024
+        ],
+        "expanded": {
+          "left": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 427,
+        "selected_component_count": 427,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              0,
+              1536,
+              1024
+            ],
+            "pixel_count": 1157568,
+            "overlap_pixels": 1157568
+          },
+          {
+            "bbox": [
+              1139,
+              15,
+              1142,
+              16
+            ],
+            "pixel_count": 3,
+            "overlap_pixels": 3
+          },
+          {
+            "bbox": [
+              1120,
+              16,
+              1139,
+              21
+            ],
+            "pixel_count": 26,
+            "overlap_pixels": 26
+          },
+          {
+            "bbox": [
+              1413,
+              27,
+              1536,
+              105
+            ],
+            "pixel_count": 626,
+            "overlap_pixels": 626
+          },
+          {
+            "bbox": [
+              1484,
+              30,
+              1485,
+              31
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              1479,
+              33,
+              1480,
+              34
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              772,
+              36,
+              773,
+              37
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              1464,
+              43,
+              1465,
+              44
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              1462,
+              44,
+              1464,
+              45
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              1459,
+              45,
+              1462,
+              47
+            ],
+            "pixel_count": 4,
+            "overlap_pixels": 4
+          },
+          {
+            "bbox": [
+              1458,
+              47,
+              1459,
+              48
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              502,
+              48,
+              503,
+              49
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              1456,
+              48,
+              1458,
+              49
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              1453,
+              49,
+              1456,
+              51
+            ],
+            "pixel_count": 4,
+            "overlap_pixels": 4
+          },
+          {
+            "bbox": [
+              1450,
+              51,
+              1453,
+              53
+            ],
+            "pixel_count": 4,
+            "overlap_pixels": 4
+          },
+          {
+            "bbox": [
+              496,
+              52,
+              497,
+              53
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              495,
+              53,
+              496,
+              54
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              1447,
+              53,
+              1450,
+              55
+            ],
+            "pixel_count": 4,
+            "overlap_pixels": 4
+          },
+          {
+            "bbox": [
+              494,
+              54,
+              495,
+              55
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              1444,
+              55,
+              1447,
+              57
+            ],
+            "pixel_count": 4,
+            "overlap_pixels": 4
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0
+        },
+        "edge_warnings": [
+          "left",
+          "top",
+          "right",
+          "bottom"
+        ]
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          1536,
+          1024
+        ],
+        "centroid_before_padding": [
+          851.24,
+          588.71
+        ],
+        "padding": {
+          "left": 24,
+          "top": 24,
+          "right": 184,
+          "bottom": 177
+        },
+        "centroid_offset_after_padding": {
+          "x": 3.24,
+          "y": 0.21
+        }
+      },
+      "source": "assets/characters/shimakaze/ui/shimakaze_illust_skill_cutin.png",
+      "tags": [
+        "cutin"
+      ]
+    },
+    {
+      "file": "assets/characters/shimakaze/processed/ui/shimakaze_ui_portrait.png",
+      "size": [
+        678,
+        715
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        38,
+        108,
+        699,
+        762
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          55,
+          175,
+          670,
+          745
+        ],
+        "final_box": [
+          38,
+          108,
+          699,
+          762
+        ],
+        "expanded": {
+          "left": 17,
+          "top": 67,
+          "right": 29,
+          "bottom": 17
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 2,
+        "selected_component_count": 1,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              54,
+              124,
+              683,
+              746
+            ],
+            "pixel_count": 358083,
+            "overlap_pixels": 347443
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 16,
+          "top": 16,
+          "right": 16,
+          "bottom": 16
+        },
+        "edge_warnings": []
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          629,
+          622
+        ],
+        "centroid_before_padding": [
+          314.03,
+          333.42
+        ],
+        "padding": {
+          "left": 25,
+          "top": 24,
+          "right": 24,
+          "bottom": 69
+        },
+        "centroid_offset_after_padding": {
+          "x": 0.03,
+          "y": -0.08
+        }
+      },
+      "source": "assets/characters/shimakaze/ui/shimakaze_ui_sheet.png",
+      "tags": [
+        "ui",
+        "portrait"
+      ]
+    },
+    {
+      "file": "assets/characters/shimakaze/processed/ui/shimakaze_ui_portrait_small.png",
+      "size": [
+        495,
+        495
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        713,
+        212,
+        1191,
+        690
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          745,
+          210,
+          1135,
+          675
+        ],
+        "final_box": [
+          713,
+          212,
+          1191,
+          690
+        ],
+        "expanded": {
+          "left": 32,
+          "top": -2,
+          "right": 56,
+          "bottom": 15
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 3,
+        "selected_component_count": 1,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              729,
+              228,
+              1175,
+              674
+            ],
+            "pixel_count": 156933,
+            "overlap_pixels": 148128
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 16,
+          "top": 16,
+          "right": 16,
+          "bottom": 16
+        },
+        "edge_warnings": []
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          446,
+          446
+        ],
+        "centroid_before_padding": [
+          222.37,
+          222.38
+        ],
+        "padding": {
+          "left": 25,
+          "top": 25,
+          "right": 24,
+          "bottom": 24
+        },
+        "centroid_offset_after_padding": {
+          "x": -0.13,
+          "y": -0.12
+        }
+      },
+      "source": "assets/characters/shimakaze/ui/shimakaze_ui_sheet.png",
+      "tags": [
+        "ui",
+        "portrait_small"
+      ]
+    },
+    {
+      "file": "assets/characters/shimakaze/processed/ui/shimakaze_ui_skill_torpedo_rush.png",
+      "size": [
+        488,
+        485
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        1238,
+        212,
+        1709,
+        680
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          1235,
+          205,
+          1635,
+          655
+        ],
+        "final_box": [
+          1238,
+          212,
+          1709,
+          680
+        ],
+        "expanded": {
+          "left": -3,
+          "top": -7,
+          "right": 74,
+          "bottom": 25
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 2,
+        "selected_component_count": 1,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              1254,
+              228,
+              1693,
+              664
+            ],
+            "pixel_count": 186196,
+            "overlap_pixels": 160551
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 16,
+          "top": 16,
+          "right": 16,
+          "bottom": 16
+        },
+        "edge_warnings": []
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          439,
+          436
+        ],
+        "centroid_before_padding": [
+          218.97,
+          217.57
+        ],
+        "padding": {
+          "left": 25,
+          "top": 25,
+          "right": 24,
+          "bottom": 24
+        },
+        "centroid_offset_after_padding": {
+          "x": -0.03,
+          "y": 0.07
+        }
+      },
+      "source": "assets/characters/shimakaze/ui/shimakaze_ui_sheet.png",
+      "tags": [
+        "ui",
+        "skill"
+      ]
+    },
+    {
+      "file": "assets/characters/shimakaze/processed/battle/shimakaze_battle_body_r.png",
+      "size": [
+        446,
+        383
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        60,
+        46,
+        461,
+        410
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          70,
+          55,
+          430,
+          420
+        ],
+        "final_box": [
+          60,
+          46,
+          461,
+          410
+        ],
+        "expanded": {
+          "left": 10,
+          "top": 9,
+          "right": 31,
+          "bottom": -10
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 5,
+        "selected_component_count": 1,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              76,
+              62,
+              445,
+              394
+            ],
+            "pixel_count": 70230,
+            "overlap_pixels": 69731
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 16,
+          "top": 16,
+          "right": 16,
+          "bottom": 16
+        },
+        "edge_warnings": []
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          369,
+          332
+        ],
+        "centroid_before_padding": [
+          199.09,
+          164.45
+        ],
+        "padding": {
+          "left": 24,
+          "top": 27,
+          "right": 53,
+          "bottom": 24
+        },
+        "centroid_offset_after_padding": {
+          "x": 0.09,
+          "y": -0.05
+        }
+      },
+      "source": "assets/characters/shimakaze/battle/shimakaze_battle_asset_sheet.png",
+      "tags": [
+        "battle",
+        "body"
+      ]
+    },
+    {
+      "file": "assets/characters/shimakaze/processed/battle/shimakaze_battle_rig_base.png",
+      "size": [
+        703,
+        438
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        481,
+        63,
+        1137,
+        394
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          490,
+          85,
+          1080,
+          390
+        ],
+        "final_box": [
+          481,
+          63,
+          1137,
+          394
+        ],
+        "expanded": {
+          "left": 9,
+          "top": 22,
+          "right": 57,
+          "bottom": 4
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 21,
+        "selected_component_count": 1,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              497,
+              79,
+              1121,
+              378
+            ],
+            "pixel_count": 75636,
+            "overlap_pixels": 73998
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 16,
+          "top": 16,
+          "right": 16,
+          "bottom": 16
+        },
+        "edge_warnings": []
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          624,
+          299
+        ],
+        "centroid_before_padding": [
+          296.34,
+          194.97
+        ],
+        "padding": {
+          "left": 55,
+          "top": 24,
+          "right": 24,
+          "bottom": 115
+        },
+        "centroid_offset_after_padding": {
+          "x": -0.16,
+          "y": -0.03
+        }
+      },
+      "source": "assets/characters/shimakaze/battle/shimakaze_battle_asset_sheet.png",
+      "tags": [
+        "battle",
+        "rig"
+      ]
+    },
+    {
+      "file": "assets/characters/shimakaze/processed/battle/shimakaze_battle_torpedo_tube_01.png",
+      "size": [
+        242,
+        172
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        1161,
+        122,
+        1373,
+        270
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          1160,
+          130,
+          1400,
+          260
+        ],
+        "final_box": [
+          1161,
+          122,
+          1373,
+          270
+        ],
+        "expanded": {
+          "left": -1,
+          "top": 8,
+          "right": -27,
+          "bottom": 10
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 5,
+        "selected_component_count": 1,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              1177,
+              138,
+              1357,
+              254
+            ],
+            "pixel_count": 14246,
+            "overlap_pixels": 14246
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 16,
+          "top": 16,
+          "right": 16,
+          "bottom": 16
+        },
+        "edge_warnings": []
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          180,
+          116
+        ],
+        "centroid_before_padding": [
+          83.07,
+          62.23
+        ],
+        "padding": {
+          "left": 38,
+          "top": 24,
+          "right": 24,
+          "bottom": 32
+        },
+        "centroid_offset_after_padding": {
+          "x": 0.07,
+          "y": 0.23
+        }
+      },
+      "source": "assets/characters/shimakaze/battle/shimakaze_battle_asset_sheet.png",
+      "tags": [
+        "battle",
+        "torpedo"
+      ]
+    },
+    {
+      "file": "assets/characters/shimakaze/processed/battle/shimakaze_battle_torpedo_tube_02.png",
+      "size": [
+        280,
+        180
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        1394,
+        126,
+        1641,
+        277
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          1400,
+          135,
+          1640,
+          260
+        ],
+        "final_box": [
+          1394,
+          126,
+          1641,
+          277
+        ],
+        "expanded": {
+          "left": 6,
+          "top": 9,
+          "right": 1,
+          "bottom": 17
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 4,
+        "selected_component_count": 1,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              1410,
+              142,
+              1625,
+              261
+            ],
+            "pixel_count": 17361,
+            "overlap_pixels": 17354
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 16,
+          "top": 16,
+          "right": 16,
+          "bottom": 16
+        },
+        "edge_warnings": []
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          215,
+          119
+        ],
+        "centroid_before_padding": [
+          99.22,
+          65.85
+        ],
+        "padding": {
+          "left": 41,
+          "top": 24,
+          "right": 24,
+          "bottom": 37
+        },
+        "centroid_offset_after_padding": {
+          "x": 0.22,
+          "y": -0.15
+        }
+      },
+      "source": "assets/characters/shimakaze/battle/shimakaze_battle_asset_sheet.png",
+      "tags": [
+        "battle",
+        "torpedo"
+      ]
+    },
+    {
+      "file": "assets/characters/shimakaze/processed/battle/shimakaze_battle_turret_main_01.png",
+      "size": [
+        192,
+        149
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        427,
+        420,
+        587,
+        544
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          430,
+          440,
+          570,
+          560
+        ],
+        "final_box": [
+          427,
+          420,
+          587,
+          544
+        ],
+        "expanded": {
+          "left": 3,
+          "top": 20,
+          "right": 17,
+          "bottom": -16
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 10,
+        "selected_component_count": 1,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              443,
+              436,
+              571,
+              528
+            ],
+            "pixel_count": 7106,
+            "overlap_pixels": 7042
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 16,
+          "top": 16,
+          "right": 16,
+          "bottom": 16
+        },
+        "edge_warnings": []
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          128,
+          92
+        ],
+        "centroid_before_padding": [
+          71.89,
+          50.35
+        ],
+        "padding": {
+          "left": 24,
+          "top": 24,
+          "right": 40,
+          "bottom": 33
+        },
+        "centroid_offset_after_padding": {
+          "x": -0.11,
+          "y": -0.15
+        }
+      },
+      "source": "assets/characters/shimakaze/battle/shimakaze_battle_asset_sheet.png",
+      "tags": [
+        "battle",
+        "turret"
+      ]
+    },
+    {
+      "file": "assets/characters/shimakaze/processed/battle/shimakaze_battle_thruster_01.png",
+      "size": [
+        177,
+        153
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        74,
+        689,
+        234,
+        825
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          70,
+          715,
+          195,
+          830
+        ],
+        "final_box": [
+          74,
+          689,
+          234,
+          825
+        ],
+        "expanded": {
+          "left": -4,
+          "top": 26,
+          "right": 39,
+          "bottom": -5
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 4,
+        "selected_component_count": 1,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              90,
+              705,
+              218,
+              809
+            ],
+            "pixel_count": 8433,
+            "overlap_pixels": 7236
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 16,
+          "top": 16,
+          "right": 16,
+          "bottom": 16
+        },
+        "edge_warnings": []
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          128,
+          104
+        ],
+        "centroid_before_padding": [
+          63.38,
+          52.55
+        ],
+        "padding": {
+          "left": 25,
+          "top": 24,
+          "right": 24,
+          "bottom": 25
+        },
+        "centroid_offset_after_padding": {
+          "x": -0.12,
+          "y": 0.05
+        }
+      },
+      "source": "assets/characters/shimakaze/battle/shimakaze_battle_asset_sheet.png",
+      "tags": [
+        "battle",
+        "thruster"
+      ]
+    },
+    {
+      "file": "assets/characters/shimakaze/processed/vfx/shimakaze_vfx_torpedo_warning_01.png",
+      "size": [
+        575,
+        157
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        457,
+        569,
+        915,
+        707
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          460,
+          585,
+          880,
+          665
+        ],
+        "final_box": [
+          457,
+          569,
+          915,
+          707
+        ],
+        "expanded": {
+          "left": 3,
+          "top": 16,
+          "right": 35,
+          "bottom": 42
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 124,
+        "selected_component_count": 2,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              473,
+              585,
+              898,
+              630
+            ],
+            "pixel_count": 8481,
+            "overlap_pixels": 8436
+          },
+          {
+            "bbox": [
+              473,
+              650,
+              899,
+              691
+            ],
+            "pixel_count": 7147,
+            "overlap_pixels": 1197
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 16,
+          "top": 16,
+          "right": 16,
+          "bottom": 16
+        },
+        "edge_warnings": []
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          426,
+          106
+        ],
+        "centroid_before_padding": [
+          162.27,
+          51.26
+        ],
+        "padding": {
+          "left": 125,
+          "top": 27,
+          "right": 24,
+          "bottom": 24
+        },
+        "centroid_offset_after_padding": {
+          "x": -0.23,
+          "y": -0.24
+        }
+      },
+      "source": "assets/characters/shimakaze/battle/shimakaze_battle_asset_sheet.png",
+      "tags": [
+        "vfx",
+        "torpedo_warning"
+      ]
+    },
+    {
+      "file": "assets/characters/shimakaze/processed/vfx/shimakaze_vfx_torpedo_trail_01.png",
+      "size": [
+        443,
+        156
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        1098,
+        465,
+        1439,
+        585
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          1095,
+          485,
+          1535,
+          560
+        ],
+        "final_box": [
+          1098,
+          465,
+          1439,
+          585
+        ],
+        "expanded": {
+          "left": -3,
+          "top": 20,
+          "right": -96,
+          "bottom": 25
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 211,
+        "selected_component_count": 40,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              1156,
+              481,
+              1275,
+              506
+            ],
+            "pixel_count": 1625,
+            "overlap_pixels": 1389
+          },
+          {
+            "bbox": [
+              1227,
+              482,
+              1277,
+              489
+            ],
+            "pixel_count": 137,
+            "overlap_pixels": 98
+          },
+          {
+            "bbox": [
+              1278,
+              485,
+              1282,
+              487
+            ],
+            "pixel_count": 6,
+            "overlap_pixels": 6
+          },
+          {
+            "bbox": [
+              1264,
+              485,
+              1350,
+              505
+            ],
+            "pixel_count": 575,
+            "overlap_pixels": 575
+          },
+          {
+            "bbox": [
+              1302,
+              486,
+              1303,
+              487
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              1282,
+              487,
+              1283,
+              488
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              1291,
+              487,
+              1292,
+              488
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              1303,
+              487,
+              1318,
+              491
+            ],
+            "pixel_count": 21,
+            "overlap_pixels": 21
+          },
+          {
+            "bbox": [
+              1343,
+              487,
+              1346,
+              489
+            ],
+            "pixel_count": 5,
+            "overlap_pixels": 5
+          },
+          {
+            "bbox": [
+              1348,
+              487,
+              1351,
+              488
+            ],
+            "pixel_count": 3,
+            "overlap_pixels": 3
+          },
+          {
+            "bbox": [
+              1282,
+              488,
+              1290,
+              490
+            ],
+            "pixel_count": 13,
+            "overlap_pixels": 13
+          },
+          {
+            "bbox": [
+              1320,
+              488,
+              1322,
+              489
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              1344,
+              492,
+              1350,
+              495
+            ],
+            "pixel_count": 11,
+            "overlap_pixels": 11
+          },
+          {
+            "bbox": [
+              1366,
+              492,
+              1367,
+              493
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              1353,
+              493,
+              1407,
+              501
+            ],
+            "pixel_count": 169,
+            "overlap_pixels": 169
+          },
+          {
+            "bbox": [
+              1242,
+              502,
+              1243,
+              503
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              1243,
+              503,
+              1244,
+              504
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              1257,
+              503,
+              1259,
+              505
+            ],
+            "pixel_count": 3,
+            "overlap_pixels": 3
+          },
+          {
+            "bbox": [
+              1291,
+              503,
+              1296,
+              505
+            ],
+            "pixel_count": 6,
+            "overlap_pixels": 6
+          },
+          {
+            "bbox": [
+              1328,
+              503,
+              1332,
+              505
+            ],
+            "pixel_count": 6,
+            "overlap_pixels": 6
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 16,
+          "top": 12,
+          "right": 16,
+          "bottom": 16
+        },
+        "edge_warnings": [
+          "top"
+        ]
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          309,
+          92
+        ],
+        "centroid_before_padding": [
+          111.44,
+          53.85
+        ],
+        "padding": {
+          "left": 110,
+          "top": 24,
+          "right": 24,
+          "bottom": 40
+        },
+        "centroid_offset_after_padding": {
+          "x": -0.06,
+          "y": -0.15
+        }
+      },
+      "source": "assets/characters/shimakaze/battle/shimakaze_battle_asset_sheet.png",
+      "tags": [
+        "vfx",
+        "torpedo"
+      ]
+    },
+    {
+      "file": "assets/characters/shimakaze/processed/vfx/shimakaze_vfx_torpedo_trail_02.png",
+      "size": [
+        659,
+        220
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        976,
+        644,
+        1489,
+        825
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          970,
+          665,
+          1490,
+          750
+        ],
+        "final_box": [
+          976,
+          644,
+          1489,
+          825
+        ],
+        "expanded": {
+          "left": -6,
+          "top": 21,
+          "right": -1,
+          "bottom": 75
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 326,
+        "selected_component_count": 50,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              1193,
+              660,
+              1241,
+              689
+            ],
+            "pixel_count": 369,
+            "overlap_pixels": 355
+          },
+          {
+            "bbox": [
+              1175,
+              663,
+              1179,
+              666
+            ],
+            "pixel_count": 6,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              1244,
+              663,
+              1252,
+              669
+            ],
+            "pixel_count": 20,
+            "overlap_pixels": 12
+          },
+          {
+            "bbox": [
+              1199,
+              665,
+              1207,
+              669
+            ],
+            "pixel_count": 12,
+            "overlap_pixels": 12
+          },
+          {
+            "bbox": [
+              1232,
+              665,
+              1267,
+              691
+            ],
+            "pixel_count": 341,
+            "overlap_pixels": 341
+          },
+          {
+            "bbox": [
+              1149,
+              666,
+              1154,
+              669
+            ],
+            "pixel_count": 8,
+            "overlap_pixels": 8
+          },
+          {
+            "bbox": [
+              1171,
+              666,
+              1174,
+              669
+            ],
+            "pixel_count": 7,
+            "overlap_pixels": 7
+          },
+          {
+            "bbox": [
+              1168,
+              668,
+              1170,
+              670
+            ],
+            "pixel_count": 3,
+            "overlap_pixels": 3
+          },
+          {
+            "bbox": [
+              1193,
+              669,
+              1197,
+              672
+            ],
+            "pixel_count": 7,
+            "overlap_pixels": 7
+          },
+          {
+            "bbox": [
+              1144,
+              670,
+              1161,
+              681
+            ],
+            "pixel_count": 58,
+            "overlap_pixels": 58
+          },
+          {
+            "bbox": [
+              1151,
+              670,
+              1192,
+              688
+            ],
+            "pixel_count": 252,
+            "overlap_pixels": 252
+          },
+          {
+            "bbox": [
+              1183,
+              670,
+              1185,
+              671
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              1224,
+              670,
+              1226,
+              672
+            ],
+            "pixel_count": 3,
+            "overlap_pixels": 3
+          },
+          {
+            "bbox": [
+              1140,
+              671,
+              1142,
+              674
+            ],
+            "pixel_count": 4,
+            "overlap_pixels": 4
+          },
+          {
+            "bbox": [
+              1279,
+              671,
+              1280,
+              672
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              1145,
+              672,
+              1146,
+              673
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              1161,
+              672,
+              1162,
+              673
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              1273,
+              672,
+              1317,
+              693
+            ],
+            "pixel_count": 322,
+            "overlap_pixels": 322
+          },
+          {
+            "bbox": [
+              1144,
+              673,
+              1145,
+              674
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              1134,
+              674,
+              1137,
+              676
+            ],
+            "pixel_count": 4,
+            "overlap_pixels": 4
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 0,
+          "top": 15,
+          "right": 0,
+          "bottom": 0
+        },
+        "edge_warnings": [
+          "left",
+          "top",
+          "right",
+          "bottom"
+        ]
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          513,
+          166
+        ],
+        "centroid_before_padding": [
+          207.35,
+          86.07
+        ],
+        "padding": {
+          "left": 122,
+          "top": 24,
+          "right": 24,
+          "bottom": 30
+        },
+        "centroid_offset_after_padding": {
+          "x": -0.15,
+          "y": 0.07
+        }
+      },
+      "source": "assets/characters/shimakaze/battle/shimakaze_battle_asset_sheet.png",
+      "tags": [
+        "vfx",
+        "torpedo"
+      ]
+    },
+    {
+      "file": "assets/characters/shimakaze/processed/vfx/shimakaze_vfx_wake_fast.png",
+      "size": [
+        374,
+        128
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        429,
+        767,
+        778,
+        867
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          435,
+          760,
+          780,
+          850
+        ],
+        "final_box": [
+          429,
+          767,
+          778,
+          867
+        ],
+        "expanded": {
+          "left": 6,
+          "top": -7,
+          "right": -2,
+          "bottom": 17
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 128,
+        "selected_component_count": 61,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              612,
+              783,
+              614,
+              784
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              587,
+              784,
+              612,
+              794
+            ],
+            "pixel_count": 44,
+            "overlap_pixels": 44
+          },
+          {
+            "bbox": [
+              673,
+              785,
+              674,
+              786
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              445,
+              785,
+              762,
+              851
+            ],
+            "pixel_count": 6286,
+            "overlap_pixels": 6284
+          },
+          {
+            "bbox": [
+              644,
+              788,
+              662,
+              793
+            ],
+            "pixel_count": 37,
+            "overlap_pixels": 37
+          },
+          {
+            "bbox": [
+              587,
+              790,
+              590,
+              791
+            ],
+            "pixel_count": 3,
+            "overlap_pixels": 3
+          },
+          {
+            "bbox": [
+              724,
+              791,
+              725,
+              792
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              581,
+              792,
+              583,
+              793
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              527,
+              793,
+              528,
+              794
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              578,
+              793,
+              580,
+              794
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              635,
+              793,
+              638,
+              794
+            ],
+            "pixel_count": 3,
+            "overlap_pixels": 3
+          },
+          {
+            "bbox": [
+              505,
+              794,
+              527,
+              805
+            ],
+            "pixel_count": 39,
+            "overlap_pixels": 39
+          },
+          {
+            "bbox": [
+              574,
+              794,
+              576,
+              795
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              514,
+              794,
+              600,
+              823
+            ],
+            "pixel_count": 719,
+            "overlap_pixels": 719
+          },
+          {
+            "bbox": [
+              633,
+              794,
+              634,
+              795
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              571,
+              795,
+              574,
+              796
+            ],
+            "pixel_count": 3,
+            "overlap_pixels": 3
+          },
+          {
+            "bbox": [
+              622,
+              795,
+              630,
+              797
+            ],
+            "pixel_count": 10,
+            "overlap_pixels": 10
+          },
+          {
+            "bbox": [
+              698,
+              795,
+              707,
+              797
+            ],
+            "pixel_count": 11,
+            "overlap_pixels": 11
+          },
+          {
+            "bbox": [
+              568,
+              796,
+              571,
+              797
+            ],
+            "pixel_count": 3,
+            "overlap_pixels": 3
+          },
+          {
+            "bbox": [
+              600,
+              796,
+              603,
+              797
+            ],
+            "pixel_count": 3,
+            "overlap_pixels": 3
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 16,
+          "top": 16,
+          "right": 16,
+          "bottom": 16
+        },
+        "edge_warnings": []
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          317,
+          68
+        ],
+        "centroid_before_padding": [
+          153.81,
+          40.12
+        ],
+        "padding": {
+          "left": 33,
+          "top": 24,
+          "right": 24,
+          "bottom": 36
+        },
+        "centroid_offset_after_padding": {
+          "x": -0.19,
+          "y": 0.12
+        }
+      },
+      "source": "assets/characters/shimakaze/battle/shimakaze_battle_asset_sheet.png",
+      "tags": [
+        "vfx",
+        "wake"
+      ]
+    },
+    {
+      "file": "assets/characters/shimakaze/processed/vfx/shimakaze_vfx_wake_long.png",
+      "size": [
+        834,
+        246
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        594,
+        712,
+        1386,
+        878
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          770,
+          735,
+          1330,
+          850
+        ],
+        "final_box": [
+          594,
+          712,
+          1386,
+          878
+        ],
+        "expanded": {
+          "left": 176,
+          "top": 23,
+          "right": 56,
+          "bottom": 28
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 272,
+        "selected_component_count": 97,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              610,
+              728,
+              794,
+              745
+            ],
+            "pixel_count": 1423,
+            "overlap_pixels": 68
+          },
+          {
+            "bbox": [
+              918,
+              749,
+              919,
+              750
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              914,
+              750,
+              918,
+              752
+            ],
+            "pixel_count": 6,
+            "overlap_pixels": 6
+          },
+          {
+            "bbox": [
+              913,
+              752,
+              914,
+              753
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              910,
+              753,
+              911,
+              755
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              909,
+              755,
+              910,
+              756
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              825,
+              756,
+              1370,
+              862
+            ],
+            "pixel_count": 20867,
+            "overlap_pixels": 19729
+          },
+          {
+            "bbox": [
+              907,
+              756,
+              909,
+              757
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              906,
+              757,
+              907,
+              758
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              970,
+              763,
+              978,
+              767
+            ],
+            "pixel_count": 13,
+            "overlap_pixels": 13
+          },
+          {
+            "bbox": [
+              1297,
+              763,
+              1298,
+              764
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              850,
+              765,
+              858,
+              772
+            ],
+            "pixel_count": 15,
+            "overlap_pixels": 15
+          },
+          {
+            "bbox": [
+              1290,
+              765,
+              1292,
+              767
+            ],
+            "pixel_count": 3,
+            "overlap_pixels": 3
+          },
+          {
+            "bbox": [
+              964,
+              767,
+              968,
+              770
+            ],
+            "pixel_count": 6,
+            "overlap_pixels": 6
+          },
+          {
+            "bbox": [
+              1194,
+              767,
+              1204,
+              775
+            ],
+            "pixel_count": 20,
+            "overlap_pixels": 20
+          },
+          {
+            "bbox": [
+              957,
+              770,
+              963,
+              774
+            ],
+            "pixel_count": 12,
+            "overlap_pixels": 12
+          },
+          {
+            "bbox": [
+              1172,
+              774,
+              1177,
+              776
+            ],
+            "pixel_count": 6,
+            "overlap_pixels": 6
+          },
+          {
+            "bbox": [
+              1115,
+              775,
+              1124,
+              781
+            ],
+            "pixel_count": 23,
+            "overlap_pixels": 23
+          },
+          {
+            "bbox": [
+              945,
+              776,
+              946,
+              777
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              1074,
+              776,
+              1088,
+              784
+            ],
+            "pixel_count": 36,
+            "overlap_pixels": 36
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 0,
+          "top": 0,
+          "right": 16,
+          "bottom": 16
+        },
+        "edge_warnings": [
+          "left",
+          "top"
+        ]
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          776,
+          150
+        ],
+        "centroid_before_padding": [
+          392.84,
+          98.8
+        ],
+        "padding": {
+          "left": 24,
+          "top": 24,
+          "right": 34,
+          "bottom": 72
+        },
+        "centroid_offset_after_padding": {
+          "x": -0.16,
+          "y": -0.2
+        }
+      },
+      "source": "assets/characters/shimakaze/battle/shimakaze_battle_asset_sheet.png",
+      "tags": [
+        "vfx",
+        "wake"
+      ]
+    },
+    {
+      "file": "assets/characters/shimakaze/processed/vfx/shimakaze_vfx_water_impact.png",
+      "size": [
+        374,
+        277
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        1397,
+        673,
+        1687,
+        872
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          1375,
+          740,
+          1660,
+          870
+        ],
+        "final_box": [
+          1397,
+          673,
+          1687,
+          872
+        ],
+        "expanded": {
+          "left": -22,
+          "top": 67,
+          "right": 27,
+          "bottom": 2
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 199,
+        "selected_component_count": 52,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              1490,
+              689,
+              1671,
+              854
+            ],
+            "pixel_count": 12059,
+            "overlap_pixels": 10356
+          },
+          {
+            "bbox": [
+              1507,
+              731,
+              1517,
+              752
+            ],
+            "pixel_count": 63,
+            "overlap_pixels": 47
+          },
+          {
+            "bbox": [
+              1647,
+              734,
+              1655,
+              743
+            ],
+            "pixel_count": 18,
+            "overlap_pixels": 6
+          },
+          {
+            "bbox": [
+              1646,
+              743,
+              1647,
+              744
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              1502,
+              744,
+              1506,
+              755
+            ],
+            "pixel_count": 15,
+            "overlap_pixels": 15
+          },
+          {
+            "bbox": [
+              1450,
+              748,
+              1473,
+              809
+            ],
+            "pixel_count": 250,
+            "overlap_pixels": 250
+          },
+          {
+            "bbox": [
+              1487,
+              756,
+              1489,
+              760
+            ],
+            "pixel_count": 7,
+            "overlap_pixels": 7
+          },
+          {
+            "bbox": [
+              1501,
+              757,
+              1506,
+              762
+            ],
+            "pixel_count": 13,
+            "overlap_pixels": 13
+          },
+          {
+            "bbox": [
+              1493,
+              758,
+              1518,
+              806
+            ],
+            "pixel_count": 371,
+            "overlap_pixels": 371
+          },
+          {
+            "bbox": [
+              1518,
+              758,
+              1519,
+              759
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              1457,
+              761,
+              1462,
+              769
+            ],
+            "pixel_count": 12,
+            "overlap_pixels": 12
+          },
+          {
+            "bbox": [
+              1486,
+              762,
+              1488,
+              766
+            ],
+            "pixel_count": 5,
+            "overlap_pixels": 5
+          },
+          {
+            "bbox": [
+              1499,
+              762,
+              1501,
+              767
+            ],
+            "pixel_count": 8,
+            "overlap_pixels": 8
+          },
+          {
+            "bbox": [
+              1413,
+              763,
+              1420,
+              771
+            ],
+            "pixel_count": 18,
+            "overlap_pixels": 18
+          },
+          {
+            "bbox": [
+              1647,
+              763,
+              1648,
+              764
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              1646,
+              764,
+              1647,
+              765
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              1489,
+              765,
+              1490,
+              766
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              1489,
+              767,
+              1500,
+              777
+            ],
+            "pixel_count": 34,
+            "overlap_pixels": 34
+          },
+          {
+            "bbox": [
+              1462,
+              769,
+              1463,
+              771
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              1485,
+              769,
+              1486,
+              771
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 16
+        },
+        "edge_warnings": [
+          "left",
+          "top",
+          "right"
+        ]
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          290,
+          183
+        ],
+        "centroid_before_padding": [
+          163.09,
+          114.49
+        ],
+        "padding": {
+          "left": 24,
+          "top": 24,
+          "right": 60,
+          "bottom": 70
+        },
+        "centroid_offset_after_padding": {
+          "x": 0.09,
+          "y": -0.01
+        }
+      },
+      "source": "assets/characters/shimakaze/battle/shimakaze_battle_asset_sheet.png",
+      "tags": [
+        "vfx",
+        "impact"
+      ]
+    },
+    {
+      "file": "assets/characters/shimakaze/processed/vfx/shimakaze_vfx_warning_line_long.png",
+      "size": [
+        1515,
+        142
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        14,
+        56,
+        1353,
+        181
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          45,
+          65,
+          1360,
+          145
+        ],
+        "final_box": [
+          14,
+          56,
+          1353,
+          181
+        ],
+        "expanded": {
+          "left": 31,
+          "top": 9,
+          "right": -7,
+          "bottom": 36
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 193,
+        "selected_component_count": 8,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              30,
+              72,
+              1337,
+              165
+            ],
+            "pixel_count": 38650,
+            "overlap_pixels": 38052
+          },
+          {
+            "bbox": [
+              1299,
+              113,
+              1304,
+              114
+            ],
+            "pixel_count": 5,
+            "overlap_pixels": 5
+          },
+          {
+            "bbox": [
+              1314,
+              114,
+              1315,
+              115
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              1320,
+              114,
+              1323,
+              115
+            ],
+            "pixel_count": 3,
+            "overlap_pixels": 3
+          },
+          {
+            "bbox": [
+              1324,
+              114,
+              1325,
+              115
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              1329,
+              114,
+              1330,
+              115
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              1170,
+              115,
+              1200,
+              125
+            ],
+            "pixel_count": 94,
+            "overlap_pixels": 94
+          },
+          {
+            "bbox": [
+              1196,
+              116,
+              1287,
+              123
+            ],
+            "pixel_count": 162,
+            "overlap_pixels": 162
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 16,
+          "top": 16,
+          "right": 16,
+          "bottom": 16
+        },
+        "edge_warnings": []
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          1307,
+          93
+        ],
+        "centroid_before_padding": [
+          494.96,
+          46.19
+        ],
+        "padding": {
+          "left": 184,
+          "top": 25,
+          "right": 24,
+          "bottom": 24
+        },
+        "centroid_offset_after_padding": {
+          "x": -78.54,
+          "y": 0.19
+        }
+      },
+      "source": "assets/characters/shimakaze/vfx/shimakaze_vfx_reference_sheet.png",
+      "tags": [
+        "vfx",
+        "torpedo_warning"
+      ]
+    },
+    {
+      "file": "assets/characters/shimakaze/processed/vfx/shimakaze_vfx_torpedo_trail_long.png",
+      "size": [
+        748,
+        97
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        59,
+        292,
+        634,
+        369
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          60,
+          305,
+          670,
+          395
+        ],
+        "final_box": [
+          59,
+          292,
+          634,
+          369
+        ],
+        "expanded": {
+          "left": 1,
+          "top": 13,
+          "right": -36,
+          "bottom": -26
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 307,
+        "selected_component_count": 61,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              362,
+              308,
+              368,
+              312
+            ],
+            "pixel_count": 13,
+            "overlap_pixels": 13
+          },
+          {
+            "bbox": [
+              290,
+              309,
+              292,
+              310
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              75,
+              310,
+              536,
+              353
+            ],
+            "pixel_count": 6768,
+            "overlap_pixels": 6768
+          },
+          {
+            "bbox": [
+              234,
+              310,
+              236,
+              311
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              282,
+              310,
+              286,
+              313
+            ],
+            "pixel_count": 7,
+            "overlap_pixels": 7
+          },
+          {
+            "bbox": [
+              322,
+              311,
+              327,
+              314
+            ],
+            "pixel_count": 7,
+            "overlap_pixels": 7
+          },
+          {
+            "bbox": [
+              489,
+              311,
+              499,
+              318
+            ],
+            "pixel_count": 37,
+            "overlap_pixels": 37
+          },
+          {
+            "bbox": [
+              491,
+              312,
+              492,
+              313
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              281,
+              313,
+              282,
+              314
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              339,
+              313,
+              370,
+              326
+            ],
+            "pixel_count": 127,
+            "overlap_pixels": 127
+          },
+          {
+            "bbox": [
+              382,
+              313,
+              404,
+              327
+            ],
+            "pixel_count": 89,
+            "overlap_pixels": 89
+          },
+          {
+            "bbox": [
+              490,
+              313,
+              491,
+              314
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              271,
+              314,
+              272,
+              315
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              272,
+              314,
+              285,
+              321
+            ],
+            "pixel_count": 39,
+            "overlap_pixels": 39
+          },
+          {
+            "bbox": [
+              342,
+              314,
+              346,
+              316
+            ],
+            "pixel_count": 5,
+            "overlap_pixels": 5
+          },
+          {
+            "bbox": [
+              266,
+              315,
+              269,
+              317
+            ],
+            "pixel_count": 4,
+            "overlap_pixels": 4
+          },
+          {
+            "bbox": [
+              298,
+              315,
+              302,
+              317
+            ],
+            "pixel_count": 5,
+            "overlap_pixels": 5
+          },
+          {
+            "bbox": [
+              317,
+              315,
+              325,
+              321
+            ],
+            "pixel_count": 21,
+            "overlap_pixels": 21
+          },
+          {
+            "bbox": [
+              337,
+              315,
+              341,
+              317
+            ],
+            "pixel_count": 6,
+            "overlap_pixels": 6
+          },
+          {
+            "bbox": [
+              332,
+              316,
+              336,
+              318
+            ],
+            "pixel_count": 6,
+            "overlap_pixels": 6
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 16,
+          "top": 16,
+          "right": 16,
+          "bottom": 16
+        },
+        "edge_warnings": []
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          543,
+          45
+        ],
+        "centroid_before_padding": [
+          192.89,
+          24.39
+        ],
+        "padding": {
+          "left": 181,
+          "top": 24,
+          "right": 24,
+          "bottom": 28
+        },
+        "centroid_offset_after_padding": {
+          "x": -0.11,
+          "y": -0.11
+        }
+      },
+      "source": "assets/characters/shimakaze/vfx/shimakaze_vfx_reference_sheet.png",
+      "tags": [
+        "vfx",
+        "torpedo"
+      ]
+    },
+    {
+      "file": "assets/characters/shimakaze/processed/vfx/shimakaze_vfx_wake_blade.png",
+      "size": [
+        1145,
+        257
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        524,
+        202,
+        1472,
+        418
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          700,
+          220,
+          1390,
+          390
+        ],
+        "final_box": [
+          524,
+          202,
+          1472,
+          418
+        ],
+        "expanded": {
+          "left": 176,
+          "top": 18,
+          "right": 82,
+          "bottom": 28
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 405,
+        "selected_component_count": 223,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              1159,
+              218,
+              1164,
+              221
+            ],
+            "pixel_count": 7,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              540,
+              219,
+              731,
+              233
+            ],
+            "pixel_count": 411,
+            "overlap_pixels": 45
+          },
+          {
+            "bbox": [
+              1150,
+              221,
+              1159,
+              227
+            ],
+            "pixel_count": 15,
+            "overlap_pixels": 15
+          },
+          {
+            "bbox": [
+              1270,
+              222,
+              1272,
+              223
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              1257,
+              223,
+              1270,
+              230
+            ],
+            "pixel_count": 23,
+            "overlap_pixels": 23
+          },
+          {
+            "bbox": [
+              1336,
+              223,
+              1337,
+              224
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              701,
+              224,
+              704,
+              225
+            ],
+            "pixel_count": 3,
+            "overlap_pixels": 3
+          },
+          {
+            "bbox": [
+              1334,
+              224,
+              1336,
+              226
+            ],
+            "pixel_count": 3,
+            "overlap_pixels": 3
+          },
+          {
+            "bbox": [
+              1217,
+              226,
+              1220,
+              230
+            ],
+            "pixel_count": 7,
+            "overlap_pixels": 7
+          },
+          {
+            "bbox": [
+              1150,
+              227,
+              1151,
+              228
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              732,
+              228,
+              788,
+              230
+            ],
+            "pixel_count": 58,
+            "overlap_pixels": 58
+          },
+          {
+            "bbox": [
+              1144,
+              228,
+              1146,
+              229
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              1148,
+              228,
+              1150,
+              229
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              689,
+              228,
+              1456,
+              368
+            ],
+            "pixel_count": 27807,
+            "overlap_pixels": 27172
+          },
+          {
+            "bbox": [
+              1142,
+              229,
+              1144,
+              230
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              1144,
+              229,
+              1148,
+              232
+            ],
+            "pixel_count": 6,
+            "overlap_pixels": 6
+          },
+          {
+            "bbox": [
+              1140,
+              230,
+              1142,
+              231
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              1138,
+              231,
+              1140,
+              232
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              1129,
+              232,
+              1138,
+              237
+            ],
+            "pixel_count": 13,
+            "overlap_pixels": 13
+          },
+          {
+            "bbox": [
+              1122,
+              232,
+              1144,
+              251
+            ],
+            "pixel_count": 45,
+            "overlap_pixels": 45
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 0,
+          "top": 11,
+          "right": 11,
+          "bottom": 0
+        },
+        "edge_warnings": [
+          "left",
+          "top",
+          "right",
+          "bottom"
+        ]
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          937,
+          205
+        ],
+        "centroid_before_padding": [
+          562.41,
+          104.5
+        ],
+        "padding": {
+          "left": 24,
+          "top": 24,
+          "right": 184,
+          "bottom": 28
+        },
+        "centroid_offset_after_padding": {
+          "x": 13.91,
+          "y": 0.0
+        }
+      },
+      "source": "assets/characters/shimakaze/vfx/shimakaze_vfx_reference_sheet.png",
+      "tags": [
+        "vfx",
+        "wake"
+      ]
+    },
+    {
+      "file": "assets/characters/shimakaze/processed/vfx/shimakaze_vfx_wake_surge.png",
+      "size": [
+        892,
+        399
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        650,
+        392,
+        1491,
+        699
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          670,
+          420,
+          1325,
+          610
+        ],
+        "final_box": [
+          650,
+          392,
+          1491,
+          699
+        ],
+        "expanded": {
+          "left": 20,
+          "top": 28,
+          "right": 166,
+          "bottom": 89
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 463,
+        "selected_component_count": 107,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              666,
+              408,
+              1233,
+              596
+            ],
+            "pixel_count": 22166,
+            "overlap_pixels": 22045
+          },
+          {
+            "bbox": [
+              1033,
+              415,
+              1047,
+              425
+            ],
+            "pixel_count": 61,
+            "overlap_pixels": 31
+          },
+          {
+            "bbox": [
+              744,
+              417,
+              1002,
+              583
+            ],
+            "pixel_count": 3776,
+            "overlap_pixels": 3768
+          },
+          {
+            "bbox": [
+              808,
+              417,
+              1094,
+              580
+            ],
+            "pixel_count": 6515,
+            "overlap_pixels": 6505
+          },
+          {
+            "bbox": [
+              1282,
+              422,
+              1299,
+              434
+            ],
+            "pixel_count": 86,
+            "overlap_pixels": 86
+          },
+          {
+            "bbox": [
+              1031,
+              426,
+              1032,
+              427
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              1256,
+              426,
+              1260,
+              430
+            ],
+            "pixel_count": 10,
+            "overlap_pixels": 10
+          },
+          {
+            "bbox": [
+              1067,
+              427,
+              1069,
+              428
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              1057,
+              428,
+              1060,
+              430
+            ],
+            "pixel_count": 4,
+            "overlap_pixels": 4
+          },
+          {
+            "bbox": [
+              1063,
+              428,
+              1067,
+              430
+            ],
+            "pixel_count": 5,
+            "overlap_pixels": 5
+          },
+          {
+            "bbox": [
+              984,
+              430,
+              1059,
+              462
+            ],
+            "pixel_count": 173,
+            "overlap_pixels": 173
+          },
+          {
+            "bbox": [
+              1061,
+              430,
+              1063,
+              431
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              1228,
+              432,
+              1236,
+              439
+            ],
+            "pixel_count": 20,
+            "overlap_pixels": 20
+          },
+          {
+            "bbox": [
+              972,
+              433,
+              974,
+              434
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              946,
+              434,
+              972,
+              449
+            ],
+            "pixel_count": 43,
+            "overlap_pixels": 43
+          },
+          {
+            "bbox": [
+              940,
+              439,
+              941,
+              440
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              984,
+              439,
+              992,
+              447
+            ],
+            "pixel_count": 24,
+            "overlap_pixels": 24
+          },
+          {
+            "bbox": [
+              939,
+              440,
+              940,
+              441
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              938,
+              441,
+              939,
+              442
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              924,
+              442,
+              938,
+              454
+            ],
+            "pixel_count": 39,
+            "overlap_pixels": 39
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 0,
+          "top": 0,
+          "right": 14,
+          "bottom": 0
+        },
+        "edge_warnings": [
+          "left",
+          "top",
+          "right",
+          "bottom"
+        ]
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          827,
+          307
+        ],
+        "centroid_before_padding": [
+          422.12,
+          175.36
+        ],
+        "padding": {
+          "left": 24,
+          "top": 24,
+          "right": 41,
+          "bottom": 68
+        },
+        "centroid_offset_after_padding": {
+          "x": 0.12,
+          "y": -0.14
+        }
+      },
+      "source": "assets/characters/shimakaze/vfx/shimakaze_vfx_reference_sheet.png",
+      "tags": [
+        "vfx",
+        "wake"
+      ]
+    },
+    {
+      "file": "assets/characters/shimakaze/processed/vfx/shimakaze_vfx_water_impact_large.png",
+      "size": [
+        332,
+        359
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        1217,
+        469,
+        1491,
+        701
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          1220,
+          500,
+          1460,
+          685
+        ],
+        "final_box": [
+          1217,
+          469,
+          1491,
+          701
+        ],
+        "expanded": {
+          "left": 3,
+          "top": 31,
+          "right": 31,
+          "bottom": 16
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 125,
+        "selected_component_count": 31,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              1338,
+              485,
+              1360,
+              563
+            ],
+            "pixel_count": 257,
+            "overlap_pixels": 205
+          },
+          {
+            "bbox": [
+              1270,
+              493,
+              1282,
+              502
+            ],
+            "pixel_count": 52,
+            "overlap_pixels": 7
+          },
+          {
+            "bbox": [
+              1447,
+              499,
+              1458,
+              516
+            ],
+            "pixel_count": 121,
+            "overlap_pixels": 119
+          },
+          {
+            "bbox": [
+              1236,
+              509,
+              1243,
+              514
+            ],
+            "pixel_count": 15,
+            "overlap_pixels": 15
+          },
+          {
+            "bbox": [
+              1258,
+              518,
+              1475,
+              683
+            ],
+            "pixel_count": 11618,
+            "overlap_pixels": 11543
+          },
+          {
+            "bbox": [
+              1411,
+              522,
+              1419,
+              533
+            ],
+            "pixel_count": 58,
+            "overlap_pixels": 58
+          },
+          {
+            "bbox": [
+              1378,
+              531,
+              1383,
+              540
+            ],
+            "pixel_count": 34,
+            "overlap_pixels": 34
+          },
+          {
+            "bbox": [
+              1289,
+              535,
+              1299,
+              559
+            ],
+            "pixel_count": 151,
+            "overlap_pixels": 151
+          },
+          {
+            "bbox": [
+              1430,
+              535,
+              1435,
+              541
+            ],
+            "pixel_count": 14,
+            "overlap_pixels": 14
+          },
+          {
+            "bbox": [
+              1312,
+              538,
+              1315,
+              544
+            ],
+            "pixel_count": 15,
+            "overlap_pixels": 15
+          },
+          {
+            "bbox": [
+              1457,
+              541,
+              1469,
+              554
+            ],
+            "pixel_count": 66,
+            "overlap_pixels": 11
+          },
+          {
+            "bbox": [
+              1406,
+              547,
+              1409,
+              551
+            ],
+            "pixel_count": 10,
+            "overlap_pixels": 10
+          },
+          {
+            "bbox": [
+              1447,
+              561,
+              1452,
+              568
+            ],
+            "pixel_count": 15,
+            "overlap_pixels": 15
+          },
+          {
+            "bbox": [
+              1279,
+              570,
+              1285,
+              576
+            ],
+            "pixel_count": 17,
+            "overlap_pixels": 17
+          },
+          {
+            "bbox": [
+              1402,
+              571,
+              1407,
+              577
+            ],
+            "pixel_count": 13,
+            "overlap_pixels": 13
+          },
+          {
+            "bbox": [
+              1264,
+              576,
+              1272,
+              586
+            ],
+            "pixel_count": 51,
+            "overlap_pixels": 51
+          },
+          {
+            "bbox": [
+              1444,
+              581,
+              1454,
+              592
+            ],
+            "pixel_count": 42,
+            "overlap_pixels": 42
+          },
+          {
+            "bbox": [
+              1349,
+              586,
+              1350,
+              591
+            ],
+            "pixel_count": 5,
+            "overlap_pixels": 5
+          },
+          {
+            "bbox": [
+              1247,
+              596,
+              1264,
+              618
+            ],
+            "pixel_count": 137,
+            "overlap_pixels": 137
+          },
+          {
+            "bbox": [
+              1436,
+              598,
+              1440,
+              603
+            ],
+            "pixel_count": 9,
+            "overlap_pixels": 9
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 9,
+          "top": 0,
+          "right": 14,
+          "bottom": 16
+        },
+        "edge_warnings": [
+          "left",
+          "top",
+          "right"
+        ]
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          251,
+          216
+        ],
+        "centroid_before_padding": [
+          141.98,
+          155.37
+        ],
+        "padding": {
+          "left": 24,
+          "top": 24,
+          "right": 57,
+          "bottom": 119
+        },
+        "centroid_offset_after_padding": {
+          "x": -0.02,
+          "y": -0.13
+        }
+      },
+      "source": "assets/characters/shimakaze/vfx/shimakaze_vfx_reference_sheet.png",
+      "tags": [
+        "vfx",
+        "impact"
+      ]
+    },
+    {
+      "file": "assets/characters/shimakaze/processed/vfx/shimakaze_vfx_speed_lines.png",
+      "size": [
+        589,
+        330
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        681,
+        672,
+        1187,
+        889
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          690,
+          690,
+          1200,
+          870
+        ],
+        "final_box": [
+          681,
+          672,
+          1187,
+          889
+        ],
+        "expanded": {
+          "left": 9,
+          "top": 18,
+          "right": -13,
+          "bottom": 19
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 190,
+        "selected_component_count": 19,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              718,
+              688,
+              1171,
+              716
+            ],
+            "pixel_count": 5911,
+            "overlap_pixels": 5825
+          },
+          {
+            "bbox": [
+              752,
+              694,
+              754,
+              696
+            ],
+            "pixel_count": 4,
+            "overlap_pixels": 4
+          },
+          {
+            "bbox": [
+              1111,
+              707,
+              1125,
+              717
+            ],
+            "pixel_count": 87,
+            "overlap_pixels": 87
+          },
+          {
+            "bbox": [
+              1130,
+              708,
+              1135,
+              712
+            ],
+            "pixel_count": 16,
+            "overlap_pixels": 16
+          },
+          {
+            "bbox": [
+              1105,
+              710,
+              1109,
+              713
+            ],
+            "pixel_count": 11,
+            "overlap_pixels": 11
+          },
+          {
+            "bbox": [
+              1028,
+              718,
+              1030,
+              719
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              1025,
+              719,
+              1027,
+              721
+            ],
+            "pixel_count": 4,
+            "overlap_pixels": 4
+          },
+          {
+            "bbox": [
+              1028,
+              721,
+              1030,
+              722
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              737,
+              724,
+              1064,
+              751
+            ],
+            "pixel_count": 3596,
+            "overlap_pixels": 3596
+          },
+          {
+            "bbox": [
+              697,
+              771,
+              1022,
+              792
+            ],
+            "pixel_count": 1314,
+            "overlap_pixels": 1314
+          },
+          {
+            "bbox": [
+              749,
+              774,
+              1006,
+              778
+            ],
+            "pixel_count": 471,
+            "overlap_pixels": 471
+          },
+          {
+            "bbox": [
+              1009,
+              776,
+              1011,
+              777
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              759,
+              786,
+              760,
+              787
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              803,
+              787,
+              924,
+              796
+            ],
+            "pixel_count": 269,
+            "overlap_pixels": 269
+          },
+          {
+            "bbox": [
+              756,
+              830,
+              1028,
+              843
+            ],
+            "pixel_count": 1858,
+            "overlap_pixels": 1858
+          },
+          {
+            "bbox": [
+              1045,
+              832,
+              1074,
+              840
+            ],
+            "pixel_count": 115,
+            "overlap_pixels": 115
+          },
+          {
+            "bbox": [
+              1079,
+              832,
+              1091,
+              838
+            ],
+            "pixel_count": 47,
+            "overlap_pixels": 47
+          },
+          {
+            "bbox": [
+              795,
+              856,
+              1055,
+              873
+            ],
+            "pixel_count": 1358,
+            "overlap_pixels": 1191
+          },
+          {
+            "bbox": [
+              1057,
+              858,
+              1068,
+              862
+            ],
+            "pixel_count": 21,
+            "overlap_pixels": 21
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 16,
+          "top": 0,
+          "right": 16,
+          "bottom": 0
+        },
+        "edge_warnings": [
+          "top",
+          "bottom"
+        ]
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          474,
+          217
+        ],
+        "centroid_before_padding": [
+          203.51,
+          75.96
+        ],
+        "padding": {
+          "left": 91,
+          "top": 89,
+          "right": 24,
+          "bottom": 24
+        },
+        "centroid_offset_after_padding": {
+          "x": 0.01,
+          "y": -0.04
+        }
+      },
+      "source": "assets/characters/shimakaze/vfx/shimakaze_vfx_reference_sheet.png",
+      "tags": [
+        "vfx",
+        "speed"
+      ]
+    },
+    {
+      "file": "assets/characters/shimakaze/processed/anim/shimakaze_anim_idle_keyframe.png",
+      "size": [
+        444,
+        410
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        53,
+        33,
+        434,
+        426
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          55,
+          55,
+          500,
+          410
+        ],
+        "final_box": [
+          53,
+          33,
+          434,
+          426
+        ],
+        "expanded": {
+          "left": 2,
+          "top": 22,
+          "right": -66,
+          "bottom": 16
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 42,
+        "selected_component_count": 1,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              69,
+              49,
+              418,
+              410
+            ],
+            "pixel_count": 69195,
+            "overlap_pixels": 69048
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 16,
+          "top": 16,
+          "right": 16,
+          "bottom": 16
+        },
+        "edge_warnings": []
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          349,
+          361
+        ],
+        "centroid_before_padding": [
+          198.14,
+          180.02
+        ],
+        "padding": {
+          "left": 24,
+          "top": 25,
+          "right": 71,
+          "bottom": 24
+        },
+        "centroid_offset_after_padding": {
+          "x": 0.14,
+          "y": 0.02
+        }
+      },
+      "source": "assets/characters/shimakaze/battle/shimakaze_anim_keyframes_sheet.png",
+      "tags": [
+        "anim",
+        "idle"
+      ]
+    },
+    {
+      "file": "assets/characters/shimakaze/processed/anim/shimakaze_anim_move_keyframe.png",
+      "size": [
+        761,
+        368
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        520,
+        92,
+        1129,
+        414
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          500,
+          55,
+          1130,
+          425
+        ],
+        "final_box": [
+          520,
+          92,
+          1129,
+          414
+        ],
+        "expanded": {
+          "left": -20,
+          "top": -37,
+          "right": -1,
+          "bottom": -11
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 81,
+        "selected_component_count": 56,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              536,
+              108,
+              1113,
+              398
+            ],
+            "pixel_count": 76471,
+            "overlap_pixels": 76471
+          },
+          {
+            "bbox": [
+              640,
+              186,
+              660,
+              196
+            ],
+            "pixel_count": 44,
+            "overlap_pixels": 44
+          },
+          {
+            "bbox": [
+              660,
+              196,
+              661,
+              197
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              699,
+              202,
+              704,
+              206
+            ],
+            "pixel_count": 11,
+            "overlap_pixels": 11
+          },
+          {
+            "bbox": [
+              704,
+              205,
+              710,
+              209
+            ],
+            "pixel_count": 14,
+            "overlap_pixels": 14
+          },
+          {
+            "bbox": [
+              750,
+              241,
+              752,
+              242
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              752,
+              242,
+              757,
+              244
+            ],
+            "pixel_count": 6,
+            "overlap_pixels": 6
+          },
+          {
+            "bbox": [
+              757,
+              244,
+              759,
+              245
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              759,
+              245,
+              761,
+              246
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              553,
+              246,
+              562,
+              250
+            ],
+            "pixel_count": 16,
+            "overlap_pixels": 16
+          },
+          {
+            "bbox": [
+              761,
+              246,
+              762,
+              247
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              718,
+              247,
+              726,
+              253
+            ],
+            "pixel_count": 17,
+            "overlap_pixels": 17
+          },
+          {
+            "bbox": [
+              764,
+              247,
+              768,
+              249
+            ],
+            "pixel_count": 6,
+            "overlap_pixels": 6
+          },
+          {
+            "bbox": [
+              681,
+              250,
+              688,
+              254
+            ],
+            "pixel_count": 11,
+            "overlap_pixels": 11
+          },
+          {
+            "bbox": [
+              772,
+              251,
+              773,
+              252
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              773,
+              252,
+              775,
+              253
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              579,
+              253,
+              630,
+              270
+            ],
+            "pixel_count": 126,
+            "overlap_pixels": 126
+          },
+          {
+            "bbox": [
+              644,
+              253,
+              645,
+              254
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              726,
+              253,
+              727,
+              254
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              775,
+              253,
+              777,
+              254
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 16,
+          "top": 16,
+          "right": 16,
+          "bottom": 16
+        },
+        "edge_warnings": []
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          577,
+          290
+        ],
+        "centroid_before_padding": [
+          356.49,
+          160.16
+        ],
+        "padding": {
+          "left": 24,
+          "top": 24,
+          "right": 160,
+          "bottom": 54
+        },
+        "centroid_offset_after_padding": {
+          "x": -0.01,
+          "y": 0.16
+        }
+      },
+      "source": "assets/characters/shimakaze/battle/shimakaze_anim_keyframes_sheet.png",
+      "tags": [
+        "anim",
+        "move"
+      ]
+    },
+    {
+      "file": "assets/characters/shimakaze/processed/anim/shimakaze_anim_attack_keyframe.png",
+      "size": [
+        445,
+        379
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        1169,
+        60,
+        1596,
+        421
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          1120,
+          55,
+          1700,
+          425
+        ],
+        "final_box": [
+          1169,
+          60,
+          1596,
+          421
+        ],
+        "expanded": {
+          "left": -49,
+          "top": -5,
+          "right": -104,
+          "bottom": -4
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 32,
+        "selected_component_count": 1,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              1185,
+              76,
+              1580,
+              405
+            ],
+            "pixel_count": 68879,
+            "overlap_pixels": 68879
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 16,
+          "top": 16,
+          "right": 16,
+          "bottom": 16
+        },
+        "edge_warnings": []
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          395,
+          329
+        ],
+        "centroid_before_padding": [
+          198.74,
+          163.59
+        ],
+        "padding": {
+          "left": 24,
+          "top": 26,
+          "right": 26,
+          "bottom": 24
+        },
+        "centroid_offset_after_padding": {
+          "x": 0.24,
+          "y": 0.09
+        }
+      },
+      "source": "assets/characters/shimakaze/battle/shimakaze_anim_keyframes_sheet.png",
+      "tags": [
+        "anim",
+        "attack"
+      ]
+    },
+    {
+      "file": "assets/characters/shimakaze/processed/anim/shimakaze_anim_hit_keyframe.png",
+      "size": [
+        771,
+        451
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        184,
+        444,
+        811,
+        835
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          260,
+          450,
+          820,
+          850
+        ],
+        "final_box": [
+          184,
+          444,
+          811,
+          835
+        ],
+        "expanded": {
+          "left": 76,
+          "top": 6,
+          "right": -9,
+          "bottom": -15
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 128,
+        "selected_component_count": 81,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              200,
+              460,
+              628,
+              819
+            ],
+            "pixel_count": 85136,
+            "overlap_pixels": 83235
+          },
+          {
+            "bbox": [
+              552,
+              493,
+              561,
+              506
+            ],
+            "pixel_count": 54,
+            "overlap_pixels": 54
+          },
+          {
+            "bbox": [
+              525,
+              497,
+              528,
+              503
+            ],
+            "pixel_count": 14,
+            "overlap_pixels": 14
+          },
+          {
+            "bbox": [
+              622,
+              512,
+              624,
+              514
+            ],
+            "pixel_count": 3,
+            "overlap_pixels": 3
+          },
+          {
+            "bbox": [
+              616,
+              514,
+              622,
+              521
+            ],
+            "pixel_count": 13,
+            "overlap_pixels": 13
+          },
+          {
+            "bbox": [
+              573,
+              520,
+              577,
+              526
+            ],
+            "pixel_count": 12,
+            "overlap_pixels": 12
+          },
+          {
+            "bbox": [
+              655,
+              523,
+              666,
+              530
+            ],
+            "pixel_count": 21,
+            "overlap_pixels": 21
+          },
+          {
+            "bbox": [
+              573,
+              525,
+              637,
+              586
+            ],
+            "pixel_count": 580,
+            "overlap_pixels": 580
+          },
+          {
+            "bbox": [
+              643,
+              578,
+              655,
+              585
+            ],
+            "pixel_count": 61,
+            "overlap_pixels": 61
+          },
+          {
+            "bbox": [
+              603,
+              582,
+              617,
+              587
+            ],
+            "pixel_count": 43,
+            "overlap_pixels": 43
+          },
+          {
+            "bbox": [
+              588,
+              602,
+              589,
+              603
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              589,
+              603,
+              594,
+              608
+            ],
+            "pixel_count": 11,
+            "overlap_pixels": 11
+          },
+          {
+            "bbox": [
+              610,
+              608,
+              624,
+              615
+            ],
+            "pixel_count": 35,
+            "overlap_pixels": 35
+          },
+          {
+            "bbox": [
+              630,
+              633,
+              645,
+              645
+            ],
+            "pixel_count": 96,
+            "overlap_pixels": 96
+          },
+          {
+            "bbox": [
+              297,
+              658,
+              313,
+              683
+            ],
+            "pixel_count": 259,
+            "overlap_pixels": 259
+          },
+          {
+            "bbox": [
+              613,
+              670,
+              618,
+              676
+            ],
+            "pixel_count": 16,
+            "overlap_pixels": 16
+          },
+          {
+            "bbox": [
+              630,
+              677,
+              640,
+              694
+            ],
+            "pixel_count": 84,
+            "overlap_pixels": 84
+          },
+          {
+            "bbox": [
+              576,
+              678,
+              582,
+              686
+            ],
+            "pixel_count": 36,
+            "overlap_pixels": 36
+          },
+          {
+            "bbox": [
+              299,
+              686,
+              300,
+              687
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              300,
+              687,
+              301,
+              688
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 0,
+          "top": 16,
+          "right": 16,
+          "bottom": 16
+        },
+        "edge_warnings": [
+          "left"
+        ]
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          611,
+          359
+        ],
+        "centroid_before_padding": [
+          249.35,
+          201.31
+        ],
+        "padding": {
+          "left": 136,
+          "top": 24,
+          "right": 24,
+          "bottom": 68
+        },
+        "centroid_offset_after_padding": {
+          "x": -0.15,
+          "y": -0.19
+        }
+      },
+      "source": "assets/characters/shimakaze/battle/shimakaze_anim_keyframes_sheet.png",
+      "tags": [
+        "anim",
+        "hit"
+      ]
+    },
+    {
+      "file": "assets/characters/shimakaze/processed/anim/shimakaze_anim_firepower_keyframe.png",
+      "size": [
+        1065,
+        416
+      ],
+      "mode": "RGBA",
+      "source_box": [
+        817,
+        439,
+        1706,
+        838
+      ],
+      "source_crop_qa": {
+        "original_box": [
+          910,
+          440,
+          1685,
+          855
+        ],
+        "final_box": [
+          817,
+          439,
+          1706,
+          838
+        ],
+        "expanded": {
+          "left": 93,
+          "top": 1,
+          "right": 21,
+          "bottom": -17
+        },
+        "auto_crop_method": "connected_components_intersecting_initial_box",
+        "component_count": 93,
+        "selected_component_count": 86,
+        "selected_component_samples": [
+          {
+            "bbox": [
+              833,
+              455,
+              1550,
+              798
+            ],
+            "pixel_count": 97747,
+            "overlap_pixels": 93270
+          },
+          {
+            "bbox": [
+              993,
+              484,
+              994,
+              485
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              1489,
+              492,
+              1490,
+              493
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              1336,
+              493,
+              1489,
+              566
+            ],
+            "pixel_count": 2866,
+            "overlap_pixels": 2866
+          },
+          {
+            "bbox": [
+              1373,
+              531,
+              1374,
+              532
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              1350,
+              532,
+              1373,
+              547
+            ],
+            "pixel_count": 58,
+            "overlap_pixels": 58
+          },
+          {
+            "bbox": [
+              1418,
+              536,
+              1571,
+              593
+            ],
+            "pixel_count": 5124,
+            "overlap_pixels": 5124
+          },
+          {
+            "bbox": [
+              1200,
+              543,
+              1267,
+              587
+            ],
+            "pixel_count": 281,
+            "overlap_pixels": 281
+          },
+          {
+            "bbox": [
+              1348,
+              547,
+              1350,
+              548
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              1347,
+              548,
+              1348,
+              549
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              1329,
+              550,
+              1330,
+              551
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              1313,
+              557,
+              1314,
+              558
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              1322,
+              557,
+              1323,
+              558
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              1311,
+              558,
+              1313,
+              559
+            ],
+            "pixel_count": 2,
+            "overlap_pixels": 2
+          },
+          {
+            "bbox": [
+              1321,
+              558,
+              1322,
+              559
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              1303,
+              559,
+              1311,
+              563
+            ],
+            "pixel_count": 11,
+            "overlap_pixels": 11
+          },
+          {
+            "bbox": [
+              1318,
+              559,
+              1321,
+              561
+            ],
+            "pixel_count": 4,
+            "overlap_pixels": 4
+          },
+          {
+            "bbox": [
+              1307,
+              564,
+              1308,
+              565
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          },
+          {
+            "bbox": [
+              1300,
+              566,
+              1307,
+              570
+            ],
+            "pixel_count": 16,
+            "overlap_pixels": 16
+          },
+          {
+            "bbox": [
+              1267,
+              567,
+              1268,
+              568
+            ],
+            "pixel_count": 1,
+            "overlap_pixels": 1
+          }
+        ],
+        "source_edge_safe_margin": 16,
+        "final_edge_margins": {
+          "left": 16,
+          "top": 16,
+          "right": 16,
+          "bottom": 16
+        },
+        "edge_warnings": []
+      },
+      "output_layout": {
+        "content_bbox": [
+          0,
+          0,
+          857,
+          367
+        ],
+        "centroid_before_padding": [
+          343.94,
+          183.03
+        ],
+        "padding": {
+          "left": 184,
+          "top": 25,
+          "right": 24,
+          "bottom": 24
+        },
+        "centroid_offset_after_padding": {
+          "x": -4.56,
+          "y": 0.03
+        }
+      },
+      "source": "assets/characters/shimakaze/battle/shimakaze_anim_keyframes_sheet.png",
+      "tags": [
+        "anim",
+        "firepower"
+      ]
+    }
+  ],
+  "config": {
+    "bind_points": "assets/characters/shimakaze/processed/config/shimakaze_meta_bind_points.json",
+    "animation": "assets/characters/shimakaze/processed/config/shimakaze_anim_config.json",
+    "vfx": "assets/characters/shimakaze/processed/config/shimakaze_vfx_config.json"
+  }
+}

@@ -387,6 +387,7 @@ target_type
 cast_range
 effect_type
 effect_value
+modifiers
 duration
 vfx_id
 ```
@@ -400,6 +401,7 @@ vfx_id
 - `cast_range`：释放距离。
 - `effect_type`：效果类型，例如炮击强化、鱼雷发射、空袭、防空强化、闪避提升。
 - `effect_value`：效果数值。
+- `modifiers`：结构化增益/减益列表，复杂技能优先使用该字段。
 - `duration`：持续时间，瞬发技能可为 0。
 - `vfx_id`：表现资源标识。
 
@@ -408,3 +410,41 @@ MVP 约定：
 - 技能冷却从开局起算。
 - 技能可以不需要目标，也可以是目标指向性技能。
 - 技能不设计射角。
+
+## 15. 增益与减益配置
+
+基础字段：
+
+```text
+stat
+operation
+value
+category
+stack_group
+stack_rule
+source_type
+duration
+limit_min
+limit_max
+```
+
+字段含义：
+
+- `stat`：被修改属性，例如 `ReloadSpeed`、`Damage`、`AccuracyPoint`、`Evasion`、`Armor`、`DetectionRange`、`ConcealmentDistance`。
+- `operation`：运算类型，可为 `FlatAdd`、`PercentAdd`、`StateMultiply`、`IndependentMultiply`。
+- `value`：修正值。百分比使用小数，例如 `0.20` 表示 `+20%`。
+- `category`：增益类别，例如 `GunDamage`、`TorpedoDamage`、`AllDamage`、`AntiAirReloadSpeed`。
+- `stack_group`：叠加组。同组效果根据 `stack_rule` 处理。
+- `stack_rule`：叠加方式，可为 `Add`、`Highest`、`Refresh`、`Replace`。
+- `source_type`：来源，例如技能、阵型、状态、关卡或装备。
+- `duration`：持续时间，永久效果可为 0 或使用专用标记。
+- `limit_min`：该属性最终下限，可选。
+- `limit_max`：该属性最终上限，可选。
+
+MVP 约定：
+
+- 普通技能默认使用 `FlatAdd` 或 `PercentAdd`。
+- 阵型、潜航、损伤状态默认使用 `StateMultiply`。
+- `IndependentMultiply` 只用于明确标记的少量核心技能。
+- 命中率增益使用 `AccuracyPoint`，表示增加百分点，不使用命中倍率。
+- 装填增益使用 `ReloadSpeed`，不使用普通的装填时间百分比减少。

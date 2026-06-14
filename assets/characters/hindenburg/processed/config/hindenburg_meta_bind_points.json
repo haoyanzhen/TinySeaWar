@@ -5,65 +5,94 @@
   "assets": {
     "hindenburg_battle_body_r.png": {
       "origin": {
-        "x": 260,
-        "y": 325,
-        "note": "battle body sea contact"
+        "x": 135,
+        "y": 260,
+        "note": "battle body sea contact below the boots"
       },
       "rig_mount": {
-        "x": 135,
-        "y": 210,
+        "x": 58,
+        "y": 185,
         "note": "rear heavy-cruiser rig mount"
       },
       "fire_control_point": {
-        "x": 340,
-        "y": 155,
-        "note": "rangefinder visor direction"
+        "x": 220,
+        "y": 115,
+        "note": "single-eye rangefinder direction"
       }
     },
     "hindenburg_battle_rig_base.png": {
       "origin": {
-        "x": 250,
-        "y": 315,
-        "note": "heavy cruiser rig center"
+        "x": 185,
+        "y": 292,
+        "note": "heavy-cruiser hull visual center"
       },
       "turret_mount_01": {
-        "x": 405,
-        "y": 235,
-        "note": "front heavy turret mount"
+        "x": 265,
+        "y": 255,
+        "note": "forward heavy turret mount"
       },
       "fire_control_point": {
-        "x": 320,
-        "y": 105,
+        "x": 205,
+        "y": 92,
         "note": "central fire-control tower"
       }
     },
     "hindenburg_battle_turret_main_01.png": {
       "origin": {
         "x": 165,
-        "y": 105,
+        "y": 142,
         "note": "turret rotation center"
       },
       "muzzle_01": {
-        "x": 300,
-        "y": 72,
+        "x": 320,
+        "y": 92,
         "note": "upper barrel muzzle"
       },
       "muzzle_02": {
-        "x": 300,
-        "y": 115,
+        "x": 320,
+        "y": 128,
+        "note": "lower barrel muzzle"
+      }
+    },
+    "hindenburg_battle_turret_main_02.png": {
+      "origin": {
+        "x": 162,
+        "y": 138,
+        "note": "turret rotation center"
+      },
+      "muzzle_01": {
+        "x": 316,
+        "y": 91,
+        "note": "upper barrel muzzle"
+      },
+      "muzzle_02": {
+        "x": 316,
+        "y": 126,
         "note": "lower barrel muzzle"
       }
     },
     "hindenburg_battle_fire_control_node.png": {
       "origin": {
-        "x": 92,
-        "y": 86,
-        "note": "fire-control node center"
+        "x": 108,
+        "y": 278,
+        "note": "fire-control pedestal pivot"
       },
       "scan_origin": {
-        "x": 112,
-        "y": 78,
-        "note": "optical scan origin"
+        "x": 110,
+        "y": 112,
+        "note": "optical scan origin at reticle center"
+      }
+    },
+    "hindenburg_battle_lock_emitter_node.png": {
+      "origin": {
+        "x": 108,
+        "y": 170,
+        "note": "lock emitter base"
+      },
+      "scan_origin": {
+        "x": 108,
+        "y": 93,
+        "note": "cold-white lock emitter center"
       }
     }
   }

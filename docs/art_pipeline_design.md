@@ -47,6 +47,7 @@ assets/characters/{id}/meta/
 {id}_ui_sheet.png
 {id}_battle_asset_sheet.png
 {id}_anim_keyframes_sheet.png
+{id}_anim_{state}_4f_sheet.png
 {id}_vfx_reference_sheet.png
 {id}_trial_log.md
 ```
@@ -80,6 +81,7 @@ assets/characters/{id}/postprocess_plan.json
 - 按配置裁切 sheet。
 - 将初始裁剪框视为目标提示，而不是最终边界；在源图 alpha 上查找与初始框相交的前景连通块，合并这些连通块的真实包围盒，再加安全边距得到最终裁剪框。
 - 连通块分析可以忽略接近全透明的低 alpha 桥接像素，避免将相邻 UI 件误判为同一主体；该阈值只用于确定裁剪边界，不修改最终输出的原始 alpha 纹理。
+- 对明确只应包含一个连通主体的舰装底座、炮塔或 Q 版头像，可在角色规格中显式启用「保留最大前景组件」或「清理小型孤岛」；不得对烟雾、火花、水花等多组件特效全局启用。
 - trim alpha。
 - 根据 alpha 包围盒和 alpha 加权重心添加平衡透明 padding，使内容尽量位于子图中心。
 - 输出 RGBA PNG。
@@ -90,6 +92,10 @@ assets/characters/{id}/postprocess_plan.json
 - 按需生成 QA 预览页。
 - 自动检查 RGBA、空 alpha、贴边、缺文件和 JSON 可解析性。
 - 按单角色资产契约检查完整性；必需项缺失时将角色包标记为 `incomplete`，即使已有 PNG 都可读也不得通过交付。
+- 检查动画和 VFX 配置的引用文件是否存在、舰种数据是否一致，以及绑定点是否在子图边界内并且靠近非透明画面。
+- MVP 动画源图默认每个状态生成 2x2 排列的连续四帧，拆分后在 `anim_config.json` 中记录有序帧、FPS 和循环标记。待机/移动使用小幅循环；攻击/受击/火力使用预备、峰值、反馈/后坐和复位。
+- 同一状态的四张透明帧需要归一到相同画布尺寸并保持稳定视觉中心，避免 Godot `AnimatedSprite2D` 播放时产生画布跳动。
+- 四帧画面驱动角色姿态；精确炮塔旋转、炮口、投射物、后坐位移和 VFX 仍使用 Godot 独立节点与补间。
 
 ## 5. Codex Computer Use 视觉确认
 
@@ -162,5 +168,23 @@ python3 tools/art_pipeline/build_edge_qa_preview.py
 python3 tools/art_pipeline/check_processed_assets.py
 python3 tools/art_pipeline/check_character_asset_contract.py
 ```
+
+## 8. 批量生产控制
+
+批量生产使用：
+
+```bash
+python3 tools/art_pipeline/batch_character_art.py
+python3 tools/art_pipeline/batch_character_art.py bismarck --process --preview
+```
+
+Dry-run 会检查基础源图、五套四帧动画源图、裁剪规格、运行时数据和资产契约。`--process` 按角色独立执行后处理，单个角色失败不中断后续角色，结果写入：
+
+```text
+assets/characters/qa/character_art_batch_report.json
+assets/characters/qa/character_art_batch_report.md
+```
+
+角色只有在源图齐全、裁剪/数据配置齐全、后处理契约通过时才标记为 `batch_ready`。图像生成仍需按角色建立和验收风格锚点，不建议在未验收锚点时一次生成整个角色包。
 
 其中 `--preview` 或 `build_edge_qa_preview.py` 负责生成视觉检查页，Codex 使用 Computer Use 完成视觉确认后，再将结果写入 QA 报告。默认后处理应优先保持快路径，不自动生成大体积嵌入式预览页。

@@ -203,6 +203,44 @@ def remove_small_alpha_islands(img: Image.Image, relative_area: float = 0.005) -
     return cleaned
 
 
+def keep_largest_alpha_component(img: Image.Image) -> Image.Image:
+    alpha = img.getchannel("A")
+    pixels = alpha.load()
+    seen: set[tuple[int, int]] = set()
+    components: list[list[tuple[int, int]]] = []
+    for y in range(alpha.height):
+        for x in range(alpha.width):
+            if (x, y) in seen or pixels[x, y] == 0:
+                continue
+            q: deque[tuple[int, int]] = deque([(x, y)])
+            seen.add((x, y))
+            component: list[tuple[int, int]] = []
+            while q:
+                cx, cy = q.popleft()
+                component.append((cx, cy))
+                for nx, ny in ((cx - 1, cy), (cx + 1, cy), (cx, cy - 1), (cx, cy + 1)):
+                    if nx < 0 or nx >= alpha.width or ny < 0 or ny >= alpha.height:
+                        continue
+                    if (nx, ny) in seen or pixels[nx, ny] == 0:
+                        continue
+                    seen.add((nx, ny))
+                    q.append((nx, ny))
+            components.append(component)
+    if not components:
+        return img
+    largest = max(components, key=len)
+    keep = set(largest)
+    cleaned = img.copy()
+    cleaned_alpha = cleaned.getchannel("A")
+    cleaned_pixels = cleaned_alpha.load()
+    for y in range(alpha.height):
+        for x in range(alpha.width):
+            if pixels[x, y] and (x, y) not in keep:
+                cleaned_pixels[x, y] = 0
+    cleaned.putalpha(cleaned_alpha)
+    return cleaned
+
+
 def intersects(a: tuple[int, int, int, int], b: tuple[int, int, int, int]) -> bool:
     return a[0] < b[2] and a[2] > b[0] and a[1] < b[3] and a[3] > b[1]
 
@@ -331,6 +369,8 @@ def save_crop(
 ) -> dict[str, Any]:
     final_box, source_crop_qa = determine_source_box(src_alpha, box)
     crop = src_alpha.crop(final_box)
+    if "keep_largest_component" in tags:
+        crop = keep_largest_alpha_component(crop)
     if "remove_small_islands" in tags:
         crop = remove_small_alpha_islands(crop)
     crop = trim_alpha(crop, pad=0)
@@ -351,77 +391,131 @@ def rel(path: Path) -> str:
     return str(path.relative_to(ROOT))
 
 
+def normalize_animation_sequence_canvases(character_id: str, states: dict[str, Any]) -> None:
+    anim_dir = CHAR_ROOT / character_id / "processed" / "anim"
+    for state in states:
+        paths = [anim_dir / f"{character_id}_anim_{state}_frame_{index:02d}.png" for index in range(1, 5)]
+        images = [Image.open(path).convert("RGBA") for path in paths]
+        width = max(image.width for image in images)
+        height = max(image.height for image in images)
+        for path, image in zip(paths, images):
+            canvas = Image.new("RGBA", (width, height), (0, 0, 0, 0))
+            canvas.alpha_composite(image, ((width - image.width) // 2, (height - image.height) // 2))
+            canvas.save(path)
+
+
 def point(x: int, y: int, note: str) -> dict[str, Any]:
     return {"x": x, "y": y, "note": note}
 
 
 SPECS: dict[str, list[CropSpec]] = {
     "enterprise_cv6": [
-        CropSpec("concept/enterprise_cv6_concept_full.png", "processed/ui", "enterprise_cv6_illust_full_alpha.png", (0, 0, 1536, 1024), ("illustration", "full_body")),
-        CropSpec("ui/enterprise_cv6_illust_half.png", "processed/ui", "enterprise_cv6_illust_half_alpha.png", (0, 0, 1536, 1024), ("illustration",)),
-        CropSpec("ui/enterprise_cv6_illust_skill_cutin.png", "processed/ui", "enterprise_cv6_illust_skill_cutin_alpha.png", (0, 0, 1536, 1024), ("cutin",)),
-        CropSpec("ui/enterprise_cv6_ui_sheet.png", "processed/ui", "enterprise_cv6_ui_portrait.png", (40, 200, 560, 795), ("ui", "portrait")),
-        CropSpec("ui/enterprise_cv6_ui_sheet.png", "processed/ui", "enterprise_cv6_ui_portrait_small.png", (625, 350, 820, 660), ("ui", "portrait_small")),
-        CropSpec("ui/enterprise_cv6_ui_sheet.png", "processed/ui", "enterprise_cv6_ui_skill_airstrike.png", (1015, 285, 1490, 780), ("ui", "skill")),
-        CropSpec("battle/enterprise_cv6_battle_asset_sheet.png", "processed/battle", "enterprise_cv6_battle_body_r.png", (40, 70, 500, 460), ("battle", "body")),
-        CropSpec("battle/enterprise_cv6_battle_asset_sheet.png", "processed/battle", "enterprise_cv6_battle_rig_base.png", (535, 90, 1485, 455), ("battle", "rig")),
-        CropSpec("battle/enterprise_cv6_battle_asset_sheet.png", "processed/battle", "enterprise_cv6_battle_aircraft_01.png", (85, 505, 310, 625), ("battle", "aircraft")),
-        CropSpec("battle/enterprise_cv6_battle_asset_sheet.png", "processed/battle", "enterprise_cv6_battle_aircraft_02.png", (400, 505, 640, 630), ("battle", "aircraft")),
-        CropSpec("battle/enterprise_cv6_battle_asset_sheet.png", "processed/battle", "enterprise_cv6_battle_aircraft_03.png", (710, 505, 950, 625), ("battle", "aircraft")),
-        CropSpec("battle/enterprise_cv6_battle_asset_sheet.png", "processed/battle", "enterprise_cv6_battle_aircraft_04.png", (1080, 505, 1320, 625), ("battle", "aircraft")),
-        CropSpec("battle/enterprise_cv6_battle_asset_sheet.png", "processed/vfx", "enterprise_cv6_vfx_airstrike_marker_blue.png", (95, 665, 340, 765), ("vfx", "area")),
-        CropSpec("battle/enterprise_cv6_battle_asset_sheet.png", "processed/vfx", "enterprise_cv6_vfx_airstrike_marker_gold.png", (420, 665, 665, 765), ("vfx", "area")),
-        CropSpec("battle/enterprise_cv6_battle_asset_sheet.png", "processed/vfx", "enterprise_cv6_vfx_wake_fast.png", (40, 835, 350, 960), ("vfx", "wake")),
-        CropSpec("battle/enterprise_cv6_battle_asset_sheet.png", "processed/vfx", "enterprise_cv6_vfx_wake_turn.png", (360, 805, 620, 945), ("vfx", "wake")),
-        CropSpec("vfx/enterprise_cv6_vfx_reference_sheet.png", "processed/vfx", "enterprise_cv6_vfx_aircraft_beam_single.png", (80, 90, 660, 220), ("vfx", "aircraft_path")),
-        CropSpec("vfx/enterprise_cv6_vfx_reference_sheet.png", "processed/vfx", "enterprise_cv6_vfx_aircraft_path_arc.png", (760, 45, 1465, 215), ("vfx", "aircraft_path")),
-        CropSpec("vfx/enterprise_cv6_vfx_reference_sheet.png", "processed/vfx", "enterprise_cv6_vfx_aircraft_formation_trails.png", (95, 290, 650, 405), ("vfx", "aircraft_path")),
-        CropSpec("vfx/enterprise_cv6_vfx_reference_sheet.png", "processed/vfx", "enterprise_cv6_vfx_aircraft_path_arrows.png", (745, 230, 1465, 430), ("vfx", "aircraft_path")),
-        CropSpec("vfx/enterprise_cv6_vfx_reference_sheet.png", "processed/vfx", "enterprise_cv6_vfx_airstrike_area.png", (80, 445, 650, 620), ("vfx", "area")),
-        CropSpec("vfx/enterprise_cv6_vfx_reference_sheet.png", "processed/vfx", "enterprise_cv6_vfx_deck_lane.png", (785, 450, 1440, 590), ("vfx", "deck_lane")),
-        CropSpec("vfx/enterprise_cv6_vfx_reference_sheet.png", "processed/vfx", "enterprise_cv6_vfx_water_splash.png", (70, 660, 680, 760), ("vfx", "splash")),
-        CropSpec("vfx/enterprise_cv6_vfx_reference_sheet.png", "processed/vfx", "enterprise_cv6_vfx_hit_sparks.png", (760, 655, 1405, 790), ("vfx", "hit")),
-        CropSpec("battle/enterprise_cv6_anim_keyframes_sheet.png", "processed/anim", "enterprise_cv6_anim_idle_keyframe.png", (0, 30, 590, 445), ("anim", "idle")),
-        CropSpec("battle/enterprise_cv6_anim_keyframes_sheet.png", "processed/anim", "enterprise_cv6_anim_move_keyframe.png", (590, 120, 1100, 445), ("anim", "move")),
-        CropSpec("battle/enterprise_cv6_anim_keyframes_sheet.png", "processed/anim", "enterprise_cv6_anim_attack_keyframe.png", (1120, 45, 1770, 445), ("anim", "attack")),
-        CropSpec("battle/enterprise_cv6_anim_keyframes_sheet.png", "processed/anim", "enterprise_cv6_anim_hit_keyframe.png", (180, 455, 810, 885), ("anim", "hit")),
-        CropSpec("battle/enterprise_cv6_anim_keyframes_sheet.png", "processed/anim", "enterprise_cv6_anim_firepower_keyframe.png", (825, 435, 1670, 887), ("anim", "firepower")),
+        CropSpec("concept/enterprise_cv6_concept_full.png", "processed/ui", "enterprise_cv6_illust_full_alpha.png", (0, 0, 1023, 1537), ("illustration", "full_body")),
+        CropSpec("ui/enterprise_cv6_illust_half.png", "processed/ui", "enterprise_cv6_illust_half_alpha.png", (0, 0, 1402, 1122), ("illustration",)),
+        CropSpec("ui/enterprise_cv6_illust_skill_cutin.png", "processed/ui", "enterprise_cv6_illust_skill_cutin_alpha.png", (0, 0, 1774, 887), ("cutin",)),
+        CropSpec("ui/enterprise_cv6_ui_sheet.png", "processed/ui", "enterprise_cv6_ui_portrait.png", (16, 16, 368, 496), ("ui", "portrait")),
+        CropSpec("ui/enterprise_cv6_ui_sheet.png", "processed/ui", "enterprise_cv6_ui_portrait_small.png", (400, 16, 752, 496), ("ui", "portrait_small")),
+        CropSpec("ui/enterprise_cv6_ui_sheet.png", "processed/ui", "enterprise_cv6_ui_chibi_head.png", (784, 16, 1136, 496), ("ui", "chibi")),
+        CropSpec("ui/enterprise_cv6_ui_sheet.png", "processed/ui", "enterprise_cv6_expr_default.png", (1168, 16, 1520, 496), ("ui", "expression")),
+        CropSpec("ui/enterprise_cv6_ui_sheet.png", "processed/ui", "enterprise_cv6_expr_serious.png", (16, 528, 368, 1008), ("ui", "expression", "serious")),
+        CropSpec("ui/enterprise_cv6_ui_sheet.png", "processed/ui", "enterprise_cv6_expr_hit.png", (400, 528, 752, 1008), ("ui", "expression", "hit")),
+        CropSpec("ui/enterprise_cv6_ui_sheet.png", "processed/ui", "enterprise_cv6_ui_skill_airstrike.png", (784, 528, 1136, 1008), ("ui", "skill")),
+        CropSpec("ui/enterprise_cv6_ui_sheet.png", "processed/ui", "enterprise_cv6_ui_class_carrier.png", (1168, 528, 1520, 1008), ("ui", "class_icon")),
+        CropSpec("battle/enterprise_cv6_battle_asset_sheet.png", "processed/battle", "enterprise_cv6_battle_body_r.png", (16, 16, 300, 400), ("battle", "body")),
+        CropSpec("battle/enterprise_cv6_battle_asset_sheet.png", "processed/battle", "enterprise_cv6_battle_rig_base.png", (300, 16, 840, 420), ("battle", "rig")),
+        CropSpec("battle/enterprise_cv6_battle_asset_sheet.png", "processed/battle", "enterprise_cv6_battle_aircraft_01.png", (850, 40, 1190, 390), ("battle", "aircraft")),
+        CropSpec("battle/enterprise_cv6_battle_asset_sheet.png", "processed/battle", "enterprise_cv6_battle_aircraft_02.png", (1210, 40, 1520, 390), ("battle", "aircraft")),
+        CropSpec("battle/enterprise_cv6_battle_asset_sheet.png", "processed/battle", "enterprise_cv6_battle_aircraft_03.png", (16, 420, 370, 700), ("battle", "aircraft")),
+        CropSpec("battle/enterprise_cv6_battle_asset_sheet.png", "processed/battle", "enterprise_cv6_battle_aircraft_04.png", (390, 420, 750, 700), ("battle", "aircraft")),
+        CropSpec("battle/enterprise_cv6_battle_asset_sheet.png", "processed/battle", "enterprise_cv6_battle_launch_marker.png", (780, 420, 1160, 700), ("battle", "launch_marker")),
+        CropSpec("battle/enterprise_cv6_battle_asset_sheet.png", "processed/battle", "enterprise_cv6_battle_air_control_node.png", (1190, 420, 1520, 700), ("battle", "air_control")),
+        CropSpec("battle/enterprise_cv6_battle_asset_sheet.png", "processed/vfx", "enterprise_cv6_vfx_wake_fast.png", (16, 720, 370, 1008), ("vfx", "wake")),
+        CropSpec("battle/enterprise_cv6_battle_asset_sheet.png", "processed/vfx", "enterprise_cv6_vfx_wake_turn.png", (390, 720, 750, 1008), ("vfx", "wake")),
+        CropSpec("battle/enterprise_cv6_battle_asset_sheet.png", "processed/vfx", "enterprise_cv6_vfx_launch_trail.png", (780, 720, 1160, 1008), ("vfx", "aircraft_path")),
+        CropSpec("battle/enterprise_cv6_battle_asset_sheet.png", "processed/vfx", "enterprise_cv6_vfx_deck_hit_sparks.png", (1190, 720, 1520, 1008), ("vfx", "hit")),
+        CropSpec("vfx/enterprise_cv6_vfx_reference_sheet.png", "processed/vfx", "enterprise_cv6_vfx_aircraft_beam_single.png", (16, 16, 368, 325), ("vfx", "aircraft_path")),
+        CropSpec("vfx/enterprise_cv6_vfx_reference_sheet.png", "processed/vfx", "enterprise_cv6_vfx_aircraft_path_arc.png", (400, 16, 752, 325), ("vfx", "aircraft_path")),
+        CropSpec("vfx/enterprise_cv6_vfx_reference_sheet.png", "processed/vfx", "enterprise_cv6_vfx_aircraft_formation_trails.png", (784, 16, 1136, 325), ("vfx", "aircraft_path")),
+        CropSpec("vfx/enterprise_cv6_vfx_reference_sheet.png", "processed/vfx", "enterprise_cv6_vfx_aircraft_path_arrows.png", (1168, 16, 1520, 325), ("vfx", "aircraft_path")),
+        CropSpec("vfx/enterprise_cv6_vfx_reference_sheet.png", "processed/vfx", "enterprise_cv6_vfx_airstrike_area.png", (16, 349, 368, 667), ("vfx", "area")),
+        CropSpec("vfx/enterprise_cv6_vfx_reference_sheet.png", "processed/vfx", "enterprise_cv6_vfx_deck_launch_lane.png", (400, 349, 752, 667), ("vfx", "deck_lane")),
+        CropSpec("vfx/enterprise_cv6_vfx_reference_sheet.png", "processed/vfx", "enterprise_cv6_vfx_deck_recovery_lane.png", (784, 349, 1136, 667), ("vfx", "deck_lane")),
+        CropSpec("vfx/enterprise_cv6_vfx_reference_sheet.png", "processed/vfx", "enterprise_cv6_vfx_aa_interception_ring.png", (1168, 349, 1520, 667), ("vfx", "area")),
+        CropSpec("vfx/enterprise_cv6_vfx_reference_sheet.png", "processed/vfx", "enterprise_cv6_vfx_water_splash.png", (16, 691, 368, 1008), ("vfx", "splash")),
+        CropSpec("vfx/enterprise_cv6_vfx_reference_sheet.png", "processed/vfx", "enterprise_cv6_vfx_hit_sparks.png", (400, 691, 752, 1008), ("vfx", "hit")),
+        CropSpec("vfx/enterprise_cv6_vfx_reference_sheet.png", "processed/vfx", "enterprise_cv6_vfx_wake_reference.png", (784, 691, 1136, 1008), ("vfx", "wake")),
+        CropSpec("vfx/enterprise_cv6_vfx_reference_sheet.png", "processed/vfx", "enterprise_cv6_vfx_command_aura.png", (1168, 691, 1520, 1008), ("vfx", "area")),
+        CropSpec("battle/enterprise_cv6_anim_idle_4f_sheet.png", "processed/anim", "enterprise_cv6_anim_idle_keyframe.png", (80, 60, 547, 567), ("anim", "idle")),
+        CropSpec("battle/enterprise_cv6_anim_move_4f_sheet.png", "processed/anim", "enterprise_cv6_anim_move_keyframe.png", (80, 60, 547, 567), ("anim", "move")),
+        CropSpec("battle/enterprise_cv6_anim_attack_4f_sheet.png", "processed/anim", "enterprise_cv6_anim_attack_keyframe.png", (80, 60, 547, 567), ("anim", "attack")),
+        CropSpec("battle/enterprise_cv6_anim_hit_4f_sheet.png", "processed/anim", "enterprise_cv6_anim_hit_keyframe.png", (80, 60, 547, 567), ("anim", "hit")),
+        CropSpec("battle/enterprise_cv6_anim_firepower_4f_sheet.png", "processed/anim", "enterprise_cv6_anim_firepower_keyframe.png", (80, 60, 547, 567), ("anim", "firepower")),
+        *[
+            CropSpec(
+                f"battle/enterprise_cv6_anim_{state}_4f_sheet.png",
+                "processed/anim",
+                f"enterprise_cv6_anim_{state}_frame_{index:02d}.png",
+                box,
+                ("anim", state, f"frame_{index:02d}"),
+            )
+            for state in ("idle", "move", "attack", "hit", "firepower")
+            for index, box in enumerate(
+                ((80, 60, 547, 567), (707, 60, 1174, 567), (80, 687, 547, 1194), (707, 687, 1174, 1194)),
+                1,
+            )
+        ],
     ],
     "hai_shih": [
         CropSpec("concept/hai_shih_concept_full.png", "processed/ui", "hai_shih_illust_full_alpha.png", (0, 0, 1024, 1536), ("illustration", "full_body")),
-        CropSpec("ui/hai_shih_illust_half.png", "processed/ui", "hai_shih_illust_half_alpha.png", (0, 0, 1024, 1536), ("illustration",)),
-        CropSpec("ui/hai_shih_illust_skill_cutin.png", "processed/ui", "hai_shih_illust_skill_cutin_alpha.png", (0, 0, 1717, 916), ("cutin",)),
-        CropSpec("ui/hai_shih_ui_sheet.png", "processed/ui", "hai_shih_ui_portrait.png", (10, 0, 520, 615), ("ui", "portrait")),
-        CropSpec("ui/hai_shih_ui_sheet.png", "processed/ui", "hai_shih_ui_portrait_small.png", (600, 160, 885, 455), ("ui", "portrait_small")),
-        CropSpec("ui/hai_shih_ui_sheet.png", "processed/ui", "hai_shih_ui_chibi_head.png", (1035, 135, 1360, 455), ("ui", "chibi")),
-        CropSpec("ui/hai_shih_ui_sheet.png", "processed/ui", "hai_shih_expr_default.png", (105, 650, 380, 960), ("ui", "expression")),
-        CropSpec("ui/hai_shih_ui_sheet.png", "processed/ui", "hai_shih_expr_serious.png", (470, 620, 760, 970), ("ui", "expression", "serious")),
-        CropSpec("ui/hai_shih_ui_sheet.png", "processed/ui", "hai_shih_ui_skill_torpedo.png", (840, 625, 1120, 925), ("ui", "skill")),
-        CropSpec("ui/hai_shih_ui_sheet.png", "processed/ui", "hai_shih_ui_class_submarine.png", (1190, 620, 1465, 925), ("ui", "class_icon")),
-        CropSpec("battle/hai_shih_battle_asset_sheet.png", "processed/battle", "hai_shih_battle_body_r.png", (60, 130, 540, 455), ("battle", "body")),
-        CropSpec("battle/hai_shih_battle_asset_sheet.png", "processed/battle", "hai_shih_battle_rig_base.png", (630, 180, 1080, 440), ("battle", "rig")),
-        CropSpec("battle/hai_shih_battle_asset_sheet.png", "processed/battle", "hai_shih_battle_torpedo_tube_01.png", (1205, 85, 1450, 250), ("battle", "torpedo")),
-        CropSpec("battle/hai_shih_battle_asset_sheet.png", "processed/battle", "hai_shih_battle_periscope_node.png", (1215, 285, 1365, 500), ("battle", "periscope")),
-        CropSpec("battle/hai_shih_battle_asset_sheet.png", "processed/battle", "hai_shih_battle_sonar_node.png", (1200, 520, 1390, 760), ("battle", "sonar")),
-        CropSpec("battle/hai_shih_battle_asset_sheet.png", "processed/vfx", "hai_shih_vfx_wake_strip.png", (40, 590, 710, 735), ("vfx", "wake")),
-        CropSpec("battle/hai_shih_battle_asset_sheet.png", "processed/vfx", "hai_shih_vfx_underwater_shadow.png", (45, 745, 690, 900), ("vfx", "shadow")),
-        CropSpec("battle/hai_shih_battle_asset_sheet.png", "processed/vfx", "hai_shih_vfx_bubbles_01.png", (765, 745, 875, 920), ("vfx", "bubble")),
-        CropSpec("battle/hai_shih_battle_asset_sheet.png", "processed/vfx", "hai_shih_vfx_bubbles_02.png", (930, 730, 1075, 930), ("vfx", "bubble")),
-        CropSpec("battle/hai_shih_battle_asset_sheet.png", "processed/vfx", "hai_shih_vfx_bubbles_03.png", (1100, 710, 1270, 930), ("vfx", "bubble")),
-        CropSpec("battle/hai_shih_battle_asset_sheet.png", "processed/vfx", "hai_shih_vfx_bubbles_04.png", (1300, 705, 1490, 930), ("vfx", "bubble")),
-        CropSpec("vfx/hai_shih_vfx_reference_sheet.png", "processed/vfx", "hai_shih_vfx_torpedo_trail.png", (60, 50, 1260, 190), ("vfx", "torpedo")),
-        CropSpec("vfx/hai_shih_vfx_reference_sheet.png", "processed/vfx", "hai_shih_vfx_torpedo_launch_flash.png", (55, 305, 570, 455), ("vfx", "torpedo")),
-        CropSpec("vfx/hai_shih_vfx_reference_sheet.png", "processed/vfx", "hai_shih_vfx_sonar_pulse.png", (590, 225, 950, 560), ("vfx", "sonar")),
-        CropSpec("vfx/hai_shih_vfx_reference_sheet.png", "processed/vfx", "hai_shih_vfx_bubble_trail.png", (1100, 270, 1450, 470), ("vfx", "bubble")),
-        CropSpec("vfx/hai_shih_vfx_reference_sheet.png", "processed/vfx", "hai_shih_vfx_shadow_fade.png", (65, 530, 760, 720), ("vfx", "shadow")),
-        CropSpec("vfx/hai_shih_vfx_reference_sheet.png", "processed/vfx", "hai_shih_vfx_periscope_glint.png", (1070, 500, 1320, 730), ("vfx", "periscope")),
-        CropSpec("vfx/hai_shih_vfx_reference_sheet.png", "processed/vfx", "hai_shih_vfx_water_ripple.png", (85, 790, 620, 960), ("vfx", "ripple")),
-        CropSpec("vfx/hai_shih_vfx_reference_sheet.png", "processed/vfx", "hai_shih_vfx_stealth_shimmer.png", (850, 800, 1380, 965), ("vfx", "stealth")),
-        CropSpec("battle/hai_shih_anim_keyframes_sheet.png", "processed/anim", "hai_shih_anim_idle_keyframe.png", (80, 50, 600, 410), ("anim", "idle")),
-        CropSpec("battle/hai_shih_anim_keyframes_sheet.png", "processed/anim", "hai_shih_anim_move_keyframe.png", (610, 120, 1120, 410), ("anim", "move")),
-        CropSpec("battle/hai_shih_anim_keyframes_sheet.png", "processed/anim", "hai_shih_anim_attack_keyframe.png", (1220, 40, 1750, 405), ("anim", "attack")),
-        CropSpec("battle/hai_shih_anim_keyframes_sheet.png", "processed/anim", "hai_shih_anim_hit_keyframe.png", (330, 430, 845, 850), ("anim", "hit")),
-        CropSpec("battle/hai_shih_anim_keyframes_sheet.png", "processed/anim", "hai_shih_anim_firepower_keyframe.png", (900, 490, 1700, 820), ("anim", "firepower")),
+        CropSpec("ui/hai_shih_illust_half.png", "processed/ui", "hai_shih_illust_half_alpha.png", (0, 0, 1254, 1254), ("illustration",)),
+        CropSpec("ui/hai_shih_illust_skill_cutin.png", "processed/ui", "hai_shih_illust_skill_cutin_alpha.png", (0, 0, 1536, 1024), ("cutin",)),
+        CropSpec("ui/hai_shih_ui_sheet.png", "processed/ui", "hai_shih_ui_portrait.png", (45, 45, 268, 582), ("ui", "portrait")),
+        CropSpec("ui/hai_shih_ui_sheet.png", "processed/ui", "hai_shih_ui_portrait_small.png", (358, 45, 581, 582), ("ui", "portrait_small")),
+        CropSpec("ui/hai_shih_ui_sheet.png", "processed/ui", "hai_shih_ui_chibi_head.png", (672, 45, 895, 582), ("ui", "chibi")),
+        CropSpec("ui/hai_shih_ui_sheet.png", "processed/ui", "hai_shih_expr_default.png", (985, 45, 1208, 582), ("ui", "expression")),
+        CropSpec("ui/hai_shih_ui_sheet.png", "processed/ui", "hai_shih_expr_serious.png", (45, 672, 268, 1209), ("ui", "expression", "serious")),
+        CropSpec("ui/hai_shih_ui_sheet.png", "processed/ui", "hai_shih_expr_hit.png", (358, 672, 581, 1209), ("ui", "expression", "hit")),
+        CropSpec("ui/hai_shih_ui_sheet.png", "processed/ui", "hai_shih_ui_skill_torpedo.png", (672, 672, 895, 1209), ("ui", "skill")),
+        CropSpec("ui/hai_shih_ui_sheet.png", "processed/ui", "hai_shih_ui_class_submarine.png", (985, 672, 1208, 1209), ("ui", "class_icon")),
+        CropSpec("battle/hai_shih_battle_asset_sheet.png", "processed/battle", "hai_shih_battle_body_r.png", (45, 45, 268, 373), ("battle", "body")),
+        CropSpec("battle/hai_shih_battle_asset_sheet.png", "processed/battle", "hai_shih_battle_rig_base.png", (358, 45, 581, 373), ("battle", "rig")),
+        CropSpec("battle/hai_shih_battle_asset_sheet.png", "processed/battle", "hai_shih_battle_torpedo_tube_01.png", (760, 90, 900, 330), ("battle", "torpedo")),
+        CropSpec("battle/hai_shih_battle_asset_sheet.png", "processed/battle", "hai_shih_battle_periscope_node.png", (985, 45, 1208, 373), ("battle", "periscope")),
+        CropSpec("battle/hai_shih_battle_asset_sheet.png", "processed/battle", "hai_shih_battle_sonar_node.png", (45, 463, 268, 791), ("battle", "sonar")),
+        CropSpec("battle/hai_shih_battle_asset_sheet.png", "processed/battle", "hai_shih_battle_guide_light_node.png", (358, 463, 581, 791), ("battle", "guide_light")),
+        CropSpec("battle/hai_shih_battle_asset_sheet.png", "processed/vfx", "hai_shih_vfx_wake_short.png", (672, 463, 895, 791), ("vfx", "wake")),
+        CropSpec("battle/hai_shih_battle_asset_sheet.png", "processed/vfx", "hai_shih_vfx_wake_turn.png", (985, 463, 1208, 791), ("vfx", "wake")),
+        CropSpec("battle/hai_shih_battle_asset_sheet.png", "processed/vfx", "hai_shih_vfx_underwater_shadow.png", (45, 881, 268, 1209), ("vfx", "shadow")),
+        CropSpec("battle/hai_shih_battle_asset_sheet.png", "processed/vfx", "hai_shih_vfx_bubbles_small.png", (358, 881, 581, 1209), ("vfx", "bubble")),
+        CropSpec("battle/hai_shih_battle_asset_sheet.png", "processed/vfx", "hai_shih_vfx_bubbles_medium.png", (672, 881, 895, 1209), ("vfx", "bubble")),
+        CropSpec("battle/hai_shih_battle_asset_sheet.png", "processed/vfx", "hai_shih_vfx_submerged_launch_trail.png", (985, 881, 1208, 1209), ("vfx", "torpedo")),
+        CropSpec("vfx/hai_shih_vfx_reference_sheet.png", "processed/vfx", "hai_shih_vfx_torpedo_trail.png", (45, 45, 268, 373), ("vfx", "torpedo")),
+        CropSpec("vfx/hai_shih_vfx_reference_sheet.png", "processed/vfx", "hai_shih_vfx_torpedo_launch_flash.png", (358, 45, 581, 373), ("vfx", "torpedo")),
+        CropSpec("vfx/hai_shih_vfx_reference_sheet.png", "processed/vfx", "hai_shih_vfx_sonar_pulse.png", (672, 45, 895, 373), ("vfx", "sonar")),
+        CropSpec("vfx/hai_shih_vfx_reference_sheet.png", "processed/vfx", "hai_shih_vfx_periscope_glint.png", (985, 45, 1208, 373), ("vfx", "periscope")),
+        CropSpec("vfx/hai_shih_vfx_reference_sheet.png", "processed/vfx", "hai_shih_vfx_stealth_shimmer.png", (45, 463, 268, 791), ("vfx", "stealth")),
+        CropSpec("vfx/hai_shih_vfx_reference_sheet.png", "processed/vfx", "hai_shih_vfx_shadow_fade.png", (358, 463, 581, 791), ("vfx", "shadow")),
+        CropSpec("vfx/hai_shih_vfx_reference_sheet.png", "processed/vfx", "hai_shih_vfx_bubble_stream_small.png", (672, 463, 895, 791), ("vfx", "bubble")),
+        CropSpec("vfx/hai_shih_vfx_reference_sheet.png", "processed/vfx", "hai_shih_vfx_bubble_stream_large.png", (985, 463, 1208, 791), ("vfx", "bubble")),
+        CropSpec("vfx/hai_shih_vfx_reference_sheet.png", "processed/vfx", "hai_shih_vfx_water_ripple.png", (45, 881, 268, 1209), ("vfx", "ripple")),
+        CropSpec("vfx/hai_shih_vfx_reference_sheet.png", "processed/vfx", "hai_shih_vfx_water_splash.png", (358, 881, 581, 1209), ("vfx", "splash")),
+        CropSpec("vfx/hai_shih_vfx_reference_sheet.png", "processed/vfx", "hai_shih_vfx_ambush_target.png", (672, 881, 895, 1209), ("vfx", "area")),
+        CropSpec("vfx/hai_shih_vfx_reference_sheet.png", "processed/vfx", "hai_shih_vfx_command_aura.png", (985, 881, 1208, 1209), ("vfx", "area")),
+        *[
+            CropSpec(f"battle/hai_shih_anim_{state}_4f_sheet.png", "processed/anim", f"hai_shih_anim_{state}_keyframe.png", (80, 60, 547, 567), ("anim", state))
+            for state in ("idle", "move", "attack", "hit", "firepower")
+        ],
+        *[
+            CropSpec(
+                f"battle/hai_shih_anim_{state}_4f_sheet.png",
+                "processed/anim",
+                f"hai_shih_anim_{state}_frame_{index:02d}.png",
+                box,
+                ("anim", state, f"frame_{index:02d}"),
+            )
+            for state in ("idle", "move", "attack", "hit", "firepower")
+            for index, box in enumerate(((80, 60, 547, 567), (707, 60, 1174, 567), (80, 687, 547, 1194), (707, 687, 1174, 1194)), 1)
+        ],
     ],
     "hindenburg": [
         CropSpec("concept/hindenburg_concept_full.png", "processed/ui", "hindenburg_illust_full_alpha.png", (0, 0, 1024, 1536), ("illustration", "full_body")),
@@ -457,6 +551,65 @@ SPECS: dict[str, list[CropSpec]] = {
         CropSpec("battle/hindenburg_anim_keyframes_sheet.png", "processed/anim", "hindenburg_anim_attack_keyframe.png", (1180, 50, 1720, 420), ("anim", "attack")),
         CropSpec("battle/hindenburg_anim_keyframes_sheet.png", "processed/anim", "hindenburg_anim_hit_keyframe.png", (260, 465, 800, 855), ("anim", "hit")),
         CropSpec("battle/hindenburg_anim_keyframes_sheet.png", "processed/anim", "hindenburg_anim_firepower_keyframe.png", (930, 450, 1675, 865), ("anim", "firepower")),
+        CropSpec("concept/hindenburg_concept_full.png", "processed/ui", "hindenburg_illust_full_alpha.png", (0, 0, 1024, 1536), ("illustration", "full_body")),
+        CropSpec("ui/hindenburg_illust_half.png", "processed/ui", "hindenburg_illust_half_alpha.png", (0, 0, 1254, 1254), ("illustration",)),
+        CropSpec("ui/hindenburg_illust_skill_cutin.png", "processed/ui", "hindenburg_illust_skill_cutin_alpha.png", (0, 0, 1717, 916), ("cutin",)),
+        *[
+            CropSpec("ui/hindenburg_ui_sheet.png", "processed/ui", name, box, tags)
+            for name, box, tags in (
+                ("hindenburg_ui_portrait.png", (45, 45, 268, 582), ("ui", "portrait")),
+                ("hindenburg_ui_portrait_small.png", (358, 45, 581, 582), ("ui", "portrait_small")),
+                ("hindenburg_ui_chibi_head.png", (672, 45, 895, 582), ("ui", "chibi")),
+                ("hindenburg_expr_default.png", (985, 45, 1208, 582), ("ui", "expression")),
+                ("hindenburg_expr_serious.png", (45, 672, 268, 1209), ("ui", "expression", "serious")),
+                ("hindenburg_expr_hit.png", (358, 672, 581, 1209), ("ui", "expression", "hit")),
+                ("hindenburg_ui_skill_fire_control.png", (672, 672, 895, 1209), ("ui", "skill")),
+                ("hindenburg_ui_class_heavy_cruiser.png", (985, 672, 1208, 1209), ("ui", "class_icon")),
+            )
+        ],
+        *[
+            CropSpec("battle/hindenburg_battle_asset_sheet.png", out_dir, name, box, tags)
+            for out_dir, name, box, tags in (
+                ("processed/battle", "hindenburg_battle_body_r.png", (45, 45, 268, 373), ("battle", "body")),
+                ("processed/battle", "hindenburg_battle_rig_base.png", (358, 45, 581, 373), ("battle", "rig")),
+                ("processed/battle", "hindenburg_battle_turret_main_01.png", (672, 45, 895, 373), ("battle", "turret")),
+                ("processed/battle", "hindenburg_battle_turret_main_02.png", (985, 45, 1208, 373), ("battle", "turret")),
+                ("processed/battle", "hindenburg_battle_fire_control_node.png", (45, 463, 268, 791), ("battle", "fire_control")),
+                ("processed/battle", "hindenburg_battle_armor_plate_01.png", (358, 463, 581, 791), ("battle", "armor")),
+                ("processed/battle", "hindenburg_battle_lock_emitter_node.png", (672, 463, 895, 791), ("battle", "fire_control")),
+                ("processed/vfx", "hindenburg_vfx_wake_narrow.png", (985, 463, 1208, 791), ("vfx", "wake")),
+                ("processed/vfx", "hindenburg_vfx_wake_wide.png", (45, 881, 268, 1209), ("vfx", "wake")),
+                ("processed/vfx", "hindenburg_vfx_heavy_muzzle_cone.png", (358, 881, 581, 1209), ("vfx", "muzzle")),
+                ("processed/vfx", "hindenburg_vfx_shell_trail.png", (672, 881, 895, 1209), ("vfx", "shell")),
+                ("processed/vfx", "hindenburg_vfx_armor_sparks.png", (985, 881, 1208, 1209), ("vfx", "hit")),
+            )
+        ],
+        *[
+            CropSpec("vfx/hindenburg_vfx_reference_sheet.png", "processed/vfx", name, box, tags)
+            for name, box, tags in (
+                ("hindenburg_vfx_lock_line.png", (45, 45, 268, 373), ("vfx", "lock")),
+                ("hindenburg_vfx_precision_reticle.png", (358, 45, 581, 373), ("vfx", "reticle")),
+                ("hindenburg_vfx_scan_beam.png", (672, 45, 895, 373), ("vfx", "scan")),
+                ("hindenburg_vfx_range_arc.png", (985, 45, 1208, 373), ("vfx", "range")),
+                ("hindenburg_vfx_muzzle_flash.png", (45, 463, 268, 791), ("vfx", "muzzle")),
+                ("hindenburg_vfx_shell_trails.png", (358, 463, 581, 791), ("vfx", "shell")),
+                ("hindenburg_vfx_suppression_ring.png", (672, 463, 895, 791), ("vfx", "area")),
+                ("hindenburg_vfx_armor_deflection.png", (985, 463, 1208, 791), ("vfx", "hit")),
+                ("hindenburg_vfx_wake.png", (45, 881, 268, 1209), ("vfx", "wake")),
+                ("hindenburg_vfx_turn_wake.png", (358, 881, 581, 1209), ("vfx", "wake")),
+                ("hindenburg_vfx_water_impact.png", (672, 881, 895, 1209), ("vfx", "impact")),
+                ("hindenburg_vfx_smoke_burst.png", (985, 881, 1208, 1209), ("vfx", "smoke")),
+            )
+        ],
+        *[
+            CropSpec(f"battle/hindenburg_anim_{state}_4f_sheet.png", "processed/anim", f"hindenburg_anim_{state}_keyframe.png", (80, 60, 547, 567), ("anim", state))
+            for state in ("idle", "move", "attack", "hit", "firepower")
+        ],
+        *[
+            CropSpec(f"battle/hindenburg_anim_{state}_4f_sheet.png", "processed/anim", f"hindenburg_anim_{state}_frame_{index:02d}.png", box, ("anim", state, f"frame_{index:02d}"))
+            for state in ("idle", "move", "attack", "hit", "firepower")
+            for index, box in enumerate(((80, 60, 547, 567), (707, 60, 1174, 567), (80, 687, 547, 1194), (707, 687, 1174, 1194)), 1)
+        ],
     ],
     "shimakaze": [
         CropSpec("concept/shimakaze_concept_full.png", "processed/ui", "shimakaze_illust_full_alpha.png", (0, 0, 1024, 1536), ("illustration", "full_body")),
@@ -488,6 +641,67 @@ SPECS: dict[str, list[CropSpec]] = {
         CropSpec("battle/shimakaze_anim_keyframes_sheet.png", "processed/anim", "shimakaze_anim_attack_keyframe.png", (1120, 55, 1700, 425), ("anim", "attack")),
         CropSpec("battle/shimakaze_anim_keyframes_sheet.png", "processed/anim", "shimakaze_anim_hit_keyframe.png", (260, 450, 820, 850), ("anim", "hit")),
         CropSpec("battle/shimakaze_anim_keyframes_sheet.png", "processed/anim", "shimakaze_anim_firepower_keyframe.png", (910, 440, 1685, 855), ("anim", "firepower")),
+        CropSpec("concept/shimakaze_concept_full.png", "processed/ui", "shimakaze_illust_full_alpha.png", (0, 0, 1024, 1536), ("illustration", "full_body")),
+        CropSpec("ui/shimakaze_illust_half.png", "processed/ui", "shimakaze_illust_half_alpha.png", (0, 0, 1122, 1402), ("illustration",)),
+        CropSpec("ui/shimakaze_illust_skill_cutin.png", "processed/ui", "shimakaze_illust_skill_cutin_alpha.png", (0, 0, 1774, 887), ("cutin",)),
+        *[
+            CropSpec("ui/shimakaze_ui_sheet.png", "processed/ui", name, box, tags)
+            for name, box, tags in (
+                ("shimakaze_ui_portrait.png", (45, 45, 268, 582), ("ui", "portrait")),
+                ("shimakaze_ui_portrait_small.png", (358, 45, 581, 582), ("ui", "portrait_small")),
+                ("shimakaze_ui_chibi_head.png", (672, 45, 895, 582), ("ui", "chibi")),
+                ("shimakaze_expr_default.png", (985, 45, 1208, 582), ("ui", "expression")),
+                ("shimakaze_expr_serious.png", (45, 672, 268, 1209), ("ui", "expression", "serious")),
+                ("shimakaze_expr_hit.png", (358, 672, 581, 1209), ("ui", "expression", "hit")),
+                ("shimakaze_ui_skill_torpedo_rush.png", (672, 672, 895, 1209), ("ui", "skill")),
+                ("shimakaze_ui_class_destroyer.png", (985, 672, 1208, 1209), ("ui", "class_icon")),
+            )
+        ],
+        *[
+            CropSpec("battle/shimakaze_battle_asset_sheet.png", out_dir, name, box, tags)
+            for out_dir, name, box, tags in (
+                ("processed/battle", "shimakaze_battle_body_r.png", (45, 45, 268, 373), ("battle", "body")),
+                ("processed/battle", "shimakaze_battle_rig_base.png", (358, 45, 581, 373), ("battle", "rig")),
+                ("processed/battle", "shimakaze_battle_torpedo_tube_01.png", (672, 45, 895, 373), ("battle", "torpedo")),
+                ("processed/battle", "shimakaze_battle_torpedo_tube_02.png", (985, 45, 1208, 373), ("battle", "torpedo")),
+                ("processed/battle", "shimakaze_battle_turret_main_01.png", (45, 463, 268, 791), ("battle", "turret")),
+                ("processed/battle", "shimakaze_battle_thruster_01.png", (358, 463, 581, 791), ("battle", "thruster")),
+                ("processed/battle", "shimakaze_battle_warning_emitter.png", (672, 463, 895, 791), ("battle", "torpedo_warning")),
+                ("processed/vfx", "shimakaze_vfx_wake_fast.png", (985, 463, 1208, 791), ("vfx", "wake")),
+                ("processed/vfx", "shimakaze_vfx_wake_long.png", (45, 881, 268, 1209), ("vfx", "wake")),
+                ("processed/vfx", "shimakaze_vfx_torpedo_trail_group.png", (358, 881, 581, 1209), ("vfx", "torpedo")),
+                ("processed/vfx", "shimakaze_vfx_water_impact.png", (672, 881, 895, 1209), ("vfx", "impact")),
+                ("processed/vfx", "shimakaze_vfx_speed_lines.png", (985, 881, 1208, 1209), ("vfx", "speed")),
+            )
+        ],
+        *[
+            CropSpec("vfx/shimakaze_vfx_reference_sheet.png", "processed/vfx", name, box, tags)
+            for name, box, tags in (
+                ("shimakaze_vfx_warning_line_single.png", (45, 45, 268, 373), ("vfx", "torpedo_warning")),
+                ("shimakaze_vfx_warning_fan.png", (358, 45, 581, 373), ("vfx", "torpedo_warning")),
+                ("shimakaze_vfx_torpedo_trail_long.png", (672, 45, 895, 373), ("vfx", "torpedo")),
+                ("shimakaze_vfx_torpedo_trail_curved.png", (985, 45, 1208, 373), ("vfx", "torpedo")),
+                ("shimakaze_vfx_wake_blade.png", (45, 463, 268, 791), ("vfx", "wake")),
+                ("shimakaze_vfx_speed_wake.png", (358, 463, 581, 791), ("vfx", "wake")),
+                ("shimakaze_vfx_wake_surge.png", (672, 463, 895, 791), ("vfx", "wake")),
+                ("shimakaze_vfx_propulsion_burst.png", (985, 463, 1208, 791), ("vfx", "speed")),
+                ("shimakaze_vfx_water_impact_large.png", (45, 881, 268, 1209), ("vfx", "impact")),
+                ("shimakaze_vfx_smoke_screen.png", (358, 881, 581, 1209), ("vfx", "smoke")),
+                ("shimakaze_vfx_speed_lines_reference.png", (672, 881, 895, 1209), ("vfx", "speed")),
+                ("shimakaze_vfx_torpedo_rush_target.png", (985, 881, 1208, 1209), ("vfx", "area")),
+                ("shimakaze_vfx_torpedo_trail_01.png", (672, 45, 895, 373), ("vfx", "torpedo")),
+                ("shimakaze_vfx_torpedo_trail_02.png", (985, 45, 1208, 373), ("vfx", "torpedo")),
+            )
+        ],
+        *[
+            CropSpec(f"battle/shimakaze_anim_{state}_4f_sheet.png", "processed/anim", f"shimakaze_anim_{state}_keyframe.png", (80, 60, 547, 567), ("anim", state))
+            for state in ("idle", "move", "attack", "hit", "firepower")
+        ],
+        *[
+            CropSpec(f"battle/shimakaze_anim_{state}_4f_sheet.png", "processed/anim", f"shimakaze_anim_{state}_frame_{index:02d}.png", box, ("anim", state, f"frame_{index:02d}"))
+            for state in ("idle", "move", "attack", "hit", "firepower")
+            for index, box in enumerate(((80, 60, 547, 567), (707, 60, 1174, 567), (80, 687, 547, 1194), (707, 687, 1174, 1194)), 1)
+        ],
     ],
     "aurora": [
         CropSpec("concept/aurora_concept_full.png", "processed/ui", "aurora_illust_full_alpha.png", (0, 0, 1024, 1536), ("illustration", "full_body")),
@@ -521,6 +735,65 @@ SPECS: dict[str, list[CropSpec]] = {
         CropSpec("battle/aurora_anim_keyframes_sheet.png", "processed/anim", "aurora_anim_attack_keyframe.png", (1120, 40, 1760, 420), ("anim", "attack")),
         CropSpec("battle/aurora_anim_keyframes_sheet.png", "processed/anim", "aurora_anim_hit_keyframe.png", (190, 445, 690, 830), ("anim", "hit")),
         CropSpec("battle/aurora_anim_keyframes_sheet.png", "processed/anim", "aurora_anim_firepower_keyframe.png", (770, 435, 1565, 850), ("anim", "firepower")),
+        CropSpec("concept/aurora_concept_full.png", "processed/ui", "aurora_illust_full_alpha.png", (0, 0, 1024, 1536), ("illustration", "full_body")),
+        CropSpec("ui/aurora_illust_half.png", "processed/ui", "aurora_illust_half_alpha.png", (0, 0, 1122, 1402), ("illustration",)),
+        CropSpec("ui/aurora_illust_skill_cutin.png", "processed/ui", "aurora_illust_skill_cutin_alpha.png", (0, 0, 1774, 887), ("cutin",)),
+        *[
+            CropSpec("ui/aurora_ui_sheet.png", "processed/ui", name, box, tags)
+            for name, box, tags in (
+                ("aurora_ui_portrait.png", (15, 20, 375, 500), ("ui", "portrait")),
+                ("aurora_ui_portrait_small.png", (400, 20, 760, 500), ("ui", "portrait_small")),
+                ("aurora_ui_chibi_head.png", (785, 20, 1145, 500), ("ui", "chibi")),
+                ("aurora_expr_default.png", (1160, 20, 1520, 500), ("ui", "expression")),
+                ("aurora_expr_serious.png", (15, 530, 375, 1005), ("ui", "expression", "serious")),
+                ("aurora_expr_hit.png", (400, 530, 760, 1005), ("ui", "expression", "hit")),
+                ("aurora_ui_skill_searchlight_support.png", (785, 530, 1145, 1005), ("ui", "skill")),
+                ("aurora_ui_class_light_cruiser.png", (1160, 530, 1520, 1005), ("ui", "class_icon")),
+            )
+        ],
+        *[
+            CropSpec("battle/aurora_battle_asset_sheet.png", out_dir, name, box, tags)
+            for out_dir, name, box, tags in (
+                ("processed/battle", "aurora_battle_body_r.png", (35, 130, 300, 390), ("battle", "body")),
+                ("processed/battle", "aurora_battle_rig_base.png", (390, 140, 670, 390), ("battle", "rig")),
+                ("processed/battle", "aurora_battle_turret_main_01.png", (740, 230, 940, 380), ("battle", "turret")),
+                ("processed/battle", "aurora_battle_turret_main_02.png", (1010, 230, 1210, 380), ("battle", "turret")),
+                ("processed/battle", "aurora_battle_searchlight_node.png", (55, 520, 270, 780), ("battle", "searchlight")),
+                ("processed/battle", "aurora_battle_signal_lamp_node.png", (405, 520, 600, 780), ("battle", "signal_lamp")),
+                ("processed/battle", "aurora_battle_command_emitter.png", (705, 530, 900, 780), ("battle", "support")),
+                ("processed/vfx", "aurora_vfx_wake.png", (1000, 560, 1210, 760), ("vfx", "wake")),
+                ("processed/vfx", "aurora_vfx_turn_wake.png", (30, 930, 290, 1160), ("vfx", "wake")),
+                ("processed/vfx", "aurora_vfx_muzzle_flash_01.png", (390, 930, 610, 1130), ("vfx", "muzzle_flash")),
+                ("processed/vfx", "aurora_vfx_water_splash.png", (720, 920, 930, 1160), ("vfx", "splash")),
+                ("processed/vfx", "aurora_vfx_morale_aura.png", (1000, 920, 1210, 1160), ("vfx", "support_area")),
+            )
+        ],
+        *[
+            CropSpec("vfx/aurora_vfx_reference_sheet.png", "processed/vfx", name, box, tags)
+            for name, box, tags in (
+                ("aurora_vfx_searchlight_beam.png", (15, 10, 375, 330), ("vfx", "searchlight")),
+                ("aurora_vfx_searchlight_beam_narrow.png", (400, 10, 760, 330), ("vfx", "searchlight")),
+                ("aurora_vfx_command_ring.png", (785, 10, 1145, 330), ("vfx", "support_area")),
+                ("aurora_vfx_signal_lamp_aura.png", (1160, 10, 1520, 330), ("vfx", "signal_lamp")),
+                ("aurora_vfx_muzzle_flash_02.png", (15, 350, 375, 670), ("vfx", "muzzle_flash")),
+                ("aurora_vfx_shell_trails.png", (400, 350, 760, 670), ("vfx", "projectile")),
+                ("aurora_vfx_support_area.png", (785, 350, 1145, 670), ("vfx", "support_area")),
+                ("aurora_vfx_morale_aura.png", (1160, 350, 1520, 670), ("vfx", "support_area")),
+                ("aurora_vfx_wake.png", (15, 690, 375, 1015), ("vfx", "wake")),
+                ("aurora_vfx_turn_wake.png", (400, 690, 760, 1015), ("vfx", "wake")),
+                ("aurora_vfx_water_splash.png", (785, 690, 1145, 1015), ("vfx", "splash")),
+                ("aurora_vfx_hit_sparks.png", (1160, 690, 1520, 1015), ("vfx", "hit")),
+            )
+        ],
+        *[
+            CropSpec(f"battle/aurora_anim_{state}_4f_sheet.png", "processed/anim", f"aurora_anim_{state}_keyframe.png", (80, 60, 547, 567), ("anim", state))
+            for state in ("idle", "move", "attack", "hit", "firepower")
+        ],
+        *[
+            CropSpec(f"battle/aurora_anim_{state}_4f_sheet.png", "processed/anim", f"aurora_anim_{state}_frame_{index:02d}.png", box, ("anim", state, f"frame_{index:02d}"))
+            for state in ("idle", "move", "attack", "hit", "firepower")
+            for index, box in enumerate(((80, 60, 547, 567), (707, 60, 1174, 567), (80, 687, 547, 1194), (707, 687, 1174, 1194)), 1)
+        ],
     ],
     "warspite": [
         CropSpec("concept/warspite_concept_full.png", "processed/ui", "warspite_illust_full_alpha.png", (0, 0, 1536, 1024), ("illustration", "full_body")),
@@ -556,6 +829,125 @@ SPECS: dict[str, list[CropSpec]] = {
         CropSpec("battle/warspite_anim_keyframes_sheet.png", "processed/anim", "warspite_anim_attack_keyframe.png", (1180, 75, 1710, 410), ("anim", "attack")),
         CropSpec("battle/warspite_anim_keyframes_sheet.png", "processed/anim", "warspite_anim_hit_keyframe.png", (155, 460, 650, 800), ("anim", "hit")),
         CropSpec("battle/warspite_anim_keyframes_sheet.png", "processed/anim", "warspite_anim_firepower_keyframe.png", (760, 450, 1610, 820), ("anim", "firepower")),
+        CropSpec("concept/warspite_concept_full.png", "processed/ui", "warspite_illust_full_alpha.png", (0, 0, 1024, 1536), ("illustration", "full_body")),
+        CropSpec("ui/warspite_illust_half.png", "processed/ui", "warspite_illust_half_alpha.png", (0, 0, 1122, 1402), ("illustration",)),
+        CropSpec("ui/warspite_illust_skill_cutin.png", "processed/ui", "warspite_illust_skill_cutin_alpha.png", (0, 0, 1774, 887), ("cutin",)),
+        *[
+            CropSpec("ui/warspite_ui_sheet.png", "processed/ui", name, box, tags)
+            for name, box, tags in (
+                ("warspite_ui_portrait.png", (15, 20, 375, 500), ("ui", "portrait")),
+                ("warspite_ui_portrait_small.png", (400, 20, 760, 500), ("ui", "portrait_small")),
+                ("warspite_ui_chibi_head.png", (785, 20, 1145, 500), ("ui", "chibi")),
+                ("warspite_expr_default.png", (1160, 20, 1520, 500), ("ui", "expression")),
+                ("warspite_expr_serious.png", (15, 530, 375, 1005), ("ui", "expression", "serious")),
+                ("warspite_expr_hit.png", (400, 530, 760, 1005), ("ui", "expression", "hit")),
+                ("warspite_ui_skill_precision_barrage.png", (785, 530, 1145, 1005), ("ui", "skill")),
+                ("warspite_ui_class_battleship.png", (1160, 530, 1520, 1005), ("ui", "class_icon")),
+            )
+        ],
+        *[
+            CropSpec("battle/warspite_battle_asset_sheet.png", out_dir, name, box, tags)
+            for out_dir, name, box, tags in (
+                ("processed/battle", "warspite_battle_body_r.png", (35, 120, 300, 390), ("battle", "body")),
+                ("processed/battle", "warspite_battle_rig_base.png", (380, 130, 630, 390), ("battle", "rig")),
+                ("processed/battle", "warspite_battle_turret_main_01.png", (735, 220, 940, 385), ("battle", "turret")),
+                ("processed/battle", "warspite_battle_turret_main_02.png", (1010, 220, 1210, 385), ("battle", "turret")),
+                ("processed/battle", "warspite_battle_turret_main_03.png", (55, 545, 285, 745), ("battle", "turret")),
+                ("processed/battle", "warspite_battle_rangefinder_node.png", (405, 515, 600, 770), ("battle", "rangefinder")),
+                ("processed/battle", "warspite_battle_command_emitter.png", (705, 515, 900, 770), ("battle", "support")),
+                ("processed/battle", "warspite_battle_radar_node.png", (705, 515, 900, 770), ("battle", "support")),
+                ("processed/vfx", "warspite_vfx_wake.png", (1000, 550, 1210, 760), ("vfx", "wake")),
+                ("processed/vfx", "warspite_vfx_turn_wake.png", (30, 930, 290, 1160), ("vfx", "wake")),
+                ("processed/vfx", "warspite_vfx_muzzle_large.png", (390, 930, 610, 1130), ("vfx", "muzzle_flash")),
+                ("processed/vfx", "warspite_vfx_splash_large.png", (720, 920, 930, 1160), ("vfx", "splash")),
+                ("processed/vfx", "warspite_vfx_armor_sparks.png", (1000, 920, 1210, 1160), ("vfx", "hit")),
+            )
+        ],
+        *[
+            CropSpec("vfx/warspite_vfx_reference_sheet.png", "processed/vfx", name, box, tags)
+            for name, box, tags in (
+                ("warspite_vfx_heavy_muzzle_cone.png", (15, 10, 375, 330), ("vfx", "muzzle_flash")),
+                ("warspite_vfx_precision_muzzle.png", (400, 10, 760, 330), ("vfx", "muzzle_flash")),
+                ("warspite_vfx_reticle_main.png", (785, 10, 1145, 330), ("vfx", "reticle")),
+                ("warspite_vfx_range_scale.png", (1160, 10, 1520, 330), ("vfx", "rangefinder")),
+                ("warspite_vfx_shell_trails.png", (15, 350, 375, 670), ("vfx", "shell")),
+                ("warspite_vfx_broadside_smoke.png", (400, 350, 760, 670), ("vfx", "smoke")),
+                ("warspite_vfx_royal_area.png", (785, 350, 1145, 670), ("vfx", "area")),
+                ("warspite_vfx_precision_aura.png", (1160, 350, 1520, 670), ("vfx", "area")),
+                ("warspite_vfx_wake.png", (15, 690, 375, 1015), ("vfx", "wake")),
+                ("warspite_vfx_turn_wake.png", (400, 690, 760, 1015), ("vfx", "wake")),
+                ("warspite_vfx_splash_sequence_02.png", (785, 690, 1145, 1015), ("vfx", "splash")),
+                ("warspite_vfx_armor_sparks.png", (1160, 690, 1520, 1015), ("vfx", "impact")),
+            )
+        ],
+        *[
+            CropSpec(f"battle/warspite_anim_{state}_4f_sheet.png", "processed/anim", f"warspite_anim_{state}_keyframe.png", (80, 60, 547, 567), ("anim", state))
+            for state in ("idle", "move", "attack", "hit", "firepower")
+        ],
+        *[
+            CropSpec(f"battle/warspite_anim_{state}_4f_sheet.png", "processed/anim", f"warspite_anim_{state}_frame_{index:02d}.png", box, ("anim", state, f"frame_{index:02d}"))
+            for state in ("idle", "move", "attack", "hit", "firepower")
+            for index, box in enumerate(((80, 60, 547, 567), (707, 60, 1174, 567), (80, 687, 547, 1194), (707, 687, 1174, 1194)), 1)
+        ],
+    ],
+    "bismarck": [
+        CropSpec("concept/bismarck_concept_full.png", "processed/ui", "bismarck_illust_full_alpha.png", (0, 0, 1023, 1537), ("illustration", "full_body")),
+        CropSpec("ui/bismarck_illust_half.png", "processed/ui", "bismarck_illust_half_alpha.png", (0, 0, 1402, 1122), ("illustration", "half_body")),
+        CropSpec("ui/bismarck_illust_skill_cutin.png", "processed/ui", "bismarck_illust_skill_cutin_alpha.png", (0, 0, 1774, 887), ("illustration", "cutin")),
+        CropSpec("ui/bismarck_ui_sheet.png", "processed/ui", "bismarck_ui_portrait.png", (145, 150, 300, 335), ("ui", "portrait")),
+        CropSpec("ui/bismarck_ui_sheet.png", "processed/ui", "bismarck_ui_portrait_small.png", (520, 175, 650, 335), ("ui", "portrait_small")),
+        CropSpec("ui/bismarck_ui_sheet.png", "processed/ui", "bismarck_ui_chibi_head.png", (885, 190, 1010, 350), ("ui", "chibi", "remove_small_islands")),
+        CropSpec("ui/bismarck_ui_sheet.png", "processed/ui", "bismarck_expr_default.png", (1240, 165, 1410, 350), ("ui", "expression", "default")),
+        CropSpec("ui/bismarck_ui_sheet.png", "processed/ui", "bismarck_expr_serious.png", (115, 625, 280, 795), ("ui", "expression", "serious")),
+        CropSpec("ui/bismarck_ui_sheet.png", "processed/ui", "bismarck_expr_hit.png", (500, 625, 650, 795), ("ui", "expression", "hit")),
+        CropSpec("ui/bismarck_ui_sheet.png", "processed/ui", "bismarck_ui_skill_decisive_salvo.png", (870, 650, 1030, 825), ("ui", "skill")),
+        CropSpec("ui/bismarck_ui_sheet.png", "processed/ui", "bismarck_ui_class_battleship.png", (1260, 650, 1400, 825), ("ui", "class_icon")),
+        CropSpec("battle/bismarck_battle_asset_sheet.png", "processed/battle", "bismarck_battle_body_r.png", (105, 155, 190, 285), ("battle", "body")),
+        CropSpec("battle/bismarck_battle_asset_sheet.png", "processed/battle", "bismarck_battle_rig_base.png", (420, 170, 700, 310), ("battle", "rig", "keep_largest_component")),
+        CropSpec("battle/bismarck_battle_asset_sheet.png", "processed/battle", "bismarck_battle_turret_main_01.png", (910, 190, 1050, 295), ("battle", "turret", "keep_largest_component")),
+        CropSpec("battle/bismarck_battle_asset_sheet.png", "processed/battle", "bismarck_battle_turret_main_02.png", (1260, 190, 1410, 295), ("battle", "turret")),
+        CropSpec("battle/bismarck_battle_asset_sheet.png", "processed/battle", "bismarck_battle_rangefinder_node.png", (115, 500, 210, 610), ("battle", "rangefinder")),
+        CropSpec("battle/bismarck_battle_asset_sheet.png", "processed/battle", "bismarck_battle_flagship_marker_node.png", (445, 500, 535, 610), ("battle", "flagship_marker")),
+        CropSpec("battle/bismarck_battle_asset_sheet.png", "processed/vfx", "bismarck_vfx_lock_reticle.png", (790, 500, 900, 610), ("vfx", "reticle")),
+        CropSpec("battle/bismarck_battle_asset_sheet.png", "processed/vfx", "bismarck_vfx_muzzle_flash.png", (1190, 500, 1370, 610), ("vfx", "muzzle_flash")),
+        CropSpec("battle/bismarck_battle_asset_sheet.png", "processed/vfx", "bismarck_vfx_wake_wide.png", (190, 820, 430, 930), ("vfx", "wake")),
+        CropSpec("battle/bismarck_battle_asset_sheet.png", "processed/vfx", "bismarck_vfx_water_impact.png", (735, 790, 920, 930), ("vfx", "impact")),
+        CropSpec("battle/bismarck_battle_asset_sheet.png", "processed/vfx", "bismarck_vfx_armor_hit.png", (1230, 805, 1390, 925), ("vfx", "hit")),
+        CropSpec("vfx/bismarck_vfx_reference_sheet.png", "processed/vfx", "bismarck_vfx_heavy_muzzle_cone.png", (105, 155, 285, 260), ("vfx", "muzzle_flash")),
+        CropSpec("vfx/bismarck_vfx_reference_sheet.png", "processed/vfx", "bismarck_vfx_smoke_burst.png", (560, 150, 690, 285), ("vfx", "smoke")),
+        CropSpec("vfx/bismarck_vfx_reference_sheet.png", "processed/vfx", "bismarck_vfx_lock_line.png", (900, 175, 1080, 260), ("vfx", "lock_line")),
+        CropSpec("vfx/bismarck_vfx_reference_sheet.png", "processed/vfx", "bismarck_vfx_precision_reticle.png", (1280, 135, 1430, 290), ("vfx", "reticle")),
+        CropSpec("vfx/bismarck_vfx_reference_sheet.png", "processed/vfx", "bismarck_vfx_range_arc.png", (125, 475, 350, 600), ("vfx", "range_scale")),
+        CropSpec("vfx/bismarck_vfx_reference_sheet.png", "processed/vfx", "bismarck_vfx_shell_trail.png", (565, 500, 750, 600), ("vfx", "shell")),
+        CropSpec("vfx/bismarck_vfx_reference_sheet.png", "processed/vfx", "bismarck_vfx_wake.png", (1050, 470, 1360, 610), ("vfx", "wake")),
+        CropSpec("vfx/bismarck_vfx_reference_sheet.png", "processed/vfx", "bismarck_vfx_splash_large.png", (140, 760, 380, 925), ("vfx", "splash")),
+        CropSpec("vfx/bismarck_vfx_reference_sheet.png", "processed/vfx", "bismarck_vfx_armor_sparks.png", (600, 760, 780, 925), ("vfx", "hit")),
+        CropSpec("vfx/bismarck_vfx_reference_sheet.png", "processed/vfx", "bismarck_vfx_decisive_area.png", (1050, 760, 1400, 925), ("vfx", "area")),
+        CropSpec("battle/bismarck_anim_keyframes_sheet.png", "processed/anim", "bismarck_anim_idle_keyframe.png", (160, 170, 360, 350), ("anim", "idle")),
+        CropSpec("battle/bismarck_anim_keyframes_sheet.png", "processed/anim", "bismarck_anim_move_keyframe.png", (680, 175, 880, 360), ("anim", "move")),
+        CropSpec("battle/bismarck_anim_keyframes_sheet.png", "processed/anim", "bismarck_anim_attack_keyframe.png", (1190, 170, 1395, 355), ("anim", "attack")),
+        CropSpec("battle/bismarck_anim_keyframes_sheet.png", "processed/anim", "bismarck_anim_hit_keyframe.png", (380, 650, 615, 850), ("anim", "hit")),
+        CropSpec("battle/bismarck_anim_keyframes_sheet.png", "processed/anim", "bismarck_anim_firepower_keyframe.png", (950, 650, 1190, 850), ("anim", "firepower")),
+        CropSpec("battle/bismarck_anim_idle_4f_sheet.png", "processed/anim", "bismarck_anim_idle_frame_01.png", (120, 120, 500, 520), ("anim", "idle", "frame_01")),
+        CropSpec("battle/bismarck_anim_idle_4f_sheet.png", "processed/anim", "bismarck_anim_idle_frame_02.png", (750, 120, 1130, 520), ("anim", "idle", "frame_02")),
+        CropSpec("battle/bismarck_anim_idle_4f_sheet.png", "processed/anim", "bismarck_anim_idle_frame_03.png", (120, 750, 500, 1130), ("anim", "idle", "frame_03")),
+        CropSpec("battle/bismarck_anim_idle_4f_sheet.png", "processed/anim", "bismarck_anim_idle_frame_04.png", (750, 750, 1130, 1130), ("anim", "idle", "frame_04")),
+        CropSpec("battle/bismarck_anim_move_4f_sheet.png", "processed/anim", "bismarck_anim_move_frame_01.png", (90, 105, 520, 525), ("anim", "move", "frame_01")),
+        CropSpec("battle/bismarck_anim_move_4f_sheet.png", "processed/anim", "bismarck_anim_move_frame_02.png", (735, 105, 1150, 525), ("anim", "move", "frame_02")),
+        CropSpec("battle/bismarck_anim_move_4f_sheet.png", "processed/anim", "bismarck_anim_move_frame_03.png", (90, 735, 520, 1150), ("anim", "move", "frame_03")),
+        CropSpec("battle/bismarck_anim_move_4f_sheet.png", "processed/anim", "bismarck_anim_move_frame_04.png", (735, 735, 1150, 1150), ("anim", "move", "frame_04")),
+        CropSpec("battle/bismarck_anim_attack_4f_sheet.png", "processed/anim", "bismarck_anim_attack_frame_01.png", (110, 105, 520, 520), ("anim", "attack", "frame_01")),
+        CropSpec("battle/bismarck_anim_attack_4f_sheet.png", "processed/anim", "bismarck_anim_attack_frame_02.png", (735, 105, 1150, 520), ("anim", "attack", "frame_02")),
+        CropSpec("battle/bismarck_anim_attack_4f_sheet.png", "processed/anim", "bismarck_anim_attack_frame_03.png", (110, 735, 520, 1150), ("anim", "attack", "frame_03")),
+        CropSpec("battle/bismarck_anim_attack_4f_sheet.png", "processed/anim", "bismarck_anim_attack_frame_04.png", (735, 735, 1150, 1150), ("anim", "attack", "frame_04")),
+        CropSpec("battle/bismarck_anim_hit_4f_sheet.png", "processed/anim", "bismarck_anim_hit_frame_01.png", (100, 100, 520, 520), ("anim", "hit", "frame_01")),
+        CropSpec("battle/bismarck_anim_hit_4f_sheet.png", "processed/anim", "bismarck_anim_hit_frame_02.png", (735, 100, 1150, 520), ("anim", "hit", "frame_02")),
+        CropSpec("battle/bismarck_anim_hit_4f_sheet.png", "processed/anim", "bismarck_anim_hit_frame_03.png", (100, 735, 520, 1150), ("anim", "hit", "frame_03")),
+        CropSpec("battle/bismarck_anim_hit_4f_sheet.png", "processed/anim", "bismarck_anim_hit_frame_04.png", (735, 735, 1150, 1150), ("anim", "hit", "frame_04")),
+        CropSpec("battle/bismarck_anim_firepower_4f_sheet.png", "processed/anim", "bismarck_anim_firepower_frame_01.png", (100, 80, 680, 440), ("anim", "firepower", "frame_01")),
+        CropSpec("battle/bismarck_anim_firepower_4f_sheet.png", "processed/anim", "bismarck_anim_firepower_frame_02.png", (860, 80, 1440, 440), ("anim", "firepower", "frame_02")),
+        CropSpec("battle/bismarck_anim_firepower_4f_sheet.png", "processed/anim", "bismarck_anim_firepower_frame_03.png", (100, 590, 680, 950), ("anim", "firepower", "frame_03")),
+        CropSpec("battle/bismarck_anim_firepower_4f_sheet.png", "processed/anim", "bismarck_anim_firepower_frame_04.png", (860, 590, 1440, 950), ("anim", "firepower", "frame_04")),
     ],
 }
 
@@ -565,14 +957,21 @@ CONFIGS: dict[str, dict[str, Any]] = {
         "ship_class": "carrier",
         "battle_bind_points": {
             "enterprise_cv6_battle_body_r.png": {
-                "origin": point(226, 322, "battle body ground/sea contact"),
-                "rig_mount": point(95, 210, "left-side rig mount from source sheet crop"),
+                "origin": point(143, 286, "battle body ground/sea contact between the boots"),
+                "rig_mount": point(70, 205, "left-side carrier rig mount behind the coat"),
             },
             "enterprise_cv6_battle_rig_base.png": {
-                "origin": point(475, 270, "carrier rig center"),
-                "aircraft_launch_01": point(795, 110, "forward deck launch lane"),
-                "aircraft_launch_02": point(650, 150, "mid deck launch lane"),
-                "aircraft_recovery": point(190, 150, "rear recovery lane"),
+                "origin": point(300, 320, "carrier hull visual center near the waterline"),
+                "aircraft_launch_01": point(467, 273, "forward deck launch point"),
+                "aircraft_launch_02": point(370, 238, "mid-deck launch point"),
+                "aircraft_recovery": point(190, 185, "aft deck recovery point"),
+            },
+            "enterprise_cv6_battle_launch_marker.png": {
+                "origin": point(147, 98, "center of the deck launch marker"),
+            },
+            "enterprise_cv6_battle_air_control_node.png": {
+                "origin": point(120, 200, "air-control pedestal base"),
+                "scan_origin": point(120, 75, "radar array scan center"),
             },
         },
         "animation_states": {
@@ -582,10 +981,17 @@ CONFIGS: dict[str, dict[str, Any]] = {
             "hit": "enterprise_cv6_anim_hit_keyframe.png",
             "firepower": "enterprise_cv6_anim_firepower_keyframe.png",
         },
+        "animation_sequences": {
+            "idle": {"fps": 5, "loop": True},
+            "move": {"fps": 7, "loop": True},
+            "attack": {"fps": 10, "loop": False},
+            "hit": {"fps": 10, "loop": False},
+            "firepower": {"fps": 12, "loop": False},
+        },
         "vfx_roles": {
             "airstrike_area": "enterprise_cv6_vfx_airstrike_area.png",
             "aircraft_path": "enterprise_cv6_vfx_aircraft_path_arrows.png",
-            "deck_lane": "enterprise_cv6_vfx_deck_lane.png",
+            "deck_lane": "enterprise_cv6_vfx_deck_launch_lane.png",
             "wake": "enterprise_cv6_vfx_wake_fast.png",
             "hit": "enterprise_cv6_vfx_hit_sparks.png",
         },
@@ -594,19 +1000,27 @@ CONFIGS: dict[str, dict[str, Any]] = {
         "ship_class": "submarine",
         "battle_bind_points": {
             "hai_shih_battle_body_r.png": {
-                "origin": point(250, 245, "battle body waterline center"),
-                "torpedo_port": point(460, 205, "front torpedo direction"),
-                "wake_origin": point(55, 255, "rear wake source"),
+                "origin": point(170, 320, "battle body waterline center below the hull"),
+                "torpedo_port": point(288, 235, "glowing bow torpedo direction"),
+                "wake_origin": point(42, 275, "rear wake source"),
             },
             "hai_shih_battle_rig_base.png": {
-                "origin": point(235, 165, "submarine hull center"),
-                "torpedo_port": point(415, 145, "front torpedo tube"),
-                "periscope_point": point(240, 36, "periscope mast top"),
-                "sonar_origin": point(415, 145, "front sonar/guide light"),
+                "origin": point(190, 235, "submarine hull visual center"),
+                "torpedo_port": point(345, 180, "glowing bow torpedo port"),
+                "periscope_point": point(228, 28, "conning-tower mast top"),
+                "sonar_origin": point(345, 180, "bow sonar and guide-light origin"),
             },
             "hai_shih_battle_torpedo_tube_01.png": {
-                "origin": point(122, 79, "tube center"),
-                "torpedo_port": point(224, 78, "launch muzzle"),
+                "origin": point(135, 85, "tube rotation and attachment center"),
+                "torpedo_port": point(45, 84, "cyan launch muzzle"),
+            },
+            "hai_shih_battle_periscope_node.png": {
+                "origin": point(87, 222, "periscope pedestal pivot"),
+                "view_origin": point(112, 65, "periscope lens center"),
+            },
+            "hai_shih_battle_sonar_node.png": {
+                "origin": point(105, 215, "sonar pedestal pivot"),
+                "sonar_origin": point(92, 90, "sonar dish center"),
             },
         },
         "animation_states": {
@@ -615,6 +1029,13 @@ CONFIGS: dict[str, dict[str, Any]] = {
             "attack": "hai_shih_anim_attack_keyframe.png",
             "hit": "hai_shih_anim_hit_keyframe.png",
             "firepower": "hai_shih_anim_firepower_keyframe.png",
+        },
+        "animation_sequences": {
+            "idle": {"fps": 5, "loop": True},
+            "move": {"fps": 7, "loop": True},
+            "attack": {"fps": 10, "loop": False},
+            "hit": {"fps": 10, "loop": False},
+            "firepower": {"fps": 12, "loop": False},
         },
         "vfx_roles": {
             "torpedo_trail": "hai_shih_vfx_torpedo_trail.png",
@@ -628,23 +1049,32 @@ CONFIGS: dict[str, dict[str, Any]] = {
         "ship_class": "heavy_cruiser",
         "battle_bind_points": {
             "hindenburg_battle_body_r.png": {
-                "origin": point(260, 325, "battle body sea contact"),
-                "rig_mount": point(135, 210, "rear heavy-cruiser rig mount"),
-                "fire_control_point": point(340, 155, "rangefinder visor direction"),
+                "origin": point(135, 260, "battle body sea contact below the boots"),
+                "rig_mount": point(58, 185, "rear heavy-cruiser rig mount"),
+                "fire_control_point": point(220, 115, "single-eye rangefinder direction"),
             },
             "hindenburg_battle_rig_base.png": {
-                "origin": point(250, 315, "heavy cruiser rig center"),
-                "turret_mount_01": point(405, 235, "front heavy turret mount"),
-                "fire_control_point": point(320, 105, "central fire-control tower"),
+                "origin": point(185, 292, "heavy-cruiser hull visual center"),
+                "turret_mount_01": point(265, 255, "forward heavy turret mount"),
+                "fire_control_point": point(205, 92, "central fire-control tower"),
             },
             "hindenburg_battle_turret_main_01.png": {
-                "origin": point(165, 105, "turret rotation center"),
-                "muzzle_01": point(300, 72, "upper barrel muzzle"),
-                "muzzle_02": point(300, 115, "lower barrel muzzle"),
+                "origin": point(165, 142, "turret rotation center"),
+                "muzzle_01": point(320, 92, "upper barrel muzzle"),
+                "muzzle_02": point(320, 128, "lower barrel muzzle"),
+            },
+            "hindenburg_battle_turret_main_02.png": {
+                "origin": point(162, 138, "turret rotation center"),
+                "muzzle_01": point(316, 91, "upper barrel muzzle"),
+                "muzzle_02": point(316, 126, "lower barrel muzzle"),
             },
             "hindenburg_battle_fire_control_node.png": {
-                "origin": point(92, 86, "fire-control node center"),
-                "scan_origin": point(112, 78, "optical scan origin"),
+                "origin": point(108, 278, "fire-control pedestal pivot"),
+                "scan_origin": point(110, 112, "optical scan origin at reticle center"),
+            },
+            "hindenburg_battle_lock_emitter_node.png": {
+                "origin": point(108, 170, "lock emitter base"),
+                "scan_origin": point(108, 93, "cold-white lock emitter center"),
             },
         },
         "animation_states": {
@@ -654,8 +1084,15 @@ CONFIGS: dict[str, dict[str, Any]] = {
             "hit": "hindenburg_anim_hit_keyframe.png",
             "firepower": "hindenburg_anim_firepower_keyframe.png",
         },
+        "animation_sequences": {
+            "idle": {"fps": 5, "loop": True},
+            "move": {"fps": 7, "loop": True},
+            "attack": {"fps": 10, "loop": False},
+            "hit": {"fps": 10, "loop": False},
+            "firepower": {"fps": 12, "loop": False},
+        },
         "vfx_roles": {
-            "reticle": "hindenburg_vfx_reticle_02.png",
+            "reticle": "hindenburg_vfx_precision_reticle.png",
             "muzzle_flash": "hindenburg_vfx_heavy_muzzle_cone.png",
             "scan_beam": "hindenburg_vfx_scan_beam.png",
             "suppression_area": "hindenburg_vfx_suppression_ring.png",
@@ -667,23 +1104,28 @@ CONFIGS: dict[str, dict[str, Any]] = {
         "ship_class": "destroyer",
         "battle_bind_points": {
             "shimakaze_battle_body_r.png": {
-                "origin": point(185, 300, "battle body sea contact"),
-                "torpedo_mount": point(75, 210, "carried torpedo launcher mount"),
-                "wake_origin": point(35, 260, "rear high-speed wake source"),
+                "origin": point(175, 350, "battle body sea contact below the hull"),
+                "torpedo_mount": point(88, 205, "rear five-tube launcher mount"),
+                "wake_origin": point(45, 310, "rear high-speed wake source"),
             },
             "shimakaze_battle_rig_base.png": {
-                "origin": point(300, 230, "destroyer rig center"),
-                "torpedo_mount": point(470, 165, "torpedo rack mount"),
-                "wake_origin": point(90, 235, "rear wake source"),
+                "origin": point(175, 292, "destroyer hull visual center"),
+                "torpedo_mount": point(250, 230, "torpedo rack attachment area"),
+                "wake_origin": point(105, 255, "rear wake source at the aft hull"),
             },
             "shimakaze_battle_torpedo_tube_01.png": {
-                "origin": point(120, 72, "torpedo tube rotation center"),
-                "torpedo_port_01": point(225, 58, "upper torpedo port"),
-                "torpedo_port_02": point(225, 92, "lower torpedo port"),
+                "origin": point(145, 138, "five-tube launcher rotation center"),
+                "torpedo_port_01": point(48, 92, "upper torpedo port at red cap"),
+                "torpedo_port_02": point(48, 150, "lower torpedo port at red cap"),
+            },
+            "shimakaze_battle_torpedo_tube_02.png": {
+                "origin": point(150, 160, "five-tube launcher rotation center"),
+                "torpedo_port_01": point(50, 112, "upper torpedo port at red cap"),
+                "torpedo_port_02": point(50, 170, "lower torpedo port at red cap"),
             },
             "shimakaze_battle_turret_main_01.png": {
-                "origin": point(72, 76, "small turret rotation center"),
-                "muzzle_01": point(135, 66, "main gun muzzle"),
+                "origin": point(145, 135, "small turret rotation center"),
+                "muzzle_01": point(30, 112, "main gun muzzle"),
             },
         },
         "animation_states": {
@@ -693,8 +1135,15 @@ CONFIGS: dict[str, dict[str, Any]] = {
             "hit": "shimakaze_anim_hit_keyframe.png",
             "firepower": "shimakaze_anim_firepower_keyframe.png",
         },
+        "animation_sequences": {
+            "idle": {"fps": 5, "loop": True},
+            "move": {"fps": 8, "loop": True},
+            "attack": {"fps": 11, "loop": False},
+            "hit": {"fps": 10, "loop": False},
+            "firepower": {"fps": 13, "loop": False},
+        },
         "vfx_roles": {
-            "torpedo_warning": "shimakaze_vfx_warning_line_long.png",
+            "torpedo_warning": "shimakaze_vfx_warning_fan.png",
             "torpedo_trail": "shimakaze_vfx_torpedo_trail_long.png",
             "wake_fast": "shimakaze_vfx_wake_blade.png",
             "wake_surge": "shimakaze_vfx_wake_surge.png",
@@ -706,22 +1155,22 @@ CONFIGS: dict[str, dict[str, Any]] = {
         "ship_class": "light_cruiser",
         "battle_bind_points": {
             "aurora_battle_body_r.png": {
-                "origin": point(190, 305, "battle body sea contact"),
-                "rig_mount": point(80, 215, "old light-cruiser rig mount"),
-                "searchlight_point": point(310, 150, "hand/searchlight direction"),
+                "origin": point(180, 330, "battle body sea contact"),
+                "rig_mount": point(170, 230, "old light-cruiser rig mount"),
+                "searchlight_point": point(285, 145, "hand/searchlight direction"),
             },
             "aurora_battle_rig_base.png": {
-                "origin": point(235, 250, "light cruiser rig center"),
-                "turret_mount_01": point(410, 175, "forward turret mount"),
-                "searchlight_mount": point(110, 110, "searchlight pedestal"),
+                "origin": point(210, 260, "light cruiser rig center"),
+                "turret_mount_01": point(310, 235, "forward turret mount"),
+                "searchlight_mount": point(120, 130, "searchlight pedestal"),
             },
             "aurora_battle_turret_main_01.png": {
-                "origin": point(84, 74, "turret rotation center"),
-                "muzzle_01": point(165, 70, "main gun muzzle"),
+                "origin": point(150, 150, "turret rotation center"),
+                "muzzle_01": point(300, 145, "main gun muzzle"),
             },
             "aurora_battle_searchlight_node.png": {
-                "origin": point(93, 88, "searchlight pivot"),
-                "beam_origin": point(92, 82, "light beam origin"),
+                "origin": point(120, 145, "searchlight pivot"),
+                "beam_origin": point(125, 100, "light beam origin"),
             },
         },
         "animation_states": {
@@ -730,6 +1179,13 @@ CONFIGS: dict[str, dict[str, Any]] = {
             "attack": "aurora_anim_attack_keyframe.png",
             "hit": "aurora_anim_hit_keyframe.png",
             "firepower": "aurora_anim_firepower_keyframe.png",
+        },
+        "animation_sequences": {
+            "idle": {"fps": 5, "loop": True},
+            "move": {"fps": 7, "loop": True},
+            "attack": {"fps": 10, "loop": False},
+            "hit": {"fps": 10, "loop": False},
+            "firepower": {"fps": 12, "loop": False},
         },
         "vfx_roles": {
             "searchlight_beam": "aurora_vfx_searchlight_beam.png",
@@ -744,23 +1200,23 @@ CONFIGS: dict[str, dict[str, Any]] = {
         "ship_class": "battleship",
         "battle_bind_points": {
             "warspite_battle_body_r.png": {
-                "origin": point(190, 275, "battle body sea contact"),
-                "rig_mount": point(90, 190, "battleship rig mount"),
-                "muzzle_group": point(310, 185, "side gun direction"),
+                "origin": point(180, 350, "battle body sea contact"),
+                "rig_mount": point(130, 220, "battleship rig mount"),
+                "muzzle_group": point(270, 250, "side gun direction"),
             },
             "warspite_battle_rig_base.png": {
-                "origin": point(430, 285, "battleship hull center"),
-                "turret_mount_01": point(470, 185, "forward main turret mount"),
-                "turret_mount_02": point(710, 180, "aft main turret mount"),
+                "origin": point(170, 300, "battleship hull center"),
+                "turret_mount_01": point(235, 250, "forward main turret mount"),
+                "turret_mount_02": point(120, 230, "aft main turret mount"),
             },
             "warspite_battle_turret_main_01.png": {
-                "origin": point(115, 80, "turret rotation center"),
-                "muzzle_01": point(220, 68, "upper barrel muzzle"),
-                "muzzle_02": point(220, 102, "lower barrel muzzle"),
+                "origin": point(180, 175, "turret rotation center"),
+                "muzzle_01": point(330, 145, "upper barrel muzzle"),
+                "muzzle_02": point(295, 165, "lower barrel muzzle"),
             },
             "warspite_battle_rangefinder_node.png": {
-                "origin": point(65, 82, "rangefinder pivot"),
-                "scan_origin": point(70, 55, "optical scan origin"),
+                "origin": point(105, 300, "rangefinder pivot"),
+                "scan_origin": point(55, 235, "optical scan origin"),
             },
         },
         "animation_states": {
@@ -770,6 +1226,13 @@ CONFIGS: dict[str, dict[str, Any]] = {
             "hit": "warspite_anim_hit_keyframe.png",
             "firepower": "warspite_anim_firepower_keyframe.png",
         },
+        "animation_sequences": {
+            "idle": {"fps": 5, "loop": True},
+            "move": {"fps": 7, "loop": True},
+            "attack": {"fps": 10, "loop": False},
+            "hit": {"fps": 10, "loop": False},
+            "firepower": {"fps": 12, "loop": False},
+        },
         "vfx_roles": {
             "heavy_muzzle": "warspite_vfx_heavy_muzzle_cone.png",
             "reticle": "warspite_vfx_reticle_main.png",
@@ -777,6 +1240,64 @@ CONFIGS: dict[str, dict[str, Any]] = {
             "splash": "warspite_vfx_splash_sequence_02.png",
             "wake": "warspite_vfx_wake.png",
             "royal_area": "warspite_vfx_royal_area.png",
+        },
+    },
+    "bismarck": {
+        "ship_class": "battleship",
+        "battle_bind_points": {
+            "bismarck_battle_body_r.png": {
+                "origin": point(136, 299, "battle body sea contact"),
+                "rig_mount": point(136, 210, "heavy battleship rig mount behind torso"),
+                "command_origin": point(158, 205, "flagship command gesture origin near hands"),
+            },
+            "bismarck_battle_rig_base.png": {
+                "origin": point(290, 276, "battleship hull center"),
+                "turret_mount_01": point(426, 267, "forward circular main turret socket"),
+                "turret_mount_02": point(178, 222, "aft circular main turret socket"),
+                "rangefinder_mount": point(264, 72, "optical rangefinder mount on superstructure"),
+            },
+            "bismarck_battle_turret_main_01.png": {
+                "origin": point(225, 155, "twin turret rotation center"),
+                "muzzle_01": point(420, 140, "far barrel muzzle"),
+                "muzzle_02": point(380, 160, "near barrel muzzle"),
+            },
+            "bismarck_battle_turret_main_02.png": {
+                "origin": point(220, 155, "twin turret rotation center"),
+                "muzzle_01": point(405, 143, "far barrel muzzle"),
+                "muzzle_02": point(373, 166, "near barrel muzzle"),
+            },
+            "bismarck_battle_rangefinder_node.png": {
+                "origin": point(115, 210, "rangefinder pedestal pivot"),
+                "scan_origin": point(75, 82, "optical lens and cold-white lock line origin"),
+            },
+            "bismarck_battle_flagship_marker_node.png": {
+                "origin": point(111, 270, "flagship marker base"),
+                "aura_origin": point(111, 150, "command area origin at banner center"),
+            },
+        },
+        "animation_states": {
+            "idle": "bismarck_anim_idle_keyframe.png",
+            "move": "bismarck_anim_move_keyframe.png",
+            "attack": "bismarck_anim_attack_keyframe.png",
+            "hit": "bismarck_anim_hit_keyframe.png",
+            "firepower": "bismarck_anim_firepower_keyframe.png",
+        },
+        "animation_sequences": {
+            "idle": {"fps": 5, "loop": True},
+            "move": {"fps": 7, "loop": True},
+            "attack": {"fps": 10, "loop": False},
+            "hit": {"fps": 10, "loop": False},
+            "firepower": {"fps": 12, "loop": False},
+        },
+        "vfx_roles": {
+            "heavy_muzzle": "bismarck_vfx_heavy_muzzle_cone.png",
+            "lock_line": "bismarck_vfx_lock_line.png",
+            "precision_reticle": "bismarck_vfx_precision_reticle.png",
+            "range_arc": "bismarck_vfx_range_arc.png",
+            "wake": "bismarck_vfx_wake.png",
+            "water_impact": "bismarck_vfx_splash_large.png",
+            "armor_hit": "bismarck_vfx_armor_sparks.png",
+            "decisive_area": "bismarck_vfx_decisive_area.png",
         },
     },
 }
@@ -821,6 +1342,8 @@ def process_character(character_id: str) -> None:
         manifest["components"].append(item)
 
     cfg = CONFIGS[character_id]
+    if "animation_sequences" in cfg:
+        normalize_animation_sequence_canvases(character_id, cfg["animation_sequences"])
     config_dir = root / "processed" / "config"
     config_dir.mkdir(parents=True, exist_ok=True)
 
@@ -845,6 +1368,20 @@ def process_character(character_id: str) -> None:
             for state, file in cfg["animation_states"].items()
         },
     }
+    if "animation_sequences" in cfg:
+        anim_config["type"] = "four_frame_sequence"
+        anim_config["notes"] = "Four-frame MVP body sequences. Precise weapons and gameplay VFX remain independent runtime nodes."
+        for state, sequence in cfg["animation_sequences"].items():
+            anim_config["states"][state] = {
+                "frames": [
+                    f"assets/characters/{character_id}/processed/anim/{character_id}_anim_{state}_frame_{index:02d}.png"
+                    for index in range(1, 5)
+                ],
+                "fps": sequence["fps"],
+                "loop": sequence["loop"],
+                "reference_file": f"assets/characters/{character_id}/processed/anim/{cfg['animation_states'][state]}",
+                "runtime_notes": "Use the four-frame body sequence; keep precise weapon rotation and VFX on independent nodes.",
+            }
     anim_path = config_dir / f"{character_id}_anim_config.json"
     anim_path.write_text(json.dumps(anim_config, ensure_ascii=False, indent=2) + "\n")
 

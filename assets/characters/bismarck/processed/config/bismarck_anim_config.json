@@ -1,0 +1,67 @@
+{
+  "character_id": "bismarck",
+  "type": "four_frame_sequence",
+  "notes": "Four-frame MVP body sequences. Precise weapons and gameplay VFX remain independent runtime nodes.",
+  "states": {
+    "idle": {
+      "frames": [
+        "assets/characters/bismarck/processed/anim/bismarck_anim_idle_frame_01.png",
+        "assets/characters/bismarck/processed/anim/bismarck_anim_idle_frame_02.png",
+        "assets/characters/bismarck/processed/anim/bismarck_anim_idle_frame_03.png",
+        "assets/characters/bismarck/processed/anim/bismarck_anim_idle_frame_04.png"
+      ],
+      "fps": 5,
+      "loop": true,
+      "reference_file": "assets/characters/bismarck/processed/anim/bismarck_anim_idle_keyframe.png",
+      "runtime_notes": "Use the four-frame body sequence; keep precise weapon rotation and VFX on independent nodes."
+    },
+    "move": {
+      "frames": [
+        "assets/characters/bismarck/processed/anim/bismarck_anim_move_frame_01.png",
+        "assets/characters/bismarck/processed/anim/bismarck_anim_move_frame_02.png",
+        "assets/characters/bismarck/processed/anim/bismarck_anim_move_frame_03.png",
+        "assets/characters/bismarck/processed/anim/bismarck_anim_move_frame_04.png"
+      ],
+      "fps": 7,
+      "loop": true,
+      "reference_file": "assets/characters/bismarck/processed/anim/bismarck_anim_move_keyframe.png",
+      "runtime_notes": "Use the four-frame body sequence; keep precise weapon rotation and VFX on independent nodes."
+    },
+    "attack": {
+      "frames": [
+        "assets/characters/bismarck/processed/anim/bismarck_anim_attack_frame_01.png",
+        "assets/characters/bismarck/processed/anim/bismarck_anim_attack_frame_02.png",
+        "assets/characters/bismarck/processed/anim/bismarck_anim_attack_frame_03.png",
+        "assets/characters/bismarck/processed/anim/bismarck_anim_attack_frame_04.png"
+      ],
+      "fps": 10,
+      "loop": false,
+      "reference_file": "assets/characters/bismarck/processed/anim/bismarck_anim_attack_keyframe.png",
+      "runtime_notes": "Use the four-frame body sequence; keep precise weapon rotation and VFX on independent nodes."
+    },
+    "hit": {
+      "frames": [
+        "assets/characters/bismarck/processed/anim/bismarck_anim_hit_frame_01.png",
+        "assets/characters/bismarck/processed/anim/bismarck_anim_hit_frame_02.png",
+        "assets/characters/bismarck/processed/anim/bismarck_anim_hit_frame_03.png",
+        "assets/characters/bismarck/processed/anim/bismarck_anim_hit_frame_04.png"
+      ],
+      "fps": 10,
+      "loop": false,
+      "reference_file": "assets/characters/bismarck/processed/anim/bismarck_anim_hit_keyframe.png",
+      "runtime_notes": "Use the four-frame body sequence; keep precise weapon rotation and VFX on independent nodes."
+    },
+    "firepower": {
+      "frames": [
+        "assets/characters/bismarck/processed/anim/bismarck_anim_firepower_frame_01.png",
+        "assets/characters/bismarck/processed/anim/bismarck_anim_firepower_frame_02.png",
+        "assets/characters/bismarck/processed/anim/bismarck_anim_firepower_frame_03.png",
+        "assets/characters/bismarck/processed/anim/bismarck_anim_firepower_frame_04.png"
+      ],
+      "fps": 12,
+      "loop": false,
+      "reference_file": "assets/characters/bismarck/processed/anim/bismarck_anim_firepower_keyframe.png",
+      "runtime_notes": "Use the four-frame body sequence; keep precise weapon rotation and VFX on independent nodes."
+    }
+  }
+}

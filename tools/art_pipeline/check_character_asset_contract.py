@@ -17,6 +17,7 @@ SHIP_CLASSES = {
     "shimakaze": "destroyer",
     "aurora": "light_cruiser",
     "warspite": "battleship",
+    "bismarck": "battleship",
 }
 
 REQUIRED_PATTERNS = {
@@ -46,6 +47,8 @@ REQUIRED_PATTERNS = {
     "manifest": "processed/config/{id}_postprocess_manifest.json",
 }
 
+REQUIRED_ANIMATION_STATES = {"idle", "move", "attack", "hit", "firepower"}
+
 
 def matches(character_id: str, pattern: str) -> list[Path]:
     formatted = pattern.format(id=character_id, ship_class=SHIP_CLASSES[character_id])
@@ -67,6 +70,85 @@ def validate_file(path: Path) -> str | None:
     return None
 
 
+def nearby_alpha(image: Image.Image, x: int, y: int, radius: int = 24) -> bool:
+    alpha = image.getchannel("A")
+    left = max(0, x - radius)
+    top = max(0, y - radius)
+    right = min(alpha.width, x + radius + 1)
+    bottom = min(alpha.height, y + radius + 1)
+    return alpha.crop((left, top, right, bottom)).getbbox() is not None
+
+
+def validate_character_data(character_id: str) -> list[str]:
+    root = CHAR_ROOT / character_id / "processed"
+    issues: list[str] = []
+
+    bind_path = root / "config" / f"{character_id}_meta_bind_points.json"
+    if bind_path.exists():
+        bind_data = json.loads(bind_path.read_text(encoding="utf-8"))
+        for asset_name, points in bind_data.get("assets", {}).items():
+            asset_path = root / "battle" / asset_name
+            if not asset_path.exists():
+                issues.append(f"bind asset missing: {asset_name}")
+                continue
+            with Image.open(asset_path) as image:
+                rgba = image.convert("RGBA")
+                for point_name, point in points.items():
+                    x = point.get("x")
+                    y = point.get("y")
+                    if not isinstance(x, int) or not isinstance(y, int):
+                        issues.append(f"invalid bind point: {asset_name}:{point_name}")
+                    elif not (0 <= x < rgba.width and 0 <= y < rgba.height):
+                        issues.append(f"bind point out of bounds: {asset_name}:{point_name}")
+                    elif not nearby_alpha(rgba, x, y):
+                        issues.append(f"bind point far from artwork: {asset_name}:{point_name}")
+
+    anim_path = root / "config" / f"{character_id}_anim_config.json"
+    if anim_path.exists():
+        anim_data = json.loads(anim_path.read_text(encoding="utf-8"))
+        states = anim_data.get("states", {})
+        missing_states = sorted(REQUIRED_ANIMATION_STATES - set(states))
+        if missing_states:
+            issues.append(f"animation states missing: {', '.join(missing_states)}")
+        for state, item in states.items():
+            frames = item.get("frames")
+            if frames is not None:
+                if len(frames) != 4:
+                    issues.append(f"animation state must contain four frames: {state}")
+                frame_sizes: set[tuple[int, int]] = set()
+                for frame in frames:
+                    if not (ROOT / frame).exists():
+                        issues.append(f"animation frame missing: {state}:{frame}")
+                    else:
+                        with Image.open(ROOT / frame) as image:
+                            frame_sizes.add(image.size)
+                if len(frame_sizes) > 1:
+                    issues.append(f"animation frame canvas mismatch: {state}")
+                if not isinstance(item.get("fps"), int) or item["fps"] <= 0:
+                    issues.append(f"animation fps invalid: {state}")
+                if not isinstance(item.get("loop"), bool):
+                    issues.append(f"animation loop flag invalid: {state}")
+            else:
+                file_value = item.get("file", "")
+                if not (ROOT / file_value).exists():
+                    issues.append(f"animation file missing: {state}:{file_value}")
+
+    vfx_path = root / "config" / f"{character_id}_vfx_config.json"
+    if vfx_path.exists():
+        vfx_data = json.loads(vfx_path.read_text(encoding="utf-8"))
+        if vfx_data.get("ship_class") != SHIP_CLASSES[character_id]:
+            issues.append("vfx ship_class does not match character contract")
+        roles = vfx_data.get("roles", {})
+        if not roles:
+            issues.append("vfx roles are empty")
+        for role, item in roles.items():
+            file_value = item.get("file", "")
+            if not (ROOT / file_value).exists():
+                issues.append(f"vfx file missing: {role}:{file_value}")
+
+    return issues
+
+
 def audit(character_id: str) -> dict[str, object]:
     missing: list[str] = []
     invalid: list[dict[str, str]] = []
@@ -86,30 +168,38 @@ def audit(character_id: str) -> dict[str, object]:
             error = validate_file(path)
             if error:
                 invalid.append({"role": role, "path": str(path.relative_to(ROOT)), "error": error})
+    data_issues = validate_character_data(character_id)
     return {
         "character_id": character_id,
         "ship_class": SHIP_CLASSES[character_id],
-        "status": "complete" if not missing and not invalid else "incomplete",
+        "status": "complete" if not missing and not invalid and not data_issues else "incomplete",
         "missing_roles": missing,
         "invalid_files": invalid,
+        "data_issues": data_issues,
         "found_roles": found,
     }
 
 
 def write_report(results: list[dict[str, object]]) -> Path:
-    out = CHAR_ROOT / "qa" / "character_asset_contract_audit.md"
+    result_ids = [str(result["character_id"]) for result in results]
+    if set(result_ids) == set(SHIP_CLASSES):
+        filename = "character_asset_contract_audit.md"
+    else:
+        filename = "character_asset_contract_audit_" + "_".join(result_ids) + ".md"
+    out = CHAR_ROOT / "qa" / filename
     out.parent.mkdir(parents=True, exist_ok=True)
     lines = [
         "# Character Asset Contract Audit",
         "",
         "Contract source: `docs/art_design.md` section 6.",
         "",
-        "| Character | Status | Missing required roles |",
-        "| --- | --- | --- |",
+        "| Character | Status | Missing required roles | Data issues |",
+        "| --- | --- | --- | --- |",
     ]
     for result in results:
         missing = ", ".join(result["missing_roles"]) or "-"
-        lines.append(f'| {result["character_id"]} | {result["status"]} | {missing} |')
+        data_issues = "; ".join(result["data_issues"]) or "-"
+        lines.append(f'| {result["character_id"]} | {result["status"]} | {missing} | {data_issues} |')
     lines.extend([
         "",
         "A character may pass edge and file-format QA while remaining incomplete. Missing required roles are blockers.",

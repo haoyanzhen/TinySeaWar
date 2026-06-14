@@ -1,27 +1,67 @@
 {
   "character_id": "aurora",
-  "type": "keyframe_reference",
-  "notes": "Generated keyframes are visual references, not final runtime animation curves.",
+  "type": "four_frame_sequence",
+  "notes": "Four-frame MVP body sequences. Precise weapons and gameplay VFX remain independent runtime nodes.",
   "states": {
     "idle": {
-      "file": "assets/characters/aurora/processed/anim/aurora_anim_idle_keyframe.png",
-      "recommended_runtime": "split-layer tween or skeletal pass"
+      "frames": [
+        "assets/characters/aurora/processed/anim/aurora_anim_idle_frame_01.png",
+        "assets/characters/aurora/processed/anim/aurora_anim_idle_frame_02.png",
+        "assets/characters/aurora/processed/anim/aurora_anim_idle_frame_03.png",
+        "assets/characters/aurora/processed/anim/aurora_anim_idle_frame_04.png"
+      ],
+      "fps": 5,
+      "loop": true,
+      "reference_file": "assets/characters/aurora/processed/anim/aurora_anim_idle_keyframe.png",
+      "runtime_notes": "Use the four-frame body sequence; keep precise weapon rotation and VFX on independent nodes."
     },
     "move": {
-      "file": "assets/characters/aurora/processed/anim/aurora_anim_move_keyframe.png",
-      "recommended_runtime": "split-layer tween or skeletal pass"
+      "frames": [
+        "assets/characters/aurora/processed/anim/aurora_anim_move_frame_01.png",
+        "assets/characters/aurora/processed/anim/aurora_anim_move_frame_02.png",
+        "assets/characters/aurora/processed/anim/aurora_anim_move_frame_03.png",
+        "assets/characters/aurora/processed/anim/aurora_anim_move_frame_04.png"
+      ],
+      "fps": 7,
+      "loop": true,
+      "reference_file": "assets/characters/aurora/processed/anim/aurora_anim_move_keyframe.png",
+      "runtime_notes": "Use the four-frame body sequence; keep precise weapon rotation and VFX on independent nodes."
     },
     "attack": {
-      "file": "assets/characters/aurora/processed/anim/aurora_anim_attack_keyframe.png",
-      "recommended_runtime": "split-layer tween or skeletal pass"
+      "frames": [
+        "assets/characters/aurora/processed/anim/aurora_anim_attack_frame_01.png",
+        "assets/characters/aurora/processed/anim/aurora_anim_attack_frame_02.png",
+        "assets/characters/aurora/processed/anim/aurora_anim_attack_frame_03.png",
+        "assets/characters/aurora/processed/anim/aurora_anim_attack_frame_04.png"
+      ],
+      "fps": 10,
+      "loop": false,
+      "reference_file": "assets/characters/aurora/processed/anim/aurora_anim_attack_keyframe.png",
+      "runtime_notes": "Use the four-frame body sequence; keep precise weapon rotation and VFX on independent nodes."
     },
     "hit": {
-      "file": "assets/characters/aurora/processed/anim/aurora_anim_hit_keyframe.png",
-      "recommended_runtime": "split-layer tween or skeletal pass"
+      "frames": [
+        "assets/characters/aurora/processed/anim/aurora_anim_hit_frame_01.png",
+        "assets/characters/aurora/processed/anim/aurora_anim_hit_frame_02.png",
+        "assets/characters/aurora/processed/anim/aurora_anim_hit_frame_03.png",
+        "assets/characters/aurora/processed/anim/aurora_anim_hit_frame_04.png"
+      ],
+      "fps": 10,
+      "loop": false,
+      "reference_file": "assets/characters/aurora/processed/anim/aurora_anim_hit_keyframe.png",
+      "runtime_notes": "Use the four-frame body sequence; keep precise weapon rotation and VFX on independent nodes."
     },
     "firepower": {
-      "file": "assets/characters/aurora/processed/anim/aurora_anim_firepower_keyframe.png",
-      "recommended_runtime": "split-layer tween or skeletal pass"
+      "frames": [
+        "assets/characters/aurora/processed/anim/aurora_anim_firepower_frame_01.png",
+        "assets/characters/aurora/processed/anim/aurora_anim_firepower_frame_02.png",
+        "assets/characters/aurora/processed/anim/aurora_anim_firepower_frame_03.png",
+        "assets/characters/aurora/processed/anim/aurora_anim_firepower_frame_04.png"
+      ],
+      "fps": 12,
+      "loop": false,
+      "reference_file": "assets/characters/aurora/processed/anim/aurora_anim_firepower_keyframe.png",
+      "runtime_notes": "Use the four-frame body sequence; keep precise weapon rotation and VFX on independent nodes."
     }
   }
 }

@@ -1,0 +1,149 @@
+extends SceneTree
+
+const ConfigRegistry = preload("res://scripts/infrastructure/data/config_registry.gd")
+const BattleSession = preload("res://scripts/application/battle_session.gd")
+const ModifierService = preload("res://scripts/domain/services/modifier_service.gd")
+const DamageService = preload("res://scripts/domain/services/damage_service.gd")
+const SeededRandomSource = preload("res://scripts/infrastructure/random/seeded_random_source.gd")
+
+var failures: Array[String] = []
+var checks := 0
+var registry
+
+
+func _init() -> void:
+	call_deferred("_run")
+
+
+func _run() -> void:
+	registry = ConfigRegistry.new()
+	_check(registry.load_all(), "configuration registry loads: %s" % str(registry.errors))
+	_check(registry.all("ships").size() == 6, "six prototype ship definitions load")
+	_check(registry.all("levels").size() == 2, "1v1 and 3v3 levels load")
+	_test_modifier_order()
+	_test_command_and_skill_rules()
+	_test_detection_and_contact_ghost()
+	_test_damage_zero_floor()
+	_test_simultaneous_flagship_victory()
+	_test_determinism()
+	_test_battle_smoke("level.prototype_1v1", 3200)
+	_test_battle_smoke("level.prototype_3v3", 4200)
+	if failures.is_empty():
+		print("PASS: %d checks" % checks)
+		quit(0)
+	else:
+		for failure in failures: push_error("FAIL: %s" % failure)
+		print("FAILED: %d of %d checks" % [failures.size(), checks])
+		quit(1)
+
+
+func _test_modifier_order() -> void:
+	var effects := [
+		{"stat":"Armor","operation":"FlatAdd","value":10.0,"category":"All"},
+		{"stat":"Armor","operation":"PercentAdd","value":0.20,"category":"All"},
+		{"stat":"Armor","operation":"StateMultiply","value":0.50,"category":"All"},
+		{"stat":"Armor","operation":"IndependentMultiply","value":1.10,"category":"All"},
+	]
+	_check(is_equal_approx(ModifierService.calculate(100.0, effects, "Armor"), 72.6), "modifier order follows flat, percent, state, independent")
+	var reload_effects := [{"stat":"ReloadSpeed","operation":"PercentAdd","value":0.50,"category":"Gun"}]
+	_check(is_equal_approx(ModifierService.reload_time(10.0, reload_effects, "Gun"), 10.0 / 1.5), "reload speed uses divisor formula")
+
+
+func _test_command_and_skill_rules() -> void:
+	var session = BattleSession.new(registry)
+	_check(session.create_battle("level.prototype_3v3", 9).get("ok", false), "3v3 battle can be created")
+	var move_result: Dictionary = session.queue_command({"command_id":"move.1","command_type":"MoveUnits","issued_at_tick":0,"issuer_id":"player","unit_id":"unit.player.aurora","target_position":Vector2(400.0, 300.0)})
+	_check(move_result.get("accepted", false), "valid move command enters shared command queue")
+	session.advance_tick(0.1)
+	_check(session.state["units_by_id"]["unit.player.aurora"]["movement_state"]["mode"] == "PlayerMoveOrder", "move command changes domain movement state")
+	var hindenburg: Dictionary = session.state["units_by_id"]["unit.enemy.hindenburg"]
+	hindenburg["skill_state"]["cooldown_remaining"] = 0.0
+	var cast_result: Dictionary = session._cast_skill(hindenburg, {"type":"Self"}, "skill.1")
+	_check(cast_result.get("accepted", false), "ready skill casts successfully")
+	_check(float(hindenburg["skill_state"]["cooldown_remaining"]) == 40.0, "successful skill starts cooldown")
+	_check(not hindenburg["status_effects"].is_empty(), "skill applies reusable status effects")
+	var second_cast: Dictionary = session._cast_skill(hindenburg, {"type":"Self"}, "skill.2")
+	_check(second_cast.get("reason_code", "") == "SKILL_ON_COOLDOWN", "skill on cooldown is rejected atomically")
+	var aurora: Dictionary = session.state["units_by_id"]["unit.player.aurora"]
+	session._sink_unit(aurora, "test")
+	session.queue_command({"command_id":"move.sunk","command_type":"MoveUnits","issued_at_tick":1,"issuer_id":"player","unit_id":"unit.player.aurora","target_position":Vector2(500.0, 300.0)})
+	var events: Array = session.advance_tick(0.1)
+	_check(_has_event_reason(events, "CommandRejected", "UNIT_SUNK"), "sunk unit cannot accept tactical commands")
+
+
+func _test_detection_and_contact_ghost() -> void:
+	var session = BattleSession.new(registry)
+	session.create_battle("level.prototype_1v1", 11)
+	var player: Dictionary = session.state["units_by_id"]["unit.player.warspite"]
+	var enemy: Dictionary = session.state["units_by_id"]["unit.enemy.bismarck"]
+	player["position"] = Vector2(400.0, 350.0)
+	enemy["position"] = Vector2(740.0, 350.0)
+	player["movement_state"]["mode"] = "HoldPosition"
+	enemy["movement_state"]["mode"] = "HoldPosition"
+	session._update_detection(0.1)
+	_check(session.state["visible_by_faction"]["player"].has(enemy["entity_id"]), "dual detection boundary acquires target")
+	enemy["position"] = Vector2(1000.0, 350.0)
+	session._update_detection(0.1)
+	var contact: Dictionary = session.state["contacts_by_faction"]["player"].get(enemy["entity_id"], {})
+	_check(not contact.is_empty() and not contact.get("visible", true), "lost target creates a last-known-position contact")
+	for index in range(30): session._update_detection(0.1)
+	_check(not session.state["contacts_by_faction"]["player"].has(enemy["entity_id"]), "contact ghost expires after three seconds")
+
+
+func _test_damage_zero_floor() -> void:
+	var source := {"entity_id":"source","position":Vector2.ZERO,"stats":{"gunnery_power":1.0},"status_effects":[]}
+	var target := {"entity_id":"target","position":Vector2(10.0,0.0),"current_hp":100.0,"stats":{"armor":999.0,"armor_thickness":"Heavy","evasion":0.0},"status_effects":[]}
+	var weapon := {"mount_type":"Gun","range":100.0,"accuracy_modifier":0.0,"armor_damage_modifiers":{"Heavy":0.1}}
+	var formula := {"base_damage":1.0,"base_hit_rate":1.0,"power_coefficient":1.0,"armor_coefficient":1.0,"evasion_coefficient":0.0,"distance_penalty_coefficient":0.0,"hit_rate_min":1.0,"hit_rate_max":1.0}
+	var result: Dictionary = DamageService.resolve({"attack_id":"zero"}, source, target, weapon, formula, SeededRandomSource.new(1), true)
+	_check(float(result["final_damage"]) == 0.0 and float(result["target_hp_after"]) == 100.0, "armor can reduce damage to zero and later bonuses do not revive it")
+
+
+func _test_simultaneous_flagship_victory() -> void:
+	var session = BattleSession.new(registry)
+	session.create_battle("level.prototype_1v1", 17)
+	session.state["units_by_id"]["unit.player.warspite"]["life_state"] = "Sunk"
+	session.state["units_by_id"]["unit.player.warspite"]["current_hp"] = 0.0
+	session.state["units_by_id"]["unit.enemy.bismarck"]["life_state"] = "Sunk"
+	session.state["units_by_id"]["unit.enemy.bismarck"]["current_hp"] = 0.0
+	session._check_victory()
+	_check(session.state["result"].get("winner_faction", "") == "player", "simultaneous flagship sinking awards player victory")
+
+
+func _test_determinism() -> void:
+	var first := _simulate("level.prototype_1v1", 2468, 3200)
+	var second := _simulate("level.prototype_1v1", 2468, 3200)
+	_check(first["result"] == second["result"], "same seed produces same battle result")
+	_check(first["events"] == second["events"], "same seed produces identical event type sequence")
+	_check(first["stats"] == second["stats"], "same seed produces identical analytics")
+
+
+func _test_battle_smoke(level_id: String, maximum_ticks: int) -> void:
+	var simulation := _simulate(level_id, 20260614, maximum_ticks)
+	_check(simulation["phase"] == "Finished", "%s headless battle reaches Finished" % level_id)
+	_check(not simulation["result"].is_empty(), "%s records a battle result" % level_id)
+	_check(simulation["events"].has("WeaponFired") and simulation["events"].has("AttackResolved") and simulation["events"].has("BattleFinished"), "%s emits complete combat event chain" % level_id)
+
+
+func _simulate(level_id: String, seed_value: int, maximum_ticks: int) -> Dictionary:
+	var session = BattleSession.new(registry)
+	var creation: Dictionary = session.create_battle(level_id, seed_value)
+	var event_types: Array[String] = []
+	for event in session.drain_events(): event_types.append(str(event["event_type"]))
+	if not creation.get("ok", false): return {"phase":"Failed","result":{},"events":event_types,"stats":{}}
+	for index in range(maximum_ticks):
+		var events: Array = session.advance_tick(0.1)
+		for event in events: event_types.append(str(event["event_type"]))
+		if session.state["phase"] == "Finished": break
+	return {"phase":session.state["phase"],"result":session.state["result"].duplicate(true),"events":event_types,"stats":session.get_statistics()}
+
+
+func _has_event_reason(events: Array, event_type: String, reason_code: String) -> bool:
+	for event in events:
+		if event.get("event_type", "") == event_type and event.get("reason_code", "") == reason_code: return true
+	return false
+
+
+func _check(condition: bool, message: String) -> void:
+	checks += 1
+	if not condition: failures.append(message)

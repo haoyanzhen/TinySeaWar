@@ -1,0 +1,7 @@
+{
+  "definitions": [
+    {"id":"projectile.shell","behavior":"DelayedImpact","speed":400.0,"lifetime":3.0,"collision_radius":2.0,"target_types":["Surface"],"destroy_on_hit":true,"pierce_count":0},
+    {"id":"projectile.surface_torpedo","behavior":"Straight","speed":165.0,"lifetime":5.0,"collision_radius":12.0,"target_types":["Surface","Submerged"],"destroy_on_hit":true,"pierce_count":0},
+    {"id":"projectile.submarine_torpedo","behavior":"Straight","speed":145.0,"lifetime":5.0,"collision_radius":12.0,"target_types":["Surface","Submerged"],"destroy_on_hit":true,"pierce_count":0}
+  ]
+}

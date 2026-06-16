@@ -35,11 +35,9 @@ max_oxygen
 variant_tags
 reference_ship_profile
 weapon_mounts
-main_weapon
-torpedo_weapon
-anti_air_weapon
-air_wing
-scout_wing
+primary_weapon_group_id
+primary_weapon_control_type
+ammo_selection_group_id
 skill_id
 is_flagship_candidate
 ```
@@ -68,11 +66,9 @@ is_flagship_candidate
 - `variant_tags`：舰娘变体标签，例如 `FastScout`、`TorpedoSpecialist`、`AAEscort`、`HeavyArmor`、`LongRangeGunnery`。
 - `reference_ship_profile`：现实舰船或舰型参考标识，只用于设计说明和调参依据，不作为强制模板。
 - `weapon_mounts`：装备底座列表，描述火炮、鱼雷、防空、航空等装备的底座数量、装填、射角和目标类型。
-- `main_weapon`：主武器引用，MVP 可作为兼容字段。
-- `torpedo_weapon`：鱼雷武器引用，MVP 可作为兼容字段。
-- `anti_air_weapon`：防空武器引用，MVP 可作为兼容字段。
-- `air_wing`：舰载机或航空队引用。
-- `scout_wing`：侦查机配置引用，主要用于航母。
+- `primary_weapon_group_id`：按 `E` 控制的主要武器组。一个角色最多一个；没有可控主要武器时为空。
+- `primary_weapon_control_type`：主要武器交互类型，可为 `Torpedo`、`BattleshipMainGun`、`AviationSquadron`、`OtherMainWeapon`。
+- `ammo_selection_group_id`：按 `Q` 切换 HE/AP 的火炮组。没有双弹种时为空；该组可以与 `primary_weapon_group_id` 不同。
 - `skill_id`：主动技能标识。
 - `is_flagship_candidate`：是否可作为旗舰。
 
@@ -82,6 +78,7 @@ is_flagship_candidate
 
 - 旧字段 `detectability` 不再作为主字段使用。MVP 以 `concealment_distance` 表达隐蔽能力。
 - 潜艇下潜时可以使用状态修正降低 `concealment_distance`，不需要单独的水下侦查公式。
+- 新代码不再使用 `main_weapon`、`torpedo_weapon`、`anti_air_weapon`、`air_wing` 或 `scout_wing` 作为独立入口，所有武器统一由 `weapon_mounts` 引用。
 
 ## 3. 装备底座配置
 
@@ -93,6 +90,10 @@ is_flagship_candidate
 id
 mount_type
 display_name
+weapon_group_id
+control_mode
+targeting_mode
+ammo_type
 mount_count
 shots_per_mount
 reload_time
@@ -103,6 +104,7 @@ fire_arc_degrees
 turret_turn_speed
 projectile_speed
 spread
+impact_radius
 accuracy_modifier
 target_types
 weapon_resource_id
@@ -115,6 +117,10 @@ aircraft_config_id
 - `id`：装备底座唯一标识。
 - `mount_type`：装备类型，可为 `Gun`、`Torpedo`、`AntiAir`、`Aviation`、`AntiSubmarine`、`Special`。
 - `display_name`：显示名称。
+- `weapon_group_id`：同一物理底座或逻辑武器组的稳定 ID。HE/AP 模式必须使用相同组 ID。
+- `control_mode`：控制方式，可为 `ManualPrimary` 或 `Automatic`。前者只响应玩家主要武器命令，后者按领域规则自动开火。
+- `targeting_mode`：目标方式，可为 `Entity`、`Direction`、`Area` 或 `AutomaticArea`。手动主炮和空袭使用 `Area`，手动鱼雷使用 `Direction`。
+- `ammo_type`：弹药类型，可为 `HE`、`AP` 或 `None`。鱼雷、航空、防空和无弹种切换的特殊武器使用 `None`。
 - `mount_count`：同类底座数量，例如三座三联装主炮可写为 3。
 - `shots_per_mount`：每个底座一次攻击发射数量，例如三联装可写为 3。
 - `reload_time`：装填时间。
@@ -125,6 +131,7 @@ aircraft_config_id
 - `turret_turn_speed`：炮塔、鱼雷管或装备朝向调整速度。
 - `projectile_speed`：投射物速度。
 - `spread`：散布。
+- `impact_radius`：海域攻击的结算半径。主炮和空袭使用；鱼雷可为空或 0。
 - `accuracy_modifier`：命中修正。
 - `target_types`：可攻击目标类型，例如 `Surface`、`Air`、`Submerged`。
 - `weapon_resource_id`：引用具体武器资源或表现资源。
@@ -137,6 +144,23 @@ MVP 约定：
 - 防空可先简化为 360 度范围，但仍使用 `reload_time` 周期结算伤害。
 - 航空可先使用固定出击点和目标区域。
 - 反潜装备用于攻击已发现的下潜潜艇。
+- 每名角色最多一个不同 `weapon_group_id` 的 `ManualPrimary` 武器组；同组 HE/AP 模式合计仍只算一个，其他武器组必须为 `Automatic`。
+- HE 与 AP 若来自同一底座，必须拥有相同 `weapon_group_id` 和共享冷却组。
+- 切换 `ammo_type` 只修改运行时选中模式，不重置或减少装填。
+- 配置加载时必须校验角色引用的主要武器组存在且唯一，并校验 `BattleshipMainGun -> Area`、`Torpedo -> Direction`、`AviationSquadron -> Area` 的目标方式映射。
+
+### 3.1 运行时武器选择状态
+
+每场战斗的 `UnitState` 额外保存：
+
+```text
+selected_ammo_by_group
+primary_weapon_group_id
+```
+
+- `selected_ammo_by_group` 保存每个可切换炮组当前使用的 `HE` 或 `AP`。
+- 运行时选择不得写回 Definition。
+- 已创建的攻击请求保存发射时的武器模式，后续切换不能改变在途攻击。
 
 ## 4. 装甲厚度枚举
 

@@ -2,7 +2,7 @@
 
 ## 1. 文档目的
 
-本文档补充 `design/program_design_phase1.md`，定义第一阶段战斗程序的领域边界、核心对象、状态规则、命令、事件和系统协作方式。
+本文档补充 `docs/program_design_phase1.md`，定义第一阶段战斗程序的领域边界、核心对象、状态规则、命令、事件和系统协作方式。
 
 Domain 层的目标是让战斗规则可以脱离 Godot 场景树运行，从而支持：
 
@@ -16,7 +16,8 @@ Domain 层的目标是让战斗规则可以脱离 Godot 场景树运行，从而
 
 相关文档：
 
-- `design/program_design_phase1.md`
+- `docs/program_design_phase1.md`
+- `docs/operation_design.md`
 - `docs/core_mechanics.md`
 - `docs/data_schema.md`
 - `docs/combat_formula.md`
@@ -293,6 +294,8 @@ weapon_states
 skill_state
 status_effects
 last_fire_time
+selected_ammo_by_group
+primary_weapon_group_id
 ```
 
 不变量：
@@ -317,6 +320,9 @@ current_target_id
 aim_heading
 fire_sequence_index
 enabled
+weapon_group_id
+control_mode
+ammo_type
 ```
 
 不变量：
@@ -325,6 +331,8 @@ enabled
 - 武器只有在单位存活、启用、装填完成、目标合法且满足射程/射角时才能开火。
 - 同一 `shared_cooldown_group` 在同一模拟时刻最多允许一种模式开火。
 - 武器发射后只创建攻击或投射物事实，不直接修改目标 HP。
+- `ManualPrimary` 武器只响应合法的主要武器命令，`Automatic` 武器只由武器系统自动触发。
+- HE/AP 模式共享同一物理底座装填，切换模式不能重置冷却。
 
 ### 5.5 ProjectileState
 
@@ -474,13 +482,19 @@ issuer_id
 | `FocusTargetCommand` | 单位 ID、敌方目标 ID | 玩家或 AI |
 | `ClearFocusTargetCommand` | 单位 ID | 玩家或 AI |
 | `CastSkillCommand` | 单位 ID、技能 ID、目标引用 | 玩家或 AI |
+| `SwitchAmmoCommand` | 单位 ID、武器组 ID、目标弹种 | 玩家 |
+| `FirePrimaryWeaponCommand` | 单位 ID、武器组 ID、目标引用（海域坐标或方向） | 玩家或 AI |
 | `CancelSkillTargetingCommand` | 单位 ID | 玩家 |
 | `PauseBattleCommand` | 无 | 玩家或系统 |
 | `ResumeBattleCommand` | 无 | 玩家或系统 |
 | `RestartBattleCommand` | 无 | 玩家 |
 | `AdvanceSimulationCommand` | 固定步长 | 系统 |
 
-普通武器自动开火不是外部命令，而是一次模拟步内由领域规则产生的内部行为。
+`Automatic` 武器自动开火不是外部命令，而是一次模拟步内由领域规则产生的内部行为。玩家选择角色、`1` 到 `9`、`0`、`-` 槽位映射、主要武器准心和 `V` 镜头跟踪属于 Presentation 状态，不进入 Domain 命令。表现层只在玩家左键确认瞄准后创建 `FirePrimaryWeaponCommand`。
+
+`FirePrimaryWeaponCommand.target_ref` 按主要武器类型解释：主炮和空袭保存世界坐标，鱼雷保存由单位位置指向准心的标准化方向。领域层必须重新校验射程、射角、装填和目标类型，不能信任表现层显示结果。
+
+主要武器瞄准状态下的鼠标右键取消属于 Presentation 状态切换，不创建领域命令。输入层必须消费该次右键，避免同时生成 `MoveUnitsCommand`。
 
 ### 7.2 命令校验
 
@@ -506,6 +520,10 @@ message
 - `TARGET_NOT_VISIBLE`
 - `TARGET_OUT_OF_RANGE`
 - `SKILL_ON_COOLDOWN`
+- `WEAPON_NOT_MANUAL_PRIMARY`
+- `WEAPON_RELOADING`
+- `INVALID_AMMO_TYPE`
+- `TARGET_OUTSIDE_FIRE_ARC`
 - `INVALID_TARGET_TYPE`
 
 无效玩家命令不能让战斗进入部分修改状态。
@@ -536,6 +554,7 @@ event_type
 | `ContactAcquired` | 观察阵营、目标、位置 |
 | `ContactLost` | 观察阵营、目标、最后位置、残影到期时间 |
 | `WeaponFired` | 单位、武器、目标或方向 |
+| `AmmoTypeChanged` | 单位、武器组、新旧弹种 |
 | `ProjectileSpawned` | 投射物和初始状态 |
 | `ProjectileHit` | 投射物、目标、位置 |
 | `AttackResolved` | `DamageResult` |
@@ -667,8 +686,10 @@ NoTarget
 `WeaponService` 负责武器运行时规则：
 
 - 推进装填和共享冷却组。
+- 校验手动主要武器命令和 HE/AP 切换命令。
 - 验证单位状态、目标类型、可见性、射程和射角。
-- 根据自动目标优先级选择合法模式。
+- 仅为 `Automatic` 武器根据自动目标优先级选择合法模式。
+- 为 `ManualPrimary` 武器使用玩家命令提供的单位、方向或区域目标。
 - 生成 `AttackRequest` 或 `ProjectileState`。
 - 提交 `WeaponFired` 和 `ProjectileSpawned` 事件。
 
@@ -715,14 +736,14 @@ Domain 使用固定模拟步长，例如 `0.05s` 或 `0.1s`。渲染帧率不改
 一次 Tick 推荐顺序：
 
 1. Application 收集并排序本 Tick 命令。
-2. Domain 校验和应用移动、集火、技能命令。
+2. Domain 校验和应用移动、集火、弹药、主要武器和技能命令。
 3. 更新状态持续时间和技能/武器冷却。
 4. 更新单位航向、速度和位置。
 5. 处理边界和单位简单分离。
 6. 更新投射物位置与生命周期。
 7. 按侦查频率运行 DetectionService。
 8. 按 AI 频率更新自动移动和目标意图。
-9. 检查武器开火条件并产生攻击。
+9. 处理本 Tick 已接受的手动主要武器请求，并检查自动武器开火条件。
 10. 处理投射物碰撞和延时攻击到达。
 11. 计算并应用伤害。
 12. 处理沉没、目标失效和状态清理。
@@ -823,6 +844,8 @@ View 不持有可写 `UnitState`。
 
 敌方隐藏单位不得出现在玩家可见快照中。调试模式可以使用独立的全知快照，但不能被正式 UI 调用。
 
+鼠标准心位置由 Presentation 使用摄像机变换实时计算，不进入战斗快照，也不消耗模拟随机数。主炮和空袭的合法区域、鱼雷方向扇面可由只读武器状态派生显示。
+
 ### 14.3 一次性表现
 
 炮口火光、技能 cut-in、命中反馈、伤害数字、沉没动画和胜负界面由领域事件触发，而不是从快照变化猜测。
@@ -835,7 +858,7 @@ AI 是命令生产者，不是拥有特权的第二套战斗规则。
 
 AI 可以读取其阵营可见快照和己方完整状态，输出移动、集火和技能命令。AI 不得读取敌方隐藏位置、直接设置目标、跳过射程或强制命中。玩家和 AI 命令经过相同校验。
 
-自动普通攻击属于单位领域行为，不需要 AI 每次提交开火命令。AI 只决定战术意图，武器系统决定何时具备合法开火条件。
+自动武器攻击属于单位领域行为，不需要 AI 每次提交开火命令。敌方 AI 若使用配置为 `ManualPrimary` 的武器，必须提交与玩家同结构的 `FirePrimaryWeaponCommand`，不能绕过装填、射程、射角或侦查规则。
 
 ---
 
@@ -928,6 +951,10 @@ AI 可以读取其阵营可见快照和己方完整状态，输出移动、集�
 - 鱼雷碰撞只命中合法阵营和目标类型。
 - 命中、0 伤害、有效伤害和沉没结果正确。
 - 多发武器逐发结算。
+- 同一角色不能加载两个不同武器组的 `ManualPrimary` 配置。
+- `E` 本身不创建领域命令；左键确认后只创建一次主要武器命令。
+- 瞄准状态下右键取消不创建 `FirePrimaryWeaponCommand` 或 `MoveUnitsCommand`，也不改变装填状态。
+- 主炮海域坐标、鱼雷中心方向和空袭中心坐标按各自目标类型通过校验与结算。
 
 ### 18.4 技能与状态
 

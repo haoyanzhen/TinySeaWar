@@ -1,0 +1,2948 @@
+{
+  "generator": "OpenAI built-in image generation",
+  "model": "gpt-image-2",
+  "palette": {
+    "panel": "#F7FCFF",
+    "secondary": "#E8F7FB",
+    "border": "#8DD9E8",
+    "text": "#244B5A",
+    "friendly": "#2FBAE6",
+    "enemy": "#FF7180",
+    "danger": "#E83F5B",
+    "selected": "#FFC857",
+    "target": "#FF9F43",
+    "positive": "#35C99A",
+    "skill": "#8A78F0"
+  },
+  "asset_count": 116,
+  "assets": [
+    {
+      "name": "ui_icon_auto_move",
+      "kind": "icon",
+      "source": "assets/ui/processed/source_alpha/ui_icons_controls_sheet_alpha.png",
+      "crop_box": [
+        0,
+        0,
+        314,
+        314
+      ],
+      "output": "assets/ui/processed/common/icons/ui_icon_auto_move.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        27,
+        27,
+        228,
+        231
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_icon_auto_move.png",
+        "assets/ui/export/2x/ui_icon_auto_move.png",
+        "assets/ui/export/4x/ui_icon_auto_move.png"
+      ]
+    },
+    {
+      "name": "ui_icon_auto_weapon",
+      "kind": "icon",
+      "source": "assets/ui/processed/source_alpha/ui_icons_controls_sheet_alpha.png",
+      "crop_box": [
+        314,
+        0,
+        627,
+        314
+      ],
+      "output": "assets/ui/processed/common/icons/ui_icon_auto_weapon.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        27,
+        27,
+        231,
+        230
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_icon_auto_weapon.png",
+        "assets/ui/export/2x/ui_icon_auto_weapon.png",
+        "assets/ui/export/4x/ui_icon_auto_weapon.png"
+      ]
+    },
+    {
+      "name": "ui_icon_auto_skill",
+      "kind": "icon",
+      "source": "assets/ui/processed/source_alpha/ui_icons_controls_sheet_alpha.png",
+      "crop_box": [
+        627,
+        0,
+        940,
+        314
+      ],
+      "output": "assets/ui/processed/common/icons/ui_icon_auto_skill.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        26,
+        25,
+        230,
+        232
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_icon_auto_skill.png",
+        "assets/ui/export/2x/ui_icon_auto_skill.png",
+        "assets/ui/export/4x/ui_icon_auto_skill.png"
+      ]
+    },
+    {
+      "name": "ui_icon_pause",
+      "kind": "icon",
+      "source": "assets/ui/processed/source_alpha/ui_icons_controls_sheet_alpha.png",
+      "crop_box": [
+        940,
+        0,
+        1254,
+        314
+      ],
+      "output": "assets/ui/processed/common/icons/ui_icon_pause.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        26,
+        25,
+        231,
+        228
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_icon_pause.png",
+        "assets/ui/export/2x/ui_icon_pause.png",
+        "assets/ui/export/4x/ui_icon_pause.png"
+      ]
+    },
+    {
+      "name": "ui_icon_continue",
+      "kind": "icon",
+      "source": "assets/ui/processed/source_alpha/ui_icons_controls_sheet_alpha.png",
+      "crop_box": [
+        0,
+        314,
+        314,
+        627
+      ],
+      "output": "assets/ui/processed/common/icons/ui_icon_continue.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        26,
+        25,
+        228,
+        229
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_icon_continue.png",
+        "assets/ui/export/2x/ui_icon_continue.png",
+        "assets/ui/export/4x/ui_icon_continue.png"
+      ]
+    },
+    {
+      "name": "ui_icon_expand",
+      "kind": "icon",
+      "source": "assets/ui/processed/source_alpha/ui_icons_controls_sheet_alpha.png",
+      "crop_box": [
+        314,
+        314,
+        627,
+        627
+      ],
+      "output": "assets/ui/processed/common/icons/ui_icon_expand.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        25,
+        26,
+        229,
+        230
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_icon_expand.png",
+        "assets/ui/export/2x/ui_icon_expand.png",
+        "assets/ui/export/4x/ui_icon_expand.png"
+      ]
+    },
+    {
+      "name": "ui_icon_collapse",
+      "kind": "icon",
+      "source": "assets/ui/processed/source_alpha/ui_icons_controls_sheet_alpha.png",
+      "crop_box": [
+        627,
+        314,
+        940,
+        627
+      ],
+      "output": "assets/ui/processed/common/icons/ui_icon_collapse.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        25,
+        26,
+        230,
+        229
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_icon_collapse.png",
+        "assets/ui/export/2x/ui_icon_collapse.png",
+        "assets/ui/export/4x/ui_icon_collapse.png"
+      ]
+    },
+    {
+      "name": "ui_icon_camera_follow",
+      "kind": "icon",
+      "source": "assets/ui/processed/source_alpha/ui_icons_controls_sheet_alpha.png",
+      "crop_box": [
+        940,
+        314,
+        1254,
+        627
+      ],
+      "output": "assets/ui/processed/common/icons/ui_icon_camera_follow.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        26,
+        25,
+        231,
+        228
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_icon_camera_follow.png",
+        "assets/ui/export/2x/ui_icon_camera_follow.png",
+        "assets/ui/export/4x/ui_icon_camera_follow.png"
+      ]
+    },
+    {
+      "name": "ui_icon_health",
+      "kind": "icon",
+      "source": "assets/ui/processed/source_alpha/ui_icons_controls_sheet_alpha.png",
+      "crop_box": [
+        0,
+        627,
+        314,
+        940
+      ],
+      "output": "assets/ui/processed/common/icons/ui_icon_health.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        48,
+        23,
+        207,
+        238
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_icon_health.png",
+        "assets/ui/export/2x/ui_icon_health.png",
+        "assets/ui/export/4x/ui_icon_health.png"
+      ]
+    },
+    {
+      "name": "ui_icon_oxygen",
+      "kind": "icon",
+      "source": "assets/ui/processed/source_alpha/ui_icons_controls_sheet_alpha.png",
+      "crop_box": [
+        314,
+        627,
+        627,
+        940
+      ],
+      "output": "assets/ui/processed/common/icons/ui_icon_oxygen.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        30,
+        26,
+        225,
+        229
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_icon_oxygen.png",
+        "assets/ui/export/2x/ui_icon_oxygen.png",
+        "assets/ui/export/4x/ui_icon_oxygen.png"
+      ]
+    },
+    {
+      "name": "ui_icon_skill_ready",
+      "kind": "icon",
+      "source": "assets/ui/processed/source_alpha/ui_icons_controls_sheet_alpha.png",
+      "crop_box": [
+        627,
+        627,
+        940,
+        940
+      ],
+      "output": "assets/ui/processed/common/icons/ui_icon_skill_ready.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        25,
+        27,
+        231,
+        228
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_icon_skill_ready.png",
+        "assets/ui/export/2x/ui_icon_skill_ready.png",
+        "assets/ui/export/4x/ui_icon_skill_ready.png"
+      ]
+    },
+    {
+      "name": "ui_icon_cooldown",
+      "kind": "icon",
+      "source": "assets/ui/processed/source_alpha/ui_icons_controls_sheet_alpha.png",
+      "crop_box": [
+        940,
+        627,
+        1254,
+        940
+      ],
+      "output": "assets/ui/processed/common/icons/ui_icon_cooldown.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        29,
+        25,
+        227,
+        230
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_icon_cooldown.png",
+        "assets/ui/export/2x/ui_icon_cooldown.png",
+        "assets/ui/export/4x/ui_icon_cooldown.png"
+      ]
+    },
+    {
+      "name": "ui_icon_selected",
+      "kind": "icon",
+      "source": "assets/ui/processed/source_alpha/ui_icons_controls_sheet_alpha.png",
+      "crop_box": [
+        0,
+        940,
+        314,
+        1254
+      ],
+      "output": "assets/ui/processed/common/icons/ui_icon_selected.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        25,
+        22,
+        230,
+        224
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_icon_selected.png",
+        "assets/ui/export/2x/ui_icon_selected.png",
+        "assets/ui/export/4x/ui_icon_selected.png"
+      ]
+    },
+    {
+      "name": "ui_icon_target_lock",
+      "kind": "icon",
+      "source": "assets/ui/processed/source_alpha/ui_icons_controls_sheet_alpha.png",
+      "crop_box": [
+        314,
+        940,
+        627,
+        1254
+      ],
+      "output": "assets/ui/processed/common/icons/ui_icon_target_lock.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        28,
+        30,
+        228,
+        224
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_icon_target_lock.png",
+        "assets/ui/export/2x/ui_icon_target_lock.png",
+        "assets/ui/export/4x/ui_icon_target_lock.png"
+      ]
+    },
+    {
+      "name": "ui_icon_detection",
+      "kind": "icon",
+      "source": "assets/ui/processed/source_alpha/ui_icons_controls_sheet_alpha.png",
+      "crop_box": [
+        627,
+        940,
+        940,
+        1254
+      ],
+      "output": "assets/ui/processed/common/icons/ui_icon_detection.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        27,
+        18,
+        228,
+        229
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_icon_detection.png",
+        "assets/ui/export/2x/ui_icon_detection.png",
+        "assets/ui/export/4x/ui_icon_detection.png"
+      ]
+    },
+    {
+      "name": "ui_icon_lost_vision",
+      "kind": "icon",
+      "source": "assets/ui/processed/source_alpha/ui_icons_controls_sheet_alpha.png",
+      "crop_box": [
+        940,
+        940,
+        1254,
+        1254
+      ],
+      "output": "assets/ui/processed/common/icons/ui_icon_lost_vision.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        26,
+        31,
+        230,
+        223
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_icon_lost_vision.png",
+        "assets/ui/export/2x/ui_icon_lost_vision.png",
+        "assets/ui/export/4x/ui_icon_lost_vision.png"
+      ]
+    },
+    {
+      "name": "ui_icon_flagship",
+      "kind": "icon",
+      "source": "assets/ui/processed/source_alpha/ui_icons_combat_sheet_alpha.png",
+      "crop_box": [
+        0,
+        0,
+        314,
+        314
+      ],
+      "output": "assets/ui/processed/common/icons/ui_icon_flagship.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        24,
+        33,
+        238,
+        227
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_icon_flagship.png",
+        "assets/ui/export/2x/ui_icon_flagship.png",
+        "assets/ui/export/4x/ui_icon_flagship.png"
+      ]
+    },
+    {
+      "name": "ui_icon_submerged",
+      "kind": "icon",
+      "source": "assets/ui/processed/source_alpha/ui_icons_combat_sheet_alpha.png",
+      "crop_box": [
+        314,
+        0,
+        627,
+        314
+      ],
+      "output": "assets/ui/processed/common/icons/ui_icon_submerged.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        25,
+        40,
+        231,
+        219
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_icon_submerged.png",
+        "assets/ui/export/2x/ui_icon_submerged.png",
+        "assets/ui/export/4x/ui_icon_submerged.png"
+      ]
+    },
+    {
+      "name": "ui_icon_surfaced",
+      "kind": "icon",
+      "source": "assets/ui/processed/source_alpha/ui_icons_combat_sheet_alpha.png",
+      "crop_box": [
+        627,
+        0,
+        940,
+        314
+      ],
+      "output": "assets/ui/processed/common/icons/ui_icon_surfaced.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        25,
+        48,
+        232,
+        208
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_icon_surfaced.png",
+        "assets/ui/export/2x/ui_icon_surfaced.png",
+        "assets/ui/export/4x/ui_icon_surfaced.png"
+      ]
+    },
+    {
+      "name": "ui_icon_gunfire",
+      "kind": "icon",
+      "source": "assets/ui/processed/source_alpha/ui_icons_combat_sheet_alpha.png",
+      "crop_box": [
+        940,
+        0,
+        1254,
+        314
+      ],
+      "output": "assets/ui/processed/common/icons/ui_icon_gunfire.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        18,
+        43,
+        232,
+        218
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_icon_gunfire.png",
+        "assets/ui/export/2x/ui_icon_gunfire.png",
+        "assets/ui/export/4x/ui_icon_gunfire.png"
+      ]
+    },
+    {
+      "name": "ui_icon_torpedo",
+      "kind": "icon",
+      "source": "assets/ui/processed/source_alpha/ui_icons_combat_sheet_alpha.png",
+      "crop_box": [
+        0,
+        314,
+        314,
+        627
+      ],
+      "output": "assets/ui/processed/common/icons/ui_icon_torpedo.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        24,
+        68,
+        232,
+        186
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_icon_torpedo.png",
+        "assets/ui/export/2x/ui_icon_torpedo.png",
+        "assets/ui/export/4x/ui_icon_torpedo.png"
+      ]
+    },
+    {
+      "name": "ui_icon_airstrike",
+      "kind": "icon",
+      "source": "assets/ui/processed/source_alpha/ui_icon_airstrike_replacement_alpha.png",
+      "crop_box": [
+        0,
+        0,
+        1254,
+        1254
+      ],
+      "output": "assets/ui/processed/common/icons/ui_icon_airstrike.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        18,
+        19,
+        238,
+        237
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_icon_airstrike.png",
+        "assets/ui/export/2x/ui_icon_airstrike.png",
+        "assets/ui/export/4x/ui_icon_airstrike.png"
+      ]
+    },
+    {
+      "name": "ui_icon_antiair",
+      "kind": "icon",
+      "source": "assets/ui/processed/source_alpha/ui_icons_combat_sheet_alpha.png",
+      "crop_box": [
+        627,
+        314,
+        940,
+        627
+      ],
+      "output": "assets/ui/processed/common/icons/ui_icon_antiair.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        25,
+        28,
+        232,
+        227
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_icon_antiair.png",
+        "assets/ui/export/2x/ui_icon_antiair.png",
+        "assets/ui/export/4x/ui_icon_antiair.png"
+      ]
+    },
+    {
+      "name": "ui_icon_antisubmarine",
+      "kind": "icon",
+      "source": "assets/ui/processed/source_alpha/ui_icons_combat_sheet_alpha.png",
+      "crop_box": [
+        940,
+        314,
+        1254,
+        627
+      ],
+      "output": "assets/ui/processed/common/icons/ui_icon_antisubmarine.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        26,
+        38,
+        230,
+        217
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_icon_antisubmarine.png",
+        "assets/ui/export/2x/ui_icon_antisubmarine.png",
+        "assets/ui/export/4x/ui_icon_antisubmarine.png"
+      ]
+    },
+    {
+      "name": "ui_icon_sunk",
+      "kind": "icon",
+      "source": "assets/ui/processed/source_alpha/ui_icons_combat_sheet_alpha.png",
+      "crop_box": [
+        0,
+        627,
+        314,
+        895
+      ],
+      "output": "assets/ui/processed/common/icons/ui_icon_sunk.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        24,
+        42,
+        231,
+        212
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_icon_sunk.png",
+        "assets/ui/export/2x/ui_icon_sunk.png",
+        "assets/ui/export/4x/ui_icon_sunk.png"
+      ]
+    },
+    {
+      "name": "ui_icon_hit",
+      "kind": "icon",
+      "source": "assets/ui/processed/source_alpha/ui_icons_combat_sheet_alpha.png",
+      "crop_box": [
+        314,
+        627,
+        627,
+        895
+      ],
+      "output": "assets/ui/processed/common/icons/ui_icon_hit.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        25,
+        29,
+        231,
+        225
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_icon_hit.png",
+        "assets/ui/export/2x/ui_icon_hit.png",
+        "assets/ui/export/4x/ui_icon_hit.png"
+      ]
+    },
+    {
+      "name": "ui_icon_warning",
+      "kind": "icon",
+      "source": "assets/ui/processed/source_alpha/ui_icons_combat_sheet_alpha.png",
+      "crop_box": [
+        627,
+        627,
+        940,
+        895
+      ],
+      "output": "assets/ui/processed/common/icons/ui_icon_warning.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        25,
+        44,
+        231,
+        209
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_icon_warning.png",
+        "assets/ui/export/2x/ui_icon_warning.png",
+        "assets/ui/export/4x/ui_icon_warning.png"
+      ]
+    },
+    {
+      "name": "ui_icon_unknown_contact",
+      "kind": "icon",
+      "source": "assets/ui/processed/source_alpha/ui_icons_combat_sheet_alpha.png",
+      "crop_box": [
+        940,
+        627,
+        1254,
+        895
+      ],
+      "output": "assets/ui/processed/common/icons/ui_icon_unknown_contact.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        25,
+        34,
+        232,
+        219
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_icon_unknown_contact.png",
+        "assets/ui/export/2x/ui_icon_unknown_contact.png",
+        "assets/ui/export/4x/ui_icon_unknown_contact.png"
+      ]
+    },
+    {
+      "name": "ui_log_contact_friendly",
+      "kind": "icon",
+      "source": "assets/ui/processed/source_alpha/ui_icons_combat_sheet_alpha.png",
+      "crop_box": [
+        0,
+        940,
+        314,
+        1254
+      ],
+      "output": "assets/ui/processed/battle/log/ui_log_contact_friendly.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        24,
+        26,
+        232,
+        223
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_log_contact_friendly.png",
+        "assets/ui/export/2x/ui_log_contact_friendly.png",
+        "assets/ui/export/4x/ui_log_contact_friendly.png"
+      ]
+    },
+    {
+      "name": "ui_log_contact_enemy",
+      "kind": "icon",
+      "source": "assets/ui/processed/source_alpha/ui_icons_combat_sheet_alpha.png",
+      "crop_box": [
+        314,
+        940,
+        627,
+        1254
+      ],
+      "output": "assets/ui/processed/battle/log/ui_log_contact_enemy.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        25,
+        26,
+        231,
+        221
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_log_contact_enemy.png",
+        "assets/ui/export/2x/ui_log_contact_enemy.png",
+        "assets/ui/export/4x/ui_log_contact_enemy.png"
+      ]
+    },
+    {
+      "name": "ui_log_aircraft_wave",
+      "kind": "icon",
+      "source": "assets/ui/processed/source_alpha/ui_icons_combat_sheet_alpha.png",
+      "crop_box": [
+        627,
+        940,
+        940,
+        1254
+      ],
+      "output": "assets/ui/processed/battle/log/ui_log_aircraft_wave.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        25,
+        24,
+        231,
+        223
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_log_aircraft_wave.png",
+        "assets/ui/export/2x/ui_log_aircraft_wave.png",
+        "assets/ui/export/4x/ui_log_aircraft_wave.png"
+      ]
+    },
+    {
+      "name": "ui_log_last_contact",
+      "kind": "icon",
+      "source": "assets/ui/processed/source_alpha/ui_icons_combat_sheet_alpha.png",
+      "crop_box": [
+        940,
+        940,
+        1254,
+        1254
+      ],
+      "output": "assets/ui/processed/battle/log/ui_log_last_contact.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        24,
+        24,
+        232,
+        223
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_log_last_contact.png",
+        "assets/ui/export/2x/ui_log_last_contact.png",
+        "assets/ui/export/4x/ui_log_last_contact.png"
+      ]
+    },
+    {
+      "name": "ui_icon_class_destroyer",
+      "kind": "icon",
+      "source": "assets/ui/processed/source_alpha/ui_icons_classes_minimap_sheet_alpha.png",
+      "crop_box": [
+        0,
+        0,
+        384,
+        341
+      ],
+      "output": "assets/ui/processed/common/icons/ui_icon_class_destroyer.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        22,
+        42,
+        234,
+        213
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_icon_class_destroyer.png",
+        "assets/ui/export/2x/ui_icon_class_destroyer.png",
+        "assets/ui/export/4x/ui_icon_class_destroyer.png"
+      ]
+    },
+    {
+      "name": "ui_icon_class_light_cruiser",
+      "kind": "icon",
+      "source": "assets/ui/processed/source_alpha/ui_icons_classes_minimap_sheet_alpha.png",
+      "crop_box": [
+        384,
+        0,
+        768,
+        341
+      ],
+      "output": "assets/ui/processed/common/icons/ui_icon_class_light_cruiser.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        24,
+        28,
+        232,
+        228
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_icon_class_light_cruiser.png",
+        "assets/ui/export/2x/ui_icon_class_light_cruiser.png",
+        "assets/ui/export/4x/ui_icon_class_light_cruiser.png"
+      ]
+    },
+    {
+      "name": "ui_icon_class_heavy_cruiser",
+      "kind": "icon",
+      "source": "assets/ui/processed/source_alpha/ui_icons_classes_minimap_sheet_alpha.png",
+      "crop_box": [
+        768,
+        0,
+        1152,
+        341
+      ],
+      "output": "assets/ui/processed/common/icons/ui_icon_class_heavy_cruiser.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        25,
+        23,
+        230,
+        233
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_icon_class_heavy_cruiser.png",
+        "assets/ui/export/2x/ui_icon_class_heavy_cruiser.png",
+        "assets/ui/export/4x/ui_icon_class_heavy_cruiser.png"
+      ]
+    },
+    {
+      "name": "ui_icon_class_battleship",
+      "kind": "icon",
+      "source": "assets/ui/processed/source_alpha/ui_icons_classes_minimap_sheet_alpha.png",
+      "crop_box": [
+        1152,
+        0,
+        1536,
+        341
+      ],
+      "output": "assets/ui/processed/common/icons/ui_icon_class_battleship.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        23,
+        29,
+        233,
+        230
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_icon_class_battleship.png",
+        "assets/ui/export/2x/ui_icon_class_battleship.png",
+        "assets/ui/export/4x/ui_icon_class_battleship.png"
+      ]
+    },
+    {
+      "name": "ui_icon_class_carrier",
+      "kind": "icon",
+      "source": "assets/ui/processed/source_alpha/ui_icons_classes_minimap_sheet_alpha.png",
+      "crop_box": [
+        0,
+        341,
+        384,
+        683
+      ],
+      "output": "assets/ui/processed/common/icons/ui_icon_class_carrier.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        23,
+        49,
+        233,
+        206
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_icon_class_carrier.png",
+        "assets/ui/export/2x/ui_icon_class_carrier.png",
+        "assets/ui/export/4x/ui_icon_class_carrier.png"
+      ]
+    },
+    {
+      "name": "ui_icon_class_submarine",
+      "kind": "icon",
+      "source": "assets/ui/processed/source_alpha/ui_icons_classes_minimap_sheet_alpha.png",
+      "crop_box": [
+        384,
+        341,
+        768,
+        683
+      ],
+      "output": "assets/ui/processed/common/icons/ui_icon_class_submarine.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        24,
+        27,
+        231,
+        226
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_icon_class_submarine.png",
+        "assets/ui/export/2x/ui_icon_class_submarine.png",
+        "assets/ui/export/4x/ui_icon_class_submarine.png"
+      ]
+    },
+    {
+      "name": "ui_minimap_surface_player",
+      "kind": "icon",
+      "source": "assets/ui/processed/source_alpha/ui_icons_classes_minimap_sheet_alpha.png",
+      "crop_box": [
+        768,
+        341,
+        1152,
+        683
+      ],
+      "output": "assets/ui/processed/battle/minimap/ui_minimap_surface_player.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        23,
+        24,
+        233,
+        231
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_minimap_surface_player.png",
+        "assets/ui/export/2x/ui_minimap_surface_player.png",
+        "assets/ui/export/4x/ui_minimap_surface_player.png"
+      ]
+    },
+    {
+      "name": "ui_minimap_surface_enemy",
+      "kind": "icon",
+      "source": "assets/ui/processed/source_alpha/ui_icons_classes_minimap_sheet_alpha.png",
+      "crop_box": [
+        1152,
+        341,
+        1536,
+        683
+      ],
+      "output": "assets/ui/processed/battle/minimap/ui_minimap_surface_enemy.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        24,
+        25,
+        232,
+        231
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_minimap_surface_enemy.png",
+        "assets/ui/export/2x/ui_minimap_surface_enemy.png",
+        "assets/ui/export/4x/ui_minimap_surface_enemy.png"
+      ]
+    },
+    {
+      "name": "ui_minimap_submarine_player",
+      "kind": "icon",
+      "source": "assets/ui/processed/source_alpha/ui_icons_classes_minimap_sheet_alpha.png",
+      "crop_box": [
+        0,
+        683,
+        384,
+        1024
+      ],
+      "output": "assets/ui/processed/battle/minimap/ui_minimap_submarine_player.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        24,
+        23,
+        232,
+        226
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_minimap_submarine_player.png",
+        "assets/ui/export/2x/ui_minimap_submarine_player.png",
+        "assets/ui/export/4x/ui_minimap_submarine_player.png"
+      ]
+    },
+    {
+      "name": "ui_minimap_submarine_enemy",
+      "kind": "icon",
+      "source": "assets/ui/processed/source_alpha/ui_icons_classes_minimap_sheet_alpha.png",
+      "crop_box": [
+        384,
+        683,
+        768,
+        1024
+      ],
+      "output": "assets/ui/processed/battle/minimap/ui_minimap_submarine_enemy.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        23,
+        22,
+        232,
+        228
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_minimap_submarine_enemy.png",
+        "assets/ui/export/2x/ui_minimap_submarine_enemy.png",
+        "assets/ui/export/4x/ui_minimap_submarine_enemy.png"
+      ]
+    },
+    {
+      "name": "ui_minimap_aircraft_player",
+      "kind": "icon",
+      "source": "assets/ui/processed/source_alpha/ui_icons_classes_minimap_sheet_alpha.png",
+      "crop_box": [
+        768,
+        683,
+        1152,
+        1024
+      ],
+      "output": "assets/ui/processed/battle/minimap/ui_minimap_aircraft_player.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        24,
+        22,
+        233,
+        227
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_minimap_aircraft_player.png",
+        "assets/ui/export/2x/ui_minimap_aircraft_player.png",
+        "assets/ui/export/4x/ui_minimap_aircraft_player.png"
+      ]
+    },
+    {
+      "name": "ui_minimap_aircraft_enemy",
+      "kind": "icon",
+      "source": "assets/ui/processed/source_alpha/ui_icons_classes_minimap_sheet_alpha.png",
+      "crop_box": [
+        1152,
+        683,
+        1536,
+        1024
+      ],
+      "output": "assets/ui/processed/battle/minimap/ui_minimap_aircraft_enemy.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        24,
+        22,
+        232,
+        226
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_minimap_aircraft_enemy.png",
+        "assets/ui/export/2x/ui_minimap_aircraft_enemy.png",
+        "assets/ui/export/4x/ui_minimap_aircraft_enemy.png"
+      ]
+    },
+    {
+      "name": "ui_panel_top_expanded",
+      "kind": "panel",
+      "source": "assets/ui/processed/source_alpha/ui_panels_sheet_alpha.png",
+      "crop_box": [
+        0,
+        70,
+        780,
+        270
+      ],
+      "output": "assets/ui/processed/battle/hud/ui_panel_top_expanded.png",
+      "size": [
+        765,
+        149
+      ],
+      "alpha_bbox": [
+        10,
+        10,
+        755,
+        139
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_panel_top_collapsed",
+      "kind": "panel",
+      "source": "assets/ui/processed/source_alpha/ui_panels_sheet_alpha.png",
+      "crop_box": [
+        775,
+        100,
+        1005,
+        255
+      ],
+      "output": "assets/ui/processed/battle/hud/ui_panel_top_collapsed.png",
+      "size": [
+        196,
+        89
+      ],
+      "alpha_bbox": [
+        10,
+        10,
+        186,
+        79
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_panel_fleet_tray_2x6",
+      "kind": "panel",
+      "source": "assets/ui/processed/source_alpha/ui_panels_sheet_alpha.png",
+      "crop_box": [
+        985,
+        20,
+        1536,
+        335
+      ],
+      "output": "assets/ui/processed/battle/fleet/ui_panel_fleet_tray_2x6.png",
+      "size": [
+        508,
+        283
+      ],
+      "alpha_bbox": [
+        10,
+        10,
+        498,
+        273
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_panel_minimap_open_sea",
+      "kind": "panel",
+      "source": "assets/ui/processed/source_alpha/ui_panels_sheet_alpha.png",
+      "crop_box": [
+        45,
+        300,
+        475,
+        650
+      ],
+      "output": "assets/ui/processed/battle/minimap/ui_panel_minimap_open_sea.png",
+      "size": [
+        359,
+        300
+      ],
+      "alpha_bbox": [
+        10,
+        10,
+        349,
+        290
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_panel_battle_log",
+      "kind": "panel",
+      "source": "assets/ui/processed/source_alpha/ui_panels_sheet_alpha.png",
+      "crop_box": [
+        545,
+        285,
+        975,
+        665
+      ],
+      "output": "assets/ui/processed/battle/log/ui_panel_battle_log.png",
+      "size": [
+        349,
+        331
+      ],
+      "alpha_bbox": [
+        10,
+        10,
+        339,
+        321
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_panel_selected_ship",
+      "kind": "panel",
+      "source": "assets/ui/processed/source_alpha/ui_panels_sheet_alpha.png",
+      "crop_box": [
+        1005,
+        340,
+        1490,
+        645
+      ],
+      "output": "assets/ui/processed/battle/hud/ui_panel_selected_ship.png",
+      "size": [
+        424,
+        233
+      ],
+      "alpha_bbox": [
+        10,
+        10,
+        414,
+        223
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_panel_pause_dialog",
+      "kind": "panel",
+      "source": "assets/ui/processed/source_alpha/ui_panels_sheet_alpha.png",
+      "crop_box": [
+        25,
+        635,
+        505,
+        995
+      ],
+      "output": "assets/ui/processed/battle/results/ui_panel_pause_dialog.png",
+      "size": [
+        416,
+        301
+      ],
+      "alpha_bbox": [
+        10,
+        10,
+        406,
+        291
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_panel_result_dialog",
+      "kind": "panel",
+      "source": "assets/ui/processed/source_alpha/ui_panels_sheet_alpha.png",
+      "crop_box": [
+        515,
+        630,
+        1000,
+        1005
+      ],
+      "output": "assets/ui/processed/battle/results/ui_panel_result_dialog.png",
+      "size": [
+        457,
+        333
+      ],
+      "alpha_bbox": [
+        10,
+        10,
+        447,
+        323
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_panel_confirm_dialog",
+      "kind": "panel",
+      "source": "assets/ui/processed/source_alpha/ui_panels_sheet_alpha.png",
+      "crop_box": [
+        995,
+        645,
+        1490,
+        1005
+      ],
+      "output": "assets/ui/processed/battle/results/ui_panel_confirm_dialog.png",
+      "size": [
+        377,
+        290
+      ],
+      "alpha_bbox": [
+        10,
+        10,
+        367,
+        280
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_frame_portrait_player",
+      "kind": "frame",
+      "source": "assets/ui/processed/source_alpha/ui_frames_buttons_sheet_alpha.png",
+      "crop_box": [
+        45,
+        10,
+        405,
+        390
+      ],
+      "output": "assets/ui/processed/battle/fleet/ui_frame_portrait_player.png",
+      "size": [
+        314,
+        354
+      ],
+      "alpha_bbox": [
+        10,
+        10,
+        304,
+        344
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_frame_portrait_enemy",
+      "kind": "frame",
+      "source": "assets/ui/processed/source_alpha/ui_frames_buttons_sheet_alpha.png",
+      "crop_box": [
+        415,
+        10,
+        775,
+        390
+      ],
+      "output": "assets/ui/processed/battle/fleet/ui_frame_portrait_enemy.png",
+      "size": [
+        315,
+        353
+      ],
+      "alpha_bbox": [
+        10,
+        10,
+        305,
+        343
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_frame_portrait_unknown",
+      "kind": "frame",
+      "source": "assets/ui/processed/source_alpha/ui_frames_buttons_sheet_alpha.png",
+      "crop_box": [
+        765,
+        10,
+        1120,
+        390
+      ],
+      "output": "assets/ui/processed/battle/fleet/ui_frame_portrait_unknown.png",
+      "size": [
+        308,
+        353
+      ],
+      "alpha_bbox": [
+        10,
+        10,
+        298,
+        343
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_frame_portrait_selected",
+      "kind": "frame",
+      "source": "assets/ui/processed/source_alpha/ui_frames_buttons_sheet_alpha.png",
+      "crop_box": [
+        1125,
+        20,
+        1510,
+        390
+      ],
+      "output": "assets/ui/processed/battle/fleet/ui_frame_portrait_selected.png",
+      "size": [
+        343,
+        328
+      ],
+      "alpha_bbox": [
+        10,
+        10,
+        333,
+        318
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_frame_portrait_flagship",
+      "kind": "frame",
+      "source": "assets/ui/processed/source_alpha/ui_frames_buttons_sheet_alpha.png",
+      "crop_box": [
+        40,
+        370,
+        410,
+        760
+      ],
+      "output": "assets/ui/processed/battle/fleet/ui_frame_portrait_flagship.png",
+      "size": [
+        327,
+        359
+      ],
+      "alpha_bbox": [
+        10,
+        10,
+        317,
+        349
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_frame_portrait_sunk",
+      "kind": "frame",
+      "source": "assets/ui/processed/source_alpha/ui_frames_buttons_sheet_alpha.png",
+      "crop_box": [
+        415,
+        370,
+        775,
+        760
+      ],
+      "output": "assets/ui/processed/battle/fleet/ui_frame_portrait_sunk.png",
+      "size": [
+        312,
+        353
+      ],
+      "alpha_bbox": [
+        10,
+        10,
+        302,
+        343
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_frame_portrait_skill_ready",
+      "kind": "frame",
+      "source": "assets/ui/processed/source_alpha/ui_frames_buttons_sheet_alpha.png",
+      "crop_box": [
+        765,
+        370,
+        1120,
+        760
+      ],
+      "output": "assets/ui/processed/battle/fleet/ui_frame_portrait_skill_ready.png",
+      "size": [
+        311,
+        355
+      ],
+      "alpha_bbox": [
+        10,
+        10,
+        301,
+        345
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_frame_portrait_low_hp",
+      "kind": "frame",
+      "source": "assets/ui/processed/source_alpha/ui_frames_buttons_sheet_alpha.png",
+      "crop_box": [
+        1125,
+        370,
+        1510,
+        760
+      ],
+      "output": "assets/ui/processed/battle/fleet/ui_frame_portrait_low_hp.png",
+      "size": [
+        328,
+        352
+      ],
+      "alpha_bbox": [
+        10,
+        10,
+        318,
+        342
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_button_small_default",
+      "kind": "button",
+      "source": "assets/ui/processed/source_alpha/ui_frames_buttons_sheet_alpha.png",
+      "crop_box": [
+        40,
+        755,
+        400,
+        990
+      ],
+      "output": "assets/ui/processed/common/buttons/ui_button_small_default.png",
+      "size": [
+        315,
+        192
+      ],
+      "alpha_bbox": [
+        10,
+        10,
+        305,
+        182
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_button_small_hover",
+      "kind": "button",
+      "source": "assets/ui/processed/source_alpha/ui_frames_buttons_sheet_alpha.png",
+      "crop_box": [
+        405,
+        755,
+        775,
+        990
+      ],
+      "output": "assets/ui/processed/common/buttons/ui_button_small_hover.png",
+      "size": [
+        311,
+        193
+      ],
+      "alpha_bbox": [
+        10,
+        10,
+        301,
+        183
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_button_small_pressed",
+      "kind": "button",
+      "source": "assets/ui/processed/source_alpha/ui_frames_buttons_sheet_alpha.png",
+      "crop_box": [
+        765,
+        755,
+        1125,
+        990
+      ],
+      "output": "assets/ui/processed/common/buttons/ui_button_small_pressed.png",
+      "size": [
+        310,
+        192
+      ],
+      "alpha_bbox": [
+        10,
+        10,
+        300,
+        182
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_button_small_disabled",
+      "kind": "button",
+      "source": "assets/ui/processed/source_alpha/ui_frames_buttons_sheet_alpha.png",
+      "crop_box": [
+        1125,
+        755,
+        1536,
+        990
+      ],
+      "output": "assets/ui/processed/common/buttons/ui_button_small_disabled.png",
+      "size": [
+        308,
+        192
+      ],
+      "alpha_bbox": [
+        10,
+        10,
+        298,
+        182
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_marker_selected",
+      "kind": "marker",
+      "source": "assets/ui/processed/source_alpha/ui_markers_sheet_alpha.png",
+      "crop_box": [
+        0,
+        0,
+        384,
+        341
+      ],
+      "output": "assets/ui/processed/battle/markers/ui_marker_selected.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        24,
+        25,
+        230,
+        232
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_marker_selected.png",
+        "assets/ui/export/2x/ui_marker_selected.png",
+        "assets/ui/export/4x/ui_marker_selected.png"
+      ]
+    },
+    {
+      "name": "ui_marker_target",
+      "kind": "marker",
+      "source": "assets/ui/processed/source_alpha/ui_markers_sheet_alpha.png",
+      "crop_box": [
+        384,
+        0,
+        768,
+        341
+      ],
+      "output": "assets/ui/processed/battle/markers/ui_marker_target.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        26,
+        29,
+        229,
+        226
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_marker_target.png",
+        "assets/ui/export/2x/ui_marker_target.png",
+        "assets/ui/export/4x/ui_marker_target.png"
+      ]
+    },
+    {
+      "name": "ui_marker_heading",
+      "kind": "marker",
+      "source": "assets/ui/processed/source_alpha/ui_markers_sheet_alpha.png",
+      "crop_box": [
+        768,
+        0,
+        1152,
+        341
+      ],
+      "output": "assets/ui/processed/battle/markers/ui_marker_heading.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        35,
+        29,
+        220,
+        229
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_marker_heading.png",
+        "assets/ui/export/2x/ui_marker_heading.png",
+        "assets/ui/export/4x/ui_marker_heading.png"
+      ]
+    },
+    {
+      "name": "ui_marker_destination",
+      "kind": "marker",
+      "source": "assets/ui/processed/source_alpha/ui_markers_sheet_alpha.png",
+      "crop_box": [
+        1152,
+        0,
+        1536,
+        341
+      ],
+      "output": "assets/ui/processed/battle/markers/ui_marker_destination.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        26,
+        33,
+        230,
+        224
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_marker_destination.png",
+        "assets/ui/export/2x/ui_marker_destination.png",
+        "assets/ui/export/4x/ui_marker_destination.png"
+      ]
+    },
+    {
+      "name": "ui_marker_path_endpoint",
+      "kind": "marker",
+      "source": "assets/ui/processed/source_alpha/ui_markers_sheet_alpha.png",
+      "crop_box": [
+        0,
+        341,
+        384,
+        683
+      ],
+      "output": "assets/ui/processed/battle/markers/ui_marker_path_endpoint.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        24,
+        77,
+        232,
+        179
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_marker_path_endpoint.png",
+        "assets/ui/export/2x/ui_marker_path_endpoint.png",
+        "assets/ui/export/4x/ui_marker_path_endpoint.png"
+      ]
+    },
+    {
+      "name": "ui_marker_offscreen_player",
+      "kind": "marker",
+      "source": "assets/ui/processed/source_alpha/ui_markers_sheet_alpha.png",
+      "crop_box": [
+        384,
+        341,
+        768,
+        683
+      ],
+      "output": "assets/ui/processed/battle/markers/ui_marker_offscreen_player.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        27,
+        47,
+        230,
+        210
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_marker_offscreen_player.png",
+        "assets/ui/export/2x/ui_marker_offscreen_player.png",
+        "assets/ui/export/4x/ui_marker_offscreen_player.png"
+      ]
+    },
+    {
+      "name": "ui_marker_offscreen_enemy",
+      "kind": "marker",
+      "source": "assets/ui/processed/source_alpha/ui_markers_sheet_alpha.png",
+      "crop_box": [
+        768,
+        341,
+        1152,
+        683
+      ],
+      "output": "assets/ui/processed/battle/markers/ui_marker_offscreen_enemy.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        25,
+        49,
+        229,
+        206
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_marker_offscreen_enemy.png",
+        "assets/ui/export/2x/ui_marker_offscreen_enemy.png",
+        "assets/ui/export/4x/ui_marker_offscreen_enemy.png"
+      ]
+    },
+    {
+      "name": "ui_marker_offscreen_danger",
+      "kind": "marker",
+      "source": "assets/ui/processed/source_alpha/ui_markers_sheet_alpha.png",
+      "crop_box": [
+        1152,
+        341,
+        1536,
+        683
+      ],
+      "output": "assets/ui/processed/battle/markers/ui_marker_offscreen_danger.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        25,
+        31,
+        231,
+        224
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_marker_offscreen_danger.png",
+        "assets/ui/export/2x/ui_marker_offscreen_danger.png",
+        "assets/ui/export/4x/ui_marker_offscreen_danger.png"
+      ]
+    },
+    {
+      "name": "ui_marker_flagship",
+      "kind": "marker",
+      "source": "assets/ui/processed/source_alpha/ui_markers_sheet_alpha.png",
+      "crop_box": [
+        0,
+        683,
+        384,
+        1024
+      ],
+      "output": "assets/ui/processed/battle/markers/ui_marker_flagship.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        24,
+        30,
+        232,
+        224
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_marker_flagship.png",
+        "assets/ui/export/2x/ui_marker_flagship.png",
+        "assets/ui/export/4x/ui_marker_flagship.png"
+      ]
+    },
+    {
+      "name": "ui_minimap_camera_frame",
+      "kind": "marker",
+      "source": "assets/ui/processed/source_alpha/ui_markers_sheet_alpha.png",
+      "crop_box": [
+        384,
+        683,
+        768,
+        1024
+      ],
+      "output": "assets/ui/processed/battle/minimap/ui_minimap_camera_frame.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        23,
+        48,
+        233,
+        207
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_minimap_camera_frame.png",
+        "assets/ui/export/2x/ui_minimap_camera_frame.png",
+        "assets/ui/export/4x/ui_minimap_camera_frame.png"
+      ]
+    },
+    {
+      "name": "ui_marker_skill_area",
+      "kind": "marker",
+      "source": "assets/ui/processed/source_alpha/ui_markers_sheet_alpha.png",
+      "crop_box": [
+        768,
+        683,
+        1152,
+        1024
+      ],
+      "output": "assets/ui/processed/battle/markers/ui_marker_skill_area.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        24,
+        26,
+        232,
+        230
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_marker_skill_area.png",
+        "assets/ui/export/2x/ui_marker_skill_area.png",
+        "assets/ui/export/4x/ui_marker_skill_area.png"
+      ]
+    },
+    {
+      "name": "ui_marker_danger_area",
+      "kind": "marker",
+      "source": "assets/ui/processed/source_alpha/ui_marker_danger_area_replacement_alpha.png",
+      "crop_box": [
+        0,
+        0,
+        1254,
+        1254
+      ],
+      "output": "assets/ui/processed/battle/markers/ui_marker_danger_area.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        21,
+        18,
+        235,
+        238
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_marker_danger_area.png",
+        "assets/ui/export/2x/ui_marker_danger_area.png",
+        "assets/ui/export/4x/ui_marker_danger_area.png"
+      ]
+    },
+    {
+      "name": "ui_result_victory_header",
+      "kind": "decor",
+      "source": "assets/ui/processed/source_alpha/ui_results_decor_sheet_alpha.png",
+      "crop_box": [
+        0,
+        0,
+        384,
+        512
+      ],
+      "output": "assets/ui/processed/battle/results/ui_result_victory_header.png",
+      "size": [
+        364,
+        280
+      ],
+      "alpha_bbox": [
+        10,
+        10,
+        364,
+        270
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_result_defeat_header",
+      "kind": "decor",
+      "source": "assets/ui/processed/source_alpha/ui_results_decor_sheet_alpha.png",
+      "crop_box": [
+        384,
+        0,
+        768,
+        512
+      ],
+      "output": "assets/ui/processed/battle/results/ui_result_defeat_header.png",
+      "size": [
+        348,
+        266
+      ],
+      "alpha_bbox": [
+        10,
+        10,
+        346,
+        256
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_result_pause_header",
+      "kind": "decor",
+      "source": "assets/ui/processed/source_alpha/ui_results_decor_sheet_alpha.png",
+      "crop_box": [
+        768,
+        0,
+        1152,
+        512
+      ],
+      "output": "assets/ui/processed/battle/results/ui_result_pause_header.png",
+      "size": [
+        340,
+        263
+      ],
+      "alpha_bbox": [
+        10,
+        10,
+        330,
+        253
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_result_confirm_header",
+      "kind": "decor",
+      "source": "assets/ui/processed/source_alpha/ui_results_decor_sheet_alpha.png",
+      "crop_box": [
+        1152,
+        0,
+        1536,
+        512
+      ],
+      "output": "assets/ui/processed/battle/results/ui_result_confirm_header.png",
+      "size": [
+        352,
+        251
+      ],
+      "alpha_bbox": [
+        6,
+        10,
+        342,
+        241
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_result_victory_flourish",
+      "kind": "decor",
+      "source": "assets/ui/processed/source_alpha/ui_results_decor_sheet_alpha.png",
+      "crop_box": [
+        0,
+        512,
+        384,
+        1024
+      ],
+      "output": "assets/ui/processed/battle/results/ui_result_victory_flourish.png",
+      "size": [
+        357,
+        204
+      ],
+      "alpha_bbox": [
+        10,
+        10,
+        356,
+        194
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_result_defeat_flourish",
+      "kind": "decor",
+      "source": "assets/ui/processed/source_alpha/ui_results_decor_sheet_alpha.png",
+      "crop_box": [
+        384,
+        512,
+        768,
+        1024
+      ],
+      "output": "assets/ui/processed/battle/results/ui_result_defeat_flourish.png",
+      "size": [
+        331,
+        205
+      ],
+      "alpha_bbox": [
+        10,
+        10,
+        331,
+        195
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_result_sparkles",
+      "kind": "decor",
+      "source": "assets/ui/processed/source_alpha/ui_results_decor_sheet_alpha.png",
+      "crop_box": [
+        768,
+        512,
+        1152,
+        1024
+      ],
+      "output": "assets/ui/processed/battle/results/ui_result_sparkles.png",
+      "size": [
+        300,
+        200
+      ],
+      "alpha_bbox": [
+        0,
+        10,
+        290,
+        190
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_result_ripples",
+      "kind": "decor",
+      "source": "assets/ui/processed/source_alpha/ui_results_decor_sheet_alpha.png",
+      "crop_box": [
+        1152,
+        512,
+        1536,
+        1024
+      ],
+      "output": "assets/ui/processed/battle/results/ui_result_ripples.png",
+      "size": [
+        287,
+        177
+      ],
+      "alpha_bbox": [
+        10,
+        10,
+        277,
+        167
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_button_auto_move_on",
+      "kind": "button",
+      "source": "assets/ui/processed/source_alpha/ui_auto_toggles_sheet_v2_alpha.png",
+      "crop_box": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "output": "assets/ui/processed/common/buttons/ui_button_auto_move_on.png",
+      "size": [
+        473,
+        233
+      ],
+      "alpha_bbox": [
+        10,
+        10,
+        463,
+        223
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_button_auto_weapon_on",
+      "kind": "button",
+      "source": "assets/ui/processed/source_alpha/ui_auto_toggles_sheet_v2_alpha.png",
+      "crop_box": [
+        512,
+        0,
+        1024,
+        512
+      ],
+      "output": "assets/ui/processed/common/buttons/ui_button_auto_weapon_on.png",
+      "size": [
+        474,
+        233
+      ],
+      "alpha_bbox": [
+        10,
+        10,
+        464,
+        223
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_button_auto_skill_on",
+      "kind": "button",
+      "source": "assets/ui/processed/source_alpha/ui_auto_toggles_sheet_v2_alpha.png",
+      "crop_box": [
+        1024,
+        0,
+        1536,
+        512
+      ],
+      "output": "assets/ui/processed/common/buttons/ui_button_auto_skill_on.png",
+      "size": [
+        468,
+        233
+      ],
+      "alpha_bbox": [
+        10,
+        10,
+        458,
+        223
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_button_auto_move_off",
+      "kind": "button",
+      "source": "assets/ui/processed/source_alpha/ui_auto_toggles_sheet_v2_alpha.png",
+      "crop_box": [
+        0,
+        512,
+        512,
+        1024
+      ],
+      "output": "assets/ui/processed/common/buttons/ui_button_auto_move_off.png",
+      "size": [
+        473,
+        235
+      ],
+      "alpha_bbox": [
+        10,
+        10,
+        463,
+        225
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_button_auto_weapon_off",
+      "kind": "button",
+      "source": "assets/ui/processed/source_alpha/ui_auto_toggles_sheet_v2_alpha.png",
+      "crop_box": [
+        512,
+        512,
+        1024,
+        1024
+      ],
+      "output": "assets/ui/processed/common/buttons/ui_button_auto_weapon_off.png",
+      "size": [
+        474,
+        235
+      ],
+      "alpha_bbox": [
+        10,
+        10,
+        464,
+        225
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_button_auto_skill_off",
+      "kind": "button",
+      "source": "assets/ui/processed/source_alpha/ui_auto_toggles_sheet_v2_alpha.png",
+      "crop_box": [
+        1024,
+        512,
+        1536,
+        1024
+      ],
+      "output": "assets/ui/processed/common/buttons/ui_button_auto_skill_off.png",
+      "size": [
+        470,
+        235
+      ],
+      "alpha_bbox": [
+        10,
+        10,
+        460,
+        225
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_button_size_small_default",
+      "kind": "button",
+      "source": "assets/ui/processed/source_alpha/ui_buttons_sizes_states_sheet_alpha.png",
+      "crop_box": [
+        0,
+        0,
+        512,
+        341
+      ],
+      "output": "assets/ui/processed/common/buttons/ui_button_size_small_default.png",
+      "size": [
+        454,
+        129
+      ],
+      "alpha_bbox": [
+        10,
+        10,
+        454,
+        129
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_button_size_medium_default",
+      "kind": "button",
+      "source": "assets/ui/processed/source_alpha/ui_buttons_sizes_states_sheet_alpha.png",
+      "crop_box": [
+        512,
+        0,
+        1024,
+        341
+      ],
+      "output": "assets/ui/processed/common/buttons/ui_button_size_medium_default.png",
+      "size": [
+        512,
+        134
+      ],
+      "alpha_bbox": [
+        0,
+        10,
+        512,
+        134
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_button_size_large_default",
+      "kind": "button",
+      "source": "assets/ui/processed/source_alpha/ui_buttons_sizes_states_sheet_alpha.png",
+      "crop_box": [
+        1024,
+        0,
+        1536,
+        341
+      ],
+      "output": "assets/ui/processed/common/buttons/ui_button_size_large_default.png",
+      "size": [
+        455,
+        135
+      ],
+      "alpha_bbox": [
+        0,
+        10,
+        445,
+        135
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_button_size_small_selected",
+      "kind": "button",
+      "source": "assets/ui/processed/source_alpha/ui_buttons_sizes_states_sheet_alpha.png",
+      "crop_box": [
+        0,
+        341,
+        512,
+        683
+      ],
+      "output": "assets/ui/processed/common/buttons/ui_button_size_small_selected.png",
+      "size": [
+        460,
+        342
+      ],
+      "alpha_bbox": [
+        10,
+        0,
+        460,
+        342
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_button_size_medium_selected",
+      "kind": "button",
+      "source": "assets/ui/processed/source_alpha/ui_buttons_sizes_states_sheet_alpha.png",
+      "crop_box": [
+        512,
+        341,
+        1024,
+        683
+      ],
+      "output": "assets/ui/processed/common/buttons/ui_button_size_medium_selected.png",
+      "size": [
+        512,
+        342
+      ],
+      "alpha_bbox": [
+        0,
+        0,
+        512,
+        342
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_button_size_large_selected",
+      "kind": "button",
+      "source": "assets/ui/processed/source_alpha/ui_buttons_sizes_states_sheet_alpha.png",
+      "crop_box": [
+        1024,
+        341,
+        1536,
+        683
+      ],
+      "output": "assets/ui/processed/common/buttons/ui_button_size_large_selected.png",
+      "size": [
+        465,
+        342
+      ],
+      "alpha_bbox": [
+        0,
+        0,
+        455,
+        342
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_button_size_small_warning",
+      "kind": "button",
+      "source": "assets/ui/processed/source_alpha/ui_buttons_sizes_states_sheet_alpha.png",
+      "crop_box": [
+        0,
+        683,
+        512,
+        1024
+      ],
+      "output": "assets/ui/processed/common/buttons/ui_button_size_small_warning.png",
+      "size": [
+        442,
+        143
+      ],
+      "alpha_bbox": [
+        10,
+        0,
+        442,
+        133
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_button_size_medium_warning",
+      "kind": "button",
+      "source": "assets/ui/processed/source_alpha/ui_buttons_sizes_states_sheet_alpha.png",
+      "crop_box": [
+        512,
+        683,
+        1024,
+        1024
+      ],
+      "output": "assets/ui/processed/common/buttons/ui_button_size_medium_warning.png",
+      "size": [
+        512,
+        149
+      ],
+      "alpha_bbox": [
+        0,
+        0,
+        512,
+        139
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_button_size_large_warning",
+      "kind": "button",
+      "source": "assets/ui/processed/source_alpha/ui_buttons_sizes_states_sheet_alpha.png",
+      "crop_box": [
+        1024,
+        683,
+        1536,
+        1024
+      ],
+      "output": "assets/ui/processed/common/buttons/ui_button_size_large_warning.png",
+      "size": [
+        448,
+        149
+      ],
+      "alpha_bbox": [
+        0,
+        0,
+        438,
+        139
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_icon_confirm",
+      "kind": "icon",
+      "source": "assets/ui/processed/source_alpha/ui_icons_dialog_actions_sheet_alpha.png",
+      "crop_box": [
+        0,
+        0,
+        627,
+        627
+      ],
+      "output": "assets/ui/processed/common/icons/ui_icon_confirm.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        28,
+        20,
+        228,
+        235
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_icon_confirm.png",
+        "assets/ui/export/2x/ui_icon_confirm.png",
+        "assets/ui/export/4x/ui_icon_confirm.png"
+      ]
+    },
+    {
+      "name": "ui_icon_cancel",
+      "kind": "icon",
+      "source": "assets/ui/processed/source_alpha/ui_icons_dialog_actions_sheet_alpha.png",
+      "crop_box": [
+        627,
+        0,
+        1254,
+        627
+      ],
+      "output": "assets/ui/processed/common/icons/ui_icon_cancel.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        28,
+        20,
+        229,
+        235
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_icon_cancel.png",
+        "assets/ui/export/2x/ui_icon_cancel.png",
+        "assets/ui/export/4x/ui_icon_cancel.png"
+      ]
+    },
+    {
+      "name": "ui_icon_restart",
+      "kind": "icon",
+      "source": "assets/ui/processed/source_alpha/ui_icons_dialog_actions_sheet_alpha.png",
+      "crop_box": [
+        0,
+        627,
+        627,
+        1254
+      ],
+      "output": "assets/ui/processed/common/icons/ui_icon_restart.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        28,
+        20,
+        228,
+        235
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_icon_restart.png",
+        "assets/ui/export/2x/ui_icon_restart.png",
+        "assets/ui/export/4x/ui_icon_restart.png"
+      ]
+    },
+    {
+      "name": "ui_icon_exit",
+      "kind": "icon",
+      "source": "assets/ui/processed/source_alpha/ui_icons_dialog_actions_sheet_alpha.png",
+      "crop_box": [
+        627,
+        627,
+        1254,
+        1254
+      ],
+      "output": "assets/ui/processed/common/icons/ui_icon_exit.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        28,
+        20,
+        228,
+        235
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_icon_exit.png",
+        "assets/ui/export/2x/ui_icon_exit.png",
+        "assets/ui/export/4x/ui_icon_exit.png"
+      ]
+    },
+    {
+      "name": "ui_bar_track_empty",
+      "kind": "bar",
+      "source": "assets/ui/processed/source_alpha/ui_bars_status_sheet_alpha.png",
+      "crop_box": [
+        0,
+        170,
+        410,
+        340
+      ],
+      "output": "assets/ui/processed/common/bars/ui_bar_track_empty.png",
+      "size": [
+        376,
+        120
+      ],
+      "alpha_bbox": [
+        10,
+        10,
+        366,
+        110
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_bar_hp_healthy",
+      "kind": "bar",
+      "source": "assets/ui/processed/source_alpha/ui_bar_hp_healthy_replacement_alpha.png",
+      "crop_box": [
+        0,
+        0,
+        2172,
+        724
+      ],
+      "output": "assets/ui/processed/common/bars/ui_bar_hp_healthy.png",
+      "size": [
+        376,
+        120
+      ],
+      "alpha_bbox": [
+        0,
+        2,
+        376,
+        117
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_bar_hp_warning",
+      "kind": "bar",
+      "source": "assets/ui/processed/source_alpha/ui_bars_status_sheet_alpha.png",
+      "crop_box": [
+        755,
+        170,
+        1145,
+        340
+      ],
+      "output": "assets/ui/processed/common/bars/ui_bar_hp_warning.png",
+      "size": [
+        355,
+        120
+      ],
+      "alpha_bbox": [
+        10,
+        10,
+        345,
+        110
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_bar_hp_critical",
+      "kind": "bar",
+      "source": "assets/ui/processed/source_alpha/ui_bars_status_sheet_alpha.png",
+      "crop_box": [
+        1130,
+        170,
+        1536,
+        340
+      ],
+      "output": "assets/ui/processed/common/bars/ui_bar_hp_critical.png",
+      "size": [
+        363,
+        120
+      ],
+      "alpha_bbox": [
+        10,
+        10,
+        353,
+        110
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_bar_oxygen",
+      "kind": "bar",
+      "source": "assets/ui/processed/source_alpha/ui_bars_status_sheet_alpha.png",
+      "crop_box": [
+        0,
+        420,
+        410,
+        600
+      ],
+      "output": "assets/ui/processed/common/bars/ui_bar_oxygen.png",
+      "size": [
+        378,
+        125
+      ],
+      "alpha_bbox": [
+        10,
+        10,
+        368,
+        115
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_bar_skill_charge",
+      "kind": "bar",
+      "source": "assets/ui/processed/source_alpha/ui_bars_status_sheet_alpha.png",
+      "crop_box": [
+        390,
+        420,
+        805,
+        600
+      ],
+      "output": "assets/ui/processed/common/bars/ui_bar_skill_charge.png",
+      "size": [
+        366,
+        125
+      ],
+      "alpha_bbox": [
+        10,
+        10,
+        356,
+        115
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_bar_damage_trail",
+      "kind": "bar",
+      "source": "assets/ui/processed/source_alpha/ui_bars_status_sheet_alpha.png",
+      "crop_box": [
+        790,
+        420,
+        1280,
+        600
+      ],
+      "output": "assets/ui/processed/common/bars/ui_bar_damage_trail.png",
+      "size": [
+        451,
+        125
+      ],
+      "alpha_bbox": [
+        10,
+        10,
+        441,
+        115
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_ring_cooldown_empty",
+      "kind": "icon",
+      "source": "assets/ui/processed/source_alpha/ui_bars_status_sheet_alpha.png",
+      "crop_box": [
+        0,
+        620,
+        320,
+        930
+      ],
+      "output": "assets/ui/processed/common/bars/ui_ring_cooldown_empty.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        25,
+        24,
+        230,
+        232
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_ring_cooldown_empty.png",
+        "assets/ui/export/2x/ui_ring_cooldown_empty.png",
+        "assets/ui/export/4x/ui_ring_cooldown_empty.png"
+      ]
+    },
+    {
+      "name": "ui_ring_cooldown_half",
+      "kind": "icon",
+      "source": "assets/ui/processed/source_alpha/ui_bars_status_sheet_alpha.png",
+      "crop_box": [
+        320,
+        620,
+        620,
+        930
+      ],
+      "output": "assets/ui/processed/common/bars/ui_ring_cooldown_half.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        25,
+        24,
+        229,
+        232
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_ring_cooldown_half.png",
+        "assets/ui/export/2x/ui_ring_cooldown_half.png",
+        "assets/ui/export/4x/ui_ring_cooldown_half.png"
+      ]
+    },
+    {
+      "name": "ui_ring_skill_ready",
+      "kind": "icon",
+      "source": "assets/ui/processed/source_alpha/ui_bars_status_sheet_alpha.png",
+      "crop_box": [
+        620,
+        620,
+        930,
+        930
+      ],
+      "output": "assets/ui/processed/common/bars/ui_ring_skill_ready.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        26,
+        25,
+        230,
+        232
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_ring_skill_ready.png",
+        "assets/ui/export/2x/ui_ring_skill_ready.png",
+        "assets/ui/export/4x/ui_ring_skill_ready.png"
+      ]
+    },
+    {
+      "name": "ui_badge_flagship_critical",
+      "kind": "icon",
+      "source": "assets/ui/processed/source_alpha/ui_bars_status_sheet_alpha.png",
+      "crop_box": [
+        910,
+        620,
+        1220,
+        930
+      ],
+      "output": "assets/ui/processed/common/bars/ui_badge_flagship_critical.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        25,
+        31,
+        231,
+        224
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_badge_flagship_critical.png",
+        "assets/ui/export/2x/ui_badge_flagship_critical.png",
+        "assets/ui/export/4x/ui_badge_flagship_critical.png"
+      ]
+    },
+    {
+      "name": "ui_badge_unknown_status",
+      "kind": "icon",
+      "source": "assets/ui/processed/source_alpha/ui_bars_status_sheet_alpha.png",
+      "crop_box": [
+        1220,
+        620,
+        1536,
+        930
+      ],
+      "output": "assets/ui/processed/common/bars/ui_badge_unknown_status.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        31,
+        25,
+        224,
+        230
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_badge_unknown_status.png",
+        "assets/ui/export/2x/ui_badge_unknown_status.png",
+        "assets/ui/export/4x/ui_badge_unknown_status.png"
+      ]
+    }
+  ]
+}

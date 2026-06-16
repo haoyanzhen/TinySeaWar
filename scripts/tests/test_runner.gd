@@ -1,6 +1,7 @@
 extends SceneTree
 
 const ConfigRegistry = preload("res://scripts/infrastructure/data/config_registry.gd")
+const AssetCatalog = preload("res://scripts/infrastructure/assets/asset_catalog.gd")
 const BattleSession = preload("res://scripts/application/battle_session.gd")
 const ModifierService = preload("res://scripts/domain/services/modifier_service.gd")
 const DamageService = preload("res://scripts/domain/services/damage_service.gd")
@@ -9,6 +10,7 @@ const SeededRandomSource = preload("res://scripts/infrastructure/random/seeded_r
 var failures: Array[String] = []
 var checks := 0
 var registry
+var assets
 
 
 func _init() -> void:
@@ -20,6 +22,9 @@ func _run() -> void:
 	_check(registry.load_all(), "configuration registry loads: %s" % str(registry.errors))
 	_check(registry.all("ships").size() == 6, "six prototype ship definitions load")
 	_check(registry.all("levels").size() == 2, "1v1 and 3v3 levels load")
+	assets = AssetCatalog.new()
+	_check(assets.load_all(), "asset catalog loads: %s" % str(assets.errors))
+	_test_asset_catalog()
 	_test_modifier_order()
 	_test_command_and_skill_rules()
 	_test_operation_design_rules()
@@ -48,6 +53,18 @@ func _test_modifier_order() -> void:
 	_check(is_equal_approx(ModifierService.calculate(100.0, effects, "Armor"), 72.6), "modifier order follows flat, percent, state, independent")
 	var reload_effects := [{"stat":"ReloadSpeed","operation":"PercentAdd","value":0.50,"category":"Gun"}]
 	_check(is_equal_approx(ModifierService.reload_time(10.0, reload_effects, "Gun"), 10.0 / 1.5), "reload speed uses divisor formula")
+
+
+func _test_asset_catalog() -> void:
+	_check(assets.has_character("bismarck"), "asset catalog discovers processed character packages")
+	var idle: Dictionary = assets.animation_state("bismarck", "idle")
+	_check(idle.get("frames", []).size() == 4 and str(idle["frames"][0]).begins_with("res://"), "character animation state resolves normalized frame paths")
+	var wake: Dictionary = assets.vfx_role("bismarck", "wake")
+	_check(str(wake.get("file", "")).ends_with("bismarck_vfx_wake.png"), "character VFX role resolves by semantic role")
+	var bind: Dictionary = assets.bind_points("bismarck", "bismarck_battle_rig_base.png")
+	_check(bind.has("turret_mount_01"), "character bind points resolve per battle asset")
+	_check(assets.battle_asset_path("bismarck", "rig_base").ends_with("bismarck_battle_rig_base.png"), "battle asset resolves by semantic suffix")
+	_check(assets.ui_asset_path("ui.icon.torpedo", "2x").ends_with("/2x/ui_icon_torpedo.png"), "UI asset resolves by semantic key and export scale")
 
 
 func _test_command_and_skill_rules() -> void:

@@ -104,6 +104,33 @@ func _validate_ship(ship: Dictionary) -> void:
 	for weapon_id in ship.get("weapon_mounts", []):
 		if get_definition("weapons", weapon_id).is_empty():
 			errors.append("Missing weapon %s referenced by %s" % [weapon_id, ship_id])
+	var primary_group_id := str(ship.get("primary_weapon_group_id", ""))
+	if primary_group_id.is_empty():
+		errors.append("Missing primary_weapon_group_id in %s" % ship_id)
+	var primary_count := 0
+	var manual_primary_groups := {}
+	var ammo_group_id := str(ship.get("ammo_selection_group_id", ""))
+	var ammo_types := {}
+	for weapon_id in ship.get("weapon_mounts", []):
+		var weapon := get_definition("weapons", str(weapon_id))
+		if weapon.is_empty(): continue
+		if weapon.get("control_mode", "") == "ManualPrimary":
+			manual_primary_groups[str(weapon.get("weapon_group_id", ""))] = true
+		if str(weapon.get("weapon_group_id", "")) == primary_group_id:
+			primary_count += 1
+			if weapon.get("control_mode", "") != "ManualPrimary":
+				errors.append("Primary weapon %s must be ManualPrimary for %s" % [weapon_id, ship_id])
+		if not ammo_group_id.is_empty() and str(weapon.get("weapon_group_id", "")) == ammo_group_id:
+			var ammo_type := str(weapon.get("ammo_type", ""))
+			if ammo_type in ["HE", "AP"]: ammo_types[ammo_type] = true
+	if primary_count == 0:
+		errors.append("Primary weapon group %s has no mounted weapon in %s" % [primary_group_id, ship_id])
+	if manual_primary_groups.size() > 1:
+		errors.append("Only one ManualPrimary weapon group is allowed in %s" % ship_id)
+	if str(ship.get("primary_weapon_control_type", "")) not in ["Area", "Direction", "Airstrike"]:
+		errors.append("Invalid primary_weapon_control_type in %s" % ship_id)
+	if not ammo_group_id.is_empty() and (not ammo_types.has("HE") or not ammo_types.has("AP")):
+		errors.append("Ammo selection group %s must contain HE and AP in %s" % [ammo_group_id, ship_id])
 	var skill_id := str(ship.get("skill_id", ""))
 	if not skill_id.is_empty() and get_definition("skills", skill_id).is_empty():
 		errors.append("Missing skill %s referenced by %s" % [skill_id, ship_id])
@@ -113,6 +140,13 @@ func _validate_weapon(weapon: Dictionary) -> void:
 	var weapon_id := str(weapon.get("id", "?"))
 	if weapon.get("mount_type", "") not in ["Gun", "Torpedo", "AntiAir", "Aviation", "AntiSubmarine", "Special"]:
 		errors.append("Invalid mount type in %s" % weapon_id)
+	if str(weapon.get("weapon_group_id", "")).is_empty():
+		errors.append("Missing weapon_group_id in %s" % weapon_id)
+	if weapon.get("control_mode", "") not in ["Automatic", "ManualPrimary"]:
+		errors.append("Invalid control_mode in %s" % weapon_id)
+	var ammo_type := str(weapon.get("ammo_type", ""))
+	if not ammo_type.is_empty() and ammo_type not in ["HE", "AP"]:
+		errors.append("Invalid ammo_type in %s" % weapon_id)
 	for field in ["mount_count", "shots_per_mount", "reload_time", "range"]:
 		if float(weapon.get(field, 0.0)) <= 0.0:
 			errors.append("%s must be positive in %s" % [field, weapon_id])

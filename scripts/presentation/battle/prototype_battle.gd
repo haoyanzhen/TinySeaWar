@@ -5,6 +5,9 @@ const BattleSession = preload("res://scripts/application/battle_session.gd")
 const FIXED_STEP := 0.1
 const CAMERA_SPEED := 900.0
 const CAMERA_EDGE_MARGIN := 28.0
+const CAMERA_FOLLOW_DAMPING := 7.5
+
+enum OperationMode { NORMAL, AIMING_PRIMARY, TARGETING_SKILL }
 
 @onready var ocean_surface: Node2D = $OceanSurface
 @onready var battle_camera: Camera2D = $BattleCamera
@@ -18,6 +21,8 @@ var focused_target_id := ""
 var recent_messages: Array[String] = []
 var camera_mode := "Manual"
 var camera_follow_unit_id := ""
+var operation_mode := OperationMode.NORMAL
+var skill_target_type := ""
 var current_palette_id := "cloudy"
 var palette_override := ""
 
@@ -56,6 +61,7 @@ func _draw() -> void:
 		draw_circle(projectile["position"], 5.0, Color("#f5d76e"))
 	for unit in snapshot["units"].values():
 		_draw_unit(unit)
+	_draw_operation_overlay()
 
 
 func _draw_map_boundary(snapshot: Dictionary) -> void:
@@ -85,31 +91,62 @@ func _draw_unit(unit: Dictionary) -> void:
 	draw_string(ThemeDB.fallback_font, position + Vector2(-54.0, 62.0), label, HORIZONTAL_ALIGNMENT_CENTER, 108.0, 18, Color.WHITE)
 
 
+func _draw_operation_overlay() -> void:
+	if selected_unit_id.is_empty() or operation_mode == OperationMode.NORMAL: return
+	var selected: Dictionary = session.state.get("units_by_id", {}).get(selected_unit_id, {})
+	if selected.is_empty(): return
+	var cursor := get_global_mouse_position()
+	if operation_mode == OperationMode.AIMING_PRIMARY:
+		var aim_status: Dictionary = session.get_primary_aim_status(selected_unit_id, cursor)
+		var legal: bool = bool(aim_status.get("legal", false))
+		var color := Color(0.25, 1.0, 0.55, 0.75) if legal else Color(1.0, 0.25, 0.2, 0.75)
+		var range_value := float(aim_status.get("range", 0.0))
+		draw_arc(selected["position"], range_value, 0.0, TAU, 96, color, 2.0)
+		draw_line(selected["position"], cursor, color, 2.0)
+		if aim_status.get("control_type", "") == "Direction":
+			var heading := (cursor - (selected["position"] as Vector2)).angle()
+			draw_line(selected["position"], selected["position"] + Vector2.RIGHT.rotated(heading - 0.18) * range_value, color, 1.5)
+			draw_line(selected["position"], selected["position"] + Vector2.RIGHT.rotated(heading + 0.18) * range_value, color, 1.5)
+		else:
+			draw_circle(cursor, 42.0, Color(color.r, color.g, color.b, 0.12))
+			draw_arc(cursor, 42.0, 0.0, TAU, 36, color, 2.0)
+		draw_string(ThemeDB.fallback_font, cursor + Vector2(18.0, -18.0), str(aim_status.get("reason_code", "OK")), HORIZONTAL_ALIGNMENT_LEFT, -1.0, 16, color)
+	elif operation_mode == OperationMode.TARGETING_SKILL:
+		var color := Color(0.45, 0.75, 1.0, 0.75)
+		draw_circle(cursor, 48.0, Color(color.r, color.g, color.b, 0.12))
+		draw_arc(cursor, 48.0, 0.0, TAU, 36, color, 2.0)
+		draw_string(ThemeDB.fallback_font, cursor + Vector2(18.0, -18.0), "Skill target: %s" % skill_target_type, HORIZONTAL_ALIGNMENT_LEFT, -1.0, 16, color)
+
+
 func _unhandled_input(event: InputEvent) -> void:
 	if session == null: return
 	if event is InputEventKey and event.pressed and not event.echo:
+		var slot := _slot_for_key(event.keycode)
+		if slot > 0:
+			_select_slot(slot)
+			return
 		match event.keycode:
 			KEY_SPACE:
 				if session.state["phase"] == "Paused": session.resume()
 				else: session.pause()
 			KEY_R: _start_battle(level_id)
-			KEY_1:
-				level_id = "level.prototype_1v1"
-				_start_battle(level_id)
-			KEY_3:
-				level_id = "level.prototype_3v3"
-				_start_battle(level_id)
-			KEY_Q: _cast_selected_skill()
-			KEY_F: _toggle_follow_selected()
-			KEY_7: _set_ocean_palette("day_clear")
-			KEY_8: _set_ocean_palette("cloudy")
-			KEY_9: _set_ocean_palette("dusk")
+			KEY_E: _begin_primary_aim()
+			KEY_Q: _switch_selected_ammo()
+			KEY_F: _begin_or_cast_skill()
+			KEY_V: _toggle_follow_selected()
+			KEY_ESCAPE: _cancel_operation_mode()
 	if event is InputEventMouseButton and event.pressed:
 		var snapshot: Dictionary = session.snapshot("player", false)
 		var world_position := get_global_mouse_position()
-		if event.button_index == MOUSE_BUTTON_LEFT: _select_at(world_position, snapshot)
-		elif event.button_index == MOUSE_BUTTON_RIGHT and not selected_unit_id.is_empty():
-			session.queue_command({"command_id": "ui.move.%s" % session.state["tick_index"], "command_type": "MoveUnits", "issued_at_tick": session.state["tick_index"], "issuer_id": "player", "unit_id": selected_unit_id, "target_position": world_position})
+		if event.button_index == MOUSE_BUTTON_LEFT:
+			if operation_mode == OperationMode.AIMING_PRIMARY: _confirm_primary_aim(world_position)
+			elif operation_mode == OperationMode.TARGETING_SKILL: _confirm_skill_target(world_position, snapshot)
+			else: _select_at(world_position, snapshot)
+		elif event.button_index == MOUSE_BUTTON_RIGHT:
+			if operation_mode == OperationMode.AIMING_PRIMARY:
+				_cancel_operation_mode()
+			elif operation_mode == OperationMode.NORMAL and not selected_unit_id.is_empty():
+				session.queue_command({"command_id": "ui.move.%s" % session.state["tick_index"], "command_type": "MoveUnits", "issued_at_tick": session.state["tick_index"], "issuer_id": "player", "unit_id": selected_unit_id, "target_position": world_position})
 
 
 func _update_camera(delta: float) -> void:
@@ -124,7 +161,8 @@ func _update_camera(delta: float) -> void:
 			camera_mode = "Manual"
 			camera_follow_unit_id = ""
 		else:
-			battle_camera.position = target["position"]
+			var weight := 1.0 - exp(-CAMERA_FOLLOW_DAMPING * delta)
+			battle_camera.position = battle_camera.position.lerp(target["position"], weight)
 	_clamp_camera_to_map()
 
 
@@ -167,15 +205,44 @@ func _clamp_camera_to_map() -> void:
 func _toggle_follow_selected() -> void:
 	if selected_unit_id.is_empty(): return
 	var selected: Dictionary = session.state.get("units_by_id", {}).get(selected_unit_id, {})
-	if selected.is_empty() or selected.get("faction_id", "") != "player" or selected.get("life_state", "") != "Alive": return
+	if selected.is_empty() or selected.get("faction_id", "") != "player": return
+	if selected.get("life_state", "") != "Alive":
+		_push_message("V disabled: UNIT_SUNK")
+		return
 	if camera_mode == "Follow" and camera_follow_unit_id == selected_unit_id:
 		camera_mode = "Manual"
 		camera_follow_unit_id = ""
 	else:
 		camera_mode = "Follow"
 		camera_follow_unit_id = selected_unit_id
-		battle_camera.position = selected["position"]
 		_clamp_camera_to_map()
+
+
+func _slot_for_key(keycode: int) -> int:
+	match keycode:
+		KEY_1: return 1
+		KEY_2: return 2
+		KEY_3: return 3
+		KEY_4: return 4
+		KEY_5: return 5
+		KEY_6: return 6
+		KEY_7: return 7
+		KEY_8: return 8
+		KEY_9: return 9
+		KEY_0: return 10
+		KEY_MINUS: return 11
+		_: return 0
+
+
+func _select_slot(slot: int) -> void:
+	for slot_data in session.get_player_slots():
+		if int(slot_data["slot"]) != slot: continue
+		selected_unit_id = str(slot_data["unit_id"])
+		operation_mode = OperationMode.NORMAL
+		if camera_mode == "Follow": camera_follow_unit_id = selected_unit_id
+		_push_message("Selected slot %d: %s" % [slot, slot_data.get("display_name", selected_unit_id)])
+		return
+	_push_message("Slot %d unavailable" % slot)
 
 
 func _select_at(world_position: Vector2, snapshot: Dictionary) -> void:
@@ -189,22 +256,94 @@ func _select_at(world_position: Vector2, snapshot: Dictionary) -> void:
 	if nearest.is_empty(): return
 	if nearest["faction_id"] == "player":
 		selected_unit_id = nearest["entity_id"]
+		if camera_mode == "Follow": camera_follow_unit_id = selected_unit_id
 	else:
 		focused_target_id = nearest["entity_id"]
 		if not selected_unit_id.is_empty(): session.queue_command({"command_id": "ui.focus.%s" % session.state["tick_index"], "command_type": "FocusTarget", "issued_at_tick": session.state["tick_index"], "issuer_id": "player", "unit_id": selected_unit_id, "target_unit_id": focused_target_id})
 
 
-func _cast_selected_skill() -> void:
+func _begin_primary_aim() -> void:
 	if selected_unit_id.is_empty(): return
-	var target_ref := {"type": "Self"}
-	if not focused_target_id.is_empty(): target_ref = {"type": "Entity", "entity_id": focused_target_id}
 	var selected: Dictionary = session.state["units_by_id"].get(selected_unit_id, {})
 	if selected.is_empty(): return
+	var operation_status: Dictionary = session.get_operation_status(selected_unit_id)
+	if not bool(operation_status.get("primary_ready", false)):
+		_push_message("E disabled: %s" % operation_status.get("primary_reason", "PRIMARY_WEAPON_UNAVAILABLE"))
+		return
+	operation_mode = OperationMode.AIMING_PRIMARY
+	_push_message("Aiming %s" % operation_status.get("primary_name", "primary weapon"))
+
+
+func _confirm_primary_aim(world_position: Vector2) -> void:
+	if selected_unit_id.is_empty(): return
+	var aim_status: Dictionary = session.get_primary_aim_status(selected_unit_id, world_position)
+	if not bool(aim_status.get("legal", false)):
+		_push_message("Primary rejected: %s" % aim_status.get("reason_code", "INVALID_TARGET"))
+		return
+	session.queue_command({"command_id": "ui.primary.%s" % session.state["tick_index"], "command_type": "FirePrimaryWeapon", "issued_at_tick": session.state["tick_index"], "issuer_id": "player", "unit_id": selected_unit_id, "target_position": world_position})
+	operation_mode = OperationMode.NORMAL
+
+
+func _switch_selected_ammo() -> void:
+	if selected_unit_id.is_empty(): return
+	var operation_status: Dictionary = session.get_operation_status(selected_unit_id)
+	if not bool(operation_status.get("q_enabled", false)):
+		_push_message("Q disabled: AMMO_SWITCH_DISABLED")
+		return
+	session.queue_command({"command_id": "ui.ammo.%s" % session.state["tick_index"], "command_type": "SwitchAmmo", "issued_at_tick": session.state["tick_index"], "issuer_id": "player", "unit_id": selected_unit_id})
+
+
+func _begin_or_cast_skill() -> void:
+	if selected_unit_id.is_empty(): return
+	var selected: Dictionary = session.state["units_by_id"].get(selected_unit_id, {})
+	if selected.is_empty(): return
+	var operation_status: Dictionary = session.get_operation_status(selected_unit_id)
+	if not bool(operation_status.get("skill_ready", false)):
+		_push_message("F disabled: SKILL_ON_COOLDOWN")
+		return
 	var skill: Dictionary = DataRegistry.registry.get_definition("skills", str(selected["skill_state"]["definition_id"]))
-	if skill.get("target_type", "Self") == "Area" and not focused_target_id.is_empty():
-		var target: Dictionary = session.state["units_by_id"].get(focused_target_id, {})
-		if not target.is_empty(): target_ref = {"type": "Position", "position": target["position"]}
+	skill_target_type = str(skill.get("target_type", "Self"))
+	if skill_target_type == "Self":
+		_queue_skill_command({"type": "Self"})
+	else:
+		operation_mode = OperationMode.TARGETING_SKILL
+		_push_message("Select skill target: %s" % skill_target_type)
+
+
+func _confirm_skill_target(world_position: Vector2, snapshot: Dictionary) -> void:
+	if selected_unit_id.is_empty(): return
+	if skill_target_type == "Area":
+		_queue_skill_command({"type": "Position", "position": world_position})
+		operation_mode = OperationMode.NORMAL
+		return
+	var clicked := _unit_at(world_position, snapshot)
+	if clicked.is_empty() or clicked.get("faction_id", "") == "player":
+		_push_message("Skill rejected: INVALID_TARGET_TYPE")
+		return
+	_queue_skill_command({"type": "Entity", "entity_id": clicked["entity_id"]})
+	operation_mode = OperationMode.NORMAL
+
+
+func _queue_skill_command(target_ref: Dictionary) -> void:
 	session.queue_command({"command_id": "ui.skill.%s" % session.state["tick_index"], "command_type": "CastSkill", "issued_at_tick": session.state["tick_index"], "issuer_id": "player", "unit_id": selected_unit_id, "target_ref": target_ref})
+
+
+func _cancel_operation_mode() -> void:
+	if operation_mode == OperationMode.NORMAL: return
+	operation_mode = OperationMode.NORMAL
+	skill_target_type = ""
+	_push_message("Operation cancelled")
+
+
+func _unit_at(world_position: Vector2, snapshot: Dictionary) -> Dictionary:
+	var nearest: Dictionary = {}
+	var nearest_distance := 48.0
+	for unit in snapshot["units"].values():
+		var distance := (unit["position"] as Vector2).distance_to(world_position)
+		if distance < nearest_distance:
+			nearest = unit
+			nearest_distance = distance
+	return nearest
 
 
 func _consume_events(events: Array) -> void:
@@ -229,6 +368,8 @@ func _start_battle(new_level_id: String) -> void:
 	accumulator = 0.0
 	selected_unit_id = ""
 	focused_target_id = ""
+	operation_mode = OperationMode.NORMAL
+	skill_target_type = ""
 	camera_mode = "Manual"
 	camera_follow_unit_id = ""
 	recent_messages.clear()
@@ -236,6 +377,7 @@ func _start_battle(new_level_id: String) -> void:
 	current_palette_id = str(map_data.get("ocean_palette", "day_clear"))
 	ocean_surface.configure(Vector2(float(map_data.get("width", 4096.0)), float(map_data.get("height", 2304.0))), current_palette_id)
 	_configure_camera_limits(map_data)
+	_select_slot(1)
 	battle_camera.position = _player_fleet_center()
 	battle_camera.reset_smoothing()
 	_clamp_camera_to_map()
@@ -271,4 +413,11 @@ func _update_hud() -> void:
 	var selected_name := "None"
 	var selected: Dictionary = session.state.get("units_by_id", {}).get(selected_unit_id, {})
 	if not selected.is_empty(): selected_name = str(selected.get("display_name", selected_unit_id))
-	battle_hud.update_state(session.snapshot("player", false), level_id, recent_messages, camera_mode, selected_name, current_palette_id)
+	battle_hud.update_state(session.snapshot("player", false), level_id, recent_messages, camera_mode, selected_name, current_palette_id, session.get_operation_status(selected_unit_id), _operation_mode_name(), session.get_player_slots())
+
+
+func _operation_mode_name() -> String:
+	match operation_mode:
+		OperationMode.AIMING_PRIMARY: return "AIMING_PRIMARY"
+		OperationMode.TARGETING_SKILL: return "TARGETING_SKILL"
+		_: return "NORMAL"

@@ -28,8 +28,9 @@ func _run() -> void:
 	_check(battle.camera_mode == "Follow", "follow mode activates for selected friendly unit")
 	var followed: Dictionary = battle.session.state["units_by_id"]["unit.player.warspite"]
 	followed["position"] = Vector2(2200.0, 1300.0)
+	var distance_before_follow: float = battle.battle_camera.position.distance_to(followed["position"])
 	battle._update_camera(0.1)
-	_check(battle.battle_camera.position.is_equal_approx(followed["position"]), "follow camera tracks the selected friendly unit")
+	_check(battle.camera_mode == "Follow" and battle.battle_camera.position.distance_to(followed["position"]) < distance_before_follow, "follow camera smoothly approaches the selected friendly unit")
 
 	battle._set_ocean_palette("dusk")
 	_check(battle.current_palette_id == "dusk", "ocean palette can switch at runtime")

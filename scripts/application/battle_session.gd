@@ -132,6 +132,7 @@ func snapshot(viewer_faction: String = PLAYER_FACTION, omniscient: bool = false)
 			"definition_id": unit["definition_id"],
 			"display_name": unit["display_name"],
 			"faction_id": unit["faction_id"],
+			"operation_slot": unit.get("operation_slot", 0),
 			"position": unit["position"],
 			"heading": unit["heading"],
 			"current_hp": unit["current_hp"],
@@ -163,6 +164,80 @@ func get_statistics() -> Dictionary:
 	return recorder.summary.duplicate(true)
 
 
+func get_player_slots() -> Array:
+	var slots: Array = []
+	for unit_id in state.get("fleets_by_id", {}).get("fleet.player", {}).get("unit_ids", []):
+		var unit: Dictionary = state["units_by_id"].get(unit_id, {})
+		if unit.is_empty(): continue
+		slots.append({"slot": int(unit.get("operation_slot", 0)), "unit_id": unit_id, "display_name": unit.get("display_name", unit_id), "life_state": unit.get("life_state", "")})
+	slots.sort_custom(func(a, b): return int(a["slot"]) < int(b["slot"]))
+	return slots
+
+
+func get_operation_status(unit_id: String) -> Dictionary:
+	var unit: Dictionary = state.get("units_by_id", {}).get(unit_id, {})
+	if unit.is_empty():
+		return {"available": false, "reason_code": "UNIT_NOT_FOUND"}
+	var ship: Dictionary = unit.get("stats", {})
+	var primary_group_id := str(ship.get("primary_weapon_group_id", ""))
+	var selected_ammo := _selected_ammo_for_group(unit, primary_group_id)
+	var primary_states := _weapon_states_for_group(unit, primary_group_id, true)
+	var primary_ready := false
+	var primary_reload := INF
+	var primary_reload_max := 0.0
+	var primary_range := 0.0
+	var primary_name := "None"
+	var primary_mount_type := ""
+	for weapon_state in primary_states:
+		var weapon: Dictionary = registry.get_definition("weapons", str(weapon_state["definition_id"]))
+		if primary_name == "None": primary_name = str(weapon.get("display_name", weapon["id"]))
+		if primary_mount_type.is_empty(): primary_mount_type = str(weapon.get("mount_type", ""))
+		primary_reload = minf(primary_reload, float(weapon_state.get("reload_remaining", 0.0)))
+		primary_reload_max = maxf(primary_reload_max, float(weapon.get("reload_time", 0.0)))
+		primary_range = maxf(primary_range, float(weapon.get("range", 0.0)))
+		if float(weapon_state.get("reload_remaining", 0.0)) <= 0.0: primary_ready = true
+	if primary_states.is_empty():
+		primary_reload = 0.0
+	var ammo_group_id := str(ship.get("ammo_selection_group_id", ""))
+	var ammo_options := _ammo_options_for_ship(ship, ammo_group_id)
+	var skill_cooldown := float(unit["skill_state"].get("cooldown_remaining", 0.0))
+	return {
+		"available": true,
+		"slot": int(unit.get("operation_slot", 0)),
+		"life_state": unit.get("life_state", ""),
+		"display_name": unit.get("display_name", unit_id),
+		"primary_group_id": primary_group_id,
+		"primary_control_type": ship.get("primary_weapon_control_type", ""),
+		"primary_name": primary_name,
+		"primary_mount_type": primary_mount_type,
+		"primary_reload_remaining": primary_reload,
+		"primary_reload_max": primary_reload_max,
+		"primary_range": primary_range,
+		"primary_ready": primary_ready and unit.get("life_state", "") == "Alive" and state.get("phase", "") == "Running",
+		"primary_reason": _primary_unavailable_reason(unit, primary_states),
+		"ammo_group_id": ammo_group_id,
+		"ammo_options": ammo_options,
+		"selected_ammo": selected_ammo,
+		"q_enabled": ammo_options.size() > 1,
+		"skill_id": unit["skill_state"].get("definition_id", ""),
+		"skill_cooldown": skill_cooldown,
+		"skill_ready": skill_cooldown <= 0.0 and unit.get("life_state", "") == "Alive" and state.get("phase", "") == "Running",
+	}
+
+
+func get_primary_aim_status(unit_id: String, target_position: Vector2) -> Dictionary:
+	var unit: Dictionary = state.get("units_by_id", {}).get(unit_id, {})
+	if unit.is_empty():
+		return {"legal": false, "reason_code": "UNIT_NOT_FOUND"}
+	var primary_group_id := str(unit.get("stats", {}).get("primary_weapon_group_id", ""))
+	var weapon_states := _weapon_states_for_group(unit, primary_group_id, true)
+	var validation := _validate_primary_fire(unit, weapon_states, target_position)
+	var operation_status := get_operation_status(unit_id)
+	validation["control_type"] = operation_status.get("primary_control_type", "")
+	validation["range"] = operation_status.get("primary_range", 0.0)
+	return validation
+
+
 func _validate_level_runtime(level: Dictionary) -> Array[String]:
 	var errors: Array[String] = []
 	var all_entity_ids := {}
@@ -179,9 +254,10 @@ func _validate_level_runtime(level: Dictionary) -> Array[String]:
 
 func _build_fleet(fleet_id: String, faction_id: String, members: Array) -> void:
 	var fleet := {"fleet_id": fleet_id, "faction_id": faction_id, "unit_ids": [], "flagship_unit_id": "", "initial_max_hp_total": 0.0}
-	for member in members:
+	for member_index in range(members.size()):
+		var member: Dictionary = members[member_index]
 		var ship: Dictionary = registry.get_definition("ships", str(member["ship_id"]))
-		var unit := _build_unit(member, ship, fleet_id, faction_id)
+		var unit := _build_unit(member, ship, fleet_id, faction_id, member_index + 1)
 		state["units_by_id"][unit["entity_id"]] = unit
 		fleet["unit_ids"].append(unit["entity_id"])
 		fleet["initial_max_hp_total"] += unit["max_hp"]
@@ -189,7 +265,7 @@ func _build_fleet(fleet_id: String, faction_id: String, members: Array) -> void:
 	state["fleets_by_id"][fleet_id] = fleet
 
 
-func _build_unit(member: Dictionary, ship: Dictionary, fleet_id: String, faction_id: String) -> Dictionary:
+func _build_unit(member: Dictionary, ship: Dictionary, fleet_id: String, faction_id: String, operation_slot: int) -> Dictionary:
 	var position_data: Array = member.get("position", [0.0, 0.0])
 	var spawn_position := Vector2(float(position_data[0]), float(position_data[1]))
 	var weapon_states: Array = []
@@ -202,6 +278,7 @@ func _build_unit(member: Dictionary, ship: Dictionary, fleet_id: String, faction
 		"display_name": str(ship.get("display_name", ship["id"])),
 		"fleet_id": fleet_id,
 		"faction_id": faction_id,
+		"operation_slot": operation_slot,
 		"is_flagship": bool(member.get("is_flagship", false)),
 		"life_state": "Alive",
 		"current_hp": float(ship["max_hp"]),
@@ -214,9 +291,21 @@ func _build_unit(member: Dictionary, ship: Dictionary, fleet_id: String, faction
 		"targeting_state": {"mode": "Automatic", "focused_target_id": "", "current_target_id": ""},
 		"weapon_states": weapon_states,
 		"skill_state": {"definition_id": ship.get("skill_id", ""), "cooldown_remaining": float(skill.get("cooldown", 0.0)), "cooldown_max": float(skill.get("cooldown", 0.0))},
+		"ammo_state": _build_ammo_state(ship),
 		"status_effects": [],
 		"firing_reveal_remaining": 0.0,
 	}
+
+
+func _build_ammo_state(ship: Dictionary) -> Dictionary:
+	var ammo_group_id := str(ship.get("ammo_selection_group_id", ""))
+	if ammo_group_id.is_empty():
+		return {}
+	var ammo_options := _ammo_options_for_ship(ship, ammo_group_id)
+	var selected_ammo := str(ship.get("initial_ammo_type", ""))
+	if selected_ammo.is_empty() or not selected_ammo in ammo_options:
+		selected_ammo = ammo_options[0] if not ammo_options.is_empty() else ""
+	return {ammo_group_id: selected_ammo}
 
 
 func _process_commands() -> void:
@@ -264,6 +353,12 @@ func _apply_command(command: Dictionary) -> Dictionary:
 			return {"accepted": true}
 		"CastSkill":
 			return _cast_skill(unit, command.get("target_ref", {}), command.get("command_id", ""))
+		"SwitchAmmo":
+			return _switch_ammo(unit, command.get("command_id", ""))
+		"FirePrimaryWeapon":
+			var target_position = command.get("target_position")
+			if typeof(target_position) != TYPE_VECTOR2: return _rejection(command.get("command_id", ""), "INVALID_TARGET_TYPE")
+			return _fire_primary_weapon(unit, _clamp_to_map(target_position), command.get("command_id", ""))
 		_:
 			return _rejection(command.get("command_id", ""), "UNKNOWN_COMMAND")
 
@@ -389,6 +484,7 @@ func _update_ai_intents() -> void:
 func _update_auto_skills() -> void:
 	for unit_id in _sorted_unit_ids():
 		var unit: Dictionary = state["units_by_id"][unit_id]
+		if unit.get("faction_id", "") == PLAYER_FACTION: continue
 		if unit["life_state"] != "Alive" or float(unit["skill_state"]["cooldown_remaining"]) > 0.0: continue
 		var skill: Dictionary = registry.get_definition("skills", str(unit["skill_state"]["definition_id"]))
 		if skill.is_empty(): continue
@@ -450,6 +546,31 @@ func _cast_skill(unit: Dictionary, target_ref: Dictionary, command_id: String) -
 	return {"accepted": true}
 
 
+func _switch_ammo(unit: Dictionary, command_id: String) -> Dictionary:
+	var ship: Dictionary = unit.get("stats", {})
+	var ammo_group_id := str(ship.get("ammo_selection_group_id", ""))
+	if ammo_group_id.is_empty(): return _rejection(command_id, "AMMO_SWITCH_DISABLED")
+	var options := _ammo_options_for_ship(ship, ammo_group_id)
+	if options.size() <= 1: return _rejection(command_id, "AMMO_SWITCH_DISABLED")
+	var current := _selected_ammo_for_group(unit, ammo_group_id)
+	var next_index := (options.find(current) + 1) % options.size()
+	unit["ammo_state"][ammo_group_id] = options[next_index]
+	_emit("AmmoSwitched", {"unit_id": unit["entity_id"], "ammo_group_id": ammo_group_id, "ammo_type": options[next_index]})
+	return {"accepted": true}
+
+
+func _fire_primary_weapon(unit: Dictionary, target_position: Vector2, command_id: String) -> Dictionary:
+	var primary_group_id := str(unit.get("stats", {}).get("primary_weapon_group_id", ""))
+	var weapon_states := _weapon_states_for_group(unit, primary_group_id, true)
+	var validation := _validate_primary_fire(unit, weapon_states, target_position)
+	if not bool(validation.get("legal", false)):
+		return _rejection(command_id, str(validation.get("reason_code", "PRIMARY_WEAPON_UNAVAILABLE")))
+	for weapon_state in validation.get("legal_weapon_states", []):
+		var weapon: Dictionary = registry.get_definition("weapons", str(weapon_state["definition_id"]))
+		_fire_weapon_at_position(unit, target_position, weapon_state, weapon, true)
+	return {"accepted": true}
+
+
 func _skill_recipients(source: Dictionary, skill: Dictionary, target_position: Vector2) -> Dictionary:
 	var result := {"Self": [source], "AlliesInArea": [], "EnemiesInArea": []}
 	var radius := float(skill.get("cast_range", 0.0))
@@ -492,6 +613,8 @@ func _update_weapons() -> void:
 		for weapon_state in weapon_states:
 			if not bool(weapon_state["enabled"]) or float(weapon_state["reload_remaining"]) > 0.0: continue
 			var weapon: Dictionary = registry.get_definition("weapons", str(weapon_state["definition_id"]))
+			if weapon.get("control_mode", "Automatic") == "ManualPrimary": continue
+			if not _weapon_matches_selected_ammo(unit, weapon): continue
 			var group := str(weapon.get("shared_cooldown_group", ""))
 			if not group.is_empty() and fired_groups.has(group): continue
 			if not _can_fire(unit, target, weapon): continue
@@ -514,12 +637,25 @@ func _can_fire(unit: Dictionary, target: Dictionary, weapon: Dictionary) -> bool
 	return angle_delta <= deg_to_rad(float(weapon.get("fire_arc_degrees", 360.0)) * 0.5)
 
 
+func _can_fire_at_position(unit: Dictionary, target_position: Vector2, weapon: Dictionary) -> Dictionary:
+	var distance := (unit["position"] as Vector2).distance_to(target_position)
+	if distance < float(weapon.get("minimum_range", 0.0)):
+		return {"legal": false, "reason_code": "TARGET_TOO_CLOSE"}
+	if distance > float(weapon.get("range", 0.0)):
+		return {"legal": false, "reason_code": "TARGET_OUT_OF_RANGE"}
+	var target_angle := (target_position - (unit["position"] as Vector2)).angle()
+	var arc_center := float(unit["heading"]) + deg_to_rad(float(weapon.get("fire_arc_center", 0.0)))
+	var angle_delta := absf(wrapf(target_angle - arc_center, -PI, PI))
+	if angle_delta > deg_to_rad(float(weapon.get("fire_arc_degrees", 360.0)) * 0.5):
+		return {"legal": false, "reason_code": "FIRE_ARC_INVALID"}
+	return {"legal": true, "reason_code": "OK"}
+
+
 func _fire_weapon(unit: Dictionary, target: Dictionary, weapon_state: Dictionary, weapon: Dictionary) -> void:
 	var category := str(weapon["mount_type"])
 	var extra_shots := int(round(ModifierService.sum_modifier(unit["status_effects"], "ExtraShots", category)))
 	var shot_count := int(weapon["mount_count"]) * int(weapon["shots_per_mount"]) + extra_shots
-	var reload_time := ModifierService.reload_time(float(weapon["reload_time"]), unit["status_effects"], category)
-	weapon_state["reload_remaining"] = reload_time
+	_set_weapon_reload(unit, weapon_state, weapon)
 	unit["firing_reveal_remaining"] = 3.0
 	var base_heading := ((target["position"] as Vector2) - (unit["position"] as Vector2)).angle()
 	for shot_index in range(shot_count):
@@ -533,6 +669,39 @@ func _fire_weapon(unit: Dictionary, target: Dictionary, weapon_state: Dictionary
 			delayed_attacks.append({"attack_id": attack_id, "source_unit_id": unit["entity_id"], "source_weapon_id": weapon["id"], "target_unit_id": target["entity_id"], "origin": unit["position"], "resolve_at_time": float(state["elapsed_time"]) + travel_seconds, "accuracy_modifier": 0.0})
 	_emit("WeaponFired", {"unit_id": unit["entity_id"], "weapon_id": weapon["id"], "target_unit_id": target["entity_id"], "shot_count": shot_count})
 	if extra_shots > 0: _consume_effect(unit, "ExtraShots", category)
+
+
+func _fire_weapon_at_position(unit: Dictionary, target_position: Vector2, weapon_state: Dictionary, weapon: Dictionary, manual: bool) -> void:
+	var category := str(weapon["mount_type"])
+	var extra_shots := int(round(ModifierService.sum_modifier(unit["status_effects"], "ExtraShots", category)))
+	var shot_count := int(weapon["mount_count"]) * int(weapon["shots_per_mount"]) + extra_shots
+	_set_weapon_reload(unit, weapon_state, weapon)
+	unit["firing_reveal_remaining"] = 3.0
+	var base_heading := (target_position - (unit["position"] as Vector2)).angle()
+	for shot_index in range(shot_count):
+		var spread_offset := 0.0
+		if shot_count > 1: spread_offset = deg_to_rad(float(weapon.get("spread", 0.0))) * (float(shot_index) / float(shot_count - 1) - 0.5)
+		var attack_id := _next_entity_id("attack")
+		if category == "Torpedo":
+			_spawn_projectile(unit, weapon, attack_id, base_heading + spread_offset)
+		else:
+			var impact_offset := Vector2.RIGHT.rotated(base_heading + PI * 0.5) * spread_offset * float(weapon.get("impact_radius", 40.0))
+			var impact_position := _clamp_to_map(target_position + impact_offset)
+			var travel_seconds := (unit["position"] as Vector2).distance_to(impact_position) / maxf(1.0, float(weapon.get("projectile_speed", 1.0)))
+			delayed_attacks.append({"attack_id": attack_id, "source_unit_id": unit["entity_id"], "source_weapon_id": weapon["id"], "target_unit_id": "", "target_position": impact_position, "impact_radius": float(weapon.get("impact_radius", 40.0)), "origin": unit["position"], "resolve_at_time": float(state["elapsed_time"]) + travel_seconds, "accuracy_modifier": 0.0})
+	_emit("WeaponFired", {"unit_id": unit["entity_id"], "weapon_id": weapon["id"], "target_position": target_position, "shot_count": shot_count, "manual": manual})
+	if extra_shots > 0: _consume_effect(unit, "ExtraShots", category)
+
+
+func _set_weapon_reload(unit: Dictionary, weapon_state: Dictionary, weapon: Dictionary) -> void:
+	var reload_time := ModifierService.reload_time(float(weapon["reload_time"]), unit["status_effects"], str(weapon["mount_type"]))
+	weapon_state["reload_remaining"] = reload_time
+	var shared_group := str(weapon.get("shared_cooldown_group", ""))
+	if shared_group.is_empty(): return
+	for sibling_state in unit["weapon_states"]:
+		var sibling: Dictionary = registry.get_definition("weapons", str(sibling_state["definition_id"]))
+		if str(sibling.get("shared_cooldown_group", "")) == shared_group:
+			sibling_state["reload_remaining"] = reload_time
 
 
 func _spawn_projectile(unit: Dictionary, weapon: Dictionary, attack_id: String, heading: float) -> void:
@@ -590,8 +759,12 @@ func _resolve_delayed_attacks() -> void:
 
 func _resolve_attack(attack: Dictionary, forced_hit: bool) -> void:
 	var source: Dictionary = state["units_by_id"].get(str(attack["source_unit_id"]), {})
+	if source.is_empty(): return
+	if str(attack.get("target_unit_id", "")).is_empty():
+		_resolve_area_attack(attack, source, forced_hit)
+		return
 	var target: Dictionary = state["units_by_id"].get(str(attack["target_unit_id"]), {})
-	if source.is_empty() or target.is_empty() or target["life_state"] != "Alive": return
+	if target.is_empty() or target["life_state"] != "Alive": return
 	var weapon: Dictionary = registry.get_definition("weapons", str(attack["source_weapon_id"]))
 	var formula: Dictionary = registry.get_definition("formulas", str(weapon["formula_id"]))
 	var source_snapshot := source.duplicate(true)
@@ -600,6 +773,27 @@ func _resolve_attack(attack: Dictionary, forced_hit: bool) -> void:
 	target["current_hp"] = float(result["target_hp_after"])
 	_emit("AttackResolved", {"damage_result": result})
 	if bool(result["caused_sinking"]): _sink_unit(target, source["entity_id"])
+
+
+func _resolve_area_attack(attack: Dictionary, source: Dictionary, forced_hit: bool) -> void:
+	var weapon: Dictionary = registry.get_definition("weapons", str(attack["source_weapon_id"]))
+	var impact_position: Vector2 = attack.get("target_position", source["position"])
+	var impact_radius := float(attack.get("impact_radius", weapon.get("impact_radius", 40.0)))
+	var candidates: Array = []
+	for target_id in _sorted_unit_ids():
+		var target: Dictionary = state["units_by_id"][target_id]
+		if target["life_state"] != "Alive" or target["faction_id"] == source["faction_id"]: continue
+		if not _target_type(target) in weapon.get("target_types", []): continue
+		var distance := (target["position"] as Vector2).distance_to(impact_position)
+		if distance <= impact_radius + float(target["stats"].get("collision_radius", 0.0)):
+			candidates.append({"unit": target, "distance": distance})
+	candidates.sort_custom(func(a, b): return float(a["distance"]) < float(b["distance"]) if not is_equal_approx(float(a["distance"]), float(b["distance"])) else str(a["unit"]["entity_id"]) < str(b["unit"]["entity_id"]))
+	if candidates.is_empty():
+		_emit("AttackResolved", {"damage_result": {"attack_id": attack.get("attack_id", ""), "source_unit_id": source.get("entity_id", ""), "target_unit_id": "", "damage_type": weapon.get("mount_type", ""), "hit": false, "hit_reason": "NO_TARGET_IN_AREA", "raw_damage": 0.0, "armor_modifier": 0.0, "armor_reduction": 0.0, "final_damage": 0.0, "target_hp_before": 0.0, "target_hp_after": 0.0, "caused_sinking": false}})
+		return
+	var target: Dictionary = candidates[0]["unit"]
+	attack["target_unit_id"] = target["entity_id"]
+	_resolve_attack(attack, forced_hit)
 
 
 func _sink_unit(unit: Dictionary, source_unit_id: String) -> void:
@@ -692,6 +886,71 @@ func _consume_effect(unit: Dictionary, stat: String, category: String) -> void:
 	for index in range(unit["status_effects"].size() - 1, -1, -1):
 		var effect: Dictionary = unit["status_effects"][index]
 		if effect.get("stat", "") == stat and effect.get("category", "All") in ["All", category]: unit["status_effects"].remove_at(index)
+
+
+func _weapon_states_for_group(unit: Dictionary, group_id: String, match_selected_ammo: bool) -> Array:
+	var result: Array = []
+	if group_id.is_empty(): return result
+	for weapon_state in unit.get("weapon_states", []):
+		var weapon: Dictionary = registry.get_definition("weapons", str(weapon_state["definition_id"]))
+		if str(weapon.get("weapon_group_id", "")) != group_id: continue
+		if match_selected_ammo and not _weapon_matches_selected_ammo(unit, weapon): continue
+		result.append(weapon_state)
+	return result
+
+
+func _weapon_matches_selected_ammo(unit: Dictionary, weapon: Dictionary) -> bool:
+	var ammo_type := str(weapon.get("ammo_type", ""))
+	if ammo_type.is_empty(): return true
+	var group_id := str(weapon.get("weapon_group_id", ""))
+	var selected_ammo := _selected_ammo_for_group(unit, group_id)
+	return selected_ammo.is_empty() or ammo_type == selected_ammo
+
+
+func _selected_ammo_for_group(unit: Dictionary, group_id: String) -> String:
+	if group_id.is_empty(): return ""
+	return str(unit.get("ammo_state", {}).get(group_id, ""))
+
+
+func _ammo_options_for_ship(ship: Dictionary, ammo_group_id: String) -> Array[String]:
+	var options: Array[String] = []
+	if ammo_group_id.is_empty(): return options
+	for weapon_id in ship.get("weapon_mounts", []):
+		var weapon: Dictionary = registry.get_definition("weapons", str(weapon_id))
+		if str(weapon.get("weapon_group_id", "")) != ammo_group_id: continue
+		var ammo_type := str(weapon.get("ammo_type", ""))
+		if ammo_type in ["HE", "AP"] and not ammo_type in options: options.append(ammo_type)
+	options.sort()
+	return options
+
+
+func _primary_unavailable_reason(unit: Dictionary, primary_states: Array) -> String:
+	if state.get("phase", "") != "Running": return "BATTLE_NOT_RUNNING"
+	if unit.get("life_state", "") != "Alive": return "UNIT_SUNK"
+	if primary_states.is_empty(): return "PRIMARY_WEAPON_UNAVAILABLE"
+	for weapon_state in primary_states:
+		if float(weapon_state.get("reload_remaining", 0.0)) <= 0.0:
+			return "OK"
+	return "WEAPON_RELOADING"
+
+
+func _validate_primary_fire(unit: Dictionary, weapon_states: Array, target_position: Vector2) -> Dictionary:
+	if state.get("phase", "") != "Running": return {"legal": false, "reason_code": "BATTLE_NOT_RUNNING", "legal_weapon_states": []}
+	if unit.get("life_state", "") != "Alive": return {"legal": false, "reason_code": "UNIT_SUNK", "legal_weapon_states": []}
+	if weapon_states.is_empty(): return {"legal": false, "reason_code": "PRIMARY_WEAPON_UNAVAILABLE", "legal_weapon_states": []}
+	var ready_states: Array = []
+	for weapon_state in weapon_states:
+		if float(weapon_state.get("reload_remaining", 0.0)) <= 0.0:
+			ready_states.append(weapon_state)
+	if ready_states.is_empty(): return {"legal": false, "reason_code": "WEAPON_RELOADING", "legal_weapon_states": []}
+	var legal_states: Array = []
+	var last_reason := "TARGET_OUT_OF_RANGE"
+	for weapon_state in ready_states:
+		var weapon: Dictionary = registry.get_definition("weapons", str(weapon_state["definition_id"]))
+		var validation := _can_fire_at_position(unit, target_position, weapon)
+		if bool(validation.get("legal", false)): legal_states.append(weapon_state)
+		else: last_reason = str(validation.get("reason_code", last_reason))
+	return {"legal": not legal_states.is_empty(), "reason_code": "OK" if not legal_states.is_empty() else last_reason, "legal_weapon_states": legal_states}
 
 
 func _target_type(unit: Dictionary) -> String:

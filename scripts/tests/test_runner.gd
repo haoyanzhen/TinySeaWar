@@ -22,6 +22,7 @@ func _run() -> void:
 	_check(registry.all("levels").size() == 2, "1v1 and 3v3 levels load")
 	_test_modifier_order()
 	_test_command_and_skill_rules()
+	_test_operation_design_rules()
 	_test_detection_and_contact_ghost()
 	_test_damage_zero_floor()
 	_test_simultaneous_flagship_victory()
@@ -69,6 +70,37 @@ func _test_command_and_skill_rules() -> void:
 	session.queue_command({"command_id":"move.sunk","command_type":"MoveUnits","issued_at_tick":1,"issuer_id":"player","unit_id":"unit.player.aurora","target_position":Vector2(500.0, 300.0)})
 	var events: Array = session.advance_tick(0.1)
 	_check(_has_event_reason(events, "CommandRejected", "UNIT_SUNK"), "sunk unit cannot accept tactical commands")
+
+
+func _test_operation_design_rules() -> void:
+	var session = BattleSession.new(registry)
+	session.create_battle("level.prototype_1v1", 21)
+	var player: Dictionary = session.state["units_by_id"]["unit.player.warspite"]
+	var enemy: Dictionary = session.state["units_by_id"]["unit.enemy.bismarck"]
+	player["position"] = Vector2(300.0, 350.0)
+	enemy["position"] = Vector2(830.0, 350.0)
+	player["heading"] = 0.0
+	enemy["heading"] = PI
+	player["movement_state"]["mode"] = "HoldPosition"
+	enemy["movement_state"]["mode"] = "HoldPosition"
+	for index in range(30): session.advance_tick(0.1)
+	var auto_events := session.drain_events()
+	_check(not _has_event(auto_events, "WeaponFired"), "ManualPrimary weapon does not participate in automatic fire")
+	_check(session.get_player_slots()[0]["unit_id"] == "unit.player.warspite", "slot 1 selects the first fleet member")
+	session.queue_command({"command_id":"primary.1","command_type":"FirePrimaryWeapon","issued_at_tick":session.state["tick_index"],"issuer_id":"player","unit_id":"unit.player.warspite","target_position":enemy["position"]})
+	var fire_events: Array = session.advance_tick(0.1)
+	_check(_has_event(fire_events, "WeaponFired"), "E-style primary confirmation creates a weapon fire fact")
+	var ap_state := _weapon_state(player, "weapon.warspite_381_ap")
+	var he_state := _weapon_state(player, "weapon.warspite_381_he")
+	_check(float(ap_state["reload_remaining"]) > 0.0 and is_equal_approx(float(ap_state["reload_remaining"]), float(he_state["reload_remaining"])), "HE/AP modes share cooldown after primary fire")
+	var reload_after_fire := float(ap_state["reload_remaining"])
+	_check(not session.delayed_attacks.is_empty() and session.delayed_attacks[0]["source_weapon_id"] == "weapon.warspite_381_ap", "already-fired shell keeps launch-time ammo definition")
+	session.queue_command({"command_id":"ammo.1","command_type":"SwitchAmmo","issued_at_tick":session.state["tick_index"],"issuer_id":"player","unit_id":"unit.player.warspite"})
+	session.advance_tick(0.1)
+	_check(player["ammo_state"]["warspite_main"] == "HE", "Q switches HE/AP ammo state")
+	_check(float(ap_state["reload_remaining"]) < reload_after_fire and float(ap_state["reload_remaining"]) > 0.0, "Q does not reset shared reload progress")
+	session._sink_unit(player, "test")
+	_check(session.get_player_slots()[0]["unit_id"] == "unit.player.warspite", "slot remains stable after sinking")
 
 
 func _test_detection_and_contact_ghost() -> void:
@@ -142,6 +174,18 @@ func _has_event_reason(events: Array, event_type: String, reason_code: String) -
 	for event in events:
 		if event.get("event_type", "") == event_type and event.get("reason_code", "") == reason_code: return true
 	return false
+
+
+func _has_event(events: Array, event_type: String) -> bool:
+	for event in events:
+		if event.get("event_type", "") == event_type: return true
+	return false
+
+
+func _weapon_state(unit: Dictionary, weapon_id: String) -> Dictionary:
+	for weapon_state in unit.get("weapon_states", []):
+		if weapon_state.get("definition_id", "") == weapon_id: return weapon_state
+	return {}
 
 
 func _check(condition: bool, message: String) -> void:

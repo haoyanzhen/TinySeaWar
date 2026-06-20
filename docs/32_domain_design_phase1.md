@@ -2,7 +2,7 @@
 
 ## 1. 文档目的
 
-本文档补充 `docs/program_design_phase1.md`，定义第一阶段战斗程序的领域边界、核心对象、状态规则、命令、事件和系统协作方式。
+本文档补充 `docs/31_program_design_phase1.md`，定义第一阶段战斗程序的领域边界、核心对象、状态规则、命令、事件和系统协作方式。
 
 Domain 层的目标是让战斗规则可以脱离 Godot 场景树运行，从而支持：
 
@@ -16,12 +16,12 @@ Domain 层的目标是让战斗规则可以脱离 Godot 场景树运行，从而
 
 相关文档：
 
-- `docs/program_design_phase1.md`
-- `docs/operation_design.md`
-- `docs/core_mechanics.md`
-- `docs/data_schema.md`
-- `docs/combat_formula.md`
-- `docs/balance_baseline.md`
+- `docs/31_program_design_phase1.md`
+- `docs/11_game_operation_design.md`
+- `docs/10_game_core_mechanics.md`
+- `docs/20_data_schema_design.md`
+- `docs/12_combat_formula_design.md`
+- `docs/13_balance_baseline.md`
 
 ---
 
@@ -679,7 +679,7 @@ NoTarget
 * IndependentMultiply 连乘
 ```
 
-同名效果、叠加组、上限和刷新规则以 `docs/combat_formula.md` 为准。其他服务只能读取计算后的 `UnitStats`，不能自行遍历状态效果做局部修正。
+同名效果、叠加组、上限和刷新规则以 `docs/12_combat_formula_design.md` 为准。其他服务只能读取计算后的 `UnitStats`，不能自行遍历状态效果做局部修正。
 
 ### 10.4 WeaponService
 

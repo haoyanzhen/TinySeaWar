@@ -2,7 +2,7 @@
 
 ## 1. 目标
 
-本文档只记录 Tinny Sea War MVP 阶段已经确定的核心战斗机制。具体计算顺序写入 `docs/combat_formula.md`，初始平衡参数写入 `docs/balance_baseline.md`，字段定义写入 `docs/data_schema.md`。
+本文档只记录 Tinny Sea War MVP 阶段已经确定的核心战斗机制。具体计算顺序写入 `docs/12_combat_formula_design.md`，初始平衡参数写入 `docs/13_balance_baseline.md`，字段定义写入 `docs/20_data_schema_design.md`。
 
 MVP 战斗目标：
 
@@ -76,7 +76,7 @@ MVP 规划六类舰种：
 
 分项能力只表示舰娘擅长方向，不直接等于最终伤害。实际攻击由分项能力、装备底座、伤害公式、命中规则、目标装甲厚度和技能修正共同决定。
 
-具体公式见 `docs/combat_formula.md`。
+具体公式见 `docs/12_combat_formula_design.md`。
 
 ## 5. 装备底座
 
@@ -109,7 +109,7 @@ MVP 规则：
 - 可控主要武器按鱼雷、战列主炮、飞行中队、其他明确标记主武器的顺序确定，并写入角色配置。
 - HE/AP 弹药切换只改变对应火炮组的当前模式，不重置共享装填。
 
-详细字段见 `docs/data_schema.md`
+详细字段见 `docs/20_data_schema_design.md`
 
 ## 6. 侦查
 
@@ -261,7 +261,7 @@ MVP 规则：
 - 使用 `Esc` 取消技能目标选择或关闭当前界面。
 - 暂停战斗并思考对策；第一阶段暂停时不接受战术命令。
 
-未被指定为玩家可控主要武器的副炮、防空、反潜和普通武器自动开火。完整输入、目标选择和反馈规则见 `docs/operation_design.md`。
+未被指定为玩家可控主要武器的副炮、防空、反潜和普通武器自动开火。完整输入、目标选择和反馈规则见 `docs/11_game_operation_design.md`。
 
 每名角色最多只有一个可控主要武器组。主炮攻击准心对应海域，鱼雷以角色指向准心的方向为中心发射鱼雷组，空袭以准心位置为中心执行范围攻击。
 
@@ -274,7 +274,7 @@ MVP 战斗期望时长为 10 分钟。
 - 小船被集火：约 5 秒。
 - 大船被持续磨血：约 90 秒。
 
-这些时长用于指导 `docs/balance_baseline.md` 中的伤害、装甲、资源消耗和生命值配置。
+这些时长用于指导 `docs/13_balance_baseline.md` 中的伤害、装甲、资源消耗和生命值配置。
 
 ## 14. 战斗可读性
 
@@ -288,4 +288,4 @@ MVP 战斗期望时长为 10 分钟。
 - 空袭范围或飞行路径。
 - 已发现和未发现目标的区别。
 
-角色朝向、舰装底座、航迹和武器朝向的美术规范见 `docs/art_design.md`。
+角色朝向、舰装底座、航迹和武器朝向的美术规范见 `docs/40_art_direction_design.md`。

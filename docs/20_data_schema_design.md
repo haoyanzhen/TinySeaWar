@@ -239,7 +239,7 @@ MVP 数值应采用三层结构：
 
 ## 8. 伤害与命中公式配置
 
-本节只定义公式配置需要存储的字段。具体计算顺序见 `docs/combat_formula.md`，MVP 初始参数见 `docs/balance_baseline.md`。
+本节只定义公式配置需要存储的字段。具体计算顺序见 `docs/12_combat_formula_design.md`，MVP 初始参数见 `docs/13_balance_baseline.md`。
 
 基础字段：
 

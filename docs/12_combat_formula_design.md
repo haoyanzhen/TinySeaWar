@@ -2,7 +2,7 @@
 
 ## 1. 设计目标
 
-本文档定义 Tinny Sea War MVP 阶段的战斗结算顺序和公式。字段来源见 `docs/data_schema.md`，初始参数建议见 `docs/balance_baseline.md`。
+本文档定义 Tinny Sea War MVP 阶段的战斗结算顺序和公式。字段来源见 `docs/20_data_schema_design.md`，初始参数建议见 `docs/13_balance_baseline.md`。
 
 公式目标：
 

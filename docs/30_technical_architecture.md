@@ -80,11 +80,11 @@ data/
 
 核心战斗文档职责：
 
-- `docs/core_mechanics.md`：记录玩家和设计视角的核心战斗规则。
-- `docs/data_schema.md`：记录配置字段、枚举和数据引用关系。
-- `docs/combat_formula.md`：记录战斗计算顺序和公式。
-- `docs/balance_baseline.md`：记录 MVP 初始平衡范围和调参基线。
-- `docs/character_balance_design.md`：记录角色基础数值、舰装数值和技能数值草案。
+- `docs/10_game_core_mechanics.md`：记录玩家和设计视角的核心战斗规则。
+- `docs/20_data_schema_design.md`：记录配置字段、枚举和数据引用关系。
+- `docs/12_combat_formula_design.md`：记录战斗计算顺序和公式。
+- `docs/13_balance_baseline.md`：记录 MVP 初始平衡范围和调参基线。
+- `docs/14_character_balance_design.md`：记录角色基础数值、舰装数值和技能数值草案。
 
 ## 3. MVP 范围
 
@@ -383,7 +383,7 @@ MVP 推荐采用半即时战斗：
 
 - 舰娘可按 AI 自动移动和索敌；未指定为玩家主要武器的武器自动攻击。
 - 玩家使用 `1` 到 `9`、`0`、`-` 选择第 1 到第 11 位角色，鼠标下达移动和集火目标，`F` 释放技能，`Q` 切换 HE/AP，`E` 进入主要武器瞄准，`V` 跟踪视角。
-- 完整输入和目标模式见 `docs/operation_design.md`。
+- 完整输入和目标模式见 `docs/11_game_operation_design.md`。
 - 战斗持续时间目标为 10 分钟。
 - 战斗时间限制为 20 分钟。
 - 关卡难度通过敌方数量、等级、资源上限、旗舰类型和 AI 参数提升。
@@ -470,7 +470,7 @@ MVP 规则：
 
 ## 8. 数据设计
 
-详细数据结构已迁移到 `docs/data_schema.md`。本文档只保留技术系统说明，舰娘配置、装备底座、舰种枚举、关卡配置和技能配置字段以数据结构设计文档为准。
+详细数据结构已迁移到 `docs/20_data_schema_design.md`。本文档只保留技术系统说明，舰娘配置、装备底座、舰种枚举、关卡配置和技能配置字段以数据结构设计文档为准。
 
 ## 9. AI 设计
 

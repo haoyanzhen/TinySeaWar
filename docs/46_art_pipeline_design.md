@@ -20,7 +20,7 @@
 
 ### 2.1 资产契约
 
-`docs/art_design.md` 的「单角色美术资产清单」是生成、后处理和验收的唯一契约。流水线不得以「源图中没有」作为忽略必需资产的理由。
+`docs/40_art_direction_design.md` 的「单角色美术资产清单」是生成、后处理和验收的唯一契约。流水线不得以「源图中没有」作为忽略必需资产的理由。
 
 每名角色的统一 UI 资产包包含：
 
@@ -176,15 +176,16 @@ python3 tools/art_pipeline/check_character_asset_contract.py
 ```bash
 python3 tools/art_pipeline/batch_character_art.py
 python3 tools/art_pipeline/batch_character_art.py bismarck --process --preview
+python3 tools/art_pipeline/postprocess_generated_character.py iowa
 ```
 
-Dry-run 会检查基础源图、五套四帧动画源图、裁剪规格、运行时数据和资产契约。`--process` 按角色独立执行后处理，单个角色失败不中断后续角色，结果写入：
+Dry-run 会检查基础源图、五套四帧动画源图、后处理路由、运行时数据和资产契约。旧试产角色可以继续使用脚本内手写裁剪规格；新生成的绿幕标准源图包优先使用 `postprocess_generated_character.py` 自动完成 UI 八格、四帧动画、战场组件、VFX 组件、基础绑定点和配置生成。`--process` 按角色独立执行后处理，单个角色失败不中断后续角色，结果写入：
 
 ```text
 assets/characters/qa/character_art_batch_report.json
 assets/characters/qa/character_art_batch_report.md
 ```
 
-角色只有在源图齐全、裁剪/数据配置齐全、后处理契约通过时才标记为 `batch_ready`。图像生成仍需按角色建立和验收风格锚点，不建议在未验收锚点时一次生成整个角色包。
+角色只有在源图齐全、手写裁剪/数据配置或通用生成后处理路由可用、后处理契约通过时才标记为 `batch_ready`。图像生成仍需按角色建立和验收风格锚点，不建议在未验收锚点时一次生成整个角色包。
 
 其中 `--preview` 或 `build_edge_qa_preview.py` 负责生成视觉检查页，Codex 使用 Computer Use 完成视觉确认后，再将结果写入 QA 报告。默认后处理应优先保持快路径，不自动生成大体积嵌入式预览页。

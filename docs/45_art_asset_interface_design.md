@@ -22,6 +22,9 @@ var idle := DataRegistry.assets.animation_state("bismarck", "idle")
 var wake := DataRegistry.assets.vfx_role("bismarck", "wake")
 var rig_path := DataRegistry.assets.battle_asset_path("bismarck", "rig_base")
 var torpedo_icon := DataRegistry.assets.ui_asset_path("ui.icon.torpedo", "2x")
+var shell_visual := DataRegistry.assets.projectile_visual("shell.large")
+var main_gun_visual := DataRegistry.assets.weapon_visual("bismarck", "main_gun")
+var muzzle_profile := DataRegistry.assets.vfx_playback_profile("muzzle_flash.large")
 ```
 
 角色接口：
@@ -30,6 +33,28 @@ var torpedo_icon := DataRegistry.assets.ui_asset_path("ui.icon.torpedo", "2x")
 - `vfx_role(character_id, role_name)` 返回角色 VFX 语义资源。
 - `bind_points(character_id, asset_name)` 返回指定战斗部件的绑定点。
 - `battle_asset_path(character_id, semantic_name)` 返回战斗部件路径，例如 `rig_base`。
+
+通用战斗表现接口：
+
+- `projectile_visual(projectile_key)` 返回公共弹体、拖尾和运动表现资源，例如 `shell.small`、`shell.medium`、`shell.large`、`torpedo.surface`、`torpedo.submerged`、`aircraft.bomb`。
+- `weapon_visual(character_id, weapon_key)` 返回角色武器到公共表现的映射，例如主炮使用哪个炮弹档位、哪个炮口 profile、哪个命中 profile。
+- `vfx_playback_profile(profile_key)` 返回 VFX 播放参数，例如 `duration`、`fps`、`loop`、`anchor`、`z_layer`、`rotation_mode`、`scale`、`follow_owner`、`blend_mode`。
+- 角色目录中的专属 VFX role 可以覆盖公共 profile 的贴图或颜色，但仍需要声明其公共语义，例如 `bismarck.heavy_muzzle -> muzzle_flash.large`。
+
+建议配置入口：
+
+- `data/visuals/projectile_visuals.json`
+- `data/visuals/weapon_visuals.json`
+- `data/visuals/vfx_playback_profiles.json`
+
+绑定点标准语义：
+
+- 炮口使用 `muzzle_01`、`muzzle_02`、`muzzle_group`。
+- 鱼雷口使用 `torpedo_port_01`、`torpedo_port_02`；旧配置中的单点 `torpedo_port` 读取时应能映射为 `torpedo_port_01`。
+- 航迹使用 `wake_origin`。
+- 航母使用 `aircraft_launch_01`、`aircraft_launch_02`、`aircraft_recovery`。
+- 侦查、技能和扫描使用 `scan_origin`、`skill_origin`。
+- 舰装挂点使用 `rig_mount`。
 
 UI 接口：
 

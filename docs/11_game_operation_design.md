@@ -2,7 +2,7 @@
 
 ## 1. 文档目的
 
-本文档定义 Tiny Sea War 第一阶段战斗的玩家输入、单位选择、主要武器、弹药、技能和视角跟踪规则。具体武器数值见 `docs/character_balance_design.md`，数据字段见 `docs/data_schema.md`，领域命令见 `docs/domain_design_phase1.md`。
+本文档定义 Tiny Sea War 第一阶段战斗的玩家输入、单位选择、主要武器、弹药、技能和视角跟踪规则。具体武器数值见 `docs/14_character_balance_design.md`，数据字段见 `docs/20_data_schema_design.md`，领域命令见 `docs/32_domain_design_phase1.md`。
 
 设计目标：
 
@@ -131,7 +131,7 @@
 
 ## 9. 角色兼容性原则
 
-当前 24 名角色均能映射到可控主要武器：拥有鱼雷者控制鱼雷，战列舰控制大口径主炮，航母控制攻击飞行中队，其余角色控制明确标记的主炮。完整映射见 `docs/character_balance_design.md`。
+当前 24 名角色均能映射到可控主要武器：拥有鱼雷者控制鱼雷，战列舰控制大口径主炮，航母控制攻击飞行中队，其余角色控制明确标记的主炮。完整映射见 `docs/14_character_balance_design.md`。
 
 兼容不代表无需配置。每名角色仍必须明确：
 

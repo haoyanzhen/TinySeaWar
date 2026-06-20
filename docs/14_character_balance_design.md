@@ -2,15 +2,15 @@
 
 ## 1. 设计目标
 
-本文档从 `docs/character_art_design.md` 提取角色原型，并给出 MVP 阶段的初始角色数值草案。
+本文档从 `docs/41_character_art_design.md` 提取角色原型，并给出 MVP 阶段的初始角色数值草案。
 
 数值原则：
 
 - 本文档是首轮可玩原型数值，不是最终平衡。
 - 同舰种角色不使用固定模板，需体现历史原型、美术定位和玩法变体。
-- 基础字段参考 `docs/data_schema.md`。
-- 伤害结算参考 `docs/combat_formula.md`。
-- 数值范围参考 `docs/balance_baseline.md`。
+- 基础字段参考 `docs/20_data_schema_design.md`。
+- 伤害结算参考 `docs/12_combat_formula_design.md`。
+- 数值范围参考 `docs/13_balance_baseline.md`。
 
 ## 2. 基础数值
 
@@ -286,7 +286,7 @@
 
 ## 4. 技能说明与数值
 
-技能增益统一遵守 `docs/combat_formula.md` 的增益计算规则：固定值直接加算、同类百分比加算、状态倍率相乘、少量明确标记的特殊效果独立乘算。命中使用“百分点”，装填统一使用“装填速度”。
+技能增益统一遵守 `docs/12_combat_formula_design.md` 的增益计算规则：固定值直接加算、同类百分比加算、状态倍率相乘、少量明确标记的特殊效果独立乘算。命中使用“百分点”，装填统一使用“装填速度”。
 
 当前技能分类示例：
 

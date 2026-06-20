@@ -4,10 +4,10 @@
 
 **PASS** for the TinySeaWar MVP UI art contract.
 
-- Model: `gpt-image-2`.
+- Model: `gpt-image-2` plus procedural textless UI surfaces.
 - Raw generated PNGs: 17.
-- Accepted semantic assets: 116.
-- 1x/2x/4x icon and marker exports: 195.
+- Accepted semantic assets: 137.
+- 1x/2x/4x icon and marker exports: 207.
 - All accepted outputs are RGBA PNGs with non-empty alpha and transparent pixels.
 - Exact semantic-role contract: pass.
 - Chroma-key residue scan: pass.
@@ -16,10 +16,10 @@
 
 | Category | Accepted |
 | --- | ---: |
-| Panels | 9 |
-| Buttons | 19 |
+| Panels | 16 |
+| Buttons | 29 |
 | Portrait frames | 8 |
-| General icons | 38 |
+| General icons | 42 |
 | Battle markers | 11 |
 | Minimap assets | 7 |
 | Battle-log icons | 4 |
@@ -28,7 +28,8 @@
 | Rings | 3 |
 | Badges | 2 |
 
-The package covers the top expanded/collapsed HUD, three automatic controls,
+The package covers opening/menu panels and buttons, text-slot-driven help and
+intro screens, the top expanded/collapsed HUD, three automatic controls,
 2x6 fleet tray, open-sea minimap, fixed-bottom battle log, selected-ship panel,
 pause/result/confirmation dialogs, fleet portrait states, tactical markers,
 combat and visibility states, six ship classes, minimap contacts, battle events,
@@ -43,6 +44,9 @@ Inspected outputs on checker, dark and light backgrounds:
 - Sky-blue outlines remain visible on light backgrounds.
 - No accepted aircraft icon contains national or historical insignia.
 - No real flags, political symbols or readable generated text are present.
+- Runtime menu, pause and result text is provided through
+  `assets/ui/layout/ui_text_slots.json`; filled QA previews are not runtime
+  assets.
 - The dedicated minimap panel contains an open-ocean grid and no islands.
 - Portrait-frame and panel crops no longer contain neighboring components.
 - Automatic-control enabled states and the healthy HP bar have continuous fills.
@@ -64,12 +68,17 @@ Small-scale review:
 - `ui_asset_contact_light.png`: light-background edge review.
 - `ui_icons_1x_contact.png`: 32 px export review.
 - `ui_icons_24px_contact.png`: 24 px readability review.
+- `ui_menu_mode_filled_preview.png`: filled main-menu readability preview.
+- `ui_menu_operation_filled_preview.png`: filled help-screen readability preview.
+- `ui_result_filled_preview.png`: filled result-screen readability preview.
+- `assets/ui/layout/ui_text_slots.json`: runtime text-slot contract.
 - `tools/art_pipeline/check_ui_asset_contract.py`: exact role, RGBA, alpha,
   residue, dimension and export validation.
 
 ## Runtime Handoff
 
 - Use runtime fonts; do not add baked text to these images.
+- Fill menu, pause and result labels from `assets/ui/layout/ui_text_slots.json`.
 - Import panel and button masters as nine-slice assets where appropriate.
 - Use `export/1x`, `2x` and `4x` for fixed-size icons, or use processed masters
   when Godot performs controlled downsampling.

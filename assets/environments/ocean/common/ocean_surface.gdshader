@@ -83,14 +83,14 @@ void fragment() {
 	float authored_wave_a = texture(wave_texture, fract(texture_uv + vec2(time * 0.002, -time * 0.0015))).r;
 	float authored_wave_b = texture(wave_texture, fract(texture_rotation * world / 1380.0 - vec2(time * 0.0011, time * 0.0016) + 0.23)).r;
 	float authored_wave = authored_wave_a * 0.58 + authored_wave_b * 0.42;
-	float sparkle_mask = crest_a * crest_b * (0.45 + crest_c * 0.55) + authored_wave * 0.0;
+	float sparkle_mask = crest_a * crest_b * (0.45 + crest_c * 0.55) + authored_wave * 0.35;
 	water = mix(water, highlight_color.rgb, wave_line * 0.62 + sparkle_mask * sparkle_strength);
 
 	float cloud_authored = texture(cloud_texture, fract(texture_rotation * world / 2048.0 + vec2(time * 0.0005, time * 0.0003))).r;
 	float cloud_field = 0.5;
 	cloud_field += sin(world.x * 0.00115 + world.y * 0.00048 + time * 0.045) * 0.22;
 	cloud_field += sin(world.x * -0.00062 + world.y * 0.00134 - time * 0.031) * 0.18;
-	cloud_field += (broad_b - 0.5) * 0.0 + cloud_authored * 0.0;
+	cloud_field += (broad_b - 0.5) * 0.12 + (cloud_authored - 0.5) * 0.32;
 	float cloud = smoothstep(0.42, 0.69, cloud_field) * cloud_opacity;
 	vec3 cloud_tint = mix(water * 0.68, cloud_color.rgb, 0.12);
 	water = mix(water, cloud_tint, cloud);

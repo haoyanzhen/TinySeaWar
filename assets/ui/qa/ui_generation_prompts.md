@@ -5,7 +5,7 @@ generation workflow. The common production constraints were:
 
 - Bright, relaxed 2D anime naval tactics UI for TinySeaWar.
 - Sea-salt white, pale aqua, sky blue, deep teal, sunlight yellow, mint green,
-  coral and violet palette from `docs/ui_art_design.md`.
+  coral and violet palette from `docs/44_ui_art_design.md`.
 - Friendly and premium, playful but not childish, never a dark military terminal.
 - Isolated components with large gaps and no readable text, logos, flags,
   political symbols, national insignia or watermarks.

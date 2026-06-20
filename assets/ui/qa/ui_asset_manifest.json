@@ -1,6 +1,6 @@
 {
-  "generator": "OpenAI built-in image generation",
-  "model": "gpt-image-2",
+  "generator": "OpenAI built-in image generation + procedural textless UI surfaces",
+  "model": "gpt-image-2 + Pillow",
   "palette": {
     "panel": "#F7FCFF",
     "secondary": "#E8F7FB",
@@ -14,7 +14,7 @@
     "positive": "#35C99A",
     "skill": "#8A78F0"
   },
-  "asset_count": 116,
+  "asset_count": 137,
   "assets": [
     {
       "name": "ui_icon_auto_move",
@@ -2942,6 +2942,505 @@
         "assets/ui/export/1x/ui_badge_unknown_status.png",
         "assets/ui/export/2x/ui_badge_unknown_status.png",
         "assets/ui/export/4x/ui_badge_unknown_status.png"
+      ]
+    },
+    {
+      "name": "ui_panel_menu_title",
+      "kind": "panel",
+      "source": "procedural_textless_ui",
+      "crop_box": [
+        0,
+        0,
+        620,
+        190
+      ],
+      "output": "assets/ui/processed/menu/ui_panel_menu_title.png",
+      "size": [
+        620,
+        190
+      ],
+      "alpha_bbox": [
+        3,
+        3,
+        616,
+        187
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_panel_menu_info",
+      "kind": "panel",
+      "source": "procedural_textless_ui",
+      "crop_box": [
+        0,
+        0,
+        650,
+        420
+      ],
+      "output": "assets/ui/processed/menu/ui_panel_menu_info.png",
+      "size": [
+        650,
+        420
+      ],
+      "alpha_bbox": [
+        3,
+        3,
+        646,
+        417
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_panel_menu_footer",
+      "kind": "panel",
+      "source": "procedural_textless_ui",
+      "crop_box": [
+        0,
+        0,
+        650,
+        88
+      ],
+      "output": "assets/ui/processed/menu/ui_panel_menu_footer.png",
+      "size": [
+        650,
+        88
+      ],
+      "alpha_bbox": [
+        3,
+        3,
+        646,
+        85
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_panel_menu_cover_label",
+      "kind": "panel",
+      "source": "procedural_textless_ui",
+      "crop_box": [
+        0,
+        0,
+        520,
+        74
+      ],
+      "output": "assets/ui/processed/menu/ui_panel_menu_cover_label.png",
+      "size": [
+        520,
+        74
+      ],
+      "alpha_bbox": [
+        4,
+        4,
+        513,
+        67
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_panel_menu_mode_card",
+      "kind": "panel",
+      "source": "procedural_textless_ui",
+      "crop_box": [
+        0,
+        0,
+        600,
+        112
+      ],
+      "output": "assets/ui/processed/menu/ui_panel_menu_mode_card.png",
+      "size": [
+        600,
+        112
+      ],
+      "alpha_bbox": [
+        3,
+        3,
+        596,
+        109
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_panel_menu_keybind_card",
+      "kind": "panel",
+      "source": "procedural_textless_ui",
+      "crop_box": [
+        0,
+        0,
+        600,
+        72
+      ],
+      "output": "assets/ui/processed/menu/ui_panel_menu_keybind_card.png",
+      "size": [
+        600,
+        72
+      ],
+      "alpha_bbox": [
+        3,
+        2,
+        596,
+        69
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_panel_menu_intro_step_card",
+      "kind": "panel",
+      "source": "procedural_textless_ui",
+      "crop_box": [
+        0,
+        0,
+        184,
+        128
+      ],
+      "output": "assets/ui/processed/menu/ui_panel_menu_intro_step_card.png",
+      "size": [
+        184,
+        128
+      ],
+      "alpha_bbox": [
+        3,
+        3,
+        184,
+        125
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_button_menu_primary_default",
+      "kind": "button",
+      "source": "procedural_textless_ui",
+      "crop_box": [
+        0,
+        0,
+        180,
+        48
+      ],
+      "output": "assets/ui/processed/common/buttons/ui_button_menu_primary_default.png",
+      "size": [
+        180,
+        48
+      ],
+      "alpha_bbox": [
+        4,
+        5,
+        173,
+        41
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_button_menu_primary_hover",
+      "kind": "button",
+      "source": "procedural_textless_ui",
+      "crop_box": [
+        0,
+        0,
+        180,
+        48
+      ],
+      "output": "assets/ui/processed/common/buttons/ui_button_menu_primary_hover.png",
+      "size": [
+        180,
+        48
+      ],
+      "alpha_bbox": [
+        4,
+        5,
+        173,
+        41
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_button_menu_primary_pressed",
+      "kind": "button",
+      "source": "procedural_textless_ui",
+      "crop_box": [
+        0,
+        0,
+        180,
+        48
+      ],
+      "output": "assets/ui/processed/common/buttons/ui_button_menu_primary_pressed.png",
+      "size": [
+        180,
+        48
+      ],
+      "alpha_bbox": [
+        7,
+        8,
+        176,
+        44
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_button_menu_primary_selected",
+      "kind": "button",
+      "source": "procedural_textless_ui",
+      "crop_box": [
+        0,
+        0,
+        180,
+        48
+      ],
+      "output": "assets/ui/processed/common/buttons/ui_button_menu_primary_selected.png",
+      "size": [
+        180,
+        48
+      ],
+      "alpha_bbox": [
+        4,
+        5,
+        173,
+        41
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_button_menu_primary_disabled",
+      "kind": "button",
+      "source": "procedural_textless_ui",
+      "crop_box": [
+        0,
+        0,
+        180,
+        48
+      ],
+      "output": "assets/ui/processed/common/buttons/ui_button_menu_primary_disabled.png",
+      "size": [
+        180,
+        48
+      ],
+      "alpha_bbox": [
+        4,
+        5,
+        173,
+        41
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_button_menu_secondary_default",
+      "kind": "button",
+      "source": "procedural_textless_ui",
+      "crop_box": [
+        0,
+        0,
+        180,
+        48
+      ],
+      "output": "assets/ui/processed/common/buttons/ui_button_menu_secondary_default.png",
+      "size": [
+        180,
+        48
+      ],
+      "alpha_bbox": [
+        4,
+        5,
+        173,
+        41
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_button_menu_secondary_hover",
+      "kind": "button",
+      "source": "procedural_textless_ui",
+      "crop_box": [
+        0,
+        0,
+        180,
+        48
+      ],
+      "output": "assets/ui/processed/common/buttons/ui_button_menu_secondary_hover.png",
+      "size": [
+        180,
+        48
+      ],
+      "alpha_bbox": [
+        4,
+        5,
+        173,
+        41
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_button_menu_secondary_pressed",
+      "kind": "button",
+      "source": "procedural_textless_ui",
+      "crop_box": [
+        0,
+        0,
+        180,
+        48
+      ],
+      "output": "assets/ui/processed/common/buttons/ui_button_menu_secondary_pressed.png",
+      "size": [
+        180,
+        48
+      ],
+      "alpha_bbox": [
+        7,
+        8,
+        176,
+        44
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_button_menu_secondary_selected",
+      "kind": "button",
+      "source": "procedural_textless_ui",
+      "crop_box": [
+        0,
+        0,
+        180,
+        48
+      ],
+      "output": "assets/ui/processed/common/buttons/ui_button_menu_secondary_selected.png",
+      "size": [
+        180,
+        48
+      ],
+      "alpha_bbox": [
+        4,
+        5,
+        173,
+        41
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_button_menu_secondary_disabled",
+      "kind": "button",
+      "source": "procedural_textless_ui",
+      "crop_box": [
+        0,
+        0,
+        180,
+        48
+      ],
+      "output": "assets/ui/processed/common/buttons/ui_button_menu_secondary_disabled.png",
+      "size": [
+        180,
+        48
+      ],
+      "alpha_bbox": [
+        4,
+        5,
+        173,
+        41
+      ],
+      "exports": []
+    },
+    {
+      "name": "ui_icon_menu_start",
+      "kind": "icon",
+      "source": "procedural_textless_ui",
+      "crop_box": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "output": "assets/ui/processed/common/icons/ui_icon_menu_start.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        26,
+        26,
+        230,
+        230
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_icon_menu_start.png",
+        "assets/ui/export/2x/ui_icon_menu_start.png",
+        "assets/ui/export/4x/ui_icon_menu_start.png"
+      ]
+    },
+    {
+      "name": "ui_icon_menu_modes",
+      "kind": "icon",
+      "source": "procedural_textless_ui",
+      "crop_box": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "output": "assets/ui/processed/common/icons/ui_icon_menu_modes.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        29,
+        29,
+        227,
+        227
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_icon_menu_modes.png",
+        "assets/ui/export/2x/ui_icon_menu_modes.png",
+        "assets/ui/export/4x/ui_icon_menu_modes.png"
+      ]
+    },
+    {
+      "name": "ui_icon_menu_guide",
+      "kind": "icon",
+      "source": "procedural_textless_ui",
+      "crop_box": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "output": "assets/ui/processed/common/icons/ui_icon_menu_guide.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        39,
+        27,
+        217,
+        229
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_icon_menu_guide.png",
+        "assets/ui/export/2x/ui_icon_menu_guide.png",
+        "assets/ui/export/4x/ui_icon_menu_guide.png"
+      ]
+    },
+    {
+      "name": "ui_icon_menu_intro",
+      "kind": "icon",
+      "source": "procedural_textless_ui",
+      "crop_box": [
+        0,
+        0,
+        256,
+        256
+      ],
+      "output": "assets/ui/processed/common/icons/ui_icon_menu_intro.png",
+      "size": [
+        256,
+        256
+      ],
+      "alpha_bbox": [
+        27,
+        27,
+        229,
+        229
+      ],
+      "exports": [
+        "assets/ui/export/1x/ui_icon_menu_intro.png",
+        "assets/ui/export/2x/ui_icon_menu_intro.png",
+        "assets/ui/export/4x/ui_icon_menu_intro.png"
       ]
     }
   ]

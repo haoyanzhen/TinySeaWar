@@ -1,0 +1,385 @@
+{
+  "schema": "tiny_sea_war.ui_text_slots.v1",
+  "coordinate_space": [
+    1920,
+    1080
+  ],
+  "notes": [
+    "Runtime UI art does not bake text into PNG assets.",
+    "QA preview images may render sample text only for readability checks."
+  ],
+  "screens": {
+    "main_menu": {
+      "background": "programmatic_ocean",
+      "panels": [
+        {
+          "asset": "ui_panel_menu_title",
+          "rect": [
+            56,
+            56,
+            620,
+            190
+          ]
+        },
+        {
+          "asset": "ui_panel_menu_info",
+          "rect": [
+            56,
+            284,
+            650,
+            420
+          ]
+        },
+        {
+          "asset": "ui_panel_menu_footer",
+          "rect": [
+            56,
+            938,
+            650,
+            88
+          ]
+        },
+        {
+          "asset": "ui_panel_menu_cover_label",
+          "rect": [
+            844,
+            930,
+            520,
+            74
+          ]
+        }
+      ],
+      "buttons": [
+        {
+          "id": "btn_mode_1v1",
+          "asset": "ui_button_menu_primary_default",
+          "rect": [
+            84,
+            724,
+            180,
+            48
+          ],
+          "text_slot": [
+            146,
+            734,
+            104,
+            28
+          ]
+        },
+        {
+          "id": "btn_mode_3v3",
+          "asset": "ui_button_menu_primary_default",
+          "rect": [
+            284,
+            724,
+            180,
+            48
+          ],
+          "text_slot": [
+            346,
+            734,
+            104,
+            28
+          ]
+        },
+        {
+          "id": "btn_more_modes",
+          "asset": "ui_button_menu_secondary_default",
+          "rect": [
+            484,
+            724,
+            180,
+            48
+          ],
+          "text_slot": [
+            546,
+            734,
+            104,
+            28
+          ]
+        },
+        {
+          "id": "btn_operation",
+          "asset": "ui_button_menu_secondary_default",
+          "rect": [
+            84,
+            786,
+            180,
+            48
+          ],
+          "text_slot": [
+            146,
+            796,
+            104,
+            28
+          ]
+        },
+        {
+          "id": "btn_game_intro",
+          "asset": "ui_button_menu_secondary_default",
+          "rect": [
+            284,
+            786,
+            180,
+            48
+          ],
+          "text_slot": [
+            346,
+            796,
+            104,
+            28
+          ]
+        },
+        {
+          "id": "btn_mode_help",
+          "asset": "ui_button_menu_secondary_selected",
+          "rect": [
+            484,
+            786,
+            180,
+            48
+          ],
+          "text_slot": [
+            546,
+            796,
+            104,
+            28
+          ]
+        }
+      ],
+      "text_slots": [
+        {
+          "id": "title",
+          "rect": [
+            84,
+            92,
+            540,
+            56
+          ],
+          "font_size": 44,
+          "color": "text"
+        },
+        {
+          "id": "subtitle",
+          "rect": [
+            84,
+            156,
+            540,
+            28
+          ],
+          "font_size": 20,
+          "color": "soft"
+        },
+        {
+          "id": "tagline",
+          "rect": [
+            84,
+            194,
+            540,
+            28
+          ],
+          "font_size": 18,
+          "color": "text"
+        },
+        {
+          "id": "info_title",
+          "rect": [
+            84,
+            316,
+            570,
+            38
+          ],
+          "font_size": 28,
+          "color": "text"
+        },
+        {
+          "id": "info_body",
+          "rect": [
+            84,
+            392,
+            594,
+            260
+          ],
+          "font_size": 18,
+          "color": "text",
+          "line_height": 26
+        },
+        {
+          "id": "footer_line_1",
+          "rect": [
+            82,
+            966,
+            596,
+            24
+          ],
+          "font_size": 18,
+          "color": "soft"
+        },
+        {
+          "id": "footer_line_2",
+          "rect": [
+            82,
+            998,
+            596,
+            22
+          ],
+          "font_size": 16,
+          "color": "soft"
+        },
+        {
+          "id": "cover_label",
+          "rect": [
+            884,
+            954,
+            440,
+            26
+          ],
+          "font_size": 20,
+          "color": "inverse"
+        }
+      ]
+    },
+    "pause_dialog": {
+      "panels": [
+        {
+          "asset": "ui_panel_pause_dialog",
+          "rect": [
+            750,
+            484,
+            420,
+            112
+          ]
+        }
+      ],
+      "icons": [
+        {
+          "asset": "ui_icon_pause",
+          "rect": [
+            780,
+            518,
+            44,
+            44
+          ]
+        }
+      ],
+      "text_slots": [
+        {
+          "id": "pause_title",
+          "rect": [
+            842,
+            520,
+            280,
+            34
+          ],
+          "font_size": 28,
+          "color": "text"
+        },
+        {
+          "id": "pause_hint",
+          "rect": [
+            842,
+            560,
+            280,
+            24
+          ],
+          "font_size": 16,
+          "color": "soft"
+        }
+      ]
+    },
+    "battle_result": {
+      "panels": [
+        {
+          "asset": "ui_panel_result_dialog",
+          "rect": [
+            470,
+            230,
+            980,
+            620
+          ]
+        }
+      ],
+      "text_slots": [
+        {
+          "id": "result_title",
+          "rect": [
+            1000,
+            320,
+            360,
+            70
+          ],
+          "font_size": 54,
+          "color": "text"
+        },
+        {
+          "id": "result_subtitle",
+          "rect": [
+            1002,
+            386,
+            360,
+            34
+          ],
+          "font_size": 22,
+          "color": "soft"
+        },
+        {
+          "id": "result_rows",
+          "rect": [
+            1004,
+            456,
+            360,
+            190
+          ],
+          "font_size": 22,
+          "color": "text",
+          "line_height": 42
+        },
+        {
+          "id": "review_tip",
+          "rect": [
+            1004,
+            668,
+            360,
+            54
+          ],
+          "font_size": 18,
+          "color": "soft"
+        }
+      ],
+      "buttons": [
+        {
+          "id": "btn_return_main",
+          "asset": "ui_button_menu_secondary_default",
+          "rect": [
+            944,
+            746,
+            180,
+            48
+          ],
+          "text_slot": [
+            986,
+            756,
+            118,
+            28
+          ]
+        },
+        {
+          "id": "btn_restart",
+          "asset": "ui_button_menu_primary_default",
+          "rect": [
+            1144,
+            746,
+            180,
+            48
+          ],
+          "text_slot": [
+            1186,
+            756,
+            118,
+            28
+          ]
+        }
+      ]
+    }
+  }
+}

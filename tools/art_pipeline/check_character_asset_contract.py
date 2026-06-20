@@ -5,20 +5,14 @@ import sys
 from pathlib import Path
 
 from PIL import Image
+import character_roster
 
 
 ROOT = Path(__file__).resolve().parents[2]
 CHAR_ROOT = ROOT / "assets" / "characters"
 
-SHIP_CLASSES = {
-    "enterprise_cv6": "carrier",
-    "hai_shih": "submarine",
-    "hindenburg": "heavy_cruiser",
-    "shimakaze": "destroyer",
-    "aurora": "light_cruiser",
-    "warspite": "battleship",
-    "bismarck": "battleship",
-}
+ROSTER = character_roster.roster_by_id()
+SHIP_CLASSES = {character_id: entry.ship_class for character_id, entry in ROSTER.items()}
 
 REQUIRED_PATTERNS = {
     "full_body": "processed/ui/{id}_illust_full_alpha.png",
@@ -191,15 +185,20 @@ def write_report(results: list[dict[str, object]]) -> Path:
     lines = [
         "# Character Asset Contract Audit",
         "",
-        "Contract source: `docs/art_design.md` section 6.",
+        "Contract source: `docs/40_art_direction_design.md` section 6.",
+        "Roster source: `docs/41_character_art_design.md`.",
         "",
-        "| Character | Status | Missing required roles | Data issues |",
-        "| --- | --- | --- | --- |",
+        "| Character | Prototype | Ship class | Status | Missing required roles | Data issues |",
+        "| --- | --- | --- | --- | --- | --- |",
     ]
     for result in results:
+        entry = ROSTER[str(result["character_id"])]
         missing = ", ".join(result["missing_roles"]) or "-"
         data_issues = "; ".join(result["data_issues"]) or "-"
-        lines.append(f'| {result["character_id"]} | {result["status"]} | {missing} | {data_issues} |')
+        lines.append(
+            f'| {result["character_id"]} | {entry.prototype} | {entry.ship_class_cn} | '
+            f'{result["status"]} | {missing} | {data_issues} |'
+        )
     lines.extend([
         "",
         "A character may pass edge and file-format QA while remaining incomplete. Missing required roles are blockers.",

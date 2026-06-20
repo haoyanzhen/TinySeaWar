@@ -8,6 +8,8 @@ from pathlib import Path
 from typing import Any
 
 import check_character_asset_contract as contract
+import character_roster
+import postprocess_generated_character as generic_pipeline
 import postprocess_trial_sheets as pipeline
 
 
@@ -31,11 +33,7 @@ FOUR_FRAME_SOURCE_FILES = tuple(
 
 
 def available_character_ids() -> list[str]:
-    return sorted(
-        path.name
-        for path in CHAR_ROOT.iterdir()
-        if path.is_dir() and path.name != "qa"
-    )
+    return [entry.character_id for entry in character_roster.load_roster()]
 
 
 def source_check(character_id: str) -> dict[str, Any]:
@@ -64,8 +62,14 @@ def configuration_check(character_id: str) -> dict[str, bool]:
     return {
         "crop_specs": character_id in pipeline.SPECS,
         "runtime_config": character_id in pipeline.CONFIGS,
+        "generic_postprocess": generic_pipeline.can_process(character_id),
         "contract_ship_class": character_id in contract.SHIP_CLASSES,
     }
+
+
+def is_configured(configuration: dict[str, bool]) -> bool:
+    hardcoded = configuration["crop_specs"] and configuration["runtime_config"]
+    return configuration["contract_ship_class"] and (hardcoded or configuration["generic_postprocess"])
 
 
 def inspect_character(character_id: str) -> dict[str, Any]:
@@ -73,7 +77,7 @@ def inspect_character(character_id: str) -> dict[str, Any]:
     configuration = configuration_check(character_id)
     can_audit = configuration["contract_ship_class"]
     audit = contract.audit(character_id) if can_audit else None
-    configured = all(configuration.values())
+    configured = is_configured(configuration)
     contract_complete = bool(audit and audit["status"] == "complete")
     return {
         "character_id": character_id,
@@ -96,7 +100,10 @@ def process_one(character_id: str, preview: bool) -> dict[str, Any]:
             "inspection": before,
         }
     try:
-        pipeline.process_character(character_id)
+        if before["configuration"]["crop_specs"] and before["configuration"]["runtime_config"]:
+            pipeline.process_character(character_id)
+        else:
+            generic_pipeline.process_character(character_id)
         preview_path = None
         if preview:
             preview_path = pipeline.build_edge_qa_preview((character_id,))
@@ -138,23 +145,29 @@ def write_reports(mode: str, results: list[dict[str, Any]]) -> tuple[Path, Path]
     }
     json_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
+    roster = character_roster.roster_by_id()
     lines = [
         "# Character Art Batch Report",
         "",
         f"Mode: `{mode}`",
         "",
-        "| Character | Sources | Four-frame | Configured | Contract | Batch ready | Run status |",
-        "| --- | --- | --- | --- | --- | --- | --- |",
+        "Roster source: `docs/41_character_art_design.md`.",
+        "",
+        "| Character | Prototype | Sources | Four-frame | Configured | Contract | Batch ready | Run status |",
+        "| --- | --- | --- | --- | --- | --- | --- | --- |",
     ]
     for result in results:
         inspection = result.get("inspection", result)
+        entry = roster.get(inspection["character_id"])
+        prototype = entry.prototype if entry else "-"
         sources = inspection["sources"]
-        configured = all(inspection["configuration"].values())
+        configured = is_configured(inspection["configuration"])
         audit = inspection.get("contract")
         contract_status = audit["status"] if audit else "unavailable"
         run_status = result.get("status", "dry-run")
         lines.append(
             f'| {inspection["character_id"]} | '
+            f'{prototype} | '
             f'{"yes" if sources["base_complete"] else "no"} | '
             f'{"yes" if sources["four_frame_complete"] else "no"} | '
             f'{"yes" if configured else "no"} | {contract_status} | '
@@ -162,7 +175,7 @@ def write_reports(mode: str, results: list[dict[str, Any]]) -> tuple[Path, Path]
         )
     lines.extend([
         "",
-        "A character is batch-ready only when base sources, all five four-frame sheets, crop/runtime configuration, and the processed asset contract are complete.",
+        "A character is batch-ready only when base sources, all five four-frame sheets, a valid postprocess route, and the processed asset contract are complete.",
         "Failures are isolated per character and do not stop later characters in the batch.",
         "",
     ])
@@ -172,7 +185,7 @@ def write_reports(mode: str, results: list[dict[str, Any]]) -> tuple[Path, Path]
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Validate or run TinySeaWar character-art batches.")
-    parser.add_argument("character_ids", nargs="*", help="Defaults to all character directories.")
+    parser.add_argument("character_ids", nargs="*", help="Defaults to all characters in docs/41_character_art_design.md.")
     parser.add_argument("--process", action="store_true", help="Run postprocess instead of dry-run inspection.")
     parser.add_argument("--preview", action="store_true", help="Build per-character embedded QA previews.")
     args = parser.parse_args()

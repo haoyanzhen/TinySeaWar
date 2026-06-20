@@ -1,0 +1,1375 @@
+{
+  "character_id": "gnevny",
+  "source": "tools/art_pipeline/postprocess_generated_character.py",
+  "method": "green_screen_auto_grid_and_component_split",
+  "outputs": [
+    {
+      "role": "source_alpha:concept_full",
+      "path": "assets/characters/gnevny/processed/source_alpha/gnevny_concept_full_alpha_source.png",
+      "size": [
+        864,
+        1821
+      ],
+      "edge_margins": {
+        "left": 24,
+        "top": 9,
+        "right": 56,
+        "bottom": 25
+      }
+    },
+    {
+      "role": "source_alpha:ui_sheet",
+      "path": "assets/characters/gnevny/processed/source_alpha/gnevny_ui_sheet_alpha_source.png",
+      "size": [
+        1774,
+        887
+      ],
+      "edge_margins": {
+        "left": 50,
+        "top": 33,
+        "right": 56,
+        "bottom": 43
+      }
+    },
+    {
+      "role": "source_alpha:battle_grid",
+      "path": "assets/characters/gnevny/processed/source_alpha/gnevny_battle_asset_grid_alpha_source.png",
+      "size": [
+        1774,
+        887
+      ],
+      "edge_margins": {
+        "left": 118,
+        "top": 46,
+        "right": 87,
+        "bottom": 87
+      }
+    },
+    {
+      "role": "source_alpha:vfx_sheet",
+      "path": "assets/characters/gnevny/processed/source_alpha/gnevny_vfx_reference_sheet_alpha_source.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "edge_margins": {
+        "left": 77,
+        "top": 154,
+        "right": 77,
+        "bottom": 152
+      }
+    },
+    {
+      "role": "source_alpha:anim_master",
+      "path": "assets/characters/gnevny/processed/source_alpha/gnevny_anim_5x4_master_alpha_source.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "edge_margins": {
+        "left": 59,
+        "top": 21,
+        "right": 36,
+        "bottom": 67
+      }
+    },
+    {
+      "role": "full_body",
+      "crop": {
+        "content_bbox": [
+          24,
+          9,
+          808,
+          1796
+        ],
+        "final_crop_box": [
+          12,
+          0,
+          820,
+          1808
+        ],
+        "output_edge_margins": {
+          "left": 12,
+          "top": 119,
+          "right": 14,
+          "bottom": 12
+        }
+      },
+      "path": "assets/characters/gnevny/processed/ui/gnevny_illust_full_alpha.png",
+      "size": [
+        810,
+        1918
+      ],
+      "edge_margins": {
+        "left": 12,
+        "top": 119,
+        "right": 14,
+        "bottom": 12
+      }
+    },
+    {
+      "role": "half_body",
+      "crop": {
+        "content_bbox": [
+          26,
+          16,
+          810,
+          1302
+        ],
+        "final_crop_box": [
+          10,
+          0,
+          826,
+          1318
+        ],
+        "output_edge_margins": {
+          "left": 26,
+          "top": 16,
+          "right": 16,
+          "bottom": 230
+        }
+      },
+      "path": "assets/characters/gnevny/processed/ui/gnevny_illust_half_alpha.png",
+      "size": [
+        826,
+        1532
+      ],
+      "edge_margins": {
+        "left": 26,
+        "top": 16,
+        "right": 16,
+        "bottom": 230
+      }
+    },
+    {
+      "role": "skill_cutin",
+      "crop": {
+        "content_bbox": [
+          845,
+          16,
+          1618,
+          1052
+        ],
+        "final_crop_box": [
+          829,
+          0,
+          1634,
+          1068
+        ],
+        "output_edge_margins": {
+          "left": 30,
+          "top": 16,
+          "right": 17,
+          "bottom": 310
+        }
+      },
+      "path": "assets/characters/gnevny/processed/ui/gnevny_illust_skill_cutin_alpha.png",
+      "size": [
+        820,
+        1362
+      ],
+      "edge_margins": {
+        "left": 30,
+        "top": 16,
+        "right": 17,
+        "bottom": 310
+      }
+    },
+    {
+      "role": "ui_portrait",
+      "crop": {
+        "content_bbox": [
+          50,
+          33,
+          412,
+          433
+        ],
+        "final_crop_box": [
+          32,
+          15,
+          430,
+          443
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 23,
+          "bottom": 84
+        }
+      },
+      "path": "assets/characters/gnevny/processed/ui/gnevny_ui_portrait.png",
+      "size": [
+        404,
+        502
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 18,
+        "right": 23,
+        "bottom": 84
+      }
+    },
+    {
+      "role": "ui_portrait_small",
+      "crop": {
+        "content_bbox": [
+          62,
+          47,
+          415,
+          433
+        ],
+        "final_crop_box": [
+          44,
+          29,
+          433,
+          443
+        ],
+        "output_edge_margins": {
+          "left": 18,
+          "top": 19,
+          "right": 19,
+          "bottom": 85
+        }
+      },
+      "path": "assets/characters/gnevny/processed/ui/gnevny_ui_portrait_small.png",
+      "size": [
+        390,
+        490
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 19,
+        "right": 19,
+        "bottom": 85
+      }
+    },
+    {
+      "role": "ui_chibi_head",
+      "crop": {
+        "content_bbox": [
+          62,
+          46,
+          399,
+          433
+        ],
+        "final_crop_box": [
+          44,
+          28,
+          417,
+          443
+        ],
+        "output_edge_margins": {
+          "left": 28,
+          "top": 18,
+          "right": 19,
+          "bottom": 35
+        }
+      },
+      "path": "assets/characters/gnevny/processed/ui/gnevny_ui_chibi_head.png",
+      "size": [
+        384,
+        440
+      ],
+      "edge_margins": {
+        "left": 28,
+        "top": 18,
+        "right": 19,
+        "bottom": 35
+      }
+    },
+    {
+      "role": "expr_default",
+      "crop": {
+        "content_bbox": [
+          40,
+          42,
+          389,
+          435
+        ],
+        "final_crop_box": [
+          22,
+          24,
+          407,
+          443
+        ],
+        "output_edge_margins": {
+          "left": 18,
+          "top": 18,
+          "right": 27,
+          "bottom": 67
+        }
+      },
+      "path": "assets/characters/gnevny/processed/ui/gnevny_expr_default.png",
+      "size": [
+        394,
+        478
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 18,
+        "right": 27,
+        "bottom": 67
+      }
+    },
+    {
+      "role": "expr_serious",
+      "crop": {
+        "content_bbox": [
+          63,
+          27,
+          402,
+          401
+        ],
+        "final_crop_box": [
+          45,
+          9,
+          420,
+          419
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 20,
+          "bottom": 74
+        }
+      },
+      "path": "assets/characters/gnevny/processed/ui/gnevny_expr_serious.png",
+      "size": [
+        378,
+        466
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 18,
+        "right": 20,
+        "bottom": 74
+      }
+    },
+    {
+      "role": "expr_hit",
+      "crop": {
+        "content_bbox": [
+          41,
+          31,
+          405,
+          400
+        ],
+        "final_crop_box": [
+          23,
+          13,
+          423,
+          418
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 29,
+          "bottom": 65
+        }
+      },
+      "path": "assets/characters/gnevny/processed/ui/gnevny_expr_hit.png",
+      "size": [
+        412,
+        452
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 18,
+        "right": 29,
+        "bottom": 65
+      }
+    },
+    {
+      "role": "ui_skill",
+      "crop": {
+        "content_bbox": [
+          59,
+          47,
+          372,
+          370
+        ],
+        "final_crop_box": [
+          41,
+          29,
+          390,
+          388
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 20,
+          "right": 18,
+          "bottom": 19
+        }
+      },
+      "path": "assets/characters/gnevny/processed/ui/gnevny_ui_skill_torpedo_rush.png",
+      "size": [
+        350,
+        362
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 20,
+        "right": 18,
+        "bottom": 19
+      }
+    },
+    {
+      "role": "class_icon",
+      "crop": {
+        "content_bbox": [
+          51,
+          48,
+          345,
+          391
+        ],
+        "final_crop_box": [
+          33,
+          30,
+          363,
+          409
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 24,
+          "right": 19,
+          "bottom": 19
+        }
+      },
+      "path": "assets/characters/gnevny/processed/ui/gnevny_ui_class_destroyer.png",
+      "size": [
+        332,
+        386
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 24,
+        "right": 19,
+        "bottom": 19
+      }
+    },
+    {
+      "role": "battle_body_r",
+      "crop": {
+        "component_bbox": [
+          154,
+          46,
+          374,
+          417
+        ],
+        "final_crop_box": [
+          136,
+          28,
+          392,
+          435
+        ],
+        "component_area": 51374,
+        "output_edge_margins": {
+          "left": 25,
+          "top": 36,
+          "right": 19,
+          "bottom": 19
+        }
+      },
+      "path": "assets/characters/gnevny/processed/battle/gnevny_battle_body_r.png",
+      "size": [
+        264,
+        426
+      ],
+      "edge_margins": {
+        "left": 25,
+        "top": 36,
+        "right": 19,
+        "bottom": 19
+      }
+    },
+    {
+      "role": "battle_rig_base",
+      "crop": {
+        "component_bbox": [
+          44,
+          164,
+          382,
+          397
+        ],
+        "final_crop_box": [
+          26,
+          146,
+          400,
+          415
+        ],
+        "component_area": 56946,
+        "output_edge_margins": {
+          "left": 27,
+          "top": 18,
+          "right": 19,
+          "bottom": 29
+        }
+      },
+      "path": "assets/characters/gnevny/processed/battle/gnevny_battle_rig_base.png",
+      "size": [
+        384,
+        280
+      ],
+      "edge_margins": {
+        "left": 27,
+        "top": 18,
+        "right": 19,
+        "bottom": 29
+      }
+    },
+    {
+      "role": "battle_turret_main_01",
+      "crop": {
+        "component_bbox": [
+          33,
+          184,
+          396,
+          388
+        ],
+        "final_crop_box": [
+          15,
+          166,
+          414,
+          406
+        ],
+        "component_area": 43595,
+        "output_edge_margins": {
+          "left": 115,
+          "top": 19,
+          "right": 18,
+          "bottom": 23
+        }
+      },
+      "path": "assets/characters/gnevny/processed/battle/gnevny_battle_turret_main_01.png",
+      "size": [
+        496,
+        246
+      ],
+      "edge_margins": {
+        "left": 115,
+        "top": 19,
+        "right": 18,
+        "bottom": 23
+      }
+    },
+    {
+      "role": "battle_torpedo_tube_01",
+      "crop": {
+        "component_bbox": [
+          49,
+          168,
+          298,
+          414
+        ],
+        "final_crop_box": [
+          31,
+          150,
+          316,
+          432
+        ],
+        "component_area": 40974,
+        "output_edge_margins": {
+          "left": 38,
+          "top": 18,
+          "right": 19,
+          "bottom": 42
+        }
+      },
+      "path": "assets/characters/gnevny/processed/battle/gnevny_battle_torpedo_tube_01.png",
+      "size": [
+        306,
+        306
+      ],
+      "edge_margins": {
+        "left": 38,
+        "top": 18,
+        "right": 19,
+        "bottom": 42
+      }
+    },
+    {
+      "role": "battle_torpedo_tube_02",
+      "crop": {
+        "component_bbox": [
+          118,
+          86,
+          366,
+          332
+        ],
+        "final_crop_box": [
+          100,
+          68,
+          384,
+          350
+        ],
+        "component_area": 40852,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 18,
+          "right": 36,
+          "bottom": 40
+        }
+      },
+      "path": "assets/characters/gnevny/processed/battle/gnevny_battle_torpedo_tube_02.png",
+      "size": [
+        302,
+        304
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 18,
+        "right": 36,
+        "bottom": 40
+      }
+    },
+    {
+      "role": "battle_propulsion_node",
+      "crop": {
+        "component_bbox": [
+          68,
+          99,
+          356,
+          344
+        ],
+        "final_crop_box": [
+          50,
+          81,
+          374,
+          362
+        ],
+        "component_area": 45313,
+        "output_edge_margins": {
+          "left": 30,
+          "top": 29,
+          "right": 18,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/gnevny/processed/battle/gnevny_battle_propulsion_node.png",
+      "size": [
+        336,
+        292
+      ],
+      "edge_margins": {
+        "left": 30,
+        "top": 29,
+        "right": 18,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "battle_radar_node",
+      "crop": {
+        "component_bbox": [
+          59,
+          15,
+          281,
+          357
+        ],
+        "final_crop_box": [
+          41,
+          0,
+          299,
+          375
+        ],
+        "component_area": 30536,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 19,
+          "right": 24,
+          "bottom": 123
+        }
+      },
+      "path": "assets/characters/gnevny/processed/battle/gnevny_battle_radar_node.png",
+      "size": [
+        264,
+        484
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 19,
+        "right": 24,
+        "bottom": 123
+      }
+    },
+    {
+      "role": "battle_wake_origin_marker",
+      "crop": {
+        "component_bbox": [
+          0,
+          227,
+          358,
+          341
+        ],
+        "final_crop_box": [
+          0,
+          209,
+          376,
+          359
+        ],
+        "component_area": 18310,
+        "output_edge_margins": {
+          "left": 79,
+          "top": 19,
+          "right": 19,
+          "bottom": 24
+        }
+      },
+      "path": "assets/characters/gnevny/processed/battle/gnevny_battle_wake_origin_marker.png",
+      "size": [
+        456,
+        158
+      ],
+      "edge_margins": {
+        "left": 79,
+        "top": 20,
+        "right": 19,
+        "bottom": 24
+      }
+    },
+    {
+      "role": "anim_idle_frame_01",
+      "path": "assets/characters/gnevny/processed/anim/gnevny_anim_idle_frame_01.png",
+      "size": [
+        172,
+        238
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 17,
+        "right": 16,
+        "bottom": 17
+      }
+    },
+    {
+      "role": "anim_idle_keyframe",
+      "path": "assets/characters/gnevny/processed/anim/gnevny_anim_idle_keyframe.png",
+      "size": [
+        172,
+        238
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 17,
+        "right": 16,
+        "bottom": 17
+      }
+    },
+    {
+      "role": "anim_idle_frame_02",
+      "path": "assets/characters/gnevny/processed/anim/gnevny_anim_idle_frame_02.png",
+      "size": [
+        172,
+        238
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 18,
+        "right": 17,
+        "bottom": 16
+      }
+    },
+    {
+      "role": "anim_idle_frame_03",
+      "path": "assets/characters/gnevny/processed/anim/gnevny_anim_idle_frame_03.png",
+      "size": [
+        172,
+        238
+      ],
+      "edge_margins": {
+        "left": 20,
+        "top": 18,
+        "right": 18,
+        "bottom": 16
+      }
+    },
+    {
+      "role": "anim_idle_frame_04",
+      "path": "assets/characters/gnevny/processed/anim/gnevny_anim_idle_frame_04.png",
+      "size": [
+        172,
+        238
+      ],
+      "edge_margins": {
+        "left": 20,
+        "top": 19,
+        "right": 19,
+        "bottom": 16
+      }
+    },
+    {
+      "role": "anim_move_frame_01",
+      "path": "assets/characters/gnevny/processed/anim/gnevny_anim_move_frame_01.png",
+      "size": [
+        324,
+        228
+      ],
+      "edge_margins": {
+        "left": 16,
+        "top": 16,
+        "right": 65,
+        "bottom": 31
+      }
+    },
+    {
+      "role": "anim_move_keyframe",
+      "path": "assets/characters/gnevny/processed/anim/gnevny_anim_move_keyframe.png",
+      "size": [
+        324,
+        228
+      ],
+      "edge_margins": {
+        "left": 16,
+        "top": 16,
+        "right": 65,
+        "bottom": 31
+      }
+    },
+    {
+      "role": "anim_move_frame_02",
+      "path": "assets/characters/gnevny/processed/anim/gnevny_anim_move_frame_02.png",
+      "size": [
+        324,
+        228
+      ],
+      "edge_margins": {
+        "left": 17,
+        "top": 17,
+        "right": 65,
+        "bottom": 30
+      }
+    },
+    {
+      "role": "anim_move_frame_03",
+      "path": "assets/characters/gnevny/processed/anim/gnevny_anim_move_frame_03.png",
+      "size": [
+        324,
+        228
+      ],
+      "edge_margins": {
+        "left": 28,
+        "top": 17,
+        "right": 70,
+        "bottom": 31
+      }
+    },
+    {
+      "role": "anim_move_frame_04",
+      "path": "assets/characters/gnevny/processed/anim/gnevny_anim_move_frame_04.png",
+      "size": [
+        324,
+        228
+      ],
+      "edge_margins": {
+        "left": 52,
+        "top": 20,
+        "right": 76,
+        "bottom": 28
+      }
+    },
+    {
+      "role": "anim_attack_frame_01",
+      "path": "assets/characters/gnevny/processed/anim/gnevny_anim_attack_frame_01.png",
+      "size": [
+        296,
+        234
+      ],
+      "edge_margins": {
+        "left": 61,
+        "top": 18,
+        "right": 40,
+        "bottom": 23
+      }
+    },
+    {
+      "role": "anim_attack_keyframe",
+      "path": "assets/characters/gnevny/processed/anim/gnevny_anim_attack_keyframe.png",
+      "size": [
+        296,
+        234
+      ],
+      "edge_margins": {
+        "left": 61,
+        "top": 18,
+        "right": 40,
+        "bottom": 23
+      }
+    },
+    {
+      "role": "anim_attack_frame_02",
+      "path": "assets/characters/gnevny/processed/anim/gnevny_anim_attack_frame_02.png",
+      "size": [
+        296,
+        234
+      ],
+      "edge_margins": {
+        "left": 59,
+        "top": 17,
+        "right": 16,
+        "bottom": 24
+      }
+    },
+    {
+      "role": "anim_attack_frame_03",
+      "path": "assets/characters/gnevny/processed/anim/gnevny_anim_attack_frame_03.png",
+      "size": [
+        296,
+        234
+      ],
+      "edge_margins": {
+        "left": 55,
+        "top": 16,
+        "right": 31,
+        "bottom": 25
+      }
+    },
+    {
+      "role": "anim_attack_frame_04",
+      "path": "assets/characters/gnevny/processed/anim/gnevny_anim_attack_frame_04.png",
+      "size": [
+        296,
+        234
+      ],
+      "edge_margins": {
+        "left": 74,
+        "top": 19,
+        "right": 37,
+        "bottom": 22
+      }
+    },
+    {
+      "role": "anim_hit_frame_01",
+      "path": "assets/characters/gnevny/processed/anim/gnevny_anim_hit_frame_01.png",
+      "size": [
+        212,
+        244
+      ],
+      "edge_margins": {
+        "left": 17,
+        "top": 26,
+        "right": 22,
+        "bottom": 19
+      }
+    },
+    {
+      "role": "anim_hit_keyframe",
+      "path": "assets/characters/gnevny/processed/anim/gnevny_anim_hit_keyframe.png",
+      "size": [
+        212,
+        244
+      ],
+      "edge_margins": {
+        "left": 17,
+        "top": 26,
+        "right": 22,
+        "bottom": 19
+      }
+    },
+    {
+      "role": "anim_hit_frame_02",
+      "path": "assets/characters/gnevny/processed/anim/gnevny_anim_hit_frame_02.png",
+      "size": [
+        212,
+        244
+      ],
+      "edge_margins": {
+        "left": 37,
+        "top": 25,
+        "right": 36,
+        "bottom": 23
+      }
+    },
+    {
+      "role": "anim_hit_frame_03",
+      "path": "assets/characters/gnevny/processed/anim/gnevny_anim_hit_frame_03.png",
+      "size": [
+        212,
+        244
+      ],
+      "edge_margins": {
+        "left": 26,
+        "top": 29,
+        "right": 26,
+        "bottom": 33
+      }
+    },
+    {
+      "role": "anim_hit_frame_04",
+      "path": "assets/characters/gnevny/processed/anim/gnevny_anim_hit_frame_04.png",
+      "size": [
+        212,
+        244
+      ],
+      "edge_margins": {
+        "left": 34,
+        "top": 23,
+        "right": 34,
+        "bottom": 16
+      }
+    },
+    {
+      "role": "anim_firepower_frame_01",
+      "path": "assets/characters/gnevny/processed/anim/gnevny_anim_firepower_frame_01.png",
+      "size": [
+        374,
+        236
+      ],
+      "edge_margins": {
+        "left": 73,
+        "top": 26,
+        "right": 88,
+        "bottom": 27
+      }
+    },
+    {
+      "role": "anim_firepower_keyframe",
+      "path": "assets/characters/gnevny/processed/anim/gnevny_anim_firepower_keyframe.png",
+      "size": [
+        374,
+        236
+      ],
+      "edge_margins": {
+        "left": 73,
+        "top": 26,
+        "right": 88,
+        "bottom": 27
+      }
+    },
+    {
+      "role": "anim_firepower_frame_02",
+      "path": "assets/characters/gnevny/processed/anim/gnevny_anim_firepower_frame_02.png",
+      "size": [
+        374,
+        236
+      ],
+      "edge_margins": {
+        "left": 71,
+        "top": 19,
+        "right": 92,
+        "bottom": 30
+      }
+    },
+    {
+      "role": "anim_firepower_frame_03",
+      "path": "assets/characters/gnevny/processed/anim/gnevny_anim_firepower_frame_03.png",
+      "size": [
+        374,
+        236
+      ],
+      "edge_margins": {
+        "left": 85,
+        "top": 17,
+        "right": 17,
+        "bottom": 37
+      }
+    },
+    {
+      "role": "anim_firepower_frame_04",
+      "path": "assets/characters/gnevny/processed/anim/gnevny_anim_firepower_frame_04.png",
+      "size": [
+        374,
+        236
+      ],
+      "edge_margins": {
+        "left": 125,
+        "top": 27,
+        "right": 114,
+        "bottom": 29
+      }
+    },
+    {
+      "role": "battle_body_r:idle_master_override",
+      "path": "assets/characters/gnevny/processed/battle/gnevny_battle_body_r.png",
+      "size": [
+        172,
+        238
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 17,
+        "right": 16,
+        "bottom": 17
+      }
+    },
+    {
+      "role": "vfx:speed_wake",
+      "crop": {
+        "component_bbox": [
+          99,
+          166,
+          370,
+          453
+        ],
+        "final_crop_box": [
+          81,
+          148,
+          384,
+          471
+        ],
+        "component_area": 14130,
+        "output_edge_margins": {
+          "left": 43,
+          "top": 19,
+          "right": 19,
+          "bottom": 48
+        }
+      },
+      "path": "assets/characters/gnevny/processed/vfx/gnevny_vfx_speed_wake.png",
+      "size": [
+        344,
+        366
+      ],
+      "edge_margins": {
+        "left": 43,
+        "top": 19,
+        "right": 19,
+        "bottom": 48
+      }
+    },
+    {
+      "role": "vfx:torpedo_warning",
+      "crop": {
+        "component_bbox": [
+          82,
+          220,
+          311,
+          427
+        ],
+        "final_crop_box": [
+          64,
+          202,
+          329,
+          445
+        ],
+        "component_area": 23427,
+        "output_edge_margins": {
+          "left": 24,
+          "top": 60,
+          "right": 19,
+          "bottom": 19
+        }
+      },
+      "path": "assets/characters/gnevny/processed/vfx/gnevny_vfx_torpedo_warning.png",
+      "size": [
+        308,
+        304
+      ],
+      "edge_margins": {
+        "left": 24,
+        "top": 60,
+        "right": 19,
+        "bottom": 19
+      }
+    },
+    {
+      "role": "vfx:torpedo_launch_flash",
+      "crop": {
+        "component_bbox": [
+          21,
+          296,
+          247,
+          412
+        ],
+        "final_crop_box": [
+          3,
+          278,
+          265,
+          430
+        ],
+        "component_area": 7893,
+        "output_edge_margins": {
+          "left": 37,
+          "top": 18,
+          "right": 19,
+          "bottom": 36
+        }
+      },
+      "path": "assets/characters/gnevny/processed/vfx/gnevny_vfx_torpedo_launch_flash.png",
+      "size": [
+        300,
+        188
+      ],
+      "edge_margins": {
+        "left": 37,
+        "top": 18,
+        "right": 19,
+        "bottom": 36
+      }
+    },
+    {
+      "role": "vfx:speed_lines",
+      "crop": {
+        "component_bbox": [
+          29,
+          191,
+          247,
+          388
+        ],
+        "final_crop_box": [
+          11,
+          173,
+          265,
+          406
+        ],
+        "component_area": 1545,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 19,
+          "right": 42,
+          "bottom": 74
+        }
+      },
+      "path": "assets/characters/gnevny/processed/vfx/gnevny_vfx_speed_lines.png",
+      "size": [
+        300,
+        314
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 19,
+        "right": 42,
+        "bottom": 74
+      }
+    },
+    {
+      "role": "vfx:water_splash",
+      "crop": {
+        "component_bbox": [
+          82,
+          106,
+          320,
+          338
+        ],
+        "final_crop_box": [
+          64,
+          88,
+          338,
+          356
+        ],
+        "component_area": 20113,
+        "output_edge_margins": {
+          "left": 30,
+          "top": 19,
+          "right": 19,
+          "bottom": 108
+        }
+      },
+      "path": "assets/characters/gnevny/processed/vfx/gnevny_vfx_water_splash.png",
+      "size": [
+        302,
+        382
+      ],
+      "edge_margins": {
+        "left": 30,
+        "top": 19,
+        "right": 19,
+        "bottom": 108
+      }
+    },
+    {
+      "role": "vfx:smoke_screen",
+      "crop": {
+        "component_bbox": [
+          62,
+          115,
+          281,
+          335
+        ],
+        "final_crop_box": [
+          44,
+          97,
+          299,
+          353
+        ],
+        "component_area": 35205,
+        "output_edge_margins": {
+          "left": 32,
+          "top": 18,
+          "right": 19,
+          "bottom": 34
+        }
+      },
+      "path": "assets/characters/gnevny/processed/vfx/gnevny_vfx_smoke_screen.png",
+      "size": [
+        270,
+        272
+      ],
+      "edge_margins": {
+        "left": 32,
+        "top": 18,
+        "right": 19,
+        "bottom": 34
+      }
+    },
+    {
+      "role": "vfx:skill_aura",
+      "crop": {
+        "component_bbox": [
+          219,
+          150,
+          322,
+          258
+        ],
+        "final_crop_box": [
+          201,
+          132,
+          340,
+          276
+        ],
+        "component_area": 1737,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 28,
+          "right": 21,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/gnevny/processed/vfx/gnevny_vfx_skill_aura.png",
+      "size": [
+        144,
+        172
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 28,
+        "right": 21,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "vfx:range_reticle",
+      "crop": {
+        "component_bbox": [
+          38,
+          98,
+          307,
+          360
+        ],
+        "final_crop_box": [
+          20,
+          80,
+          325,
+          378
+        ],
+        "component_area": 4144,
+        "output_edge_margins": {
+          "left": 21,
+          "top": 19,
+          "right": 18,
+          "bottom": 19
+        }
+      },
+      "path": "assets/characters/gnevny/processed/vfx/gnevny_vfx_range_reticle.png",
+      "size": [
+        308,
+        300
+      ],
+      "edge_margins": {
+        "left": 21,
+        "top": 19,
+        "right": 18,
+        "bottom": 19
+      }
+    }
+  ]
+}

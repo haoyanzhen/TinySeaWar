@@ -1,6 +1,6 @@
 # Character Asset Contract Audit
 
-Contract source: `docs/art_design.md` section 6.
+Contract source: `docs/40_art_direction_design.md` section 6.
 
 | Character | Status | Missing required roles | Data issues |
 | --- | --- | --- | --- |

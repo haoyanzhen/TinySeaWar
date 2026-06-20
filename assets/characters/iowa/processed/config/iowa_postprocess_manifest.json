@@ -1,0 +1,1515 @@
+{
+  "character_id": "iowa",
+  "source": "tools/art_pipeline/postprocess_generated_character.py",
+  "method": "green_screen_auto_grid_and_component_split",
+  "outputs": [
+    {
+      "role": "source_alpha:concept_full",
+      "path": "assets/characters/iowa/processed/source_alpha/iowa_concept_full_alpha_source.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "edge_margins": {
+        "left": 10,
+        "top": 22,
+        "right": 42,
+        "bottom": 24
+      }
+    },
+    {
+      "role": "source_alpha:half_body",
+      "path": "assets/characters/iowa/processed/source_alpha/iowa_illust_half_alpha_source.png",
+      "size": [
+        1086,
+        1448
+      ],
+      "edge_margins": {
+        "left": 0,
+        "top": 54,
+        "right": 0,
+        "bottom": 0
+      }
+    },
+    {
+      "role": "source_alpha:skill_cutin",
+      "path": "assets/characters/iowa/processed/source_alpha/iowa_illust_skill_cutin_alpha_source.png",
+      "size": [
+        1693,
+        929
+      ],
+      "edge_margins": {
+        "left": 12,
+        "top": 12,
+        "right": 0,
+        "bottom": 0
+      }
+    },
+    {
+      "role": "source_alpha:ui_sheet",
+      "path": "assets/characters/iowa/processed/source_alpha/iowa_ui_sheet_alpha_source.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "edge_margins": {
+        "left": 36,
+        "top": 67,
+        "right": 84,
+        "bottom": 126
+      }
+    },
+    {
+      "role": "source_alpha:battle_sheet",
+      "path": "assets/characters/iowa/processed/source_alpha/iowa_battle_asset_sheet_alpha_source.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "edge_margins": {
+        "left": 50,
+        "top": 138,
+        "right": 36,
+        "bottom": 105
+      }
+    },
+    {
+      "role": "source_alpha:vfx_sheet",
+      "path": "assets/characters/iowa/processed/source_alpha/iowa_vfx_reference_sheet_alpha_source.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "edge_margins": {
+        "left": 47,
+        "top": 64,
+        "right": 40,
+        "bottom": 57
+      }
+    },
+    {
+      "role": "source_alpha:anim_idle",
+      "path": "assets/characters/iowa/processed/source_alpha/iowa_anim_idle_4f_sheet_alpha_source.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "edge_margins": {
+        "left": 84,
+        "top": 47,
+        "right": 119,
+        "bottom": 123
+      }
+    },
+    {
+      "role": "source_alpha:anim_move",
+      "path": "assets/characters/iowa/processed/source_alpha/iowa_anim_move_4f_sheet_alpha_source.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "edge_margins": {
+        "left": 39,
+        "top": 109,
+        "right": 42,
+        "bottom": 134
+      }
+    },
+    {
+      "role": "source_alpha:anim_attack",
+      "path": "assets/characters/iowa/processed/source_alpha/iowa_anim_attack_4f_sheet_alpha_source.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "edge_margins": {
+        "left": 85,
+        "top": 73,
+        "right": 28,
+        "bottom": 124
+      }
+    },
+    {
+      "role": "source_alpha:anim_hit",
+      "path": "assets/characters/iowa/processed/source_alpha/iowa_anim_hit_4f_sheet_alpha_source.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "edge_margins": {
+        "left": 25,
+        "top": 77,
+        "right": 80,
+        "bottom": 119
+      }
+    },
+    {
+      "role": "source_alpha:anim_firepower",
+      "path": "assets/characters/iowa/processed/source_alpha/iowa_anim_firepower_4f_sheet_alpha_source.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "edge_margins": {
+        "left": 20,
+        "top": 90,
+        "right": 11,
+        "bottom": 76
+      }
+    },
+    {
+      "role": "full_body",
+      "crop": {
+        "content_bbox": [
+          10,
+          22,
+          1494,
+          1000
+        ],
+        "final_crop_box": [
+          0,
+          10,
+          1506,
+          1012
+        ],
+        "output_edge_margins": {
+          "left": 10,
+          "top": 12,
+          "right": 12,
+          "bottom": 12
+        }
+      },
+      "path": "assets/characters/iowa/processed/ui/iowa_illust_full_alpha.png",
+      "size": [
+        1506,
+        1002
+      ],
+      "edge_margins": {
+        "left": 10,
+        "top": 12,
+        "right": 12,
+        "bottom": 12
+      }
+    },
+    {
+      "role": "half_body",
+      "crop": {
+        "content_bbox": [
+          0,
+          54,
+          1086,
+          1448
+        ],
+        "final_crop_box": [
+          0,
+          38,
+          1086,
+          1448
+        ],
+        "output_edge_margins": {
+          "left": 0,
+          "top": 16,
+          "right": 0,
+          "bottom": 0
+        }
+      },
+      "path": "assets/characters/iowa/processed/ui/iowa_illust_half_alpha.png",
+      "size": [
+        1086,
+        1410
+      ],
+      "edge_margins": {
+        "left": 0,
+        "top": 16,
+        "right": 0,
+        "bottom": 0
+      }
+    },
+    {
+      "role": "skill_cutin",
+      "crop": {
+        "content_bbox": [
+          12,
+          12,
+          1693,
+          929
+        ],
+        "final_crop_box": [
+          0,
+          0,
+          1693,
+          929
+        ],
+        "output_edge_margins": {
+          "left": 12,
+          "top": 12,
+          "right": 0,
+          "bottom": 0
+        }
+      },
+      "path": "assets/characters/iowa/processed/ui/iowa_illust_skill_cutin_alpha.png",
+      "size": [
+        1693,
+        929
+      ],
+      "edge_margins": {
+        "left": 12,
+        "top": 12,
+        "right": 0,
+        "bottom": 0
+      }
+    },
+    {
+      "role": "ui_portrait",
+      "crop": {
+        "content_bbox": [
+          36,
+          67,
+          384,
+          442
+        ],
+        "final_crop_box": [
+          18,
+          49,
+          384,
+          460
+        ],
+        "output_edge_margins": {
+          "left": 18,
+          "top": 18,
+          "right": 0,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/iowa/processed/ui/iowa_ui_portrait.png",
+      "size": [
+        366,
+        411
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 18,
+        "right": 0,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "ui_portrait_small",
+      "crop": {
+        "content_bbox": [
+          0,
+          147,
+          352,
+          442
+        ],
+        "final_crop_box": [
+          0,
+          129,
+          370,
+          460
+        ],
+        "output_edge_margins": {
+          "left": 0,
+          "top": 18,
+          "right": 18,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/iowa/processed/ui/iowa_ui_portrait_small.png",
+      "size": [
+        370,
+        331
+      ],
+      "edge_margins": {
+        "left": 83,
+        "top": 18,
+        "right": 18,
+        "bottom": 27
+      }
+    },
+    {
+      "role": "ui_chibi_head",
+      "crop": {
+        "content_bbox": [
+          70,
+          190,
+          384,
+          435
+        ],
+        "final_crop_box": [
+          52,
+          172,
+          384,
+          453
+        ],
+        "output_edge_margins": {
+          "left": 18,
+          "top": 18,
+          "right": 0,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/iowa/processed/ui/iowa_ui_chibi_head.png",
+      "size": [
+        332,
+        281
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 18,
+        "right": 77,
+        "bottom": 24
+      }
+    },
+    {
+      "role": "expr_default",
+      "crop": {
+        "content_bbox": [
+          0,
+          135,
+          297,
+          436
+        ],
+        "final_crop_box": [
+          0,
+          117,
+          315,
+          454
+        ],
+        "output_edge_margins": {
+          "left": 0,
+          "top": 18,
+          "right": 18,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/iowa/processed/ui/iowa_expr_default.png",
+      "size": [
+        315,
+        337
+      ],
+      "edge_margins": {
+        "left": 0,
+        "top": 18,
+        "right": 18,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "expr_serious",
+      "crop": {
+        "content_bbox": [
+          62,
+          52,
+          367,
+          381
+        ],
+        "final_crop_box": [
+          44,
+          34,
+          384,
+          399
+        ],
+        "output_edge_margins": {
+          "left": 18,
+          "top": 18,
+          "right": 17,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/iowa/processed/ui/iowa_expr_serious.png",
+      "size": [
+        340,
+        365
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 18,
+        "right": 17,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "expr_hit",
+      "crop": {
+        "content_bbox": [
+          44,
+          53,
+          352,
+          381
+        ],
+        "final_crop_box": [
+          26,
+          35,
+          370,
+          399
+        ],
+        "output_edge_margins": {
+          "left": 18,
+          "top": 18,
+          "right": 18,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/iowa/processed/ui/iowa_expr_hit.png",
+      "size": [
+        344,
+        364
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 18,
+        "right": 18,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "ui_skill_main_gun_salvo",
+      "crop": {
+        "content_bbox": [
+          39,
+          92,
+          327,
+          378
+        ],
+        "final_crop_box": [
+          21,
+          74,
+          345,
+          396
+        ],
+        "output_edge_margins": {
+          "left": 18,
+          "top": 18,
+          "right": 18,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/iowa/processed/ui/iowa_ui_skill_main_gun_salvo.png",
+      "size": [
+        324,
+        322
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 18,
+        "right": 18,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "class_icon",
+      "crop": {
+        "content_bbox": [
+          24,
+          74,
+          300,
+          386
+        ],
+        "final_crop_box": [
+          6,
+          56,
+          318,
+          404
+        ],
+        "output_edge_margins": {
+          "left": 18,
+          "top": 18,
+          "right": 18,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/iowa/processed/ui/iowa_ui_class_battleship.png",
+      "size": [
+        312,
+        348
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 18,
+        "right": 18,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "battle_body_r",
+      "crop": {
+        "component_bbox": [
+          50,
+          138,
+          430,
+          531
+        ],
+        "final_crop_box": [
+          32,
+          120,
+          448,
+          549
+        ],
+        "component_area": 83221,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 18,
+          "right": 18,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/iowa/processed/battle/iowa_battle_body_r.png",
+      "size": [
+        416,
+        429
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 18,
+        "right": 18,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "battle_rig_base",
+      "crop": {
+        "component_bbox": [
+          62,
+          602,
+          538,
+          874
+        ],
+        "final_crop_box": [
+          44,
+          584,
+          556,
+          892
+        ],
+        "component_area": 101934,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 18,
+          "right": 18,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/iowa/processed/battle/iowa_battle_rig_base.png",
+      "size": [
+        512,
+        308
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 18,
+        "right": 18,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "battle_turret_main_01",
+      "crop": {
+        "component_bbox": [
+          480,
+          229,
+          878,
+          465
+        ],
+        "final_crop_box": [
+          462,
+          211,
+          896,
+          483
+        ],
+        "component_area": 47118,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 18,
+          "right": 0,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/iowa/processed/battle/iowa_battle_turret_main_01.png",
+      "size": [
+        434,
+        272
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 18,
+        "right": 18,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "battle_turret_main_02",
+      "crop": {
+        "component_bbox": [
+          843,
+          230,
+          1176,
+          464
+        ],
+        "final_crop_box": [
+          825,
+          212,
+          1194,
+          482
+        ],
+        "component_area": 40752,
+        "output_edge_margins": {
+          "left": 0,
+          "top": 17,
+          "right": 0,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/iowa/processed/battle/iowa_battle_turret_main_02.png",
+      "size": [
+        369,
+        270
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 18,
+        "right": 18,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "battle_turret_main_03",
+      "crop": {
+        "component_bbox": [
+          1172,
+          226,
+          1500,
+          467
+        ],
+        "final_crop_box": [
+          1154,
+          208,
+          1518,
+          485
+        ],
+        "component_area": 40851,
+        "output_edge_margins": {
+          "left": 0,
+          "top": 18,
+          "right": 18,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/iowa/processed/battle/iowa_battle_turret_main_03.png",
+      "size": [
+        364,
+        277
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 18,
+        "right": 18,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "battle_turret_secondary_01",
+      "crop": {
+        "component_bbox": [
+          630,
+          676,
+          858,
+          825
+        ],
+        "final_crop_box": [
+          612,
+          658,
+          876,
+          843
+        ],
+        "component_area": 21856,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 18,
+          "right": 18,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/iowa/processed/battle/iowa_battle_turret_secondary_01.png",
+      "size": [
+        264,
+        185
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 18,
+        "right": 18,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "battle_fire_control_node",
+      "crop": {
+        "component_bbox": [
+          934,
+          609,
+          1139,
+          855
+        ],
+        "final_crop_box": [
+          916,
+          591,
+          1157,
+          873
+        ],
+        "component_area": 26538,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 18,
+          "right": 18,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/iowa/processed/battle/iowa_battle_fire_control_node.png",
+      "size": [
+        241,
+        282
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 18,
+        "right": 18,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "battle_flagship_marker",
+      "crop": {
+        "component_bbox": [
+          1172,
+          226,
+          1500,
+          467
+        ],
+        "final_crop_box": [
+          1154,
+          208,
+          1518,
+          485
+        ],
+        "component_area": 40851,
+        "output_edge_margins": {
+          "left": 0,
+          "top": 18,
+          "right": 18,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/iowa/processed/battle/iowa_battle_flagship_marker.png",
+      "size": [
+        364,
+        277
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 18,
+        "right": 18,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "battle_wake_origin_marker",
+      "crop": {
+        "component_bbox": [
+          1209,
+          768,
+          1439,
+          919
+        ],
+        "final_crop_box": [
+          1191,
+          750,
+          1457,
+          937
+        ],
+        "component_area": 11448,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 18,
+          "right": 18,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/iowa/processed/battle/iowa_battle_wake_origin_marker.png",
+      "size": [
+        266,
+        187
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 18,
+        "right": 18,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "anim_idle_frame_01",
+      "path": "assets/characters/iowa/processed/anim/iowa_anim_idle_frame_01.png",
+      "size": [
+        485,
+        521
+      ],
+      "edge_margins": {
+        "left": 16,
+        "top": 16,
+        "right": 17,
+        "bottom": 16
+      }
+    },
+    {
+      "role": "anim_idle_keyframe",
+      "path": "assets/characters/iowa/processed/anim/iowa_anim_idle_keyframe.png",
+      "size": [
+        485,
+        521
+      ],
+      "edge_margins": {
+        "left": 16,
+        "top": 16,
+        "right": 17,
+        "bottom": 16
+      }
+    },
+    {
+      "role": "anim_idle_frame_02",
+      "path": "assets/characters/iowa/processed/anim/iowa_anim_idle_frame_02.png",
+      "size": [
+        485,
+        521
+      ],
+      "edge_margins": {
+        "left": 17,
+        "top": 17,
+        "right": 17,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "anim_idle_frame_03",
+      "path": "assets/characters/iowa/processed/anim/iowa_anim_idle_frame_03.png",
+      "size": [
+        485,
+        521
+      ],
+      "edge_margins": {
+        "left": 16,
+        "top": 17,
+        "right": 16,
+        "bottom": 17
+      }
+    },
+    {
+      "role": "anim_idle_frame_04",
+      "path": "assets/characters/iowa/processed/anim/iowa_anim_idle_frame_04.png",
+      "size": [
+        485,
+        521
+      ],
+      "edge_margins": {
+        "left": 17,
+        "top": 18,
+        "right": 17,
+        "bottom": 19
+      }
+    },
+    {
+      "role": "anim_move_frame_01",
+      "path": "assets/characters/iowa/processed/anim/iowa_anim_move_frame_01.png",
+      "size": [
+        579,
+        471
+      ],
+      "edge_margins": {
+        "left": 34,
+        "top": 16,
+        "right": 35,
+        "bottom": 16
+      }
+    },
+    {
+      "role": "anim_move_keyframe",
+      "path": "assets/characters/iowa/processed/anim/iowa_anim_move_keyframe.png",
+      "size": [
+        579,
+        471
+      ],
+      "edge_margins": {
+        "left": 34,
+        "top": 16,
+        "right": 35,
+        "bottom": 16
+      }
+    },
+    {
+      "role": "anim_move_frame_02",
+      "path": "assets/characters/iowa/processed/anim/iowa_anim_move_frame_02.png",
+      "size": [
+        579,
+        471
+      ],
+      "edge_margins": {
+        "left": 30,
+        "top": 20,
+        "right": 31,
+        "bottom": 20
+      }
+    },
+    {
+      "role": "anim_move_frame_03",
+      "path": "assets/characters/iowa/processed/anim/iowa_anim_move_frame_03.png",
+      "size": [
+        579,
+        471
+      ],
+      "edge_margins": {
+        "left": 16,
+        "top": 18,
+        "right": 16,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "anim_move_frame_04",
+      "path": "assets/characters/iowa/processed/anim/iowa_anim_move_frame_04.png",
+      "size": [
+        579,
+        471
+      ],
+      "edge_margins": {
+        "left": 22,
+        "top": 17,
+        "right": 23,
+        "bottom": 17
+      }
+    },
+    {
+      "role": "anim_attack_frame_01",
+      "path": "assets/characters/iowa/processed/anim/iowa_anim_attack_frame_01.png",
+      "size": [
+        580,
+        496
+      ],
+      "edge_margins": {
+        "left": 65,
+        "top": 16,
+        "right": 65,
+        "bottom": 16
+      }
+    },
+    {
+      "role": "anim_attack_keyframe",
+      "path": "assets/characters/iowa/processed/anim/iowa_anim_attack_keyframe.png",
+      "size": [
+        580,
+        496
+      ],
+      "edge_margins": {
+        "left": 65,
+        "top": 16,
+        "right": 65,
+        "bottom": 16
+      }
+    },
+    {
+      "role": "anim_attack_frame_02",
+      "path": "assets/characters/iowa/processed/anim/iowa_anim_attack_frame_02.png",
+      "size": [
+        580,
+        496
+      ],
+      "edge_margins": {
+        "left": 16,
+        "top": 16,
+        "right": 16,
+        "bottom": 16
+      }
+    },
+    {
+      "role": "anim_attack_frame_03",
+      "path": "assets/characters/iowa/processed/anim/iowa_anim_attack_frame_03.png",
+      "size": [
+        580,
+        496
+      ],
+      "edge_margins": {
+        "left": 34,
+        "top": 16,
+        "right": 19,
+        "bottom": 16
+      }
+    },
+    {
+      "role": "anim_attack_frame_04",
+      "path": "assets/characters/iowa/processed/anim/iowa_anim_attack_frame_04.png",
+      "size": [
+        580,
+        496
+      ],
+      "edge_margins": {
+        "left": 26,
+        "top": 16,
+        "right": 42,
+        "bottom": 16
+      }
+    },
+    {
+      "role": "anim_hit_frame_01",
+      "path": "assets/characters/iowa/processed/anim/iowa_anim_hit_frame_01.png",
+      "size": [
+        589,
+        516
+      ],
+      "edge_margins": {
+        "left": 16,
+        "top": 22,
+        "right": 16,
+        "bottom": 22
+      }
+    },
+    {
+      "role": "anim_hit_keyframe",
+      "path": "assets/characters/iowa/processed/anim/iowa_anim_hit_keyframe.png",
+      "size": [
+        589,
+        516
+      ],
+      "edge_margins": {
+        "left": 16,
+        "top": 22,
+        "right": 16,
+        "bottom": 22
+      }
+    },
+    {
+      "role": "anim_hit_frame_02",
+      "path": "assets/characters/iowa/processed/anim/iowa_anim_hit_frame_02.png",
+      "size": [
+        589,
+        516
+      ],
+      "edge_margins": {
+        "left": 50,
+        "top": 19,
+        "right": 51,
+        "bottom": 19
+      }
+    },
+    {
+      "role": "anim_hit_frame_03",
+      "path": "assets/characters/iowa/processed/anim/iowa_anim_hit_frame_03.png",
+      "size": [
+        589,
+        516
+      ],
+      "edge_margins": {
+        "left": 40,
+        "top": 16,
+        "right": 41,
+        "bottom": 16
+      }
+    },
+    {
+      "role": "anim_hit_frame_04",
+      "path": "assets/characters/iowa/processed/anim/iowa_anim_hit_frame_04.png",
+      "size": [
+        589,
+        516
+      ],
+      "edge_margins": {
+        "left": 50,
+        "top": 19,
+        "right": 51,
+        "bottom": 20
+      }
+    },
+    {
+      "role": "anim_firepower_frame_01",
+      "path": "assets/characters/iowa/processed/anim/iowa_anim_firepower_frame_01.png",
+      "size": [
+        627,
+        545
+      ],
+      "edge_margins": {
+        "left": 20,
+        "top": 16,
+        "right": 4,
+        "bottom": 16
+      }
+    },
+    {
+      "role": "anim_firepower_keyframe",
+      "path": "assets/characters/iowa/processed/anim/iowa_anim_firepower_keyframe.png",
+      "size": [
+        627,
+        545
+      ],
+      "edge_margins": {
+        "left": 20,
+        "top": 16,
+        "right": 4,
+        "bottom": 16
+      }
+    },
+    {
+      "role": "anim_firepower_frame_02",
+      "path": "assets/characters/iowa/processed/anim/iowa_anim_firepower_frame_02.png",
+      "size": [
+        627,
+        545
+      ],
+      "edge_margins": {
+        "left": 0,
+        "top": 23,
+        "right": 11,
+        "bottom": 23
+      }
+    },
+    {
+      "role": "anim_firepower_frame_03",
+      "path": "assets/characters/iowa/processed/anim/iowa_anim_firepower_frame_03.png",
+      "size": [
+        627,
+        545
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 20,
+        "right": 19,
+        "bottom": 21
+      }
+    },
+    {
+      "role": "anim_firepower_frame_04",
+      "path": "assets/characters/iowa/processed/anim/iowa_anim_firepower_frame_04.png",
+      "size": [
+        627,
+        545
+      ],
+      "edge_margins": {
+        "left": 40,
+        "top": 27,
+        "right": 40,
+        "bottom": 27
+      }
+    },
+    {
+      "role": "vfx:fire_control_lock_line",
+      "crop": {
+        "component_bbox": [
+          1107,
+          114,
+          1452,
+          391
+        ],
+        "final_crop_box": [
+          1089,
+          96,
+          1470,
+          409
+        ],
+        "component_area": 66753,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 4,
+          "right": 0,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/iowa/processed/vfx/iowa_vfx_fire_control_lock_line.png",
+      "size": [
+        381,
+        313
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 4,
+        "right": 0,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "vfx:muzzle_flash_large",
+      "crop": {
+        "component_bbox": [
+          635,
+          77,
+          1078,
+          391
+        ],
+        "final_crop_box": [
+          617,
+          59,
+          1096,
+          409
+        ],
+        "component_area": 57856,
+        "output_edge_margins": {
+          "left": 12,
+          "top": 5,
+          "right": 17,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/iowa/processed/vfx/iowa_vfx_muzzle_flash_large.png",
+      "size": [
+        479,
+        350
+      ],
+      "edge_margins": {
+        "left": 12,
+        "top": 5,
+        "right": 17,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "vfx:broadside_smoke",
+      "crop": {
+        "component_bbox": [
+          500,
+          755,
+          1134,
+          904
+        ],
+        "final_crop_box": [
+          482,
+          737,
+          1152,
+          922
+        ],
+        "component_area": 52117,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 7,
+          "right": 18,
+          "bottom": 16
+        }
+      },
+      "path": "assets/characters/iowa/processed/vfx/iowa_vfx_broadside_smoke.png",
+      "size": [
+        670,
+        185
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 7,
+        "right": 18,
+        "bottom": 16
+      }
+    },
+    {
+      "role": "vfx:shell_trail_heavy",
+      "crop": {
+        "component_bbox": [
+          659,
+          431,
+          1049,
+          655
+        ],
+        "final_crop_box": [
+          641,
+          413,
+          1067,
+          673
+        ],
+        "component_area": 28762,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 18,
+          "right": 18,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/iowa/processed/vfx/iowa_vfx_shell_trail_heavy.png",
+      "size": [
+        426,
+        260
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 18,
+        "right": 18,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "vfx:water_splash_large",
+      "crop": {
+        "component_bbox": [
+          71,
+          469,
+          614,
+          587
+        ],
+        "final_crop_box": [
+          53,
+          451,
+          632,
+          605
+        ],
+        "component_area": 26930,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 1,
+          "right": 18,
+          "bottom": 7
+        }
+      },
+      "path": "assets/characters/iowa/processed/vfx/iowa_vfx_water_splash_large.png",
+      "size": [
+        579,
+        154
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 1,
+        "right": 18,
+        "bottom": 7
+      }
+    },
+    {
+      "role": "vfx:armor_sparks",
+      "crop": {
+        "component_bbox": [
+          47,
+          693,
+          411,
+          934
+        ],
+        "final_crop_box": [
+          29,
+          675,
+          429,
+          952
+        ],
+        "component_area": 26648,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 0,
+          "right": 0,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/iowa/processed/vfx/iowa_vfx_armor_sparks.png",
+      "size": [
+        400,
+        277
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 0,
+        "right": 0,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "vfx:command_aura",
+      "crop": {
+        "component_bbox": [
+          1126,
+          469,
+          1372,
+          647
+        ],
+        "final_crop_box": [
+          1108,
+          451,
+          1390,
+          665
+        ],
+        "component_area": 17813,
+        "output_edge_margins": {
+          "left": 15,
+          "top": 0,
+          "right": 0,
+          "bottom": 0
+        }
+      },
+      "path": "assets/characters/iowa/processed/vfx/iowa_vfx_command_aura.png",
+      "size": [
+        282,
+        214
+      ],
+      "edge_margins": {
+        "left": 15,
+        "top": 0,
+        "right": 0,
+        "bottom": 0
+      }
+    },
+    {
+      "role": "vfx:wake_heavy",
+      "crop": {
+        "component_bbox": [
+          57,
+          71,
+          584,
+          368
+        ],
+        "final_crop_box": [
+          39,
+          53,
+          602,
+          386
+        ],
+        "component_area": 17319,
+        "output_edge_margins": {
+          "left": 10,
+          "top": 18,
+          "right": 18,
+          "bottom": 13
+        }
+      },
+      "path": "assets/characters/iowa/processed/vfx/iowa_vfx_wake_heavy.png",
+      "size": [
+        563,
+        333
+      ],
+      "edge_margins": {
+        "left": 10,
+        "top": 18,
+        "right": 18,
+        "bottom": 13
+      }
+    },
+    {
+      "role": "vfx:range_reticle",
+      "crop": {
+        "component_bbox": [
+          1204,
+          695,
+          1496,
+          938
+        ],
+        "final_crop_box": [
+          1186,
+          677,
+          1514,
+          956
+        ],
+        "component_area": 8986,
+        "output_edge_margins": {
+          "left": 0,
+          "top": 0,
+          "right": 18,
+          "bottom": 0
+        }
+      },
+      "path": "assets/characters/iowa/processed/vfx/iowa_vfx_range_reticle.png",
+      "size": [
+        328,
+        279
+      ],
+      "edge_margins": {
+        "left": 0,
+        "top": 0,
+        "right": 18,
+        "bottom": 0
+      }
+    }
+  ]
+}

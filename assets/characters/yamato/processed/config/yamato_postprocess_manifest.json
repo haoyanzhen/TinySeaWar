@@ -1,0 +1,1375 @@
+{
+  "character_id": "yamato",
+  "source": "tools/art_pipeline/postprocess_generated_character.py",
+  "method": "green_screen_auto_grid_and_component_split",
+  "outputs": [
+    {
+      "role": "source_alpha:concept_full",
+      "path": "assets/characters/yamato/processed/source_alpha/yamato_concept_full_alpha_source.png",
+      "size": [
+        1024,
+        1536
+      ],
+      "edge_margins": {
+        "left": 4,
+        "top": 54,
+        "right": 0,
+        "bottom": 47
+      }
+    },
+    {
+      "role": "source_alpha:ui_sheet",
+      "path": "assets/characters/yamato/processed/source_alpha/yamato_ui_sheet_alpha_source.png",
+      "size": [
+        1774,
+        887
+      ],
+      "edge_margins": {
+        "left": 56,
+        "top": 38,
+        "right": 36,
+        "bottom": 43
+      }
+    },
+    {
+      "role": "source_alpha:battle_grid",
+      "path": "assets/characters/yamato/processed/source_alpha/yamato_battle_asset_grid_alpha_source.png",
+      "size": [
+        1774,
+        887
+      ],
+      "edge_margins": {
+        "left": 60,
+        "top": 88,
+        "right": 69,
+        "bottom": 122
+      }
+    },
+    {
+      "role": "source_alpha:vfx_sheet",
+      "path": "assets/characters/yamato/processed/source_alpha/yamato_vfx_reference_sheet_alpha_source.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "edge_margins": {
+        "left": 41,
+        "top": 87,
+        "right": 38,
+        "bottom": 131
+      }
+    },
+    {
+      "role": "source_alpha:anim_master",
+      "path": "assets/characters/yamato/processed/source_alpha/yamato_anim_5x4_master_alpha_source.png",
+      "size": [
+        1122,
+        1402
+      ],
+      "edge_margins": {
+        "left": 23,
+        "top": 23,
+        "right": 0,
+        "bottom": 59
+      }
+    },
+    {
+      "role": "full_body",
+      "crop": {
+        "content_bbox": [
+          4,
+          54,
+          1024,
+          1489
+        ],
+        "final_crop_box": [
+          0,
+          42,
+          1024,
+          1501
+        ],
+        "output_edge_margins": {
+          "left": 13,
+          "top": 12,
+          "right": 65,
+          "bottom": 37
+        }
+      },
+      "path": "assets/characters/yamato/processed/ui/yamato_illust_full_alpha.png",
+      "size": [
+        1098,
+        1484
+      ],
+      "edge_margins": {
+        "left": 13,
+        "top": 12,
+        "right": 65,
+        "bottom": 37
+      }
+    },
+    {
+      "role": "half_body",
+      "crop": {
+        "content_bbox": [
+          17,
+          16,
+          1037,
+          1049
+        ],
+        "final_crop_box": [
+          1,
+          0,
+          1053,
+          1065
+        ],
+        "output_edge_margins": {
+          "left": 17,
+          "top": 16,
+          "right": 71,
+          "bottom": 313
+        }
+      },
+      "path": "assets/characters/yamato/processed/ui/yamato_illust_half_alpha.png",
+      "size": [
+        1108,
+        1362
+      ],
+      "edge_margins": {
+        "left": 17,
+        "top": 16,
+        "right": 71,
+        "bottom": 313
+      }
+    },
+    {
+      "role": "skill_cutin",
+      "crop": {
+        "content_bbox": [
+          531,
+          17,
+          1551,
+          849
+        ],
+        "final_crop_box": [
+          515,
+          1,
+          1567,
+          865
+        ],
+        "output_edge_margins": {
+          "left": 16,
+          "top": 17,
+          "right": 72,
+          "bottom": 339
+        }
+      },
+      "path": "assets/characters/yamato/processed/ui/yamato_illust_skill_cutin_alpha.png",
+      "size": [
+        1108,
+        1188
+      ],
+      "edge_margins": {
+        "left": 16,
+        "top": 17,
+        "right": 72,
+        "bottom": 339
+      }
+    },
+    {
+      "role": "ui_portrait",
+      "crop": {
+        "content_bbox": [
+          56,
+          38,
+          443,
+          418
+        ],
+        "final_crop_box": [
+          38,
+          20,
+          443,
+          436
+        ],
+        "output_edge_margins": {
+          "left": 18,
+          "top": 18,
+          "right": 39,
+          "bottom": 106
+        }
+      },
+      "path": "assets/characters/yamato/processed/ui/yamato_ui_portrait.png",
+      "size": [
+        444,
+        504
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 18,
+        "right": 39,
+        "bottom": 106
+      }
+    },
+    {
+      "role": "ui_portrait_small",
+      "crop": {
+        "content_bbox": [
+          0,
+          76,
+          423,
+          418
+        ],
+        "final_crop_box": [
+          0,
+          58,
+          441,
+          436
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 120,
+          "bottom": 79
+        }
+      },
+      "path": "assets/characters/yamato/processed/ui/yamato_ui_portrait_small.png",
+      "size": [
+        562,
+        440
+      ],
+      "edge_margins": {
+        "left": 137,
+        "top": 19,
+        "right": 120,
+        "bottom": 82
+      }
+    },
+    {
+      "role": "ui_chibi_head",
+      "crop": {
+        "content_bbox": [
+          75,
+          93,
+          386,
+          402
+        ],
+        "final_crop_box": [
+          57,
+          75,
+          404,
+          420
+        ],
+        "output_edge_margins": {
+          "left": 24,
+          "top": 19,
+          "right": 19,
+          "bottom": 42
+        }
+      },
+      "path": "assets/characters/yamato/processed/ui/yamato_ui_chibi_head.png",
+      "size": [
+        354,
+        370
+      ],
+      "edge_margins": {
+        "left": 24,
+        "top": 19,
+        "right": 19,
+        "bottom": 42
+      }
+    },
+    {
+      "role": "expr_default",
+      "crop": {
+        "content_bbox": [
+          30,
+          54,
+          409,
+          418
+        ],
+        "final_crop_box": [
+          12,
+          36,
+          427,
+          436
+        ],
+        "output_edge_margins": {
+          "left": 25,
+          "top": 18,
+          "right": 18,
+          "bottom": 98
+        }
+      },
+      "path": "assets/characters/yamato/processed/ui/yamato_expr_default.png",
+      "size": [
+        422,
+        480
+      ],
+      "edge_margins": {
+        "left": 25,
+        "top": 18,
+        "right": 18,
+        "bottom": 98
+      }
+    },
+    {
+      "role": "expr_serious",
+      "crop": {
+        "content_bbox": [
+          81,
+          19,
+          420,
+          371
+        ],
+        "final_crop_box": [
+          63,
+          1,
+          438,
+          389
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 24,
+          "bottom": 87
+        }
+      },
+      "path": "assets/characters/yamato/processed/ui/yamato_expr_serious.png",
+      "size": [
+        382,
+        458
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 19,
+        "right": 24,
+        "bottom": 87
+      }
+    },
+    {
+      "role": "expr_hit",
+      "crop": {
+        "content_bbox": [
+          91,
+          18,
+          423,
+          371
+        ],
+        "final_crop_box": [
+          73,
+          0,
+          441,
+          389
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 29,
+          "bottom": 86
+        }
+      },
+      "path": "assets/characters/yamato/processed/ui/yamato_expr_hit.png",
+      "size": [
+        380,
+        458
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 19,
+        "right": 29,
+        "bottom": 86
+      }
+    },
+    {
+      "role": "ui_skill",
+      "crop": {
+        "content_bbox": [
+          79,
+          55,
+          374,
+          353
+        ],
+        "final_crop_box": [
+          61,
+          37,
+          392,
+          371
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 20,
+          "right": 18,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/yamato/processed/ui/yamato_ui_skill_main_gun_salvo.png",
+      "size": [
+        332,
+        336
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 20,
+        "right": 18,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "class_icon",
+      "crop": {
+        "content_bbox": [
+          129,
+          25,
+          279,
+          401
+        ],
+        "final_crop_box": [
+          111,
+          7,
+          297,
+          419
+        ],
+        "output_edge_margins": {
+          "left": 20,
+          "top": 19,
+          "right": 18,
+          "bottom": 49
+        }
+      },
+      "path": "assets/characters/yamato/processed/ui/yamato_ui_class_battleship.png",
+      "size": [
+        188,
+        444
+      ],
+      "edge_margins": {
+        "left": 20,
+        "top": 19,
+        "right": 18,
+        "bottom": 49
+      }
+    },
+    {
+      "role": "battle_body_r",
+      "crop": {
+        "component_bbox": [
+          60,
+          88,
+          384,
+          354
+        ],
+        "final_crop_box": [
+          42,
+          70,
+          402,
+          372
+        ],
+        "component_area": 39509,
+        "output_edge_margins": {
+          "left": 78,
+          "top": 19,
+          "right": 18,
+          "bottom": 83
+        }
+      },
+      "path": "assets/characters/yamato/processed/battle/yamato_battle_body_r.png",
+      "size": [
+        420,
+        368
+      ],
+      "edge_margins": {
+        "left": 78,
+        "top": 19,
+        "right": 18,
+        "bottom": 83
+      }
+    },
+    {
+      "role": "battle_rig_base",
+      "crop": {
+        "component_bbox": [
+          32,
+          89,
+          358,
+          374
+        ],
+        "final_crop_box": [
+          14,
+          71,
+          376,
+          392
+        ],
+        "component_area": 53276,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 19,
+          "bottom": 87
+        }
+      },
+      "path": "assets/characters/yamato/processed/battle/yamato_battle_rig_base.png",
+      "size": [
+        364,
+        390
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 18,
+        "right": 19,
+        "bottom": 87
+      }
+    },
+    {
+      "role": "battle_turret_main_01",
+      "crop": {
+        "component_bbox": [
+          26,
+          125,
+          378,
+          351
+        ],
+        "final_crop_box": [
+          8,
+          107,
+          396,
+          369
+        ],
+        "component_area": 54424,
+        "output_edge_margins": {
+          "left": 45,
+          "top": 19,
+          "right": 19,
+          "bottom": 25
+        }
+      },
+      "path": "assets/characters/yamato/processed/battle/yamato_battle_turret_main_01.png",
+      "size": [
+        416,
+        270
+      ],
+      "edge_margins": {
+        "left": 45,
+        "top": 19,
+        "right": 19,
+        "bottom": 25
+      }
+    },
+    {
+      "role": "battle_turret_main_02",
+      "crop": {
+        "component_bbox": [
+          25,
+          125,
+          376,
+          352
+        ],
+        "final_crop_box": [
+          7,
+          107,
+          394,
+          370
+        ],
+        "component_area": 54355,
+        "output_edge_margins": {
+          "left": 45,
+          "top": 19,
+          "right": 18,
+          "bottom": 26
+        }
+      },
+      "path": "assets/characters/yamato/processed/battle/yamato_battle_turret_main_02.png",
+      "size": [
+        414,
+        272
+      ],
+      "edge_margins": {
+        "left": 45,
+        "top": 19,
+        "right": 18,
+        "bottom": 26
+      }
+    },
+    {
+      "role": "battle_turret_main_03",
+      "crop": {
+        "component_bbox": [
+          73,
+          83,
+          413,
+          303
+        ],
+        "final_crop_box": [
+          55,
+          65,
+          431,
+          321
+        ],
+        "component_area": 51334,
+        "output_edge_margins": {
+          "left": 44,
+          "top": 19,
+          "right": 18,
+          "bottom": 25
+        }
+      },
+      "path": "assets/characters/yamato/processed/battle/yamato_battle_turret_main_03.png",
+      "size": [
+        402,
+        264
+      ],
+      "edge_margins": {
+        "left": 44,
+        "top": 19,
+        "right": 18,
+        "bottom": 25
+      }
+    },
+    {
+      "role": "battle_fire_control_node",
+      "crop": {
+        "component_bbox": [
+          91,
+          57,
+          293,
+          322
+        ],
+        "final_crop_box": [
+          73,
+          39,
+          311,
+          340
+        ],
+        "component_area": 29108,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 19,
+          "bottom": 76
+        }
+      },
+      "path": "assets/characters/yamato/processed/battle/yamato_battle_fire_control_node.png",
+      "size": [
+        240,
+        360
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 19,
+        "right": 19,
+        "bottom": 76
+      }
+    },
+    {
+      "role": "battle_flagship_marker",
+      "crop": {
+        "component_bbox": [
+          60,
+          61,
+          304,
+          321
+        ],
+        "final_crop_box": [
+          42,
+          43,
+          322,
+          339
+        ],
+        "component_area": 28476,
+        "output_edge_margins": {
+          "left": 37,
+          "top": 18,
+          "right": 19,
+          "bottom": 70
+        }
+      },
+      "path": "assets/characters/yamato/processed/battle/yamato_battle_flagship_marker.png",
+      "size": [
+        300,
+        348
+      ],
+      "edge_margins": {
+        "left": 37,
+        "top": 18,
+        "right": 19,
+        "bottom": 70
+      }
+    },
+    {
+      "role": "battle_wake_origin_marker",
+      "crop": {
+        "component_bbox": [
+          32,
+          86,
+          370,
+          321
+        ],
+        "final_crop_box": [
+          14,
+          68,
+          388,
+          339
+        ],
+        "component_area": 43624,
+        "output_edge_margins": {
+          "left": 80,
+          "top": 18,
+          "right": 18,
+          "bottom": 29
+        }
+      },
+      "path": "assets/characters/yamato/processed/battle/yamato_battle_wake_origin_marker.png",
+      "size": [
+        436,
+        282
+      ],
+      "edge_margins": {
+        "left": 80,
+        "top": 18,
+        "right": 18,
+        "bottom": 29
+      }
+    },
+    {
+      "role": "anim_idle_frame_01",
+      "path": "assets/characters/yamato/processed/anim/yamato_anim_idle_frame_01.png",
+      "size": [
+        326,
+        304
+      ],
+      "edge_margins": {
+        "left": 55,
+        "top": 17,
+        "right": 21,
+        "bottom": 70
+      }
+    },
+    {
+      "role": "anim_idle_keyframe",
+      "path": "assets/characters/yamato/processed/anim/yamato_anim_idle_keyframe.png",
+      "size": [
+        326,
+        304
+      ],
+      "edge_margins": {
+        "left": 55,
+        "top": 17,
+        "right": 21,
+        "bottom": 70
+      }
+    },
+    {
+      "role": "anim_idle_frame_02",
+      "path": "assets/characters/yamato/processed/anim/yamato_anim_idle_frame_02.png",
+      "size": [
+        326,
+        304
+      ],
+      "edge_margins": {
+        "left": 63,
+        "top": 17,
+        "right": 20,
+        "bottom": 70
+      }
+    },
+    {
+      "role": "anim_idle_frame_03",
+      "path": "assets/characters/yamato/processed/anim/yamato_anim_idle_frame_03.png",
+      "size": [
+        326,
+        304
+      ],
+      "edge_margins": {
+        "left": 58,
+        "top": 16,
+        "right": 19,
+        "bottom": 72
+      }
+    },
+    {
+      "role": "anim_idle_frame_04",
+      "path": "assets/characters/yamato/processed/anim/yamato_anim_idle_frame_04.png",
+      "size": [
+        326,
+        304
+      ],
+      "edge_margins": {
+        "left": 55,
+        "top": 16,
+        "right": 16,
+        "bottom": 71
+      }
+    },
+    {
+      "role": "anim_move_frame_01",
+      "path": "assets/characters/yamato/processed/anim/yamato_anim_move_frame_01.png",
+      "size": [
+        310,
+        288
+      ],
+      "edge_margins": {
+        "left": 50,
+        "top": 17,
+        "right": 24,
+        "bottom": 64
+      }
+    },
+    {
+      "role": "anim_move_keyframe",
+      "path": "assets/characters/yamato/processed/anim/yamato_anim_move_keyframe.png",
+      "size": [
+        310,
+        288
+      ],
+      "edge_margins": {
+        "left": 50,
+        "top": 17,
+        "right": 24,
+        "bottom": 64
+      }
+    },
+    {
+      "role": "anim_move_frame_02",
+      "path": "assets/characters/yamato/processed/anim/yamato_anim_move_frame_02.png",
+      "size": [
+        310,
+        288
+      ],
+      "edge_margins": {
+        "left": 48,
+        "top": 17,
+        "right": 18,
+        "bottom": 65
+      }
+    },
+    {
+      "role": "anim_move_frame_03",
+      "path": "assets/characters/yamato/processed/anim/yamato_anim_move_frame_03.png",
+      "size": [
+        310,
+        288
+      ],
+      "edge_margins": {
+        "left": 27,
+        "top": 28,
+        "right": 16,
+        "bottom": 70
+      }
+    },
+    {
+      "role": "anim_move_frame_04",
+      "path": "assets/characters/yamato/processed/anim/yamato_anim_move_frame_04.png",
+      "size": [
+        310,
+        288
+      ],
+      "edge_margins": {
+        "left": 61,
+        "top": 17,
+        "right": 29,
+        "bottom": 64
+      }
+    },
+    {
+      "role": "anim_attack_frame_01",
+      "path": "assets/characters/yamato/processed/anim/yamato_anim_attack_frame_01.png",
+      "size": [
+        332,
+        304
+      ],
+      "edge_margins": {
+        "left": 59,
+        "top": 18,
+        "right": 30,
+        "bottom": 71
+      }
+    },
+    {
+      "role": "anim_attack_keyframe",
+      "path": "assets/characters/yamato/processed/anim/yamato_anim_attack_keyframe.png",
+      "size": [
+        332,
+        304
+      ],
+      "edge_margins": {
+        "left": 59,
+        "top": 18,
+        "right": 30,
+        "bottom": 71
+      }
+    },
+    {
+      "role": "anim_attack_frame_02",
+      "path": "assets/characters/yamato/processed/anim/yamato_anim_attack_frame_02.png",
+      "size": [
+        332,
+        304
+      ],
+      "edge_margins": {
+        "left": 65,
+        "top": 17,
+        "right": 27,
+        "bottom": 71
+      }
+    },
+    {
+      "role": "anim_attack_frame_03",
+      "path": "assets/characters/yamato/processed/anim/yamato_anim_attack_frame_03.png",
+      "size": [
+        332,
+        304
+      ],
+      "edge_margins": {
+        "left": 58,
+        "top": 17,
+        "right": 17,
+        "bottom": 71
+      }
+    },
+    {
+      "role": "anim_attack_frame_04",
+      "path": "assets/characters/yamato/processed/anim/yamato_anim_attack_frame_04.png",
+      "size": [
+        332,
+        304
+      ],
+      "edge_margins": {
+        "left": 56,
+        "top": 17,
+        "right": 25,
+        "bottom": 70
+      }
+    },
+    {
+      "role": "anim_hit_frame_01",
+      "path": "assets/characters/yamato/processed/anim/yamato_anim_hit_frame_01.png",
+      "size": [
+        314,
+        306
+      ],
+      "edge_margins": {
+        "left": 59,
+        "top": 20,
+        "right": 38,
+        "bottom": 69
+      }
+    },
+    {
+      "role": "anim_hit_keyframe",
+      "path": "assets/characters/yamato/processed/anim/yamato_anim_hit_keyframe.png",
+      "size": [
+        314,
+        306
+      ],
+      "edge_margins": {
+        "left": 59,
+        "top": 20,
+        "right": 38,
+        "bottom": 69
+      }
+    },
+    {
+      "role": "anim_hit_frame_02",
+      "path": "assets/characters/yamato/processed/anim/yamato_anim_hit_frame_02.png",
+      "size": [
+        314,
+        306
+      ],
+      "edge_margins": {
+        "left": 59,
+        "top": 17,
+        "right": 34,
+        "bottom": 69
+      }
+    },
+    {
+      "role": "anim_hit_frame_03",
+      "path": "assets/characters/yamato/processed/anim/yamato_anim_hit_frame_03.png",
+      "size": [
+        314,
+        306
+      ],
+      "edge_margins": {
+        "left": 54,
+        "top": 16,
+        "right": 18,
+        "bottom": 70
+      }
+    },
+    {
+      "role": "anim_hit_frame_04",
+      "path": "assets/characters/yamato/processed/anim/yamato_anim_hit_frame_04.png",
+      "size": [
+        314,
+        306
+      ],
+      "edge_margins": {
+        "left": 54,
+        "top": 17,
+        "right": 17,
+        "bottom": 69
+      }
+    },
+    {
+      "role": "anim_firepower_frame_01",
+      "path": "assets/characters/yamato/processed/anim/yamato_anim_firepower_frame_01.png",
+      "size": [
+        346,
+        274
+      ],
+      "edge_margins": {
+        "left": 59,
+        "top": 21,
+        "right": 42,
+        "bottom": 66
+      }
+    },
+    {
+      "role": "anim_firepower_keyframe",
+      "path": "assets/characters/yamato/processed/anim/yamato_anim_firepower_keyframe.png",
+      "size": [
+        346,
+        274
+      ],
+      "edge_margins": {
+        "left": 59,
+        "top": 21,
+        "right": 42,
+        "bottom": 66
+      }
+    },
+    {
+      "role": "anim_firepower_frame_02",
+      "path": "assets/characters/yamato/processed/anim/yamato_anim_firepower_frame_02.png",
+      "size": [
+        346,
+        274
+      ],
+      "edge_margins": {
+        "left": 61,
+        "top": 21,
+        "right": 42,
+        "bottom": 65
+      }
+    },
+    {
+      "role": "anim_firepower_frame_03",
+      "path": "assets/characters/yamato/processed/anim/yamato_anim_firepower_frame_03.png",
+      "size": [
+        346,
+        274
+      ],
+      "edge_margins": {
+        "left": 59,
+        "top": 21,
+        "right": 29,
+        "bottom": 63
+      }
+    },
+    {
+      "role": "anim_firepower_frame_04",
+      "path": "assets/characters/yamato/processed/anim/yamato_anim_firepower_frame_04.png",
+      "size": [
+        346,
+        274
+      ],
+      "edge_margins": {
+        "left": 64,
+        "top": 16,
+        "right": 16,
+        "bottom": 65
+      }
+    },
+    {
+      "role": "battle_body_r:idle_master_override",
+      "path": "assets/characters/yamato/processed/battle/yamato_battle_body_r.png",
+      "size": [
+        326,
+        304
+      ],
+      "edge_margins": {
+        "left": 55,
+        "top": 17,
+        "right": 21,
+        "bottom": 70
+      }
+    },
+    {
+      "role": "vfx:fire_control_lock_line",
+      "crop": {
+        "component_bbox": [
+          51,
+          166,
+          340,
+          391
+        ],
+        "final_crop_box": [
+          33,
+          148,
+          358,
+          409
+        ],
+        "component_area": 5557,
+        "output_edge_margins": {
+          "left": 95,
+          "top": 73,
+          "right": 18,
+          "bottom": 19
+        }
+      },
+      "path": "assets/characters/yamato/processed/vfx/yamato_vfx_fire_control_lock_line.png",
+      "size": [
+        420,
+        350
+      ],
+      "edge_margins": {
+        "left": 95,
+        "top": 73,
+        "right": 18,
+        "bottom": 19
+      }
+    },
+    {
+      "role": "vfx:muzzle_flash_large",
+      "crop": {
+        "component_bbox": [
+          39,
+          138,
+          344,
+          428
+        ],
+        "final_crop_box": [
+          21,
+          120,
+          362,
+          446
+        ],
+        "component_area": 36208,
+        "output_edge_margins": {
+          "left": 58,
+          "top": 18,
+          "right": 19,
+          "bottom": 92
+        }
+      },
+      "path": "assets/characters/yamato/processed/vfx/yamato_vfx_muzzle_flash_large.png",
+      "size": [
+        408,
+        424
+      ],
+      "edge_margins": {
+        "left": 58,
+        "top": 18,
+        "right": 19,
+        "bottom": 92
+      }
+    },
+    {
+      "role": "vfx:broadside_smoke",
+      "crop": {
+        "component_bbox": [
+          30,
+          148,
+          370,
+          449
+        ],
+        "final_crop_box": [
+          12,
+          130,
+          384,
+          467
+        ],
+        "component_area": 64280,
+        "output_edge_margins": {
+          "left": 23,
+          "top": 18,
+          "right": 18,
+          "bottom": 25
+        }
+      },
+      "path": "assets/characters/yamato/processed/vfx/yamato_vfx_broadside_smoke.png",
+      "size": [
+        390,
+        354
+      ],
+      "edge_margins": {
+        "left": 23,
+        "top": 18,
+        "right": 18,
+        "bottom": 25
+      }
+    },
+    {
+      "role": "vfx:shell_trail_heavy",
+      "crop": {
+        "component_bbox": [
+          42,
+          136,
+          346,
+          440
+        ],
+        "final_crop_box": [
+          24,
+          118,
+          364,
+          458
+        ],
+        "component_area": 19870,
+        "output_edge_margins": {
+          "left": 46,
+          "top": 19,
+          "right": 18,
+          "bottom": 59
+        }
+      },
+      "path": "assets/characters/yamato/processed/vfx/yamato_vfx_shell_trail_heavy.png",
+      "size": [
+        368,
+        382
+      ],
+      "edge_margins": {
+        "left": 46,
+        "top": 19,
+        "right": 18,
+        "bottom": 59
+      }
+    },
+    {
+      "role": "vfx:water_splash_large",
+      "crop": {
+        "component_bbox": [
+          52,
+          33,
+          339,
+          370
+        ],
+        "final_crop_box": [
+          34,
+          15,
+          357,
+          388
+        ],
+        "component_area": 38488,
+        "output_edge_margins": {
+          "left": 22,
+          "top": 19,
+          "right": 18,
+          "bottom": 131
+        }
+      },
+      "path": "assets/characters/yamato/processed/vfx/yamato_vfx_water_splash_large.png",
+      "size": [
+        348,
+        514
+      ],
+      "edge_margins": {
+        "left": 22,
+        "top": 19,
+        "right": 18,
+        "bottom": 131
+      }
+    },
+    {
+      "role": "vfx:armor_sparks",
+      "crop": {
+        "component_bbox": [
+          114,
+          70,
+          334,
+          286
+        ],
+        "final_crop_box": [
+          96,
+          52,
+          352,
+          304
+        ],
+        "component_area": 7435,
+        "output_edge_margins": {
+          "left": 78,
+          "top": 18,
+          "right": 18,
+          "bottom": 67
+        }
+      },
+      "path": "assets/characters/yamato/processed/vfx/yamato_vfx_armor_sparks.png",
+      "size": [
+        344,
+        330
+      ],
+      "edge_margins": {
+        "left": 78,
+        "top": 18,
+        "right": 18,
+        "bottom": 67
+      }
+    },
+    {
+      "role": "vfx:command_aura",
+      "crop": {
+        "component_bbox": [
+          39,
+          49,
+          332,
+          368
+        ],
+        "final_crop_box": [
+          21,
+          31,
+          350,
+          386
+        ],
+        "component_area": 31580,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 19,
+          "bottom": 125
+        }
+      },
+      "path": "assets/characters/yamato/processed/vfx/yamato_vfx_command_aura.png",
+      "size": [
+        350,
+        472
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 18,
+        "right": 19,
+        "bottom": 125
+      }
+    },
+    {
+      "role": "vfx:wake_heavy",
+      "crop": {
+        "component_bbox": [
+          15,
+          91,
+          319,
+          363
+        ],
+        "final_crop_box": [
+          0,
+          73,
+          337,
+          381
+        ],
+        "component_area": 30354,
+        "output_edge_margins": {
+          "left": 23,
+          "top": 18,
+          "right": 18,
+          "bottom": 27
+        }
+      },
+      "path": "assets/characters/yamato/processed/vfx/yamato_vfx_wake_heavy.png",
+      "size": [
+        346,
+        318
+      ],
+      "edge_margins": {
+        "left": 23,
+        "top": 18,
+        "right": 18,
+        "bottom": 27
+      }
+    }
+  ]
+}

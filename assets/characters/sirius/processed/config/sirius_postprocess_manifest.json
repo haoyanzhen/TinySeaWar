@@ -1,0 +1,1375 @@
+{
+  "character_id": "sirius",
+  "source": "tools/art_pipeline/postprocess_generated_character.py",
+  "method": "green_screen_auto_grid_and_component_split",
+  "outputs": [
+    {
+      "role": "source_alpha:concept_full",
+      "path": "assets/characters/sirius/processed/source_alpha/sirius_concept_full_alpha_source.png",
+      "size": [
+        1024,
+        1536
+      ],
+      "edge_margins": {
+        "left": 11,
+        "top": 27,
+        "right": 9,
+        "bottom": 24
+      }
+    },
+    {
+      "role": "source_alpha:ui_sheet",
+      "path": "assets/characters/sirius/processed/source_alpha/sirius_ui_sheet_alpha_source.png",
+      "size": [
+        1774,
+        887
+      ],
+      "edge_margins": {
+        "left": 69,
+        "top": 41,
+        "right": 100,
+        "bottom": 80
+      }
+    },
+    {
+      "role": "source_alpha:battle_grid",
+      "path": "assets/characters/sirius/processed/source_alpha/sirius_battle_asset_grid_alpha_source.png",
+      "size": [
+        1774,
+        887
+      ],
+      "edge_margins": {
+        "left": 0,
+        "top": 0,
+        "right": 0,
+        "bottom": 0
+      }
+    },
+    {
+      "role": "source_alpha:vfx_sheet",
+      "path": "assets/characters/sirius/processed/source_alpha/sirius_vfx_reference_sheet_alpha_source.png",
+      "size": [
+        1774,
+        887
+      ],
+      "edge_margins": {
+        "left": 91,
+        "top": 128,
+        "right": 87,
+        "bottom": 133
+      }
+    },
+    {
+      "role": "source_alpha:anim_master",
+      "path": "assets/characters/sirius/processed/source_alpha/sirius_anim_5x4_master_alpha_source.png",
+      "size": [
+        1122,
+        1402
+      ],
+      "edge_margins": {
+        "left": 33,
+        "top": 73,
+        "right": 18,
+        "bottom": 86
+      }
+    },
+    {
+      "role": "full_body",
+      "crop": {
+        "content_bbox": [
+          11,
+          27,
+          1015,
+          1512
+        ],
+        "final_crop_box": [
+          0,
+          15,
+          1024,
+          1524
+        ],
+        "output_edge_margins": {
+          "left": 12,
+          "top": 330,
+          "right": 26,
+          "bottom": 13
+        }
+      },
+      "path": "assets/characters/sirius/processed/ui/sirius_illust_full_alpha.png",
+      "size": [
+        1042,
+        1828
+      ],
+      "edge_margins": {
+        "left": 12,
+        "top": 330,
+        "right": 26,
+        "bottom": 13
+      }
+    },
+    {
+      "role": "half_body",
+      "crop": {
+        "content_bbox": [
+          17,
+          72,
+          1021,
+          1141
+        ],
+        "final_crop_box": [
+          1,
+          56,
+          1037,
+          1157
+        ],
+        "output_edge_margins": {
+          "left": 17,
+          "top": 72,
+          "right": 31,
+          "bottom": 17
+        }
+      },
+      "path": "assets/characters/sirius/processed/ui/sirius_illust_half_alpha.png",
+      "size": [
+        1052,
+        1158
+      ],
+      "edge_margins": {
+        "left": 17,
+        "top": 72,
+        "right": 31,
+        "bottom": 17
+      }
+    },
+    {
+      "role": "skill_cutin",
+      "crop": {
+        "content_bbox": [
+          387,
+          16,
+          1391,
+          877
+        ],
+        "final_crop_box": [
+          371,
+          0,
+          1407,
+          893
+        ],
+        "output_edge_margins": {
+          "left": 17,
+          "top": 16,
+          "right": 31,
+          "bottom": 119
+        }
+      },
+      "path": "assets/characters/sirius/processed/ui/sirius_illust_skill_cutin_alpha.png",
+      "size": [
+        1052,
+        996
+      ],
+      "edge_margins": {
+        "left": 17,
+        "top": 16,
+        "right": 31,
+        "bottom": 119
+      }
+    },
+    {
+      "role": "ui_portrait",
+      "crop": {
+        "content_bbox": [
+          90,
+          41,
+          419,
+          419
+        ],
+        "final_crop_box": [
+          72,
+          23,
+          437,
+          437
+        ],
+        "output_edge_margins": {
+          "left": 27,
+          "top": 18,
+          "right": 18,
+          "bottom": 64
+        }
+      },
+      "path": "assets/characters/sirius/processed/ui/sirius_ui_portrait.png",
+      "size": [
+        374,
+        460
+      ],
+      "edge_margins": {
+        "left": 27,
+        "top": 18,
+        "right": 18,
+        "bottom": 64
+      }
+    },
+    {
+      "role": "ui_portrait_small",
+      "crop": {
+        "content_bbox": [
+          71,
+          73,
+          359,
+          392
+        ],
+        "final_crop_box": [
+          53,
+          55,
+          377,
+          410
+        ],
+        "output_edge_margins": {
+          "left": 18,
+          "top": 19,
+          "right": 44,
+          "bottom": 36
+        }
+      },
+      "path": "assets/characters/sirius/processed/ui/sirius_ui_portrait_small.png",
+      "size": [
+        350,
+        374
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 19,
+        "right": 45,
+        "bottom": 36
+      }
+    },
+    {
+      "role": "ui_chibi_head",
+      "crop": {
+        "content_bbox": [
+          47,
+          95,
+          375,
+          380
+        ],
+        "final_crop_box": [
+          29,
+          77,
+          393,
+          398
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 25,
+          "bottom": 27
+        }
+      },
+      "path": "assets/characters/sirius/processed/ui/sirius_ui_chibi_head.png",
+      "size": [
+        372,
+        330
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 18,
+        "right": 25,
+        "bottom": 27
+      }
+    },
+    {
+      "role": "expr_default",
+      "crop": {
+        "content_bbox": [
+          46,
+          76,
+          338,
+          398
+        ],
+        "final_crop_box": [
+          28,
+          58,
+          356,
+          416
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 43,
+          "bottom": 42
+        }
+      },
+      "path": "assets/characters/sirius/processed/ui/sirius_expr_default.png",
+      "size": [
+        354,
+        382
+      ],
+      "edge_margins": {
+        "left": 21,
+        "top": 18,
+        "right": 44,
+        "bottom": 42
+      }
+    },
+    {
+      "role": "expr_serious",
+      "crop": {
+        "content_bbox": [
+          69,
+          42,
+          361,
+          362
+        ],
+        "final_crop_box": [
+          51,
+          24,
+          379,
+          380
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 43,
+          "bottom": 40
+        }
+      },
+      "path": "assets/characters/sirius/processed/ui/sirius_expr_serious.png",
+      "size": [
+        354,
+        378
+      ],
+      "edge_margins": {
+        "left": 21,
+        "top": 18,
+        "right": 44,
+        "bottom": 40
+      }
+    },
+    {
+      "role": "expr_hit",
+      "crop": {
+        "content_bbox": [
+          52,
+          42,
+          345,
+          362
+        ],
+        "final_crop_box": [
+          34,
+          24,
+          363,
+          380
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 44,
+          "bottom": 39
+        }
+      },
+      "path": "assets/characters/sirius/processed/ui/sirius_expr_hit.png",
+      "size": [
+        356,
+        378
+      ],
+      "edge_margins": {
+        "left": 20,
+        "top": 19,
+        "right": 45,
+        "bottom": 39
+      }
+    },
+    {
+      "role": "ui_skill",
+      "crop": {
+        "content_bbox": [
+          55,
+          53,
+          357,
+          356
+        ],
+        "final_crop_box": [
+          37,
+          35,
+          375,
+          374
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 20,
+          "right": 19,
+          "bottom": 19
+        }
+      },
+      "path": "assets/characters/sirius/processed/ui/sirius_ui_skill_escort_barrage.png",
+      "size": [
+        340,
+        342
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 20,
+        "right": 19,
+        "bottom": 19
+      }
+    },
+    {
+      "role": "class_icon",
+      "crop": {
+        "content_bbox": [
+          54,
+          56,
+          345,
+          364
+        ],
+        "final_crop_box": [
+          36,
+          38,
+          363,
+          382
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 29,
+          "right": 18,
+          "bottom": 19
+        }
+      },
+      "path": "assets/characters/sirius/processed/ui/sirius_ui_class_light_cruiser.png",
+      "size": [
+        328,
+        356
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 29,
+        "right": 18,
+        "bottom": 19
+      }
+    },
+    {
+      "role": "battle_body_r",
+      "crop": {
+        "component_bbox": [
+          64,
+          69,
+          381,
+          365
+        ],
+        "final_crop_box": [
+          46,
+          51,
+          399,
+          383
+        ],
+        "component_area": 55654,
+        "output_edge_margins": {
+          "left": 31,
+          "top": 19,
+          "right": 18,
+          "bottom": 39
+        }
+      },
+      "path": "assets/characters/sirius/processed/battle/sirius_battle_body_r.png",
+      "size": [
+        366,
+        354
+      ],
+      "edge_margins": {
+        "left": 31,
+        "top": 19,
+        "right": 18,
+        "bottom": 39
+      }
+    },
+    {
+      "role": "battle_rig_base",
+      "crop": {
+        "component_bbox": [
+          92,
+          179,
+          350,
+          332
+        ],
+        "final_crop_box": [
+          74,
+          161,
+          368,
+          350
+        ],
+        "component_area": 31724,
+        "output_edge_margins": {
+          "left": 20,
+          "top": 25,
+          "right": 18,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/sirius/processed/battle/sirius_battle_rig_base.png",
+      "size": [
+        296,
+        196
+      ],
+      "edge_margins": {
+        "left": 20,
+        "top": 25,
+        "right": 18,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "battle_turret_main_01",
+      "crop": {
+        "component_bbox": [
+          72,
+          156,
+          371,
+          329
+        ],
+        "final_crop_box": [
+          54,
+          138,
+          389,
+          347
+        ],
+        "component_area": 30161,
+        "output_edge_margins": {
+          "left": 84,
+          "top": 25,
+          "right": 19,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/sirius/processed/battle/sirius_battle_turret_main_01.png",
+      "size": [
+        402,
+        216
+      ],
+      "edge_margins": {
+        "left": 84,
+        "top": 25,
+        "right": 19,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "battle_turret_main_02",
+      "crop": {
+        "component_bbox": [
+          70,
+          156,
+          369,
+          329
+        ],
+        "final_crop_box": [
+          52,
+          138,
+          387,
+          347
+        ],
+        "component_area": 30202,
+        "output_edge_margins": {
+          "left": 83,
+          "top": 25,
+          "right": 18,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/sirius/processed/battle/sirius_battle_turret_main_02.png",
+      "size": [
+        400,
+        216
+      ],
+      "edge_margins": {
+        "left": 83,
+        "top": 25,
+        "right": 18,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "battle_aa_center",
+      "crop": {
+        "component_bbox": [
+          118,
+          136,
+          310,
+          285
+        ],
+        "final_crop_box": [
+          100,
+          118,
+          328,
+          303
+        ],
+        "component_area": 19008,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 19,
+          "right": 20,
+          "bottom": 24
+        }
+      },
+      "path": "assets/characters/sirius/processed/battle/sirius_battle_aa_center.png",
+      "size": [
+        230,
+        192
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 19,
+        "right": 20,
+        "bottom": 24
+      }
+    },
+    {
+      "role": "battle_radar_node",
+      "crop": {
+        "component_bbox": [
+          157,
+          120,
+          269,
+          300
+        ],
+        "final_crop_box": [
+          139,
+          102,
+          287,
+          318
+        ],
+        "component_area": 13304,
+        "output_edge_margins": {
+          "left": 32,
+          "top": 19,
+          "right": 18,
+          "bottom": 27
+        }
+      },
+      "path": "assets/characters/sirius/processed/battle/sirius_battle_radar_node.png",
+      "size": [
+        162,
+        226
+      ],
+      "edge_margins": {
+        "left": 32,
+        "top": 19,
+        "right": 18,
+        "bottom": 27
+      }
+    },
+    {
+      "role": "battle_support_node",
+      "crop": {
+        "component_bbox": [
+          115,
+          115,
+          331,
+          298
+        ],
+        "final_crop_box": [
+          97,
+          97,
+          349,
+          316
+        ],
+        "component_area": 21091,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 19,
+          "bottom": 21
+        }
+      },
+      "path": "assets/characters/sirius/processed/battle/sirius_battle_support_node.png",
+      "size": [
+        254,
+        222
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 18,
+        "right": 19,
+        "bottom": 21
+      }
+    },
+    {
+      "role": "battle_wake_origin_marker",
+      "crop": {
+        "component_bbox": [
+          183,
+          80,
+          248,
+          352
+        ],
+        "final_crop_box": [
+          165,
+          62,
+          266,
+          370
+        ],
+        "component_area": 9389,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 18,
+          "bottom": 88
+        }
+      },
+      "path": "assets/characters/sirius/processed/battle/sirius_battle_wake_origin_marker.png",
+      "size": [
+        102,
+        378
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 18,
+        "right": 18,
+        "bottom": 88
+      }
+    },
+    {
+      "role": "anim_idle_frame_01",
+      "path": "assets/characters/sirius/processed/anim/sirius_anim_idle_frame_01.png",
+      "size": [
+        250,
+        240
+      ],
+      "edge_margins": {
+        "left": 28,
+        "top": 17,
+        "right": 17,
+        "bottom": 27
+      }
+    },
+    {
+      "role": "anim_idle_keyframe",
+      "path": "assets/characters/sirius/processed/anim/sirius_anim_idle_keyframe.png",
+      "size": [
+        250,
+        240
+      ],
+      "edge_margins": {
+        "left": 28,
+        "top": 17,
+        "right": 17,
+        "bottom": 27
+      }
+    },
+    {
+      "role": "anim_idle_frame_02",
+      "path": "assets/characters/sirius/processed/anim/sirius_anim_idle_frame_02.png",
+      "size": [
+        250,
+        240
+      ],
+      "edge_margins": {
+        "left": 28,
+        "top": 17,
+        "right": 19,
+        "bottom": 27
+      }
+    },
+    {
+      "role": "anim_idle_frame_03",
+      "path": "assets/characters/sirius/processed/anim/sirius_anim_idle_frame_03.png",
+      "size": [
+        250,
+        240
+      ],
+      "edge_margins": {
+        "left": 27,
+        "top": 18,
+        "right": 21,
+        "bottom": 27
+      }
+    },
+    {
+      "role": "anim_idle_frame_04",
+      "path": "assets/characters/sirius/processed/anim/sirius_anim_idle_frame_04.png",
+      "size": [
+        250,
+        240
+      ],
+      "edge_margins": {
+        "left": 27,
+        "top": 17,
+        "right": 20,
+        "bottom": 26
+      }
+    },
+    {
+      "role": "anim_move_frame_01",
+      "path": "assets/characters/sirius/processed/anim/sirius_anim_move_frame_01.png",
+      "size": [
+        268,
+        240
+      ],
+      "edge_margins": {
+        "left": 30,
+        "top": 20,
+        "right": 38,
+        "bottom": 31
+      }
+    },
+    {
+      "role": "anim_move_keyframe",
+      "path": "assets/characters/sirius/processed/anim/sirius_anim_move_keyframe.png",
+      "size": [
+        268,
+        240
+      ],
+      "edge_margins": {
+        "left": 30,
+        "top": 20,
+        "right": 38,
+        "bottom": 31
+      }
+    },
+    {
+      "role": "anim_move_frame_02",
+      "path": "assets/characters/sirius/processed/anim/sirius_anim_move_frame_02.png",
+      "size": [
+        268,
+        240
+      ],
+      "edge_margins": {
+        "left": 28,
+        "top": 19,
+        "right": 51,
+        "bottom": 26
+      }
+    },
+    {
+      "role": "anim_move_frame_03",
+      "path": "assets/characters/sirius/processed/anim/sirius_anim_move_frame_03.png",
+      "size": [
+        268,
+        240
+      ],
+      "edge_margins": {
+        "left": 17,
+        "top": 17,
+        "right": 50,
+        "bottom": 30
+      }
+    },
+    {
+      "role": "anim_move_frame_04",
+      "path": "assets/characters/sirius/processed/anim/sirius_anim_move_frame_04.png",
+      "size": [
+        268,
+        240
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 16,
+        "right": 41,
+        "bottom": 29
+      }
+    },
+    {
+      "role": "anim_attack_frame_01",
+      "path": "assets/characters/sirius/processed/anim/sirius_anim_attack_frame_01.png",
+      "size": [
+        338,
+        236
+      ],
+      "edge_margins": {
+        "left": 74,
+        "top": 17,
+        "right": 26,
+        "bottom": 25
+      }
+    },
+    {
+      "role": "anim_attack_keyframe",
+      "path": "assets/characters/sirius/processed/anim/sirius_anim_attack_keyframe.png",
+      "size": [
+        338,
+        236
+      ],
+      "edge_margins": {
+        "left": 74,
+        "top": 17,
+        "right": 26,
+        "bottom": 25
+      }
+    },
+    {
+      "role": "anim_attack_frame_02",
+      "path": "assets/characters/sirius/processed/anim/sirius_anim_attack_frame_02.png",
+      "size": [
+        338,
+        236
+      ],
+      "edge_margins": {
+        "left": 74,
+        "top": 17,
+        "right": 20,
+        "bottom": 25
+      }
+    },
+    {
+      "role": "anim_attack_frame_03",
+      "path": "assets/characters/sirius/processed/anim/sirius_anim_attack_frame_03.png",
+      "size": [
+        338,
+        236
+      ],
+      "edge_margins": {
+        "left": 71,
+        "top": 18,
+        "right": 20,
+        "bottom": 25
+      }
+    },
+    {
+      "role": "anim_attack_frame_04",
+      "path": "assets/characters/sirius/processed/anim/sirius_anim_attack_frame_04.png",
+      "size": [
+        338,
+        236
+      ],
+      "edge_margins": {
+        "left": 71,
+        "top": 17,
+        "right": 16,
+        "bottom": 26
+      }
+    },
+    {
+      "role": "anim_hit_frame_01",
+      "path": "assets/characters/sirius/processed/anim/sirius_anim_hit_frame_01.png",
+      "size": [
+        246,
+        230
+      ],
+      "edge_margins": {
+        "left": 21,
+        "top": 17,
+        "right": 38,
+        "bottom": 24
+      }
+    },
+    {
+      "role": "anim_hit_keyframe",
+      "path": "assets/characters/sirius/processed/anim/sirius_anim_hit_keyframe.png",
+      "size": [
+        246,
+        230
+      ],
+      "edge_margins": {
+        "left": 21,
+        "top": 17,
+        "right": 38,
+        "bottom": 24
+      }
+    },
+    {
+      "role": "anim_hit_frame_02",
+      "path": "assets/characters/sirius/processed/anim/sirius_anim_hit_frame_02.png",
+      "size": [
+        246,
+        230
+      ],
+      "edge_margins": {
+        "left": 17,
+        "top": 18,
+        "right": 36,
+        "bottom": 22
+      }
+    },
+    {
+      "role": "anim_hit_frame_03",
+      "path": "assets/characters/sirius/processed/anim/sirius_anim_hit_frame_03.png",
+      "size": [
+        246,
+        230
+      ],
+      "edge_margins": {
+        "left": 24,
+        "top": 16,
+        "right": 35,
+        "bottom": 23
+      }
+    },
+    {
+      "role": "anim_hit_frame_04",
+      "path": "assets/characters/sirius/processed/anim/sirius_anim_hit_frame_04.png",
+      "size": [
+        246,
+        230
+      ],
+      "edge_margins": {
+        "left": 21,
+        "top": 17,
+        "right": 37,
+        "bottom": 23
+      }
+    },
+    {
+      "role": "anim_firepower_frame_01",
+      "path": "assets/characters/sirius/processed/anim/sirius_anim_firepower_frame_01.png",
+      "size": [
+        308,
+        236
+      ],
+      "edge_margins": {
+        "left": 57,
+        "top": 18,
+        "right": 31,
+        "bottom": 22
+      }
+    },
+    {
+      "role": "anim_firepower_keyframe",
+      "path": "assets/characters/sirius/processed/anim/sirius_anim_firepower_keyframe.png",
+      "size": [
+        308,
+        236
+      ],
+      "edge_margins": {
+        "left": 57,
+        "top": 18,
+        "right": 31,
+        "bottom": 22
+      }
+    },
+    {
+      "role": "anim_firepower_frame_02",
+      "path": "assets/characters/sirius/processed/anim/sirius_anim_firepower_frame_02.png",
+      "size": [
+        308,
+        236
+      ],
+      "edge_margins": {
+        "left": 52,
+        "top": 16,
+        "right": 17,
+        "bottom": 24
+      }
+    },
+    {
+      "role": "anim_firepower_frame_03",
+      "path": "assets/characters/sirius/processed/anim/sirius_anim_firepower_frame_03.png",
+      "size": [
+        308,
+        236
+      ],
+      "edge_margins": {
+        "left": 59,
+        "top": 20,
+        "right": 66,
+        "bottom": 22
+      }
+    },
+    {
+      "role": "anim_firepower_frame_04",
+      "path": "assets/characters/sirius/processed/anim/sirius_anim_firepower_frame_04.png",
+      "size": [
+        308,
+        236
+      ],
+      "edge_margins": {
+        "left": 58,
+        "top": 20,
+        "right": 67,
+        "bottom": 23
+      }
+    },
+    {
+      "role": "battle_body_r:idle_master_override",
+      "path": "assets/characters/sirius/processed/battle/sirius_battle_body_r.png",
+      "size": [
+        250,
+        240
+      ],
+      "edge_margins": {
+        "left": 28,
+        "top": 17,
+        "right": 17,
+        "bottom": 27
+      }
+    },
+    {
+      "role": "vfx:aa_burst",
+      "crop": {
+        "component_bbox": [
+          185,
+          200,
+          261,
+          302
+        ],
+        "final_crop_box": [
+          167,
+          182,
+          279,
+          320
+        ],
+        "component_area": 3561,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 18,
+          "bottom": 47
+        }
+      },
+      "path": "assets/characters/sirius/processed/vfx/sirius_vfx_aa_burst.png",
+      "size": [
+        146,
+        186
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 19,
+        "right": 18,
+        "bottom": 47
+      }
+    },
+    {
+      "role": "vfx:aa_circle",
+      "crop": {
+        "component_bbox": [
+          255,
+          271,
+          320,
+          335
+        ],
+        "final_crop_box": [
+          237,
+          253,
+          338,
+          353
+        ],
+        "component_area": 709,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 44,
+          "bottom": 32
+        }
+      },
+      "path": "assets/characters/sirius/processed/vfx/sirius_vfx_aa_circle.png",
+      "size": [
+        152,
+        138
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 18,
+        "right": 44,
+        "bottom": 32
+      }
+    },
+    {
+      "role": "vfx:muzzle_flash_medium",
+      "crop": {
+        "component_bbox": [
+          122,
+          155,
+          340,
+          331
+        ],
+        "final_crop_box": [
+          104,
+          137,
+          358,
+          349
+        ],
+        "component_area": 16678,
+        "output_edge_margins": {
+          "left": 37,
+          "top": 19,
+          "right": 18,
+          "bottom": 27
+        }
+      },
+      "path": "assets/characters/sirius/processed/vfx/sirius_vfx_muzzle_flash_medium.png",
+      "size": [
+        286,
+        222
+      ],
+      "edge_margins": {
+        "left": 37,
+        "top": 19,
+        "right": 18,
+        "bottom": 27
+      }
+    },
+    {
+      "role": "vfx:shell_trail",
+      "crop": {
+        "component_bbox": [
+          86,
+          220,
+          358,
+          273
+        ],
+        "final_crop_box": [
+          68,
+          202,
+          376,
+          291
+        ],
+        "component_area": 6455,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 70,
+          "bottom": 19
+        }
+      },
+      "path": "assets/characters/sirius/processed/vfx/sirius_vfx_shell_trail.png",
+      "size": [
+        378,
+        108
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 18,
+        "right": 70,
+        "bottom": 19
+      }
+    },
+    {
+      "role": "vfx:water_splash",
+      "crop": {
+        "component_bbox": [
+          110,
+          116,
+          335,
+          293
+        ],
+        "final_crop_box": [
+          92,
+          98,
+          353,
+          311
+        ],
+        "component_area": 17110,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 24,
+          "bottom": 100
+        }
+      },
+      "path": "assets/characters/sirius/processed/vfx/sirius_vfx_water_splash.png",
+      "size": [
+        298,
+        314
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 19,
+        "right": 24,
+        "bottom": 100
+      }
+    },
+    {
+      "role": "vfx:armor_sparks",
+      "crop": {
+        "component_bbox": [
+          204,
+          226,
+          256,
+          261
+        ],
+        "final_crop_box": [
+          186,
+          208,
+          274,
+          279
+        ],
+        "component_area": 723,
+        "output_edge_margins": {
+          "left": 25,
+          "top": 27,
+          "right": 19,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/sirius/processed/vfx/sirius_vfx_armor_sparks.png",
+      "size": [
+        132,
+        114
+      ],
+      "edge_margins": {
+        "left": 25,
+        "top": 27,
+        "right": 19,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "vfx:escort_aura",
+      "crop": {
+        "component_bbox": [
+          97,
+          115,
+          320,
+          298
+        ],
+        "final_crop_box": [
+          79,
+          97,
+          338,
+          316
+        ],
+        "component_area": 19406,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 21,
+          "bottom": 78
+        }
+      },
+      "path": "assets/characters/sirius/processed/vfx/sirius_vfx_escort_aura.png",
+      "size": [
+        266,
+        302
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 19,
+        "right": 21,
+        "bottom": 78
+      }
+    },
+    {
+      "role": "vfx:wake_medium",
+      "crop": {
+        "component_bbox": [
+          75,
+          159,
+          341,
+          311
+        ],
+        "final_crop_box": [
+          57,
+          141,
+          359,
+          329
+        ],
+        "component_area": 19472,
+        "output_edge_margins": {
+          "left": 26,
+          "top": 18,
+          "right": 19,
+          "bottom": 40
+        }
+      },
+      "path": "assets/characters/sirius/processed/vfx/sirius_vfx_wake_medium.png",
+      "size": [
+        326,
+        224
+      ],
+      "edge_margins": {
+        "left": 26,
+        "top": 18,
+        "right": 19,
+        "bottom": 40
+      }
+    }
+  ]
+}

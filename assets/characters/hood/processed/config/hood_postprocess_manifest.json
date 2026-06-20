@@ -1,0 +1,1375 @@
+{
+  "character_id": "hood",
+  "source": "tools/art_pipeline/postprocess_generated_character.py",
+  "method": "green_screen_auto_grid_and_component_split",
+  "outputs": [
+    {
+      "role": "source_alpha:concept_full",
+      "path": "assets/characters/hood/processed/source_alpha/hood_concept_full_alpha_source.png",
+      "size": [
+        864,
+        1821
+      ],
+      "edge_margins": {
+        "left": 0,
+        "top": 126,
+        "right": 2,
+        "bottom": 125
+      }
+    },
+    {
+      "role": "source_alpha:ui_sheet",
+      "path": "assets/characters/hood/processed/source_alpha/hood_ui_sheet_alpha_source.png",
+      "size": [
+        1672,
+        941
+      ],
+      "edge_margins": {
+        "left": 54,
+        "top": 44,
+        "right": 57,
+        "bottom": 75
+      }
+    },
+    {
+      "role": "source_alpha:battle_grid",
+      "path": "assets/characters/hood/processed/source_alpha/hood_battle_asset_grid_alpha_source.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "edge_margins": {
+        "left": 65,
+        "top": 104,
+        "right": 70,
+        "bottom": 216
+      }
+    },
+    {
+      "role": "source_alpha:vfx_sheet",
+      "path": "assets/characters/hood/processed/source_alpha/hood_vfx_reference_sheet_alpha_source.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "edge_margins": {
+        "left": 41,
+        "top": 87,
+        "right": 38,
+        "bottom": 131
+      }
+    },
+    {
+      "role": "source_alpha:anim_master",
+      "path": "assets/characters/hood/processed/source_alpha/hood_anim_5x4_master_alpha_source.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "edge_margins": {
+        "left": 28,
+        "top": 20,
+        "right": 131,
+        "bottom": 14
+      }
+    },
+    {
+      "role": "full_body",
+      "crop": {
+        "content_bbox": [
+          0,
+          126,
+          862,
+          1696
+        ],
+        "final_crop_box": [
+          0,
+          114,
+          864,
+          1708
+        ],
+        "output_edge_margins": {
+          "left": 13,
+          "top": 215,
+          "right": 45,
+          "bottom": 13
+        }
+      },
+      "path": "assets/characters/hood/processed/ui/hood_illust_full_alpha.png",
+      "size": [
+        920,
+        1798
+      ],
+      "edge_margins": {
+        "left": 13,
+        "top": 215,
+        "right": 45,
+        "bottom": 13
+      }
+    },
+    {
+      "role": "half_body",
+      "crop": {
+        "content_bbox": [
+          17,
+          16,
+          879,
+          1146
+        ],
+        "final_crop_box": [
+          1,
+          0,
+          895,
+          1162
+        ],
+        "output_edge_margins": {
+          "left": 17,
+          "top": 16,
+          "right": 43,
+          "bottom": 168
+        }
+      },
+      "path": "assets/characters/hood/processed/ui/hood_illust_half_alpha.png",
+      "size": [
+        922,
+        1314
+      ],
+      "edge_margins": {
+        "left": 17,
+        "top": 16,
+        "right": 43,
+        "bottom": 168
+      }
+    },
+    {
+      "role": "skill_cutin",
+      "crop": {
+        "content_bbox": [
+          566,
+          17,
+          1428,
+          927
+        ],
+        "final_crop_box": [
+          550,
+          1,
+          1444,
+          943
+        ],
+        "output_edge_margins": {
+          "left": 16,
+          "top": 17,
+          "right": 48,
+          "bottom": 199
+        }
+      },
+      "path": "assets/characters/hood/processed/ui/hood_illust_skill_cutin_alpha.png",
+      "size": [
+        926,
+        1126
+      ],
+      "edge_margins": {
+        "left": 16,
+        "top": 17,
+        "right": 48,
+        "bottom": 199
+      }
+    },
+    {
+      "role": "ui_portrait",
+      "crop": {
+        "content_bbox": [
+          54,
+          44,
+          418,
+          448
+        ],
+        "final_crop_box": [
+          36,
+          26,
+          418,
+          466
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 45,
+          "bottom": 96
+        }
+      },
+      "path": "assets/characters/hood/processed/ui/hood_ui_portrait.png",
+      "size": [
+        428,
+        518
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 18,
+        "right": 45,
+        "bottom": 96
+      }
+    },
+    {
+      "role": "ui_portrait_small",
+      "crop": {
+        "content_bbox": [
+          0,
+          105,
+          418,
+          448
+        ],
+        "final_crop_box": [
+          0,
+          87,
+          418,
+          466
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 91,
+          "bottom": 73
+        }
+      },
+      "path": "assets/characters/hood/processed/ui/hood_ui_portrait_small.png",
+      "size": [
+        528,
+        434
+      ],
+      "edge_margins": {
+        "left": 150,
+        "top": 18,
+        "right": 91,
+        "bottom": 73
+      }
+    },
+    {
+      "role": "ui_chibi_head",
+      "crop": {
+        "content_bbox": [
+          0,
+          156,
+          380,
+          447
+        ],
+        "final_crop_box": [
+          0,
+          138,
+          398,
+          465
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 91,
+          "bottom": 42
+        }
+      },
+      "path": "assets/characters/hood/processed/ui/hood_ui_chibi_head.png",
+      "size": [
+        490,
+        352
+      ],
+      "edge_margins": {
+        "left": 96,
+        "top": 19,
+        "right": 91,
+        "bottom": 45
+      }
+    },
+    {
+      "role": "expr_default",
+      "crop": {
+        "content_bbox": [
+          24,
+          102,
+          361,
+          449
+        ],
+        "final_crop_box": [
+          6,
+          84,
+          379,
+          467
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 30,
+          "bottom": 85
+        }
+      },
+      "path": "assets/characters/hood/processed/ui/hood_expr_default.png",
+      "size": [
+        386,
+        450
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 18,
+        "right": 30,
+        "bottom": 85
+      }
+    },
+    {
+      "role": "expr_serious",
+      "crop": {
+        "content_bbox": [
+          76,
+          46,
+          413,
+          396
+        ],
+        "final_crop_box": [
+          58,
+          28,
+          418,
+          414
+        ],
+        "output_edge_margins": {
+          "left": 18,
+          "top": 18,
+          "right": 27,
+          "bottom": 84
+        }
+      },
+      "path": "assets/characters/hood/processed/ui/hood_expr_serious.png",
+      "size": [
+        382,
+        452
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 18,
+        "right": 27,
+        "bottom": 84
+      }
+    },
+    {
+      "role": "expr_hit",
+      "crop": {
+        "content_bbox": [
+          66,
+          46,
+          418,
+          396
+        ],
+        "final_crop_box": [
+          48,
+          28,
+          418,
+          414
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 29,
+          "bottom": 80
+        }
+      },
+      "path": "assets/characters/hood/processed/ui/hood_expr_hit.png",
+      "size": [
+        400,
+        448
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 18,
+        "right": 29,
+        "bottom": 80
+      }
+    },
+    {
+      "role": "ui_skill",
+      "crop": {
+        "content_bbox": [
+          0,
+          57,
+          375,
+          383
+        ],
+        "final_crop_box": [
+          0,
+          39,
+          393,
+          401
+        ],
+        "output_edge_margins": {
+          "left": 18,
+          "top": 35,
+          "right": 79,
+          "bottom": 19
+        }
+      },
+      "path": "assets/characters/hood/processed/ui/hood_ui_skill_main_gun_salvo.png",
+      "size": [
+        472,
+        380
+      ],
+      "edge_margins": {
+        "left": 91,
+        "top": 35,
+        "right": 79,
+        "bottom": 40
+      }
+    },
+    {
+      "role": "class_icon",
+      "crop": {
+        "content_bbox": [
+          48,
+          63,
+          339,
+          360
+        ],
+        "final_crop_box": [
+          30,
+          45,
+          357,
+          378
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 20,
+          "right": 18,
+          "bottom": 19
+        }
+      },
+      "path": "assets/characters/hood/processed/ui/hood_ui_class_battleship.png",
+      "size": [
+        328,
+        336
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 20,
+        "right": 18,
+        "bottom": 19
+      }
+    },
+    {
+      "role": "battle_body_r",
+      "crop": {
+        "component_bbox": [
+          65,
+          110,
+          384,
+          399
+        ],
+        "final_crop_box": [
+          47,
+          92,
+          384,
+          417
+        ],
+        "component_area": 36135,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 28,
+          "bottom": 22
+        }
+      },
+      "path": "assets/characters/hood/processed/battle/hood_battle_body_r.png",
+      "size": [
+        366,
+        330
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 19,
+        "right": 28,
+        "bottom": 22
+      }
+    },
+    {
+      "role": "battle_rig_base",
+      "crop": {
+        "component_bbox": [
+          77,
+          104,
+          375,
+          408
+        ],
+        "final_crop_box": [
+          59,
+          86,
+          384,
+          426
+        ],
+        "component_area": 31393,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 23,
+          "bottom": 26
+        }
+      },
+      "path": "assets/characters/hood/processed/battle/hood_battle_rig_base.png",
+      "size": [
+        340,
+        348
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 18,
+        "right": 23,
+        "bottom": 26
+      }
+    },
+    {
+      "role": "battle_turret_main_01",
+      "crop": {
+        "component_bbox": [
+          103,
+          177,
+          344,
+          362
+        ],
+        "final_crop_box": [
+          85,
+          159,
+          362,
+          380
+        ],
+        "component_area": 26475,
+        "output_edge_margins": {
+          "left": 79,
+          "top": 22,
+          "right": 18,
+          "bottom": 19
+        }
+      },
+      "path": "assets/characters/hood/processed/battle/hood_battle_turret_main_01.png",
+      "size": [
+        338,
+        226
+      ],
+      "edge_margins": {
+        "left": 79,
+        "top": 22,
+        "right": 18,
+        "bottom": 19
+      }
+    },
+    {
+      "role": "battle_turret_main_02",
+      "crop": {
+        "component_bbox": [
+          71,
+          179,
+          311,
+          363
+        ],
+        "final_crop_box": [
+          53,
+          161,
+          329,
+          381
+        ],
+        "component_area": 26288,
+        "output_edge_margins": {
+          "left": 78,
+          "top": 22,
+          "right": 18,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/hood/processed/battle/hood_battle_turret_main_02.png",
+      "size": [
+        336,
+        224
+      ],
+      "edge_margins": {
+        "left": 78,
+        "top": 22,
+        "right": 18,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "battle_turret_main_03",
+      "crop": {
+        "component_bbox": [
+          100,
+          88,
+          345,
+          277
+        ],
+        "final_crop_box": [
+          82,
+          70,
+          363,
+          295
+        ],
+        "component_area": 27630,
+        "output_edge_margins": {
+          "left": 80,
+          "top": 23,
+          "right": 19,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/hood/processed/battle/hood_battle_turret_main_03.png",
+      "size": [
+        344,
+        230
+      ],
+      "edge_margins": {
+        "left": 80,
+        "top": 23,
+        "right": 19,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "battle_fire_control_node",
+      "crop": {
+        "component_bbox": [
+          97,
+          81,
+          292,
+          288
+        ],
+        "final_crop_box": [
+          79,
+          63,
+          310,
+          306
+        ],
+        "component_area": 29836,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 18,
+          "bottom": 33
+        }
+      },
+      "path": "assets/characters/hood/processed/battle/hood_battle_fire_control_node.png",
+      "size": [
+        232,
+        258
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 18,
+        "right": 18,
+        "bottom": 33
+      }
+    },
+    {
+      "role": "battle_flagship_marker",
+      "crop": {
+        "component_bbox": [
+          80,
+          68,
+          271,
+          296
+        ],
+        "final_crop_box": [
+          62,
+          50,
+          289,
+          314
+        ],
+        "component_area": 26060,
+        "output_edge_margins": {
+          "left": 20,
+          "top": 18,
+          "right": 19,
+          "bottom": 32
+        }
+      },
+      "path": "assets/characters/hood/processed/battle/hood_battle_flagship_marker.png",
+      "size": [
+        230,
+        278
+      ],
+      "edge_margins": {
+        "left": 20,
+        "top": 18,
+        "right": 19,
+        "bottom": 32
+      }
+    },
+    {
+      "role": "battle_wake_origin_marker",
+      "crop": {
+        "component_bbox": [
+          16,
+          127,
+          314,
+          257
+        ],
+        "final_crop_box": [
+          0,
+          109,
+          332,
+          275
+        ],
+        "component_area": 16780,
+        "output_edge_margins": {
+          "left": 31,
+          "top": 23,
+          "right": 19,
+          "bottom": 19
+        }
+      },
+      "path": "assets/characters/hood/processed/battle/hood_battle_wake_origin_marker.png",
+      "size": [
+        354,
+        172
+      ],
+      "edge_margins": {
+        "left": 37,
+        "top": 23,
+        "right": 19,
+        "bottom": 19
+      }
+    },
+    {
+      "role": "anim_idle_frame_01",
+      "path": "assets/characters/hood/processed/anim/hood_anim_idle_frame_01.png",
+      "size": [
+        314,
+        256
+      ],
+      "edge_margins": {
+        "left": 43,
+        "top": 18,
+        "right": 35,
+        "bottom": 56
+      }
+    },
+    {
+      "role": "anim_idle_keyframe",
+      "path": "assets/characters/hood/processed/anim/hood_anim_idle_keyframe.png",
+      "size": [
+        314,
+        256
+      ],
+      "edge_margins": {
+        "left": 43,
+        "top": 18,
+        "right": 35,
+        "bottom": 56
+      }
+    },
+    {
+      "role": "anim_idle_frame_02",
+      "path": "assets/characters/hood/processed/anim/hood_anim_idle_frame_02.png",
+      "size": [
+        314,
+        256
+      ],
+      "edge_margins": {
+        "left": 16,
+        "top": 17,
+        "right": 31,
+        "bottom": 55
+      }
+    },
+    {
+      "role": "anim_idle_frame_03",
+      "path": "assets/characters/hood/processed/anim/hood_anim_idle_frame_03.png",
+      "size": [
+        314,
+        256
+      ],
+      "edge_margins": {
+        "left": 45,
+        "top": 19,
+        "right": 41,
+        "bottom": 55
+      }
+    },
+    {
+      "role": "anim_idle_frame_04",
+      "path": "assets/characters/hood/processed/anim/hood_anim_idle_frame_04.png",
+      "size": [
+        314,
+        256
+      ],
+      "edge_margins": {
+        "left": 29,
+        "top": 17,
+        "right": 39,
+        "bottom": 57
+      }
+    },
+    {
+      "role": "anim_move_frame_01",
+      "path": "assets/characters/hood/processed/anim/hood_anim_move_frame_01.png",
+      "size": [
+        382,
+        220
+      ],
+      "edge_margins": {
+        "left": 31,
+        "top": 18,
+        "right": 41,
+        "bottom": 31
+      }
+    },
+    {
+      "role": "anim_move_keyframe",
+      "path": "assets/characters/hood/processed/anim/hood_anim_move_keyframe.png",
+      "size": [
+        382,
+        220
+      ],
+      "edge_margins": {
+        "left": 31,
+        "top": 18,
+        "right": 41,
+        "bottom": 31
+      }
+    },
+    {
+      "role": "anim_move_frame_02",
+      "path": "assets/characters/hood/processed/anim/hood_anim_move_frame_02.png",
+      "size": [
+        382,
+        220
+      ],
+      "edge_margins": {
+        "left": 17,
+        "top": 19,
+        "right": 47,
+        "bottom": 33
+      }
+    },
+    {
+      "role": "anim_move_frame_03",
+      "path": "assets/characters/hood/processed/anim/hood_anim_move_frame_03.png",
+      "size": [
+        382,
+        220
+      ],
+      "edge_margins": {
+        "left": 33,
+        "top": 18,
+        "right": 54,
+        "bottom": 32
+      }
+    },
+    {
+      "role": "anim_move_frame_04",
+      "path": "assets/characters/hood/processed/anim/hood_anim_move_frame_04.png",
+      "size": [
+        382,
+        220
+      ],
+      "edge_margins": {
+        "left": 71,
+        "top": 17,
+        "right": 58,
+        "bottom": 34
+      }
+    },
+    {
+      "role": "anim_attack_frame_01",
+      "path": "assets/characters/hood/processed/anim/hood_anim_attack_frame_01.png",
+      "size": [
+        470,
+        242
+      ],
+      "edge_margins": {
+        "left": 95,
+        "top": 19,
+        "right": 45,
+        "bottom": 43
+      }
+    },
+    {
+      "role": "anim_attack_keyframe",
+      "path": "assets/characters/hood/processed/anim/hood_anim_attack_keyframe.png",
+      "size": [
+        470,
+        242
+      ],
+      "edge_margins": {
+        "left": 95,
+        "top": 19,
+        "right": 45,
+        "bottom": 43
+      }
+    },
+    {
+      "role": "anim_attack_frame_02",
+      "path": "assets/characters/hood/processed/anim/hood_anim_attack_frame_02.png",
+      "size": [
+        470,
+        242
+      ],
+      "edge_margins": {
+        "left": 101,
+        "top": 21,
+        "right": 17,
+        "bottom": 43
+      }
+    },
+    {
+      "role": "anim_attack_frame_03",
+      "path": "assets/characters/hood/processed/anim/hood_anim_attack_frame_03.png",
+      "size": [
+        470,
+        242
+      ],
+      "edge_margins": {
+        "left": 113,
+        "top": 21,
+        "right": 42,
+        "bottom": 37
+      }
+    },
+    {
+      "role": "anim_attack_frame_04",
+      "path": "assets/characters/hood/processed/anim/hood_anim_attack_frame_04.png",
+      "size": [
+        470,
+        242
+      ],
+      "edge_margins": {
+        "left": 124,
+        "top": 17,
+        "right": 104,
+        "bottom": 42
+      }
+    },
+    {
+      "role": "anim_hit_frame_01",
+      "path": "assets/characters/hood/processed/anim/hood_anim_hit_frame_01.png",
+      "size": [
+        292,
+        232
+      ],
+      "edge_margins": {
+        "left": 16,
+        "top": 23,
+        "right": 22,
+        "bottom": 38
+      }
+    },
+    {
+      "role": "anim_hit_keyframe",
+      "path": "assets/characters/hood/processed/anim/hood_anim_hit_keyframe.png",
+      "size": [
+        292,
+        232
+      ],
+      "edge_margins": {
+        "left": 16,
+        "top": 23,
+        "right": 22,
+        "bottom": 38
+      }
+    },
+    {
+      "role": "anim_hit_frame_02",
+      "path": "assets/characters/hood/processed/anim/hood_anim_hit_frame_02.png",
+      "size": [
+        292,
+        232
+      ],
+      "edge_margins": {
+        "left": 36,
+        "top": 17,
+        "right": 34,
+        "bottom": 41
+      }
+    },
+    {
+      "role": "anim_hit_frame_03",
+      "path": "assets/characters/hood/processed/anim/hood_anim_hit_frame_03.png",
+      "size": [
+        292,
+        232
+      ],
+      "edge_margins": {
+        "left": 32,
+        "top": 17,
+        "right": 27,
+        "bottom": 40
+      }
+    },
+    {
+      "role": "anim_hit_frame_04",
+      "path": "assets/characters/hood/processed/anim/hood_anim_hit_frame_04.png",
+      "size": [
+        292,
+        232
+      ],
+      "edge_margins": {
+        "left": 46,
+        "top": 18,
+        "right": 23,
+        "bottom": 41
+      }
+    },
+    {
+      "role": "anim_firepower_frame_01",
+      "path": "assets/characters/hood/processed/anim/hood_anim_firepower_frame_01.png",
+      "size": [
+        324,
+        234
+      ],
+      "edge_margins": {
+        "left": 21,
+        "top": 23,
+        "right": 30,
+        "bottom": 28
+      }
+    },
+    {
+      "role": "anim_firepower_keyframe",
+      "path": "assets/characters/hood/processed/anim/hood_anim_firepower_keyframe.png",
+      "size": [
+        324,
+        234
+      ],
+      "edge_margins": {
+        "left": 21,
+        "top": 23,
+        "right": 30,
+        "bottom": 28
+      }
+    },
+    {
+      "role": "anim_firepower_frame_02",
+      "path": "assets/characters/hood/processed/anim/hood_anim_firepower_frame_02.png",
+      "size": [
+        324,
+        234
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 18,
+        "right": 16,
+        "bottom": 22
+      }
+    },
+    {
+      "role": "anim_firepower_frame_03",
+      "path": "assets/characters/hood/processed/anim/hood_anim_firepower_frame_03.png",
+      "size": [
+        324,
+        234
+      ],
+      "edge_margins": {
+        "left": 55,
+        "top": 21,
+        "right": 44,
+        "bottom": 25
+      }
+    },
+    {
+      "role": "anim_firepower_frame_04",
+      "path": "assets/characters/hood/processed/anim/hood_anim_firepower_frame_04.png",
+      "size": [
+        324,
+        234
+      ],
+      "edge_margins": {
+        "left": 58,
+        "top": 17,
+        "right": 45,
+        "bottom": 25
+      }
+    },
+    {
+      "role": "battle_body_r:idle_master_override",
+      "path": "assets/characters/hood/processed/battle/hood_battle_body_r.png",
+      "size": [
+        314,
+        256
+      ],
+      "edge_margins": {
+        "left": 43,
+        "top": 18,
+        "right": 35,
+        "bottom": 56
+      }
+    },
+    {
+      "role": "vfx:fire_control_lock_line",
+      "crop": {
+        "component_bbox": [
+          51,
+          166,
+          340,
+          391
+        ],
+        "final_crop_box": [
+          33,
+          148,
+          358,
+          409
+        ],
+        "component_area": 5557,
+        "output_edge_margins": {
+          "left": 95,
+          "top": 73,
+          "right": 18,
+          "bottom": 19
+        }
+      },
+      "path": "assets/characters/hood/processed/vfx/hood_vfx_fire_control_lock_line.png",
+      "size": [
+        420,
+        350
+      ],
+      "edge_margins": {
+        "left": 95,
+        "top": 73,
+        "right": 18,
+        "bottom": 19
+      }
+    },
+    {
+      "role": "vfx:muzzle_flash_large",
+      "crop": {
+        "component_bbox": [
+          39,
+          138,
+          344,
+          428
+        ],
+        "final_crop_box": [
+          21,
+          120,
+          362,
+          446
+        ],
+        "component_area": 36208,
+        "output_edge_margins": {
+          "left": 58,
+          "top": 18,
+          "right": 19,
+          "bottom": 92
+        }
+      },
+      "path": "assets/characters/hood/processed/vfx/hood_vfx_muzzle_flash_large.png",
+      "size": [
+        408,
+        424
+      ],
+      "edge_margins": {
+        "left": 58,
+        "top": 18,
+        "right": 19,
+        "bottom": 92
+      }
+    },
+    {
+      "role": "vfx:broadside_smoke",
+      "crop": {
+        "component_bbox": [
+          30,
+          148,
+          370,
+          449
+        ],
+        "final_crop_box": [
+          12,
+          130,
+          384,
+          467
+        ],
+        "component_area": 64280,
+        "output_edge_margins": {
+          "left": 23,
+          "top": 18,
+          "right": 18,
+          "bottom": 25
+        }
+      },
+      "path": "assets/characters/hood/processed/vfx/hood_vfx_broadside_smoke.png",
+      "size": [
+        390,
+        354
+      ],
+      "edge_margins": {
+        "left": 23,
+        "top": 18,
+        "right": 18,
+        "bottom": 25
+      }
+    },
+    {
+      "role": "vfx:shell_trail_heavy",
+      "crop": {
+        "component_bbox": [
+          42,
+          136,
+          346,
+          440
+        ],
+        "final_crop_box": [
+          24,
+          118,
+          364,
+          458
+        ],
+        "component_area": 19870,
+        "output_edge_margins": {
+          "left": 46,
+          "top": 19,
+          "right": 18,
+          "bottom": 59
+        }
+      },
+      "path": "assets/characters/hood/processed/vfx/hood_vfx_shell_trail_heavy.png",
+      "size": [
+        368,
+        382
+      ],
+      "edge_margins": {
+        "left": 46,
+        "top": 19,
+        "right": 18,
+        "bottom": 59
+      }
+    },
+    {
+      "role": "vfx:water_splash_large",
+      "crop": {
+        "component_bbox": [
+          52,
+          33,
+          339,
+          370
+        ],
+        "final_crop_box": [
+          34,
+          15,
+          357,
+          388
+        ],
+        "component_area": 38488,
+        "output_edge_margins": {
+          "left": 22,
+          "top": 19,
+          "right": 18,
+          "bottom": 131
+        }
+      },
+      "path": "assets/characters/hood/processed/vfx/hood_vfx_water_splash_large.png",
+      "size": [
+        348,
+        514
+      ],
+      "edge_margins": {
+        "left": 22,
+        "top": 19,
+        "right": 18,
+        "bottom": 131
+      }
+    },
+    {
+      "role": "vfx:armor_sparks",
+      "crop": {
+        "component_bbox": [
+          114,
+          70,
+          334,
+          286
+        ],
+        "final_crop_box": [
+          96,
+          52,
+          352,
+          304
+        ],
+        "component_area": 7435,
+        "output_edge_margins": {
+          "left": 78,
+          "top": 18,
+          "right": 18,
+          "bottom": 67
+        }
+      },
+      "path": "assets/characters/hood/processed/vfx/hood_vfx_armor_sparks.png",
+      "size": [
+        344,
+        330
+      ],
+      "edge_margins": {
+        "left": 78,
+        "top": 18,
+        "right": 18,
+        "bottom": 67
+      }
+    },
+    {
+      "role": "vfx:command_aura",
+      "crop": {
+        "component_bbox": [
+          39,
+          49,
+          332,
+          368
+        ],
+        "final_crop_box": [
+          21,
+          31,
+          350,
+          386
+        ],
+        "component_area": 31580,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 19,
+          "bottom": 125
+        }
+      },
+      "path": "assets/characters/hood/processed/vfx/hood_vfx_command_aura.png",
+      "size": [
+        350,
+        472
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 18,
+        "right": 19,
+        "bottom": 125
+      }
+    },
+    {
+      "role": "vfx:wake_heavy",
+      "crop": {
+        "component_bbox": [
+          15,
+          91,
+          319,
+          363
+        ],
+        "final_crop_box": [
+          0,
+          73,
+          337,
+          381
+        ],
+        "component_area": 30354,
+        "output_edge_margins": {
+          "left": 23,
+          "top": 18,
+          "right": 18,
+          "bottom": 27
+        }
+      },
+      "path": "assets/characters/hood/processed/vfx/hood_vfx_wake_heavy.png",
+      "size": [
+        346,
+        318
+      ],
+      "edge_margins": {
+        "left": 23,
+        "top": 18,
+        "right": 18,
+        "bottom": 27
+      }
+    }
+  ]
+}

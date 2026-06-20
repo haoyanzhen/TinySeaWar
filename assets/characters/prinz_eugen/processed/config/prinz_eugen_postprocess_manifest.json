@@ -1,0 +1,1375 @@
+{
+  "character_id": "prinz_eugen",
+  "source": "tools/art_pipeline/postprocess_generated_character.py",
+  "method": "green_screen_auto_grid_and_component_split",
+  "outputs": [
+    {
+      "role": "source_alpha:concept_full",
+      "path": "assets/characters/prinz_eugen/processed/source_alpha/prinz_eugen_concept_full_alpha_source.png",
+      "size": [
+        1024,
+        1536
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 41,
+        "right": 29,
+        "bottom": 29
+      }
+    },
+    {
+      "role": "source_alpha:ui_sheet",
+      "path": "assets/characters/prinz_eugen/processed/source_alpha/prinz_eugen_ui_sheet_alpha_source.png",
+      "size": [
+        1774,
+        887
+      ],
+      "edge_margins": {
+        "left": 61,
+        "top": 30,
+        "right": 89,
+        "bottom": 87
+      }
+    },
+    {
+      "role": "source_alpha:battle_grid",
+      "path": "assets/characters/prinz_eugen/processed/source_alpha/prinz_eugen_battle_asset_grid_alpha_source.png",
+      "size": [
+        1774,
+        887
+      ],
+      "edge_margins": {
+        "left": 81,
+        "top": 92,
+        "right": 76,
+        "bottom": 132
+      }
+    },
+    {
+      "role": "source_alpha:vfx_sheet",
+      "path": "assets/characters/prinz_eugen/processed/source_alpha/prinz_eugen_vfx_reference_sheet_alpha_source.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "edge_margins": {
+        "left": 0,
+        "top": 0,
+        "right": 0,
+        "bottom": 0
+      }
+    },
+    {
+      "role": "source_alpha:anim_master",
+      "path": "assets/characters/prinz_eugen/processed/source_alpha/prinz_eugen_anim_5x4_master_alpha_source.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "edge_margins": {
+        "left": 72,
+        "top": 30,
+        "right": 50,
+        "bottom": 38
+      }
+    },
+    {
+      "role": "full_body",
+      "crop": {
+        "content_bbox": [
+          18,
+          41,
+          995,
+          1507
+        ],
+        "final_crop_box": [
+          6,
+          29,
+          1007,
+          1519
+        ],
+        "output_edge_margins": {
+          "left": 13,
+          "top": 142,
+          "right": 12,
+          "bottom": 12
+        }
+      },
+      "path": "assets/characters/prinz_eugen/processed/ui/prinz_eugen_illust_full_alpha.png",
+      "size": [
+        1002,
+        1620
+      ],
+      "edge_margins": {
+        "left": 13,
+        "top": 142,
+        "right": 12,
+        "bottom": 12
+      }
+    },
+    {
+      "role": "half_body",
+      "crop": {
+        "content_bbox": [
+          25,
+          17,
+          1002,
+          1072
+        ],
+        "final_crop_box": [
+          9,
+          1,
+          1018,
+          1088
+        ],
+        "output_edge_margins": {
+          "left": 25,
+          "top": 17,
+          "right": 16,
+          "bottom": 176
+        }
+      },
+      "path": "assets/characters/prinz_eugen/processed/ui/prinz_eugen_illust_half_alpha.png",
+      "size": [
+        1018,
+        1248
+      ],
+      "edge_margins": {
+        "left": 25,
+        "top": 17,
+        "right": 16,
+        "bottom": 176
+      }
+    },
+    {
+      "role": "skill_cutin",
+      "crop": {
+        "content_bbox": [
+          516,
+          17,
+          1493,
+          867
+        ],
+        "final_crop_box": [
+          500,
+          1,
+          1509,
+          883
+        ],
+        "output_edge_margins": {
+          "left": 31,
+          "top": 17,
+          "right": 16,
+          "bottom": 241
+        }
+      },
+      "path": "assets/characters/prinz_eugen/processed/ui/prinz_eugen_illust_skill_cutin_alpha.png",
+      "size": [
+        1024,
+        1108
+      ],
+      "edge_margins": {
+        "left": 31,
+        "top": 17,
+        "right": 16,
+        "bottom": 241
+      }
+    },
+    {
+      "role": "ui_portrait",
+      "crop": {
+        "content_bbox": [
+          61,
+          30,
+          393,
+          419
+        ],
+        "final_crop_box": [
+          43,
+          12,
+          411,
+          437
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 35,
+          "bottom": 72
+        }
+      },
+      "path": "assets/characters/prinz_eugen/processed/ui/prinz_eugen_ui_portrait.png",
+      "size": [
+        386,
+        480
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 19,
+        "right": 35,
+        "bottom": 72
+      }
+    },
+    {
+      "role": "ui_portrait_small",
+      "crop": {
+        "content_bbox": [
+          67,
+          83,
+          369,
+          403
+        ],
+        "final_crop_box": [
+          49,
+          65,
+          387,
+          421
+        ],
+        "output_edge_margins": {
+          "left": 18,
+          "top": 19,
+          "right": 34,
+          "bottom": 59
+        }
+      },
+      "path": "assets/characters/prinz_eugen/processed/ui/prinz_eugen_ui_portrait_small.png",
+      "size": [
+        354,
+        398
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 19,
+        "right": 34,
+        "bottom": 59
+      }
+    },
+    {
+      "role": "ui_chibi_head",
+      "crop": {
+        "content_bbox": [
+          43,
+          82,
+          358,
+          391
+        ],
+        "final_crop_box": [
+          25,
+          64,
+          376,
+          409
+        ],
+        "output_edge_margins": {
+          "left": 18,
+          "top": 19,
+          "right": 37,
+          "bottom": 36
+        }
+      },
+      "path": "assets/characters/prinz_eugen/processed/ui/prinz_eugen_ui_chibi_head.png",
+      "size": [
+        370,
+        364
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 19,
+        "right": 37,
+        "bottom": 36
+      }
+    },
+    {
+      "role": "expr_default",
+      "crop": {
+        "content_bbox": [
+          45,
+          78,
+          356,
+          395
+        ],
+        "final_crop_box": [
+          27,
+          60,
+          374,
+          413
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 30,
+          "bottom": 43
+        }
+      },
+      "path": "assets/characters/prinz_eugen/processed/ui/prinz_eugen_expr_default.png",
+      "size": [
+        360,
+        378
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 18,
+        "right": 30,
+        "bottom": 43
+      }
+    },
+    {
+      "role": "expr_serious",
+      "crop": {
+        "content_bbox": [
+          89,
+          44,
+          393,
+          357
+        ],
+        "final_crop_box": [
+          71,
+          26,
+          411,
+          375
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 27,
+          "bottom": 43
+        }
+      },
+      "path": "assets/characters/prinz_eugen/processed/ui/prinz_eugen_expr_serious.png",
+      "size": [
+        350,
+        374
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 18,
+        "right": 27,
+        "bottom": 43
+      }
+    },
+    {
+      "role": "expr_hit",
+      "crop": {
+        "content_bbox": [
+          67,
+          44,
+          367,
+          355
+        ],
+        "final_crop_box": [
+          49,
+          26,
+          385,
+          373
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 25,
+          "bottom": 43
+        }
+      },
+      "path": "assets/characters/prinz_eugen/processed/ui/prinz_eugen_expr_hit.png",
+      "size": [
+        344,
+        372
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 18,
+        "right": 25,
+        "bottom": 43
+      }
+    },
+    {
+      "role": "ui_skill",
+      "crop": {
+        "content_bbox": [
+          67,
+          78,
+          339,
+          348
+        ],
+        "final_crop_box": [
+          49,
+          60,
+          357,
+          366
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 20,
+          "right": 19,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/prinz_eugen/processed/ui/prinz_eugen_ui_skill_fire_control.png",
+      "size": [
+        310,
+        308
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 20,
+        "right": 19,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "class_icon",
+      "crop": {
+        "content_bbox": [
+          57,
+          78,
+          327,
+          350
+        ],
+        "final_crop_box": [
+          39,
+          60,
+          345,
+          368
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 20,
+          "right": 19,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/prinz_eugen/processed/ui/prinz_eugen_ui_class_heavy_cruiser.png",
+      "size": [
+        308,
+        310
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 20,
+        "right": 19,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "battle_body_r",
+      "crop": {
+        "component_bbox": [
+          109,
+          92,
+          315,
+          378
+        ],
+        "final_crop_box": [
+          91,
+          74,
+          333,
+          396
+        ],
+        "component_area": 38144,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 18,
+          "right": 32,
+          "bottom": 26
+        }
+      },
+      "path": "assets/characters/prinz_eugen/processed/battle/prinz_eugen_battle_body_r.png",
+      "size": [
+        256,
+        330
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 18,
+        "right": 32,
+        "bottom": 26
+      }
+    },
+    {
+      "role": "battle_rig_base",
+      "crop": {
+        "component_bbox": [
+          57,
+          148,
+          394,
+          385
+        ],
+        "final_crop_box": [
+          39,
+          130,
+          412,
+          403
+        ],
+        "component_area": 46600,
+        "output_edge_margins": {
+          "left": 61,
+          "top": 43,
+          "right": 18,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/prinz_eugen/processed/battle/prinz_eugen_battle_rig_base.png",
+      "size": [
+        416,
+        298
+      ],
+      "edge_margins": {
+        "left": 61,
+        "top": 43,
+        "right": 18,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "battle_turret_main_01",
+      "crop": {
+        "component_bbox": [
+          78,
+          152,
+          393,
+          360
+        ],
+        "final_crop_box": [
+          60,
+          134,
+          411,
+          378
+        ],
+        "component_area": 37722,
+        "output_edge_margins": {
+          "left": 70,
+          "top": 20,
+          "right": 19,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/prinz_eugen/processed/battle/prinz_eugen_battle_turret_main_01.png",
+      "size": [
+        404,
+        246
+      ],
+      "edge_margins": {
+        "left": 70,
+        "top": 20,
+        "right": 19,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "battle_turret_main_02",
+      "crop": {
+        "component_bbox": [
+          56,
+          152,
+          369,
+          360
+        ],
+        "final_crop_box": [
+          38,
+          134,
+          387,
+          378
+        ],
+        "component_area": 37497,
+        "output_edge_margins": {
+          "left": 69,
+          "top": 20,
+          "right": 18,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/prinz_eugen/processed/battle/prinz_eugen_battle_turret_main_02.png",
+      "size": [
+        400,
+        246
+      ],
+      "edge_margins": {
+        "left": 69,
+        "top": 20,
+        "right": 18,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "battle_turret_main_03",
+      "crop": {
+        "component_bbox": [
+          81,
+          91,
+          398,
+          301
+        ],
+        "final_crop_box": [
+          63,
+          73,
+          416,
+          319
+        ],
+        "component_area": 38109,
+        "output_edge_margins": {
+          "left": 70,
+          "top": 20,
+          "right": 19,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/prinz_eugen/processed/battle/prinz_eugen_battle_turret_main_03.png",
+      "size": [
+        406,
+        248
+      ],
+      "edge_margins": {
+        "left": 70,
+        "top": 20,
+        "right": 19,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "battle_fire_control_node",
+      "crop": {
+        "component_bbox": [
+          130,
+          64,
+          301,
+          312
+        ],
+        "final_crop_box": [
+          112,
+          46,
+          319,
+          330
+        ],
+        "component_area": 26430,
+        "output_edge_margins": {
+          "left": 25,
+          "top": 19,
+          "right": 18,
+          "bottom": 59
+        }
+      },
+      "path": "assets/characters/prinz_eugen/processed/battle/prinz_eugen_battle_fire_control_node.png",
+      "size": [
+        214,
+        326
+      ],
+      "edge_margins": {
+        "left": 25,
+        "top": 19,
+        "right": 18,
+        "bottom": 59
+      }
+    },
+    {
+      "role": "battle_turret_secondary_01",
+      "crop": {
+        "component_bbox": [
+          121,
+          101,
+          322,
+          281
+        ],
+        "final_crop_box": [
+          103,
+          83,
+          340,
+          299
+        ],
+        "component_area": 24076,
+        "output_edge_margins": {
+          "left": 49,
+          "top": 19,
+          "right": 18,
+          "bottom": 27
+        }
+      },
+      "path": "assets/characters/prinz_eugen/processed/battle/prinz_eugen_battle_turret_secondary_01.png",
+      "size": [
+        268,
+        226
+      ],
+      "edge_margins": {
+        "left": 49,
+        "top": 19,
+        "right": 18,
+        "bottom": 27
+      }
+    },
+    {
+      "role": "battle_wake_origin_marker",
+      "crop": {
+        "component_bbox": [
+          68,
+          110,
+          341,
+          305
+        ],
+        "final_crop_box": [
+          50,
+          92,
+          359,
+          323
+        ],
+        "component_area": 21817,
+        "output_edge_margins": {
+          "left": 33,
+          "top": 18,
+          "right": 18,
+          "bottom": 29
+        }
+      },
+      "path": "assets/characters/prinz_eugen/processed/battle/prinz_eugen_battle_wake_origin_marker.png",
+      "size": [
+        324,
+        242
+      ],
+      "edge_margins": {
+        "left": 33,
+        "top": 18,
+        "right": 18,
+        "bottom": 29
+      }
+    },
+    {
+      "role": "anim_idle_frame_01",
+      "path": "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_idle_frame_01.png",
+      "size": [
+        242,
+        236
+      ],
+      "edge_margins": {
+        "left": 17,
+        "top": 17,
+        "right": 24,
+        "bottom": 45
+      }
+    },
+    {
+      "role": "anim_idle_keyframe",
+      "path": "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_idle_keyframe.png",
+      "size": [
+        242,
+        236
+      ],
+      "edge_margins": {
+        "left": 17,
+        "top": 17,
+        "right": 24,
+        "bottom": 45
+      }
+    },
+    {
+      "role": "anim_idle_frame_02",
+      "path": "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_idle_frame_02.png",
+      "size": [
+        242,
+        236
+      ],
+      "edge_margins": {
+        "left": 17,
+        "top": 17,
+        "right": 24,
+        "bottom": 45
+      }
+    },
+    {
+      "role": "anim_idle_frame_03",
+      "path": "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_idle_frame_03.png",
+      "size": [
+        242,
+        236
+      ],
+      "edge_margins": {
+        "left": 17,
+        "top": 17,
+        "right": 24,
+        "bottom": 45
+      }
+    },
+    {
+      "role": "anim_idle_frame_04",
+      "path": "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_idle_frame_04.png",
+      "size": [
+        242,
+        236
+      ],
+      "edge_margins": {
+        "left": 17,
+        "top": 17,
+        "right": 24,
+        "bottom": 45
+      }
+    },
+    {
+      "role": "anim_move_frame_01",
+      "path": "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_move_frame_01.png",
+      "size": [
+        304,
+        226
+      ],
+      "edge_margins": {
+        "left": 35,
+        "top": 26,
+        "right": 53,
+        "bottom": 32
+      }
+    },
+    {
+      "role": "anim_move_keyframe",
+      "path": "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_move_keyframe.png",
+      "size": [
+        304,
+        226
+      ],
+      "edge_margins": {
+        "left": 35,
+        "top": 26,
+        "right": 53,
+        "bottom": 32
+      }
+    },
+    {
+      "role": "anim_move_frame_02",
+      "path": "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_move_frame_02.png",
+      "size": [
+        304,
+        226
+      ],
+      "edge_margins": {
+        "left": 16,
+        "top": 27,
+        "right": 32,
+        "bottom": 28
+      }
+    },
+    {
+      "role": "anim_move_frame_03",
+      "path": "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_move_frame_03.png",
+      "size": [
+        304,
+        226
+      ],
+      "edge_margins": {
+        "left": 20,
+        "top": 17,
+        "right": 17,
+        "bottom": 40
+      }
+    },
+    {
+      "role": "anim_move_frame_04",
+      "path": "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_move_frame_04.png",
+      "size": [
+        304,
+        226
+      ],
+      "edge_margins": {
+        "left": 41,
+        "top": 23,
+        "right": 36,
+        "bottom": 40
+      }
+    },
+    {
+      "role": "anim_attack_frame_01",
+      "path": "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_attack_frame_01.png",
+      "size": [
+        386,
+        230
+      ],
+      "edge_margins": {
+        "left": 75,
+        "top": 17,
+        "right": 31,
+        "bottom": 34
+      }
+    },
+    {
+      "role": "anim_attack_keyframe",
+      "path": "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_attack_keyframe.png",
+      "size": [
+        386,
+        230
+      ],
+      "edge_margins": {
+        "left": 75,
+        "top": 17,
+        "right": 31,
+        "bottom": 34
+      }
+    },
+    {
+      "role": "anim_attack_frame_02",
+      "path": "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_attack_frame_02.png",
+      "size": [
+        386,
+        230
+      ],
+      "edge_margins": {
+        "left": 71,
+        "top": 16,
+        "right": 25,
+        "bottom": 34
+      }
+    },
+    {
+      "role": "anim_attack_frame_03",
+      "path": "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_attack_frame_03.png",
+      "size": [
+        386,
+        230
+      ],
+      "edge_margins": {
+        "left": 66,
+        "top": 17,
+        "right": 27,
+        "bottom": 34
+      }
+    },
+    {
+      "role": "anim_attack_frame_04",
+      "path": "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_attack_frame_04.png",
+      "size": [
+        386,
+        230
+      ],
+      "edge_margins": {
+        "left": 98,
+        "top": 19,
+        "right": 17,
+        "bottom": 32
+      }
+    },
+    {
+      "role": "anim_hit_frame_01",
+      "path": "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_hit_frame_01.png",
+      "size": [
+        266,
+        232
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 26,
+        "right": 40,
+        "bottom": 33
+      }
+    },
+    {
+      "role": "anim_hit_keyframe",
+      "path": "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_hit_keyframe.png",
+      "size": [
+        266,
+        232
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 26,
+        "right": 40,
+        "bottom": 33
+      }
+    },
+    {
+      "role": "anim_hit_frame_02",
+      "path": "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_hit_frame_02.png",
+      "size": [
+        266,
+        232
+      ],
+      "edge_margins": {
+        "left": 16,
+        "top": 31,
+        "right": 32,
+        "bottom": 43
+      }
+    },
+    {
+      "role": "anim_hit_frame_03",
+      "path": "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_hit_frame_03.png",
+      "size": [
+        266,
+        232
+      ],
+      "edge_margins": {
+        "left": 23,
+        "top": 19,
+        "right": 34,
+        "bottom": 36
+      }
+    },
+    {
+      "role": "anim_hit_frame_04",
+      "path": "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_hit_frame_04.png",
+      "size": [
+        266,
+        232
+      ],
+      "edge_margins": {
+        "left": 38,
+        "top": 16,
+        "right": 36,
+        "bottom": 34
+      }
+    },
+    {
+      "role": "anim_firepower_frame_01",
+      "path": "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_firepower_frame_01.png",
+      "size": [
+        474,
+        216
+      ],
+      "edge_margins": {
+        "left": 110,
+        "top": 17,
+        "right": 122,
+        "bottom": 29
+      }
+    },
+    {
+      "role": "anim_firepower_keyframe",
+      "path": "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_firepower_keyframe.png",
+      "size": [
+        474,
+        216
+      ],
+      "edge_margins": {
+        "left": 110,
+        "top": 17,
+        "right": 122,
+        "bottom": 29
+      }
+    },
+    {
+      "role": "anim_firepower_frame_02",
+      "path": "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_firepower_frame_02.png",
+      "size": [
+        474,
+        216
+      ],
+      "edge_margins": {
+        "left": 96,
+        "top": 17,
+        "right": 91,
+        "bottom": 29
+      }
+    },
+    {
+      "role": "anim_firepower_frame_03",
+      "path": "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_firepower_frame_03.png",
+      "size": [
+        474,
+        216
+      ],
+      "edge_margins": {
+        "left": 118,
+        "top": 18,
+        "right": 84,
+        "bottom": 28
+      }
+    },
+    {
+      "role": "anim_firepower_frame_04",
+      "path": "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_firepower_frame_04.png",
+      "size": [
+        474,
+        216
+      ],
+      "edge_margins": {
+        "left": 124,
+        "top": 21,
+        "right": 16,
+        "bottom": 25
+      }
+    },
+    {
+      "role": "battle_body_r:idle_master_override",
+      "path": "assets/characters/prinz_eugen/processed/battle/prinz_eugen_battle_body_r.png",
+      "size": [
+        242,
+        236
+      ],
+      "edge_margins": {
+        "left": 17,
+        "top": 17,
+        "right": 24,
+        "bottom": 45
+      }
+    },
+    {
+      "role": "vfx:fire_control_lock_line",
+      "crop": {
+        "component_bbox": [
+          0,
+          0,
+          313,
+          627
+        ],
+        "final_crop_box": [
+          0,
+          0,
+          313,
+          627
+        ],
+        "component_area": 196251,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 18,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/prinz_eugen/processed/vfx/prinz_eugen_vfx_fire_control_lock_line.png",
+      "size": [
+        350,
+        664
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 19,
+        "right": 18,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "vfx:muzzle_flash_large",
+      "crop": {
+        "component_bbox": [
+          0,
+          0,
+          313,
+          627
+        ],
+        "final_crop_box": [
+          0,
+          0,
+          313,
+          627
+        ],
+        "component_area": 196251,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 18,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/prinz_eugen/processed/vfx/prinz_eugen_vfx_muzzle_flash_large.png",
+      "size": [
+        350,
+        664
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 19,
+        "right": 18,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "vfx:broadside_smoke",
+      "crop": {
+        "component_bbox": [
+          0,
+          0,
+          313,
+          627
+        ],
+        "final_crop_box": [
+          0,
+          0,
+          313,
+          627
+        ],
+        "component_area": 196251,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 18,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/prinz_eugen/processed/vfx/prinz_eugen_vfx_broadside_smoke.png",
+      "size": [
+        350,
+        664
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 19,
+        "right": 18,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "vfx:shell_trail_heavy",
+      "crop": {
+        "component_bbox": [
+          0,
+          0,
+          315,
+          627
+        ],
+        "final_crop_box": [
+          0,
+          0,
+          315,
+          627
+        ],
+        "component_area": 197505,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 18,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/prinz_eugen/processed/vfx/prinz_eugen_vfx_shell_trail_heavy.png",
+      "size": [
+        352,
+        664
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 19,
+        "right": 18,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "vfx:water_splash_large",
+      "crop": {
+        "component_bbox": [
+          0,
+          0,
+          313,
+          627
+        ],
+        "final_crop_box": [
+          0,
+          0,
+          313,
+          627
+        ],
+        "component_area": 196251,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 18,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/prinz_eugen/processed/vfx/prinz_eugen_vfx_water_splash_large.png",
+      "size": [
+        350,
+        664
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 19,
+        "right": 18,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "vfx:armor_sparks",
+      "crop": {
+        "component_bbox": [
+          0,
+          0,
+          313,
+          627
+        ],
+        "final_crop_box": [
+          0,
+          0,
+          313,
+          627
+        ],
+        "component_area": 196251,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 18,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/prinz_eugen/processed/vfx/prinz_eugen_vfx_armor_sparks.png",
+      "size": [
+        350,
+        664
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 19,
+        "right": 18,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "vfx:suppression_aura",
+      "crop": {
+        "component_bbox": [
+          0,
+          0,
+          313,
+          627
+        ],
+        "final_crop_box": [
+          0,
+          0,
+          313,
+          627
+        ],
+        "component_area": 196251,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 18,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/prinz_eugen/processed/vfx/prinz_eugen_vfx_suppression_aura.png",
+      "size": [
+        350,
+        664
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 19,
+        "right": 18,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "vfx:wake_heavy",
+      "crop": {
+        "component_bbox": [
+          0,
+          0,
+          315,
+          627
+        ],
+        "final_crop_box": [
+          0,
+          0,
+          315,
+          627
+        ],
+        "component_area": 197505,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 18,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/prinz_eugen/processed/vfx/prinz_eugen_vfx_wake_heavy.png",
+      "size": [
+        352,
+        664
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 19,
+        "right": 18,
+        "bottom": 18
+      }
+    }
+  ]
+}

@@ -99,7 +99,7 @@ Per-character notes:
 
 ## Skill Updates To Carry Forward
 
-- Keep character data in `docs/character_art_design.md`; do not duplicate the full roster inside the skill.
+- Keep character data in `docs/41_character_art_design.md`; do not duplicate the full roster inside the skill.
 - Use short prompt variants when image generation returns repeated temporary failures.
 - For animation, request a simple pose sheet first, then derive production keyframes during cleanup.
 - For UI sheets, reduce to portrait, avatar, chibi head, two expressions, one skill icon, and one class icon if the full sheet fails.

@@ -1,0 +1,1375 @@
+{
+  "character_id": "pobeda",
+  "source": "tools/art_pipeline/postprocess_generated_character.py",
+  "method": "green_screen_auto_grid_and_component_split",
+  "outputs": [
+    {
+      "role": "source_alpha:concept_full",
+      "path": "assets/characters/pobeda/processed/source_alpha/pobeda_concept_full_alpha_source.png",
+      "size": [
+        1024,
+        1536
+      ],
+      "edge_margins": {
+        "left": 17,
+        "top": 163,
+        "right": 7,
+        "bottom": 109
+      }
+    },
+    {
+      "role": "source_alpha:ui_sheet",
+      "path": "assets/characters/pobeda/processed/source_alpha/pobeda_ui_sheet_alpha_source.png",
+      "size": [
+        1774,
+        887
+      ],
+      "edge_margins": {
+        "left": 46,
+        "top": 58,
+        "right": 54,
+        "bottom": 45
+      }
+    },
+    {
+      "role": "source_alpha:battle_grid",
+      "path": "assets/characters/pobeda/processed/source_alpha/pobeda_battle_asset_grid_alpha_source.png",
+      "size": [
+        1774,
+        887
+      ],
+      "edge_margins": {
+        "left": 85,
+        "top": 57,
+        "right": 80,
+        "bottom": 98
+      }
+    },
+    {
+      "role": "source_alpha:vfx_sheet",
+      "path": "assets/characters/pobeda/processed/source_alpha/pobeda_vfx_reference_sheet_alpha_source.png",
+      "size": [
+        1774,
+        887
+      ],
+      "edge_margins": {
+        "left": 66,
+        "top": 85,
+        "right": 93,
+        "bottom": 101
+      }
+    },
+    {
+      "role": "source_alpha:anim_master",
+      "path": "assets/characters/pobeda/processed/source_alpha/pobeda_anim_5x4_master_alpha_source.png",
+      "size": [
+        1122,
+        1402
+      ],
+      "edge_margins": {
+        "left": 15,
+        "top": 46,
+        "right": 22,
+        "bottom": 79
+      }
+    },
+    {
+      "role": "full_body",
+      "crop": {
+        "content_bbox": [
+          17,
+          163,
+          1017,
+          1427
+        ],
+        "final_crop_box": [
+          5,
+          151,
+          1024,
+          1439
+        ],
+        "output_edge_margins": {
+          "left": 12,
+          "top": 171,
+          "right": 32,
+          "bottom": 13
+        }
+      },
+      "path": "assets/characters/pobeda/processed/ui/pobeda_illust_full_alpha.png",
+      "size": [
+        1044,
+        1448
+      ],
+      "edge_margins": {
+        "left": 12,
+        "top": 171,
+        "right": 32,
+        "bottom": 13
+      }
+    },
+    {
+      "role": "half_body",
+      "crop": {
+        "content_bbox": [
+          17,
+          16,
+          1017,
+          926
+        ],
+        "final_crop_box": [
+          1,
+          0,
+          1033,
+          942
+        ],
+        "output_edge_margins": {
+          "left": 17,
+          "top": 16,
+          "right": 41,
+          "bottom": 132
+        }
+      },
+      "path": "assets/characters/pobeda/processed/ui/pobeda_illust_half_alpha.png",
+      "size": [
+        1058,
+        1058
+      ],
+      "edge_margins": {
+        "left": 17,
+        "top": 16,
+        "right": 41,
+        "bottom": 132
+      }
+    },
+    {
+      "role": "skill_cutin",
+      "crop": {
+        "content_bbox": [
+          311,
+          16,
+          1311,
+          749
+        ],
+        "final_crop_box": [
+          295,
+          0,
+          1327,
+          765
+        ],
+        "output_edge_margins": {
+          "left": 17,
+          "top": 16,
+          "right": 39,
+          "bottom": 165
+        }
+      },
+      "path": "assets/characters/pobeda/processed/ui/pobeda_illust_skill_cutin_alpha.png",
+      "size": [
+        1056,
+        914
+      ],
+      "edge_margins": {
+        "left": 17,
+        "top": 16,
+        "right": 39,
+        "bottom": 165
+      }
+    },
+    {
+      "role": "ui_portrait",
+      "crop": {
+        "content_bbox": [
+          46,
+          58,
+          426,
+          410
+        ],
+        "final_crop_box": [
+          28,
+          40,
+          443,
+          428
+        ],
+        "output_edge_margins": {
+          "left": 18,
+          "top": 19,
+          "right": 20,
+          "bottom": 93
+        }
+      },
+      "path": "assets/characters/pobeda/processed/ui/pobeda_ui_portrait.png",
+      "size": [
+        418,
+        464
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 19,
+        "right": 20,
+        "bottom": 93
+      }
+    },
+    {
+      "role": "ui_portrait_small",
+      "crop": {
+        "content_bbox": [
+          52,
+          79,
+          401,
+          398
+        ],
+        "final_crop_box": [
+          34,
+          61,
+          419,
+          416
+        ],
+        "output_edge_margins": {
+          "left": 21,
+          "top": 18,
+          "right": 18,
+          "bottom": 75
+        }
+      },
+      "path": "assets/characters/pobeda/processed/ui/pobeda_ui_portrait_small.png",
+      "size": [
+        388,
+        412
+      ],
+      "edge_margins": {
+        "left": 21,
+        "top": 18,
+        "right": 18,
+        "bottom": 75
+      }
+    },
+    {
+      "role": "ui_chibi_head",
+      "crop": {
+        "content_bbox": [
+          61,
+          91,
+          352,
+          363
+        ],
+        "final_crop_box": [
+          43,
+          73,
+          370,
+          381
+        ],
+        "output_edge_margins": {
+          "left": 18,
+          "top": 19,
+          "right": 25,
+          "bottom": 29
+        }
+      },
+      "path": "assets/characters/pobeda/processed/ui/pobeda_ui_chibi_head.png",
+      "size": [
+        334,
+        320
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 19,
+        "right": 25,
+        "bottom": 29
+      }
+    },
+    {
+      "role": "expr_default",
+      "crop": {
+        "content_bbox": [
+          17,
+          63,
+          391,
+          410
+        ],
+        "final_crop_box": [
+          0,
+          45,
+          409,
+          428
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 27,
+          "bottom": 93
+        }
+      },
+      "path": "assets/characters/pobeda/processed/ui/pobeda_expr_default.png",
+      "size": [
+        420,
+        458
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 18,
+        "right": 27,
+        "bottom": 93
+      }
+    },
+    {
+      "role": "expr_serious",
+      "crop": {
+        "content_bbox": [
+          46,
+          41,
+          397,
+          395
+        ],
+        "final_crop_box": [
+          28,
+          23,
+          415,
+          413
+        ],
+        "output_edge_margins": {
+          "left": 18,
+          "top": 19,
+          "right": 21,
+          "bottom": 85
+        }
+      },
+      "path": "assets/characters/pobeda/processed/ui/pobeda_expr_serious.png",
+      "size": [
+        390,
+        458
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 19,
+        "right": 21,
+        "bottom": 85
+      }
+    },
+    {
+      "role": "expr_hit",
+      "crop": {
+        "content_bbox": [
+          47,
+          41,
+          399,
+          395
+        ],
+        "final_crop_box": [
+          29,
+          23,
+          417,
+          413
+        ],
+        "output_edge_margins": {
+          "left": 26,
+          "top": 19,
+          "right": 18,
+          "bottom": 81
+        }
+      },
+      "path": "assets/characters/pobeda/processed/ui/pobeda_expr_hit.png",
+      "size": [
+        396,
+        454
+      ],
+      "edge_margins": {
+        "left": 26,
+        "top": 19,
+        "right": 18,
+        "bottom": 81
+      }
+    },
+    {
+      "role": "ui_skill",
+      "crop": {
+        "content_bbox": [
+          30,
+          39,
+          387,
+          399
+        ],
+        "final_crop_box": [
+          12,
+          21,
+          405,
+          417
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 18,
+          "bottom": 73
+        }
+      },
+      "path": "assets/characters/pobeda/processed/ui/pobeda_ui_skill_airstrike.png",
+      "size": [
+        394,
+        452
+      ],
+      "edge_margins": {
+        "left": 43,
+        "top": 133,
+        "right": 42,
+        "bottom": 73
+      }
+    },
+    {
+      "role": "class_icon",
+      "crop": {
+        "content_bbox": [
+          18,
+          62,
+          388,
+          377
+        ],
+        "final_crop_box": [
+          0,
+          44,
+          406,
+          395
+        ],
+        "output_edge_margins": {
+          "left": 22,
+          "top": 18,
+          "right": 18,
+          "bottom": 43
+        }
+      },
+      "path": "assets/characters/pobeda/processed/ui/pobeda_ui_class_carrier.png",
+      "size": [
+        410,
+        376
+      ],
+      "edge_margins": {
+        "left": 54,
+        "top": 18,
+        "right": 50,
+        "bottom": 43
+      }
+    },
+    {
+      "role": "battle_body_r",
+      "crop": {
+        "component_bbox": [
+          85,
+          84,
+          370,
+          345
+        ],
+        "final_crop_box": [
+          67,
+          66,
+          388,
+          363
+        ],
+        "component_area": 47660,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 31,
+          "right": 39,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/pobeda/processed/battle/pobeda_battle_body_r.png",
+      "size": [
+        342,
+        310
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 31,
+        "right": 39,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "battle_rig_base",
+      "crop": {
+        "component_bbox": [
+          85,
+          59,
+          352,
+          380
+        ],
+        "final_crop_box": [
+          67,
+          41,
+          370,
+          398
+        ],
+        "component_area": 48651,
+        "output_edge_margins": {
+          "left": 20,
+          "top": 19,
+          "right": 19,
+          "bottom": 42
+        }
+      },
+      "path": "assets/characters/pobeda/processed/battle/pobeda_battle_rig_base.png",
+      "size": [
+        306,
+        382
+      ],
+      "edge_margins": {
+        "left": 20,
+        "top": 19,
+        "right": 19,
+        "bottom": 42
+      }
+    },
+    {
+      "role": "battle_flight_deck",
+      "crop": {
+        "component_bbox": [
+          56,
+          57,
+          358,
+          375
+        ],
+        "final_crop_box": [
+          38,
+          39,
+          376,
+          393
+        ],
+        "component_area": 48182,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 41,
+          "right": 21,
+          "bottom": 19
+        }
+      },
+      "path": "assets/characters/pobeda/processed/battle/pobeda_battle_flight_deck.png",
+      "size": [
+        342,
+        378
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 41,
+        "right": 21,
+        "bottom": 19
+      }
+    },
+    {
+      "role": "battle_aircraft_group_01",
+      "crop": {
+        "component_bbox": [
+          41,
+          200,
+          177,
+          366
+        ],
+        "final_crop_box": [
+          23,
+          182,
+          195,
+          384
+        ],
+        "component_area": 10560,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 19,
+          "right": 20,
+          "bottom": 35
+        }
+      },
+      "path": "assets/characters/pobeda/processed/battle/pobeda_battle_aircraft_group_01.png",
+      "size": [
+        192,
+        238
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 37,
+        "right": 38,
+        "bottom": 35
+      }
+    },
+    {
+      "role": "battle_aircraft_launch_marker",
+      "crop": {
+        "component_bbox": [
+          97,
+          96,
+          347,
+          318
+        ],
+        "final_crop_box": [
+          79,
+          78,
+          365,
+          336
+        ],
+        "component_area": 45065,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 19,
+          "bottom": 29
+        }
+      },
+      "path": "assets/characters/pobeda/processed/battle/pobeda_battle_aircraft_launch_marker.png",
+      "size": [
+        288,
+        270
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 19,
+        "right": 19,
+        "bottom": 29
+      }
+    },
+    {
+      "role": "battle_aircraft_recovery_marker",
+      "crop": {
+        "component_bbox": [
+          95,
+          96,
+          339,
+          319
+        ],
+        "final_crop_box": [
+          77,
+          78,
+          357,
+          337
+        ],
+        "component_area": 43859,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 19,
+          "bottom": 29
+        }
+      },
+      "path": "assets/characters/pobeda/processed/battle/pobeda_battle_aircraft_recovery_marker.png",
+      "size": [
+        282,
+        270
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 18,
+        "right": 19,
+        "bottom": 29
+      }
+    },
+    {
+      "role": "battle_radar_node",
+      "crop": {
+        "component_bbox": [
+          84,
+          68,
+          312,
+          328
+        ],
+        "final_crop_box": [
+          66,
+          50,
+          330,
+          346
+        ],
+        "component_area": 40710,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 19,
+          "bottom": 45
+        }
+      },
+      "path": "assets/characters/pobeda/processed/battle/pobeda_battle_radar_node.png",
+      "size": [
+        266,
+        324
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 19,
+        "right": 19,
+        "bottom": 45
+      }
+    },
+    {
+      "role": "battle_wake_origin_marker",
+      "crop": {
+        "component_bbox": [
+          39,
+          78,
+          345,
+          346
+        ],
+        "final_crop_box": [
+          21,
+          60,
+          363,
+          364
+        ],
+        "component_area": 56273,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 29,
+          "right": 20,
+          "bottom": 19
+        }
+      },
+      "path": "assets/characters/pobeda/processed/battle/pobeda_battle_wake_origin_marker.png",
+      "size": [
+        380,
+        316
+      ],
+      "edge_margins": {
+        "left": 36,
+        "top": 29,
+        "right": 38,
+        "bottom": 19
+      }
+    },
+    {
+      "role": "anim_idle_frame_01",
+      "path": "assets/characters/pobeda/processed/anim/pobeda_anim_idle_frame_01.png",
+      "size": [
+        272,
+        246
+      ],
+      "edge_margins": {
+        "left": 25,
+        "top": 16,
+        "right": 17,
+        "bottom": 23
+      }
+    },
+    {
+      "role": "anim_idle_keyframe",
+      "path": "assets/characters/pobeda/processed/anim/pobeda_anim_idle_keyframe.png",
+      "size": [
+        272,
+        246
+      ],
+      "edge_margins": {
+        "left": 25,
+        "top": 16,
+        "right": 17,
+        "bottom": 23
+      }
+    },
+    {
+      "role": "anim_idle_frame_02",
+      "path": "assets/characters/pobeda/processed/anim/pobeda_anim_idle_frame_02.png",
+      "size": [
+        272,
+        246
+      ],
+      "edge_margins": {
+        "left": 22,
+        "top": 17,
+        "right": 21,
+        "bottom": 27
+      }
+    },
+    {
+      "role": "anim_idle_frame_03",
+      "path": "assets/characters/pobeda/processed/anim/pobeda_anim_idle_frame_03.png",
+      "size": [
+        272,
+        246
+      ],
+      "edge_margins": {
+        "left": 17,
+        "top": 17,
+        "right": 21,
+        "bottom": 26
+      }
+    },
+    {
+      "role": "anim_idle_frame_04",
+      "path": "assets/characters/pobeda/processed/anim/pobeda_anim_idle_frame_04.png",
+      "size": [
+        272,
+        246
+      ],
+      "edge_margins": {
+        "left": 21,
+        "top": 17,
+        "right": 21,
+        "bottom": 25
+      }
+    },
+    {
+      "role": "anim_move_frame_01",
+      "path": "assets/characters/pobeda/processed/anim/pobeda_anim_move_frame_01.png",
+      "size": [
+        320,
+        210
+      ],
+      "edge_margins": {
+        "left": 37,
+        "top": 33,
+        "right": 58,
+        "bottom": 16
+      }
+    },
+    {
+      "role": "anim_move_keyframe",
+      "path": "assets/characters/pobeda/processed/anim/pobeda_anim_move_keyframe.png",
+      "size": [
+        320,
+        210
+      ],
+      "edge_margins": {
+        "left": 37,
+        "top": 33,
+        "right": 58,
+        "bottom": 16
+      }
+    },
+    {
+      "role": "anim_move_frame_02",
+      "path": "assets/characters/pobeda/processed/anim/pobeda_anim_move_frame_02.png",
+      "size": [
+        320,
+        210
+      ],
+      "edge_margins": {
+        "left": 30,
+        "top": 32,
+        "right": 59,
+        "bottom": 21
+      }
+    },
+    {
+      "role": "anim_move_frame_03",
+      "path": "assets/characters/pobeda/processed/anim/pobeda_anim_move_frame_03.png",
+      "size": [
+        320,
+        210
+      ],
+      "edge_margins": {
+        "left": 24,
+        "top": 35,
+        "right": 58,
+        "bottom": 20
+      }
+    },
+    {
+      "role": "anim_move_frame_04",
+      "path": "assets/characters/pobeda/processed/anim/pobeda_anim_move_frame_04.png",
+      "size": [
+        320,
+        210
+      ],
+      "edge_margins": {
+        "left": 16,
+        "top": 35,
+        "right": 52,
+        "bottom": 21
+      }
+    },
+    {
+      "role": "anim_attack_frame_01",
+      "path": "assets/characters/pobeda/processed/anim/pobeda_anim_attack_frame_01.png",
+      "size": [
+        312,
+        234
+      ],
+      "edge_margins": {
+        "left": 45,
+        "top": 18,
+        "right": 45,
+        "bottom": 23
+      }
+    },
+    {
+      "role": "anim_attack_keyframe",
+      "path": "assets/characters/pobeda/processed/anim/pobeda_anim_attack_keyframe.png",
+      "size": [
+        312,
+        234
+      ],
+      "edge_margins": {
+        "left": 45,
+        "top": 18,
+        "right": 45,
+        "bottom": 23
+      }
+    },
+    {
+      "role": "anim_attack_frame_02",
+      "path": "assets/characters/pobeda/processed/anim/pobeda_anim_attack_frame_02.png",
+      "size": [
+        312,
+        234
+      ],
+      "edge_margins": {
+        "left": 46,
+        "top": 17,
+        "right": 24,
+        "bottom": 25
+      }
+    },
+    {
+      "role": "anim_attack_frame_03",
+      "path": "assets/characters/pobeda/processed/anim/pobeda_anim_attack_frame_03.png",
+      "size": [
+        312,
+        234
+      ],
+      "edge_margins": {
+        "left": 54,
+        "top": 19,
+        "right": 16,
+        "bottom": 30
+      }
+    },
+    {
+      "role": "anim_attack_frame_04",
+      "path": "assets/characters/pobeda/processed/anim/pobeda_anim_attack_frame_04.png",
+      "size": [
+        312,
+        234
+      ],
+      "edge_margins": {
+        "left": 51,
+        "top": 20,
+        "right": 17,
+        "bottom": 30
+      }
+    },
+    {
+      "role": "anim_hit_frame_01",
+      "path": "assets/characters/pobeda/processed/anim/pobeda_anim_hit_frame_01.png",
+      "size": [
+        296,
+        226
+      ],
+      "edge_margins": {
+        "left": 40,
+        "top": 19,
+        "right": 39,
+        "bottom": 20
+      }
+    },
+    {
+      "role": "anim_hit_keyframe",
+      "path": "assets/characters/pobeda/processed/anim/pobeda_anim_hit_keyframe.png",
+      "size": [
+        296,
+        226
+      ],
+      "edge_margins": {
+        "left": 40,
+        "top": 19,
+        "right": 39,
+        "bottom": 20
+      }
+    },
+    {
+      "role": "anim_hit_frame_02",
+      "path": "assets/characters/pobeda/processed/anim/pobeda_anim_hit_frame_02.png",
+      "size": [
+        296,
+        226
+      ],
+      "edge_margins": {
+        "left": 40,
+        "top": 16,
+        "right": 32,
+        "bottom": 23
+      }
+    },
+    {
+      "role": "anim_hit_frame_03",
+      "path": "assets/characters/pobeda/processed/anim/pobeda_anim_hit_frame_03.png",
+      "size": [
+        296,
+        226
+      ],
+      "edge_margins": {
+        "left": 46,
+        "top": 17,
+        "right": 27,
+        "bottom": 20
+      }
+    },
+    {
+      "role": "anim_hit_frame_04",
+      "path": "assets/characters/pobeda/processed/anim/pobeda_anim_hit_frame_04.png",
+      "size": [
+        296,
+        226
+      ],
+      "edge_margins": {
+        "left": 45,
+        "top": 18,
+        "right": 16,
+        "bottom": 19
+      }
+    },
+    {
+      "role": "anim_firepower_frame_01",
+      "path": "assets/characters/pobeda/processed/anim/pobeda_anim_firepower_frame_01.png",
+      "size": [
+        380,
+        200
+      ],
+      "edge_margins": {
+        "left": 87,
+        "top": 31,
+        "right": 89,
+        "bottom": 16
+      }
+    },
+    {
+      "role": "anim_firepower_keyframe",
+      "path": "assets/characters/pobeda/processed/anim/pobeda_anim_firepower_keyframe.png",
+      "size": [
+        380,
+        200
+      ],
+      "edge_margins": {
+        "left": 87,
+        "top": 31,
+        "right": 89,
+        "bottom": 16
+      }
+    },
+    {
+      "role": "anim_firepower_frame_02",
+      "path": "assets/characters/pobeda/processed/anim/pobeda_anim_firepower_frame_02.png",
+      "size": [
+        380,
+        200
+      ],
+      "edge_margins": {
+        "left": 87,
+        "top": 25,
+        "right": 69,
+        "bottom": 23
+      }
+    },
+    {
+      "role": "anim_firepower_frame_03",
+      "path": "assets/characters/pobeda/processed/anim/pobeda_anim_firepower_frame_03.png",
+      "size": [
+        380,
+        200
+      ],
+      "edge_margins": {
+        "left": 98,
+        "top": 20,
+        "right": 52,
+        "bottom": 21
+      }
+    },
+    {
+      "role": "anim_firepower_frame_04",
+      "path": "assets/characters/pobeda/processed/anim/pobeda_anim_firepower_frame_04.png",
+      "size": [
+        380,
+        200
+      ],
+      "edge_margins": {
+        "left": 104,
+        "top": 22,
+        "right": 16,
+        "bottom": 20
+      }
+    },
+    {
+      "role": "battle_body_r:idle_master_override",
+      "path": "assets/characters/pobeda/processed/battle/pobeda_battle_body_r.png",
+      "size": [
+        272,
+        246
+      ],
+      "edge_margins": {
+        "left": 25,
+        "top": 16,
+        "right": 17,
+        "bottom": 23
+      }
+    },
+    {
+      "role": "vfx:aircraft_path",
+      "crop": {
+        "component_bbox": [
+          111,
+          128,
+          323,
+          326
+        ],
+        "final_crop_box": [
+          93,
+          110,
+          341,
+          344
+        ],
+        "component_area": 1353,
+        "output_edge_margins": {
+          "left": 135,
+          "top": 18,
+          "right": 19,
+          "bottom": 50
+        }
+      },
+      "path": "assets/characters/pobeda/processed/vfx/pobeda_vfx_aircraft_path.png",
+      "size": [
+        384,
+        276
+      ],
+      "edge_margins": {
+        "left": 135,
+        "top": 18,
+        "right": 19,
+        "bottom": 50
+      }
+    },
+    {
+      "role": "vfx:aircraft_launch_flash",
+      "crop": {
+        "component_bbox": [
+          154,
+          141,
+          281,
+          351
+        ],
+        "final_crop_box": [
+          136,
+          123,
+          299,
+          369
+        ],
+        "component_area": 10163,
+        "output_edge_margins": {
+          "left": 25,
+          "top": 19,
+          "right": 18,
+          "bottom": 85
+        }
+      },
+      "path": "assets/characters/pobeda/processed/vfx/pobeda_vfx_aircraft_launch_flash.png",
+      "size": [
+        192,
+        314
+      ],
+      "edge_margins": {
+        "left": 25,
+        "top": 19,
+        "right": 18,
+        "bottom": 85
+      }
+    },
+    {
+      "role": "vfx:aircraft_formation",
+      "crop": {
+        "component_bbox": [
+          187,
+          85,
+          254,
+          288
+        ],
+        "final_crop_box": [
+          169,
+          67,
+          272,
+          306
+        ],
+        "component_area": 2951,
+        "output_edge_margins": {
+          "left": 20,
+          "top": 64,
+          "right": 19,
+          "bottom": 19
+        }
+      },
+      "path": "assets/characters/pobeda/processed/vfx/pobeda_vfx_aircraft_formation.png",
+      "size": [
+        142,
+        286
+      ],
+      "edge_margins": {
+        "left": 20,
+        "top": 64,
+        "right": 19,
+        "bottom": 19
+      }
+    },
+    {
+      "role": "vfx:aircraft_explosion",
+      "crop": {
+        "component_bbox": [
+          69,
+          129,
+          342,
+          360
+        ],
+        "final_crop_box": [
+          51,
+          111,
+          360,
+          378
+        ],
+        "component_area": 19799,
+        "output_edge_margins": {
+          "left": 25,
+          "top": 43,
+          "right": 18,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/pobeda/processed/vfx/pobeda_vfx_aircraft_explosion.png",
+      "size": [
+        316,
+        310
+      ],
+      "edge_margins": {
+        "left": 25,
+        "top": 43,
+        "right": 18,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "vfx:airstrike_area",
+      "crop": {
+        "component_bbox": [
+          66,
+          129,
+          395,
+          308
+        ],
+        "final_crop_box": [
+          48,
+          111,
+          413,
+          326
+        ],
+        "component_area": 6579,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 18,
+          "right": 19,
+          "bottom": 19
+        }
+      },
+      "path": "assets/characters/pobeda/processed/vfx/pobeda_vfx_airstrike_area.png",
+      "size": [
+        366,
+        216
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 18,
+        "right": 19,
+        "bottom": 19
+      }
+    },
+    {
+      "role": "vfx:aircraft_recovery",
+      "crop": {
+        "component_bbox": [
+          171,
+          102,
+          269,
+          323
+        ],
+        "final_crop_box": [
+          153,
+          84,
+          287,
+          341
+        ],
+        "component_area": 12885,
+        "output_edge_margins": {
+          "left": 21,
+          "top": 19,
+          "right": 19,
+          "bottom": 73
+        }
+      },
+      "path": "assets/characters/pobeda/processed/vfx/pobeda_vfx_aircraft_recovery.png",
+      "size": [
+        138,
+        324
+      ],
+      "edge_margins": {
+        "left": 21,
+        "top": 19,
+        "right": 19,
+        "bottom": 73
+      }
+    },
+    {
+      "role": "vfx:aa_burst",
+      "crop": {
+        "component_bbox": [
+          152,
+          135,
+          269,
+          309
+        ],
+        "final_crop_box": [
+          134,
+          117,
+          287,
+          327
+        ],
+        "component_area": 8750,
+        "output_edge_margins": {
+          "left": 25,
+          "top": 26,
+          "right": 18,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/pobeda/processed/vfx/pobeda_vfx_aa_burst.png",
+      "size": [
+        196,
+        236
+      ],
+      "edge_margins": {
+        "left": 25,
+        "top": 26,
+        "right": 18,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "vfx:wake_carrier",
+      "crop": {
+        "component_bbox": [
+          47,
+          91,
+          352,
+          343
+        ],
+        "final_crop_box": [
+          29,
+          73,
+          370,
+          361
+        ],
+        "component_area": 51416,
+        "output_edge_margins": {
+          "left": 22,
+          "top": 19,
+          "right": 19,
+          "bottom": 19
+        }
+      },
+      "path": "assets/characters/pobeda/processed/vfx/pobeda_vfx_wake_carrier.png",
+      "size": [
+        346,
+        290
+      ],
+      "edge_margins": {
+        "left": 22,
+        "top": 19,
+        "right": 19,
+        "bottom": 19
+      }
+    }
+  ]
+}

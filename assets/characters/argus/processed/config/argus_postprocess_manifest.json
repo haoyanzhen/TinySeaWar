@@ -1,0 +1,1375 @@
+{
+  "character_id": "argus",
+  "source": "tools/art_pipeline/postprocess_generated_character.py",
+  "method": "green_screen_auto_grid_and_component_split",
+  "outputs": [
+    {
+      "role": "source_alpha:concept_full",
+      "path": "assets/characters/argus/processed/source_alpha/argus_concept_full_alpha_source.png",
+      "size": [
+        1024,
+        1536
+      ],
+      "edge_margins": {
+        "left": 24,
+        "top": 44,
+        "right": 54,
+        "bottom": 53
+      }
+    },
+    {
+      "role": "source_alpha:ui_sheet",
+      "path": "assets/characters/argus/processed/source_alpha/argus_ui_sheet_alpha_source.png",
+      "size": [
+        1774,
+        887
+      ],
+      "edge_margins": {
+        "left": 62,
+        "top": 34,
+        "right": 92,
+        "bottom": 52
+      }
+    },
+    {
+      "role": "source_alpha:battle_grid",
+      "path": "assets/characters/argus/processed/source_alpha/argus_battle_asset_grid_alpha_source.png",
+      "size": [
+        1774,
+        887
+      ],
+      "edge_margins": {
+        "left": 91,
+        "top": 62,
+        "right": 55,
+        "bottom": 96
+      }
+    },
+    {
+      "role": "source_alpha:vfx_sheet",
+      "path": "assets/characters/argus/processed/source_alpha/argus_vfx_reference_sheet_alpha_source.png",
+      "size": [
+        1774,
+        887
+      ],
+      "edge_margins": {
+        "left": 66,
+        "top": 85,
+        "right": 93,
+        "bottom": 101
+      }
+    },
+    {
+      "role": "source_alpha:anim_master",
+      "path": "assets/characters/argus/processed/source_alpha/argus_anim_5x4_master_alpha_source.png",
+      "size": [
+        1122,
+        1402
+      ],
+      "edge_margins": {
+        "left": 31,
+        "top": 47,
+        "right": 32,
+        "bottom": 73
+      }
+    },
+    {
+      "role": "full_body",
+      "crop": {
+        "content_bbox": [
+          24,
+          44,
+          970,
+          1483
+        ],
+        "final_crop_box": [
+          12,
+          32,
+          982,
+          1495
+        ],
+        "output_edge_margins": {
+          "left": 37,
+          "top": 232,
+          "right": 13,
+          "bottom": 13
+        }
+      },
+      "path": "assets/characters/argus/processed/ui/argus_illust_full_alpha.png",
+      "size": [
+        996,
+        1684
+      ],
+      "edge_margins": {
+        "left": 37,
+        "top": 232,
+        "right": 13,
+        "bottom": 13
+      }
+    },
+    {
+      "role": "half_body",
+      "crop": {
+        "content_bbox": [
+          53,
+          16,
+          999,
+          1052
+        ],
+        "final_crop_box": [
+          37,
+          0,
+          1015,
+          1068
+        ],
+        "output_edge_margins": {
+          "left": 53,
+          "top": 16,
+          "right": 17,
+          "bottom": 38
+        }
+      },
+      "path": "assets/characters/argus/processed/ui/argus_illust_half_alpha.png",
+      "size": [
+        1016,
+        1090
+      ],
+      "edge_margins": {
+        "left": 53,
+        "top": 16,
+        "right": 17,
+        "bottom": 38
+      }
+    },
+    {
+      "role": "skill_cutin",
+      "crop": {
+        "content_bbox": [
+          448,
+          16,
+          1394,
+          850
+        ],
+        "final_crop_box": [
+          432,
+          0,
+          1410,
+          866
+        ],
+        "output_edge_margins": {
+          "left": 49,
+          "top": 16,
+          "right": 17,
+          "bottom": 156
+        }
+      },
+      "path": "assets/characters/argus/processed/ui/argus_illust_skill_cutin_alpha.png",
+      "size": [
+        1012,
+        1006
+      ],
+      "edge_margins": {
+        "left": 49,
+        "top": 16,
+        "right": 17,
+        "bottom": 156
+      }
+    },
+    {
+      "role": "ui_portrait",
+      "crop": {
+        "content_bbox": [
+          62,
+          34,
+          443,
+          412
+        ],
+        "final_crop_box": [
+          44,
+          16,
+          443,
+          430
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 72,
+          "bottom": 70
+        }
+      },
+      "path": "assets/characters/argus/processed/ui/argus_ui_portrait.png",
+      "size": [
+        472,
+        466
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 18,
+        "right": 72,
+        "bottom": 70
+      }
+    },
+    {
+      "role": "ui_portrait_small",
+      "crop": {
+        "content_bbox": [
+          0,
+          74,
+          411,
+          412
+        ],
+        "final_crop_box": [
+          0,
+          56,
+          429,
+          430
+        ],
+        "output_edge_margins": {
+          "left": 18,
+          "top": 19,
+          "right": 153,
+          "bottom": 43
+        }
+      },
+      "path": "assets/characters/argus/processed/ui/argus_ui_portrait_small.png",
+      "size": [
+        582,
+        400
+      ],
+      "edge_margins": {
+        "left": 164,
+        "top": 19,
+        "right": 153,
+        "bottom": 44
+      }
+    },
+    {
+      "role": "ui_chibi_head",
+      "crop": {
+        "content_bbox": [
+          79,
+          97,
+          394,
+          391
+        ],
+        "final_crop_box": [
+          61,
+          79,
+          412,
+          409
+        ],
+        "output_edge_margins": {
+          "left": 18,
+          "top": 18,
+          "right": 19,
+          "bottom": 28
+        }
+      },
+      "path": "assets/characters/argus/processed/ui/argus_ui_chibi_head.png",
+      "size": [
+        352,
+        340
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 18,
+        "right": 19,
+        "bottom": 28
+      }
+    },
+    {
+      "role": "expr_default",
+      "crop": {
+        "content_bbox": [
+          72,
+          45,
+          353,
+          411
+        ],
+        "final_crop_box": [
+          54,
+          27,
+          371,
+          429
+        ],
+        "output_edge_margins": {
+          "left": 22,
+          "top": 19,
+          "right": 19,
+          "bottom": 51
+        }
+      },
+      "path": "assets/characters/argus/processed/ui/argus_expr_default.png",
+      "size": [
+        322,
+        436
+      ],
+      "edge_margins": {
+        "left": 22,
+        "top": 19,
+        "right": 19,
+        "bottom": 51
+      }
+    },
+    {
+      "role": "expr_serious",
+      "crop": {
+        "content_bbox": [
+          118,
+          15,
+          414,
+          392
+        ],
+        "final_crop_box": [
+          100,
+          0,
+          432,
+          410
+        ],
+        "output_edge_margins": {
+          "left": 22,
+          "top": 18,
+          "right": 18,
+          "bottom": 53
+        }
+      },
+      "path": "assets/characters/argus/processed/ui/argus_expr_serious.png",
+      "size": [
+        336,
+        448
+      ],
+      "edge_margins": {
+        "left": 22,
+        "top": 18,
+        "right": 18,
+        "bottom": 53
+      }
+    },
+    {
+      "role": "expr_hit",
+      "crop": {
+        "content_bbox": [
+          65,
+          18,
+          416,
+          392
+        ],
+        "final_crop_box": [
+          47,
+          0,
+          434,
+          410
+        ],
+        "output_edge_margins": {
+          "left": 18,
+          "top": 19,
+          "right": 49,
+          "bottom": 69
+        }
+      },
+      "path": "assets/characters/argus/processed/ui/argus_expr_hit.png",
+      "size": [
+        418,
+        462
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 19,
+        "right": 49,
+        "bottom": 69
+      }
+    },
+    {
+      "role": "ui_skill",
+      "crop": {
+        "content_bbox": [
+          74,
+          59,
+          378,
+          365
+        ],
+        "final_crop_box": [
+          56,
+          41,
+          396,
+          383
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 19,
+          "bottom": 19
+        }
+      },
+      "path": "assets/characters/argus/processed/ui/argus_ui_skill_airstrike.png",
+      "size": [
+        342,
+        344
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 19,
+        "right": 19,
+        "bottom": 19
+      }
+    },
+    {
+      "role": "class_icon",
+      "crop": {
+        "content_bbox": [
+          49,
+          60,
+          348,
+          364
+        ],
+        "final_crop_box": [
+          31,
+          42,
+          366,
+          382
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 20,
+          "right": 18,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/argus/processed/ui/argus_ui_class_carrier.png",
+      "size": [
+        336,
+        342
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 20,
+        "right": 18,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "battle_body_r",
+      "crop": {
+        "component_bbox": [
+          150,
+          62,
+          330,
+          380
+        ],
+        "final_crop_box": [
+          132,
+          44,
+          348,
+          398
+        ],
+        "component_area": 34011,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 63,
+          "right": 27,
+          "bottom": 19
+        }
+      },
+      "path": "assets/characters/argus/processed/battle/argus_battle_body_r.png",
+      "size": [
+        226,
+        400
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 63,
+        "right": 27,
+        "bottom": 19
+      }
+    },
+    {
+      "role": "battle_rig_base",
+      "crop": {
+        "component_bbox": [
+          46,
+          74,
+          387,
+          371
+        ],
+        "final_crop_box": [
+          28,
+          56,
+          405,
+          389
+        ],
+        "component_area": 45937,
+        "output_edge_margins": {
+          "left": 42,
+          "top": 18,
+          "right": 19,
+          "bottom": 87
+        }
+      },
+      "path": "assets/characters/argus/processed/battle/argus_battle_rig_base.png",
+      "size": [
+        402,
+        402
+      ],
+      "edge_margins": {
+        "left": 42,
+        "top": 18,
+        "right": 19,
+        "bottom": 87
+      }
+    },
+    {
+      "role": "battle_flight_deck",
+      "crop": {
+        "component_bbox": [
+          40,
+          138,
+          383,
+          329
+        ],
+        "final_crop_box": [
+          22,
+          120,
+          401,
+          347
+        ],
+        "component_area": 30389,
+        "output_edge_margins": {
+          "left": 22,
+          "top": 24,
+          "right": 19,
+          "bottom": 19
+        }
+      },
+      "path": "assets/characters/argus/processed/battle/argus_battle_flight_deck.png",
+      "size": [
+        384,
+        234
+      ],
+      "edge_margins": {
+        "left": 22,
+        "top": 24,
+        "right": 19,
+        "bottom": 19
+      }
+    },
+    {
+      "role": "battle_aircraft_group_01",
+      "crop": {
+        "component_bbox": [
+          42,
+          236,
+          198,
+          323
+        ],
+        "final_crop_box": [
+          24,
+          218,
+          216,
+          341
+        ],
+        "component_area": 6376,
+        "output_edge_margins": {
+          "left": 25,
+          "top": 19,
+          "right": 19,
+          "bottom": 20
+        }
+      },
+      "path": "assets/characters/argus/processed/battle/argus_battle_aircraft_group_01.png",
+      "size": [
+        200,
+        126
+      ],
+      "edge_margins": {
+        "left": 25,
+        "top": 19,
+        "right": 19,
+        "bottom": 20
+      }
+    },
+    {
+      "role": "battle_aircraft_launch_marker",
+      "crop": {
+        "component_bbox": [
+          91,
+          105,
+          386,
+          305
+        ],
+        "final_crop_box": [
+          73,
+          87,
+          404,
+          323
+        ],
+        "component_area": 32027,
+        "output_edge_margins": {
+          "left": 20,
+          "top": 26,
+          "right": 19,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/argus/processed/battle/argus_battle_aircraft_launch_marker.png",
+      "size": [
+        334,
+        244
+      ],
+      "edge_margins": {
+        "left": 20,
+        "top": 26,
+        "right": 19,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "battle_aircraft_recovery_marker",
+      "crop": {
+        "component_bbox": [
+          68,
+          106,
+          359,
+          303
+        ],
+        "final_crop_box": [
+          50,
+          88,
+          377,
+          321
+        ],
+        "component_area": 31328,
+        "output_edge_margins": {
+          "left": 21,
+          "top": 25,
+          "right": 18,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/argus/processed/battle/argus_battle_aircraft_recovery_marker.png",
+      "size": [
+        330,
+        240
+      ],
+      "edge_margins": {
+        "left": 21,
+        "top": 25,
+        "right": 18,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "battle_radar_node",
+      "crop": {
+        "component_bbox": [
+          123,
+          71,
+          281,
+          313
+        ],
+        "final_crop_box": [
+          105,
+          53,
+          299,
+          331
+        ],
+        "component_area": 23588,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 18,
+          "right": 22,
+          "bottom": 38
+        }
+      },
+      "path": "assets/characters/argus/processed/battle/argus_battle_radar_node.png",
+      "size": [
+        198,
+        298
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 18,
+        "right": 22,
+        "bottom": 38
+      }
+    },
+    {
+      "role": "battle_wake_origin_marker",
+      "crop": {
+        "component_bbox": [
+          126,
+          75,
+          295,
+          348
+        ],
+        "final_crop_box": [
+          108,
+          57,
+          313,
+          366
+        ],
+        "component_area": 28918,
+        "output_edge_margins": {
+          "left": 28,
+          "top": 19,
+          "right": 18,
+          "bottom": 39
+        }
+      },
+      "path": "assets/characters/argus/processed/battle/argus_battle_wake_origin_marker.png",
+      "size": [
+        240,
+        332
+      ],
+      "edge_margins": {
+        "left": 40,
+        "top": 20,
+        "right": 31,
+        "bottom": 39
+      }
+    },
+    {
+      "role": "anim_idle_frame_01",
+      "path": "assets/characters/argus/processed/anim/argus_anim_idle_frame_01.png",
+      "size": [
+        212,
+        234
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 16,
+        "right": 21,
+        "bottom": 24
+      }
+    },
+    {
+      "role": "anim_idle_keyframe",
+      "path": "assets/characters/argus/processed/anim/argus_anim_idle_keyframe.png",
+      "size": [
+        212,
+        234
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 16,
+        "right": 21,
+        "bottom": 24
+      }
+    },
+    {
+      "role": "anim_idle_frame_02",
+      "path": "assets/characters/argus/processed/anim/argus_anim_idle_frame_02.png",
+      "size": [
+        212,
+        234
+      ],
+      "edge_margins": {
+        "left": 16,
+        "top": 16,
+        "right": 21,
+        "bottom": 24
+      }
+    },
+    {
+      "role": "anim_idle_frame_03",
+      "path": "assets/characters/argus/processed/anim/argus_anim_idle_frame_03.png",
+      "size": [
+        212,
+        234
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 16,
+        "right": 21,
+        "bottom": 24
+      }
+    },
+    {
+      "role": "anim_idle_frame_04",
+      "path": "assets/characters/argus/processed/anim/argus_anim_idle_frame_04.png",
+      "size": [
+        212,
+        234
+      ],
+      "edge_margins": {
+        "left": 16,
+        "top": 16,
+        "right": 22,
+        "bottom": 24
+      }
+    },
+    {
+      "role": "anim_move_frame_01",
+      "path": "assets/characters/argus/processed/anim/argus_anim_move_frame_01.png",
+      "size": [
+        228,
+        238
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 17,
+        "right": 32,
+        "bottom": 27
+      }
+    },
+    {
+      "role": "anim_move_keyframe",
+      "path": "assets/characters/argus/processed/anim/argus_anim_move_keyframe.png",
+      "size": [
+        228,
+        238
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 17,
+        "right": 32,
+        "bottom": 27
+      }
+    },
+    {
+      "role": "anim_move_frame_02",
+      "path": "assets/characters/argus/processed/anim/argus_anim_move_frame_02.png",
+      "size": [
+        228,
+        238
+      ],
+      "edge_margins": {
+        "left": 16,
+        "top": 17,
+        "right": 29,
+        "bottom": 27
+      }
+    },
+    {
+      "role": "anim_move_frame_03",
+      "path": "assets/characters/argus/processed/anim/argus_anim_move_frame_03.png",
+      "size": [
+        228,
+        238
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 17,
+        "right": 32,
+        "bottom": 27
+      }
+    },
+    {
+      "role": "anim_move_frame_04",
+      "path": "assets/characters/argus/processed/anim/argus_anim_move_frame_04.png",
+      "size": [
+        228,
+        238
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 17,
+        "right": 28,
+        "bottom": 28
+      }
+    },
+    {
+      "role": "anim_attack_frame_01",
+      "path": "assets/characters/argus/processed/anim/argus_anim_attack_frame_01.png",
+      "size": [
+        214,
+        234
+      ],
+      "edge_margins": {
+        "left": 16,
+        "top": 17,
+        "right": 26,
+        "bottom": 22
+      }
+    },
+    {
+      "role": "anim_attack_keyframe",
+      "path": "assets/characters/argus/processed/anim/argus_anim_attack_keyframe.png",
+      "size": [
+        214,
+        234
+      ],
+      "edge_margins": {
+        "left": 16,
+        "top": 17,
+        "right": 26,
+        "bottom": 22
+      }
+    },
+    {
+      "role": "anim_attack_frame_02",
+      "path": "assets/characters/argus/processed/anim/argus_anim_attack_frame_02.png",
+      "size": [
+        214,
+        234
+      ],
+      "edge_margins": {
+        "left": 16,
+        "top": 18,
+        "right": 26,
+        "bottom": 22
+      }
+    },
+    {
+      "role": "anim_attack_frame_03",
+      "path": "assets/characters/argus/processed/anim/argus_anim_attack_frame_03.png",
+      "size": [
+        214,
+        234
+      ],
+      "edge_margins": {
+        "left": 17,
+        "top": 18,
+        "right": 27,
+        "bottom": 22
+      }
+    },
+    {
+      "role": "anim_attack_frame_04",
+      "path": "assets/characters/argus/processed/anim/argus_anim_attack_frame_04.png",
+      "size": [
+        214,
+        234
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 18,
+        "right": 26,
+        "bottom": 22
+      }
+    },
+    {
+      "role": "anim_hit_frame_01",
+      "path": "assets/characters/argus/processed/anim/argus_anim_hit_frame_01.png",
+      "size": [
+        216,
+        232
+      ],
+      "edge_margins": {
+        "left": 22,
+        "top": 19,
+        "right": 19,
+        "bottom": 25
+      }
+    },
+    {
+      "role": "anim_hit_keyframe",
+      "path": "assets/characters/argus/processed/anim/argus_anim_hit_keyframe.png",
+      "size": [
+        216,
+        232
+      ],
+      "edge_margins": {
+        "left": 22,
+        "top": 19,
+        "right": 19,
+        "bottom": 25
+      }
+    },
+    {
+      "role": "anim_hit_frame_02",
+      "path": "assets/characters/argus/processed/anim/argus_anim_hit_frame_02.png",
+      "size": [
+        216,
+        232
+      ],
+      "edge_margins": {
+        "left": 27,
+        "top": 18,
+        "right": 25,
+        "bottom": 25
+      }
+    },
+    {
+      "role": "anim_hit_frame_03",
+      "path": "assets/characters/argus/processed/anim/argus_anim_hit_frame_03.png",
+      "size": [
+        216,
+        232
+      ],
+      "edge_margins": {
+        "left": 39,
+        "top": 19,
+        "right": 17,
+        "bottom": 29
+      }
+    },
+    {
+      "role": "anim_hit_frame_04",
+      "path": "assets/characters/argus/processed/anim/argus_anim_hit_frame_04.png",
+      "size": [
+        216,
+        232
+      ],
+      "edge_margins": {
+        "left": 23,
+        "top": 17,
+        "right": 22,
+        "bottom": 25
+      }
+    },
+    {
+      "role": "anim_firepower_frame_01",
+      "path": "assets/characters/argus/processed/anim/argus_anim_firepower_frame_01.png",
+      "size": [
+        204,
+        236
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 17,
+        "right": 17,
+        "bottom": 24
+      }
+    },
+    {
+      "role": "anim_firepower_keyframe",
+      "path": "assets/characters/argus/processed/anim/argus_anim_firepower_keyframe.png",
+      "size": [
+        204,
+        236
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 17,
+        "right": 17,
+        "bottom": 24
+      }
+    },
+    {
+      "role": "anim_firepower_frame_02",
+      "path": "assets/characters/argus/processed/anim/argus_anim_firepower_frame_02.png",
+      "size": [
+        204,
+        236
+      ],
+      "edge_margins": {
+        "left": 17,
+        "top": 17,
+        "right": 18,
+        "bottom": 25
+      }
+    },
+    {
+      "role": "anim_firepower_frame_03",
+      "path": "assets/characters/argus/processed/anim/argus_anim_firepower_frame_03.png",
+      "size": [
+        204,
+        236
+      ],
+      "edge_margins": {
+        "left": 17,
+        "top": 17,
+        "right": 17,
+        "bottom": 24
+      }
+    },
+    {
+      "role": "anim_firepower_frame_04",
+      "path": "assets/characters/argus/processed/anim/argus_anim_firepower_frame_04.png",
+      "size": [
+        204,
+        236
+      ],
+      "edge_margins": {
+        "left": 22,
+        "top": 17,
+        "right": 18,
+        "bottom": 25
+      }
+    },
+    {
+      "role": "battle_body_r:idle_master_override",
+      "path": "assets/characters/argus/processed/battle/argus_battle_body_r.png",
+      "size": [
+        212,
+        234
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 16,
+        "right": 21,
+        "bottom": 24
+      }
+    },
+    {
+      "role": "vfx:aircraft_path",
+      "crop": {
+        "component_bbox": [
+          111,
+          128,
+          323,
+          326
+        ],
+        "final_crop_box": [
+          93,
+          110,
+          341,
+          344
+        ],
+        "component_area": 1353,
+        "output_edge_margins": {
+          "left": 135,
+          "top": 18,
+          "right": 19,
+          "bottom": 50
+        }
+      },
+      "path": "assets/characters/argus/processed/vfx/argus_vfx_aircraft_path.png",
+      "size": [
+        384,
+        276
+      ],
+      "edge_margins": {
+        "left": 135,
+        "top": 18,
+        "right": 19,
+        "bottom": 50
+      }
+    },
+    {
+      "role": "vfx:aircraft_launch_flash",
+      "crop": {
+        "component_bbox": [
+          154,
+          141,
+          281,
+          351
+        ],
+        "final_crop_box": [
+          136,
+          123,
+          299,
+          369
+        ],
+        "component_area": 10163,
+        "output_edge_margins": {
+          "left": 25,
+          "top": 19,
+          "right": 18,
+          "bottom": 85
+        }
+      },
+      "path": "assets/characters/argus/processed/vfx/argus_vfx_aircraft_launch_flash.png",
+      "size": [
+        192,
+        314
+      ],
+      "edge_margins": {
+        "left": 25,
+        "top": 19,
+        "right": 18,
+        "bottom": 85
+      }
+    },
+    {
+      "role": "vfx:aircraft_formation",
+      "crop": {
+        "component_bbox": [
+          187,
+          85,
+          254,
+          288
+        ],
+        "final_crop_box": [
+          169,
+          67,
+          272,
+          306
+        ],
+        "component_area": 2951,
+        "output_edge_margins": {
+          "left": 20,
+          "top": 64,
+          "right": 19,
+          "bottom": 19
+        }
+      },
+      "path": "assets/characters/argus/processed/vfx/argus_vfx_aircraft_formation.png",
+      "size": [
+        142,
+        286
+      ],
+      "edge_margins": {
+        "left": 20,
+        "top": 64,
+        "right": 19,
+        "bottom": 19
+      }
+    },
+    {
+      "role": "vfx:aircraft_explosion",
+      "crop": {
+        "component_bbox": [
+          69,
+          129,
+          342,
+          360
+        ],
+        "final_crop_box": [
+          51,
+          111,
+          360,
+          378
+        ],
+        "component_area": 19799,
+        "output_edge_margins": {
+          "left": 25,
+          "top": 43,
+          "right": 18,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/argus/processed/vfx/argus_vfx_aircraft_explosion.png",
+      "size": [
+        316,
+        310
+      ],
+      "edge_margins": {
+        "left": 25,
+        "top": 43,
+        "right": 18,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "vfx:airstrike_area",
+      "crop": {
+        "component_bbox": [
+          66,
+          129,
+          395,
+          308
+        ],
+        "final_crop_box": [
+          48,
+          111,
+          413,
+          326
+        ],
+        "component_area": 6579,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 18,
+          "right": 19,
+          "bottom": 19
+        }
+      },
+      "path": "assets/characters/argus/processed/vfx/argus_vfx_airstrike_area.png",
+      "size": [
+        366,
+        216
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 18,
+        "right": 19,
+        "bottom": 19
+      }
+    },
+    {
+      "role": "vfx:aircraft_recovery",
+      "crop": {
+        "component_bbox": [
+          171,
+          102,
+          269,
+          323
+        ],
+        "final_crop_box": [
+          153,
+          84,
+          287,
+          341
+        ],
+        "component_area": 12885,
+        "output_edge_margins": {
+          "left": 21,
+          "top": 19,
+          "right": 19,
+          "bottom": 73
+        }
+      },
+      "path": "assets/characters/argus/processed/vfx/argus_vfx_aircraft_recovery.png",
+      "size": [
+        138,
+        324
+      ],
+      "edge_margins": {
+        "left": 21,
+        "top": 19,
+        "right": 19,
+        "bottom": 73
+      }
+    },
+    {
+      "role": "vfx:aa_burst",
+      "crop": {
+        "component_bbox": [
+          152,
+          135,
+          269,
+          309
+        ],
+        "final_crop_box": [
+          134,
+          117,
+          287,
+          327
+        ],
+        "component_area": 8750,
+        "output_edge_margins": {
+          "left": 25,
+          "top": 26,
+          "right": 18,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/argus/processed/vfx/argus_vfx_aa_burst.png",
+      "size": [
+        196,
+        236
+      ],
+      "edge_margins": {
+        "left": 25,
+        "top": 26,
+        "right": 18,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "vfx:wake_carrier",
+      "crop": {
+        "component_bbox": [
+          47,
+          91,
+          352,
+          343
+        ],
+        "final_crop_box": [
+          29,
+          73,
+          370,
+          361
+        ],
+        "component_area": 51416,
+        "output_edge_margins": {
+          "left": 22,
+          "top": 19,
+          "right": 19,
+          "bottom": 19
+        }
+      },
+      "path": "assets/characters/argus/processed/vfx/argus_vfx_wake_carrier.png",
+      "size": [
+        346,
+        290
+      ],
+      "edge_margins": {
+        "left": 22,
+        "top": 19,
+        "right": 19,
+        "bottom": 19
+      }
+    }
+  ]
+}

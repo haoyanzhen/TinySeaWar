@@ -1,0 +1,250 @@
+{
+  "definitions": [
+    {
+      "id": "visual.projectile.shell.medium",
+      "aliases": [
+        "visual.projectile.shell",
+        "shell.medium",
+        "shell"
+      ],
+      "projectile_id": "projectile.shell",
+      "projectile_type": "Shell",
+      "sprite": "assets/vfx/combat/projectiles/shells/projectile_shell_medium.png",
+      "trail_sprite": "assets/vfx/combat/trails/vfx_trail_shell_medium_01.png",
+      "trail_profile_id": "vfx.profile.shell_trail.medium",
+      "impact_profile": "vfx.profile.shell_impact.medium",
+      "miss_profile": "vfx.profile.water_impact.medium",
+      "trail_color": "#ffd777",
+      "trail_length": 34.0,
+      "scale": 0.35,
+      "rotation_mode": "Velocity"
+    },
+    {
+      "id": "visual.projectile.shell.small",
+      "aliases": [
+        "shell.small"
+      ],
+      "projectile_id": "projectile.shell",
+      "projectile_type": "Shell",
+      "sprite": "assets/vfx/combat/projectiles/shells/projectile_shell_small.png",
+      "trail_sprite": "assets/vfx/combat/trails/vfx_trail_shell_short_01.png",
+      "trail_profile_id": "vfx.profile.shell_trail.short",
+      "impact_profile": "vfx.profile.shell_impact.small",
+      "miss_profile": "vfx.profile.water_impact.small",
+      "trail_color": "#ffd05e",
+      "trail_length": 26.0,
+      "scale": 0.3,
+      "rotation_mode": "Velocity"
+    },
+    {
+      "id": "visual.projectile.shell.large",
+      "aliases": [
+        "shell.large"
+      ],
+      "projectile_id": "projectile.shell",
+      "projectile_type": "Shell",
+      "sprite": "assets/vfx/combat/projectiles/shells/projectile_shell_large.png",
+      "trail_sprite": "assets/vfx/combat/trails/vfx_trail_shell_long_01.png",
+      "trail_profile_id": "vfx.profile.shell_trail.long",
+      "impact_profile": "vfx.profile.shell_impact.large",
+      "miss_profile": "vfx.profile.water_impact.large",
+      "trail_color": "#ffe089",
+      "trail_length": 42.0,
+      "scale": 0.38,
+      "rotation_mode": "Velocity"
+    },
+    {
+      "id": "visual.projectile.shell.superheavy",
+      "aliases": [
+        "shell.superheavy"
+      ],
+      "projectile_id": "projectile.shell",
+      "projectile_type": "Shell",
+      "sprite": "assets/vfx/combat/projectiles/shells/projectile_shell_superheavy.png",
+      "trail_sprite": "assets/vfx/combat/trails/vfx_trail_shell_long_01.png",
+      "trail_profile_id": "vfx.profile.shell_trail.long",
+      "impact_profile": "vfx.profile.shell_impact.large",
+      "miss_profile": "vfx.profile.water_impact.large",
+      "trail_color": "#fff0a8",
+      "trail_length": 52.0,
+      "scale": 0.42,
+      "rotation_mode": "Velocity"
+    },
+    {
+      "id": "visual.projectile.torpedo.surface",
+      "aliases": [
+        "visual.projectile.surface_torpedo",
+        "torpedo.surface"
+      ],
+      "projectile_id": "projectile.surface_torpedo",
+      "projectile_type": "Torpedo",
+      "sprite": "assets/vfx/combat/projectiles/torpedoes/projectile_torpedo_surface.png",
+      "trail_sprite": "assets/vfx/combat/trails/vfx_trail_torpedo_surface_01.png",
+      "trail_profile_id": "vfx.profile.torpedo_trail.surface",
+      "impact_profile": "vfx.profile.torpedo_impact",
+      "warning_profile": "vfx.profile.torpedo_warning.line",
+      "trail_color": "#8fe8ff",
+      "trail_length": 46.0,
+      "scale": 0.34,
+      "rotation_mode": "Velocity"
+    },
+    {
+      "id": "visual.projectile.torpedo.fast",
+      "aliases": [
+        "torpedo.fast"
+      ],
+      "projectile_id": "projectile.surface_torpedo",
+      "projectile_type": "Torpedo",
+      "sprite": "assets/vfx/combat/projectiles/torpedoes/projectile_torpedo_fast.png",
+      "trail_sprite": "assets/vfx/combat/trails/vfx_trail_torpedo_surface_01.png",
+      "trail_profile_id": "vfx.profile.torpedo_trail.surface",
+      "impact_profile": "vfx.profile.torpedo_impact",
+      "warning_profile": "vfx.profile.torpedo_warning.fan",
+      "trail_color": "#9ff7ff",
+      "trail_length": 56.0,
+      "scale": 0.32,
+      "rotation_mode": "Velocity"
+    },
+    {
+      "id": "visual.projectile.torpedo.heavy",
+      "aliases": [
+        "torpedo.heavy"
+      ],
+      "projectile_id": "projectile.surface_torpedo",
+      "projectile_type": "Torpedo",
+      "sprite": "assets/vfx/combat/projectiles/torpedoes/projectile_torpedo_heavy.png",
+      "trail_sprite": "assets/vfx/combat/trails/vfx_trail_torpedo_surface_01.png",
+      "trail_profile_id": "vfx.profile.torpedo_trail.surface",
+      "impact_profile": "vfx.profile.torpedo_impact",
+      "warning_profile": "vfx.profile.torpedo_warning.fan",
+      "trail_color": "#75d9ff",
+      "trail_length": 48.0,
+      "scale": 0.38,
+      "rotation_mode": "Velocity"
+    },
+    {
+      "id": "visual.projectile.torpedo.submerged",
+      "aliases": [
+        "visual.projectile.submarine_torpedo",
+        "torpedo.submerged",
+        "torpedo.submarine"
+      ],
+      "projectile_id": "projectile.submarine_torpedo",
+      "projectile_type": "Torpedo",
+      "sprite": "assets/vfx/combat/projectiles/torpedoes/projectile_torpedo_submerged.png",
+      "trail_sprite": "assets/vfx/combat/trails/vfx_trail_torpedo_submerged_01.png",
+      "trail_profile_id": "vfx.profile.torpedo_trail.submerged",
+      "impact_profile": "vfx.profile.torpedo_impact",
+      "warning_profile": "vfx.profile.torpedo_warning.line",
+      "trail_color": "#5ec8ff",
+      "trail_length": 38.0,
+      "scale": 0.3,
+      "rotation_mode": "Velocity"
+    },
+    {
+      "id": "visual.projectile.aircraft.bomb",
+      "aliases": [
+        "aircraft.bomb",
+        "bomb.aircraft"
+      ],
+      "projectile_id": "projectile.aircraft_bomb",
+      "projectile_type": "Bomb",
+      "sprite": "assets/vfx/combat/projectiles/bombs/projectile_air_bomb.png",
+      "trail_profile_id": "vfx.profile.aircraft.path",
+      "impact_profile": "vfx.profile.airstrike_impact",
+      "scale": 0.32,
+      "rotation_mode": "Velocity",
+      "arc_mode": "BallisticArc"
+    },
+    {
+      "id": "visual.projectile.torpedo.air",
+      "aliases": [
+        "torpedo.air",
+        "aircraft.torpedo"
+      ],
+      "projectile_id": "projectile.air_torpedo",
+      "projectile_type": "Torpedo",
+      "sprite": "assets/vfx/combat/projectiles/torpedoes/projectile_torpedo_air.png",
+      "trail_sprite": "assets/vfx/combat/trails/vfx_particle_torpedo_bubble_01.png",
+      "trail_profile_id": "vfx.profile.torpedo_trail.surface",
+      "impact_profile": "vfx.profile.torpedo_impact",
+      "warning_profile": "vfx.profile.torpedo_warning.line",
+      "trail_color": "#9eefff",
+      "trail_length": 42.0,
+      "scale": 0.3,
+      "rotation_mode": "Velocity"
+    },
+    {
+      "id": "visual.projectile.aircraft.fighter",
+      "aliases": [
+        "aircraft.fighter"
+      ],
+      "projectile_id": "aircraft.fighter",
+      "projectile_type": "Aircraft",
+      "sprite": "assets/vfx/combat/aircraft/aircraft_fighter_01.png",
+      "trail_profile_id": "vfx.profile.aircraft.path",
+      "hit_profile": "vfx.profile.aircraft.intercept_hit",
+      "fall_profile": "vfx.profile.aircraft.fall",
+      "scale": 0.42,
+      "rotation_mode": "PathTangent"
+    },
+    {
+      "id": "visual.projectile.aircraft.bomber",
+      "aliases": [
+        "aircraft.bomber"
+      ],
+      "projectile_id": "aircraft.bomber",
+      "projectile_type": "Aircraft",
+      "sprite": "assets/vfx/combat/aircraft/aircraft_bomber_01.png",
+      "payload_visual_id": "visual.projectile.aircraft.bomb",
+      "trail_profile_id": "vfx.profile.aircraft.path",
+      "hit_profile": "vfx.profile.aircraft.intercept_hit",
+      "fall_profile": "vfx.profile.aircraft.fall",
+      "scale": 0.44,
+      "rotation_mode": "PathTangent"
+    },
+    {
+      "id": "visual.projectile.aircraft.torpedo_bomber",
+      "aliases": [
+        "aircraft.torpedo_bomber"
+      ],
+      "projectile_id": "aircraft.torpedo_bomber",
+      "projectile_type": "Aircraft",
+      "sprite": "assets/vfx/combat/aircraft/aircraft_torpedo_bomber_01.png",
+      "payload_visual_id": "visual.projectile.torpedo.air",
+      "trail_profile_id": "vfx.profile.aircraft.path",
+      "hit_profile": "vfx.profile.aircraft.intercept_hit",
+      "fall_profile": "vfx.profile.aircraft.fall",
+      "scale": 0.44,
+      "rotation_mode": "PathTangent"
+    },
+    {
+      "id": "visual.projectile.aircraft.scout",
+      "aliases": [
+        "aircraft.scout"
+      ],
+      "projectile_id": "aircraft.scout",
+      "projectile_type": "Aircraft",
+      "sprite": "assets/vfx/combat/aircraft/aircraft_scout_01.png",
+      "trail_profile_id": "vfx.profile.aircraft.path",
+      "hit_profile": "vfx.profile.aircraft.intercept_hit",
+      "fall_profile": "vfx.profile.aircraft.fall",
+      "scale": 0.38,
+      "rotation_mode": "PathTangent"
+    },
+    {
+      "id": "visual.projectile.aircraft.asw",
+      "aliases": [
+        "aircraft.asw"
+      ],
+      "projectile_id": "aircraft.asw",
+      "projectile_type": "Aircraft",
+      "sprite": "assets/vfx/combat/aircraft/aircraft_asw_01.png",
+      "trail_profile_id": "vfx.profile.aircraft.path",
+      "hit_profile": "vfx.profile.aircraft.intercept_hit",
+      "fall_profile": "vfx.profile.aircraft.fall",
+      "scale": 0.4,
+      "rotation_mode": "PathTangent"
+    }
+  ]
+}

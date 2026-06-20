@@ -1,11 +1,15 @@
 extends Node2D
 
 const BattleSession = preload("res://scripts/application/battle_session.gd")
+const BattleEffectDirector = preload("res://scripts/presentation/battle/battle_effect_director.gd")
 
+const MAIN_MENU_SCENE := "res://scenes/menu/main_menu.tscn"
 const FIXED_STEP := 0.1
 const CAMERA_SPEED := 900.0
 const CAMERA_EDGE_MARGIN := 28.0
 const CAMERA_FOLLOW_DAMPING := 7.5
+const UI_ASSET_ROOT := "res://assets/ui/export/2x"
+const DEFAULT_UNIT_SCALE := 0.28
 
 enum OperationMode { NORMAL, AIMING_PRIMARY, TARGETING_SKILL }
 
@@ -25,13 +29,29 @@ var operation_mode := OperationMode.NORMAL
 var skill_target_type := ""
 var current_palette_id := "cloudy"
 var palette_override := ""
+var texture_cache: Dictionary = {}
+var unit_visual_cache: Dictionary = {}
+var result_character_id := ""
+var unit_layer: Node2D
+var projectile_layer: Node2D
+var vfx_layer: Node2D
+var effect_director
 
 
 func _ready() -> void:
 	_ensure_camera_input_actions()
+	_create_presentation_layers()
+	var flow := get_node_or_null("/root/GameFlow")
+	if flow != null:
+		level_id = str(flow.selected_level_id)
 	for argument in OS.get_cmdline_user_args():
 		if argument.begins_with("--level="): level_id = argument.trim_prefix("--level=")
 		elif argument.begins_with("--palette="): palette_override = argument.trim_prefix("--palette=")
+	battle_hud.return_to_menu_requested.connect(_return_to_main_menu)
+	battle_hud.restart_requested.connect(_restart_battle)
+	effect_director = BattleEffectDirector.new()
+	add_child(effect_director)
+	effect_director.setup(unit_layer, projectile_layer, vfx_layer)
 	_start_battle(level_id)
 	if not palette_override.is_empty(): _set_ocean_palette(palette_override)
 
@@ -45,6 +65,7 @@ func _process(delta: float) -> void:
 		_consume_events(events)
 	_update_camera(delta)
 	ocean_surface.set_animation_paused(session.state.get("phase", "") == "Paused")
+	_sync_visuals()
 	_update_hud()
 	queue_redraw()
 
@@ -55,13 +76,21 @@ func _draw() -> void:
 	_draw_map_boundary(snapshot)
 	for contact in snapshot["contacts"].values():
 		var ghost_position: Vector2 = contact["last_known_position"]
-		draw_circle(ghost_position, 22.0, Color(0.9, 0.3, 0.3, 0.2))
-		draw_arc(ghost_position, 29.0, 0.0, TAU, 28, Color(1.0, 0.55, 0.6, 0.55), 2.0)
-	for projectile in snapshot["projectiles"].values():
-		draw_circle(projectile["position"], 5.0, Color("#f5d76e"))
-	for unit in snapshot["units"].values():
-		_draw_unit(unit)
+		_draw_icon_centered("ui_icon_unknown_contact", ghost_position, 0.55, Color(1.0, 0.55, 0.6, 0.65))
+		draw_arc(ghost_position, 33.0, 0.0, TAU, 28, Color(1.0, 0.55, 0.6, 0.55), 2.0)
 	_draw_operation_overlay()
+
+
+func _create_presentation_layers() -> void:
+	projectile_layer = Node2D.new()
+	projectile_layer.name = "ProjectileLayer"
+	unit_layer = Node2D.new()
+	unit_layer.name = "UnitLayer"
+	vfx_layer = Node2D.new()
+	vfx_layer.name = "VfxLayer"
+	add_child(projectile_layer)
+	add_child(unit_layer)
+	add_child(vfx_layer)
 
 
 func _draw_map_boundary(snapshot: Dictionary) -> void:
@@ -73,22 +102,103 @@ func _draw_map_boundary(snapshot: Dictionary) -> void:
 func _draw_unit(unit: Dictionary) -> void:
 	var position: Vector2 = unit["position"]
 	var friendly: bool = unit["faction_id"] == "player"
+	var life_state := str(unit["life_state"])
 	var color := Color("#63c7ff") if friendly else Color("#ff6b6b")
-	if unit["life_state"] == "Sunk": color = Color("#6c7780")
-	var radius := 25.0 if unit["is_flagship"] else 19.0
-	draw_circle(position, radius + 5.0, Color(0.02, 0.08, 0.12, 0.55))
-	draw_circle(position, radius, color)
+	if life_state == "Sunk": color = Color("#6c7780")
+	var radius := float(unit.get("collision_radius", 22.0))
+	draw_circle(position, radius + 12.0, Color(0.02, 0.08, 0.12, 0.28))
+	_draw_unit_art(unit, color)
+	draw_arc(position, radius, 0.0, TAU, 40, Color(0.86, 0.97, 1.0, 0.45), 1.5)
 	var heading_vector := Vector2.RIGHT.rotated(float(unit["heading"]))
-	draw_line(position, position + heading_vector * 42.0, Color.WHITE, 3.0)
+	draw_line(position, position + heading_vector * (radius + 34.0), Color(1.0, 1.0, 1.0, 0.75), 2.5)
 	if unit["entity_id"] == selected_unit_id:
-		draw_arc(position, radius + 12.0, 0.0, TAU, 40, Color("#f8ef9a"), 3.0)
+		_draw_icon_centered("ui_marker_selected", position, 0.85, Color.WHITE)
+		draw_arc(position, radius + 19.0, 0.0, TAU, 40, Color("#f8ef9a"), 3.0)
 	if unit["entity_id"] == focused_target_id:
-		draw_arc(position, radius + 16.0, 0.0, TAU, 40, Color("#ffb35c"), 3.0)
+		_draw_icon_centered("ui_marker_target", position, 0.9, Color.WHITE)
+		draw_arc(position, radius + 25.0, 0.0, TAU, 40, Color("#ffb35c"), 3.0)
+	if bool(unit["is_flagship"]):
+		_draw_icon_centered("ui_marker_flagship", position + Vector2(0.0, -radius - 34.0), 0.42, Color.WHITE)
 	var hp_ratio := float(unit["current_hp"]) / maxf(1.0, float(unit["max_hp"]))
-	draw_rect(Rect2(position + Vector2(-34.0, -43.0), Vector2(68.0, 7.0)), Color("#202931"), true)
-	draw_rect(Rect2(position + Vector2(-34.0, -43.0), Vector2(68.0 * hp_ratio, 7.0)), Color("#70db84"), true)
+	var bar_width := maxf(68.0, radius * 3.2)
+	draw_rect(Rect2(position + Vector2(-bar_width * 0.5, -radius - 28.0), Vector2(bar_width, 7.0)), Color("#202931"), true)
+	draw_rect(Rect2(position + Vector2(-bar_width * 0.5, -radius - 28.0), Vector2(bar_width * hp_ratio, 7.0)), Color("#70db84") if friendly else Color("#ff9a8c"), true)
 	var label := ("[F] " if unit["is_flagship"] else "") + str(unit["display_name"])
-	draw_string(ThemeDB.fallback_font, position + Vector2(-54.0, 62.0), label, HORIZONTAL_ALIGNMENT_CENTER, 108.0, 18, Color.WHITE)
+	draw_string(ThemeDB.fallback_font, position + Vector2(-72.0, radius + 36.0), label, HORIZONTAL_ALIGNMENT_CENTER, 144.0, 18, Color.WHITE)
+
+
+func _draw_unit_art(unit: Dictionary, fallback_color: Color) -> void:
+	var visuals := _unit_visuals(unit)
+	var position: Vector2 = unit["position"]
+	var rotation := float(unit["heading"])
+	var radius := float(unit.get("collision_radius", 22.0))
+	var scales := _unit_art_scales(visuals, radius)
+	var life_state := str(unit.get("life_state", "Alive"))
+	var tint := Color(1.0, 1.0, 1.0, 1.0)
+	if life_state == "Sunk":
+		tint = Color(0.5, 0.58, 0.62, 0.65)
+	if visuals.get("rig") != null:
+		_draw_texture_centered(visuals["rig"], position, rotation, scales["rig"], tint)
+	if visuals.get("body") != null:
+		_draw_texture_centered(visuals["body"], position, rotation, scales["body"], tint)
+	if visuals.get("rig") == null and visuals.get("body") == null:
+		draw_circle(position, radius, fallback_color)
+
+
+func _draw_projectile(projectile: Dictionary) -> void:
+	var position: Vector2 = projectile.get("position", Vector2.ZERO)
+	var velocity: Vector2 = projectile.get("velocity", Vector2.ZERO)
+	var heading := velocity.angle() if velocity.length_squared() > 0.01 else 0.0
+	draw_line(position - Vector2.RIGHT.rotated(heading) * 18.0, position, Color(1.0, 0.92, 0.45, 0.6), 2.0)
+	_draw_icon_centered("ui_icon_gunfire", position, 0.24, Color(1.0, 0.94, 0.6, 0.85))
+
+
+func _draw_icon_centered(icon_name: String, position: Vector2, scale_value: float = 1.0, modulate: Color = Color.WHITE) -> void:
+	var texture := _texture("%s/%s.png" % [UI_ASSET_ROOT, icon_name])
+	if texture == null: return
+	_draw_texture_centered(texture, position, 0.0, scale_value, modulate)
+
+
+func _draw_texture_centered(texture: Texture2D, position: Vector2, rotation: float, scale_value: float, modulate: Color = Color.WHITE) -> void:
+	draw_set_transform(position, rotation, Vector2(scale_value, scale_value))
+	draw_texture(texture, -texture.get_size() * 0.5, modulate)
+	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+
+
+func _unit_visuals(unit: Dictionary) -> Dictionary:
+	var definition_id := str(unit.get("definition_id", ""))
+	if unit_visual_cache.has(definition_id): return unit_visual_cache[definition_id]
+	var slug := definition_id.trim_prefix("ship.")
+	var asset_root := str(unit.get("asset_root", "res://assets/characters/%s/processed" % slug))
+	var visuals := {
+		"rig": _texture("%s/battle/%s_battle_rig_base.png" % [asset_root, slug]),
+		"body": _texture("%s/battle/%s_battle_body_r.png" % [asset_root, slug]),
+	}
+	unit_visual_cache[definition_id] = visuals
+	return visuals
+
+
+func _unit_art_scales(visuals: Dictionary, radius: float) -> Dictionary:
+	var body_texture: Texture2D = visuals.get("body", null)
+	var rig_texture: Texture2D = visuals.get("rig", null)
+	var body_scale := DEFAULT_UNIT_SCALE
+	var rig_scale := DEFAULT_UNIT_SCALE
+	if body_texture != null:
+		var body_target_width := clampf(radius * 3.8, 84.0, 126.0)
+		body_scale = body_target_width / maxf(1.0, float(body_texture.get_width()))
+	if rig_texture != null:
+		var rig_target_width := clampf(radius * 5.0, 108.0, 162.0)
+		rig_scale = rig_target_width / maxf(1.0, float(rig_texture.get_width()))
+	else:
+		rig_scale = body_scale
+	return {"body": body_scale, "rig": rig_scale}
+
+
+func _texture(path: String) -> Texture2D:
+	if texture_cache.has(path): return texture_cache[path]
+	var resource := load(path)
+	texture_cache[path] = resource if resource is Texture2D else null
+	return texture_cache[path]
 
 
 func _draw_operation_overlay() -> void:
@@ -347,11 +457,15 @@ func _unit_at(world_position: Vector2, snapshot: Dictionary) -> Dictionary:
 
 
 func _consume_events(events: Array) -> void:
+	if effect_director != null:
+		effect_director.consume_events(events, session)
 	for event in events:
 		match event.get("event_type", ""):
 			"UnitSunk": _push_message("%s was sunk" % event.get("unit_id", "unit"))
 			"SkillCast": _push_message("%s cast %s" % [event.get("unit_id", "unit"), event.get("skill_id", "skill")])
-			"BattleFinished": _push_message("Battle finished: %s" % event.get("result", {}).get("winner_faction", "?"))
+			"BattleFinished":
+				result_character_id = _random_player_character_id()
+				_push_message("Battle finished: %s" % event.get("result", {}).get("winner_faction", "?"))
 
 
 func _push_message(message: String) -> void:
@@ -368,11 +482,14 @@ func _start_battle(new_level_id: String) -> void:
 	accumulator = 0.0
 	selected_unit_id = ""
 	focused_target_id = ""
+	result_character_id = ""
 	operation_mode = OperationMode.NORMAL
 	skill_target_type = ""
 	camera_mode = "Manual"
 	camera_follow_unit_id = ""
 	recent_messages.clear()
+	if effect_director != null:
+		effect_director.clear()
 	var map_data: Dictionary = session.state.get("map", {})
 	current_palette_id = str(map_data.get("ocean_palette", "day_clear"))
 	ocean_surface.configure(Vector2(float(map_data.get("width", 4096.0)), float(map_data.get("height", 2304.0))), current_palette_id)
@@ -382,7 +499,14 @@ func _start_battle(new_level_id: String) -> void:
 	battle_camera.reset_smoothing()
 	_clamp_camera_to_map()
 	_update_hud()
+	_sync_visuals()
 	queue_redraw()
+
+
+func _sync_visuals() -> void:
+	if effect_director == null or session == null or session.state.is_empty():
+		return
+	effect_director.sync_snapshot(session.snapshot("player", false), selected_unit_id, focused_target_id)
 
 
 func _configure_camera_limits(map_data: Dictionary) -> void:
@@ -413,7 +537,16 @@ func _update_hud() -> void:
 	var selected_name := "None"
 	var selected: Dictionary = session.state.get("units_by_id", {}).get(selected_unit_id, {})
 	if not selected.is_empty(): selected_name = str(selected.get("display_name", selected_unit_id))
-	battle_hud.update_state(session.snapshot("player", false), level_id, recent_messages, camera_mode, selected_name, current_palette_id, session.get_operation_status(selected_unit_id), _operation_mode_name(), session.get_player_slots())
+	var snapshot: Dictionary = session.snapshot("player", false)
+	var half_view := get_viewport_rect().size * 0.5
+	snapshot["camera_rect"] = Rect2(battle_camera.position - half_view, half_view * 2.0)
+	snapshot["selected_unit_id"] = selected_unit_id
+	snapshot["focused_target_id"] = focused_target_id
+	if not snapshot.get("result", {}).is_empty():
+		if result_character_id.is_empty():
+			result_character_id = _random_player_character_id()
+		snapshot["result_character_id"] = result_character_id
+	battle_hud.update_state(snapshot, level_id, recent_messages, camera_mode, selected_name, current_palette_id, session.get_operation_status(selected_unit_id), _operation_mode_name(), session.get_player_slots())
 
 
 func _operation_mode_name() -> String:
@@ -421,3 +554,25 @@ func _operation_mode_name() -> String:
 		OperationMode.AIMING_PRIMARY: return "AIMING_PRIMARY"
 		OperationMode.TARGETING_SKILL: return "TARGETING_SKILL"
 		_: return "NORMAL"
+
+
+func _random_player_character_id() -> String:
+	var candidates: Array[String] = []
+	for unit in session.state.get("units_by_id", {}).values():
+		if str(unit.get("faction_id", "")) != "player": continue
+		var slug := str(unit.get("definition_id", "")).trim_prefix("ship.")
+		if not slug.is_empty(): candidates.append(slug)
+	if candidates.is_empty(): return "warspite"
+	var rng := RandomNumberGenerator.new()
+	rng.randomize()
+	return candidates[rng.randi_range(0, candidates.size() - 1)]
+
+
+func _restart_battle() -> void:
+	_start_battle(level_id)
+
+
+func _return_to_main_menu() -> void:
+	var error := get_tree().change_scene_to_file(MAIN_MENU_SCENE)
+	if error != OK:
+		push_error("Could not return to main menu: %s" % error)

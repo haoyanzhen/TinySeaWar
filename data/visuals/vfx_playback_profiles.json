@@ -1,0 +1,552 @@
+{
+  "definitions": [
+    {
+      "id": "vfx.profile.muzzle_flash.medium",
+      "aliases": [
+        "vfx.profile.muzzle_flash",
+        "muzzle_flash.medium",
+        "muzzle_flash"
+      ],
+      "duration": 0.24,
+      "fps": 12,
+      "loop": false,
+      "anchor": "muzzle",
+      "z_layer": "EffectAboveUnit",
+      "rotation_mode": "OwnerHeading",
+      "scale": 0.21,
+      "follow_owner": false,
+      "blend_mode": "Add",
+      "fade_out": true
+    },
+    {
+      "id": "vfx.profile.muzzle_flash.small",
+      "aliases": [
+        "muzzle_flash.small"
+      ],
+      "duration": 0.18,
+      "fps": 12,
+      "loop": false,
+      "anchor": "muzzle",
+      "z_layer": "EffectAboveUnit",
+      "rotation_mode": "OwnerHeading",
+      "scale": 0.34,
+      "follow_owner": false,
+      "blend_mode": "Add",
+      "fade_out": true
+    },
+    {
+      "id": "vfx.profile.muzzle_flash.large",
+      "aliases": [
+        "muzzle_flash.large"
+      ],
+      "duration": 0.3,
+      "fps": 12,
+      "loop": false,
+      "anchor": "muzzle",
+      "z_layer": "EffectAboveUnit",
+      "rotation_mode": "OwnerHeading",
+      "scale": 0.25,
+      "follow_owner": false,
+      "blend_mode": "Add",
+      "fade_out": true,
+      "screen_shake": 0.04
+    },
+    {
+      "id": "vfx.profile.shell_trail.short",
+      "aliases": [
+        "shell.trail.short"
+      ],
+      "duration": 0.2,
+      "fps": 12,
+      "loop": false,
+      "anchor": "projectile",
+      "z_layer": "ProjectileTrail",
+      "rotation_mode": "Velocity",
+      "scale": 0.32,
+      "follow_owner": false,
+      "blend_mode": "Add",
+      "fade_out": true
+    },
+    {
+      "id": "vfx.profile.shell_trail.medium",
+      "aliases": [
+        "shell.trail.medium"
+      ],
+      "duration": 0.24,
+      "fps": 12,
+      "loop": false,
+      "anchor": "projectile",
+      "z_layer": "ProjectileTrail",
+      "rotation_mode": "Velocity",
+      "scale": 0.38,
+      "follow_owner": false,
+      "blend_mode": "Add",
+      "fade_out": true
+    },
+    {
+      "id": "vfx.profile.shell_trail.long",
+      "aliases": [
+        "shell.trail.long"
+      ],
+      "duration": 0.28,
+      "fps": 12,
+      "loop": false,
+      "anchor": "projectile",
+      "z_layer": "ProjectileTrail",
+      "rotation_mode": "Velocity",
+      "scale": 0.29,
+      "follow_owner": false,
+      "blend_mode": "Add",
+      "fade_out": true
+    },
+    {
+      "id": "vfx.profile.shell_impact.medium",
+      "aliases": [
+        "vfx.profile.shell_impact",
+        "shell_impact",
+        "impact.water.medium"
+      ],
+      "duration": 0.55,
+      "fps": 10,
+      "loop": false,
+      "anchor": "impact",
+      "z_layer": "EffectAboveUnit",
+      "rotation_mode": "None",
+      "scale": 0.44,
+      "follow_owner": false,
+      "blend_mode": "Alpha",
+      "fade_out": true
+    },
+    {
+      "id": "vfx.profile.shell_impact.small",
+      "aliases": [
+        "impact.water.small"
+      ],
+      "duration": 0.42,
+      "fps": 10,
+      "loop": false,
+      "anchor": "impact",
+      "z_layer": "EffectAboveUnit",
+      "rotation_mode": "None",
+      "scale": 0.46,
+      "follow_owner": false,
+      "blend_mode": "Alpha",
+      "fade_out": true
+    },
+    {
+      "id": "vfx.profile.shell_impact.large",
+      "aliases": [
+        "impact.water.large"
+      ],
+      "duration": 0.68,
+      "fps": 10,
+      "loop": false,
+      "anchor": "impact",
+      "z_layer": "EffectAboveUnit",
+      "rotation_mode": "None",
+      "scale": 0.36,
+      "follow_owner": false,
+      "blend_mode": "Alpha",
+      "fade_out": true,
+      "screen_shake": 0.06
+    },
+    {
+      "id": "vfx.profile.water_impact.medium",
+      "aliases": [
+        "water_impact.medium"
+      ],
+      "duration": 0.5,
+      "fps": 10,
+      "loop": false,
+      "anchor": "impact",
+      "z_layer": "EffectAboveUnit",
+      "rotation_mode": "None",
+      "scale": 0.56,
+      "follow_owner": false,
+      "blend_mode": "Alpha",
+      "fade_out": true
+    },
+    {
+      "id": "vfx.profile.water_impact.small",
+      "aliases": [
+        "water_impact.small"
+      ],
+      "duration": 0.38,
+      "fps": 10,
+      "loop": false,
+      "anchor": "impact",
+      "z_layer": "EffectAboveUnit",
+      "rotation_mode": "None",
+      "scale": 0.44,
+      "follow_owner": false,
+      "blend_mode": "Alpha",
+      "fade_out": true
+    },
+    {
+      "id": "vfx.profile.water_impact.large",
+      "aliases": [
+        "water_impact.large"
+      ],
+      "duration": 0.64,
+      "fps": 10,
+      "loop": false,
+      "anchor": "impact",
+      "z_layer": "EffectAboveUnit",
+      "rotation_mode": "None",
+      "scale": 0.7,
+      "follow_owner": false,
+      "blend_mode": "Alpha",
+      "fade_out": true
+    },
+    {
+      "id": "vfx.profile.torpedo_launch",
+      "aliases": [
+        "torpedo.launch.surface"
+      ],
+      "duration": 0.42,
+      "fps": 12,
+      "loop": false,
+      "anchor": "torpedo_port",
+      "z_layer": "ProjectileTrail",
+      "rotation_mode": "OwnerHeading",
+      "scale": 0.46,
+      "follow_owner": false,
+      "blend_mode": "Alpha",
+      "fade_out": true
+    },
+    {
+      "id": "vfx.profile.submarine_torpedo_launch",
+      "aliases": [
+        "torpedo.launch.submerged"
+      ],
+      "duration": 0.46,
+      "fps": 12,
+      "loop": false,
+      "anchor": "torpedo_port",
+      "z_layer": "ProjectileTrail",
+      "rotation_mode": "OwnerHeading",
+      "scale": 0.42,
+      "follow_owner": false,
+      "blend_mode": "Add",
+      "fade_out": true
+    },
+    {
+      "id": "vfx.profile.torpedo_trail.surface",
+      "aliases": [
+        "torpedo.trail.surface"
+      ],
+      "duration": 0.36,
+      "fps": 12,
+      "loop": true,
+      "anchor": "projectile",
+      "z_layer": "ProjectileTrail",
+      "rotation_mode": "Velocity",
+      "scale": 0.42,
+      "follow_owner": false,
+      "blend_mode": "Alpha",
+      "fade_out": true
+    },
+    {
+      "id": "vfx.profile.torpedo_trail.submerged",
+      "aliases": [
+        "torpedo.trail.submerged"
+      ],
+      "duration": 0.36,
+      "fps": 12,
+      "loop": true,
+      "anchor": "projectile",
+      "z_layer": "ProjectileTrail",
+      "rotation_mode": "Velocity",
+      "scale": 0.38,
+      "follow_owner": false,
+      "blend_mode": "Add",
+      "fade_out": true
+    },
+    {
+      "id": "vfx.profile.torpedo_impact",
+      "aliases": [
+        "impact.torpedo.underwater"
+      ],
+      "duration": 0.62,
+      "fps": 10,
+      "loop": false,
+      "anchor": "impact",
+      "z_layer": "EffectAboveUnit",
+      "rotation_mode": "None",
+      "scale": 0.55,
+      "follow_owner": false,
+      "blend_mode": "Add",
+      "fade_out": true,
+      "screen_shake": 0.08
+    },
+    {
+      "id": "vfx.profile.torpedo_warning.line",
+      "aliases": [
+        "torpedo.warning.line"
+      ],
+      "duration": 0.55,
+      "fps": 8,
+      "loop": true,
+      "anchor": "area",
+      "z_layer": "Warning",
+      "rotation_mode": "AimDirection",
+      "scale": 1.0,
+      "follow_owner": false,
+      "blend_mode": "Add",
+      "fade_out": false
+    },
+    {
+      "id": "vfx.profile.torpedo_warning.fan",
+      "aliases": [
+        "torpedo.warning.fan"
+      ],
+      "duration": 0.55,
+      "fps": 8,
+      "loop": true,
+      "anchor": "area",
+      "z_layer": "Warning",
+      "rotation_mode": "AimDirection",
+      "scale": 1.0,
+      "follow_owner": false,
+      "blend_mode": "Add",
+      "fade_out": false
+    },
+    {
+      "id": "vfx.profile.skill_area",
+      "aliases": [
+        "skill.area"
+      ],
+      "duration": 0.85,
+      "fps": 10,
+      "loop": false,
+      "anchor": "area",
+      "z_layer": "Warning",
+      "rotation_mode": "None",
+      "scale": 0.72,
+      "follow_owner": false,
+      "blend_mode": "Add",
+      "fade_out": true
+    },
+    {
+      "id": "vfx.profile.aircraft_launch",
+      "aliases": [
+        "aircraft.launch"
+      ],
+      "duration": 0.7,
+      "fps": 10,
+      "loop": false,
+      "anchor": "aircraft_launch",
+      "z_layer": "AirUnit",
+      "rotation_mode": "OwnerHeading",
+      "scale": 0.5,
+      "follow_owner": false,
+      "blend_mode": "Alpha",
+      "fade_out": true
+    },
+    {
+      "id": "vfx.profile.airstrike_impact",
+      "aliases": [
+        "aircraft.impact"
+      ],
+      "duration": 0.75,
+      "fps": 10,
+      "loop": false,
+      "anchor": "impact",
+      "z_layer": "EffectAboveUnit",
+      "rotation_mode": "None",
+      "scale": 0.62,
+      "follow_owner": false,
+      "blend_mode": "Alpha",
+      "fade_out": true
+    },
+    {
+      "id": "vfx.profile.aircraft.path",
+      "aliases": [
+        "aircraft.path"
+      ],
+      "sprite": "assets/vfx/combat/aircraft/vfx_aircraft_path_01.png",
+      "duration": 0.8,
+      "fps": 10,
+      "loop": true,
+      "anchor": "area",
+      "z_layer": "AirUnit",
+      "rotation_mode": "PathTangent",
+      "scale": 0.55,
+      "follow_owner": false,
+      "blend_mode": "Alpha",
+      "fade_out": false
+    },
+    {
+      "id": "vfx.profile.aircraft.launch_trail",
+      "aliases": [
+        "aircraft.launch_trail",
+        "aircraft.launch"
+      ],
+      "sprite": "assets/vfx/combat/aircraft/vfx_aircraft_launch_trail_01.png",
+      "duration": 0.5,
+      "fps": 10,
+      "loop": false,
+      "anchor": "aircraft_launch",
+      "z_layer": "AirUnit",
+      "rotation_mode": "OwnerHeading",
+      "scale": 0.48,
+      "follow_owner": false,
+      "blend_mode": "Alpha",
+      "fade_out": true
+    },
+    {
+      "id": "vfx.profile.aircraft.landing_trail",
+      "aliases": [
+        "aircraft.landing_trail",
+        "aircraft.landing"
+      ],
+      "sprite": "assets/vfx/combat/aircraft/vfx_aircraft_landing_trail_01.png",
+      "duration": 0.5,
+      "fps": 10,
+      "loop": false,
+      "anchor": "aircraft_recovery",
+      "z_layer": "AirUnit",
+      "rotation_mode": "OwnerHeading",
+      "scale": 0.46,
+      "follow_owner": false,
+      "blend_mode": "Alpha",
+      "fade_out": true
+    },
+    {
+      "id": "vfx.profile.aircraft.intercept_hit",
+      "aliases": [
+        "aircraft.intercept_hit"
+      ],
+      "sprite": "assets/vfx/combat/antiair/vfx_aircraft_intercept_hit_01.png",
+      "duration": 0.28,
+      "fps": 12,
+      "loop": false,
+      "anchor": "aircraft",
+      "z_layer": "AirUnit",
+      "rotation_mode": "None",
+      "scale": 0.34,
+      "follow_owner": false,
+      "blend_mode": "Add",
+      "fade_out": true
+    },
+    {
+      "id": "vfx.profile.aircraft.fall",
+      "aliases": [
+        "aircraft.fall"
+      ],
+      "sprite": "assets/vfx/combat/antiair/vfx_aircraft_fall_explosion_01.png",
+      "duration": 0.42,
+      "fps": 12,
+      "loop": false,
+      "anchor": "aircraft",
+      "z_layer": "AirUnit",
+      "rotation_mode": "None",
+      "scale": 0.42,
+      "follow_owner": false,
+      "blend_mode": "Add",
+      "fade_out": true
+    },
+    {
+      "id": "vfx.profile.aa.tracer.light",
+      "aliases": [
+        "aa.tracer.light"
+      ],
+      "sprite": "assets/vfx/combat/antiair/vfx_antiair_tracer_light_01.png",
+      "duration": 0.2,
+      "fps": 12,
+      "loop": false,
+      "anchor": "aa_origin",
+      "z_layer": "EffectAboveUnit",
+      "rotation_mode": "AimDirection",
+      "scale": 0.28,
+      "follow_owner": false,
+      "blend_mode": "Add",
+      "fade_out": true
+    },
+    {
+      "id": "vfx.profile.aa.tracer.medium",
+      "aliases": [
+        "aa.tracer.medium"
+      ],
+      "sprite": "assets/vfx/combat/antiair/vfx_antiair_tracer_medium_01.png",
+      "duration": 0.24,
+      "fps": 12,
+      "loop": false,
+      "anchor": "aa_origin",
+      "z_layer": "EffectAboveUnit",
+      "rotation_mode": "AimDirection",
+      "scale": 0.34,
+      "follow_owner": false,
+      "blend_mode": "Add",
+      "fade_out": true
+    },
+    {
+      "id": "vfx.profile.aa.burst.small",
+      "aliases": [
+        "aa.burst.small"
+      ],
+      "sprite": "assets/vfx/combat/antiair/vfx_antiair_burst_small_01.png",
+      "duration": 0.3,
+      "fps": 12,
+      "loop": false,
+      "anchor": "aircraft",
+      "z_layer": "AirUnit",
+      "rotation_mode": "None",
+      "scale": 0.36,
+      "follow_owner": false,
+      "blend_mode": "Add",
+      "fade_out": true
+    },
+    {
+      "id": "vfx.profile.submarine.underwater_shadow",
+      "aliases": [
+        "submarine.underwater_shadow"
+      ],
+      "sprite": "assets/vfx/combat/wakes/vfx_wake_submarine_low_01.png",
+      "duration": 0.7,
+      "fps": 8,
+      "loop": true,
+      "anchor": "origin",
+      "z_layer": "UnderUnit",
+      "rotation_mode": "OwnerHeading",
+      "scale": 0.58,
+      "follow_owner": true,
+      "blend_mode": "Alpha",
+      "fade_out": false
+    },
+    {
+      "id": "vfx.profile.submarine.bubble_trail",
+      "aliases": [
+        "submarine.bubble_trail"
+      ],
+      "sprite": "assets/vfx/combat/antisubmarine/vfx_asw_bubble_column_01.png",
+      "duration": 0.5,
+      "fps": 10,
+      "loop": true,
+      "anchor": "wake_origin",
+      "z_layer": "ProjectileTrail",
+      "rotation_mode": "OwnerHeading",
+      "scale": 0.42,
+      "follow_owner": true,
+      "blend_mode": "Alpha",
+      "fade_out": false
+    },
+    {
+      "id": "vfx.profile.submarine.sonar_pulse",
+      "aliases": [
+        "submarine.sonar_pulse"
+      ],
+      "sprite": "assets/vfx/combat/antisubmarine/vfx_asw_sonar_pulse_01.png",
+      "duration": 0.75,
+      "fps": 10,
+      "loop": false,
+      "anchor": "scan_origin",
+      "z_layer": "Warning",
+      "rotation_mode": "None",
+      "scale": 0.62,
+      "follow_owner": false,
+      "blend_mode": "Add",
+      "fade_out": true
+    }
+  ]
+}

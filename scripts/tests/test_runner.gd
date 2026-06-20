@@ -21,7 +21,7 @@ func _run() -> void:
 	registry = ConfigRegistry.new()
 	_check(registry.load_all(), "configuration registry loads: %s" % str(registry.errors))
 	_check(registry.all("ships").size() == 6, "six prototype ship definitions load")
-	_check(registry.all("levels").size() == 2, "1v1 and 3v3 levels load")
+	_check(registry.all("levels").size() == 4, "1v1, 3v3, 5v5, and 11v11 levels load")
 	assets = AssetCatalog.new()
 	_check(assets.load_all(), "asset catalog loads: %s" % str(assets.errors))
 	_test_asset_catalog()
@@ -34,6 +34,8 @@ func _run() -> void:
 	_test_determinism()
 	_test_battle_smoke("level.prototype_1v1", 3200)
 	_test_battle_smoke("level.prototype_3v3", 4200)
+	_test_battle_smoke("level.prototype_5v5", 5200)
+	_test_battle_smoke("level.prototype_11v11", 7200)
 	if failures.is_empty():
 		print("PASS: %d checks" % checks)
 		quit(0)
@@ -65,6 +67,9 @@ func _test_asset_catalog() -> void:
 	_check(bind.has("turret_mount_01"), "character bind points resolve per battle asset")
 	_check(assets.battle_asset_path("bismarck", "rig_base").ends_with("bismarck_battle_rig_base.png"), "battle asset resolves by semantic suffix")
 	_check(assets.ui_asset_path("ui.icon.torpedo", "2x").ends_with("/2x/ui_icon_torpedo.png"), "UI asset resolves by semantic key and export scale")
+	_check(not assets.projectile_visual("projectile.surface_torpedo").is_empty(), "projectile visual resolves by projectile id")
+	_check(assets.weapon_visual("shimakaze", "shimakaze_torpedo").get("fire_animation_state", "") == "firepower", "weapon visual resolves by character and weapon group")
+	_check(float(assets.vfx_playback_profile("vfx.profile.shell_impact").get("duration", 0.0)) > 0.0, "VFX playback profile resolves by semantic id")
 
 
 func _test_command_and_skill_rules() -> void:

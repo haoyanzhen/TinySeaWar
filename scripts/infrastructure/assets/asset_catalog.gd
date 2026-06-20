@@ -2,6 +2,7 @@ extends RefCounted
 
 const CHARACTER_ROOT := "res://assets/characters"
 const UI_MANIFEST_PATH := "res://assets/ui/qa/ui_asset_manifest.json"
+const VISUAL_CONFIG_ROOT := "res://data/visuals"
 
 const CHARACTER_CONFIG_SUFFIXES := {
 	"anim": "_anim_config.json",
@@ -27,6 +28,9 @@ const UI_SEMANTIC_PREFIXES := {
 var characters := {}
 var ui_assets := {}
 var ui_aliases := {}
+var projectile_visuals := {}
+var weapon_visuals := {}
+var vfx_playback_profiles := {}
 var errors: Array[String] = []
 
 
@@ -34,9 +38,13 @@ func load_all() -> bool:
 	characters.clear()
 	ui_assets.clear()
 	ui_aliases.clear()
+	projectile_visuals.clear()
+	weapon_visuals.clear()
+	vfx_playback_profiles.clear()
 	errors.clear()
 	_load_characters()
 	_load_ui_assets()
+	_load_visual_configs()
 	return errors.is_empty()
 
 
@@ -54,16 +62,49 @@ func animation_state(character_id: String, state_name: String) -> Dictionary:
 	return anim.get("states", {}).get(state_name, {}).duplicate(true)
 
 
+func animation_states(character_id: String) -> Dictionary:
+	var data: Dictionary = characters.get(character_id, {})
+	var anim: Dictionary = data.get("configs", {}).get("anim", {})
+	return anim.get("states", {}).duplicate(true)
+
+
 func vfx_role(character_id: String, role_name: String) -> Dictionary:
 	var data: Dictionary = characters.get(character_id, {})
 	var vfx: Dictionary = data.get("configs", {}).get("vfx", {})
 	return vfx.get("roles", {}).get(role_name, {}).duplicate(true)
 
 
+func vfx_roles(character_id: String) -> Dictionary:
+	var data: Dictionary = characters.get(character_id, {})
+	var vfx: Dictionary = data.get("configs", {}).get("vfx", {})
+	return vfx.get("roles", {}).duplicate(true)
+
+
 func bind_points(character_id: String, asset_name: String) -> Dictionary:
 	var data: Dictionary = characters.get(character_id, {})
 	var bindings: Dictionary = data.get("configs", {}).get("bind_points", {})
 	return bindings.get("assets", {}).get(asset_name, {}).duplicate(true)
+
+
+func bind_point(character_id: String, point_name: String, preferred_asset_name := "") -> Dictionary:
+	if not preferred_asset_name.is_empty():
+		var preferred := bind_points(character_id, preferred_asset_name)
+		if preferred.has(point_name):
+			return preferred[point_name].duplicate(true)
+	var data: Dictionary = characters.get(character_id, {})
+	var assets: Dictionary = data.get("configs", {}).get("bind_points", {}).get("assets", {})
+	for asset_name in assets:
+		var points: Dictionary = assets[asset_name]
+		if points.has(point_name):
+			var point: Dictionary = points[point_name].duplicate(true)
+			point["asset_name"] = asset_name
+			return point
+	return {}
+
+
+func battle_asset_paths(character_id: String) -> Dictionary:
+	var data: Dictionary = characters.get(character_id, {})
+	return data.get("battle_assets", {}).duplicate(true)
 
 
 func battle_asset_path(character_id: String, semantic_name: String) -> String:
@@ -89,6 +130,32 @@ func ui_asset(asset_key: String) -> Dictionary:
 	return ui_assets.get(canonical, {}).duplicate(true)
 
 
+func projectile_visual(projectile_id_or_visual_id: String) -> Dictionary:
+	var key := _visual_lookup_key(projectile_id_or_visual_id, "visual.projectile.")
+	return projectile_visuals.get(key, projectile_visuals.get(projectile_id_or_visual_id, {})).duplicate(true)
+
+
+func weapon_visual(character_id: String, weapon_key: String) -> Dictionary:
+	var exact_key := "%s:%s" % [character_id, weapon_key]
+	if weapon_visuals.has(exact_key):
+		return weapon_visuals[exact_key].duplicate(true)
+	if weapon_visuals.has(weapon_key):
+		var direct: Dictionary = weapon_visuals[weapon_key]
+		if str(direct.get("character_id", character_id)) == character_id:
+			return direct.duplicate(true)
+	for visual in weapon_visuals.values():
+		if str(visual.get("character_id", "")) != character_id:
+			continue
+		if str(visual.get("weapon_group_id", "")) == weapon_key or str(visual.get("weapon_id", "")) == weapon_key:
+			return visual.duplicate(true)
+	return {}
+
+
+func vfx_playback_profile(profile_id: String) -> Dictionary:
+	var key := _visual_lookup_key(profile_id, "vfx.profile.")
+	return vfx_playback_profiles.get(key, vfx_playback_profiles.get(profile_id, {})).duplicate(true)
+
+
 func _load_characters() -> void:
 	var directory := DirAccess.open(CHARACTER_ROOT)
 	if directory == null:
@@ -97,7 +164,8 @@ func _load_characters() -> void:
 	directory.list_dir_begin()
 	var entry := directory.get_next()
 	while not entry.is_empty():
-		if directory.current_is_dir() and not entry.begins_with(".") and entry != "qa":
+		var processed_root := "%s/%s/processed" % [CHARACTER_ROOT, entry]
+		if directory.current_is_dir() and not entry.begins_with(".") and entry != "qa" and DirAccess.dir_exists_absolute(processed_root):
 			_load_character(entry)
 		entry = directory.get_next()
 	directory.list_dir_end()
@@ -164,6 +232,72 @@ func _load_ui_assets() -> void:
 		ui_assets[name] = asset
 		ui_aliases[name] = name
 		ui_aliases[_ui_semantic_key(name)] = name
+
+
+func _load_visual_configs() -> void:
+	var directory := DirAccess.open(VISUAL_CONFIG_ROOT)
+	if directory == null:
+		errors.append("Missing visual config directory: %s" % VISUAL_CONFIG_ROOT)
+		return
+	directory.list_dir_begin()
+	var file_name := directory.get_next()
+	while not file_name.is_empty():
+		if not directory.current_is_dir() and file_name.ends_with(".json"):
+			_load_visual_config_file("%s/%s" % [VISUAL_CONFIG_ROOT, file_name])
+		file_name = directory.get_next()
+	directory.list_dir_end()
+
+
+func _load_visual_config_file(path: String) -> void:
+	var document := _read_json(path)
+	if document.is_empty() or typeof(document.get("definitions")) != TYPE_ARRAY:
+		errors.append("Missing or invalid visual config: %s" % path)
+		return
+	for raw_definition in document.get("definitions", []):
+		if typeof(raw_definition) != TYPE_DICTIONARY:
+			errors.append("Non-object visual definition in %s" % path)
+			continue
+		var definition: Dictionary = _normalize_paths(raw_definition)
+		var definition_id := str(definition.get("id", ""))
+		if definition_id.is_empty():
+			errors.append("Visual definition without id in %s" % path)
+			continue
+		if definition_id.begins_with("visual.projectile."):
+			_store_visual_definition(projectile_visuals, definition)
+			var projectile_id := str(definition.get("projectile_id", ""))
+			if not projectile_id.is_empty() and not projectile_visuals.has(projectile_id):
+				projectile_visuals[projectile_id] = definition
+		elif definition_id.begins_with("weapon_visual."):
+			var character_id := str(definition.get("character_id", ""))
+			_store_visual_definition(weapon_visuals, definition)
+			for weapon_key in [str(definition.get("weapon_id", "")), str(definition.get("weapon_group_id", ""))]:
+				if not character_id.is_empty() and not weapon_key.is_empty():
+					weapon_visuals["%s:%s" % [character_id, weapon_key]] = definition
+			for alias in definition.get("aliases", []):
+				var alias_text := str(alias)
+				if not character_id.is_empty() and not alias_text.is_empty():
+					weapon_visuals["%s:%s" % [character_id, alias_text]] = definition
+		elif definition_id.begins_with("vfx.profile."):
+			_store_visual_definition(vfx_playback_profiles, definition)
+		else:
+			errors.append("Unsupported visual definition id: %s in %s" % [definition_id, path])
+
+
+func _store_visual_definition(target: Dictionary, definition: Dictionary) -> void:
+	var definition_id := str(definition.get("id", ""))
+	target[definition_id] = definition
+	for alias in definition.get("aliases", []):
+		var alias_text := str(alias)
+		if not alias_text.is_empty():
+			target[alias_text] = definition
+
+
+func _visual_lookup_key(key: String, prefix: String) -> String:
+	if key.begins_with(prefix):
+		return key
+	if key.begins_with("visual.") or key.begins_with("vfx."):
+		return key
+	return "%s%s" % [prefix, key]
 
 
 func _ui_semantic_key(asset_name: String) -> String:

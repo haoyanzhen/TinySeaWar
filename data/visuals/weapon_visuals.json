@@ -1,0 +1,283 @@
+{
+  "definitions": [
+    {
+      "id": "weapon_visual.warspite_main",
+      "aliases": [
+        "warspite.main_gun"
+      ],
+      "character_id": "warspite",
+      "weapon_group_id": "warspite_main",
+      "projectile_visual_id": "visual.projectile.shell.large",
+      "fire_animation_state": "firepower",
+      "launch_bind": "muzzle_group",
+      "muzzle_vfx_role": "heavy_muzzle",
+      "impact_vfx_role": "splash",
+      "launch_profile": "vfx.profile.muzzle_flash.large",
+      "impact_profile": "vfx.profile.shell_impact.large",
+      "warning_profile": "vfx.profile.shell_impact.large",
+      "vfx_role_mappings": {
+        "heavy_muzzle": "muzzle_flash.large",
+        "splash": "impact.water.large",
+        "wake": "wake.battleship_heavy",
+        "reticle": "shell.trail.long"
+      }
+    },
+    {
+      "id": "weapon_visual.warspite_secondary",
+      "aliases": [
+        "warspite.secondary_gun"
+      ],
+      "character_id": "warspite",
+      "weapon_group_id": "warspite_secondary",
+      "projectile_visual_id": "visual.projectile.shell.medium",
+      "fire_animation_state": "attack",
+      "launch_bind": "muzzle_01",
+      "muzzle_vfx_role": "heavy_muzzle",
+      "impact_vfx_role": "splash",
+      "launch_profile": "vfx.profile.muzzle_flash.medium",
+      "impact_profile": "vfx.profile.shell_impact.medium",
+      "vfx_role_mappings": {
+        "heavy_muzzle": "muzzle_flash.large",
+        "splash": "impact.water.large",
+        "wake": "wake.battleship_heavy",
+        "reticle": "shell.trail.long"
+      }
+    },
+    {
+      "id": "weapon_visual.bismarck_main",
+      "aliases": [
+        "bismarck.main_gun"
+      ],
+      "character_id": "bismarck",
+      "weapon_group_id": "bismarck_main",
+      "projectile_visual_id": "visual.projectile.shell.large",
+      "fire_animation_state": "firepower",
+      "launch_bind": "muzzle_01",
+      "muzzle_vfx_role": "heavy_muzzle",
+      "impact_vfx_role": "water_impact",
+      "launch_profile": "vfx.profile.muzzle_flash.large",
+      "impact_profile": "vfx.profile.shell_impact.large",
+      "vfx_role_mappings": {
+        "heavy_muzzle": "muzzle_flash.large",
+        "water_impact": "impact.water.large",
+        "armor_hit": "impact.armor.spark",
+        "wake": "wake.battleship_heavy"
+      }
+    },
+    {
+      "id": "weapon_visual.bismarck_secondary",
+      "aliases": [
+        "bismarck.secondary_gun"
+      ],
+      "character_id": "bismarck",
+      "weapon_group_id": "bismarck_secondary",
+      "projectile_visual_id": "visual.projectile.shell.medium",
+      "fire_animation_state": "attack",
+      "launch_bind": "muzzle_01",
+      "muzzle_vfx_role": "heavy_muzzle",
+      "impact_vfx_role": "water_impact",
+      "launch_profile": "vfx.profile.muzzle_flash.medium",
+      "impact_profile": "vfx.profile.shell_impact.medium",
+      "vfx_role_mappings": {
+        "heavy_muzzle": "muzzle_flash.large",
+        "water_impact": "impact.water.large",
+        "armor_hit": "impact.armor.spark",
+        "wake": "wake.battleship_heavy"
+      }
+    },
+    {
+      "id": "weapon_visual.aurora_main",
+      "aliases": [
+        "aurora.main_gun"
+      ],
+      "character_id": "aurora",
+      "weapon_group_id": "aurora_main",
+      "projectile_visual_id": "visual.projectile.shell.medium",
+      "fire_animation_state": "attack",
+      "launch_bind": "muzzle_01",
+      "muzzle_vfx_role": "muzzle_flash",
+      "impact_vfx_role": "water_splash",
+      "launch_profile": "vfx.profile.muzzle_flash.medium",
+      "impact_profile": "vfx.profile.shell_impact.medium"
+    },
+    {
+      "id": "weapon_visual.hindenburg_main",
+      "aliases": [
+        "hindenburg.main_gun"
+      ],
+      "character_id": "hindenburg",
+      "weapon_group_id": "hindenburg_main",
+      "projectile_visual_id": "visual.projectile.shell.medium",
+      "fire_animation_state": "firepower",
+      "launch_bind": "muzzle_01",
+      "muzzle_vfx_role": "muzzle_flash",
+      "impact_vfx_role": "shell_trail",
+      "launch_profile": "vfx.profile.muzzle_flash.medium",
+      "impact_profile": "vfx.profile.shell_impact.medium",
+      "vfx_role_mappings": {
+        "muzzle_flash": "muzzle_flash.medium",
+        "shell_trail": "shell.trail.medium",
+        "wake": "wake.cruiser",
+        "scan_beam": "submarine.sonar_pulse",
+        "reticle": "shell.trail.medium"
+      }
+    },
+    {
+      "id": "weapon_visual.shimakaze_gun",
+      "aliases": [
+        "shimakaze.gun"
+      ],
+      "character_id": "shimakaze",
+      "weapon_group_id": "shimakaze_gun",
+      "projectile_visual_id": "visual.projectile.shell.small",
+      "fire_animation_state": "attack",
+      "launch_bind": "muzzle_01",
+      "muzzle_vfx_role": "speed_lines",
+      "impact_vfx_role": "water_impact",
+      "launch_profile": "vfx.profile.muzzle_flash.small",
+      "impact_profile": "vfx.profile.shell_impact.small",
+      "vfx_role_mappings": {
+        "torpedo_trail": "torpedo.trail.surface",
+        "torpedo_warning": "torpedo.warning.fan",
+        "water_impact": "impact.water.small",
+        "wake_fast": "wake.destroyer_fast",
+        "speed_lines": "wake.destroyer_fast"
+      }
+    },
+    {
+      "id": "weapon_visual.shimakaze_torpedo",
+      "aliases": [
+        "shimakaze.torpedo"
+      ],
+      "character_id": "shimakaze",
+      "weapon_group_id": "shimakaze_torpedo",
+      "projectile_visual_id": "visual.projectile.torpedo.fast",
+      "fire_animation_state": "firepower",
+      "launch_bind": "torpedo_port_01",
+      "muzzle_vfx_role": "torpedo_trail",
+      "impact_vfx_role": "water_impact",
+      "launch_profile": "vfx.profile.torpedo_launch",
+      "trail_profile": "vfx.profile.torpedo_trail.surface",
+      "impact_profile": "vfx.profile.torpedo_impact",
+      "warning_profile": "vfx.profile.torpedo_warning.fan",
+      "vfx_role_mappings": {
+        "torpedo_trail": "torpedo.trail.surface",
+        "torpedo_warning": "torpedo.warning.fan",
+        "water_impact": "impact.water.small",
+        "wake_fast": "wake.destroyer_fast",
+        "speed_lines": "wake.destroyer_fast"
+      }
+    },
+    {
+      "id": "weapon_visual.hai_shih_torpedo",
+      "aliases": [
+        "hai_shih.torpedo"
+      ],
+      "character_id": "hai_shih",
+      "weapon_group_id": "hai_shih_torpedo",
+      "projectile_visual_id": "visual.projectile.torpedo.submerged",
+      "fire_animation_state": "attack",
+      "launch_bind": "torpedo_port",
+      "muzzle_vfx_role": "torpedo_trail",
+      "impact_vfx_role": "bubble_trail",
+      "launch_profile": "vfx.profile.submarine_torpedo_launch",
+      "trail_profile": "vfx.profile.torpedo_trail.submerged",
+      "impact_profile": "vfx.profile.torpedo_impact",
+      "warning_profile": "vfx.profile.torpedo_warning.line"
+    },
+    {
+      "id": "weapon_visual.enterprise_cv6_airstrike",
+      "aliases": [
+        "enterprise_cv6.airstrike",
+        "enterprise_cv6.main_air_group"
+      ],
+      "character_id": "enterprise_cv6",
+      "weapon_group_id": "enterprise_cv6_airstrike",
+      "projectile_visual_id": "visual.projectile.aircraft.bomber",
+      "secondary_projectile_visual_id": "visual.projectile.aircraft.torpedo_bomber",
+      "fire_animation_state": "firepower",
+      "launch_bind": "aircraft_launch_01",
+      "recovery_bind": "aircraft_recovery",
+      "muzzle_vfx_role": "aircraft_path",
+      "impact_vfx_role": "airstrike_area",
+      "launch_profile": "vfx.profile.aircraft.launch_trail",
+      "trail_profile": "vfx.profile.aircraft.path",
+      "landing_profile": "vfx.profile.aircraft.landing_trail",
+      "hit_profile": "vfx.profile.aircraft.intercept_hit",
+      "fall_profile": "vfx.profile.aircraft.fall",
+      "impact_profile": "vfx.profile.airstrike_impact",
+      "warning_profile": "vfx.profile.skill_area",
+      "vfx_role_mappings": {
+        "aircraft_path": "aircraft.path",
+        "deck_lane": "aircraft.launch_trail",
+        "airstrike_area": "aircraft.airstrike_area",
+        "hit": "aircraft.intercept_hit",
+        "wake": "wake.carrier_wide"
+      }
+    },
+    {
+      "id": "weapon_visual.enterprise_cv6_fighter_patrol",
+      "aliases": [
+        "enterprise_cv6.fighter_patrol"
+      ],
+      "character_id": "enterprise_cv6",
+      "weapon_group_id": "enterprise_cv6_fighter_patrol",
+      "projectile_visual_id": "visual.projectile.aircraft.fighter",
+      "fire_animation_state": "attack",
+      "launch_bind": "aircraft_launch_02",
+      "recovery_bind": "aircraft_recovery",
+      "launch_profile": "vfx.profile.aircraft.launch_trail",
+      "trail_profile": "vfx.profile.aircraft.path",
+      "landing_profile": "vfx.profile.aircraft.landing_trail",
+      "hit_profile": "vfx.profile.aircraft.intercept_hit",
+      "fall_profile": "vfx.profile.aircraft.fall"
+    },
+    {
+      "id": "weapon_visual.aurora_support_aa",
+      "aliases": [
+        "aurora.aa_support"
+      ],
+      "character_id": "aurora",
+      "weapon_group_id": "aurora_support_aa",
+      "projectile_visual_id": "visual.projectile.shell.small",
+      "fire_animation_state": "firepower",
+      "launch_bind": "muzzle_01",
+      "muzzle_vfx_role": "searchlight_beam",
+      "impact_vfx_role": "support_area",
+      "launch_profile": "vfx.profile.aa.tracer.light",
+      "impact_profile": "vfx.profile.aa.burst.small",
+      "vfx_role_mappings": {
+        "muzzle_flash": "muzzle_flash.medium",
+        "searchlight_beam": "submarine.sonar_pulse",
+        "support_area": "skill.area",
+        "water_splash": "impact.water.medium",
+        "wake": "wake.cruiser"
+      }
+    },
+    {
+      "id": "weapon_visual.hai_shih_torpedo_standardized",
+      "aliases": [
+        "hai_shih.torpedo_port_01"
+      ],
+      "character_id": "hai_shih",
+      "weapon_group_id": "hai_shih_torpedo_standardized",
+      "projectile_visual_id": "visual.projectile.torpedo.submerged",
+      "fire_animation_state": "attack",
+      "launch_bind": "torpedo_port_01",
+      "legacy_launch_bind": "torpedo_port",
+      "muzzle_vfx_role": "torpedo_trail",
+      "impact_vfx_role": "bubble_trail",
+      "launch_profile": "vfx.profile.submarine_torpedo_launch",
+      "trail_profile": "vfx.profile.torpedo_trail.submerged",
+      "impact_profile": "vfx.profile.torpedo_impact",
+      "warning_profile": "vfx.profile.torpedo_warning.line",
+      "vfx_role_mappings": {
+        "underwater_shadow": "submarine.underwater_shadow",
+        "bubble_trail": "submarine.bubble_trail",
+        "sonar_pulse": "submarine.sonar_pulse",
+        "torpedo_trail": "torpedo.trail.submerged",
+        "stealth": "submarine.underwater_shadow"
+      }
+    }
+  ]
+}

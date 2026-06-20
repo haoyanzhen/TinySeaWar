@@ -133,6 +133,9 @@ func snapshot(viewer_faction: String = PLAYER_FACTION, omniscient: bool = false)
 			"display_name": unit["display_name"],
 			"faction_id": unit["faction_id"],
 			"operation_slot": unit.get("operation_slot", 0),
+			"ship_class": unit.get("stats", {}).get("ship_class", ""),
+			"asset_root": unit.get("stats", {}).get("asset_root", ""),
+			"collision_radius": unit.get("stats", {}).get("collision_radius", 20.0),
 			"position": unit["position"],
 			"heading": unit["heading"],
 			"current_hp": unit["current_hp"],
@@ -169,7 +172,19 @@ func get_player_slots() -> Array:
 	for unit_id in state.get("fleets_by_id", {}).get("fleet.player", {}).get("unit_ids", []):
 		var unit: Dictionary = state["units_by_id"].get(unit_id, {})
 		if unit.is_empty(): continue
-		slots.append({"slot": int(unit.get("operation_slot", 0)), "unit_id": unit_id, "display_name": unit.get("display_name", unit_id), "life_state": unit.get("life_state", "")})
+		var stats: Dictionary = unit.get("stats", {})
+		slots.append({
+			"slot": int(unit.get("operation_slot", 0)),
+			"unit_id": unit_id,
+			"definition_id": unit.get("definition_id", ""),
+			"display_name": unit.get("display_name", unit_id),
+			"life_state": unit.get("life_state", ""),
+			"current_hp": unit.get("current_hp", 0.0),
+			"max_hp": unit.get("max_hp", 1.0),
+			"is_flagship": unit.get("is_flagship", false),
+			"ship_class": stats.get("ship_class", ""),
+			"asset_root": stats.get("asset_root", ""),
+		})
 	slots.sort_custom(func(a, b): return int(a["slot"]) < int(b["slot"]))
 	return slots
 

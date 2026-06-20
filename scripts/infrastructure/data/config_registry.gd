@@ -7,6 +7,7 @@ const CATEGORY_PATHS := {
 	"skills": "res://data/skills",
 	"formulas": "res://data/formulas",
 	"levels": "res://data/levels",
+	"visuals": "res://data/visuals",
 }
 
 var definitions := {}
@@ -84,12 +85,14 @@ func _validate_references() -> void:
 	for weapon in all("weapons"):
 		_validate_weapon(weapon)
 	for projectile in all("projectiles"):
-		if projectile.get("behavior", "") not in ["Straight", "DelayedImpact"]:
+		if projectile.get("behavior", "") not in ["Straight", "DelayedImpact", "PathFollow"]:
 			errors.append("Unsupported projectile behavior in %s" % projectile.get("id", "?"))
 		if float(projectile.get("collision_radius", 0.0)) <= 0.0:
 			errors.append("Projectile radius must be positive in %s" % projectile.get("id", "?"))
 	for level in all("levels"):
 		_validate_level(level)
+	for visual in all("visuals"):
+		_validate_visual(visual)
 
 
 func _validate_ship(ship: Dictionary) -> void:
@@ -177,3 +180,56 @@ func _validate_level(level: Dictionary) -> void:
 				flagship_count += 1
 		if flagship_count != 1:
 			errors.append("%s/%s must contain exactly one flagship" % [level_id, fleet_name])
+
+
+func _validate_visual(visual: Dictionary) -> void:
+	var visual_id := str(visual.get("id", "?"))
+	if visual_id.begins_with("visual.projectile."):
+		var projectile_id := str(visual.get("projectile_id", ""))
+		if projectile_id.is_empty():
+			errors.append("Missing projectile_id in %s" % visual_id)
+		elif get_definition("projectiles", projectile_id).is_empty():
+			errors.append("Missing projectile %s referenced by %s" % [projectile_id, visual_id])
+		var sprite := str(visual.get("sprite", ""))
+		if sprite.is_empty():
+			errors.append("Missing sprite in %s" % visual_id)
+		elif not _resource_exists(sprite):
+			errors.append("Missing sprite resource %s in %s" % [sprite, visual_id])
+		var trail_sprite := str(visual.get("trail_sprite", ""))
+		if not trail_sprite.is_empty() and not _resource_exists(trail_sprite):
+			errors.append("Missing trail sprite resource %s in %s" % [trail_sprite, visual_id])
+	elif visual_id.begins_with("weapon_visual."):
+		if str(visual.get("character_id", "")).is_empty():
+			errors.append("Missing character_id in %s" % visual_id)
+		var weapon_id := str(visual.get("weapon_id", ""))
+		var weapon_group_id := str(visual.get("weapon_group_id", ""))
+		if weapon_group_id.is_empty() and weapon_id.is_empty():
+			errors.append("Missing weapon_group_id or weapon_id in %s" % visual_id)
+		elif not weapon_id.is_empty() and get_definition("weapons", weapon_id).is_empty():
+			errors.append("Missing weapon %s referenced by %s" % [weapon_id, visual_id])
+		elif not weapon_group_id.is_empty() and not _weapon_group_exists(weapon_group_id):
+			errors.append("Missing weapon group %s referenced by %s" % [weapon_group_id, visual_id])
+		var projectile_visual_id := str(visual.get("projectile_visual_id", ""))
+		if projectile_visual_id.is_empty():
+			errors.append("Missing projectile_visual_id in %s" % visual_id)
+		elif get_definition("visuals", projectile_visual_id).is_empty():
+			errors.append("Missing projectile visual %s referenced by %s" % [projectile_visual_id, visual_id])
+	elif visual_id.begins_with("vfx.profile."):
+		if float(visual.get("duration", 0.0)) <= 0.0:
+			errors.append("VFX duration must be positive in %s" % visual_id)
+	else:
+		errors.append("Unsupported visual definition id: %s" % visual_id)
+
+
+func _weapon_group_exists(weapon_group_id: String) -> bool:
+	for weapon in all("weapons"):
+		if str(weapon.get("weapon_group_id", "")) == weapon_group_id:
+			return true
+	return false
+
+
+func _resource_exists(path: String) -> bool:
+	var resource_path := path
+	if resource_path.begins_with("assets/") or resource_path.begins_with("data/"):
+		resource_path = "res://%s" % resource_path
+	return FileAccess.file_exists(resource_path)

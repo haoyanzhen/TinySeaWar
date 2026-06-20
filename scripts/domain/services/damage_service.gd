@@ -18,6 +18,7 @@ static func resolve(attack: Dictionary, source: Dictionary, target: Dictionary, 
 	var result := {
 		"attack_id": attack.get("attack_id", ""),
 		"source_unit_id": source.get("entity_id", ""),
+		"source_weapon_id": weapon.get("id", attack.get("source_weapon_id", "")),
 		"target_unit_id": target.get("entity_id", ""),
 		"damage_type": category,
 		"hit": hit,

@@ -1,6 +1,88 @@
 {
   "definitions": [
-    {"id":"level.prototype_1v1","display_name":"Prototype 1v1","battle_mode":"OpenSeaEqualBattle","map":{"width":4096.0,"height":2304.0,"ocean_palette":"day_clear"},"time_limit":240.0,"player_fleet":[{"entity_id":"unit.player.warspite","ship_id":"ship.warspite","position":[2048.0,1700.0],"heading":-90.0,"is_flagship":true}],"enemy_fleet":[{"entity_id":"unit.enemy.bismarck","ship_id":"ship.bismarck","position":[2048.0,604.0],"heading":90.0,"is_flagship":true}]},
-    {"id":"level.prototype_3v3","display_name":"Prototype 3v3","battle_mode":"OpenSeaEqualBattle","map":{"width":4096.0,"height":2304.0,"ocean_palette":"cloudy"},"time_limit":360.0,"player_fleet":[{"entity_id":"unit.player.warspite","ship_id":"ship.warspite","position":[2048.0,1680.0],"heading":-90.0,"is_flagship":true},{"entity_id":"unit.player.aurora","ship_id":"ship.aurora","position":[1948.0,1740.0],"heading":-90.0,"is_flagship":false},{"entity_id":"unit.player.shimakaze","ship_id":"ship.shimakaze","position":[2148.0,1740.0],"heading":-90.0,"is_flagship":false}],"enemy_fleet":[{"entity_id":"unit.enemy.bismarck","ship_id":"ship.bismarck","position":[2048.0,624.0],"heading":90.0,"is_flagship":true},{"entity_id":"unit.enemy.hindenburg","ship_id":"ship.hindenburg","position":[1948.0,564.0],"heading":90.0,"is_flagship":false},{"entity_id":"unit.enemy.hai_shih","ship_id":"ship.hai_shih","position":[2148.0,564.0],"heading":90.0,"is_flagship":false}]}
+    {
+      "id": "level.prototype_1v1",
+      "display_name": "Prototype 1v1",
+      "battle_mode": "OpenSeaEqualBattle",
+      "map": {"width": 4096.0, "height": 2304.0, "ocean_palette": "day_clear"},
+      "time_limit": 240.0,
+      "player_fleet": [
+        {"entity_id": "unit.player.warspite", "ship_id": "ship.warspite", "position": [2048.0, 1700.0], "heading": -90.0, "is_flagship": true}
+      ],
+      "enemy_fleet": [
+        {"entity_id": "unit.enemy.bismarck", "ship_id": "ship.bismarck", "position": [2048.0, 604.0], "heading": 90.0, "is_flagship": true}
+      ]
+    },
+    {
+      "id": "level.prototype_3v3",
+      "display_name": "Prototype 3v3",
+      "battle_mode": "OpenSeaEqualBattle",
+      "map": {"width": 4096.0, "height": 2304.0, "ocean_palette": "cloudy"},
+      "time_limit": 360.0,
+      "player_fleet": [
+        {"entity_id": "unit.player.warspite", "ship_id": "ship.warspite", "position": [2048.0, 1680.0], "heading": -90.0, "is_flagship": true},
+        {"entity_id": "unit.player.aurora", "ship_id": "ship.aurora", "position": [1948.0, 1740.0], "heading": -90.0, "is_flagship": false},
+        {"entity_id": "unit.player.shimakaze", "ship_id": "ship.shimakaze", "position": [2148.0, 1740.0], "heading": -90.0, "is_flagship": false}
+      ],
+      "enemy_fleet": [
+        {"entity_id": "unit.enemy.bismarck", "ship_id": "ship.bismarck", "position": [2048.0, 624.0], "heading": 90.0, "is_flagship": true},
+        {"entity_id": "unit.enemy.hindenburg", "ship_id": "ship.hindenburg", "position": [1948.0, 564.0], "heading": 90.0, "is_flagship": false},
+        {"entity_id": "unit.enemy.hai_shih", "ship_id": "ship.hai_shih", "position": [2148.0, 564.0], "heading": 90.0, "is_flagship": false}
+      ]
+    },
+    {
+      "id": "level.prototype_5v5",
+      "display_name": "Prototype 5v5",
+      "battle_mode": "OpenSeaEqualBattle",
+      "map": {"width": 5120.0, "height": 2880.0, "ocean_palette": "cloudy"},
+      "time_limit": 420.0,
+      "player_fleet": [
+        {"entity_id": "unit.player.warspite", "ship_id": "ship.warspite", "position": [2560.0, 2260.0], "heading": -90.0, "is_flagship": true},
+        {"entity_id": "unit.player.hindenburg", "ship_id": "ship.hindenburg", "position": [2380.0, 2340.0], "heading": -90.0, "is_flagship": false},
+        {"entity_id": "unit.player.aurora", "ship_id": "ship.aurora", "position": [2740.0, 2340.0], "heading": -90.0, "is_flagship": false},
+        {"entity_id": "unit.player.shimakaze", "ship_id": "ship.shimakaze", "position": [2200.0, 2420.0], "heading": -90.0, "is_flagship": false},
+        {"entity_id": "unit.player.hai_shih", "ship_id": "ship.hai_shih", "position": [2920.0, 2420.0], "heading": -90.0, "is_flagship": false}
+      ],
+      "enemy_fleet": [
+        {"entity_id": "unit.enemy.bismarck", "ship_id": "ship.bismarck", "position": [2560.0, 620.0], "heading": 90.0, "is_flagship": true},
+        {"entity_id": "unit.enemy.hindenburg", "ship_id": "ship.hindenburg", "position": [2380.0, 540.0], "heading": 90.0, "is_flagship": false},
+        {"entity_id": "unit.enemy.aurora", "ship_id": "ship.aurora", "position": [2740.0, 540.0], "heading": 90.0, "is_flagship": false},
+        {"entity_id": "unit.enemy.shimakaze", "ship_id": "ship.shimakaze", "position": [2200.0, 460.0], "heading": 90.0, "is_flagship": false},
+        {"entity_id": "unit.enemy.hai_shih", "ship_id": "ship.hai_shih", "position": [2920.0, 460.0], "heading": 90.0, "is_flagship": false}
+      ]
+    },
+    {
+      "id": "level.prototype_11v11",
+      "display_name": "Prototype 11v11",
+      "battle_mode": "OpenSeaEqualBattle",
+      "map": {"width": 6144.0, "height": 3456.0, "ocean_palette": "dusk"},
+      "time_limit": 600.0,
+      "player_fleet": [
+        {"entity_id": "unit.player.warspite", "ship_id": "ship.warspite", "position": [3072.0, 2720.0], "heading": -90.0, "is_flagship": true},
+        {"entity_id": "unit.player.bismarck", "ship_id": "ship.bismarck", "position": [2772.0, 2800.0], "heading": -90.0, "is_flagship": false},
+        {"entity_id": "unit.player.hindenburg", "ship_id": "ship.hindenburg", "position": [3372.0, 2800.0], "heading": -90.0, "is_flagship": false},
+        {"entity_id": "unit.player.aurora", "ship_id": "ship.aurora", "position": [2472.0, 2880.0], "heading": -90.0, "is_flagship": false},
+        {"entity_id": "unit.player.shimakaze", "ship_id": "ship.shimakaze", "position": [3672.0, 2880.0], "heading": -90.0, "is_flagship": false},
+        {"entity_id": "unit.player.hai_shih", "ship_id": "ship.hai_shih", "position": [3072.0, 2960.0], "heading": -90.0, "is_flagship": false},
+        {"entity_id": "unit.player.warspite_escort", "ship_id": "ship.warspite", "position": [2672.0, 3040.0], "heading": -90.0, "is_flagship": false},
+        {"entity_id": "unit.player.hindenburg_escort", "ship_id": "ship.hindenburg", "position": [3472.0, 3040.0], "heading": -90.0, "is_flagship": false},
+        {"entity_id": "unit.player.aurora_escort", "ship_id": "ship.aurora", "position": [2872.0, 3120.0], "heading": -90.0, "is_flagship": false},
+        {"entity_id": "unit.player.shimakaze_escort", "ship_id": "ship.shimakaze", "position": [3272.0, 3120.0], "heading": -90.0, "is_flagship": false},
+        {"entity_id": "unit.player.hai_shih_escort", "ship_id": "ship.hai_shih", "position": [3072.0, 3200.0], "heading": -90.0, "is_flagship": false}
+      ],
+      "enemy_fleet": [
+        {"entity_id": "unit.enemy.bismarck", "ship_id": "ship.bismarck", "position": [3072.0, 736.0], "heading": 90.0, "is_flagship": true},
+        {"entity_id": "unit.enemy.warspite", "ship_id": "ship.warspite", "position": [2772.0, 656.0], "heading": 90.0, "is_flagship": false},
+        {"entity_id": "unit.enemy.hindenburg", "ship_id": "ship.hindenburg", "position": [3372.0, 656.0], "heading": 90.0, "is_flagship": false},
+        {"entity_id": "unit.enemy.aurora", "ship_id": "ship.aurora", "position": [2472.0, 576.0], "heading": 90.0, "is_flagship": false},
+        {"entity_id": "unit.enemy.shimakaze", "ship_id": "ship.shimakaze", "position": [3672.0, 576.0], "heading": 90.0, "is_flagship": false},
+        {"entity_id": "unit.enemy.hai_shih", "ship_id": "ship.hai_shih", "position": [3072.0, 496.0], "heading": 90.0, "is_flagship": false},
+        {"entity_id": "unit.enemy.bismarck_guard", "ship_id": "ship.bismarck", "position": [2672.0, 416.0], "heading": 90.0, "is_flagship": false},
+        {"entity_id": "unit.enemy.hindenburg_guard", "ship_id": "ship.hindenburg", "position": [3472.0, 416.0], "heading": 90.0, "is_flagship": false},
+        {"entity_id": "unit.enemy.aurora_guard", "ship_id": "ship.aurora", "position": [2872.0, 336.0], "heading": 90.0, "is_flagship": false},
+        {"entity_id": "unit.enemy.shimakaze_guard", "ship_id": "ship.shimakaze", "position": [3272.0, 336.0], "heading": 90.0, "is_flagship": false},
+        {"entity_id": "unit.enemy.hai_shih_guard", "ship_id": "ship.hai_shih", "position": [3072.0, 256.0], "heading": 90.0, "is_flagship": false}
+      ]
+    }
   ]
 }

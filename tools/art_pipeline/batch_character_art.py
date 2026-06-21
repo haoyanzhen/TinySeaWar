@@ -17,7 +17,7 @@ ROOT = Path(__file__).resolve().parents[2]
 CHAR_ROOT = ROOT / "assets" / "characters"
 QA_ROOT = CHAR_ROOT / "qa"
 
-BASE_SOURCE_FILES = (
+LEGACY_BASE_SOURCE_FILES = (
     "concept/{id}_concept_full.png",
     "ui/{id}_illust_half.png",
     "ui/{id}_illust_skill_cutin.png",
@@ -26,10 +26,23 @@ BASE_SOURCE_FILES = (
     "vfx/{id}_vfx_reference_sheet.png",
 )
 
-FOUR_FRAME_SOURCE_FILES = tuple(
+LEGACY_FOUR_FRAME_SOURCE_FILES = tuple(
     f"battle/{{id}}_anim_{state}_4f_sheet.png"
     for state in ("idle", "move", "attack", "hit", "firepower")
 )
+
+GENERATED_BASE_SOURCE_FILES = (
+    "concept/{id}_concept_full.png",
+    "ui/{id}_ui_sheet.png",
+    "vfx/{id}_vfx_reference_sheet.png",
+)
+
+GENERATED_BATTLE_SOURCE_FILES = (
+    "battle/{id}_battle_asset_grid.png",
+    "battle/{id}_battle_asset_sheet.png",
+)
+
+GENERATED_ANIMATION_SOURCE_FILE = "battle/{id}_anim_5x4_master.png"
 
 
 def available_character_ids() -> list[str]:
@@ -38,23 +51,54 @@ def available_character_ids() -> list[str]:
 
 def source_check(character_id: str) -> dict[str, Any]:
     root = CHAR_ROOT / character_id
-    required = BASE_SOURCE_FILES + FOUR_FRAME_SOURCE_FILES
-    missing = [
-        pattern.format(id=character_id)
-        for pattern in required
-        if not (root / pattern.format(id=character_id)).exists()
-    ]
+    legacy_base_complete = all(
+        (root / pattern.format(id=character_id)).exists()
+        for pattern in LEGACY_BASE_SOURCE_FILES
+    )
+    legacy_animation_complete = all(
+        (root / pattern.format(id=character_id)).exists()
+        for pattern in LEGACY_FOUR_FRAME_SOURCE_FILES
+    )
+    generated_base_complete = all(
+        (root / pattern.format(id=character_id)).exists()
+        for pattern in GENERATED_BASE_SOURCE_FILES
+    ) and any(
+        (root / pattern.format(id=character_id)).exists()
+        for pattern in GENERATED_BATTLE_SOURCE_FILES
+    )
+    generated_animation_complete = (
+        root / GENERATED_ANIMATION_SOURCE_FILE.format(id=character_id)
+    ).exists()
+
+    legacy_complete = legacy_base_complete and legacy_animation_complete
+    generated_complete = generated_base_complete and generated_animation_complete
+    if generated_complete:
+        route = "generated_master"
+        required = GENERATED_BASE_SOURCE_FILES + (GENERATED_ANIMATION_SOURCE_FILE,)
+        missing = []
+    elif legacy_complete:
+        route = "legacy_sheets"
+        required = LEGACY_BASE_SOURCE_FILES + LEGACY_FOUR_FRAME_SOURCE_FILES
+        missing = []
+    else:
+        route = "incomplete"
+        generated_required = GENERATED_BASE_SOURCE_FILES + (GENERATED_ANIMATION_SOURCE_FILE,)
+        missing = [
+            pattern.format(id=character_id)
+            for pattern in generated_required
+            if not (root / pattern.format(id=character_id)).exists()
+        ]
+        if not any(
+            (root / pattern.format(id=character_id)).exists()
+            for pattern in GENERATED_BATTLE_SOURCE_FILES
+        ):
+            missing.append("battle/{id}_battle_asset_grid.png|battle/{id}_battle_asset_sheet.png".format(id=character_id))
     return {
-        "complete": not missing,
+        "complete": legacy_complete or generated_complete,
         "missing": missing,
-        "base_complete": not any(
-            not (root / pattern.format(id=character_id)).exists()
-            for pattern in BASE_SOURCE_FILES
-        ),
-        "four_frame_complete": not any(
-            not (root / pattern.format(id=character_id)).exists()
-            for pattern in FOUR_FRAME_SOURCE_FILES
-        ),
+        "base_complete": legacy_base_complete or generated_base_complete,
+        "four_frame_complete": legacy_animation_complete or generated_animation_complete,
+        "production_route": route,
     }
 
 
@@ -153,8 +197,8 @@ def write_reports(mode: str, results: list[dict[str, Any]]) -> tuple[Path, Path]
         "",
         "Roster source: `docs/41_character_art_design.md`.",
         "",
-        "| Character | Prototype | Sources | Four-frame | Configured | Contract | Batch ready | Run status |",
-        "| --- | --- | --- | --- | --- | --- | --- | --- |",
+        "| Character | Prototype | Source route | Sources | Four-frame | Configured | Contract | Batch ready | Run status |",
+        "| --- | --- | --- | --- | --- | --- | --- | --- | --- |",
     ]
     for result in results:
         inspection = result.get("inspection", result)
@@ -168,6 +212,7 @@ def write_reports(mode: str, results: list[dict[str, Any]]) -> tuple[Path, Path]
         lines.append(
             f'| {inspection["character_id"]} | '
             f'{prototype} | '
+            f'{sources["production_route"]} | '
             f'{"yes" if sources["base_complete"] else "no"} | '
             f'{"yes" if sources["four_frame_complete"] else "no"} | '
             f'{"yes" if configured else "no"} | {contract_status} | '
@@ -175,7 +220,7 @@ def write_reports(mode: str, results: list[dict[str, Any]]) -> tuple[Path, Path]
         )
     lines.extend([
         "",
-        "A character is batch-ready only when base sources, all five four-frame sheets, a valid postprocess route, and the processed asset contract are complete.",
+        "A character is batch-ready only when either the legacy sheet route or generated-master route is complete, a valid postprocess route exists, and the processed asset contract passes.",
         "Failures are isolated per character and do not stop later characters in the batch.",
         "",
     ])

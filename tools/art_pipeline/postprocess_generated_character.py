@@ -13,6 +13,7 @@ import character_roster
 
 ROOT = Path(__file__).resolve().parents[2]
 CHAR_ROOT = ROOT / "assets" / "characters"
+QA_ROOT = CHAR_ROOT / "qa"
 ALPHA_THRESHOLD = 12
 OUTPUT_PADDING = 24
 
@@ -127,10 +128,48 @@ def remove_green_background(path: Path) -> Image.Image:
     img = Image.open(path).convert("RGBA")
     pixels = img.load()
     width, height = img.size
+    mask = bytearray(width * height)
+    queue: deque[tuple[int, int]] = deque()
+
+    def is_green(x: int, y: int) -> bool:
+        r, g, b, a = pixels[x, y]
+        return a > 0 and g >= 105 and g > r + 30 and g > b + 30
+
+    def enqueue(x: int, y: int) -> None:
+        index = y * width + x
+        if mask[index] or not is_green(x, y):
+            return
+        mask[index] = 1
+        queue.append((x, y))
+
+    for x in range(width):
+        enqueue(x, 0)
+        enqueue(x, height - 1)
+    for y in range(height):
+        enqueue(0, y)
+        enqueue(width - 1, y)
+
+    while queue:
+        x, y = queue.popleft()
+        r, g, b, _a = pixels[x, y]
+        pixels[x, y] = (r, g, b, 0)
+        if x > 0:
+            enqueue(x - 1, y)
+        if x + 1 < width:
+            enqueue(x + 1, y)
+        if y > 0:
+            enqueue(x, y - 1)
+        if y + 1 < height:
+            enqueue(x, y + 1)
+
+    # Hair, portrait frames, and rigging can enclose islands of the source key
+    # color that are not connected to the canvas edge. Generated source sheets
+    # therefore reserve bright green exclusively for chroma keying; clear any
+    # remaining high-confidence key pixels while preserving darker teal/green art.
     for y in range(height):
         for x in range(width):
             r, g, b, a = pixels[x, y]
-            if g >= 150 and g > r + 70 and g > b + 70:
+            if a > 0 and g >= 150 and g > r + 70 and g > b + 70:
                 pixels[x, y] = (r, g, b, 0)
     return img
 
@@ -476,6 +515,46 @@ def build_contact_sheet(character_id: str, processed_root: Path) -> Path:
     return out
 
 
+def build_roster_contact_sheet() -> Path:
+    roster = character_roster.load_roster()
+    tile_width, tile_height = 420, 320
+    columns = 4
+    rows = (len(roster) + columns - 1) // columns
+    canvas = Image.new("RGB", (columns * tile_width, rows * tile_height), "#101a21")
+    draw = ImageDraw.Draw(canvas)
+    resampling = getattr(Image, "Resampling", Image)
+
+    for index, entry in enumerate(roster):
+        x = (index % columns) * tile_width
+        y = (index // columns) * tile_height
+        draw.rectangle((x + 6, y + 6, x + tile_width - 6, y + tile_height - 6), fill="#22313a", outline="#607985")
+        draw.text((x + 16, y + 14), f"{entry.character_id}  {entry.ship_class}", fill="#f1f6f8")
+        root = CHAR_ROOT / entry.character_id / "processed"
+        candidates = (
+            (root / "ui" / f"{entry.character_id}_illust_full_alpha.png", (16, 42, 176, 300)),
+            (root / "ui" / f"{entry.character_id}_ui_portrait.png", (188, 42, 294, 146)),
+            (root / "battle" / f"{entry.character_id}_battle_body_r.png", (304, 42, 404, 146)),
+            (root / "anim" / f"{entry.character_id}_anim_move_keyframe.png", (188, 158, 294, 294)),
+            (root / "anim" / f"{entry.character_id}_anim_firepower_keyframe.png", (304, 158, 404, 294)),
+        )
+        for path, (left, top, right, bottom) in candidates:
+            draw.rectangle((x + left, y + top, x + right, y + bottom), fill="#d6e0e5")
+            if not path.exists():
+                draw.line((x + left, y + top, x + right, y + bottom), fill="#b93636", width=3)
+                draw.line((x + right, y + top, x + left, y + bottom), fill="#b93636", width=3)
+                continue
+            image = Image.open(path).convert("RGBA")
+            image.thumbnail((right - left - 12, bottom - top - 12), resampling.LANCZOS)
+            px = x + left + ((right - left) - image.width) // 2
+            py = y + top + ((bottom - top) - image.height) // 2
+            canvas.paste(image.convert("RGB"), (px, py), image.getchannel("A"))
+
+    out = QA_ROOT / "character_roster_processed_contact.png"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    canvas.save(out)
+    return out
+
+
 def process_character(character_id: str) -> None:
     roster = character_roster.roster_by_id()
     if character_id not in roster:
@@ -613,11 +692,16 @@ def process_character(character_id: str) -> None:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Postprocess generated green-screen TinySeaWar character sheets.")
-    parser.add_argument("character_ids", nargs="+")
+    parser.add_argument("character_ids", nargs="*")
+    parser.add_argument("--roster-contact", action="store_true", help="Build a compact 24-character visual QA sheet.")
     args = parser.parse_args()
     for character_id in args.character_ids:
         process_character(character_id)
         print(f"processed: {character_id}")
+    if args.roster_contact:
+        print(f"roster_contact: {build_roster_contact_sheet().relative_to(ROOT)}")
+    if not args.character_ids and not args.roster_contact:
+        parser.error("provide at least one character id or --roster-contact")
     return 0
 
 

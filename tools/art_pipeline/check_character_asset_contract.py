@@ -55,8 +55,25 @@ def validate_file(path: Path) -> str | None:
             with Image.open(path) as image:
                 if image.mode != "RGBA":
                     return f"PNG mode is {image.mode}, expected RGBA"
-                if image.getchannel("A").getbbox() is None:
+                alpha = image.getchannel("A")
+                bbox = alpha.getbbox()
+                if bbox is None:
                     return "PNG alpha is empty"
+                left, top, right, bottom = bbox
+                if min(left, top, image.width - right, image.height - bottom) == 0:
+                    return "PNG alpha touches canvas edge"
+                sample = alpha.copy()
+                sample.thumbnail((256, 256), getattr(Image, "Resampling", Image).BOX)
+                width, height = sample.size
+                values = list(sample.getdata())
+                weight = sum(values)
+                if weight:
+                    centroid_x = sum((index % width) * value for index, value in enumerate(values)) / weight
+                    centroid_y = sum((index // width) * value for index, value in enumerate(values)) / weight
+                    offset_x = abs(centroid_x - (width - 1) / 2) / width
+                    offset_y = abs(centroid_y - (height - 1) / 2) / height
+                    if max(offset_x, offset_y) > 0.10:
+                        return f"PNG visual centroid is not centered ({offset_x:.3f}, {offset_y:.3f})"
         elif path.suffix == ".json":
             json.loads(path.read_text(encoding="utf-8"))
     except Exception as exc:  # Keep the audit readable when one file is corrupt.
@@ -147,6 +164,7 @@ def audit(character_id: str) -> dict[str, object]:
     missing: list[str] = []
     invalid: list[dict[str, str]] = []
     found: dict[str, list[str]] = {}
+    validated_paths: set[Path] = set()
     for role, pattern in REQUIRED_PATTERNS.items():
         paths = matches(character_id, pattern)
         if role == "main_weapon":
@@ -159,9 +177,18 @@ def audit(character_id: str) -> dict[str, object]:
             continue
         found[role] = [str(path.relative_to(ROOT)) for path in paths]
         for path in paths:
+            validated_paths.add(path)
             error = validate_file(path)
             if error:
                 invalid.append({"role": role, "path": str(path.relative_to(ROOT)), "error": error})
+    processed_root = CHAR_ROOT / character_id / "processed"
+    for folder in ("ui", "battle", "anim", "vfx"):
+        for path in sorted((processed_root / folder).glob("*.png")):
+            if path in validated_paths:
+                continue
+            error = validate_file(path)
+            if error:
+                invalid.append({"role": "runtime_png", "path": str(path.relative_to(ROOT)), "error": error})
     data_issues = validate_character_data(character_id)
     return {
         "character_id": character_id,

@@ -1,5 +1,6 @@
 extends Control
 
+const UiText = preload("res://scripts/presentation/ui_text.gd")
 const BATTLE_SCENE := "res://scenes/battle/prototype_battle.tscn"
 const PANEL_FILL := Color(0.93, 0.98, 1.0, 0.88)
 const PANEL_STROKE := Color(0.48, 0.82, 0.95, 0.62)
@@ -13,6 +14,9 @@ var info_title := "选择模式"
 var info_body := ""
 var mode_buttons: Array[Button] = []
 var info_panel_visible := true
+var settings_overlay: Control
+var resolution_selector: OptionButton
+var resolution_status: Label
 
 
 func _ready() -> void:
@@ -20,6 +24,7 @@ func _ready() -> void:
 	cover_character_id = _random_character_id()
 	info_body = _mode_body()
 	_create_buttons()
+	_create_settings_panel()
 	queue_redraw()
 
 
@@ -39,6 +44,7 @@ func _create_buttons() -> void:
 	_add_button("btn_mode_11v11", "开始 11v11", Vector2(84.0, 786.0), Vector2(180.0, 48.0), func(): _start_level("level.prototype_11v11"))
 	_add_button("btn_operation", "操作说明", Vector2(284.0, 786.0), Vector2(180.0, 48.0), func(): _show_operation_guide())
 	_add_button("btn_game_intro", "游戏介绍", Vector2(484.0, 786.0), Vector2(180.0, 48.0), func(): _show_game_intro())
+	_add_button("btn_settings", "设置", Vector2(84.0, 848.0), Vector2(180.0, 48.0), func(): _show_settings())
 
 
 func _add_button(node_name: String, label: String, position_value: Vector2, size_value: Vector2, callback: Callable) -> Button:
@@ -63,6 +69,120 @@ func _start_level(level_id: String) -> void:
 		push_error("Could not start battle scene: %s" % error)
 
 
+func _create_settings_panel() -> void:
+	settings_overlay = Control.new()
+	settings_overlay.name = "SettingsOverlay"
+	settings_overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	settings_overlay.mouse_filter = Control.MOUSE_FILTER_STOP
+	settings_overlay.z_index = 100
+	settings_overlay.visible = false
+	add_child(settings_overlay)
+
+	var shade := ColorRect.new()
+	shade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	shade.color = Color(0.02, 0.12, 0.17, 0.58)
+	shade.mouse_filter = Control.MOUSE_FILTER_STOP
+	settings_overlay.add_child(shade)
+
+	var panel := PanelContainer.new()
+	panel.name = "SettingsPanel"
+	panel.set_anchors_preset(Control.PRESET_CENTER)
+	panel.position = Vector2(-270.0, -170.0)
+	panel.size = Vector2(540.0, 340.0)
+	var panel_style := StyleBoxFlat.new()
+	panel_style.bg_color = Color("eefaff")
+	panel_style.border_color = PANEL_STROKE
+	panel_style.set_border_width_all(2)
+	panel_style.set_corner_radius_all(12)
+	panel.add_theme_stylebox_override("panel", panel_style)
+	settings_overlay.add_child(panel)
+
+	var margin := MarginContainer.new()
+	margin.add_theme_constant_override("margin_left", 34)
+	margin.add_theme_constant_override("margin_top", 28)
+	margin.add_theme_constant_override("margin_right", 34)
+	margin.add_theme_constant_override("margin_bottom", 28)
+	panel.add_child(margin)
+	var content := VBoxContainer.new()
+	content.add_theme_constant_override("separation", 18)
+	margin.add_child(content)
+
+	var title := Label.new()
+	title.text = "界面设置"
+	title.add_theme_font_size_override("font_size", 30)
+	title.add_theme_color_override("font_color", TEXT_DARK)
+	content.add_child(title)
+	var hint := Label.new()
+	hint.text = "选择游戏窗口大小，应用后立即生效。"
+	hint.add_theme_font_size_override("font_size", 18)
+	hint.add_theme_color_override("font_color", TEXT_SOFT)
+	content.add_child(hint)
+
+	resolution_selector = OptionButton.new()
+	resolution_selector.name = "ResolutionSelector"
+	resolution_selector.custom_minimum_size = Vector2(0.0, 48.0)
+	resolution_selector.add_theme_font_size_override("font_size", 18)
+	for option in _window_size_options():
+		resolution_selector.add_item("%d x %d" % [option.x, option.y])
+	content.add_child(resolution_selector)
+	resolution_status = Label.new()
+	resolution_status.add_theme_font_size_override("font_size", 16)
+	resolution_status.add_theme_color_override("font_color", TEXT_SOFT)
+	content.add_child(resolution_status)
+
+	var actions := HBoxContainer.new()
+	actions.alignment = BoxContainer.ALIGNMENT_END
+	actions.add_theme_constant_override("separation", 12)
+	content.add_child(actions)
+	var close_button := Button.new()
+	close_button.name = "CloseSettingsButton"
+	close_button.text = "关闭"
+	close_button.custom_minimum_size = Vector2(110.0, 44.0)
+	close_button.pressed.connect(func(): settings_overlay.hide())
+	actions.add_child(close_button)
+	var apply_button := Button.new()
+	apply_button.name = "ApplySettingsButton"
+	apply_button.text = "应用"
+	apply_button.custom_minimum_size = Vector2(110.0, 44.0)
+	apply_button.pressed.connect(_apply_selected_window_size)
+	actions.add_child(apply_button)
+
+
+func _show_settings() -> void:
+	var current_size := _current_window_size()
+	var options := _window_size_options()
+	for index in range(options.size()):
+		if options[index] == current_size:
+			resolution_selector.select(index)
+			break
+	resolution_status.text = "当前：%d x %d" % [current_size.x, current_size.y]
+	settings_overlay.show()
+
+
+func _apply_selected_window_size() -> void:
+	var options := _window_size_options()
+	var selected_index := resolution_selector.selected
+	if selected_index < 0 or selected_index >= options.size():
+		resolution_status.text = "未找到可用的界面尺寸。"
+		return
+	var selected_size := options[selected_index]
+	var flow := get_node_or_null("/root/GameFlow")
+	if flow == null or not flow.apply_window_size(selected_size):
+		resolution_status.text = "设置保存失败。"
+		return
+	resolution_status.text = "已应用：%d x %d" % [selected_size.x, selected_size.y]
+
+
+func _window_size_options() -> Array[Vector2i]:
+	var flow := get_node_or_null("/root/GameFlow")
+	return flow.window_size_options() if flow != null else []
+
+
+func _current_window_size() -> Vector2i:
+	var flow := get_node_or_null("/root/GameFlow")
+	return flow.current_window_size if flow != null else Vector2i(1920, 1080)
+
+
 func _show_mode_select() -> void:
 	info_title = "选择模式"
 	info_body = _mode_body()
@@ -71,18 +191,18 @@ func _show_mode_select() -> void:
 
 func _show_operation_guide() -> void:
 	info_title = "操作说明"
-	info_body = "基础 UI：\n- 顶部左右为敌我舰队头像栏，头像下方显示生命状态。\n- 左下角是战术小地图，右侧是战斗日志和选中单位信息。\n- 底部操作槽显示 E / Q / F / V 的当前可用状态。\n\n键鼠操作：\n- 1-9 / 0 / -：切换己方角色槽位。\n- 鼠标左键：选择单位、设置集火目标、确认瞄准。\n- 鼠标右键：普通状态下移动，瞄准状态下取消。\n- E：主要武器瞄准；Q：切换 HE/AP；F：释放技能；V：跟踪镜头。\n- WASD：移动镜头；Space：暂停；Esc：取消当前操作。"
+	info_body = "基础界面：\n- 顶部左右为敌我舰队头像栏，头像下方显示生命状态。\n- 左下角是战术小地图，右侧是战斗日志和选中单位信息。\n- 底部操作槽显示 E / Q / F / V 的当前可用状态。\n\n键鼠操作：\n- 1-9 / 0 / -：切换己方角色槽位。\n- 鼠标左键：选择单位、设置集火目标、确认瞄准。\n- 鼠标右键：普通状态下移动，瞄准状态下取消。\n- 鼠标滚轮：缩放战场观察视角。\n- E：主要武器瞄准；Q：切换高爆弹/穿甲弹；F：释放技能；V：跟踪镜头。\n- W/A/S/D：移动镜头；空格键：暂停；退出键：取消当前操作。"
 	queue_redraw()
 
 
 func _show_game_intro() -> void:
 	info_title = "游戏介绍"
-	info_body = "Tiny Sea War 是开阔海域中的轻量 2D 舰队战。角色会自动航行、索敌并使用副武器，玩家负责关键角色轮换、主要武器瞄准、弹种切换、技能释放和集火目标选择。\n\n核心玩法：\n- 保持己方旗舰存活，同时寻找机会击沉敌方旗舰。\n- 通过 E 的手动主要武器抓住开火窗口，Q 切换合适弹种。\n- 使用 V 跟随关键角色，用小地图观察整体态势。\n\n胜利条件：\n- 击沉敌方旗舰立即胜利。\n- 时间耗尽时，按双方剩余总 HP 比例判定胜负。\n- 双方旗舰同一结算周期沉没时，当前规则判定玩家胜利。"
+	info_body = "小小海战是开阔海域中的轻量二维舰队战。角色会自动航行、索敌并使用副武器，玩家负责关键角色轮换、主要武器瞄准、弹种切换、技能释放和集火目标选择。\n\n核心玩法：\n- 保持己方旗舰存活，同时寻找机会击沉敌方旗舰。\n- 通过 E 的手动主要武器抓住开火窗口，Q 切换合适弹种。\n- 使用 V 跟随关键角色，用小地图观察整体态势。\n\n胜利条件：\n- 击沉敌方旗舰立即胜利。\n- 时间耗尽时，按双方剩余总耐久比例判定胜负。\n- 双方旗舰同一结算周期沉没时，当前规则判定玩家胜利。"
 	queue_redraw()
 
 
 func _mode_body() -> String:
-	return "请选择本次出击模式。\n\n1v1：单舰对决，适合熟悉镜头、选择、主要武器瞄准和旗舰胜负。\n\n3v3：小队舰队战，适合练习角色槽位切换、集火目标、技能和小地图阅读。\n\n5v5：完整小舰队交战，覆盖潜艇、驱逐、巡洋、战列的混合威胁。\n\n11v11：大规模压力战，验证 1-9 / 0 / - 共 11 个操作槽、侦查密度、HUD 可读性和表现层性能。"
+	return "请选择本次出击模式。\n\n1v1：单舰对决，适合熟悉镜头、选择、主要武器瞄准和旗舰胜负。\n\n3v3：小队舰队战，适合练习角色槽位切换、集火目标、技能和小地图阅读。\n\n5v5：完整小舰队交战，覆盖潜艇、驱逐、巡洋、战列的混合威胁。\n\n11v11：大规模压力战，验证 1-9 / 0 / - 共 11 个操作槽、侦查密度、界面可读性和表现层性能。"
 
 
 func _draw_ocean_background(viewport_size: Vector2) -> void:
@@ -101,13 +221,13 @@ func _draw_cover_art(rect: Rect2) -> void:
 	var cover_draw_rect := _cover_rect(texture, rect)
 	draw_texture_rect(texture, cover_draw_rect, false, Color(1.0, 1.0, 1.0, 0.92))
 	draw_rect(Rect2(rect.position + Vector2(18.0, rect.size.y - 112.0), Vector2(rect.size.x - 36.0, 74.0)), Color(0.04, 0.18, 0.24, 0.36), true)
-	draw_string(ThemeDB.fallback_font, rect.position + Vector2(44.0, rect.size.y - 70.0), "Today's Cover: %s" % cover_character_id.capitalize(), HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 88.0, 24, Color.WHITE)
+	draw_string(ThemeDB.fallback_font, rect.position + Vector2(44.0, rect.size.y - 70.0), "本次封面：%s" % UiText.character_name(cover_character_id), HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 88.0, 24, Color.WHITE)
 
 
 func _draw_title_panel(rect: Rect2) -> void:
 	_draw_panel(rect)
-	draw_string(ThemeDB.fallback_font, rect.position + Vector2(26.0, 58.0), "Tiny Sea War", HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 52.0, 44, TEXT_DARK)
-	draw_string(ThemeDB.fallback_font, rect.position + Vector2(28.0, 100.0), "Open Sea Fleet Tactics Prototype", HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 56.0, 20, TEXT_SOFT)
+	draw_string(ThemeDB.fallback_font, rect.position + Vector2(26.0, 58.0), "小小海战", HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 52.0, 44, TEXT_DARK)
+	draw_string(ThemeDB.fallback_font, rect.position + Vector2(28.0, 100.0), "开阔海域舰队战术原型", HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 56.0, 20, TEXT_SOFT)
 	draw_string(ThemeDB.fallback_font, rect.position + Vector2(28.0, 142.0), "选择模式，阅读操作，再把舰队带上海面。", HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 56.0, 18, TEXT_DARK)
 
 

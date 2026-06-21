@@ -6,6 +6,7 @@ const BattleSession = preload("res://scripts/application/battle_session.gd")
 const ModifierService = preload("res://scripts/domain/services/modifier_service.gd")
 const DamageService = preload("res://scripts/domain/services/damage_service.gd")
 const SeededRandomSource = preload("res://scripts/infrastructure/random/seeded_random_source.gd")
+const UiText = preload("res://scripts/presentation/ui_text.gd")
 
 var failures: Array[String] = []
 var checks := 0
@@ -22,6 +23,12 @@ func _run() -> void:
 	_check(registry.load_all(), "configuration registry loads: %s" % str(registry.errors))
 	_check(registry.all("ships").size() == 6, "six prototype ship definitions load")
 	_check(registry.all("levels").size() == 4, "1v1, 3v3, 5v5, and 11v11 levels load")
+	var presentation_settings: Dictionary = registry.get_definition("settings", "settings.presentation")
+	_check(presentation_settings.get("window", {}).get("logical_size", []) == [1920.0, 1080.0], "presentation settings expose the fixed logical canvas size")
+	_check(presentation_settings.get("window", {}).get("size_options", []).size() == 5, "presentation settings expose five window sizes")
+	_check(presentation_settings.get("camera", {}).get("min_visible_size", []) == [500.0, 500.0], "camera minimum visible size loads from configuration")
+	_check(is_equal_approx(float(presentation_settings.get("camera", {}).get("max_map_visible_fraction", 0.0)), 0.6666667), "camera maximum map fraction loads from configuration")
+	_test_chinese_display_text()
 	assets = AssetCatalog.new()
 	_check(assets.load_all(), "asset catalog loads: %s" % str(assets.errors))
 	_test_asset_catalog()
@@ -43,6 +50,24 @@ func _run() -> void:
 		for failure in failures: push_error("FAIL: %s" % failure)
 		print("FAILED: %d of %d checks" % [failures.size(), checks])
 		quit(1)
+
+
+func _test_chinese_display_text() -> void:
+	for category in ["ships", "weapons", "skills", "levels"]:
+		for definition in registry.all(category):
+			_check(_contains_chinese(str(definition.get("display_name", ""))), "%s display name is Chinese: %s" % [category, definition.get("id", "?")])
+	_check(UiText.mode_name("level.prototype_11v11") == "11v11 大规模会战", "battle mode has a Chinese display label")
+	_check(UiText.ship_class_name("Battleship") == "战列舰", "ship class has a Chinese display label")
+	_check(UiText.reason_name("WEAPON_RELOADING") == "武器装填中", "operation reason has a Chinese display label")
+	_check(UiText.character_name("warspite") == "厌战号", "character id has a Chinese display label")
+
+
+func _contains_chinese(value: String) -> bool:
+	for index in range(value.length()):
+		var code := value.unicode_at(index)
+		if code >= 0x4E00 and code <= 0x9FFF:
+			return true
+	return false
 
 
 func _test_modifier_order() -> void:

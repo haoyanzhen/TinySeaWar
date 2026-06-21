@@ -7,6 +7,7 @@ const CATEGORY_PATHS := {
 	"skills": "res://data/skills",
 	"formulas": "res://data/formulas",
 	"levels": "res://data/levels",
+	"settings": "res://data/settings",
 	"visuals": "res://data/visuals",
 }
 
@@ -91,6 +92,8 @@ func _validate_references() -> void:
 			errors.append("Projectile radius must be positive in %s" % projectile.get("id", "?"))
 	for level in all("levels"):
 		_validate_level(level)
+	for settings in all("settings"):
+		_validate_settings(settings)
 	for visual in all("visuals"):
 		_validate_visual(visual)
 
@@ -180,6 +183,42 @@ func _validate_level(level: Dictionary) -> void:
 				flagship_count += 1
 		if flagship_count != 1:
 			errors.append("%s/%s must contain exactly one flagship" % [level_id, fleet_name])
+
+
+func _validate_settings(settings: Dictionary) -> void:
+	var settings_id := str(settings.get("id", "?"))
+	if settings_id != "settings.presentation":
+		errors.append("Unsupported settings definition id: %s" % settings_id)
+		return
+	var window: Dictionary = settings.get("window", {})
+	var logical_size: Array = window.get("logical_size", [])
+	var default_size: Array = window.get("default_size", [])
+	var size_options: Array = window.get("size_options", [])
+	if not _valid_positive_pair(logical_size):
+		errors.append("Invalid logical window size in %s" % settings_id)
+	if not _valid_positive_pair(default_size):
+		errors.append("Invalid default window size in %s" % settings_id)
+	if size_options.is_empty():
+		errors.append("Window size options cannot be empty in %s" % settings_id)
+	for size_option in size_options:
+		if not _valid_positive_pair(size_option):
+			errors.append("Invalid window size option in %s" % settings_id)
+	if not default_size.is_empty() and default_size not in size_options:
+		errors.append("Default window size must be listed in size_options in %s" % settings_id)
+	var camera: Dictionary = settings.get("camera", {})
+	if not _valid_positive_pair(camera.get("min_visible_size", [])):
+		errors.append("Invalid camera min_visible_size in %s" % settings_id)
+	var max_fraction := float(camera.get("max_map_visible_fraction", 0.0))
+	if max_fraction <= 0.0 or max_fraction > 1.0:
+		errors.append("Camera max_map_visible_fraction must be in (0, 1] in %s" % settings_id)
+	if float(camera.get("zoom_step", 0.0)) <= 1.0:
+		errors.append("Camera zoom_step must be greater than 1 in %s" % settings_id)
+	if float(camera.get("default_zoom", 0.0)) <= 0.0:
+		errors.append("Camera default_zoom must be positive in %s" % settings_id)
+
+
+func _valid_positive_pair(value: Variant) -> bool:
+	return value is Array and value.size() == 2 and float(value[0]) > 0.0 and float(value[1]) > 0.0
 
 
 func _validate_visual(visual: Dictionary) -> void:

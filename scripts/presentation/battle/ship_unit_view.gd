@@ -120,7 +120,7 @@ func _draw_health_bar(radius: float, friendly: bool) -> void:
 	var bar_width := maxf(68.0, radius * 3.2)
 	draw_rect(Rect2(Vector2(-bar_width * 0.5, -radius - 28.0), Vector2(bar_width, 7.0)), Color("#202931"), true)
 	draw_rect(Rect2(Vector2(-bar_width * 0.5, -radius - 28.0), Vector2(bar_width * hp_ratio, 7.0)), Color("#70db84") if friendly else Color("#ff9a8c"), true)
-	var label := ("[F] " if bool(unit.get("is_flagship", false)) else "") + str(unit.get("display_name", unit_id))
+	var label := ("[旗舰] " if bool(unit.get("is_flagship", false)) else "") + str(unit.get("display_name", unit_id))
 	draw_string(ThemeDB.fallback_font, Vector2(-72.0, radius + 36.0), label, HORIZONTAL_ALIGNMENT_CENTER, 144.0, 18, Color.WHITE)
 
 

@@ -3,6 +3,7 @@ extends Control
 signal return_to_menu_requested
 signal restart_requested
 
+const UiText = preload("res://scripts/presentation/ui_text.gd")
 const UI_ASSET_ROOT := "res://assets/ui/export/2x"
 const PANEL_FILL := Color(0.93, 0.98, 1.0, 0.88)
 const PANEL_STROKE := Color(0.48, 0.82, 0.95, 0.62)
@@ -15,7 +16,7 @@ var snapshot := {}
 var level_id := ""
 var recent_messages: Array[String] = []
 var camera_mode := "Manual"
-var selected_name := "None"
+var selected_name := "未选择"
 var palette_id := "day_clear"
 var operation_status := {}
 var operation_mode := "NORMAL"
@@ -63,14 +64,14 @@ func _draw_top_status(viewport_size: Vector2) -> void:
 	var panel := Rect2(Vector2((viewport_size.x - 560.0) * 0.5, 18.0), Vector2(560.0, 74.0))
 	_draw_panel(panel, "")
 	var phase := str(snapshot.get("phase", ""))
-	var title := "%s  |  %.1fs  |  %s" % [level_id.trim_prefix("level."), float(snapshot.get("elapsed_time", 0.0)), phase]
-	draw_string(ThemeDB.fallback_font, panel.position + Vector2(24.0, 32.0), "Tiny Sea War", HORIZONTAL_ALIGNMENT_LEFT, panel.size.x - 48.0, 22, TEXT_DARK)
+	var title := "%s  |  %.1f 秒  |  %s" % [UiText.mode_name(level_id), float(snapshot.get("elapsed_time", 0.0)), UiText.phase_name(phase)]
+	draw_string(ThemeDB.fallback_font, panel.position + Vector2(24.0, 32.0), "小小海战", HORIZONTAL_ALIGNMENT_LEFT, panel.size.x - 48.0, 22, TEXT_DARK)
 	draw_string(ThemeDB.fallback_font, panel.position + Vector2(24.0, 58.0), title, HORIZONTAL_ALIGNMENT_LEFT, panel.size.x - 48.0, 18, TEXT_SOFT)
 	_draw_icon("ui_icon_pause" if phase == "Running" else "ui_icon_continue", Rect2(panel.position + Vector2(panel.size.x - 58.0, 18.0), Vector2(36.0, 36.0)))
 
 
 func _draw_fleet_panel(rect: Rect2, friendly: bool) -> void:
-	_draw_panel(rect, "Friendly Fleet" if friendly else "Enemy Fleet")
+	_draw_panel(rect, "己方舰队" if friendly else "敌方舰队")
 	var origin := rect.position + Vector2(16.0, 36.0)
 	var cell_size := Vector2(88.0, 44.0)
 	var gap := Vector2(8.0, 10.0)
@@ -109,13 +110,13 @@ func _draw_roster_cell(rect: Rect2, entry: Dictionary, slot_number: int, friendl
 
 func _draw_operation_dock(rect: Rect2) -> void:
 	_draw_panel(rect, "")
-	var title := "Selected: %s  |  Camera: %s  |  Mode: %s  |  Ocean: %s" % [selected_name, camera_mode, operation_mode, palette_id]
+	var title := "选中：%s  |  镜头：%s  |  操作：%s  |  海域：%s" % [selected_name, UiText.camera_mode_name(camera_mode), UiText.operation_mode_name(operation_mode), UiText.palette_name(palette_id)]
 	draw_string(ThemeDB.fallback_font, rect.position + Vector2(22.0, 24.0), title, HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 44.0, 17, TEXT_DARK)
 	var cards := [
 		{"key": "E", "icon": "ui_icon_gunfire", "text": _primary_text(), "ready": bool(operation_status.get("primary_ready", false))},
 		{"key": "Q", "icon": "ui_icon_confirm", "text": _ammo_text(), "ready": bool(operation_status.get("q_enabled", false))},
 		{"key": "F", "icon": "ui_icon_skill_ready", "text": _skill_text(), "ready": bool(operation_status.get("skill_ready", false))},
-		{"key": "V", "icon": "ui_icon_camera_follow", "text": "Follow" if camera_mode != "Follow" else "Following", "ready": true},
+		{"key": "V", "icon": "ui_icon_camera_follow", "text": "开始跟随" if camera_mode != "Follow" else "正在跟随", "ready": true},
 	]
 	for index in range(cards.size()):
 		var card_rect := Rect2(rect.position + Vector2(22.0 + index * 214.0, 38.0), Vector2(198.0, 36.0))
@@ -132,7 +133,7 @@ func _draw_action_card(rect: Rect2, card: Dictionary) -> void:
 
 
 func _draw_minimap(rect: Rect2) -> void:
-	_draw_panel(rect, "Tactical Map")
+	_draw_panel(rect, "战术地图")
 	var map_rect := Rect2(rect.position + Vector2(14.0, 36.0), rect.size - Vector2(28.0, 52.0))
 	draw_rect(map_rect, Color(0.08, 0.34, 0.46, 0.72), true)
 	draw_rect(map_rect, Color(0.84, 0.98, 1.0, 0.52), false, 1.5)
@@ -151,29 +152,29 @@ func _draw_minimap(rect: Rect2) -> void:
 		var bottom_right := _minimap_position(camera_rect.position + camera_rect.size, map_rect, map_data)
 		draw_rect(Rect2(top_left, bottom_right - top_left), Color(1.0, 1.0, 1.0, 0.0), false, 1.5)
 		_draw_icon("ui_minimap_camera_frame", Rect2(top_left - Vector2(8.0, 8.0), Vector2(16.0, 16.0)), Color(1.0, 1.0, 1.0, 0.8))
-	draw_string(ThemeDB.fallback_font, rect.position + Vector2(14.0, rect.size.y - 14.0), "A/D/W/S pan  |  1-0/- select", HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 28.0, 13, TEXT_SOFT)
+	draw_string(ThemeDB.fallback_font, rect.position + Vector2(14.0, rect.size.y - 14.0), "A/D/W/S 移动镜头  |  1-0/- 选择角色", HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 28.0, 13, TEXT_SOFT)
 
 
 func _draw_log_panel(rect: Rect2) -> void:
-	_draw_panel(rect, "Battle Log")
+	_draw_panel(rect, "战斗日志")
 	var y := rect.position.y + 42.0
 	for message in recent_messages:
-		_draw_icon("ui_log_contact_enemy" if message.contains("sunk") else "ui_log_last_contact", Rect2(Vector2(rect.position.x + 14.0, y - 17.0), Vector2(18.0, 18.0)))
+		_draw_icon("ui_log_contact_enemy" if message.contains("沉没") else "ui_log_last_contact", Rect2(Vector2(rect.position.x + 14.0, y - 17.0), Vector2(18.0, 18.0)))
 		draw_string(ThemeDB.fallback_font, Vector2(rect.position.x + 40.0, y), message, HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 54.0, 15, TEXT_DARK)
 		y += 30.0
 	if recent_messages.is_empty():
-		draw_string(ThemeDB.fallback_font, rect.position + Vector2(18.0, 62.0), "No critical events yet.", HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 36.0, 15, TEXT_SOFT)
+		draw_string(ThemeDB.fallback_font, rect.position + Vector2(18.0, 62.0), "尚无重要战斗事件。", HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 36.0, 15, TEXT_SOFT)
 
 
 func _draw_selected_panel(rect: Rect2) -> void:
-	_draw_panel(rect, "Selected Unit")
+	_draw_panel(rect, "当前角色")
 	var selected := _selected_unit()
 	if selected.is_empty():
-		draw_string(ThemeDB.fallback_font, rect.position + Vector2(18.0, 64.0), "Select a unit with 1-9/0/- or click on the map.", HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 36.0, 15, TEXT_SOFT)
+		draw_string(ThemeDB.fallback_font, rect.position + Vector2(18.0, 64.0), "按 1-9/0/- 或点击地图选择角色。", HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 36.0, 15, TEXT_SOFT)
 		return
 	_draw_portrait(selected, Rect2(rect.position + Vector2(16.0, 42.0), Vector2(82.0, 82.0)))
 	draw_string(ThemeDB.fallback_font, rect.position + Vector2(112.0, 62.0), str(selected.get("display_name", "?")), HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 130.0, 20, TEXT_DARK)
-	draw_string(ThemeDB.fallback_font, rect.position + Vector2(112.0, 88.0), "%s  Slot %s" % [selected.get("ship_class", "?"), selected.get("operation_slot", "-")], HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 130.0, 15, TEXT_SOFT)
+	draw_string(ThemeDB.fallback_font, rect.position + Vector2(112.0, 88.0), "%s  编号 %s" % [UiText.ship_class_name(str(selected.get("ship_class", ""))), selected.get("operation_slot", "-")], HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 130.0, 15, TEXT_SOFT)
 	_draw_hp_bar(Rect2(rect.position + Vector2(112.0, 104.0), Vector2(rect.size.x - 132.0, 10.0)), float(selected.get("current_hp", 0.0)), float(selected.get("max_hp", 1.0)), true)
 	var primary := _primary_text()
 	var ammo := _ammo_text()
@@ -188,8 +189,8 @@ func _draw_pause_panel(viewport_size: Vector2) -> void:
 	draw_rect(Rect2(Vector2.ZERO, viewport_size), Color(0.0, 0.06, 0.1, 0.24), true)
 	_draw_panel(rect, "")
 	_draw_icon("ui_icon_pause", Rect2(rect.position + Vector2(30.0, 34.0), Vector2(44.0, 44.0)))
-	draw_string(ThemeDB.fallback_font, rect.position + Vector2(92.0, 60.0), "Paused", HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 120.0, 28, TEXT_DARK)
-	draw_string(ThemeDB.fallback_font, rect.position + Vector2(92.0, 86.0), "Press Space to continue.", HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 120.0, 16, TEXT_SOFT)
+	draw_string(ThemeDB.fallback_font, rect.position + Vector2(92.0, 60.0), "战斗已暂停", HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 120.0, 28, TEXT_DARK)
+	draw_string(ThemeDB.fallback_font, rect.position + Vector2(92.0, 86.0), "按空格键继续战斗。", HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 120.0, 16, TEXT_SOFT)
 
 
 func _draw_result_panel(viewport_size: Vector2) -> void:
@@ -201,17 +202,17 @@ func _draw_result_panel(viewport_size: Vector2) -> void:
 	var title := "胜利" if player_won else "失败"
 	var subtitle := "敌方旗舰已经失去作战能力。" if player_won else "己方旗舰失去作战能力。"
 	if str(result.get("reason", "")) == "TIME_LIMIT":
-		subtitle = "时间耗尽，按双方剩余总 HP 比例判定。"
+		subtitle = "时间耗尽，按双方剩余总耐久比例判定。"
 	_draw_result_character(Rect2(rect.position + Vector2(34.0, 28.0), Vector2(400.0, 548.0)))
 	draw_string(ThemeDB.fallback_font, rect.position + Vector2(470.0, 92.0), title, HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 520.0, 54, TEXT_DARK)
 	draw_rect(Rect2(rect.position + Vector2(472.0, 112.0), Vector2(132.0, 5.0)), Color("#70db84") if player_won else Color("#ff9a8c"), true)
 	draw_string(ThemeDB.fallback_font, rect.position + Vector2(472.0, 156.0), subtitle, HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 520.0, 22, TEXT_SOFT)
 	var duration := _format_duration(float(result.get("elapsed_time", snapshot.get("elapsed_time", 0.0))))
 	var rows := [
-		"战斗模式：%s" % level_id.trim_prefix("level."),
+		"战斗模式：%s" % UiText.mode_name(level_id),
 		"战斗时长：%s" % duration,
-		"结算原因：%s" % str(result.get("reason", "")),
-		"胜利阵营：%s" % str(result.get("winner_faction", "")),
+		"结算原因：%s" % UiText.result_reason_name(str(result.get("reason", ""))),
+		"胜利阵营：%s" % UiText.faction_name(str(result.get("winner_faction", ""))),
 	]
 	var y := rect.position.y + 228.0
 	for row in rows:
@@ -280,23 +281,25 @@ func _selected_unit() -> Dictionary:
 
 
 func _primary_text() -> String:
-	if operation_status.is_empty(): return "disabled"
-	var name := str(operation_status.get("primary_name", "Primary"))
+	if operation_status.is_empty(): return "不可用"
+	var name := str(operation_status.get("primary_name", "主要武器"))
 	var reload := float(operation_status.get("primary_reload_remaining", 0.0))
-	if bool(operation_status.get("primary_ready", false)): return "%s ready" % name
-	return "%s %.1fs" % [name, reload]
+	if bool(operation_status.get("primary_ready", false)): return "%s 已就绪" % name
+	return "%s %.1f 秒" % [name, reload]
 
 
 func _ammo_text() -> String:
-	if operation_status.is_empty() or not bool(operation_status.get("q_enabled", false)): return "disabled"
-	return str(operation_status.get("selected_ammo", "?"))
+	if operation_status.is_empty() or not bool(operation_status.get("q_enabled", false)): return "不可切换"
+	return UiText.ammo_name(str(operation_status.get("selected_ammo", "")))
 
 
 func _skill_text() -> String:
-	if operation_status.is_empty(): return "disabled"
+	if operation_status.is_empty(): return "不可用"
+	var skill := DataRegistry.registry.get_definition("skills", str(operation_status.get("skill_id", "")))
+	var skill_name := str(skill.get("display_name", "技能"))
 	var cooldown := float(operation_status.get("skill_cooldown", 0.0))
-	if bool(operation_status.get("skill_ready", false)): return "skill ready"
-	return "skill %.1fs" % cooldown
+	if bool(operation_status.get("skill_ready", false)): return "%s 已就绪" % skill_name
+	return "%s %.1f 秒" % [skill_name, cooldown]
 
 
 func _short_name(display_name: String) -> String:

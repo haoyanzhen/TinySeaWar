@@ -1,0 +1,113 @@
+extends RefCounted
+
+
+static func mode_name(level_id: String) -> String:
+	match level_id:
+		"level.prototype_1v1": return "1v1 单舰对决"
+		"level.prototype_3v3": return "3v3 小队演习"
+		"level.prototype_5v5": return "5v5 舰队战"
+		"level.prototype_11v11": return "11v11 大规模会战"
+		_: return "未知模式"
+
+
+static func phase_name(phase: String) -> String:
+	match phase:
+		"Running": return "战斗中"
+		"Paused": return "已暂停"
+		"Finished": return "战斗结束"
+		"Setup": return "准备中"
+		_: return "状态未知"
+
+
+static func camera_mode_name(mode: String) -> String:
+	return "跟随" if mode == "Follow" else "自由观察"
+
+
+static func operation_mode_name(mode: String) -> String:
+	match mode:
+		"AIMING_PRIMARY": return "主武器瞄准"
+		"TARGETING_SKILL": return "技能选目标"
+		_: return "常规操作"
+
+
+static func palette_name(palette_id: String) -> String:
+	match palette_id:
+		"day_clear": return "晴昼训练海域"
+		"cloudy": return "阴云标准海域"
+		"dusk": return "黄昏决战海域"
+		_: return "未知海域"
+
+
+static func ship_class_name(ship_class: String) -> String:
+	match ship_class:
+		"Battleship": return "战列舰"
+		"HeavyCruiser": return "重巡洋舰"
+		"LightCruiser": return "轻巡洋舰"
+		"Destroyer": return "驱逐舰"
+		"Submarine": return "潜艇"
+		"Carrier": return "航空母舰"
+		_: return "未知舰种"
+
+
+static func target_type_name(target_type: String) -> String:
+	match target_type:
+		"Self": return "自身"
+		"Enemy", "Entity": return "敌方单位"
+		"Area", "Position": return "指定区域"
+		_: return "未知目标"
+
+
+static func faction_name(faction_id: String) -> String:
+	match faction_id:
+		"player": return "己方"
+		"enemy": return "敌方"
+		_: return "未知阵营"
+
+
+static func result_reason_name(reason: String) -> String:
+	match reason:
+		"FLAGSHIP_SUNK": return "旗舰沉没"
+		"FLAGSHIP_SUNK_SIMULTANEOUS": return "双方旗舰同时沉没"
+		"TIME_LIMIT": return "战斗时间耗尽"
+		_: return "战斗结束"
+
+
+static func reason_name(reason_code: String) -> String:
+	match reason_code:
+		"OK": return "可以执行"
+		"BATTLE_NOT_RUNNING": return "战斗尚未进行"
+		"BATTLE_NOT_PAUSED": return "战斗未暂停"
+		"UNIT_NOT_FOUND": return "未找到单位"
+		"UNIT_NOT_CONTROLLABLE": return "该单位不可控制"
+		"UNIT_SUNK": return "单位已沉没"
+		"PRIMARY_WEAPON_UNAVAILABLE": return "没有可用的主要武器"
+		"WEAPON_RELOADING": return "武器装填中"
+		"TARGET_TOO_CLOSE": return "目标距离过近"
+		"TARGET_OUT_OF_RANGE": return "目标超出射程"
+		"TARGET_NOT_VISIBLE": return "目标尚未发现"
+		"FIRE_ARC_INVALID": return "目标不在射界内"
+		"INVALID_TARGET", "INVALID_TARGET_TYPE": return "目标无效"
+		"AMMO_SWITCH_DISABLED": return "无法切换弹药"
+		"SKILL_NOT_FOUND": return "未找到技能"
+		"SKILL_ON_COOLDOWN": return "技能冷却中"
+		"INVALID_COMMAND_STRUCTURE", "UNKNOWN_COMMAND": return "无法识别该操作"
+		_: return "操作无法执行"
+
+
+static func ammo_name(ammo_type: String) -> String:
+	match ammo_type:
+		"HE": return "高爆弹"
+		"AP": return "穿甲弹"
+		_: return "无弹种"
+
+
+static func character_name(character_id: String) -> String:
+	match character_id.trim_prefix("ship."):
+		"warspite": return "厌战号"
+		"bismarck": return "俾斯麦号"
+		"aurora": return "阿芙乐尔号"
+		"hindenburg": return "兴登堡号"
+		"shimakaze": return "岛风号"
+		"hai_shih": return "海狮号"
+		"yukikaze": return "雪风号"
+		_: return "未知角色"

@@ -2,6 +2,7 @@ extends Node2D
 
 const BattleSession = preload("res://scripts/application/battle_session.gd")
 const BattleEffectDirector = preload("res://scripts/presentation/battle/battle_effect_director.gd")
+const UiText = preload("res://scripts/presentation/ui_text.gd")
 
 const MAIN_MENU_SCENE := "res://scenes/menu/main_menu.tscn"
 const FIXED_STEP := 0.1
@@ -25,6 +26,9 @@ var focused_target_id := ""
 var recent_messages: Array[String] = []
 var camera_mode := "Manual"
 var camera_follow_unit_id := ""
+var camera_settings: Dictionary = {}
+var camera_zoom_min := 1.0
+var camera_zoom_max := 1.0
 var operation_mode := OperationMode.NORMAL
 var skill_target_type := ""
 var current_palette_id := "cloudy"
@@ -40,6 +44,7 @@ var effect_director
 
 func _ready() -> void:
 	_ensure_camera_input_actions()
+	camera_settings = DataRegistry.registry.get_definition("settings", "settings.presentation").get("camera", {})
 	_create_presentation_layers()
 	var flow := get_node_or_null("/root/GameFlow")
 	if flow != null:
@@ -123,7 +128,7 @@ func _draw_unit(unit: Dictionary) -> void:
 	var bar_width := maxf(68.0, radius * 3.2)
 	draw_rect(Rect2(position + Vector2(-bar_width * 0.5, -radius - 28.0), Vector2(bar_width, 7.0)), Color("#202931"), true)
 	draw_rect(Rect2(position + Vector2(-bar_width * 0.5, -radius - 28.0), Vector2(bar_width * hp_ratio, 7.0)), Color("#70db84") if friendly else Color("#ff9a8c"), true)
-	var label := ("[F] " if unit["is_flagship"] else "") + str(unit["display_name"])
+	var label := ("[旗舰] " if unit["is_flagship"] else "") + str(unit["display_name"])
 	draw_string(ThemeDB.fallback_font, position + Vector2(-72.0, radius + 36.0), label, HORIZONTAL_ALIGNMENT_CENTER, 144.0, 18, Color.WHITE)
 
 
@@ -220,12 +225,12 @@ func _draw_operation_overlay() -> void:
 		else:
 			draw_circle(cursor, 42.0, Color(color.r, color.g, color.b, 0.12))
 			draw_arc(cursor, 42.0, 0.0, TAU, 36, color, 2.0)
-		draw_string(ThemeDB.fallback_font, cursor + Vector2(18.0, -18.0), str(aim_status.get("reason_code", "OK")), HORIZONTAL_ALIGNMENT_LEFT, -1.0, 16, color)
+		draw_string(ThemeDB.fallback_font, cursor + Vector2(18.0, -18.0), UiText.reason_name(str(aim_status.get("reason_code", "OK"))), HORIZONTAL_ALIGNMENT_LEFT, -1.0, 16, color)
 	elif operation_mode == OperationMode.TARGETING_SKILL:
 		var color := Color(0.45, 0.75, 1.0, 0.75)
 		draw_circle(cursor, 48.0, Color(color.r, color.g, color.b, 0.12))
 		draw_arc(cursor, 48.0, 0.0, TAU, 36, color, 2.0)
-		draw_string(ThemeDB.fallback_font, cursor + Vector2(18.0, -18.0), "Skill target: %s" % skill_target_type, HORIZONTAL_ALIGNMENT_LEFT, -1.0, 16, color)
+		draw_string(ThemeDB.fallback_font, cursor + Vector2(18.0, -18.0), "技能目标：%s" % UiText.target_type_name(skill_target_type), HORIZONTAL_ALIGNMENT_LEFT, -1.0, 16, color)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -246,6 +251,12 @@ func _unhandled_input(event: InputEvent) -> void:
 			KEY_V: _toggle_follow_selected()
 			KEY_ESCAPE: _cancel_operation_mode()
 	if event is InputEventMouseButton and event.pressed:
+		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
+			_adjust_camera_zoom(float(camera_settings.get("zoom_step", 1.0)), event.position)
+			return
+		if event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+			_adjust_camera_zoom(1.0 / float(camera_settings.get("zoom_step", 1.0)), event.position)
+			return
 		var snapshot: Dictionary = session.snapshot("player", false)
 		var world_position := get_global_mouse_position()
 		if event.button_index == MOUSE_BUTTON_LEFT:
@@ -264,7 +275,7 @@ func _update_camera(delta: float) -> void:
 	if input_direction.length_squared() > 0.0:
 		camera_mode = "Manual"
 		camera_follow_unit_id = ""
-		battle_camera.position += input_direction.normalized() * CAMERA_SPEED * delta
+		battle_camera.position += input_direction.normalized() * CAMERA_SPEED * delta / maxf(battle_camera.zoom.x, 0.01)
 	elif camera_mode == "Follow":
 		var target: Dictionary = session.state.get("units_by_id", {}).get(camera_follow_unit_id, {})
 		if target.is_empty() or target.get("life_state", "") != "Alive" or target.get("faction_id", "") != "player":
@@ -274,6 +285,53 @@ func _update_camera(delta: float) -> void:
 			var weight := 1.0 - exp(-CAMERA_FOLLOW_DAMPING * delta)
 			battle_camera.position = battle_camera.position.lerp(target["position"], weight)
 	_clamp_camera_to_map()
+
+
+func _adjust_camera_zoom(multiplier: float, screen_position: Vector2) -> void:
+	var old_zoom := battle_camera.zoom.x
+	var new_zoom := clampf(old_zoom * multiplier, camera_zoom_min, camera_zoom_max)
+	if is_equal_approx(old_zoom, new_zoom):
+		return
+	var screen_offset := screen_position - get_viewport_rect().size * 0.5
+	var anchor_world := battle_camera.position + screen_offset / old_zoom
+	battle_camera.zoom = Vector2.ONE * new_zoom
+	battle_camera.position = anchor_world - screen_offset / new_zoom
+	_clamp_camera_to_map()
+	_update_hud()
+
+
+func _configure_camera_zoom(map_data: Dictionary) -> void:
+	var viewport_size := get_viewport_rect().size
+	var map_size := Vector2(float(map_data.get("width", 4096.0)), float(map_data.get("height", 2304.0)))
+	var min_visible_size := _pair_to_vector(camera_settings.get("min_visible_size", []))
+	var max_visible_fraction := float(camera_settings.get("max_map_visible_fraction", 0.0))
+	if min_visible_size.x <= 0.0 or min_visible_size.y <= 0.0 or max_visible_fraction <= 0.0:
+		push_error("Camera zoom settings are missing or invalid")
+		camera_zoom_min = 1.0
+		camera_zoom_max = 1.0
+		battle_camera.zoom = Vector2.ONE
+		return
+	camera_zoom_min = maxf(
+		viewport_size.x / (map_size.x * max_visible_fraction),
+		viewport_size.y / (map_size.y * max_visible_fraction)
+	)
+	camera_zoom_max = minf(
+		viewport_size.x / min_visible_size.x,
+		viewport_size.y / min_visible_size.y
+	)
+	camera_zoom_max = maxf(camera_zoom_max, camera_zoom_min)
+	var default_zoom := clampf(float(camera_settings.get("default_zoom", 1.0)), camera_zoom_min, camera_zoom_max)
+	battle_camera.zoom = Vector2.ONE * default_zoom
+
+
+func _camera_visible_size() -> Vector2:
+	return get_viewport_rect().size / maxf(battle_camera.zoom.x, 0.01)
+
+
+func _pair_to_vector(value: Array) -> Vector2:
+	if value.size() != 2:
+		return Vector2.ZERO
+	return Vector2(float(value[0]), float(value[1]))
 
 
 func _ensure_camera_input_actions() -> void:
@@ -300,7 +358,7 @@ func _clamp_camera_to_map() -> void:
 	if session == null or session.state.is_empty(): return
 	var source: Dictionary = session.state.get("map", {})
 	var map_size := Vector2(float(source.get("width", 4096.0)), float(source.get("height", 2304.0)))
-	var half_view := get_viewport_rect().size * 0.5
+	var half_view := _camera_visible_size() * 0.5
 	var minimum := half_view + Vector2.ONE * CAMERA_EDGE_MARGIN
 	var maximum := map_size - half_view - Vector2.ONE * CAMERA_EDGE_MARGIN
 	if maximum.x < minimum.x:
@@ -317,7 +375,7 @@ func _toggle_follow_selected() -> void:
 	var selected: Dictionary = session.state.get("units_by_id", {}).get(selected_unit_id, {})
 	if selected.is_empty() or selected.get("faction_id", "") != "player": return
 	if selected.get("life_state", "") != "Alive":
-		_push_message("V disabled: UNIT_SUNK")
+		_push_message("V 不可用：%s" % UiText.reason_name("UNIT_SUNK"))
 		return
 	if camera_mode == "Follow" and camera_follow_unit_id == selected_unit_id:
 		camera_mode = "Manual"
@@ -350,9 +408,9 @@ func _select_slot(slot: int) -> void:
 		selected_unit_id = str(slot_data["unit_id"])
 		operation_mode = OperationMode.NORMAL
 		if camera_mode == "Follow": camera_follow_unit_id = selected_unit_id
-		_push_message("Selected slot %d: %s" % [slot, slot_data.get("display_name", selected_unit_id)])
+		_push_message("已选择 %d 号角色：%s" % [slot, slot_data.get("display_name", selected_unit_id)])
 		return
-	_push_message("Slot %d unavailable" % slot)
+	_push_message("%d 号角色不可用" % slot)
 
 
 func _select_at(world_position: Vector2, snapshot: Dictionary) -> void:
@@ -378,17 +436,17 @@ func _begin_primary_aim() -> void:
 	if selected.is_empty(): return
 	var operation_status: Dictionary = session.get_operation_status(selected_unit_id)
 	if not bool(operation_status.get("primary_ready", false)):
-		_push_message("E disabled: %s" % operation_status.get("primary_reason", "PRIMARY_WEAPON_UNAVAILABLE"))
+		_push_message("E 不可用：%s" % UiText.reason_name(str(operation_status.get("primary_reason", "PRIMARY_WEAPON_UNAVAILABLE"))))
 		return
 	operation_mode = OperationMode.AIMING_PRIMARY
-	_push_message("Aiming %s" % operation_status.get("primary_name", "primary weapon"))
+	_push_message("正在瞄准：%s" % operation_status.get("primary_name", "主要武器"))
 
 
 func _confirm_primary_aim(world_position: Vector2) -> void:
 	if selected_unit_id.is_empty(): return
 	var aim_status: Dictionary = session.get_primary_aim_status(selected_unit_id, world_position)
 	if not bool(aim_status.get("legal", false)):
-		_push_message("Primary rejected: %s" % aim_status.get("reason_code", "INVALID_TARGET"))
+		_push_message("主要武器无法发射：%s" % UiText.reason_name(str(aim_status.get("reason_code", "INVALID_TARGET"))))
 		return
 	session.queue_command({"command_id": "ui.primary.%s" % session.state["tick_index"], "command_type": "FirePrimaryWeapon", "issued_at_tick": session.state["tick_index"], "issuer_id": "player", "unit_id": selected_unit_id, "target_position": world_position})
 	operation_mode = OperationMode.NORMAL
@@ -398,7 +456,7 @@ func _switch_selected_ammo() -> void:
 	if selected_unit_id.is_empty(): return
 	var operation_status: Dictionary = session.get_operation_status(selected_unit_id)
 	if not bool(operation_status.get("q_enabled", false)):
-		_push_message("Q disabled: AMMO_SWITCH_DISABLED")
+		_push_message("Q 不可用：%s" % UiText.reason_name("AMMO_SWITCH_DISABLED"))
 		return
 	session.queue_command({"command_id": "ui.ammo.%s" % session.state["tick_index"], "command_type": "SwitchAmmo", "issued_at_tick": session.state["tick_index"], "issuer_id": "player", "unit_id": selected_unit_id})
 
@@ -409,7 +467,7 @@ func _begin_or_cast_skill() -> void:
 	if selected.is_empty(): return
 	var operation_status: Dictionary = session.get_operation_status(selected_unit_id)
 	if not bool(operation_status.get("skill_ready", false)):
-		_push_message("F disabled: SKILL_ON_COOLDOWN")
+		_push_message("F 不可用：%s" % UiText.reason_name("SKILL_ON_COOLDOWN"))
 		return
 	var skill: Dictionary = DataRegistry.registry.get_definition("skills", str(selected["skill_state"]["definition_id"]))
 	skill_target_type = str(skill.get("target_type", "Self"))
@@ -417,7 +475,7 @@ func _begin_or_cast_skill() -> void:
 		_queue_skill_command({"type": "Self"})
 	else:
 		operation_mode = OperationMode.TARGETING_SKILL
-		_push_message("Select skill target: %s" % skill_target_type)
+		_push_message("请选择技能目标：%s" % UiText.target_type_name(skill_target_type))
 
 
 func _confirm_skill_target(world_position: Vector2, snapshot: Dictionary) -> void:
@@ -428,7 +486,7 @@ func _confirm_skill_target(world_position: Vector2, snapshot: Dictionary) -> voi
 		return
 	var clicked := _unit_at(world_position, snapshot)
 	if clicked.is_empty() or clicked.get("faction_id", "") == "player":
-		_push_message("Skill rejected: INVALID_TARGET_TYPE")
+		_push_message("技能无法释放：%s" % UiText.reason_name("INVALID_TARGET_TYPE"))
 		return
 	_queue_skill_command({"type": "Entity", "entity_id": clicked["entity_id"]})
 	operation_mode = OperationMode.NORMAL
@@ -442,7 +500,7 @@ func _cancel_operation_mode() -> void:
 	if operation_mode == OperationMode.NORMAL: return
 	operation_mode = OperationMode.NORMAL
 	skill_target_type = ""
-	_push_message("Operation cancelled")
+	_push_message("已取消当前操作")
 
 
 func _unit_at(world_position: Vector2, snapshot: Dictionary) -> Dictionary:
@@ -461,11 +519,21 @@ func _consume_events(events: Array) -> void:
 		effect_director.consume_events(events, session)
 	for event in events:
 		match event.get("event_type", ""):
-			"UnitSunk": _push_message("%s was sunk" % event.get("unit_id", "unit"))
-			"SkillCast": _push_message("%s cast %s" % [event.get("unit_id", "unit"), event.get("skill_id", "skill")])
+			"UnitSunk": _push_message("%s 已沉没" % _unit_display_name(str(event.get("unit_id", ""))))
+			"SkillCast": _push_message("%s 释放了 %s" % [_unit_display_name(str(event.get("unit_id", ""))), _skill_display_name(str(event.get("skill_id", "")))])
 			"BattleFinished":
 				result_character_id = _random_player_character_id()
-				_push_message("Battle finished: %s" % event.get("result", {}).get("winner_faction", "?"))
+				_push_message("战斗结束，胜利阵营：%s" % UiText.faction_name(str(event.get("result", {}).get("winner_faction", ""))))
+
+
+func _unit_display_name(unit_id: String) -> String:
+	var unit: Dictionary = session.state.get("units_by_id", {}).get(unit_id, {})
+	return str(unit.get("display_name", "未知单位"))
+
+
+func _skill_display_name(skill_id: String) -> String:
+	var skill: Dictionary = DataRegistry.registry.get_definition("skills", skill_id)
+	return str(skill.get("display_name", "未知技能"))
 
 
 func _push_message(message: String) -> void:
@@ -494,6 +562,7 @@ func _start_battle(new_level_id: String) -> void:
 	current_palette_id = str(map_data.get("ocean_palette", "day_clear"))
 	ocean_surface.configure(Vector2(float(map_data.get("width", 4096.0)), float(map_data.get("height", 2304.0))), current_palette_id)
 	_configure_camera_limits(map_data)
+	_configure_camera_zoom(map_data)
 	_select_slot(1)
 	battle_camera.position = _player_fleet_center()
 	battle_camera.reset_smoothing()
@@ -534,11 +603,11 @@ func _set_ocean_palette(palette_id: String) -> void:
 
 func _update_hud() -> void:
 	if session == null or session.state.is_empty(): return
-	var selected_name := "None"
+	var selected_name := "未选择"
 	var selected: Dictionary = session.state.get("units_by_id", {}).get(selected_unit_id, {})
 	if not selected.is_empty(): selected_name = str(selected.get("display_name", selected_unit_id))
 	var snapshot: Dictionary = session.snapshot("player", false)
-	var half_view := get_viewport_rect().size * 0.5
+	var half_view := _camera_visible_size() * 0.5
 	snapshot["camera_rect"] = Rect2(battle_camera.position - half_view, half_view * 2.0)
 	snapshot["selected_unit_id"] = selected_unit_id
 	snapshot["focused_target_id"] = focused_target_id

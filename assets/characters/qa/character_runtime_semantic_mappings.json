@@ -1,119 +1,2046 @@
 {
   "characters": {
     "enterprise_cv6": {
+      "ship_class": "carrier",
       "binding_semantics": {
-        "aircraft_launch_01": "aircraft launch point 1",
-        "aircraft_launch_02": "aircraft launch point 2",
-        "aircraft_recovery": "aircraft recovery point",
-        "wake_origin": "carrier wake origin",
-        "skill_origin": "air command/scan origin"
+        "aircraft_launch_01": {
+          "semantic": "aircraft.launch.01",
+          "assets": [
+            "enterprise_cv6_battle_rig_base.png"
+          ]
+        },
+        "aircraft_launch_02": {
+          "semantic": "aircraft.launch.02",
+          "assets": [
+            "enterprise_cv6_battle_rig_base.png"
+          ]
+        },
+        "aircraft_recovery": {
+          "semantic": "aircraft.recovery",
+          "assets": [
+            "enterprise_cv6_battle_rig_base.png"
+          ]
+        },
+        "origin": {
+          "semantic": "effect.origin",
+          "assets": [
+            "enterprise_cv6_battle_air_control_node.png",
+            "enterprise_cv6_battle_body_r.png",
+            "enterprise_cv6_battle_launch_marker.png",
+            "enterprise_cv6_battle_rig_base.png"
+          ]
+        },
+        "rig_mount": {
+          "semantic": "rig.mount",
+          "assets": [
+            "enterprise_cv6_battle_body_r.png"
+          ]
+        },
+        "scan_origin": {
+          "semantic": "scan.origin",
+          "assets": [
+            "enterprise_cv6_battle_air_control_node.png"
+          ]
+        },
+        "skill_origin": {
+          "semantic": "skill.origin",
+          "assets": [
+            "enterprise_cv6_battle_air_control_node.png"
+          ]
+        },
+        "wake_origin": {
+          "semantic": "wake.origin",
+          "assets": [
+            "enterprise_cv6_battle_body_r.png"
+          ]
+        }
       },
       "vfx_roles": {
-        "aircraft_path": "aircraft.path",
-        "deck_lane": "aircraft.launch_trail",
-        "airstrike_area": "aircraft.airstrike_area",
-        "hit": "aircraft.intercept_hit",
-        "wake": "wake.carrier_wide"
+        "aircraft_path": {
+          "semantic": "aircraft.path",
+          "file": "assets/characters/enterprise_cv6/processed/vfx/enterprise_cv6_vfx_aircraft_path_arrows.png"
+        },
+        "airstrike_area": {
+          "semantic": "aircraft.airstrike_area",
+          "file": "assets/characters/enterprise_cv6/processed/vfx/enterprise_cv6_vfx_airstrike_area.png"
+        },
+        "deck_lane": {
+          "semantic": "aircraft.launch_trail",
+          "file": "assets/characters/enterprise_cv6/processed/vfx/enterprise_cv6_vfx_deck_launch_lane.png"
+        },
+        "hit": {
+          "semantic": "aircraft.intercept_hit",
+          "file": "assets/characters/enterprise_cv6/processed/vfx/enterprise_cv6_vfx_hit_sparks.png"
+        },
+        "wake": {
+          "semantic": "wake.class_profile",
+          "file": "assets/characters/enterprise_cv6/processed/vfx/enterprise_cv6_vfx_wake_fast.png"
+        }
       }
     },
-    "hai_shih": {
+    "iowa": {
+      "ship_class": "battleship",
       "binding_semantics": {
-        "torpedo_port": "legacy alias for torpedo_port_01",
-        "torpedo_port_01": "standard submarine torpedo port",
-        "sonar_origin": "submarine.sonar_pulse",
-        "periscope_point": "periscope/view point",
-        "wake_origin": "submarine low wake origin",
-        "skill_origin": "submarine ambush/scan origin"
+        "muzzle_01": {
+          "semantic": "weapon.muzzle.01",
+          "assets": [
+            "iowa_battle_turret_main_01.png",
+            "iowa_battle_turret_main_02.png",
+            "iowa_battle_turret_main_03.png",
+            "iowa_battle_turret_secondary_01.png"
+          ]
+        },
+        "pivot": {
+          "semantic": "asset.pivot",
+          "assets": [
+            "iowa_battle_body_r.png",
+            "iowa_battle_fire_control_node.png",
+            "iowa_battle_flagship_marker.png",
+            "iowa_battle_rig_base.png",
+            "iowa_battle_turret_main_01.png",
+            "iowa_battle_turret_main_02.png",
+            "iowa_battle_turret_main_03.png",
+            "iowa_battle_turret_secondary_01.png",
+            "iowa_battle_wake_origin_marker.png"
+          ]
+        },
+        "rig_mount": {
+          "semantic": "rig.mount",
+          "assets": [
+            "iowa_battle_rig_base.png"
+          ]
+        },
+        "skill_origin": {
+          "semantic": "skill.origin",
+          "assets": [
+            "iowa_battle_fire_control_node.png",
+            "iowa_battle_flagship_marker.png"
+          ]
+        },
+        "wake_origin": {
+          "semantic": "wake.origin",
+          "assets": [
+            "iowa_battle_wake_origin_marker.png"
+          ]
+        }
       },
       "vfx_roles": {
-        "underwater_shadow": "submarine.underwater_shadow",
-        "bubble_trail": "submarine.bubble_trail",
-        "sonar_pulse": "submarine.sonar_pulse",
-        "torpedo_trail": "torpedo.trail.submerged",
-        "stealth": "submarine.underwater_shadow"
+        "armor_sparks": {
+          "semantic": "impact.armor.spark",
+          "file": "assets/characters/iowa/processed/vfx/iowa_vfx_armor_sparks.png"
+        },
+        "broadside_smoke": {
+          "semantic": "muzzle_smoke.heavy",
+          "file": "assets/characters/iowa/processed/vfx/iowa_vfx_broadside_smoke.png"
+        },
+        "command_aura": {
+          "semantic": "skill.area",
+          "file": "assets/characters/iowa/processed/vfx/iowa_vfx_command_aura.png"
+        },
+        "fire_control_lock_line": {
+          "semantic": "targeting.overlay",
+          "file": "assets/characters/iowa/processed/vfx/iowa_vfx_fire_control_lock_line.png"
+        },
+        "muzzle_flash_large": {
+          "semantic": "muzzle_flash.large",
+          "file": "assets/characters/iowa/processed/vfx/iowa_vfx_muzzle_flash_large.png"
+        },
+        "shell_trail_heavy": {
+          "semantic": "shell.trail.long",
+          "file": "assets/characters/iowa/processed/vfx/iowa_vfx_shell_trail_heavy.png"
+        },
+        "wake_heavy": {
+          "semantic": "wake.heavy",
+          "file": "assets/characters/iowa/processed/vfx/iowa_vfx_wake_heavy.png"
+        },
+        "water_splash_large": {
+          "semantic": "impact.water.large",
+          "file": "assets/characters/iowa/processed/vfx/iowa_vfx_water_splash_large.png"
+        }
       }
     },
-    "hindenburg": {
+    "san_diego": {
+      "ship_class": "light_cruiser",
       "binding_semantics": {
-        "muzzle_01": "main gun muzzle 1",
-        "muzzle_02": "main gun muzzle 2",
-        "muzzle_group": "main gun grouped muzzle",
-        "turret_mount_01": "turret pivot",
-        "fire_control_point": "scan/skill origin",
-        "wake_origin": "cruiser wake origin"
+        "muzzle_01": {
+          "semantic": "weapon.muzzle.01",
+          "assets": [
+            "san_diego_battle_turret_main_01.png",
+            "san_diego_battle_turret_main_02.png"
+          ]
+        },
+        "pivot": {
+          "semantic": "asset.pivot",
+          "assets": [
+            "san_diego_battle_aa_center.png",
+            "san_diego_battle_body_r.png",
+            "san_diego_battle_radar_node.png",
+            "san_diego_battle_rig_base.png",
+            "san_diego_battle_support_node.png",
+            "san_diego_battle_turret_main_01.png",
+            "san_diego_battle_turret_main_02.png",
+            "san_diego_battle_wake_origin_marker.png"
+          ]
+        },
+        "rig_mount": {
+          "semantic": "rig.mount",
+          "assets": [
+            "san_diego_battle_rig_base.png"
+          ]
+        },
+        "scan_origin": {
+          "semantic": "scan.origin",
+          "assets": [
+            "san_diego_battle_radar_node.png"
+          ]
+        },
+        "skill_origin": {
+          "semantic": "skill.origin",
+          "assets": [
+            "san_diego_battle_support_node.png"
+          ]
+        },
+        "wake_origin": {
+          "semantic": "wake.origin",
+          "assets": [
+            "san_diego_battle_wake_origin_marker.png"
+          ]
+        }
       },
       "vfx_roles": {
-        "muzzle_flash": "muzzle_flash.medium",
-        "shell_trail": "shell.trail.medium",
-        "scan_beam": "submarine.sonar_pulse",
-        "wake": "wake.cruiser",
-        "reticle": "shell.trail.medium"
+        "aa_burst": {
+          "semantic": "aa.burst",
+          "file": "assets/characters/san_diego/processed/vfx/san_diego_vfx_aa_burst.png"
+        },
+        "aa_circle": {
+          "semantic": "aa.circle",
+          "file": "assets/characters/san_diego/processed/vfx/san_diego_vfx_aa_circle.png"
+        },
+        "armor_sparks": {
+          "semantic": "impact.armor.spark",
+          "file": "assets/characters/san_diego/processed/vfx/san_diego_vfx_armor_sparks.png"
+        },
+        "escort_aura": {
+          "semantic": "skill.area",
+          "file": "assets/characters/san_diego/processed/vfx/san_diego_vfx_escort_aura.png"
+        },
+        "muzzle_flash_medium": {
+          "semantic": "muzzle_flash.medium",
+          "file": "assets/characters/san_diego/processed/vfx/san_diego_vfx_muzzle_flash_medium.png"
+        },
+        "shell_trail": {
+          "semantic": "shell.trail.medium",
+          "file": "assets/characters/san_diego/processed/vfx/san_diego_vfx_shell_trail.png"
+        },
+        "wake_medium": {
+          "semantic": "wake.cruiser",
+          "file": "assets/characters/san_diego/processed/vfx/san_diego_vfx_wake_medium.png"
+        },
+        "water_splash": {
+          "semantic": "impact.water.class_profile",
+          "file": "assets/characters/san_diego/processed/vfx/san_diego_vfx_water_splash.png"
+        }
       }
     },
-    "shimakaze": {
+    "ward": {
+      "ship_class": "destroyer",
       "binding_semantics": {
-        "muzzle_01": "small gun muzzle",
-        "muzzle_group": "small gun grouped muzzle alias",
-        "torpedo_port_01": "torpedo port 1",
-        "torpedo_port_02": "torpedo port 2",
-        "wake_origin": "destroyer fast wake origin",
-        "skill_origin": "torpedo rush skill origin"
+        "muzzle_01": {
+          "semantic": "weapon.muzzle.01",
+          "assets": [
+            "ward_battle_turret_main_01.png"
+          ]
+        },
+        "pivot": {
+          "semantic": "asset.pivot",
+          "assets": [
+            "ward_battle_body_r.png",
+            "ward_battle_propulsion_node.png",
+            "ward_battle_radar_node.png",
+            "ward_battle_rig_base.png",
+            "ward_battle_torpedo_tube_01.png",
+            "ward_battle_torpedo_tube_02.png",
+            "ward_battle_turret_main_01.png",
+            "ward_battle_wake_origin_marker.png"
+          ]
+        },
+        "rig_mount": {
+          "semantic": "rig.mount",
+          "assets": [
+            "ward_battle_rig_base.png"
+          ]
+        },
+        "scan_origin": {
+          "semantic": "scan.origin",
+          "assets": [
+            "ward_battle_radar_node.png"
+          ]
+        },
+        "torpedo_port_01": {
+          "semantic": "weapon.torpedo_port.01",
+          "assets": [
+            "ward_battle_torpedo_tube_01.png",
+            "ward_battle_torpedo_tube_02.png"
+          ]
+        },
+        "wake_origin": {
+          "semantic": "wake.origin",
+          "assets": [
+            "ward_battle_wake_origin_marker.png"
+          ]
+        }
       },
       "vfx_roles": {
-        "torpedo_trail": "torpedo.trail.surface",
-        "torpedo_warning": "torpedo.warning.fan",
-        "water_impact": "impact.water.small",
-        "wake_fast": "wake.destroyer_fast",
-        "speed_lines": "wake.destroyer_fast"
-      }
-    },
-    "aurora": {
-      "binding_semantics": {
-        "muzzle_01": "light cruiser gun muzzle",
-        "searchlight_point": "searchlight/skill origin",
-        "skill_origin": "standard support skill origin",
-        "wake_origin": "cruiser wake origin"
-      },
-      "vfx_roles": {
-        "muzzle_flash": "muzzle_flash.medium",
-        "searchlight_beam": "submarine.sonar_pulse",
-        "support_area": "skill.area",
-        "water_splash": "impact.water.medium",
-        "wake": "wake.cruiser"
+        "range_reticle": {
+          "semantic": "targeting.overlay",
+          "file": "assets/characters/ward/processed/vfx/ward_vfx_range_reticle.png"
+        },
+        "skill_aura": {
+          "semantic": "skill.area",
+          "file": "assets/characters/ward/processed/vfx/ward_vfx_skill_aura.png"
+        },
+        "smoke_screen": {
+          "semantic": "skill.area.smoke",
+          "file": "assets/characters/ward/processed/vfx/ward_vfx_smoke_screen.png"
+        },
+        "speed_lines": {
+          "semantic": "wake.destroyer_fast",
+          "file": "assets/characters/ward/processed/vfx/ward_vfx_speed_lines.png"
+        },
+        "speed_wake": {
+          "semantic": "wake.destroyer_fast",
+          "file": "assets/characters/ward/processed/vfx/ward_vfx_speed_wake.png"
+        },
+        "torpedo_launch_flash": {
+          "semantic": "torpedo.launch_flash",
+          "file": "assets/characters/ward/processed/vfx/ward_vfx_torpedo_launch_flash.png"
+        },
+        "torpedo_warning": {
+          "semantic": "torpedo.warning.fan",
+          "file": "assets/characters/ward/processed/vfx/ward_vfx_torpedo_warning.png"
+        },
+        "water_splash": {
+          "semantic": "impact.water.class_profile",
+          "file": "assets/characters/ward/processed/vfx/ward_vfx_water_splash.png"
+        }
       }
     },
     "warspite": {
+      "ship_class": "battleship",
       "binding_semantics": {
-        "muzzle_01": "main gun muzzle 1",
-        "muzzle_02": "main gun muzzle 2",
-        "muzzle_group": "main gun grouped muzzle",
-        "turret_mount_01": "main turret pivot 1",
-        "turret_mount_02": "main turret pivot 2",
-        "skill_origin": "precision salvo origin",
-        "wake_origin": "battleship wake origin"
+        "muzzle_01": {
+          "semantic": "weapon.muzzle.01",
+          "assets": [
+            "warspite_battle_turret_main_01.png"
+          ]
+        },
+        "muzzle_02": {
+          "semantic": "weapon.muzzle.02",
+          "assets": [
+            "warspite_battle_turret_main_01.png"
+          ]
+        },
+        "muzzle_group": {
+          "semantic": "weapon.muzzle.group",
+          "assets": [
+            "warspite_battle_body_r.png"
+          ]
+        },
+        "origin": {
+          "semantic": "effect.origin",
+          "assets": [
+            "warspite_battle_body_r.png",
+            "warspite_battle_rangefinder_node.png",
+            "warspite_battle_rig_base.png",
+            "warspite_battle_turret_main_01.png"
+          ]
+        },
+        "rig_mount": {
+          "semantic": "rig.mount",
+          "assets": [
+            "warspite_battle_body_r.png"
+          ]
+        },
+        "scan_origin": {
+          "semantic": "scan.origin",
+          "assets": [
+            "warspite_battle_rangefinder_node.png"
+          ]
+        },
+        "skill_origin": {
+          "semantic": "skill.origin",
+          "assets": [
+            "warspite_battle_rangefinder_node.png"
+          ]
+        },
+        "turret_mount_01": {
+          "semantic": "weapon.turret_mount.01",
+          "assets": [
+            "warspite_battle_rig_base.png"
+          ]
+        },
+        "turret_mount_02": {
+          "semantic": "weapon.turret_mount.02",
+          "assets": [
+            "warspite_battle_rig_base.png"
+          ]
+        },
+        "wake_origin": {
+          "semantic": "wake.origin",
+          "assets": [
+            "warspite_battle_body_r.png"
+          ]
+        }
       },
       "vfx_roles": {
-        "heavy_muzzle": "muzzle_flash.large",
-        "splash": "impact.water.large",
-        "wake": "wake.battleship_heavy",
-        "reticle": "shell.trail.long"
+        "heavy_muzzle": {
+          "semantic": "muzzle_flash.large",
+          "file": "assets/characters/warspite/processed/vfx/warspite_vfx_heavy_muzzle_cone.png"
+        },
+        "range_scale": {
+          "semantic": "targeting.overlay",
+          "file": "assets/characters/warspite/processed/vfx/warspite_vfx_range_scale.png"
+        },
+        "reticle": {
+          "semantic": "targeting.overlay",
+          "file": "assets/characters/warspite/processed/vfx/warspite_vfx_reticle_main.png"
+        },
+        "royal_area": {
+          "semantic": "skill.area",
+          "file": "assets/characters/warspite/processed/vfx/warspite_vfx_royal_area.png"
+        },
+        "splash": {
+          "semantic": "character.splash",
+          "file": "assets/characters/warspite/processed/vfx/warspite_vfx_splash_sequence_02.png"
+        },
+        "wake": {
+          "semantic": "wake.class_profile",
+          "file": "assets/characters/warspite/processed/vfx/warspite_vfx_wake.png"
+        }
+      }
+    },
+    "hood": {
+      "ship_class": "battleship",
+      "binding_semantics": {
+        "muzzle_01": {
+          "semantic": "weapon.muzzle.01",
+          "assets": [
+            "hood_battle_turret_main_01.png",
+            "hood_battle_turret_main_02.png",
+            "hood_battle_turret_main_03.png"
+          ]
+        },
+        "pivot": {
+          "semantic": "asset.pivot",
+          "assets": [
+            "hood_battle_body_r.png",
+            "hood_battle_fire_control_node.png",
+            "hood_battle_flagship_marker.png",
+            "hood_battle_rig_base.png",
+            "hood_battle_turret_main_01.png",
+            "hood_battle_turret_main_02.png",
+            "hood_battle_turret_main_03.png",
+            "hood_battle_wake_origin_marker.png"
+          ]
+        },
+        "rig_mount": {
+          "semantic": "rig.mount",
+          "assets": [
+            "hood_battle_rig_base.png"
+          ]
+        },
+        "skill_origin": {
+          "semantic": "skill.origin",
+          "assets": [
+            "hood_battle_fire_control_node.png",
+            "hood_battle_flagship_marker.png"
+          ]
+        },
+        "wake_origin": {
+          "semantic": "wake.origin",
+          "assets": [
+            "hood_battle_wake_origin_marker.png"
+          ]
+        }
+      },
+      "vfx_roles": {
+        "armor_sparks": {
+          "semantic": "impact.armor.spark",
+          "file": "assets/characters/hood/processed/vfx/hood_vfx_armor_sparks.png"
+        },
+        "broadside_smoke": {
+          "semantic": "muzzle_smoke.heavy",
+          "file": "assets/characters/hood/processed/vfx/hood_vfx_broadside_smoke.png"
+        },
+        "command_aura": {
+          "semantic": "skill.area",
+          "file": "assets/characters/hood/processed/vfx/hood_vfx_command_aura.png"
+        },
+        "fire_control_lock_line": {
+          "semantic": "targeting.overlay",
+          "file": "assets/characters/hood/processed/vfx/hood_vfx_fire_control_lock_line.png"
+        },
+        "muzzle_flash_large": {
+          "semantic": "muzzle_flash.large",
+          "file": "assets/characters/hood/processed/vfx/hood_vfx_muzzle_flash_large.png"
+        },
+        "shell_trail_heavy": {
+          "semantic": "shell.trail.long",
+          "file": "assets/characters/hood/processed/vfx/hood_vfx_shell_trail_heavy.png"
+        },
+        "wake_heavy": {
+          "semantic": "wake.heavy",
+          "file": "assets/characters/hood/processed/vfx/hood_vfx_wake_heavy.png"
+        },
+        "water_splash_large": {
+          "semantic": "impact.water.large",
+          "file": "assets/characters/hood/processed/vfx/hood_vfx_water_splash_large.png"
+        }
+      }
+    },
+    "sirius": {
+      "ship_class": "light_cruiser",
+      "binding_semantics": {
+        "muzzle_01": {
+          "semantic": "weapon.muzzle.01",
+          "assets": [
+            "sirius_battle_turret_main_01.png",
+            "sirius_battle_turret_main_02.png"
+          ]
+        },
+        "pivot": {
+          "semantic": "asset.pivot",
+          "assets": [
+            "sirius_battle_aa_center.png",
+            "sirius_battle_body_r.png",
+            "sirius_battle_radar_node.png",
+            "sirius_battle_rig_base.png",
+            "sirius_battle_support_node.png",
+            "sirius_battle_turret_main_01.png",
+            "sirius_battle_turret_main_02.png",
+            "sirius_battle_wake_origin_marker.png"
+          ]
+        },
+        "rig_mount": {
+          "semantic": "rig.mount",
+          "assets": [
+            "sirius_battle_rig_base.png"
+          ]
+        },
+        "scan_origin": {
+          "semantic": "scan.origin",
+          "assets": [
+            "sirius_battle_radar_node.png"
+          ]
+        },
+        "skill_origin": {
+          "semantic": "skill.origin",
+          "assets": [
+            "sirius_battle_support_node.png"
+          ]
+        },
+        "wake_origin": {
+          "semantic": "wake.origin",
+          "assets": [
+            "sirius_battle_wake_origin_marker.png"
+          ]
+        }
+      },
+      "vfx_roles": {
+        "aa_burst": {
+          "semantic": "aa.burst",
+          "file": "assets/characters/sirius/processed/vfx/sirius_vfx_aa_burst.png"
+        },
+        "aa_circle": {
+          "semantic": "aa.circle",
+          "file": "assets/characters/sirius/processed/vfx/sirius_vfx_aa_circle.png"
+        },
+        "armor_sparks": {
+          "semantic": "impact.armor.spark",
+          "file": "assets/characters/sirius/processed/vfx/sirius_vfx_armor_sparks.png"
+        },
+        "escort_aura": {
+          "semantic": "skill.area",
+          "file": "assets/characters/sirius/processed/vfx/sirius_vfx_escort_aura.png"
+        },
+        "muzzle_flash_medium": {
+          "semantic": "muzzle_flash.medium",
+          "file": "assets/characters/sirius/processed/vfx/sirius_vfx_muzzle_flash_medium.png"
+        },
+        "shell_trail": {
+          "semantic": "shell.trail.medium",
+          "file": "assets/characters/sirius/processed/vfx/sirius_vfx_shell_trail.png"
+        },
+        "wake_medium": {
+          "semantic": "wake.cruiser",
+          "file": "assets/characters/sirius/processed/vfx/sirius_vfx_wake_medium.png"
+        },
+        "water_splash": {
+          "semantic": "impact.water.class_profile",
+          "file": "assets/characters/sirius/processed/vfx/sirius_vfx_water_splash.png"
+        }
+      }
+    },
+    "argus": {
+      "ship_class": "carrier",
+      "binding_semantics": {
+        "aircraft_launch_01": {
+          "semantic": "aircraft.launch.01",
+          "assets": [
+            "argus_battle_aircraft_launch_marker.png"
+          ]
+        },
+        "aircraft_recovery": {
+          "semantic": "aircraft.recovery",
+          "assets": [
+            "argus_battle_aircraft_recovery_marker.png"
+          ]
+        },
+        "pivot": {
+          "semantic": "asset.pivot",
+          "assets": [
+            "argus_battle_aircraft_group_01.png",
+            "argus_battle_aircraft_launch_marker.png",
+            "argus_battle_aircraft_recovery_marker.png",
+            "argus_battle_body_r.png",
+            "argus_battle_flight_deck.png",
+            "argus_battle_radar_node.png",
+            "argus_battle_rig_base.png",
+            "argus_battle_wake_origin_marker.png"
+          ]
+        },
+        "rig_mount": {
+          "semantic": "rig.mount",
+          "assets": [
+            "argus_battle_rig_base.png"
+          ]
+        },
+        "scan_origin": {
+          "semantic": "scan.origin",
+          "assets": [
+            "argus_battle_radar_node.png"
+          ]
+        },
+        "wake_origin": {
+          "semantic": "wake.origin",
+          "assets": [
+            "argus_battle_wake_origin_marker.png"
+          ]
+        }
+      },
+      "vfx_roles": {
+        "aa_burst": {
+          "semantic": "aa.burst",
+          "file": "assets/characters/argus/processed/vfx/argus_vfx_aa_burst.png"
+        },
+        "aircraft_explosion": {
+          "semantic": "aircraft.intercept_hit",
+          "file": "assets/characters/argus/processed/vfx/argus_vfx_aircraft_explosion.png"
+        },
+        "aircraft_formation": {
+          "semantic": "aircraft.formation",
+          "file": "assets/characters/argus/processed/vfx/argus_vfx_aircraft_formation.png"
+        },
+        "aircraft_launch_flash": {
+          "semantic": "aircraft.launch_flash",
+          "file": "assets/characters/argus/processed/vfx/argus_vfx_aircraft_launch_flash.png"
+        },
+        "aircraft_path": {
+          "semantic": "aircraft.path",
+          "file": "assets/characters/argus/processed/vfx/argus_vfx_aircraft_path.png"
+        },
+        "aircraft_recovery": {
+          "semantic": "aircraft.recovery",
+          "file": "assets/characters/argus/processed/vfx/argus_vfx_aircraft_recovery.png"
+        },
+        "airstrike_area": {
+          "semantic": "aircraft.airstrike_area",
+          "file": "assets/characters/argus/processed/vfx/argus_vfx_airstrike_area.png"
+        },
+        "wake_carrier": {
+          "semantic": "wake.carrier_wide",
+          "file": "assets/characters/argus/processed/vfx/argus_vfx_wake_carrier.png"
+        }
+      }
+    },
+    "aurora": {
+      "ship_class": "light_cruiser",
+      "binding_semantics": {
+        "beam_origin": {
+          "semantic": "skill.beam_origin",
+          "assets": [
+            "aurora_battle_searchlight_node.png"
+          ]
+        },
+        "muzzle_01": {
+          "semantic": "weapon.muzzle.01",
+          "assets": [
+            "aurora_battle_turret_main_01.png"
+          ]
+        },
+        "origin": {
+          "semantic": "effect.origin",
+          "assets": [
+            "aurora_battle_body_r.png",
+            "aurora_battle_rig_base.png",
+            "aurora_battle_searchlight_node.png",
+            "aurora_battle_turret_main_01.png"
+          ]
+        },
+        "rig_mount": {
+          "semantic": "rig.mount",
+          "assets": [
+            "aurora_battle_body_r.png"
+          ]
+        },
+        "searchlight_mount": {
+          "semantic": "skill.searchlight_mount",
+          "assets": [
+            "aurora_battle_rig_base.png"
+          ]
+        },
+        "searchlight_point": {
+          "semantic": "skill.searchlight_origin",
+          "assets": [
+            "aurora_battle_body_r.png"
+          ]
+        },
+        "skill_origin": {
+          "semantic": "skill.origin",
+          "assets": [
+            "aurora_battle_body_r.png"
+          ]
+        },
+        "turret_mount_01": {
+          "semantic": "weapon.turret_mount.01",
+          "assets": [
+            "aurora_battle_rig_base.png"
+          ]
+        },
+        "wake_origin": {
+          "semantic": "wake.origin",
+          "assets": [
+            "aurora_battle_body_r.png"
+          ]
+        }
+      },
+      "vfx_roles": {
+        "morale_aura": {
+          "semantic": "skill.area",
+          "file": "assets/characters/aurora/processed/vfx/aurora_vfx_morale_aura.png"
+        },
+        "muzzle_flash": {
+          "semantic": "muzzle_flash.medium",
+          "file": "assets/characters/aurora/processed/vfx/aurora_vfx_muzzle_flash_02.png"
+        },
+        "searchlight_beam": {
+          "semantic": "skill.beam",
+          "file": "assets/characters/aurora/processed/vfx/aurora_vfx_searchlight_beam.png"
+        },
+        "support_area": {
+          "semantic": "skill.area",
+          "file": "assets/characters/aurora/processed/vfx/aurora_vfx_command_ring.png"
+        },
+        "wake": {
+          "semantic": "wake.class_profile",
+          "file": "assets/characters/aurora/processed/vfx/aurora_vfx_wake.png"
+        },
+        "water_splash": {
+          "semantic": "impact.water.class_profile",
+          "file": "assets/characters/aurora/processed/vfx/aurora_vfx_water_splash.png"
+        }
+      }
+    },
+    "kirov": {
+      "ship_class": "heavy_cruiser",
+      "binding_semantics": {
+        "muzzle_01": {
+          "semantic": "weapon.muzzle.01",
+          "assets": [
+            "kirov_battle_turret_main_01.png",
+            "kirov_battle_turret_main_02.png",
+            "kirov_battle_turret_main_03.png",
+            "kirov_battle_turret_secondary_01.png"
+          ]
+        },
+        "pivot": {
+          "semantic": "asset.pivot",
+          "assets": [
+            "kirov_battle_body_r.png",
+            "kirov_battle_fire_control_node.png",
+            "kirov_battle_rig_base.png",
+            "kirov_battle_turret_main_01.png",
+            "kirov_battle_turret_main_02.png",
+            "kirov_battle_turret_main_03.png",
+            "kirov_battle_turret_secondary_01.png",
+            "kirov_battle_wake_origin_marker.png"
+          ]
+        },
+        "rig_mount": {
+          "semantic": "rig.mount",
+          "assets": [
+            "kirov_battle_rig_base.png"
+          ]
+        },
+        "skill_origin": {
+          "semantic": "skill.origin",
+          "assets": [
+            "kirov_battle_fire_control_node.png"
+          ]
+        },
+        "wake_origin": {
+          "semantic": "wake.origin",
+          "assets": [
+            "kirov_battle_wake_origin_marker.png"
+          ]
+        }
+      },
+      "vfx_roles": {
+        "armor_sparks": {
+          "semantic": "impact.armor.spark",
+          "file": "assets/characters/kirov/processed/vfx/kirov_vfx_armor_sparks.png"
+        },
+        "broadside_smoke": {
+          "semantic": "muzzle_smoke.heavy",
+          "file": "assets/characters/kirov/processed/vfx/kirov_vfx_broadside_smoke.png"
+        },
+        "fire_control_lock_line": {
+          "semantic": "targeting.overlay",
+          "file": "assets/characters/kirov/processed/vfx/kirov_vfx_fire_control_lock_line.png"
+        },
+        "muzzle_flash_large": {
+          "semantic": "muzzle_flash.large",
+          "file": "assets/characters/kirov/processed/vfx/kirov_vfx_muzzle_flash_large.png"
+        },
+        "shell_trail_heavy": {
+          "semantic": "shell.trail.long",
+          "file": "assets/characters/kirov/processed/vfx/kirov_vfx_shell_trail_heavy.png"
+        },
+        "suppression_aura": {
+          "semantic": "skill.area",
+          "file": "assets/characters/kirov/processed/vfx/kirov_vfx_suppression_aura.png"
+        },
+        "wake_heavy": {
+          "semantic": "wake.heavy",
+          "file": "assets/characters/kirov/processed/vfx/kirov_vfx_wake_heavy.png"
+        },
+        "water_splash_large": {
+          "semantic": "impact.water.large",
+          "file": "assets/characters/kirov/processed/vfx/kirov_vfx_water_splash_large.png"
+        }
+      }
+    },
+    "pobeda": {
+      "ship_class": "carrier",
+      "binding_semantics": {
+        "aircraft_launch_01": {
+          "semantic": "aircraft.launch.01",
+          "assets": [
+            "pobeda_battle_aircraft_launch_marker.png"
+          ]
+        },
+        "aircraft_recovery": {
+          "semantic": "aircraft.recovery",
+          "assets": [
+            "pobeda_battle_aircraft_recovery_marker.png"
+          ]
+        },
+        "pivot": {
+          "semantic": "asset.pivot",
+          "assets": [
+            "pobeda_battle_aircraft_group_01.png",
+            "pobeda_battle_aircraft_launch_marker.png",
+            "pobeda_battle_aircraft_recovery_marker.png",
+            "pobeda_battle_body_r.png",
+            "pobeda_battle_flight_deck.png",
+            "pobeda_battle_radar_node.png",
+            "pobeda_battle_rig_base.png",
+            "pobeda_battle_wake_origin_marker.png"
+          ]
+        },
+        "rig_mount": {
+          "semantic": "rig.mount",
+          "assets": [
+            "pobeda_battle_rig_base.png"
+          ]
+        },
+        "scan_origin": {
+          "semantic": "scan.origin",
+          "assets": [
+            "pobeda_battle_radar_node.png"
+          ]
+        },
+        "wake_origin": {
+          "semantic": "wake.origin",
+          "assets": [
+            "pobeda_battle_wake_origin_marker.png"
+          ]
+        }
+      },
+      "vfx_roles": {
+        "aa_burst": {
+          "semantic": "aa.burst",
+          "file": "assets/characters/pobeda/processed/vfx/pobeda_vfx_aa_burst.png"
+        },
+        "aircraft_explosion": {
+          "semantic": "aircraft.intercept_hit",
+          "file": "assets/characters/pobeda/processed/vfx/pobeda_vfx_aircraft_explosion.png"
+        },
+        "aircraft_formation": {
+          "semantic": "aircraft.formation",
+          "file": "assets/characters/pobeda/processed/vfx/pobeda_vfx_aircraft_formation.png"
+        },
+        "aircraft_launch_flash": {
+          "semantic": "aircraft.launch_flash",
+          "file": "assets/characters/pobeda/processed/vfx/pobeda_vfx_aircraft_launch_flash.png"
+        },
+        "aircraft_path": {
+          "semantic": "aircraft.path",
+          "file": "assets/characters/pobeda/processed/vfx/pobeda_vfx_aircraft_path.png"
+        },
+        "aircraft_recovery": {
+          "semantic": "aircraft.recovery",
+          "file": "assets/characters/pobeda/processed/vfx/pobeda_vfx_aircraft_recovery.png"
+        },
+        "airstrike_area": {
+          "semantic": "aircraft.airstrike_area",
+          "file": "assets/characters/pobeda/processed/vfx/pobeda_vfx_airstrike_area.png"
+        },
+        "wake_carrier": {
+          "semantic": "wake.carrier_wide",
+          "file": "assets/characters/pobeda/processed/vfx/pobeda_vfx_wake_carrier.png"
+        }
+      }
+    },
+    "gnevny": {
+      "ship_class": "destroyer",
+      "binding_semantics": {
+        "muzzle_01": {
+          "semantic": "weapon.muzzle.01",
+          "assets": [
+            "gnevny_battle_turret_main_01.png"
+          ]
+        },
+        "pivot": {
+          "semantic": "asset.pivot",
+          "assets": [
+            "gnevny_battle_body_r.png",
+            "gnevny_battle_propulsion_node.png",
+            "gnevny_battle_radar_node.png",
+            "gnevny_battle_rig_base.png",
+            "gnevny_battle_torpedo_tube_01.png",
+            "gnevny_battle_torpedo_tube_02.png",
+            "gnevny_battle_turret_main_01.png",
+            "gnevny_battle_wake_origin_marker.png"
+          ]
+        },
+        "rig_mount": {
+          "semantic": "rig.mount",
+          "assets": [
+            "gnevny_battle_rig_base.png"
+          ]
+        },
+        "scan_origin": {
+          "semantic": "scan.origin",
+          "assets": [
+            "gnevny_battle_radar_node.png"
+          ]
+        },
+        "torpedo_port_01": {
+          "semantic": "weapon.torpedo_port.01",
+          "assets": [
+            "gnevny_battle_torpedo_tube_01.png",
+            "gnevny_battle_torpedo_tube_02.png"
+          ]
+        },
+        "wake_origin": {
+          "semantic": "wake.origin",
+          "assets": [
+            "gnevny_battle_wake_origin_marker.png"
+          ]
+        }
+      },
+      "vfx_roles": {
+        "range_reticle": {
+          "semantic": "targeting.overlay",
+          "file": "assets/characters/gnevny/processed/vfx/gnevny_vfx_range_reticle.png"
+        },
+        "skill_aura": {
+          "semantic": "skill.area",
+          "file": "assets/characters/gnevny/processed/vfx/gnevny_vfx_skill_aura.png"
+        },
+        "smoke_screen": {
+          "semantic": "skill.area.smoke",
+          "file": "assets/characters/gnevny/processed/vfx/gnevny_vfx_smoke_screen.png"
+        },
+        "speed_lines": {
+          "semantic": "wake.destroyer_fast",
+          "file": "assets/characters/gnevny/processed/vfx/gnevny_vfx_speed_lines.png"
+        },
+        "speed_wake": {
+          "semantic": "wake.destroyer_fast",
+          "file": "assets/characters/gnevny/processed/vfx/gnevny_vfx_speed_wake.png"
+        },
+        "torpedo_launch_flash": {
+          "semantic": "torpedo.launch_flash",
+          "file": "assets/characters/gnevny/processed/vfx/gnevny_vfx_torpedo_launch_flash.png"
+        },
+        "torpedo_warning": {
+          "semantic": "torpedo.warning.fan",
+          "file": "assets/characters/gnevny/processed/vfx/gnevny_vfx_torpedo_warning.png"
+        },
+        "water_splash": {
+          "semantic": "impact.water.class_profile",
+          "file": "assets/characters/gnevny/processed/vfx/gnevny_vfx_water_splash.png"
+        }
       }
     },
     "bismarck": {
+      "ship_class": "battleship",
       "binding_semantics": {
-        "muzzle_01": "main gun muzzle 1",
-        "muzzle_02": "main gun muzzle 2",
-        "muzzle_group": "main gun grouped muzzle",
-        "turret_mount_01": "main turret pivot 1",
-        "turret_mount_02": "main turret pivot 2",
-        "skill_origin": "decisive salvo command origin",
-        "wake_origin": "battleship wake origin"
+        "aura_origin": {
+          "semantic": "skill.aura_origin",
+          "assets": [
+            "bismarck_battle_flagship_marker_node.png"
+          ]
+        },
+        "command_origin": {
+          "semantic": "skill.command_origin",
+          "assets": [
+            "bismarck_battle_body_r.png"
+          ]
+        },
+        "muzzle_01": {
+          "semantic": "weapon.muzzle.01",
+          "assets": [
+            "bismarck_battle_turret_main_01.png",
+            "bismarck_battle_turret_main_02.png"
+          ]
+        },
+        "muzzle_02": {
+          "semantic": "weapon.muzzle.02",
+          "assets": [
+            "bismarck_battle_turret_main_01.png",
+            "bismarck_battle_turret_main_02.png"
+          ]
+        },
+        "muzzle_group": {
+          "semantic": "weapon.muzzle.group",
+          "assets": [
+            "bismarck_battle_turret_main_01.png"
+          ]
+        },
+        "origin": {
+          "semantic": "effect.origin",
+          "assets": [
+            "bismarck_battle_body_r.png",
+            "bismarck_battle_flagship_marker_node.png",
+            "bismarck_battle_rangefinder_node.png",
+            "bismarck_battle_rig_base.png",
+            "bismarck_battle_turret_main_01.png",
+            "bismarck_battle_turret_main_02.png"
+          ]
+        },
+        "rangefinder_mount": {
+          "semantic": "skill.rangefinder_mount",
+          "assets": [
+            "bismarck_battle_rig_base.png"
+          ]
+        },
+        "rig_mount": {
+          "semantic": "rig.mount",
+          "assets": [
+            "bismarck_battle_body_r.png"
+          ]
+        },
+        "scan_origin": {
+          "semantic": "scan.origin",
+          "assets": [
+            "bismarck_battle_rangefinder_node.png"
+          ]
+        },
+        "skill_origin": {
+          "semantic": "skill.origin",
+          "assets": [
+            "bismarck_battle_body_r.png"
+          ]
+        },
+        "turret_mount_01": {
+          "semantic": "weapon.turret_mount.01",
+          "assets": [
+            "bismarck_battle_rig_base.png"
+          ]
+        },
+        "turret_mount_02": {
+          "semantic": "weapon.turret_mount.02",
+          "assets": [
+            "bismarck_battle_rig_base.png"
+          ]
+        },
+        "wake_origin": {
+          "semantic": "wake.origin",
+          "assets": [
+            "bismarck_battle_body_r.png"
+          ]
+        }
       },
       "vfx_roles": {
-        "heavy_muzzle": "muzzle_flash.large",
-        "water_impact": "impact.water.large",
-        "armor_hit": "impact.armor.spark",
-        "wake": "wake.battleship_heavy"
+        "armor_hit": {
+          "semantic": "impact.armor.spark",
+          "file": "assets/characters/bismarck/processed/vfx/bismarck_vfx_armor_sparks.png"
+        },
+        "decisive_area": {
+          "semantic": "skill.area",
+          "file": "assets/characters/bismarck/processed/vfx/bismarck_vfx_decisive_area.png"
+        },
+        "heavy_muzzle": {
+          "semantic": "muzzle_flash.large",
+          "file": "assets/characters/bismarck/processed/vfx/bismarck_vfx_heavy_muzzle_cone.png"
+        },
+        "lock_line": {
+          "semantic": "targeting.overlay",
+          "file": "assets/characters/bismarck/processed/vfx/bismarck_vfx_lock_line.png"
+        },
+        "precision_reticle": {
+          "semantic": "targeting.overlay",
+          "file": "assets/characters/bismarck/processed/vfx/bismarck_vfx_precision_reticle.png"
+        },
+        "range_arc": {
+          "semantic": "targeting.overlay",
+          "file": "assets/characters/bismarck/processed/vfx/bismarck_vfx_range_arc.png"
+        },
+        "wake": {
+          "semantic": "wake.class_profile",
+          "file": "assets/characters/bismarck/processed/vfx/bismarck_vfx_wake.png"
+        },
+        "water_impact": {
+          "semantic": "impact.water.class_profile",
+          "file": "assets/characters/bismarck/processed/vfx/bismarck_vfx_splash_large.png"
+        }
+      }
+    },
+    "prinz_eugen": {
+      "ship_class": "heavy_cruiser",
+      "binding_semantics": {
+        "muzzle_01": {
+          "semantic": "weapon.muzzle.01",
+          "assets": [
+            "prinz_eugen_battle_turret_main_01.png",
+            "prinz_eugen_battle_turret_main_02.png",
+            "prinz_eugen_battle_turret_main_03.png",
+            "prinz_eugen_battle_turret_secondary_01.png"
+          ]
+        },
+        "pivot": {
+          "semantic": "asset.pivot",
+          "assets": [
+            "prinz_eugen_battle_body_r.png",
+            "prinz_eugen_battle_fire_control_node.png",
+            "prinz_eugen_battle_rig_base.png",
+            "prinz_eugen_battle_turret_main_01.png",
+            "prinz_eugen_battle_turret_main_02.png",
+            "prinz_eugen_battle_turret_main_03.png",
+            "prinz_eugen_battle_turret_secondary_01.png",
+            "prinz_eugen_battle_wake_origin_marker.png"
+          ]
+        },
+        "rig_mount": {
+          "semantic": "rig.mount",
+          "assets": [
+            "prinz_eugen_battle_rig_base.png"
+          ]
+        },
+        "skill_origin": {
+          "semantic": "skill.origin",
+          "assets": [
+            "prinz_eugen_battle_fire_control_node.png"
+          ]
+        },
+        "wake_origin": {
+          "semantic": "wake.origin",
+          "assets": [
+            "prinz_eugen_battle_wake_origin_marker.png"
+          ]
+        }
+      },
+      "vfx_roles": {
+        "armor_sparks": {
+          "semantic": "impact.armor.spark",
+          "file": "assets/characters/prinz_eugen/processed/vfx/prinz_eugen_vfx_armor_sparks.png"
+        },
+        "broadside_smoke": {
+          "semantic": "muzzle_smoke.heavy",
+          "file": "assets/characters/prinz_eugen/processed/vfx/prinz_eugen_vfx_broadside_smoke.png"
+        },
+        "fire_control_lock_line": {
+          "semantic": "targeting.overlay",
+          "file": "assets/characters/prinz_eugen/processed/vfx/prinz_eugen_vfx_fire_control_lock_line.png"
+        },
+        "muzzle_flash_large": {
+          "semantic": "muzzle_flash.large",
+          "file": "assets/characters/prinz_eugen/processed/vfx/prinz_eugen_vfx_muzzle_flash_large.png"
+        },
+        "shell_trail_heavy": {
+          "semantic": "shell.trail.long",
+          "file": "assets/characters/prinz_eugen/processed/vfx/prinz_eugen_vfx_shell_trail_heavy.png"
+        },
+        "suppression_aura": {
+          "semantic": "skill.area",
+          "file": "assets/characters/prinz_eugen/processed/vfx/prinz_eugen_vfx_suppression_aura.png"
+        },
+        "wake_heavy": {
+          "semantic": "wake.heavy",
+          "file": "assets/characters/prinz_eugen/processed/vfx/prinz_eugen_vfx_wake_heavy.png"
+        },
+        "water_splash_large": {
+          "semantic": "impact.water.large",
+          "file": "assets/characters/prinz_eugen/processed/vfx/prinz_eugen_vfx_water_splash_large.png"
+        }
+      }
+    },
+    "hindenburg": {
+      "ship_class": "heavy_cruiser",
+      "binding_semantics": {
+        "fire_control_point": {
+          "semantic": "skill.fire_control_origin",
+          "assets": [
+            "hindenburg_battle_body_r.png",
+            "hindenburg_battle_rig_base.png"
+          ]
+        },
+        "muzzle_01": {
+          "semantic": "weapon.muzzle.01",
+          "assets": [
+            "hindenburg_battle_turret_main_01.png",
+            "hindenburg_battle_turret_main_02.png"
+          ]
+        },
+        "muzzle_02": {
+          "semantic": "weapon.muzzle.02",
+          "assets": [
+            "hindenburg_battle_turret_main_01.png",
+            "hindenburg_battle_turret_main_02.png"
+          ]
+        },
+        "muzzle_group": {
+          "semantic": "weapon.muzzle.group",
+          "assets": [
+            "hindenburg_battle_turret_main_01.png"
+          ]
+        },
+        "origin": {
+          "semantic": "effect.origin",
+          "assets": [
+            "hindenburg_battle_body_r.png",
+            "hindenburg_battle_fire_control_node.png",
+            "hindenburg_battle_lock_emitter_node.png",
+            "hindenburg_battle_rig_base.png",
+            "hindenburg_battle_turret_main_01.png",
+            "hindenburg_battle_turret_main_02.png"
+          ]
+        },
+        "rig_mount": {
+          "semantic": "rig.mount",
+          "assets": [
+            "hindenburg_battle_body_r.png"
+          ]
+        },
+        "scan_origin": {
+          "semantic": "scan.origin",
+          "assets": [
+            "hindenburg_battle_fire_control_node.png",
+            "hindenburg_battle_lock_emitter_node.png"
+          ]
+        },
+        "skill_origin": {
+          "semantic": "skill.origin",
+          "assets": [
+            "hindenburg_battle_body_r.png"
+          ]
+        },
+        "turret_mount_01": {
+          "semantic": "weapon.turret_mount.01",
+          "assets": [
+            "hindenburg_battle_rig_base.png"
+          ]
+        },
+        "wake_origin": {
+          "semantic": "wake.origin",
+          "assets": [
+            "hindenburg_battle_body_r.png"
+          ]
+        }
+      },
+      "vfx_roles": {
+        "muzzle_flash": {
+          "semantic": "muzzle_flash.medium",
+          "file": "assets/characters/hindenburg/processed/vfx/hindenburg_vfx_heavy_muzzle_cone.png"
+        },
+        "reticle": {
+          "semantic": "targeting.overlay",
+          "file": "assets/characters/hindenburg/processed/vfx/hindenburg_vfx_precision_reticle.png"
+        },
+        "scan_beam": {
+          "semantic": "skill.beam",
+          "file": "assets/characters/hindenburg/processed/vfx/hindenburg_vfx_scan_beam.png"
+        },
+        "shell_trail": {
+          "semantic": "shell.trail.medium",
+          "file": "assets/characters/hindenburg/processed/vfx/hindenburg_vfx_shell_trail.png"
+        },
+        "suppression_area": {
+          "semantic": "skill.area",
+          "file": "assets/characters/hindenburg/processed/vfx/hindenburg_vfx_suppression_ring.png"
+        },
+        "wake": {
+          "semantic": "wake.class_profile",
+          "file": "assets/characters/hindenburg/processed/vfx/hindenburg_vfx_wake.png"
+        }
+      }
+    },
+    "u_47": {
+      "ship_class": "submarine",
+      "binding_semantics": {
+        "pivot": {
+          "semantic": "asset.pivot",
+          "assets": [
+            "u_47_battle_body_r.png",
+            "u_47_battle_dive_plane.png",
+            "u_47_battle_periscope_node.png",
+            "u_47_battle_rig_base.png",
+            "u_47_battle_sonar_node.png",
+            "u_47_battle_submerged_shadow.png",
+            "u_47_battle_torpedo_tube_01.png",
+            "u_47_battle_wake_origin_marker.png"
+          ]
+        },
+        "rig_mount": {
+          "semantic": "rig.mount",
+          "assets": [
+            "u_47_battle_rig_base.png"
+          ]
+        },
+        "scan_origin": {
+          "semantic": "scan.origin",
+          "assets": [
+            "u_47_battle_periscope_node.png",
+            "u_47_battle_sonar_node.png"
+          ]
+        },
+        "torpedo_port_01": {
+          "semantic": "weapon.torpedo_port.01",
+          "assets": [
+            "u_47_battle_torpedo_tube_01.png"
+          ]
+        },
+        "wake_origin": {
+          "semantic": "wake.origin",
+          "assets": [
+            "u_47_battle_wake_origin_marker.png"
+          ]
+        }
+      },
+      "vfx_roles": {
+        "bubble_trail": {
+          "semantic": "submarine.bubble_trail",
+          "file": "assets/characters/u_47/processed/vfx/u_47_vfx_bubble_trail.png"
+        },
+        "dive_ripple": {
+          "semantic": "submarine.dive_ripple",
+          "file": "assets/characters/u_47/processed/vfx/u_47_vfx_dive_ripple.png"
+        },
+        "periscope_glint": {
+          "semantic": "submarine.periscope_glint",
+          "file": "assets/characters/u_47/processed/vfx/u_47_vfx_periscope_glint.png"
+        },
+        "sonar_pulse": {
+          "semantic": "submarine.sonar_pulse",
+          "file": "assets/characters/u_47/processed/vfx/u_47_vfx_sonar_pulse.png"
+        },
+        "torpedo_launch_flash": {
+          "semantic": "torpedo.launch_flash",
+          "file": "assets/characters/u_47/processed/vfx/u_47_vfx_torpedo_launch_flash.png"
+        },
+        "torpedo_trail": {
+          "semantic": "torpedo.trail",
+          "file": "assets/characters/u_47/processed/vfx/u_47_vfx_torpedo_trail.png"
+        },
+        "underwater_shadow": {
+          "semantic": "submarine.underwater_shadow",
+          "file": "assets/characters/u_47/processed/vfx/u_47_vfx_underwater_shadow.png"
+        },
+        "wake_subtle": {
+          "semantic": "wake.submarine",
+          "file": "assets/characters/u_47/processed/vfx/u_47_vfx_wake_subtle.png"
+        }
+      }
+    },
+    "yamato": {
+      "ship_class": "battleship",
+      "binding_semantics": {
+        "muzzle_01": {
+          "semantic": "weapon.muzzle.01",
+          "assets": [
+            "yamato_battle_turret_main_01.png",
+            "yamato_battle_turret_main_02.png",
+            "yamato_battle_turret_main_03.png"
+          ]
+        },
+        "pivot": {
+          "semantic": "asset.pivot",
+          "assets": [
+            "yamato_battle_body_r.png",
+            "yamato_battle_fire_control_node.png",
+            "yamato_battle_flagship_marker.png",
+            "yamato_battle_rig_base.png",
+            "yamato_battle_turret_main_01.png",
+            "yamato_battle_turret_main_02.png",
+            "yamato_battle_turret_main_03.png",
+            "yamato_battle_wake_origin_marker.png"
+          ]
+        },
+        "rig_mount": {
+          "semantic": "rig.mount",
+          "assets": [
+            "yamato_battle_rig_base.png"
+          ]
+        },
+        "skill_origin": {
+          "semantic": "skill.origin",
+          "assets": [
+            "yamato_battle_fire_control_node.png",
+            "yamato_battle_flagship_marker.png"
+          ]
+        },
+        "wake_origin": {
+          "semantic": "wake.origin",
+          "assets": [
+            "yamato_battle_wake_origin_marker.png"
+          ]
+        }
+      },
+      "vfx_roles": {
+        "armor_sparks": {
+          "semantic": "impact.armor.spark",
+          "file": "assets/characters/yamato/processed/vfx/yamato_vfx_armor_sparks.png"
+        },
+        "broadside_smoke": {
+          "semantic": "muzzle_smoke.heavy",
+          "file": "assets/characters/yamato/processed/vfx/yamato_vfx_broadside_smoke.png"
+        },
+        "command_aura": {
+          "semantic": "skill.area",
+          "file": "assets/characters/yamato/processed/vfx/yamato_vfx_command_aura.png"
+        },
+        "fire_control_lock_line": {
+          "semantic": "targeting.overlay",
+          "file": "assets/characters/yamato/processed/vfx/yamato_vfx_fire_control_lock_line.png"
+        },
+        "muzzle_flash_large": {
+          "semantic": "muzzle_flash.large",
+          "file": "assets/characters/yamato/processed/vfx/yamato_vfx_muzzle_flash_large.png"
+        },
+        "shell_trail_heavy": {
+          "semantic": "shell.trail.long",
+          "file": "assets/characters/yamato/processed/vfx/yamato_vfx_shell_trail_heavy.png"
+        },
+        "wake_heavy": {
+          "semantic": "wake.heavy",
+          "file": "assets/characters/yamato/processed/vfx/yamato_vfx_wake_heavy.png"
+        },
+        "water_splash_large": {
+          "semantic": "impact.water.large",
+          "file": "assets/characters/yamato/processed/vfx/yamato_vfx_water_splash_large.png"
+        }
+      }
+    },
+    "yukikaze": {
+      "ship_class": "destroyer",
+      "binding_semantics": {
+        "muzzle_01": {
+          "semantic": "weapon.muzzle.01",
+          "assets": [
+            "yukikaze_battle_turret_main_01.png"
+          ]
+        },
+        "pivot": {
+          "semantic": "asset.pivot",
+          "assets": [
+            "yukikaze_battle_body_r.png",
+            "yukikaze_battle_propulsion_node.png",
+            "yukikaze_battle_radar_node.png",
+            "yukikaze_battle_rig_base.png",
+            "yukikaze_battle_torpedo_tube_01.png",
+            "yukikaze_battle_torpedo_tube_02.png",
+            "yukikaze_battle_turret_main_01.png",
+            "yukikaze_battle_wake_origin_marker.png"
+          ]
+        },
+        "rig_mount": {
+          "semantic": "rig.mount",
+          "assets": [
+            "yukikaze_battle_rig_base.png"
+          ]
+        },
+        "scan_origin": {
+          "semantic": "scan.origin",
+          "assets": [
+            "yukikaze_battle_radar_node.png"
+          ]
+        },
+        "torpedo_port_01": {
+          "semantic": "weapon.torpedo_port.01",
+          "assets": [
+            "yukikaze_battle_torpedo_tube_01.png",
+            "yukikaze_battle_torpedo_tube_02.png"
+          ]
+        },
+        "wake_origin": {
+          "semantic": "wake.origin",
+          "assets": [
+            "yukikaze_battle_wake_origin_marker.png"
+          ]
+        }
+      },
+      "vfx_roles": {
+        "range_reticle": {
+          "semantic": "targeting.overlay",
+          "file": "assets/characters/yukikaze/processed/vfx/yukikaze_vfx_range_reticle.png"
+        },
+        "skill_aura": {
+          "semantic": "skill.area",
+          "file": "assets/characters/yukikaze/processed/vfx/yukikaze_vfx_skill_aura.png"
+        },
+        "smoke_screen": {
+          "semantic": "skill.area.smoke",
+          "file": "assets/characters/yukikaze/processed/vfx/yukikaze_vfx_smoke_screen.png"
+        },
+        "speed_lines": {
+          "semantic": "wake.destroyer_fast",
+          "file": "assets/characters/yukikaze/processed/vfx/yukikaze_vfx_speed_lines.png"
+        },
+        "speed_wake": {
+          "semantic": "wake.destroyer_fast",
+          "file": "assets/characters/yukikaze/processed/vfx/yukikaze_vfx_speed_wake.png"
+        },
+        "torpedo_launch_flash": {
+          "semantic": "torpedo.launch_flash",
+          "file": "assets/characters/yukikaze/processed/vfx/yukikaze_vfx_torpedo_launch_flash.png"
+        },
+        "torpedo_warning": {
+          "semantic": "torpedo.warning.fan",
+          "file": "assets/characters/yukikaze/processed/vfx/yukikaze_vfx_torpedo_warning.png"
+        },
+        "water_splash": {
+          "semantic": "impact.water.class_profile",
+          "file": "assets/characters/yukikaze/processed/vfx/yukikaze_vfx_water_splash.png"
+        }
+      }
+    },
+    "shimakaze": {
+      "ship_class": "destroyer",
+      "binding_semantics": {
+        "muzzle_01": {
+          "semantic": "weapon.muzzle.01",
+          "assets": [
+            "shimakaze_battle_turret_main_01.png"
+          ]
+        },
+        "muzzle_group": {
+          "semantic": "weapon.muzzle.group",
+          "assets": [
+            "shimakaze_battle_turret_main_01.png"
+          ]
+        },
+        "origin": {
+          "semantic": "effect.origin",
+          "assets": [
+            "shimakaze_battle_body_r.png",
+            "shimakaze_battle_rig_base.png",
+            "shimakaze_battle_torpedo_tube_01.png",
+            "shimakaze_battle_torpedo_tube_02.png",
+            "shimakaze_battle_turret_main_01.png"
+          ]
+        },
+        "skill_origin": {
+          "semantic": "skill.origin",
+          "assets": [
+            "shimakaze_battle_body_r.png"
+          ]
+        },
+        "torpedo_mount": {
+          "semantic": "weapon.torpedo_mount",
+          "assets": [
+            "shimakaze_battle_body_r.png",
+            "shimakaze_battle_rig_base.png"
+          ]
+        },
+        "torpedo_port_01": {
+          "semantic": "weapon.torpedo_port.01",
+          "assets": [
+            "shimakaze_battle_torpedo_tube_01.png",
+            "shimakaze_battle_torpedo_tube_02.png"
+          ]
+        },
+        "torpedo_port_02": {
+          "semantic": "weapon.torpedo_port.02",
+          "assets": [
+            "shimakaze_battle_torpedo_tube_01.png",
+            "shimakaze_battle_torpedo_tube_02.png"
+          ]
+        },
+        "wake_origin": {
+          "semantic": "wake.origin",
+          "assets": [
+            "shimakaze_battle_body_r.png",
+            "shimakaze_battle_rig_base.png"
+          ]
+        }
+      },
+      "vfx_roles": {
+        "speed_lines": {
+          "semantic": "wake.destroyer_fast",
+          "file": "assets/characters/shimakaze/processed/vfx/shimakaze_vfx_speed_lines.png"
+        },
+        "torpedo_trail": {
+          "semantic": "torpedo.trail",
+          "file": "assets/characters/shimakaze/processed/vfx/shimakaze_vfx_torpedo_trail_long.png"
+        },
+        "torpedo_warning": {
+          "semantic": "torpedo.warning.fan",
+          "file": "assets/characters/shimakaze/processed/vfx/shimakaze_vfx_warning_fan.png"
+        },
+        "wake_fast": {
+          "semantic": "wake.destroyer_fast",
+          "file": "assets/characters/shimakaze/processed/vfx/shimakaze_vfx_wake_blade.png"
+        },
+        "wake_surge": {
+          "semantic": "character.wake_surge",
+          "file": "assets/characters/shimakaze/processed/vfx/shimakaze_vfx_wake_surge.png"
+        },
+        "water_impact": {
+          "semantic": "impact.water.class_profile",
+          "file": "assets/characters/shimakaze/processed/vfx/shimakaze_vfx_water_impact_large.png"
+        }
+      }
+    },
+    "hosho": {
+      "ship_class": "carrier",
+      "binding_semantics": {
+        "aircraft_launch_01": {
+          "semantic": "aircraft.launch.01",
+          "assets": [
+            "hosho_battle_aircraft_launch_marker.png"
+          ]
+        },
+        "aircraft_recovery": {
+          "semantic": "aircraft.recovery",
+          "assets": [
+            "hosho_battle_aircraft_recovery_marker.png"
+          ]
+        },
+        "pivot": {
+          "semantic": "asset.pivot",
+          "assets": [
+            "hosho_battle_aircraft_group_01.png",
+            "hosho_battle_aircraft_launch_marker.png",
+            "hosho_battle_aircraft_recovery_marker.png",
+            "hosho_battle_body_r.png",
+            "hosho_battle_flight_deck.png",
+            "hosho_battle_radar_node.png",
+            "hosho_battle_rig_base.png",
+            "hosho_battle_wake_origin_marker.png"
+          ]
+        },
+        "rig_mount": {
+          "semantic": "rig.mount",
+          "assets": [
+            "hosho_battle_rig_base.png"
+          ]
+        },
+        "scan_origin": {
+          "semantic": "scan.origin",
+          "assets": [
+            "hosho_battle_radar_node.png"
+          ]
+        },
+        "wake_origin": {
+          "semantic": "wake.origin",
+          "assets": [
+            "hosho_battle_wake_origin_marker.png"
+          ]
+        }
+      },
+      "vfx_roles": {
+        "aa_burst": {
+          "semantic": "aa.burst",
+          "file": "assets/characters/hosho/processed/vfx/hosho_vfx_aa_burst.png"
+        },
+        "aircraft_explosion": {
+          "semantic": "aircraft.intercept_hit",
+          "file": "assets/characters/hosho/processed/vfx/hosho_vfx_aircraft_explosion.png"
+        },
+        "aircraft_formation": {
+          "semantic": "aircraft.formation",
+          "file": "assets/characters/hosho/processed/vfx/hosho_vfx_aircraft_formation.png"
+        },
+        "aircraft_launch_flash": {
+          "semantic": "aircraft.launch_flash",
+          "file": "assets/characters/hosho/processed/vfx/hosho_vfx_aircraft_launch_flash.png"
+        },
+        "aircraft_path": {
+          "semantic": "aircraft.path",
+          "file": "assets/characters/hosho/processed/vfx/hosho_vfx_aircraft_path.png"
+        },
+        "aircraft_recovery": {
+          "semantic": "aircraft.recovery",
+          "file": "assets/characters/hosho/processed/vfx/hosho_vfx_aircraft_recovery.png"
+        },
+        "airstrike_area": {
+          "semantic": "aircraft.airstrike_area",
+          "file": "assets/characters/hosho/processed/vfx/hosho_vfx_airstrike_area.png"
+        },
+        "wake_carrier": {
+          "semantic": "wake.carrier_wide",
+          "file": "assets/characters/hosho/processed/vfx/hosho_vfx_wake_carrier.png"
+        }
+      }
+    },
+    "ning_hai": {
+      "ship_class": "light_cruiser",
+      "binding_semantics": {
+        "muzzle_01": {
+          "semantic": "weapon.muzzle.01",
+          "assets": [
+            "ning_hai_battle_turret_main_01.png",
+            "ning_hai_battle_turret_main_02.png"
+          ]
+        },
+        "pivot": {
+          "semantic": "asset.pivot",
+          "assets": [
+            "ning_hai_battle_aa_center.png",
+            "ning_hai_battle_body_r.png",
+            "ning_hai_battle_radar_node.png",
+            "ning_hai_battle_rig_base.png",
+            "ning_hai_battle_support_node.png",
+            "ning_hai_battle_turret_main_01.png",
+            "ning_hai_battle_turret_main_02.png",
+            "ning_hai_battle_wake_origin_marker.png"
+          ]
+        },
+        "rig_mount": {
+          "semantic": "rig.mount",
+          "assets": [
+            "ning_hai_battle_rig_base.png"
+          ]
+        },
+        "scan_origin": {
+          "semantic": "scan.origin",
+          "assets": [
+            "ning_hai_battle_radar_node.png"
+          ]
+        },
+        "skill_origin": {
+          "semantic": "skill.origin",
+          "assets": [
+            "ning_hai_battle_support_node.png"
+          ]
+        },
+        "wake_origin": {
+          "semantic": "wake.origin",
+          "assets": [
+            "ning_hai_battle_wake_origin_marker.png"
+          ]
+        }
+      },
+      "vfx_roles": {
+        "aa_burst": {
+          "semantic": "aa.burst",
+          "file": "assets/characters/ning_hai/processed/vfx/ning_hai_vfx_aa_burst.png"
+        },
+        "aa_circle": {
+          "semantic": "aa.circle",
+          "file": "assets/characters/ning_hai/processed/vfx/ning_hai_vfx_aa_circle.png"
+        },
+        "armor_sparks": {
+          "semantic": "impact.armor.spark",
+          "file": "assets/characters/ning_hai/processed/vfx/ning_hai_vfx_armor_sparks.png"
+        },
+        "escort_aura": {
+          "semantic": "skill.area",
+          "file": "assets/characters/ning_hai/processed/vfx/ning_hai_vfx_escort_aura.png"
+        },
+        "muzzle_flash_medium": {
+          "semantic": "muzzle_flash.medium",
+          "file": "assets/characters/ning_hai/processed/vfx/ning_hai_vfx_muzzle_flash_medium.png"
+        },
+        "shell_trail": {
+          "semantic": "shell.trail.medium",
+          "file": "assets/characters/ning_hai/processed/vfx/ning_hai_vfx_shell_trail.png"
+        },
+        "wake_medium": {
+          "semantic": "wake.cruiser",
+          "file": "assets/characters/ning_hai/processed/vfx/ning_hai_vfx_wake_medium.png"
+        },
+        "water_splash": {
+          "semantic": "impact.water.class_profile",
+          "file": "assets/characters/ning_hai/processed/vfx/ning_hai_vfx_water_splash.png"
+        }
+      }
+    },
+    "anshan": {
+      "ship_class": "destroyer",
+      "binding_semantics": {
+        "muzzle_01": {
+          "semantic": "weapon.muzzle.01",
+          "assets": [
+            "anshan_battle_turret_main_01.png"
+          ]
+        },
+        "pivot": {
+          "semantic": "asset.pivot",
+          "assets": [
+            "anshan_battle_body_r.png",
+            "anshan_battle_propulsion_node.png",
+            "anshan_battle_radar_node.png",
+            "anshan_battle_rig_base.png",
+            "anshan_battle_torpedo_tube_01.png",
+            "anshan_battle_torpedo_tube_02.png",
+            "anshan_battle_turret_main_01.png",
+            "anshan_battle_wake_origin_marker.png"
+          ]
+        },
+        "rig_mount": {
+          "semantic": "rig.mount",
+          "assets": [
+            "anshan_battle_rig_base.png"
+          ]
+        },
+        "scan_origin": {
+          "semantic": "scan.origin",
+          "assets": [
+            "anshan_battle_radar_node.png"
+          ]
+        },
+        "torpedo_port_01": {
+          "semantic": "weapon.torpedo_port.01",
+          "assets": [
+            "anshan_battle_torpedo_tube_01.png",
+            "anshan_battle_torpedo_tube_02.png"
+          ]
+        },
+        "wake_origin": {
+          "semantic": "wake.origin",
+          "assets": [
+            "anshan_battle_wake_origin_marker.png"
+          ]
+        }
+      },
+      "vfx_roles": {
+        "range_reticle": {
+          "semantic": "targeting.overlay",
+          "file": "assets/characters/anshan/processed/vfx/anshan_vfx_range_reticle.png"
+        },
+        "skill_aura": {
+          "semantic": "skill.area",
+          "file": "assets/characters/anshan/processed/vfx/anshan_vfx_skill_aura.png"
+        },
+        "smoke_screen": {
+          "semantic": "skill.area.smoke",
+          "file": "assets/characters/anshan/processed/vfx/anshan_vfx_smoke_screen.png"
+        },
+        "speed_lines": {
+          "semantic": "wake.destroyer_fast",
+          "file": "assets/characters/anshan/processed/vfx/anshan_vfx_speed_lines.png"
+        },
+        "speed_wake": {
+          "semantic": "wake.destroyer_fast",
+          "file": "assets/characters/anshan/processed/vfx/anshan_vfx_speed_wake.png"
+        },
+        "torpedo_launch_flash": {
+          "semantic": "torpedo.launch_flash",
+          "file": "assets/characters/anshan/processed/vfx/anshan_vfx_torpedo_launch_flash.png"
+        },
+        "torpedo_warning": {
+          "semantic": "torpedo.warning.fan",
+          "file": "assets/characters/anshan/processed/vfx/anshan_vfx_torpedo_warning.png"
+        },
+        "water_splash": {
+          "semantic": "impact.water.class_profile",
+          "file": "assets/characters/anshan/processed/vfx/anshan_vfx_water_splash.png"
+        }
+      }
+    },
+    "chongqing": {
+      "ship_class": "light_cruiser",
+      "binding_semantics": {
+        "muzzle_01": {
+          "semantic": "weapon.muzzle.01",
+          "assets": [
+            "chongqing_battle_turret_main_01.png",
+            "chongqing_battle_turret_main_02.png"
+          ]
+        },
+        "pivot": {
+          "semantic": "asset.pivot",
+          "assets": [
+            "chongqing_battle_aa_center.png",
+            "chongqing_battle_body_r.png",
+            "chongqing_battle_radar_node.png",
+            "chongqing_battle_rig_base.png",
+            "chongqing_battle_support_node.png",
+            "chongqing_battle_turret_main_01.png",
+            "chongqing_battle_turret_main_02.png",
+            "chongqing_battle_wake_origin_marker.png"
+          ]
+        },
+        "rig_mount": {
+          "semantic": "rig.mount",
+          "assets": [
+            "chongqing_battle_rig_base.png"
+          ]
+        },
+        "scan_origin": {
+          "semantic": "scan.origin",
+          "assets": [
+            "chongqing_battle_radar_node.png"
+          ]
+        },
+        "skill_origin": {
+          "semantic": "skill.origin",
+          "assets": [
+            "chongqing_battle_support_node.png"
+          ]
+        },
+        "wake_origin": {
+          "semantic": "wake.origin",
+          "assets": [
+            "chongqing_battle_wake_origin_marker.png"
+          ]
+        }
+      },
+      "vfx_roles": {
+        "aa_burst": {
+          "semantic": "aa.burst",
+          "file": "assets/characters/chongqing/processed/vfx/chongqing_vfx_aa_burst.png"
+        },
+        "aa_circle": {
+          "semantic": "aa.circle",
+          "file": "assets/characters/chongqing/processed/vfx/chongqing_vfx_aa_circle.png"
+        },
+        "armor_sparks": {
+          "semantic": "impact.armor.spark",
+          "file": "assets/characters/chongqing/processed/vfx/chongqing_vfx_armor_sparks.png"
+        },
+        "escort_aura": {
+          "semantic": "skill.area",
+          "file": "assets/characters/chongqing/processed/vfx/chongqing_vfx_escort_aura.png"
+        },
+        "muzzle_flash_medium": {
+          "semantic": "muzzle_flash.medium",
+          "file": "assets/characters/chongqing/processed/vfx/chongqing_vfx_muzzle_flash_medium.png"
+        },
+        "shell_trail": {
+          "semantic": "shell.trail.medium",
+          "file": "assets/characters/chongqing/processed/vfx/chongqing_vfx_shell_trail.png"
+        },
+        "wake_medium": {
+          "semantic": "wake.cruiser",
+          "file": "assets/characters/chongqing/processed/vfx/chongqing_vfx_wake_medium.png"
+        },
+        "water_splash": {
+          "semantic": "impact.water.class_profile",
+          "file": "assets/characters/chongqing/processed/vfx/chongqing_vfx_water_splash.png"
+        }
+      }
+    },
+    "hai_shih": {
+      "ship_class": "submarine",
+      "binding_semantics": {
+        "origin": {
+          "semantic": "effect.origin",
+          "assets": [
+            "hai_shih_battle_body_r.png",
+            "hai_shih_battle_periscope_node.png",
+            "hai_shih_battle_rig_base.png",
+            "hai_shih_battle_sonar_node.png",
+            "hai_shih_battle_torpedo_tube_01.png"
+          ]
+        },
+        "periscope_point": {
+          "semantic": "scan.periscope",
+          "assets": [
+            "hai_shih_battle_rig_base.png"
+          ]
+        },
+        "scan_origin": {
+          "semantic": "scan.origin",
+          "assets": [
+            "hai_shih_battle_rig_base.png"
+          ]
+        },
+        "skill_origin": {
+          "semantic": "skill.origin",
+          "assets": [
+            "hai_shih_battle_periscope_node.png"
+          ]
+        },
+        "sonar_origin": {
+          "semantic": "scan.sonar_origin",
+          "assets": [
+            "hai_shih_battle_rig_base.png",
+            "hai_shih_battle_sonar_node.png"
+          ]
+        },
+        "torpedo_port": {
+          "semantic": "weapon.torpedo_port.legacy",
+          "assets": [
+            "hai_shih_battle_body_r.png",
+            "hai_shih_battle_rig_base.png",
+            "hai_shih_battle_torpedo_tube_01.png"
+          ]
+        },
+        "torpedo_port_01": {
+          "semantic": "weapon.torpedo_port.01",
+          "assets": [
+            "hai_shih_battle_body_r.png"
+          ]
+        },
+        "view_origin": {
+          "semantic": "view.origin",
+          "assets": [
+            "hai_shih_battle_periscope_node.png"
+          ]
+        },
+        "wake_origin": {
+          "semantic": "wake.origin",
+          "assets": [
+            "hai_shih_battle_body_r.png"
+          ]
+        }
+      },
+      "vfx_roles": {
+        "bubble_trail": {
+          "semantic": "submarine.bubble_trail",
+          "file": "assets/characters/hai_shih/processed/vfx/hai_shih_vfx_bubble_trail.png"
+        },
+        "sonar_pulse": {
+          "semantic": "submarine.sonar_pulse",
+          "file": "assets/characters/hai_shih/processed/vfx/hai_shih_vfx_sonar_pulse.png"
+        },
+        "stealth": {
+          "semantic": "character.stealth",
+          "file": "assets/characters/hai_shih/processed/vfx/hai_shih_vfx_stealth_shimmer.png"
+        },
+        "torpedo_trail": {
+          "semantic": "torpedo.trail",
+          "file": "assets/characters/hai_shih/processed/vfx/hai_shih_vfx_torpedo_trail.png"
+        },
+        "underwater_shadow": {
+          "semantic": "submarine.underwater_shadow",
+          "file": "assets/characters/hai_shih/processed/vfx/hai_shih_vfx_underwater_shadow.png"
+        }
       }
     }
   }

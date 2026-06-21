@@ -1,133 +1,32 @@
 # Character Runtime Semantic Mappings
 
-Maps existing character binding points and VFX roles to the public combat visual semantics used by `data/visuals`.
+Generated from every character's processed binding-point and VFX configuration.
 
-## enterprise_cv6
+| Character | Ship class | Binding semantics | VFX roles |
+| --- | --- | ---: | ---: |
+| enterprise_cv6 | carrier | 8 | 5 |
+| iowa | battleship | 5 | 8 |
+| san_diego | light_cruiser | 6 | 8 |
+| ward | destroyer | 6 | 8 |
+| warspite | battleship | 10 | 6 |
+| hood | battleship | 5 | 8 |
+| sirius | light_cruiser | 6 | 8 |
+| argus | carrier | 6 | 8 |
+| aurora | light_cruiser | 9 | 6 |
+| kirov | heavy_cruiser | 5 | 8 |
+| pobeda | carrier | 6 | 8 |
+| gnevny | destroyer | 6 | 8 |
+| bismarck | battleship | 13 | 8 |
+| prinz_eugen | heavy_cruiser | 5 | 8 |
+| hindenburg | heavy_cruiser | 10 | 6 |
+| u_47 | submarine | 5 | 8 |
+| yamato | battleship | 5 | 8 |
+| yukikaze | destroyer | 6 | 8 |
+| shimakaze | destroyer | 8 | 6 |
+| hosho | carrier | 6 | 8 |
+| ning_hai | light_cruiser | 6 | 8 |
+| anshan | destroyer | 6 | 8 |
+| chongqing | light_cruiser | 6 | 8 |
+| hai_shih | submarine | 9 | 5 |
 
-### Binding Points
-
-- `aircraft_launch_01` -> aircraft launch point 1
-- `aircraft_launch_02` -> aircraft launch point 2
-- `aircraft_recovery` -> aircraft recovery point
-- `wake_origin` -> carrier wake origin
-- `skill_origin` -> air command/scan origin
-
-### VFX Roles
-
-- `aircraft_path` -> `aircraft.path`
-- `deck_lane` -> `aircraft.launch_trail`
-- `airstrike_area` -> `aircraft.airstrike_area`
-- `hit` -> `aircraft.intercept_hit`
-- `wake` -> `wake.carrier_wide`
-
-## hai_shih
-
-### Binding Points
-
-- `torpedo_port` -> legacy alias for torpedo_port_01
-- `torpedo_port_01` -> standard submarine torpedo port
-- `sonar_origin` -> submarine.sonar_pulse
-- `periscope_point` -> periscope/view point
-- `wake_origin` -> submarine low wake origin
-- `skill_origin` -> submarine ambush/scan origin
-
-### VFX Roles
-
-- `underwater_shadow` -> `submarine.underwater_shadow`
-- `bubble_trail` -> `submarine.bubble_trail`
-- `sonar_pulse` -> `submarine.sonar_pulse`
-- `torpedo_trail` -> `torpedo.trail.submerged`
-- `stealth` -> `submarine.underwater_shadow`
-
-## hindenburg
-
-### Binding Points
-
-- `muzzle_01` -> main gun muzzle 1
-- `muzzle_02` -> main gun muzzle 2
-- `muzzle_group` -> main gun grouped muzzle
-- `turret_mount_01` -> turret pivot
-- `fire_control_point` -> scan/skill origin
-- `wake_origin` -> cruiser wake origin
-
-### VFX Roles
-
-- `muzzle_flash` -> `muzzle_flash.medium`
-- `shell_trail` -> `shell.trail.medium`
-- `scan_beam` -> `submarine.sonar_pulse`
-- `wake` -> `wake.cruiser`
-- `reticle` -> `shell.trail.medium`
-
-## shimakaze
-
-### Binding Points
-
-- `muzzle_01` -> small gun muzzle
-- `muzzle_group` -> small gun grouped muzzle alias
-- `torpedo_port_01` -> torpedo port 1
-- `torpedo_port_02` -> torpedo port 2
-- `wake_origin` -> destroyer fast wake origin
-- `skill_origin` -> torpedo rush skill origin
-
-### VFX Roles
-
-- `torpedo_trail` -> `torpedo.trail.surface`
-- `torpedo_warning` -> `torpedo.warning.fan`
-- `water_impact` -> `impact.water.small`
-- `wake_fast` -> `wake.destroyer_fast`
-- `speed_lines` -> `wake.destroyer_fast`
-
-## aurora
-
-### Binding Points
-
-- `muzzle_01` -> light cruiser gun muzzle
-- `searchlight_point` -> searchlight/skill origin
-- `skill_origin` -> standard support skill origin
-- `wake_origin` -> cruiser wake origin
-
-### VFX Roles
-
-- `muzzle_flash` -> `muzzle_flash.medium`
-- `searchlight_beam` -> `submarine.sonar_pulse`
-- `support_area` -> `skill.area`
-- `water_splash` -> `impact.water.medium`
-- `wake` -> `wake.cruiser`
-
-## warspite
-
-### Binding Points
-
-- `muzzle_01` -> main gun muzzle 1
-- `muzzle_02` -> main gun muzzle 2
-- `muzzle_group` -> main gun grouped muzzle
-- `turret_mount_01` -> main turret pivot 1
-- `turret_mount_02` -> main turret pivot 2
-- `skill_origin` -> precision salvo origin
-- `wake_origin` -> battleship wake origin
-
-### VFX Roles
-
-- `heavy_muzzle` -> `muzzle_flash.large`
-- `splash` -> `impact.water.large`
-- `wake` -> `wake.battleship_heavy`
-- `reticle` -> `shell.trail.long`
-
-## bismarck
-
-### Binding Points
-
-- `muzzle_01` -> main gun muzzle 1
-- `muzzle_02` -> main gun muzzle 2
-- `muzzle_group` -> main gun grouped muzzle
-- `turret_mount_01` -> main turret pivot 1
-- `turret_mount_02` -> main turret pivot 2
-- `skill_origin` -> decisive salvo command origin
-- `wake_origin` -> battleship wake origin
-
-### VFX Roles
-
-- `heavy_muzzle` -> `muzzle_flash.large`
-- `water_impact` -> `impact.water.large`
-- `armor_hit` -> `impact.armor.spark`
-- `wake` -> `wake.battleship_heavy`
+Detailed semantic names, source assets, and VFX files are stored in the JSON report.

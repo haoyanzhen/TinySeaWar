@@ -22,12 +22,12 @@ Roster source: `docs/41_character_art_design.md`.
 | hindenburg | 兴登堡号 Hindenburg | 重巡 | complete | - | - |
 | u_47 | U-47 | 潜艇 | complete | - | - |
 | yamato | 大和号 Yamato | 战列 | complete | - | - |
-| yukikaze | 雪风号 Yukikaze | 驱逐 | incomplete | full_body, half_body, skill_cutin, expression_default, expression_serious, expression_hit, portrait, portrait_small, chibi_head, skill_icon, class_icon, battle_body, rig_base, main_weapon, anim_idle, anim_move, anim_attack, anim_hit, anim_firepower, vfx, bind_points, anim_config, vfx_config, manifest | - |
+| yukikaze | 雪风号 Yukikaze | 驱逐 | complete | - | - |
 | shimakaze | 岛风号 Shimakaze | 驱逐 | complete | - | - |
-| hosho | 凤翔号 Hosho | 航母 | incomplete | full_body, half_body, skill_cutin, expression_default, expression_serious, expression_hit, portrait, portrait_small, chibi_head, skill_icon, class_icon, battle_body, rig_base, main_weapon, anim_idle, anim_move, anim_attack, anim_hit, anim_firepower, vfx, bind_points, anim_config, vfx_config, manifest | - |
-| ning_hai | 宁海号 Ning Hai | 轻巡 | incomplete | full_body, half_body, skill_cutin, expression_default, expression_serious, expression_hit, portrait, portrait_small, chibi_head, skill_icon, class_icon, battle_body, rig_base, main_weapon, anim_idle, anim_move, anim_attack, anim_hit, anim_firepower, vfx, bind_points, anim_config, vfx_config, manifest | - |
-| anshan | 鞍山号 Anshan | 驱逐 | incomplete | full_body, half_body, skill_cutin, expression_default, expression_serious, expression_hit, portrait, portrait_small, chibi_head, skill_icon, class_icon, battle_body, rig_base, main_weapon, anim_idle, anim_move, anim_attack, anim_hit, anim_firepower, vfx, bind_points, anim_config, vfx_config, manifest | - |
-| chongqing | 重庆号 ROCS Chongqing | 轻巡 | incomplete | full_body, half_body, skill_cutin, expression_default, expression_serious, expression_hit, portrait, portrait_small, chibi_head, skill_icon, class_icon, battle_body, rig_base, main_weapon, anim_idle, anim_move, anim_attack, anim_hit, anim_firepower, vfx, bind_points, anim_config, vfx_config, manifest | - |
+| hosho | 凤翔号 Hosho | 航母 | complete | - | - |
+| ning_hai | 宁海号 Ning Hai | 轻巡 | complete | - | - |
+| anshan | 鞍山号 Anshan | 驱逐 | complete | - | - |
+| chongqing | 重庆号 ROCS Chongqing | 轻巡 | complete | - | - |
 | hai_shih | 海狮号 ROCS Hai Shih | 潜艇 | complete | - | - |
 
 A character may pass edge and file-format QA while remaining incomplete. Missing required roles are blockers.

@@ -1,0 +1,1375 @@
+{
+  "character_id": "ning_hai",
+  "source": "tools/art_pipeline/postprocess_generated_character.py",
+  "method": "green_screen_auto_grid_and_component_split",
+  "outputs": [
+    {
+      "role": "source_alpha:concept_full",
+      "path": "assets/characters/ning_hai/processed/source_alpha/ning_hai_concept_full_alpha_source.png",
+      "size": [
+        1024,
+        1536
+      ],
+      "edge_margins": {
+        "left": 29,
+        "top": 53,
+        "right": 22,
+        "bottom": 35
+      }
+    },
+    {
+      "role": "source_alpha:ui_sheet",
+      "path": "assets/characters/ning_hai/processed/source_alpha/ning_hai_ui_sheet_alpha_source.png",
+      "size": [
+        1774,
+        887
+      ],
+      "edge_margins": {
+        "left": 99,
+        "top": 43,
+        "right": 138,
+        "bottom": 82
+      }
+    },
+    {
+      "role": "source_alpha:battle_grid",
+      "path": "assets/characters/ning_hai/processed/source_alpha/ning_hai_battle_asset_grid_alpha_source.png",
+      "size": [
+        1774,
+        887
+      ],
+      "edge_margins": {
+        "left": 58,
+        "top": 80,
+        "right": 106,
+        "bottom": 100
+      }
+    },
+    {
+      "role": "source_alpha:vfx_sheet",
+      "path": "assets/characters/ning_hai/processed/source_alpha/ning_hai_vfx_reference_sheet_alpha_source.png",
+      "size": [
+        1774,
+        887
+      ],
+      "edge_margins": {
+        "left": 92,
+        "top": 130,
+        "right": 88,
+        "bottom": 134
+      }
+    },
+    {
+      "role": "source_alpha:anim_master",
+      "path": "assets/characters/ning_hai/processed/source_alpha/ning_hai_anim_5x4_master_alpha_source.png",
+      "size": [
+        1003,
+        1568
+      ],
+      "edge_margins": {
+        "left": 15,
+        "top": 62,
+        "right": 11,
+        "bottom": 35
+      }
+    },
+    {
+      "role": "full_body",
+      "crop": {
+        "content_bbox": [
+          29,
+          53,
+          1002,
+          1501
+        ],
+        "final_crop_box": [
+          17,
+          41,
+          1014,
+          1513
+        ],
+        "output_edge_margins": {
+          "left": 27,
+          "top": 259,
+          "right": 12,
+          "bottom": 13
+        }
+      },
+      "path": "assets/characters/ning_hai/processed/ui/ning_hai_illust_full_alpha.png",
+      "size": [
+        1012,
+        1720
+      ],
+      "edge_margins": {
+        "left": 27,
+        "top": 259,
+        "right": 12,
+        "bottom": 13
+      }
+    },
+    {
+      "role": "half_body",
+      "crop": {
+        "content_bbox": [
+          21,
+          17,
+          994,
+          1059
+        ],
+        "final_crop_box": [
+          5,
+          1,
+          1010,
+          1075
+        ],
+        "output_edge_margins": {
+          "left": 21,
+          "top": 17,
+          "right": 16,
+          "bottom": 63
+        }
+      },
+      "path": "assets/characters/ning_hai/processed/ui/ning_hai_illust_half_alpha.png",
+      "size": [
+        1010,
+        1122
+      ],
+      "edge_margins": {
+        "left": 21,
+        "top": 17,
+        "right": 16,
+        "bottom": 63
+      }
+    },
+    {
+      "role": "skill_cutin",
+      "crop": {
+        "content_bbox": [
+          465,
+          16,
+          1438,
+          855
+        ],
+        "final_crop_box": [
+          449,
+          0,
+          1454,
+          871
+        ],
+        "output_edge_margins": {
+          "left": 20,
+          "top": 16,
+          "right": 17,
+          "bottom": 201
+        }
+      },
+      "path": "assets/characters/ning_hai/processed/ui/ning_hai_illust_skill_cutin_alpha.png",
+      "size": [
+        1010,
+        1056
+      ],
+      "edge_margins": {
+        "left": 20,
+        "top": 16,
+        "right": 17,
+        "bottom": 201
+      }
+    },
+    {
+      "role": "ui_portrait",
+      "crop": {
+        "content_bbox": [
+          99,
+          45,
+          402,
+          397
+        ],
+        "final_crop_box": [
+          81,
+          27,
+          420,
+          415
+        ],
+        "output_edge_margins": {
+          "left": 18,
+          "top": 18,
+          "right": 37,
+          "bottom": 50
+        }
+      },
+      "path": "assets/characters/ning_hai/processed/ui/ning_hai_ui_portrait.png",
+      "size": [
+        358,
+        420
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 18,
+        "right": 37,
+        "bottom": 50
+      }
+    },
+    {
+      "role": "ui_portrait_small",
+      "crop": {
+        "content_bbox": [
+          89,
+          69,
+          366,
+          397
+        ],
+        "final_crop_box": [
+          71,
+          51,
+          384,
+          415
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 32,
+          "bottom": 41
+        }
+      },
+      "path": "assets/characters/ning_hai/processed/ui/ning_hai_ui_portrait_small.png",
+      "size": [
+        328,
+        388
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 19,
+        "right": 35,
+        "bottom": 41
+      }
+    },
+    {
+      "role": "ui_chibi_head",
+      "crop": {
+        "content_bbox": [
+          47,
+          91,
+          443,
+          397
+        ],
+        "final_crop_box": [
+          29,
+          73,
+          443,
+          415
+        ],
+        "output_edge_margins": {
+          "left": 115,
+          "top": 24,
+          "right": 19,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/ning_hai/processed/ui/ning_hai_ui_chibi_head.png",
+      "size": [
+        530,
+        348
+      ],
+      "edge_margins": {
+        "left": 115,
+        "top": 24,
+        "right": 128,
+        "bottom": 35
+      }
+    },
+    {
+      "role": "expr_default",
+      "crop": {
+        "content_bbox": [
+          0,
+          43,
+          307,
+          397
+        ],
+        "final_crop_box": [
+          0,
+          25,
+          325,
+          415
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 24,
+          "bottom": 62
+        }
+      },
+      "path": "assets/characters/ning_hai/processed/ui/ning_hai_expr_default.png",
+      "size": [
+        350,
+        434
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 18,
+        "right": 24,
+        "bottom": 62
+      }
+    },
+    {
+      "role": "expr_serious",
+      "crop": {
+        "content_bbox": [
+          106,
+          15,
+          401,
+          362
+        ],
+        "final_crop_box": [
+          88,
+          0,
+          419,
+          380
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 34,
+          "bottom": 47
+        }
+      },
+      "path": "assets/characters/ning_hai/processed/ui/ning_hai_expr_serious.png",
+      "size": [
+        348,
+        412
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 18,
+        "right": 34,
+        "bottom": 47
+      }
+    },
+    {
+      "role": "expr_hit",
+      "crop": {
+        "content_bbox": [
+          81,
+          21,
+          357,
+          360
+        ],
+        "final_crop_box": [
+          63,
+          3,
+          375,
+          378
+        ],
+        "output_edge_margins": {
+          "left": 22,
+          "top": 19,
+          "right": 18,
+          "bottom": 44
+        }
+      },
+      "path": "assets/characters/ning_hai/processed/ui/ning_hai_expr_hit.png",
+      "size": [
+        316,
+        402
+      ],
+      "edge_margins": {
+        "left": 22,
+        "top": 19,
+        "right": 18,
+        "bottom": 44
+      }
+    },
+    {
+      "role": "ui_skill",
+      "crop": {
+        "content_bbox": [
+          45,
+          33,
+          357,
+          351
+        ],
+        "final_crop_box": [
+          27,
+          15,
+          375,
+          369
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 20,
+          "right": 19,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/ning_hai/processed/ui/ning_hai_ui_skill_escort_barrage.png",
+      "size": [
+        350,
+        356
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 20,
+        "right": 19,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "class_icon",
+      "crop": {
+        "content_bbox": [
+          71,
+          16,
+          196,
+          360
+        ],
+        "final_crop_box": [
+          53,
+          0,
+          214,
+          378
+        ],
+        "output_edge_margins": {
+          "left": 20,
+          "top": 19,
+          "right": 19,
+          "bottom": 19
+        }
+      },
+      "path": "assets/characters/ning_hai/processed/ui/ning_hai_ui_class_light_cruiser.png",
+      "size": [
+        164,
+        382
+      ],
+      "edge_margins": {
+        "left": 20,
+        "top": 19,
+        "right": 19,
+        "bottom": 19
+      }
+    },
+    {
+      "role": "battle_body_r",
+      "crop": {
+        "component_bbox": [
+          58,
+          80,
+          401,
+          379
+        ],
+        "final_crop_box": [
+          40,
+          62,
+          419,
+          397
+        ],
+        "component_area": 65333,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 19,
+          "right": 33,
+          "bottom": 42
+        }
+      },
+      "path": "assets/characters/ning_hai/processed/battle/ning_hai_battle_body_r.png",
+      "size": [
+        394,
+        360
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 19,
+        "right": 33,
+        "bottom": 42
+      }
+    },
+    {
+      "role": "battle_rig_base",
+      "crop": {
+        "component_bbox": [
+          67,
+          124,
+          351,
+          333
+        ],
+        "final_crop_box": [
+          49,
+          106,
+          369,
+          351
+        ],
+        "component_area": 41821,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 19,
+          "bottom": 33
+        }
+      },
+      "path": "assets/characters/ning_hai/processed/battle/ning_hai_battle_rig_base.png",
+      "size": [
+        322,
+        260
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 18,
+        "right": 19,
+        "bottom": 33
+      }
+    },
+    {
+      "role": "battle_turret_main_01",
+      "crop": {
+        "component_bbox": [
+          43,
+          104,
+          341,
+          345
+        ],
+        "final_crop_box": [
+          25,
+          86,
+          359,
+          363
+        ],
+        "component_area": 43702,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 19,
+          "right": 88,
+          "bottom": 38
+        }
+      },
+      "path": "assets/characters/ning_hai/processed/battle/ning_hai_battle_turret_main_01.png",
+      "size": [
+        404,
+        298
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 19,
+        "right": 88,
+        "bottom": 38
+      }
+    },
+    {
+      "role": "battle_turret_main_02",
+      "crop": {
+        "component_bbox": [
+          18,
+          108,
+          309,
+          344
+        ],
+        "final_crop_box": [
+          0,
+          90,
+          327,
+          362
+        ],
+        "component_area": 42999,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 78,
+          "bottom": 37
+        }
+      },
+      "path": "assets/characters/ning_hai/processed/battle/ning_hai_battle_turret_main_02.png",
+      "size": [
+        388,
+        292
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 19,
+        "right": 78,
+        "bottom": 37
+      }
+    },
+    {
+      "role": "battle_aa_center",
+      "crop": {
+        "component_bbox": [
+          105,
+          80,
+          353,
+          331
+        ],
+        "final_crop_box": [
+          87,
+          62,
+          371,
+          349
+        ],
+        "component_area": 40031,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 21,
+          "bottom": 59
+        }
+      },
+      "path": "assets/characters/ning_hai/processed/battle/ning_hai_battle_aa_center.png",
+      "size": [
+        288,
+        330
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 20,
+        "right": 21,
+        "bottom": 59
+      }
+    },
+    {
+      "role": "battle_radar_node",
+      "crop": {
+        "component_bbox": [
+          90,
+          77,
+          317,
+          332
+        ],
+        "final_crop_box": [
+          72,
+          59,
+          335,
+          350
+        ],
+        "component_area": 36640,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 18,
+          "bottom": 64
+        }
+      },
+      "path": "assets/characters/ning_hai/processed/battle/ning_hai_battle_radar_node.png",
+      "size": [
+        264,
+        338
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 19,
+        "right": 18,
+        "bottom": 64
+      }
+    },
+    {
+      "role": "battle_support_node",
+      "crop": {
+        "component_bbox": [
+          45,
+          95,
+          320,
+          339
+        ],
+        "final_crop_box": [
+          27,
+          77,
+          338,
+          357
+        ],
+        "component_area": 42068,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 32,
+          "bottom": 64
+        }
+      },
+      "path": "assets/characters/ning_hai/processed/battle/ning_hai_battle_support_node.png",
+      "size": [
+        326,
+        326
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 18,
+        "right": 32,
+        "bottom": 64
+      }
+    },
+    {
+      "role": "battle_wake_origin_marker",
+      "crop": {
+        "component_bbox": [
+          56,
+          104,
+          338,
+          344
+        ],
+        "final_crop_box": [
+          38,
+          86,
+          356,
+          362
+        ],
+        "component_area": 22951,
+        "output_edge_margins": {
+          "left": 45,
+          "top": 18,
+          "right": 18,
+          "bottom": 43
+        }
+      },
+      "path": "assets/characters/ning_hai/processed/battle/ning_hai_battle_wake_origin_marker.png",
+      "size": [
+        346,
+        302
+      ],
+      "edge_margins": {
+        "left": 45,
+        "top": 19,
+        "right": 19,
+        "bottom": 43
+      }
+    },
+    {
+      "role": "anim_idle_frame_01",
+      "path": "assets/characters/ning_hai/processed/anim/ning_hai_anim_idle_frame_01.png",
+      "size": [
+        268,
+        312
+      ],
+      "edge_margins": {
+        "left": 21,
+        "top": 35,
+        "right": 20,
+        "bottom": 45
+      }
+    },
+    {
+      "role": "anim_idle_keyframe",
+      "path": "assets/characters/ning_hai/processed/anim/ning_hai_anim_idle_keyframe.png",
+      "size": [
+        268,
+        312
+      ],
+      "edge_margins": {
+        "left": 21,
+        "top": 35,
+        "right": 20,
+        "bottom": 45
+      }
+    },
+    {
+      "role": "anim_idle_frame_02",
+      "path": "assets/characters/ning_hai/processed/anim/ning_hai_anim_idle_frame_02.png",
+      "size": [
+        268,
+        312
+      ],
+      "edge_margins": {
+        "left": 22,
+        "top": 17,
+        "right": 17,
+        "bottom": 44
+      }
+    },
+    {
+      "role": "anim_idle_frame_03",
+      "path": "assets/characters/ning_hai/processed/anim/ning_hai_anim_idle_frame_03.png",
+      "size": [
+        268,
+        312
+      ],
+      "edge_margins": {
+        "left": 28,
+        "top": 17,
+        "right": 21,
+        "bottom": 44
+      }
+    },
+    {
+      "role": "anim_idle_frame_04",
+      "path": "assets/characters/ning_hai/processed/anim/ning_hai_anim_idle_frame_04.png",
+      "size": [
+        268,
+        312
+      ],
+      "edge_margins": {
+        "left": 24,
+        "top": 16,
+        "right": 17,
+        "bottom": 46
+      }
+    },
+    {
+      "role": "anim_move_frame_01",
+      "path": "assets/characters/ning_hai/processed/anim/ning_hai_anim_move_frame_01.png",
+      "size": [
+        260,
+        264
+      ],
+      "edge_margins": {
+        "left": 36,
+        "top": 22,
+        "right": 21,
+        "bottom": 19
+      }
+    },
+    {
+      "role": "anim_move_keyframe",
+      "path": "assets/characters/ning_hai/processed/anim/ning_hai_anim_move_keyframe.png",
+      "size": [
+        260,
+        264
+      ],
+      "edge_margins": {
+        "left": 36,
+        "top": 22,
+        "right": 21,
+        "bottom": 19
+      }
+    },
+    {
+      "role": "anim_move_frame_02",
+      "path": "assets/characters/ning_hai/processed/anim/ning_hai_anim_move_frame_02.png",
+      "size": [
+        260,
+        264
+      ],
+      "edge_margins": {
+        "left": 39,
+        "top": 26,
+        "right": 27,
+        "bottom": 16
+      }
+    },
+    {
+      "role": "anim_move_frame_03",
+      "path": "assets/characters/ning_hai/processed/anim/ning_hai_anim_move_frame_03.png",
+      "size": [
+        260,
+        264
+      ],
+      "edge_margins": {
+        "left": 20,
+        "top": 17,
+        "right": 16,
+        "bottom": 24
+      }
+    },
+    {
+      "role": "anim_move_frame_04",
+      "path": "assets/characters/ning_hai/processed/anim/ning_hai_anim_move_frame_04.png",
+      "size": [
+        260,
+        264
+      ],
+      "edge_margins": {
+        "left": 17,
+        "top": 17,
+        "right": 17,
+        "bottom": 24
+      }
+    },
+    {
+      "role": "anim_attack_frame_01",
+      "path": "assets/characters/ning_hai/processed/anim/ning_hai_anim_attack_frame_01.png",
+      "size": [
+        302,
+        296
+      ],
+      "edge_margins": {
+        "left": 37,
+        "top": 18,
+        "right": 38,
+        "bottom": 41
+      }
+    },
+    {
+      "role": "anim_attack_keyframe",
+      "path": "assets/characters/ning_hai/processed/anim/ning_hai_anim_attack_keyframe.png",
+      "size": [
+        302,
+        296
+      ],
+      "edge_margins": {
+        "left": 37,
+        "top": 18,
+        "right": 38,
+        "bottom": 41
+      }
+    },
+    {
+      "role": "anim_attack_frame_02",
+      "path": "assets/characters/ning_hai/processed/anim/ning_hai_anim_attack_frame_02.png",
+      "size": [
+        302,
+        296
+      ],
+      "edge_margins": {
+        "left": 32,
+        "top": 21,
+        "right": 37,
+        "bottom": 42
+      }
+    },
+    {
+      "role": "anim_attack_frame_03",
+      "path": "assets/characters/ning_hai/processed/anim/ning_hai_anim_attack_frame_03.png",
+      "size": [
+        302,
+        296
+      ],
+      "edge_margins": {
+        "left": 17,
+        "top": 17,
+        "right": 35,
+        "bottom": 41
+      }
+    },
+    {
+      "role": "anim_attack_frame_04",
+      "path": "assets/characters/ning_hai/processed/anim/ning_hai_anim_attack_frame_04.png",
+      "size": [
+        302,
+        296
+      ],
+      "edge_margins": {
+        "left": 44,
+        "top": 36,
+        "right": 45,
+        "bottom": 38
+      }
+    },
+    {
+      "role": "anim_hit_frame_01",
+      "path": "assets/characters/ning_hai/processed/anim/ning_hai_anim_hit_frame_01.png",
+      "size": [
+        250,
+        282
+      ],
+      "edge_margins": {
+        "left": 30,
+        "top": 32,
+        "right": 27,
+        "bottom": 46
+      }
+    },
+    {
+      "role": "anim_hit_keyframe",
+      "path": "assets/characters/ning_hai/processed/anim/ning_hai_anim_hit_keyframe.png",
+      "size": [
+        250,
+        282
+      ],
+      "edge_margins": {
+        "left": 30,
+        "top": 32,
+        "right": 27,
+        "bottom": 46
+      }
+    },
+    {
+      "role": "anim_hit_frame_02",
+      "path": "assets/characters/ning_hai/processed/anim/ning_hai_anim_hit_frame_02.png",
+      "size": [
+        250,
+        282
+      ],
+      "edge_margins": {
+        "left": 32,
+        "top": 29,
+        "right": 25,
+        "bottom": 34
+      }
+    },
+    {
+      "role": "anim_hit_frame_03",
+      "path": "assets/characters/ning_hai/processed/anim/ning_hai_anim_hit_frame_03.png",
+      "size": [
+        250,
+        282
+      ],
+      "edge_margins": {
+        "left": 27,
+        "top": 28,
+        "right": 27,
+        "bottom": 32
+      }
+    },
+    {
+      "role": "anim_hit_frame_04",
+      "path": "assets/characters/ning_hai/processed/anim/ning_hai_anim_hit_frame_04.png",
+      "size": [
+        250,
+        282
+      ],
+      "edge_margins": {
+        "left": 23,
+        "top": 17,
+        "right": 17,
+        "bottom": 25
+      }
+    },
+    {
+      "role": "anim_firepower_frame_01",
+      "path": "assets/characters/ning_hai/processed/anim/ning_hai_anim_firepower_frame_01.png",
+      "size": [
+        254,
+        290
+      ],
+      "edge_margins": {
+        "left": 29,
+        "top": 22,
+        "right": 17,
+        "bottom": 16
+      }
+    },
+    {
+      "role": "anim_firepower_keyframe",
+      "path": "assets/characters/ning_hai/processed/anim/ning_hai_anim_firepower_keyframe.png",
+      "size": [
+        254,
+        290
+      ],
+      "edge_margins": {
+        "left": 29,
+        "top": 22,
+        "right": 17,
+        "bottom": 16
+      }
+    },
+    {
+      "role": "anim_firepower_frame_02",
+      "path": "assets/characters/ning_hai/processed/anim/ning_hai_anim_firepower_frame_02.png",
+      "size": [
+        254,
+        290
+      ],
+      "edge_margins": {
+        "left": 50,
+        "top": 38,
+        "right": 33,
+        "bottom": 37
+      }
+    },
+    {
+      "role": "anim_firepower_frame_03",
+      "path": "assets/characters/ning_hai/processed/anim/ning_hai_anim_firepower_frame_03.png",
+      "size": [
+        254,
+        290
+      ],
+      "edge_margins": {
+        "left": 30,
+        "top": 39,
+        "right": 28,
+        "bottom": 39
+      }
+    },
+    {
+      "role": "anim_firepower_frame_04",
+      "path": "assets/characters/ning_hai/processed/anim/ning_hai_anim_firepower_frame_04.png",
+      "size": [
+        254,
+        290
+      ],
+      "edge_margins": {
+        "left": 28,
+        "top": 18,
+        "right": 22,
+        "bottom": 30
+      }
+    },
+    {
+      "role": "battle_body_r:idle_master_override",
+      "path": "assets/characters/ning_hai/processed/battle/ning_hai_battle_body_r.png",
+      "size": [
+        268,
+        312
+      ],
+      "edge_margins": {
+        "left": 21,
+        "top": 35,
+        "right": 20,
+        "bottom": 45
+      }
+    },
+    {
+      "role": "vfx:aa_burst",
+      "crop": {
+        "component_bbox": [
+          186,
+          205,
+          254,
+          301
+        ],
+        "final_crop_box": [
+          168,
+          187,
+          272,
+          319
+        ],
+        "component_area": 2727,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 19,
+          "right": 22,
+          "bottom": 31
+        }
+      },
+      "path": "assets/characters/ning_hai/processed/vfx/ning_hai_vfx_aa_burst.png",
+      "size": [
+        140,
+        152
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 19,
+        "right": 22,
+        "bottom": 31
+      }
+    },
+    {
+      "role": "vfx:aa_circle",
+      "crop": {
+        "component_bbox": [
+          257,
+          271,
+          319,
+          334
+        ],
+        "final_crop_box": [
+          239,
+          253,
+          337,
+          352
+        ],
+        "component_area": 455,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 19,
+          "right": 46,
+          "bottom": 33
+        }
+      },
+      "path": "assets/characters/ning_hai/processed/vfx/ning_hai_vfx_aa_circle.png",
+      "size": [
+        150,
+        138
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 19,
+        "right": 46,
+        "bottom": 33
+      }
+    },
+    {
+      "role": "vfx:muzzle_flash_medium",
+      "crop": {
+        "component_bbox": [
+          127,
+          156,
+          339,
+          329
+        ],
+        "final_crop_box": [
+          109,
+          138,
+          357,
+          347
+        ],
+        "component_area": 14890,
+        "output_edge_margins": {
+          "left": 37,
+          "top": 18,
+          "right": 18,
+          "bottom": 26
+        }
+      },
+      "path": "assets/characters/ning_hai/processed/vfx/ning_hai_vfx_muzzle_flash_medium.png",
+      "size": [
+        284,
+        218
+      ],
+      "edge_margins": {
+        "left": 37,
+        "top": 18,
+        "right": 18,
+        "bottom": 26
+      }
+    },
+    {
+      "role": "vfx:shell_trail",
+      "crop": {
+        "component_bbox": [
+          97,
+          222,
+          357,
+          270
+        ],
+        "final_crop_box": [
+          79,
+          204,
+          375,
+          288
+        ],
+        "component_area": 5626,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 19,
+          "right": 54,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/ning_hai/processed/vfx/ning_hai_vfx_shell_trail.png",
+      "size": [
+        332,
+        106
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 19,
+        "right": 54,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "vfx:water_splash",
+      "crop": {
+        "component_bbox": [
+          112,
+          147,
+          334,
+          292
+        ],
+        "final_crop_box": [
+          94,
+          129,
+          352,
+          310
+        ],
+        "component_area": 15102,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 18,
+          "right": 21,
+          "bottom": 73
+        }
+      },
+      "path": "assets/characters/ning_hai/processed/vfx/ning_hai_vfx_water_splash.png",
+      "size": [
+        292,
+        254
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 18,
+        "right": 21,
+        "bottom": 73
+      }
+    },
+    {
+      "role": "vfx:armor_sparks",
+      "crop": {
+        "component_bbox": [
+          209,
+          227,
+          254,
+          261
+        ],
+        "final_crop_box": [
+          191,
+          209,
+          272,
+          279
+        ],
+        "component_area": 478,
+        "output_edge_margins": {
+          "left": 26,
+          "top": 19,
+          "right": 18,
+          "bottom": 25
+        }
+      },
+      "path": "assets/characters/ning_hai/processed/vfx/ning_hai_vfx_armor_sparks.png",
+      "size": [
+        92,
+        96
+      ],
+      "edge_margins": {
+        "left": 26,
+        "top": 19,
+        "right": 18,
+        "bottom": 25
+      }
+    },
+    {
+      "role": "vfx:escort_aura",
+      "crop": {
+        "component_bbox": [
+          103,
+          130,
+          319,
+          297
+        ],
+        "final_crop_box": [
+          85,
+          112,
+          337,
+          315
+        ],
+        "component_area": 17005,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 18,
+          "bottom": 72
+        }
+      },
+      "path": "assets/characters/ning_hai/processed/vfx/ning_hai_vfx_escort_aura.png",
+      "size": [
+        262,
+        272
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 19,
+        "right": 18,
+        "bottom": 72
+      }
+    },
+    {
+      "role": "vfx:wake_medium",
+      "crop": {
+        "component_bbox": [
+          75,
+          164,
+          325,
+          310
+        ],
+        "final_crop_box": [
+          57,
+          146,
+          343,
+          328
+        ],
+        "component_area": 17428,
+        "output_edge_margins": {
+          "left": 32,
+          "top": 19,
+          "right": 18,
+          "bottom": 33
+        }
+      },
+      "path": "assets/characters/ning_hai/processed/vfx/ning_hai_vfx_wake_medium.png",
+      "size": [
+        324,
+        202
+      ],
+      "edge_margins": {
+        "left": 32,
+        "top": 19,
+        "right": 18,
+        "bottom": 33
+      }
+    }
+  ]
+}

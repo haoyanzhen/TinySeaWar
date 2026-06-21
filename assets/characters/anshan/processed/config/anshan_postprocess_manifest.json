@@ -1,0 +1,1375 @@
+{
+  "character_id": "anshan",
+  "source": "tools/art_pipeline/postprocess_generated_character.py",
+  "method": "green_screen_auto_grid_and_component_split",
+  "outputs": [
+    {
+      "role": "source_alpha:concept_full",
+      "path": "assets/characters/anshan/processed/source_alpha/anshan_concept_full_alpha_source.png",
+      "size": [
+        1024,
+        1536
+      ],
+      "edge_margins": {
+        "left": 31,
+        "top": 59,
+        "right": 16,
+        "bottom": 108
+      }
+    },
+    {
+      "role": "source_alpha:ui_sheet",
+      "path": "assets/characters/anshan/processed/source_alpha/anshan_ui_sheet_alpha_source.png",
+      "size": [
+        1774,
+        887
+      ],
+      "edge_margins": {
+        "left": 38,
+        "top": 40,
+        "right": 31,
+        "bottom": 62
+      }
+    },
+    {
+      "role": "source_alpha:battle_grid",
+      "path": "assets/characters/anshan/processed/source_alpha/anshan_battle_asset_grid_alpha_source.png",
+      "size": [
+        1774,
+        887
+      ],
+      "edge_margins": {
+        "left": 89,
+        "top": 60,
+        "right": 105,
+        "bottom": 100
+      }
+    },
+    {
+      "role": "source_alpha:vfx_sheet",
+      "path": "assets/characters/anshan/processed/source_alpha/anshan_vfx_reference_sheet_alpha_source.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "edge_margins": {
+        "left": 83,
+        "top": 163,
+        "right": 77,
+        "bottom": 153
+      }
+    },
+    {
+      "role": "source_alpha:anim_master",
+      "path": "assets/characters/anshan/processed/source_alpha/anshan_anim_5x4_master_alpha_source.png",
+      "size": [
+        1122,
+        1402
+      ],
+      "edge_margins": {
+        "left": 44,
+        "top": 57,
+        "right": 35,
+        "bottom": 101
+      }
+    },
+    {
+      "role": "full_body",
+      "crop": {
+        "content_bbox": [
+          31,
+          59,
+          1008,
+          1428
+        ],
+        "final_crop_box": [
+          19,
+          47,
+          1020,
+          1440
+        ],
+        "output_edge_margins": {
+          "left": 44,
+          "top": 143,
+          "right": 13,
+          "bottom": 12
+        }
+      },
+      "path": "assets/characters/anshan/processed/ui/anshan_illust_full_alpha.png",
+      "size": [
+        1034,
+        1524
+      ],
+      "edge_margins": {
+        "left": 44,
+        "top": 143,
+        "right": 13,
+        "bottom": 12
+      }
+    },
+    {
+      "role": "half_body",
+      "crop": {
+        "content_bbox": [
+          54,
+          16,
+          1031,
+          1001
+        ],
+        "final_crop_box": [
+          38,
+          0,
+          1047,
+          1017
+        ],
+        "output_edge_margins": {
+          "left": 54,
+          "top": 16,
+          "right": 17,
+          "bottom": 125
+        }
+      },
+      "path": "assets/characters/anshan/processed/ui/anshan_illust_half_alpha.png",
+      "size": [
+        1048,
+        1126
+      ],
+      "edge_margins": {
+        "left": 54,
+        "top": 16,
+        "right": 17,
+        "bottom": 125
+      }
+    },
+    {
+      "role": "skill_cutin",
+      "crop": {
+        "content_bbox": [
+          437,
+          16,
+          1405,
+          810
+        ],
+        "final_crop_box": [
+          421,
+          0,
+          1421,
+          826
+        ],
+        "output_edge_margins": {
+          "left": 59,
+          "top": 16,
+          "right": 17,
+          "bottom": 190
+        }
+      },
+      "path": "assets/characters/anshan/processed/ui/anshan_illust_skill_cutin_alpha.png",
+      "size": [
+        1044,
+        1000
+      ],
+      "edge_margins": {
+        "left": 59,
+        "top": 16,
+        "right": 17,
+        "bottom": 190
+      }
+    },
+    {
+      "role": "ui_portrait",
+      "crop": {
+        "content_bbox": [
+          38,
+          40,
+          438,
+          415
+        ],
+        "final_crop_box": [
+          20,
+          22,
+          443,
+          433
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 45,
+          "bottom": 74
+        }
+      },
+      "path": "assets/characters/anshan/processed/ui/anshan_ui_portrait.png",
+      "size": [
+        464,
+        468
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 19,
+        "right": 45,
+        "bottom": 74
+      }
+    },
+    {
+      "role": "ui_portrait_small",
+      "crop": {
+        "content_bbox": [
+          83,
+          81,
+          382,
+          392
+        ],
+        "final_crop_box": [
+          65,
+          63,
+          400,
+          410
+        ],
+        "output_edge_margins": {
+          "left": 46,
+          "top": 19,
+          "right": 19,
+          "bottom": 44
+        }
+      },
+      "path": "assets/characters/anshan/processed/ui/anshan_ui_portrait_small.png",
+      "size": [
+        364,
+        374
+      ],
+      "edge_margins": {
+        "left": 46,
+        "top": 19,
+        "right": 19,
+        "bottom": 44
+      }
+    },
+    {
+      "role": "ui_chibi_head",
+      "crop": {
+        "content_bbox": [
+          70,
+          89,
+          378,
+          398
+        ],
+        "final_crop_box": [
+          52,
+          71,
+          396,
+          416
+        ],
+        "output_edge_margins": {
+          "left": 23,
+          "top": 24,
+          "right": 19,
+          "bottom": 19
+        }
+      },
+      "path": "assets/characters/anshan/processed/ui/anshan_ui_chibi_head.png",
+      "size": [
+        350,
+        352
+      ],
+      "edge_margins": {
+        "left": 23,
+        "top": 24,
+        "right": 19,
+        "bottom": 19
+      }
+    },
+    {
+      "role": "expr_default",
+      "crop": {
+        "content_bbox": [
+          27,
+          49,
+          414,
+          415
+        ],
+        "final_crop_box": [
+          9,
+          31,
+          432,
+          433
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 36,
+          "bottom": 67
+        }
+      },
+      "path": "assets/characters/anshan/processed/ui/anshan_expr_default.png",
+      "size": [
+        442,
+        452
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 19,
+        "right": 36,
+        "bottom": 67
+      }
+    },
+    {
+      "role": "expr_serious",
+      "crop": {
+        "content_bbox": [
+          83,
+          35,
+          425,
+          382
+        ],
+        "final_crop_box": [
+          65,
+          17,
+          443,
+          400
+        ],
+        "output_edge_margins": {
+          "left": 48,
+          "top": 19,
+          "right": 18,
+          "bottom": 54
+        }
+      },
+      "path": "assets/characters/anshan/processed/ui/anshan_expr_serious.png",
+      "size": [
+        408,
+        420
+      ],
+      "edge_margins": {
+        "left": 48,
+        "top": 19,
+        "right": 18,
+        "bottom": 54
+      }
+    },
+    {
+      "role": "expr_hit",
+      "crop": {
+        "content_bbox": [
+          65,
+          41,
+          401,
+          382
+        ],
+        "final_crop_box": [
+          47,
+          23,
+          419,
+          400
+        ],
+        "output_edge_margins": {
+          "left": 35,
+          "top": 18,
+          "right": 19,
+          "bottom": 43
+        }
+      },
+      "path": "assets/characters/anshan/processed/ui/anshan_expr_hit.png",
+      "size": [
+        390,
+        402
+      ],
+      "edge_margins": {
+        "left": 35,
+        "top": 18,
+        "right": 19,
+        "bottom": 43
+      }
+    },
+    {
+      "role": "ui_skill",
+      "crop": {
+        "content_bbox": [
+          67,
+          58,
+          351,
+          345
+        ],
+        "final_crop_box": [
+          49,
+          40,
+          369,
+          363
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 20,
+          "right": 19,
+          "bottom": 19
+        }
+      },
+      "path": "assets/characters/anshan/processed/ui/anshan_ui_skill_torpedo_rush.png",
+      "size": [
+        322,
+        326
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 20,
+        "right": 19,
+        "bottom": 19
+      }
+    },
+    {
+      "role": "class_icon",
+      "crop": {
+        "content_bbox": [
+          135,
+          40,
+          274,
+          382
+        ],
+        "final_crop_box": [
+          117,
+          22,
+          292,
+          400
+        ],
+        "output_edge_margins": {
+          "left": 20,
+          "top": 18,
+          "right": 19,
+          "bottom": 52
+        }
+      },
+      "path": "assets/characters/anshan/processed/ui/anshan_ui_class_destroyer.png",
+      "size": [
+        178,
+        412
+      ],
+      "edge_margins": {
+        "left": 20,
+        "top": 18,
+        "right": 19,
+        "bottom": 52
+      }
+    },
+    {
+      "role": "battle_body_r",
+      "crop": {
+        "component_bbox": [
+          130,
+          60,
+          359,
+          411
+        ],
+        "final_crop_box": [
+          112,
+          42,
+          377,
+          429
+        ],
+        "component_area": 57352,
+        "output_edge_margins": {
+          "left": 21,
+          "top": 40,
+          "right": 18,
+          "bottom": 19
+        }
+      },
+      "path": "assets/characters/anshan/processed/battle/anshan_battle_body_r.png",
+      "size": [
+        268,
+        410
+      ],
+      "edge_margins": {
+        "left": 21,
+        "top": 40,
+        "right": 18,
+        "bottom": 19
+      }
+    },
+    {
+      "role": "battle_rig_base",
+      "crop": {
+        "component_bbox": [
+          55,
+          153,
+          347,
+          387
+        ],
+        "final_crop_box": [
+          37,
+          135,
+          365,
+          405
+        ],
+        "component_area": 44276,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 19,
+          "right": 30,
+          "bottom": 33
+        }
+      },
+      "path": "assets/characters/anshan/processed/battle/anshan_battle_rig_base.png",
+      "size": [
+        340,
+        286
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 19,
+        "right": 30,
+        "bottom": 33
+      }
+    },
+    {
+      "role": "battle_turret_main_01",
+      "crop": {
+        "component_bbox": [
+          13,
+          165,
+          364,
+          380
+        ],
+        "final_crop_box": [
+          0,
+          147,
+          382,
+          398
+        ],
+        "component_area": 43209,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 23,
+          "right": 72,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/anshan/processed/battle/anshan_battle_turret_main_01.png",
+      "size": [
+        442,
+        256
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 23,
+        "right": 72,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "battle_torpedo_tube_01",
+      "crop": {
+        "component_bbox": [
+          65,
+          108,
+          340,
+          373
+        ],
+        "final_crop_box": [
+          47,
+          90,
+          358,
+          391
+        ],
+        "component_area": 44357,
+        "output_edge_margins": {
+          "left": 20,
+          "top": 18,
+          "right": 19,
+          "bottom": 27
+        }
+      },
+      "path": "assets/characters/anshan/processed/battle/anshan_battle_torpedo_tube_01.png",
+      "size": [
+        314,
+        310
+      ],
+      "edge_margins": {
+        "left": 20,
+        "top": 18,
+        "right": 19,
+        "bottom": 27
+      }
+    },
+    {
+      "role": "battle_torpedo_tube_02",
+      "crop": {
+        "component_bbox": [
+          89,
+          66,
+          358,
+          326
+        ],
+        "final_crop_box": [
+          71,
+          48,
+          376,
+          344
+        ],
+        "component_area": 42569,
+        "output_edge_margins": {
+          "left": 20,
+          "top": 18,
+          "right": 19,
+          "bottom": 28
+        }
+      },
+      "path": "assets/characters/anshan/processed/battle/anshan_battle_torpedo_tube_02.png",
+      "size": [
+        308,
+        306
+      ],
+      "edge_margins": {
+        "left": 20,
+        "top": 18,
+        "right": 19,
+        "bottom": 28
+      }
+    },
+    {
+      "role": "battle_propulsion_node",
+      "crop": {
+        "component_bbox": [
+          81,
+          53,
+          327,
+          303
+        ],
+        "final_crop_box": [
+          63,
+          35,
+          345,
+          321
+        ],
+        "component_area": 40589,
+        "output_edge_margins": {
+          "left": 29,
+          "top": 19,
+          "right": 19,
+          "bottom": 51
+        }
+      },
+      "path": "assets/characters/anshan/processed/battle/anshan_battle_propulsion_node.png",
+      "size": [
+        294,
+        320
+      ],
+      "edge_margins": {
+        "left": 29,
+        "top": 19,
+        "right": 19,
+        "bottom": 51
+      }
+    },
+    {
+      "role": "battle_radar_node",
+      "crop": {
+        "component_bbox": [
+          91,
+          16,
+          281,
+          337
+        ],
+        "final_crop_box": [
+          73,
+          0,
+          299,
+          355
+        ],
+        "component_area": 29714,
+        "output_edge_margins": {
+          "left": 27,
+          "top": 19,
+          "right": 19,
+          "bottom": 80
+        }
+      },
+      "path": "assets/characters/anshan/processed/battle/anshan_battle_radar_node.png",
+      "size": [
+        236,
+        420
+      ],
+      "edge_margins": {
+        "left": 27,
+        "top": 19,
+        "right": 19,
+        "bottom": 80
+      }
+    },
+    {
+      "role": "battle_wake_origin_marker",
+      "crop": {
+        "component_bbox": [
+          42,
+          79,
+          328,
+          344
+        ],
+        "final_crop_box": [
+          24,
+          61,
+          346,
+          362
+        ],
+        "component_area": 34601,
+        "output_edge_margins": {
+          "left": 33,
+          "top": 31,
+          "right": 18,
+          "bottom": 19
+        }
+      },
+      "path": "assets/characters/anshan/processed/battle/anshan_battle_wake_origin_marker.png",
+      "size": [
+        338,
+        316
+      ],
+      "edge_margins": {
+        "left": 33,
+        "top": 32,
+        "right": 19,
+        "bottom": 19
+      }
+    },
+    {
+      "role": "anim_idle_frame_01",
+      "path": "assets/characters/anshan/processed/anim/anshan_anim_idle_frame_01.png",
+      "size": [
+        182,
+        256
+      ],
+      "edge_margins": {
+        "left": 20,
+        "top": 30,
+        "right": 22,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "anim_idle_keyframe",
+      "path": "assets/characters/anshan/processed/anim/anshan_anim_idle_keyframe.png",
+      "size": [
+        182,
+        256
+      ],
+      "edge_margins": {
+        "left": 20,
+        "top": 30,
+        "right": 22,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "anim_idle_frame_02",
+      "path": "assets/characters/anshan/processed/anim/anshan_anim_idle_frame_02.png",
+      "size": [
+        182,
+        256
+      ],
+      "edge_margins": {
+        "left": 17,
+        "top": 33,
+        "right": 17,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "anim_idle_frame_03",
+      "path": "assets/characters/anshan/processed/anim/anshan_anim_idle_frame_03.png",
+      "size": [
+        182,
+        256
+      ],
+      "edge_margins": {
+        "left": 26,
+        "top": 33,
+        "right": 20,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "anim_idle_frame_04",
+      "path": "assets/characters/anshan/processed/anim/anshan_anim_idle_frame_04.png",
+      "size": [
+        182,
+        256
+      ],
+      "edge_margins": {
+        "left": 29,
+        "top": 34,
+        "right": 22,
+        "bottom": 16
+      }
+    },
+    {
+      "role": "anim_move_frame_01",
+      "path": "assets/characters/anshan/processed/anim/anshan_anim_move_frame_01.png",
+      "size": [
+        206,
+        248
+      ],
+      "edge_margins": {
+        "left": 17,
+        "top": 36,
+        "right": 22,
+        "bottom": 16
+      }
+    },
+    {
+      "role": "anim_move_keyframe",
+      "path": "assets/characters/anshan/processed/anim/anshan_anim_move_keyframe.png",
+      "size": [
+        206,
+        248
+      ],
+      "edge_margins": {
+        "left": 17,
+        "top": 36,
+        "right": 22,
+        "bottom": 16
+      }
+    },
+    {
+      "role": "anim_move_frame_02",
+      "path": "assets/characters/anshan/processed/anim/anshan_anim_move_frame_02.png",
+      "size": [
+        206,
+        248
+      ],
+      "edge_margins": {
+        "left": 17,
+        "top": 38,
+        "right": 25,
+        "bottom": 20
+      }
+    },
+    {
+      "role": "anim_move_frame_03",
+      "path": "assets/characters/anshan/processed/anim/anshan_anim_move_frame_03.png",
+      "size": [
+        206,
+        248
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 38,
+        "right": 24,
+        "bottom": 23
+      }
+    },
+    {
+      "role": "anim_move_frame_04",
+      "path": "assets/characters/anshan/processed/anim/anshan_anim_move_frame_04.png",
+      "size": [
+        206,
+        248
+      ],
+      "edge_margins": {
+        "left": 17,
+        "top": 38,
+        "right": 22,
+        "bottom": 21
+      }
+    },
+    {
+      "role": "anim_attack_frame_01",
+      "path": "assets/characters/anshan/processed/anim/anshan_anim_attack_frame_01.png",
+      "size": [
+        342,
+        234
+      ],
+      "edge_margins": {
+        "left": 93,
+        "top": 23,
+        "right": 72,
+        "bottom": 17
+      }
+    },
+    {
+      "role": "anim_attack_keyframe",
+      "path": "assets/characters/anshan/processed/anim/anshan_anim_attack_keyframe.png",
+      "size": [
+        342,
+        234
+      ],
+      "edge_margins": {
+        "left": 93,
+        "top": 23,
+        "right": 72,
+        "bottom": 17
+      }
+    },
+    {
+      "role": "anim_attack_frame_02",
+      "path": "assets/characters/anshan/processed/anim/anshan_anim_attack_frame_02.png",
+      "size": [
+        342,
+        234
+      ],
+      "edge_margins": {
+        "left": 83,
+        "top": 23,
+        "right": 16,
+        "bottom": 20
+      }
+    },
+    {
+      "role": "anim_attack_frame_03",
+      "path": "assets/characters/anshan/processed/anim/anshan_anim_attack_frame_03.png",
+      "size": [
+        342,
+        234
+      ],
+      "edge_margins": {
+        "left": 85,
+        "top": 24,
+        "right": 20,
+        "bottom": 20
+      }
+    },
+    {
+      "role": "anim_attack_frame_04",
+      "path": "assets/characters/anshan/processed/anim/anshan_anim_attack_frame_04.png",
+      "size": [
+        342,
+        234
+      ],
+      "edge_margins": {
+        "left": 97,
+        "top": 25,
+        "right": 48,
+        "bottom": 20
+      }
+    },
+    {
+      "role": "anim_hit_frame_01",
+      "path": "assets/characters/anshan/processed/anim/anshan_anim_hit_frame_01.png",
+      "size": [
+        222,
+        244
+      ],
+      "edge_margins": {
+        "left": 17,
+        "top": 32,
+        "right": 35,
+        "bottom": 22
+      }
+    },
+    {
+      "role": "anim_hit_keyframe",
+      "path": "assets/characters/anshan/processed/anim/anshan_anim_hit_keyframe.png",
+      "size": [
+        222,
+        244
+      ],
+      "edge_margins": {
+        "left": 17,
+        "top": 32,
+        "right": 35,
+        "bottom": 22
+      }
+    },
+    {
+      "role": "anim_hit_frame_02",
+      "path": "assets/characters/anshan/processed/anim/anshan_anim_hit_frame_02.png",
+      "size": [
+        222,
+        244
+      ],
+      "edge_margins": {
+        "left": 35,
+        "top": 33,
+        "right": 38,
+        "bottom": 21
+      }
+    },
+    {
+      "role": "anim_hit_frame_03",
+      "path": "assets/characters/anshan/processed/anim/anshan_anim_hit_frame_03.png",
+      "size": [
+        222,
+        244
+      ],
+      "edge_margins": {
+        "left": 39,
+        "top": 29,
+        "right": 41,
+        "bottom": 19
+      }
+    },
+    {
+      "role": "anim_hit_frame_04",
+      "path": "assets/characters/anshan/processed/anim/anshan_anim_hit_frame_04.png",
+      "size": [
+        222,
+        244
+      ],
+      "edge_margins": {
+        "left": 40,
+        "top": 29,
+        "right": 43,
+        "bottom": 16
+      }
+    },
+    {
+      "role": "anim_firepower_frame_01",
+      "path": "assets/characters/anshan/processed/anim/anshan_anim_firepower_frame_01.png",
+      "size": [
+        298,
+        236
+      ],
+      "edge_margins": {
+        "left": 88,
+        "top": 39,
+        "right": 86,
+        "bottom": 16
+      }
+    },
+    {
+      "role": "anim_firepower_keyframe",
+      "path": "assets/characters/anshan/processed/anim/anshan_anim_firepower_keyframe.png",
+      "size": [
+        298,
+        236
+      ],
+      "edge_margins": {
+        "left": 88,
+        "top": 39,
+        "right": 86,
+        "bottom": 16
+      }
+    },
+    {
+      "role": "anim_firepower_frame_02",
+      "path": "assets/characters/anshan/processed/anim/anshan_anim_firepower_frame_02.png",
+      "size": [
+        298,
+        236
+      ],
+      "edge_margins": {
+        "left": 39,
+        "top": 28,
+        "right": 54,
+        "bottom": 27
+      }
+    },
+    {
+      "role": "anim_firepower_frame_03",
+      "path": "assets/characters/anshan/processed/anim/anshan_anim_firepower_frame_03.png",
+      "size": [
+        298,
+        236
+      ],
+      "edge_margins": {
+        "left": 29,
+        "top": 38,
+        "right": 17,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "anim_firepower_frame_04",
+      "path": "assets/characters/anshan/processed/anim/anshan_anim_firepower_frame_04.png",
+      "size": [
+        298,
+        236
+      ],
+      "edge_margins": {
+        "left": 82,
+        "top": 34,
+        "right": 85,
+        "bottom": 21
+      }
+    },
+    {
+      "role": "battle_body_r:idle_master_override",
+      "path": "assets/characters/anshan/processed/battle/anshan_battle_body_r.png",
+      "size": [
+        182,
+        256
+      ],
+      "edge_margins": {
+        "left": 20,
+        "top": 30,
+        "right": 22,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "vfx:speed_wake",
+      "crop": {
+        "component_bbox": [
+          104,
+          187,
+          347,
+          446
+        ],
+        "final_crop_box": [
+          86,
+          169,
+          365,
+          464
+        ],
+        "component_area": 11797,
+        "output_edge_margins": {
+          "left": 40,
+          "top": 18,
+          "right": 19,
+          "bottom": 46
+        }
+      },
+      "path": "assets/characters/anshan/processed/vfx/anshan_vfx_speed_wake.png",
+      "size": [
+        320,
+        340
+      ],
+      "edge_margins": {
+        "left": 40,
+        "top": 18,
+        "right": 19,
+        "bottom": 46
+      }
+    },
+    {
+      "role": "vfx:torpedo_warning",
+      "crop": {
+        "component_bbox": [
+          84,
+          233,
+          306,
+          425
+        ],
+        "final_crop_box": [
+          66,
+          215,
+          324,
+          443
+        ],
+        "component_area": 21377,
+        "output_edge_margins": {
+          "left": 25,
+          "top": 60,
+          "right": 18,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/anshan/processed/vfx/anshan_vfx_torpedo_warning.png",
+      "size": [
+        296,
+        288
+      ],
+      "edge_margins": {
+        "left": 25,
+        "top": 60,
+        "right": 18,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "vfx:torpedo_launch_flash",
+      "crop": {
+        "component_bbox": [
+          21,
+          297,
+          222,
+          412
+        ],
+        "final_crop_box": [
+          3,
+          279,
+          240,
+          430
+        ],
+        "component_area": 7049,
+        "output_edge_margins": {
+          "left": 22,
+          "top": 18,
+          "right": 19,
+          "bottom": 39
+        }
+      },
+      "path": "assets/characters/anshan/processed/vfx/anshan_vfx_torpedo_launch_flash.png",
+      "size": [
+        260,
+        190
+      ],
+      "edge_margins": {
+        "left": 22,
+        "top": 18,
+        "right": 19,
+        "bottom": 39
+      }
+    },
+    {
+      "role": "vfx:speed_lines",
+      "crop": {
+        "component_bbox": [
+          50,
+          198,
+          239,
+          368
+        ],
+        "final_crop_box": [
+          32,
+          180,
+          257,
+          386
+        ],
+        "component_area": 1358,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 39,
+          "bottom": 78
+        }
+      },
+      "path": "assets/characters/anshan/processed/vfx/anshan_vfx_speed_lines.png",
+      "size": [
+        274,
+        296
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 19,
+        "right": 39,
+        "bottom": 78
+      }
+    },
+    {
+      "role": "vfx:water_splash",
+      "crop": {
+        "component_bbox": [
+          91,
+          132,
+          319,
+          335
+        ],
+        "final_crop_box": [
+          73,
+          114,
+          337,
+          353
+        ],
+        "component_area": 18030,
+        "output_edge_margins": {
+          "left": 30,
+          "top": 19,
+          "right": 19,
+          "bottom": 81
+        }
+      },
+      "path": "assets/characters/anshan/processed/vfx/anshan_vfx_water_splash.png",
+      "size": [
+        290,
+        330
+      ],
+      "edge_margins": {
+        "left": 30,
+        "top": 19,
+        "right": 19,
+        "bottom": 81
+      }
+    },
+    {
+      "role": "vfx:smoke_screen",
+      "crop": {
+        "component_bbox": [
+          68,
+          120,
+          265,
+          328
+        ],
+        "final_crop_box": [
+          50,
+          102,
+          283,
+          346
+        ],
+        "component_area": 29600,
+        "output_edge_margins": {
+          "left": 30,
+          "top": 19,
+          "right": 19,
+          "bottom": 31
+        }
+      },
+      "path": "assets/characters/anshan/processed/vfx/anshan_vfx_smoke_screen.png",
+      "size": [
+        246,
+        258
+      ],
+      "edge_margins": {
+        "left": 30,
+        "top": 19,
+        "right": 19,
+        "bottom": 31
+      }
+    },
+    {
+      "role": "vfx:skill_aura",
+      "crop": {
+        "component_bbox": [
+          24,
+          155,
+          144,
+          268
+        ],
+        "final_crop_box": [
+          6,
+          137,
+          162,
+          286
+        ],
+        "component_area": 1226,
+        "output_edge_margins": {
+          "left": 49,
+          "top": 21,
+          "right": 19,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/anshan/processed/vfx/anshan_vfx_skill_aura.png",
+      "size": [
+        198,
+        184
+      ],
+      "edge_margins": {
+        "left": 49,
+        "top": 21,
+        "right": 19,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "vfx:range_reticle",
+      "crop": {
+        "component_bbox": [
+          39,
+          125,
+          246,
+          359
+        ],
+        "final_crop_box": [
+          21,
+          107,
+          264,
+          377
+        ],
+        "component_area": 1684,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 23,
+          "right": 22,
+          "bottom": 19
+        }
+      },
+      "path": "assets/characters/anshan/processed/vfx/anshan_vfx_range_reticle.png",
+      "size": [
+        266,
+        294
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 23,
+        "right": 22,
+        "bottom": 19
+      }
+    }
+  ]
+}

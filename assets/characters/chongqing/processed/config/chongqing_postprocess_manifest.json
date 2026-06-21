@@ -1,0 +1,1375 @@
+{
+  "character_id": "chongqing",
+  "source": "tools/art_pipeline/postprocess_generated_character.py",
+  "method": "green_screen_auto_grid_and_component_split",
+  "outputs": [
+    {
+      "role": "source_alpha:concept_full",
+      "path": "assets/characters/chongqing/processed/source_alpha/chongqing_concept_full_alpha_source.png",
+      "size": [
+        1024,
+        1536
+      ],
+      "edge_margins": {
+        "left": 104,
+        "top": 147,
+        "right": 135,
+        "bottom": 110
+      }
+    },
+    {
+      "role": "source_alpha:ui_sheet",
+      "path": "assets/characters/chongqing/processed/source_alpha/chongqing_ui_sheet_alpha_source.png",
+      "size": [
+        1774,
+        887
+      ],
+      "edge_margins": {
+        "left": 84,
+        "top": 55,
+        "right": 70,
+        "bottom": 69
+      }
+    },
+    {
+      "role": "source_alpha:battle_grid",
+      "path": "assets/characters/chongqing/processed/source_alpha/chongqing_battle_asset_grid_alpha_source.png",
+      "size": [
+        1774,
+        887
+      ],
+      "edge_margins": {
+        "left": 125,
+        "top": 70,
+        "right": 112,
+        "bottom": 91
+      }
+    },
+    {
+      "role": "source_alpha:vfx_sheet",
+      "path": "assets/characters/chongqing/processed/source_alpha/chongqing_vfx_reference_sheet_alpha_source.png",
+      "size": [
+        1774,
+        887
+      ],
+      "edge_margins": {
+        "left": 92,
+        "top": 130,
+        "right": 88,
+        "bottom": 134
+      }
+    },
+    {
+      "role": "source_alpha:anim_master",
+      "path": "assets/characters/chongqing/processed/source_alpha/chongqing_anim_5x4_master_alpha_source.png",
+      "size": [
+        1122,
+        1402
+      ],
+      "edge_margins": {
+        "left": 29,
+        "top": 39,
+        "right": 22,
+        "bottom": 92
+      }
+    },
+    {
+      "role": "full_body",
+      "crop": {
+        "content_bbox": [
+          104,
+          147,
+          889,
+          1426
+        ],
+        "final_crop_box": [
+          92,
+          135,
+          901,
+          1438
+        ],
+        "output_edge_margins": {
+          "left": 12,
+          "top": 196,
+          "right": 61,
+          "bottom": 13
+        }
+      },
+      "path": "assets/characters/chongqing/processed/ui/chongqing_illust_full_alpha.png",
+      "size": [
+        858,
+        1488
+      ],
+      "edge_margins": {
+        "left": 12,
+        "top": 196,
+        "right": 61,
+        "bottom": 13
+      }
+    },
+    {
+      "role": "half_body",
+      "crop": {
+        "content_bbox": [
+          17,
+          17,
+          802,
+          937
+        ],
+        "final_crop_box": [
+          1,
+          1,
+          818,
+          953
+        ],
+        "output_edge_margins": {
+          "left": 17,
+          "top": 17,
+          "right": 68,
+          "bottom": 107
+        }
+      },
+      "path": "assets/characters/chongqing/processed/ui/chongqing_illust_half_alpha.png",
+      "size": [
+        870,
+        1044
+      ],
+      "edge_margins": {
+        "left": 17,
+        "top": 17,
+        "right": 68,
+        "bottom": 107
+      }
+    },
+    {
+      "role": "skill_cutin",
+      "crop": {
+        "content_bbox": [
+          446,
+          17,
+          1231,
+          758
+        ],
+        "final_crop_box": [
+          430,
+          1,
+          1247,
+          774
+        ],
+        "output_edge_margins": {
+          "left": 17,
+          "top": 17,
+          "right": 60,
+          "bottom": 198
+        }
+      },
+      "path": "assets/characters/chongqing/processed/ui/chongqing_illust_skill_cutin_alpha.png",
+      "size": [
+        862,
+        956
+      ],
+      "edge_margins": {
+        "left": 17,
+        "top": 17,
+        "right": 60,
+        "bottom": 198
+      }
+    },
+    {
+      "role": "ui_portrait",
+      "crop": {
+        "content_bbox": [
+          84,
+          55,
+          443,
+          402
+        ],
+        "final_crop_box": [
+          66,
+          37,
+          443,
+          420
+        ],
+        "output_edge_margins": {
+          "left": 24,
+          "top": 19,
+          "right": 19,
+          "bottom": 66
+        }
+      },
+      "path": "assets/characters/chongqing/processed/ui/chongqing_ui_portrait.png",
+      "size": [
+        402,
+        432
+      ],
+      "edge_margins": {
+        "left": 24,
+        "top": 19,
+        "right": 19,
+        "bottom": 66
+      }
+    },
+    {
+      "role": "ui_portrait_small",
+      "crop": {
+        "content_bbox": [
+          0,
+          62,
+          413,
+          402
+        ],
+        "final_crop_box": [
+          0,
+          44,
+          431,
+          420
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 76,
+          "bottom": 56
+        }
+      },
+      "path": "assets/characters/chongqing/processed/ui/chongqing_ui_portrait_small.png",
+      "size": [
+        508,
+        414
+      ],
+      "edge_margins": {
+        "left": 110,
+        "top": 18,
+        "right": 76,
+        "bottom": 56
+      }
+    },
+    {
+      "role": "ui_chibi_head",
+      "crop": {
+        "content_bbox": [
+          52,
+          73,
+          365,
+          391
+        ],
+        "final_crop_box": [
+          34,
+          55,
+          383,
+          409
+        ],
+        "output_edge_margins": {
+          "left": 22,
+          "top": 18,
+          "right": 19,
+          "bottom": 38
+        }
+      },
+      "path": "assets/characters/chongqing/processed/ui/chongqing_ui_chibi_head.png",
+      "size": [
+        354,
+        374
+      ],
+      "edge_margins": {
+        "left": 22,
+        "top": 18,
+        "right": 19,
+        "bottom": 38
+      }
+    },
+    {
+      "role": "expr_default",
+      "crop": {
+        "content_bbox": [
+          54,
+          61,
+          375,
+          402
+        ],
+        "final_crop_box": [
+          36,
+          43,
+          393,
+          420
+        ],
+        "output_edge_margins": {
+          "left": 52,
+          "top": 19,
+          "right": 19,
+          "bottom": 56
+        }
+      },
+      "path": "assets/characters/chongqing/processed/ui/chongqing_expr_default.png",
+      "size": [
+        392,
+        416
+      ],
+      "edge_margins": {
+        "left": 52,
+        "top": 19,
+        "right": 19,
+        "bottom": 56
+      }
+    },
+    {
+      "role": "expr_serious",
+      "crop": {
+        "content_bbox": [
+          111,
+          28,
+          439,
+          374
+        ],
+        "final_crop_box": [
+          93,
+          10,
+          443,
+          392
+        ],
+        "output_edge_margins": {
+          "left": 59,
+          "top": 19,
+          "right": 19,
+          "bottom": 55
+        }
+      },
+      "path": "assets/characters/chongqing/processed/ui/chongqing_expr_serious.png",
+      "size": [
+        406,
+        420
+      ],
+      "edge_margins": {
+        "left": 59,
+        "top": 19,
+        "right": 19,
+        "bottom": 55
+      }
+    },
+    {
+      "role": "expr_hit",
+      "crop": {
+        "content_bbox": [
+          90,
+          29,
+          431,
+          375
+        ],
+        "final_crop_box": [
+          72,
+          11,
+          443,
+          393
+        ],
+        "output_edge_margins": {
+          "left": 60,
+          "top": 19,
+          "right": 19,
+          "bottom": 57
+        }
+      },
+      "path": "assets/characters/chongqing/processed/ui/chongqing_expr_hit.png",
+      "size": [
+        420,
+        422
+      ],
+      "edge_margins": {
+        "left": 60,
+        "top": 19,
+        "right": 19,
+        "bottom": 57
+      }
+    },
+    {
+      "role": "ui_skill",
+      "crop": {
+        "content_bbox": [
+          40,
+          35,
+          361,
+          360
+        ],
+        "final_crop_box": [
+          22,
+          17,
+          379,
+          378
+        ],
+        "output_edge_margins": {
+          "left": 20,
+          "top": 19,
+          "right": 19,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/chongqing/processed/ui/chongqing_ui_skill_escort_barrage.png",
+      "size": [
+        360,
+        362
+      ],
+      "edge_margins": {
+        "left": 20,
+        "top": 19,
+        "right": 19,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "class_icon",
+      "crop": {
+        "content_bbox": [
+          101,
+          33,
+          273,
+          371
+        ],
+        "final_crop_box": [
+          83,
+          15,
+          291,
+          389
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 19,
+          "bottom": 22
+        }
+      },
+      "path": "assets/characters/chongqing/processed/ui/chongqing_ui_class_light_cruiser.png",
+      "size": [
+        210,
+        378
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 18,
+        "right": 19,
+        "bottom": 22
+      }
+    },
+    {
+      "role": "battle_body_r",
+      "crop": {
+        "component_bbox": [
+          142,
+          80,
+          362,
+          405
+        ],
+        "final_crop_box": [
+          124,
+          62,
+          380,
+          423
+        ],
+        "component_area": 42891,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 55,
+          "right": 31,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/chongqing/processed/battle/chongqing_battle_body_r.png",
+      "size": [
+        270,
+        398
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 55,
+        "right": 31,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "battle_rig_base",
+      "crop": {
+        "component_bbox": [
+          41,
+          70,
+          392,
+          397
+        ],
+        "final_crop_box": [
+          23,
+          52,
+          410,
+          415
+        ],
+        "component_area": 60034,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 36,
+          "bottom": 74
+        }
+      },
+      "path": "assets/characters/chongqing/processed/battle/chongqing_battle_rig_base.png",
+      "size": [
+        406,
+        420
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 19,
+        "right": 36,
+        "bottom": 74
+      }
+    },
+    {
+      "role": "battle_turret_main_01",
+      "crop": {
+        "component_bbox": [
+          60,
+          151,
+          348,
+          385
+        ],
+        "final_crop_box": [
+          42,
+          133,
+          366,
+          403
+        ],
+        "component_area": 46945,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 39,
+          "bottom": 27
+        }
+      },
+      "path": "assets/characters/chongqing/processed/battle/chongqing_battle_turret_main_01.png",
+      "size": [
+        346,
+        280
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 19,
+        "right": 39,
+        "bottom": 27
+      }
+    },
+    {
+      "role": "battle_turret_main_02",
+      "crop": {
+        "component_bbox": [
+          0,
+          153,
+          297,
+          388
+        ],
+        "final_crop_box": [
+          0,
+          135,
+          315,
+          406
+        ],
+        "component_area": 48061,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 38,
+          "bottom": 26
+        }
+      },
+      "path": "assets/characters/chongqing/processed/battle/chongqing_battle_turret_main_02.png",
+      "size": [
+        354,
+        280
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 19,
+        "right": 38,
+        "bottom": 26
+      }
+    },
+    {
+      "role": "battle_aa_center",
+      "crop": {
+        "component_bbox": [
+          125,
+          76,
+          369,
+          338
+        ],
+        "final_crop_box": [
+          107,
+          58,
+          387,
+          356
+        ],
+        "component_area": 42852,
+        "output_edge_margins": {
+          "left": 21,
+          "top": 18,
+          "right": 19,
+          "bottom": 60
+        }
+      },
+      "path": "assets/characters/chongqing/processed/battle/chongqing_battle_aa_center.png",
+      "size": [
+        284,
+        340
+      ],
+      "edge_margins": {
+        "left": 21,
+        "top": 18,
+        "right": 19,
+        "bottom": 60
+      }
+    },
+    {
+      "role": "battle_radar_node",
+      "crop": {
+        "component_bbox": [
+          97,
+          23,
+          345,
+          353
+        ],
+        "final_crop_box": [
+          79,
+          5,
+          363,
+          371
+        ],
+        "component_area": 51242,
+        "output_edge_margins": {
+          "left": 21,
+          "top": 19,
+          "right": 19,
+          "bottom": 73
+        }
+      },
+      "path": "assets/characters/chongqing/processed/battle/chongqing_battle_radar_node.png",
+      "size": [
+        288,
+        422
+      ],
+      "edge_margins": {
+        "left": 21,
+        "top": 19,
+        "right": 19,
+        "bottom": 73
+      }
+    },
+    {
+      "role": "battle_support_node",
+      "crop": {
+        "component_bbox": [
+          75,
+          38,
+          331,
+          341
+        ],
+        "final_crop_box": [
+          57,
+          20,
+          349,
+          359
+        ],
+        "component_area": 41188,
+        "output_edge_margins": {
+          "left": 27,
+          "top": 18,
+          "right": 19,
+          "bottom": 117
+        }
+      },
+      "path": "assets/characters/chongqing/processed/battle/chongqing_battle_support_node.png",
+      "size": [
+        302,
+        438
+      ],
+      "edge_margins": {
+        "left": 27,
+        "top": 18,
+        "right": 19,
+        "bottom": 117
+      }
+    },
+    {
+      "role": "battle_wake_origin_marker",
+      "crop": {
+        "component_bbox": [
+          20,
+          95,
+          333,
+          319
+        ],
+        "final_crop_box": [
+          2,
+          77,
+          351,
+          337
+        ],
+        "component_area": 43155,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 32,
+          "bottom": 39
+        }
+      },
+      "path": "assets/characters/chongqing/processed/battle/chongqing_battle_wake_origin_marker.png",
+      "size": [
+        364,
+        282
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 19,
+        "right": 32,
+        "bottom": 39
+      }
+    },
+    {
+      "role": "anim_idle_frame_01",
+      "path": "assets/characters/chongqing/processed/anim/chongqing_anim_idle_frame_01.png",
+      "size": [
+        200,
+        258
+      ],
+      "edge_margins": {
+        "left": 23,
+        "top": 26,
+        "right": 16,
+        "bottom": 17
+      }
+    },
+    {
+      "role": "anim_idle_keyframe",
+      "path": "assets/characters/chongqing/processed/anim/chongqing_anim_idle_keyframe.png",
+      "size": [
+        200,
+        258
+      ],
+      "edge_margins": {
+        "left": 23,
+        "top": 26,
+        "right": 16,
+        "bottom": 17
+      }
+    },
+    {
+      "role": "anim_idle_frame_02",
+      "path": "assets/characters/chongqing/processed/anim/chongqing_anim_idle_frame_02.png",
+      "size": [
+        200,
+        258
+      ],
+      "edge_margins": {
+        "left": 24,
+        "top": 28,
+        "right": 20,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "anim_idle_frame_03",
+      "path": "assets/characters/chongqing/processed/anim/chongqing_anim_idle_frame_03.png",
+      "size": [
+        200,
+        258
+      ],
+      "edge_margins": {
+        "left": 25,
+        "top": 27,
+        "right": 22,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "anim_idle_frame_04",
+      "path": "assets/characters/chongqing/processed/anim/chongqing_anim_idle_frame_04.png",
+      "size": [
+        200,
+        258
+      ],
+      "edge_margins": {
+        "left": 22,
+        "top": 28,
+        "right": 21,
+        "bottom": 17
+      }
+    },
+    {
+      "role": "anim_move_frame_01",
+      "path": "assets/characters/chongqing/processed/anim/chongqing_anim_move_frame_01.png",
+      "size": [
+        248,
+        250
+      ],
+      "edge_margins": {
+        "left": 29,
+        "top": 25,
+        "right": 46,
+        "bottom": 17
+      }
+    },
+    {
+      "role": "anim_move_keyframe",
+      "path": "assets/characters/chongqing/processed/anim/chongqing_anim_move_keyframe.png",
+      "size": [
+        248,
+        250
+      ],
+      "edge_margins": {
+        "left": 29,
+        "top": 25,
+        "right": 46,
+        "bottom": 17
+      }
+    },
+    {
+      "role": "anim_move_frame_02",
+      "path": "assets/characters/chongqing/processed/anim/chongqing_anim_move_frame_02.png",
+      "size": [
+        248,
+        250
+      ],
+      "edge_margins": {
+        "left": 32,
+        "top": 28,
+        "right": 47,
+        "bottom": 16
+      }
+    },
+    {
+      "role": "anim_move_frame_03",
+      "path": "assets/characters/chongqing/processed/anim/chongqing_anim_move_frame_03.png",
+      "size": [
+        248,
+        250
+      ],
+      "edge_margins": {
+        "left": 16,
+        "top": 18,
+        "right": 40,
+        "bottom": 27
+      }
+    },
+    {
+      "role": "anim_move_frame_04",
+      "path": "assets/characters/chongqing/processed/anim/chongqing_anim_move_frame_04.png",
+      "size": [
+        248,
+        250
+      ],
+      "edge_margins": {
+        "left": 30,
+        "top": 17,
+        "right": 34,
+        "bottom": 25
+      }
+    },
+    {
+      "role": "anim_attack_frame_01",
+      "path": "assets/characters/chongqing/processed/anim/chongqing_anim_attack_frame_01.png",
+      "size": [
+        334,
+        258
+      ],
+      "edge_margins": {
+        "left": 79,
+        "top": 18,
+        "right": 57,
+        "bottom": 41
+      }
+    },
+    {
+      "role": "anim_attack_keyframe",
+      "path": "assets/characters/chongqing/processed/anim/chongqing_anim_attack_keyframe.png",
+      "size": [
+        334,
+        258
+      ],
+      "edge_margins": {
+        "left": 79,
+        "top": 18,
+        "right": 57,
+        "bottom": 41
+      }
+    },
+    {
+      "role": "anim_attack_frame_02",
+      "path": "assets/characters/chongqing/processed/anim/chongqing_anim_attack_frame_02.png",
+      "size": [
+        334,
+        258
+      ],
+      "edge_margins": {
+        "left": 72,
+        "top": 17,
+        "right": 16,
+        "bottom": 42
+      }
+    },
+    {
+      "role": "anim_attack_frame_03",
+      "path": "assets/characters/chongqing/processed/anim/chongqing_anim_attack_frame_03.png",
+      "size": [
+        334,
+        258
+      ],
+      "edge_margins": {
+        "left": 76,
+        "top": 19,
+        "right": 54,
+        "bottom": 41
+      }
+    },
+    {
+      "role": "anim_attack_frame_04",
+      "path": "assets/characters/chongqing/processed/anim/chongqing_anim_attack_frame_04.png",
+      "size": [
+        334,
+        258
+      ],
+      "edge_margins": {
+        "left": 80,
+        "top": 19,
+        "right": 48,
+        "bottom": 41
+      }
+    },
+    {
+      "role": "anim_hit_frame_01",
+      "path": "assets/characters/chongqing/processed/anim/chongqing_anim_hit_frame_01.png",
+      "size": [
+        240,
+        246
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 17,
+        "right": 16,
+        "bottom": 42
+      }
+    },
+    {
+      "role": "anim_hit_keyframe",
+      "path": "assets/characters/chongqing/processed/anim/chongqing_anim_hit_keyframe.png",
+      "size": [
+        240,
+        246
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 17,
+        "right": 16,
+        "bottom": 42
+      }
+    },
+    {
+      "role": "anim_hit_frame_02",
+      "path": "assets/characters/chongqing/processed/anim/chongqing_anim_hit_frame_02.png",
+      "size": [
+        240,
+        246
+      ],
+      "edge_margins": {
+        "left": 40,
+        "top": 27,
+        "right": 28,
+        "bottom": 38
+      }
+    },
+    {
+      "role": "anim_hit_frame_03",
+      "path": "assets/characters/chongqing/processed/anim/chongqing_anim_hit_frame_03.png",
+      "size": [
+        240,
+        246
+      ],
+      "edge_margins": {
+        "left": 40,
+        "top": 26,
+        "right": 34,
+        "bottom": 40
+      }
+    },
+    {
+      "role": "anim_hit_frame_04",
+      "path": "assets/characters/chongqing/processed/anim/chongqing_anim_hit_frame_04.png",
+      "size": [
+        240,
+        246
+      ],
+      "edge_margins": {
+        "left": 41,
+        "top": 27,
+        "right": 36,
+        "bottom": 38
+      }
+    },
+    {
+      "role": "anim_firepower_frame_01",
+      "path": "assets/characters/chongqing/processed/anim/chongqing_anim_firepower_frame_01.png",
+      "size": [
+        248,
+        238
+      ],
+      "edge_margins": {
+        "left": 30,
+        "top": 17,
+        "right": 16,
+        "bottom": 32
+      }
+    },
+    {
+      "role": "anim_firepower_keyframe",
+      "path": "assets/characters/chongqing/processed/anim/chongqing_anim_firepower_keyframe.png",
+      "size": [
+        248,
+        238
+      ],
+      "edge_margins": {
+        "left": 30,
+        "top": 17,
+        "right": 16,
+        "bottom": 32
+      }
+    },
+    {
+      "role": "anim_firepower_frame_02",
+      "path": "assets/characters/chongqing/processed/anim/chongqing_anim_firepower_frame_02.png",
+      "size": [
+        248,
+        238
+      ],
+      "edge_margins": {
+        "left": 35,
+        "top": 17,
+        "right": 24,
+        "bottom": 31
+      }
+    },
+    {
+      "role": "anim_firepower_frame_03",
+      "path": "assets/characters/chongqing/processed/anim/chongqing_anim_firepower_frame_03.png",
+      "size": [
+        248,
+        238
+      ],
+      "edge_margins": {
+        "left": 34,
+        "top": 17,
+        "right": 24,
+        "bottom": 31
+      }
+    },
+    {
+      "role": "anim_firepower_frame_04",
+      "path": "assets/characters/chongqing/processed/anim/chongqing_anim_firepower_frame_04.png",
+      "size": [
+        248,
+        238
+      ],
+      "edge_margins": {
+        "left": 39,
+        "top": 18,
+        "right": 28,
+        "bottom": 31
+      }
+    },
+    {
+      "role": "battle_body_r:idle_master_override",
+      "path": "assets/characters/chongqing/processed/battle/chongqing_battle_body_r.png",
+      "size": [
+        200,
+        258
+      ],
+      "edge_margins": {
+        "left": 23,
+        "top": 26,
+        "right": 16,
+        "bottom": 17
+      }
+    },
+    {
+      "role": "vfx:aa_burst",
+      "crop": {
+        "component_bbox": [
+          186,
+          205,
+          254,
+          301
+        ],
+        "final_crop_box": [
+          168,
+          187,
+          272,
+          319
+        ],
+        "component_area": 2727,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 19,
+          "right": 22,
+          "bottom": 31
+        }
+      },
+      "path": "assets/characters/chongqing/processed/vfx/chongqing_vfx_aa_burst.png",
+      "size": [
+        140,
+        152
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 19,
+        "right": 22,
+        "bottom": 31
+      }
+    },
+    {
+      "role": "vfx:aa_circle",
+      "crop": {
+        "component_bbox": [
+          257,
+          271,
+          319,
+          334
+        ],
+        "final_crop_box": [
+          239,
+          253,
+          337,
+          352
+        ],
+        "component_area": 455,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 19,
+          "right": 46,
+          "bottom": 33
+        }
+      },
+      "path": "assets/characters/chongqing/processed/vfx/chongqing_vfx_aa_circle.png",
+      "size": [
+        150,
+        138
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 19,
+        "right": 46,
+        "bottom": 33
+      }
+    },
+    {
+      "role": "vfx:muzzle_flash_medium",
+      "crop": {
+        "component_bbox": [
+          127,
+          156,
+          339,
+          329
+        ],
+        "final_crop_box": [
+          109,
+          138,
+          357,
+          347
+        ],
+        "component_area": 14890,
+        "output_edge_margins": {
+          "left": 37,
+          "top": 18,
+          "right": 18,
+          "bottom": 26
+        }
+      },
+      "path": "assets/characters/chongqing/processed/vfx/chongqing_vfx_muzzle_flash_medium.png",
+      "size": [
+        284,
+        218
+      ],
+      "edge_margins": {
+        "left": 37,
+        "top": 18,
+        "right": 18,
+        "bottom": 26
+      }
+    },
+    {
+      "role": "vfx:shell_trail",
+      "crop": {
+        "component_bbox": [
+          97,
+          222,
+          357,
+          270
+        ],
+        "final_crop_box": [
+          79,
+          204,
+          375,
+          288
+        ],
+        "component_area": 5626,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 19,
+          "right": 54,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/chongqing/processed/vfx/chongqing_vfx_shell_trail.png",
+      "size": [
+        332,
+        106
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 19,
+        "right": 54,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "vfx:water_splash",
+      "crop": {
+        "component_bbox": [
+          112,
+          147,
+          334,
+          292
+        ],
+        "final_crop_box": [
+          94,
+          129,
+          352,
+          310
+        ],
+        "component_area": 15102,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 18,
+          "right": 21,
+          "bottom": 73
+        }
+      },
+      "path": "assets/characters/chongqing/processed/vfx/chongqing_vfx_water_splash.png",
+      "size": [
+        292,
+        254
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 18,
+        "right": 21,
+        "bottom": 73
+      }
+    },
+    {
+      "role": "vfx:armor_sparks",
+      "crop": {
+        "component_bbox": [
+          209,
+          227,
+          254,
+          261
+        ],
+        "final_crop_box": [
+          191,
+          209,
+          272,
+          279
+        ],
+        "component_area": 478,
+        "output_edge_margins": {
+          "left": 26,
+          "top": 19,
+          "right": 18,
+          "bottom": 25
+        }
+      },
+      "path": "assets/characters/chongqing/processed/vfx/chongqing_vfx_armor_sparks.png",
+      "size": [
+        92,
+        96
+      ],
+      "edge_margins": {
+        "left": 26,
+        "top": 19,
+        "right": 18,
+        "bottom": 25
+      }
+    },
+    {
+      "role": "vfx:escort_aura",
+      "crop": {
+        "component_bbox": [
+          103,
+          130,
+          319,
+          297
+        ],
+        "final_crop_box": [
+          85,
+          112,
+          337,
+          315
+        ],
+        "component_area": 17005,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 18,
+          "bottom": 72
+        }
+      },
+      "path": "assets/characters/chongqing/processed/vfx/chongqing_vfx_escort_aura.png",
+      "size": [
+        262,
+        272
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 19,
+        "right": 18,
+        "bottom": 72
+      }
+    },
+    {
+      "role": "vfx:wake_medium",
+      "crop": {
+        "component_bbox": [
+          75,
+          164,
+          325,
+          310
+        ],
+        "final_crop_box": [
+          57,
+          146,
+          343,
+          328
+        ],
+        "component_area": 17428,
+        "output_edge_margins": {
+          "left": 32,
+          "top": 19,
+          "right": 18,
+          "bottom": 33
+        }
+      },
+      "path": "assets/characters/chongqing/processed/vfx/chongqing_vfx_wake_medium.png",
+      "size": [
+        324,
+        202
+      ],
+      "edge_margins": {
+        "left": 32,
+        "top": 19,
+        "right": 18,
+        "bottom": 33
+      }
+    }
+  ]
+}

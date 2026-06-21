@@ -1,0 +1,1375 @@
+{
+  "character_id": "hosho",
+  "source": "tools/art_pipeline/postprocess_generated_character.py",
+  "method": "green_screen_auto_grid_and_component_split",
+  "outputs": [
+    {
+      "role": "source_alpha:concept_full",
+      "path": "assets/characters/hosho/processed/source_alpha/hosho_concept_full_alpha_source.png",
+      "size": [
+        1024,
+        1536
+      ],
+      "edge_margins": {
+        "left": 22,
+        "top": 39,
+        "right": 18,
+        "bottom": 50
+      }
+    },
+    {
+      "role": "source_alpha:ui_sheet",
+      "path": "assets/characters/hosho/processed/source_alpha/hosho_ui_sheet_alpha_source.png",
+      "size": [
+        1774,
+        887
+      ],
+      "edge_margins": {
+        "left": 71,
+        "top": 33,
+        "right": 113,
+        "bottom": 42
+      }
+    },
+    {
+      "role": "source_alpha:battle_grid",
+      "path": "assets/characters/hosho/processed/source_alpha/hosho_battle_asset_grid_alpha_source.png",
+      "size": [
+        1774,
+        887
+      ],
+      "edge_margins": {
+        "left": 145,
+        "top": 84,
+        "right": 167,
+        "bottom": 126
+      }
+    },
+    {
+      "role": "source_alpha:vfx_sheet",
+      "path": "assets/characters/hosho/processed/source_alpha/hosho_vfx_reference_sheet_alpha_source.png",
+      "size": [
+        1774,
+        887
+      ],
+      "edge_margins": {
+        "left": 67,
+        "top": 85,
+        "right": 96,
+        "bottom": 112
+      }
+    },
+    {
+      "role": "source_alpha:anim_master",
+      "path": "assets/characters/hosho/processed/source_alpha/hosho_anim_5x4_master_alpha_source.png",
+      "size": [
+        1122,
+        1402
+      ],
+      "edge_margins": {
+        "left": 28,
+        "top": 20,
+        "right": 17,
+        "bottom": 51
+      }
+    },
+    {
+      "role": "full_body",
+      "crop": {
+        "content_bbox": [
+          22,
+          39,
+          1006,
+          1486
+        ],
+        "final_crop_box": [
+          10,
+          27,
+          1018,
+          1498
+        ],
+        "output_edge_margins": {
+          "left": 62,
+          "top": 199,
+          "right": 12,
+          "bottom": 12
+        }
+      },
+      "path": "assets/characters/hosho/processed/ui/hosho_illust_full_alpha.png",
+      "size": [
+        1058,
+        1658
+      ],
+      "edge_margins": {
+        "left": 62,
+        "top": 199,
+        "right": 12,
+        "bottom": 12
+      }
+    },
+    {
+      "role": "half_body",
+      "crop": {
+        "content_bbox": [
+          66,
+          17,
+          1050,
+          1058
+        ],
+        "final_crop_box": [
+          50,
+          1,
+          1066,
+          1074
+        ],
+        "output_edge_margins": {
+          "left": 66,
+          "top": 17,
+          "right": 16,
+          "bottom": 92
+        }
+      },
+      "path": "assets/characters/hosho/processed/ui/hosho_illust_half_alpha.png",
+      "size": [
+        1066,
+        1150
+      ],
+      "edge_margins": {
+        "left": 66,
+        "top": 17,
+        "right": 16,
+        "bottom": 92
+      }
+    },
+    {
+      "role": "skill_cutin",
+      "crop": {
+        "content_bbox": [
+          500,
+          16,
+          1484,
+          855
+        ],
+        "final_crop_box": [
+          484,
+          0,
+          1500,
+          871
+        ],
+        "output_edge_margins": {
+          "left": 60,
+          "top": 16,
+          "right": 16,
+          "bottom": 223
+        }
+      },
+      "path": "assets/characters/hosho/processed/ui/hosho_illust_skill_cutin_alpha.png",
+      "size": [
+        1060,
+        1078
+      ],
+      "edge_margins": {
+        "left": 60,
+        "top": 16,
+        "right": 16,
+        "bottom": 223
+      }
+    },
+    {
+      "role": "ui_portrait",
+      "crop": {
+        "content_bbox": [
+          71,
+          33,
+          377,
+          411
+        ],
+        "final_crop_box": [
+          53,
+          15,
+          395,
+          429
+        ],
+        "output_edge_margins": {
+          "left": 18,
+          "top": 19,
+          "right": 20,
+          "bottom": 69
+        }
+      },
+      "path": "assets/characters/hosho/processed/ui/hosho_ui_portrait.png",
+      "size": [
+        344,
+        466
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 20,
+        "right": 20,
+        "bottom": 69
+      }
+    },
+    {
+      "role": "ui_portrait_small",
+      "crop": {
+        "content_bbox": [
+          89,
+          57,
+          362,
+          410
+        ],
+        "final_crop_box": [
+          71,
+          39,
+          380,
+          428
+        ],
+        "output_edge_margins": {
+          "left": 22,
+          "top": 19,
+          "right": 19,
+          "bottom": 62
+        }
+      },
+      "path": "assets/characters/hosho/processed/ui/hosho_ui_portrait_small.png",
+      "size": [
+        314,
+        434
+      ],
+      "edge_margins": {
+        "left": 22,
+        "top": 19,
+        "right": 20,
+        "bottom": 62
+      }
+    },
+    {
+      "role": "ui_chibi_head",
+      "crop": {
+        "content_bbox": [
+          62,
+          90,
+          368,
+          400
+        ],
+        "final_crop_box": [
+          44,
+          72,
+          386,
+          418
+        ],
+        "output_edge_margins": {
+          "left": 41,
+          "top": 18,
+          "right": 19,
+          "bottom": 52
+        }
+      },
+      "path": "assets/characters/hosho/processed/ui/hosho_ui_chibi_head.png",
+      "size": [
+        366,
+        380
+      ],
+      "edge_margins": {
+        "left": 41,
+        "top": 18,
+        "right": 20,
+        "bottom": 52
+      }
+    },
+    {
+      "role": "expr_default",
+      "crop": {
+        "content_bbox": [
+          63,
+          51,
+          332,
+          410
+        ],
+        "final_crop_box": [
+          45,
+          33,
+          350,
+          428
+        ],
+        "output_edge_margins": {
+          "left": 35,
+          "top": 19,
+          "right": 18,
+          "bottom": 60
+        }
+      },
+      "path": "assets/characters/hosho/processed/ui/hosho_expr_default.png",
+      "size": [
+        322,
+        438
+      ],
+      "edge_margins": {
+        "left": 35,
+        "top": 19,
+        "right": 20,
+        "bottom": 60
+      }
+    },
+    {
+      "role": "expr_serious",
+      "crop": {
+        "content_bbox": [
+          98,
+          31,
+          367,
+          394
+        ],
+        "final_crop_box": [
+          80,
+          13,
+          385,
+          412
+        ],
+        "output_edge_margins": {
+          "left": 33,
+          "top": 19,
+          "right": 18,
+          "bottom": 62
+        }
+      },
+      "path": "assets/characters/hosho/processed/ui/hosho_expr_serious.png",
+      "size": [
+        320,
+        444
+      ],
+      "edge_margins": {
+        "left": 33,
+        "top": 20,
+        "right": 18,
+        "bottom": 62
+      }
+    },
+    {
+      "role": "expr_hit",
+      "crop": {
+        "content_bbox": [
+          89,
+          34,
+          368,
+          394
+        ],
+        "final_crop_box": [
+          71,
+          16,
+          386,
+          412
+        ],
+        "output_edge_margins": {
+          "left": 32,
+          "top": 19,
+          "right": 19,
+          "bottom": 59
+        }
+      },
+      "path": "assets/characters/hosho/processed/ui/hosho_expr_hit.png",
+      "size": [
+        330,
+        438
+      ],
+      "edge_margins": {
+        "left": 34,
+        "top": 19,
+        "right": 19,
+        "bottom": 59
+      }
+    },
+    {
+      "role": "ui_skill",
+      "crop": {
+        "content_bbox": [
+          27,
+          45,
+          373,
+          360
+        ],
+        "final_crop_box": [
+          9,
+          27,
+          391,
+          378
+        ],
+        "output_edge_margins": {
+          "left": 20,
+          "top": 19,
+          "right": 18,
+          "bottom": 48
+        }
+      },
+      "path": "assets/characters/hosho/processed/ui/hosho_ui_skill_airstrike.png",
+      "size": [
+        384,
+        382
+      ],
+      "edge_margins": {
+        "left": 20,
+        "top": 19,
+        "right": 18,
+        "bottom": 48
+      }
+    },
+    {
+      "role": "class_icon",
+      "crop": {
+        "content_bbox": [
+          110,
+          41,
+          248,
+          402
+        ],
+        "final_crop_box": [
+          92,
+          23,
+          266,
+          420
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 35,
+          "right": 19,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/hosho/processed/ui/hosho_ui_class_carrier.png",
+      "size": [
+        176,
+        414
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 35,
+        "right": 19,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "battle_body_r",
+      "crop": {
+        "component_bbox": [
+          171,
+          84,
+          365,
+          411
+        ],
+        "final_crop_box": [
+          153,
+          66,
+          383,
+          429
+        ],
+        "component_area": 33457,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 44,
+          "right": 19,
+          "bottom": 19
+        }
+      },
+      "path": "assets/characters/hosho/processed/battle/hosho_battle_body_r.png",
+      "size": [
+        232,
+        390
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 44,
+        "right": 19,
+        "bottom": 19
+      }
+    },
+    {
+      "role": "battle_rig_base",
+      "crop": {
+        "component_bbox": [
+          85,
+          135,
+          390,
+          368
+        ],
+        "final_crop_box": [
+          67,
+          117,
+          408,
+          386
+        ],
+        "component_area": 39508,
+        "output_edge_margins": {
+          "left": 20,
+          "top": 19,
+          "right": 19,
+          "bottom": 38
+        }
+      },
+      "path": "assets/characters/hosho/processed/battle/hosho_battle_rig_base.png",
+      "size": [
+        344,
+        290
+      ],
+      "edge_margins": {
+        "left": 20,
+        "top": 19,
+        "right": 19,
+        "bottom": 38
+      }
+    },
+    {
+      "role": "battle_flight_deck",
+      "crop": {
+        "component_bbox": [
+          150,
+          88,
+          305,
+          401
+        ],
+        "final_crop_box": [
+          132,
+          70,
+          323,
+          419
+        ],
+        "component_area": 40160,
+        "output_edge_margins": {
+          "left": 20,
+          "top": 19,
+          "right": 19,
+          "bottom": 34
+        }
+      },
+      "path": "assets/characters/hosho/processed/battle/hosho_battle_flight_deck.png",
+      "size": [
+        194,
+        366
+      ],
+      "edge_margins": {
+        "left": 20,
+        "top": 19,
+        "right": 19,
+        "bottom": 34
+      }
+    },
+    {
+      "role": "battle_aircraft_group_01",
+      "crop": {
+        "component_bbox": [
+          100,
+          121,
+          248,
+          194
+        ],
+        "final_crop_box": [
+          82,
+          103,
+          266,
+          212
+        ],
+        "component_area": 5934,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 28,
+          "right": 27,
+          "bottom": 19
+        }
+      },
+      "path": "assets/characters/hosho/processed/battle/hosho_battle_aircraft_group_01.png",
+      "size": [
+        194,
+        138
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 28,
+        "right": 27,
+        "bottom": 37
+      }
+    },
+    {
+      "role": "battle_aircraft_launch_marker",
+      "crop": {
+        "component_bbox": [
+          145,
+          84,
+          377,
+          302
+        ],
+        "final_crop_box": [
+          127,
+          66,
+          395,
+          320
+        ],
+        "component_area": 29403,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 21,
+          "right": 19,
+          "bottom": 19
+        }
+      },
+      "path": "assets/characters/hosho/processed/battle/hosho_battle_aircraft_launch_marker.png",
+      "size": [
+        270,
+        258
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 21,
+        "right": 19,
+        "bottom": 19
+      }
+    },
+    {
+      "role": "battle_aircraft_recovery_marker",
+      "crop": {
+        "component_bbox": [
+          117,
+          87,
+          354,
+          302
+        ],
+        "final_crop_box": [
+          99,
+          69,
+          372,
+          320
+        ],
+        "component_area": 30032,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 18,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/hosho/processed/battle/hosho_battle_aircraft_recovery_marker.png",
+      "size": [
+        274,
+        252
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 19,
+        "right": 18,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "battle_radar_node",
+      "crop": {
+        "component_bbox": [
+          150,
+          71,
+          304,
+          275
+        ],
+        "final_crop_box": [
+          132,
+          53,
+          322,
+          293
+        ],
+        "component_area": 20452,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 19,
+          "bottom": 56
+        }
+      },
+      "path": "assets/characters/hosho/processed/battle/hosho_battle_radar_node.png",
+      "size": [
+        192,
+        278
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 18,
+        "right": 19,
+        "bottom": 56
+      }
+    },
+    {
+      "role": "battle_wake_origin_marker",
+      "crop": {
+        "component_bbox": [
+          111,
+          55,
+          278,
+          318
+        ],
+        "final_crop_box": [
+          93,
+          37,
+          296,
+          336
+        ],
+        "component_area": 30501,
+        "output_edge_margins": {
+          "left": 21,
+          "top": 18,
+          "right": 18,
+          "bottom": 30
+        }
+      },
+      "path": "assets/characters/hosho/processed/battle/hosho_battle_wake_origin_marker.png",
+      "size": [
+        206,
+        312
+      ],
+      "edge_margins": {
+        "left": 21,
+        "top": 19,
+        "right": 18,
+        "bottom": 30
+      }
+    },
+    {
+      "role": "anim_idle_frame_01",
+      "path": "assets/characters/hosho/processed/anim/hosho_anim_idle_frame_01.png",
+      "size": [
+        160,
+        288
+      ],
+      "edge_margins": {
+        "left": 20,
+        "top": 38,
+        "right": 17,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "anim_idle_keyframe",
+      "path": "assets/characters/hosho/processed/anim/hosho_anim_idle_keyframe.png",
+      "size": [
+        160,
+        288
+      ],
+      "edge_margins": {
+        "left": 20,
+        "top": 38,
+        "right": 17,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "anim_idle_frame_02",
+      "path": "assets/characters/hosho/processed/anim/hosho_anim_idle_frame_02.png",
+      "size": [
+        160,
+        288
+      ],
+      "edge_margins": {
+        "left": 20,
+        "top": 38,
+        "right": 19,
+        "bottom": 16
+      }
+    },
+    {
+      "role": "anim_idle_frame_03",
+      "path": "assets/characters/hosho/processed/anim/hosho_anim_idle_frame_03.png",
+      "size": [
+        160,
+        288
+      ],
+      "edge_margins": {
+        "left": 22,
+        "top": 38,
+        "right": 18,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "anim_idle_frame_04",
+      "path": "assets/characters/hosho/processed/anim/hosho_anim_idle_frame_04.png",
+      "size": [
+        160,
+        288
+      ],
+      "edge_margins": {
+        "left": 21,
+        "top": 37,
+        "right": 17,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "anim_move_frame_01",
+      "path": "assets/characters/hosho/processed/anim/hosho_anim_move_frame_01.png",
+      "size": [
+        298,
+        274
+      ],
+      "edge_margins": {
+        "left": 16,
+        "top": 18,
+        "right": 51,
+        "bottom": 35
+      }
+    },
+    {
+      "role": "anim_move_keyframe",
+      "path": "assets/characters/hosho/processed/anim/hosho_anim_move_keyframe.png",
+      "size": [
+        298,
+        274
+      ],
+      "edge_margins": {
+        "left": 16,
+        "top": 18,
+        "right": 51,
+        "bottom": 35
+      }
+    },
+    {
+      "role": "anim_move_frame_02",
+      "path": "assets/characters/hosho/processed/anim/hosho_anim_move_frame_02.png",
+      "size": [
+        298,
+        274
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 16,
+        "right": 50,
+        "bottom": 36
+      }
+    },
+    {
+      "role": "anim_move_frame_03",
+      "path": "assets/characters/hosho/processed/anim/hosho_anim_move_frame_03.png",
+      "size": [
+        298,
+        274
+      ],
+      "edge_margins": {
+        "left": 16,
+        "top": 17,
+        "right": 48,
+        "bottom": 26
+      }
+    },
+    {
+      "role": "anim_move_frame_04",
+      "path": "assets/characters/hosho/processed/anim/hosho_anim_move_frame_04.png",
+      "size": [
+        298,
+        274
+      ],
+      "edge_margins": {
+        "left": 27,
+        "top": 17,
+        "right": 49,
+        "bottom": 26
+      }
+    },
+    {
+      "role": "anim_attack_frame_01",
+      "path": "assets/characters/hosho/processed/anim/hosho_anim_attack_frame_01.png",
+      "size": [
+        216,
+        270
+      ],
+      "edge_margins": {
+        "left": 40,
+        "top": 20,
+        "right": 25,
+        "bottom": 17
+      }
+    },
+    {
+      "role": "anim_attack_keyframe",
+      "path": "assets/characters/hosho/processed/anim/hosho_anim_attack_keyframe.png",
+      "size": [
+        216,
+        270
+      ],
+      "edge_margins": {
+        "left": 40,
+        "top": 20,
+        "right": 25,
+        "bottom": 17
+      }
+    },
+    {
+      "role": "anim_attack_frame_02",
+      "path": "assets/characters/hosho/processed/anim/hosho_anim_attack_frame_02.png",
+      "size": [
+        216,
+        270
+      ],
+      "edge_margins": {
+        "left": 16,
+        "top": 18,
+        "right": 17,
+        "bottom": 22
+      }
+    },
+    {
+      "role": "anim_attack_frame_03",
+      "path": "assets/characters/hosho/processed/anim/hosho_anim_attack_frame_03.png",
+      "size": [
+        216,
+        270
+      ],
+      "edge_margins": {
+        "left": 42,
+        "top": 22,
+        "right": 27,
+        "bottom": 20
+      }
+    },
+    {
+      "role": "anim_attack_frame_04",
+      "path": "assets/characters/hosho/processed/anim/hosho_anim_attack_frame_04.png",
+      "size": [
+        216,
+        270
+      ],
+      "edge_margins": {
+        "left": 46,
+        "top": 23,
+        "right": 29,
+        "bottom": 17
+      }
+    },
+    {
+      "role": "anim_hit_frame_01",
+      "path": "assets/characters/hosho/processed/anim/hosho_anim_hit_frame_01.png",
+      "size": [
+        256,
+        268
+      ],
+      "edge_margins": {
+        "left": 31,
+        "top": 30,
+        "right": 21,
+        "bottom": 24
+      }
+    },
+    {
+      "role": "anim_hit_keyframe",
+      "path": "assets/characters/hosho/processed/anim/hosho_anim_hit_keyframe.png",
+      "size": [
+        256,
+        268
+      ],
+      "edge_margins": {
+        "left": 31,
+        "top": 30,
+        "right": 21,
+        "bottom": 24
+      }
+    },
+    {
+      "role": "anim_hit_frame_02",
+      "path": "assets/characters/hosho/processed/anim/hosho_anim_hit_frame_02.png",
+      "size": [
+        256,
+        268
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 29,
+        "right": 40,
+        "bottom": 24
+      }
+    },
+    {
+      "role": "anim_hit_frame_03",
+      "path": "assets/characters/hosho/processed/anim/hosho_anim_hit_frame_03.png",
+      "size": [
+        256,
+        268
+      ],
+      "edge_margins": {
+        "left": 17,
+        "top": 24,
+        "right": 39,
+        "bottom": 22
+      }
+    },
+    {
+      "role": "anim_hit_frame_04",
+      "path": "assets/characters/hosho/processed/anim/hosho_anim_hit_frame_04.png",
+      "size": [
+        256,
+        268
+      ],
+      "edge_margins": {
+        "left": 49,
+        "top": 31,
+        "right": 59,
+        "bottom": 16
+      }
+    },
+    {
+      "role": "anim_firepower_frame_01",
+      "path": "assets/characters/hosho/processed/anim/hosho_anim_firepower_frame_01.png",
+      "size": [
+        246,
+        268
+      ],
+      "edge_margins": {
+        "left": 17,
+        "top": 23,
+        "right": 44,
+        "bottom": 23
+      }
+    },
+    {
+      "role": "anim_firepower_keyframe",
+      "path": "assets/characters/hosho/processed/anim/hosho_anim_firepower_keyframe.png",
+      "size": [
+        246,
+        268
+      ],
+      "edge_margins": {
+        "left": 17,
+        "top": 23,
+        "right": 44,
+        "bottom": 23
+      }
+    },
+    {
+      "role": "anim_firepower_frame_02",
+      "path": "assets/characters/hosho/processed/anim/hosho_anim_firepower_frame_02.png",
+      "size": [
+        246,
+        268
+      ],
+      "edge_margins": {
+        "left": 23,
+        "top": 24,
+        "right": 46,
+        "bottom": 21
+      }
+    },
+    {
+      "role": "anim_firepower_frame_03",
+      "path": "assets/characters/hosho/processed/anim/hosho_anim_firepower_frame_03.png",
+      "size": [
+        246,
+        268
+      ],
+      "edge_margins": {
+        "left": 24,
+        "top": 18,
+        "right": 44,
+        "bottom": 22
+      }
+    },
+    {
+      "role": "anim_firepower_frame_04",
+      "path": "assets/characters/hosho/processed/anim/hosho_anim_firepower_frame_04.png",
+      "size": [
+        246,
+        268
+      ],
+      "edge_margins": {
+        "left": 53,
+        "top": 20,
+        "right": 50,
+        "bottom": 17
+      }
+    },
+    {
+      "role": "battle_body_r:idle_master_override",
+      "path": "assets/characters/hosho/processed/battle/hosho_battle_body_r.png",
+      "size": [
+        160,
+        288
+      ],
+      "edge_margins": {
+        "left": 20,
+        "top": 38,
+        "right": 17,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "vfx:aircraft_path",
+      "crop": {
+        "component_bbox": [
+          115,
+          149,
+          283,
+          297
+        ],
+        "final_crop_box": [
+          97,
+          131,
+          301,
+          315
+        ],
+        "component_area": 785,
+        "output_edge_margins": {
+          "left": 91,
+          "top": 19,
+          "right": 19,
+          "bottom": 31
+        }
+      },
+      "path": "assets/characters/hosho/processed/vfx/hosho_vfx_aircraft_path.png",
+      "size": [
+        298,
+        218
+      ],
+      "edge_margins": {
+        "left": 91,
+        "top": 19,
+        "right": 19,
+        "bottom": 31
+      }
+    },
+    {
+      "role": "vfx:aircraft_launch_flash",
+      "crop": {
+        "component_bbox": [
+          156,
+          152,
+          277,
+          350
+        ],
+        "final_crop_box": [
+          138,
+          134,
+          295,
+          368
+        ],
+        "component_area": 8759,
+        "output_edge_margins": {
+          "left": 24,
+          "top": 18,
+          "right": 18,
+          "bottom": 82
+        }
+      },
+      "path": "assets/characters/hosho/processed/vfx/hosho_vfx_aircraft_launch_flash.png",
+      "size": [
+        190,
+        298
+      ],
+      "edge_margins": {
+        "left": 24,
+        "top": 18,
+        "right": 18,
+        "bottom": 82
+      }
+    },
+    {
+      "role": "vfx:aircraft_formation",
+      "crop": {
+        "component_bbox": [
+          187,
+          85,
+          253,
+          273
+        ],
+        "final_crop_box": [
+          169,
+          67,
+          271,
+          291
+        ],
+        "component_area": 2549,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 66,
+          "right": 19,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/hosho/processed/vfx/hosho_vfx_aircraft_formation.png",
+      "size": [
+        140,
+        272
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 66,
+        "right": 19,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "vfx:aircraft_explosion",
+      "crop": {
+        "component_bbox": [
+          106,
+          132,
+          342,
+          320
+        ],
+        "final_crop_box": [
+          88,
+          114,
+          360,
+          338
+        ],
+        "component_area": 17293,
+        "output_edge_margins": {
+          "left": 43,
+          "top": 30,
+          "right": 19,
+          "bottom": 19
+        }
+      },
+      "path": "assets/characters/hosho/processed/vfx/hosho_vfx_aircraft_explosion.png",
+      "size": [
+        316,
+        270
+      ],
+      "edge_margins": {
+        "left": 43,
+        "top": 30,
+        "right": 19,
+        "bottom": 19
+      }
+    },
+    {
+      "role": "vfx:airstrike_area",
+      "crop": {
+        "component_bbox": [
+          67,
+          131,
+          393,
+          307
+        ],
+        "final_crop_box": [
+          49,
+          113,
+          411,
+          325
+        ],
+        "component_area": 5543,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 19,
+          "bottom": 22
+        }
+      },
+      "path": "assets/characters/hosho/processed/vfx/hosho_vfx_airstrike_area.png",
+      "size": [
+        364,
+        216
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 18,
+        "right": 19,
+        "bottom": 22
+      }
+    },
+    {
+      "role": "vfx:aircraft_recovery",
+      "crop": {
+        "component_bbox": [
+          178,
+          118,
+          261,
+          316
+        ],
+        "final_crop_box": [
+          160,
+          100,
+          279,
+          334
+        ],
+        "component_area": 8311,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 18,
+          "bottom": 84
+        }
+      },
+      "path": "assets/characters/hosho/processed/vfx/hosho_vfx_aircraft_recovery.png",
+      "size": [
+        120,
+        314
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 18,
+        "right": 18,
+        "bottom": 84
+      }
+    },
+    {
+      "role": "vfx:aa_burst",
+      "crop": {
+        "component_bbox": [
+          153,
+          136,
+          268,
+          309
+        ],
+        "final_crop_box": [
+          135,
+          118,
+          286,
+          327
+        ],
+        "component_area": 7015,
+        "output_edge_margins": {
+          "left": 24,
+          "top": 26,
+          "right": 19,
+          "bottom": 19
+        }
+      },
+      "path": "assets/characters/hosho/processed/vfx/hosho_vfx_aa_burst.png",
+      "size": [
+        194,
+        236
+      ],
+      "edge_margins": {
+        "left": 24,
+        "top": 26,
+        "right": 19,
+        "bottom": 19
+      }
+    },
+    {
+      "role": "vfx:wake_carrier",
+      "crop": {
+        "component_bbox": [
+          58,
+          112,
+          340,
+          332
+        ],
+        "final_crop_box": [
+          40,
+          94,
+          358,
+          350
+        ],
+        "component_area": 42736,
+        "output_edge_margins": {
+          "left": 27,
+          "top": 21,
+          "right": 18,
+          "bottom": 19
+        }
+      },
+      "path": "assets/characters/hosho/processed/vfx/hosho_vfx_wake_carrier.png",
+      "size": [
+        336,
+        262
+      ],
+      "edge_margins": {
+        "left": 27,
+        "top": 21,
+        "right": 18,
+        "bottom": 19
+      }
+    }
+  ]
+}

@@ -472,3 +472,33 @@ MVP 约定：
 - `IndependentMultiply` 只用于明确标记的少量核心技能。
 - 命中率增益使用 `AccuracyPoint`，表示增加百分点，不使用命中倍率。
 - 装填增益使用 `ReloadSpeed`，不使用普通的装填时间百分比减少。
+
+## 16. 表现设置配置
+
+当前运行时配置位于 `data/settings/presentation_settings.json`，定义窗口尺寸候选和战斗镜头缩放边界。
+
+基础字段：
+
+```text
+id
+window.logical_size
+window.default_size
+window.size_options
+camera.default_zoom
+camera.zoom_step
+camera.min_visible_size
+camera.max_map_visible_fraction
+```
+
+字段含义：
+
+- `id`：MVP 固定为 `settings.presentation`。
+- `window.logical_size`：界面设计使用的固定逻辑画布尺寸。窗口尺寸变化时，根窗口按比例缩放该画布，而不是改变界面布局坐标。
+- `window.default_size`：首次启动使用的窗口宽高。
+- `window.size_options`：开始界面允许玩家选择的窗口宽高列表；默认尺寸必须包含在列表中。
+- `camera.default_zoom`：每场战斗开始时的镜头缩放倍率。
+- `camera.zoom_step`：一次滚轮输入的缩放倍率，必须大于 `1`。
+- `camera.min_visible_size`：最近视角仍需保留的最小世界像素宽高，MVP 为 `[500, 500]`。
+- `camera.max_map_visible_fraction`：最远视角在每个轴上最多显示的地图比例，MVP 为 `2/3`。
+
+窗口尺寸属于用户偏好，选中值保存到 `user://tiny_sea_war_settings.cfg`，不写回项目配置。镜头缩放属于表现层状态，不进入 Domain 战斗状态，也不影响模拟随机数。

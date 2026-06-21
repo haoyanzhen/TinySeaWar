@@ -35,6 +35,9 @@
 - 投射物配置：`data/projectiles/projectiles.json`
 - 公式配置：`data/formulas/combat_formulas.json`
 - 海面调色板：`data/environments/ocean_palettes.json`
+- 表现设置：`data/settings/presentation_settings.json`
+  - `window`：固定逻辑画布、主界面可选窗口尺寸与默认尺寸。
+  - `camera`：默认缩放、滚轮步长、最近观察范围和最远地图占比。
 
 ## 战斗核心
 
@@ -66,6 +69,9 @@
 
 ## 玩家输入与战斗展示
 
+- 中文显示文本：`scripts/presentation/ui_text.gd`
+  - 统一转换模式、阶段、镜头、操作、海域、舰种、目标类型、阵营、结算原因、拒绝原因和角色 ID。
+  - Domain 与配置引用仍使用稳定英文枚举，不直接显示给玩家。
 - 战斗输入、镜头、单位绘制：`scripts/presentation/battle/prototype_battle.gd`
   - 数字键选槽位：`_slot_for_key`、`_select_slot`
   - 鼠标选择/集火/移动：`_unhandled_input`、`_select_at`
@@ -74,6 +80,7 @@
   - F 技能：`_begin_or_cast_skill`、`_confirm_skill_target`
   - V 跟随镜头：`_toggle_follow_selected`
   - WASD 镜头：`_update_camera`
+  - 滚轮缩放与边界：`_adjust_camera_zoom`、`_configure_camera_zoom`、`_clamp_camera_to_map`
   - 战场角色图层：`_draw_unit`、`_draw_unit_art`
   - 瞄准叠层：`_draw_operation_overlay`
   - HUD 数据推送：`_update_hud`
@@ -92,12 +99,15 @@
 
 - 流程状态：`scripts/application/game_flow.gd`
   - `selected_level_id` 记录主界面选择的关卡。
+  - `window_size_options`、`apply_window_size` 负责读取、应用并持久化窗口尺寸。
+  - `_configure_content_scaling` 固定逻辑画布并启用等比界面缩放。
 - 主界面：`scripts/presentation/menu/main_menu.gd`
   - 按钮创建：`_create_buttons`
   - 开始战斗：`_start_level`
-  - 模式说明：`_show_mode_select`、`_show_more_modes`
+  - 模式说明：`_show_mode_select`
   - 操作说明：`_show_operation_guide`
   - 游戏介绍：`_show_game_intro`
+  - 界面设置：`_create_settings_panel`、`_show_settings`、`_apply_selected_window_size`
   - 随机横向封面：`_random_character_id`、`_draw_cover_art`
 
 ## 美术资产

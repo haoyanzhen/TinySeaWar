@@ -44,13 +44,17 @@ assets/characters/{id}/meta/
 核心输入文件：
 
 ```text
+{id}_concept_full.png
 {id}_ui_sheet.png
-{id}_battle_asset_sheet.png
-{id}_anim_keyframes_sheet.png
-{id}_anim_{state}_4f_sheet.png
+{id}_battle_asset_grid.png
+{id}_anim_5x4_master.png
 {id}_vfx_reference_sheet.png
 {id}_trial_log.md
 ```
+
+新生成角色默认使用 `4x2` 战斗拆件母版和 `5x4` 动画母版：动画五行依次为待机、移动、攻击、受击、火力，每行从左到右为连续四帧。旧试产角色允许继续使用 `{id}_battle_asset_sheet.png` 与五张 `{id}_anim_{state}_4f_sheet.png`，批处理工具必须同时识别两条合法路线。
+
+半身立绘和技能 cut-in 可以作为独立源图提供；缺省时允许从已验收全身锚点自动派生构图，但正式输出仍必须包含对应独立文件。
 
 ## 3. 配置
 
@@ -77,7 +81,8 @@ assets/characters/{id}/postprocess_plan.json
 程序应负责：
 
 - 扫描角色目录。
-- 清背景，优先使用边缘连通背景删除，避免误删白发、泡沫、浅色航迹等角色纹理。
+- 清背景时先删除与画布边缘连通的抠图色，再清理被头发、头像框或舰装封闭的高置信度抠图色残留；不得只依赖边缘连通判定，否则封闭区域会留下色块。
+- 源图生成时将抠图色视为保留色：角色、舰装和特效不得使用同一高亮色。角色设计必须使用绿色高亮时改用洋红抠图底，反之亦然；后处理不得承担猜测同色像素语义的责任。
 - 按配置裁切 sheet。
 - 将初始裁剪框视为目标提示，而不是最终边界；在源图 alpha 上查找与初始框相交的前景连通块，合并这些连通块的真实包围盒，再加安全边距得到最终裁剪框。
 - 连通块分析可以忽略接近全透明的低 alpha 桥接像素，避免将相邻 UI 件误判为同一主体；该阈值只用于确定裁剪边界，不修改最终输出的原始 alpha 纹理。
@@ -91,9 +96,10 @@ assets/characters/{id}/postprocess_plan.json
 - 生成 `vfx_config.json`。
 - 按需生成 QA 预览页。
 - 自动检查 RGBA、空 alpha、贴边、缺文件和 JSON 可解析性。
+- 自动检查所有运行时 PNG 的透明安全边距和 alpha 加权视觉重心；任一边贴图或视觉重心偏离画布中心超过 10% 时阻塞交付。
 - 按单角色资产契约检查完整性；必需项缺失时将角色包标记为 `incomplete`，即使已有 PNG 都可读也不得通过交付。
 - 检查动画和 VFX 配置的引用文件是否存在、舰种数据是否一致，以及绑定点是否在子图边界内并且靠近非透明画面。
-- MVP 动画源图默认每个状态生成 2x2 排列的连续四帧，拆分后在 `anim_config.json` 中记录有序帧、FPS 和循环标记。待机/移动使用小幅循环；攻击/受击/火力使用预备、峰值、反馈/后坐和复位。
+- MVP 动画源图默认使用一张 `5x4` 母版，每行一个状态、每行四帧；旧角色也可使用每状态一张 `2x2` 连续四帧图。拆分后在 `anim_config.json` 中记录有序帧、FPS 和循环标记。待机/移动使用小幅循环；攻击/受击/火力使用预备、峰值、反馈/后坐和复位。
 - 同一状态的四张透明帧需要归一到相同画布尺寸并保持稳定视觉中心，避免 Godot `AnimatedSprite2D` 播放时产生画布跳动。
 - 四帧画面驱动角色姿态；精确炮塔旋转、炮口、投射物、后坐位移和 VFX 仍使用 Godot 独立节点与补间。
 
@@ -150,6 +156,8 @@ assets/characters/{id}/processed/config/
 ```text
 assets/characters/qa/edge_qa_preview.html
 assets/characters/qa/edge_qa_report.md
+assets/characters/qa/{id}_processed_contact.png
+assets/characters/qa/character_roster_processed_contact.png
 ```
 
 预览页建议支持两种模式：
@@ -179,13 +187,13 @@ python3 tools/art_pipeline/batch_character_art.py bismarck --process --preview
 python3 tools/art_pipeline/postprocess_generated_character.py iowa
 ```
 
-Dry-run 会检查基础源图、五套四帧动画源图、后处理路由、运行时数据和资产契约。旧试产角色可以继续使用脚本内手写裁剪规格；新生成的绿幕标准源图包优先使用 `postprocess_generated_character.py` 自动完成 UI 八格、四帧动画、战场组件、VFX 组件、基础绑定点和配置生成。`--process` 按角色独立执行后处理，单个角色失败不中断后续角色，结果写入：
+Dry-run 会检查旧式独立 sheet 或新式母版输入、后处理路由、运行时数据和资产契约。旧试产角色可以继续使用脚本内手写裁剪规格；新生成的标准源图包优先使用 `postprocess_generated_character.py` 自动完成 UI 八格、`4x2` 战斗组件、`5x4` 动画母版、VFX 八格、基础绑定点和配置生成。`--process` 按角色独立执行后处理，单个角色失败不中断后续角色，结果写入：
 
 ```text
 assets/characters/qa/character_art_batch_report.json
 assets/characters/qa/character_art_batch_report.md
 ```
 
-角色只有在源图齐全、手写裁剪/数据配置或通用生成后处理路由可用、后处理契约通过时才标记为 `batch_ready`。图像生成仍需按角色建立和验收风格锚点，不建议在未验收锚点时一次生成整个角色包。
+角色只有在旧式 sheet 路线或新式母版路线至少一条完整、对应后处理路由可用、后处理契约通过时才标记为 `batch_ready`。图像生成仍需按角色建立和验收风格锚点，不建议在未验收锚点时一次生成整个角色包。全量验收使用 `postprocess_generated_character.py --roster-contact` 生成 24 角色关键资产总览，并保留每名角色的完整 processed contact。
 
 其中 `--preview` 或 `build_edge_qa_preview.py` 负责生成视觉检查页，Codex 使用 Computer Use 完成视觉确认后，再将结果写入 QA 报告。默认后处理应优先保持快路径，不自动生成大体积嵌入式预览页。

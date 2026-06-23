@@ -156,10 +156,29 @@ func _validate_weapon(weapon: Dictionary) -> void:
 	for field in ["mount_count", "shots_per_mount", "reload_time", "range"]:
 		if float(weapon.get(field, 0.0)) <= 0.0:
 			errors.append("%s must be positive in %s" % [field, weapon_id])
+	var base_range := float(weapon.get("base_range", 0.0))
+	if base_range <= 0.0:
+		errors.append("base_range must be positive in %s" % weapon_id)
+	elif not is_equal_approx(float(weapon.get("range", 0.0)), base_range * 2.0):
+		errors.append("Effective range must be 2x base_range in %s" % weapon_id)
 	if float(weapon.get("minimum_range", 0.0)) > float(weapon.get("range", 0.0)):
 		errors.append("Invalid range band in %s" % weapon_id)
 	if float(weapon.get("fire_arc_degrees", 0.0)) <= 0.0 or float(weapon.get("fire_arc_degrees", 0.0)) > 360.0:
 		errors.append("Invalid fire arc in %s" % weapon_id)
+	var fire_arcs: Array = weapon.get("fire_arcs", [])
+	if weapon.get("mount_type", "") == "Torpedo" and weapon.get("control_mode", "") == "ManualPrimary" and fire_arcs.is_empty():
+		errors.append("Manual torpedo weapon must define fire_arcs in %s" % weapon_id)
+	for arc_index in range(fire_arcs.size()):
+		var arc = fire_arcs[arc_index]
+		if not arc is Dictionary:
+			errors.append("Invalid fire arc entry %s in %s" % [arc_index, weapon_id])
+			continue
+		if not arc.has("center") or not arc.has("degrees"):
+			errors.append("Incomplete fire arc entry %s in %s" % [arc_index, weapon_id])
+			continue
+		var arc_degrees := float(arc.get("degrees", 0.0))
+		if arc_degrees <= 0.0 or arc_degrees > 360.0:
+			errors.append("Invalid fire arc entry %s in %s" % [arc_index, weapon_id])
 	if get_definition("projectiles", str(weapon.get("projectile_id", ""))).is_empty():
 		errors.append("Missing projectile referenced by %s" % weapon_id)
 	if get_definition("formulas", str(weapon.get("formula_id", ""))).is_empty():

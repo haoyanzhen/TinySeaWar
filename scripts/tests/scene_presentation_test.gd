@@ -52,8 +52,19 @@ func _run() -> void:
 	_check(battle.battle_hud._texture("res://assets/ui/export/2x/ui_marker_selected.png") != null, "battle HUD loads exported UI marker art")
 	_check(battle.battle_hud._portrait_texture(warspite_snapshot) != null, "battle HUD loads character portrait art")
 	_check(battle.session.get_player_slots()[0].has("current_hp") and battle.session.get_player_slots()[0].has("ship_class"), "player slot data includes HUD presentation fields")
+	var shimakaze: Dictionary = battle.session.state["units_by_id"]["unit.player.shimakaze"]
+	shimakaze["heading"] = 0.0
+	var torpedo_aim: Dictionary = battle.session.get_primary_aim_status(shimakaze["entity_id"], shimakaze["position"] + Vector2(0.0, 300.0))
+	battle.selected_unit_id = shimakaze["entity_id"]
+	battle.operation_mode = 1
+	await process_frame
+	_check(torpedo_aim.get("weapon_type", "") == "Torpedo" and torpedo_aim.get("fire_arcs", []).size() == 2, "torpedo aim overlay receives broadside sectors from the battle session")
+	_check(is_equal_approx(float(torpedo_aim.get("range", 0.0)), 1020.0), "torpedo range circle renders the doubled effective range")
+	_check(battle.has_method("_draw_torpedo_aim_overlay") and battle.has_method("_draw_annular_sector"), "battle scene provides colored torpedo sectors and spread-line drawing")
+	battle.operation_mode = 0
 	battle.selected_unit_id = "unit.player.warspite"
 	battle._update_hud()
+	_check(is_equal_approx(float(battle.session.get_operation_status("unit.player.warspite").get("primary_range", 0.0)), 1440.0), "HUD operation status displays the doubled main-gun range")
 	_check(battle.battle_hud._skill_text().contains("老兵校射"), "battle HUD displays the Chinese skill name")
 	var player_center: Vector2 = battle._player_fleet_center()
 	_check(battle.battle_camera.position.distance_to(player_center) < 4.0, "initial camera centers on player fleet")
@@ -113,6 +124,17 @@ func _run() -> void:
 	battle._update_hud()
 	_check(battle.battle_hud.return_button.visible and battle.battle_hud.restart_button.visible, "result screen exposes return and replay buttons")
 	_check(battle.battle_hud._texture("res://assets/characters/warspite/processed/ui/warspite_illust_full_alpha.png") != null, "result screen loads vertical friendly character illustration")
+	battle._start_battle("level.prototype_11v11")
+	await process_frame
+	await process_frame
+	battle.effect_director.sync_snapshot(battle.session.snapshot("player", true), "", "")
+	_check(battle.effect_director.unit_views.size() == 22, "11v11 scene instantiates 22 unique runtime character views")
+	var full_roster_views_ready := true
+	for view in battle.effect_director.unit_views.values():
+		if view.body_texture == null or view.rig_texture == null:
+			full_roster_views_ready = false
+			break
+	_check(full_roster_views_ready, "all 11v11 roster members load battle body and rig artwork")
 
 	battle.queue_free()
 	if failures.is_empty():

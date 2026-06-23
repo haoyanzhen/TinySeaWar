@@ -216,13 +216,14 @@ func _draw_operation_overlay() -> void:
 		var legal: bool = bool(aim_status.get("legal", false))
 		var color := Color(0.25, 1.0, 0.55, 0.75) if legal else Color(1.0, 0.25, 0.2, 0.75)
 		var range_value := float(aim_status.get("range", 0.0))
-		draw_arc(selected["position"], range_value, 0.0, TAU, 96, color, 2.0)
-		draw_line(selected["position"], cursor, color, 2.0)
-		if aim_status.get("control_type", "") == "Direction":
-			var heading := (cursor - (selected["position"] as Vector2)).angle()
-			draw_line(selected["position"], selected["position"] + Vector2.RIGHT.rotated(heading - 0.18) * range_value, color, 1.5)
-			draw_line(selected["position"], selected["position"] + Vector2.RIGHT.rotated(heading + 0.18) * range_value, color, 1.5)
+		if aim_status.get("control_type", "") == "Direction" and aim_status.get("weapon_type", "") == "Torpedo":
+			_draw_torpedo_aim_overlay(selected, cursor, aim_status)
+		elif aim_status.get("control_type", "") == "Direction":
+			draw_arc(selected["position"], range_value, 0.0, TAU, 96, color, 2.0)
+			draw_line(selected["position"], cursor, color, 2.0)
 		else:
+			draw_arc(selected["position"], range_value, 0.0, TAU, 96, color, 2.0)
+			draw_line(selected["position"], cursor, color, 2.0)
 			draw_circle(cursor, 42.0, Color(color.r, color.g, color.b, 0.12))
 			draw_arc(cursor, 42.0, 0.0, TAU, 36, color, 2.0)
 		draw_string(ThemeDB.fallback_font, cursor + Vector2(18.0, -18.0), UiText.reason_name(str(aim_status.get("reason_code", "OK"))), HORIZONTAL_ALIGNMENT_LEFT, -1.0, 16, color)
@@ -231,6 +232,50 @@ func _draw_operation_overlay() -> void:
 		draw_circle(cursor, 48.0, Color(color.r, color.g, color.b, 0.12))
 		draw_arc(cursor, 48.0, 0.0, TAU, 36, color, 2.0)
 		draw_string(ThemeDB.fallback_font, cursor + Vector2(18.0, -18.0), "技能目标：%s" % UiText.target_type_name(skill_target_type), HORIZONTAL_ALIGNMENT_LEFT, -1.0, 16, color)
+
+
+func _draw_torpedo_aim_overlay(selected: Dictionary, cursor: Vector2, aim_status: Dictionary) -> void:
+	var origin: Vector2 = selected["position"]
+	var maximum_range := float(aim_status.get("range", 0.0))
+	var invalid_color := Color(1.0, 0.18, 0.16, 0.075)
+	var invalid_edge := Color(1.0, 0.24, 0.2, 0.72)
+	var valid_color := Color(0.18, 1.0, 0.48, 0.16)
+	var valid_edge := Color(0.28, 1.0, 0.55, 0.86)
+	draw_circle(origin, maximum_range, invalid_color)
+	draw_arc(origin, maximum_range, 0.0, TAU, 128, invalid_edge, 2.0)
+	for arc in aim_status.get("fire_arcs", []):
+		var center_angle := float(selected.get("heading", 0.0)) + deg_to_rad(float(arc.get("center", 0.0)))
+		var half_angle := deg_to_rad(float(arc.get("degrees", 0.0))) * 0.5
+		var minimum_range := float(arc.get("minimum_range", 0.0))
+		var arc_range := float(arc.get("range", maximum_range))
+		_draw_annular_sector(origin, minimum_range, arc_range, center_angle - half_angle, center_angle + half_angle, valid_color)
+		draw_arc(origin, arc_range, center_angle - half_angle, center_angle + half_angle, 36, valid_edge, 2.0)
+		draw_line(origin + Vector2.RIGHT.rotated(center_angle - half_angle) * minimum_range, origin + Vector2.RIGHT.rotated(center_angle - half_angle) * arc_range, valid_edge, 1.5)
+		draw_line(origin + Vector2.RIGHT.rotated(center_angle + half_angle) * minimum_range, origin + Vector2.RIGHT.rotated(center_angle + half_angle) * arc_range, valid_edge, 1.5)
+	var selected_heading := (cursor - origin).angle()
+	var selected_range := float(aim_status.get("selected_range", maximum_range))
+	var spread_half_angle := deg_to_rad(float(aim_status.get("spread_degrees", 0.0))) * 0.5
+	var white := Color(1.0, 1.0, 1.0, 0.95)
+	draw_line(origin, origin + Vector2.RIGHT.rotated(selected_heading) * selected_range, white, 2.5)
+	draw_line(origin, origin + Vector2.RIGHT.rotated(selected_heading - spread_half_angle) * selected_range, white, 1.5)
+	draw_line(origin, origin + Vector2.RIGHT.rotated(selected_heading + spread_half_angle) * selected_range, white, 1.5)
+	draw_arc(origin, selected_range, selected_heading - spread_half_angle, selected_heading + spread_half_angle, 16, white, 1.5)
+
+
+func _draw_annular_sector(center: Vector2, inner_radius: float, outer_radius: float, start_angle: float, end_angle: float, color: Color) -> void:
+	if outer_radius <= 0.0 or end_angle <= start_angle: return
+	var segment_count := maxi(8, int(ceil(rad_to_deg(end_angle - start_angle) / 4.0)))
+	var points := PackedVector2Array()
+	for segment in range(segment_count + 1):
+		var ratio := float(segment) / float(segment_count)
+		points.append(center + Vector2.RIGHT.rotated(lerpf(start_angle, end_angle, ratio)) * outer_radius)
+	if inner_radius <= 0.0:
+		points.append(center)
+	else:
+		for segment in range(segment_count, -1, -1):
+			var ratio := float(segment) / float(segment_count)
+			points.append(center + Vector2.RIGHT.rotated(lerpf(start_angle, end_angle, ratio)) * inner_radius)
+	draw_colored_polygon(points, color)
 
 
 func _unhandled_input(event: InputEvent) -> void:

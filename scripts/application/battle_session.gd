@@ -250,6 +250,13 @@ func get_primary_aim_status(unit_id: String, target_position: Vector2) -> Dictio
 	var operation_status := get_operation_status(unit_id)
 	validation["control_type"] = operation_status.get("primary_control_type", "")
 	validation["range"] = operation_status.get("primary_range", 0.0)
+	var aim_weapons := _primary_aim_weapons(weapon_states)
+	validation["weapon_type"] = _common_weapon_type(aim_weapons)
+	validation["fire_arcs"] = _aim_fire_arcs(aim_weapons)
+	var direction_weapon := _direction_weapon_for_aim(unit, aim_weapons, target_position)
+	validation["minimum_range"] = float(direction_weapon.get("minimum_range", 0.0))
+	validation["selected_range"] = float(direction_weapon.get("range", validation["range"]))
+	validation["spread_degrees"] = float(direction_weapon.get("spread", 0.0))
 	return validation
 
 
@@ -647,9 +654,7 @@ func _can_fire(unit: Dictionary, target: Dictionary, weapon: Dictionary) -> bool
 	var distance := (unit["position"] as Vector2).distance_to(target["position"] as Vector2)
 	if distance < float(weapon.get("minimum_range", 0.0)) or distance > float(weapon.get("range", 0.0)): return false
 	var target_angle := ((target["position"] as Vector2) - (unit["position"] as Vector2)).angle()
-	var arc_center := float(unit["heading"]) + deg_to_rad(float(weapon.get("fire_arc_center", 0.0)))
-	var angle_delta := absf(wrapf(target_angle - arc_center, -PI, PI))
-	return angle_delta <= deg_to_rad(float(weapon.get("fire_arc_degrees", 360.0)) * 0.5)
+	return _angle_in_weapon_fire_arcs(float(unit["heading"]), target_angle, weapon)
 
 
 func _can_fire_at_position(unit: Dictionary, target_position: Vector2, weapon: Dictionary) -> Dictionary:
@@ -659,9 +664,7 @@ func _can_fire_at_position(unit: Dictionary, target_position: Vector2, weapon: D
 	if distance > float(weapon.get("range", 0.0)):
 		return {"legal": false, "reason_code": "TARGET_OUT_OF_RANGE"}
 	var target_angle := (target_position - (unit["position"] as Vector2)).angle()
-	var arc_center := float(unit["heading"]) + deg_to_rad(float(weapon.get("fire_arc_center", 0.0)))
-	var angle_delta := absf(wrapf(target_angle - arc_center, -PI, PI))
-	if angle_delta > deg_to_rad(float(weapon.get("fire_arc_degrees", 360.0)) * 0.5):
+	if not _angle_in_weapon_fire_arcs(float(unit["heading"]), target_angle, weapon):
 		return {"legal": false, "reason_code": "FIRE_ARC_INVALID"}
 	return {"legal": true, "reason_code": "OK"}
 
@@ -966,6 +969,76 @@ func _validate_primary_fire(unit: Dictionary, weapon_states: Array, target_posit
 		if bool(validation.get("legal", false)): legal_states.append(weapon_state)
 		else: last_reason = str(validation.get("reason_code", last_reason))
 	return {"legal": not legal_states.is_empty(), "reason_code": "OK" if not legal_states.is_empty() else last_reason, "legal_weapon_states": legal_states}
+
+
+func _weapon_fire_arcs(weapon: Dictionary) -> Array:
+	var configured_arcs: Array = weapon.get("fire_arcs", [])
+	if not configured_arcs.is_empty():
+		return configured_arcs
+	return [{
+		"center": float(weapon.get("fire_arc_center", 0.0)),
+		"degrees": float(weapon.get("fire_arc_degrees", 360.0)),
+	}]
+
+
+func _angle_in_weapon_fire_arcs(unit_heading: float, target_angle: float, weapon: Dictionary) -> bool:
+	for arc in _weapon_fire_arcs(weapon):
+		var arc_center := unit_heading + deg_to_rad(float(arc.get("center", 0.0)))
+		var angle_delta := absf(wrapf(target_angle - arc_center, -PI, PI))
+		if angle_delta <= deg_to_rad(float(arc.get("degrees", 360.0)) * 0.5):
+			return true
+	return false
+
+
+func _primary_aim_weapons(weapon_states: Array) -> Array:
+	var weapons: Array = []
+	for weapon_state in weapon_states:
+		if float(weapon_state.get("reload_remaining", 0.0)) > 0.0: continue
+		var weapon: Dictionary = registry.get_definition("weapons", str(weapon_state.get("definition_id", "")))
+		if not weapon.is_empty():
+			weapons.append(weapon)
+	return weapons
+
+
+func _common_weapon_type(weapons: Array) -> String:
+	if weapons.is_empty(): return ""
+	var weapon_type := str(weapons[0].get("mount_type", ""))
+	for weapon in weapons:
+		if str(weapon.get("mount_type", "")) != weapon_type: return "Mixed"
+	return weapon_type
+
+
+func _aim_fire_arcs(weapons: Array) -> Array:
+	var result: Array = []
+	for weapon in weapons:
+		for arc in _weapon_fire_arcs(weapon):
+			result.append({
+				"center": float(arc.get("center", 0.0)),
+				"degrees": float(arc.get("degrees", 360.0)),
+				"minimum_range": float(weapon.get("minimum_range", 0.0)),
+				"range": float(weapon.get("range", 0.0)),
+				"spread_degrees": float(weapon.get("spread", 0.0)),
+				"weapon_id": str(weapon.get("id", "")),
+			})
+	return result
+
+
+func _direction_weapon_for_aim(unit: Dictionary, weapons: Array, target_position: Vector2) -> Dictionary:
+	if weapons.is_empty(): return {}
+	var target_angle := (target_position - (unit["position"] as Vector2)).angle()
+	for weapon in weapons:
+		if _angle_in_weapon_fire_arcs(float(unit["heading"]), target_angle, weapon):
+			return weapon
+	var nearest_weapon: Dictionary = weapons[0]
+	var nearest_delta := INF
+	for weapon in weapons:
+		for arc in _weapon_fire_arcs(weapon):
+			var arc_center := float(unit["heading"]) + deg_to_rad(float(arc.get("center", 0.0)))
+			var angle_delta := absf(wrapf(target_angle - arc_center, -PI, PI))
+			if angle_delta < nearest_delta:
+				nearest_delta = angle_delta
+				nearest_weapon = weapon
+	return nearest_weapon
 
 
 func _target_type(unit: Dictionary) -> String:

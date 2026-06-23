@@ -1,0 +1,1749 @@
+{
+  "definitions": [
+    {
+      "id": "weapon.enterprise_airstrike",
+      "display_name": "舰载机攻击队",
+      "weapon_group_id": "enterprise_airstrike",
+      "control_mode": "ManualPrimary",
+      "ammo_type": "",
+      "mount_type": "Aviation",
+      "mount_count": 2,
+      "shots_per_mount": 8,
+      "reload_time": 14,
+      "base_range": 760,
+      "range": 1520,
+      "minimum_range": 0,
+      "fire_arc_center": 0,
+      "fire_arc_degrees": 360,
+      "projectile_speed": 180,
+      "spread": 24,
+      "impact_radius": 48,
+      "accuracy_modifier": 0.06,
+      "shared_cooldown_group": "enterprise_airstrike",
+      "projectile_id": "projectile.aircraft_bomb",
+      "formula_id": "formula.medium_he",
+      "armor_damage_modifiers": {
+        "Unarmored": 1.1,
+        "Light": 1,
+        "Medium": 0.9,
+        "Heavy": 0.75,
+        "Submerged": 0,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface"
+      ]
+    },
+    {
+      "id": "weapon.enterprise_aa",
+      "display_name": "企业号防空炮阵",
+      "weapon_group_id": "enterprise_aa",
+      "control_mode": "Automatic",
+      "ammo_type": "",
+      "mount_type": "AntiAir",
+      "mount_count": 8,
+      "shots_per_mount": 4,
+      "reload_time": 0.6,
+      "base_range": 270,
+      "range": 540,
+      "minimum_range": 0,
+      "fire_arc_center": 0,
+      "fire_arc_degrees": 360,
+      "projectile_speed": 320,
+      "spread": 0,
+      "impact_radius": 18,
+      "accuracy_modifier": 0,
+      "shared_cooldown_group": "",
+      "projectile_id": "projectile.shell",
+      "formula_id": "formula.small_he",
+      "armor_damage_modifiers": {
+        "Unarmored": 0,
+        "Light": 0,
+        "Medium": 0,
+        "Heavy": 0,
+        "Submerged": 0,
+        "Air": 1
+      },
+      "target_types": [
+        "Air"
+      ]
+    },
+    {
+      "id": "weapon.iowa_406_ap",
+      "display_name": "406毫米主炮（穿甲弹）",
+      "weapon_group_id": "iowa_main",
+      "control_mode": "ManualPrimary",
+      "ammo_type": "AP",
+      "mount_type": "Gun",
+      "mount_count": 3,
+      "shots_per_mount": 3,
+      "reload_time": 10,
+      "base_range": 740,
+      "range": 1480,
+      "minimum_range": 0,
+      "fire_arc_center": 0,
+      "fire_arc_degrees": 290,
+      "projectile_speed": 430,
+      "spread": 18,
+      "impact_radius": 48,
+      "accuracy_modifier": 0.03,
+      "shared_cooldown_group": "iowa_main",
+      "projectile_id": "projectile.shell",
+      "formula_id": "formula.large_ap",
+      "armor_damage_modifiers": {
+        "Unarmored": 0.65,
+        "Light": 0.45,
+        "Medium": 1.1,
+        "Heavy": 1.25,
+        "Submerged": 0,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface"
+      ]
+    },
+    {
+      "id": "weapon.iowa_406_he",
+      "display_name": "406毫米主炮（高爆弹）",
+      "weapon_group_id": "iowa_main",
+      "control_mode": "ManualPrimary",
+      "ammo_type": "HE",
+      "mount_type": "Gun",
+      "mount_count": 3,
+      "shots_per_mount": 3,
+      "reload_time": 10,
+      "base_range": 700,
+      "range": 1400,
+      "minimum_range": 0,
+      "fire_arc_center": 0,
+      "fire_arc_degrees": 290,
+      "projectile_speed": 400,
+      "spread": 24,
+      "impact_radius": 48,
+      "accuracy_modifier": 0,
+      "shared_cooldown_group": "iowa_main",
+      "projectile_id": "projectile.shell",
+      "formula_id": "formula.large_he",
+      "armor_damage_modifiers": {
+        "Unarmored": 1,
+        "Light": 1.1,
+        "Medium": 0.95,
+        "Heavy": 0.75,
+        "Submerged": 0,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface"
+      ]
+    },
+    {
+      "id": "weapon.iowa_127_he",
+      "display_name": "127毫米副炮",
+      "weapon_group_id": "iowa_secondary",
+      "control_mode": "Automatic",
+      "ammo_type": "HE",
+      "mount_type": "Gun",
+      "mount_count": 10,
+      "shots_per_mount": 2,
+      "reload_time": 3.2,
+      "base_range": 340,
+      "range": 680,
+      "minimum_range": 0,
+      "fire_arc_center": 0,
+      "fire_arc_degrees": 320,
+      "projectile_speed": 320,
+      "spread": 18,
+      "impact_radius": 30,
+      "accuracy_modifier": 0.02,
+      "shared_cooldown_group": "iowa_secondary",
+      "projectile_id": "projectile.shell",
+      "formula_id": "formula.small_he",
+      "armor_damage_modifiers": {
+        "Unarmored": 1.2,
+        "Light": 1.15,
+        "Medium": 0.45,
+        "Heavy": 0.13,
+        "Submerged": 0,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface"
+      ]
+    },
+    {
+      "id": "weapon.iowa_aa",
+      "display_name": "衣阿华号防空炮阵",
+      "weapon_group_id": "iowa_aa",
+      "control_mode": "Automatic",
+      "ammo_type": "",
+      "mount_type": "AntiAir",
+      "mount_count": 10,
+      "shots_per_mount": 4,
+      "reload_time": 0.55,
+      "base_range": 280,
+      "range": 560,
+      "minimum_range": 0,
+      "fire_arc_center": 0,
+      "fire_arc_degrees": 360,
+      "projectile_speed": 320,
+      "spread": 0,
+      "impact_radius": 18,
+      "accuracy_modifier": 0,
+      "shared_cooldown_group": "",
+      "projectile_id": "projectile.shell",
+      "formula_id": "formula.small_he",
+      "armor_damage_modifiers": {
+        "Unarmored": 0,
+        "Light": 0,
+        "Medium": 0,
+        "Heavy": 0,
+        "Submerged": 0,
+        "Air": 1
+      },
+      "target_types": [
+        "Air"
+      ]
+    },
+    {
+      "id": "weapon.san_diego_127_he",
+      "display_name": "127毫米两用炮高爆",
+      "weapon_group_id": "san_diego_gun",
+      "control_mode": "Automatic",
+      "ammo_type": "HE",
+      "mount_type": "Gun",
+      "mount_count": 8,
+      "shots_per_mount": 2,
+      "reload_time": 3.2,
+      "base_range": 410,
+      "range": 820,
+      "minimum_range": 0,
+      "fire_arc_center": 0,
+      "fire_arc_degrees": 320,
+      "projectile_speed": 330,
+      "spread": 18,
+      "impact_radius": 30,
+      "accuracy_modifier": 0.03,
+      "shared_cooldown_group": "san_diego_gun",
+      "projectile_id": "projectile.shell",
+      "formula_id": "formula.small_he",
+      "armor_damage_modifiers": {
+        "Unarmored": 1.2,
+        "Light": 1.15,
+        "Medium": 0.45,
+        "Heavy": 0.13,
+        "Submerged": 0,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface"
+      ]
+    },
+    {
+      "id": "weapon.san_diego_torpedo",
+      "display_name": "533毫米鱼雷",
+      "weapon_group_id": "san_diego_torpedo",
+      "control_mode": "ManualPrimary",
+      "ammo_type": "",
+      "mount_type": "Torpedo",
+      "mount_count": 2,
+      "shots_per_mount": 4,
+      "reload_time": 18,
+      "base_range": 400,
+      "range": 800,
+      "minimum_range": 20,
+      "fire_arc_center": 90,
+      "fire_arc_degrees": 70,
+      "projectile_speed": 140,
+      "spread": 14,
+      "impact_radius": 0,
+      "accuracy_modifier": 0,
+      "shared_cooldown_group": "",
+      "projectile_id": "projectile.surface_torpedo",
+      "formula_id": "formula.surface_torpedo",
+      "armor_damage_modifiers": {
+        "Unarmored": 0.7,
+        "Light": 0.7,
+        "Medium": 1,
+        "Heavy": 1.25,
+        "Submerged": 1,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface",
+        "Submerged"
+      ],
+      "fire_arcs": [
+        {
+          "center": -90,
+          "degrees": 70
+        },
+        {
+          "center": 90,
+          "degrees": 70
+        }
+      ]
+    },
+    {
+      "id": "weapon.san_diego_aa_heavy",
+      "display_name": "127毫米两用炮防空",
+      "weapon_group_id": "san_diego_aa_heavy",
+      "control_mode": "Automatic",
+      "ammo_type": "",
+      "mount_type": "AntiAir",
+      "mount_count": 8,
+      "shots_per_mount": 2,
+      "reload_time": 1.2,
+      "base_range": 310,
+      "range": 620,
+      "minimum_range": 0,
+      "fire_arc_center": 0,
+      "fire_arc_degrees": 360,
+      "projectile_speed": 320,
+      "spread": 0,
+      "impact_radius": 18,
+      "accuracy_modifier": 0,
+      "shared_cooldown_group": "",
+      "projectile_id": "projectile.shell",
+      "formula_id": "formula.small_he",
+      "armor_damage_modifiers": {
+        "Unarmored": 0,
+        "Light": 0,
+        "Medium": 0,
+        "Heavy": 0,
+        "Submerged": 0,
+        "Air": 1
+      },
+      "target_types": [
+        "Air"
+      ]
+    },
+    {
+      "id": "weapon.san_diego_aa_rapid",
+      "display_name": "防空炮阵",
+      "weapon_group_id": "san_diego_aa_rapid",
+      "control_mode": "Automatic",
+      "ammo_type": "",
+      "mount_type": "AntiAir",
+      "mount_count": 8,
+      "shots_per_mount": 4,
+      "reload_time": 0.45,
+      "base_range": 300,
+      "range": 600,
+      "minimum_range": 0,
+      "fire_arc_center": 0,
+      "fire_arc_degrees": 360,
+      "projectile_speed": 320,
+      "spread": 0,
+      "impact_radius": 18,
+      "accuracy_modifier": 0,
+      "shared_cooldown_group": "",
+      "projectile_id": "projectile.shell",
+      "formula_id": "formula.small_he",
+      "armor_damage_modifiers": {
+        "Unarmored": 0,
+        "Light": 0,
+        "Medium": 0,
+        "Heavy": 0,
+        "Submerged": 0,
+        "Air": 1
+      },
+      "target_types": [
+        "Air"
+      ]
+    },
+    {
+      "id": "weapon.ward_102_he",
+      "display_name": "102毫米主炮高爆",
+      "weapon_group_id": "ward_gun",
+      "control_mode": "Automatic",
+      "ammo_type": "HE",
+      "mount_type": "Gun",
+      "mount_count": 4,
+      "shots_per_mount": 1,
+      "reload_time": 2.8,
+      "base_range": 330,
+      "range": 660,
+      "minimum_range": 0,
+      "fire_arc_center": 0,
+      "fire_arc_degrees": 300,
+      "projectile_speed": 300,
+      "spread": 20,
+      "impact_radius": 30,
+      "accuracy_modifier": 0.02,
+      "shared_cooldown_group": "ward_gun",
+      "projectile_id": "projectile.shell",
+      "formula_id": "formula.small_he",
+      "armor_damage_modifiers": {
+        "Unarmored": 1.2,
+        "Light": 1.15,
+        "Medium": 0.45,
+        "Heavy": 0.13,
+        "Submerged": 0,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface"
+      ]
+    },
+    {
+      "id": "weapon.ward_torpedo",
+      "display_name": "533毫米鱼雷",
+      "weapon_group_id": "ward_torpedo",
+      "control_mode": "ManualPrimary",
+      "ammo_type": "",
+      "mount_type": "Torpedo",
+      "mount_count": 4,
+      "shots_per_mount": 3,
+      "reload_time": 16,
+      "base_range": 420,
+      "range": 840,
+      "minimum_range": 20,
+      "fire_arc_center": 90,
+      "fire_arc_degrees": 70,
+      "projectile_speed": 150,
+      "spread": 14,
+      "impact_radius": 0,
+      "accuracy_modifier": 0,
+      "shared_cooldown_group": "",
+      "projectile_id": "projectile.surface_torpedo",
+      "formula_id": "formula.surface_torpedo",
+      "armor_damage_modifiers": {
+        "Unarmored": 0.7,
+        "Light": 0.7,
+        "Medium": 1,
+        "Heavy": 1.25,
+        "Submerged": 1,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface",
+        "Submerged"
+      ],
+      "fire_arcs": [
+        {
+          "center": -90,
+          "degrees": 70
+        },
+        {
+          "center": 90,
+          "degrees": 70
+        }
+      ]
+    },
+    {
+      "id": "weapon.hood_381_ap",
+      "display_name": "381毫米主炮（穿甲弹）",
+      "weapon_group_id": "hood_main",
+      "control_mode": "ManualPrimary",
+      "ammo_type": "AP",
+      "mount_type": "Gun",
+      "mount_count": 4,
+      "shots_per_mount": 2,
+      "reload_time": 9.8,
+      "base_range": 700,
+      "range": 1400,
+      "minimum_range": 0,
+      "fire_arc_center": 0,
+      "fire_arc_degrees": 290,
+      "projectile_speed": 420,
+      "spread": 18,
+      "impact_radius": 48,
+      "accuracy_modifier": 0.03,
+      "shared_cooldown_group": "hood_main",
+      "projectile_id": "projectile.shell",
+      "formula_id": "formula.large_ap",
+      "armor_damage_modifiers": {
+        "Unarmored": 0.65,
+        "Light": 0.45,
+        "Medium": 1.1,
+        "Heavy": 1.25,
+        "Submerged": 0,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface"
+      ]
+    },
+    {
+      "id": "weapon.hood_381_he",
+      "display_name": "381毫米主炮（高爆弹）",
+      "weapon_group_id": "hood_main",
+      "control_mode": "ManualPrimary",
+      "ammo_type": "HE",
+      "mount_type": "Gun",
+      "mount_count": 4,
+      "shots_per_mount": 2,
+      "reload_time": 9.8,
+      "base_range": 670,
+      "range": 1340,
+      "minimum_range": 0,
+      "fire_arc_center": 0,
+      "fire_arc_degrees": 290,
+      "projectile_speed": 390,
+      "spread": 24,
+      "impact_radius": 48,
+      "accuracy_modifier": 0,
+      "shared_cooldown_group": "hood_main",
+      "projectile_id": "projectile.shell",
+      "formula_id": "formula.large_he",
+      "armor_damage_modifiers": {
+        "Unarmored": 1,
+        "Light": 1.1,
+        "Medium": 0.95,
+        "Heavy": 0.75,
+        "Submerged": 0,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface"
+      ]
+    },
+    {
+      "id": "weapon.hood_secondary",
+      "display_name": "护航副炮",
+      "weapon_group_id": "hood_secondary",
+      "control_mode": "Automatic",
+      "ammo_type": "HE",
+      "mount_type": "Gun",
+      "mount_count": 6,
+      "shots_per_mount": 1,
+      "reload_time": 3.6,
+      "base_range": 320,
+      "range": 640,
+      "minimum_range": 0,
+      "fire_arc_center": 0,
+      "fire_arc_degrees": 300,
+      "projectile_speed": 300,
+      "spread": 18,
+      "impact_radius": 40,
+      "accuracy_modifier": 0.01,
+      "shared_cooldown_group": "hood_secondary",
+      "projectile_id": "projectile.shell",
+      "formula_id": "formula.medium_he",
+      "armor_damage_modifiers": {
+        "Unarmored": 1.15,
+        "Light": 1.2,
+        "Medium": 0.8,
+        "Heavy": 0.45,
+        "Submerged": 0,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface"
+      ]
+    },
+    {
+      "id": "weapon.sirius_133_he",
+      "display_name": "133毫米两用炮高爆",
+      "weapon_group_id": "sirius_main",
+      "control_mode": "ManualPrimary",
+      "ammo_type": "HE",
+      "mount_type": "Gun",
+      "mount_count": 5,
+      "shots_per_mount": 2,
+      "reload_time": 3.2,
+      "base_range": 400,
+      "range": 800,
+      "minimum_range": 0,
+      "fire_arc_center": 0,
+      "fire_arc_degrees": 310,
+      "projectile_speed": 330,
+      "spread": 18,
+      "impact_radius": 30,
+      "accuracy_modifier": 0.03,
+      "shared_cooldown_group": "sirius_main",
+      "projectile_id": "projectile.shell",
+      "formula_id": "formula.small_he",
+      "armor_damage_modifiers": {
+        "Unarmored": 1.2,
+        "Light": 1.15,
+        "Medium": 0.45,
+        "Heavy": 0.13,
+        "Submerged": 0,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface"
+      ]
+    },
+    {
+      "id": "weapon.sirius_aa",
+      "display_name": "天狼星号防空炮阵",
+      "weapon_group_id": "sirius_aa",
+      "control_mode": "Automatic",
+      "ammo_type": "",
+      "mount_type": "AntiAir",
+      "mount_count": 7,
+      "shots_per_mount": 4,
+      "reload_time": 0.6,
+      "base_range": 290,
+      "range": 580,
+      "minimum_range": 0,
+      "fire_arc_center": 0,
+      "fire_arc_degrees": 360,
+      "projectile_speed": 320,
+      "spread": 0,
+      "impact_radius": 18,
+      "accuracy_modifier": 0,
+      "shared_cooldown_group": "",
+      "projectile_id": "projectile.shell",
+      "formula_id": "formula.small_he",
+      "armor_damage_modifiers": {
+        "Unarmored": 0,
+        "Light": 0,
+        "Medium": 0,
+        "Heavy": 0,
+        "Submerged": 0,
+        "Air": 1
+      },
+      "target_types": [
+        "Air"
+      ]
+    },
+    {
+      "id": "weapon.argus_airstrike",
+      "display_name": "基础空袭队",
+      "weapon_group_id": "argus_airstrike",
+      "control_mode": "ManualPrimary",
+      "ammo_type": "",
+      "mount_type": "Aviation",
+      "mount_count": 1,
+      "shots_per_mount": 4,
+      "reload_time": 16,
+      "base_range": 660,
+      "range": 1320,
+      "minimum_range": 0,
+      "fire_arc_center": 0,
+      "fire_arc_degrees": 360,
+      "projectile_speed": 150,
+      "spread": 28,
+      "impact_radius": 48,
+      "accuracy_modifier": 0,
+      "shared_cooldown_group": "argus_airstrike",
+      "projectile_id": "projectile.aircraft_bomb",
+      "formula_id": "formula.medium_he",
+      "armor_damage_modifiers": {
+        "Unarmored": 1.1,
+        "Light": 1,
+        "Medium": 0.9,
+        "Heavy": 0.75,
+        "Submerged": 0,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface"
+      ]
+    },
+    {
+      "id": "weapon.argus_aa",
+      "display_name": "百眼巨人号轻防空",
+      "weapon_group_id": "argus_aa",
+      "control_mode": "Automatic",
+      "ammo_type": "",
+      "mount_type": "AntiAir",
+      "mount_count": 4,
+      "shots_per_mount": 1,
+      "reload_time": 1.4,
+      "base_range": 220,
+      "range": 440,
+      "minimum_range": 0,
+      "fire_arc_center": 0,
+      "fire_arc_degrees": 360,
+      "projectile_speed": 320,
+      "spread": 0,
+      "impact_radius": 18,
+      "accuracy_modifier": 0,
+      "shared_cooldown_group": "",
+      "projectile_id": "projectile.shell",
+      "formula_id": "formula.small_he",
+      "armor_damage_modifiers": {
+        "Unarmored": 0,
+        "Light": 0,
+        "Medium": 0,
+        "Heavy": 0,
+        "Submerged": 0,
+        "Air": 1
+      },
+      "target_types": [
+        "Air"
+      ]
+    },
+    {
+      "id": "weapon.kirov_180_ap",
+      "display_name": "180毫米主炮（穿甲弹）",
+      "weapon_group_id": "kirov_main",
+      "control_mode": "Automatic",
+      "ammo_type": "AP",
+      "mount_type": "Gun",
+      "mount_count": 3,
+      "shots_per_mount": 3,
+      "reload_time": 5,
+      "base_range": 540,
+      "range": 1080,
+      "minimum_range": 0,
+      "fire_arc_center": 0,
+      "fire_arc_degrees": 300,
+      "projectile_speed": 380,
+      "spread": 16,
+      "impact_radius": 40,
+      "accuracy_modifier": 0.03,
+      "shared_cooldown_group": "kirov_main",
+      "projectile_id": "projectile.shell",
+      "formula_id": "formula.medium_ap",
+      "armor_damage_modifiers": {
+        "Unarmored": 0.8,
+        "Light": 0.65,
+        "Medium": 1.05,
+        "Heavy": 0.95,
+        "Submerged": 0,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface"
+      ]
+    },
+    {
+      "id": "weapon.kirov_180_he",
+      "display_name": "180毫米主炮（高爆弹）",
+      "weapon_group_id": "kirov_main",
+      "control_mode": "Automatic",
+      "ammo_type": "HE",
+      "mount_type": "Gun",
+      "mount_count": 3,
+      "shots_per_mount": 3,
+      "reload_time": 4.7,
+      "base_range": 510,
+      "range": 1020,
+      "minimum_range": 0,
+      "fire_arc_center": 0,
+      "fire_arc_degrees": 300,
+      "projectile_speed": 350,
+      "spread": 22,
+      "impact_radius": 40,
+      "accuracy_modifier": 0.01,
+      "shared_cooldown_group": "kirov_main",
+      "projectile_id": "projectile.shell",
+      "formula_id": "formula.medium_he",
+      "armor_damage_modifiers": {
+        "Unarmored": 1.15,
+        "Light": 1.2,
+        "Medium": 0.8,
+        "Heavy": 0.45,
+        "Submerged": 0,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface"
+      ]
+    },
+    {
+      "id": "weapon.kirov_torpedo",
+      "display_name": "533毫米鱼雷",
+      "weapon_group_id": "kirov_torpedo",
+      "control_mode": "ManualPrimary",
+      "ammo_type": "",
+      "mount_type": "Torpedo",
+      "mount_count": 2,
+      "shots_per_mount": 3,
+      "reload_time": 15,
+      "base_range": 430,
+      "range": 860,
+      "minimum_range": 20,
+      "fire_arc_center": 90,
+      "fire_arc_degrees": 70,
+      "projectile_speed": 145,
+      "spread": 12,
+      "impact_radius": 0,
+      "accuracy_modifier": 0,
+      "shared_cooldown_group": "",
+      "projectile_id": "projectile.surface_torpedo",
+      "formula_id": "formula.surface_torpedo",
+      "armor_damage_modifiers": {
+        "Unarmored": 0.7,
+        "Light": 0.7,
+        "Medium": 1,
+        "Heavy": 1.25,
+        "Submerged": 1,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface",
+        "Submerged"
+      ],
+      "fire_arcs": [
+        {
+          "center": -90,
+          "degrees": 70
+        },
+        {
+          "center": 90,
+          "degrees": 70
+        }
+      ]
+    },
+    {
+      "id": "weapon.pobeda_bomber",
+      "display_name": "攻击机编队",
+      "weapon_group_id": "pobeda_airstrike",
+      "control_mode": "ManualPrimary",
+      "ammo_type": "",
+      "mount_type": "Aviation",
+      "mount_count": 2,
+      "shots_per_mount": 6,
+      "reload_time": 15,
+      "base_range": 730,
+      "range": 1460,
+      "minimum_range": 0,
+      "fire_arc_center": 0,
+      "fire_arc_degrees": 360,
+      "projectile_speed": 170,
+      "spread": 24,
+      "impact_radius": 48,
+      "accuracy_modifier": 0.03,
+      "shared_cooldown_group": "pobeda_airstrike",
+      "projectile_id": "projectile.aircraft_bomb",
+      "formula_id": "formula.medium_he",
+      "armor_damage_modifiers": {
+        "Unarmored": 1.1,
+        "Light": 1,
+        "Medium": 0.9,
+        "Heavy": 0.75,
+        "Submerged": 0,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface"
+      ]
+    },
+    {
+      "id": "weapon.pobeda_ap_bomber",
+      "display_name": "航空穿甲弹编队",
+      "weapon_group_id": "pobeda_airstrike",
+      "control_mode": "ManualPrimary",
+      "ammo_type": "",
+      "mount_type": "Aviation",
+      "mount_count": 1,
+      "shots_per_mount": 4,
+      "reload_time": 20,
+      "base_range": 710,
+      "range": 1420,
+      "minimum_range": 0,
+      "fire_arc_center": 0,
+      "fire_arc_degrees": 360,
+      "projectile_speed": 160,
+      "spread": 18,
+      "impact_radius": 48,
+      "accuracy_modifier": 0.02,
+      "shared_cooldown_group": "pobeda_airstrike",
+      "projectile_id": "projectile.aircraft_bomb",
+      "formula_id": "formula.large_ap",
+      "armor_damage_modifiers": {
+        "Unarmored": 1.1,
+        "Light": 1,
+        "Medium": 0.9,
+        "Heavy": 0.75,
+        "Submerged": 0,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface"
+      ]
+    },
+    {
+      "id": "weapon.gnevny_130_he",
+      "display_name": "130毫米主炮高爆",
+      "weapon_group_id": "gnevny_gun",
+      "control_mode": "Automatic",
+      "ammo_type": "HE",
+      "mount_type": "Gun",
+      "mount_count": 4,
+      "shots_per_mount": 1,
+      "reload_time": 2.7,
+      "base_range": 360,
+      "range": 720,
+      "minimum_range": 0,
+      "fire_arc_center": 0,
+      "fire_arc_degrees": 300,
+      "projectile_speed": 320,
+      "spread": 20,
+      "impact_radius": 30,
+      "accuracy_modifier": 0.01,
+      "shared_cooldown_group": "gnevny_gun",
+      "projectile_id": "projectile.shell",
+      "formula_id": "formula.small_he",
+      "armor_damage_modifiers": {
+        "Unarmored": 1.2,
+        "Light": 1.15,
+        "Medium": 0.45,
+        "Heavy": 0.13,
+        "Submerged": 0,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface"
+      ]
+    },
+    {
+      "id": "weapon.gnevny_torpedo",
+      "display_name": "533毫米鱼雷",
+      "weapon_group_id": "gnevny_torpedo",
+      "control_mode": "ManualPrimary",
+      "ammo_type": "",
+      "mount_type": "Torpedo",
+      "mount_count": 2,
+      "shots_per_mount": 3,
+      "reload_time": 14,
+      "base_range": 440,
+      "range": 880,
+      "minimum_range": 20,
+      "fire_arc_center": 90,
+      "fire_arc_degrees": 70,
+      "projectile_speed": 150,
+      "spread": 12,
+      "impact_radius": 0,
+      "accuracy_modifier": 0,
+      "shared_cooldown_group": "",
+      "projectile_id": "projectile.surface_torpedo",
+      "formula_id": "formula.surface_torpedo",
+      "armor_damage_modifiers": {
+        "Unarmored": 0.7,
+        "Light": 0.7,
+        "Medium": 1,
+        "Heavy": 1.25,
+        "Submerged": 1,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface",
+        "Submerged"
+      ],
+      "fire_arcs": [
+        {
+          "center": -90,
+          "degrees": 70
+        },
+        {
+          "center": 90,
+          "degrees": 70
+        }
+      ]
+    },
+    {
+      "id": "weapon.prinz_203_ap",
+      "display_name": "203毫米主炮（穿甲弹）",
+      "weapon_group_id": "prinz_main",
+      "control_mode": "Automatic",
+      "ammo_type": "AP",
+      "mount_type": "Gun",
+      "mount_count": 4,
+      "shots_per_mount": 2,
+      "reload_time": 5.3,
+      "base_range": 530,
+      "range": 1060,
+      "minimum_range": 0,
+      "fire_arc_center": 0,
+      "fire_arc_degrees": 300,
+      "projectile_speed": 380,
+      "spread": 16,
+      "impact_radius": 40,
+      "accuracy_modifier": 0.04,
+      "shared_cooldown_group": "prinz_main",
+      "projectile_id": "projectile.shell",
+      "formula_id": "formula.medium_ap",
+      "armor_damage_modifiers": {
+        "Unarmored": 0.8,
+        "Light": 0.65,
+        "Medium": 1.05,
+        "Heavy": 0.95,
+        "Submerged": 0,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface"
+      ]
+    },
+    {
+      "id": "weapon.prinz_203_he",
+      "display_name": "203毫米主炮（高爆弹）",
+      "weapon_group_id": "prinz_main",
+      "control_mode": "Automatic",
+      "ammo_type": "HE",
+      "mount_type": "Gun",
+      "mount_count": 4,
+      "shots_per_mount": 2,
+      "reload_time": 4.8,
+      "base_range": 500,
+      "range": 1000,
+      "minimum_range": 0,
+      "fire_arc_center": 0,
+      "fire_arc_degrees": 300,
+      "projectile_speed": 350,
+      "spread": 22,
+      "impact_radius": 40,
+      "accuracy_modifier": 0.01,
+      "shared_cooldown_group": "prinz_main",
+      "projectile_id": "projectile.shell",
+      "formula_id": "formula.medium_he",
+      "armor_damage_modifiers": {
+        "Unarmored": 1.15,
+        "Light": 1.2,
+        "Medium": 0.8,
+        "Heavy": 0.45,
+        "Submerged": 0,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface"
+      ]
+    },
+    {
+      "id": "weapon.prinz_torpedo",
+      "display_name": "533毫米鱼雷",
+      "weapon_group_id": "prinz_torpedo",
+      "control_mode": "ManualPrimary",
+      "ammo_type": "",
+      "mount_type": "Torpedo",
+      "mount_count": 2,
+      "shots_per_mount": 3,
+      "reload_time": 16,
+      "base_range": 430,
+      "range": 860,
+      "minimum_range": 20,
+      "fire_arc_center": 90,
+      "fire_arc_degrees": 75,
+      "projectile_speed": 145,
+      "spread": 12,
+      "impact_radius": 0,
+      "accuracy_modifier": 0,
+      "shared_cooldown_group": "",
+      "projectile_id": "projectile.surface_torpedo",
+      "formula_id": "formula.surface_torpedo",
+      "armor_damage_modifiers": {
+        "Unarmored": 0.7,
+        "Light": 0.7,
+        "Medium": 1,
+        "Heavy": 1.25,
+        "Submerged": 1,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface",
+        "Submerged"
+      ],
+      "fire_arcs": [
+        {
+          "center": -90,
+          "degrees": 75
+        },
+        {
+          "center": 90,
+          "degrees": 75
+        }
+      ]
+    },
+    {
+      "id": "weapon.u47_fore_torpedo",
+      "display_name": "前部鱼雷发射管",
+      "weapon_group_id": "u47_torpedo",
+      "control_mode": "ManualPrimary",
+      "ammo_type": "",
+      "mount_type": "Torpedo",
+      "mount_count": 1,
+      "shots_per_mount": 4,
+      "reload_time": 16,
+      "base_range": 470,
+      "range": 940,
+      "minimum_range": 20,
+      "fire_arc_center": 0,
+      "fire_arc_degrees": 110,
+      "projectile_speed": 155,
+      "spread": 8,
+      "impact_radius": 0,
+      "accuracy_modifier": 0,
+      "shared_cooldown_group": "",
+      "projectile_id": "projectile.submarine_torpedo",
+      "formula_id": "formula.submarine_torpedo",
+      "armor_damage_modifiers": {
+        "Unarmored": 0.7,
+        "Light": 0.7,
+        "Medium": 1,
+        "Heavy": 1.25,
+        "Submerged": 1,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface",
+        "Submerged"
+      ],
+      "fire_arcs": [
+        {
+          "center": 0,
+          "degrees": 110
+        }
+      ]
+    },
+    {
+      "id": "weapon.u47_aft_torpedo",
+      "display_name": "后部鱼雷发射管",
+      "weapon_group_id": "u47_torpedo",
+      "control_mode": "ManualPrimary",
+      "ammo_type": "",
+      "mount_type": "Torpedo",
+      "mount_count": 1,
+      "shots_per_mount": 1,
+      "reload_time": 18,
+      "base_range": 400,
+      "range": 800,
+      "minimum_range": 20,
+      "fire_arc_center": 180,
+      "fire_arc_degrees": 90,
+      "projectile_speed": 145,
+      "spread": 10,
+      "impact_radius": 0,
+      "accuracy_modifier": 0,
+      "shared_cooldown_group": "",
+      "projectile_id": "projectile.submarine_torpedo",
+      "formula_id": "formula.submarine_torpedo",
+      "armor_damage_modifiers": {
+        "Unarmored": 0.7,
+        "Light": 0.7,
+        "Medium": 1,
+        "Heavy": 1.25,
+        "Submerged": 1,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface",
+        "Submerged"
+      ],
+      "fire_arcs": [
+        {
+          "center": 180,
+          "degrees": 90
+        }
+      ]
+    },
+    {
+      "id": "weapon.yamato_460_ap",
+      "display_name": "460毫米主炮（穿甲弹）",
+      "weapon_group_id": "yamato_main",
+      "control_mode": "ManualPrimary",
+      "ammo_type": "AP",
+      "mount_type": "Gun",
+      "mount_count": 3,
+      "shots_per_mount": 3,
+      "reload_time": 12,
+      "base_range": 780,
+      "range": 1560,
+      "minimum_range": 0,
+      "fire_arc_center": 0,
+      "fire_arc_degrees": 270,
+      "projectile_speed": 440,
+      "spread": 20,
+      "impact_radius": 48,
+      "accuracy_modifier": 0.02,
+      "shared_cooldown_group": "yamato_main",
+      "projectile_id": "projectile.shell",
+      "formula_id": "formula.large_ap",
+      "armor_damage_modifiers": {
+        "Unarmored": 0.65,
+        "Light": 0.45,
+        "Medium": 1.1,
+        "Heavy": 1.25,
+        "Submerged": 0,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface"
+      ]
+    },
+    {
+      "id": "weapon.yamato_460_he",
+      "display_name": "460毫米主炮（高爆弹）",
+      "weapon_group_id": "yamato_main",
+      "control_mode": "ManualPrimary",
+      "ammo_type": "HE",
+      "mount_type": "Gun",
+      "mount_count": 3,
+      "shots_per_mount": 3,
+      "reload_time": 12,
+      "base_range": 740,
+      "range": 1480,
+      "minimum_range": 0,
+      "fire_arc_center": 0,
+      "fire_arc_degrees": 270,
+      "projectile_speed": 400,
+      "spread": 28,
+      "impact_radius": 48,
+      "accuracy_modifier": 0,
+      "shared_cooldown_group": "yamato_main",
+      "projectile_id": "projectile.shell",
+      "formula_id": "formula.large_he",
+      "armor_damage_modifiers": {
+        "Unarmored": 1,
+        "Light": 1.1,
+        "Medium": 0.95,
+        "Heavy": 0.75,
+        "Submerged": 0,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface"
+      ]
+    },
+    {
+      "id": "weapon.yamato_155_he",
+      "display_name": "155毫米副炮",
+      "weapon_group_id": "yamato_secondary",
+      "control_mode": "Automatic",
+      "ammo_type": "HE",
+      "mount_type": "Gun",
+      "mount_count": 4,
+      "shots_per_mount": 3,
+      "reload_time": 4.5,
+      "base_range": 360,
+      "range": 720,
+      "minimum_range": 0,
+      "fire_arc_center": 0,
+      "fire_arc_degrees": 280,
+      "projectile_speed": 320,
+      "spread": 22,
+      "impact_radius": 40,
+      "accuracy_modifier": 0.01,
+      "shared_cooldown_group": "yamato_secondary",
+      "projectile_id": "projectile.shell",
+      "formula_id": "formula.medium_he",
+      "armor_damage_modifiers": {
+        "Unarmored": 1.15,
+        "Light": 1.2,
+        "Medium": 0.8,
+        "Heavy": 0.45,
+        "Submerged": 0,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface"
+      ]
+    },
+    {
+      "id": "weapon.yukikaze_127_he",
+      "display_name": "127毫米主炮高爆",
+      "weapon_group_id": "yukikaze_gun",
+      "control_mode": "Automatic",
+      "ammo_type": "HE",
+      "mount_type": "Gun",
+      "mount_count": 3,
+      "shots_per_mount": 2,
+      "reload_time": 2.6,
+      "base_range": 360,
+      "range": 720,
+      "minimum_range": 0,
+      "fire_arc_center": 0,
+      "fire_arc_degrees": 310,
+      "projectile_speed": 320,
+      "spread": 18,
+      "impact_radius": 30,
+      "accuracy_modifier": 0.03,
+      "shared_cooldown_group": "yukikaze_gun",
+      "projectile_id": "projectile.shell",
+      "formula_id": "formula.small_he",
+      "armor_damage_modifiers": {
+        "Unarmored": 1.2,
+        "Light": 1.15,
+        "Medium": 0.45,
+        "Heavy": 0.13,
+        "Submerged": 0,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface"
+      ]
+    },
+    {
+      "id": "weapon.yukikaze_torpedo",
+      "display_name": "610毫米鱼雷",
+      "weapon_group_id": "yukikaze_torpedo",
+      "control_mode": "ManualPrimary",
+      "ammo_type": "",
+      "mount_type": "Torpedo",
+      "mount_count": 2,
+      "shots_per_mount": 4,
+      "reload_time": 15,
+      "base_range": 500,
+      "range": 1000,
+      "minimum_range": 20,
+      "fire_arc_center": 90,
+      "fire_arc_degrees": 70,
+      "projectile_speed": 165,
+      "spread": 10,
+      "impact_radius": 0,
+      "accuracy_modifier": 0,
+      "shared_cooldown_group": "",
+      "projectile_id": "projectile.surface_torpedo",
+      "formula_id": "formula.surface_torpedo",
+      "armor_damage_modifiers": {
+        "Unarmored": 0.7,
+        "Light": 0.7,
+        "Medium": 1,
+        "Heavy": 1.25,
+        "Submerged": 1,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface",
+        "Submerged"
+      ],
+      "fire_arcs": [
+        {
+          "center": -90,
+          "degrees": 70
+        },
+        {
+          "center": 90,
+          "degrees": 70
+        }
+      ]
+    },
+    {
+      "id": "weapon.hosho_airstrike",
+      "display_name": "轻空袭队",
+      "weapon_group_id": "hosho_airstrike",
+      "control_mode": "ManualPrimary",
+      "ammo_type": "",
+      "mount_type": "Aviation",
+      "mount_count": 1,
+      "shots_per_mount": 4,
+      "reload_time": 16,
+      "base_range": 650,
+      "range": 1300,
+      "minimum_range": 0,
+      "fire_arc_center": 0,
+      "fire_arc_degrees": 360,
+      "projectile_speed": 150,
+      "spread": 28,
+      "impact_radius": 48,
+      "accuracy_modifier": 0,
+      "shared_cooldown_group": "hosho_airstrike",
+      "projectile_id": "projectile.aircraft_bomb",
+      "formula_id": "formula.medium_he",
+      "armor_damage_modifiers": {
+        "Unarmored": 1.1,
+        "Light": 1,
+        "Medium": 0.9,
+        "Heavy": 0.75,
+        "Submerged": 0,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface"
+      ]
+    },
+    {
+      "id": "weapon.ning_140_he",
+      "display_name": "140毫米主炮（高爆弹）",
+      "weapon_group_id": "ning_main",
+      "control_mode": "Automatic",
+      "ammo_type": "HE",
+      "mount_type": "Gun",
+      "mount_count": 3,
+      "shots_per_mount": 2,
+      "reload_time": 3.6,
+      "base_range": 400,
+      "range": 800,
+      "minimum_range": 0,
+      "fire_arc_center": 0,
+      "fire_arc_degrees": 300,
+      "projectile_speed": 320,
+      "spread": 20,
+      "impact_radius": 40,
+      "accuracy_modifier": 0.02,
+      "shared_cooldown_group": "ning_main",
+      "projectile_id": "projectile.shell",
+      "formula_id": "formula.medium_he",
+      "armor_damage_modifiers": {
+        "Unarmored": 1.15,
+        "Light": 1.2,
+        "Medium": 0.8,
+        "Heavy": 0.45,
+        "Submerged": 0,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface"
+      ]
+    },
+    {
+      "id": "weapon.ning_140_ap",
+      "display_name": "140毫米主炮（穿甲弹）",
+      "weapon_group_id": "ning_main",
+      "control_mode": "Automatic",
+      "ammo_type": "AP",
+      "mount_type": "Gun",
+      "mount_count": 3,
+      "shots_per_mount": 2,
+      "reload_time": 4,
+      "base_range": 390,
+      "range": 780,
+      "minimum_range": 0,
+      "fire_arc_center": 0,
+      "fire_arc_degrees": 300,
+      "projectile_speed": 340,
+      "spread": 16,
+      "impact_radius": 40,
+      "accuracy_modifier": 0,
+      "shared_cooldown_group": "ning_main",
+      "projectile_id": "projectile.shell",
+      "formula_id": "formula.medium_ap",
+      "armor_damage_modifiers": {
+        "Unarmored": 0.8,
+        "Light": 0.65,
+        "Medium": 1.05,
+        "Heavy": 0.95,
+        "Submerged": 0,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface"
+      ]
+    },
+    {
+      "id": "weapon.ning_torpedo",
+      "display_name": "533毫米鱼雷",
+      "weapon_group_id": "ning_torpedo",
+      "control_mode": "ManualPrimary",
+      "ammo_type": "",
+      "mount_type": "Torpedo",
+      "mount_count": 2,
+      "shots_per_mount": 2,
+      "reload_time": 17,
+      "base_range": 400,
+      "range": 800,
+      "minimum_range": 20,
+      "fire_arc_center": 90,
+      "fire_arc_degrees": 70,
+      "projectile_speed": 140,
+      "spread": 14,
+      "impact_radius": 0,
+      "accuracy_modifier": 0,
+      "shared_cooldown_group": "",
+      "projectile_id": "projectile.surface_torpedo",
+      "formula_id": "formula.surface_torpedo",
+      "armor_damage_modifiers": {
+        "Unarmored": 0.7,
+        "Light": 0.7,
+        "Medium": 1,
+        "Heavy": 1.25,
+        "Submerged": 1,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface",
+        "Submerged"
+      ],
+      "fire_arcs": [
+        {
+          "center": -90,
+          "degrees": 70
+        },
+        {
+          "center": 90,
+          "degrees": 70
+        }
+      ]
+    },
+    {
+      "id": "weapon.ning_aa",
+      "display_name": "宁海号防空节点",
+      "weapon_group_id": "ning_aa",
+      "control_mode": "Automatic",
+      "ammo_type": "",
+      "mount_type": "AntiAir",
+      "mount_count": 5,
+      "shots_per_mount": 2,
+      "reload_time": 0.9,
+      "base_range": 260,
+      "range": 520,
+      "minimum_range": 0,
+      "fire_arc_center": 0,
+      "fire_arc_degrees": 360,
+      "projectile_speed": 320,
+      "spread": 0,
+      "impact_radius": 18,
+      "accuracy_modifier": 0,
+      "shared_cooldown_group": "",
+      "projectile_id": "projectile.shell",
+      "formula_id": "formula.small_he",
+      "armor_damage_modifiers": {
+        "Unarmored": 0,
+        "Light": 0,
+        "Medium": 0,
+        "Heavy": 0,
+        "Submerged": 0,
+        "Air": 1
+      },
+      "target_types": [
+        "Air"
+      ]
+    },
+    {
+      "id": "weapon.anshan_130_he",
+      "display_name": "130毫米主炮高爆",
+      "weapon_group_id": "anshan_gun",
+      "control_mode": "Automatic",
+      "ammo_type": "HE",
+      "mount_type": "Gun",
+      "mount_count": 4,
+      "shots_per_mount": 1,
+      "reload_time": 2.7,
+      "base_range": 370,
+      "range": 740,
+      "minimum_range": 0,
+      "fire_arc_center": 0,
+      "fire_arc_degrees": 310,
+      "projectile_speed": 330,
+      "spread": 18,
+      "impact_radius": 30,
+      "accuracy_modifier": 0.03,
+      "shared_cooldown_group": "anshan_gun",
+      "projectile_id": "projectile.shell",
+      "formula_id": "formula.small_he",
+      "armor_damage_modifiers": {
+        "Unarmored": 1.2,
+        "Light": 1.15,
+        "Medium": 0.45,
+        "Heavy": 0.13,
+        "Submerged": 0,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface"
+      ]
+    },
+    {
+      "id": "weapon.anshan_torpedo",
+      "display_name": "533毫米鱼雷",
+      "weapon_group_id": "anshan_torpedo",
+      "control_mode": "ManualPrimary",
+      "ammo_type": "",
+      "mount_type": "Torpedo",
+      "mount_count": 2,
+      "shots_per_mount": 3,
+      "reload_time": 15,
+      "base_range": 440,
+      "range": 880,
+      "minimum_range": 20,
+      "fire_arc_center": 90,
+      "fire_arc_degrees": 70,
+      "projectile_speed": 150,
+      "spread": 12,
+      "impact_radius": 0,
+      "accuracy_modifier": 0,
+      "shared_cooldown_group": "",
+      "projectile_id": "projectile.surface_torpedo",
+      "formula_id": "formula.surface_torpedo",
+      "armor_damage_modifiers": {
+        "Unarmored": 0.7,
+        "Light": 0.7,
+        "Medium": 1,
+        "Heavy": 1.25,
+        "Submerged": 1,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface",
+        "Submerged"
+      ],
+      "fire_arcs": [
+        {
+          "center": -90,
+          "degrees": 70
+        },
+        {
+          "center": 90,
+          "degrees": 70
+        }
+      ]
+    },
+    {
+      "id": "weapon.anshan_aa",
+      "display_name": "鞍山号轻防空",
+      "weapon_group_id": "anshan_aa",
+      "control_mode": "Automatic",
+      "ammo_type": "",
+      "mount_type": "AntiAir",
+      "mount_count": 4,
+      "shots_per_mount": 2,
+      "reload_time": 0.95,
+      "base_range": 250,
+      "range": 500,
+      "minimum_range": 0,
+      "fire_arc_center": 0,
+      "fire_arc_degrees": 360,
+      "projectile_speed": 320,
+      "spread": 0,
+      "impact_radius": 18,
+      "accuracy_modifier": 0,
+      "shared_cooldown_group": "",
+      "projectile_id": "projectile.shell",
+      "formula_id": "formula.small_he",
+      "armor_damage_modifiers": {
+        "Unarmored": 0,
+        "Light": 0,
+        "Medium": 0,
+        "Heavy": 0,
+        "Submerged": 0,
+        "Air": 1
+      },
+      "target_types": [
+        "Air"
+      ]
+    },
+    {
+      "id": "weapon.chongqing_152_he",
+      "display_name": "152毫米主炮（高爆弹）",
+      "weapon_group_id": "chongqing_main",
+      "control_mode": "Automatic",
+      "ammo_type": "HE",
+      "mount_type": "Gun",
+      "mount_count": 4,
+      "shots_per_mount": 3,
+      "reload_time": 3.6,
+      "base_range": 420,
+      "range": 840,
+      "minimum_range": 0,
+      "fire_arc_center": 0,
+      "fire_arc_degrees": 300,
+      "projectile_speed": 330,
+      "spread": 20,
+      "impact_radius": 40,
+      "accuracy_modifier": 0.03,
+      "shared_cooldown_group": "chongqing_main",
+      "projectile_id": "projectile.shell",
+      "formula_id": "formula.medium_he",
+      "armor_damage_modifiers": {
+        "Unarmored": 1.15,
+        "Light": 1.2,
+        "Medium": 0.8,
+        "Heavy": 0.45,
+        "Submerged": 0,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface"
+      ]
+    },
+    {
+      "id": "weapon.chongqing_152_ap",
+      "display_name": "152毫米主炮（穿甲弹）",
+      "weapon_group_id": "chongqing_main",
+      "control_mode": "Automatic",
+      "ammo_type": "AP",
+      "mount_type": "Gun",
+      "mount_count": 4,
+      "shots_per_mount": 3,
+      "reload_time": 4,
+      "base_range": 410,
+      "range": 820,
+      "minimum_range": 0,
+      "fire_arc_center": 0,
+      "fire_arc_degrees": 300,
+      "projectile_speed": 350,
+      "spread": 16,
+      "impact_radius": 40,
+      "accuracy_modifier": 0.01,
+      "shared_cooldown_group": "chongqing_main",
+      "projectile_id": "projectile.shell",
+      "formula_id": "formula.medium_ap",
+      "armor_damage_modifiers": {
+        "Unarmored": 0.8,
+        "Light": 0.65,
+        "Medium": 1.05,
+        "Heavy": 0.95,
+        "Submerged": 0,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface"
+      ]
+    },
+    {
+      "id": "weapon.chongqing_torpedo",
+      "display_name": "533毫米鱼雷",
+      "weapon_group_id": "chongqing_torpedo",
+      "control_mode": "ManualPrimary",
+      "ammo_type": "",
+      "mount_type": "Torpedo",
+      "mount_count": 2,
+      "shots_per_mount": 3,
+      "reload_time": 18,
+      "base_range": 410,
+      "range": 820,
+      "minimum_range": 20,
+      "fire_arc_center": 90,
+      "fire_arc_degrees": 70,
+      "projectile_speed": 140,
+      "spread": 14,
+      "impact_radius": 0,
+      "accuracy_modifier": 0,
+      "shared_cooldown_group": "",
+      "projectile_id": "projectile.surface_torpedo",
+      "formula_id": "formula.surface_torpedo",
+      "armor_damage_modifiers": {
+        "Unarmored": 0.7,
+        "Light": 0.7,
+        "Medium": 1,
+        "Heavy": 1.25,
+        "Submerged": 1,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface",
+        "Submerged"
+      ],
+      "fire_arcs": [
+        {
+          "center": -90,
+          "degrees": 70
+        },
+        {
+          "center": 90,
+          "degrees": 70
+        }
+      ]
+    },
+    {
+      "id": "weapon.chongqing_aa",
+      "display_name": "重庆号防空节点",
+      "weapon_group_id": "chongqing_aa",
+      "control_mode": "Automatic",
+      "ammo_type": "",
+      "mount_type": "AntiAir",
+      "mount_count": 6,
+      "shots_per_mount": 2,
+      "reload_time": 0.8,
+      "base_range": 270,
+      "range": 540,
+      "minimum_range": 0,
+      "fire_arc_center": 0,
+      "fire_arc_degrees": 360,
+      "projectile_speed": 320,
+      "spread": 0,
+      "impact_radius": 18,
+      "accuracy_modifier": 0,
+      "shared_cooldown_group": "",
+      "projectile_id": "projectile.shell",
+      "formula_id": "formula.small_he",
+      "armor_damage_modifiers": {
+        "Unarmored": 0,
+        "Light": 0,
+        "Medium": 0,
+        "Heavy": 0,
+        "Submerged": 0,
+        "Air": 1
+      },
+      "target_types": [
+        "Air"
+      ]
+    }
+  ]
+}

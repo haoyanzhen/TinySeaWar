@@ -21,8 +21,10 @@ func _init() -> void:
 func _run() -> void:
 	registry = ConfigRegistry.new()
 	_check(registry.load_all(), "configuration registry loads: %s" % str(registry.errors))
-	_check(registry.all("ships").size() == 6, "six prototype ship definitions load")
+	_check(registry.all("ships").size() == 24, "all 24 character ship definitions load")
 	_check(registry.all("levels").size() == 4, "1v1, 3v3, 5v5, and 11v11 levels load")
+	_test_weapon_range_scale()
+	_test_hit_rate_floor()
 	var presentation_settings: Dictionary = registry.get_definition("settings", "settings.presentation")
 	_check(presentation_settings.get("window", {}).get("logical_size", []) == [1920.0, 1080.0], "presentation settings expose the fixed logical canvas size")
 	_check(presentation_settings.get("window", {}).get("size_options", []).size() == 5, "presentation settings expose five window sizes")
@@ -32,9 +34,11 @@ func _run() -> void:
 	assets = AssetCatalog.new()
 	_check(assets.load_all(), "asset catalog loads: %s" % str(assets.errors))
 	_test_asset_catalog()
+	_test_full_roster_runtime_data()
 	_test_modifier_order()
 	_test_command_and_skill_rules()
 	_test_operation_design_rules()
+	_test_torpedo_fire_arc_rules()
 	_test_detection_and_contact_ghost()
 	_test_damage_zero_floor()
 	_test_simultaneous_flagship_victory()
@@ -55,7 +59,9 @@ func _run() -> void:
 func _test_chinese_display_text() -> void:
 	for category in ["ships", "weapons", "skills", "levels"]:
 		for definition in registry.all(category):
-			_check(_contains_chinese(str(definition.get("display_name", ""))), "%s display name is Chinese: %s" % [category, definition.get("id", "?")])
+			var display_name := str(definition.get("display_name", ""))
+			var language_neutral_name := str(definition.get("id", "")) == "ship.u_47"
+			_check(_contains_chinese(display_name) or language_neutral_name, "%s display name is localized: %s" % [category, definition.get("id", "?")])
 	_check(UiText.mode_name("level.prototype_11v11") == "11v11 大规模会战", "battle mode has a Chinese display label")
 	_check(UiText.ship_class_name("Battleship") == "战列舰", "ship class has a Chinese display label")
 	_check(UiText.reason_name("WEAPON_RELOADING") == "武器装填中", "operation reason has a Chinese display label")
@@ -68,6 +74,51 @@ func _contains_chinese(value: String) -> bool:
 		if code >= 0x4E00 and code <= 0x9FFF:
 			return true
 	return false
+
+
+func _test_weapon_range_scale() -> void:
+	for weapon in registry.all("weapons"):
+		var base_range := float(weapon.get("base_range", 0.0))
+		var effective_range := float(weapon.get("range", 0.0))
+		_check(base_range > 0.0 and is_equal_approx(effective_range, base_range * 2.0), "%s uses the global 2x effective attack range" % weapon.get("id", "?"))
+	_check(is_equal_approx(float(registry.get_definition("weapons", "weapon.warspite_381_ap").get("range", 0.0)), 1440.0), "main-gun UI and rules expose doubled range")
+	_check(is_equal_approx(float(registry.get_definition("weapons", "weapon.shimakaze_610_torpedo").get("range", 0.0)), 1020.0), "torpedo UI and rules expose doubled range")
+	_check(is_equal_approx(float(registry.get_definition("weapons", "weapon.enterprise_airstrike").get("range", 0.0)), 1520.0), "aviation UI and rules expose doubled range")
+
+
+func _test_hit_rate_floor() -> void:
+	for formula in registry.all("formulas"):
+		if str(formula.get("attack_type", "")) == "Gun":
+			_check(is_equal_approx(float(formula.get("hit_rate_min", 0.0)), 0.05), "%s uses the 5 percent probabilistic hit floor" % formula.get("id", "?"))
+			_check(is_equal_approx(float(formula.get("hit_rate_max", 0.0)), 0.95), "%s keeps the existing maximum hit rate" % formula.get("id", "?"))
+		elif str(formula.get("attack_type", "")) == "Torpedo":
+			_check(is_equal_approx(float(formula.get("hit_rate_min", 0.0)), 1.0), "%s keeps collision-forced torpedo accuracy" % formula.get("id", "?"))
+
+
+func _test_full_roster_runtime_data() -> void:
+	var roster_ids := {}
+	for ship in registry.all("ships"):
+		var ship_id := str(ship.get("id", ""))
+		var character_id := ship_id.trim_prefix("ship.")
+		roster_ids[ship_id] = true
+		_check(assets.has_character(character_id), "runtime art catalog contains %s" % ship_id)
+		var character_assets: Dictionary = assets.character(character_id)
+		var battle_assets: Dictionary = character_assets.get("battle_assets", {})
+		var ui_assets: Dictionary = character_assets.get("ui_assets", {})
+		_check(battle_assets.has("body_r") and battle_assets.has("rig_base"), "%s has battle body and rig assets" % ship_id)
+		_check(ui_assets.has("ui_portrait") and ui_assets.has("illust_skill_cutin_alpha") and ui_assets.has("illust_full_alpha"), "%s has HUD, menu, and result artwork" % ship_id)
+		_check(UiText.character_name(character_id) != "未知角色", "%s has a localized UI name" % ship_id)
+		_check(not ship.get("weapon_mounts", []).is_empty(), "%s has at least one runtime weapon" % ship_id)
+		_check(not registry.get_definition("skills", str(ship.get("skill_id", ""))).is_empty(), "%s has a runtime skill" % ship_id)
+		_check(not str(ship.get("primary_weapon_group_id", "")).is_empty(), "%s has an explicit primary weapon group" % ship_id)
+	var level_roster := {}
+	for level in registry.all("levels"):
+		for fleet_name in ["player_fleet", "enemy_fleet"]:
+			for member in level.get(fleet_name, []):
+				level_roster[str(member.get("ship_id", ""))] = true
+	_check(level_roster.size() == roster_ids.size(), "playable levels collectively instantiate all 24 characters")
+	for ship_id in roster_ids:
+		_check(level_roster.has(ship_id), "%s appears in at least one playable level" % ship_id)
 
 
 func _test_modifier_order() -> void:
@@ -88,6 +139,14 @@ func _test_asset_catalog() -> void:
 	_check(idle.get("frames", []).size() == 4 and str(idle["frames"][0]).begins_with("res://"), "character animation state resolves normalized frame paths")
 	var wake: Dictionary = assets.vfx_role("bismarck", "wake")
 	_check(str(wake.get("file", "")).ends_with("bismarck_vfx_wake.png"), "character VFX role resolves by semantic role")
+	var shared_vfx: Dictionary = assets.vfx_role("kirov", "muzzle_flash_large")
+	var shared_vfx_path := str(shared_vfx.get("file", ""))
+	_check(
+		shared_vfx.get("source", "") == "shared_class_template"
+		and shared_vfx_path.begins_with("res://assets/vfx/combat/character_templates/")
+		and FileAccess.file_exists(shared_vfx_path),
+		"shared class-template VFX resolves to one public runtime asset",
+	)
 	var bind: Dictionary = assets.bind_points("bismarck", "bismarck_battle_rig_base.png")
 	_check(bind.has("turret_mount_01"), "character bind points resolve per battle asset")
 	_check(assets.battle_asset_path("bismarck", "rig_base").ends_with("bismarck_battle_rig_base.png"), "battle asset resolves by semantic suffix")
@@ -141,13 +200,42 @@ func _test_operation_design_rules() -> void:
 	var he_state := _weapon_state(player, "weapon.warspite_381_he")
 	_check(float(ap_state["reload_remaining"]) > 0.0 and is_equal_approx(float(ap_state["reload_remaining"]), float(he_state["reload_remaining"])), "HE/AP modes share cooldown after primary fire")
 	var reload_after_fire := float(ap_state["reload_remaining"])
-	_check(not session.delayed_attacks.is_empty() and session.delayed_attacks[0]["source_weapon_id"] == "weapon.warspite_381_ap", "already-fired shell keeps launch-time ammo definition")
+	var fired_ap_shell := false
+	for attack in session.delayed_attacks:
+		if str(attack.get("source_weapon_id", "")) == "weapon.warspite_381_ap":
+			fired_ap_shell = true
+			break
+	_check(fired_ap_shell, "already-fired shell keeps launch-time ammo definition")
 	session.queue_command({"command_id":"ammo.1","command_type":"SwitchAmmo","issued_at_tick":session.state["tick_index"],"issuer_id":"player","unit_id":"unit.player.warspite"})
 	session.advance_tick(0.1)
 	_check(player["ammo_state"]["warspite_main"] == "HE", "Q switches HE/AP ammo state")
 	_check(float(ap_state["reload_remaining"]) < reload_after_fire and float(ap_state["reload_remaining"]) > 0.0, "Q does not reset shared reload progress")
 	session._sink_unit(player, "test")
 	_check(session.get_player_slots()[0]["unit_id"] == "unit.player.warspite", "slot remains stable after sinking")
+
+
+func _test_torpedo_fire_arc_rules() -> void:
+	var session = BattleSession.new(registry)
+	session.create_battle("level.prototype_5v5", 27)
+	var shimakaze: Dictionary = session.state["units_by_id"]["unit.player.shimakaze"]
+	shimakaze["position"] = Vector2(1200.0, 1200.0)
+	shimakaze["heading"] = 0.0
+	var starboard_status: Dictionary = session.get_primary_aim_status(shimakaze["entity_id"], shimakaze["position"] + Vector2(0.0, 300.0))
+	var port_status: Dictionary = session.get_primary_aim_status(shimakaze["entity_id"], shimakaze["position"] + Vector2(0.0, -300.0))
+	var bow_status: Dictionary = session.get_primary_aim_status(shimakaze["entity_id"], shimakaze["position"] + Vector2(300.0, 0.0))
+	var stern_status: Dictionary = session.get_primary_aim_status(shimakaze["entity_id"], shimakaze["position"] + Vector2(-300.0, 0.0))
+	_check(bool(starboard_status.get("legal", false)) and bool(port_status.get("legal", false)), "surface torpedoes allow both broadside sectors")
+	_check(not bool(bow_status.get("legal", true)) and not bool(stern_status.get("legal", true)), "surface torpedoes reject bow and stern blind sectors")
+	_check(starboard_status.get("fire_arcs", []).size() == 2 and is_equal_approx(float(starboard_status.get("spread_degrees", 0.0)), 12.0), "torpedo aim status exposes both firing sectors and configured spread")
+	var submarine: Dictionary = session.state["units_by_id"]["unit.player.hai_shih"]
+	submarine["position"] = Vector2(2000.0, 1200.0)
+	submarine["heading"] = 0.0
+	var fore_status: Dictionary = session.get_primary_aim_status(submarine["entity_id"], submarine["position"] + Vector2(300.0, 0.0))
+	var aft_status: Dictionary = session.get_primary_aim_status(submarine["entity_id"], submarine["position"] + Vector2(-300.0, 0.0))
+	var beam_status: Dictionary = session.get_primary_aim_status(submarine["entity_id"], submarine["position"] + Vector2(0.0, 300.0))
+	_check(bool(fore_status.get("legal", false)) and bool(aft_status.get("legal", false)), "submarine torpedoes retain fore and aft firing sectors")
+	_check(not bool(beam_status.get("legal", true)), "submarine torpedoes reject broadside firing")
+	_check(is_equal_approx(float(fore_status.get("spread_degrees", 0.0)), 10.0) and is_equal_approx(float(aft_status.get("spread_degrees", 0.0)), 12.0), "selected torpedo direction exposes the matching launcher spread")
 
 
 func _test_detection_and_contact_ghost() -> void:

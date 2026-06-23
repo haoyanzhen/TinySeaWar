@@ -58,30 +58,30 @@
       "map": {"width": 6144.0, "height": 3456.0, "ocean_palette": "dusk"},
       "time_limit": 600.0,
       "player_fleet": [
-        {"entity_id": "unit.player.warspite", "ship_id": "ship.warspite", "position": [3072.0, 2720.0], "heading": -90.0, "is_flagship": true},
-        {"entity_id": "unit.player.bismarck", "ship_id": "ship.bismarck", "position": [2772.0, 2800.0], "heading": -90.0, "is_flagship": false},
-        {"entity_id": "unit.player.hindenburg", "ship_id": "ship.hindenburg", "position": [3372.0, 2800.0], "heading": -90.0, "is_flagship": false},
-        {"entity_id": "unit.player.aurora", "ship_id": "ship.aurora", "position": [2472.0, 2880.0], "heading": -90.0, "is_flagship": false},
-        {"entity_id": "unit.player.shimakaze", "ship_id": "ship.shimakaze", "position": [3672.0, 2880.0], "heading": -90.0, "is_flagship": false},
-        {"entity_id": "unit.player.hai_shih", "ship_id": "ship.hai_shih", "position": [3072.0, 2960.0], "heading": -90.0, "is_flagship": false},
-        {"entity_id": "unit.player.warspite_escort", "ship_id": "ship.warspite", "position": [2672.0, 3040.0], "heading": -90.0, "is_flagship": false},
-        {"entity_id": "unit.player.hindenburg_escort", "ship_id": "ship.hindenburg", "position": [3472.0, 3040.0], "heading": -90.0, "is_flagship": false},
-        {"entity_id": "unit.player.aurora_escort", "ship_id": "ship.aurora", "position": [2872.0, 3120.0], "heading": -90.0, "is_flagship": false},
-        {"entity_id": "unit.player.shimakaze_escort", "ship_id": "ship.shimakaze", "position": [3272.0, 3120.0], "heading": -90.0, "is_flagship": false},
-        {"entity_id": "unit.player.hai_shih_escort", "ship_id": "ship.hai_shih", "position": [3072.0, 3200.0], "heading": -90.0, "is_flagship": false}
+        {"entity_id": "unit.player.iowa", "ship_id": "ship.iowa", "position": [3072.0, 2720.0], "heading": -90.0, "is_flagship": true},
+        {"entity_id": "unit.player.enterprise_cv6", "ship_id": "ship.enterprise_cv6", "position": [2772.0, 2800.0], "heading": -90.0, "is_flagship": false},
+        {"entity_id": "unit.player.san_diego", "ship_id": "ship.san_diego", "position": [3372.0, 2800.0], "heading": -90.0, "is_flagship": false},
+        {"entity_id": "unit.player.ward", "ship_id": "ship.ward", "position": [2472.0, 2880.0], "heading": -90.0, "is_flagship": false},
+        {"entity_id": "unit.player.hood", "ship_id": "ship.hood", "position": [3672.0, 2880.0], "heading": -90.0, "is_flagship": false},
+        {"entity_id": "unit.player.sirius", "ship_id": "ship.sirius", "position": [3072.0, 2960.0], "heading": -90.0, "is_flagship": false},
+        {"entity_id": "unit.player.argus", "ship_id": "ship.argus", "position": [2672.0, 3040.0], "heading": -90.0, "is_flagship": false},
+        {"entity_id": "unit.player.aurora", "ship_id": "ship.aurora", "position": [3472.0, 3040.0], "heading": -90.0, "is_flagship": false},
+        {"entity_id": "unit.player.kirov", "ship_id": "ship.kirov", "position": [2872.0, 3120.0], "heading": -90.0, "is_flagship": false},
+        {"entity_id": "unit.player.pobeda", "ship_id": "ship.pobeda", "position": [3272.0, 3120.0], "heading": -90.0, "is_flagship": false},
+        {"entity_id": "unit.player.gnevny", "ship_id": "ship.gnevny", "position": [3072.0, 3200.0], "heading": -90.0, "is_flagship": false}
       ],
       "enemy_fleet": [
-        {"entity_id": "unit.enemy.bismarck", "ship_id": "ship.bismarck", "position": [3072.0, 736.0], "heading": 90.0, "is_flagship": true},
-        {"entity_id": "unit.enemy.warspite", "ship_id": "ship.warspite", "position": [2772.0, 656.0], "heading": 90.0, "is_flagship": false},
+        {"entity_id": "unit.enemy.yamato", "ship_id": "ship.yamato", "position": [3072.0, 736.0], "heading": 90.0, "is_flagship": true},
+        {"entity_id": "unit.enemy.prinz_eugen", "ship_id": "ship.prinz_eugen", "position": [2772.0, 656.0], "heading": 90.0, "is_flagship": false},
         {"entity_id": "unit.enemy.hindenburg", "ship_id": "ship.hindenburg", "position": [3372.0, 656.0], "heading": 90.0, "is_flagship": false},
-        {"entity_id": "unit.enemy.aurora", "ship_id": "ship.aurora", "position": [2472.0, 576.0], "heading": 90.0, "is_flagship": false},
-        {"entity_id": "unit.enemy.shimakaze", "ship_id": "ship.shimakaze", "position": [3672.0, 576.0], "heading": 90.0, "is_flagship": false},
-        {"entity_id": "unit.enemy.hai_shih", "ship_id": "ship.hai_shih", "position": [3072.0, 496.0], "heading": 90.0, "is_flagship": false},
-        {"entity_id": "unit.enemy.bismarck_guard", "ship_id": "ship.bismarck", "position": [2672.0, 416.0], "heading": 90.0, "is_flagship": false},
-        {"entity_id": "unit.enemy.hindenburg_guard", "ship_id": "ship.hindenburg", "position": [3472.0, 416.0], "heading": 90.0, "is_flagship": false},
-        {"entity_id": "unit.enemy.aurora_guard", "ship_id": "ship.aurora", "position": [2872.0, 336.0], "heading": 90.0, "is_flagship": false},
-        {"entity_id": "unit.enemy.shimakaze_guard", "ship_id": "ship.shimakaze", "position": [3272.0, 336.0], "heading": 90.0, "is_flagship": false},
-        {"entity_id": "unit.enemy.hai_shih_guard", "ship_id": "ship.hai_shih", "position": [3072.0, 256.0], "heading": 90.0, "is_flagship": false}
+        {"entity_id": "unit.enemy.u_47", "ship_id": "ship.u_47", "position": [2472.0, 576.0], "heading": 90.0, "is_flagship": false},
+        {"entity_id": "unit.enemy.yukikaze", "ship_id": "ship.yukikaze", "position": [3672.0, 576.0], "heading": 90.0, "is_flagship": false},
+        {"entity_id": "unit.enemy.shimakaze", "ship_id": "ship.shimakaze", "position": [3072.0, 496.0], "heading": 90.0, "is_flagship": false},
+        {"entity_id": "unit.enemy.hosho", "ship_id": "ship.hosho", "position": [2672.0, 416.0], "heading": 90.0, "is_flagship": false},
+        {"entity_id": "unit.enemy.ning_hai", "ship_id": "ship.ning_hai", "position": [3472.0, 416.0], "heading": 90.0, "is_flagship": false},
+        {"entity_id": "unit.enemy.anshan", "ship_id": "ship.anshan", "position": [2872.0, 336.0], "heading": 90.0, "is_flagship": false},
+        {"entity_id": "unit.enemy.chongqing", "ship_id": "ship.chongqing", "position": [3272.0, 336.0], "heading": 90.0, "is_flagship": false},
+        {"entity_id": "unit.enemy.hai_shih", "ship_id": "ship.hai_shih", "position": [3072.0, 256.0], "heading": 90.0, "is_flagship": false}
       ]
     }
   ]

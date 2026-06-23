@@ -1,0 +1,562 @@
+{
+  "definitions": [
+    {
+      "id": "skill.enterprise_multi_wave",
+      "display_name": "多波次空袭",
+      "cooldown": 45,
+      "target_type": "Area",
+      "cast_range": 760,
+      "duration": 12,
+      "effects": [
+        {
+          "scope": "Self",
+          "stat": "Damage",
+          "operation": "PercentAdd",
+          "value": 0.2,
+          "category": "Aviation",
+          "stack_group": "enterprise_skill",
+          "stack_rule": "Refresh"
+        },
+        {
+          "scope": "Self",
+          "stat": "AccuracyPoint",
+          "operation": "FlatAdd",
+          "value": 0.1,
+          "category": "Aviation",
+          "stack_group": "enterprise_skill",
+          "stack_rule": "Refresh"
+        }
+      ]
+    },
+    {
+      "id": "skill.iowa_radar_salvo",
+      "display_name": "雷达校准齐射",
+      "cooldown": 42,
+      "target_type": "Enemy",
+      "cast_range": 760,
+      "duration": 8,
+      "effects": [
+        {
+          "scope": "Self",
+          "stat": "AccuracyPoint",
+          "operation": "FlatAdd",
+          "value": 0.18,
+          "category": "Gun",
+          "stack_group": "iowa_skill",
+          "stack_rule": "Refresh"
+        },
+        {
+          "scope": "Self",
+          "stat": "ArmorDamageModifier",
+          "operation": "PercentAdd",
+          "value": 0.1,
+          "category": "Gun",
+          "stack_group": "iowa_skill",
+          "stack_rule": "Refresh"
+        }
+      ]
+    },
+    {
+      "id": "skill.san_diego_aa_center",
+      "display_name": "防空弹幕中心",
+      "cooldown": 36,
+      "target_type": "Area",
+      "cast_range": 330,
+      "duration": 10,
+      "effects": [
+        {
+          "scope": "AlliesInArea",
+          "stat": "ReloadSpeed",
+          "operation": "PercentAdd",
+          "value": 0.33,
+          "category": "AntiAir",
+          "stack_group": "san_diego_skill",
+          "stack_rule": "Refresh"
+        },
+        {
+          "scope": "AlliesInArea",
+          "stat": "Damage",
+          "operation": "PercentAdd",
+          "value": 0.2,
+          "category": "AntiAir",
+          "stack_group": "san_diego_skill",
+          "stack_rule": "Refresh"
+        },
+        {
+          "scope": "AlliesInArea",
+          "stat": "DamageReduction",
+          "operation": "PercentAdd",
+          "value": 0.2,
+          "category": "Aviation",
+          "stack_group": "san_diego_skill",
+          "stack_rule": "Refresh"
+        }
+      ]
+    },
+    {
+      "id": "skill.ward_first_alert",
+      "display_name": "第一警戒",
+      "cooldown": 28,
+      "target_type": "Self",
+      "cast_range": 0,
+      "duration": 12,
+      "effects": [
+        {
+          "scope": "Self",
+          "stat": "DetectionRange",
+          "operation": "FlatAdd",
+          "value": 90,
+          "category": "All",
+          "stack_group": "ward_skill",
+          "stack_rule": "Refresh"
+        },
+        {
+          "scope": "Self",
+          "stat": "Speed",
+          "operation": "PercentAdd",
+          "value": 0.12,
+          "category": "All",
+          "stack_group": "ward_skill",
+          "stack_rule": "Refresh"
+        },
+        {
+          "scope": "Self",
+          "stat": "ReloadSpeed",
+          "operation": "PercentAdd",
+          "value": 0.25,
+          "category": "Gun",
+          "stack_group": "ward_skill",
+          "stack_rule": "Refresh"
+        }
+      ]
+    },
+    {
+      "id": "skill.hood_fleet_glory",
+      "display_name": "舰队荣光",
+      "cooldown": 48,
+      "target_type": "Area",
+      "cast_range": 430,
+      "duration": 14,
+      "effects": [
+        {
+          "scope": "AlliesInArea",
+          "stat": "Speed",
+          "operation": "PercentAdd",
+          "value": 0.1,
+          "category": "All",
+          "stack_group": "hood_skill",
+          "stack_rule": "Refresh"
+        },
+        {
+          "scope": "AlliesInArea",
+          "stat": "TurnSpeed",
+          "operation": "PercentAdd",
+          "value": 0.12,
+          "category": "All",
+          "stack_group": "hood_skill",
+          "stack_rule": "Refresh"
+        },
+        {
+          "scope": "AlliesInArea",
+          "stat": "ConcealmentDistance",
+          "operation": "PercentAdd",
+          "value": -0.08,
+          "category": "All",
+          "stack_group": "hood_skill",
+          "stack_rule": "Refresh"
+        }
+      ]
+    },
+    {
+      "id": "skill.sirius_silver_escort",
+      "display_name": "银白护航圈",
+      "cooldown": 38,
+      "target_type": "Area",
+      "cast_range": 310,
+      "duration": 12,
+      "effects": [
+        {
+          "scope": "AlliesInArea",
+          "stat": "ReloadSpeed",
+          "operation": "PercentAdd",
+          "value": 0.25,
+          "category": "AntiAir",
+          "stack_group": "sirius_skill",
+          "stack_rule": "Refresh"
+        },
+        {
+          "scope": "AlliesInArea",
+          "stat": "AccuracyPoint",
+          "operation": "FlatAdd",
+          "value": 0.06,
+          "category": "Gun",
+          "stack_group": "sirius_skill",
+          "stack_rule": "Refresh"
+        },
+        {
+          "scope": "AlliesInArea",
+          "stat": "DetectionRange",
+          "operation": "FlatAdd",
+          "value": 40,
+          "category": "All",
+          "stack_group": "sirius_skill",
+          "stack_rule": "Refresh"
+        }
+      ]
+    },
+    {
+      "id": "skill.argus_training_scout",
+      "display_name": "训练侦察队",
+      "cooldown": 32,
+      "target_type": "Self",
+      "cast_range": 0,
+      "duration": 35,
+      "effects": [
+        {
+          "scope": "Self",
+          "stat": "DetectionRange",
+          "operation": "FlatAdd",
+          "value": 80,
+          "category": "All",
+          "stack_group": "argus_skill",
+          "stack_rule": "Refresh"
+        },
+        {
+          "scope": "Self",
+          "stat": "AccuracyPoint",
+          "operation": "FlatAdd",
+          "value": 0.06,
+          "category": "Aviation",
+          "stack_group": "argus_skill",
+          "stack_rule": "Refresh"
+        }
+      ]
+    },
+    {
+      "id": "skill.kirov_ice_suppression",
+      "display_name": "冰线压制",
+      "cooldown": 38,
+      "target_type": "Area",
+      "cast_range": 540,
+      "duration": 6,
+      "effects": [
+        {
+          "scope": "Self",
+          "stat": "Damage",
+          "operation": "PercentAdd",
+          "value": 0.12,
+          "category": "Gun",
+          "stack_group": "kirov_skill",
+          "stack_rule": "Refresh"
+        },
+        {
+          "scope": "EnemiesInArea",
+          "stat": "TurnSpeed",
+          "operation": "PercentAdd",
+          "value": -0.15,
+          "category": "All",
+          "stack_group": "kirov_slow",
+          "stack_rule": "Refresh"
+        }
+      ]
+    },
+    {
+      "id": "skill.pobeda_air_support",
+      "display_name": "方案航空支援",
+      "cooldown": 44,
+      "target_type": "Self",
+      "cast_range": 0,
+      "duration": 14,
+      "effects": [
+        {
+          "scope": "Self",
+          "stat": "Damage",
+          "operation": "PercentAdd",
+          "value": 0.2,
+          "category": "Aviation",
+          "stack_group": "pobeda_skill",
+          "stack_rule": "Refresh"
+        },
+        {
+          "scope": "Self",
+          "stat": "AccuracyPoint",
+          "operation": "FlatAdd",
+          "value": 0.08,
+          "category": "Aviation",
+          "stack_group": "pobeda_skill",
+          "stack_rule": "Refresh"
+        }
+      ]
+    },
+    {
+      "id": "skill.gnevny_snow_torpedo",
+      "display_name": "雪线雷击",
+      "cooldown": 32,
+      "target_type": "Self",
+      "cast_range": 0,
+      "duration": 6,
+      "effects": [
+        {
+          "scope": "Self",
+          "stat": "Speed",
+          "operation": "PercentAdd",
+          "value": 0.18,
+          "category": "All",
+          "stack_group": "gnevny_skill",
+          "stack_rule": "Refresh"
+        },
+        {
+          "scope": "Self",
+          "stat": "ExtraShots",
+          "operation": "FlatAdd",
+          "value": 2,
+          "category": "Torpedo",
+          "stack_group": "gnevny_skill",
+          "stack_rule": "Refresh"
+        }
+      ]
+    },
+    {
+      "id": "skill.prinz_precision_evasion",
+      "display_name": "精密规避",
+      "cooldown": 34,
+      "target_type": "Self",
+      "cast_range": 0,
+      "duration": 8,
+      "effects": [
+        {
+          "scope": "Self",
+          "stat": "Evasion",
+          "operation": "FlatAdd",
+          "value": 35,
+          "category": "All",
+          "stack_group": "prinz_skill",
+          "stack_rule": "Refresh"
+        },
+        {
+          "scope": "Self",
+          "stat": "AccuracyPoint",
+          "operation": "FlatAdd",
+          "value": 0.12,
+          "category": "Gun",
+          "stack_group": "prinz_skill",
+          "stack_rule": "Refresh"
+        }
+      ]
+    },
+    {
+      "id": "skill.u47_silent_ambush",
+      "display_name": "静默伏击",
+      "cooldown": 36,
+      "target_type": "Self",
+      "cast_range": 0,
+      "duration": 12,
+      "effects": [
+        {
+          "scope": "Self",
+          "stat": "ConcealmentDistance",
+          "operation": "StateMultiply",
+          "value": 0.75,
+          "category": "All",
+          "stack_group": "u47_skill",
+          "stack_rule": "Refresh"
+        },
+        {
+          "scope": "Self",
+          "stat": "Damage",
+          "operation": "PercentAdd",
+          "value": 0.18,
+          "category": "Torpedo",
+          "stack_group": "u47_skill",
+          "stack_rule": "Refresh"
+        }
+      ]
+    },
+    {
+      "id": "skill.yamato_full_salvo",
+      "display_name": "主炮全开",
+      "cooldown": 55,
+      "target_type": "Self",
+      "cast_range": 0,
+      "duration": 8,
+      "effects": [
+        {
+          "scope": "Self",
+          "stat": "Damage",
+          "operation": "PercentAdd",
+          "value": 0.25,
+          "category": "Gun",
+          "stack_group": "yamato_skill",
+          "stack_rule": "Refresh"
+        },
+        {
+          "scope": "Self",
+          "stat": "AccuracyPoint",
+          "operation": "FlatAdd",
+          "value": -0.03,
+          "category": "Gun",
+          "stack_group": "yamato_skill",
+          "stack_rule": "Refresh"
+        }
+      ]
+    },
+    {
+      "id": "skill.yukikaze_lucky_evasion",
+      "display_name": "幸运回避",
+      "cooldown": 34,
+      "target_type": "Area",
+      "cast_range": 360,
+      "duration": 10,
+      "effects": [
+        {
+          "scope": "Self",
+          "stat": "Evasion",
+          "operation": "FlatAdd",
+          "value": 45,
+          "category": "All",
+          "stack_group": "yukikaze_skill",
+          "stack_rule": "Refresh"
+        },
+        {
+          "scope": "Self",
+          "stat": "ProjectileSpeed",
+          "operation": "PercentAdd",
+          "value": 0.12,
+          "category": "Torpedo",
+          "stack_group": "yukikaze_skill",
+          "stack_rule": "Refresh"
+        },
+        {
+          "scope": "AlliesInArea",
+          "stat": "ReloadSpeed",
+          "operation": "PercentAdd",
+          "value": 0.11,
+          "category": "All",
+          "stack_group": "yukikaze_aura",
+          "stack_rule": "Refresh"
+        }
+      ]
+    },
+    {
+      "id": "skill.hosho_light_training",
+      "display_name": "轻型空袭训练",
+      "cooldown": 34,
+      "target_type": "Self",
+      "cast_range": 0,
+      "duration": 10,
+      "effects": [
+        {
+          "scope": "Self",
+          "stat": "Damage",
+          "operation": "PercentAdd",
+          "value": 0.15,
+          "category": "Aviation",
+          "stack_group": "hosho_skill",
+          "stack_rule": "Refresh"
+        },
+        {
+          "scope": "Self",
+          "stat": "DetectionRange",
+          "operation": "FlatAdd",
+          "value": 60,
+          "category": "All",
+          "stack_group": "hosho_skill",
+          "stack_rule": "Refresh"
+        }
+      ]
+    },
+    {
+      "id": "skill.ning_coastal_escort",
+      "display_name": "近海护卫",
+      "cooldown": 36,
+      "target_type": "Area",
+      "cast_range": 300,
+      "duration": 12,
+      "effects": [
+        {
+          "scope": "AlliesInArea",
+          "stat": "Damage",
+          "operation": "PercentAdd",
+          "value": 0.25,
+          "category": "AntiAir",
+          "stack_group": "ning_skill",
+          "stack_rule": "Refresh"
+        },
+        {
+          "scope": "AlliesInArea",
+          "stat": "Armor",
+          "operation": "FlatAdd",
+          "value": 8,
+          "category": "All",
+          "stack_group": "ning_skill",
+          "stack_rule": "Refresh"
+        },
+        {
+          "scope": "AlliesInArea",
+          "stat": "ReloadSpeed",
+          "operation": "PercentAdd",
+          "value": 0.14,
+          "category": "Gun",
+          "stack_group": "ning_skill",
+          "stack_rule": "Refresh"
+        }
+      ]
+    },
+    {
+      "id": "skill.anshan_escort_alert",
+      "display_name": "护航警戒",
+      "cooldown": 34,
+      "target_type": "Area",
+      "cast_range": 520,
+      "duration": 12,
+      "effects": [
+        {
+          "scope": "Self",
+          "stat": "DetectionRange",
+          "operation": "FlatAdd",
+          "value": 80,
+          "category": "All",
+          "stack_group": "anshan_skill",
+          "stack_rule": "Refresh"
+        },
+        {
+          "scope": "AlliesInArea",
+          "stat": "Evasion",
+          "operation": "FlatAdd",
+          "value": 10,
+          "category": "All",
+          "stack_group": "anshan_aura",
+          "stack_rule": "Refresh"
+        }
+      ]
+    },
+    {
+      "id": "skill.chongqing_turning_support",
+      "display_name": "转折支援",
+      "cooldown": 40,
+      "target_type": "Area",
+      "cast_range": 420,
+      "duration": 12,
+      "effects": [
+        {
+          "scope": "AlliesInArea",
+          "stat": "AccuracyPoint",
+          "operation": "FlatAdd",
+          "value": 0.08,
+          "category": "Gun",
+          "stack_group": "chongqing_skill",
+          "stack_rule": "Refresh"
+        },
+        {
+          "scope": "AlliesInArea",
+          "stat": "ReloadSpeed",
+          "operation": "PercentAdd",
+          "value": 0.18,
+          "category": "AntiAir",
+          "stack_group": "chongqing_skill",
+          "stack_rule": "Refresh"
+        }
+      ]
+    }
+  ]
+}

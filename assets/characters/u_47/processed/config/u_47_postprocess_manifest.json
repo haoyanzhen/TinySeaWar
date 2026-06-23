@@ -1,7 +1,7 @@
 {
   "character_id": "u_47",
   "source": "tools/art_pipeline/postprocess_generated_character.py",
-  "method": "green_screen_auto_grid_and_component_split",
+  "method": "generated_background_auto_grid_and_component_split",
   "outputs": [
     {
       "role": "source_alpha:concept_full",
@@ -25,10 +25,10 @@
         887
       ],
       "edge_margins": {
-        "left": 0,
-        "top": 0,
-        "right": 0,
-        "bottom": 0
+        "left": 63,
+        "top": 28,
+        "right": 24,
+        "bottom": 43
       }
     },
     {
@@ -53,10 +53,10 @@
         1254
       ],
       "edge_margins": {
-        "left": 0,
-        "top": 0,
-        "right": 0,
-        "bottom": 0
+        "left": 30,
+        "top": 143,
+        "right": 50,
+        "bottom": 181
       }
     },
     {
@@ -179,203 +179,203 @@
       "role": "ui_portrait",
       "crop": {
         "content_bbox": [
-          0,
-          0,
+          63,
+          28,
           443,
-          443
+          442
         ],
         "final_crop_box": [
-          0,
-          0,
+          45,
+          10,
           443,
           443
         ],
         "output_edge_margins": {
-          "left": 19,
-          "top": 18,
-          "right": 64,
-          "bottom": 91
+          "left": 25,
+          "top": 19,
+          "right": 19,
+          "bottom": 77
         }
       },
       "path": "assets/characters/u_47/processed/ui/u_47_ui_portrait.png",
       "size": [
-        526,
-        552
+        424,
+        510
       ],
       "edge_margins": {
-        "left": 19,
-        "top": 18,
-        "right": 64,
-        "bottom": 91
+        "left": 25,
+        "top": 19,
+        "right": 19,
+        "bottom": 77
       }
     },
     {
       "role": "ui_portrait_small",
       "crop": {
         "content_bbox": [
-          0,
-          0,
-          443,
-          443
+          66,
+          36,
+          402,
+          412
         ],
         "final_crop_box": [
-          0,
-          0,
-          443,
-          443
+          48,
+          18,
+          420,
+          430
         ],
         "output_edge_margins": {
-          "left": 30,
+          "left": 47,
           "top": 18,
           "right": 19,
-          "bottom": 51
+          "bottom": 56
         }
       },
       "path": "assets/characters/u_47/processed/ui/u_47_ui_portrait_small.png",
       "size": [
-        492,
-        512
+        402,
+        450
       ],
       "edge_margins": {
-        "left": 96,
-        "top": 54,
-        "right": 60,
-        "bottom": 82
+        "left": 47,
+        "top": 18,
+        "right": 19,
+        "bottom": 56
       }
     },
     {
       "role": "ui_chibi_head",
       "crop": {
         "content_bbox": [
-          0,
-          0,
-          443,
-          443
+          78,
+          76,
+          350,
+          317
         ],
         "final_crop_box": [
-          0,
-          0,
-          443,
-          443
+          60,
+          58,
+          368,
+          335
         ],
         "output_edge_margins": {
-          "left": 45,
-          "top": 76,
+          "left": 20,
+          "top": 31,
           "right": 18,
-          "bottom": 19
+          "bottom": 18
         }
       },
       "path": "assets/characters/u_47/processed/ui/u_47_ui_chibi_head.png",
       "size": [
-        506,
-        538
+        310,
+        290
       ],
       "edge_margins": {
-        "left": 123,
-        "top": 153,
-        "right": 112,
-        "bottom": 145
+        "left": 20,
+        "top": 31,
+        "right": 18,
+        "bottom": 18
       }
     },
     {
       "role": "expr_default",
       "crop": {
         "content_bbox": [
-          0,
-          0,
-          445,
-          443
+          63,
+          34,
+          394,
+          408
         ],
         "final_crop_box": [
-          0,
-          0,
-          445,
-          443
+          45,
+          16,
+          412,
+          426
         ],
         "output_edge_margins": {
-          "left": 18,
+          "left": 27,
           "top": 18,
-          "right": 23,
-          "bottom": 47
+          "right": 18,
+          "bottom": 58
         }
       },
       "path": "assets/characters/u_47/processed/ui/u_47_expr_default.png",
       "size": [
-        486,
-        508
+        376,
+        450
       ],
       "edge_margins": {
-        "left": 81,
-        "top": 52,
-        "right": 74,
-        "bottom": 82
+        "left": 27,
+        "top": 18,
+        "right": 18,
+        "bottom": 58
       }
     },
     {
       "role": "expr_serious",
       "crop": {
         "content_bbox": [
+          67,
           0,
-          0,
-          443,
-          444
+          441,
+          400
         ],
         "final_crop_box": [
-          0,
+          49,
           0,
           443,
-          444
+          418
         ],
         "output_edge_margins": {
-          "left": 38,
-          "top": 19,
-          "right": 19,
-          "bottom": 39
+          "left": 94,
+          "top": 18,
+          "right": 18,
+          "bottom": 82
         }
       },
       "path": "assets/characters/u_47/processed/ui/u_47_expr_serious.png",
       "size": [
-        500,
-        502
+        486,
+        500
       ],
       "edge_margins": {
-        "left": 105,
-        "top": 51,
-        "right": 70,
-        "bottom": 83
+        "left": 94,
+        "top": 50,
+        "right": 67,
+        "bottom": 82
       }
     },
     {
       "role": "expr_hit",
       "crop": {
         "content_bbox": [
+          75,
           0,
-          0,
-          443,
-          444
+          442,
+          401
         ],
         "final_crop_box": [
-          0,
+          57,
           0,
           443,
-          444
+          419
         ],
         "output_edge_margins": {
-          "left": 25,
+          "left": 91,
           "top": 18,
           "right": 18,
-          "bottom": 40
+          "bottom": 83
         }
       },
       "path": "assets/characters/u_47/processed/ui/u_47_expr_hit.png",
       "size": [
-        486,
+        476,
         502
       ],
       "edge_margins": {
-        "left": 100,
+        "left": 91,
         "top": 50,
-        "right": 66,
+        "right": 65,
         "bottom": 83
       }
     },
@@ -385,66 +385,66 @@
         "content_bbox": [
           0,
           0,
-          443,
-          444
+          442,
+          374
         ],
         "final_crop_box": [
           0,
           0,
           443,
-          444
+          392
         ],
         "output_edge_margins": {
-          "left": 44,
-          "top": 22,
-          "right": 19,
-          "bottom": 18
+          "left": 26,
+          "top": 19,
+          "right": 18,
+          "bottom": 73
         }
       },
       "path": "assets/characters/u_47/processed/ui/u_47_ui_skill_torpedo_ambush.png",
       "size": [
-        506,
-        484
+        486,
+        466
       ],
       "edge_margins": {
-        "left": 137,
-        "top": 216,
-        "right": 123,
-        "bottom": 226
+        "left": 119,
+        "top": 213,
+        "right": 121,
+        "bottom": 211
       }
     },
     {
       "role": "class_icon",
       "crop": {
         "content_bbox": [
-          0,
-          0,
-          445,
-          444
+          27,
+          90,
+          421,
+          281
         ],
         "final_crop_box": [
-          0,
-          0,
-          445,
-          444
+          9,
+          72,
+          439,
+          299
         ],
         "output_edge_margins": {
-          "left": 36,
-          "top": 18,
+          "left": 53,
+          "top": 19,
           "right": 19,
-          "bottom": 38
+          "bottom": 110
         }
       },
       "path": "assets/characters/u_47/processed/ui/u_47_ui_class_submarine.png",
       "size": [
-        500,
-        500
+        466,
+        320
       ],
       "edge_margins": {
-        "left": 63,
-        "top": 108,
-        "right": 43,
-        "bottom": 201
+        "left": 53,
+        "top": 19,
+        "right": 19,
+        "bottom": 110
       }
     },
     {
@@ -1095,280 +1095,280 @@
       "role": "vfx:bubble_trail",
       "crop": {
         "component_bbox": [
-          0,
-          0,
-          313,
-          627
+          35,
+          195,
+          283,
+          321
         ],
         "final_crop_box": [
-          0,
-          0,
-          313,
-          627
+          17,
+          177,
+          301,
+          339
         ],
-        "component_area": 196251,
+        "component_area": 7986,
         "output_edge_margins": {
-          "left": 19,
-          "top": 19,
-          "right": 18,
-          "bottom": 18
+          "left": 81,
+          "top": 18,
+          "right": 19,
+          "bottom": 42
         }
       },
       "path": "assets/characters/u_47/processed/vfx/u_47_vfx_bubble_trail.png",
       "size": [
-        350,
-        664
+        354,
+        188
       ],
       "edge_margins": {
-        "left": 19,
-        "top": 19,
-        "right": 18,
-        "bottom": 18
+        "left": 81,
+        "top": 18,
+        "right": 19,
+        "bottom": 42
       }
     },
     {
       "role": "vfx:sonar_pulse",
       "crop": {
         "component_bbox": [
-          0,
-          0,
-          313,
-          627
+          51,
+          172,
+          242,
+          339
         ],
         "final_crop_box": [
-          0,
-          0,
-          313,
-          627
+          33,
+          154,
+          260,
+          357
         ],
-        "component_area": 196251,
+        "component_area": 12910,
         "output_edge_margins": {
           "left": 19,
           "top": 19,
-          "right": 18,
-          "bottom": 18
+          "right": 22,
+          "bottom": 41
         }
       },
       "path": "assets/characters/u_47/processed/vfx/u_47_vfx_sonar_pulse.png",
       "size": [
-        350,
-        664
+        236,
+        242
       ],
       "edge_margins": {
         "left": 19,
         "top": 19,
-        "right": 18,
-        "bottom": 18
+        "right": 22,
+        "bottom": 41
       }
     },
     {
       "role": "vfx:torpedo_launch_flash",
       "crop": {
         "component_bbox": [
-          0,
-          0,
-          313,
-          627
+          23,
+          193,
+          255,
+          343
         ],
         "final_crop_box": [
-          0,
-          0,
-          313,
-          627
+          5,
+          175,
+          273,
+          361
         ],
-        "component_area": 196251,
+        "component_area": 26758,
         "output_edge_margins": {
           "left": 19,
-          "top": 19,
-          "right": 18,
-          "bottom": 18
+          "top": 18,
+          "right": 19,
+          "bottom": 31
         }
       },
       "path": "assets/characters/u_47/processed/vfx/u_47_vfx_torpedo_launch_flash.png",
       "size": [
-        350,
-        664
+        286,
+        226
       ],
       "edge_margins": {
         "left": 19,
-        "top": 19,
-        "right": 18,
-        "bottom": 18
+        "top": 18,
+        "right": 19,
+        "bottom": 31
       }
     },
     {
       "role": "vfx:torpedo_trail",
       "crop": {
         "component_bbox": [
-          0,
-          0,
-          315,
-          627
+          29,
+          156,
+          240,
+          345
         ],
         "final_crop_box": [
-          0,
-          0,
-          315,
-          627
+          11,
+          138,
+          258,
+          363
         ],
-        "component_area": 197505,
+        "component_area": 15394,
         "output_edge_margins": {
-          "left": 19,
-          "top": 19,
+          "left": 20,
+          "top": 18,
           "right": 18,
-          "bottom": 18
+          "bottom": 89
         }
       },
       "path": "assets/characters/u_47/processed/vfx/u_47_vfx_torpedo_trail.png",
       "size": [
-        352,
-        664
+        272,
+        296
       ],
       "edge_margins": {
-        "left": 19,
-        "top": 19,
+        "left": 20,
+        "top": 18,
         "right": 18,
-        "bottom": 18
+        "bottom": 89
       }
     },
     {
       "role": "vfx:underwater_shadow",
       "crop": {
         "component_bbox": [
-          0,
-          0,
-          313,
-          627
+          38,
+          130,
+          275,
+          272
         ],
         "final_crop_box": [
-          0,
-          0,
-          313,
-          627
+          20,
+          112,
+          293,
+          290
         ],
-        "component_area": 196251,
+        "component_area": 19954,
         "output_edge_margins": {
-          "left": 19,
+          "left": 18,
           "top": 19,
-          "right": 18,
-          "bottom": 18
+          "right": 28,
+          "bottom": 29
         }
       },
       "path": "assets/characters/u_47/processed/vfx/u_47_vfx_underwater_shadow.png",
       "size": [
-        350,
-        664
+        296,
+        212
       ],
       "edge_margins": {
-        "left": 19,
+        "left": 18,
         "top": 19,
-        "right": 18,
-        "bottom": 18
+        "right": 28,
+        "bottom": 29
       }
     },
     {
       "role": "vfx:periscope_glint",
       "crop": {
         "component_bbox": [
-          0,
-          0,
-          313,
-          627
+          27,
+          184,
+          262,
+          269
         ],
         "final_crop_box": [
-          0,
-          0,
-          313,
-          627
+          9,
+          166,
+          280,
+          287
         ],
-        "component_area": 196251,
+        "component_area": 15383,
         "output_edge_margins": {
-          "left": 19,
+          "left": 21,
           "top": 19,
           "right": 18,
-          "bottom": 18
+          "bottom": 38
         }
       },
       "path": "assets/characters/u_47/processed/vfx/u_47_vfx_periscope_glint.png",
       "size": [
-        350,
-        664
+        274,
+        160
       ],
       "edge_margins": {
-        "left": 19,
+        "left": 21,
         "top": 19,
         "right": 18,
-        "bottom": 18
+        "bottom": 38
       }
     },
     {
       "role": "vfx:dive_ripple",
       "crop": {
         "component_bbox": [
-          0,
-          0,
-          313,
-          627
+          124,
+          202,
+          152,
+          230
         ],
         "final_crop_box": [
-          0,
-          0,
-          313,
-          627
+          106,
+          184,
+          170,
+          248
         ],
-        "component_area": 196251,
+        "component_area": 537,
         "output_edge_margins": {
           "left": 19,
           "top": 19,
-          "right": 18,
-          "bottom": 18
+          "right": 27,
+          "bottom": 21
         }
       },
       "path": "assets/characters/u_47/processed/vfx/u_47_vfx_dive_ripple.png",
       "size": [
-        350,
-        664
+        110,
+        104
       ],
       "edge_margins": {
         "left": 19,
         "top": 19,
-        "right": 18,
-        "bottom": 18
+        "right": 27,
+        "bottom": 21
       }
     },
     {
       "role": "vfx:wake_subtle",
       "crop": {
         "component_bbox": [
-          0,
-          0,
-          315,
-          627
+          79,
+          207,
+          195,
+          305
         ],
         "final_crop_box": [
-          0,
-          0,
-          315,
-          627
+          61,
+          189,
+          213,
+          323
         ],
-        "component_area": 197505,
+        "component_area": 4581,
         "output_edge_margins": {
-          "left": 19,
-          "top": 19,
-          "right": 18,
-          "bottom": 18
+          "left": 22,
+          "top": 18,
+          "right": 19,
+          "bottom": 30
         }
       },
       "path": "assets/characters/u_47/processed/vfx/u_47_vfx_wake_subtle.png",
       "size": [
-        352,
-        664
+        184,
+        164
       ],
       "edge_margins": {
-        "left": 19,
-        "top": 19,
-        "right": 18,
-        "bottom": 18
+        "left": 22,
+        "top": 18,
+        "right": 19,
+        "bottom": 30
       }
     }
   ]

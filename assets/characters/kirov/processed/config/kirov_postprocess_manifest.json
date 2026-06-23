@@ -1,7 +1,7 @@
 {
   "character_id": "kirov",
   "source": "tools/art_pipeline/postprocess_generated_character.py",
-  "method": "green_screen_auto_grid_and_component_split",
+  "method": "generated_background_auto_grid_and_component_split",
   "outputs": [
     {
       "role": "source_alpha:concept_full",
@@ -53,10 +53,10 @@
         1254
       ],
       "edge_margins": {
-        "left": 0,
-        "top": 0,
-        "right": 0,
-        "bottom": 0
+        "left": 48,
+        "top": 148,
+        "right": 38,
+        "bottom": 171
       }
     },
     {
@@ -1095,139 +1095,139 @@
       "role": "vfx:fire_control_lock_line",
       "crop": {
         "component_bbox": [
-          0,
-          0,
-          313,
-          627
+          60,
+          163,
+          289,
+          411
         ],
         "final_crop_box": [
-          0,
-          0,
-          313,
-          627
+          42,
+          145,
+          307,
+          418
         ],
-        "component_area": 196251,
+        "component_area": 7400,
         "output_edge_margins": {
-          "left": 19,
-          "top": 19,
+          "left": 35,
+          "top": 18,
           "right": 18,
-          "bottom": 18
+          "bottom": 40
         }
       },
-      "path": "assets/characters/kirov/processed/vfx/kirov_vfx_fire_control_lock_line.png",
+      "path": "assets/vfx/combat/character_templates/heavy_cruiser/vfx_heavy_cruiser_fire_control_lock_line.png",
       "size": [
-        350,
-        664
+        282,
+        306
       ],
       "edge_margins": {
-        "left": 19,
-        "top": 19,
+        "left": 35,
+        "top": 18,
         "right": 18,
-        "bottom": 18
+        "bottom": 40
       }
     },
     {
       "role": "vfx:muzzle_flash_large",
       "crop": {
         "component_bbox": [
-          0,
-          0,
-          313,
-          627
+          29,
+          148,
+          282,
+          418
         ],
         "final_crop_box": [
-          0,
-          0,
-          313,
-          627
+          11,
+          130,
+          300,
+          418
         ],
-        "component_area": 196251,
+        "component_area": 20440,
         "output_edge_margins": {
-          "left": 19,
+          "left": 18,
           "top": 19,
-          "right": 18,
-          "bottom": 18
+          "right": 23,
+          "bottom": 31
         }
       },
-      "path": "assets/characters/kirov/processed/vfx/kirov_vfx_muzzle_flash_large.png",
+      "path": "assets/vfx/combat/character_templates/heavy_cruiser/vfx_heavy_cruiser_muzzle_flash_large.png",
       "size": [
-        350,
-        664
+        312,
+        320
       ],
       "edge_margins": {
-        "left": 19,
+        "left": 18,
         "top": 19,
-        "right": 18,
-        "bottom": 18
+        "right": 23,
+        "bottom": 31
       }
     },
     {
       "role": "vfx:broadside_smoke",
       "crop": {
         "component_bbox": [
-          0,
-          0,
-          313,
-          627
+          26,
+          170,
+          274,
+          408
         ],
         "final_crop_box": [
-          0,
-          0,
-          313,
-          627
+          8,
+          152,
+          292,
+          418
         ],
-        "component_area": 196251,
+        "component_area": 28871,
         "output_edge_margins": {
           "left": 19,
-          "top": 19,
-          "right": 18,
-          "bottom": 18
+          "top": 18,
+          "right": 43,
+          "bottom": 28
         }
       },
-      "path": "assets/characters/kirov/processed/vfx/kirov_vfx_broadside_smoke.png",
+      "path": "assets/vfx/combat/character_templates/heavy_cruiser/vfx_heavy_cruiser_broadside_smoke.png",
       "size": [
-        350,
-        664
+        310,
+        290
       ],
       "edge_margins": {
         "left": 19,
-        "top": 19,
-        "right": 18,
-        "bottom": 18
+        "top": 18,
+        "right": 43,
+        "bottom": 28
       }
     },
     {
       "role": "vfx:shell_trail_heavy",
       "crop": {
         "component_bbox": [
-          0,
-          0,
-          315,
-          627
+          85,
+          175,
+          198,
+          411
         ],
         "final_crop_box": [
-          0,
-          0,
-          315,
-          627
+          67,
+          157,
+          216,
+          418
         ],
-        "component_area": 197505,
+        "component_area": 3507,
         "output_edge_margins": {
           "left": 19,
-          "top": 19,
-          "right": 18,
+          "top": 24,
+          "right": 56,
           "bottom": 18
         }
       },
-      "path": "assets/characters/kirov/processed/vfx/kirov_vfx_shell_trail_heavy.png",
+      "path": "assets/vfx/combat/character_templates/heavy_cruiser/vfx_heavy_cruiser_shell_trail_heavy.png",
       "size": [
-        352,
-        664
+        222,
+        300
       ],
       "edge_margins": {
         "left": 19,
-        "top": 19,
-        "right": 18,
+        "top": 24,
+        "right": 56,
         "bottom": 18
       }
     },
@@ -1235,68 +1235,68 @@
       "role": "vfx:water_splash_large",
       "crop": {
         "component_bbox": [
-          0,
-          0,
+          48,
+          99,
           313,
-          627
+          304
         ],
         "final_crop_box": [
-          0,
-          0,
+          30,
+          81,
           313,
-          627
+          322
         ],
-        "component_area": 196251,
+        "component_area": 26919,
         "output_edge_margins": {
-          "left": 19,
-          "top": 19,
-          "right": 18,
-          "bottom": 18
+          "left": 18,
+          "top": 18,
+          "right": 35,
+          "bottom": 35
         }
       },
-      "path": "assets/characters/kirov/processed/vfx/kirov_vfx_water_splash_large.png",
+      "path": "assets/vfx/combat/character_templates/heavy_cruiser/vfx_heavy_cruiser_water_splash_large.png",
       "size": [
-        350,
-        664
+        318,
+        264
       ],
       "edge_margins": {
-        "left": 19,
-        "top": 19,
-        "right": 18,
-        "bottom": 18
+        "left": 18,
+        "top": 18,
+        "right": 35,
+        "bottom": 35
       }
     },
     {
       "role": "vfx:armor_sparks",
       "crop": {
         "component_bbox": [
-          0,
-          0,
-          313,
-          627
+          45,
+          216,
+          290,
+          301
         ],
         "final_crop_box": [
-          0,
-          0,
-          313,
-          627
+          27,
+          198,
+          308,
+          319
         ],
-        "component_area": 196251,
+        "component_area": 4793,
         "output_edge_margins": {
-          "left": 19,
-          "top": 19,
+          "left": 34,
+          "top": 39,
           "right": 18,
           "bottom": 18
         }
       },
-      "path": "assets/characters/kirov/processed/vfx/kirov_vfx_armor_sparks.png",
+      "path": "assets/vfx/combat/character_templates/heavy_cruiser/vfx_heavy_cruiser_armor_sparks.png",
       "size": [
-        350,
-        664
+        310,
+        166
       ],
       "edge_margins": {
-        "left": 19,
-        "top": 19,
+        "left": 34,
+        "top": 39,
         "right": 18,
         "bottom": 18
       }
@@ -1305,70 +1305,70 @@
       "role": "vfx:suppression_aura",
       "crop": {
         "component_bbox": [
-          0,
-          0,
-          313,
-          627
+          24,
+          97,
+          287,
+          320
         ],
         "final_crop_box": [
-          0,
-          0,
-          313,
-          627
+          6,
+          79,
+          305,
+          338
         ],
-        "component_area": 196251,
+        "component_area": 26970,
         "output_edge_margins": {
-          "left": 19,
-          "top": 19,
-          "right": 18,
-          "bottom": 18
+          "left": 27,
+          "top": 18,
+          "right": 19,
+          "bottom": 117
         }
       },
-      "path": "assets/characters/kirov/processed/vfx/kirov_vfx_suppression_aura.png",
+      "path": "assets/vfx/combat/character_templates/heavy_cruiser/vfx_heavy_cruiser_suppression_aura.png",
       "size": [
-        350,
-        664
+        316,
+        358
       ],
       "edge_margins": {
-        "left": 19,
-        "top": 19,
-        "right": 18,
-        "bottom": 18
+        "left": 27,
+        "top": 18,
+        "right": 19,
+        "bottom": 117
       }
     },
     {
       "role": "vfx:wake_heavy",
       "crop": {
         "component_bbox": [
-          0,
-          0,
-          315,
-          627
+          49,
+          110,
+          220,
+          314
         ],
         "final_crop_box": [
-          0,
-          0,
-          315,
-          627
+          31,
+          92,
+          238,
+          332
         ],
-        "component_area": 197505,
+        "component_area": 13563,
         "output_edge_margins": {
-          "left": 19,
+          "left": 29,
           "top": 19,
           "right": 18,
-          "bottom": 18
+          "bottom": 88
         }
       },
-      "path": "assets/characters/kirov/processed/vfx/kirov_vfx_wake_heavy.png",
+      "path": "assets/vfx/combat/character_templates/heavy_cruiser/vfx_heavy_cruiser_wake_heavy.png",
       "size": [
-        352,
-        664
+        254,
+        334
       ],
       "edge_margins": {
-        "left": 19,
+        "left": 29,
         "top": 19,
         "right": 18,
-        "bottom": 18
+        "bottom": 88
       }
     }
   ]

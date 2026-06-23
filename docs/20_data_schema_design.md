@@ -97,10 +97,12 @@ ammo_type
 mount_count
 shots_per_mount
 reload_time
+base_range
 range
 minimum_range
 fire_arc_center
 fire_arc_degrees
+fire_arcs
 turret_turn_speed
 projectile_speed
 spread
@@ -124,10 +126,12 @@ aircraft_config_id
 - `mount_count`：同类底座数量，例如三座三联装主炮可写为 3。
 - `shots_per_mount`：每个底座一次攻击发射数量，例如三联装可写为 3。
 - `reload_time`：装填时间。
-- `range`：最大射程。
+- `base_range`：角色数值设计中的首轮射程基线，用于保留调参来源。
+- `range`：当前运行时最大射程，也是领域判定与 UI 绘制的直接真源。当前全武器实机调节统一为 `base_range * 2`。
 - `minimum_range`：最小射程，可选。
 - `fire_arc_center`：射角中心，通常相对舰娘航向或舰装底座方向。
 - `fire_arc_degrees`：射角宽度。
+- `fire_arcs`：可选的多扇区射角数组，每项包含相对舰首的 `center` 与总宽度 `degrees`。存在时它是运行时射角真源；旧的单扇区字段保留为兼容和摘要。水面鱼雷通常以左右舷两个扇区表达，潜艇前、后管可以使用同组的两个武器定义分别表达首尾扇区。
 - `turret_turn_speed`：炮塔、鱼雷管或装备朝向调整速度。
 - `projectile_speed`：投射物速度。
 - `spread`：散布。
@@ -141,6 +145,7 @@ aircraft_config_id
 MVP 约定：
 
 - 主炮和鱼雷必须使用射角。
+- `ManualPrimary` 鱼雷必须显式配置非空 `fire_arcs`；每个扇区的 `degrees` 必须大于 0 且不超过 360。
 - 防空可先简化为 360 度范围，但仍使用 `reload_time` 周期结算伤害。
 - 航空可先使用固定出击点和目标区域。
 - 反潜装备用于攻击已发现的下潜潜艇。
@@ -383,21 +388,86 @@ enemy_ai_profile_id
 
 ## 13. AI 配置
 
-基础字段：
+AI 配置分为舰队方案、单舰模式和运行时状态。具体行为语义见 `docs/16_enemy_ai_behavior_design.md`。
+
+舰队 AI Profile 基础字段：
 
 ```text
 id
-target_priority
-preferred_range
-special_behavior
+doctrine_id
+difficulty
+common_rule_set_id
+formation_plan_id
+group_assignments
+unit_mode_overrides
 ```
 
 字段含义：
 
 - `id`：AI 配置唯一标识。
-- `target_priority`：目标优先级列表，默认顺序为潜艇/航母、驱逐、战列、重巡、轻巡。
-- `preferred_range`：期望作战距离，例如保持距离、正面作战或近距离攻击。
-- `special_behavior`：特殊行为，例如绕后、斩首、保护旗舰或集火指定舰种。
+- `doctrine_id`：舰队战术方案引用，例如标准推进、旗舰固守、单翼突击或航空消耗。
+- `difficulty`：决策质量档位，只影响决策间隔、评分项和协同程度，不修改战斗属性。
+- `common_rule_set_id`：可选。通用行进、避碰、边界、搜索和地形利用规则引用；省略时使用开阔海域默认规则。
+- `formation_plan_id`：可选。开局阵型、阵位职责、阵位容差和允许转换的阵型方案引用；省略时以关卡出生阵位形成弹性编组，不主动转换阵型。
+- `group_assignments`：战术编组、保护对象、侧翼和组内职责配置。
+- `unit_mode_overrides`：按参战单位 ID 覆盖初始单舰模式和回退模式。
+
+单舰 AI Mode 基础字段：
+
+```text
+id
+movement_policy
+attack_policy
+skill_policy
+preferred_range_ratio
+exposure_tolerance
+fire_discipline
+target_weights
+enter_conditions
+exit_conditions
+fallback_mode_id
+minimum_hold_time
+```
+
+- `movement_policy`：行动策略，例如避战侦查、前锋对线、侧翼雷击或保持炮线。
+- `attack_policy`：目标评分、追击限制、主要武器窗口和过量伤害规则。
+- `skill_policy`：技能用途标签、释放阈值、保留条件和同类效果错峰规则。
+- `preferred_range_ratio`：相对当前主要武器射程的期望距离带，不直接复制绝对射程。
+- `exposure_tolerance`：允许持续暴露、承受局部威胁和脱队的风险阈值。
+- `fire_discipline`：`FreeFire`、`SelfDefense`、`HoldUntilWindow` 或 `Silent`。
+- `target_weights`：舰种、旗舰、航母、威胁、距离、武器适配和击沉收益等评分权重。
+- `enter_conditions`、`exit_conditions`：模式进入与退出条件；条件只读取合法态势信息。
+- `fallback_mode_id`：当前任务失效、完成或紧急脱离后的回退模式。
+- `minimum_hold_time`：非紧急模式最短驻留时间，用于避免射程边缘反复切换。
+
+通用 AI Rule Set 基础字段：
+
+```text
+id
+navigation_policy
+formation_policy
+collision_policy
+boundary_policy
+avoidance_policy
+search_policy
+terrain_policy
+environment_costs
+```
+
+- `navigation_policy`：短航路长度、重算间隔、转弯前减速和航点到达容差。
+- `formation_policy`：舒适圈、修正圈、脱队圈、阵型转换冷却和阵位重排规则。
+- `collision_policy`：预测时间、最小接近距离、让路优先级和卡住恢复规则。
+- `boundary_policy`：软警戒距离、转出空间和贴边路径成本。
+- `avoidance_policy`：鱼雷、持续危险区和已知环境威胁的规避权重与恢复时间。
+- `search_policy`：残影置信度衰减、搜索扇区、搜索时限和回归条件。
+- `terrain_policy`：是否允许寻找掩体、最低出口数、最大停留时间和地形类型权重。MVP 开阔海域固定禁用岛屿掩体。
+- `environment_costs`：浅水、海峡、雷区、风暴等公开环境类型的通行或威胁成本。
+
+地图负责提供碰撞多边形、可通行区域、视线遮挡和地形类型；AI Rule Set 只保存使用这些事实的偏好，不复制地图几何，也不能覆盖玩家与 AI 共用的通行合法性。
+
+舰船定义可增加 `allowed_ai_mode_ids`，或由稳定的 `variant_tags` 映射可选模式。关卡只允许从该集合中选择初始和回退模式。AI 模式运行时的当前目标、编组记忆、残影置信度和切换原因属于单场战斗状态，不写回配置定义。
+
+为兼容首轮原型，旧式 `target_priority`、`preferred_range` 和 `special_behavior` 可在加载时转换为一个匿名单舰模式；新配置不再把多个特殊行为压缩为单个字符串。
 
 ## 14. 技能配置
 
@@ -414,6 +484,8 @@ effect_value
 modifiers
 duration
 vfx_id
+ai_tags
+ai_policy_id
 ```
 
 字段含义：
@@ -428,6 +500,8 @@ vfx_id
 - `modifiers`：结构化增益/减益列表，复杂技能优先使用该字段。
 - `duration`：持续时间，瞬发技能可为 0。
 - `vfx_id`：表现资源标识。
+- `ai_tags`：可选。技能 AI 用途标签，例如 `Burst`、`Defense`、`Recon`、`Mobility`、`AreaSupport`；不改变技能效果。
+- `ai_policy_id`：可选。引用程序支持的有限技能评估策略；不得包含可执行表达式。省略时敌方 AI 使用按目标类型分类的兼容策略。
 
 MVP 约定：
 

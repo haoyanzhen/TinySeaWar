@@ -82,6 +82,7 @@ assets/characters/{id}/postprocess_plan.json
 
 - 扫描角色目录。
 - 清背景时先删除与画布边缘连通的抠图色，再清理被头发、头像框或舰装封闭的高置信度抠图色残留；不得只依赖边缘连通判定，否则封闭区域会留下色块。
+- 兼容早期白底 VFX 源图：根据画布边缘识别近白底色，用白底 alpha 恢复而不是全局删除白色；若白底 sheet 内仍嵌有绿色 UI 单元，再叠加高置信度绿幕清理。
 - 源图生成时将抠图色视为保留色：角色、舰装和特效不得使用同一高亮色。角色设计必须使用绿色高亮时改用洋红抠图底，反之亦然；后处理不得承担猜测同色像素语义的责任。
 - 按配置裁切 sheet。
 - 将初始裁剪框视为目标提示，而不是最终边界；在源图 alpha 上查找与初始框相交的前景连通块，合并这些连通块的真实包围盒，再加安全边距得到最终裁剪框。
@@ -97,6 +98,7 @@ assets/characters/{id}/postprocess_plan.json
 - 按需生成 QA 预览页。
 - 自动检查 RGBA、空 alpha、贴边、缺文件和 JSON 可解析性。
 - 自动检查所有运行时 PNG 的透明安全边距和 alpha 加权视觉重心；任一边贴图或视觉重心偏离画布中心超过 10% 时阻塞交付。
+- 自动检查运行时 PNG 的大面积不透明近白底和保留绿幕色；命中阈值时阻塞交付，避免仅凭 RGBA 模式误判为透明资产。
 - 按单角色资产契约检查完整性；必需项缺失时将角色包标记为 `incomplete`，即使已有 PNG 都可读也不得通过交付。
 - 检查动画和 VFX 配置的引用文件是否存在、舰种数据是否一致，以及绑定点是否在子图边界内并且靠近非透明画面。
 - MVP 动画源图默认使用一张 `5x4` 母版，每行一个状态、每行四帧；旧角色也可使用每状态一张 `2x2` 连续四帧图。拆分后在 `anim_config.json` 中记录有序帧、FPS 和循环标记。待机/移动使用小幅循环；攻击/受击/火力使用预备、峰值、反馈/后坐和复位。
@@ -138,6 +140,7 @@ assets/characters/{id}/processed/source_alpha/
 assets/characters/{id}/processed/ui/
 assets/characters/{id}/processed/battle/
 assets/characters/{id}/processed/vfx/
+assets/vfx/combat/character_templates/{ship_class}/
 assets/characters/{id}/processed/anim/
 assets/characters/{id}/processed/config/
 ```
@@ -187,7 +190,7 @@ python3 tools/art_pipeline/batch_character_art.py bismarck --process --preview
 python3 tools/art_pipeline/postprocess_generated_character.py iowa
 ```
 
-Dry-run 会检查旧式独立 sheet 或新式母版输入、后处理路由、运行时数据和资产契约。旧试产角色可以继续使用脚本内手写裁剪规格；新生成的标准源图包优先使用 `postprocess_generated_character.py` 自动完成 UI 八格、`4x2` 战斗组件、`5x4` 动画母版、VFX 八格、基础绑定点和配置生成。`--process` 按角色独立执行后处理，单个角色失败不中断后续角色，结果写入：
+Dry-run 会检查旧式独立 sheet 或新式母版输入、后处理路由、运行时数据和资产契约。旧试产角色可以继续使用脚本内手写裁剪规格；新生成的标准源图包优先使用 `postprocess_generated_character.py` 自动完成 UI 八格、`4x2` 战斗组件、`5x4` 动画母版、VFX 八格、基础绑定点和配置生成。宽幅 VFX 表按 `2x4` 读取；早期方形白底 VFX 表按 `3x4` 读取前两行的八个运行时角色，避免跨行串图。像素完全一致且已确认属于舰种模板的 VFX 只在 `assets/vfx/combat/character_templates/` 保存一份，角色 `vfx_config` 通过 `shared_class_template` 引用；不同图像自动保留为角色专属覆盖。`--process` 按角色独立执行后处理，单个角色失败不中断后续角色，结果写入：
 
 ```text
 assets/characters/qa/character_art_batch_report.json

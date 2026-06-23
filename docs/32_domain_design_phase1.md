@@ -860,6 +860,8 @@ AI 可以读取其阵营可见快照和己方完整状态，输出移动、集�
 
 自动武器攻击属于单位领域行为，不需要 AI 每次提交开火命令。敌方 AI 若使用配置为 `ManualPrimary` 的武器，必须提交与玩家同结构的 `FirePrimaryWeaponCommand`，不能绕过装填、射程、射角或侦查规则。
 
+舰队战术方案、战术编组、单舰模式、通用航行规则和 AI 短期记忆属于 AI Runtime State，由 Application/策略层维护，不进入 Presentation，也不把关卡行为脚本堆入 `UnitState`。单舰模式只组合行动、攻击和技能策略；短航路、阵位和掩体点只产生移动意图。最终移动、碰撞、边界、地形通行、视线、攻击与技能合法性仍由 Domain 决定。完整模式与通用规则设计见 `docs/16_enemy_ai_behavior_design.md`。
+
 ---
 
 ## 16. 第一阶段扩展点

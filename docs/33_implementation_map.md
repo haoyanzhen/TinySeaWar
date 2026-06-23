@@ -26,12 +26,14 @@
 - 关卡配置：`data/levels/prototype_levels.json`
   - 新增 1v1、3v3、更多战斗模式时优先改这里。
   - `map.ocean_palette` 控制海面调色板。
-- 舰船配置：`data/ships/prototype_ships.json`
+- 舰船配置：`data/ships/prototype_ships.json`、`data/ships/expanded_roster_ships.json`
   - 角色基础属性、武器挂载、技能、主要武器组、弹种组、`asset_root`。
-- 武器配置：`data/weapons/prototype_weapons.json`
+- 武器配置：`data/weapons/prototype_weapons.json`、`data/weapons/expanded_roster_weapons.json`
   - 自动武器与 `ManualPrimary` 主要武器。
   - HE/AP 共享冷却依赖相同 `weapon_group_id`。
-- 技能配置：`data/skills/prototype_skills.json`
+  - `base_range` 保存设计基线，`range` 保存当前 2 倍有效射程；领域与 UI 均直接读取 `range`。
+- 技能配置：`data/skills/prototype_skills.json`、`data/skills/expanded_roster_skills.json`
+- 扩展角色武器/技能生成入口：`tools/data/build_expanded_roster_data.mjs`
 - 投射物配置：`data/projectiles/projectiles.json`
 - 公式配置：`data/formulas/combat_formulas.json`
 - 海面调色板：`data/environments/ocean_palettes.json`
@@ -49,6 +51,7 @@
   - 玩家槽位：`get_player_slots`
   - 操作状态：`get_operation_status`
   - 主要武器瞄准校验：`get_primary_aim_status`
+  - 多扇区射角：`_weapon_fire_arcs`、`_angle_in_weapon_fire_arcs`
 - 常改位置：
   - 移动：`_update_movement`
   - 索敌与接触残影：`_update_detection`
@@ -83,6 +86,7 @@
   - 滚轮缩放与边界：`_adjust_camera_zoom`、`_configure_camera_zoom`、`_clamp_camera_to_map`
   - 战场角色图层：`_draw_unit`、`_draw_unit_art`
   - 瞄准叠层：`_draw_operation_overlay`
+  - 鱼雷红/绿角域与白色散布线：`_draw_torpedo_aim_overlay`、`_draw_annular_sector`
   - HUD 数据推送：`_update_hud`
 - HUD：`scripts/presentation/battle/battle_hud.gd`
   - 顶部状态：`_draw_top_status`
@@ -139,8 +143,8 @@
 
 ## 常见修改入口
 
-- 新增角色：先改 `data/ships/prototype_ships.json`，再确认 `assets/characters/{id}/processed/` 资产完整。
-- 新增武器或调整手动主武器：改 `data/weapons/prototype_weapons.json`，必要时改 `battle_session.gd` 的 `_fire_primary_weapon`、`_validate_primary_fire`。
+- 新增角色：按所属批次修改 `data/ships/prototype_ships.json` 或 `data/ships/expanded_roster_ships.json`，再确认 `assets/characters/{id}/processed/` 资产完整。
+- 新增武器或调整手动主武器：修改对应批次武器 JSON；扩展角色优先改生成入口并重新生成，必要时再改 `battle_session.gd` 的 `_fire_primary_weapon`、`_validate_primary_fire`。
 - 调整伤害：优先改 `data/formulas/combat_formulas.json` 和 `damage_service.gd`。
 - 调整 HE/AP：看舰船的 `ammo_selection_group_id`，武器的 `weapon_group_id`、`ammo_type`。
 - 调整胜利条件：改 `battle_session.gd` 的 `_check_victory`、`_check_timeout`。

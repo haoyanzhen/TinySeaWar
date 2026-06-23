@@ -52,6 +52,8 @@ MVP 的核心约束：
 ### 审计与历史
 
 - `docs/90_design_audit_round4.md`：第四轮设计复核结论。处理历史争议、优先级或设计债务时参考，但不要把它当作最新运行时真源。
+- `docs/91_character_phase2_historical_validation.md`：第二期角色的独立历史考据。核对实舰、方案状态、主要武装和舰种映射争议时参考。
+- `docs/92_character_phase2_balance_validation.md`：第二期角色的独立纸面数值审查。评估 Cost、舰种生态、技能预算和动态验证计划时参考。
 
 ## Codex 工作指引
 

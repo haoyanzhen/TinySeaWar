@@ -7,6 +7,7 @@ import re
 
 ROOT = Path(__file__).resolve().parents[2]
 CHARACTER_DOC = ROOT / "docs" / "41_character_art_design.md"
+PHASE1_HEADING = "## 1. 第一期角色列表"
 
 SHIP_CLASS_MAP = {
     "驱逐": "destroyer",
@@ -74,7 +75,13 @@ def _split_table_row(line: str) -> list[str]:
 
 def load_roster(doc_path: Path = CHARACTER_DOC) -> list[CharacterRosterEntry]:
     entries: list[CharacterRosterEntry] = []
+    in_phase1 = False
     for line in doc_path.read_text(encoding="utf-8").splitlines():
+        if line.startswith("## "):
+            in_phase1 = line.strip() == PHASE1_HEADING
+            continue
+        if not in_phase1:
+            continue
         if not line.startswith("| "):
             continue
         cells = _split_table_row(line)

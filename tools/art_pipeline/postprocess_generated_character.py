@@ -80,6 +80,15 @@ VFX_ROLES_BY_CLASS = {
     "submarine": ("bubble_trail", "sonar_pulse", "torpedo_launch_flash", "torpedo_trail", "underwater_shadow", "periscope_glint", "dive_ripple", "wake_subtle"),
 }
 
+SHARED_VFX_TEMPLATE_CHARACTERS = {
+    "anshan", "gnevny", "ward", "yukikaze",
+    "chongqing", "ning_hai", "san_diego", "sirius",
+    "argus", "hosho", "pobeda",
+    "hood", "yamato",
+    "kirov", "prinz_eugen",
+}
+SHARED_VFX_ROOT = ROOT / "assets" / "vfx" / "combat" / "character_templates"
+
 
 def source_paths(character_id: str) -> dict[str, Path]:
     root = CHAR_ROOT / character_id
@@ -172,6 +181,82 @@ def remove_green_background(path: Path) -> Image.Image:
             if a > 0 and g >= 150 and g > r + 70 and g > b + 70:
                 pixels[x, y] = (r, g, b, 0)
     return img
+
+
+def has_white_backdrop(img: Image.Image) -> bool:
+    """Return true when the source border is an opaque, near-white matte."""
+    width, height = img.size
+    pixels = img.load()
+    samples = []
+    step_x = max(1, width // 128)
+    step_y = max(1, height // 128)
+    for x in range(0, width, step_x):
+        samples.append(pixels[x, 0])
+        samples.append(pixels[x, height - 1])
+    for y in range(0, height, step_y):
+        samples.append(pixels[0, y])
+        samples.append(pixels[width - 1, y])
+    white = sum(
+        1
+        for r, g, b, a in samples
+        if a >= 240 and min(r, g, b) >= 240 and max(r, g, b) - min(r, g, b) <= 12
+    )
+    return bool(samples) and white / len(samples) >= 0.85
+
+
+def remove_white_background(img: Image.Image) -> Image.Image:
+    """Recover transparency from artwork composited over a white matte.
+
+    Generated VFX use saturated outlines around pale cores. Estimating alpha
+    from the darkest channel preserves those colored details while removing
+    the connected white field. Near-white source noise is explicitly cleared
+    so it cannot expand later component bounds.
+    """
+    out = Image.new("RGBA", img.size, (0, 0, 0, 0))
+    source = img.load()
+    target = out.load()
+    for y in range(img.height):
+        for x in range(img.width):
+            r, g, b, source_alpha = source[x, y]
+            if source_alpha == 0:
+                continue
+            recovered_alpha = max(255 - r, 255 - g, 255 - b)
+            recovered_alpha = recovered_alpha * source_alpha // 255
+            if recovered_alpha < ALPHA_THRESHOLD:
+                continue
+            scale = 255 / recovered_alpha
+            foreground = tuple(
+                max(0, min(255, round(255 + (channel - 255) * scale)))
+                for channel in (r, g, b)
+            )
+            target[x, y] = (*foreground, recovered_alpha)
+    return out
+
+
+def clear_high_confidence_green(img: Image.Image) -> Image.Image:
+    pixels = img.load()
+    for y in range(img.height):
+        for x in range(img.width):
+            r, g, b, a = pixels[x, y]
+            if a > 0 and g >= 150 and g > r + 70 and g > b + 70:
+                pixels[x, y] = (r, g, b, 0)
+    return img
+
+
+def remove_generated_background(path: Path) -> Image.Image:
+    img = Image.open(path).convert("RGBA")
+    if has_white_backdrop(img):
+        # Some transitional packages place green-backed UI cells on a white
+        # outer sheet, so both cleanup passes may be required.
+        return clear_high_confidence_green(remove_white_background(img))
+    return remove_green_background(path)
+
+
+def vfx_grid_rows(img: Image.Image) -> int:
+    # The standard green-screen package is a wide 2x4 grid. Earlier square
+    # white-matte packages contain three rows; only the first two rows map to
+    # the eight runtime roles, but they must be split as 3x4 to avoid overlap.
+    return 3 if img.height / img.width >= 0.80 else 2
 
 
 def alpha_bbox(img: Image.Image) -> tuple[int, int, int, int] | None:
@@ -487,6 +572,13 @@ def build_contact_sheet(character_id: str, processed_root: Path) -> Path:
     paths = []
     for folder in ("ui", "battle", "anim", "vfx"):
         paths.extend(sorted((processed_root / folder).glob("*.png")))
+    vfx_config = processed_root / "config" / f"{character_id}_vfx_config.json"
+    if vfx_config.exists():
+        config = json.loads(vfx_config.read_text(encoding="utf-8"))
+        for item in config.get("roles", {}).values():
+            configured_path = ROOT / item.get("file", "")
+            if configured_path.exists() and configured_path not in paths:
+                paths.append(configured_path)
     cell_width, cell_height = 240, 210
     columns = 6
     rows = (len(paths) + columns - 1) // columns
@@ -568,7 +660,7 @@ def process_character(character_id: str) -> None:
     manifest: dict[str, Any] = {
         "character_id": character_id,
         "source": "tools/art_pipeline/postprocess_generated_character.py",
-        "method": "green_screen_auto_grid_and_component_split",
+        "method": "generated_background_auto_grid_and_component_split",
         "outputs": [],
     }
 
@@ -576,7 +668,7 @@ def process_character(character_id: str) -> None:
     for key, path in paths.items():
         if not path.exists():
             continue
-        alpha = remove_green_background(path)
+        alpha = remove_generated_background(path)
         alpha_sources[key] = alpha
         out = dirs["source_alpha"] / f"{path.stem}_alpha_source.png"
         manifest["outputs"].append({"role": f"source_alpha:{key}", **save_image(alpha, out)})
@@ -659,8 +751,16 @@ def process_character(character_id: str) -> None:
         manifest["outputs"].append({"role": "battle_body_r:idle_master_override", **save_image(idle_body, body_path)})
         bind_assets[body_name] = {"pivot": point_near_center(idle_body)}
 
-    vfx_cells = split_grid(alpha_sources["vfx_sheet"], rows=2, cols=4)
+    vfx_cells = split_grid(
+        alpha_sources["vfx_sheet"],
+        rows=vfx_grid_rows(alpha_sources["vfx_sheet"]),
+        cols=4,
+    )
     vfx_roles: dict[str, Any] = {}
+    use_shared_vfx = character_id in SHARED_VFX_TEMPLATE_CHARACTERS
+    if use_shared_vfx:
+        for old_path in dirs["vfx"].glob(f"{character_id}_vfx_*.png*"):
+            old_path.unlink()
     for role_name, cell in zip(VFX_ROLES_BY_CLASS[entry.ship_class], vfx_cells):
         components = connected_components(cell, min_area=120)
         if not components:
@@ -668,8 +768,19 @@ def process_character(character_id: str) -> None:
         cropped, crop_meta = crop_component(cell, components[0], pad=18)
         out_name = f"{character_id}_vfx_{role_name}.png"
         out_path = dirs["vfx"] / out_name
+        source_kind = "character_specific"
+        if use_shared_vfx:
+            shared_path = SHARED_VFX_ROOT / entry.ship_class / f"vfx_{entry.ship_class}_{role_name}.png"
+            if not shared_path.exists():
+                out_path = shared_path
+                source_kind = "shared_class_template"
+            else:
+                existing = Image.open(shared_path).convert("RGBA")
+                if existing.size == cropped.size and existing.tobytes() == cropped.tobytes():
+                    out_path = shared_path
+                    source_kind = "shared_class_template"
         manifest["outputs"].append({"role": f"vfx:{role_name}", "crop": crop_meta, **save_image(cropped, out_path)})
-        vfx_roles[role_name] = {"file": str(out_path.relative_to(ROOT)), "source": "character_specific"}
+        vfx_roles[role_name] = {"file": str(out_path.relative_to(ROOT)), "source": source_kind}
 
     (dirs["config"] / f"{character_id}_meta_bind_points.json").write_text(
         json.dumps({"character_id": character_id, "assets": bind_assets}, ensure_ascii=False, indent=2) + "\n",

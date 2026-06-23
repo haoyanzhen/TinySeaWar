@@ -42,11 +42,25 @@ REQUIRED_PATTERNS = {
 }
 
 REQUIRED_ANIMATION_STATES = {"idle", "move", "attack", "hit", "firepower"}
+MAX_OPAQUE_WHITE_CANVAS_RATIO = 0.50
+MAX_CHROMA_KEY_CANVAS_RATIO = 0.05
 
 
 def matches(character_id: str, pattern: str) -> list[Path]:
     formatted = pattern.format(id=character_id, ship_class=SHIP_CLASSES[character_id])
     return sorted((CHAR_ROOT / character_id).glob(formatted))
+
+
+def configured_vfx_paths(character_id: str) -> list[Path]:
+    config_path = CHAR_ROOT / character_id / "processed" / "config" / f"{character_id}_vfx_config.json"
+    if not config_path.exists():
+        return []
+    config = json.loads(config_path.read_text(encoding="utf-8"))
+    return sorted(
+        ROOT / item.get("file", "")
+        for item in config.get("roles", {}).values()
+        if item.get("file") and (ROOT / item["file"]).exists()
+    )
 
 
 def validate_file(path: Path) -> str | None:
@@ -62,8 +76,29 @@ def validate_file(path: Path) -> str | None:
                 left, top, right, bottom = bbox
                 if min(left, top, image.width - right, image.height - bottom) == 0:
                     return "PNG alpha touches canvas edge"
-                sample = alpha.copy()
-                sample.thumbnail((256, 256), getattr(Image, "Resampling", Image).BOX)
+                sample_image = image.copy()
+                sample_image.thumbnail((256, 256), getattr(Image, "Resampling", Image).BOX)
+                pixels = list(sample_image.getdata())
+                opaque_white = sum(
+                    1
+                    for pixel in pixels
+                    if pixel[3] >= 240 and min(pixel[:3]) >= 245
+                )
+                white_ratio = opaque_white / len(pixels)
+                if white_ratio >= MAX_OPAQUE_WHITE_CANVAS_RATIO:
+                    return f"PNG has opaque near-white background ({white_ratio:.1%} of canvas)"
+                chroma_key = sum(
+                    1
+                    for pixel in pixels
+                    if pixel[3] >= 128
+                    and pixel[1] >= 150
+                    and pixel[1] > pixel[0] + 70
+                    and pixel[1] > pixel[2] + 70
+                )
+                chroma_ratio = chroma_key / len(pixels)
+                if chroma_ratio >= MAX_CHROMA_KEY_CANVAS_RATIO:
+                    return f"PNG has reserved green-screen residue ({chroma_ratio:.1%} of canvas)"
+                sample = sample_image.getchannel("A")
                 width, height = sample.size
                 values = list(sample.getdata())
                 weight = sum(values)
@@ -167,6 +202,8 @@ def audit(character_id: str) -> dict[str, object]:
     validated_paths: set[Path] = set()
     for role, pattern in REQUIRED_PATTERNS.items():
         paths = matches(character_id, pattern)
+        if role == "vfx" and not paths:
+            paths = configured_vfx_paths(character_id)
         if role == "main_weapon":
             paths = [
                 path for path in paths

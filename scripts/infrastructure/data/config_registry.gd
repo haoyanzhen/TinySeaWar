@@ -10,6 +10,8 @@ const CATEGORY_PATHS := {
 	"settings": "res://data/settings",
 	"visuals": "res://data/visuals",
 }
+const DISTANCE_BASELINE_MULTIPLIER := 1.5
+const MOTION_BASELINE_MULTIPLIER := 0.5
 
 var definitions := {}
 var errors: Array[String] = []
@@ -85,6 +87,8 @@ func _validate_references() -> void:
 		_validate_ship(ship)
 	for weapon in all("weapons"):
 		_validate_weapon(weapon)
+	for skill in all("skills"):
+		_validate_skill(skill)
 	for projectile in all("projectiles"):
 		if projectile.get("behavior", "") not in ["Straight", "DelayedImpact", "PathFollow"]:
 			errors.append("Unsupported projectile behavior in %s" % projectile.get("id", "?"))
@@ -107,6 +111,10 @@ func _validate_ship(ship: Dictionary) -> void:
 	for field in ["max_hp", "speed", "turn_speed", "detection_range", "concealment_distance", "collision_radius"]:
 		if float(ship.get(field, 0.0)) <= 0.0:
 			errors.append("%s must be positive in %s" % [field, ship_id])
+	for field in ["speed", "turn_speed"]:
+		_validate_scaled_field(ship, field, "base_%s" % field, MOTION_BASELINE_MULTIPLIER, ship_id)
+	for field in ["detection_range", "concealment_distance"]:
+		_validate_scaled_field(ship, field, "base_%s" % field, DISTANCE_BASELINE_MULTIPLIER, ship_id)
 	for weapon_id in ship.get("weapon_mounts", []):
 		if get_definition("weapons", weapon_id).is_empty():
 			errors.append("Missing weapon %s referenced by %s" % [weapon_id, ship_id])
@@ -159,8 +167,8 @@ func _validate_weapon(weapon: Dictionary) -> void:
 	var base_range := float(weapon.get("base_range", 0.0))
 	if base_range <= 0.0:
 		errors.append("base_range must be positive in %s" % weapon_id)
-	elif not is_equal_approx(float(weapon.get("range", 0.0)), base_range * 2.0):
-		errors.append("Effective range must be 2x base_range in %s" % weapon_id)
+	elif not is_equal_approx(float(weapon.get("range", 0.0)), base_range * DISTANCE_BASELINE_MULTIPLIER):
+		errors.append("Effective range must be %.1fx base_range in %s" % [DISTANCE_BASELINE_MULTIPLIER, weapon_id])
 	if float(weapon.get("minimum_range", 0.0)) > float(weapon.get("range", 0.0)):
 		errors.append("Invalid range band in %s" % weapon_id)
 	if float(weapon.get("fire_arc_degrees", 0.0)) <= 0.0 or float(weapon.get("fire_arc_degrees", 0.0)) > 360.0:
@@ -183,6 +191,29 @@ func _validate_weapon(weapon: Dictionary) -> void:
 		errors.append("Missing projectile referenced by %s" % weapon_id)
 	if get_definition("formulas", str(weapon.get("formula_id", ""))).is_empty():
 		errors.append("Missing formula referenced by %s" % weapon_id)
+
+
+func _validate_skill(skill: Dictionary) -> void:
+	var skill_id := str(skill.get("id", "?"))
+	var base_cast_range := float(skill.get("base_cast_range", skill.get("cast_range", 0.0)))
+	if base_cast_range < 0.0:
+		errors.append("base_cast_range cannot be negative in %s" % skill_id)
+	elif base_cast_range <= 0.0:
+		if not is_equal_approx(float(skill.get("cast_range", 0.0)), 0.0):
+			errors.append("Zero-range skill must keep cast_range 0 in %s" % skill_id)
+	elif not skill.has("base_cast_range"):
+		errors.append("Missing base_cast_range in %s" % skill_id)
+	elif not is_equal_approx(float(skill.get("cast_range", 0.0)), base_cast_range * DISTANCE_BASELINE_MULTIPLIER):
+		errors.append("Effective cast_range must be %.1fx base_cast_range in %s" % [DISTANCE_BASELINE_MULTIPLIER, skill_id])
+
+
+func _validate_scaled_field(definition: Dictionary, effective_field: String, base_field: String, multiplier: float, definition_id: String) -> void:
+	var base_value := float(definition.get(base_field, 0.0))
+	if base_value <= 0.0:
+		errors.append("%s must be positive in %s" % [base_field, definition_id])
+		return
+	if not is_equal_approx(float(definition.get(effective_field, 0.0)), base_value * multiplier):
+		errors.append("%s must be %.1fx %s in %s" % [effective_field, multiplier, base_field, definition_id])
 
 
 func _validate_level(level: Dictionary) -> void:

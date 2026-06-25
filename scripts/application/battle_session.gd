@@ -253,6 +253,7 @@ func get_primary_aim_status(unit_id: String, target_position: Vector2) -> Dictio
 	var aim_weapons := _primary_aim_weapons(weapon_states)
 	validation["weapon_type"] = _common_weapon_type(aim_weapons)
 	validation["fire_arcs"] = _aim_fire_arcs(aim_weapons)
+	validation["impact_radius"] = _aim_impact_radius(aim_weapons)
 	var direction_weapon := _direction_weapon_for_aim(unit, aim_weapons, target_position)
 	validation["minimum_range"] = float(direction_weapon.get("minimum_range", 0.0))
 	validation["selected_range"] = float(direction_weapon.get("range", validation["range"]))
@@ -1021,6 +1022,13 @@ func _aim_fire_arcs(weapons: Array) -> Array:
 				"weapon_id": str(weapon.get("id", "")),
 			})
 	return result
+
+
+func _aim_impact_radius(weapons: Array) -> float:
+	var radius := 42.0
+	for weapon in weapons:
+		radius = maxf(radius, float(weapon.get("impact_radius", radius)))
+	return radius
 
 
 func _direction_weapon_for_aim(unit: Dictionary, weapons: Array, target_position: Vector2) -> Dictionary:

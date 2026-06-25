@@ -3,12 +3,14 @@ extends Node
 const ShipUnitView = preload("res://scripts/presentation/battle/ship_unit_view.gd")
 const ProjectileView = preload("res://scripts/presentation/battle/projectile_view.gd")
 const BattleVfx = preload("res://scripts/presentation/battle/battle_vfx.gd")
+const DamageNumberView = preload("res://scripts/presentation/battle/damage_number_view.gd")
 
 var unit_layer: Node2D
 var projectile_layer: Node2D
 var vfx_layer: Node2D
 var unit_views := {}
 var projectile_views := {}
+var damage_number_views_by_target := {}
 
 
 func setup(new_unit_layer: Node2D, new_projectile_layer: Node2D, new_vfx_layer: Node2D) -> void:
@@ -27,6 +29,7 @@ func clear() -> void:
 			view.queue_free()
 	unit_views.clear()
 	projectile_views.clear()
+	damage_number_views_by_target.clear()
 	if vfx_layer != null:
 		for child in vfx_layer.get_children():
 			child.queue_free()
@@ -132,6 +135,7 @@ func _handle_attack_resolved(event: Dictionary, session) -> void:
 	var target_view: ShipUnitView = unit_views.get(target_id, null)
 	if target_view != null and bool(result.get("hit", false)):
 		target_view.play_hit_state()
+	_spawn_damage_number(result, session)
 	var source: Dictionary = session.state.get("units_by_id", {}).get(str(result.get("source_unit_id", "")), {})
 	var source_character := str(source.get("definition_id", "")).trim_prefix("ship.")
 	var weapon: Dictionary = DataRegistry.registry.get_definition("weapons", str(result.get("source_weapon_id", "")))
@@ -167,6 +171,145 @@ func _spawn_role_vfx(character_id: String, role_name: String, world_position: Ve
 	effect.position = world_position
 	vfx_layer.add_child(effect)
 	effect.configure(str(role.get("file", "")), DataRegistry.assets.vfx_playback_profile(profile_id), rotation_value)
+
+
+func _spawn_damage_number(result: Dictionary, session) -> void:
+	if vfx_layer == null or not _damage_result_visible_to_player(result, session):
+		return
+	var entry := _damage_number_entry(result, session)
+	if entry.is_empty():
+		return
+	var target_id := str(entry.get("target_unit_id", ""))
+	var active_views := _active_damage_number_views(target_id)
+	for view in active_views:
+		if view.can_absorb(entry):
+			view.absorb(entry)
+			damage_number_views_by_target[target_id] = active_views
+			return
+	if active_views.size() >= 3:
+		active_views.sort_custom(func(a, b): return int(a.priority) < int(b.priority))
+		var lowest: DamageNumberView = active_views[0]
+		if int(entry.get("priority", 1)) <= int(lowest.priority):
+			if lowest.can_absorb(entry):
+				lowest.absorb(entry)
+			damage_number_views_by_target[target_id] = active_views
+			return
+		lowest.queue_free()
+		active_views.remove_at(0)
+	var number := DamageNumberView.new()
+	number.position = entry.get("position", Vector2.ZERO)
+	number.z_index = 35
+	vfx_layer.add_child(number)
+	number.configure(entry)
+	active_views.append(number)
+	damage_number_views_by_target[target_id] = active_views
+
+
+func _active_damage_number_views(target_id: String) -> Array:
+	var result: Array = []
+	for view in damage_number_views_by_target.get(target_id, []):
+		if is_instance_valid(view) and not view.is_queued_for_deletion():
+			result.append(view)
+	return result
+
+
+func _damage_result_visible_to_player(result: Dictionary, session) -> bool:
+	var target_id := str(result.get("target_unit_id", ""))
+	if target_id.is_empty():
+		return false
+	var target: Dictionary = session.state.get("units_by_id", {}).get(target_id, {})
+	if target.is_empty():
+		return false
+	if str(target.get("faction_id", "")) == "player":
+		return true
+	return session.state.get("visible_by_faction", {}).get("player", {}).has(target_id)
+
+
+func _damage_number_entry(result: Dictionary, session) -> Dictionary:
+	var target_id := str(result.get("target_unit_id", ""))
+	if target_id.is_empty():
+		return {}
+	var target: Dictionary = session.state.get("units_by_id", {}).get(target_id, {})
+	if target.is_empty():
+		return {}
+	var source: Dictionary = session.state.get("units_by_id", {}).get(str(result.get("source_unit_id", "")), {})
+	var weapon: Dictionary = DataRegistry.registry.get_definition("weapons", str(result.get("source_weapon_id", "")))
+	var style := _damage_number_style(result, weapon)
+	if style.is_empty():
+		return {}
+	var target_position: Vector2 = target.get("position", Vector2.ZERO)
+	var anchor := target_position + Vector2(0.0, -float(target.get("stats", {}).get("collision_radius", 20.0)) - 42.0)
+	var side := 0.0
+	if not source.is_empty():
+		var from_source := target_position - (source.get("position", target_position) as Vector2)
+		if absf(from_source.x) > 0.1:
+			side = signf(from_source.x) * float(style.get("side_distance", 0.0))
+	var amount := float(result.get("final_damage", 0.0))
+	var numeric := bool(style.get("numeric", true))
+	var text := str(style.get("text", ""))
+	if numeric:
+		text = str(int(round(amount)))
+	return {
+		"target_unit_id": target_id,
+		"position": anchor,
+		"amount": amount,
+		"hit_count": 1,
+		"numeric": numeric,
+		"text": text,
+		"priority": int(style.get("priority", 1)),
+		"duration": float(style.get("duration", 0.55)),
+		"font_size": int(style.get("font_size", 20)),
+		"rise_distance": float(style.get("rise_distance", 32.0)),
+		"side_distance": side,
+		"hold_seconds": float(style.get("hold_seconds", 0.0)),
+		"fill_color": style.get("fill_color", Color.WHITE),
+		"inner_outline_color": style.get("inner_outline_color", Color(1.0, 1.0, 1.0, 0.0)),
+		"outer_outline_color": style.get("outer_outline_color", Color(0.02, 0.08, 0.12, 0.92)),
+		"outline_size": int(style.get("outline_size", 3)),
+	}
+
+
+func _damage_number_style(result: Dictionary, weapon: Dictionary) -> Dictionary:
+	var damage_type := str(result.get("damage_type", weapon.get("mount_type", "")))
+	var hit := bool(result.get("hit", false))
+	var final_damage := float(result.get("final_damage", 0.0))
+	if not hit:
+		return _label_damage_style("未命中", damage_type)
+	if final_damage <= 0.0:
+		var weapon_id := str(result.get("source_weapon_id", ""))
+		return _label_damage_style("跳弹" if weapon_id.contains("_ap") else "格挡", damage_type)
+	var weapon_id := str(result.get("source_weapon_id", ""))
+	var formula_id := str(weapon.get("formula_id", ""))
+	if damage_type == "Torpedo":
+		return {"font_size": 24, "duration": 0.82, "rise_distance": 42.0, "side_distance": 28.0, "priority": 4, "fill_color": Color("#ff6f61"), "inner_outline_color": Color(1.0, 1.0, 1.0, 0.92), "outer_outline_color": Color("#12304f"), "outline_size": 4}
+	if damage_type == "Aviation":
+		return {"font_size": 24, "duration": 0.70, "rise_distance": 38.0, "priority": 4, "fill_color": Color("#c77dff") if formula_id.contains("ap") else Color("#ffa53a"), "inner_outline_color": Color(1.0, 1.0, 1.0, 0.82), "outer_outline_color": Color("#1e2444"), "outline_size": 4}
+	if damage_type == "AntiAir":
+		return {"font_size": 12, "duration": 0.48, "rise_distance": 22.0, "priority": 1, "fill_color": Color("#d7f7ff"), "outer_outline_color": Color("#234256"), "outline_size": 3}
+	if damage_type == "AntiSubmarine":
+		return {"font_size": 40, "duration": 0.80, "rise_distance": 48.0, "priority": 4, "fill_color": Color("#4db5ff"), "inner_outline_color": Color(1.0, 1.0, 1.0, 0.82), "outer_outline_color": Color("#092a44"), "outline_size": 4}
+	if formula_id.contains("_ap") or weapon_id.contains("_ap"):
+		return {"font_size": 48, "duration": 0.78, "rise_distance": 52.0, "hold_seconds": 0.08, "priority": 5, "fill_color": Color("#ffd54f"), "inner_outline_color": Color(1.0, 1.0, 1.0, 0.86), "outer_outline_color": Color("#02060a"), "outline_size": 5}
+	if formula_id.contains("large"):
+		return {"font_size": 50, "duration": 0.76, "rise_distance": 52.0, "priority": 5, "fill_color": Color("#ffae35"), "outer_outline_color": Color("#123a48"), "outline_size": 5}
+	if formula_id.contains("medium"):
+		return {"font_size": 24, "duration": 0.58, "rise_distance": 36.0, "priority": 3, "fill_color": Color("#64cfff"), "inner_outline_color": Color(1.0, 1.0, 1.0, 0.82), "outer_outline_color": Color("#083542"), "outline_size": 4}
+	return {"font_size": 12, "duration": 0.46, "rise_distance": 24.0, "priority": 1, "fill_color": Color("#bec6cf"), "outer_outline_color": Color("#1d252d"), "outline_size": 3}
+
+
+func _label_damage_style(label: String, damage_type: String) -> Dictionary:
+	var base_size := 14
+	var fill := Color("#d9e2ec")
+	if damage_type == "Torpedo":
+		base_size = 18
+		fill = Color("#ffb0a6")
+	elif damage_type == "Aviation":
+		base_size = 18
+		fill = Color("#e1c6ff")
+	elif damage_type == "AntiSubmarine":
+		base_size = 28
+		fill = Color("#9bdcff")
+	return {"numeric": false, "text": label, "font_size": base_size, "duration": 0.48, "rise_distance": 18.0, "priority": 0, "fill_color": fill, "outer_outline_color": Color("#10202b"), "outline_size": 3}
 
 
 func _impact_role_for_target(character_id: String) -> String:

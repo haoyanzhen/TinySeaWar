@@ -11,6 +11,12 @@ const CAMERA_EDGE_MARGIN := 28.0
 const CAMERA_FOLLOW_DAMPING := 7.5
 const UI_ASSET_ROOT := "res://assets/ui/export/2x"
 const DEFAULT_UNIT_SCALE := 0.28
+const RANGE_AVAILABLE_FILL := Color(0.18, 1.0, 0.48, 0.13)
+const RANGE_AVAILABLE_EDGE := Color(0.28, 1.0, 0.55, 0.86)
+const RANGE_UNAVAILABLE_FILL := Color(1.0, 0.18, 0.16, 0.075)
+const RANGE_UNAVAILABLE_EDGE := Color(1.0, 0.24, 0.2, 0.72)
+const RANGE_SELECTION_WHITE := Color(1.0, 1.0, 1.0, 0.95)
+const DEFAULT_AREA_TARGET_RADIUS := 48.0
 
 enum OperationMode { NORMAL, AIMING_PRIMARY, TARGETING_SKILL }
 
@@ -213,53 +219,79 @@ func _draw_operation_overlay() -> void:
 	var cursor := get_global_mouse_position()
 	if operation_mode == OperationMode.AIMING_PRIMARY:
 		var aim_status: Dictionary = session.get_primary_aim_status(selected_unit_id, cursor)
-		var legal: bool = bool(aim_status.get("legal", false))
-		var color := Color(0.25, 1.0, 0.55, 0.75) if legal else Color(1.0, 0.25, 0.2, 0.75)
-		var range_value := float(aim_status.get("range", 0.0))
-		if aim_status.get("control_type", "") == "Direction" and aim_status.get("weapon_type", "") == "Torpedo":
-			_draw_torpedo_aim_overlay(selected, cursor, aim_status)
-		elif aim_status.get("control_type", "") == "Direction":
-			draw_arc(selected["position"], range_value, 0.0, TAU, 96, color, 2.0)
-			draw_line(selected["position"], cursor, color, 2.0)
+		if aim_status.get("control_type", "") == "Direction":
+			_draw_directional_aim_overlay(selected, cursor, aim_status)
 		else:
-			draw_arc(selected["position"], range_value, 0.0, TAU, 96, color, 2.0)
-			draw_line(selected["position"], cursor, color, 2.0)
-			draw_circle(cursor, 42.0, Color(color.r, color.g, color.b, 0.12))
-			draw_arc(cursor, 42.0, 0.0, TAU, 36, color, 2.0)
-		draw_string(ThemeDB.fallback_font, cursor + Vector2(18.0, -18.0), UiText.reason_name(str(aim_status.get("reason_code", "OK"))), HORIZONTAL_ALIGNMENT_LEFT, -1.0, 16, color)
+			_draw_area_target_overlay(selected, cursor, aim_status, float(aim_status.get("impact_radius", DEFAULT_AREA_TARGET_RADIUS)))
+		_draw_aim_reason_label(cursor, str(aim_status.get("reason_code", "OK")), bool(aim_status.get("legal", false)))
 	elif operation_mode == OperationMode.TARGETING_SKILL:
-		var color := Color(0.45, 0.75, 1.0, 0.75)
-		draw_circle(cursor, 48.0, Color(color.r, color.g, color.b, 0.12))
-		draw_arc(cursor, 48.0, 0.0, TAU, 36, color, 2.0)
-		draw_string(ThemeDB.fallback_font, cursor + Vector2(18.0, -18.0), "技能目标：%s" % UiText.target_type_name(skill_target_type), HORIZONTAL_ALIGNMENT_LEFT, -1.0, 16, color)
+		_draw_skill_target_overlay(selected, cursor)
 
 
 func _draw_torpedo_aim_overlay(selected: Dictionary, cursor: Vector2, aim_status: Dictionary) -> void:
+	_draw_directional_aim_overlay(selected, cursor, aim_status)
+
+
+func _draw_directional_aim_overlay(selected: Dictionary, cursor: Vector2, aim_status: Dictionary) -> void:
 	var origin: Vector2 = selected["position"]
 	var maximum_range := float(aim_status.get("range", 0.0))
-	var invalid_color := Color(1.0, 0.18, 0.16, 0.075)
-	var invalid_edge := Color(1.0, 0.24, 0.2, 0.72)
-	var valid_color := Color(0.18, 1.0, 0.48, 0.16)
-	var valid_edge := Color(0.28, 1.0, 0.55, 0.86)
-	draw_circle(origin, maximum_range, invalid_color)
-	draw_arc(origin, maximum_range, 0.0, TAU, 128, invalid_edge, 2.0)
+	draw_circle(origin, maximum_range, RANGE_UNAVAILABLE_FILL)
+	draw_arc(origin, maximum_range, 0.0, TAU, 128, RANGE_UNAVAILABLE_EDGE, 2.0)
 	for arc in aim_status.get("fire_arcs", []):
 		var center_angle := float(selected.get("heading", 0.0)) + deg_to_rad(float(arc.get("center", 0.0)))
 		var half_angle := deg_to_rad(float(arc.get("degrees", 0.0))) * 0.5
 		var minimum_range := float(arc.get("minimum_range", 0.0))
 		var arc_range := float(arc.get("range", maximum_range))
-		_draw_annular_sector(origin, minimum_range, arc_range, center_angle - half_angle, center_angle + half_angle, valid_color)
-		draw_arc(origin, arc_range, center_angle - half_angle, center_angle + half_angle, 36, valid_edge, 2.0)
-		draw_line(origin + Vector2.RIGHT.rotated(center_angle - half_angle) * minimum_range, origin + Vector2.RIGHT.rotated(center_angle - half_angle) * arc_range, valid_edge, 1.5)
-		draw_line(origin + Vector2.RIGHT.rotated(center_angle + half_angle) * minimum_range, origin + Vector2.RIGHT.rotated(center_angle + half_angle) * arc_range, valid_edge, 1.5)
+		_draw_annular_sector(origin, minimum_range, arc_range, center_angle - half_angle, center_angle + half_angle, RANGE_AVAILABLE_FILL)
+		draw_arc(origin, arc_range, center_angle - half_angle, center_angle + half_angle, 36, RANGE_AVAILABLE_EDGE, 2.0)
+		draw_line(origin + Vector2.RIGHT.rotated(center_angle - half_angle) * minimum_range, origin + Vector2.RIGHT.rotated(center_angle - half_angle) * arc_range, RANGE_AVAILABLE_EDGE, 1.5)
+		draw_line(origin + Vector2.RIGHT.rotated(center_angle + half_angle) * minimum_range, origin + Vector2.RIGHT.rotated(center_angle + half_angle) * arc_range, RANGE_AVAILABLE_EDGE, 1.5)
 	var selected_heading := (cursor - origin).angle()
 	var selected_range := float(aim_status.get("selected_range", maximum_range))
 	var spread_half_angle := deg_to_rad(float(aim_status.get("spread_degrees", 0.0))) * 0.5
-	var white := Color(1.0, 1.0, 1.0, 0.95)
-	draw_line(origin, origin + Vector2.RIGHT.rotated(selected_heading) * selected_range, white, 2.5)
-	draw_line(origin, origin + Vector2.RIGHT.rotated(selected_heading - spread_half_angle) * selected_range, white, 1.5)
-	draw_line(origin, origin + Vector2.RIGHT.rotated(selected_heading + spread_half_angle) * selected_range, white, 1.5)
-	draw_arc(origin, selected_range, selected_heading - spread_half_angle, selected_heading + spread_half_angle, 16, white, 1.5)
+	draw_line(origin, origin + Vector2.RIGHT.rotated(selected_heading) * selected_range, RANGE_SELECTION_WHITE, 2.5)
+	if spread_half_angle > 0.0:
+		draw_line(origin, origin + Vector2.RIGHT.rotated(selected_heading - spread_half_angle) * selected_range, RANGE_SELECTION_WHITE, 1.5)
+		draw_line(origin, origin + Vector2.RIGHT.rotated(selected_heading + spread_half_angle) * selected_range, RANGE_SELECTION_WHITE, 1.5)
+		draw_arc(origin, selected_range, selected_heading - spread_half_angle, selected_heading + spread_half_angle, 16, RANGE_SELECTION_WHITE, 1.5)
+
+
+func _draw_area_target_overlay(selected: Dictionary, cursor: Vector2, aim_status: Dictionary, target_radius: float) -> void:
+	var origin: Vector2 = selected["position"]
+	_draw_range_overlay(origin, float(aim_status.get("minimum_range", 0.0)), float(aim_status.get("range", 0.0)))
+	draw_line(origin, cursor, RANGE_SELECTION_WHITE, 2.0)
+	draw_circle(cursor, target_radius, Color(1.0, 1.0, 1.0, 0.10))
+	draw_arc(cursor, target_radius, 0.0, TAU, 48, RANGE_SELECTION_WHITE, 2.0)
+
+
+func _draw_skill_target_overlay(selected: Dictionary, cursor: Vector2) -> void:
+	var skill: Dictionary = DataRegistry.registry.get_definition("skills", str(selected.get("skill_state", {}).get("definition_id", "")))
+	var cast_range := float(skill.get("cast_range", 0.0))
+	var legal := cast_range <= 0.0 or (selected["position"] as Vector2).distance_to(cursor) <= cast_range
+	_draw_range_overlay(selected["position"], 0.0, cast_range)
+	draw_line(selected["position"], cursor, RANGE_SELECTION_WHITE, 1.8)
+	if skill_target_type == "Enemy":
+		draw_arc(cursor, 34.0, 0.0, TAU, 36, RANGE_SELECTION_WHITE, 2.0)
+	else:
+		draw_circle(cursor, DEFAULT_AREA_TARGET_RADIUS, Color(1.0, 1.0, 1.0, 0.10))
+		draw_arc(cursor, DEFAULT_AREA_TARGET_RADIUS, 0.0, TAU, 48, RANGE_SELECTION_WHITE, 2.0)
+	var label := "技能目标：%s" % UiText.target_type_name(skill_target_type)
+	if not legal:
+		label = "%s / %s" % [label, UiText.reason_name("TARGET_OUT_OF_RANGE")]
+	draw_string(ThemeDB.fallback_font, cursor + Vector2(18.0, -18.0), label, HORIZONTAL_ALIGNMENT_LEFT, -1.0, 16, RANGE_SELECTION_WHITE if legal else RANGE_UNAVAILABLE_EDGE)
+
+
+func _draw_range_overlay(origin: Vector2, minimum_range: float, maximum_range: float) -> void:
+	if maximum_range > 0.0:
+		draw_circle(origin, maximum_range, RANGE_AVAILABLE_FILL)
+		draw_arc(origin, maximum_range, 0.0, TAU, 128, RANGE_AVAILABLE_EDGE, 2.0)
+	if minimum_range > 0.0:
+		draw_circle(origin, minimum_range, RANGE_UNAVAILABLE_FILL)
+		draw_arc(origin, minimum_range, 0.0, TAU, 64, RANGE_UNAVAILABLE_EDGE, 2.0)
+
+
+func _draw_aim_reason_label(cursor: Vector2, reason_code: String, legal: bool) -> void:
+	draw_string(ThemeDB.fallback_font, cursor + Vector2(18.0, -18.0), UiText.reason_name(reason_code), HORIZONTAL_ALIGNMENT_LEFT, -1.0, 16, RANGE_SELECTION_WHITE if legal else RANGE_UNAVAILABLE_EDGE)
 
 
 func _draw_annular_sector(center: Vector2, inner_radius: float, outer_radius: float, start_angle: float, end_angle: float, color: Color) -> void:

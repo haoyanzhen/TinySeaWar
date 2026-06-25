@@ -28,11 +28,13 @@
   - `map.ocean_palette` 控制海面调色板。
 - 舰船配置：`data/ships/prototype_ships.json`、`data/ships/expanded_roster_ships.json`
   - 角色基础属性、武器挂载、技能、主要武器组、弹种组、`asset_root`。
+  - `base_speed/base_turn_speed/base_detection_range/base_concealment_distance` 保存设计基线；运行字段分别按 0.5 或 1.5 倍写入。
 - 武器配置：`data/weapons/prototype_weapons.json`、`data/weapons/expanded_roster_weapons.json`
   - 自动武器与 `ManualPrimary` 主要武器。
   - HE/AP 共享冷却依赖相同 `weapon_group_id`。
-  - `base_range` 保存设计基线，`range` 保存当前 2 倍有效射程；领域与 UI 均直接读取 `range`。
+  - `base_range` 保存设计基线，`range` 保存当前 1.5 倍有效射程；领域与 UI 均直接读取 `range`。
 - 技能配置：`data/skills/prototype_skills.json`、`data/skills/expanded_roster_skills.json`
+  - `base_cast_range` 保存设计基线，`cast_range` 保存当前 1.5 倍有效释放距离。
 - 扩展角色武器/技能生成入口：`tools/data/build_expanded_roster_data.mjs`
 - 投射物配置：`data/projectiles/projectiles.json`
 - 公式配置：`data/formulas/combat_formulas.json`
@@ -86,8 +88,13 @@
   - 滚轮缩放与边界：`_adjust_camera_zoom`、`_configure_camera_zoom`、`_clamp_camera_to_map`
   - 战场角色图层：`_draw_unit`、`_draw_unit_art`
   - 瞄准叠层：`_draw_operation_overlay`
-  - 鱼雷红/绿角域与白色散布线：`_draw_torpedo_aim_overlay`、`_draw_annular_sector`
+  - 红/绿/白战术范围叠层：`_draw_directional_aim_overlay`、`_draw_area_target_overlay`、`_draw_skill_target_overlay`、`_draw_annular_sector`
   - HUD 数据推送：`_update_hud`
+- 战斗表现导演：`scripts/presentation/battle/battle_effect_director.gd`
+  - 角色、投射物、VFX 同步：`sync_snapshot`、`consume_events`
+  - 命中跳字：`_spawn_damage_number`、`_damage_number_entry`
+- 伤害跳字节点：`scripts/presentation/battle/damage_number_view.gd`
+  - 运行时字体绘制、描边、动效、0.25 秒合并和每目标最多 3 组。
 - HUD：`scripts/presentation/battle/battle_hud.gd`
   - 顶部状态：`_draw_top_status`
   - 敌我头像栏：`_draw_fleet_panel`、`_draw_roster_cell`

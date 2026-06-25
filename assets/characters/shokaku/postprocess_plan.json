@@ -1,0 +1,55 @@
+{
+  "character_id": "shokaku",
+  "phase": "phase2",
+  "ship_class": "carrier",
+  "level": 3,
+  "skill_role": "coordinated_strike_wave",
+  "battle_grid_roles": [
+    "battle_body_r",
+    "battle_rig_base",
+    "battle_flight_deck",
+    "battle_aircraft_group_01",
+    "battle_aircraft_group_02",
+    "battle_aircraft_launch_marker",
+    "battle_aircraft_recovery_marker",
+    "battle_aa_center"
+  ],
+  "mount_instances": {
+    "aircraft_launch": 2,
+    "aircraft_recovery": 1
+  },
+  "bindings": {
+    "battle_rig_base": [
+      "rig_mount",
+      "wake_origin",
+      "skill_origin",
+      "aircraft_launch_01",
+      "aircraft_launch_02",
+      "aircraft_recovery_01"
+    ]
+  },
+  "vfx_roles": [
+    "dual_wave_path",
+    "crane_formation_marker",
+    "aircraft_launch_flash",
+    "aircraft_formation",
+    "airstrike_area",
+    "aircraft_recovery",
+    "aa_burst",
+    "skill_aura"
+  ],
+  "public_vfx_profiles": {
+    "dual_wave_path": "skill.area",
+    "crane_formation_marker": "skill.area",
+    "aircraft_launch_flash": "aircraft.path",
+    "aircraft_formation": "aircraft.path",
+    "airstrike_area": "aircraft.path",
+    "aircraft_recovery": "aircraft.path",
+    "aa_burst": "aa.burst.small",
+    "skill_aura": "skill.area"
+  },
+  "acceptance_rules": [
+    "Original TinySeaWar design; no real flags, political symbols, readable insignia, or extremist symbols.",
+    "Character body, rig base, weapon nodes, and VFX must remain visually separable."
+  ]
+}

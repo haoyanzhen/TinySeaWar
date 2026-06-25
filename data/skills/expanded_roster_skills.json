@@ -5,7 +5,7 @@
       "display_name": "多波次空袭",
       "cooldown": 45,
       "target_type": "Area",
-      "cast_range": 760,
+      "cast_range": 1140.0,
       "duration": 12,
       "effects": [
         {
@@ -26,14 +26,15 @@
           "stack_group": "enterprise_skill",
           "stack_rule": "Refresh"
         }
-      ]
+      ],
+      "base_cast_range": 760.0
     },
     {
       "id": "skill.iowa_radar_salvo",
       "display_name": "雷达校准齐射",
       "cooldown": 42,
       "target_type": "Enemy",
-      "cast_range": 760,
+      "cast_range": 1140.0,
       "duration": 8,
       "effects": [
         {
@@ -54,14 +55,15 @@
           "stack_group": "iowa_skill",
           "stack_rule": "Refresh"
         }
-      ]
+      ],
+      "base_cast_range": 760.0
     },
     {
       "id": "skill.san_diego_aa_center",
       "display_name": "防空弹幕中心",
       "cooldown": 36,
       "target_type": "Area",
-      "cast_range": 330,
+      "cast_range": 495.0,
       "duration": 10,
       "effects": [
         {
@@ -91,7 +93,8 @@
           "stack_group": "san_diego_skill",
           "stack_rule": "Refresh"
         }
-      ]
+      ],
+      "base_cast_range": 330.0
     },
     {
       "id": "skill.ward_first_alert",
@@ -128,14 +131,15 @@
           "stack_group": "ward_skill",
           "stack_rule": "Refresh"
         }
-      ]
+      ],
+      "base_cast_range": 0.0
     },
     {
       "id": "skill.hood_fleet_glory",
       "display_name": "舰队荣光",
       "cooldown": 48,
       "target_type": "Area",
-      "cast_range": 430,
+      "cast_range": 645.0,
       "duration": 14,
       "effects": [
         {
@@ -165,14 +169,15 @@
           "stack_group": "hood_skill",
           "stack_rule": "Refresh"
         }
-      ]
+      ],
+      "base_cast_range": 430.0
     },
     {
       "id": "skill.sirius_silver_escort",
       "display_name": "银白护航圈",
       "cooldown": 38,
       "target_type": "Area",
-      "cast_range": 310,
+      "cast_range": 465.0,
       "duration": 12,
       "effects": [
         {
@@ -202,7 +207,8 @@
           "stack_group": "sirius_skill",
           "stack_rule": "Refresh"
         }
-      ]
+      ],
+      "base_cast_range": 310.0
     },
     {
       "id": "skill.argus_training_scout",
@@ -230,14 +236,15 @@
           "stack_group": "argus_skill",
           "stack_rule": "Refresh"
         }
-      ]
+      ],
+      "base_cast_range": 0.0
     },
     {
       "id": "skill.kirov_ice_suppression",
       "display_name": "冰线压制",
       "cooldown": 38,
       "target_type": "Area",
-      "cast_range": 540,
+      "cast_range": 810.0,
       "duration": 6,
       "effects": [
         {
@@ -258,7 +265,8 @@
           "stack_group": "kirov_slow",
           "stack_rule": "Refresh"
         }
-      ]
+      ],
+      "base_cast_range": 540.0
     },
     {
       "id": "skill.pobeda_air_support",
@@ -286,7 +294,8 @@
           "stack_group": "pobeda_skill",
           "stack_rule": "Refresh"
         }
-      ]
+      ],
+      "base_cast_range": 0.0
     },
     {
       "id": "skill.gnevny_snow_torpedo",
@@ -314,7 +323,8 @@
           "stack_group": "gnevny_skill",
           "stack_rule": "Refresh"
         }
-      ]
+      ],
+      "base_cast_range": 0.0
     },
     {
       "id": "skill.prinz_precision_evasion",
@@ -342,7 +352,8 @@
           "stack_group": "prinz_skill",
           "stack_rule": "Refresh"
         }
-      ]
+      ],
+      "base_cast_range": 0.0
     },
     {
       "id": "skill.u47_silent_ambush",
@@ -370,7 +381,8 @@
           "stack_group": "u47_skill",
           "stack_rule": "Refresh"
         }
-      ]
+      ],
+      "base_cast_range": 0.0
     },
     {
       "id": "skill.yamato_full_salvo",
@@ -398,14 +410,15 @@
           "stack_group": "yamato_skill",
           "stack_rule": "Refresh"
         }
-      ]
+      ],
+      "base_cast_range": 0.0
     },
     {
       "id": "skill.yukikaze_lucky_evasion",
       "display_name": "幸运回避",
       "cooldown": 34,
       "target_type": "Area",
-      "cast_range": 360,
+      "cast_range": 540.0,
       "duration": 10,
       "effects": [
         {
@@ -435,7 +448,8 @@
           "stack_group": "yukikaze_aura",
           "stack_rule": "Refresh"
         }
-      ]
+      ],
+      "base_cast_range": 360.0
     },
     {
       "id": "skill.hosho_light_training",
@@ -463,14 +477,15 @@
           "stack_group": "hosho_skill",
           "stack_rule": "Refresh"
         }
-      ]
+      ],
+      "base_cast_range": 0.0
     },
     {
       "id": "skill.ning_coastal_escort",
       "display_name": "近海护卫",
       "cooldown": 36,
       "target_type": "Area",
-      "cast_range": 300,
+      "cast_range": 450.0,
       "duration": 12,
       "effects": [
         {
@@ -500,14 +515,15 @@
           "stack_group": "ning_skill",
           "stack_rule": "Refresh"
         }
-      ]
+      ],
+      "base_cast_range": 300.0
     },
     {
       "id": "skill.anshan_escort_alert",
       "display_name": "护航警戒",
       "cooldown": 34,
       "target_type": "Area",
-      "cast_range": 520,
+      "cast_range": 780.0,
       "duration": 12,
       "effects": [
         {
@@ -528,14 +544,15 @@
           "stack_group": "anshan_aura",
           "stack_rule": "Refresh"
         }
-      ]
+      ],
+      "base_cast_range": 520.0
     },
     {
       "id": "skill.chongqing_turning_support",
       "display_name": "转折支援",
       "cooldown": 40,
       "target_type": "Area",
-      "cast_range": 420,
+      "cast_range": 630.0,
       "duration": 12,
       "effects": [
         {
@@ -556,7 +573,8 @@
           "stack_group": "chongqing_skill",
           "stack_rule": "Refresh"
         }
-      ]
+      ],
+      "base_cast_range": 420.0
     }
   ]
 }

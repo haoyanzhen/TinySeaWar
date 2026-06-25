@@ -52,7 +52,7 @@ assets/characters/{id}/meta/
 {id}_trial_log.md
 ```
 
-新生成角色默认使用 `4x2` 战斗拆件母版和 `5x4` 动画母版：动画五行依次为待机、移动、攻击、受击、火力，每行从左到右为连续四帧。旧试产角色允许继续使用 `{id}_battle_asset_sheet.png` 与五张 `{id}_anim_{state}_4f_sheet.png`，批处理工具必须同时识别两条合法路线。
+新生成角色默认使用 `4x2` 战斗拆件母版和 `5x4` 动画母版：动画五行依次为待机、移动、攻击、受击、火力，每行从左到右为连续四帧。动画母版必须使用 Q 版/SD 战场单位比例，匹配 `battle_body_r` 的战场读图尺度；不得生成全身立绘、半身立绘或技能 cut-in 比例。动画帧只包含角色本体、附着舰装、武器后坐、贴近炮口的开火火光、局部烟火、局部航迹/扫描/光环和姿态变化；飞出的炮弹、鱼雷、导弹、舰载机、深水炸弹、长曳光、长尾迹和大水柱等子物体必须交给公共战斗表现或运行时节点，不烘焙进角色动画母版。旧试产角色允许继续使用 `{id}_battle_asset_sheet.png` 与五张 `{id}_anim_{state}_4f_sheet.png`，批处理工具必须同时识别两条合法路线。
 
 半身立绘和技能 cut-in 可以作为独立源图提供；缺省时允许从已验收全身锚点自动派生构图，但正式输出仍必须包含对应独立文件。
 
@@ -75,6 +75,8 @@ assets/characters/{id}/postprocess_plan.json
 - 动画状态。
 - VFX 用途。
 - padding 和 edge-fix 策略。
+
+第二期角色将该文件作为强制生产契约，另外记录 `phase`、`ship_class`、`skill_role`、`battle_grid_roles`、`mount_instances`、`bindings`、`vfx_roles`、`public_vfx_profiles` 和 `acceptance_rules`。后处理优先读取角色级计划，第一期无该文件时继续使用现有舰种默认模板。
 
 ## 4. 程序化步骤
 
@@ -101,7 +103,7 @@ assets/characters/{id}/postprocess_plan.json
 - 自动检查运行时 PNG 的大面积不透明近白底和保留绿幕色；命中阈值时阻塞交付，避免仅凭 RGBA 模式误判为透明资产。
 - 按单角色资产契约检查完整性；必需项缺失时将角色包标记为 `incomplete`，即使已有 PNG 都可读也不得通过交付。
 - 检查动画和 VFX 配置的引用文件是否存在、舰种数据是否一致，以及绑定点是否在子图边界内并且靠近非透明画面。
-- MVP 动画源图默认使用一张 `5x4` 母版，每行一个状态、每行四帧；旧角色也可使用每状态一张 `2x2` 连续四帧图。拆分后在 `anim_config.json` 中记录有序帧、FPS 和循环标记。待机/移动使用小幅循环；攻击/受击/火力使用预备、峰值、反馈/后坐和复位。
+- MVP 动画源图默认使用一张 Q 版战场单位 `5x4` 母版，每行一个状态、每行四帧；旧角色也可使用每状态一张 `2x2` 连续四帧图。拆分后在 `anim_config.json` 中记录有序帧、FPS 和循环标记。待机/移动使用小幅循环；攻击/受击/火力使用预备、峰值、反馈/后坐和复位。攻击帧最多允许贴近炮口的开火火光或小型局部烟火，不允许出现已发射的炮弹、鱼雷、飞机、深弹或长尾迹等独立子物体。
 - 同一状态的四张透明帧需要归一到相同画布尺寸并保持稳定视觉中心，避免 Godot `AnimatedSprite2D` 播放时产生画布跳动。
 - 四帧画面驱动角色姿态；精确炮塔旋转、炮口、投射物、后坐位移和 VFX 仍使用 Godot 独立节点与补间。
 
@@ -188,6 +190,9 @@ python3 tools/art_pipeline/check_character_asset_contract.py
 python3 tools/art_pipeline/batch_character_art.py
 python3 tools/art_pipeline/batch_character_art.py bismarck --process --preview
 python3 tools/art_pipeline/postprocess_generated_character.py iowa
+python3 tools/art_pipeline/batch_character_art.py --phase phase2
+python3 tools/art_pipeline/check_character_asset_contract.py --phase phase2
+python3 tools/art_pipeline/postprocess_generated_character.py --phase phase2 --roster-contact
 ```
 
 Dry-run 会检查旧式独立 sheet 或新式母版输入、后处理路由、运行时数据和资产契约。旧试产角色可以继续使用脚本内手写裁剪规格；新生成的标准源图包优先使用 `postprocess_generated_character.py` 自动完成 UI 八格、`4x2` 战斗组件、`5x4` 动画母版、VFX 八格、基础绑定点和配置生成。宽幅 VFX 表按 `2x4` 读取；早期方形白底 VFX 表按 `3x4` 读取前两行的八个运行时角色，避免跨行串图。像素完全一致且已确认属于舰种模板的 VFX 只在 `assets/vfx/combat/character_templates/` 保存一份，角色 `vfx_config` 通过 `shared_class_template` 引用；不同图像自动保留为角色专属覆盖。`--process` 按角色独立执行后处理，单个角色失败不中断后续角色，结果写入：

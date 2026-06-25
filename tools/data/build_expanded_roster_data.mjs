@@ -3,6 +3,7 @@ import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
+const DISTANCE_BASELINE_MULTIPLIER = 1.5;
 const output = (path, definitions) => {
   const absolute = resolve(root, path);
   mkdirSync(dirname(absolute), { recursive: true });
@@ -22,7 +23,7 @@ const armor = {
 
 const common = (id, name, group, mode, type, mounts, shots, reload, range, speed, spread, accuracy) => ({
   id, display_name: name, weapon_group_id: group, control_mode: mode, ammo_type: "", mount_type: type,
-  mount_count: mounts, shots_per_mount: shots, reload_time: reload, base_range: range, range: range * 2, minimum_range: 0,
+  mount_count: mounts, shots_per_mount: shots, reload_time: reload, base_range: range, range: range * DISTANCE_BASELINE_MULTIPLIER, minimum_range: 0,
   fire_arc_center: 0, fire_arc_degrees: 360, projectile_speed: speed, spread,
   impact_radius: 36, accuracy_modifier: accuracy, shared_cooldown_group: "",
 });
@@ -117,7 +118,7 @@ const weapons = [
 ];
 
 const effect = (scope, stat, operation, value, category, group) => ({ scope, stat, operation, value, category, stack_group: group, stack_rule: "Refresh" });
-const skill = (id, name, cooldown, target_type, cast_range, duration, effects) => ({ id, display_name:name, cooldown, target_type, cast_range, duration, effects });
+const skill = (id, name, cooldown, target_type, cast_range, duration, effects) => ({ id, display_name:name, cooldown, target_type, base_cast_range: cast_range, cast_range: cast_range > 0 ? cast_range * DISTANCE_BASELINE_MULTIPLIER : 0, duration, effects });
 const skills = [
   skill("skill.enterprise_multi_wave","多波次空袭",45,"Area",760,12,[effect("Self","Damage","PercentAdd",0.2,"Aviation","enterprise_skill"),effect("Self","AccuracyPoint","FlatAdd",0.1,"Aviation","enterprise_skill")]),
   skill("skill.iowa_radar_salvo","雷达校准齐射",42,"Enemy",760,8,[effect("Self","AccuracyPoint","FlatAdd",0.18,"Gun","iowa_skill"),effect("Self","ArmorDamageModifier","PercentAdd",0.1,"Gun","iowa_skill")]),

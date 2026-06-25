@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import argparse
 import json
 import sys
 from pathlib import Path
@@ -11,7 +12,7 @@ import character_roster
 ROOT = Path(__file__).resolve().parents[2]
 CHAR_ROOT = ROOT / "assets" / "characters"
 
-ROSTER = character_roster.roster_by_id()
+ROSTER = character_roster.roster_by_id("all")
 SHIP_CLASSES = {character_id: entry.ship_class for character_id, entry in ROSTER.items()}
 
 REQUIRED_PATTERNS = {
@@ -128,6 +129,27 @@ def nearby_alpha(image: Image.Image, x: int, y: int, radius: int = 24) -> bool:
 def validate_character_data(character_id: str) -> list[str]:
     root = CHAR_ROOT / character_id / "processed"
     issues: list[str] = []
+    plan_path = CHAR_ROOT / character_id / "postprocess_plan.json"
+    plan: dict[str, object] = {}
+    if ROSTER[character_id].phase == "phase2":
+        if not plan_path.exists():
+            issues.append("phase2 postprocess plan missing")
+        else:
+            plan = json.loads(plan_path.read_text(encoding="utf-8"))
+            if plan.get("character_id") != character_id:
+                issues.append("postprocess plan character_id mismatch")
+            if plan.get("ship_class") != SHIP_CLASSES[character_id]:
+                issues.append("postprocess plan ship_class mismatch")
+            battle_roles = plan.get("battle_grid_roles", [])
+            vfx_roles = plan.get("vfx_roles", [])
+            if not isinstance(battle_roles, list) or len(battle_roles) != 8:
+                issues.append("postprocess plan must define eight battle grid roles")
+            if not isinstance(vfx_roles, list) or len(vfx_roles) != 8:
+                issues.append("postprocess plan must define eight VFX roles")
+            if len(set(battle_roles)) != len(battle_roles):
+                issues.append("postprocess plan battle roles must be unique")
+            if len(set(vfx_roles)) != len(vfx_roles):
+                issues.append("postprocess plan VFX roles must be unique")
 
     bind_path = root / "config" / f"{character_id}_meta_bind_points.json"
     if bind_path.exists():
@@ -148,6 +170,14 @@ def validate_character_data(character_id: str) -> list[str]:
                         issues.append(f"bind point out of bounds: {asset_name}:{point_name}")
                     elif not nearby_alpha(rgba, x, y):
                         issues.append(f"bind point far from artwork: {asset_name}:{point_name}")
+        if plan:
+            configured_assets = bind_data.get("assets", {})
+            for role, point_names in plan.get("bindings", {}).items():
+                asset_name = f"{character_id}_{role}.png"
+                configured_points = configured_assets.get(asset_name, {})
+                for point_name in point_names:
+                    if point_name not in configured_points:
+                        issues.append(f"planned bind point missing: {asset_name}:{point_name}")
 
     anim_path = root / "config" / f"{character_id}_anim_config.json"
     if anim_path.exists():
@@ -191,6 +221,21 @@ def validate_character_data(character_id: str) -> list[str]:
             file_value = item.get("file", "")
             if not (ROOT / file_value).exists():
                 issues.append(f"vfx file missing: {role}:{file_value}")
+            if plan and not item.get("public_semantic"):
+                issues.append(f"VFX public semantic missing: {role}")
+        if plan:
+            for role in plan.get("vfx_roles", []):
+                if role not in roles:
+                    issues.append(f"planned VFX role missing: {role}")
+
+    if plan:
+        for role in plan.get("battle_grid_roles", []):
+            path = root / "battle" / f"{character_id}_{role}.png"
+            if not path.exists():
+                issues.append(f"planned battle role missing: {role}")
+        skill_role = str(plan.get("skill_role", ""))
+        if not skill_role or not (root / "ui" / f"{character_id}_ui_skill_{skill_role}.png").exists():
+            issues.append(f"planned skill icon missing: {skill_role or '?'}")
 
     return issues
 
@@ -238,10 +283,12 @@ def audit(character_id: str) -> dict[str, object]:
     }
 
 
-def write_report(results: list[dict[str, object]]) -> Path:
+def write_report(results: list[dict[str, object]], phase: str = "phase1") -> Path:
     result_ids = [str(result["character_id"]) for result in results]
-    if set(result_ids) == set(SHIP_CLASSES):
-        filename = "character_asset_contract_audit.md"
+    phase_ids = set(character_roster.roster_by_id(phase))
+    if set(result_ids) == phase_ids:
+        suffix = "" if phase == "phase1" else f"_{phase}"
+        filename = f"character_asset_contract_audit{suffix}.md"
     else:
         filename = "character_asset_contract_audit_" + "_".join(result_ids) + ".md"
     out = CHAR_ROOT / "qa" / filename
@@ -273,13 +320,17 @@ def write_report(results: list[dict[str, object]]) -> Path:
 
 
 def main() -> int:
-    character_ids = sys.argv[1:] or list(SHIP_CLASSES)
+    parser = argparse.ArgumentParser(description="Audit TinySeaWar character asset contracts.")
+    parser.add_argument("character_ids", nargs="*")
+    parser.add_argument("--phase", choices=("phase1", "phase2", "all"), default="phase1")
+    args = parser.parse_args()
+    character_ids = args.character_ids or list(character_roster.roster_by_id(args.phase))
     unknown = [character_id for character_id in character_ids if character_id not in SHIP_CLASSES]
     if unknown:
         print(f"Unknown character ids: {', '.join(unknown)}", file=sys.stderr)
         return 2
     results = [audit(character_id) for character_id in character_ids]
-    report = write_report(results)
+    report = write_report(results, args.phase)
     print(json.dumps(results, ensure_ascii=False, indent=2))
     print(f"report: {report.relative_to(ROOT)}")
     return 1 if any(result["status"] != "complete" for result in results) else 0

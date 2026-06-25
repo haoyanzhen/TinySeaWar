@@ -1,0 +1,64 @@
+{
+  "character_id": "graf_zeppelin",
+  "phase": "phase2",
+  "ship_class": "carrier",
+  "level": 2,
+  "skill_role": "experimental_air_wing",
+  "battle_grid_roles": [
+    "battle_body_r",
+    "battle_rig_base",
+    "battle_flight_deck",
+    "battle_aircraft_group_01",
+    "battle_turret_secondary_01",
+    "battle_aircraft_launch_marker",
+    "battle_aircraft_recovery_marker",
+    "battle_aa_center"
+  ],
+  "mount_instances": {
+    "aircraft_launch": 1,
+    "aircraft_recovery": 1,
+    "turret_secondary": 8
+  },
+  "bindings": {
+    "battle_rig_base": [
+      "rig_mount",
+      "wake_origin",
+      "skill_origin",
+      "aircraft_launch_01",
+      "aircraft_recovery_01",
+      "secondary_mount_01",
+      "secondary_mount_02",
+      "secondary_mount_03",
+      "secondary_mount_04",
+      "secondary_mount_05",
+      "secondary_mount_06",
+      "secondary_mount_07",
+      "secondary_mount_08"
+    ]
+  },
+  "vfx_roles": [
+    "unfinished_plan_overlay",
+    "experimental_flight_lane",
+    "aircraft_launch_flash",
+    "aircraft_formation",
+    "airstrike_area",
+    "aircraft_recovery",
+    "aa_burst",
+    "skill_aura"
+  ],
+  "public_vfx_profiles": {
+    "unfinished_plan_overlay": "skill.area",
+    "experimental_flight_lane": "aircraft.path",
+    "aircraft_launch_flash": "aircraft.path",
+    "aircraft_formation": "aircraft.path",
+    "airstrike_area": "aircraft.path",
+    "aircraft_recovery": "aircraft.path",
+    "aa_burst": "aa.burst.small",
+    "skill_aura": "skill.area"
+  },
+  "acceptance_rules": [
+    "Original TinySeaWar design; no real flags, political symbols, readable insignia, or extremist symbols.",
+    "Character body, rig base, weapon nodes, and VFX must remain visually separable.",
+    "Clearly unfinished experimental carrier structure; UI plan marker only, no readable text."
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "character_id": "i_19",
+  "phase": "phase2",
+  "ship_class": "submarine",
+  "level": 2,
+  "skill_role": "floatplane_vanguard",
+  "battle_grid_roles": [
+    "battle_body_r",
+    "battle_rig_base",
+    "battle_torpedo_tube_fore",
+    "battle_floatplane",
+    "battle_aircraft_launch_marker",
+    "battle_periscope_node",
+    "battle_sonar_node",
+    "battle_submerged_shadow"
+  ],
+  "mount_instances": {
+    "torpedo_fore": 6,
+    "aircraft_launch": 1
+  },
+  "bindings": {
+    "battle_rig_base": [
+      "rig_mount",
+      "wake_origin",
+      "skill_origin",
+      "torpedo_fore_mount_01",
+      "torpedo_fore_mount_02",
+      "torpedo_fore_mount_03",
+      "torpedo_fore_mount_04",
+      "torpedo_fore_mount_05",
+      "torpedo_fore_mount_06",
+      "aircraft_launch_01"
+    ]
+  },
+  "vfx_roles": [
+    "floatplane_scan",
+    "long_range_torpedo_trail",
+    "sonar_pulse",
+    "torpedo_launch_flash",
+    "torpedo_trail",
+    "underwater_shadow",
+    "dive_ripple",
+    "skill_aura"
+  ],
+  "public_vfx_profiles": {
+    "floatplane_scan": "submarine.sonar_pulse",
+    "long_range_torpedo_trail": "torpedo.trail.submerged",
+    "sonar_pulse": "submarine.sonar_pulse",
+    "torpedo_launch_flash": "torpedo.trail.submerged",
+    "torpedo_trail": "torpedo.trail.submerged",
+    "underwater_shadow": "skill.area",
+    "dive_ripple": "skill.area",
+    "skill_aura": "skill.area"
+  },
+  "acceptance_rules": [
+    "Original TinySeaWar design; no real flags, political symbols, readable insignia, or extremist symbols.",
+    "Character body, rig base, weapon nodes, and VFX must remain visually separable.",
+    "Submarine character must wear fitted waterproof or tactical boots; no swim fins on feet.",
+    "Only bow torpedo ports; no stern torpedo node; floatplane remains separable."
+  ]
+}

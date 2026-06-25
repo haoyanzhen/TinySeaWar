@@ -21,9 +21,9 @@ func _init() -> void:
 func _run() -> void:
 	registry = ConfigRegistry.new()
 	_check(registry.load_all(), "configuration registry loads: %s" % str(registry.errors))
-	_check(registry.all("ships").size() == 24, "all 24 character ship definitions load")
+	_check(registry.all("ships").size() == 48, "all 48 phase-one and phase-two character ship definitions load")
 	_check(registry.all("levels").size() == 4, "1v1, 3v3, 5v5, and 11v11 levels load")
-	_test_weapon_range_scale()
+	_test_runtime_baseline_scales()
 	_test_hit_rate_floor()
 	var presentation_settings: Dictionary = registry.get_definition("settings", "settings.presentation")
 	_check(presentation_settings.get("window", {}).get("logical_size", []) == [1920.0, 1080.0], "presentation settings expose the fixed logical canvas size")
@@ -76,14 +76,27 @@ func _contains_chinese(value: String) -> bool:
 	return false
 
 
-func _test_weapon_range_scale() -> void:
+func _test_runtime_baseline_scales() -> void:
+	for ship in registry.all("ships"):
+		_check(is_equal_approx(float(ship.get("speed", 0.0)), float(ship.get("base_speed", 0.0)) * 0.5), "%s uses the 0.5x runtime speed baseline" % ship.get("id", "?"))
+		_check(is_equal_approx(float(ship.get("turn_speed", 0.0)), float(ship.get("base_turn_speed", 0.0)) * 0.5), "%s uses the 0.5x runtime turn baseline" % ship.get("id", "?"))
+		_check(is_equal_approx(float(ship.get("detection_range", 0.0)), float(ship.get("base_detection_range", 0.0)) * 1.5), "%s uses the 1.5x runtime detection baseline" % ship.get("id", "?"))
+		_check(is_equal_approx(float(ship.get("concealment_distance", 0.0)), float(ship.get("base_concealment_distance", 0.0)) * 1.5), "%s uses the 1.5x runtime concealment baseline" % ship.get("id", "?"))
 	for weapon in registry.all("weapons"):
 		var base_range := float(weapon.get("base_range", 0.0))
 		var effective_range := float(weapon.get("range", 0.0))
-		_check(base_range > 0.0 and is_equal_approx(effective_range, base_range * 2.0), "%s uses the global 2x effective attack range" % weapon.get("id", "?"))
-	_check(is_equal_approx(float(registry.get_definition("weapons", "weapon.warspite_381_ap").get("range", 0.0)), 1440.0), "main-gun UI and rules expose doubled range")
-	_check(is_equal_approx(float(registry.get_definition("weapons", "weapon.shimakaze_610_torpedo").get("range", 0.0)), 1020.0), "torpedo UI and rules expose doubled range")
-	_check(is_equal_approx(float(registry.get_definition("weapons", "weapon.enterprise_airstrike").get("range", 0.0)), 1520.0), "aviation UI and rules expose doubled range")
+		_check(base_range > 0.0 and is_equal_approx(effective_range, base_range * 1.5), "%s uses the global 1.5x effective attack range" % weapon.get("id", "?"))
+	for skill in registry.all("skills"):
+		var base_cast_range := float(skill.get("base_cast_range", 0.0))
+		var expected_cast_range := base_cast_range * 1.5 if base_cast_range > 0.0 else 0.0
+		_check(is_equal_approx(float(skill.get("cast_range", 0.0)), expected_cast_range), "%s uses the 1.5x runtime skill range baseline" % skill.get("id", "?"))
+	var warspite: Dictionary = registry.get_definition("ships", "ship.warspite")
+	_check(is_equal_approx(float(warspite.get("speed", 0.0)), 31.0) and is_equal_approx(float(warspite.get("turn_speed", 0.0)), 22.5), "ship movement uses the halved runtime speed and turn baseline")
+	_check(is_equal_approx(float(warspite.get("detection_range", 0.0)), 585.0) and is_equal_approx(float(warspite.get("concealment_distance", 0.0)), 525.0), "ship detection and concealment use the 1.5x runtime distance baseline")
+	_check(is_equal_approx(float(registry.get_definition("weapons", "weapon.warspite_381_ap").get("range", 0.0)), 1080.0), "main-gun UI and rules expose the 1.5x effective range")
+	_check(is_equal_approx(float(registry.get_definition("weapons", "weapon.shimakaze_610_torpedo").get("range", 0.0)), 765.0), "torpedo UI and rules expose the 1.5x effective range")
+	_check(is_equal_approx(float(registry.get_definition("weapons", "weapon.enterprise_airstrike").get("range", 0.0)), 1140.0), "aviation UI and rules expose the 1.5x effective range")
+	_check(is_equal_approx(float(registry.get_definition("skills", "skill.warspite_veteran_aim").get("cast_range", 0.0)), 1095.0), "skill range uses the 1.5x runtime distance baseline")
 
 
 func _test_hit_rate_floor() -> void:
@@ -97,28 +110,43 @@ func _test_hit_rate_floor() -> void:
 
 func _test_full_roster_runtime_data() -> void:
 	var roster_ids := {}
+	var produced_phase2_assets := 0
 	for ship in registry.all("ships"):
 		var ship_id := str(ship.get("id", ""))
 		var character_id := ship_id.trim_prefix("ship.")
 		roster_ids[ship_id] = true
-		_check(assets.has_character(character_id), "runtime art catalog contains %s" % ship_id)
-		var character_assets: Dictionary = assets.character(character_id)
-		var battle_assets: Dictionary = character_assets.get("battle_assets", {})
-		var ui_assets: Dictionary = character_assets.get("ui_assets", {})
-		_check(battle_assets.has("body_r") and battle_assets.has("rig_base"), "%s has battle body and rig assets" % ship_id)
-		_check(ui_assets.has("ui_portrait") and ui_assets.has("illust_skill_cutin_alpha") and ui_assets.has("illust_full_alpha"), "%s has HUD, menu, and result artwork" % ship_id)
+		var phase2_plan_path := "res://assets/characters/%s/postprocess_plan.json" % character_id
+		var processed_manifest_path := "res://assets/characters/%s/processed/config/%s_postprocess_manifest.json" % [character_id, character_id]
+		var phase2_pending_art := FileAccess.file_exists(phase2_plan_path) and not FileAccess.file_exists(processed_manifest_path)
+		if not phase2_pending_art:
+			_check(assets.has_character(character_id), "runtime art catalog contains %s" % ship_id)
+			var character_assets: Dictionary = assets.character(character_id)
+			var battle_assets: Dictionary = character_assets.get("battle_assets", {})
+			var ui_assets: Dictionary = character_assets.get("ui_assets", {})
+			_check(battle_assets.has("body_r") and battle_assets.has("rig_base"), "%s has battle body and rig assets" % ship_id)
+			_check(ui_assets.has("ui_portrait") and ui_assets.has("illust_skill_cutin_alpha") and ui_assets.has("illust_full_alpha"), "%s has HUD, menu, and result artwork" % ship_id)
+			if FileAccess.file_exists(phase2_plan_path):
+				produced_phase2_assets += 1
 		_check(UiText.character_name(character_id) != "未知角色", "%s has a localized UI name" % ship_id)
 		_check(not ship.get("weapon_mounts", []).is_empty(), "%s has at least one runtime weapon" % ship_id)
 		_check(not registry.get_definition("skills", str(ship.get("skill_id", ""))).is_empty(), "%s has a runtime skill" % ship_id)
 		_check(not str(ship.get("primary_weapon_group_id", "")).is_empty(), "%s has an explicit primary weapon group" % ship_id)
+	_check(produced_phase2_assets >= 4, "the accepted phase-two US batch is discoverable through the runtime art catalog")
 	var level_roster := {}
 	for level in registry.all("levels"):
 		for fleet_name in ["player_fleet", "enemy_fleet"]:
 			for member in level.get(fleet_name, []):
 				level_roster[str(member.get("ship_id", ""))] = true
-	_check(level_roster.size() == roster_ids.size(), "playable levels collectively instantiate all 24 characters")
-	for ship_id in roster_ids:
-		_check(level_roster.has(ship_id), "%s appears in at least one playable level" % ship_id)
+	_check(level_roster.size() == 24, "existing playable levels retain the 24-character phase-one roster")
+	for ship_id in level_roster:
+		_check(roster_ids.has(ship_id), "%s in a playable level resolves to runtime data" % ship_id)
+	for ship in registry.all("ships"):
+		var character_id := str(ship.get("id", "")).trim_prefix("ship.")
+		if not FileAccess.file_exists("res://assets/characters/%s/postprocess_plan.json" % character_id):
+			continue
+		for weapon_id in ship.get("weapon_mounts", []):
+			var weapon: Dictionary = registry.get_definition("weapons", str(weapon_id))
+			_check(not assets.weapon_visual(character_id, str(weapon.get("weapon_group_id", ""))).is_empty(), "%s weapon group has a visual mapping" % weapon_id)
 
 
 func _test_modifier_order() -> void:

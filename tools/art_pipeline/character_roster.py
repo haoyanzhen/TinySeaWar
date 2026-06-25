@@ -8,6 +8,11 @@ import re
 ROOT = Path(__file__).resolve().parents[2]
 CHARACTER_DOC = ROOT / "docs" / "41_character_art_design.md"
 PHASE1_HEADING = "## 1. 第一期角色列表"
+PHASE2_HEADING = "## 2. 第二期角色列表"
+PHASE_HEADINGS = {
+    "phase1": PHASE1_HEADING,
+    "phase2": PHASE2_HEADING,
+}
 
 SHIP_CLASS_MAP = {
     "驱逐": "destroyer",
@@ -43,11 +48,36 @@ CHARACTER_ID_ALIASES = {
     "鞍山号 Anshan": "anshan",
     "重庆号 ROCS Chongqing": "chongqing",
     "海狮号 ROCS Hai Shih": "hai_shih",
+    "弗莱彻号 USS Fletcher DD-445": "fletcher",
+    "克利夫兰号 USS Cleveland CL-55": "cleveland",
+    "巴尔的摩号 USS Baltimore CA-68": "baltimore",
+    "刺尾鱼号 USS Wahoo SS-238": "wahoo",
+    "杰维斯号 HMS Jervis": "jervis",
+    "贝尔法斯特号 HMS Belfast": "belfast",
+    "光辉号 HMS Illustrious": "illustrious",
+    "拥护者号 HMS Upholder P37": "upholder",
+    "塔什干号 Tashkent": "tashkent",
+    "恰巴耶夫号 Chapayev": "chapayev",
+    "甘古特号 Gangut": "gangut",
+    "K-21": "k_21",
+    "Z23": "z23",
+    "纽伦堡号 Nürnberg": "nurnberg",
+    "沙恩霍斯特号 Scharnhorst": "scharnhorst",
+    "齐柏林伯爵号 Graf Zeppelin": "graf_zeppelin",
+    "秋月号 Akizuki": "akizuki",
+    "高雄号 Takao": "takao",
+    "翔鹤号 Shokaku": "shokaku",
+    "伊-19 I-19": "i_19",
+    "逸仙号 ROCS Yat Sen": "yat_sen",
+    "长春号 PLAN Chang Chun": "chang_chun",
+    "定远号 Dingyuan": "dingyuan",
+    "海龙号 ROCS Hai Lung SS-793": "hai_lung",
 }
 
 
 @dataclass(frozen=True)
 class CharacterRosterEntry:
+    phase: str
     character_id: str
     prototype: str
     faction: str
@@ -73,14 +103,24 @@ def _split_table_row(line: str) -> list[str]:
     return [cell.strip() for cell in line.strip().strip("|").split("|")]
 
 
-def load_roster(doc_path: Path = CHARACTER_DOC) -> list[CharacterRosterEntry]:
+def _normalize_phases(phase: str) -> tuple[str, ...]:
+    if phase == "all":
+        return tuple(PHASE_HEADINGS)
+    if phase not in PHASE_HEADINGS:
+        raise ValueError(f"Unknown character phase: {phase}")
+    return (phase,)
+
+
+def load_roster(doc_path: Path = CHARACTER_DOC, phase: str = "phase1") -> list[CharacterRosterEntry]:
     entries: list[CharacterRosterEntry] = []
-    in_phase1 = False
+    selected_phases = _normalize_phases(phase)
+    selected_headings = {PHASE_HEADINGS[item]: item for item in selected_phases}
+    current_phase = ""
     for line in doc_path.read_text(encoding="utf-8").splitlines():
         if line.startswith("## "):
-            in_phase1 = line.strip() == PHASE1_HEADING
+            current_phase = selected_headings.get(line.strip(), "")
             continue
-        if not in_phase1:
+        if not current_phase:
             continue
         if not line.startswith("| "):
             continue
@@ -93,6 +133,7 @@ def load_roster(doc_path: Path = CHARACTER_DOC) -> list[CharacterRosterEntry]:
         prototype = cells[0]
         entries.append(
             CharacterRosterEntry(
+                phase=current_phase,
                 character_id=CHARACTER_ID_ALIASES.get(prototype, _fallback_character_id(prototype)),
                 prototype=prototype,
                 faction=cells[1],
@@ -118,9 +159,9 @@ def load_roster(doc_path: Path = CHARACTER_DOC) -> list[CharacterRosterEntry]:
     return entries
 
 
-def roster_by_id() -> dict[str, CharacterRosterEntry]:
-    return {entry.character_id: entry for entry in load_roster()}
+def roster_by_id(phase: str = "phase1") -> dict[str, CharacterRosterEntry]:
+    return {entry.character_id: entry for entry in load_roster(phase=phase)}
 
 
-def ship_classes_by_id() -> dict[str, str]:
-    return {entry.character_id: entry.ship_class for entry in load_roster()}
+def ship_classes_by_id(phase: str = "phase1") -> dict[str, str]:
+    return {entry.character_id: entry.ship_class for entry in load_roster(phase=phase)}

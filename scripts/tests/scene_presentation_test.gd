@@ -59,12 +59,12 @@ func _run() -> void:
 	battle.operation_mode = 1
 	await process_frame
 	_check(torpedo_aim.get("weapon_type", "") == "Torpedo" and torpedo_aim.get("fire_arcs", []).size() == 2, "torpedo aim overlay receives broadside sectors from the battle session")
-	_check(is_equal_approx(float(torpedo_aim.get("range", 0.0)), 1020.0), "torpedo range circle renders the doubled effective range")
-	_check(battle.has_method("_draw_torpedo_aim_overlay") and battle.has_method("_draw_annular_sector"), "battle scene provides colored torpedo sectors and spread-line drawing")
+	_check(is_equal_approx(float(torpedo_aim.get("range", 0.0)), 765.0), "torpedo range circle renders the 1.5x effective range")
+	_check(battle.has_method("_draw_directional_aim_overlay") and battle.has_method("_draw_area_target_overlay") and battle.has_method("_draw_skill_target_overlay"), "battle scene uses unified red-green-white tactical range overlays")
 	battle.operation_mode = 0
 	battle.selected_unit_id = "unit.player.warspite"
 	battle._update_hud()
-	_check(is_equal_approx(float(battle.session.get_operation_status("unit.player.warspite").get("primary_range", 0.0)), 1440.0), "HUD operation status displays the doubled main-gun range")
+	_check(is_equal_approx(float(battle.session.get_operation_status("unit.player.warspite").get("primary_range", 0.0)), 1080.0), "HUD operation status displays the 1.5x main-gun range")
 	_check(battle.battle_hud._skill_text().contains("老兵校射"), "battle HUD displays the Chinese skill name")
 	var player_center: Vector2 = battle._player_fleet_center()
 	_check(battle.battle_camera.position.distance_to(player_center) < 4.0, "initial camera centers on player fleet")
@@ -118,6 +118,19 @@ func _run() -> void:
 	battle.effect_director._spawn_role_vfx("warspite", "heavy_muzzle", warspite_snapshot["position"], 0.0, "vfx.profile.muzzle_flash")
 	await process_frame
 	_check(battle.vfx_layer.get_child_count() > vfx_count_before, "VFX director can spawn role-bound combat effects")
+	battle.session.state["visible_by_faction"]["player"]["unit.enemy.bismarck"] = true
+	var damage_result := {"target_unit_id":"unit.enemy.bismarck","source_unit_id":"unit.player.warspite","source_weapon_id":"weapon.warspite_381_ap","damage_type":"Gun","hit":true,"final_damage":321.0}
+	var damage_numbers_before: int = battle.vfx_layer.get_child_count()
+	battle.effect_director._spawn_damage_number(damage_result, battle.session)
+	_check(battle.vfx_layer.get_child_count() > damage_numbers_before, "visible confirmed hits spawn runtime-font damage numbers")
+	var damage_view = battle.effect_director.damage_number_views_by_target["unit.enemy.bismarck"][0]
+	battle.effect_director._spawn_damage_number(damage_result, battle.session)
+	_check(int(damage_view.hit_count) == 2 and int(damage_view.amount) == 642, "damage numbers merge rapid multi-hit damage on the same target")
+	battle.session.state["visible_by_faction"]["player"].erase("unit.enemy.hindenburg")
+	var hidden_result := {"target_unit_id":"unit.enemy.hindenburg","source_unit_id":"unit.player.warspite","source_weapon_id":"weapon.warspite_381_ap","damage_type":"Gun","hit":true,"final_damage":100.0}
+	var hidden_count_before: int = battle.vfx_layer.get_child_count()
+	battle.effect_director._spawn_damage_number(hidden_result, battle.session)
+	_check(battle.vfx_layer.get_child_count() == hidden_count_before, "damage numbers do not reveal hidden enemy positions")
 	battle.session.state["phase"] = "Finished"
 	battle.session.state["result"] = {"winner_faction": "player", "reason": "FLAGSHIP_SUNK", "elapsed_time": 93.0}
 	battle.result_character_id = "warspite"

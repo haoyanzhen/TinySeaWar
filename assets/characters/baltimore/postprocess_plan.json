@@ -1,0 +1,55 @@
+{
+  "character_id": "baltimore",
+  "phase": "phase2",
+  "ship_class": "heavy_cruiser",
+  "level": 2,
+  "skill_role": "radar_ap_calibration",
+  "battle_grid_roles": [
+    "battle_body_r",
+    "battle_rig_base",
+    "battle_turret_main_01",
+    "battle_turret_main_02",
+    "battle_turret_main_03",
+    "battle_fire_control_node",
+    "battle_aa_center",
+    "battle_wake_origin_marker"
+  ],
+  "mount_instances": {
+    "turret_main": 3
+  },
+  "bindings": {
+    "battle_rig_base": [
+      "rig_mount",
+      "wake_origin",
+      "skill_origin",
+      "turret_mount_01",
+      "turret_mount_02",
+      "turret_mount_03"
+    ]
+  },
+  "vfx_roles": [
+    "ap_calibration_frame",
+    "radar_lock_line",
+    "shell_trail_heavy",
+    "armor_sparks",
+    "fire_control_lock",
+    "skill_aura",
+    "water_splash_large",
+    "aa_interception"
+  ],
+  "public_vfx_profiles": {
+    "ap_calibration_frame": "skill.area",
+    "radar_lock_line": "skill.area",
+    "shell_trail_heavy": "shell.trail.long",
+    "armor_sparks": "impact.armor.spark",
+    "fire_control_lock": "skill.area",
+    "skill_aura": "skill.area",
+    "water_splash_large": "impact.water.large",
+    "aa_interception": "aa.burst.small"
+  },
+  "acceptance_rules": [
+    "Original TinySeaWar design; no real flags, political symbols, readable insignia, or extremist symbols.",
+    "Character body, rig base, weapon nodes, and VFX must remain visually separable.",
+    "No torpedo tube may appear; preserve the clean radar heavy-cruiser silhouette."
+  ]
+}

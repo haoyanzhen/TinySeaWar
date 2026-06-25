@@ -45,8 +45,8 @@ GENERATED_BATTLE_SOURCE_FILES = (
 GENERATED_ANIMATION_SOURCE_FILE = "battle/{id}_anim_5x4_master.png"
 
 
-def available_character_ids() -> list[str]:
-    return [entry.character_id for entry in character_roster.load_roster()]
+def available_character_ids(phase: str = "phase1") -> list[str]:
+    return [entry.character_id for entry in character_roster.load_roster(phase=phase)]
 
 
 def source_check(character_id: str) -> dict[str, Any]:
@@ -106,6 +106,7 @@ def configuration_check(character_id: str) -> dict[str, bool]:
     return {
         "crop_specs": character_id in pipeline.SPECS,
         "runtime_config": character_id in pipeline.CONFIGS,
+        "postprocess_plan": (CHAR_ROOT / character_id / "postprocess_plan.json").exists(),
         "generic_postprocess": generic_pipeline.can_process(character_id),
         "contract_ship_class": character_id in contract.SHIP_CLASSES,
     }
@@ -113,7 +114,9 @@ def configuration_check(character_id: str) -> dict[str, bool]:
 
 def is_configured(configuration: dict[str, bool]) -> bool:
     hardcoded = configuration["crop_specs"] and configuration["runtime_config"]
-    return configuration["contract_ship_class"] and (hardcoded or configuration["generic_postprocess"])
+    return configuration["contract_ship_class"] and (
+        hardcoded or configuration["postprocess_plan"] or configuration["generic_postprocess"]
+    )
 
 
 def inspect_character(character_id: str) -> dict[str, Any]:
@@ -169,10 +172,11 @@ def process_one(character_id: str, preview: bool) -> dict[str, Any]:
         }
 
 
-def write_reports(mode: str, results: list[dict[str, Any]]) -> tuple[Path, Path]:
+def write_reports(mode: str, results: list[dict[str, Any]], phase: str = "phase1") -> tuple[Path, Path]:
     QA_ROOT.mkdir(parents=True, exist_ok=True)
-    json_path = QA_ROOT / "character_art_batch_report.json"
-    markdown_path = QA_ROOT / "character_art_batch_report.md"
+    suffix = "" if phase == "phase1" else f"_{phase}"
+    json_path = QA_ROOT / f"character_art_batch_report{suffix}.json"
+    markdown_path = QA_ROOT / f"character_art_batch_report{suffix}.md"
     payload = {
         "mode": mode,
         "summary": {
@@ -189,7 +193,7 @@ def write_reports(mode: str, results: list[dict[str, Any]]) -> tuple[Path, Path]
     }
     json_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
-    roster = character_roster.roster_by_id()
+    roster = character_roster.roster_by_id("all")
     lines = [
         "# Character Art Batch Report",
         "",
@@ -233,16 +237,17 @@ def main() -> int:
     parser.add_argument("character_ids", nargs="*", help="Defaults to all characters in docs/41_character_art_design.md.")
     parser.add_argument("--process", action="store_true", help="Run postprocess instead of dry-run inspection.")
     parser.add_argument("--preview", action="store_true", help="Build per-character embedded QA previews.")
+    parser.add_argument("--phase", choices=("phase1", "phase2", "all"), default="phase1")
     args = parser.parse_args()
 
-    character_ids = args.character_ids or available_character_ids()
+    character_ids = args.character_ids or available_character_ids(args.phase)
     if args.process:
         results = [process_one(character_id, args.preview) for character_id in character_ids]
         mode = "process"
     else:
         results = [inspect_character(character_id) for character_id in character_ids]
         mode = "dry-run"
-    json_path, markdown_path = write_reports(mode, results)
+    json_path, markdown_path = write_reports(mode, results, args.phase)
     print(json.dumps({"mode": mode, "results": results}, ensure_ascii=False, indent=2))
     print(f"json_report: {json_path.relative_to(ROOT)}")
     print(f"markdown_report: {markdown_path.relative_to(ROOT)}")

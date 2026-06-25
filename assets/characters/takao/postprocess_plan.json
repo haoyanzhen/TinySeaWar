@@ -1,0 +1,61 @@
+{
+  "character_id": "takao",
+  "phase": "phase2",
+  "ship_class": "heavy_cruiser",
+  "level": 2,
+  "skill_role": "night_torpedo",
+  "battle_grid_roles": [
+    "battle_body_r",
+    "battle_rig_base",
+    "battle_turret_main_01",
+    "battle_turret_main_02",
+    "battle_torpedo_tube_01",
+    "battle_fire_control_node",
+    "battle_bridge_node",
+    "battle_wake_origin_marker"
+  ],
+  "mount_instances": {
+    "turret_main": 5,
+    "torpedo": 4
+  },
+  "bindings": {
+    "battle_rig_base": [
+      "rig_mount",
+      "wake_origin",
+      "skill_origin",
+      "turret_mount_01",
+      "turret_mount_02",
+      "turret_mount_03",
+      "turret_mount_04",
+      "turret_mount_05",
+      "torpedo_mount_01",
+      "torpedo_mount_02",
+      "torpedo_mount_03",
+      "torpedo_mount_04"
+    ]
+  },
+  "vfx_roles": [
+    "night_target_line",
+    "heavy_torpedo_sector",
+    "shell_trail_heavy",
+    "armor_sparks",
+    "fire_control_lock",
+    "skill_aura",
+    "water_splash_large",
+    "torpedo_warning"
+  ],
+  "public_vfx_profiles": {
+    "night_target_line": "skill.area",
+    "heavy_torpedo_sector": "torpedo.warning.fan",
+    "shell_trail_heavy": "shell.trail.long",
+    "armor_sparks": "impact.armor.spark",
+    "fire_control_lock": "skill.area",
+    "skill_aura": "skill.area",
+    "water_splash_large": "impact.water.large",
+    "torpedo_warning": "torpedo.warning.fan"
+  },
+  "acceptance_rules": [
+    "Original TinySeaWar design; no real flags, political symbols, readable insignia, or extremist symbols.",
+    "Character body, rig base, weapon nodes, and VFX must remain visually separable."
+  ]
+}

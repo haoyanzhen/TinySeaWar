@@ -1,0 +1,59 @@
+{
+  "character_id": "chang_chun",
+  "phase": "phase2",
+  "ship_class": "destroyer",
+  "level": 2,
+  "skill_role": "forward_escort",
+  "battle_grid_roles": [
+    "battle_body_r",
+    "battle_rig_base",
+    "battle_turret_main_01",
+    "battle_torpedo_tube_01",
+    "battle_aa_center",
+    "battle_radar_node",
+    "battle_support_node",
+    "battle_wake_origin_marker"
+  ],
+  "mount_instances": {
+    "turret_main": 4,
+    "torpedo": 2
+  },
+  "bindings": {
+    "battle_rig_base": [
+      "rig_mount",
+      "wake_origin",
+      "skill_origin",
+      "turret_mount_01",
+      "turret_mount_02",
+      "turret_mount_03",
+      "turret_mount_04",
+      "torpedo_mount_01",
+      "torpedo_mount_02"
+    ]
+  },
+  "vfx_roles": [
+    "forward_escort_wake",
+    "early_radar_scan",
+    "torpedo_launch_flash",
+    "muzzle_flash_small",
+    "water_splash",
+    "aa_circle",
+    "skill_aura",
+    "range_reticle"
+  ],
+  "public_vfx_profiles": {
+    "forward_escort_wake": "wake.destroyer_fast",
+    "early_radar_scan": "submarine.sonar_pulse",
+    "torpedo_launch_flash": "torpedo.trail.surface",
+    "muzzle_flash_small": "muzzle_flash.small",
+    "water_splash": "impact.water.medium",
+    "aa_circle": "aa.burst.small",
+    "skill_aura": "skill.area",
+    "range_reticle": "skill.area"
+  },
+  "acceptance_rules": [
+    "Original TinySeaWar design; no real flags, political symbols, readable insignia, or extremist symbols.",
+    "Character body, rig base, weapon nodes, and VFX must remain visually separable.",
+    "Early gun-and-torpedo configuration only; no missile launcher."
+  ]
+}

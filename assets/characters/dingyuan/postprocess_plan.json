@@ -1,0 +1,57 @@
+{
+  "character_id": "dingyuan",
+  "phase": "phase2",
+  "ship_class": "battleship",
+  "level": 2,
+  "skill_role": "ironclad_anchor",
+  "battle_grid_roles": [
+    "battle_body_r",
+    "battle_rig_base",
+    "battle_turret_main_01",
+    "battle_turret_secondary_01",
+    "battle_armor_plate",
+    "battle_smokestack_node",
+    "battle_flagship_marker",
+    "battle_wake_origin_marker"
+  ],
+  "mount_instances": {
+    "turret_main": 2,
+    "turret_secondary": 2
+  },
+  "bindings": {
+    "battle_rig_base": [
+      "rig_mount",
+      "wake_origin",
+      "skill_origin",
+      "turret_mount_01",
+      "turret_mount_02",
+      "secondary_mount_01",
+      "secondary_mount_02"
+    ]
+  },
+  "vfx_roles": [
+    "ironclad_guard_aura",
+    "coal_smoke_wake",
+    "broadside_smoke",
+    "shell_trail_heavy",
+    "armor_sparks",
+    "command_aura",
+    "water_splash_large",
+    "fire_control_lock"
+  ],
+  "public_vfx_profiles": {
+    "ironclad_guard_aura": "skill.area",
+    "coal_smoke_wake": "wake.battleship_heavy",
+    "broadside_smoke": "skill.area",
+    "shell_trail_heavy": "shell.trail.long",
+    "armor_sparks": "impact.armor.spark",
+    "command_aura": "skill.area",
+    "water_splash_large": "impact.water.large",
+    "fire_control_lock": "skill.area"
+  },
+  "acceptance_rules": [
+    "Original TinySeaWar design; no real flags, political symbols, readable insignia, or extremist symbols.",
+    "Character body, rig base, weapon nodes, and VFX must remain visually separable.",
+    "Pre-dreadnought ironclad silhouette; no radar or modern anti-aircraft equipment."
+  ]
+}

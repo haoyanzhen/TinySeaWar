@@ -1,0 +1,59 @@
+{
+  "character_id": "upholder",
+  "phase": "phase2",
+  "ship_class": "submarine",
+  "level": 2,
+  "skill_role": "coastal_ambush",
+  "battle_grid_roles": [
+    "battle_body_r",
+    "battle_rig_base",
+    "battle_torpedo_tube_fore",
+    "battle_periscope_node",
+    "battle_sonar_node",
+    "battle_dive_plane",
+    "battle_submerged_shadow",
+    "battle_wake_origin_marker"
+  ],
+  "mount_instances": {
+    "torpedo_fore": 6
+  },
+  "bindings": {
+    "battle_rig_base": [
+      "rig_mount",
+      "wake_origin",
+      "skill_origin",
+      "torpedo_fore_mount_01",
+      "torpedo_fore_mount_02",
+      "torpedo_fore_mount_03",
+      "torpedo_fore_mount_04",
+      "torpedo_fore_mount_05",
+      "torpedo_fore_mount_06"
+    ]
+  },
+  "vfx_roles": [
+    "coastal_ambush_sector",
+    "surface_ripple",
+    "sonar_pulse",
+    "torpedo_launch_flash",
+    "torpedo_trail",
+    "underwater_shadow",
+    "dive_ripple",
+    "skill_aura"
+  ],
+  "public_vfx_profiles": {
+    "coastal_ambush_sector": "torpedo.warning.fan",
+    "surface_ripple": "skill.area",
+    "sonar_pulse": "submarine.sonar_pulse",
+    "torpedo_launch_flash": "torpedo.trail.submerged",
+    "torpedo_trail": "torpedo.trail.submerged",
+    "underwater_shadow": "skill.area",
+    "dive_ripple": "skill.area",
+    "skill_aura": "skill.area"
+  },
+  "acceptance_rules": [
+    "Original TinySeaWar design; no real flags, political symbols, readable insignia, or extremist symbols.",
+    "Character body, rig base, weapon nodes, and VFX must remain visually separable.",
+    "Submarine character must wear fitted waterproof or tactical boots; no swim fins on feet.",
+    "Only bow torpedo ports; no stern torpedo node."
+  ]
+}

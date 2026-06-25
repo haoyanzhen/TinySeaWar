@@ -33,6 +33,13 @@ The registry rejects duplicate IDs, missing references, unsupported enums,
 invalid ranges, non-positive core values, and invalid flagship counts before a
 battle can start.
 
-Every weapon keeps both `base_range` and the effective runtime `range`. The
-current battlefield tuning uses `range == base_range * 2` for guns, torpedoes,
-anti-air weapons, and aviation alike. Minimum range is not scaled.
+Runtime data keeps design baselines and effective values side by side. Current
+battlefield tuning uses:
+
+- weapon `range == base_range * 1.5`;
+- ship `detection_range` and `concealment_distance` at 1.5x their `base_*`
+  fields;
+- skill `cast_range == base_cast_range * 1.5` for non-self skills;
+- ship `speed` and `turn_speed` at 0.5x their `base_*` fields.
+
+Minimum weapon range is not scaled.

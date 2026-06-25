@@ -107,6 +107,16 @@ def source_paths(character_id: str) -> dict[str, Path]:
     return paths
 
 
+def load_postprocess_plan(character_id: str) -> dict[str, Any]:
+    path = CHAR_ROOT / character_id / "postprocess_plan.json"
+    if not path.exists():
+        return {}
+    plan = json.loads(path.read_text(encoding="utf-8"))
+    if plan.get("character_id") != character_id:
+        raise ValueError(f"postprocess plan character_id mismatch: {path}")
+    return plan
+
+
 def can_process(character_id: str) -> bool:
     paths = source_paths(character_id)
     required = ("concept_full", "ui_sheet", "vfx_sheet")
@@ -509,6 +519,38 @@ def point_near_center(img: Image.Image) -> dict[str, int]:
     return {"x": best[1], "y": best[2]}
 
 
+def point_near_fraction(img: Image.Image, fraction_x: float, fraction_y: float = 0.5) -> dict[str, int]:
+    bbox = alpha_bbox(img)
+    if bbox is None:
+        return point_near_center(img)
+    left, top, right, bottom = bbox
+    target_x = left + int((right - left - 1) * max(0.0, min(1.0, fraction_x)))
+    target_y = top + int((bottom - top - 1) * max(0.0, min(1.0, fraction_y)))
+    alpha = img.getchannel("A")
+    pixels = alpha.load()
+    best: tuple[int, int, int] | None = None
+    for y in range(top, bottom):
+        for x in range(left, right):
+            if pixels[x, y] < ALPHA_THRESHOLD:
+                continue
+            distance = (x - target_x) ** 2 + (y - target_y) ** 2
+            if best is None or distance < best[0]:
+                best = (distance, x, y)
+    return {"x": best[1], "y": best[2]} if best else point_near_center(img)
+
+
+def add_planned_bindings(
+    role: str,
+    img: Image.Image,
+    points: dict[str, dict[str, int]],
+    plan: dict[str, Any],
+) -> None:
+    bindings = list(plan.get("bindings", {}).get(role, []))
+    for index, point_name in enumerate(bindings):
+        fraction = (index + 1) / (len(bindings) + 1)
+        points[str(point_name)] = point_near_fraction(img, fraction, 0.58)
+
+
 def point_near_right_edge(img: Image.Image) -> dict[str, int]:
     alpha = img.getchannel("A")
     pixels = alpha.load()
@@ -607,8 +649,8 @@ def build_contact_sheet(character_id: str, processed_root: Path) -> Path:
     return out
 
 
-def build_roster_contact_sheet() -> Path:
-    roster = character_roster.load_roster()
+def build_roster_contact_sheet(phase: str = "phase1") -> Path:
+    roster = character_roster.load_roster(phase=phase)
     tile_width, tile_height = 420, 320
     columns = 4
     rows = (len(roster) + columns - 1) // columns
@@ -641,26 +683,29 @@ def build_roster_contact_sheet() -> Path:
             py = y + top + ((bottom - top) - image.height) // 2
             canvas.paste(image.convert("RGB"), (px, py), image.getchannel("A"))
 
-    out = QA_ROOT / "character_roster_processed_contact.png"
+    suffix = "" if phase == "phase1" else f"_{phase}"
+    out = QA_ROOT / f"character_roster_processed_contact{suffix}.png"
     out.parent.mkdir(parents=True, exist_ok=True)
     canvas.save(out)
     return out
 
 
 def process_character(character_id: str) -> None:
-    roster = character_roster.roster_by_id()
+    roster = character_roster.roster_by_id("all")
     if character_id not in roster:
         raise SystemExit(f"Unknown character id: {character_id}")
     if not can_process(character_id):
         raise SystemExit(f"Source package is incomplete for {character_id}")
 
     entry = roster[character_id]
+    plan = load_postprocess_plan(character_id)
     dirs = ensure_dirs(character_id)
     paths = source_paths(character_id)
     manifest: dict[str, Any] = {
         "character_id": character_id,
         "source": "tools/art_pipeline/postprocess_generated_character.py",
         "method": "generated_background_auto_grid_and_component_split",
+        "postprocess_plan": str((CHAR_ROOT / character_id / "postprocess_plan.json").relative_to(ROOT)) if plan else "",
         "outputs": [],
     }
 
@@ -687,19 +732,23 @@ def process_character(character_id: str) -> None:
     for slot_name, cell in zip(UI_SLOT_NAMES, ui_cells[:7]):
         cropped, crop_meta = crop_with_padding(cell, pad=18)
         cropped = keep_largest_alpha_component(cropped)
-        resolved_slot = f"ui_skill_{SKILL_ROLE_BY_CLASS[entry.ship_class]}" if slot_name == "ui_skill" else slot_name
+        cropped = center_alpha_with_padding(cropped, 18)
+        skill_role = str(plan.get("skill_role", SKILL_ROLE_BY_CLASS[entry.ship_class]))
+        resolved_slot = f"ui_skill_{skill_role}" if slot_name == "ui_skill" else slot_name
         out_name = f"{character_id}_{resolved_slot}.png"
         manifest["outputs"].append({"role": slot_name, "crop": crop_meta, **save_image(cropped, dirs["ui"] / out_name)})
     class_cell = ui_cells[7]
     class_img, class_meta = crop_with_padding(class_cell, pad=18)
     class_img = keep_largest_alpha_component(class_img)
+    class_img = center_alpha_with_padding(class_img, 18)
     class_name = f"{character_id}_ui_class_{entry.ship_class}.png"
     manifest["outputs"].append({"role": "class_icon", "crop": class_meta, **save_image(class_img, dirs["ui"] / class_name)})
 
     battle_source_key = "battle_grid" if "battle_grid" in alpha_sources else "battle_sheet"
     if battle_source_key == "battle_grid":
         battle_roles = []
-        for role, cell in zip(BATTLE_GRID_ROLES[entry.ship_class], split_grid(alpha_sources[battle_source_key], rows=2, cols=4)):
+        planned_roles = tuple(plan.get("battle_grid_roles", BATTLE_GRID_ROLES[entry.ship_class]))
+        for role, cell in zip(planned_roles, split_grid(alpha_sources[battle_source_key], rows=2, cols=4)):
             components = connected_components(cell, min_area=300)
             if components:
                 battle_roles.append((role, cell, components[0]))
@@ -714,6 +763,7 @@ def process_character(character_id: str) -> None:
         out_path = dirs["battle"] / out_name
         manifest["outputs"].append({"role": role, "crop": crop_meta, **save_image(cropped, out_path)})
         bind_assets[out_name] = battle_points(role, cropped)
+        add_planned_bindings(role, cropped, bind_assets[out_name], plan)
 
     anim_states: dict[str, Any] = {}
     master_rows = split_grid(alpha_sources["anim_master"], rows=5, cols=1) if "anim_master" in alpha_sources else None
@@ -750,6 +800,7 @@ def process_character(character_id: str) -> None:
         body_path = dirs["battle"] / body_name
         manifest["outputs"].append({"role": "battle_body_r:idle_master_override", **save_image(idle_body, body_path)})
         bind_assets[body_name] = {"pivot": point_near_center(idle_body)}
+        add_planned_bindings("battle_body_r", idle_body, bind_assets[body_name], plan)
 
     vfx_cells = split_grid(
         alpha_sources["vfx_sheet"],
@@ -761,7 +812,9 @@ def process_character(character_id: str) -> None:
     if use_shared_vfx:
         for old_path in dirs["vfx"].glob(f"{character_id}_vfx_*.png*"):
             old_path.unlink()
-    for role_name, cell in zip(VFX_ROLES_BY_CLASS[entry.ship_class], vfx_cells):
+    planned_vfx_roles = tuple(plan.get("vfx_roles", VFX_ROLES_BY_CLASS[entry.ship_class]))
+    public_vfx_profiles = plan.get("public_vfx_profiles", {})
+    for role_name, cell in zip(planned_vfx_roles, vfx_cells):
         components = connected_components(cell, min_area=120)
         if not components:
             continue
@@ -780,7 +833,11 @@ def process_character(character_id: str) -> None:
                     out_path = shared_path
                     source_kind = "shared_class_template"
         manifest["outputs"].append({"role": f"vfx:{role_name}", "crop": crop_meta, **save_image(cropped, out_path)})
-        vfx_roles[role_name] = {"file": str(out_path.relative_to(ROOT)), "source": source_kind}
+        vfx_roles[role_name] = {
+            "file": str(out_path.relative_to(ROOT)),
+            "source": source_kind,
+            "public_semantic": str(public_vfx_profiles.get(role_name, "")),
+        }
 
     (dirs["config"] / f"{character_id}_meta_bind_points.json").write_text(
         json.dumps({"character_id": character_id, "assets": bind_assets}, ensure_ascii=False, indent=2) + "\n",
@@ -805,12 +862,13 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Postprocess generated green-screen TinySeaWar character sheets.")
     parser.add_argument("character_ids", nargs="*")
     parser.add_argument("--roster-contact", action="store_true", help="Build a compact 24-character visual QA sheet.")
+    parser.add_argument("--phase", choices=("phase1", "phase2", "all"), default="phase1")
     args = parser.parse_args()
     for character_id in args.character_ids:
         process_character(character_id)
         print(f"processed: {character_id}")
     if args.roster_contact:
-        print(f"roster_contact: {build_roster_contact_sheet().relative_to(ROOT)}")
+        print(f"roster_contact: {build_roster_contact_sheet(args.phase).relative_to(ROOT)}")
     if not args.character_ids and not args.roster_contact:
         parser.error("provide at least one character id or --roster-contact")
     return 0

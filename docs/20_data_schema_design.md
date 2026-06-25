@@ -21,9 +21,13 @@ cost
 max_hp
 armor
 armor_thickness
+base_speed
 speed
+base_turn_speed
 turn_speed
+base_detection_range
 detection_range
+base_concealment_distance
 concealment_distance
 fire_concealment_multiplier
 evasion
@@ -52,10 +56,14 @@ is_flagship_candidate
 - `max_hp`：最大生命值。
 - `armor`：装甲值，用于伤害公式中的固定减伤。
 - `armor_thickness`：装甲厚度分档，用于武器对不同护甲厚度的伤害补正。
-- `speed`：最大航速。
-- `turn_speed`：转向速度。
-- `detection_range`：侦查范围。
-- `concealment_distance`：隐蔽距离，表示目标能被发现的最大距离，数值越小越难被发现。
+- `base_speed`：设计基线最大航速。
+- `speed`：当前运行时最大航速。当前统一为 `base_speed * 0.5`。
+- `base_turn_speed`：设计基线转向速度。
+- `turn_speed`：当前运行时转向速度。当前统一为 `base_turn_speed * 0.5`。
+- `base_detection_range`：设计基线侦查范围。
+- `detection_range`：当前运行时侦查范围。当前统一为 `base_detection_range * 1.5`。
+- `base_concealment_distance`：设计基线隐蔽距离。
+- `concealment_distance`：当前运行时隐蔽距离，表示目标能被发现的最大距离，数值越小越难被发现。当前统一为 `base_concealment_distance * 1.5`。
 - `fire_concealment_multiplier`：开火破隐比例。舰娘开火后，当前隐蔽距离按该比例放大。
 - `evasion`：闪避能力。
 - `gunnery_power`：火炮能力，影响主炮、副炮和炮击技能。
@@ -127,7 +135,7 @@ aircraft_config_id
 - `shots_per_mount`：每个底座一次攻击发射数量，例如三联装可写为 3。
 - `reload_time`：装填时间。
 - `base_range`：角色数值设计中的首轮射程基线，用于保留调参来源。
-- `range`：当前运行时最大射程，也是领域判定与 UI 绘制的直接真源。当前全武器实机调节统一为 `base_range * 2`。
+- `range`：当前运行时最大射程，也是领域判定与 UI 绘制的直接真源。当前全武器实机调节统一为 `base_range * 1.5`。
 - `minimum_range`：最小射程，可选。
 - `fire_arc_center`：射角中心，通常相对舰娘航向或舰装底座方向。
 - `fire_arc_degrees`：射角宽度。
@@ -478,6 +486,7 @@ id
 display_name
 cooldown
 target_type
+base_cast_range
 cast_range
 effect_type
 effect_value
@@ -494,7 +503,8 @@ ai_policy_id
 - `display_name`：显示名称。
 - `cooldown`：冷却时间。
 - `target_type`：目标类型，例如自身、敌方、区域、旗舰。
-- `cast_range`：释放距离。
+- `base_cast_range`：设计基线释放距离。自身技能或无距离限制技能为 `0`。
+- `cast_range`：当前运行时释放距离。当前统一为 `base_cast_range * 1.5`；自身技能或无距离限制技能保持 `0`。
 - `effect_type`：效果类型，例如炮击强化、鱼雷发射、空袭、防空强化、闪避提升。
 - `effect_value`：效果数值。
 - `modifiers`：结构化增益/减益列表，复杂技能优先使用该字段。
@@ -502,6 +512,9 @@ ai_policy_id
 - `vfx_id`：表现资源标识。
 - `ai_tags`：可选。技能 AI 用途标签，例如 `Burst`、`Defense`、`Recon`、`Mobility`、`AreaSupport`；不改变技能效果。
 - `ai_policy_id`：可选。引用程序支持的有限技能评估策略；不得包含可执行表达式。省略时敌方 AI 使用按目标类型分类的兼容策略。
+- `implementation_status`：可选。取值 `supported` 或 `partial`，用于标记该技能的结构化效果是否已被当前战斗系统完整消费。
+- `unsupported_effects`：可选字符串数组。记录已进入配置但尚无对应运行时机制的效果语义；不得将其误报为已生效。
+- `design_values`：可选。保留角色数值文档中的完整技能描述，供审计和后续机制实现对照，不直接执行。
 
 MVP 约定：
 

@@ -1,0 +1,59 @@
+{
+  "character_id": "nurnberg",
+  "phase": "phase2",
+  "ship_class": "light_cruiser",
+  "level": 2,
+  "skill_role": "stern_evasion_fire",
+  "battle_grid_roles": [
+    "battle_body_r",
+    "battle_rig_base",
+    "battle_turret_main_01",
+    "battle_turret_main_02",
+    "battle_torpedo_tube_01",
+    "battle_aa_center",
+    "battle_turn_indicator",
+    "battle_wake_origin_marker"
+  ],
+  "mount_instances": {
+    "turret_main": 3,
+    "torpedo": 4
+  },
+  "bindings": {
+    "battle_rig_base": [
+      "rig_mount",
+      "wake_origin",
+      "skill_origin",
+      "turret_mount_01",
+      "turret_mount_02",
+      "turret_mount_03",
+      "torpedo_mount_01",
+      "torpedo_mount_02",
+      "torpedo_mount_03",
+      "torpedo_mount_04"
+    ]
+  },
+  "vfx_roles": [
+    "turn_scale_ring",
+    "curved_stern_wake",
+    "shell_trail",
+    "aa_burst",
+    "aa_circle",
+    "radar_scan",
+    "skill_aura",
+    "water_splash"
+  ],
+  "public_vfx_profiles": {
+    "turn_scale_ring": "skill.area",
+    "curved_stern_wake": "wake.cruiser",
+    "shell_trail": "shell.trail.medium",
+    "aa_burst": "aa.burst.small",
+    "aa_circle": "aa.burst.small",
+    "radar_scan": "submarine.sonar_pulse",
+    "skill_aura": "skill.area",
+    "water_splash": "impact.water.medium"
+  },
+  "acceptance_rules": [
+    "Original TinySeaWar design; no real flags, political symbols, readable insignia, or extremist symbols.",
+    "Character body, rig base, weapon nodes, and VFX must remain visually separable."
+  ]
+}

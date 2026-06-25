@@ -1,0 +1,58 @@
+{
+  "character_id": "tashkent",
+  "phase": "phase2",
+  "ship_class": "destroyer",
+  "level": 2,
+  "skill_role": "blue_cruiser",
+  "battle_grid_roles": [
+    "battle_body_r",
+    "battle_rig_base",
+    "battle_turret_main_01",
+    "battle_torpedo_tube_01",
+    "battle_propulsion_node",
+    "battle_command_node",
+    "battle_aa_center",
+    "battle_wake_origin_marker"
+  ],
+  "mount_instances": {
+    "turret_main": 3,
+    "torpedo": 3
+  },
+  "bindings": {
+    "battle_rig_base": [
+      "rig_mount",
+      "wake_origin",
+      "skill_origin",
+      "turret_mount_01",
+      "turret_mount_02",
+      "turret_mount_03",
+      "torpedo_mount_01",
+      "torpedo_mount_02",
+      "torpedo_mount_03"
+    ]
+  },
+  "vfx_roles": [
+    "blue_speed_wake",
+    "blade_wake",
+    "torpedo_launch_flash",
+    "muzzle_flash_small",
+    "water_splash",
+    "aa_circle",
+    "skill_aura",
+    "range_reticle"
+  ],
+  "public_vfx_profiles": {
+    "blue_speed_wake": "wake.destroyer_fast",
+    "blade_wake": "wake.destroyer_fast",
+    "torpedo_launch_flash": "torpedo.trail.surface",
+    "muzzle_flash_small": "muzzle_flash.small",
+    "water_splash": "impact.water.medium",
+    "aa_circle": "aa.burst.small",
+    "skill_aura": "skill.area",
+    "range_reticle": "skill.area"
+  },
+  "acceptance_rules": [
+    "Original TinySeaWar design; no real flags, political symbols, readable insignia, or extremist symbols.",
+    "Character body, rig base, weapon nodes, and VFX must remain visually separable."
+  ]
+}

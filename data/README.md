@@ -37,6 +37,8 @@ Runtime data keeps design baselines and effective values side by side. Current
 battlefield tuning uses:
 
 - weapon `range == base_range * 1.5`;
+- weapon `projectile_speed == base_projectile_speed * 0.5`;
+- projectile and aircraft definition `speed == base_speed * 0.5`;
 - ship `detection_range` and `concealment_distance` at 1.5x their `base_*`
   fields;
 - skill `cast_range == base_cast_range * 1.5` for non-self skills;

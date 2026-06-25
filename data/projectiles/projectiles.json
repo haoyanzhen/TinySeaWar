@@ -1,1 +1,139 @@
-{"definitions":[{"id":"projectile.shell","behavior":"DelayedImpact","speed":400.0,"lifetime":3.0,"collision_radius":2.0,"target_types":["Surface"],"destroy_on_hit":true,"pierce_count":0},{"id":"projectile.surface_torpedo","behavior":"Straight","speed":165.0,"lifetime":5.0,"collision_radius":12.0,"target_types":["Surface","Submerged"],"destroy_on_hit":true,"pierce_count":0},{"id":"projectile.submarine_torpedo","behavior":"Straight","speed":145.0,"lifetime":5.0,"collision_radius":12.0,"target_types":["Surface","Submerged"],"destroy_on_hit":true,"pierce_count":0},{"id":"projectile.aircraft_bomb","behavior":"DelayedImpact","speed":300.0,"lifetime":4.0,"collision_radius":10.0,"target_types":["Surface"],"destroy_on_hit":true,"pierce_count":0},{"id":"projectile.air_torpedo","behavior":"Straight","speed":150.0,"lifetime":5.0,"collision_radius":12.0,"target_types":["Surface","Submerged"],"destroy_on_hit":true,"pierce_count":0},{"id":"aircraft.fighter","behavior":"PathFollow","speed":260.0,"lifetime":6.0,"collision_radius":14.0,"target_types":["Air"],"destroy_on_hit":false,"pierce_count":0},{"id":"aircraft.bomber","behavior":"PathFollow","speed":220.0,"lifetime":7.0,"collision_radius":15.0,"target_types":["Surface"],"destroy_on_hit":false,"pierce_count":0},{"id":"aircraft.torpedo_bomber","behavior":"PathFollow","speed":210.0,"lifetime":7.0,"collision_radius":15.0,"target_types":["Surface","Submerged"],"destroy_on_hit":false,"pierce_count":0},{"id":"aircraft.scout","behavior":"PathFollow","speed":240.0,"lifetime":8.0,"collision_radius":12.0,"target_types":["Surface","Submerged"],"destroy_on_hit":false,"pierce_count":0},{"id":"aircraft.asw","behavior":"PathFollow","speed":215.0,"lifetime":7.0,"collision_radius":14.0,"target_types":["Submerged"],"destroy_on_hit":false,"pierce_count":0}]}
+{
+  "definitions": [
+    {
+      "id": "projectile.shell",
+      "behavior": "DelayedImpact",
+      "speed": 200,
+      "lifetime": 3.0,
+      "collision_radius": 2.0,
+      "target_types": [
+        "Surface"
+      ],
+      "destroy_on_hit": true,
+      "pierce_count": 0,
+      "base_speed": 400
+    },
+    {
+      "id": "projectile.surface_torpedo",
+      "behavior": "Straight",
+      "speed": 82.5,
+      "lifetime": 5.0,
+      "collision_radius": 12.0,
+      "target_types": [
+        "Surface",
+        "Submerged"
+      ],
+      "destroy_on_hit": true,
+      "pierce_count": 0,
+      "base_speed": 165
+    },
+    {
+      "id": "projectile.submarine_torpedo",
+      "behavior": "Straight",
+      "speed": 72.5,
+      "lifetime": 5.0,
+      "collision_radius": 12.0,
+      "target_types": [
+        "Surface",
+        "Submerged"
+      ],
+      "destroy_on_hit": true,
+      "pierce_count": 0,
+      "base_speed": 145
+    },
+    {
+      "id": "projectile.aircraft_bomb",
+      "behavior": "DelayedImpact",
+      "speed": 150,
+      "lifetime": 4.0,
+      "collision_radius": 10.0,
+      "target_types": [
+        "Surface"
+      ],
+      "destroy_on_hit": true,
+      "pierce_count": 0,
+      "base_speed": 300
+    },
+    {
+      "id": "projectile.air_torpedo",
+      "behavior": "Straight",
+      "speed": 75,
+      "lifetime": 5.0,
+      "collision_radius": 12.0,
+      "target_types": [
+        "Surface",
+        "Submerged"
+      ],
+      "destroy_on_hit": true,
+      "pierce_count": 0,
+      "base_speed": 150
+    },
+    {
+      "id": "aircraft.fighter",
+      "behavior": "PathFollow",
+      "speed": 130,
+      "lifetime": 6.0,
+      "collision_radius": 14.0,
+      "target_types": [
+        "Air"
+      ],
+      "destroy_on_hit": false,
+      "pierce_count": 0,
+      "base_speed": 260
+    },
+    {
+      "id": "aircraft.bomber",
+      "behavior": "PathFollow",
+      "speed": 110,
+      "lifetime": 7.0,
+      "collision_radius": 15.0,
+      "target_types": [
+        "Surface"
+      ],
+      "destroy_on_hit": false,
+      "pierce_count": 0,
+      "base_speed": 220
+    },
+    {
+      "id": "aircraft.torpedo_bomber",
+      "behavior": "PathFollow",
+      "speed": 105,
+      "lifetime": 7.0,
+      "collision_radius": 15.0,
+      "target_types": [
+        "Surface",
+        "Submerged"
+      ],
+      "destroy_on_hit": false,
+      "pierce_count": 0,
+      "base_speed": 210
+    },
+    {
+      "id": "aircraft.scout",
+      "behavior": "PathFollow",
+      "speed": 120,
+      "lifetime": 8.0,
+      "collision_radius": 12.0,
+      "target_types": [
+        "Surface",
+        "Submerged"
+      ],
+      "destroy_on_hit": false,
+      "pierce_count": 0,
+      "base_speed": 240
+    },
+    {
+      "id": "aircraft.asw",
+      "behavior": "PathFollow",
+      "speed": 107.5,
+      "lifetime": 7.0,
+      "collision_radius": 14.0,
+      "target_types": [
+        "Submerged"
+      ],
+      "destroy_on_hit": false,
+      "pierce_count": 0,
+      "base_speed": 215
+    }
+  ]
+}

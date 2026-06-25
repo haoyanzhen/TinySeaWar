@@ -15,7 +15,7 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 360,
-      "projectile_speed": 180,
+      "projectile_speed": 90,
       "spread": 24,
       "impact_radius": 48,
       "accuracy_modifier": 0.06,
@@ -32,7 +32,8 @@
       },
       "target_types": [
         "Surface"
-      ]
+      ],
+      "base_projectile_speed": 180
     },
     {
       "id": "weapon.enterprise_aa",
@@ -49,7 +50,7 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 360,
-      "projectile_speed": 320,
+      "projectile_speed": 160,
       "spread": 0,
       "impact_radius": 18,
       "accuracy_modifier": 0,
@@ -66,7 +67,8 @@
       },
       "target_types": [
         "Air"
-      ]
+      ],
+      "base_projectile_speed": 320
     },
     {
       "id": "weapon.iowa_406_ap",
@@ -83,7 +85,7 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 290,
-      "projectile_speed": 430,
+      "projectile_speed": 215,
       "spread": 18,
       "impact_radius": 48,
       "accuracy_modifier": 0.03,
@@ -100,7 +102,8 @@
       },
       "target_types": [
         "Surface"
-      ]
+      ],
+      "base_projectile_speed": 430
     },
     {
       "id": "weapon.iowa_406_he",
@@ -117,7 +120,7 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 290,
-      "projectile_speed": 400,
+      "projectile_speed": 200,
       "spread": 24,
       "impact_radius": 48,
       "accuracy_modifier": 0,
@@ -134,7 +137,8 @@
       },
       "target_types": [
         "Surface"
-      ]
+      ],
+      "base_projectile_speed": 400
     },
     {
       "id": "weapon.iowa_127_he",
@@ -151,7 +155,7 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 320,
-      "projectile_speed": 320,
+      "projectile_speed": 160,
       "spread": 18,
       "impact_radius": 30,
       "accuracy_modifier": 0.02,
@@ -168,7 +172,8 @@
       },
       "target_types": [
         "Surface"
-      ]
+      ],
+      "base_projectile_speed": 320
     },
     {
       "id": "weapon.iowa_aa",
@@ -185,7 +190,7 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 360,
-      "projectile_speed": 320,
+      "projectile_speed": 160,
       "spread": 0,
       "impact_radius": 18,
       "accuracy_modifier": 0,
@@ -202,7 +207,8 @@
       },
       "target_types": [
         "Air"
-      ]
+      ],
+      "base_projectile_speed": 320
     },
     {
       "id": "weapon.san_diego_127_he",
@@ -219,7 +225,7 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 320,
-      "projectile_speed": 330,
+      "projectile_speed": 165,
       "spread": 18,
       "impact_radius": 30,
       "accuracy_modifier": 0.03,
@@ -236,7 +242,8 @@
       },
       "target_types": [
         "Surface"
-      ]
+      ],
+      "base_projectile_speed": 330
     },
     {
       "id": "weapon.san_diego_torpedo",
@@ -253,7 +260,7 @@
       "minimum_range": 20,
       "fire_arc_center": 90,
       "fire_arc_degrees": 70,
-      "projectile_speed": 140,
+      "projectile_speed": 70,
       "spread": 14,
       "impact_radius": 0,
       "accuracy_modifier": 0,
@@ -281,7 +288,8 @@
           "center": 90,
           "degrees": 70
         }
-      ]
+      ],
+      "base_projectile_speed": 140
     },
     {
       "id": "weapon.san_diego_aa_heavy",
@@ -298,7 +306,7 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 360,
-      "projectile_speed": 320,
+      "projectile_speed": 160,
       "spread": 0,
       "impact_radius": 18,
       "accuracy_modifier": 0,
@@ -315,7 +323,8 @@
       },
       "target_types": [
         "Air"
-      ]
+      ],
+      "base_projectile_speed": 320
     },
     {
       "id": "weapon.san_diego_aa_rapid",
@@ -332,7 +341,7 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 360,
-      "projectile_speed": 320,
+      "projectile_speed": 160,
       "spread": 0,
       "impact_radius": 18,
       "accuracy_modifier": 0,
@@ -349,7 +358,8 @@
       },
       "target_types": [
         "Air"
-      ]
+      ],
+      "base_projectile_speed": 320
     },
     {
       "id": "weapon.ward_102_he",
@@ -366,7 +376,7 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 300,
-      "projectile_speed": 300,
+      "projectile_speed": 150,
       "spread": 20,
       "impact_radius": 30,
       "accuracy_modifier": 0.02,
@@ -383,7 +393,8 @@
       },
       "target_types": [
         "Surface"
-      ]
+      ],
+      "base_projectile_speed": 300
     },
     {
       "id": "weapon.ward_torpedo",
@@ -400,7 +411,7 @@
       "minimum_range": 20,
       "fire_arc_center": 90,
       "fire_arc_degrees": 70,
-      "projectile_speed": 150,
+      "projectile_speed": 75,
       "spread": 14,
       "impact_radius": 0,
       "accuracy_modifier": 0,
@@ -428,7 +439,8 @@
           "center": 90,
           "degrees": 70
         }
-      ]
+      ],
+      "base_projectile_speed": 150
     },
     {
       "id": "weapon.hood_381_ap",
@@ -445,7 +457,7 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 290,
-      "projectile_speed": 420,
+      "projectile_speed": 210,
       "spread": 18,
       "impact_radius": 48,
       "accuracy_modifier": 0.03,
@@ -462,7 +474,8 @@
       },
       "target_types": [
         "Surface"
-      ]
+      ],
+      "base_projectile_speed": 420
     },
     {
       "id": "weapon.hood_381_he",
@@ -479,7 +492,7 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 290,
-      "projectile_speed": 390,
+      "projectile_speed": 195,
       "spread": 24,
       "impact_radius": 48,
       "accuracy_modifier": 0,
@@ -496,7 +509,8 @@
       },
       "target_types": [
         "Surface"
-      ]
+      ],
+      "base_projectile_speed": 390
     },
     {
       "id": "weapon.hood_secondary",
@@ -513,7 +527,7 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 300,
-      "projectile_speed": 300,
+      "projectile_speed": 150,
       "spread": 18,
       "impact_radius": 40,
       "accuracy_modifier": 0.01,
@@ -530,7 +544,8 @@
       },
       "target_types": [
         "Surface"
-      ]
+      ],
+      "base_projectile_speed": 300
     },
     {
       "id": "weapon.sirius_133_he",
@@ -547,7 +562,7 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 310,
-      "projectile_speed": 330,
+      "projectile_speed": 165,
       "spread": 18,
       "impact_radius": 30,
       "accuracy_modifier": 0.03,
@@ -564,7 +579,8 @@
       },
       "target_types": [
         "Surface"
-      ]
+      ],
+      "base_projectile_speed": 330
     },
     {
       "id": "weapon.sirius_aa",
@@ -581,7 +597,7 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 360,
-      "projectile_speed": 320,
+      "projectile_speed": 160,
       "spread": 0,
       "impact_radius": 18,
       "accuracy_modifier": 0,
@@ -598,7 +614,8 @@
       },
       "target_types": [
         "Air"
-      ]
+      ],
+      "base_projectile_speed": 320
     },
     {
       "id": "weapon.argus_airstrike",
@@ -615,7 +632,7 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 360,
-      "projectile_speed": 150,
+      "projectile_speed": 75,
       "spread": 28,
       "impact_radius": 48,
       "accuracy_modifier": 0,
@@ -632,7 +649,8 @@
       },
       "target_types": [
         "Surface"
-      ]
+      ],
+      "base_projectile_speed": 150
     },
     {
       "id": "weapon.argus_aa",
@@ -649,7 +667,7 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 360,
-      "projectile_speed": 320,
+      "projectile_speed": 160,
       "spread": 0,
       "impact_radius": 18,
       "accuracy_modifier": 0,
@@ -666,7 +684,8 @@
       },
       "target_types": [
         "Air"
-      ]
+      ],
+      "base_projectile_speed": 320
     },
     {
       "id": "weapon.kirov_180_ap",
@@ -683,7 +702,7 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 300,
-      "projectile_speed": 380,
+      "projectile_speed": 190,
       "spread": 16,
       "impact_radius": 40,
       "accuracy_modifier": 0.03,
@@ -700,7 +719,8 @@
       },
       "target_types": [
         "Surface"
-      ]
+      ],
+      "base_projectile_speed": 380
     },
     {
       "id": "weapon.kirov_180_he",
@@ -717,7 +737,7 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 300,
-      "projectile_speed": 350,
+      "projectile_speed": 175,
       "spread": 22,
       "impact_radius": 40,
       "accuracy_modifier": 0.01,
@@ -734,7 +754,8 @@
       },
       "target_types": [
         "Surface"
-      ]
+      ],
+      "base_projectile_speed": 350
     },
     {
       "id": "weapon.kirov_torpedo",
@@ -751,7 +772,7 @@
       "minimum_range": 20,
       "fire_arc_center": 90,
       "fire_arc_degrees": 70,
-      "projectile_speed": 145,
+      "projectile_speed": 72.5,
       "spread": 12,
       "impact_radius": 0,
       "accuracy_modifier": 0,
@@ -779,7 +800,8 @@
           "center": 90,
           "degrees": 70
         }
-      ]
+      ],
+      "base_projectile_speed": 145
     },
     {
       "id": "weapon.pobeda_bomber",
@@ -796,7 +818,7 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 360,
-      "projectile_speed": 170,
+      "projectile_speed": 85,
       "spread": 24,
       "impact_radius": 48,
       "accuracy_modifier": 0.03,
@@ -813,7 +835,8 @@
       },
       "target_types": [
         "Surface"
-      ]
+      ],
+      "base_projectile_speed": 170
     },
     {
       "id": "weapon.pobeda_ap_bomber",
@@ -830,7 +853,7 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 360,
-      "projectile_speed": 160,
+      "projectile_speed": 80,
       "spread": 18,
       "impact_radius": 48,
       "accuracy_modifier": 0.02,
@@ -847,7 +870,8 @@
       },
       "target_types": [
         "Surface"
-      ]
+      ],
+      "base_projectile_speed": 160
     },
     {
       "id": "weapon.gnevny_130_he",
@@ -864,7 +888,7 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 300,
-      "projectile_speed": 320,
+      "projectile_speed": 160,
       "spread": 20,
       "impact_radius": 30,
       "accuracy_modifier": 0.01,
@@ -881,7 +905,8 @@
       },
       "target_types": [
         "Surface"
-      ]
+      ],
+      "base_projectile_speed": 320
     },
     {
       "id": "weapon.gnevny_torpedo",
@@ -898,7 +923,7 @@
       "minimum_range": 20,
       "fire_arc_center": 90,
       "fire_arc_degrees": 70,
-      "projectile_speed": 150,
+      "projectile_speed": 75,
       "spread": 12,
       "impact_radius": 0,
       "accuracy_modifier": 0,
@@ -926,7 +951,8 @@
           "center": 90,
           "degrees": 70
         }
-      ]
+      ],
+      "base_projectile_speed": 150
     },
     {
       "id": "weapon.prinz_203_ap",
@@ -943,7 +969,7 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 300,
-      "projectile_speed": 380,
+      "projectile_speed": 190,
       "spread": 16,
       "impact_radius": 40,
       "accuracy_modifier": 0.04,
@@ -960,7 +986,8 @@
       },
       "target_types": [
         "Surface"
-      ]
+      ],
+      "base_projectile_speed": 380
     },
     {
       "id": "weapon.prinz_203_he",
@@ -977,7 +1004,7 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 300,
-      "projectile_speed": 350,
+      "projectile_speed": 175,
       "spread": 22,
       "impact_radius": 40,
       "accuracy_modifier": 0.01,
@@ -994,7 +1021,8 @@
       },
       "target_types": [
         "Surface"
-      ]
+      ],
+      "base_projectile_speed": 350
     },
     {
       "id": "weapon.prinz_torpedo",
@@ -1011,7 +1039,7 @@
       "minimum_range": 20,
       "fire_arc_center": 90,
       "fire_arc_degrees": 75,
-      "projectile_speed": 145,
+      "projectile_speed": 72.5,
       "spread": 12,
       "impact_radius": 0,
       "accuracy_modifier": 0,
@@ -1039,7 +1067,8 @@
           "center": 90,
           "degrees": 75
         }
-      ]
+      ],
+      "base_projectile_speed": 145
     },
     {
       "id": "weapon.u47_fore_torpedo",
@@ -1056,7 +1085,7 @@
       "minimum_range": 20,
       "fire_arc_center": 0,
       "fire_arc_degrees": 110,
-      "projectile_speed": 155,
+      "projectile_speed": 77.5,
       "spread": 8,
       "impact_radius": 0,
       "accuracy_modifier": 0,
@@ -1080,7 +1109,8 @@
           "center": 0,
           "degrees": 110
         }
-      ]
+      ],
+      "base_projectile_speed": 155
     },
     {
       "id": "weapon.u47_aft_torpedo",
@@ -1097,7 +1127,7 @@
       "minimum_range": 20,
       "fire_arc_center": 180,
       "fire_arc_degrees": 90,
-      "projectile_speed": 145,
+      "projectile_speed": 72.5,
       "spread": 10,
       "impact_radius": 0,
       "accuracy_modifier": 0,
@@ -1121,7 +1151,8 @@
           "center": 180,
           "degrees": 90
         }
-      ]
+      ],
+      "base_projectile_speed": 145
     },
     {
       "id": "weapon.yamato_460_ap",
@@ -1138,7 +1169,7 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 270,
-      "projectile_speed": 440,
+      "projectile_speed": 220,
       "spread": 20,
       "impact_radius": 48,
       "accuracy_modifier": 0.02,
@@ -1155,7 +1186,8 @@
       },
       "target_types": [
         "Surface"
-      ]
+      ],
+      "base_projectile_speed": 440
     },
     {
       "id": "weapon.yamato_460_he",
@@ -1172,7 +1204,7 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 270,
-      "projectile_speed": 400,
+      "projectile_speed": 200,
       "spread": 28,
       "impact_radius": 48,
       "accuracy_modifier": 0,
@@ -1189,7 +1221,8 @@
       },
       "target_types": [
         "Surface"
-      ]
+      ],
+      "base_projectile_speed": 400
     },
     {
       "id": "weapon.yamato_155_he",
@@ -1206,7 +1239,7 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 280,
-      "projectile_speed": 320,
+      "projectile_speed": 160,
       "spread": 22,
       "impact_radius": 40,
       "accuracy_modifier": 0.01,
@@ -1223,7 +1256,8 @@
       },
       "target_types": [
         "Surface"
-      ]
+      ],
+      "base_projectile_speed": 320
     },
     {
       "id": "weapon.yukikaze_127_he",
@@ -1240,7 +1274,7 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 310,
-      "projectile_speed": 320,
+      "projectile_speed": 160,
       "spread": 18,
       "impact_radius": 30,
       "accuracy_modifier": 0.03,
@@ -1257,7 +1291,8 @@
       },
       "target_types": [
         "Surface"
-      ]
+      ],
+      "base_projectile_speed": 320
     },
     {
       "id": "weapon.yukikaze_torpedo",
@@ -1274,7 +1309,7 @@
       "minimum_range": 20,
       "fire_arc_center": 90,
       "fire_arc_degrees": 70,
-      "projectile_speed": 165,
+      "projectile_speed": 82.5,
       "spread": 10,
       "impact_radius": 0,
       "accuracy_modifier": 0,
@@ -1302,7 +1337,8 @@
           "center": 90,
           "degrees": 70
         }
-      ]
+      ],
+      "base_projectile_speed": 165
     },
     {
       "id": "weapon.hosho_airstrike",
@@ -1319,7 +1355,7 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 360,
-      "projectile_speed": 150,
+      "projectile_speed": 75,
       "spread": 28,
       "impact_radius": 48,
       "accuracy_modifier": 0,
@@ -1336,7 +1372,8 @@
       },
       "target_types": [
         "Surface"
-      ]
+      ],
+      "base_projectile_speed": 150
     },
     {
       "id": "weapon.ning_140_he",
@@ -1353,7 +1390,7 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 300,
-      "projectile_speed": 320,
+      "projectile_speed": 160,
       "spread": 20,
       "impact_radius": 40,
       "accuracy_modifier": 0.02,
@@ -1370,7 +1407,8 @@
       },
       "target_types": [
         "Surface"
-      ]
+      ],
+      "base_projectile_speed": 320
     },
     {
       "id": "weapon.ning_140_ap",
@@ -1387,7 +1425,7 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 300,
-      "projectile_speed": 340,
+      "projectile_speed": 170,
       "spread": 16,
       "impact_radius": 40,
       "accuracy_modifier": 0,
@@ -1404,7 +1442,8 @@
       },
       "target_types": [
         "Surface"
-      ]
+      ],
+      "base_projectile_speed": 340
     },
     {
       "id": "weapon.ning_torpedo",
@@ -1421,7 +1460,7 @@
       "minimum_range": 20,
       "fire_arc_center": 90,
       "fire_arc_degrees": 70,
-      "projectile_speed": 140,
+      "projectile_speed": 70,
       "spread": 14,
       "impact_radius": 0,
       "accuracy_modifier": 0,
@@ -1449,7 +1488,8 @@
           "center": 90,
           "degrees": 70
         }
-      ]
+      ],
+      "base_projectile_speed": 140
     },
     {
       "id": "weapon.ning_aa",
@@ -1466,7 +1506,7 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 360,
-      "projectile_speed": 320,
+      "projectile_speed": 160,
       "spread": 0,
       "impact_radius": 18,
       "accuracy_modifier": 0,
@@ -1483,7 +1523,8 @@
       },
       "target_types": [
         "Air"
-      ]
+      ],
+      "base_projectile_speed": 320
     },
     {
       "id": "weapon.anshan_130_he",
@@ -1500,7 +1541,7 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 310,
-      "projectile_speed": 330,
+      "projectile_speed": 165,
       "spread": 18,
       "impact_radius": 30,
       "accuracy_modifier": 0.03,
@@ -1517,7 +1558,8 @@
       },
       "target_types": [
         "Surface"
-      ]
+      ],
+      "base_projectile_speed": 330
     },
     {
       "id": "weapon.anshan_torpedo",
@@ -1534,7 +1576,7 @@
       "minimum_range": 20,
       "fire_arc_center": 90,
       "fire_arc_degrees": 70,
-      "projectile_speed": 150,
+      "projectile_speed": 75,
       "spread": 12,
       "impact_radius": 0,
       "accuracy_modifier": 0,
@@ -1562,7 +1604,8 @@
           "center": 90,
           "degrees": 70
         }
-      ]
+      ],
+      "base_projectile_speed": 150
     },
     {
       "id": "weapon.anshan_aa",
@@ -1579,7 +1622,7 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 360,
-      "projectile_speed": 320,
+      "projectile_speed": 160,
       "spread": 0,
       "impact_radius": 18,
       "accuracy_modifier": 0,
@@ -1596,7 +1639,8 @@
       },
       "target_types": [
         "Air"
-      ]
+      ],
+      "base_projectile_speed": 320
     },
     {
       "id": "weapon.chongqing_152_he",
@@ -1613,7 +1657,7 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 300,
-      "projectile_speed": 330,
+      "projectile_speed": 165,
       "spread": 20,
       "impact_radius": 40,
       "accuracy_modifier": 0.03,
@@ -1630,7 +1674,8 @@
       },
       "target_types": [
         "Surface"
-      ]
+      ],
+      "base_projectile_speed": 330
     },
     {
       "id": "weapon.chongqing_152_ap",
@@ -1647,7 +1692,7 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 300,
-      "projectile_speed": 350,
+      "projectile_speed": 175,
       "spread": 16,
       "impact_radius": 40,
       "accuracy_modifier": 0.01,
@@ -1664,7 +1709,8 @@
       },
       "target_types": [
         "Surface"
-      ]
+      ],
+      "base_projectile_speed": 350
     },
     {
       "id": "weapon.chongqing_torpedo",
@@ -1681,7 +1727,7 @@
       "minimum_range": 20,
       "fire_arc_center": 90,
       "fire_arc_degrees": 70,
-      "projectile_speed": 140,
+      "projectile_speed": 70,
       "spread": 14,
       "impact_radius": 0,
       "accuracy_modifier": 0,
@@ -1709,7 +1755,8 @@
           "center": 90,
           "degrees": 70
         }
-      ]
+      ],
+      "base_projectile_speed": 140
     },
     {
       "id": "weapon.chongqing_aa",
@@ -1726,7 +1773,7 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 360,
-      "projectile_speed": 320,
+      "projectile_speed": 160,
       "spread": 0,
       "impact_radius": 18,
       "accuracy_modifier": 0,
@@ -1743,7 +1790,8 @@
       },
       "target_types": [
         "Air"
-      ]
+      ],
+      "base_projectile_speed": 320
     }
   ]
 }

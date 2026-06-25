@@ -23,6 +23,8 @@
 | 技能释放距离 | `base_cast_range` | `cast_range` | 1.5 |
 | 航速 | `base_speed` | `speed` | 0.5 |
 | 转向 | `base_turn_speed` | `turn_speed` | 0.5 |
+| 武器投射速度 | `base_projectile_speed` | `projectile_speed` | 0.5 |
+| 公共投射物 / 舰载机速度 | `base_speed` | `speed` | 0.5 |
 
 该倍率用于解决当前地图尺度下“航速-射程比”过高的问题：交战空间扩大，但单位推进和转向节奏收敛。领域层和 UI 均直接读取运行字段，不在战斗中再次乘算。武器最小射程暂不随倍率变化。
 

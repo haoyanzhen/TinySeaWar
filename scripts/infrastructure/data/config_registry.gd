@@ -12,6 +12,7 @@ const CATEGORY_PATHS := {
 }
 const DISTANCE_BASELINE_MULTIPLIER := 1.5
 const MOTION_BASELINE_MULTIPLIER := 0.5
+const ATTACK_SPEED_BASELINE_MULTIPLIER := 0.5
 
 var definitions := {}
 var errors: Array[String] = []
@@ -90,16 +91,22 @@ func _validate_references() -> void:
 	for skill in all("skills"):
 		_validate_skill(skill)
 	for projectile in all("projectiles"):
-		if projectile.get("behavior", "") not in ["Straight", "DelayedImpact", "PathFollow"]:
-			errors.append("Unsupported projectile behavior in %s" % projectile.get("id", "?"))
-		if float(projectile.get("collision_radius", 0.0)) <= 0.0:
-			errors.append("Projectile radius must be positive in %s" % projectile.get("id", "?"))
+		_validate_projectile(projectile)
 	for level in all("levels"):
 		_validate_level(level)
 	for settings in all("settings"):
 		_validate_settings(settings)
 	for visual in all("visuals"):
 		_validate_visual(visual)
+
+
+func _validate_projectile(projectile: Dictionary) -> void:
+	var projectile_id := str(projectile.get("id", "?"))
+	if projectile.get("behavior", "") not in ["Straight", "DelayedImpact", "PathFollow"]:
+		errors.append("Unsupported projectile behavior in %s" % projectile_id)
+	if float(projectile.get("collision_radius", 0.0)) <= 0.0:
+		errors.append("Projectile radius must be positive in %s" % projectile_id)
+	_validate_non_negative_scaled_field(projectile, "speed", "base_speed", ATTACK_SPEED_BASELINE_MULTIPLIER, projectile_id)
 
 
 func _validate_ship(ship: Dictionary) -> void:
@@ -171,6 +178,7 @@ func _validate_weapon(weapon: Dictionary) -> void:
 		errors.append("Effective range must be %.1fx base_range in %s" % [DISTANCE_BASELINE_MULTIPLIER, weapon_id])
 	if float(weapon.get("minimum_range", 0.0)) > float(weapon.get("range", 0.0)):
 		errors.append("Invalid range band in %s" % weapon_id)
+	_validate_non_negative_scaled_field(weapon, "projectile_speed", "base_projectile_speed", ATTACK_SPEED_BASELINE_MULTIPLIER, weapon_id)
 	if float(weapon.get("fire_arc_degrees", 0.0)) <= 0.0 or float(weapon.get("fire_arc_degrees", 0.0)) > 360.0:
 		errors.append("Invalid fire arc in %s" % weapon_id)
 	var fire_arcs: Array = weapon.get("fire_arcs", [])
@@ -211,6 +219,18 @@ func _validate_scaled_field(definition: Dictionary, effective_field: String, bas
 	var base_value := float(definition.get(base_field, 0.0))
 	if base_value <= 0.0:
 		errors.append("%s must be positive in %s" % [base_field, definition_id])
+		return
+	if not is_equal_approx(float(definition.get(effective_field, 0.0)), base_value * multiplier):
+		errors.append("%s must be %.1fx %s in %s" % [effective_field, multiplier, base_field, definition_id])
+
+
+func _validate_non_negative_scaled_field(definition: Dictionary, effective_field: String, base_field: String, multiplier: float, definition_id: String) -> void:
+	if not definition.has(base_field):
+		errors.append("Missing %s in %s" % [base_field, definition_id])
+		return
+	var base_value := float(definition.get(base_field, 0.0))
+	if base_value < 0.0:
+		errors.append("%s cannot be negative in %s" % [base_field, definition_id])
 		return
 	if not is_equal_approx(float(definition.get(effective_field, 0.0)), base_value * multiplier):
 		errors.append("%s must be %.1fx %s in %s" % [effective_field, multiplier, base_field, definition_id])

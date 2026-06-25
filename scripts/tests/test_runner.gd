@@ -86,6 +86,11 @@ func _test_runtime_baseline_scales() -> void:
 		var base_range := float(weapon.get("base_range", 0.0))
 		var effective_range := float(weapon.get("range", 0.0))
 		_check(base_range > 0.0 and is_equal_approx(effective_range, base_range * 1.5), "%s uses the global 1.5x effective attack range" % weapon.get("id", "?"))
+		var base_projectile_speed := float(weapon.get("base_projectile_speed", 0.0))
+		_check(base_projectile_speed >= 0.0 and is_equal_approx(float(weapon.get("projectile_speed", 0.0)), base_projectile_speed * 0.5), "%s uses the 0.5x runtime attack speed baseline" % weapon.get("id", "?"))
+	for projectile in registry.all("projectiles"):
+		var base_speed := float(projectile.get("base_speed", 0.0))
+		_check(base_speed >= 0.0 and is_equal_approx(float(projectile.get("speed", 0.0)), base_speed * 0.5), "%s uses the 0.5x runtime projectile and aircraft speed baseline" % projectile.get("id", "?"))
 	for skill in registry.all("skills"):
 		var base_cast_range := float(skill.get("base_cast_range", 0.0))
 		var expected_cast_range := base_cast_range * 1.5 if base_cast_range > 0.0 else 0.0
@@ -96,6 +101,11 @@ func _test_runtime_baseline_scales() -> void:
 	_check(is_equal_approx(float(registry.get_definition("weapons", "weapon.warspite_381_ap").get("range", 0.0)), 1080.0), "main-gun UI and rules expose the 1.5x effective range")
 	_check(is_equal_approx(float(registry.get_definition("weapons", "weapon.shimakaze_610_torpedo").get("range", 0.0)), 765.0), "torpedo UI and rules expose the 1.5x effective range")
 	_check(is_equal_approx(float(registry.get_definition("weapons", "weapon.enterprise_airstrike").get("range", 0.0)), 1140.0), "aviation UI and rules expose the 1.5x effective range")
+	_check(is_equal_approx(float(registry.get_definition("weapons", "weapon.warspite_381_ap").get("projectile_speed", 0.0)), 210.0), "main-gun projectiles use the halved runtime attack speed baseline")
+	_check(is_equal_approx(float(registry.get_definition("weapons", "weapon.shimakaze_610_torpedo").get("projectile_speed", 0.0)), 85.0), "torpedoes use the halved runtime attack speed baseline")
+	_check(is_equal_approx(float(registry.get_definition("weapons", "weapon.enterprise_airstrike").get("projectile_speed", 0.0)), 90.0), "aviation groups use the halved runtime attack speed baseline")
+	_check(is_equal_approx(float(registry.get_definition("projectiles", "projectile.surface_torpedo").get("speed", 0.0)), 82.5), "projectile definitions use the halved runtime movement speed baseline")
+	_check(is_equal_approx(float(registry.get_definition("projectiles", "aircraft.bomber").get("speed", 0.0)), 110.0), "aircraft definitions use the halved runtime movement speed baseline")
 	_check(is_equal_approx(float(registry.get_definition("skills", "skill.warspite_veteran_aim").get("cast_range", 0.0)), 1095.0), "skill range uses the 1.5x runtime distance baseline")
 
 

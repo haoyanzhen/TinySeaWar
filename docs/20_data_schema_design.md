@@ -112,6 +112,7 @@ fire_arc_center
 fire_arc_degrees
 fire_arcs
 turret_turn_speed
+base_projectile_speed
 projectile_speed
 spread
 impact_radius
@@ -141,7 +142,8 @@ aircraft_config_id
 - `fire_arc_degrees`：射角宽度。
 - `fire_arcs`：可选的多扇区射角数组，每项包含相对舰首的 `center` 与总宽度 `degrees`。存在时它是运行时射角真源；旧的单扇区字段保留为兼容和摘要。水面鱼雷通常以左右舷两个扇区表达，潜艇前、后管可以使用同组的两个武器定义分别表达首尾扇区。
 - `turret_turn_speed`：炮塔、鱼雷管或装备朝向调整速度。
-- `projectile_speed`：投射物速度。
+- `base_projectile_speed`：武器配置中的炮弹、鱼雷、舰载机等攻击速度设计基线。
+- `projectile_speed`：当前运行时攻击速度，也是炮弹飞行时间、鱼雷推进和航空编队移动表现的直接真源。当前统一为 `base_projectile_speed * 0.5`。
 - `spread`：散布。
 - `impact_radius`：海域攻击的结算半径。主炮和空袭使用；鱼雷可为空或 0。
 - `accuracy_modifier`：命中修正。

@@ -4,6 +4,7 @@ const ShipUnitView = preload("res://scripts/presentation/battle/ship_unit_view.g
 const ProjectileView = preload("res://scripts/presentation/battle/projectile_view.gd")
 const BattleVfx = preload("res://scripts/presentation/battle/battle_vfx.gd")
 const DamageNumberView = preload("res://scripts/presentation/battle/damage_number_view.gd")
+const ShellFlightView = preload("res://scripts/presentation/battle/shell_flight_view.gd")
 
 var unit_layer: Node2D
 var projectile_layer: Node2D
@@ -30,6 +31,9 @@ func clear() -> void:
 	unit_views.clear()
 	projectile_views.clear()
 	damage_number_views_by_target.clear()
+	if projectile_layer != null:
+		for child in projectile_layer.get_children():
+			child.queue_free()
 	if vfx_layer != null:
 		for child in vfx_layer.get_children():
 			child.queue_free()
@@ -104,6 +108,7 @@ func _handle_weapon_fired(event: Dictionary, session) -> void:
 	if view != null:
 		view.play_fire_state(str(visual.get("fire_animation_state", "attack")))
 		var launch_position := view.bind_point_world(str(visual.get("launch_bind", "")))
+		_spawn_shell_flights(event, session, weapon, visual, source, launch_position)
 		_spawn_role_vfx(character_id, str(visual.get("muzzle_vfx_role", "")), launch_position, float(source.get("heading", 0.0)), str(visual.get("launch_profile", "vfx.profile.muzzle_flash")))
 
 
@@ -171,6 +176,120 @@ func _spawn_role_vfx(character_id: String, role_name: String, world_position: Ve
 	effect.position = world_position
 	vfx_layer.add_child(effect)
 	effect.configure(str(role.get("file", "")), DataRegistry.assets.vfx_playback_profile(profile_id), rotation_value)
+
+
+func _spawn_shell_flights(event: Dictionary, session, weapon: Dictionary, weapon_visual: Dictionary, source: Dictionary, launch_position: Vector2) -> void:
+	if projectile_layer == null or str(weapon.get("mount_type", "")) != "Gun":
+		return
+	var projectile_visual_id := str(weapon_visual.get("projectile_visual_id", weapon.get("projectile_id", "")))
+	var projectile_visual := DataRegistry.assets.projectile_visual(projectile_visual_id)
+	if projectile_visual.is_empty() or str(projectile_visual.get("projectile_type", "")) != "Shell":
+		return
+	var multiplier := float(weapon_visual.get("shell_trail_caliber_pixel_multiplier", projectile_visual.get("shell_trail_caliber_pixel_multiplier", 0.1)))
+	var caliber_mm := _weapon_caliber_mm(weapon, weapon_visual, projectile_visual)
+	var length_px := maxf(1.0, caliber_mm * multiplier)
+	var width_px := float(weapon_visual.get("shell_trail_width", projectile_visual.get("shell_trail_width", 1.5)))
+	var trail_fade_seconds := float(weapon_visual.get("shell_trail_duration", projectile_visual.get("shell_trail_duration", 0.18)))
+	var color := _shell_trail_color(weapon, weapon_visual, projectile_visual)
+	for destination in _shell_flight_destinations(event, session, weapon, source, launch_position):
+		var travel_seconds := launch_position.distance_to(destination) / maxf(1.0, float(weapon.get("projectile_speed", 1.0)))
+		var duration_seconds := maxf(float(weapon_visual.get("shell_flight_min_duration", 0.08)), travel_seconds)
+		var flight := ShellFlightView.new()
+		flight.z_index = 18
+		projectile_layer.add_child(flight)
+		flight.configure(launch_position, destination, projectile_visual, color, length_px, width_px, duration_seconds, trail_fade_seconds)
+
+
+func _shell_flight_destinations(event: Dictionary, session, weapon: Dictionary, source: Dictionary, launch_position: Vector2) -> Array:
+	var count := clampi(int(event.get("shot_count", 1)), 1, 12)
+	var base_destination := _weapon_fire_destination(event, session, source, launch_position)
+	var base_heading := (base_destination - launch_position).angle()
+	var scatter_radius := _shell_visual_scatter_radius(weapon, count)
+	var destinations: Array = []
+	for shot_index in range(count):
+		destinations.append(base_destination + _shell_visual_scatter_offset(event, session, weapon, shot_index, count, scatter_radius, base_heading))
+	return destinations
+
+
+func _shell_visual_scatter_radius(weapon: Dictionary, shot_count: int) -> float:
+	if shot_count <= 1:
+		return 0.0
+	var impact_radius := float(weapon.get("impact_radius", 36.0))
+	var spread_factor := clampf(float(weapon.get("spread", 0.0)) / 30.0, 0.0, 1.0)
+	return maxf(4.0, impact_radius * lerpf(0.25, 0.45, spread_factor))
+
+
+func _shell_visual_scatter_offset(event: Dictionary, session, weapon: Dictionary, shot_index: int, shot_count: int, scatter_radius: float, base_heading: float) -> Vector2:
+	if shot_count <= 1 or scatter_radius <= 0.0:
+		return Vector2.ZERO
+	var seed_text := "%s:%s:%s:%s:%s" % [
+		session.state.get("tick_index", 0),
+		event.get("unit_id", ""),
+		event.get("weapon_id", weapon.get("id", "")),
+		event.get("target_unit_id", event.get("target_position", "")),
+		shot_index,
+	]
+	var seed := seed_text.hash()
+	var angle := TAU * _unit_noise(seed, 17)
+	var radius := scatter_radius * pow(_unit_noise(seed, 43), 1.85)
+	var local := Vector2.RIGHT.rotated(angle) * radius
+	return local.rotated(base_heading)
+
+
+func _unit_noise(seed: int, salt: int) -> float:
+	return fposmod(sin(float(seed + salt) * 12.9898) * 43758.5453, 1.0)
+
+
+func _weapon_fire_destination(event: Dictionary, session, source: Dictionary, launch_position: Vector2) -> Vector2:
+	if typeof(event.get("target_position")) == TYPE_VECTOR2:
+		return event["target_position"]
+	var target_id := str(event.get("target_unit_id", ""))
+	if not target_id.is_empty():
+		var target: Dictionary = session.state.get("units_by_id", {}).get(target_id, {})
+		if not target.is_empty():
+			return target.get("position", launch_position)
+	return launch_position + Vector2.RIGHT.rotated(float(source.get("heading", 0.0))) * 160.0
+
+
+func _weapon_caliber_mm(weapon: Dictionary, weapon_visual: Dictionary, projectile_visual: Dictionary) -> float:
+	for field in ["shell_caliber_mm", "caliber_mm"]:
+		if weapon_visual.has(field):
+			return maxf(1.0, float(weapon_visual.get(field, 0.0)))
+		if weapon.has(field):
+			return maxf(1.0, float(weapon.get(field, 0.0)))
+	var parsed := _parse_caliber_mm("%s %s" % [weapon.get("display_name", ""), weapon.get("id", "")])
+	if parsed > 0.0:
+		return parsed
+	var visual_id := str(projectile_visual.get("id", ""))
+	if visual_id.contains("superheavy"):
+		return 460.0
+	if visual_id.contains("large"):
+		return 381.0
+	if visual_id.contains("medium"):
+		return 203.0
+	if visual_id.contains("small"):
+		return 127.0
+	return 152.0
+
+
+func _parse_caliber_mm(text: String) -> float:
+	var expression := RegEx.new()
+	if expression.compile("(\\d+(?:\\.\\d+)?)\\s*mm") != OK:
+		return 0.0
+	var result := expression.search(text)
+	if result == null:
+		return 0.0
+	return float(result.get_string(1))
+
+
+func _shell_trail_color(weapon: Dictionary, weapon_visual: Dictionary, projectile_visual: Dictionary) -> Color:
+	var color_key := str(weapon_visual.get("shell_trail_color_key", projectile_visual.get("shell_trail_color_key", "")))
+	if color_key.is_empty():
+		color_key = "clean_white" if str(weapon.get("ammo_type", "")) == "AP" else "fire_yellow"
+	var palette = projectile_visual.get("shell_trail_color_palette", {})
+	if palette is Dictionary and palette.has(color_key):
+		return Color(str(palette[color_key]))
+	return Color(str(projectile_visual.get("trail_color", "#ffd777")))
 
 
 func _spawn_damage_number(result: Dictionary, session) -> void:

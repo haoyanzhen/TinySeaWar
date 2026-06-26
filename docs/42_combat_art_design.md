@@ -91,6 +91,8 @@
 
 炮弹本体通常使用单张 Sprite，由程序沿直线、抛物线或区域落点曲线移动。炮塔旋转、炮口闪光、弹体和命中特效必须是独立节点。
 
+所有舰炮开火后都应生成轻量炮弹飞行表现节点，用于补足炮弹离膛方向、飞行时间和齐射数量的可读性。节点按武器 `projectile_speed` 从炮口飞向目标或落点，并在炮弹后方绘制曳尾；多发齐射的表现落点应在目标区域附近做随机但集中的散布，不表现为从炮口均匀张开的扇形。曳尾长度默认按 `口径 mm * shell_trail_caliber_pixel_multiplier` 计算，MVP 初始倍率为 `0.1`，倍率必须作为独立配置项保留，不能写死在贴图或代码常量里。曳尾颜色使用公共色盘选择：整洁白 `clean_white`、火光黄 `fire_yellow`、夕阳红 `sunset_red`；穿甲弹优先使用整洁白，高爆弹优先使用火光黄，超重或技能强化炮击可使用夕阳红。曳尾需要从炮弹到尾端逐渐变细、变淡，避免看起来像鱼雷水迹。
+
 ### 4.2 水面鱼雷
 
 鱼雷必须始终是可读的实体威胁：
@@ -322,6 +324,8 @@ vfx_asw_depth_charge_bubble_01.png
 | 航迹 | `wake.destroyer_fast` / `wake.cruiser` / `wake.battleship_heavy` / `wake.carrier_wide` / `wake.submarine_low` | 舰种基础移动反馈 |
 
 每个 profile 至少需要记录 `duration`、`fps` 或 `frame_count`、`loop`、`anchor`、`z_layer`、`rotation_mode`、`scale`、`follow_owner`、`blend_mode`。角色专属覆盖只替换贴图、颜色或局部装饰，不改变伤害时点和运动规则。
+
+炮弹 visual 还需要记录 `shell_trail_caliber_pixel_multiplier`、`shell_trail_width`、`shell_trail_duration`、`shell_trail_color_key` 和 `shell_trail_color_palette`。其中倍率控制口径到像素长度的换算；宽度、持续时间和颜色只影响表现，不影响弹速、命中和伤害时点。
 
 ## 10. 验收标准
 

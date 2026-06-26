@@ -41,6 +41,14 @@ var muzzle_profile := DataRegistry.assets.vfx_playback_profile("muzzle_flash.lar
 - `vfx_playback_profile(profile_key)` 返回 VFX 播放参数，例如 `duration`、`fps`、`loop`、`anchor`、`z_layer`、`rotation_mode`、`scale`、`follow_owner`、`blend_mode`。
 - 角色目录中的专属 VFX role 可以覆盖公共 profile 的贴图或颜色，但仍需要声明其公共语义，例如 `bismarck.heavy_muzzle -> muzzle_flash.large`。
 
+炮弹曳尾接口：
+
+- 炮弹类 `projectile_visual` 可提供 `shell_trail_caliber_pixel_multiplier`，默认 MVP 为 `0.1`，运行时按 `口径 mm * 倍率` 计算曳尾像素长度。
+- 可选字段 `shell_trail_width`、`shell_trail_duration`、`shell_trail_color_key`、`shell_trail_color_palette` 只控制表现；它们不参与伤害、弹速、命中或领域判定。
+- `weapon_visual` 或武器数据可用 `shell_caliber_mm` / `caliber_mm` 覆盖口径；没有覆盖时运行时从武器名称中的 `xxxmm` 读取，再按炮弹档位兜底。
+- 表现层按 `WeaponFired` 事件创建炮弹飞行节点，飞行节点使用公共炮弹 sprite，并在炮弹当前位置后方绘制渐变曳尾。多发炮击的表现落点集中在目标区域附近，不按炮口等角度扇出。
+- 推荐公共颜色键为 `clean_white`、`fire_yellow`、`sunset_red`。
+
 建议配置入口：
 
 - `data/visuals/projectile_visuals.json`

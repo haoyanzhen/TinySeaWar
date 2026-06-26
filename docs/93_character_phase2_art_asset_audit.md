@@ -2,59 +2,113 @@
 
 ## 1. 审计结论
 
-截至 2026-06-24，第二期 24 名角色的生产契约、生成简报、运行时数据和审计工具已完成。美系首批 4 名已完成锚点修正、MVP 派生、透明后处理和契约审计，达到 `batch_ready`；其余 20 名仍按阵营锚点确认门槛等待生产，不误报为完成。
+截至 2026-06-26，第二期美系首批 4 名角色的正式资产包状态已回退为未完成。此前生成的 UI、战斗拆件、VFX 和动画 sheet 来自锚点派生/程序绘制兜底链，属于 smoke test / placeholder，而非正式 gpt-image-2 / reference-image 产物；这些假资产已从正式源目录和 processed 目录移除。
+
+因此，美系四人当前不得标记为 `batch_ready`。目前仅保留已确认的 `concept/{id}_concept_full.png` 锚点、角色级 `postprocess_plan.json`、生成简报和 trial log，等待真实 UI / 战斗拆件 / 动画 / VFX 源资产重新生成。
+
+其余 20 名第二期角色仍处于阵营锚点门槛之前，未标记为完成。
 
 | 审计项 | 结果 |
 | --- | --- |
 | 第二期名册 | 24/24 已固定 ID，可用 `phase2` 或 `all` 单独加载 |
 | 角色级后处理计划 | 24/24 完成 |
-| 生成简报与试产日志 | 24/24 完成 |
-| 角色运行时数据 | 24/24 完成 |
-| 武器运行时数据 | 69 项，引用闭合 |
-| 技能运行时数据 | 24/24 完成，支持度明确标注 |
-| 武器表现映射 | 55 个武器组，覆盖全部 69 件武器 |
-| Godot 配置验证 | 285 项检查全部通过 |
-| 原始风格锚点 | 美系 4/4 已验收；弗莱彻已修正为 5 座单装炮塔与两座单排五联装鱼雷发射器，刺尾鱼已去除脚蹼 |
-| 已验收派生源图 | 美系 4/4 具备 UI `4x2`、战斗拆件 `4x2`、动画 `5x4` 与 VFX `4x2` |
-| 正式 processed 资产 | 4/24；美系首批共 20 动画帧/角色、8 VFX/角色及完整 UI/拆件/配置 |
-| 契约 `batch_ready` | 4/24；美系首批自动审计无 blocker |
+| 生成简报与试产日志 | 24/24 完成，动画口径已改为五张 `2x2` 状态 sheet |
+| 运行时数据 | 第二期 ship / weapon / skill / weapon visual 数据可加载 |
+| 美系基础风格参考 | 4/4 保留 `concept/{id}_concept_full.png` |
+| 美系旧派生资产清理 | 旧 `5x4` 动画母版、候选动画母版、boxed/clean 拆帧 QA、旧 processed 动画与旧派生目录已删除 |
+| 美系新源母版 | 0/4 正式源包完整；锚点派生/程序绘制的假源 sheet 已移除 |
+| 美系正式 processed 资产 | 0/4；占位派生 processed 包已移除 |
+| 美系契约状态 | 4/4 `incomplete`，缺失正式 MVP 资产角色 |
+| 美系批处理状态 | 0/4 `batch_ready` |
+| Godot phase2 配置验证 | `PASS: 285 phase-two configuration checks` |
+| Godot 总回归 | `PASS: 1212 checks` |
 
-## 2. 已完成的接口与生产准备
+## 2. 本轮规则变更
 
-- `character_roster.py` 默认继续返回第一期，显式支持 `phase1`、`phase2` 和 `all`。
-- 第二期每名角色拥有 `postprocess_plan.json`，固定八个战斗拆件槽位、实际武器数量、标准绑定点、八个专属 VFX role、公共语义和角色级禁止项。
-- 后处理优先读取角色级计划，同时保留第一期舰种模板兼容路径。
-- 批处理、契约检查和 24 人总览支持 `--phase phase2`，第二期 QA 报告不覆盖第一期报告。
-- 技能图标文件名使用角色技能语义，不再只使用舰种通用名。
-- 多炮塔、多鱼雷管和多起飞点使用可复用图形加多个独立挂点，不要求为每个实例复制一张 PNG。
+本轮将角色动画生产默认规则从一张 `5x4` 合集改为五张独立 `2x2` 状态 sheet：
 
-## 3. 美系首批生产结论
+- `battle/{id}_anim_idle_4f_sheet.png`
+- `battle/{id}_anim_move_4f_sheet.png`
+- `battle/{id}_anim_attack_4f_sheet.png`
+- `battle/{id}_anim_hit_4f_sheet.png`
+- `battle/{id}_anim_firepower_4f_sheet.png`
 
-克利夫兰、巴尔的摩、刺尾鱼与修正后的弗莱彻锚点均已获用户验收。刺尾鱼已按反馈去除脚蹼并替换为防水战术短靴；“潜艇角色脚上禁止穿脚蹼”已上升为 `40/41` 文档和所有第二期潜艇计划的强制规则。
+每张 `2x2` sheet 的帧序为左上、右上、左下、右下。`5x4` 仍作为过渡兼容输入，但不再作为第二期新资产的默认生产格式。
 
-弗莱彻原候选将侧面鱼雷管错画为多排管阵列，用户审查后确认不可用；第二候选为错误的 `1x6`。最终生产锚点已明确呈现五座独立单炮与左右各一座 `1x5` 发射器，并清除舰号和烘焙文字。两张错误候选保留在概念目录用于追溯，不进入运行时。
+变更原因：
 
-参考图生成端点在动画和部分派生请求上持续出现 network error。为保持身份一致性并完成 MVP，克利夫兰与弗莱彻的动画母版，以及巴尔的摩/刺尾鱼的 UI、战斗节点和动画，改由已验收锚点或已验收战斗本体直接派生：人物像素不换脸，装备节点使用无文字、可计数的确定性图形。该降级路线仍经过相同透明化、拆分、绑定点和契约审计，不作为空白占位图处理。
+- `5x4` 高密度母版在固定像素尺寸下容易压缩单格内容。
+- 可见格线/固定硬切会掩盖源格边界截断风险。
+- 五张 `2x2` 能给每个状态更大的有效画布，并降低动作、身份和舰装细节互相挤压的概率。
 
-美系 4 名均已生成完整运行时包并通过合同审计。其余 20 名仍受“每阵营四张锚点确认后再生成派生资产”的硬门槛约束；当前未进入锚点确认的阵营不标记为 `batch_ready`。
+已同步位置：
 
-英国批次已开始锚点生产，但杰维斯首轮与简化重试均在新图生成网络层失败，未返回候选图；因此英国 4 人门槛保持关闭，未用占位资产推进派生生产。
+- `tiny-sea-war-art-pipeline` skill
+- `docs/40_art_direction_design.md`
+- `docs/46_art_pipeline_design.md`
+- `tools/art_pipeline/build_phase2_generation_briefs.py`
+- `tools/art_pipeline/batch_character_art.py`
+- `tools/art_pipeline/build_procedural_animation_master.py`
+- `tools/art_pipeline/check_character_asset_contract.py` 增加第二期四帧动画姿态变化检查：对每帧主体 alpha 做裁切、缩放、居中注册后比较剪影重合度，避免整体平移、轻微旋转、色调变化或外接闪光造成假通过。
+- `tools/art_pipeline/build_anchor_derived_mvp_sheets.py` 和 `tools/art_pipeline/build_procedural_animation_master.py` 已降级为显式 `--allow-placeholder` 的 QA 占位输出，只写入 `assets/characters/qa/*_placeholders/`，不得写正式源目录。
+- `tools/art_pipeline/batch_character_art.py` 和 `postprocess_generated_character.py` 增加 source provenance 传递/阻断；`batch_ready_allowed=false` 的来源不能进入 `batch_ready`。
 
-非阻塞 polish：巴尔的摩和刺尾鱼的三表情目前以锚点裁切与色调差异表达，建议待参考图服务稳定后替换为真正的表情重绘；美系 4 名的 20 帧动画为身份安全的微动版，后续可升级为更丰富的手绘逐帧。以上不影响透明导入、角色识别、节点装配或运行时播放。
+## 3. 美系四人资产状态
 
-## 4. 运行时设计债
+| 角色 | 舰种 | 新动画源 | processed 动画 | VFX | 契约 | 备注 |
+| --- | --- | --- | --- | --- | --- | --- |
+| 弗莱彻 `fletcher` | 驱逐 | 缺失 | 缺失 | 缺失 | incomplete | 仅保留锚点与计划；需真实生成五座单炮、鱼雷管、深弹与声呐资产 |
+| 克利夫兰 `cleveland` | 轻巡 | 缺失 | 缺失 | 缺失 | incomplete | 仅保留锚点与计划；需真实生成无雷炮巡、防空、雷达资产 |
+| 巴尔的摩 `baltimore` | 重巡 | 缺失 | 缺失 | 缺失 | incomplete | 仅保留锚点与计划；需真实生成无雷重巡、三座重炮、雷达火控资产 |
+| 刺尾鱼 `wahoo` | 潜艇 | 缺失 | 缺失 | 缺失 | incomplete | 仅保留锚点与计划；需真实生成无脚蹼潜艇、六艏四艉鱼雷口、声呐、潜望镜和氧气指示资产 |
 
-第二期技能已完整保留设计数值，当前战斗系统可消费的修正已进入 `effects`。下列语义保留在 `unsupported_effects`，本轮不误报为已生效：
+## 4. 审计产物
+
+- 批处理报告：`assets/characters/qa/character_art_batch_report_phase2.md`
+- 契约报告：`assets/characters/qa/character_asset_contract_audit_fletcher_cleveland_baltimore_wahoo.md`
+- 第二期总览：`assets/characters/qa/character_roster_processed_contact_phase2.png`
+- 单角色联系表：
+  - `assets/characters/qa/fletcher_processed_contact.png`
+  - `assets/characters/qa/cleveland_processed_contact.png`
+  - `assets/characters/qa/baltimore_processed_contact.png`
+  - `assets/characters/qa/wahoo_processed_contact.png`
+
+## 5. Blocker 与修复要求
+
+- `fletcher`、`cleveland`、`baltimore`、`wahoo` 当前缺少正式 UI、战斗拆件、动画和 VFX 源资产。锚点派生/程序绘制占位不得用于正式源包。
+- 必须重新生成每个角色的正式 `4x2` UI、`4x2` 战斗拆件、五张 `2x2` Q 版战场单位动画母版和 `2x4` VFX 母版。
+- 每个状态四帧需要能读出动作阶段：
+  - `idle`：呼吸、舰装浮动或轻微站姿变化。
+  - `move`：身体前倾、推进/航迹节奏和舰装随动。
+  - `attack`：预备、开火峰值、后坐、复位。
+  - `hit`：受击收缩、摇晃/火花反馈、恢复。
+  - `firepower`：技能/火力动作启动、舰装响应、局部火光或光环、复位。
+- 允许贴近炮口的火光和局部烟火；仍不允许飞出的炮弹、鱼雷、舰载机、深弹、长尾迹或大水柱烘焙进角色动画。
+- 重新后处理后必须通过 source provenance、资产契约和姿态变化检查，再进入 Computer Use 视觉确认。
+
+## 6. 非阻塞 polish
+
+- 武器节点、技能图标和 VFX 当前以确定性图形表达语义，技术可用；后续可替换为更精细的手绘资产。
+- 刺尾鱼的水下阴影/鲨形阴影 VFX 当前偏程序化，建议后续做更自然的低亮蓝黑水下效果。
+- 表情差异主要通过锚点裁切和轻微色调变化实现，后续可用参考图服务重绘为更明确的表情。
+
+以上 polish 项不影响后续真实资产生成；当前由正式源资产缺失和非生产来源兜底禁用共同阻止 `batch_ready`。
+
+## 7. 设计债
+
+本轮只完成资产生产与接入，不扩展战斗系统。第二期技能中的部分结构化效果仍保留为运行时设计债：
 
 - 氧气消耗、仅潜航速度和仅潜航隐蔽。
 - 实体舰载机 HP、多波次空袭与第二波独立命中。
 - 主动鱼雷预警提前、侦察机独立视野和“仅对已侦查目标”条件。
 - 武器散布修正、下一轮消耗、目标装甲类别补正和开火破隐比例。
 
-## 5. 验证记录
+这些项目不影响美系四人的资产路径和运行时发现，但当前动画 blocker 仍需先修复。
 
-- `godot --headless --path . --log-file /tmp/tinyseawar_phase2_config.log --script res://scripts/tests/phase2_config_test.gd`：`PASS: 285 phase-two configuration checks`。
-- Godot 全量回归：`PASS: 820 checks`；48 名角色数据全部加载，AssetCatalog 对已有正式 manifest 的第二期角色自动执行运行时美术断言，美系 4 名均可发现。
-- 第一期角色资产契约复查通过，未因分期改造产生回归。
-- 美系首批 4 名逐角色 `batch_ready`：弗莱彻、克利夫兰、巴尔的摩、刺尾鱼均无缺失 role、无非法 PNG、无引用或绑定点问题。
-- 第二期全量批次与契约报告准确列出 4 名完成与其余 20 名待生产状态；不覆盖第一期 QA 文件。
+## 8. 验证记录
+
+- `python3 tools/art_pipeline/check_character_asset_contract.py fletcher cleveland baltimore wahoo --phase phase2`：4/4 `incomplete`，正式 MVP 资产缺失。
+- `python3 tools/art_pipeline/batch_character_art.py fletcher cleveland baltimore wahoo --phase phase2`：4/4 源包缺失，0/4 `batch_ready`。
+- `python3 tools/art_pipeline/batch_character_art.py fletcher cleveland baltimore wahoo --phase phase2 --process`：不得运行正式处理，除非真实源资产已生成并通过来源检查。
+- `/opt/homebrew/bin/godot --headless --path . -s scripts/tests/phase2_config_test.gd`：`PASS: 285 phase-two configuration checks`。
+- `/opt/homebrew/bin/godot --headless --path . -s scripts/tests/test_runner.gd`：`PASS: 1212 checks`。

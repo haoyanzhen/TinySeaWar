@@ -33,10 +33,12 @@
   - 自动武器与 `ManualPrimary` 主要武器。
   - HE/AP 共享冷却依赖相同 `weapon_group_id`。
   - `base_range` 保存设计基线，`range` 保存当前 1.5 倍有效射程；领域与 UI 均直接读取 `range`。
+  - `base_projectile_speed` 保存炮弹、鱼雷、舰载机等攻击速度设计基线，`projectile_speed` 保存当前 0.5 倍运行速度。
 - 技能配置：`data/skills/prototype_skills.json`、`data/skills/expanded_roster_skills.json`
   - `base_cast_range` 保存设计基线，`cast_range` 保存当前 1.5 倍有效释放距离。
 - 扩展角色武器/技能生成入口：`tools/data/build_expanded_roster_data.mjs`
 - 投射物配置：`data/projectiles/projectiles.json`
+  - `base_speed` 保存公共投射物 / 舰载机移动速度设计基线，`speed` 保存当前 0.5 倍运行速度。
 - 公式配置：`data/formulas/combat_formulas.json`
 - 海面调色板：`data/environments/ocean_palettes.json`
 - 表现设置：`data/settings/presentation_settings.json`

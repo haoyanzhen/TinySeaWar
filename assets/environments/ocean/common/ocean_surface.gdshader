@@ -18,6 +18,10 @@ uniform float sparkle_strength : hint_range(0.0, 1.0) = 0.25;
 uniform float cloud_opacity : hint_range(0.0, 1.0) = 0.1;
 uniform float warm_reflection_strength : hint_range(0.0, 1.0) = 0.0;
 uniform float ai_texture_strength : hint_range(0.0, 0.4) = 0.16;
+uniform float foam_strength : hint_range(0.0, 1.0) = 0.02;
+uniform float rain_strength : hint_range(0.0, 1.0) = 0.0;
+uniform float mist_strength : hint_range(0.0, 1.0) = 0.0;
+uniform float lightning_strength : hint_range(0.0, 1.0) = 0.0;
 
 varying vec2 local_position;
 
@@ -85,6 +89,9 @@ void fragment() {
 	float authored_wave = authored_wave_a * 0.58 + authored_wave_b * 0.42;
 	float sparkle_mask = crest_a * crest_b * (0.45 + crest_c * 0.55) + authored_wave * 0.35;
 	water = mix(water, highlight_color.rgb, wave_line * 0.62 + sparkle_mask * sparkle_strength);
+	float foam_noise = fbm(world * 0.0048 + vec2(-time * 0.045, time * 0.026));
+	float foam = smoothstep(0.72, 0.98, foam_noise + authored_wave * 0.36 + wave_line * 0.24) * foam_strength;
+	water = mix(water, highlight_color.rgb, foam * 0.42);
 
 	float cloud_authored = texture(cloud_texture, fract(texture_rotation * world / 2048.0 + vec2(time * 0.0005, time * 0.0003))).r;
 	float cloud_field = 0.5;
@@ -97,12 +104,24 @@ void fragment() {
 
 	float warm_pattern = smoothstep(0.69, 0.94, broad_b + wave_line * 0.25);
 	water = mix(water, warm_reflection_color.rgb, warm_pattern * warm_reflection_strength);
+	float rain_breakup = smoothstep(0.28, 0.86, fbm(world * 0.006 + vec2(time * 0.42, -time * 0.31)));
+	float rain_line_a = smoothstep(0.986, 1.0, sin(world.x * 0.033 + world.y * 0.118 - time * 8.6));
+	float rain_line_b = smoothstep(0.992, 1.0, sin(world.x * -0.041 + world.y * 0.091 - time * 7.2 + 1.7));
+	float rain_lines = (rain_line_a * 0.62 + rain_line_b * 0.38) * rain_breakup * rain_strength;
+	float rain_ripple = smoothstep(0.965, 1.0, fbm(world * 0.021 + vec2(time * 1.4, time * 0.9))) * rain_strength;
+	vec3 rain_tint = mix(water, highlight_color.rgb, 0.36);
+	water = mix(water, rain_tint, rain_lines * 0.18 + rain_ripple * 0.08);
+	float lightning_pulse = pow(smoothstep(0.935, 1.0, sin(time * 0.73) * 0.5 + 0.5), 8.0) * lightning_strength;
+	lightning_pulse *= smoothstep(0.38, 0.86, cloud_field);
+	water = mix(water, highlight_color.rgb, lightning_pulse * 0.34);
 	float map_edge_distance = min(min(world.x, map_size.x - world.x), min(world.y, map_size.y - world.y));
 	float map_edge = 1.0 - smoothstep(0.0, 150.0, map_edge_distance);
 	water = mix(water, deep_color.rgb * 0.58, map_edge * 0.72);
 
 	vec2 centered = SCREEN_UV * 2.0 - 1.0;
 	float vignette = smoothstep(0.28, 1.25, length(centered * vec2(0.78, 1.0)));
+	vec3 mist_tint = mix(surface_color.rgb, highlight_color.rgb, 0.28);
+	water = mix(water, mist_tint, mist_strength * (0.18 + vignette * 0.12));
 	water *= 1.025 - vignette * 0.115;
 	COLOR = vec4(water, 1.0);
 }

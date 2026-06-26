@@ -97,7 +97,7 @@ func _test_runtime_baseline_scales() -> void:
 		_check(is_equal_approx(float(skill.get("cast_range", 0.0)), expected_cast_range), "%s uses the 1.5x runtime skill range baseline" % skill.get("id", "?"))
 	var warspite: Dictionary = registry.get_definition("ships", "ship.warspite")
 	_check(is_equal_approx(float(warspite.get("speed", 0.0)), 31.0) and is_equal_approx(float(warspite.get("turn_speed", 0.0)), 22.5), "ship movement uses the halved runtime speed and turn baseline")
-	_check(is_equal_approx(float(warspite.get("detection_range", 0.0)), 585.0) and is_equal_approx(float(warspite.get("concealment_distance", 0.0)), 525.0), "ship detection and concealment use the 1.5x runtime distance baseline")
+	_check(is_equal_approx(float(warspite.get("detection_range", 0.0)), 585.0) and is_equal_approx(float(warspite.get("concealment_distance", 0.0)), 900.0), "ship detection and concealment use the 1.5x runtime distance baseline")
 	_check(is_equal_approx(float(registry.get_definition("weapons", "weapon.warspite_381_ap").get("range", 0.0)), 1080.0), "main-gun UI and rules expose the 1.5x effective range")
 	_check(is_equal_approx(float(registry.get_definition("weapons", "weapon.shimakaze_610_torpedo").get("range", 0.0)), 765.0), "torpedo UI and rules expose the 1.5x effective range")
 	_check(is_equal_approx(float(registry.get_definition("weapons", "weapon.enterprise_airstrike").get("range", 0.0)), 1140.0), "aviation UI and rules expose the 1.5x effective range")
@@ -234,6 +234,8 @@ func _test_operation_design_rules() -> void:
 	session.queue_command({"command_id":"primary.1","command_type":"FirePrimaryWeapon","issued_at_tick":session.state["tick_index"],"issuer_id":"player","unit_id":"unit.player.warspite","target_position":enemy["position"]})
 	var fire_events: Array = session.advance_tick(0.1)
 	_check(_has_event(fire_events, "WeaponFired"), "E-style primary confirmation creates a weapon fire fact")
+	var expected_reveal_remaining := float(player["stats"]["concealment_distance"]) / maxf(1.0, float(player["stats"]["speed"])) - 0.1
+	_check(is_equal_approx(float(player["firing_reveal_remaining"]), expected_reveal_remaining), "firing reveal duration uses runtime concealment divided by runtime speed")
 	var ap_state := _weapon_state(player, "weapon.warspite_381_ap")
 	var he_state := _weapon_state(player, "weapon.warspite_381_he")
 	_check(float(ap_state["reload_remaining"]) > 0.0 and is_equal_approx(float(ap_state["reload_remaining"]), float(he_state["reload_remaining"])), "HE/AP modes share cooldown after primary fire")
@@ -291,8 +293,18 @@ func _test_detection_and_contact_ghost() -> void:
 	session._update_detection(0.1)
 	var contact: Dictionary = session.state["contacts_by_faction"]["player"].get(enemy["entity_id"], {})
 	_check(not contact.is_empty() and not contact.get("visible", true), "lost target creates a last-known-position contact")
-	for index in range(30): session._update_detection(0.1)
-	_check(not session.state["contacts_by_faction"]["player"].has(enemy["entity_id"]), "contact ghost expires after three seconds")
+	for index in range(599): session._update_detection(0.1)
+	_check(session.state["contacts_by_faction"]["player"].has(enemy["entity_id"]), "contact ghost remains before the one-minute cap")
+	session._update_detection(0.1)
+	_check(not session.state["contacts_by_faction"]["player"].has(enemy["entity_id"]), "contact ghost expires after the one-minute cap")
+	enemy["position"] = Vector2(740.0, 350.0)
+	session._update_detection(0.1)
+	enemy["position"] = Vector2(1000.0, 350.0)
+	session._update_detection(0.1)
+	enemy["position"] = Vector2(740.0, 350.0)
+	session._update_detection(0.1)
+	contact = session.state["contacts_by_faction"]["player"].get(enemy["entity_id"], {})
+	_check(not contact.is_empty() and bool(contact.get("visible", false)) and is_equal_approx(float(contact.get("ghost_remaining", -1.0)), 0.0), "rediscovered target replaces the contact ghost immediately")
 
 
 func _test_damage_zero_floor() -> void:

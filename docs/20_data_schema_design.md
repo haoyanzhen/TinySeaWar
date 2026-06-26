@@ -65,6 +65,7 @@ is_flagship_candidate
 - `base_concealment_distance`：设计基线隐蔽距离。
 - `concealment_distance`：当前运行时隐蔽距离，表示目标能被发现的最大距离，数值越小越难被发现。当前统一为 `base_concealment_distance * 1.5`。
 - `fire_concealment_multiplier`：开火破隐比例。舰娘开火后，当前隐蔽距离按该比例放大。
+- 开火后的再隐蔽时间不使用独立配置字段，运行时按 `实时 concealment_distance / 实时 speed` 计算。
 - `evasion`：闪避能力。
 - `gunnery_power`：火炮能力，影响主炮、副炮和炮击技能。
 - `torpedo_power`：鱼雷能力，影响水面鱼雷、潜艇鱼雷和部分航空鱼雷表现。
@@ -591,3 +592,27 @@ camera.max_map_visible_fraction
 - `camera.max_map_visible_fraction`：最远视角在每个轴上最多显示的地图比例，MVP 为 `2/3`。
 
 窗口尺寸属于用户偏好，选中值保存到 `user://tiny_sea_war_settings.cfg`，不写回项目配置。镜头缩放属于表现层状态，不进入 Domain 战斗状态，也不影响模拟随机数。
+
+## 17. 公共战斗表现配置
+
+当前运行时配置位于 `data/visuals/`，由 `AssetCatalog` 读取，供表现层按语义查询炮弹、鱼雷、舰载机、武器表现映射和 VFX 播放参数。
+
+炮弹类 `projectile_visual` 可选字段：
+
+```text
+shell_trail_caliber_pixel_multiplier
+shell_trail_width
+shell_trail_duration
+shell_trail_color_key
+shell_trail_color_palette
+```
+
+字段含义：
+
+- `shell_trail_caliber_pixel_multiplier`：炮弹曳尾长度倍率。运行时按 `武器口径 mm * 倍率` 计算像素长度，MVP 默认 `0.1`。
+- `shell_trail_width`：曳尾线宽，仅影响表现。
+- `shell_trail_duration`：曳尾淡出时间，仅影响表现。
+- `shell_trail_color_key`：默认颜色键，例如 `clean_white`、`fire_yellow`、`sunset_red`。
+- `shell_trail_color_palette`：颜色键到十六进制颜色的映射。
+
+这些字段只属于表现层，不进入 Domain 伤害、命中、弹速、射程或碰撞计算。武器或 `weapon_visual` 可用 `shell_caliber_mm` / `caliber_mm` 显式覆盖口径；未配置时，表现层可从武器名称中的 `xxxmm` 读取，并按炮弹档位兜底。

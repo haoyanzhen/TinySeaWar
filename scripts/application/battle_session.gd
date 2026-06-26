@@ -7,7 +7,7 @@ const BattleRecorder = preload("res://scripts/infrastructure/analytics/battle_re
 
 const PLAYER_FACTION := "player"
 const ENEMY_FACTION := "enemy"
-const CONTACT_GHOST_DURATION := 3.0
+const CONTACT_GHOST_DURATION := 60.0
 
 var registry
 var random_source
@@ -675,7 +675,7 @@ func _fire_weapon(unit: Dictionary, target: Dictionary, weapon_state: Dictionary
 	var extra_shots := int(round(ModifierService.sum_modifier(unit["status_effects"], "ExtraShots", category)))
 	var shot_count := int(weapon["mount_count"]) * int(weapon["shots_per_mount"]) + extra_shots
 	_set_weapon_reload(unit, weapon_state, weapon)
-	unit["firing_reveal_remaining"] = 3.0
+	_mark_unit_fired(unit)
 	var base_heading := ((target["position"] as Vector2) - (unit["position"] as Vector2)).angle()
 	for shot_index in range(shot_count):
 		var spread_offset := 0.0
@@ -695,7 +695,7 @@ func _fire_weapon_at_position(unit: Dictionary, target_position: Vector2, weapon
 	var extra_shots := int(round(ModifierService.sum_modifier(unit["status_effects"], "ExtraShots", category)))
 	var shot_count := int(weapon["mount_count"]) * int(weapon["shots_per_mount"]) + extra_shots
 	_set_weapon_reload(unit, weapon_state, weapon)
-	unit["firing_reveal_remaining"] = 3.0
+	_mark_unit_fired(unit)
 	var base_heading := (target_position - (unit["position"] as Vector2)).angle()
 	for shot_index in range(shot_count):
 		var spread_offset := 0.0
@@ -710,6 +710,16 @@ func _fire_weapon_at_position(unit: Dictionary, target_position: Vector2, weapon
 			delayed_attacks.append({"attack_id": attack_id, "source_unit_id": unit["entity_id"], "source_weapon_id": weapon["id"], "target_unit_id": "", "target_position": impact_position, "impact_radius": float(weapon.get("impact_radius", 40.0)), "origin": unit["position"], "resolve_at_time": float(state["elapsed_time"]) + travel_seconds, "accuracy_modifier": 0.0})
 	_emit("WeaponFired", {"unit_id": unit["entity_id"], "weapon_id": weapon["id"], "target_position": target_position, "shot_count": shot_count, "manual": manual})
 	if extra_shots > 0: _consume_effect(unit, "ExtraShots", category)
+
+
+func _mark_unit_fired(unit: Dictionary) -> void:
+	unit["firing_reveal_remaining"] = maxf(float(unit["firing_reveal_remaining"]), _firing_reveal_duration(unit))
+
+
+func _firing_reveal_duration(unit: Dictionary) -> float:
+	var concealment := ModifierService.calculate(float(unit["stats"]["concealment_distance"]), unit["status_effects"], "ConcealmentDistance")
+	var speed := ModifierService.calculate(float(unit["stats"]["speed"]), unit["status_effects"], "Speed")
+	return maxf(0.1, concealment / maxf(1.0, speed))
 
 
 func _set_weapon_reload(unit: Dictionary, weapon_state: Dictionary, weapon: Dictionary) -> void:
@@ -882,10 +892,15 @@ func _target_score(source: Dictionary, target: Dictionary) -> float:
 
 
 func _preferred_range(unit: Dictionary) -> float:
-	var maximum := 250.0
+	var automatic_maximum := 0.0
+	var fallback_maximum := 250.0
 	for weapon_state in unit["weapon_states"]:
 		var weapon: Dictionary = registry.get_definition("weapons", str(weapon_state["definition_id"]))
-		maximum = maxf(maximum, float(weapon.get("range", 0.0)))
+		var range := float(weapon.get("range", 0.0))
+		fallback_maximum = maxf(fallback_maximum, range)
+		if weapon.get("control_mode", "Automatic") == "Automatic":
+			automatic_maximum = maxf(automatic_maximum, range)
+	var maximum := automatic_maximum if automatic_maximum > 0.0 else fallback_maximum
 	return maximum * 0.72
 
 

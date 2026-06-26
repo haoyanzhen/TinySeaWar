@@ -307,6 +307,13 @@ func _validate_visual(visual: Dictionary) -> void:
 		var trail_sprite := str(visual.get("trail_sprite", ""))
 		if not trail_sprite.is_empty() and not _resource_exists(trail_sprite):
 			errors.append("Missing trail sprite resource %s in %s" % [trail_sprite, visual_id])
+		if str(visual.get("projectile_type", "")) == "Shell":
+			if float(visual.get("shell_trail_caliber_pixel_multiplier", 0.0)) <= 0.0:
+				errors.append("Shell trail caliber multiplier must be positive in %s" % visual_id)
+			if float(visual.get("shell_trail_width", 0.0)) <= 0.0:
+				errors.append("Shell trail width must be positive in %s" % visual_id)
+			if float(visual.get("shell_trail_duration", 0.0)) <= 0.0:
+				errors.append("Shell trail duration must be positive in %s" % visual_id)
 	elif visual_id.begins_with("weapon_visual."):
 		if str(visual.get("character_id", "")).is_empty():
 			errors.append("Missing character_id in %s" % visual_id)

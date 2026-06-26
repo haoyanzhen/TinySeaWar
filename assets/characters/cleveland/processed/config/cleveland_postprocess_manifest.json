@@ -1,0 +1,1418 @@
+{
+  "character_id": "cleveland",
+  "source": "tools/art_pipeline/postprocess_generated_character.py",
+  "method": "generated_background_auto_grid_and_component_split",
+  "postprocess_plan": "assets/characters/cleveland/postprocess_plan.json",
+  "outputs": [
+    {
+      "role": "source_alpha:concept_full",
+      "path": "assets/characters/cleveland/processed/source_alpha/cleveland_concept_full_alpha_source.png",
+      "size": [
+        1024,
+        1536
+      ],
+      "edge_margins": {
+        "left": 20,
+        "top": 108,
+        "right": 44,
+        "bottom": 145
+      }
+    },
+    {
+      "role": "source_alpha:ui_sheet",
+      "path": "assets/characters/cleveland/processed/source_alpha/cleveland_ui_sheet_alpha_source.png",
+      "size": [
+        1774,
+        887
+      ],
+      "edge_margins": {
+        "left": 32,
+        "top": 30,
+        "right": 28,
+        "bottom": 47
+      }
+    },
+    {
+      "role": "source_alpha:battle_grid",
+      "path": "assets/characters/cleveland/processed/source_alpha/cleveland_battle_asset_grid_alpha_source.png",
+      "size": [
+        1774,
+        887
+      ],
+      "edge_margins": {
+        "left": 63,
+        "top": 33,
+        "right": 83,
+        "bottom": 81
+      }
+    },
+    {
+      "role": "source_alpha:vfx_sheet",
+      "path": "assets/characters/cleveland/processed/source_alpha/cleveland_vfx_reference_sheet_alpha_source.png",
+      "size": [
+        887,
+        1774
+      ],
+      "edge_margins": {
+        "left": 22,
+        "top": 85,
+        "right": 46,
+        "bottom": 100
+      }
+    },
+    {
+      "role": "source_alpha:anim_idle",
+      "path": "assets/characters/cleveland/processed/source_alpha/cleveland_anim_idle_4f_sheet_alpha_source.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "edge_margins": {
+        "left": 118,
+        "top": 97,
+        "right": 161,
+        "bottom": 105
+      }
+    },
+    {
+      "role": "source_alpha:anim_move",
+      "path": "assets/characters/cleveland/processed/source_alpha/cleveland_anim_move_4f_sheet_alpha_source.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "edge_margins": {
+        "left": 105,
+        "top": 120,
+        "right": 69,
+        "bottom": 143
+      }
+    },
+    {
+      "role": "source_alpha:anim_attack",
+      "path": "assets/characters/cleveland/processed/source_alpha/cleveland_anim_attack_4f_sheet_alpha_source.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "edge_margins": {
+        "left": 36,
+        "top": 73,
+        "right": 24,
+        "bottom": 123
+      }
+    },
+    {
+      "role": "source_alpha:anim_hit",
+      "path": "assets/characters/cleveland/processed/source_alpha/cleveland_anim_hit_4f_sheet_alpha_source.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "edge_margins": {
+        "left": 107,
+        "top": 91,
+        "right": 142,
+        "bottom": 143
+      }
+    },
+    {
+      "role": "source_alpha:anim_firepower",
+      "path": "assets/characters/cleveland/processed/source_alpha/cleveland_anim_firepower_4f_sheet_alpha_source.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "edge_margins": {
+        "left": 96,
+        "top": 82,
+        "right": 113,
+        "bottom": 150
+      }
+    },
+    {
+      "role": "full_body",
+      "crop": {
+        "content_bbox": [
+          20,
+          108,
+          980,
+          1391
+        ],
+        "final_crop_box": [
+          8,
+          96,
+          992,
+          1403
+        ],
+        "output_edge_margins": {
+          "left": 12,
+          "top": 58,
+          "right": 66,
+          "bottom": 13
+        }
+      },
+      "path": "assets/characters/cleveland/processed/ui/cleveland_illust_full_alpha.png",
+      "size": [
+        1038,
+        1354
+      ],
+      "edge_margins": {
+        "left": 12,
+        "top": 58,
+        "right": 66,
+        "bottom": 13
+      }
+    },
+    {
+      "role": "half_body",
+      "crop": {
+        "content_bbox": [
+          16,
+          17,
+          976,
+          940
+        ],
+        "final_crop_box": [
+          0,
+          1,
+          992,
+          956
+        ],
+        "output_edge_margins": {
+          "left": 16,
+          "top": 17,
+          "right": 68,
+          "bottom": 238
+        }
+      },
+      "path": "assets/characters/cleveland/processed/ui/cleveland_illust_half_alpha.png",
+      "size": [
+        1044,
+        1178
+      ],
+      "edge_margins": {
+        "left": 16,
+        "top": 17,
+        "right": 68,
+        "bottom": 238
+      }
+    },
+    {
+      "role": "skill_cutin",
+      "crop": {
+        "content_bbox": [
+          401,
+          17,
+          1361,
+          761
+        ],
+        "final_crop_box": [
+          385,
+          1,
+          1377,
+          777
+        ],
+        "output_edge_margins": {
+          "left": 17,
+          "top": 17,
+          "right": 83,
+          "bottom": 255
+        }
+      },
+      "path": "assets/characters/cleveland/processed/ui/cleveland_illust_skill_cutin_alpha.png",
+      "size": [
+        1060,
+        1016
+      ],
+      "edge_margins": {
+        "left": 17,
+        "top": 17,
+        "right": 83,
+        "bottom": 255
+      }
+    },
+    {
+      "role": "ui_portrait",
+      "crop": {
+        "content_bbox": [
+          32,
+          30,
+          443,
+          428
+        ],
+        "final_crop_box": [
+          14,
+          12,
+          443,
+          443
+        ],
+        "output_edge_margins": {
+          "left": 18,
+          "top": 19,
+          "right": 91,
+          "bottom": 89
+        }
+      },
+      "path": "assets/characters/cleveland/processed/ui/cleveland_ui_portrait.png",
+      "size": [
+        520,
+        506
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 19,
+        "right": 90,
+        "bottom": 89
+      }
+    },
+    {
+      "role": "ui_portrait_small",
+      "crop": {
+        "content_bbox": [
+          0,
+          56,
+          409,
+          428
+        ],
+        "final_crop_box": [
+          0,
+          38,
+          427,
+          443
+        ],
+        "output_edge_margins": {
+          "left": 18,
+          "top": 19,
+          "right": 69,
+          "bottom": 53
+        }
+      },
+      "path": "assets/characters/cleveland/processed/ui/cleveland_ui_portrait_small.png",
+      "size": [
+        304,
+        368
+      ],
+      "edge_margins": {
+        "left": 22,
+        "top": 19,
+        "right": 18,
+        "bottom": 44
+      }
+    },
+    {
+      "role": "ui_chibi_head",
+      "crop": {
+        "content_bbox": [
+          43,
+          90,
+          443,
+          430
+        ],
+        "final_crop_box": [
+          25,
+          72,
+          443,
+          443
+        ],
+        "output_edge_margins": {
+          "left": 101,
+          "top": 19,
+          "right": 19,
+          "bottom": 47
+        }
+      },
+      "path": "assets/characters/cleveland/processed/ui/cleveland_ui_chibi_head.png",
+      "size": [
+        316,
+        384
+      ],
+      "edge_margins": {
+        "left": 24,
+        "top": 19,
+        "right": 19,
+        "bottom": 57
+      }
+    },
+    {
+      "role": "expr_default",
+      "crop": {
+        "content_bbox": [
+          0,
+          30,
+          417,
+          430
+        ],
+        "final_crop_box": [
+          0,
+          12,
+          435,
+          443
+        ],
+        "output_edge_margins": {
+          "left": 25,
+          "top": 18,
+          "right": 18,
+          "bottom": 96
+        }
+      },
+      "path": "assets/characters/cleveland/processed/ui/cleveland_expr_default.png",
+      "size": [
+        462,
+        516
+      ],
+      "edge_margins": {
+        "left": 26,
+        "top": 19,
+        "right": 19,
+        "bottom": 97
+      }
+    },
+    {
+      "role": "expr_serious",
+      "crop": {
+        "content_bbox": [
+          32,
+          7,
+          443,
+          397
+        ],
+        "final_crop_box": [
+          14,
+          0,
+          443,
+          415
+        ],
+        "output_edge_margins": {
+          "left": 18,
+          "top": 18,
+          "right": 77,
+          "bottom": 106
+        }
+      },
+      "path": "assets/characters/cleveland/processed/ui/cleveland_expr_serious.png",
+      "size": [
+        506,
+        514
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 18,
+        "right": 77,
+        "bottom": 106
+      }
+    },
+    {
+      "role": "expr_hit",
+      "crop": {
+        "content_bbox": [
+          0,
+          7,
+          443,
+          397
+        ],
+        "final_crop_box": [
+          0,
+          0,
+          443,
+          415
+        ],
+        "output_edge_margins": {
+          "left": 18,
+          "top": 18,
+          "right": 97,
+          "bottom": 98
+        }
+      },
+      "path": "assets/characters/cleveland/processed/ui/cleveland_expr_hit.png",
+      "size": [
+        426,
+        498
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 19,
+        "right": 45,
+        "bottom": 89
+      }
+    },
+    {
+      "role": "ui_skill",
+      "crop": {
+        "content_bbox": [
+          0,
+          73,
+          404,
+          397
+        ],
+        "final_crop_box": [
+          0,
+          55,
+          422,
+          415
+        ],
+        "output_edge_margins": {
+          "left": 18,
+          "top": 31,
+          "right": 86,
+          "bottom": 19
+        }
+      },
+      "path": "assets/characters/cleveland/processed/ui/cleveland_ui_skill_layered_aa_net.png",
+      "size": [
+        340,
+        338
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 19,
+        "right": 18,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "class_icon",
+      "crop": {
+        "content_bbox": [
+          55,
+          78,
+          325,
+          379
+        ],
+        "final_crop_box": [
+          37,
+          60,
+          343,
+          397
+        ],
+        "output_edge_margins": {
+          "left": 20,
+          "top": 19,
+          "right": 18,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/cleveland/processed/ui/cleveland_ui_class_light_cruiser.png",
+      "size": [
+        308,
+        338
+      ],
+      "edge_margins": {
+        "left": 20,
+        "top": 19,
+        "right": 18,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "battle_body_r",
+      "crop": {
+        "component_bbox": [
+          63,
+          59,
+          377,
+          408
+        ],
+        "final_crop_box": [
+          45,
+          41,
+          395,
+          426
+        ],
+        "component_area": 59912,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 30,
+          "right": 51,
+          "bottom": 19
+        }
+      },
+      "path": "assets/characters/cleveland/processed/battle/cleveland_battle_body_r.png",
+      "size": [
+        384,
+        398
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 30,
+        "right": 51,
+        "bottom": 19
+      }
+    },
+    {
+      "role": "battle_rig_base",
+      "crop": {
+        "component_bbox": [
+          39,
+          33,
+          391,
+          407
+        ],
+        "final_crop_box": [
+          21,
+          15,
+          409,
+          425
+        ],
+        "component_area": 71787,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 27,
+          "bottom": 128
+        }
+      },
+      "path": "assets/characters/cleveland/processed/battle/cleveland_battle_rig_base.png",
+      "size": [
+        398,
+        520
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 18,
+        "right": 27,
+        "bottom": 128
+      }
+    },
+    {
+      "role": "battle_turret_main_01",
+      "crop": {
+        "component_bbox": [
+          60,
+          186,
+          389,
+          366
+        ],
+        "final_crop_box": [
+          42,
+          168,
+          407,
+          384
+        ],
+        "component_area": 34140,
+        "output_edge_margins": {
+          "left": 96,
+          "top": 19,
+          "right": 19,
+          "bottom": 25
+        }
+      },
+      "path": "assets/characters/cleveland/processed/battle/cleveland_battle_turret_main_01.png",
+      "size": [
+        444,
+        224
+      ],
+      "edge_margins": {
+        "left": 96,
+        "top": 19,
+        "right": 19,
+        "bottom": 25
+      }
+    },
+    {
+      "role": "battle_turret_main_02",
+      "crop": {
+        "component_bbox": [
+          16,
+          183,
+          354,
+          362
+        ],
+        "final_crop_box": [
+          0,
+          165,
+          372,
+          380
+        ],
+        "component_area": 34071,
+        "output_edge_margins": {
+          "left": 104,
+          "top": 19,
+          "right": 18,
+          "bottom": 22
+        }
+      },
+      "path": "assets/characters/cleveland/processed/battle/cleveland_battle_turret_main_02.png",
+      "size": [
+        460,
+        220
+      ],
+      "edge_margins": {
+        "left": 104,
+        "top": 19,
+        "right": 18,
+        "bottom": 22
+      }
+    },
+    {
+      "role": "battle_aa_center",
+      "crop": {
+        "component_bbox": [
+          139,
+          99,
+          365,
+          318
+        ],
+        "final_crop_box": [
+          121,
+          81,
+          383,
+          336
+        ],
+        "component_area": 30475,
+        "output_edge_margins": {
+          "left": 29,
+          "top": 19,
+          "right": 19,
+          "bottom": 56
+        }
+      },
+      "path": "assets/characters/cleveland/processed/battle/cleveland_battle_aa_center.png",
+      "size": [
+        274,
+        294
+      ],
+      "edge_margins": {
+        "left": 29,
+        "top": 19,
+        "right": 19,
+        "bottom": 56
+      }
+    },
+    {
+      "role": "battle_radar_node",
+      "crop": {
+        "component_bbox": [
+          100,
+          49,
+          314,
+          337
+        ],
+        "final_crop_box": [
+          82,
+          31,
+          332,
+          355
+        ],
+        "component_area": 34703,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 18,
+          "right": 24,
+          "bottom": 70
+        }
+      },
+      "path": "assets/characters/cleveland/processed/battle/cleveland_battle_radar_node.png",
+      "size": [
+        256,
+        376
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 18,
+        "right": 24,
+        "bottom": 70
+      }
+    },
+    {
+      "role": "battle_fire_control_node",
+      "crop": {
+        "component_bbox": [
+          48,
+          103,
+          283,
+          335
+        ],
+        "final_crop_box": [
+          30,
+          85,
+          301,
+          353
+        ],
+        "component_area": 35742,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 20,
+          "bottom": 35
+        }
+      },
+      "path": "assets/characters/cleveland/processed/battle/cleveland_battle_fire_control_node.png",
+      "size": [
+        274,
+        286
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 19,
+        "right": 20,
+        "bottom": 35
+      }
+    },
+    {
+      "role": "battle_wake_origin_marker",
+      "crop": {
+        "component_bbox": [
+          110,
+          191,
+          362,
+          363
+        ],
+        "final_crop_box": [
+          92,
+          173,
+          380,
+          381
+        ],
+        "component_area": 24098,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 18,
+          "right": 30,
+          "bottom": 44
+        }
+      },
+      "path": "assets/characters/cleveland/processed/battle/cleveland_battle_wake_origin_marker.png",
+      "size": [
+        302,
+        234
+      ],
+      "edge_margins": {
+        "left": 20,
+        "top": 18,
+        "right": 30,
+        "bottom": 44
+      }
+    },
+    {
+      "role": "anim_idle_frame_01",
+      "path": "assets/characters/cleveland/processed/anim/cleveland_anim_idle_frame_01.png",
+      "size": [
+        454,
+        552
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 17,
+        "right": 19,
+        "bottom": 86
+      }
+    },
+    {
+      "role": "anim_idle_keyframe",
+      "path": "assets/characters/cleveland/processed/anim/cleveland_anim_idle_keyframe.png",
+      "size": [
+        454,
+        552
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 17,
+        "right": 19,
+        "bottom": 86
+      }
+    },
+    {
+      "role": "anim_idle_frame_02",
+      "path": "assets/characters/cleveland/processed/anim/cleveland_anim_idle_frame_02.png",
+      "size": [
+        454,
+        552
+      ],
+      "edge_margins": {
+        "left": 22,
+        "top": 20,
+        "right": 24,
+        "bottom": 73
+      }
+    },
+    {
+      "role": "anim_idle_frame_03",
+      "path": "assets/characters/cleveland/processed/anim/cleveland_anim_idle_frame_03.png",
+      "size": [
+        454,
+        552
+      ],
+      "edge_margins": {
+        "left": 16,
+        "top": 37,
+        "right": 17,
+        "bottom": 76
+      }
+    },
+    {
+      "role": "anim_idle_frame_04",
+      "path": "assets/characters/cleveland/processed/anim/cleveland_anim_idle_frame_04.png",
+      "size": [
+        454,
+        552
+      ],
+      "edge_margins": {
+        "left": 22,
+        "top": 20,
+        "right": 18,
+        "bottom": 84
+      }
+    },
+    {
+      "role": "anim_move_frame_01",
+      "path": "assets/characters/cleveland/processed/anim/cleveland_anim_move_frame_01.png",
+      "size": [
+        624,
+        466
+      ],
+      "edge_margins": {
+        "left": 128,
+        "top": 27,
+        "right": 93,
+        "bottom": 16
+      }
+    },
+    {
+      "role": "anim_move_keyframe",
+      "path": "assets/characters/cleveland/processed/anim/cleveland_anim_move_keyframe.png",
+      "size": [
+        624,
+        466
+      ],
+      "edge_margins": {
+        "left": 128,
+        "top": 27,
+        "right": 93,
+        "bottom": 16
+      }
+    },
+    {
+      "role": "anim_move_frame_02",
+      "path": "assets/characters/cleveland/processed/anim/cleveland_anim_move_frame_02.png",
+      "size": [
+        624,
+        466
+      ],
+      "edge_margins": {
+        "left": 106,
+        "top": 33,
+        "right": 16,
+        "bottom": 38
+      }
+    },
+    {
+      "role": "anim_move_frame_03",
+      "path": "assets/characters/cleveland/processed/anim/cleveland_anim_move_frame_03.png",
+      "size": [
+        624,
+        466
+      ],
+      "edge_margins": {
+        "left": 96,
+        "top": 29,
+        "right": 31,
+        "bottom": 40
+      }
+    },
+    {
+      "role": "anim_move_frame_04",
+      "path": "assets/characters/cleveland/processed/anim/cleveland_anim_move_frame_04.png",
+      "size": [
+        624,
+        466
+      ],
+      "edge_margins": {
+        "left": 130,
+        "top": 31,
+        "right": 85,
+        "bottom": 23
+      }
+    },
+    {
+      "role": "anim_attack_frame_01",
+      "path": "assets/characters/cleveland/processed/anim/cleveland_anim_attack_frame_01.png",
+      "size": [
+        642,
+        544
+      ],
+      "edge_margins": {
+        "left": 17,
+        "top": 41,
+        "right": 56,
+        "bottom": 72
+      }
+    },
+    {
+      "role": "anim_attack_keyframe",
+      "path": "assets/characters/cleveland/processed/anim/cleveland_anim_attack_keyframe.png",
+      "size": [
+        642,
+        544
+      ],
+      "edge_margins": {
+        "left": 17,
+        "top": 41,
+        "right": 56,
+        "bottom": 72
+      }
+    },
+    {
+      "role": "anim_attack_frame_02",
+      "path": "assets/characters/cleveland/processed/anim/cleveland_anim_attack_frame_02.png",
+      "size": [
+        642,
+        544
+      ],
+      "edge_margins": {
+        "left": 29,
+        "top": 16,
+        "right": 55,
+        "bottom": 28
+      }
+    },
+    {
+      "role": "anim_attack_frame_03",
+      "path": "assets/characters/cleveland/processed/anim/cleveland_anim_attack_frame_03.png",
+      "size": [
+        642,
+        544
+      ],
+      "edge_margins": {
+        "left": 20,
+        "top": 55,
+        "right": 70,
+        "bottom": 58
+      }
+    },
+    {
+      "role": "anim_attack_frame_04",
+      "path": "assets/characters/cleveland/processed/anim/cleveland_anim_attack_frame_04.png",
+      "size": [
+        642,
+        544
+      ],
+      "edge_margins": {
+        "left": 28,
+        "top": 51,
+        "right": 17,
+        "bottom": 55
+      }
+    },
+    {
+      "role": "anim_hit_frame_01",
+      "path": "assets/characters/cleveland/processed/anim/cleveland_anim_hit_frame_01.png",
+      "size": [
+        492,
+        506
+      ],
+      "edge_margins": {
+        "left": 43,
+        "top": 16,
+        "right": 33,
+        "bottom": 29
+      }
+    },
+    {
+      "role": "anim_hit_keyframe",
+      "path": "assets/characters/cleveland/processed/anim/cleveland_anim_hit_keyframe.png",
+      "size": [
+        492,
+        506
+      ],
+      "edge_margins": {
+        "left": 43,
+        "top": 16,
+        "right": 33,
+        "bottom": 29
+      }
+    },
+    {
+      "role": "anim_hit_frame_02",
+      "path": "assets/characters/cleveland/processed/anim/cleveland_anim_hit_frame_02.png",
+      "size": [
+        492,
+        506
+      ],
+      "edge_margins": {
+        "left": 27,
+        "top": 35,
+        "right": 18,
+        "bottom": 41
+      }
+    },
+    {
+      "role": "anim_hit_frame_03",
+      "path": "assets/characters/cleveland/processed/anim/cleveland_anim_hit_frame_03.png",
+      "size": [
+        492,
+        506
+      ],
+      "edge_margins": {
+        "left": 16,
+        "top": 43,
+        "right": 19,
+        "bottom": 33
+      }
+    },
+    {
+      "role": "anim_hit_frame_04",
+      "path": "assets/characters/cleveland/processed/anim/cleveland_anim_hit_frame_04.png",
+      "size": [
+        492,
+        506
+      ],
+      "edge_margins": {
+        "left": 31,
+        "top": 25,
+        "right": 28,
+        "bottom": 44
+      }
+    },
+    {
+      "role": "anim_firepower_frame_01",
+      "path": "assets/characters/cleveland/processed/anim/cleveland_anim_firepower_frame_01.png",
+      "size": [
+        534,
+        542
+      ],
+      "edge_margins": {
+        "left": 17,
+        "top": 41,
+        "right": 24,
+        "bottom": 93
+      }
+    },
+    {
+      "role": "anim_firepower_keyframe",
+      "path": "assets/characters/cleveland/processed/anim/cleveland_anim_firepower_keyframe.png",
+      "size": [
+        534,
+        542
+      ],
+      "edge_margins": {
+        "left": 17,
+        "top": 41,
+        "right": 24,
+        "bottom": 93
+      }
+    },
+    {
+      "role": "anim_firepower_frame_02",
+      "path": "assets/characters/cleveland/processed/anim/cleveland_anim_firepower_frame_02.png",
+      "size": [
+        534,
+        542
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 17,
+        "right": 40,
+        "bottom": 45
+      }
+    },
+    {
+      "role": "anim_firepower_frame_03",
+      "path": "assets/characters/cleveland/processed/anim/cleveland_anim_firepower_frame_03.png",
+      "size": [
+        534,
+        542
+      ],
+      "edge_margins": {
+        "left": 17,
+        "top": 66,
+        "right": 48,
+        "bottom": 72
+      }
+    },
+    {
+      "role": "anim_firepower_frame_04",
+      "path": "assets/characters/cleveland/processed/anim/cleveland_anim_firepower_frame_04.png",
+      "size": [
+        534,
+        542
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 64,
+        "right": 44,
+        "bottom": 82
+      }
+    },
+    {
+      "role": "vfx:layered_aa_net",
+      "crop": {
+        "component_bbox": [
+          39,
+          128,
+          221,
+          359
+        ],
+        "final_crop_box": [
+          21,
+          110,
+          221,
+          377
+        ],
+        "component_area": 21518,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 18,
+          "right": 61,
+          "bottom": 28
+        }
+      },
+      "path": "assets/characters/cleveland/processed/vfx/cleveland_vfx_layered_aa_net.png",
+      "size": [
+        278,
+        282
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 18,
+        "right": 61,
+        "bottom": 28
+      }
+    },
+    {
+      "role": "vfx:radar_calibration",
+      "crop": {
+        "component_bbox": [
+          0,
+          122,
+          188,
+          359
+        ],
+        "final_crop_box": [
+          0,
+          104,
+          206,
+          377
+        ],
+        "component_area": 19909,
+        "output_edge_margins": {
+          "left": 56,
+          "top": 19,
+          "right": 19,
+          "bottom": 41
+        }
+      },
+      "path": "assets/characters/cleveland/processed/vfx/cleveland_vfx_radar_calibration.png",
+      "size": [
+        270,
+        306
+      ],
+      "edge_margins": {
+        "left": 56,
+        "top": 19,
+        "right": 19,
+        "bottom": 41
+      }
+    },
+    {
+      "role": "vfx:shell_trail",
+      "crop": {
+        "component_bbox": [
+          61,
+          85,
+          221,
+          366
+        ],
+        "final_crop_box": [
+          43,
+          67,
+          221,
+          384
+        ],
+        "component_area": 12524,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 81,
+          "bottom": 73
+        }
+      },
+      "path": "assets/characters/cleveland/processed/vfx/cleveland_vfx_shell_trail.png",
+      "size": [
+        260,
+        382
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 19,
+        "right": 81,
+        "bottom": 73
+      }
+    },
+    {
+      "role": "vfx:aa_burst",
+      "crop": {
+        "component_bbox": [
+          0,
+          97,
+          145,
+          354
+        ],
+        "final_crop_box": [
+          0,
+          79,
+          163,
+          372
+        ],
+        "component_area": 21048,
+        "output_edge_margins": {
+          "left": 54,
+          "top": 19,
+          "right": 19,
+          "bottom": 35
+        }
+      },
+      "path": "assets/characters/cleveland/processed/vfx/cleveland_vfx_aa_burst.png",
+      "size": [
+        218,
+        322
+      ],
+      "edge_margins": {
+        "left": 54,
+        "top": 19,
+        "right": 19,
+        "bottom": 35
+      }
+    },
+    {
+      "role": "vfx:aa_circle",
+      "crop": {
+        "component_bbox": [
+          62,
+          0,
+          221,
+          151
+        ],
+        "final_crop_box": [
+          44,
+          0,
+          221,
+          169
+        ],
+        "component_area": 14527,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 26,
+          "right": 57,
+          "bottom": 19
+        }
+      },
+      "path": "assets/characters/cleveland/processed/vfx/cleveland_vfx_aa_circle.png",
+      "size": [
+        234,
+        196
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 26,
+        "right": 57,
+        "bottom": 19
+      }
+    },
+    {
+      "role": "vfx:radar_scan",
+      "crop": {
+        "component_bbox": [
+          0,
+          0,
+          181,
+          123
+        ],
+        "final_crop_box": [
+          0,
+          0,
+          199,
+          141
+        ],
+        "component_area": 10471,
+        "output_edge_margins": {
+          "left": 95,
+          "top": 50,
+          "right": 18,
+          "bottom": 19
+        }
+      },
+      "path": "assets/characters/cleveland/processed/vfx/cleveland_vfx_radar_scan.png",
+      "size": [
+        294,
+        204
+      ],
+      "edge_margins": {
+        "left": 95,
+        "top": 50,
+        "right": 18,
+        "bottom": 19
+      }
+    },
+    {
+      "role": "vfx:skill_aura",
+      "crop": {
+        "component_bbox": [
+          97,
+          0,
+          221,
+          187
+        ],
+        "final_crop_box": [
+          79,
+          0,
+          221,
+          205
+        ],
+        "component_area": 16044,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 39,
+          "right": 56,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/cleveland/processed/vfx/cleveland_vfx_skill_aura.png",
+      "size": [
+        216,
+        248
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 39,
+        "right": 56,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "vfx:water_splash",
+      "crop": {
+        "component_bbox": [
+          0,
+          0,
+          124,
+          179
+        ],
+        "final_crop_box": [
+          0,
+          0,
+          142,
+          197
+        ],
+        "component_area": 12614,
+        "output_edge_margins": {
+          "left": 75,
+          "top": 45,
+          "right": 19,
+          "bottom": 19
+        }
+      },
+      "path": "assets/characters/cleveland/processed/vfx/cleveland_vfx_water_splash.png",
+      "size": [
+        236,
+        260
+      ],
+      "edge_margins": {
+        "left": 75,
+        "top": 45,
+        "right": 19,
+        "bottom": 19
+      }
+    }
+  ]
+}

@@ -1,0 +1,1418 @@
+{
+  "character_id": "wahoo",
+  "source": "tools/art_pipeline/postprocess_generated_character.py",
+  "method": "generated_background_auto_grid_and_component_split",
+  "postprocess_plan": "assets/characters/wahoo/postprocess_plan.json",
+  "outputs": [
+    {
+      "role": "source_alpha:concept_full",
+      "path": "assets/characters/wahoo/processed/source_alpha/wahoo_concept_full_alpha_source.png",
+      "size": [
+        1536,
+        1024
+      ],
+      "edge_margins": {
+        "left": 71,
+        "top": 109,
+        "right": 84,
+        "bottom": 143
+      }
+    },
+    {
+      "role": "source_alpha:ui_sheet",
+      "path": "assets/characters/wahoo/processed/source_alpha/wahoo_ui_sheet_alpha_source.png",
+      "size": [
+        1774,
+        887
+      ],
+      "edge_margins": {
+        "left": 17,
+        "top": 32,
+        "right": 31,
+        "bottom": 50
+      }
+    },
+    {
+      "role": "source_alpha:battle_grid",
+      "path": "assets/characters/wahoo/processed/source_alpha/wahoo_battle_asset_grid_alpha_source.png",
+      "size": [
+        1774,
+        887
+      ],
+      "edge_margins": {
+        "left": 35,
+        "top": 57,
+        "right": 29,
+        "bottom": 107
+      }
+    },
+    {
+      "role": "source_alpha:vfx_sheet",
+      "path": "assets/characters/wahoo/processed/source_alpha/wahoo_vfx_reference_sheet_alpha_source.png",
+      "size": [
+        887,
+        1774
+      ],
+      "edge_margins": {
+        "left": 57,
+        "top": 118,
+        "right": 53,
+        "bottom": 135
+      }
+    },
+    {
+      "role": "source_alpha:anim_idle",
+      "path": "assets/characters/wahoo/processed/source_alpha/wahoo_anim_idle_4f_sheet_alpha_source.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "edge_margins": {
+        "left": 127,
+        "top": 67,
+        "right": 177,
+        "bottom": 126
+      }
+    },
+    {
+      "role": "source_alpha:anim_move",
+      "path": "assets/characters/wahoo/processed/source_alpha/wahoo_anim_move_4f_sheet_alpha_source.png",
+      "size": [
+        1774,
+        887
+      ],
+      "edge_margins": {
+        "left": 219,
+        "top": 56,
+        "right": 179,
+        "bottom": 118
+      }
+    },
+    {
+      "role": "source_alpha:anim_attack",
+      "path": "assets/characters/wahoo/processed/source_alpha/wahoo_anim_attack_4f_sheet_alpha_source.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "edge_margins": {
+        "left": 55,
+        "top": 58,
+        "right": 59,
+        "bottom": 89
+      }
+    },
+    {
+      "role": "source_alpha:anim_hit",
+      "path": "assets/characters/wahoo/processed/source_alpha/wahoo_anim_hit_4f_sheet_alpha_source.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "edge_margins": {
+        "left": 102,
+        "top": 65,
+        "right": 99,
+        "bottom": 95
+      }
+    },
+    {
+      "role": "source_alpha:anim_firepower",
+      "path": "assets/characters/wahoo/processed/source_alpha/wahoo_anim_firepower_4f_sheet_alpha_source.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "edge_margins": {
+        "left": 48,
+        "top": 80,
+        "right": 76,
+        "bottom": 112
+      }
+    },
+    {
+      "role": "full_body",
+      "crop": {
+        "content_bbox": [
+          71,
+          109,
+          1452,
+          881
+        ],
+        "final_crop_box": [
+          59,
+          97,
+          1464,
+          893
+        ],
+        "output_edge_margins": {
+          "left": 13,
+          "top": 13,
+          "right": 70,
+          "bottom": 27
+        }
+      },
+      "path": "assets/characters/wahoo/processed/ui/wahoo_illust_full_alpha.png",
+      "size": [
+        1464,
+        812
+      ],
+      "edge_margins": {
+        "left": 13,
+        "top": 13,
+        "right": 70,
+        "bottom": 27
+      }
+    },
+    {
+      "role": "half_body",
+      "crop": {
+        "content_bbox": [
+          17,
+          16,
+          1398,
+          571
+        ],
+        "final_crop_box": [
+          1,
+          0,
+          1414,
+          587
+        ],
+        "output_edge_margins": {
+          "left": 17,
+          "top": 16,
+          "right": 62,
+          "bottom": 175
+        }
+      },
+      "path": "assets/characters/wahoo/processed/ui/wahoo_illust_half_alpha.png",
+      "size": [
+        1460,
+        746
+      ],
+      "edge_margins": {
+        "left": 17,
+        "top": 16,
+        "right": 62,
+        "bottom": 175
+      }
+    },
+    {
+      "role": "skill_cutin",
+      "crop": {
+        "content_bbox": [
+          16,
+          17,
+          1379,
+          464
+        ],
+        "final_crop_box": [
+          0,
+          1,
+          1395,
+          480
+        ],
+        "output_edge_margins": {
+          "left": 16,
+          "top": 17,
+          "right": 115,
+          "bottom": 148
+        }
+      },
+      "path": "assets/characters/wahoo/processed/ui/wahoo_illust_skill_cutin_alpha.png",
+      "size": [
+        1494,
+        612
+      ],
+      "edge_margins": {
+        "left": 16,
+        "top": 17,
+        "right": 115,
+        "bottom": 148
+      }
+    },
+    {
+      "role": "ui_portrait",
+      "crop": {
+        "content_bbox": [
+          17,
+          32,
+          443,
+          436
+        ],
+        "final_crop_box": [
+          0,
+          14,
+          443,
+          443
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 95,
+          "bottom": 84
+        }
+      },
+      "path": "assets/characters/wahoo/processed/ui/wahoo_ui_portrait.png",
+      "size": [
+        540,
+        504
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 19,
+        "right": 95,
+        "bottom": 83
+      }
+    },
+    {
+      "role": "ui_portrait_small",
+      "crop": {
+        "content_bbox": [
+          0,
+          75,
+          409,
+          436
+        ],
+        "final_crop_box": [
+          0,
+          57,
+          427,
+          443
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 44,
+          "bottom": 41
+        }
+      },
+      "path": "assets/characters/wahoo/processed/ui/wahoo_ui_portrait_small.png",
+      "size": [
+        332,
+        372
+      ],
+      "edge_margins": {
+        "left": 31,
+        "top": 18,
+        "right": 19,
+        "bottom": 32
+      }
+    },
+    {
+      "role": "ui_chibi_head",
+      "crop": {
+        "content_bbox": [
+          38,
+          83,
+          443,
+          436
+        ],
+        "final_crop_box": [
+          20,
+          65,
+          443,
+          443
+        ],
+        "output_edge_margins": {
+          "left": 96,
+          "top": 18,
+          "right": 19,
+          "bottom": 45
+        }
+      },
+      "path": "assets/characters/wahoo/processed/ui/wahoo_ui_chibi_head.png",
+      "size": [
+        368,
+        404
+      ],
+      "edge_margins": {
+        "left": 33,
+        "top": 18,
+        "right": 18,
+        "bottom": 49
+      }
+    },
+    {
+      "role": "expr_default",
+      "crop": {
+        "content_bbox": [
+          0,
+          37,
+          414,
+          436
+        ],
+        "final_crop_box": [
+          0,
+          19,
+          432,
+          443
+        ],
+        "output_edge_margins": {
+          "left": 51,
+          "top": 19,
+          "right": 19,
+          "bottom": 84
+        }
+      },
+      "path": "assets/characters/wahoo/processed/ui/wahoo_expr_default.png",
+      "size": [
+        482,
+        502
+      ],
+      "edge_margins": {
+        "left": 50,
+        "top": 18,
+        "right": 18,
+        "bottom": 85
+      }
+    },
+    {
+      "role": "expr_serious",
+      "crop": {
+        "content_bbox": [
+          70,
+          37,
+          443,
+          394
+        ],
+        "final_crop_box": [
+          52,
+          19,
+          443,
+          412
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 58,
+          "bottom": 74
+        }
+      },
+      "path": "assets/characters/wahoo/processed/ui/wahoo_expr_serious.png",
+      "size": [
+        450,
+        450
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 18,
+        "right": 59,
+        "bottom": 75
+      }
+    },
+    {
+      "role": "expr_hit",
+      "crop": {
+        "content_bbox": [
+          0,
+          32,
+          443,
+          394
+        ],
+        "final_crop_box": [
+          0,
+          14,
+          443,
+          412
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 86,
+          "bottom": 76
+        }
+      },
+      "path": "assets/characters/wahoo/processed/ui/wahoo_expr_hit.png",
+      "size": [
+        398,
+        446
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 19,
+        "right": 29,
+        "bottom": 71
+      }
+    },
+    {
+      "role": "ui_skill",
+      "crop": {
+        "content_bbox": [
+          0,
+          70,
+          404,
+          388
+        ],
+        "final_crop_box": [
+          0,
+          52,
+          422,
+          406
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 20,
+          "right": 91,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/wahoo/processed/ui/wahoo_ui_skill_continuous_hunt.png",
+      "size": [
+        340,
+        342
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 19,
+        "right": 19,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "class_icon",
+      "crop": {
+        "content_bbox": [
+          53,
+          77,
+          325,
+          380
+        ],
+        "final_crop_box": [
+          35,
+          59,
+          343,
+          398
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 19,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/wahoo/processed/ui/wahoo_ui_class_submarine.png",
+      "size": [
+        310,
+        340
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 19,
+        "right": 19,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "battle_body_r",
+      "crop": {
+        "component_bbox": [
+          35,
+          57,
+          402,
+          407
+        ],
+        "final_crop_box": [
+          17,
+          39,
+          420,
+          425
+        ],
+        "component_area": 70058,
+        "output_edge_margins": {
+          "left": 24,
+          "top": 19,
+          "right": 19,
+          "bottom": 45
+        }
+      },
+      "path": "assets/characters/wahoo/processed/battle/wahoo_battle_body_r.png",
+      "size": [
+        410,
+        414
+      ],
+      "edge_margins": {
+        "left": 24,
+        "top": 19,
+        "right": 19,
+        "bottom": 45
+      }
+    },
+    {
+      "role": "battle_rig_base",
+      "crop": {
+        "component_bbox": [
+          5,
+          132,
+          443,
+          366
+        ],
+        "final_crop_box": [
+          0,
+          114,
+          443,
+          384
+        ],
+        "component_area": 50421,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 18,
+          "right": 22,
+          "bottom": 114
+        }
+      },
+      "path": "assets/characters/wahoo/processed/battle/wahoo_battle_rig_base.png",
+      "size": [
+        478,
+        366
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 18,
+        "right": 22,
+        "bottom": 114
+      }
+    },
+    {
+      "role": "battle_torpedo_tube_fore",
+      "crop": {
+        "component_bbox": [
+          186,
+          210,
+          443,
+          356
+        ],
+        "final_crop_box": [
+          168,
+          192,
+          443,
+          374
+        ],
+        "component_area": 29414,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 30,
+          "bottom": 27
+        }
+      },
+      "path": "assets/characters/wahoo/processed/battle/wahoo_battle_torpedo_tube_fore.png",
+      "size": [
+        306,
+        192
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 19,
+        "right": 30,
+        "bottom": 27
+      }
+    },
+    {
+      "role": "battle_torpedo_tube_aft",
+      "crop": {
+        "component_bbox": [
+          139,
+          206,
+          416,
+          352
+        ],
+        "final_crop_box": [
+          121,
+          188,
+          434,
+          370
+        ],
+        "component_area": 29478,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 24,
+          "bottom": 32
+        }
+      },
+      "path": "assets/characters/wahoo/processed/battle/wahoo_battle_torpedo_tube_aft.png",
+      "size": [
+        320,
+        196
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 18,
+        "right": 24,
+        "bottom": 32
+      }
+    },
+    {
+      "role": "battle_sonar_node",
+      "crop": {
+        "component_bbox": [
+          128,
+          48,
+          301,
+          332
+        ],
+        "final_crop_box": [
+          110,
+          30,
+          319,
+          350
+        ],
+        "component_area": 26597,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 24,
+          "bottom": 98
+        }
+      },
+      "path": "assets/characters/wahoo/processed/battle/wahoo_battle_sonar_node.png",
+      "size": [
+        216,
+        400
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 18,
+        "right": 24,
+        "bottom": 98
+      }
+    },
+    {
+      "role": "battle_periscope_node",
+      "crop": {
+        "component_bbox": [
+          125,
+          53,
+          266,
+          326
+        ],
+        "final_crop_box": [
+          107,
+          35,
+          284,
+          344
+        ],
+        "component_area": 20562,
+        "output_edge_margins": {
+          "left": 25,
+          "top": 19,
+          "right": 18,
+          "bottom": 88
+        }
+      },
+      "path": "assets/characters/wahoo/processed/battle/wahoo_battle_periscope_node.png",
+      "size": [
+        184,
+        380
+      ],
+      "edge_margins": {
+        "left": 25,
+        "top": 19,
+        "right": 18,
+        "bottom": 88
+      }
+    },
+    {
+      "role": "battle_oxygen_indicator",
+      "crop": {
+        "component_bbox": [
+          101,
+          46,
+          186,
+          337
+        ],
+        "final_crop_box": [
+          83,
+          28,
+          204,
+          355
+        ],
+        "component_area": 19653,
+        "output_edge_margins": {
+          "left": 20,
+          "top": 19,
+          "right": 19,
+          "bottom": 40
+        }
+      },
+      "path": "assets/characters/wahoo/processed/battle/wahoo_battle_oxygen_indicator.png",
+      "size": [
+        124,
+        350
+      ],
+      "edge_margins": {
+        "left": 20,
+        "top": 19,
+        "right": 19,
+        "bottom": 40
+      }
+    },
+    {
+      "role": "battle_submerged_shadow",
+      "crop": {
+        "component_bbox": [
+          0,
+          175,
+          314,
+          313
+        ],
+        "final_crop_box": [
+          0,
+          157,
+          332,
+          331
+        ],
+        "component_area": 21782,
+        "output_edge_margins": {
+          "left": 93,
+          "top": 19,
+          "right": 19,
+          "bottom": 47
+        }
+      },
+      "path": "assets/characters/wahoo/processed/battle/wahoo_battle_submerged_shadow.png",
+      "size": [
+        444,
+        222
+      ],
+      "edge_margins": {
+        "left": 93,
+        "top": 37,
+        "right": 37,
+        "bottom": 47
+      }
+    },
+    {
+      "role": "anim_idle_frame_01",
+      "path": "assets/characters/wahoo/processed/anim/wahoo_anim_idle_frame_01.png",
+      "size": [
+        430,
+        528
+      ],
+      "edge_margins": {
+        "left": 27,
+        "top": 19,
+        "right": 31,
+        "bottom": 74
+      }
+    },
+    {
+      "role": "anim_idle_keyframe",
+      "path": "assets/characters/wahoo/processed/anim/wahoo_anim_idle_keyframe.png",
+      "size": [
+        430,
+        528
+      ],
+      "edge_margins": {
+        "left": 27,
+        "top": 19,
+        "right": 31,
+        "bottom": 74
+      }
+    },
+    {
+      "role": "anim_idle_frame_02",
+      "path": "assets/characters/wahoo/processed/anim/wahoo_anim_idle_frame_02.png",
+      "size": [
+        430,
+        528
+      ],
+      "edge_margins": {
+        "left": 33,
+        "top": 17,
+        "right": 35,
+        "bottom": 68
+      }
+    },
+    {
+      "role": "anim_idle_frame_03",
+      "path": "assets/characters/wahoo/processed/anim/wahoo_anim_idle_frame_03.png",
+      "size": [
+        430,
+        528
+      ],
+      "edge_margins": {
+        "left": 23,
+        "top": 18,
+        "right": 17,
+        "bottom": 76
+      }
+    },
+    {
+      "role": "anim_idle_frame_04",
+      "path": "assets/characters/wahoo/processed/anim/wahoo_anim_idle_frame_04.png",
+      "size": [
+        430,
+        528
+      ],
+      "edge_margins": {
+        "left": 24,
+        "top": 17,
+        "right": 31,
+        "bottom": 73
+      }
+    },
+    {
+      "role": "anim_move_frame_01",
+      "path": "assets/characters/wahoo/processed/anim/wahoo_anim_move_frame_01.png",
+      "size": [
+        774,
+        386
+      ],
+      "edge_margins": {
+        "left": 216,
+        "top": 16,
+        "right": 79,
+        "bottom": 78
+      }
+    },
+    {
+      "role": "anim_move_keyframe",
+      "path": "assets/characters/wahoo/processed/anim/wahoo_anim_move_keyframe.png",
+      "size": [
+        774,
+        386
+      ],
+      "edge_margins": {
+        "left": 216,
+        "top": 16,
+        "right": 79,
+        "bottom": 78
+      }
+    },
+    {
+      "role": "anim_move_frame_02",
+      "path": "assets/characters/wahoo/processed/anim/wahoo_anim_move_frame_02.png",
+      "size": [
+        774,
+        386
+      ],
+      "edge_margins": {
+        "left": 203,
+        "top": 26,
+        "right": 52,
+        "bottom": 81
+      }
+    },
+    {
+      "role": "anim_move_frame_03",
+      "path": "assets/characters/wahoo/processed/anim/wahoo_anim_move_frame_03.png",
+      "size": [
+        774,
+        386
+      ],
+      "edge_margins": {
+        "left": 193,
+        "top": 68,
+        "right": 33,
+        "bottom": 81
+      }
+    },
+    {
+      "role": "anim_move_frame_04",
+      "path": "assets/characters/wahoo/processed/anim/wahoo_anim_move_frame_04.png",
+      "size": [
+        774,
+        386
+      ],
+      "edge_margins": {
+        "left": 190,
+        "top": 42,
+        "right": 16,
+        "bottom": 89
+      }
+    },
+    {
+      "role": "anim_attack_frame_01",
+      "path": "assets/characters/wahoo/processed/anim/wahoo_anim_attack_frame_01.png",
+      "size": [
+        624,
+        576
+      ],
+      "edge_margins": {
+        "left": 102,
+        "top": 16,
+        "right": 62,
+        "bottom": 51
+      }
+    },
+    {
+      "role": "anim_attack_keyframe",
+      "path": "assets/characters/wahoo/processed/anim/wahoo_anim_attack_keyframe.png",
+      "size": [
+        624,
+        576
+      ],
+      "edge_margins": {
+        "left": 102,
+        "top": 16,
+        "right": 62,
+        "bottom": 51
+      }
+    },
+    {
+      "role": "anim_attack_frame_02",
+      "path": "assets/characters/wahoo/processed/anim/wahoo_anim_attack_frame_02.png",
+      "size": [
+        624,
+        576
+      ],
+      "edge_margins": {
+        "left": 16,
+        "top": 19,
+        "right": 67,
+        "bottom": 47
+      }
+    },
+    {
+      "role": "anim_attack_frame_03",
+      "path": "assets/characters/wahoo/processed/anim/wahoo_anim_attack_frame_03.png",
+      "size": [
+        624,
+        576
+      ],
+      "edge_margins": {
+        "left": 37,
+        "top": 21,
+        "right": 52,
+        "bottom": 52
+      }
+    },
+    {
+      "role": "anim_attack_frame_04",
+      "path": "assets/characters/wahoo/processed/anim/wahoo_anim_attack_frame_04.png",
+      "size": [
+        624,
+        576
+      ],
+      "edge_margins": {
+        "left": 74,
+        "top": 18,
+        "right": 63,
+        "bottom": 38
+      }
+    },
+    {
+      "role": "anim_hit_frame_01",
+      "path": "assets/characters/wahoo/processed/anim/wahoo_anim_hit_frame_01.png",
+      "size": [
+        538,
+        570
+      ],
+      "edge_margins": {
+        "left": 31,
+        "top": 16,
+        "right": 26,
+        "bottom": 41
+      }
+    },
+    {
+      "role": "anim_hit_keyframe",
+      "path": "assets/characters/wahoo/processed/anim/wahoo_anim_hit_keyframe.png",
+      "size": [
+        538,
+        570
+      ],
+      "edge_margins": {
+        "left": 31,
+        "top": 16,
+        "right": 26,
+        "bottom": 41
+      }
+    },
+    {
+      "role": "anim_hit_frame_02",
+      "path": "assets/characters/wahoo/processed/anim/wahoo_anim_hit_frame_02.png",
+      "size": [
+        538,
+        570
+      ],
+      "edge_margins": {
+        "left": 49,
+        "top": 29,
+        "right": 16,
+        "bottom": 69
+      }
+    },
+    {
+      "role": "anim_hit_frame_03",
+      "path": "assets/characters/wahoo/processed/anim/wahoo_anim_hit_frame_03.png",
+      "size": [
+        538,
+        570
+      ],
+      "edge_margins": {
+        "left": 34,
+        "top": 20,
+        "right": 23,
+        "bottom": 59
+      }
+    },
+    {
+      "role": "anim_hit_frame_04",
+      "path": "assets/characters/wahoo/processed/anim/wahoo_anim_hit_frame_04.png",
+      "size": [
+        538,
+        570
+      ],
+      "edge_margins": {
+        "left": 73,
+        "top": 49,
+        "right": 20,
+        "bottom": 59
+      }
+    },
+    {
+      "role": "anim_firepower_frame_01",
+      "path": "assets/characters/wahoo/processed/anim/wahoo_anim_firepower_frame_01.png",
+      "size": [
+        662,
+        672
+      ],
+      "edge_margins": {
+        "left": 17,
+        "top": 77,
+        "right": 66,
+        "bottom": 176
+      }
+    },
+    {
+      "role": "anim_firepower_keyframe",
+      "path": "assets/characters/wahoo/processed/anim/wahoo_anim_firepower_keyframe.png",
+      "size": [
+        662,
+        672
+      ],
+      "edge_margins": {
+        "left": 17,
+        "top": 77,
+        "right": 66,
+        "bottom": 176
+      }
+    },
+    {
+      "role": "anim_firepower_frame_02",
+      "path": "assets/characters/wahoo/processed/anim/wahoo_anim_firepower_frame_02.png",
+      "size": [
+        662,
+        672
+      ],
+      "edge_margins": {
+        "left": 28,
+        "top": 63,
+        "right": 111,
+        "bottom": 136
+      }
+    },
+    {
+      "role": "anim_firepower_frame_03",
+      "path": "assets/characters/wahoo/processed/anim/wahoo_anim_firepower_frame_03.png",
+      "size": [
+        662,
+        672
+      ],
+      "edge_margins": {
+        "left": 106,
+        "top": 85,
+        "right": 100,
+        "bottom": 151
+      }
+    },
+    {
+      "role": "anim_firepower_frame_04",
+      "path": "assets/characters/wahoo/processed/anim/wahoo_anim_firepower_frame_04.png",
+      "size": [
+        662,
+        672
+      ],
+      "edge_margins": {
+        "left": 54,
+        "top": 16,
+        "right": 89,
+        "bottom": 159
+      }
+    },
+    {
+      "role": "vfx:shark_shadow",
+      "crop": {
+        "component_bbox": [
+          76,
+          160,
+          221,
+          338
+        ],
+        "final_crop_box": [
+          58,
+          142,
+          221,
+          356
+        ],
+        "component_area": 12541,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 29,
+          "right": 59,
+          "bottom": 19
+        }
+      },
+      "path": "assets/characters/wahoo/processed/vfx/wahoo_vfx_shark_shadow.png",
+      "size": [
+        222,
+        244
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 29,
+        "right": 59,
+        "bottom": 19
+      }
+    },
+    {
+      "role": "vfx:reload_pulse",
+      "crop": {
+        "component_bbox": [
+          0,
+          147,
+          195,
+          352
+        ],
+        "final_crop_box": [
+          0,
+          129,
+          213,
+          370
+        ],
+        "component_area": 20677,
+        "output_edge_margins": {
+          "left": 78,
+          "top": 19,
+          "right": 18,
+          "bottom": 43
+        }
+      },
+      "path": "assets/characters/wahoo/processed/vfx/wahoo_vfx_reload_pulse.png",
+      "size": [
+        304,
+        298
+      ],
+      "edge_margins": {
+        "left": 78,
+        "top": 19,
+        "right": 18,
+        "bottom": 43
+      }
+    },
+    {
+      "role": "vfx:sonar_pulse",
+      "crop": {
+        "component_bbox": [
+          59,
+          118,
+          221,
+          382
+        ],
+        "final_crop_box": [
+          41,
+          100,
+          221,
+          400
+        ],
+        "component_area": 19438,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 73,
+          "bottom": 94
+        }
+      },
+      "path": "assets/characters/wahoo/processed/vfx/wahoo_vfx_sonar_pulse.png",
+      "size": [
+        272,
+        376
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 18,
+        "right": 73,
+        "bottom": 94
+      }
+    },
+    {
+      "role": "vfx:torpedo_launch_flash",
+      "crop": {
+        "component_bbox": [
+          0,
+          202,
+          157,
+          376
+        ],
+        "final_crop_box": [
+          0,
+          184,
+          175,
+          394
+        ],
+        "component_area": 15491,
+        "output_edge_margins": {
+          "left": 76,
+          "top": 19,
+          "right": 19,
+          "bottom": 33
+        }
+      },
+      "path": "assets/characters/wahoo/processed/vfx/wahoo_vfx_torpedo_launch_flash.png",
+      "size": [
+        264,
+        244
+      ],
+      "edge_margins": {
+        "left": 76,
+        "top": 19,
+        "right": 19,
+        "bottom": 33
+      }
+    },
+    {
+      "role": "vfx:torpedo_trail",
+      "crop": {
+        "component_bbox": [
+          89,
+          431,
+          221,
+          546
+        ],
+        "final_crop_box": [
+          71,
+          413,
+          221,
+          564
+        ],
+        "component_area": 7600,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 43,
+          "bottom": 43
+        }
+      },
+      "path": "assets/characters/wahoo/processed/vfx/wahoo_vfx_torpedo_trail.png",
+      "size": [
+        194,
+        210
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 19,
+        "right": 43,
+        "bottom": 43
+      }
+    },
+    {
+      "role": "vfx:underwater_shadow",
+      "crop": {
+        "component_bbox": [
+          0,
+          0,
+          119,
+          191
+        ],
+        "final_crop_box": [
+          0,
+          0,
+          137,
+          209
+        ],
+        "component_area": 9028,
+        "output_edge_margins": {
+          "left": 74,
+          "top": 32,
+          "right": 19,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/wahoo/processed/vfx/wahoo_vfx_underwater_shadow.png",
+      "size": [
+        212,
+        258
+      ],
+      "edge_margins": {
+        "left": 74,
+        "top": 32,
+        "right": 19,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "vfx:dive_ripple",
+      "crop": {
+        "component_bbox": [
+          33,
+          13,
+          221,
+          174
+        ],
+        "final_crop_box": [
+          15,
+          0,
+          221,
+          192
+        ],
+        "component_area": 16191,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 24,
+          "right": 85,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/wahoo/processed/vfx/wahoo_vfx_dive_ripple.png",
+      "size": [
+        292,
+        234
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 24,
+        "right": 85,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "vfx:skill_aura",
+      "crop": {
+        "component_bbox": [
+          0,
+          0,
+          168,
+          215
+        ],
+        "final_crop_box": [
+          0,
+          0,
+          186,
+          233
+        ],
+        "component_area": 27487,
+        "output_edge_margins": {
+          "left": 44,
+          "top": 40,
+          "right": 19,
+          "bottom": 19
+        }
+      },
+      "path": "assets/characters/wahoo/processed/vfx/wahoo_vfx_skill_aura.png",
+      "size": [
+        234,
+        282
+      ],
+      "edge_margins": {
+        "left": 44,
+        "top": 40,
+        "right": 19,
+        "bottom": 19
+      }
+    }
+  ]
+}

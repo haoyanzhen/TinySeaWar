@@ -1,0 +1,1418 @@
+{
+  "character_id": "fletcher",
+  "source": "tools/art_pipeline/postprocess_generated_character.py",
+  "method": "generated_background_auto_grid_and_component_split",
+  "postprocess_plan": "assets/characters/fletcher/postprocess_plan.json",
+  "outputs": [
+    {
+      "role": "source_alpha:concept_full",
+      "path": "assets/characters/fletcher/processed/source_alpha/fletcher_concept_full_alpha_source.png",
+      "size": [
+        1024,
+        1536
+      ],
+      "edge_margins": {
+        "left": 17,
+        "top": 63,
+        "right": 23,
+        "bottom": 67
+      }
+    },
+    {
+      "role": "source_alpha:ui_sheet",
+      "path": "assets/characters/fletcher/processed/source_alpha/fletcher_ui_sheet_alpha_source.png",
+      "size": [
+        1774,
+        887
+      ],
+      "edge_margins": {
+        "left": 47,
+        "top": 20,
+        "right": 58,
+        "bottom": 51
+      }
+    },
+    {
+      "role": "source_alpha:battle_grid",
+      "path": "assets/characters/fletcher/processed/source_alpha/fletcher_battle_asset_grid_alpha_source.png",
+      "size": [
+        1774,
+        887
+      ],
+      "edge_margins": {
+        "left": 73,
+        "top": 53,
+        "right": 128,
+        "bottom": 99
+      }
+    },
+    {
+      "role": "source_alpha:vfx_sheet",
+      "path": "assets/characters/fletcher/processed/source_alpha/fletcher_vfx_reference_sheet_alpha_source.png",
+      "size": [
+        887,
+        1774
+      ],
+      "edge_margins": {
+        "left": 42,
+        "top": 71,
+        "right": 77,
+        "bottom": 122
+      }
+    },
+    {
+      "role": "source_alpha:anim_idle",
+      "path": "assets/characters/fletcher/processed/source_alpha/fletcher_anim_idle_4f_sheet_alpha_source.png",
+      "size": [
+        1774,
+        887
+      ],
+      "edge_margins": {
+        "left": 342,
+        "top": 44,
+        "right": 422,
+        "bottom": 71
+      }
+    },
+    {
+      "role": "source_alpha:anim_move",
+      "path": "assets/characters/fletcher/processed/source_alpha/fletcher_anim_move_4f_sheet_alpha_source.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "edge_margins": {
+        "left": 131,
+        "top": 101,
+        "right": 87,
+        "bottom": 123
+      }
+    },
+    {
+      "role": "source_alpha:anim_attack",
+      "path": "assets/characters/fletcher/processed/source_alpha/fletcher_anim_attack_4f_sheet_alpha_source.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "edge_margins": {
+        "left": 36,
+        "top": 111,
+        "right": 54,
+        "bottom": 150
+      }
+    },
+    {
+      "role": "source_alpha:anim_hit",
+      "path": "assets/characters/fletcher/processed/source_alpha/fletcher_anim_hit_4f_sheet_alpha_source.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "edge_margins": {
+        "left": 134,
+        "top": 103,
+        "right": 117,
+        "bottom": 152
+      }
+    },
+    {
+      "role": "source_alpha:anim_firepower",
+      "path": "assets/characters/fletcher/processed/source_alpha/fletcher_anim_firepower_4f_sheet_alpha_source.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "edge_margins": {
+        "left": 67,
+        "top": 127,
+        "right": 72,
+        "bottom": 171
+      }
+    },
+    {
+      "role": "full_body",
+      "crop": {
+        "content_bbox": [
+          17,
+          63,
+          1001,
+          1469
+        ],
+        "final_crop_box": [
+          5,
+          51,
+          1013,
+          1481
+        ],
+        "output_edge_margins": {
+          "left": 13,
+          "top": 213,
+          "right": 25,
+          "bottom": 13
+        }
+      },
+      "path": "assets/characters/fletcher/processed/ui/fletcher_illust_full_alpha.png",
+      "size": [
+        1022,
+        1632
+      ],
+      "edge_margins": {
+        "left": 13,
+        "top": 213,
+        "right": 25,
+        "bottom": 13
+      }
+    },
+    {
+      "role": "half_body",
+      "crop": {
+        "content_bbox": [
+          17,
+          17,
+          1001,
+          1029
+        ],
+        "final_crop_box": [
+          1,
+          1,
+          1017,
+          1045
+        ],
+        "output_edge_margins": {
+          "left": 17,
+          "top": 17,
+          "right": 27,
+          "bottom": 99
+        }
+      },
+      "path": "assets/characters/fletcher/processed/ui/fletcher_illust_half_alpha.png",
+      "size": [
+        1028,
+        1128
+      ],
+      "edge_margins": {
+        "left": 17,
+        "top": 17,
+        "right": 27,
+        "bottom": 99
+      }
+    },
+    {
+      "role": "skill_cutin",
+      "crop": {
+        "content_bbox": [
+          427,
+          16,
+          1411,
+          831
+        ],
+        "final_crop_box": [
+          411,
+          0,
+          1427,
+          847
+        ],
+        "output_edge_margins": {
+          "left": 17,
+          "top": 16,
+          "right": 25,
+          "bottom": 195
+        }
+      },
+      "path": "assets/characters/fletcher/processed/ui/fletcher_illust_skill_cutin_alpha.png",
+      "size": [
+        1026,
+        1026
+      ],
+      "edge_margins": {
+        "left": 17,
+        "top": 16,
+        "right": 25,
+        "bottom": 195
+      }
+    },
+    {
+      "role": "ui_portrait",
+      "crop": {
+        "content_bbox": [
+          47,
+          20,
+          443,
+          430
+        ],
+        "final_crop_box": [
+          29,
+          2,
+          443,
+          443
+        ],
+        "output_edge_margins": {
+          "left": 18,
+          "top": 19,
+          "right": 64,
+          "bottom": 93
+        }
+      },
+      "path": "assets/characters/fletcher/processed/ui/fletcher_ui_portrait.png",
+      "size": [
+        478,
+        522
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 19,
+        "right": 64,
+        "bottom": 93
+      }
+    },
+    {
+      "role": "ui_portrait_small",
+      "crop": {
+        "content_bbox": [
+          0,
+          120,
+          388,
+          429
+        ],
+        "final_crop_box": [
+          0,
+          102,
+          406,
+          443
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 23,
+          "right": 61,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/fletcher/processed/ui/fletcher_ui_portrait_small.png",
+      "size": [
+        314,
+        324
+      ],
+      "edge_margins": {
+        "left": 20,
+        "top": 18,
+        "right": 19,
+        "bottom": 30
+      }
+    },
+    {
+      "role": "ui_chibi_head",
+      "crop": {
+        "content_bbox": [
+          18,
+          126,
+          443,
+          430
+        ],
+        "final_crop_box": [
+          0,
+          108,
+          443,
+          443
+        ],
+        "output_edge_margins": {
+          "left": 109,
+          "top": 21,
+          "right": 18,
+          "bottom": 19
+        }
+      },
+      "path": "assets/characters/fletcher/processed/ui/fletcher_ui_chibi_head.png",
+      "size": [
+        356,
+        328
+      ],
+      "edge_margins": {
+        "left": 22,
+        "top": 18,
+        "right": 19,
+        "bottom": 28
+      }
+    },
+    {
+      "role": "expr_default",
+      "crop": {
+        "content_bbox": [
+          0,
+          47,
+          387,
+          431
+        ],
+        "final_crop_box": [
+          0,
+          29,
+          405,
+          443
+        ],
+        "output_edge_margins": {
+          "left": 40,
+          "top": 18,
+          "right": 19,
+          "bottom": 82
+        }
+      },
+      "path": "assets/characters/fletcher/processed/ui/fletcher_expr_default.png",
+      "size": [
+        446,
+        484
+      ],
+      "edge_margins": {
+        "left": 40,
+        "top": 18,
+        "right": 19,
+        "bottom": 82
+      }
+    },
+    {
+      "role": "expr_serious",
+      "crop": {
+        "content_bbox": [
+          60,
+          20,
+          443,
+          393
+        ],
+        "final_crop_box": [
+          42,
+          2,
+          443,
+          411
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 46,
+          "bottom": 77
+        }
+      },
+      "path": "assets/characters/fletcher/processed/ui/fletcher_expr_serious.png",
+      "size": [
+        446,
+        468
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 18,
+        "right": 45,
+        "bottom": 77
+      }
+    },
+    {
+      "role": "expr_hit",
+      "crop": {
+        "content_bbox": [
+          0,
+          15,
+          443,
+          391
+        ],
+        "final_crop_box": [
+          0,
+          0,
+          443,
+          409
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 86,
+          "bottom": 71
+        }
+      },
+      "path": "assets/characters/fletcher/processed/ui/fletcher_expr_hit.png",
+      "size": [
+        418,
+        462
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 18,
+        "right": 27,
+        "bottom": 68
+      }
+    },
+    {
+      "role": "ui_skill",
+      "crop": {
+        "content_bbox": [
+          0,
+          72,
+          407,
+          391
+        ],
+        "final_crop_box": [
+          0,
+          54,
+          425,
+          409
+        ],
+        "output_edge_margins": {
+          "left": 18,
+          "top": 29,
+          "right": 97,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/fletcher/processed/ui/fletcher_ui_skill_fleet_hunter_screen.png",
+      "size": [
+        340,
+        342
+      ],
+      "edge_margins": {
+        "left": 20,
+        "top": 20,
+        "right": 18,
+        "bottom": 19
+      }
+    },
+    {
+      "role": "class_icon",
+      "crop": {
+        "content_bbox": [
+          56,
+          76,
+          327,
+          380
+        ],
+        "final_crop_box": [
+          38,
+          58,
+          345,
+          398
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 18,
+          "bottom": 19
+        }
+      },
+      "path": "assets/characters/fletcher/processed/ui/fletcher_ui_class_destroyer.png",
+      "size": [
+        308,
+        342
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 19,
+        "right": 18,
+        "bottom": 19
+      }
+    },
+    {
+      "role": "battle_body_r",
+      "crop": {
+        "component_bbox": [
+          73,
+          57,
+          387,
+          424
+        ],
+        "final_crop_box": [
+          55,
+          39,
+          405,
+          442
+        ],
+        "component_area": 60215,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 36,
+          "right": 42,
+          "bottom": 19
+        }
+      },
+      "path": "assets/characters/fletcher/processed/battle/fletcher_battle_body_r.png",
+      "size": [
+        374,
+        422
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 36,
+        "right": 42,
+        "bottom": 19
+      }
+    },
+    {
+      "role": "battle_rig_base",
+      "crop": {
+        "component_bbox": [
+          59,
+          53,
+          395,
+          434
+        ],
+        "final_crop_box": [
+          41,
+          35,
+          413,
+          443
+        ],
+        "component_area": 59673,
+        "output_edge_margins": {
+          "left": 21,
+          "top": 19,
+          "right": 19,
+          "bottom": 156
+        }
+      },
+      "path": "assets/characters/fletcher/processed/battle/fletcher_battle_rig_base.png",
+      "size": [
+        376,
+        556
+      ],
+      "edge_margins": {
+        "left": 21,
+        "top": 19,
+        "right": 19,
+        "bottom": 156
+      }
+    },
+    {
+      "role": "battle_turret_main_01",
+      "crop": {
+        "component_bbox": [
+          67,
+          190,
+          352,
+          401
+        ],
+        "final_crop_box": [
+          49,
+          172,
+          370,
+          419
+        ],
+        "component_area": 33455,
+        "output_edge_margins": {
+          "left": 111,
+          "top": 20,
+          "right": 18,
+          "bottom": 19
+        }
+      },
+      "path": "assets/characters/fletcher/processed/battle/fletcher_battle_turret_main_01.png",
+      "size": [
+        414,
+        250
+      ],
+      "edge_margins": {
+        "left": 111,
+        "top": 20,
+        "right": 18,
+        "bottom": 19
+      }
+    },
+    {
+      "role": "battle_torpedo_tube_01",
+      "crop": {
+        "component_bbox": [
+          15,
+          205,
+          299,
+          389
+        ],
+        "final_crop_box": [
+          0,
+          187,
+          317,
+          407
+        ],
+        "component_area": 35773,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 23,
+          "right": 44,
+          "bottom": 19
+        }
+      },
+      "path": "assets/characters/fletcher/processed/battle/fletcher_battle_torpedo_tube_01.png",
+      "size": [
+        346,
+        226
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 23,
+        "right": 44,
+        "bottom": 19
+      }
+    },
+    {
+      "role": "battle_depth_charge_rack",
+      "crop": {
+        "component_bbox": [
+          125,
+          103,
+          364,
+          343
+        ],
+        "final_crop_box": [
+          107,
+          85,
+          382,
+          361
+        ],
+        "component_area": 39931,
+        "output_edge_margins": {
+          "left": 24,
+          "top": 19,
+          "right": 19,
+          "bottom": 23
+        }
+      },
+      "path": "assets/characters/fletcher/processed/battle/fletcher_battle_depth_charge_rack.png",
+      "size": [
+        282,
+        282
+      ],
+      "edge_margins": {
+        "left": 24,
+        "top": 19,
+        "right": 19,
+        "bottom": 23
+      }
+    },
+    {
+      "role": "battle_sonar_node",
+      "crop": {
+        "component_bbox": [
+          95,
+          99,
+          306,
+          313
+        ],
+        "final_crop_box": [
+          77,
+          81,
+          324,
+          331
+        ],
+        "component_area": 29095,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 18,
+          "bottom": 66
+        }
+      },
+      "path": "assets/characters/fletcher/processed/battle/fletcher_battle_sonar_node.png",
+      "size": [
+        248,
+        298
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 18,
+        "right": 18,
+        "bottom": 66
+      }
+    },
+    {
+      "role": "battle_aa_center",
+      "crop": {
+        "component_bbox": [
+          52,
+          99,
+          287,
+          337
+        ],
+        "final_crop_box": [
+          34,
+          81,
+          305,
+          355
+        ],
+        "component_area": 31512,
+        "output_edge_margins": {
+          "left": 66,
+          "top": 18,
+          "right": 19,
+          "bottom": 32
+        }
+      },
+      "path": "assets/characters/fletcher/processed/battle/fletcher_battle_aa_center.png",
+      "size": [
+        320,
+        288
+      ],
+      "edge_margins": {
+        "left": 66,
+        "top": 18,
+        "right": 19,
+        "bottom": 32
+      }
+    },
+    {
+      "role": "battle_wake_origin_marker",
+      "crop": {
+        "component_bbox": [
+          7,
+          159,
+          307,
+          345
+        ],
+        "final_crop_box": [
+          0,
+          141,
+          325,
+          363
+        ],
+        "component_area": 30999,
+        "output_edge_margins": {
+          "left": 27,
+          "top": 18,
+          "right": 19,
+          "bottom": 24
+        }
+      },
+      "path": "assets/characters/fletcher/processed/battle/fletcher_battle_wake_origin_marker.png",
+      "size": [
+        356,
+        246
+      ],
+      "edge_margins": {
+        "left": 27,
+        "top": 36,
+        "right": 29,
+        "bottom": 24
+      }
+    },
+    {
+      "role": "anim_idle_frame_01",
+      "path": "assets/characters/fletcher/processed/anim/fletcher_anim_idle_frame_01.png",
+      "size": [
+        454,
+        412
+      ],
+      "edge_margins": {
+        "left": 70,
+        "top": 17,
+        "right": 39,
+        "bottom": 39
+      }
+    },
+    {
+      "role": "anim_idle_keyframe",
+      "path": "assets/characters/fletcher/processed/anim/fletcher_anim_idle_keyframe.png",
+      "size": [
+        454,
+        412
+      ],
+      "edge_margins": {
+        "left": 70,
+        "top": 17,
+        "right": 39,
+        "bottom": 39
+      }
+    },
+    {
+      "role": "anim_idle_frame_02",
+      "path": "assets/characters/fletcher/processed/anim/fletcher_anim_idle_frame_02.png",
+      "size": [
+        454,
+        412
+      ],
+      "edge_margins": {
+        "left": 32,
+        "top": 20,
+        "right": 30,
+        "bottom": 39
+      }
+    },
+    {
+      "role": "anim_idle_frame_03",
+      "path": "assets/characters/fletcher/processed/anim/fletcher_anim_idle_frame_03.png",
+      "size": [
+        454,
+        412
+      ],
+      "edge_margins": {
+        "left": 59,
+        "top": 28,
+        "right": 16,
+        "bottom": 37
+      }
+    },
+    {
+      "role": "anim_idle_frame_04",
+      "path": "assets/characters/fletcher/processed/anim/fletcher_anim_idle_frame_04.png",
+      "size": [
+        454,
+        412
+      ],
+      "edge_margins": {
+        "left": 70,
+        "top": 18,
+        "right": 31,
+        "bottom": 38
+      }
+    },
+    {
+      "role": "anim_move_frame_01",
+      "path": "assets/characters/fletcher/processed/anim/fletcher_anim_move_frame_01.png",
+      "size": [
+        534,
+        506
+      ],
+      "edge_margins": {
+        "left": 97,
+        "top": 16,
+        "right": 68,
+        "bottom": 36
+      }
+    },
+    {
+      "role": "anim_move_keyframe",
+      "path": "assets/characters/fletcher/processed/anim/fletcher_anim_move_keyframe.png",
+      "size": [
+        534,
+        506
+      ],
+      "edge_margins": {
+        "left": 97,
+        "top": 16,
+        "right": 68,
+        "bottom": 36
+      }
+    },
+    {
+      "role": "anim_move_frame_02",
+      "path": "assets/characters/fletcher/processed/anim/fletcher_anim_move_frame_02.png",
+      "size": [
+        534,
+        506
+      ],
+      "edge_margins": {
+        "left": 78,
+        "top": 20,
+        "right": 23,
+        "bottom": 49
+      }
+    },
+    {
+      "role": "anim_move_frame_03",
+      "path": "assets/characters/fletcher/processed/anim/fletcher_anim_move_frame_03.png",
+      "size": [
+        534,
+        506
+      ],
+      "edge_margins": {
+        "left": 74,
+        "top": 26,
+        "right": 16,
+        "bottom": 50
+      }
+    },
+    {
+      "role": "anim_move_frame_04",
+      "path": "assets/characters/fletcher/processed/anim/fletcher_anim_move_frame_04.png",
+      "size": [
+        534,
+        506
+      ],
+      "edge_margins": {
+        "left": 96,
+        "top": 39,
+        "right": 66,
+        "bottom": 40
+      }
+    },
+    {
+      "role": "anim_attack_frame_01",
+      "path": "assets/characters/fletcher/processed/anim/fletcher_anim_attack_frame_01.png",
+      "size": [
+        630,
+        498
+      ],
+      "edge_margins": {
+        "left": 16,
+        "top": 16,
+        "right": 59,
+        "bottom": 73
+      }
+    },
+    {
+      "role": "anim_attack_keyframe",
+      "path": "assets/characters/fletcher/processed/anim/fletcher_anim_attack_keyframe.png",
+      "size": [
+        630,
+        498
+      ],
+      "edge_margins": {
+        "left": 16,
+        "top": 16,
+        "right": 59,
+        "bottom": 73
+      }
+    },
+    {
+      "role": "anim_attack_frame_02",
+      "path": "assets/characters/fletcher/processed/anim/fletcher_anim_attack_frame_02.png",
+      "size": [
+        630,
+        498
+      ],
+      "edge_margins": {
+        "left": 31,
+        "top": 24,
+        "right": 37,
+        "bottom": 54
+      }
+    },
+    {
+      "role": "anim_attack_frame_03",
+      "path": "assets/characters/fletcher/processed/anim/fletcher_anim_attack_frame_03.png",
+      "size": [
+        630,
+        498
+      ],
+      "edge_margins": {
+        "left": 26,
+        "top": 42,
+        "right": 36,
+        "bottom": 65
+      }
+    },
+    {
+      "role": "anim_attack_frame_04",
+      "path": "assets/characters/fletcher/processed/anim/fletcher_anim_attack_frame_04.png",
+      "size": [
+        630,
+        498
+      ],
+      "edge_margins": {
+        "left": 21,
+        "top": 27,
+        "right": 58,
+        "bottom": 39
+      }
+    },
+    {
+      "role": "anim_hit_frame_01",
+      "path": "assets/characters/fletcher/processed/anim/fletcher_anim_hit_frame_01.png",
+      "size": [
+        476,
+        456
+      ],
+      "edge_margins": {
+        "left": 33,
+        "top": 39,
+        "right": 54,
+        "bottom": 21
+      }
+    },
+    {
+      "role": "anim_hit_keyframe",
+      "path": "assets/characters/fletcher/processed/anim/fletcher_anim_hit_keyframe.png",
+      "size": [
+        476,
+        456
+      ],
+      "edge_margins": {
+        "left": 33,
+        "top": 39,
+        "right": 54,
+        "bottom": 21
+      }
+    },
+    {
+      "role": "anim_hit_frame_02",
+      "path": "assets/characters/fletcher/processed/anim/fletcher_anim_hit_frame_02.png",
+      "size": [
+        476,
+        456
+      ],
+      "edge_margins": {
+        "left": 16,
+        "top": 52,
+        "right": 40,
+        "bottom": 53
+      }
+    },
+    {
+      "role": "anim_hit_frame_03",
+      "path": "assets/characters/fletcher/processed/anim/fletcher_anim_hit_frame_03.png",
+      "size": [
+        476,
+        456
+      ],
+      "edge_margins": {
+        "left": 44,
+        "top": 51,
+        "right": 30,
+        "bottom": 16
+      }
+    },
+    {
+      "role": "anim_hit_frame_04",
+      "path": "assets/characters/fletcher/processed/anim/fletcher_anim_hit_frame_04.png",
+      "size": [
+        476,
+        456
+      ],
+      "edge_margins": {
+        "left": 61,
+        "top": 44,
+        "right": 66,
+        "bottom": 28
+      }
+    },
+    {
+      "role": "anim_firepower_frame_01",
+      "path": "assets/characters/fletcher/processed/anim/fletcher_anim_firepower_frame_01.png",
+      "size": [
+        580,
+        440
+      ],
+      "edge_margins": {
+        "left": 34,
+        "top": 16,
+        "right": 47,
+        "bottom": 28
+      }
+    },
+    {
+      "role": "anim_firepower_keyframe",
+      "path": "assets/characters/fletcher/processed/anim/fletcher_anim_firepower_keyframe.png",
+      "size": [
+        580,
+        440
+      ],
+      "edge_margins": {
+        "left": 34,
+        "top": 16,
+        "right": 47,
+        "bottom": 28
+      }
+    },
+    {
+      "role": "anim_firepower_frame_02",
+      "path": "assets/characters/fletcher/processed/anim/fletcher_anim_firepower_frame_02.png",
+      "size": [
+        580,
+        440
+      ],
+      "edge_margins": {
+        "left": 37,
+        "top": 27,
+        "right": 17,
+        "bottom": 26
+      }
+    },
+    {
+      "role": "anim_firepower_frame_03",
+      "path": "assets/characters/fletcher/processed/anim/fletcher_anim_firepower_frame_03.png",
+      "size": [
+        580,
+        440
+      ],
+      "edge_margins": {
+        "left": 31,
+        "top": 22,
+        "right": 22,
+        "bottom": 33
+      }
+    },
+    {
+      "role": "anim_firepower_frame_04",
+      "path": "assets/characters/fletcher/processed/anim/fletcher_anim_firepower_frame_04.png",
+      "size": [
+        580,
+        440
+      ],
+      "edge_margins": {
+        "left": 76,
+        "top": 39,
+        "right": 49,
+        "bottom": 23
+      }
+    },
+    {
+      "role": "vfx:escort_warning_fan",
+      "crop": {
+        "component_bbox": [
+          76,
+          128,
+          221,
+          378
+        ],
+        "final_crop_box": [
+          58,
+          110,
+          221,
+          396
+        ],
+        "component_area": 10371,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 19,
+          "right": 76,
+          "bottom": 39
+        }
+      },
+      "path": "assets/characters/fletcher/processed/vfx/fletcher_vfx_escort_warning_fan.png",
+      "size": [
+        240,
+        308
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 19,
+        "right": 76,
+        "bottom": 39
+      }
+    },
+    {
+      "role": "vfx:depth_charge_drop",
+      "crop": {
+        "component_bbox": [
+          0,
+          123,
+          157,
+          378
+        ],
+        "final_crop_box": [
+          0,
+          105,
+          175,
+          396
+        ],
+        "component_area": 12785,
+        "output_edge_margins": {
+          "left": 79,
+          "top": 18,
+          "right": 18,
+          "bottom": 41
+        }
+      },
+      "path": "assets/characters/fletcher/processed/vfx/fletcher_vfx_depth_charge_drop.png",
+      "size": [
+        254,
+        314
+      ],
+      "edge_margins": {
+        "left": 79,
+        "top": 18,
+        "right": 18,
+        "bottom": 41
+      }
+    },
+    {
+      "role": "vfx:torpedo_launch_flash",
+      "crop": {
+        "component_bbox": [
+          96,
+          122,
+          221,
+          384
+        ],
+        "final_crop_box": [
+          78,
+          104,
+          221,
+          402
+        ],
+        "component_area": 14636,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 19,
+          "right": 77,
+          "bottom": 109
+        }
+      },
+      "path": "assets/characters/fletcher/processed/vfx/fletcher_vfx_torpedo_launch_flash.png",
+      "size": [
+        238,
+        408
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 19,
+        "right": 77,
+        "bottom": 109
+      }
+    },
+    {
+      "role": "vfx:muzzle_flash_small",
+      "crop": {
+        "component_bbox": [
+          0,
+          212,
+          86,
+          383
+        ],
+        "final_crop_box": [
+          0,
+          194,
+          104,
+          401
+        ],
+        "component_area": 5807,
+        "output_edge_margins": {
+          "left": 58,
+          "top": 19,
+          "right": 19,
+          "bottom": 88
+        }
+      },
+      "path": "assets/characters/fletcher/processed/vfx/fletcher_vfx_muzzle_flash_small.png",
+      "size": [
+        174,
+        296
+      ],
+      "edge_margins": {
+        "left": 58,
+        "top": 19,
+        "right": 19,
+        "bottom": 88
+      }
+    },
+    {
+      "role": "vfx:water_splash",
+      "crop": {
+        "component_bbox": [
+          65,
+          389,
+          221,
+          591
+        ],
+        "final_crop_box": [
+          47,
+          371,
+          221,
+          591
+        ],
+        "component_area": 15940,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 18,
+          "right": 64,
+          "bottom": 93
+        }
+      },
+      "path": "assets/characters/fletcher/processed/vfx/fletcher_vfx_water_splash.png",
+      "size": [
+        238,
+        328
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 18,
+        "right": 64,
+        "bottom": 93
+      }
+    },
+    {
+      "role": "vfx:aa_circle",
+      "crop": {
+        "component_bbox": [
+          0,
+          305,
+          154,
+          591
+        ],
+        "final_crop_box": [
+          0,
+          287,
+          172,
+          591
+        ],
+        "component_area": 17615,
+        "output_edge_margins": {
+          "left": 73,
+          "top": 19,
+          "right": 19,
+          "bottom": 131
+        }
+      },
+      "path": "assets/characters/fletcher/processed/vfx/fletcher_vfx_aa_circle.png",
+      "size": [
+        246,
+        440
+      ],
+      "edge_margins": {
+        "left": 73,
+        "top": 19,
+        "right": 19,
+        "bottom": 131
+      }
+    },
+    {
+      "role": "vfx:skill_aura",
+      "crop": {
+        "component_bbox": [
+          50,
+          334,
+          221,
+          591
+        ],
+        "final_crop_box": [
+          32,
+          316,
+          221,
+          591
+        ],
+        "component_area": 23177,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 64,
+          "bottom": 45
+        }
+      },
+      "path": "assets/characters/fletcher/processed/vfx/fletcher_vfx_skill_aura.png",
+      "size": [
+        254,
+        320
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 18,
+        "right": 64,
+        "bottom": 45
+      }
+    },
+    {
+      "role": "vfx:range_reticle",
+      "crop": {
+        "component_bbox": [
+          0,
+          346,
+          103,
+          586
+        ],
+        "final_crop_box": [
+          0,
+          328,
+          121,
+          591
+        ],
+        "component_area": 9852,
+        "output_edge_margins": {
+          "left": 62,
+          "top": 24,
+          "right": 18,
+          "bottom": 19
+        }
+      },
+      "path": "assets/characters/fletcher/processed/vfx/fletcher_vfx_range_reticle.png",
+      "size": [
+        196,
+        294
+      ],
+      "edge_margins": {
+        "left": 62,
+        "top": 24,
+        "right": 18,
+        "bottom": 19
+      }
+    }
+  ]
+}

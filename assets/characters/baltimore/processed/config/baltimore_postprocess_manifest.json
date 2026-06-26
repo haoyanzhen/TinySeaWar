@@ -1,0 +1,1418 @@
+{
+  "character_id": "baltimore",
+  "source": "tools/art_pipeline/postprocess_generated_character.py",
+  "method": "generated_background_auto_grid_and_component_split",
+  "postprocess_plan": "assets/characters/baltimore/postprocess_plan.json",
+  "outputs": [
+    {
+      "role": "source_alpha:concept_full",
+      "path": "assets/characters/baltimore/processed/source_alpha/baltimore_concept_full_alpha_source.png",
+      "size": [
+        1024,
+        1536
+      ],
+      "edge_margins": {
+        "left": 33,
+        "top": 18,
+        "right": 45,
+        "bottom": 60
+      }
+    },
+    {
+      "role": "source_alpha:ui_sheet",
+      "path": "assets/characters/baltimore/processed/source_alpha/baltimore_ui_sheet_alpha_source.png",
+      "size": [
+        1774,
+        887
+      ],
+      "edge_margins": {
+        "left": 10,
+        "top": 19,
+        "right": 6,
+        "bottom": 36
+      }
+    },
+    {
+      "role": "source_alpha:battle_grid",
+      "path": "assets/characters/baltimore/processed/source_alpha/baltimore_battle_asset_grid_alpha_source.png",
+      "size": [
+        1774,
+        887
+      ],
+      "edge_margins": {
+        "left": 60,
+        "top": 36,
+        "right": 82,
+        "bottom": 81
+      }
+    },
+    {
+      "role": "source_alpha:vfx_sheet",
+      "path": "assets/characters/baltimore/processed/source_alpha/baltimore_vfx_reference_sheet_alpha_source.png",
+      "size": [
+        887,
+        1774
+      ],
+      "edge_margins": {
+        "left": 31,
+        "top": 27,
+        "right": 39,
+        "bottom": 74
+      }
+    },
+    {
+      "role": "source_alpha:anim_idle",
+      "path": "assets/characters/baltimore/processed/source_alpha/baltimore_anim_idle_4f_sheet_alpha_source.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "edge_margins": {
+        "left": 98,
+        "top": 118,
+        "right": 107,
+        "bottom": 140
+      }
+    },
+    {
+      "role": "source_alpha:anim_move",
+      "path": "assets/characters/baltimore/processed/source_alpha/baltimore_anim_move_4f_sheet_alpha_source.png",
+      "size": [
+        1774,
+        887
+      ],
+      "edge_margins": {
+        "left": 265,
+        "top": 65,
+        "right": 133,
+        "bottom": 65
+      }
+    },
+    {
+      "role": "source_alpha:anim_attack",
+      "path": "assets/characters/baltimore/processed/source_alpha/baltimore_anim_attack_4f_sheet_alpha_source.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "edge_margins": {
+        "left": 44,
+        "top": 110,
+        "right": 18,
+        "bottom": 144
+      }
+    },
+    {
+      "role": "source_alpha:anim_hit",
+      "path": "assets/characters/baltimore/processed/source_alpha/baltimore_anim_hit_4f_sheet_alpha_source.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "edge_margins": {
+        "left": 123,
+        "top": 108,
+        "right": 123,
+        "bottom": 132
+      }
+    },
+    {
+      "role": "source_alpha:anim_firepower",
+      "path": "assets/characters/baltimore/processed/source_alpha/baltimore_anim_firepower_4f_sheet_alpha_source.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "edge_margins": {
+        "left": 56,
+        "top": 83,
+        "right": 89,
+        "bottom": 125
+      }
+    },
+    {
+      "role": "full_body",
+      "crop": {
+        "content_bbox": [
+          33,
+          18,
+          979,
+          1476
+        ],
+        "final_crop_box": [
+          21,
+          6,
+          991,
+          1488
+        ],
+        "output_edge_margins": {
+          "left": 12,
+          "top": 64,
+          "right": 52,
+          "bottom": 12
+        }
+      },
+      "path": "assets/characters/baltimore/processed/ui/baltimore_illust_full_alpha.png",
+      "size": [
+        1010,
+        1534
+      ],
+      "edge_margins": {
+        "left": 12,
+        "top": 64,
+        "right": 52,
+        "bottom": 12
+      }
+    },
+    {
+      "role": "half_body",
+      "crop": {
+        "content_bbox": [
+          16,
+          16,
+          962,
+          1065
+        ],
+        "final_crop_box": [
+          0,
+          0,
+          978,
+          1081
+        ],
+        "output_edge_margins": {
+          "left": 16,
+          "top": 16,
+          "right": 54,
+          "bottom": 263
+        }
+      },
+      "path": "assets/characters/baltimore/processed/ui/baltimore_illust_half_alpha.png",
+      "size": [
+        1016,
+        1328
+      ],
+      "edge_margins": {
+        "left": 16,
+        "top": 16,
+        "right": 54,
+        "bottom": 263
+      }
+    },
+    {
+      "role": "skill_cutin",
+      "crop": {
+        "content_bbox": [
+          541,
+          16,
+          1487,
+          861
+        ],
+        "final_crop_box": [
+          525,
+          0,
+          1503,
+          877
+        ],
+        "output_edge_margins": {
+          "left": 16,
+          "top": 16,
+          "right": 46,
+          "bottom": 283
+        }
+      },
+      "path": "assets/characters/baltimore/processed/ui/baltimore_illust_skill_cutin_alpha.png",
+      "size": [
+        1008,
+        1144
+      ],
+      "edge_margins": {
+        "left": 16,
+        "top": 16,
+        "right": 46,
+        "bottom": 283
+      }
+    },
+    {
+      "role": "ui_portrait",
+      "crop": {
+        "content_bbox": [
+          10,
+          19,
+          443,
+          430
+        ],
+        "final_crop_box": [
+          0,
+          1,
+          443,
+          443
+        ],
+        "output_edge_margins": {
+          "left": 18,
+          "top": 19,
+          "right": 107,
+          "bottom": 98
+        }
+      },
+      "path": "assets/characters/baltimore/processed/ui/baltimore_ui_portrait.png",
+      "size": [
+        558,
+        528
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 18,
+        "right": 106,
+        "bottom": 99
+      }
+    },
+    {
+      "role": "ui_portrait_small",
+      "crop": {
+        "content_bbox": [
+          0,
+          105,
+          410,
+          430
+        ],
+        "final_crop_box": [
+          0,
+          87,
+          428,
+          443
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 39,
+          "bottom": 47
+        }
+      },
+      "path": "assets/characters/baltimore/processed/ui/baltimore_ui_portrait_small.png",
+      "size": [
+        330,
+        356
+      ],
+      "edge_margins": {
+        "left": 29,
+        "top": 19,
+        "right": 19,
+        "bottom": 40
+      }
+    },
+    {
+      "role": "ui_chibi_head",
+      "crop": {
+        "content_bbox": [
+          38,
+          97,
+          443,
+          430
+        ],
+        "final_crop_box": [
+          20,
+          79,
+          443,
+          443
+        ],
+        "output_edge_margins": {
+          "left": 81,
+          "top": 18,
+          "right": 18,
+          "bottom": 59
+        }
+      },
+      "path": "assets/characters/baltimore/processed/ui/baltimore_ui_chibi_head.png",
+      "size": [
+        330,
+        384
+      ],
+      "edge_margins": {
+        "left": 26,
+        "top": 18,
+        "right": 19,
+        "bottom": 48
+      }
+    },
+    {
+      "role": "expr_default",
+      "crop": {
+        "content_bbox": [
+          0,
+          23,
+          439,
+          430
+        ],
+        "final_crop_box": [
+          0,
+          5,
+          445,
+          443
+        ],
+        "output_edge_margins": {
+          "left": 102,
+          "top": 18,
+          "right": 19,
+          "bottom": 103
+        }
+      },
+      "path": "assets/characters/baltimore/processed/ui/baltimore_expr_default.png",
+      "size": [
+        560,
+        528
+      ],
+      "edge_margins": {
+        "left": 102,
+        "top": 18,
+        "right": 19,
+        "bottom": 103
+      }
+    },
+    {
+      "role": "expr_serious",
+      "crop": {
+        "content_bbox": [
+          44,
+          25,
+          443,
+          393
+        ],
+        "final_crop_box": [
+          26,
+          7,
+          443,
+          411
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 86,
+          "bottom": 91
+        }
+      },
+      "path": "assets/characters/baltimore/processed/ui/baltimore_expr_serious.png",
+      "size": [
+        502,
+        478
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 18,
+        "right": 85,
+        "bottom": 92
+      }
+    },
+    {
+      "role": "expr_hit",
+      "crop": {
+        "content_bbox": [
+          0,
+          28,
+          443,
+          393
+        ],
+        "final_crop_box": [
+          0,
+          10,
+          443,
+          411
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 62,
+          "bottom": 103
+        }
+      },
+      "path": "assets/characters/baltimore/processed/ui/baltimore_expr_hit.png",
+      "size": [
+        368,
+        464
+      ],
+      "edge_margins": {
+        "left": 35,
+        "top": 18,
+        "right": 18,
+        "bottom": 81
+      }
+    },
+    {
+      "role": "ui_skill",
+      "crop": {
+        "content_bbox": [
+          0,
+          87,
+          381,
+          393
+        ],
+        "final_crop_box": [
+          0,
+          69,
+          399,
+          411
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 22,
+          "right": 84,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/baltimore/processed/ui/baltimore_ui_skill_radar_ap_calibration.png",
+      "size": [
+        334,
+        334
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 20,
+        "right": 18,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "class_icon",
+      "crop": {
+        "content_bbox": [
+          31,
+          62,
+          327,
+          408
+        ],
+        "final_crop_box": [
+          13,
+          44,
+          345,
+          426
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 20,
+          "right": 19,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/baltimore/processed/ui/baltimore_ui_class_heavy_cruiser.png",
+      "size": [
+        334,
+        384
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 20,
+        "right": 19,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "battle_body_r",
+      "crop": {
+        "component_bbox": [
+          90,
+          85,
+          356,
+          405
+        ],
+        "final_crop_box": [
+          72,
+          67,
+          374,
+          423
+        ],
+        "component_area": 46966,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 20,
+          "right": 41,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/baltimore/processed/battle/baltimore_battle_body_r.png",
+      "size": [
+        326,
+        358
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 20,
+        "right": 41,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "battle_rig_base",
+      "crop": {
+        "component_bbox": [
+          0,
+          36,
+          393,
+          403
+        ],
+        "final_crop_box": [
+          0,
+          18,
+          411,
+          421
+        ],
+        "component_area": 80717,
+        "output_edge_margins": {
+          "left": 31,
+          "top": 18,
+          "right": 18,
+          "bottom": 123
+        }
+      },
+      "path": "assets/characters/baltimore/processed/battle/baltimore_battle_rig_base.png",
+      "size": [
+        442,
+        508
+      ],
+      "edge_margins": {
+        "left": 31,
+        "top": 18,
+        "right": 18,
+        "bottom": 123
+      }
+    },
+    {
+      "role": "battle_turret_main_01",
+      "crop": {
+        "component_bbox": [
+          14,
+          175,
+          360,
+          376
+        ],
+        "final_crop_box": [
+          0,
+          157,
+          378,
+          394
+        ],
+        "component_area": 45967,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 19,
+          "right": 68,
+          "bottom": 26
+        }
+      },
+      "path": "assets/characters/baltimore/processed/battle/baltimore_battle_turret_main_01.png",
+      "size": [
+        432,
+        246
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 19,
+        "right": 68,
+        "bottom": 26
+      }
+    },
+    {
+      "role": "battle_turret_main_02",
+      "crop": {
+        "component_bbox": [
+          20,
+          175,
+          363,
+          377
+        ],
+        "final_crop_box": [
+          2,
+          157,
+          381,
+          395
+        ],
+        "component_area": 45828,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 19,
+          "right": 67,
+          "bottom": 27
+        }
+      },
+      "path": "assets/characters/baltimore/processed/battle/baltimore_battle_turret_main_02.png",
+      "size": [
+        428,
+        248
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 19,
+        "right": 67,
+        "bottom": 27
+      }
+    },
+    {
+      "role": "battle_turret_main_03",
+      "crop": {
+        "component_bbox": [
+          60,
+          109,
+          403,
+          311
+        ],
+        "final_crop_box": [
+          42,
+          91,
+          421,
+          329
+        ],
+        "component_area": 46010,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 68,
+          "bottom": 26
+        }
+      },
+      "path": "assets/characters/baltimore/processed/battle/baltimore_battle_turret_main_03.png",
+      "size": [
+        430,
+        246
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 18,
+        "right": 68,
+        "bottom": 26
+      }
+    },
+    {
+      "role": "battle_fire_control_node",
+      "crop": {
+        "component_bbox": [
+          99,
+          52,
+          299,
+          341
+        ],
+        "final_crop_box": [
+          81,
+          34,
+          317,
+          359
+        ],
+        "component_area": 39895,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 18,
+          "right": 26,
+          "bottom": 37
+        }
+      },
+      "path": "assets/characters/baltimore/processed/battle/baltimore_battle_fire_control_node.png",
+      "size": [
+        244,
+        344
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 18,
+        "right": 26,
+        "bottom": 37
+      }
+    },
+    {
+      "role": "battle_aa_center",
+      "crop": {
+        "component_bbox": [
+          45,
+          94,
+          350,
+          330
+        ],
+        "final_crop_box": [
+          27,
+          76,
+          368,
+          348
+        ],
+        "component_area": 43254,
+        "output_edge_margins": {
+          "left": 21,
+          "top": 19,
+          "right": 18,
+          "bottom": 71
+        }
+      },
+      "path": "assets/characters/baltimore/processed/battle/baltimore_battle_aa_center.png",
+      "size": [
+        344,
+        326
+      ],
+      "edge_margins": {
+        "left": 21,
+        "top": 19,
+        "right": 18,
+        "bottom": 71
+      }
+    },
+    {
+      "role": "battle_wake_origin_marker",
+      "crop": {
+        "component_bbox": [
+          26,
+          183,
+          330,
+          363
+        ],
+        "final_crop_box": [
+          8,
+          165,
+          348,
+          381
+        ],
+        "component_area": 26803,
+        "output_edge_margins": {
+          "left": 21,
+          "top": 18,
+          "right": 19,
+          "bottom": 34
+        }
+      },
+      "path": "assets/characters/baltimore/processed/battle/baltimore_battle_wake_origin_marker.png",
+      "size": [
+        378,
+        250
+      ],
+      "edge_margins": {
+        "left": 38,
+        "top": 36,
+        "right": 36,
+        "bottom": 34
+      }
+    },
+    {
+      "role": "anim_idle_frame_01",
+      "path": "assets/characters/baltimore/processed/anim/baltimore_anim_idle_frame_01.png",
+      "size": [
+        546,
+        520
+      ],
+      "edge_margins": {
+        "left": 57,
+        "top": 16,
+        "right": 38,
+        "bottom": 65
+      }
+    },
+    {
+      "role": "anim_idle_keyframe",
+      "path": "assets/characters/baltimore/processed/anim/baltimore_anim_idle_keyframe.png",
+      "size": [
+        546,
+        520
+      ],
+      "edge_margins": {
+        "left": 57,
+        "top": 16,
+        "right": 38,
+        "bottom": 65
+      }
+    },
+    {
+      "role": "anim_idle_frame_02",
+      "path": "assets/characters/baltimore/processed/anim/baltimore_anim_idle_frame_02.png",
+      "size": [
+        546,
+        520
+      ],
+      "edge_margins": {
+        "left": 48,
+        "top": 22,
+        "right": 28,
+        "bottom": 57
+      }
+    },
+    {
+      "role": "anim_idle_frame_03",
+      "path": "assets/characters/baltimore/processed/anim/baltimore_anim_idle_frame_03.png",
+      "size": [
+        546,
+        520
+      ],
+      "edge_margins": {
+        "left": 47,
+        "top": 23,
+        "right": 17,
+        "bottom": 66
+      }
+    },
+    {
+      "role": "anim_idle_frame_04",
+      "path": "assets/characters/baltimore/processed/anim/baltimore_anim_idle_frame_04.png",
+      "size": [
+        546,
+        520
+      ],
+      "edge_margins": {
+        "left": 51,
+        "top": 25,
+        "right": 28,
+        "bottom": 69
+      }
+    },
+    {
+      "role": "anim_move_frame_01",
+      "path": "assets/characters/baltimore/processed/anim/baltimore_anim_move_frame_01.png",
+      "size": [
+        804,
+        422
+      ],
+      "edge_margins": {
+        "left": 191,
+        "top": 24,
+        "right": 39,
+        "bottom": 52
+      }
+    },
+    {
+      "role": "anim_move_keyframe",
+      "path": "assets/characters/baltimore/processed/anim/baltimore_anim_move_keyframe.png",
+      "size": [
+        804,
+        422
+      ],
+      "edge_margins": {
+        "left": 191,
+        "top": 24,
+        "right": 39,
+        "bottom": 52
+      }
+    },
+    {
+      "role": "anim_move_frame_02",
+      "path": "assets/characters/baltimore/processed/anim/baltimore_anim_move_frame_02.png",
+      "size": [
+        804,
+        422
+      ],
+      "edge_margins": {
+        "left": 195,
+        "top": 20,
+        "right": 16,
+        "bottom": 61
+      }
+    },
+    {
+      "role": "anim_move_frame_03",
+      "path": "assets/characters/baltimore/processed/anim/baltimore_anim_move_frame_03.png",
+      "size": [
+        804,
+        422
+      ],
+      "edge_margins": {
+        "left": 201,
+        "top": 17,
+        "right": 45,
+        "bottom": 58
+      }
+    },
+    {
+      "role": "anim_move_frame_04",
+      "path": "assets/characters/baltimore/processed/anim/baltimore_anim_move_frame_04.png",
+      "size": [
+        804,
+        422
+      ],
+      "edge_margins": {
+        "left": 222,
+        "top": 28,
+        "right": 24,
+        "bottom": 55
+      }
+    },
+    {
+      "role": "anim_attack_frame_01",
+      "path": "assets/characters/baltimore/processed/anim/baltimore_anim_attack_frame_01.png",
+      "size": [
+        662,
+        518
+      ],
+      "edge_margins": {
+        "left": 44,
+        "top": 23,
+        "right": 46,
+        "bottom": 82
+      }
+    },
+    {
+      "role": "anim_attack_keyframe",
+      "path": "assets/characters/baltimore/processed/anim/baltimore_anim_attack_keyframe.png",
+      "size": [
+        662,
+        518
+      ],
+      "edge_margins": {
+        "left": 44,
+        "top": 23,
+        "right": 46,
+        "bottom": 82
+      }
+    },
+    {
+      "role": "anim_attack_frame_02",
+      "path": "assets/characters/baltimore/processed/anim/baltimore_anim_attack_frame_02.png",
+      "size": [
+        662,
+        518
+      ],
+      "edge_margins": {
+        "left": 39,
+        "top": 33,
+        "right": 16,
+        "bottom": 39
+      }
+    },
+    {
+      "role": "anim_attack_frame_03",
+      "path": "assets/characters/baltimore/processed/anim/baltimore_anim_attack_frame_03.png",
+      "size": [
+        662,
+        518
+      ],
+      "edge_margins": {
+        "left": 28,
+        "top": 46,
+        "right": 51,
+        "bottom": 62
+      }
+    },
+    {
+      "role": "anim_attack_frame_04",
+      "path": "assets/characters/baltimore/processed/anim/baltimore_anim_attack_frame_04.png",
+      "size": [
+        662,
+        518
+      ],
+      "edge_margins": {
+        "left": 43,
+        "top": 16,
+        "right": 55,
+        "bottom": 51
+      }
+    },
+    {
+      "role": "anim_hit_frame_01",
+      "path": "assets/characters/baltimore/processed/anim/baltimore_anim_hit_frame_01.png",
+      "size": [
+        496,
+        492
+      ],
+      "edge_margins": {
+        "left": 40,
+        "top": 21,
+        "right": 48,
+        "bottom": 38
+      }
+    },
+    {
+      "role": "anim_hit_keyframe",
+      "path": "assets/characters/baltimore/processed/anim/baltimore_anim_hit_keyframe.png",
+      "size": [
+        496,
+        492
+      ],
+      "edge_margins": {
+        "left": 40,
+        "top": 21,
+        "right": 48,
+        "bottom": 38
+      }
+    },
+    {
+      "role": "anim_hit_frame_02",
+      "path": "assets/characters/baltimore/processed/anim/baltimore_anim_hit_frame_02.png",
+      "size": [
+        496,
+        492
+      ],
+      "edge_margins": {
+        "left": 28,
+        "top": 28,
+        "right": 39,
+        "bottom": 39
+      }
+    },
+    {
+      "role": "anim_hit_frame_03",
+      "path": "assets/characters/baltimore/processed/anim/baltimore_anim_hit_frame_03.png",
+      "size": [
+        496,
+        492
+      ],
+      "edge_margins": {
+        "left": 17,
+        "top": 17,
+        "right": 24,
+        "bottom": 26
+      }
+    },
+    {
+      "role": "anim_hit_frame_04",
+      "path": "assets/characters/baltimore/processed/anim/baltimore_anim_hit_frame_04.png",
+      "size": [
+        496,
+        492
+      ],
+      "edge_margins": {
+        "left": 41,
+        "top": 25,
+        "right": 38,
+        "bottom": 37
+      }
+    },
+    {
+      "role": "anim_firepower_frame_01",
+      "path": "assets/characters/baltimore/processed/anim/baltimore_anim_firepower_frame_01.png",
+      "size": [
+        638,
+        526
+      ],
+      "edge_margins": {
+        "left": 72,
+        "top": 16,
+        "right": 73,
+        "bottom": 28
+      }
+    },
+    {
+      "role": "anim_firepower_keyframe",
+      "path": "assets/characters/baltimore/processed/anim/baltimore_anim_firepower_keyframe.png",
+      "size": [
+        638,
+        526
+      ],
+      "edge_margins": {
+        "left": 72,
+        "top": 16,
+        "right": 73,
+        "bottom": 28
+      }
+    },
+    {
+      "role": "anim_firepower_frame_02",
+      "path": "assets/characters/baltimore/processed/anim/baltimore_anim_firepower_frame_02.png",
+      "size": [
+        638,
+        526
+      ],
+      "edge_margins": {
+        "left": 73,
+        "top": 33,
+        "right": 63,
+        "bottom": 22
+      }
+    },
+    {
+      "role": "anim_firepower_frame_03",
+      "path": "assets/characters/baltimore/processed/anim/baltimore_anim_firepower_frame_03.png",
+      "size": [
+        638,
+        526
+      ],
+      "edge_margins": {
+        "left": 37,
+        "top": 48,
+        "right": 30,
+        "bottom": 50
+      }
+    },
+    {
+      "role": "anim_firepower_frame_04",
+      "path": "assets/characters/baltimore/processed/anim/baltimore_anim_firepower_frame_04.png",
+      "size": [
+        638,
+        526
+      ],
+      "edge_margins": {
+        "left": 17,
+        "top": 40,
+        "right": 96,
+        "bottom": 38
+      }
+    },
+    {
+      "role": "vfx:ap_calibration_frame",
+      "crop": {
+        "component_bbox": [
+          48,
+          72,
+          221,
+          356
+        ],
+        "final_crop_box": [
+          30,
+          54,
+          221,
+          374
+        ],
+        "component_area": 8174,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 30,
+          "bottom": 22
+        }
+      },
+      "path": "assets/characters/baltimore/processed/vfx/baltimore_vfx_ap_calibration_frame.png",
+      "size": [
+        222,
+        346
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 18,
+        "right": 30,
+        "bottom": 22
+      }
+    },
+    {
+      "role": "vfx:radar_lock_line",
+      "crop": {
+        "component_bbox": [
+          0,
+          27,
+          193,
+          402
+        ],
+        "final_crop_box": [
+          0,
+          9,
+          211,
+          420
+        ],
+        "component_area": 11253,
+        "output_edge_margins": {
+          "left": 46,
+          "top": 21,
+          "right": 19,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/baltimore/processed/vfx/baltimore_vfx_radar_lock_line.png",
+      "size": [
+        258,
+        414
+      ],
+      "edge_margins": {
+        "left": 46,
+        "top": 21,
+        "right": 19,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "vfx:shell_trail_heavy",
+      "crop": {
+        "component_bbox": [
+          27,
+          126,
+          221,
+          298
+        ],
+        "final_crop_box": [
+          9,
+          108,
+          221,
+          316
+        ],
+        "component_area": 11803,
+        "output_edge_margins": {
+          "left": 24,
+          "top": 23,
+          "right": 18,
+          "bottom": 19
+        }
+      },
+      "path": "assets/characters/baltimore/processed/vfx/baltimore_vfx_shell_trail_heavy.png",
+      "size": [
+        236,
+        214
+      ],
+      "edge_margins": {
+        "left": 24,
+        "top": 23,
+        "right": 18,
+        "bottom": 19
+      }
+    },
+    {
+      "role": "vfx:armor_sparks",
+      "crop": {
+        "component_bbox": [
+          0,
+          187,
+          180,
+          225
+        ],
+        "final_crop_box": [
+          0,
+          169,
+          198,
+          243
+        ],
+        "component_area": 2740,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 23,
+          "bottom": 24
+        }
+      },
+      "path": "assets/characters/baltimore/processed/vfx/baltimore_vfx_armor_sparks.png",
+      "size": [
+        222,
+        94
+      ],
+      "edge_margins": {
+        "left": 19,
+        "top": 18,
+        "right": 23,
+        "bottom": 24
+      }
+    },
+    {
+      "role": "vfx:fire_control_lock",
+      "crop": {
+        "component_bbox": [
+          73,
+          0,
+          221,
+          85
+        ],
+        "final_crop_box": [
+          55,
+          0,
+          221,
+          103
+        ],
+        "component_area": 7665,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 34,
+          "right": 59,
+          "bottom": 19
+        }
+      },
+      "path": "assets/characters/baltimore/processed/vfx/baltimore_vfx_fire_control_lock.png",
+      "size": [
+        232,
+        156
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 34,
+        "right": 59,
+        "bottom": 19
+      }
+    },
+    {
+      "role": "vfx:skill_aura",
+      "crop": {
+        "component_bbox": [
+          0,
+          0,
+          135,
+          71
+        ],
+        "final_crop_box": [
+          0,
+          0,
+          153,
+          89
+        ],
+        "component_area": 5812,
+        "output_edge_margins": {
+          "left": 57,
+          "top": 50,
+          "right": 19,
+          "bottom": 18
+        }
+      },
+      "path": "assets/characters/baltimore/processed/vfx/baltimore_vfx_skill_aura.png",
+      "size": [
+        218,
+        152
+      ],
+      "edge_margins": {
+        "left": 57,
+        "top": 50,
+        "right": 19,
+        "bottom": 18
+      }
+    },
+    {
+      "role": "vfx:water_splash_large",
+      "crop": {
+        "component_bbox": [
+          17,
+          336,
+          221,
+          591
+        ],
+        "final_crop_box": [
+          0,
+          318,
+          221,
+          591
+        ],
+        "component_area": 25493,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 19,
+          "right": 49,
+          "bottom": 126
+        }
+      },
+      "path": "assets/characters/baltimore/processed/vfx/baltimore_vfx_water_splash_large.png",
+      "size": [
+        276,
+        404
+      ],
+      "edge_margins": {
+        "left": 18,
+        "top": 19,
+        "right": 49,
+        "bottom": 126
+      }
+    },
+    {
+      "role": "vfx:aa_interception",
+      "crop": {
+        "component_bbox": [
+          0,
+          421,
+          168,
+          591
+        ],
+        "final_crop_box": [
+          0,
+          403,
+          186,
+          591
+        ],
+        "component_area": 17251,
+        "output_edge_margins": {
+          "left": 44,
+          "top": 18,
+          "right": 18,
+          "bottom": 68
+        }
+      },
+      "path": "assets/characters/baltimore/processed/vfx/baltimore_vfx_aa_interception.png",
+      "size": [
+        230,
+        272
+      ],
+      "edge_margins": {
+        "left": 44,
+        "top": 18,
+        "right": 18,
+        "bottom": 68
+      }
+    }
+  ]
+}

@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
 const DISTANCE_BASELINE_MULTIPLIER = 1.5;
+const ATTACK_SPEED_BASELINE_MULTIPLIER = 0.5;
 const output = (path, definitions) => {
   const absolute = resolve(root, path);
   mkdirSync(dirname(absolute), { recursive: true });
@@ -24,7 +25,7 @@ const armor = {
 const common = (id, name, group, mode, type, mounts, shots, reload, range, speed, spread, accuracy) => ({
   id, display_name: name, weapon_group_id: group, control_mode: mode, ammo_type: "", mount_type: type,
   mount_count: mounts, shots_per_mount: shots, reload_time: reload, base_range: range, range: range * DISTANCE_BASELINE_MULTIPLIER, minimum_range: 0,
-  fire_arc_center: 0, fire_arc_degrees: 360, projectile_speed: speed, spread,
+  fire_arc_center: 0, fire_arc_degrees: 360, base_projectile_speed: speed, projectile_speed: speed * ATTACK_SPEED_BASELINE_MULTIPLIER, spread,
   impact_radius: 36, accuracy_modifier: accuracy, shared_cooldown_group: "",
 });
 

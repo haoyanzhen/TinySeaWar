@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import itertools
 import json
 import sys
 from pathlib import Path
@@ -45,6 +46,13 @@ REQUIRED_PATTERNS = {
 REQUIRED_ANIMATION_STATES = {"idle", "move", "attack", "hit", "firepower"}
 MAX_OPAQUE_WHITE_CANVAS_RATIO = 0.50
 MAX_CHROMA_KEY_CANVAS_RATIO = 0.05
+MAX_REGISTERED_ALPHA_IOU_BY_STATE = {
+    "idle": 0.92,
+    "move": 0.86,
+    "attack": 0.78,
+    "hit": 0.82,
+    "firepower": 0.86,
+}
 
 
 def matches(character_id: str, pattern: str) -> list[Path]:
@@ -126,6 +134,59 @@ def nearby_alpha(image: Image.Image, x: int, y: int, radius: int = 24) -> bool:
     return alpha.crop((left, top, right, bottom)).getbbox() is not None
 
 
+def registered_alpha_mask(path: Path, size: int = 320, subject_size: int = 256) -> Image.Image:
+    """Return a centered subject mask so pure translation/scale does not count as animation."""
+    with Image.open(path) as image:
+        alpha = image.convert("RGBA").getchannel("A").point(lambda value: 255 if value > 24 else 0)
+    bbox = alpha.getbbox()
+    if bbox is None:
+        return Image.new("L", (size, size), 0)
+    subject = alpha.crop(bbox)
+    resample = getattr(getattr(Image, "Resampling", Image), "LANCZOS")
+    subject.thumbnail((subject_size, subject_size), resample)
+    canvas = Image.new("L", (size, size), 0)
+    canvas.paste(subject, ((size - subject.width) // 2, (size - subject.height) // 2))
+    return canvas.point(lambda value: 255 if value > 32 else 0)
+
+
+def alpha_mask_iou(left: Image.Image, right: Image.Image) -> float:
+    left_pixels = list(left.getdata())
+    right_pixels = list(right.getdata())
+    intersection = sum(1 for a, b in zip(left_pixels, right_pixels) if a and b)
+    union = sum(1 for a, b in zip(left_pixels, right_pixels) if a or b)
+    return intersection / union if union else 1.0
+
+
+def validate_animation_pose_variation(character_id: str, states: dict[str, object]) -> list[str]:
+    """Catch four-frame sheets that are only the same sprite shifted/tinted or given a flash."""
+    issues: list[str] = []
+    if ROSTER[character_id].phase != "phase2":
+        return issues
+    for state, item in states.items():
+        if not isinstance(item, dict):
+            continue
+        frames = item.get("frames")
+        if not isinstance(frames, list) or len(frames) != 4:
+            continue
+        frame_paths = [ROOT / str(frame) for frame in frames]
+        if any(not path.exists() for path in frame_paths):
+            continue
+        masks = [registered_alpha_mask(path) for path in frame_paths]
+        ious = [
+            alpha_mask_iou(left, right)
+            for left, right in itertools.combinations(masks, 2)
+        ]
+        average_iou = sum(ious) / len(ious)
+        threshold = MAX_REGISTERED_ALPHA_IOU_BY_STATE.get(state, 0.86)
+        if average_iou >= threshold:
+            issues.append(
+                f"animation pose variation too low: {state} "
+                f"(registered alpha IoU {average_iou:.3f} >= {threshold:.2f}; "
+                "translations, tints, and detached flashes do not satisfy the action contract)"
+            )
+    return issues
+
+
 def validate_character_data(character_id: str) -> list[str]:
     root = CHAR_ROOT / character_id / "processed"
     issues: list[str] = []
@@ -150,6 +211,15 @@ def validate_character_data(character_id: str) -> list[str]:
                 issues.append("postprocess plan battle roles must be unique")
             if len(set(vfx_roles)) != len(vfx_roles):
                 issues.append("postprocess plan VFX roles must be unique")
+
+    manifest_path = root / "config" / f"{character_id}_postprocess_manifest.json"
+    if manifest_path.exists():
+        manifest_data = json.loads(manifest_path.read_text(encoding="utf-8"))
+        source_provenance = manifest_data.get("source_provenance")
+        if isinstance(source_provenance, dict) and source_provenance.get("batch_ready_allowed") is False:
+            source = source_provenance.get("source", "unknown")
+            kind = source_provenance.get("kind", "placeholder")
+            issues.append(f"non-production source provenance: {kind} from {source}")
 
     bind_path = root / "config" / f"{character_id}_meta_bind_points.json"
     if bind_path.exists():
@@ -208,6 +278,8 @@ def validate_character_data(character_id: str) -> list[str]:
                 file_value = item.get("file", "")
                 if not (ROOT / file_value).exists():
                     issues.append(f"animation file missing: {state}:{file_value}")
+        if isinstance(states, dict):
+            issues.extend(validate_animation_pose_variation(character_id, states))
 
     vfx_path = root / "config" / f"{character_id}_vfx_config.json"
     if vfx_path.exists():

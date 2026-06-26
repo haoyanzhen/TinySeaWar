@@ -127,6 +127,17 @@ def can_process(character_id: str) -> bool:
     return paths["anim_master"].exists() or all(paths[f"anim_{state}"].exists() for state in ANIMATION_STATES)
 
 
+def load_source_provenance(character_id: str) -> dict[str, Any]:
+    root = CHAR_ROOT / character_id
+    for path in (
+        root / "placeholder_source_provenance.json",
+        root / "meta" / f"{character_id}_source_provenance.json",
+    ):
+        if path.exists():
+            return json.loads(path.read_text(encoding="utf-8"))
+    return {}
+
+
 def ensure_dirs(character_id: str) -> dict[str, Path]:
     root = CHAR_ROOT / character_id / "processed"
     dirs = {
@@ -708,6 +719,9 @@ def process_character(character_id: str) -> None:
         "postprocess_plan": str((CHAR_ROOT / character_id / "postprocess_plan.json").relative_to(ROOT)) if plan else "",
         "outputs": [],
     }
+    source_provenance = load_source_provenance(character_id)
+    if source_provenance:
+        manifest["source_provenance"] = source_provenance
 
     alpha_sources: dict[str, Image.Image] = {}
     for key, path in paths.items():

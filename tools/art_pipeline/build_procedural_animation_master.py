@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageEnhance
@@ -10,8 +11,10 @@ import postprocess_generated_character as pipeline
 
 ROOT = Path(__file__).resolve().parents[2]
 CHAR_ROOT = ROOT / "assets" / "characters"
+QA_ROOT = CHAR_ROOT / "qa" / "procedural_animation_placeholders"
 GREEN = (0, 255, 0, 255)
 CELL_SIZE = (384, 512)
+ANIMATION_STATES = ("idle", "move", "attack", "hit", "firepower")
 
 
 def _fit_subject(subject: Image.Image, maximum: tuple[int, int]) -> Image.Image:
@@ -123,7 +126,25 @@ def _frame(
     return frame
 
 
-def build(character_id: str) -> Path:
+def write_placeholder_provenance(character_id: str, out_root: Path, outputs: list[Path]) -> Path:
+    path = out_root / "placeholder_source_provenance.json"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    payload = {
+        "character_id": character_id,
+        "source": "tools/art_pipeline/build_procedural_animation_master.py",
+        "kind": "procedural_animation_placeholder",
+        "batch_ready_allowed": False,
+        "notes": (
+            "Smoke-test placeholder only. These sheets are derived from one battle-body cell using "
+            "programmatic transforms. They do not satisfy the final TinySeaWar character animation contract."
+        ),
+        "outputs": [str(path.relative_to(ROOT)) for path in outputs],
+    }
+    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    return path
+
+
+def build(character_id: str) -> list[Path]:
     root = CHAR_ROOT / character_id
     battle_path = root / "battle" / f"{character_id}_battle_asset_grid.png"
     if not battle_path.exists():
@@ -135,26 +156,46 @@ def build(character_id: str) -> Path:
     subject, _meta = pipeline.crop_with_padding(body_cell, pad=20)
     subject = _fit_subject(subject, (CELL_SIZE[0] - 72, CELL_SIZE[1] - 72))
 
-    states = ("idle", "move", "attack", "hit", "firepower")
-    master = Image.new("RGBA", (CELL_SIZE[0] * 4, CELL_SIZE[1] * 5), GREEN)
-    for row, state in enumerate(states):
+    outputs: list[Path] = []
+    out_root = QA_ROOT / character_id / "battle"
+    for state in ANIMATION_STATES:
+        sheet = Image.new("RGBA", (CELL_SIZE[0] * 2, CELL_SIZE[1] * 2), GREEN)
         for col in range(4):
-            master.alpha_composite(_frame(subject, state, col), (col * CELL_SIZE[0], row * CELL_SIZE[1]))
+            sheet.alpha_composite(
+                _frame(subject, state, col),
+                ((col % 2) * CELL_SIZE[0], (col // 2) * CELL_SIZE[1]),
+            )
 
-    out = root / "battle" / f"{character_id}_anim_5x4_master.png"
-    out.parent.mkdir(parents=True, exist_ok=True)
-    master.convert("RGB").save(out)
-    return out
+        out = out_root / f"{character_id}_anim_{state}_4f_sheet.png"
+        out.parent.mkdir(parents=True, exist_ok=True)
+        sheet.convert("RGB").save(out)
+        outputs.append(out)
+    outputs.append(write_placeholder_provenance(character_id, QA_ROOT / character_id, outputs))
+    return outputs
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(
-        description="Build an identity-safe 5x4 MVP animation master from an approved battle-body cell."
+        description=(
+            "Build placeholder 2x2 animation state sheets from one approved battle-body cell. "
+            "This command never writes runtime source assets and cannot produce batch-ready character art."
+        )
+    )
+    parser.add_argument(
+        "--allow-placeholder",
+        action="store_true",
+        help="Required acknowledgement: write non-production placeholder sheets under assets/characters/qa/.",
     )
     parser.add_argument("character_ids", nargs="+")
     args = parser.parse_args()
+    if not args.allow_placeholder:
+        parser.error(
+            "procedural animation fallback generation is disabled for production. "
+            "Use --allow-placeholder only for smoke tests; missing real animation assets must remain missing."
+        )
     for character_id in args.character_ids:
-        print(f"generated: {build(character_id).relative_to(ROOT)}")
+        for path in build(character_id):
+            print(f"placeholder: {path.relative_to(ROOT)}")
     return 0
 
 

@@ -11,9 +11,11 @@ import postprocess_generated_character as pipeline
 
 ROOT = Path(__file__).resolve().parents[2]
 CHAR_ROOT = ROOT / "assets" / "characters"
+QA_ROOT = CHAR_ROOT / "qa" / "anchor_derived_placeholders"
 GREEN = (0, 255, 0, 255)
 UI_CELL = (448, 448)
 BATTLE_CELL = (448, 448)
+VFX_CELL = (384, 384)
 
 PORTRAIT_BOXES = {
     "baltimore": (220, 100, 760, 700),
@@ -90,7 +92,7 @@ def _class_icon(ship_class: str) -> Image.Image:
     return icon
 
 
-def build_ui(character_id: str, ship_class: str, full: Image.Image) -> Path:
+def build_ui(character_id: str, ship_class: str, full: Image.Image, out_root: Path) -> Path:
     portrait = _portrait(full, character_id)
     small = portrait.resize((max(1, portrait.width // 2), max(1, portrait.height // 2)), getattr(Image, "Resampling", Image).LANCZOS)
     chibi = ImageEnhance.Color(full).enhance(1.08)
@@ -107,7 +109,7 @@ def build_ui(character_id: str, ship_class: str, full: Image.Image) -> Path:
     sheet = Image.new("RGBA", (UI_CELL[0] * 4, UI_CELL[1] * 2), GREEN)
     for index, cell in enumerate(cells):
         sheet.alpha_composite(cell, ((index % 4) * UI_CELL[0], (index // 4) * UI_CELL[1]))
-    out = CHAR_ROOT / character_id / "ui" / f"{character_id}_ui_sheet.png"
+    out = out_root / "ui" / f"{character_id}_ui_sheet.png"
     out.parent.mkdir(parents=True, exist_ok=True)
     sheet.convert("RGB").save(out)
     return out
@@ -130,13 +132,18 @@ def _node(role: str) -> Image.Image:
         for index in range(barrels):
             y = 210 + index * 30
             draw.rounded_rectangle((280, y, 390, y + 16), radius=8, fill=steel, outline=edge, width=3)
-    elif "torpedo_tube_fore" in role or "torpedo_tube_aft" in role:
-        count = 6 if "fore" in role else 4
+    elif "torpedo_tube" in role:
+        count = 6 if "fore" in role else 4 if "aft" in role else 5
         start = cx - (count * 44) // 2
         for index in range(count):
             x = start + index * 44
             draw.ellipse((x, 182, x + 38, 220), fill=(25, 32, 42, 255), outline=edge, width=5)
             draw.rounded_rectangle((x, 202, x + 38, 318), radius=16, fill=steel, outline=edge, width=4)
+    elif "depth_charge" in role:
+        for index in range(4):
+            x = 124 + index * 52
+            draw.ellipse((x, 164, x + 36, 200), fill=(42, 52, 64, 255), outline=edge, width=5)
+            draw.rounded_rectangle((x - 8, 204, x + 44, 294), radius=14, fill=steel, outline=edge, width=4)
     elif "fire_control" in role or "radar" in role or "sonar" in role:
         draw.ellipse((138, 138, 310, 310), outline=blue, width=10)
         for radius in (38, 74):
@@ -164,15 +171,115 @@ def _node(role: str) -> Image.Image:
     return cell
 
 
-def build_battle(character_id: str, full: Image.Image, roles: list[str]) -> Path:
+def build_battle(character_id: str, full: Image.Image, roles: list[str], out_root: Path) -> Path:
     cells = [_cell_with(full, BATTLE_CELL, y_bias=8)] + [_node(role) for role in roles[1:]]
     sheet = Image.new("RGBA", (BATTLE_CELL[0] * 4, BATTLE_CELL[1] * 2), GREEN)
     for index, cell in enumerate(cells[:8]):
         sheet.alpha_composite(cell, ((index % 4) * BATTLE_CELL[0], (index // 4) * BATTLE_CELL[1]))
-    out = CHAR_ROOT / character_id / "battle" / f"{character_id}_battle_asset_grid.png"
+    out = out_root / "battle" / f"{character_id}_battle_asset_grid.png"
     out.parent.mkdir(parents=True, exist_ok=True)
     sheet.convert("RGB").save(out)
     return out
+
+
+def _vfx_cell(role: str) -> Image.Image:
+    cell = Image.new("RGBA", VFX_CELL, GREEN)
+    draw = ImageDraw.Draw(cell, "RGBA")
+    cx, cy = VFX_CELL[0] // 2, VFX_CELL[1] // 2
+    blue = (55, 165, 255, 255)
+    pale = (230, 246, 255, 255)
+    orange = (255, 165, 55, 225)
+    smoke = (120, 138, 158, 145)
+
+    if "warning_fan" in role or "range_reticle" in role:
+        for radius in (82, 124, 164):
+            draw.arc((cx - radius, cy - radius, cx + radius, cy + radius), 205, 335, fill=blue, width=8)
+        draw.line((cx, cy, 54, cy + 88), fill=pale, width=4)
+        draw.line((cx, cy, 330, cy + 88), fill=pale, width=4)
+    elif "depth_charge" in role:
+        for index in range(4):
+            x = 96 + index * 48
+            draw.ellipse((x, 118 + index * 12, x + 34, 152 + index * 12), fill=(60, 75, 92, 240), outline=pale, width=4)
+            draw.ellipse((x - 14, 208 + index * 8, x + 48, 254 + index * 8), outline=blue, width=5)
+    elif "torpedo" in role or "bubble" in role:
+        for index in range(11):
+            x = 44 + index * 28
+            y = cy + ((index % 3) - 1) * 16
+            draw.ellipse((x, y, x + 14, y + 14), fill=(115, 198, 255, 255))
+        draw.line((72, cy + 48, 318, cy - 28), fill=(55, 165, 255, 255), width=10)
+    elif "muzzle" in role:
+        draw.polygon(((80, cy), (182, cy - 42), (330, cy), (182, cy + 42)), fill=orange)
+        draw.ellipse((150, cy - 24, 216, cy + 24), fill=(255, 245, 200, 245))
+        draw.ellipse((48, cy - 52, 128, cy + 52), fill=smoke)
+    elif "aa" in role:
+        for radius in (58, 104, 150):
+            draw.ellipse((cx - radius, cy - radius, cx + radius, cy + radius), outline=(105, 175, 255, 255), width=6)
+        for point in ((96, 112), (276, 96), (308, 246), (122, 276)):
+            draw.ellipse((point[0] - 13, point[1] - 13, point[0] + 13, point[1] + 13), fill=(210, 235, 255, 255))
+    elif "radar" in role or "sonar" in role or "calibration" in role or "lock" in role:
+        for radius in (54, 96, 140):
+            draw.arc((cx - radius, cy - radius, cx + radius, cy + radius), 215, 325, fill=blue, width=7)
+        draw.line((88, 284, 296, 76), fill=(255, 225, 120, 220), width=9)
+        draw.rectangle((96, 96, 288, 288), outline=(120, 220, 255, 145), width=5)
+    elif "shell_trail" in role:
+        draw.line((64, 260, 316, 116), fill=(255, 238, 170, 230), width=11)
+        draw.line((64, 278, 316, 134), fill=(125, 210, 255, 140), width=5)
+        draw.ellipse((300, 102, 334, 136), fill=(255, 246, 210, 230))
+    elif "splash" in role:
+        for index, height in enumerate((118, 158, 98, 132, 86)):
+            x = 96 + index * 42
+            draw.polygon(((x, 260), (x + 20, 260 - height), (x + 42, 260)), fill=(185, 238, 255, 190))
+        draw.ellipse((72, 244, 312, 300), outline=blue, width=8)
+    elif "spark" in role:
+        for angle in range(0, 360, 35):
+            import math
+            ex = cx + int(math.cos(math.radians(angle)) * 128)
+            ey = cy + int(math.sin(math.radians(angle)) * 72)
+            draw.line((cx, cy, ex, ey), fill=(255, 215, 80, 220), width=5)
+        draw.ellipse((cx - 28, cy - 22, cx + 28, cy + 22), fill=(255, 245, 190, 235))
+    elif "shark" in role or "underwater_shadow" in role:
+        draw.ellipse((46, 152, 338, 244), fill=(8, 26, 50, 190), outline=(75, 160, 220, 155), width=6)
+        draw.polygon(((210, 152), (242, 84), (270, 162)), fill=(8, 26, 50, 170))
+    elif "ripple" in role or "wake" in role:
+        for radius in (54, 92, 132):
+            draw.ellipse((cx - radius, cy - radius // 3, cx + radius, cy + radius // 3), outline=blue, width=7)
+    elif "aura" in role or "pulse" in role:
+        for radius, alpha in ((66, 220), (110, 160), (154, 110)):
+            draw.ellipse((cx - radius, cy - radius, cx + radius, cy + radius), outline=(90, 205, 255, alpha), width=8)
+        draw.ellipse((cx - 24, cy - 24, cx + 24, cy + 24), fill=(220, 248, 255, 190))
+    else:
+        draw.ellipse((74, 74, 310, 310), outline=blue, width=9)
+        draw.ellipse((136, 136, 248, 248), fill=(160, 230, 255, 135))
+    return cell
+
+
+def build_vfx(character_id: str, roles: list[str], out_root: Path) -> Path:
+    sheet = Image.new("RGBA", (VFX_CELL[0] * 4, VFX_CELL[1] * 2), GREEN)
+    for index, role in enumerate(roles[:8]):
+        sheet.alpha_composite(_vfx_cell(role), ((index % 4) * VFX_CELL[0], (index // 4) * VFX_CELL[1]))
+    out = out_root / "vfx" / f"{character_id}_vfx_reference_sheet.png"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    sheet.convert("RGB").save(out)
+    return out
+
+
+def write_placeholder_provenance(character_id: str, out_root: Path, outputs: list[Path]) -> Path:
+    path = out_root / "placeholder_source_provenance.json"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    payload = {
+        "character_id": character_id,
+        "source": "tools/art_pipeline/build_anchor_derived_mvp_sheets.py",
+        "kind": "anchor_derived_placeholder",
+        "batch_ready_allowed": False,
+        "notes": (
+            "Smoke-test placeholder only. These sheets are derived from one accepted style anchor "
+            "and procedural diagrams, not generated production art. Do not copy into runtime source "
+            "directories or accept them as character assets."
+        ),
+        "outputs": [str(path.relative_to(ROOT)) for path in outputs],
+    }
+    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    return path
 
 
 def build(character_id: str) -> list[Path]:
@@ -180,19 +287,38 @@ def build(character_id: str) -> list[Path]:
     plan = json.loads((root / "postprocess_plan.json").read_text(encoding="utf-8"))
     concept = root / "concept" / f"{character_id}_concept_full.png"
     full = pipeline.remove_generated_background(concept)
-    return [
-        build_ui(character_id, str(plan["ship_class"]), full),
-        build_battle(character_id, full, list(plan["battle_grid_roles"])),
+    out_root = QA_ROOT / character_id
+    outputs = [
+        build_ui(character_id, str(plan["ship_class"]), full, out_root),
+        build_battle(character_id, full, list(plan["battle_grid_roles"]), out_root),
+        build_vfx(character_id, list(plan["vfx_roles"]), out_root),
     ]
+    outputs.append(write_placeholder_provenance(character_id, out_root, outputs))
+    return outputs
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build identity-safe MVP sheets directly from approved anchors.")
+    parser = argparse.ArgumentParser(
+        description=(
+            "Build anchor-derived placeholder sheets for smoke tests. This command never writes "
+            "runtime source assets and cannot produce batch-ready character art."
+        )
+    )
+    parser.add_argument(
+        "--allow-placeholder",
+        action="store_true",
+        help="Required acknowledgement: write non-production placeholder sheets under assets/characters/qa/.",
+    )
     parser.add_argument("character_ids", nargs="+")
     args = parser.parse_args()
+    if not args.allow_placeholder:
+        parser.error(
+            "anchor-derived fallback generation is disabled for production. "
+            "Use --allow-placeholder only for smoke tests; missing real assets must remain missing."
+        )
     for character_id in args.character_ids:
         for path in build(character_id):
-            print(f"generated: {path.relative_to(ROOT)}")
+            print(f"placeholder: {path.relative_to(ROOT)}")
     return 0
 
 

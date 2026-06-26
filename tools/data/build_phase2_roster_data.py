@@ -11,6 +11,7 @@ DOC = ROOT / "docs" / "14_character_balance_design.md"
 PLAN_ROOT = ROOT / "assets" / "characters"
 DISTANCE_BASELINE_MULTIPLIER = 1.5
 MOTION_BASELINE_MULTIPLIER = 0.5
+ATTACK_SPEED_BASELINE_MULTIPLIER = 0.5
 
 SHORT_TO_ID = {
     "弗莱彻": "fletcher", "克利夫兰": "cleveland", "巴尔的摩": "baltimore", "刺尾鱼": "wahoo",
@@ -210,7 +211,7 @@ def build_weapons() -> tuple[list[dict[str, Any]], dict[str, list[str]], dict[st
             "reload_time": number(row[5]), "base_range": number(row[6]), "range": number(row[6]) * DISTANCE_BASELINE_MULTIPLIER,
             "minimum_range": 20 if mount_type == "Torpedo" else 0,
             "fire_arc_center": fire_center, "fire_arc_degrees": fire_degrees, "fire_arcs": fire_arcs,
-            "projectile_speed": number(row[8]), "spread": number(row[9]), "impact_radius": 36,
+            "base_projectile_speed": number(row[8]), "projectile_speed": number(row[8]) * ATTACK_SPEED_BASELINE_MULTIPLIER, "spread": number(row[9]), "impact_radius": 36,
             "accuracy_modifier": number(row[10]), "projectile_id": projectile_id, "formula_id": formula_id,
             "shared_cooldown_group": group if ammo in {"HE", "AP"} and group.endswith("_main") else "",
             "armor_damage_modifiers": ARMOR[key if key in ARMOR else "aviation"], "target_types": target_types,

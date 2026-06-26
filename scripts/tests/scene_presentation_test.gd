@@ -103,6 +103,25 @@ func _run() -> void:
 	var ocean_material := battle.ocean_surface.material as ShaderMaterial
 	_check(float(ocean_material.get_shader_parameter("ai_texture_strength")) > 0.0, "runtime ocean palette enables authored ocean texture weight")
 	_check(ocean_material.get_shader_parameter("base_texture") != null, "runtime ocean palette binds the authored base ocean texture")
+	var ocean_palette_file := FileAccess.open("res://data/environments/ocean_palettes.json", FileAccess.READ)
+	var ocean_palette_data: Dictionary = JSON.parse_string(ocean_palette_file.get_as_text())
+	var ocean_palettes: Dictionary = ocean_palette_data.get("palettes", {})
+	var ocean_times := ["day", "dawn", "dusk", "night"]
+	var ocean_weathers := ["clear", "cloudy", "overcast", "rain", "thunderstorm"]
+	for weather in ocean_weathers:
+		for time_of_day in ocean_times:
+			var palette_id := "%s_%s" % [weather, time_of_day]
+			_check(ocean_palettes.has(palette_id), "ocean palette exists: %s" % palette_id)
+			battle._set_ocean_palette(palette_id)
+			_check(ocean_material.get_shader_parameter("base_texture") != null, "ocean palette binds texture: %s" % palette_id)
+	battle._set_ocean_palette("rain_night")
+	_check(float(ocean_material.get_shader_parameter("rain_strength")) > 0.0 and float(ocean_material.get_shader_parameter("mist_strength")) > 0.0, "rain ocean palette drives rain and mist shader layers")
+	_check(float(ocean_material.get_shader_parameter("rain_density")) > 1.0 and float(ocean_material.get_shader_parameter("rain_line_strength")) > 1.0, "rain ocean palette drives visible rain-line profile parameters")
+	_check(ocean_material.get_shader_parameter("rain_line_texture") != null and ocean_material.get_shader_parameter("rain_ripple_texture") != null, "rain ocean palette binds authored rain texture masters")
+	battle._set_ocean_palette("thunderstorm_night")
+	_check(float(ocean_material.get_shader_parameter("lightning_strength")) > 0.0 and float(ocean_material.get_shader_parameter("foam_strength")) > 0.0, "thunderstorm ocean palette drives lightning and foam shader layers")
+	_check(float(ocean_material.get_shader_parameter("squall_strength")) > 0.0 and float(ocean_material.get_shader_parameter("wave_scale")) > 1.0, "thunderstorm ocean palette drives squall and rough-wave profile parameters")
+	_check(ocean_material.get_shader_parameter("storm_shadow_texture") != null and ocean_material.get_shader_parameter("lightning_mask_texture") != null, "thunderstorm ocean palette binds authored storm texture masters")
 	var camera_before_input: Vector2 = battle.battle_camera.position
 	Input.action_press("camera_right")
 	await process_frame
@@ -118,6 +137,37 @@ func _run() -> void:
 	battle.effect_director._spawn_role_vfx("warspite", "heavy_muzzle", warspite_snapshot["position"], 0.0, "vfx.profile.muzzle_flash")
 	await process_frame
 	_check(battle.vfx_layer.get_child_count() > vfx_count_before, "VFX director can spawn role-bound combat effects")
+	var shell_count_before: int = battle.projectile_layer.get_child_count()
+	battle.effect_director.consume_events([
+		{
+			"event_type": "WeaponFired",
+			"unit_id": "unit.player.warspite",
+			"weapon_id": "weapon.warspite_381_ap",
+			"target_position": warspite_snapshot["position"] + Vector2(360.0, 0.0),
+			"shot_count": 2,
+		}
+	], battle.session)
+	await process_frame
+	var shell_flight_found := false
+	for child in battle.projectile_layer.get_children():
+		var script: Script = child.get_script() as Script
+		if script != null and str(script.resource_path).ends_with("shell_flight_view.gd"):
+			shell_flight_found = true
+			break
+	_check(battle.projectile_layer.get_child_count() > shell_count_before and shell_flight_found, "gun fire spawns visible shell flight nodes with trailing effects")
+	var shell_destinations: Array = battle.effect_director._shell_flight_destinations({
+		"event_type": "WeaponFired",
+		"unit_id": "unit.player.warspite",
+		"weapon_id": "weapon.warspite_381_ap",
+		"target_position": warspite_snapshot["position"] + Vector2(360.0, 0.0),
+		"shot_count": 8,
+	}, battle.session, battle.session.registry.get_definition("weapons", "weapon.warspite_381_ap"), battle.session.state["units_by_id"]["unit.player.warspite"], warspite_snapshot["position"])
+	var clustered_shells := true
+	for destination in shell_destinations:
+		if (destination as Vector2).distance_to(warspite_snapshot["position"] + Vector2(360.0, 0.0)) > 24.0:
+			clustered_shells = false
+			break
+	_check(clustered_shells, "shell flight visuals cluster around the target area instead of forming a wide fan")
 	battle.session.state["visible_by_faction"]["player"]["unit.enemy.bismarck"] = true
 	var damage_result := {"target_unit_id":"unit.enemy.bismarck","source_unit_id":"unit.player.warspite","source_weapon_id":"weapon.warspite_381_ap","damage_type":"Gun","hit":true,"final_damage":321.0}
 	var damage_numbers_before: int = battle.vfx_layer.get_child_count()

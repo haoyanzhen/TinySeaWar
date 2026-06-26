@@ -13,8 +13,10 @@
 - 开局镜头以玩家初始编队中心为中心并保持手动模式。
 - `WASD` 镜头移动。
 - `F` 跟随当前选中的己方舰船，再次按下退出跟随。
-- 晴昼、多云、暮色三套海况参数，可通过 `7`、`8`、`9` 切换。
+- 5 种气候 x 4 个时间段的 20 套海况资源，采用“时间色板 + 气候渲染剖面”，并保留 `day_clear`、`cloudy`、`dusk` 三个兼容入口。
 - 程序化水体明暗、窄波纹、稀疏闪光、云影、暮色反光和地图边缘压暗。
+- 正式天气母版资源接入：晴朗波光、多云云影、阴云厚云、白沫风纹、雨线、雨点涟漪、风暴暗云和雷雨闪电冷光层。
+- 程序化气候剖面继续负责母版资源的采样尺度、透明度、动画速度和组合强度。
 - 暂停时海面环境动画暂停。
 - 镜头边界限制，任何分辨率下都不会露出地图外空白。
 
@@ -47,6 +49,24 @@ assets/environments/ocean/common/ocean_wave_highlight_tile.png
 
 这些纹理保留为后续迭代源文件。当前运行时不直接混入 AI 平铺底图，避免大地图出现可识别的重复纹样。
 
+正式天气母版资源保存在：
+
+```text
+assets/environments/ocean/weather/
+```
+
+当前包含：
+
+- `ocean_weather_clear_glint_master.png`
+- `ocean_weather_cloudy_shadow_master.png`
+- `ocean_weather_overcast_cloud_master.png`
+- `ocean_weather_foam_wind_master.png`
+- `ocean_weather_rain_lines_master.png`
+- `ocean_weather_rain_ripples_master.png`
+- `ocean_weather_storm_shadow_master.png`
+- `ocean_weather_lightning_flash_master.png`
+- `weather_asset_manifest.json`
+
 ## 3. 程序实现
 
 ### 3.1 海面
@@ -76,11 +96,13 @@ assets/environments/ocean/common/ocean_wave_highlight_tile.png
 data/environments/ocean_palettes.json
 ```
 
-当前配置：
+当前正式组合：
 
-- `day_clear`：明亮青蓝，较清晰的波纹和高光。
-- `cloudy`：深蓝灰，较强云影和较低闪光。
-- `dusk`：蓝灰暮色，低亮波纹和暖色反射。
+- 气候：`clear`、`cloudy`、`overcast`、`rain`、`thunderstorm`。
+- 时间：`day`、`dawn`、`dusk`、`night`。
+- 组合 ID 使用 `{weather}_{time}`，例如 `clear_day`、`rain_night`、`thunderstorm_dusk`。
+- 时间字段主要控制颜色、明度、色温和暖/冷反光；气候字段主要控制云团、波浪、白沫、雨幕、低雾、风暴暗云和闪电层。
+- 旧入口 `day_clear`、`cloudy`、`dusk` 继续可用，分别映射到晴昼训练、多云标准和黄昏决战用途。
 
 关卡通过 `map.ocean_palette` 选择默认海况。
 
@@ -127,7 +149,7 @@ scripts/tests/render_scene_qa.gd
 | 3840 x 2160 | 通过 |
 | 镜头移动至地图其他区域 | 无空白、海面连续 |
 | 镜头移动至地图边缘 | 不越界，边缘自然压暗 |
-| 三套海况切换 | 颜色、云影、波纹和暮色反光正确切换 |
+| 20 套海况切换 | 颜色、云影、波纹、白沫、雨雾和雷雨闪电参数正确切换 |
 
 QA 渲染工具示例：
 
@@ -144,6 +166,6 @@ godot --path . --script scripts/tests/render_scene_qa.gd -- \
 以下内容不阻塞当前 MVP：
 
 - 使用独立美术工具进一步制作更自然的无缝纹理。
-- 增加小雨和低雾环境变体。
+- 继续微调雨、低雾和雷雨在正式角色叠加后的可读性。
 - 为低、中、高画质档提供不同环境采样数量。
 - 在正式角色资产接入后重新校准海面明度和波纹对比度。

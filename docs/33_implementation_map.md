@@ -25,7 +25,7 @@
   - `DataRegistry.assets`：读取美术资产索引。
 - 关卡配置：`data/levels/prototype_levels.json`
   - 新增 1v1、3v3、更多战斗模式时优先改这里。
-  - `map.ocean_palette` 控制海面调色板。
+  - `map.ocean_palette` 控制海面调色板，可引用 5 种气候 x 4 个时间段的组合海域。
 - 舰船配置：`data/ships/prototype_ships.json`、`data/ships/expanded_roster_ships.json`
   - 角色基础属性、武器挂载、技能、主要武器组、弹种组、`asset_root`。
   - `base_speed/base_turn_speed/base_detection_range/base_concealment_distance` 保存设计基线；运行字段分别按 0.5 或 1.5 倍写入。
@@ -41,6 +41,7 @@
   - `base_speed` 保存公共投射物 / 舰载机移动速度设计基线，`speed` 保存当前 0.5 倍运行速度。
 - 公式配置：`data/formulas/combat_formulas.json`
 - 海面调色板：`data/environments/ocean_palettes.json`
+  - 当前包含 20 套气候/时间组合，以及 `day_clear`、`cloudy`、`dusk` 三个兼容入口。
 - 表现设置：`data/settings/presentation_settings.json`
   - `window`：固定逻辑画布、主界面可选窗口尺寸与默认尺寸。
   - `camera`：默认缩放、滚轮步长、最近观察范围和最远地图占比。
@@ -162,8 +163,8 @@
 - 调整 HUD 布局：改 `battle_hud.gd`。
 - 调整结算画面：改 `battle_hud.gd` 的 `_draw_result_panel` 和 `_draw_result_character`。
 - 调整主界面文案/按钮：改 `main_menu.gd`。
-- 调整海面颜色或纹理强度：改 `data/environments/ocean_palettes.json`。
-- 调整海面算法：改 `ocean_surface.gdshader`。
+- 调整海面颜色、气候、时间、雨雾或闪电强度：改 `data/environments/ocean_palettes.json`。
+- 调整海面算法和天气层合成：改 `assets/environments/ocean/common/ocean_surface.gdshader`。
 
 ## 分层约定
 

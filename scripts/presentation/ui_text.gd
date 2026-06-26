@@ -1,5 +1,7 @@
 extends RefCounted
 
+const OCEAN_PALETTE_PATH := "res://data/environments/ocean_palettes.json"
+
 
 static func mode_name(level_id: String) -> String:
 	match level_id:
@@ -31,11 +33,14 @@ static func operation_mode_name(mode: String) -> String:
 
 
 static func palette_name(palette_id: String) -> String:
-	match palette_id:
-		"day_clear": return "晴昼训练海域"
-		"cloudy": return "阴云标准海域"
-		"dusk": return "黄昏决战海域"
-		_: return "未知海域"
+	var file := FileAccess.open(OCEAN_PALETTE_PATH, FileAccess.READ)
+	if file != null:
+		var parsed = JSON.parse_string(file.get_as_text())
+		if typeof(parsed) == TYPE_DICTIONARY and typeof(parsed.get("palettes")) == TYPE_DICTIONARY:
+			var palette: Dictionary = parsed["palettes"].get(palette_id, {})
+			if not palette.is_empty():
+				return str(palette.get("display_name", palette_id))
+	return "未知海域"
 
 
 static func ship_class_name(ship_class: String) -> String:

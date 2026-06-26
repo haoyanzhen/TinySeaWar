@@ -25,8 +25,6 @@ Use lowercase English file names with underscores:
 - [14_character_balance_design.md](14_character_balance_design.md)
 - [15_battle_level_design.md](15_battle_level_design.md)
 - [16_enemy_ai_behavior_design.md](16_enemy_ai_behavior_design.md)
-- [17_enemy_ai_implementation_feasibility.md](17_enemy_ai_implementation_feasibility.md)
-- [18_enemy_ai_quantitative_implementation.md](18_enemy_ai_quantitative_implementation.md)
 
 ### Data
 

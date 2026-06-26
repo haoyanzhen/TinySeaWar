@@ -363,6 +363,86 @@ collision_damage
 - `boundary_type`：边界类型，MVP 固定为不可离开的固定边界。
 - `collision_damage`：单位碰撞卡住时造成的生命值损失。
 
+海面调色配置保存在 `data/environments/ocean_palettes.json`。关卡 `map.ocean_palette` 引用其中一个调色 ID，用于切换纯场景表现，不改变碰撞、侦查、命中、移动或射程规则。
+
+海面调色基础字段：
+
+```text
+display_name
+time_of_day
+weather
+base_texture
+clear_glint_texture
+weather_cloud_texture
+foam_texture
+rain_line_texture
+rain_ripple_texture
+storm_shadow_texture
+lightning_mask_texture
+deep_color
+surface_color
+shallow_color
+highlight_color
+cloud_color
+warm_reflection_color
+wave_strength
+sparkle_strength
+cloud_opacity
+warm_reflection_strength
+animation_speed
+ai_texture_strength
+foam_strength
+rain_strength
+mist_strength
+lightning_strength
+cloud_scale
+cloud_cutoff
+cloud_softness
+wave_scale
+foam_coverage
+rain_angle
+rain_density
+rain_line_strength
+rain_ripple_strength
+squall_strength
+```
+
+- `display_name`：海域显示名称。
+- `time_of_day`：时间段，当前取值为 `day`、`dawn`、`dusk`、`night`。
+- `weather`：气候，当前取值为 `clear`、`cloudy`、`overcast`、`rain`、`thunderstorm`。
+- `base_texture`：海面基础可平铺纹理路径。
+- `clear_glint_texture`：晴朗波光和稀疏浪尖母版。
+- `weather_cloud_texture`：当前气候使用的云影母版，例如多云、阴云或雷雨暗云。
+- `foam_texture`：白沫、风纹和强风浪碎波母版。
+- `rain_line_texture`：雨线母版。
+- `rain_ripple_texture`：雨点落海涟漪母版。
+- `storm_shadow_texture`：雷雨风暴暗云母版。
+- `lightning_mask_texture`：雷雨闪电冷光遮罩母版。
+- `deep_color`、`surface_color`、`shallow_color`：深水、主海面和浅层反光色。
+- `highlight_color`：波纹、高光、雨点涟漪和闪电冷光参考色。
+- `cloud_color`：云影乘色层参考色。
+- `warm_reflection_color`：黄昏或低角度天光反射色。
+- `wave_strength`：中小波纹可见强度。
+- `sparkle_strength`：短高光和碎闪强度。
+- `cloud_opacity`：云影覆盖强度。
+- `warm_reflection_strength`：暖色反光强度。
+- `animation_speed`：海面、云影和天气层的整体动画速度倍率。
+- `ai_texture_strength`：AI/后处理海面母版混入强度。
+- `foam_strength`：白沫、风纹和强风浪碎波强度。
+- `rain_strength`：雨线和雨点涟漪强度。
+- `mist_strength`：低雾和雨幕空气感强度。
+- `lightning_strength`：雷雨闪电对海面和云影的短时冷白照亮强度。
+- `cloud_scale`：云影采样尺度。数值越小，云团越大，适合阴云和雷雨。
+- `cloud_cutoff`：云影成形阈值。数值越低，云影覆盖越多。
+- `cloud_softness`：云影边缘柔和度。晴朗和多云更软，阴云和雷雨更硬。
+- `wave_scale`：波纹频率尺度。雷雨和雨天使用更高数值形成更碎、更急的海面。
+- `foam_coverage`：白沫出现阈值。数值越低，白沫覆盖越多。
+- `rain_angle`：雨线方向，使用弧度。
+- `rain_density`：雨线密度。
+- `rain_line_strength`：雨线可见强度。
+- `rain_ripple_strength`：雨点落海涟漪强度。
+- `squall_strength`：风暴暗云和局部压暗强度，用于阴云、雨和雷雨的环境差异。
+
 ## 12. 关卡配置
 
 基础字段：

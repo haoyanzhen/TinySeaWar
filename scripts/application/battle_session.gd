@@ -253,6 +253,7 @@ func get_primary_aim_status(unit_id: String, target_position: Vector2) -> Dictio
 	var aim_weapons := _primary_aim_weapons(weapon_states)
 	validation["weapon_type"] = _common_weapon_type(aim_weapons)
 	validation["fire_arcs"] = _aim_fire_arcs(aim_weapons)
+	validation["full_salvo_fire_arcs"] = _aim_full_salvo_fire_arcs(aim_weapons)
 	validation["impact_radius"] = _aim_impact_radius(aim_weapons)
 	var direction_weapon := _direction_weapon_for_aim(unit, aim_weapons, target_position)
 	validation["minimum_range"] = float(direction_weapon.get("minimum_range", 0.0))
@@ -381,7 +382,7 @@ func _apply_command(command: Dictionary) -> Dictionary:
 		"FirePrimaryWeapon":
 			var target_position = command.get("target_position")
 			if typeof(target_position) != TYPE_VECTOR2: return _rejection(command.get("command_id", ""), "INVALID_TARGET_TYPE")
-			return _fire_primary_weapon(unit, _clamp_to_map(target_position), command.get("command_id", ""))
+			return _fire_primary_weapon(unit, target_position, command.get("command_id", ""))
 		_:
 			return _rejection(command.get("command_id", ""), "UNKNOWN_COMMAND")
 
@@ -670,6 +671,15 @@ func _can_fire_at_position(unit: Dictionary, target_position: Vector2, weapon: D
 	return {"legal": true, "reason_code": "OK"}
 
 
+func _can_fire_in_direction(unit: Dictionary, direction_point: Vector2, weapon: Dictionary) -> Dictionary:
+	var direction: Vector2 = direction_point - (unit["position"] as Vector2)
+	if direction.length_squared() <= 0.0001:
+		return {"legal": false, "reason_code": "INVALID_TARGET_TYPE"}
+	if not _angle_in_weapon_fire_arcs(float(unit["heading"]), direction.angle(), weapon):
+		return {"legal": false, "reason_code": "FIRE_ARC_INVALID"}
+	return {"legal": true, "reason_code": "OK"}
+
+
 func _fire_weapon(unit: Dictionary, target: Dictionary, weapon_state: Dictionary, weapon: Dictionary) -> void:
 	var category := str(weapon["mount_type"])
 	var extra_shots := int(round(ModifierService.sum_modifier(unit["status_effects"], "ExtraShots", category)))
@@ -749,8 +759,9 @@ func _spawn_projectile(unit: Dictionary, weapon: Dictionary, attack_id: String, 
 		"heading": heading,
 		"speed": speed,
 		"collision_radius": radius,
-		"remaining_lifetime": float(projectile_definition.get("lifetime", 5.0)),
-		"remaining_range": float(weapon.get("range", speed * float(projectile_definition.get("lifetime", 5.0)))),
+		"max_range": float(weapon.get("range", 0.0)),
+		"travelled_distance": 0.0,
+		"remaining_range": float(weapon.get("range", 0.0)),
 		"target_types": projectile_definition.get("target_types", []).duplicate(),
 	}
 	_emit("ProjectileSpawned", {"projectile_id": projectile_id, "source_unit_id": unit["entity_id"], "position": state["projectiles_by_id"][projectile_id]["position"]})
@@ -759,13 +770,11 @@ func _spawn_projectile(unit: Dictionary, weapon: Dictionary, attack_id: String, 
 func _update_projectiles(delta: float) -> void:
 	for projectile_id in state["projectiles_by_id"].keys():
 		var projectile: Dictionary = state["projectiles_by_id"][projectile_id]
-		var movement := float(projectile["speed"]) * delta
+		var movement := minf(float(projectile["speed"]) * delta, float(projectile["remaining_range"]))
 		projectile["position"] += Vector2.RIGHT.rotated(float(projectile["heading"])) * movement
-		projectile["remaining_lifetime"] = float(projectile["remaining_lifetime"]) - delta
+		projectile["travelled_distance"] = float(projectile["travelled_distance"]) + movement
 		projectile["remaining_range"] = float(projectile["remaining_range"]) - movement
-		if float(projectile["remaining_lifetime"]) <= 0.0 or float(projectile["remaining_range"]) <= 0.0:
-			state["projectiles_by_id"].erase(projectile_id)
-			continue
+		var hit := false
 		for target_id in _sorted_unit_ids():
 			var target: Dictionary = state["units_by_id"][target_id]
 			if target["life_state"] != "Alive" or target["faction_id"] == projectile["faction_id"] or not _target_type(target) in projectile["target_types"]: continue
@@ -774,7 +783,11 @@ func _update_projectiles(delta: float) -> void:
 			_emit("ProjectileHit", {"projectile_id": projectile_id, "target_unit_id": target_id, "position": projectile["position"]})
 			_resolve_attack({"attack_id": projectile["attack_id"], "source_unit_id": projectile["source_unit_id"], "source_weapon_id": projectile["source_weapon_id"], "target_unit_id": target_id, "origin": projectile["position"], "accuracy_modifier": 0.0}, true)
 			state["projectiles_by_id"].erase(projectile_id)
+			hit = true
 			break
+		if not hit and float(projectile["remaining_range"]) <= 0.0001:
+			_emit("ProjectileExpired", {"projectile_id": projectile_id, "position": projectile["position"], "reason_code": "MAX_RANGE"})
+			state["projectiles_by_id"].erase(projectile_id)
 
 
 func _resolve_delayed_attacks() -> void:
@@ -981,7 +994,7 @@ func _validate_primary_fire(unit: Dictionary, weapon_states: Array, target_posit
 	var last_reason := "TARGET_OUT_OF_RANGE"
 	for weapon_state in ready_states:
 		var weapon: Dictionary = registry.get_definition("weapons", str(weapon_state["definition_id"]))
-		var validation := _can_fire_at_position(unit, target_position, weapon)
+		var validation := _can_fire_in_direction(unit, target_position, weapon) if weapon.get("mount_type", "") == "Torpedo" else _can_fire_at_position(unit, target_position, weapon)
 		if bool(validation.get("legal", false)): legal_states.append(weapon_state)
 		else: last_reason = str(validation.get("reason_code", last_reason))
 	return {"legal": not legal_states.is_empty(), "reason_code": "OK" if not legal_states.is_empty() else last_reason, "legal_weapon_states": legal_states}
@@ -1034,6 +1047,20 @@ func _aim_fire_arcs(weapons: Array) -> Array:
 				"minimum_range": float(weapon.get("minimum_range", 0.0)),
 				"range": float(weapon.get("range", 0.0)),
 				"spread_degrees": float(weapon.get("spread", 0.0)),
+				"weapon_id": str(weapon.get("id", "")),
+			})
+	return result
+
+
+func _aim_full_salvo_fire_arcs(weapons: Array) -> Array:
+	var result: Array = []
+	for weapon in weapons:
+		for arc in weapon.get("full_salvo_fire_arcs", []):
+			result.append({
+				"center": float(arc.get("center", 0.0)),
+				"degrees": float(arc.get("degrees", 360.0)),
+				"minimum_range": float(weapon.get("minimum_range", 0.0)),
+				"range": float(weapon.get("range", 0.0)),
 				"weapon_id": str(weapon.get("id", "")),
 			})
 	return result

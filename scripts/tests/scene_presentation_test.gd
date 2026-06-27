@@ -60,9 +60,11 @@ func _run() -> void:
 	await process_frame
 	_check(torpedo_aim.get("weapon_type", "") == "Torpedo" and torpedo_aim.get("fire_arcs", []).size() == 2, "torpedo aim overlay receives broadside sectors from the battle session")
 	_check(is_equal_approx(float(torpedo_aim.get("range", 0.0)), 765.0), "torpedo range circle renders the 1.5x effective range")
-	_check(battle.has_method("_draw_directional_aim_overlay") and battle.has_method("_draw_area_target_overlay") and battle.has_method("_draw_skill_target_overlay"), "battle scene uses unified red-green-white tactical range overlays")
+	_check(battle.has_method("_draw_directional_aim_overlay") and battle.has_method("_draw_gun_aim_overlay") and battle.has_method("_draw_area_target_overlay") and battle.has_method("_draw_skill_target_overlay"), "battle scene uses direction, gun-sector, area, and skill tactical overlays")
 	battle.operation_mode = 0
 	battle.selected_unit_id = "unit.player.warspite"
+	var warspite_aim: Dictionary = battle.session.get_primary_aim_status("unit.player.warspite", warspite_snapshot["position"] + Vector2(0.0, 400.0))
+	_check(warspite_aim.get("fire_arcs", []).size() == 1 and warspite_aim.get("full_salvo_fire_arcs", []).size() == 2, "main-gun overlay receives green available sectors and dark-green all-mount sectors")
 	battle._update_hud()
 	_check(is_equal_approx(float(battle.session.get_operation_status("unit.player.warspite").get("primary_range", 0.0)), 1080.0), "HUD operation status displays the 1.5x main-gun range")
 	_check(battle.battle_hud._skill_text().contains("老兵校射"), "battle HUD displays the Chinese skill name")

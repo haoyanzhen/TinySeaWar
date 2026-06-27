@@ -10,8 +10,8 @@
       "mount_count": 2,
       "shots_per_mount": 8,
       "reload_time": 14,
-      "base_range": 760.0,
-      "range": 1140.0,
+      "base_range": 760,
+      "range": 1140,
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 360,
@@ -45,8 +45,8 @@
       "mount_count": 8,
       "shots_per_mount": 4,
       "reload_time": 0.6,
-      "base_range": 270.0,
-      "range": 405.0,
+      "base_range": 270,
+      "range": 405,
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 360,
@@ -80,8 +80,8 @@
       "mount_count": 3,
       "shots_per_mount": 3,
       "reload_time": 10,
-      "base_range": 740.0,
-      "range": 1110.0,
+      "base_range": 740,
+      "range": 1110,
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 290,
@@ -103,7 +103,17 @@
       "target_types": [
         "Surface"
       ],
-      "base_projectile_speed": 430
+      "base_projectile_speed": 430,
+      "full_salvo_fire_arcs": [
+        {
+          "center": -90,
+          "degrees": 110
+        },
+        {
+          "center": 90,
+          "degrees": 110
+        }
+      ]
     },
     {
       "id": "weapon.iowa_406_he",
@@ -115,8 +125,8 @@
       "mount_count": 3,
       "shots_per_mount": 3,
       "reload_time": 10,
-      "base_range": 700.0,
-      "range": 1050.0,
+      "base_range": 700,
+      "range": 1050,
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 290,
@@ -138,7 +148,17 @@
       "target_types": [
         "Surface"
       ],
-      "base_projectile_speed": 400
+      "base_projectile_speed": 400,
+      "full_salvo_fire_arcs": [
+        {
+          "center": -90,
+          "degrees": 110
+        },
+        {
+          "center": 90,
+          "degrees": 110
+        }
+      ]
     },
     {
       "id": "weapon.iowa_127_he",
@@ -150,8 +170,8 @@
       "mount_count": 10,
       "shots_per_mount": 2,
       "reload_time": 3.2,
-      "base_range": 340.0,
-      "range": 510.0,
+      "base_range": 340,
+      "range": 510,
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 320,
@@ -173,7 +193,17 @@
       "target_types": [
         "Surface"
       ],
-      "base_projectile_speed": 320
+      "base_projectile_speed": 320,
+      "full_salvo_fire_arcs": [
+        {
+          "center": -90,
+          "degrees": 120
+        },
+        {
+          "center": 90,
+          "degrees": 120
+        }
+      ]
     },
     {
       "id": "weapon.iowa_aa",
@@ -185,8 +215,8 @@
       "mount_count": 10,
       "shots_per_mount": 4,
       "reload_time": 0.55,
-      "base_range": 280.0,
-      "range": 420.0,
+      "base_range": 280,
+      "range": 420,
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 360,
@@ -220,8 +250,8 @@
       "mount_count": 8,
       "shots_per_mount": 2,
       "reload_time": 3.2,
-      "base_range": 410.0,
-      "range": 615.0,
+      "base_range": 410,
+      "range": 615,
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 320,
@@ -243,7 +273,17 @@
       "target_types": [
         "Surface"
       ],
-      "base_projectile_speed": 330
+      "base_projectile_speed": 330,
+      "full_salvo_fire_arcs": [
+        {
+          "center": -90,
+          "degrees": 120
+        },
+        {
+          "center": 90,
+          "degrees": 120
+        }
+      ]
     },
     {
       "id": "weapon.san_diego_torpedo",
@@ -255,8 +295,8 @@
       "mount_count": 2,
       "shots_per_mount": 4,
       "reload_time": 18,
-      "base_range": 400.0,
-      "range": 600.0,
+      "base_range": 400,
+      "range": 600,
       "minimum_range": 20,
       "fire_arc_center": 90,
       "fire_arc_degrees": 70,
@@ -301,8 +341,8 @@
       "mount_count": 8,
       "shots_per_mount": 2,
       "reload_time": 1.2,
-      "base_range": 310.0,
-      "range": 465.0,
+      "base_range": 310,
+      "range": 465,
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 360,
@@ -336,8 +376,8 @@
       "mount_count": 8,
       "shots_per_mount": 4,
       "reload_time": 0.45,
-      "base_range": 300.0,
-      "range": 450.0,
+      "base_range": 300,
+      "range": 450,
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 360,
@@ -371,8 +411,8 @@
       "mount_count": 4,
       "shots_per_mount": 1,
       "reload_time": 2.8,
-      "base_range": 330.0,
-      "range": 495.0,
+      "base_range": 330,
+      "range": 495,
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 300,
@@ -394,7 +434,17 @@
       "target_types": [
         "Surface"
       ],
-      "base_projectile_speed": 300
+      "base_projectile_speed": 300,
+      "full_salvo_fire_arcs": [
+        {
+          "center": -90,
+          "degrees": 120
+        },
+        {
+          "center": 90,
+          "degrees": 120
+        }
+      ]
     },
     {
       "id": "weapon.ward_torpedo",
@@ -406,8 +456,8 @@
       "mount_count": 4,
       "shots_per_mount": 3,
       "reload_time": 16,
-      "base_range": 420.0,
-      "range": 630.0,
+      "base_range": 420,
+      "range": 630,
       "minimum_range": 20,
       "fire_arc_center": 90,
       "fire_arc_degrees": 70,
@@ -452,8 +502,8 @@
       "mount_count": 4,
       "shots_per_mount": 2,
       "reload_time": 9.8,
-      "base_range": 700.0,
-      "range": 1050.0,
+      "base_range": 700,
+      "range": 1050,
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 290,
@@ -475,7 +525,17 @@
       "target_types": [
         "Surface"
       ],
-      "base_projectile_speed": 420
+      "base_projectile_speed": 420,
+      "full_salvo_fire_arcs": [
+        {
+          "center": -90,
+          "degrees": 110
+        },
+        {
+          "center": 90,
+          "degrees": 110
+        }
+      ]
     },
     {
       "id": "weapon.hood_381_he",
@@ -487,8 +547,8 @@
       "mount_count": 4,
       "shots_per_mount": 2,
       "reload_time": 9.8,
-      "base_range": 670.0,
-      "range": 1005.0,
+      "base_range": 670,
+      "range": 1005,
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 290,
@@ -510,7 +570,17 @@
       "target_types": [
         "Surface"
       ],
-      "base_projectile_speed": 390
+      "base_projectile_speed": 390,
+      "full_salvo_fire_arcs": [
+        {
+          "center": -90,
+          "degrees": 110
+        },
+        {
+          "center": 90,
+          "degrees": 110
+        }
+      ]
     },
     {
       "id": "weapon.hood_secondary",
@@ -522,8 +592,8 @@
       "mount_count": 6,
       "shots_per_mount": 1,
       "reload_time": 3.6,
-      "base_range": 320.0,
-      "range": 480.0,
+      "base_range": 320,
+      "range": 480,
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 300,
@@ -545,7 +615,17 @@
       "target_types": [
         "Surface"
       ],
-      "base_projectile_speed": 300
+      "base_projectile_speed": 300,
+      "full_salvo_fire_arcs": [
+        {
+          "center": -90,
+          "degrees": 120
+        },
+        {
+          "center": 90,
+          "degrees": 120
+        }
+      ]
     },
     {
       "id": "weapon.sirius_133_he",
@@ -557,8 +637,8 @@
       "mount_count": 5,
       "shots_per_mount": 2,
       "reload_time": 3.2,
-      "base_range": 400.0,
-      "range": 600.0,
+      "base_range": 400,
+      "range": 600,
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 310,
@@ -580,7 +660,17 @@
       "target_types": [
         "Surface"
       ],
-      "base_projectile_speed": 330
+      "base_projectile_speed": 330,
+      "full_salvo_fire_arcs": [
+        {
+          "center": -90,
+          "degrees": 120
+        },
+        {
+          "center": 90,
+          "degrees": 120
+        }
+      ]
     },
     {
       "id": "weapon.sirius_aa",
@@ -592,8 +682,8 @@
       "mount_count": 7,
       "shots_per_mount": 4,
       "reload_time": 0.6,
-      "base_range": 290.0,
-      "range": 435.0,
+      "base_range": 290,
+      "range": 435,
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 360,
@@ -627,8 +717,8 @@
       "mount_count": 1,
       "shots_per_mount": 4,
       "reload_time": 16,
-      "base_range": 660.0,
-      "range": 990.0,
+      "base_range": 660,
+      "range": 990,
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 360,
@@ -662,8 +752,8 @@
       "mount_count": 4,
       "shots_per_mount": 1,
       "reload_time": 1.4,
-      "base_range": 220.0,
-      "range": 330.0,
+      "base_range": 220,
+      "range": 330,
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 360,
@@ -697,8 +787,8 @@
       "mount_count": 3,
       "shots_per_mount": 3,
       "reload_time": 5,
-      "base_range": 540.0,
-      "range": 810.0,
+      "base_range": 540,
+      "range": 810,
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 300,
@@ -720,7 +810,17 @@
       "target_types": [
         "Surface"
       ],
-      "base_projectile_speed": 380
+      "base_projectile_speed": 380,
+      "full_salvo_fire_arcs": [
+        {
+          "center": -90,
+          "degrees": 120
+        },
+        {
+          "center": 90,
+          "degrees": 120
+        }
+      ]
     },
     {
       "id": "weapon.kirov_180_he",
@@ -732,8 +832,8 @@
       "mount_count": 3,
       "shots_per_mount": 3,
       "reload_time": 4.7,
-      "base_range": 510.0,
-      "range": 765.0,
+      "base_range": 510,
+      "range": 765,
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 300,
@@ -755,7 +855,17 @@
       "target_types": [
         "Surface"
       ],
-      "base_projectile_speed": 350
+      "base_projectile_speed": 350,
+      "full_salvo_fire_arcs": [
+        {
+          "center": -90,
+          "degrees": 120
+        },
+        {
+          "center": 90,
+          "degrees": 120
+        }
+      ]
     },
     {
       "id": "weapon.kirov_torpedo",
@@ -767,8 +877,8 @@
       "mount_count": 2,
       "shots_per_mount": 3,
       "reload_time": 15,
-      "base_range": 430.0,
-      "range": 645.0,
+      "base_range": 430,
+      "range": 645,
       "minimum_range": 20,
       "fire_arc_center": 90,
       "fire_arc_degrees": 70,
@@ -813,8 +923,8 @@
       "mount_count": 2,
       "shots_per_mount": 6,
       "reload_time": 15,
-      "base_range": 730.0,
-      "range": 1095.0,
+      "base_range": 730,
+      "range": 1095,
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 360,
@@ -848,8 +958,8 @@
       "mount_count": 1,
       "shots_per_mount": 4,
       "reload_time": 20,
-      "base_range": 710.0,
-      "range": 1065.0,
+      "base_range": 710,
+      "range": 1065,
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 360,
@@ -883,8 +993,8 @@
       "mount_count": 4,
       "shots_per_mount": 1,
       "reload_time": 2.7,
-      "base_range": 360.0,
-      "range": 540.0,
+      "base_range": 360,
+      "range": 540,
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 300,
@@ -906,7 +1016,17 @@
       "target_types": [
         "Surface"
       ],
-      "base_projectile_speed": 320
+      "base_projectile_speed": 320,
+      "full_salvo_fire_arcs": [
+        {
+          "center": -90,
+          "degrees": 120
+        },
+        {
+          "center": 90,
+          "degrees": 120
+        }
+      ]
     },
     {
       "id": "weapon.gnevny_torpedo",
@@ -918,8 +1038,8 @@
       "mount_count": 2,
       "shots_per_mount": 3,
       "reload_time": 14,
-      "base_range": 440.0,
-      "range": 660.0,
+      "base_range": 440,
+      "range": 660,
       "minimum_range": 20,
       "fire_arc_center": 90,
       "fire_arc_degrees": 70,
@@ -964,8 +1084,8 @@
       "mount_count": 4,
       "shots_per_mount": 2,
       "reload_time": 5.3,
-      "base_range": 530.0,
-      "range": 795.0,
+      "base_range": 530,
+      "range": 795,
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 300,
@@ -987,7 +1107,17 @@
       "target_types": [
         "Surface"
       ],
-      "base_projectile_speed": 380
+      "base_projectile_speed": 380,
+      "full_salvo_fire_arcs": [
+        {
+          "center": -90,
+          "degrees": 120
+        },
+        {
+          "center": 90,
+          "degrees": 120
+        }
+      ]
     },
     {
       "id": "weapon.prinz_203_he",
@@ -999,8 +1129,8 @@
       "mount_count": 4,
       "shots_per_mount": 2,
       "reload_time": 4.8,
-      "base_range": 500.0,
-      "range": 750.0,
+      "base_range": 500,
+      "range": 750,
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 300,
@@ -1022,7 +1152,17 @@
       "target_types": [
         "Surface"
       ],
-      "base_projectile_speed": 350
+      "base_projectile_speed": 350,
+      "full_salvo_fire_arcs": [
+        {
+          "center": -90,
+          "degrees": 120
+        },
+        {
+          "center": 90,
+          "degrees": 120
+        }
+      ]
     },
     {
       "id": "weapon.prinz_torpedo",
@@ -1034,8 +1174,8 @@
       "mount_count": 2,
       "shots_per_mount": 3,
       "reload_time": 16,
-      "base_range": 430.0,
-      "range": 645.0,
+      "base_range": 430,
+      "range": 645,
       "minimum_range": 20,
       "fire_arc_center": 90,
       "fire_arc_degrees": 75,
@@ -1080,8 +1220,8 @@
       "mount_count": 1,
       "shots_per_mount": 4,
       "reload_time": 16,
-      "base_range": 470.0,
-      "range": 705.0,
+      "base_range": 470,
+      "range": 705,
       "minimum_range": 20,
       "fire_arc_center": 0,
       "fire_arc_degrees": 110,
@@ -1122,8 +1262,8 @@
       "mount_count": 1,
       "shots_per_mount": 1,
       "reload_time": 18,
-      "base_range": 400.0,
-      "range": 600.0,
+      "base_range": 400,
+      "range": 600,
       "minimum_range": 20,
       "fire_arc_center": 180,
       "fire_arc_degrees": 90,
@@ -1164,8 +1304,8 @@
       "mount_count": 3,
       "shots_per_mount": 3,
       "reload_time": 12,
-      "base_range": 780.0,
-      "range": 1170.0,
+      "base_range": 780,
+      "range": 1170,
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 270,
@@ -1187,7 +1327,17 @@
       "target_types": [
         "Surface"
       ],
-      "base_projectile_speed": 440
+      "base_projectile_speed": 440,
+      "full_salvo_fire_arcs": [
+        {
+          "center": -90,
+          "degrees": 90
+        },
+        {
+          "center": 90,
+          "degrees": 90
+        }
+      ]
     },
     {
       "id": "weapon.yamato_460_he",
@@ -1199,8 +1349,8 @@
       "mount_count": 3,
       "shots_per_mount": 3,
       "reload_time": 12,
-      "base_range": 740.0,
-      "range": 1110.0,
+      "base_range": 740,
+      "range": 1110,
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 270,
@@ -1222,7 +1372,17 @@
       "target_types": [
         "Surface"
       ],
-      "base_projectile_speed": 400
+      "base_projectile_speed": 400,
+      "full_salvo_fire_arcs": [
+        {
+          "center": -90,
+          "degrees": 90
+        },
+        {
+          "center": 90,
+          "degrees": 90
+        }
+      ]
     },
     {
       "id": "weapon.yamato_155_he",
@@ -1234,8 +1394,8 @@
       "mount_count": 4,
       "shots_per_mount": 3,
       "reload_time": 4.5,
-      "base_range": 360.0,
-      "range": 540.0,
+      "base_range": 360,
+      "range": 540,
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 280,
@@ -1257,7 +1417,17 @@
       "target_types": [
         "Surface"
       ],
-      "base_projectile_speed": 320
+      "base_projectile_speed": 320,
+      "full_salvo_fire_arcs": [
+        {
+          "center": -90,
+          "degrees": 100
+        },
+        {
+          "center": 90,
+          "degrees": 100
+        }
+      ]
     },
     {
       "id": "weapon.yukikaze_127_he",
@@ -1269,8 +1439,8 @@
       "mount_count": 3,
       "shots_per_mount": 2,
       "reload_time": 2.6,
-      "base_range": 360.0,
-      "range": 540.0,
+      "base_range": 360,
+      "range": 540,
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 310,
@@ -1292,7 +1462,17 @@
       "target_types": [
         "Surface"
       ],
-      "base_projectile_speed": 320
+      "base_projectile_speed": 320,
+      "full_salvo_fire_arcs": [
+        {
+          "center": -90,
+          "degrees": 120
+        },
+        {
+          "center": 90,
+          "degrees": 120
+        }
+      ]
     },
     {
       "id": "weapon.yukikaze_torpedo",
@@ -1304,8 +1484,8 @@
       "mount_count": 2,
       "shots_per_mount": 4,
       "reload_time": 15,
-      "base_range": 500.0,
-      "range": 750.0,
+      "base_range": 500,
+      "range": 750,
       "minimum_range": 20,
       "fire_arc_center": 90,
       "fire_arc_degrees": 70,
@@ -1350,8 +1530,8 @@
       "mount_count": 1,
       "shots_per_mount": 4,
       "reload_time": 16,
-      "base_range": 650.0,
-      "range": 975.0,
+      "base_range": 650,
+      "range": 975,
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 360,
@@ -1385,8 +1565,8 @@
       "mount_count": 3,
       "shots_per_mount": 2,
       "reload_time": 3.6,
-      "base_range": 400.0,
-      "range": 600.0,
+      "base_range": 400,
+      "range": 600,
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 300,
@@ -1408,7 +1588,17 @@
       "target_types": [
         "Surface"
       ],
-      "base_projectile_speed": 320
+      "base_projectile_speed": 320,
+      "full_salvo_fire_arcs": [
+        {
+          "center": -90,
+          "degrees": 120
+        },
+        {
+          "center": 90,
+          "degrees": 120
+        }
+      ]
     },
     {
       "id": "weapon.ning_140_ap",
@@ -1420,8 +1610,8 @@
       "mount_count": 3,
       "shots_per_mount": 2,
       "reload_time": 4,
-      "base_range": 390.0,
-      "range": 585.0,
+      "base_range": 390,
+      "range": 585,
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 300,
@@ -1443,7 +1633,17 @@
       "target_types": [
         "Surface"
       ],
-      "base_projectile_speed": 340
+      "base_projectile_speed": 340,
+      "full_salvo_fire_arcs": [
+        {
+          "center": -90,
+          "degrees": 120
+        },
+        {
+          "center": 90,
+          "degrees": 120
+        }
+      ]
     },
     {
       "id": "weapon.ning_torpedo",
@@ -1455,8 +1655,8 @@
       "mount_count": 2,
       "shots_per_mount": 2,
       "reload_time": 17,
-      "base_range": 400.0,
-      "range": 600.0,
+      "base_range": 400,
+      "range": 600,
       "minimum_range": 20,
       "fire_arc_center": 90,
       "fire_arc_degrees": 70,
@@ -1501,8 +1701,8 @@
       "mount_count": 5,
       "shots_per_mount": 2,
       "reload_time": 0.9,
-      "base_range": 260.0,
-      "range": 390.0,
+      "base_range": 260,
+      "range": 390,
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 360,
@@ -1536,8 +1736,8 @@
       "mount_count": 4,
       "shots_per_mount": 1,
       "reload_time": 2.7,
-      "base_range": 370.0,
-      "range": 555.0,
+      "base_range": 370,
+      "range": 555,
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 310,
@@ -1559,7 +1759,17 @@
       "target_types": [
         "Surface"
       ],
-      "base_projectile_speed": 330
+      "base_projectile_speed": 330,
+      "full_salvo_fire_arcs": [
+        {
+          "center": -90,
+          "degrees": 120
+        },
+        {
+          "center": 90,
+          "degrees": 120
+        }
+      ]
     },
     {
       "id": "weapon.anshan_torpedo",
@@ -1571,8 +1781,8 @@
       "mount_count": 2,
       "shots_per_mount": 3,
       "reload_time": 15,
-      "base_range": 440.0,
-      "range": 660.0,
+      "base_range": 440,
+      "range": 660,
       "minimum_range": 20,
       "fire_arc_center": 90,
       "fire_arc_degrees": 70,
@@ -1617,8 +1827,8 @@
       "mount_count": 4,
       "shots_per_mount": 2,
       "reload_time": 0.95,
-      "base_range": 250.0,
-      "range": 375.0,
+      "base_range": 250,
+      "range": 375,
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 360,
@@ -1652,8 +1862,8 @@
       "mount_count": 4,
       "shots_per_mount": 3,
       "reload_time": 3.6,
-      "base_range": 420.0,
-      "range": 630.0,
+      "base_range": 420,
+      "range": 630,
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 300,
@@ -1675,7 +1885,17 @@
       "target_types": [
         "Surface"
       ],
-      "base_projectile_speed": 330
+      "base_projectile_speed": 330,
+      "full_salvo_fire_arcs": [
+        {
+          "center": -90,
+          "degrees": 120
+        },
+        {
+          "center": 90,
+          "degrees": 120
+        }
+      ]
     },
     {
       "id": "weapon.chongqing_152_ap",
@@ -1687,8 +1907,8 @@
       "mount_count": 4,
       "shots_per_mount": 3,
       "reload_time": 4,
-      "base_range": 410.0,
-      "range": 615.0,
+      "base_range": 410,
+      "range": 615,
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 300,
@@ -1710,7 +1930,17 @@
       "target_types": [
         "Surface"
       ],
-      "base_projectile_speed": 350
+      "base_projectile_speed": 350,
+      "full_salvo_fire_arcs": [
+        {
+          "center": -90,
+          "degrees": 120
+        },
+        {
+          "center": 90,
+          "degrees": 120
+        }
+      ]
     },
     {
       "id": "weapon.chongqing_torpedo",
@@ -1722,8 +1952,8 @@
       "mount_count": 2,
       "shots_per_mount": 3,
       "reload_time": 18,
-      "base_range": 410.0,
-      "range": 615.0,
+      "base_range": 410,
+      "range": 615,
       "minimum_range": 20,
       "fire_arc_center": 90,
       "fire_arc_degrees": 70,
@@ -1768,8 +1998,8 @@
       "mount_count": 6,
       "shots_per_mount": 2,
       "reload_time": 0.8,
-      "base_range": 270.0,
-      "range": 405.0,
+      "base_range": 270,
+      "range": 405,
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 360,

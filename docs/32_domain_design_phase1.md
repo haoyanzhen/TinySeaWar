@@ -347,12 +347,14 @@ fleet_id
 position
 heading
 speed
-remaining_lifetime
+max_range
+travelled_distance
+remaining_range
 remaining_pierce_count
 active
 ```
 
-火炮若第一阶段只需要落点和飞行延迟，可以表示为定时 `AttackRequest`，不强制创建参与碰撞的炮弹实体。鱼雷必须创建领域投射物，以保证碰撞与画面表现共享同一位置事实。
+火炮若第一阶段只需要落点和飞行延迟，可以表示为定时 `AttackRequest`，不强制创建参与碰撞的炮弹实体。鱼雷必须创建领域投射物，以保证碰撞与画面表现共享同一位置事实；其失效条件以累计航程达到武器最大射程为准，不以准心位置或公共生命周期提前截断。
 
 ### 5.6 SkillState
 
@@ -492,7 +494,7 @@ issuer_id
 
 `Automatic` 武器自动开火不是外部命令，而是一次模拟步内由领域规则产生的内部行为。玩家选择角色、`1` 到 `9`、`0`、`-` 槽位映射、主要武器准心和 `V` 镜头跟踪属于 Presentation 状态，不进入 Domain 命令。表现层只在玩家左键确认瞄准后创建 `FirePrimaryWeaponCommand`。
 
-`FirePrimaryWeaponCommand.target_ref` 按主要武器类型解释：主炮和空袭保存世界坐标，鱼雷保存由单位位置指向准心的标准化方向。领域层必须重新校验射程、射角、装填和目标类型，不能信任表现层显示结果。
+`FirePrimaryWeaponCommand.target_ref` 按主要武器类型解释：主炮和空袭保存世界坐标，鱼雷保存由单位位置指向准心的标准化方向。领域层必须重新校验主炮/空袭射程、全部方向武器的射角、装填和目标类型；鱼雷准心距离不作为射程判定，不能信任表现层显示结果。
 
 主要武器瞄准状态下的鼠标右键取消属于 Presentation 状态切换，不创建领域命令。输入层必须消费该次右键，避免同时生成 `MoveUnitsCommand`。
 
@@ -557,6 +559,7 @@ event_type
 | `AmmoTypeChanged` | 单位、武器组、新旧弹种 |
 | `ProjectileSpawned` | 投射物和初始状态 |
 | `ProjectileHit` | 投射物、目标、位置 |
+| `ProjectileExpired` | 投射物、最终位置、`MAX_RANGE` 原因 |
 | `AttackResolved` | `DamageResult` |
 | `StatusApplied` | 来源、目标、状态、持续时间 |
 | `StatusExpired` | 目标、状态 |

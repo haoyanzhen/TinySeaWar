@@ -195,6 +195,17 @@ func _validate_weapon(weapon: Dictionary) -> void:
 		var arc_degrees := float(arc.get("degrees", 0.0))
 		if arc_degrees <= 0.0 or arc_degrees > 360.0:
 			errors.append("Invalid fire arc entry %s in %s" % [arc_index, weapon_id])
+	var full_salvo_fire_arcs: Array = weapon.get("full_salvo_fire_arcs", [])
+	if weapon.get("mount_type", "") == "Gun" and int(weapon.get("mount_count", 0)) > 1 and full_salvo_fire_arcs.is_empty():
+		errors.append("Multi-mount gun must define full_salvo_fire_arcs in %s" % weapon_id)
+	for arc_index in range(full_salvo_fire_arcs.size()):
+		var arc = full_salvo_fire_arcs[arc_index]
+		if not arc is Dictionary or not arc.has("center") or not arc.has("degrees"):
+			errors.append("Invalid full-salvo fire arc entry %s in %s" % [arc_index, weapon_id])
+			continue
+		var arc_degrees := float(arc.get("degrees", 0.0))
+		if arc_degrees <= 0.0 or arc_degrees > 360.0:
+			errors.append("Invalid full-salvo fire arc entry %s in %s" % [arc_index, weapon_id])
 	if get_definition("projectiles", str(weapon.get("projectile_id", ""))).is_empty():
 		errors.append("Missing projectile referenced by %s" % weapon_id)
 	if get_definition("formulas", str(weapon.get("formula_id", ""))).is_empty():

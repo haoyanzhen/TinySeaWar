@@ -13,6 +13,16 @@ DISTANCE_BASELINE_MULTIPLIER = 1.5
 MOTION_BASELINE_MULTIPLIER = 0.5
 ATTACK_SPEED_BASELINE_MULTIPLIER = 0.5
 
+
+def full_salvo_fire_arcs(center: float, degrees: float, mount_count: int) -> list[dict[str, float]]:
+    if mount_count <= 1:
+        return [{"center": center, "degrees": degrees}]
+    broadside_degrees = max(30.0, min(120.0, degrees - 180.0))
+    return [
+        {"center": center - 90.0, "degrees": broadside_degrees},
+        {"center": center + 90.0, "degrees": broadside_degrees},
+    ]
+
 SHORT_TO_ID = {
     "弗莱彻": "fletcher", "克利夫兰": "cleveland", "巴尔的摩": "baltimore", "刺尾鱼": "wahoo",
     "杰维斯": "jervis", "贝尔法斯特": "belfast", "光辉": "illustrious", "拥护者": "upholder",
@@ -216,6 +226,10 @@ def build_weapons() -> tuple[list[dict[str, Any]], dict[str, list[str]], dict[st
             "shared_cooldown_group": group if ammo in {"HE", "AP"} and group.endswith("_main") else "",
             "armor_damage_modifiers": ARMOR[key if key in ARMOR else "aviation"], "target_types": target_types,
         }
+        if mount_type == "Gun":
+            definition["full_salvo_fire_arcs"] = full_salvo_fire_arcs(
+                fire_center, fire_degrees, definition["mount_count"]
+            )
         definitions.append(definition)
         mounts[cid].append(weapon_id)
         group_info.setdefault(group, {"character_id": cid, "mount_type": mount_type, "formula": key, "weapon_ids": []})["weapon_ids"].append(weapon_id)

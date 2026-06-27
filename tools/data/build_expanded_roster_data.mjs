@@ -5,6 +5,14 @@ import { fileURLToPath } from "node:url";
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
 const DISTANCE_BASELINE_MULTIPLIER = 1.5;
 const ATTACK_SPEED_BASELINE_MULTIPLIER = 0.5;
+const fullSalvoFireArcs = (center, degrees, mounts) => {
+  if (mounts <= 1) return [{ center, degrees }];
+  const broadsideDegrees = Math.max(30, Math.min(120, degrees - 180));
+  return [
+    { center: center - 90, degrees: broadsideDegrees },
+    { center: center + 90, degrees: broadsideDegrees },
+  ];
+};
 const output = (path, definitions) => {
   const absolute = resolve(root, path);
   mkdirSync(dirname(absolute), { recursive: true });
@@ -29,12 +37,16 @@ const common = (id, name, group, mode, type, mounts, shots, reload, range, speed
   impact_radius: 36, accuracy_modifier: accuracy, shared_cooldown_group: "",
 });
 
-const gun = ({ id, name, group, mode = "Automatic", ammo = "HE", mounts, shots, reload, range, arc, speed, spread, accuracy, formula }) => ({
-  ...common(id, name, group, mode, "Gun", mounts, shots, reload, range, speed, spread, accuracy),
-  ammo_type: ammo, fire_arc_degrees: Math.min(360, arc * 2), projectile_id: "projectile.shell",
-  formula_id: `formula.${formula}`, impact_radius: formula.startsWith("large") ? 48 : formula.startsWith("medium") ? 40 : 30,
-  shared_cooldown_group: ammo === "AP" || ammo === "HE" ? group : "", armor_damage_modifiers: armor[formula], target_types: ["Surface"],
-});
+const gun = ({ id, name, group, mode = "Automatic", ammo = "HE", mounts, shots, reload, range, arc, speed, spread, accuracy, formula }) => {
+  const fireArcDegrees = Math.min(360, arc * 2);
+  return {
+    ...common(id, name, group, mode, "Gun", mounts, shots, reload, range, speed, spread, accuracy),
+    ammo_type: ammo, fire_arc_degrees: fireArcDegrees,
+    full_salvo_fire_arcs: fullSalvoFireArcs(0, fireArcDegrees, mounts), projectile_id: "projectile.shell",
+    formula_id: `formula.${formula}`, impact_radius: formula.startsWith("large") ? 48 : formula.startsWith("medium") ? 40 : 30,
+    shared_cooldown_group: ammo === "AP" || ammo === "HE" ? group : "", armor_damage_modifiers: armor[formula], target_types: ["Surface"],
+  };
+};
 
 const torpedo = ({ id, name, group, mounts, shots, reload, range, arc, speed, spread, submarine = false, center = null }) => {
   const definition = {

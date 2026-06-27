@@ -88,6 +88,8 @@ func _test_runtime_baseline_scales() -> void:
 		_check(base_range > 0.0 and is_equal_approx(effective_range, base_range * 1.5), "%s uses the global 1.5x effective attack range" % weapon.get("id", "?"))
 		var base_projectile_speed := float(weapon.get("base_projectile_speed", 0.0))
 		_check(base_projectile_speed >= 0.0 and is_equal_approx(float(weapon.get("projectile_speed", 0.0)), base_projectile_speed * 0.5), "%s uses the 0.5x runtime attack speed baseline" % weapon.get("id", "?"))
+		if weapon.get("mount_type", "") == "Gun" and int(weapon.get("mount_count", 0)) > 1:
+			_check(not weapon.get("full_salvo_fire_arcs", []).is_empty(), "%s exposes the all-mount full-salvo firing sectors" % weapon.get("id", "?"))
 	for projectile in registry.all("projectiles"):
 		var base_speed := float(projectile.get("base_speed", 0.0))
 		_check(base_speed >= 0.0 and is_equal_approx(float(projectile.get("speed", 0.0)), base_speed * 0.5), "%s uses the 0.5x runtime projectile and aircraft speed baseline" % projectile.get("id", "?"))
@@ -231,6 +233,8 @@ func _test_operation_design_rules() -> void:
 	var auto_events := session.drain_events()
 	_check(not _has_event(auto_events, "WeaponFired"), "ManualPrimary weapon does not participate in automatic fire")
 	_check(session.get_player_slots()[0]["unit_id"] == "unit.player.warspite", "slot 1 selects the first fleet member")
+	var gun_aim_status: Dictionary = session.get_primary_aim_status(player["entity_id"], enemy["position"])
+	_check(gun_aim_status.get("fire_arcs", []).size() == 1 and gun_aim_status.get("full_salvo_fire_arcs", []).size() == 2, "main-gun aim exposes available and all-mount full-salvo firing sectors")
 	session.queue_command({"command_id":"primary.1","command_type":"FirePrimaryWeapon","issued_at_tick":session.state["tick_index"],"issuer_id":"player","unit_id":"unit.player.warspite","target_position":enemy["position"]})
 	var fire_events: Array = session.advance_tick(0.1)
 	_check(_has_event(fire_events, "WeaponFired"), "E-style primary confirmation creates a weapon fire fact")
@@ -261,10 +265,12 @@ func _test_torpedo_fire_arc_rules() -> void:
 	shimakaze["position"] = Vector2(1200.0, 1200.0)
 	shimakaze["heading"] = 0.0
 	var starboard_status: Dictionary = session.get_primary_aim_status(shimakaze["entity_id"], shimakaze["position"] + Vector2(0.0, 300.0))
+	var distant_starboard_status: Dictionary = session.get_primary_aim_status(shimakaze["entity_id"], shimakaze["position"] + Vector2(0.0, 3000.0))
 	var port_status: Dictionary = session.get_primary_aim_status(shimakaze["entity_id"], shimakaze["position"] + Vector2(0.0, -300.0))
 	var bow_status: Dictionary = session.get_primary_aim_status(shimakaze["entity_id"], shimakaze["position"] + Vector2(300.0, 0.0))
 	var stern_status: Dictionary = session.get_primary_aim_status(shimakaze["entity_id"], shimakaze["position"] + Vector2(-300.0, 0.0))
 	_check(bool(starboard_status.get("legal", false)) and bool(port_status.get("legal", false)), "surface torpedoes allow both broadside sectors")
+	_check(bool(distant_starboard_status.get("legal", false)), "torpedo aim uses direction only and ignores cursor distance")
 	_check(not bool(bow_status.get("legal", true)) and not bool(stern_status.get("legal", true)), "surface torpedoes reject bow and stern blind sectors")
 	_check(starboard_status.get("fire_arcs", []).size() == 2 and is_equal_approx(float(starboard_status.get("spread_degrees", 0.0)), 12.0), "torpedo aim status exposes both firing sectors and configured spread")
 	var submarine: Dictionary = session.state["units_by_id"]["unit.player.hai_shih"]
@@ -276,6 +282,23 @@ func _test_torpedo_fire_arc_rules() -> void:
 	_check(bool(fore_status.get("legal", false)) and bool(aft_status.get("legal", false)), "submarine torpedoes retain fore and aft firing sectors")
 	_check(not bool(beam_status.get("legal", true)), "submarine torpedoes reject broadside firing")
 	_check(is_equal_approx(float(fore_status.get("spread_degrees", 0.0)), 10.0) and is_equal_approx(float(aft_status.get("spread_degrees", 0.0)), 12.0), "selected torpedo direction exposes the matching launcher spread")
+	var torpedo_weapon: Dictionary = registry.get_definition("weapons", "weapon.shimakaze_610_torpedo")
+	session.drain_events()
+	session._spawn_projectile(shimakaze, torpedo_weapon, "attack.torpedo.range", PI * 0.5)
+	var projectile_id := str(session.state["projectiles_by_id"].keys()[0])
+	var launch_position: Vector2 = session.state["projectiles_by_id"][projectile_id]["position"]
+	for index in range(70):
+		session._update_projectiles(0.1)
+	_check(session.state["projectiles_by_id"].has(projectile_id) and float(session.state["projectiles_by_id"][projectile_id].get("travelled_distance", 0.0)) > 300.0, "torpedo continues beyond the clicked direction point")
+	for index in range(30):
+		if not session.state["projectiles_by_id"].has(projectile_id): break
+		session._update_projectiles(0.1)
+	var expiry_position := Vector2.ZERO
+	for event in session.drain_events():
+		if event.get("event_type", "") == "ProjectileExpired" and event.get("projectile_id", "") == projectile_id:
+			expiry_position = event.get("position", Vector2.ZERO)
+	_check(not session.state["projectiles_by_id"].has(projectile_id), "torpedo disappears after reaching its maximum range")
+	_check(is_equal_approx(launch_position.distance_to(expiry_position), float(torpedo_weapon["range"])), "torpedo expiry position matches the weapon maximum range")
 
 
 func _test_detection_and_contact_ghost() -> void:

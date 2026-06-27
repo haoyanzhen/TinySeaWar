@@ -10,7 +10,7 @@
       "mount_count": 4,
       "shots_per_mount": 2,
       "reload_time": 10.5,
-      "range": 1080.0,
+      "range": 1080,
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 280,
@@ -32,8 +32,18 @@
         "Submerged": 0,
         "Air": 0
       },
-      "base_range": 720.0,
-      "base_projectile_speed": 420
+      "base_range": 720,
+      "base_projectile_speed": 420,
+      "full_salvo_fire_arcs": [
+        {
+          "center": -90,
+          "degrees": 100
+        },
+        {
+          "center": 90,
+          "degrees": 100
+        }
+      ]
     },
     {
       "id": "weapon.warspite_381_he",
@@ -45,7 +55,7 @@
       "mount_count": 4,
       "shots_per_mount": 2,
       "reload_time": 10.5,
-      "range": 1035.0,
+      "range": 1035,
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 280,
@@ -67,8 +77,18 @@
         "Submerged": 0,
         "Air": 0
       },
-      "base_range": 690.0,
-      "base_projectile_speed": 390
+      "base_range": 690,
+      "base_projectile_speed": 390,
+      "full_salvo_fire_arcs": [
+        {
+          "center": -90,
+          "degrees": 100
+        },
+        {
+          "center": 90,
+          "degrees": 100
+        }
+      ]
     },
     {
       "id": "weapon.warspite_152_he",
@@ -80,7 +100,7 @@
       "mount_count": 6,
       "shots_per_mount": 1,
       "reload_time": 4,
-      "range": 510.0,
+      "range": 510,
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 270,
@@ -102,8 +122,18 @@
         "Submerged": 0,
         "Air": 0
       },
-      "base_range": 340.0,
-      "base_projectile_speed": 300
+      "base_range": 340,
+      "base_projectile_speed": 300,
+      "full_salvo_fire_arcs": [
+        {
+          "center": -90,
+          "degrees": 90
+        },
+        {
+          "center": 90,
+          "degrees": 90
+        }
+      ]
     },
     {
       "id": "weapon.bismarck_380_ap",
@@ -115,7 +145,7 @@
       "mount_count": 4,
       "shots_per_mount": 2,
       "reload_time": 10,
-      "range": 1095.0,
+      "range": 1095,
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 280,
@@ -137,8 +167,18 @@
         "Submerged": 0,
         "Air": 0
       },
-      "base_range": 730.0,
-      "base_projectile_speed": 420
+      "base_range": 730,
+      "base_projectile_speed": 420,
+      "full_salvo_fire_arcs": [
+        {
+          "center": -90,
+          "degrees": 100
+        },
+        {
+          "center": 90,
+          "degrees": 100
+        }
+      ]
     },
     {
       "id": "weapon.bismarck_380_he",
@@ -150,7 +190,7 @@
       "mount_count": 4,
       "shots_per_mount": 2,
       "reload_time": 10,
-      "range": 1050.0,
+      "range": 1050,
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 280,
@@ -172,8 +212,18 @@
         "Submerged": 0,
         "Air": 0
       },
-      "base_range": 700.0,
-      "base_projectile_speed": 390
+      "base_range": 700,
+      "base_projectile_speed": 390,
+      "full_salvo_fire_arcs": [
+        {
+          "center": -90,
+          "degrees": 100
+        },
+        {
+          "center": 90,
+          "degrees": 100
+        }
+      ]
     },
     {
       "id": "weapon.bismarck_150_he",
@@ -185,7 +235,7 @@
       "mount_count": 6,
       "shots_per_mount": 2,
       "reload_time": 3.8,
-      "range": 525.0,
+      "range": 525,
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 270,
@@ -207,8 +257,18 @@
         "Submerged": 0,
         "Air": 0
       },
-      "base_range": 350.0,
-      "base_projectile_speed": 310
+      "base_range": 350,
+      "base_projectile_speed": 310,
+      "full_salvo_fire_arcs": [
+        {
+          "center": -90,
+          "degrees": 90
+        },
+        {
+          "center": 90,
+          "degrees": 90
+        }
+      ]
     },
     {
       "id": "weapon.aurora_152_he",
@@ -220,7 +280,7 @@
       "mount_count": 6,
       "shots_per_mount": 1,
       "reload_time": 4.2,
-      "range": 585.0,
+      "range": 585,
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 290,
@@ -242,8 +302,18 @@
         "Submerged": 0,
         "Air": 0
       },
-      "base_range": 390.0,
-      "base_projectile_speed": 300
+      "base_range": 390,
+      "base_projectile_speed": 300,
+      "full_salvo_fire_arcs": [
+        {
+          "center": -90,
+          "degrees": 110
+        },
+        {
+          "center": 90,
+          "degrees": 110
+        }
+      ]
     },
     {
       "id": "weapon.hindenburg_203_ap",
@@ -255,7 +325,7 @@
       "mount_count": 4,
       "shots_per_mount": 3,
       "reload_time": 5.5,
-      "range": 840.0,
+      "range": 840,
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 290,
@@ -277,8 +347,18 @@
         "Submerged": 0,
         "Air": 0
       },
-      "base_range": 560.0,
-      "base_projectile_speed": 400
+      "base_range": 560,
+      "base_projectile_speed": 400,
+      "full_salvo_fire_arcs": [
+        {
+          "center": -90,
+          "degrees": 110
+        },
+        {
+          "center": 90,
+          "degrees": 110
+        }
+      ]
     },
     {
       "id": "weapon.hindenburg_203_he",
@@ -290,7 +370,7 @@
       "mount_count": 4,
       "shots_per_mount": 3,
       "reload_time": 5,
-      "range": 795.0,
+      "range": 795,
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 290,
@@ -312,8 +392,18 @@
         "Submerged": 0,
         "Air": 0
       },
-      "base_range": 530.0,
-      "base_projectile_speed": 360
+      "base_range": 530,
+      "base_projectile_speed": 360,
+      "full_salvo_fire_arcs": [
+        {
+          "center": -90,
+          "degrees": 110
+        },
+        {
+          "center": 90,
+          "degrees": 110
+        }
+      ]
     },
     {
       "id": "weapon.shimakaze_127_he",
@@ -325,7 +415,7 @@
       "mount_count": 3,
       "shots_per_mount": 2,
       "reload_time": 2.8,
-      "range": 525.0,
+      "range": 525,
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 300,
@@ -347,8 +437,18 @@
         "Submerged": 0,
         "Air": 0
       },
-      "base_range": 350.0,
-      "base_projectile_speed": 320
+      "base_range": 350,
+      "base_projectile_speed": 320,
+      "full_salvo_fire_arcs": [
+        {
+          "center": -90,
+          "degrees": 120
+        },
+        {
+          "center": 90,
+          "degrees": 120
+        }
+      ]
     },
     {
       "id": "weapon.shimakaze_610_torpedo",
@@ -360,7 +460,7 @@
       "mount_count": 3,
       "shots_per_mount": 5,
       "reload_time": 18,
-      "range": 765.0,
+      "range": 765,
       "minimum_range": 25,
       "fire_arc_center": 90,
       "fire_arc_degrees": 75,
@@ -392,7 +492,7 @@
         "Submerged": 1,
         "Air": 0
       },
-      "base_range": 510.0,
+      "base_range": 510,
       "base_projectile_speed": 170
     },
     {
@@ -405,7 +505,7 @@
       "mount_count": 1,
       "shots_per_mount": 4,
       "reload_time": 18,
-      "range": 660.0,
+      "range": 660,
       "minimum_range": 20,
       "fire_arc_center": 0,
       "fire_arc_degrees": 110,
@@ -433,7 +533,7 @@
         "Submerged": 1,
         "Air": 0
       },
-      "base_range": 440.0,
+      "base_range": 440,
       "base_projectile_speed": 145
     },
     {
@@ -446,7 +546,7 @@
       "mount_count": 1,
       "shots_per_mount": 2,
       "reload_time": 20,
-      "range": 570.0,
+      "range": 570,
       "minimum_range": 20,
       "fire_arc_center": 180,
       "fire_arc_degrees": 90,
@@ -474,7 +574,7 @@
         "Submerged": 1,
         "Air": 0
       },
-      "base_range": 380.0,
+      "base_range": 380,
       "base_projectile_speed": 135
     },
     {
@@ -501,7 +601,7 @@
       "mount_count": 2,
       "shots_per_mount": 2,
       "reload_time": 14,
-      "range": 975.0,
+      "range": 975,
       "projectile_speed": 110,
       "impact_radius": 42,
       "target_types": [
@@ -509,7 +609,7 @@
       ],
       "projectile_id": "aircraft.bomber",
       "formula_id": "formula.medium_he",
-      "base_range": 650.0,
+      "base_range": 650,
       "base_projectile_speed": 220
     },
     {
@@ -536,7 +636,7 @@
       "mount_count": 2,
       "shots_per_mount": 1,
       "reload_time": 8,
-      "range": 780.0,
+      "range": 780,
       "projectile_speed": 130,
       "impact_radius": 20,
       "target_types": [
@@ -544,7 +644,7 @@
       ],
       "projectile_id": "aircraft.fighter",
       "formula_id": "formula.small_he",
-      "base_range": 520.0,
+      "base_range": 520,
       "base_projectile_speed": 260
     },
     {
@@ -571,7 +671,7 @@
       "mount_count": 2,
       "shots_per_mount": 1,
       "reload_time": 5,
-      "range": 540.0,
+      "range": 540,
       "projectile_speed": 160,
       "impact_radius": 18,
       "target_types": [
@@ -579,7 +679,7 @@
       ],
       "projectile_id": "projectile.shell",
       "formula_id": "formula.small_he",
-      "base_range": 360.0,
+      "base_range": 360,
       "base_projectile_speed": 320
     },
     {
@@ -606,7 +706,7 @@
       "mount_count": 1,
       "shots_per_mount": 4,
       "reload_time": 18,
-      "range": 660.0,
+      "range": 660,
       "projectile_speed": 72.5,
       "impact_radius": 28,
       "target_types": [
@@ -615,7 +715,7 @@
       ],
       "projectile_id": "projectile.submarine_torpedo",
       "formula_id": "formula.submarine_torpedo",
-      "base_range": 440.0,
+      "base_range": 440,
       "base_projectile_speed": 145
     }
   ]

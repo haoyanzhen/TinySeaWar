@@ -13,6 +13,8 @@ const UI_ASSET_ROOT := "res://assets/ui/export/2x"
 const DEFAULT_UNIT_SCALE := 0.28
 const RANGE_AVAILABLE_FILL := Color(0.18, 1.0, 0.48, 0.13)
 const RANGE_AVAILABLE_EDGE := Color(0.28, 1.0, 0.55, 0.86)
+const RANGE_FULL_SALVO_FILL := Color(0.02, 0.38, 0.14, 0.30)
+const RANGE_FULL_SALVO_EDGE := Color(0.08, 0.62, 0.24, 0.95)
 const RANGE_UNAVAILABLE_FILL := Color(1.0, 0.18, 0.16, 0.075)
 const RANGE_UNAVAILABLE_EDGE := Color(1.0, 0.24, 0.2, 0.72)
 const RANGE_SELECTION_WHITE := Color(1.0, 1.0, 1.0, 0.95)
@@ -224,6 +226,8 @@ func _draw_operation_overlay() -> void:
 		var aim_status: Dictionary = session.get_primary_aim_status(selected_unit_id, cursor)
 		if aim_status.get("control_type", "") == "Direction":
 			_draw_directional_aim_overlay(selected, cursor, aim_status)
+		elif aim_status.get("weapon_type", "") == "Gun":
+			_draw_gun_aim_overlay(selected, cursor, aim_status)
 		else:
 			_draw_area_target_overlay(selected, cursor, aim_status, float(aim_status.get("impact_radius", DEFAULT_AREA_TARGET_RADIUS)))
 		_draw_aim_reason_label(cursor, str(aim_status.get("reason_code", "OK")), bool(aim_status.get("legal", false)))
@@ -243,7 +247,7 @@ func _draw_directional_aim_overlay(selected: Dictionary, cursor: Vector2, aim_st
 	for arc in aim_status.get("fire_arcs", []):
 		var center_angle := float(selected.get("heading", 0.0)) + deg_to_rad(float(arc.get("center", 0.0)))
 		var half_angle := deg_to_rad(float(arc.get("degrees", 0.0))) * 0.5
-		var minimum_range := float(arc.get("minimum_range", 0.0))
+		var minimum_range := 0.0
 		var arc_range := float(arc.get("range", maximum_range))
 		_draw_annular_sector(origin, minimum_range, arc_range, center_angle - half_angle, center_angle + half_angle, RANGE_AVAILABLE_FILL)
 		draw_arc(origin, arc_range, center_angle - half_angle, center_angle + half_angle, 36, RANGE_AVAILABLE_EDGE, 2.0)
@@ -257,6 +261,32 @@ func _draw_directional_aim_overlay(selected: Dictionary, cursor: Vector2, aim_st
 		draw_line(origin, origin + Vector2.RIGHT.rotated(selected_heading - spread_half_angle) * selected_range, RANGE_SELECTION_WHITE, 1.5)
 		draw_line(origin, origin + Vector2.RIGHT.rotated(selected_heading + spread_half_angle) * selected_range, RANGE_SELECTION_WHITE, 1.5)
 		draw_arc(origin, selected_range, selected_heading - spread_half_angle, selected_heading + spread_half_angle, 16, RANGE_SELECTION_WHITE, 1.5)
+
+
+func _draw_gun_aim_overlay(selected: Dictionary, cursor: Vector2, aim_status: Dictionary) -> void:
+	var origin: Vector2 = selected["position"]
+	var maximum_range := float(aim_status.get("range", 0.0))
+	draw_circle(origin, maximum_range, RANGE_UNAVAILABLE_FILL)
+	draw_arc(origin, maximum_range, 0.0, TAU, 128, RANGE_UNAVAILABLE_EDGE, 2.0)
+	_draw_fire_arc_sectors(selected, aim_status.get("fire_arcs", []), maximum_range, RANGE_AVAILABLE_FILL, RANGE_AVAILABLE_EDGE)
+	_draw_fire_arc_sectors(selected, aim_status.get("full_salvo_fire_arcs", []), maximum_range, RANGE_FULL_SALVO_FILL, RANGE_FULL_SALVO_EDGE)
+	draw_line(origin, cursor, RANGE_SELECTION_WHITE, 2.0)
+	var target_radius := float(aim_status.get("impact_radius", DEFAULT_AREA_TARGET_RADIUS))
+	draw_circle(cursor, target_radius, Color(1.0, 1.0, 1.0, 0.10))
+	draw_arc(cursor, target_radius, 0.0, TAU, 48, RANGE_SELECTION_WHITE, 2.0)
+
+
+func _draw_fire_arc_sectors(selected: Dictionary, arcs: Array, maximum_range: float, fill_color: Color, edge_color: Color) -> void:
+	var origin: Vector2 = selected["position"]
+	for arc in arcs:
+		var center_angle := float(selected.get("heading", 0.0)) + deg_to_rad(float(arc.get("center", 0.0)))
+		var half_angle := deg_to_rad(float(arc.get("degrees", 0.0))) * 0.5
+		var minimum_range := float(arc.get("minimum_range", 0.0))
+		var arc_range := float(arc.get("range", maximum_range))
+		_draw_annular_sector(origin, minimum_range, arc_range, center_angle - half_angle, center_angle + half_angle, fill_color)
+		draw_arc(origin, arc_range, center_angle - half_angle, center_angle + half_angle, 36, edge_color, 2.0)
+		draw_line(origin + Vector2.RIGHT.rotated(center_angle - half_angle) * minimum_range, origin + Vector2.RIGHT.rotated(center_angle - half_angle) * arc_range, edge_color, 1.5)
+		draw_line(origin + Vector2.RIGHT.rotated(center_angle + half_angle) * minimum_range, origin + Vector2.RIGHT.rotated(center_angle + half_angle) * arc_range, edge_color, 1.5)
 
 
 func _draw_area_target_overlay(selected: Dictionary, cursor: Vector2, aim_status: Dictionary, target_radius: float) -> void:

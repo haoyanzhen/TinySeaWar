@@ -18,8 +18,8 @@
 - `docs/42_combat_art_design.md`
 - `docs/44_ui_art_design.md`
 - `docs/45_art_asset_interface_design.md`
-- `docs/art_asset_usage_audit.md`
-- `docs/art_asset_next_stage_assessment.md`
+- `docs/94_art_asset_usage_audit.md`
+- `docs/95_art_asset_next_stage_assessment.md`
 
 ---
 
@@ -86,7 +86,7 @@ Domain 不负责：
 | `UnitMoved` 可选 | 高级移动表现 | `unit_id`、`from`、`to`、`speed` |
 | `WeaponFired` | 炮口、鱼雷、开火动画 | `source_unit_id`、`weapon_id`、`projectile_id`、`origin`、`target_position`、`heading`、`salvo_index` |
 | `ProjectileSpawned` | 创建弹体视图 | `projectile_id`、`source_unit_id`、`weapon_id`、`position`、`heading`、`speed` |
-| `ProjectileExpired` | 弹体淡出 | `projectile_id`、`position`、`reason` |
+| `ProjectileExpired` | 弹体淡出 | `projectile_id`、`position`、`reason_code` |
 | `AttackResolved` | 命中、水花、受击动画 | `damage_result`、`impact_position`、`weapon_id`、`projectile_id` |
 | `AreaAttackResolved` 可选 | 区域落点多反馈 | `attack_id`、`impact_position`、`affected_unit_ids` |
 | `SkillCast` | 技能 VFX 与 cut-in | `unit_id`、`skill_id`、`target_ref` |

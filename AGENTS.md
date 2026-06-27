@@ -18,6 +18,10 @@ MVP 的核心约束：
 
 设计文档位于 `docs/`，使用数字前缀保持阅读顺序。新增文档请遵守 `docs/README.md` 的命名规则。
 
+### 当前状态
+
+- `docs/00_project_status.md`：当前完成度、已知缺口、验证结果和下一阶段优先级的唯一状态真源。判断某项能力是否已完成时先读；不要仅凭存在代码、配置或资产就标记完成。
+
 ### 玩法与数值
 
 - `docs/10_game_core_mechanics.md`：玩法骨架和已确定核心战斗机制。改胜负条件、舰种资源、侦查隐蔽、旗舰、潜航、技能等规则时先读。
@@ -25,6 +29,8 @@ MVP 的核心约束：
 - `docs/12_combat_formula_design.md`：侦查、命中、伤害、护甲、状态、资源等计算顺序。改公式或战斗结算时必须对齐。
 - `docs/13_balance_baseline.md`：MVP 首轮调参范围和节奏目标。改基础范围、战斗时长、资源消耗、舰种基线时参考。
 - `docs/14_character_balance_design.md`：角色级初始数值、武器、技能和玩法变体。改角色配置、技能数值、角色定位时参考。
+- `docs/15_battle_level_design.md`：自定义战斗、闯关章节、编成、地图预设、解锁和验收草案。改战斗模式、关卡结构或进度设计时先读。
+- `docs/16_enemy_ai_behavior_design.md`：敌方 AI 的舰队战术、单舰模式、量化决策、技能使用、边界和岛屿处理方案。改 AI 行为或难度时先读。
 
 ### 数据契约
 
@@ -35,7 +41,8 @@ MVP 的核心约束：
 - `docs/30_technical_architecture.md`：Godot 技术路线、目录结构、系统边界和长期技术原则。做架构性修改时先读。
 - `docs/31_program_design_phase1.md`：第一阶段 3v3 战斗切片的程序实现范围。做原型功能取舍时以它为边界。
 - `docs/32_domain_design_phase1.md`：Domain 层对象、状态所有权、命令、事件和系统协作。改战斗规则代码、模拟、测试时先读。
-- `docs/33_implementation_map.md`：当前代码位置速查。开始改代码时用它快速定位入口、数据、HUD、海面、测试和资产接口。
+- `docs/33_domain_design_phase2.md`：第二阶段角色动画、战斗单位视图、投射物、VFX、绑定点和 HUD 接入边界。改战斗表现架构时先读。
+- `docs/34_implementation_map.md`：当前代码位置速查。开始改代码时用它快速定位入口、数据、HUD、海面、测试和资产接口。
 
 ### 美术与资产
 
@@ -54,13 +61,42 @@ MVP 的核心约束：
 - `docs/90_design_audit_round4.md`：第四轮设计复核结论。处理历史争议、优先级或设计债务时参考，但不要把它当作最新运行时真源。
 - `docs/91_character_phase2_historical_validation.md`：第二期角色的独立历史考据。核对实舰、方案状态、主要武装和舰种映射争议时参考。
 - `docs/92_character_phase2_balance_validation.md`：第二期角色的独立纸面数值审查。评估 Cost、舰种生态、技能预算和动态验证计划时参考。
+- `docs/93_character_phase2_art_asset_audit.md`：第二期角色美术资产验收、阻塞项和设计债记录。判断第二期 processed 资产是否合格时参考。
+- `docs/94_art_asset_usage_audit.md`：运行画面、资产索引和未使用素材的历史盘点；阅读顶部状态更新，旧数量不一定代表当前状态。
+- `docs/95_art_asset_next_stage_assessment.md`：角色动画、绑定点、VFX、弹体和航空表现的阶段缺口评估。规划下一轮美术接入时参考。
+
+## 当前项目完成状态
+
+详细状态以 `docs/00_project_status.md` 为准。当前摘要：
+
+- **战斗设计已完成**：战斗方式、战场设置、数值设定、伤害计算等均已完成。
+- **可运行战斗切片已完成**：主菜单、四个开阔海域模式、第一期 24 名角色关卡覆盖、核心战斗、玩家操作、HUD、结算、海面天气和自动测试均已有实现。
+- **角色设计第二期部分完成**：24 名角色的数据、武器、技能和表现映射已加载，但未进入现有关卡；仅 4 名完成 processed 资产，其余 20 名仍待生产。
+- **美术部分完成**：角色美术、战斗美术、UI美术、环境美术等资产接口已建立；航空、防空、反潜、正式岛屿地图和完整 UI 换肤仍需继续。
+- **玩法策划未完成**：已有核心规则、关卡和 AI 设计基础，但自定义编成、闯关、AI 分层、奖励解锁、舰种生态与动态平衡尚未统一定稿和实机验收。
+- **音效与音乐未完成**：当前没有正式音频设计、运行时音频资产、总线或播放代码，任何音频类别都不得标记为已完成。
+
+## 代码、数据与资产路引
+
+- `autoload/data_registry.gd`：运行时数据与资产总入口。
+- `data/ships|weapons|skills/`：第一期与第二期角色规则配置；`data/levels/` 目前只有第一期角色关卡。
+- `data/visuals/`：投射物表现、武器表现和 VFX 播放参数。
+- `scripts/application/battle_session.gd`：战斗流程和当前大部分规则协调。
+- `scripts/presentation/battle/ship_unit_view.gd`：角色战场视图；`animation_state_machine.gd` 管理角色动画状态。
+- `scripts/presentation/battle/battle_effect_director.gd`：消费战斗事件并协调角色、投射物、炮弹轨迹、VFX 和伤害跳字。
+- `scripts/presentation/battle/projectile_view.gd`、`shell_flight_view.gd`、`battle_vfx.gd`：公共战斗表现节点。
+- `assets/characters/{character_id}/processed/`：已完成角色运行时资产；只有 `postprocess_plan.json` 不代表资产完成。
+- `assets/vfx/`：公共战斗与角色模板特效；`assets/environment/`、`assets/environments/`：陆地、天气和海面资源。
+- `tools/data/`：角色批次配置生成；`tools/art_pipeline/`：角色、UI、场景和陆地资产处理与验收。
+- 当前不存在正式 `assets/audio/`；新增音频前必须先补音频设计、语义事件和总线约定。
 
 ## Codex 工作指引
 
 ### 开始任何任务
 
 - 先检查 `git status --short`，保护用户已有改动，不回滚无关文件。
-- 根据任务类型阅读上面对应文档；如果涉及代码落点，再读 `docs/33_implementation_map.md`。
+- 先读 `docs/00_project_status.md`，确认本次任务是在补缺口、扩展部分完成项，还是维护已完成基线。
+- 根据任务类型阅读上面对应文档；如果涉及代码落点，再读 `docs/34_implementation_map.md`。
 - 用 `rg` 或 `rg --files` 查找引用和调用点，避免只改一处留下旧路径、旧字段或旧规则。
 - 只改和任务直接相关的文件。设计文档、数据、代码、美术资产不要顺手大范围重构。
 
@@ -92,3 +128,4 @@ MVP 的核心约束：
 - 程序改动后，优先运行项目已有测试或最小可行的 Godot/脚本校验。
 - 资产或 UI 改动后，检查对应 QA 报告、manifest 或运行时引用是否仍然能找到文件。
 - 如果暂时无法运行测试，在最终回复中明确说明原因和剩余风险。
+- 更新阶段完成度时，必须同时记录数据加载、运行时接入、关卡覆盖、资产覆盖和自动/人工验收，不以单一维度代替整体完成度。

@@ -2,6 +2,8 @@
 
 本文档用于后续修改时快速定位代码位置。它不是设计文档，只记录“现在程序怎么分层、改什么先看哪里”。
 
+项目阶段完成度、已知缺口和测试快照见 `docs/00_project_status.md`。
+
 ## 入口与场景
 
 - Godot 项目入口：`project.godot`
@@ -27,17 +29,19 @@
 - 关卡配置：`data/levels/prototype_levels.json`
   - 新增 1v1、3v3、更多战斗模式时优先改这里。
   - `map.ocean_palette` 控制海面调色板，可引用 5 种气候 x 4 个时间段的组合海域。
-- 舰船配置：`data/ships/prototype_ships.json`、`data/ships/expanded_roster_ships.json`
+- 舰船配置：`data/ships/prototype_ships.json`、`data/ships/expanded_roster_ships.json`、`data/ships/phase2_ships.json`
   - 角色基础属性、武器挂载、技能、主要武器组、弹种组、`asset_root`。
   - `base_speed/base_turn_speed/base_detection_range/base_concealment_distance` 保存设计基线；运行字段分别按 0.5 或 1.5 倍写入。
-- 武器配置：`data/weapons/prototype_weapons.json`、`data/weapons/expanded_roster_weapons.json`
+- 武器配置：`data/weapons/prototype_weapons.json`、`data/weapons/expanded_roster_weapons.json`、`data/weapons/phase2_weapons.json`
   - 自动武器与 `ManualPrimary` 主要武器。
   - HE/AP 共享冷却依赖相同 `weapon_group_id`。
   - `base_range` 保存设计基线，`range` 保存当前 1.5 倍有效射程；领域与 UI 均直接读取 `range`。
   - `base_projectile_speed` 保存炮弹、鱼雷、舰载机等攻击速度设计基线，`projectile_speed` 保存当前 0.5 倍运行速度。
-- 技能配置：`data/skills/prototype_skills.json`、`data/skills/expanded_roster_skills.json`
+  - 舰炮 `fire_arcs` 表示至少一座底座可射区，`full_salvo_fire_arcs` 表示全部底座齐射区。
+- 技能配置：`data/skills/prototype_skills.json`、`data/skills/expanded_roster_skills.json`、`data/skills/phase2_skills.json`
   - `base_cast_range` 保存设计基线，`cast_range` 保存当前 1.5 倍有效释放距离。
 - 扩展角色武器/技能生成入口：`tools/data/build_expanded_roster_data.mjs`
+- 第二期角色数据生成入口：`tools/data/build_phase2_roster_data.py`
 - 投射物配置：`data/projectiles/projectiles.json`
   - `base_speed` 保存公共投射物 / 舰载机移动速度设计基线，`speed` 保存当前 0.5 倍运行速度。
 - 公式配置：`data/formulas/combat_formulas.json`
@@ -47,6 +51,10 @@
 - 表现设置：`data/settings/presentation_settings.json`
   - `window`：固定逻辑画布、主界面可选窗口尺寸与默认尺寸。
   - `camera`：默认缩放、滚轮步长、最近观察范围和最远地图占比。
+- 战斗表现配置：`data/visuals/`
+  - `projectile_visuals.json`：投射物贴图、尺寸、轨迹与颜色。
+  - `weapon_visuals.json`、`phase2_weapon_visuals.json`：角色武器组到动画、绑定点、投射物和 VFX 的映射。
+  - `vfx_playback_profiles.json`：公共 VFX 的时长、缩放、淡入淡出和混合参数。
 
 ## 战斗核心
 
@@ -93,11 +101,19 @@
   - 滚轮缩放与边界：`_adjust_camera_zoom`、`_configure_camera_zoom`、`_clamp_camera_to_map`
   - 战场角色图层：`_draw_unit`、`_draw_unit_art`
   - 瞄准叠层：`_draw_operation_overlay`
-  - 红/绿/白战术范围叠层：`_draw_directional_aim_overlay`、`_draw_area_target_overlay`、`_draw_skill_target_overlay`、`_draw_annular_sector`
+  - 红/绿/深绿/白主炮射界：`_draw_gun_aim_overlay`、`_draw_fire_arc_sectors`
+  - 红/绿/白方向与战术范围叠层：`_draw_directional_aim_overlay`、`_draw_area_target_overlay`、`_draw_skill_target_overlay`、`_draw_annular_sector`
   - HUD 数据推送：`_update_hud`
 - 战斗表现导演：`scripts/presentation/battle/battle_effect_director.gd`
   - 角色、投射物、VFX 同步：`sync_snapshot`、`consume_events`
   - 命中跳字：`_spawn_damage_number`、`_damage_number_entry`
+- 角色战场视图：`scripts/presentation/battle/ship_unit_view.gd`
+  - 角色本体、舰装、状态图标、血条、动画和绑定点。
+- 角色动画状态机：`scripts/presentation/battle/animation_state_machine.gd`
+- 公共表现节点：
+  - 投射物：`scripts/presentation/battle/projectile_view.gd`
+  - 炮弹飞行与轨迹：`scripts/presentation/battle/shell_flight_view.gd`
+  - VFX：`scripts/presentation/battle/battle_vfx.gd`
 - 伤害跳字节点：`scripts/presentation/battle/damage_number_view.gd`
   - 运行时字体绘制、描边、动效、0.25 秒合并和每目标最多 3 组。
 - HUD：`scripts/presentation/battle/battle_hud.gd`
@@ -150,12 +166,14 @@
 
 - 核心规则测试：`scripts/tests/test_runner.gd`
 - 场景与展示测试：`scripts/tests/scene_presentation_test.gd`
+- 第二期配置与资产映射测试：`scripts/tests/phase2_config_test.gd`
 - 批量模拟：`scripts/tests/batch_simulation.gd`
 - 截图 QA：`scripts/tests/render_scene_qa.gd`
 - 常用命令：
   - 启动检查：`godot --headless --path . --quit-after 2`
   - 核心测试：`godot --headless --path . --script res://scripts/tests/test_runner.gd`
   - 展示测试：`godot --headless --path . --script res://scripts/tests/scene_presentation_test.gd`
+  - 第二期配置测试：`godot --headless --path . --script res://scripts/tests/phase2_config_test.gd`
   - 格式检查：`git diff --check`
 
 ## 常见修改入口
@@ -175,6 +193,8 @@
 - 调整独立天气层合成：改 `assets/environment/weather/weather_overlay.gdshader`。
 - 调整陆地/岛屿视觉资产：改 `assets/environment/land/` 下透明 PNG 和 `land_asset_manifest.json`。
 - 调整陆地碰撞候选边缘：重新运行 `tools/art_pipeline/process_land_art.py`，并人工复核 `land_collision_manifest.json` 后再接入关卡。
+- 调整投射物、武器动画/VFX 映射：改 `data/visuals/`，并同步 `asset_catalog.gd`、配置校验和第二期配置测试。
+- 音效、音乐和语音当前没有运行时入口；建立音频方案前不要在表现脚本中零散硬编码音频路径。
 
 ## 分层约定
 

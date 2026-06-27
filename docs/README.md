@@ -4,6 +4,7 @@ This folder uses numeric prefixes so design files stay grouped in a useful readi
 
 ## Naming Rules
 
+- `00-09`: project status, roadmap, and repository-wide guides.
 - `10-19`: gameplay, operations, formulas, and balance.
 - `20-29`: data contracts and schema.
 - `30-39`: technical architecture and implementation notes.
@@ -15,6 +16,10 @@ Use lowercase English file names with underscores:
 `NN_domain_topic_kind.md`
 
 ## Reading Order
+
+### Project Status
+
+- [00_project_status.md](00_project_status.md)
 
 ### Gameplay And Balance
 
@@ -35,7 +40,8 @@ Use lowercase English file names with underscores:
 - [30_technical_architecture.md](30_technical_architecture.md)
 - [31_program_design_phase1.md](31_program_design_phase1.md)
 - [32_domain_design_phase1.md](32_domain_design_phase1.md)
-- [33_implementation_map.md](33_implementation_map.md)
+- [33_domain_design_phase2.md](33_domain_design_phase2.md)
+- [34_implementation_map.md](34_implementation_map.md)
 
 ### Art
 
@@ -54,3 +60,6 @@ Use lowercase English file names with underscores:
 - [90_design_audit_round4.md](90_design_audit_round4.md)
 - [91_character_phase2_historical_validation.md](91_character_phase2_historical_validation.md)
 - [92_character_phase2_balance_validation.md](92_character_phase2_balance_validation.md)
+- [93_character_phase2_art_asset_audit.md](93_character_phase2_art_asset_audit.md)
+- [94_art_asset_usage_audit.md](94_art_asset_usage_audit.md)
+- [95_art_asset_next_stage_assessment.md](95_art_asset_next_stage_assessment.md)

@@ -101,6 +101,8 @@ func _run() -> void:
 	battle._set_ocean_palette("dusk")
 	_check(battle.current_palette_id == "dusk", "ocean palette can switch at runtime")
 	var ocean_material := battle.ocean_surface.material as ShaderMaterial
+	var weather_material := battle.weather_overlay.material as ShaderMaterial
+	_check(weather_material != null, "battle scene includes an independent weather overlay material")
 	_check(float(ocean_material.get_shader_parameter("ai_texture_strength")) > 0.0, "runtime ocean palette enables authored ocean texture weight")
 	_check(ocean_material.get_shader_parameter("base_texture") != null, "runtime ocean palette binds the authored base ocean texture")
 	var ocean_palette_file := FileAccess.open("res://data/environments/ocean_palettes.json", FileAccess.READ)
@@ -118,10 +120,13 @@ func _run() -> void:
 	_check(float(ocean_material.get_shader_parameter("rain_strength")) > 0.0 and float(ocean_material.get_shader_parameter("mist_strength")) > 0.0, "rain ocean palette drives rain and mist shader layers")
 	_check(float(ocean_material.get_shader_parameter("rain_density")) > 1.0 and float(ocean_material.get_shader_parameter("rain_line_strength")) > 1.0, "rain ocean palette drives visible rain-line profile parameters")
 	_check(ocean_material.get_shader_parameter("rain_line_texture") != null and ocean_material.get_shader_parameter("rain_ripple_texture") != null, "rain ocean palette binds authored rain texture masters")
+	_check(float(weather_material.get_shader_parameter("rain_strength")) > 0.0 and weather_material.get_shader_parameter("rain_line_texture") != null, "rain weather overlay binds authored rain layer")
+	_check(weather_material.get_shader_parameter("snow_flake_texture") != null and weather_material.get_shader_parameter("snow_haze_texture") != null, "weather overlay binds authored snow master textures")
 	battle._set_ocean_palette("thunderstorm_night")
 	_check(float(ocean_material.get_shader_parameter("lightning_strength")) > 0.0 and float(ocean_material.get_shader_parameter("foam_strength")) > 0.0, "thunderstorm ocean palette drives lightning and foam shader layers")
 	_check(float(ocean_material.get_shader_parameter("squall_strength")) > 0.0 and float(ocean_material.get_shader_parameter("wave_scale")) > 1.0, "thunderstorm ocean palette drives squall and rough-wave profile parameters")
 	_check(ocean_material.get_shader_parameter("storm_shadow_texture") != null and ocean_material.get_shader_parameter("lightning_mask_texture") != null, "thunderstorm ocean palette binds authored storm texture masters")
+	_check(float(weather_material.get_shader_parameter("lightning_strength")) > 0.0 and weather_material.get_shader_parameter("storm_shadow_texture") != null, "thunderstorm weather overlay drives storm and lightning layers")
 	var camera_before_input: Vector2 = battle.battle_camera.position
 	Input.action_press("camera_right")
 	await process_frame

@@ -12,59 +12,73 @@
   "assets": [
     {
       "id": "clear_glint",
-      "path": "res://assets/environments/ocean/weather/ocean_weather_clear_glint_master.png",
+      "path": "res://assets/environment/weather/ocean_weather_clear_glint_master.png",
       "weather": "clear",
       "role": "Sparse clear-weather glint and clean small-wave highlight mask.",
       "intended_shader_slot": "clear_glint_texture"
     },
     {
       "id": "cloudy_shadow",
-      "path": "res://assets/environments/ocean/weather/ocean_weather_cloudy_shadow_master.png",
+      "path": "res://assets/environment/weather/ocean_weather_cloudy_shadow_master.png",
       "weather": "cloudy",
       "role": "Soft broad cloudy-weather cloud shadow mask.",
       "intended_shader_slot": "weather_cloud_texture"
     },
     {
       "id": "overcast_cloud",
-      "path": "res://assets/environments/ocean/weather/ocean_weather_overcast_cloud_master.png",
+      "path": "res://assets/environment/weather/ocean_weather_overcast_cloud_master.png",
       "weather": "overcast",
       "role": "Thicker overcast cloud-bank and darker cloud shadow mask.",
       "intended_shader_slot": "weather_cloud_texture"
     },
     {
       "id": "foam_wind",
-      "path": "res://assets/environments/ocean/weather/ocean_weather_foam_wind_master.png",
+      "path": "res://assets/environment/weather/ocean_weather_foam_wind_master.png",
       "weather": "overcast,rain,thunderstorm",
       "role": "Foam, wind streak, and rough-weather whitecap mask.",
       "intended_shader_slot": "foam_texture"
     },
     {
       "id": "rain_lines",
-      "path": "res://assets/environments/ocean/weather/ocean_weather_rain_lines_master.png",
+      "path": "res://assets/environment/weather/ocean_weather_rain_lines_master.png",
       "weather": "rain,thunderstorm",
       "role": "Slanted rain-line overlay mask.",
       "intended_shader_slot": "rain_line_texture"
     },
     {
       "id": "rain_ripples",
-      "path": "res://assets/environments/ocean/weather/ocean_weather_rain_ripples_master.png",
+      "path": "res://assets/environment/weather/ocean_weather_rain_ripples_master.png",
       "weather": "rain,thunderstorm",
       "role": "Rain droplet ripple and small impact mark mask.",
       "intended_shader_slot": "rain_ripple_texture"
     },
     {
       "id": "storm_shadow",
-      "path": "res://assets/environments/ocean/weather/ocean_weather_storm_shadow_master.png",
+      "path": "res://assets/environment/weather/ocean_weather_storm_shadow_master.png",
       "weather": "thunderstorm",
       "role": "Thunderstorm squall cloud and heavy storm shadow mask.",
       "intended_shader_slot": "storm_shadow_texture"
     },
     {
       "id": "lightning_flash",
-      "path": "res://assets/environments/ocean/weather/ocean_weather_lightning_flash_master.png",
+      "path": "res://assets/environment/weather/ocean_weather_lightning_flash_master.png",
       "weather": "thunderstorm",
       "role": "Cold lightning flash illumination mask.",
       "intended_shader_slot": "lightning_mask_texture"
+    },
+    {
+      "id": "snow_flakes",
+      "path": "res://assets/environment/weather/ocean_weather_snow_flakes_master.png",
+      "weather": "snow",
+      "role": "Sparse drifting snow flake overlay mask for cold-weather sea variants.",
+      "intended_shader_slot": "snow_flake_texture"
+    },
+    {
+      "id": "snow_haze",
+      "path": "res://assets/environment/weather/ocean_weather_snow_haze_master.png",
+      "weather": "snow",
+      "role": "Soft snow haze and wind-snow veil mask for cold-weather sea variants.",
+      "intended_shader_slot": "snow_haze_texture"
     }
   ]
 }

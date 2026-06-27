@@ -1,12 +1,17 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=8 format=3]
 
 [ext_resource path="res://scripts/presentation/battle/prototype_battle.gd" type="Script" id="1"]
 [ext_resource path="res://scripts/presentation/battle/ocean_surface.gd" type="Script" id="2"]
 [ext_resource path="res://assets/environments/ocean/common/ocean_surface.gdshader" type="Shader" id="3"]
 [ext_resource path="res://scripts/presentation/battle/battle_hud.gd" type="Script" id="4"]
+[ext_resource path="res://scripts/presentation/battle/weather_overlay.gd" type="Script" id="5"]
+[ext_resource path="res://assets/environment/weather/weather_overlay.gdshader" type="Shader" id="6"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ocean"]
 shader = ExtResource("3")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_weather"]
+shader = ExtResource("6")
 
 [node name="PrototypeBattle" type="Node2D"]
 script = ExtResource("1")
@@ -15,6 +20,11 @@ script = ExtResource("1")
 z_index = -100
 material = SubResource("ShaderMaterial_ocean")
 script = ExtResource("2")
+
+[node name="WeatherOverlay" type="Node2D" parent="."]
+z_index = -80
+material = SubResource("ShaderMaterial_weather")
+script = ExtResource("5")
 
 [node name="BattleCamera" type="Camera2D" parent="."]
 position = Vector2(2048, 1764)

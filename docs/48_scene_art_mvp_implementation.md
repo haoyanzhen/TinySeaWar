@@ -15,8 +15,8 @@
 - `F` 跟随当前选中的己方舰船，再次按下退出跟随。
 - 5 种气候 x 4 个时间段的 20 套海况资源，采用“时间色板 + 气候渲染剖面”，并保留 `day_clear`、`cloudy`、`dusk` 三个兼容入口。
 - 程序化水体明暗、窄波纹、稀疏闪光、云影、暮色反光和地图边缘压暗。
-- 正式天气母版资源接入：晴朗波光、多云云影、阴云厚云、白沫风纹、雨线、雨点涟漪、风暴暗云和雷雨闪电冷光层。
-- 程序化气候剖面继续负责母版资源的采样尺度、透明度、动画速度和组合强度。
+- 正式天气母版资源接入：晴朗波光、多云云影、阴云厚云、白沫风纹、雨线、雨点涟漪、风暴暗云、雷雨闪电冷光层、雪粒和雪雾层。
+- 天气表现已从海面 Shader 中拆出独立 `WeatherOverlay`，程序化气候剖面继续负责母版资源的采样尺度、透明度、动画速度和组合强度。
 - 暂停时海面环境动画暂停。
 - 镜头边界限制，任何分辨率下都不会露出地图外空白。
 
@@ -52,7 +52,7 @@ assets/environments/ocean/common/ocean_wave_highlight_tile.png
 正式天气母版资源保存在：
 
 ```text
-assets/environments/ocean/weather/
+assets/environment/weather/
 ```
 
 当前包含：
@@ -65,7 +65,32 @@ assets/environments/ocean/weather/
 - `ocean_weather_rain_ripples_master.png`
 - `ocean_weather_storm_shadow_master.png`
 - `ocean_weather_lightning_flash_master.png`
+- `ocean_weather_snow_flakes_master.png`
+- `ocean_weather_snow_haze_master.png`
 - `weather_asset_manifest.json`
+
+陆地层设计母版资源保存在：
+
+```text
+assets/environment/land/
+```
+
+当前包含 10 类透明 PNG 陆地资产、对应 imagegen chroma-key 源图和碰撞候选边缘：
+
+- `land_double_island_long_channel.png`
+- `land_scattered_islands.png`
+- `land_ring_lagoon.png`
+- `land_crescent_bay.png`
+- `land_central_sandbar.png`
+- `land_dual_channel_reef_line.png`
+- `land_harbor_mouth.png`
+- `land_broken_atoll.png`
+- `land_offset_large_island.png`
+- `land_long_archipelago.png`
+- `land_asset_manifest.json`
+- `land_collision_manifest.json`
+
+陆地透明图已剔除纯色背景，保留岛体、浅水边缘和岸线白沫。碰撞候选边缘由 alpha 通道提取，只作为后续关卡编辑初始数据，正式启用前需要人工拆分硬障碍、浅水成本和纯视觉白沫。
 
 ## 3. 程序实现
 
@@ -88,7 +113,13 @@ assets/environments/ocean/weather/
 
 动画时间由脚本传入，不直接依赖 Shader 的 `TIME`，因此战斗暂停时环境动画能够同步暂停。
 
-### 3.2 海况配置
+### 3.2 独立天气层
+
+`WeatherOverlay` 是独立 Node2D，位于海面之上、单位和 UI/战术叠层之下。它使用 `assets/environment/weather/weather_overlay.gdshader` 采样正式天气母版，负责云影、雨线、雨点涟漪、白沫风纹、风暴暗云、闪电冷光、雪粒和雪雾。
+
+天气层读取同一个 `data/environments/ocean_palettes.json`。当前 20 个基础组合中，晴朗、多云、阴云、雨和雷雨使用不同天气资源与参数；雪层资源已接入配置和 shader，但基础 20 组合默认 `snow_strength = 0`、`snow_haze_strength = 0`，用于后续寒冷海域扩展。
+
+### 3.3 海况配置
 
 海况参数保存在：
 
@@ -106,7 +137,7 @@ data/environments/ocean_palettes.json
 
 关卡通过 `map.ocean_palette` 选择默认海况。
 
-### 3.3 地图与镜头
+### 3.4 地图与镜头
 
 原型关卡地图统一调整为 4096 x 2304：
 
@@ -124,8 +155,12 @@ project.godot
 scenes/battle/prototype_battle.tscn
 scripts/presentation/battle/prototype_battle.gd
 scripts/presentation/battle/ocean_surface.gd
+scripts/presentation/battle/weather_overlay.gd
 scripts/presentation/battle/battle_hud.gd
 assets/environments/ocean/common/ocean_surface.gdshader
+assets/environment/weather/weather_overlay.gdshader
+assets/environment/land/land_asset_manifest.json
+assets/environment/land/land_collision_manifest.json
 data/environments/ocean_palettes.json
 data/levels/prototype_levels.json
 scripts/tests/scene_presentation_test.gd
@@ -149,7 +184,7 @@ scripts/tests/render_scene_qa.gd
 | 3840 x 2160 | 通过 |
 | 镜头移动至地图其他区域 | 无空白、海面连续 |
 | 镜头移动至地图边缘 | 不越界，边缘自然压暗 |
-| 20 套海况切换 | 颜色、云影、波纹、白沫、雨雾和雷雨闪电参数正确切换 |
+| 20 套海况切换 | 颜色、云影、波纹、白沫、雨雾、雷雨闪电和独立天气 overlay 参数正确切换 |
 
 QA 渲染工具示例：
 

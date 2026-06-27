@@ -1,0 +1,112 @@
+{
+  "generated_by": "imagegen built-in tool + chroma-key postprocess",
+  "asset_family": "TinySeaWar land and island layer master assets",
+  "runtime_target_size": [
+    1024,
+    1024
+  ],
+  "background_policy": "final textures are transparent PNG; chroma-key sources retained under source/",
+  "collision_policy": "collision polygons are extracted from alpha edge and must be reviewed/tuned before gameplay obstruction is enabled",
+  "assets": [
+    {
+      "id": "land_double_island_long_channel",
+      "display_name": "双岛长海峡",
+      "role": "左右两块长岛夹出中间纵向海峡",
+      "texture": "res://assets/environment/land/land_double_island_long_channel.png",
+      "source_chromakey": "res://assets/environment/land/source/land_double_island_long_channel_source.png",
+      "collision_source": "alpha channel from transparent texture",
+      "collision_manifest": "res://assets/environment/land/land_collision_manifest.json",
+      "runtime_status": "design_asset_ready_collision_review_required"
+    },
+    {
+      "id": "land_scattered_islands",
+      "display_name": "散岛群",
+      "role": "多个小岛分散形成多航道",
+      "texture": "res://assets/environment/land/land_scattered_islands.png",
+      "source_chromakey": "res://assets/environment/land/source/land_scattered_islands_source.png",
+      "collision_source": "alpha channel from transparent texture",
+      "collision_manifest": "res://assets/environment/land/land_collision_manifest.json",
+      "runtime_status": "design_asset_ready_collision_review_required"
+    },
+    {
+      "id": "land_ring_lagoon",
+      "display_name": "环岛泻湖",
+      "role": "环形岛链包围中央水域并留出入口",
+      "texture": "res://assets/environment/land/land_ring_lagoon.png",
+      "source_chromakey": "res://assets/environment/land/source/land_ring_lagoon_source.png",
+      "collision_source": "alpha channel from transparent texture",
+      "collision_manifest": "res://assets/environment/land/land_collision_manifest.json",
+      "runtime_status": "design_asset_ready_collision_review_required"
+    },
+    {
+      "id": "land_crescent_bay",
+      "display_name": "新月岛",
+      "role": "单侧弧形大岛包住浅水湾",
+      "texture": "res://assets/environment/land/land_crescent_bay.png",
+      "source_chromakey": "res://assets/environment/land/source/land_crescent_bay_source.png",
+      "collision_source": "alpha channel from transparent texture",
+      "collision_manifest": "res://assets/environment/land/land_collision_manifest.json",
+      "runtime_status": "design_asset_ready_collision_review_required"
+    },
+    {
+      "id": "land_central_sandbar",
+      "display_name": "中央沙洲",
+      "role": "低矮沙洲和小礁石组合",
+      "texture": "res://assets/environment/land/land_central_sandbar.png",
+      "source_chromakey": "res://assets/environment/land/source/land_central_sandbar_source.png",
+      "collision_source": "alpha channel from transparent texture",
+      "collision_manifest": "res://assets/environment/land/land_collision_manifest.json",
+      "runtime_status": "design_asset_ready_collision_review_required"
+    },
+    {
+      "id": "land_dual_channel_reef_line",
+      "display_name": "双航道礁线",
+      "role": "两条斜向礁线形成平行航道",
+      "texture": "res://assets/environment/land/land_dual_channel_reef_line.png",
+      "source_chromakey": "res://assets/environment/land/source/land_dual_channel_reef_line_source.png",
+      "collision_source": "alpha channel from transparent texture",
+      "collision_manifest": "res://assets/environment/land/land_collision_manifest.json",
+      "runtime_status": "design_asset_ready_collision_review_required"
+    },
+    {
+      "id": "land_harbor_mouth",
+      "display_name": "港湾入口",
+      "role": "两侧岬角形成天然港湾入口",
+      "texture": "res://assets/environment/land/land_harbor_mouth.png",
+      "source_chromakey": "res://assets/environment/land/source/land_harbor_mouth_source.png",
+      "collision_source": "alpha channel from transparent texture",
+      "collision_manifest": "res://assets/environment/land/land_collision_manifest.json",
+      "runtime_status": "design_asset_ready_collision_review_required"
+    },
+    {
+      "id": "land_broken_atoll",
+      "display_name": "破碎环礁",
+      "role": "多块礁石围出不完整环形",
+      "texture": "res://assets/environment/land/land_broken_atoll.png",
+      "source_chromakey": "res://assets/environment/land/source/land_broken_atoll_source.png",
+      "collision_source": "alpha channel from transparent texture",
+      "collision_manifest": "res://assets/environment/land/land_collision_manifest.json",
+      "runtime_status": "design_asset_ready_collision_review_required"
+    },
+    {
+      "id": "land_offset_large_island",
+      "display_name": "大岛偏置",
+      "role": "单块大岛偏置并保留一侧开阔海",
+      "texture": "res://assets/environment/land/land_offset_large_island.png",
+      "source_chromakey": "res://assets/environment/land/source/land_offset_large_island_source.png",
+      "collision_source": "alpha channel from transparent texture",
+      "collision_manifest": "res://assets/environment/land/land_collision_manifest.json",
+      "runtime_status": "design_asset_ready_collision_review_required"
+    },
+    {
+      "id": "land_long_archipelago",
+      "display_name": "细长群岛",
+      "role": "多条细长岛链作为天然航道标尺",
+      "texture": "res://assets/environment/land/land_long_archipelago.png",
+      "source_chromakey": "res://assets/environment/land/source/land_long_archipelago_source.png",
+      "collision_source": "alpha channel from transparent texture",
+      "collision_manifest": "res://assets/environment/land/land_collision_manifest.json",
+      "runtime_status": "design_asset_ready_collision_review_required"
+    }
+  ]
+}

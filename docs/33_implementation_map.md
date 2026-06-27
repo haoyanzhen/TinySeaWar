@@ -16,6 +16,7 @@
   - 主控制：`scripts/presentation/battle/prototype_battle.gd`
   - HUD：`scripts/presentation/battle/battle_hud.gd`
   - 海面：`scripts/presentation/battle/ocean_surface.gd`
+  - 独立天气层：`scripts/presentation/battle/weather_overlay.gd`
 
 ## 数据与配置
 
@@ -42,6 +43,7 @@
 - 公式配置：`data/formulas/combat_formulas.json`
 - 海面调色板：`data/environments/ocean_palettes.json`
   - 当前包含 20 套气候/时间组合，以及 `day_clear`、`cloudy`、`dusk` 三个兼容入口。
+  - 同一配置同时驱动海面 Shader 与独立 WeatherOverlay；雪粒/雪雾资源已正式挂载，当前基础 20 组合默认强度为 0。
 - 表现设置：`data/settings/presentation_settings.json`
   - `window`：固定逻辑画布、主界面可选窗口尺寸与默认尺寸。
   - `camera`：默认缩放、滚轮步长、最近观察范围和最远地图占比。
@@ -138,6 +140,11 @@
 - UI 语义清单：`assets/ui/qa/ui_asset_manifest.json`
 - 海面 Shader：`assets/environments/ocean/common/ocean_surface.gdshader`
 - 海面贴图：`assets/environments/ocean/common/ocean_*_tile.png`
+- 天气层 Shader：`assets/environment/weather/weather_overlay.gdshader`
+- 天气母版：`assets/environment/weather/ocean_weather_*_master.png`
+- 陆地母版：`assets/environment/land/land_*.png`
+- 陆地资产清单：`assets/environment/land/land_asset_manifest.json`
+- 陆地碰撞候选边缘：`assets/environment/land/land_collision_manifest.json`
 
 ## 测试与调试
 
@@ -163,8 +170,11 @@
 - 调整 HUD 布局：改 `battle_hud.gd`。
 - 调整结算画面：改 `battle_hud.gd` 的 `_draw_result_panel` 和 `_draw_result_character`。
 - 调整主界面文案/按钮：改 `main_menu.gd`。
-- 调整海面颜色、气候、时间、雨雾或闪电强度：改 `data/environments/ocean_palettes.json`。
-- 调整海面算法和天气层合成：改 `assets/environments/ocean/common/ocean_surface.gdshader`。
+- 调整海面颜色、气候、时间、雨雾、闪电或雪层强度：改 `data/environments/ocean_palettes.json`。
+- 调整海面算法：改 `assets/environments/ocean/common/ocean_surface.gdshader`。
+- 调整独立天气层合成：改 `assets/environment/weather/weather_overlay.gdshader`。
+- 调整陆地/岛屿视觉资产：改 `assets/environment/land/` 下透明 PNG 和 `land_asset_manifest.json`。
+- 调整陆地碰撞候选边缘：重新运行 `tools/art_pipeline/process_land_art.py`，并人工复核 `land_collision_manifest.json` 后再接入关卡。
 
 ## 分层约定
 

@@ -21,6 +21,7 @@ const DEFAULT_AREA_TARGET_RADIUS := 48.0
 enum OperationMode { NORMAL, AIMING_PRIMARY, TARGETING_SKILL }
 
 @onready var ocean_surface: Node2D = $OceanSurface
+@onready var weather_overlay: Node2D = $WeatherOverlay
 @onready var battle_camera: Camera2D = $BattleCamera
 @onready var battle_hud: Control = $HUD/BattleHud
 
@@ -75,7 +76,9 @@ func _process(delta: float) -> void:
 		var events: Array = session.advance_tick(FIXED_STEP)
 		_consume_events(events)
 	_update_camera(delta)
-	ocean_surface.set_animation_paused(session.state.get("phase", "") == "Paused")
+	var paused: bool = session.state.get("phase", "") == "Paused"
+	ocean_surface.set_animation_paused(paused)
+	weather_overlay.set_animation_paused(paused)
 	_sync_visuals()
 	_update_hud()
 	queue_redraw()
@@ -637,7 +640,9 @@ func _start_battle(new_level_id: String) -> void:
 		effect_director.clear()
 	var map_data: Dictionary = session.state.get("map", {})
 	current_palette_id = str(map_data.get("ocean_palette", "day_clear"))
-	ocean_surface.configure(Vector2(float(map_data.get("width", 4096.0)), float(map_data.get("height", 2304.0))), current_palette_id)
+	var map_size := Vector2(float(map_data.get("width", 4096.0)), float(map_data.get("height", 2304.0)))
+	ocean_surface.configure(map_size, current_palette_id)
+	weather_overlay.configure(map_size, current_palette_id)
 	_configure_camera_limits(map_data)
 	_configure_camera_zoom(map_data)
 	_select_slot(1)
@@ -675,6 +680,7 @@ func _player_fleet_center() -> Vector2:
 func _set_ocean_palette(palette_id: String) -> void:
 	current_palette_id = palette_id
 	ocean_surface.set_palette(palette_id)
+	weather_overlay.set_palette(palette_id)
 	_update_hud()
 
 

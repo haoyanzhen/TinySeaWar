@@ -379,6 +379,8 @@ rain_line_texture
 rain_ripple_texture
 storm_shadow_texture
 lightning_mask_texture
+snow_flake_texture
+snow_haze_texture
 deep_color
 surface_color
 shallow_color
@@ -405,6 +407,8 @@ rain_density
 rain_line_strength
 rain_ripple_strength
 squall_strength
+snow_strength
+snow_haze_strength
 ```
 
 - `display_name`：海域显示名称。
@@ -418,6 +422,8 @@ squall_strength
 - `rain_ripple_texture`：雨点落海涟漪母版。
 - `storm_shadow_texture`：雷雨风暴暗云母版。
 - `lightning_mask_texture`：雷雨闪电冷光遮罩母版。
+- `snow_flake_texture`：雪粒飘落母版，供独立天气层使用。
+- `snow_haze_texture`：雪雾/风雪遮罩母版，供独立天气层使用。
 - `deep_color`、`surface_color`、`shallow_color`：深水、主海面和浅层反光色。
 - `highlight_color`：波纹、高光、雨点涟漪和闪电冷光参考色。
 - `cloud_color`：云影乘色层参考色。
@@ -442,6 +448,81 @@ squall_strength
 - `rain_line_strength`：雨线可见强度。
 - `rain_ripple_strength`：雨点落海涟漪强度。
 - `squall_strength`：风暴暗云和局部压暗强度，用于阴云、雨和雷雨的环境差异。
+- `snow_strength`：雪粒强度。当前 20 个基础组合默认 0，寒冷海域扩展时启用。
+- `snow_haze_strength`：雪雾强度。当前 20 个基础组合默认 0，寒冷海域扩展时启用。
+
+### 11.1 陆地资产与碰撞边缘配置
+
+陆地资产清单保存在 `assets/environment/land/land_asset_manifest.json`，碰撞候选边缘保存在 `assets/environment/land/land_collision_manifest.json`。当前陆地层是场景扩展资产，不改变 MVP 开阔海域默认规则；只有关卡显式引用并启用地形阻挡时，Domain/寻路层才读取对应碰撞数据。
+
+陆地资产清单字段：
+
+```text
+generated_by
+asset_family
+runtime_target_size
+background_policy
+collision_policy
+assets
+```
+
+单个陆地资产字段：
+
+```text
+id
+display_name
+role
+texture
+source_chromakey
+collision_source
+collision_manifest
+runtime_status
+```
+
+- `texture`：透明 PNG 运行时纹理路径，位于 `res://assets/environment/land/`。
+- `source_chromakey`：imagegen 原始纯色背景源图，用于重新去背景或 QA。
+- `collision_source`：碰撞候选边缘来源，当前为透明 PNG 的 alpha 通道。
+- `runtime_status`：当前状态。`design_asset_ready_collision_review_required` 表示美术资产已生成，但碰撞边缘仍需人工审核后才能进入玩法真源。
+
+陆地碰撞候选字段：
+
+```text
+generated_by
+edge_source
+usage
+assets
+```
+
+单个碰撞资产字段：
+
+```text
+id
+texture
+size_px
+alpha_threshold
+component_count
+collision_polygons
+```
+
+单个碰撞多边形字段：
+
+```text
+area_px
+bounds_px
+polygon_px
+```
+
+- `alpha_threshold`：生成候选边缘时使用的 alpha 阈值。当前默认 24。
+- `component_count`：透明图中超过面积阈值的连通组件数量。
+- `collision_polygons`：按组件生成的候选多边形数组。
+- `polygon_px`：以图片左上角为原点的像素坐标点列。导入关卡后需按摆放位置、缩放和旋转转换到世界坐标。
+- `bounds_px`：组件像素包围盒，用于快速预览和编辑器选择。
+
+约束：
+
+- 不能直接把所有 alpha 边缘等同于硬碰撞。浅水 halo、白沫、视觉阴影和小装饰礁石需要在关卡编辑阶段按语义拆分。
+- 不能从 PNG 透明度在运行时临时推断碰撞真相；运行时应读取已经审核过的多边形配置。
+- 关卡地图仍是通行、碰撞、视线遮挡和地形成本的真源。美术资产只提供候选边缘和视觉外形。
 
 ## 12. 关卡配置
 

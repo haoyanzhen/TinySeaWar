@@ -263,11 +263,11 @@ MVP 建议使用固定伤害加每对单位独立冷却，不引入质量和动�
 
 ### 5.4 Codex Computer Use 缺少部署说明
 
-`46_art_pipeline_design.md` 已定义相对路径预览和 data URI 稳定 QA 两种方式，当前工具也已生成 QA 页面和报告。这属于工具运行手册完善项，不是游戏设计问题，不应列入战斗设计优先级。
+`46_character_art_asset_pipeline.md` 已定义相对路径预览和 data URI 稳定 QA 两种方式，当前工具也已生成 QA 页面和报告。这属于工具运行手册完善项，不是游戏设计问题，不应列入战斗设计优先级。
 
-### 5.5 `46_art_pipeline_design.md` 未被技术文档引用
+### 5.5 `46_character_art_asset_pipeline.md` 未被技术文档引用（已解决）
 
-建议补交叉引用，但这只是文档导航改进，不影响设计正确性。可随下一次技术文档整理完成。
+原建议仅涉及文档导航，不影响设计正确性。当前已在 `docs/30_technical_architecture.md` 和 `docs/34_implementation_map.md` 补充交叉引用。
 
 ### 5.6 阵营色板缺少 hex 值
 

@@ -38,6 +38,7 @@ func _run() -> void:
 	_test_modifier_order()
 	_test_command_and_skill_rules()
 	_test_operation_design_rules()
+	_test_automatic_lead_and_fixed_impacts()
 	_test_torpedo_fire_arc_rules()
 	_test_detection_and_contact_ghost()
 	_test_damage_zero_floor()
@@ -194,6 +195,7 @@ func _test_asset_catalog() -> void:
 	_check(not assets.projectile_visual("projectile.surface_torpedo").is_empty(), "projectile visual resolves by projectile id")
 	_check(assets.weapon_visual("shimakaze", "shimakaze_torpedo").get("fire_animation_state", "") == "firepower", "weapon visual resolves by character and weapon group")
 	_check(float(assets.vfx_playback_profile("vfx.profile.shell_impact").get("duration", 0.0)) > 0.0, "VFX playback profile resolves by semantic id")
+	_check(assets.combat_vfx_asset_path("impact.water.large").ends_with("vfx_impact_water_large_01.png"), "public large-caliber water-column art resolves by combat VFX semantic")
 
 
 func _test_command_and_skill_rules() -> void:
@@ -299,6 +301,52 @@ func _test_torpedo_fire_arc_rules() -> void:
 			expiry_position = event.get("position", Vector2.ZERO)
 	_check(not session.state["projectiles_by_id"].has(projectile_id), "torpedo disappears after reaching its maximum range")
 	_check(is_equal_approx(launch_position.distance_to(expiry_position), float(torpedo_weapon["range"])), "torpedo expiry position matches the weapon maximum range")
+
+
+func _test_automatic_lead_and_fixed_impacts() -> void:
+	var session = BattleSession.new(registry)
+	session.create_battle("level.prototype_3v3", 31)
+	var source: Dictionary = session.state["units_by_id"]["unit.player.warspite"]
+	var target: Dictionary = session.state["units_by_id"]["unit.enemy.bismarck"]
+	source["position"] = Vector2(500.0, 500.0)
+	source["heading"] = 0.0
+	target["position"] = Vector2(850.0, 500.0)
+	target["heading"] = PI * 0.5
+	target["current_speed"] = 40.0
+	var weapon: Dictionary = registry.get_definition("weapons", "weapon.warspite_152_he")
+	var weapon_state := _weapon_state(source, weapon["id"])
+	var solution: Dictionary = session._automatic_aim_solution(source, target, weapon)
+	_check((solution.get("position", target["position"]) as Vector2).y > float(target["position"].y), "automatic fire leads a moving target along its current velocity")
+	session.delayed_attacks.clear()
+	session.drain_events()
+	session._fire_weapon(source, target, weapon_state, weapon, solution)
+	_check(session.delayed_attacks.size() == int(weapon["mount_count"]) * int(weapon["shots_per_mount"]), "automatic gun fire creates one fixed-area attack per shell")
+	var fixed_area_attacks := true
+	var latest_resolve_time := 0.0
+	for attack in session.delayed_attacks:
+		fixed_area_attacks = fixed_area_attacks and str(attack.get("target_unit_id", "")) == "" and str(attack.get("aimed_target_unit_id", "")) == target["entity_id"] and typeof(attack.get("target_position")) == TYPE_VECTOR2
+		latest_resolve_time = maxf(latest_resolve_time, float(attack.get("resolve_at_time", 0.0)))
+	_check(fixed_area_attacks, "automatic shells retain the aimed target only as metadata and resolve against fixed world positions")
+	var hp_before := float(target["current_hp"])
+	target["position"] = Vector2(1900.0, 1500.0)
+	session.state["elapsed_time"] = latest_resolve_time + 0.01
+	session._resolve_delayed_attacks()
+	_check(is_equal_approx(float(target["current_hp"]), hp_before), "a target that leaves the predicted impact area is not tracked or damaged")
+	var fixed_miss_event := false
+	var fired_event_exposes_impacts := false
+	for event in session.drain_events():
+		var result: Dictionary = event.get("damage_result", {})
+		if event.get("event_type", "") == "WeaponFired" and event.get("impact_positions", []).size() == int(weapon["mount_count"]) * int(weapon["shots_per_mount"]):
+			fired_event_exposes_impacts = true
+		if event.get("event_type", "") == "AttackResolved" and result.get("hit_reason", "") == "NO_TARGET_IN_AREA" and typeof(result.get("impact_position")) == TYPE_VECTOR2:
+			fixed_miss_event = true
+	_check(fired_event_exposes_impacts, "weapon fire presentation receives the same per-shell fixed impact coordinates as the domain")
+	_check(fixed_miss_event, "fixed-area misses expose their impact position for presentation")
+	var replacement: Dictionary = session.state["units_by_id"]["unit.enemy.hindenburg"]
+	replacement["position"] = Vector2(900.0, 700.0)
+	var replacement_hp_before := float(replacement["current_hp"])
+	session._resolve_attack({"attack_id":"attack.fixed.replacement","source_unit_id":source["entity_id"],"source_weapon_id":weapon["id"],"aimed_target_unit_id":target["entity_id"],"target_unit_id":"","target_position":replacement["position"],"impact_radius":float(weapon["impact_radius"]),"origin":source["position"],"accuracy_modifier":0.0}, true)
+	_check(float(replacement["current_hp"]) < replacement_hp_before, "a different enemy entering the fixed impact area can receive the shell damage")
 
 
 func _test_detection_and_contact_ghost() -> void:

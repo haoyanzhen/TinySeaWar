@@ -2,6 +2,7 @@ extends RefCounted
 
 const CHARACTER_ROOT := "res://assets/characters"
 const UI_MANIFEST_PATH := "res://assets/ui/qa/ui_asset_manifest.json"
+const COMBAT_VFX_MANIFEST_PATH := "res://assets/vfx/combat/qa/combat_vfx_asset_manifest.json"
 const VISUAL_CONFIG_ROOT := "res://data/visuals"
 
 const CHARACTER_CONFIG_SUFFIXES := {
@@ -28,6 +29,7 @@ const UI_SEMANTIC_PREFIXES := {
 var characters := {}
 var ui_assets := {}
 var ui_aliases := {}
+var combat_vfx_assets := {}
 var projectile_visuals := {}
 var weapon_visuals := {}
 var vfx_playback_profiles := {}
@@ -38,12 +40,14 @@ func load_all() -> bool:
 	characters.clear()
 	ui_assets.clear()
 	ui_aliases.clear()
+	combat_vfx_assets.clear()
 	projectile_visuals.clear()
 	weapon_visuals.clear()
 	vfx_playback_profiles.clear()
 	errors.clear()
 	_load_characters()
 	_load_ui_assets()
+	_load_combat_vfx_assets()
 	_load_visual_configs()
 	return errors.is_empty()
 
@@ -156,6 +160,10 @@ func vfx_playback_profile(profile_id: String) -> Dictionary:
 	return vfx_playback_profiles.get(key, vfx_playback_profiles.get(profile_id, {})).duplicate(true)
 
 
+func combat_vfx_asset_path(semantic: String) -> String:
+	return str(combat_vfx_assets.get(semantic, {}).get("file", ""))
+
+
 func _load_characters() -> void:
 	var directory := DirAccess.open(CHARACTER_ROOT)
 	if directory == null:
@@ -232,6 +240,23 @@ func _load_ui_assets() -> void:
 		ui_assets[name] = asset
 		ui_aliases[name] = name
 		ui_aliases[_ui_semantic_key(name)] = name
+
+
+func _load_combat_vfx_assets() -> void:
+	var manifest := _read_json(COMBAT_VFX_MANIFEST_PATH)
+	if manifest.is_empty():
+		errors.append("Missing or invalid combat VFX asset manifest: %s" % COMBAT_VFX_MANIFEST_PATH)
+		return
+	for raw_asset in manifest.get("assets", []):
+		if typeof(raw_asset) != TYPE_DICTIONARY:
+			errors.append("Non-object combat VFX asset in manifest")
+			continue
+		var asset: Dictionary = _normalize_paths(raw_asset)
+		var semantic := str(asset.get("semantic", ""))
+		if semantic.is_empty():
+			errors.append("Combat VFX asset without semantic")
+			continue
+		combat_vfx_assets[semantic] = asset
 
 
 func _load_visual_configs() -> void:

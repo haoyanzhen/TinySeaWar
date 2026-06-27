@@ -5,6 +5,7 @@ const ProjectileView = preload("res://scripts/presentation/battle/projectile_vie
 const BattleVfx = preload("res://scripts/presentation/battle/battle_vfx.gd")
 const DamageNumberView = preload("res://scripts/presentation/battle/damage_number_view.gd")
 const ShellFlightView = preload("res://scripts/presentation/battle/shell_flight_view.gd")
+const LARGE_GUN_CALIBER_MM := 280.0
 
 var unit_layer: Node2D
 var projectile_layer: Node2D
@@ -131,8 +132,13 @@ func _handle_projectile_hit(event: Dictionary, session) -> void:
 
 func _handle_attack_resolved(event: Dictionary, session) -> void:
 	var result: Dictionary = event.get("damage_result", {})
+	var source: Dictionary = session.state.get("units_by_id", {}).get(str(result.get("source_unit_id", "")), {})
+	var source_character := str(source.get("definition_id", "")).trim_prefix("ship.")
+	var weapon: Dictionary = DataRegistry.registry.get_definition("weapons", str(result.get("source_weapon_id", "")))
+	var visual := DataRegistry.assets.weapon_visual(source_character, str(weapon.get("weapon_group_id", "")))
 	var target_id := str(result.get("target_unit_id", ""))
 	if target_id.is_empty():
+		_spawn_large_gun_water_column(result, weapon, visual)
 		return
 	var target: Dictionary = session.state.get("units_by_id", {}).get(target_id, {})
 	if target.is_empty():
@@ -141,12 +147,28 @@ func _handle_attack_resolved(event: Dictionary, session) -> void:
 	if target_view != null and bool(result.get("hit", false)):
 		target_view.play_hit_state()
 	_spawn_damage_number(result, session)
-	var source: Dictionary = session.state.get("units_by_id", {}).get(str(result.get("source_unit_id", "")), {})
-	var source_character := str(source.get("definition_id", "")).trim_prefix("ship.")
-	var weapon: Dictionary = DataRegistry.registry.get_definition("weapons", str(result.get("source_weapon_id", "")))
-	var visual := DataRegistry.assets.weapon_visual(source_character, str(weapon.get("weapon_group_id", "")))
+	if not bool(result.get("hit", false)):
+		_spawn_large_gun_water_column(result, weapon, visual)
+		return
 	var target_position: Vector2 = target.get("position", Vector2.ZERO)
 	_spawn_role_vfx(source_character, str(visual.get("impact_vfx_role", "")), target_position, 0.0, str(visual.get("impact_profile", "vfx.profile.shell_impact")))
+
+
+func _spawn_large_gun_water_column(result: Dictionary, weapon: Dictionary, weapon_visual: Dictionary) -> void:
+	if not _is_large_caliber_gun(weapon, weapon_visual):
+		return
+	var impact_position = result.get("impact_position")
+	if typeof(impact_position) != TYPE_VECTOR2:
+		return
+	_spawn_public_vfx("impact.water.large", impact_position, "vfx.profile.water_impact.large")
+
+
+func _is_large_caliber_gun(weapon: Dictionary, weapon_visual: Dictionary) -> bool:
+	if weapon.get("mount_type", "") != "Gun":
+		return false
+	var projectile_visual_id := str(weapon_visual.get("projectile_visual_id", weapon.get("projectile_id", "")))
+	var projectile_visual := DataRegistry.assets.projectile_visual(projectile_visual_id)
+	return _weapon_caliber_mm(weapon, weapon_visual, projectile_visual) >= LARGE_GUN_CALIBER_MM
 
 
 func _handle_skill_cast(event: Dictionary, session) -> void:
@@ -178,6 +200,18 @@ func _spawn_role_vfx(character_id: String, role_name: String, world_position: Ve
 	effect.configure(str(role.get("file", "")), DataRegistry.assets.vfx_playback_profile(profile_id), rotation_value)
 
 
+func _spawn_public_vfx(semantic: String, world_position: Vector2, profile_id: String) -> void:
+	if vfx_layer == null:
+		return
+	var texture_path := DataRegistry.assets.combat_vfx_asset_path(semantic)
+	if texture_path.is_empty():
+		return
+	var effect := BattleVfx.new()
+	effect.position = world_position
+	vfx_layer.add_child(effect)
+	effect.configure(texture_path, DataRegistry.assets.vfx_playback_profile(profile_id))
+
+
 func _spawn_shell_flights(event: Dictionary, session, weapon: Dictionary, weapon_visual: Dictionary, source: Dictionary, launch_position: Vector2) -> void:
 	if projectile_layer == null or str(weapon.get("mount_type", "")) != "Gun":
 		return
@@ -202,6 +236,13 @@ func _spawn_shell_flights(event: Dictionary, session, weapon: Dictionary, weapon
 
 func _shell_flight_destinations(event: Dictionary, session, weapon: Dictionary, source: Dictionary, launch_position: Vector2) -> Array:
 	var count := clampi(int(event.get("shot_count", 1)), 1, 12)
+	var fixed_impact_positions: Array = event.get("impact_positions", [])
+	if not fixed_impact_positions.is_empty():
+		var fixed_destinations: Array = []
+		for index in range(mini(count, fixed_impact_positions.size())):
+			if typeof(fixed_impact_positions[index]) == TYPE_VECTOR2:
+				fixed_destinations.append(fixed_impact_positions[index])
+		return fixed_destinations
 	var base_destination := _weapon_fire_destination(event, session, source, launch_position)
 	var base_heading := (base_destination - launch_position).angle()
 	var scatter_radius := _shell_visual_scatter_radius(weapon, count)
@@ -274,7 +315,7 @@ func _weapon_caliber_mm(weapon: Dictionary, weapon_visual: Dictionary, projectil
 
 func _parse_caliber_mm(text: String) -> float:
 	var expression := RegEx.new()
-	if expression.compile("(\\d+(?:\\.\\d+)?)\\s*mm") != OK:
+	if expression.compile("(\\d+(?:\\.\\d+)?)\\s*(?:mm|毫米)") != OK:
 		return 0.0
 	var result := expression.search(text)
 	if result == null:

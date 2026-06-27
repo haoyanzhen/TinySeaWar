@@ -25,6 +25,7 @@ var torpedo_icon := DataRegistry.assets.ui_asset_path("ui.icon.torpedo", "2x")
 var shell_visual := DataRegistry.assets.projectile_visual("shell.large")
 var main_gun_visual := DataRegistry.assets.weapon_visual("bismarck", "main_gun")
 var muzzle_profile := DataRegistry.assets.vfx_playback_profile("muzzle_flash.large")
+var water_column := DataRegistry.assets.combat_vfx_asset_path("impact.water.large")
 ```
 
 角色接口：
@@ -39,6 +40,7 @@ var muzzle_profile := DataRegistry.assets.vfx_playback_profile("muzzle_flash.lar
 - `projectile_visual(projectile_key)` 返回公共弹体、拖尾和运动表现资源，例如 `shell.small`、`shell.medium`、`shell.large`、`torpedo.surface`、`torpedo.submerged`、`aircraft.bomb`。
 - `weapon_visual(character_id, weapon_key)` 返回角色武器到公共表现的映射，例如主炮使用哪个炮弹档位、哪个炮口 profile、哪个命中 profile。
 - `vfx_playback_profile(profile_key)` 返回 VFX 播放参数，例如 `duration`、`fps`、`loop`、`anchor`、`z_layer`、`rotation_mode`、`scale`、`follow_owner`、`blend_mode`。
+- `combat_vfx_asset_path(semantic)` 从公共战斗 VFX manifest 返回语义资源路径，例如 `impact.water.large`；表现代码不得手拼公共水柱文件名。
 - 角色目录中的专属 VFX role 可以覆盖公共 profile 的贴图或颜色，但仍需要声明其公共语义，例如 `bismarck.heavy_muzzle -> muzzle_flash.large`。
 
 炮弹曳尾接口：

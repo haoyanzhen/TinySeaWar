@@ -84,7 +84,7 @@ Domain 不负责：
 | --- | --- | --- |
 | `UnitSpawned` | 创建单位视图 | `unit_id`、`definition_id`、`faction_id`、`position` |
 | `UnitMoved` 可选 | 高级移动表现 | `unit_id`、`from`、`to`、`speed` |
-| `WeaponFired` | 炮口、鱼雷、开火动画 | `source_unit_id`、`weapon_id`、`projectile_id`、`origin`、`target_position`、`heading`、`salvo_index` |
+| `WeaponFired` | 炮口、鱼雷、开火动画 | `source_unit_id`、`weapon_id`、`projectile_id`、`origin`、`target_position`、`heading`、`salvo_index`、炮击逐发 `impact_positions` |
 | `ProjectileSpawned` | 创建弹体视图 | `projectile_id`、`source_unit_id`、`weapon_id`、`position`、`heading`、`speed` |
 | `ProjectileExpired` | 弹体淡出 | `projectile_id`、`position`、`reason_code` |
 | `AttackResolved` | 命中、水花、受击动画 | `damage_result`、`impact_position`、`weapon_id`、`projectile_id` |

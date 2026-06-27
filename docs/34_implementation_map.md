@@ -73,6 +73,7 @@
   - AI 行为：`_update_ai_intents`
   - 自动技能：`_update_auto_skills`
   - 自动武器：`_update_weapons`
+  - 自动火炮预判与固定落点：`_automatic_aim_solution`、`_positive_intercept_time`、`_salvo_impact_position`
   - 手动主要武器：`_fire_primary_weapon`
   - 弹药切换：`_switch_ammo`
   - 技能释放：`_cast_skill`
@@ -107,6 +108,7 @@
 - 战斗表现导演：`scripts/presentation/battle/battle_effect_director.gd`
   - 角色、投射物、VFX 同步：`sync_snapshot`、`consume_events`
   - 命中跳字：`_spawn_damage_number`、`_damage_number_entry`
+  - 大口径未命中水柱：`_spawn_large_gun_water_column`；小/中口径未命中不生成水柱。
 - 角色战场视图：`scripts/presentation/battle/ship_unit_view.gd`
   - 角色本体、舰装、状态图标、血条、动画和绑定点。
 - 角色动画状态机：`scripts/presentation/battle/animation_state_machine.gd`

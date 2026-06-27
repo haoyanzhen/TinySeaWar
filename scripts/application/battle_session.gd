@@ -642,7 +642,10 @@ func _update_weapons() -> void:
 			var group := str(weapon.get("shared_cooldown_group", ""))
 			if not group.is_empty() and fired_groups.has(group): continue
 			if not _can_fire(unit, target, weapon): continue
-			_fire_weapon(unit, target, weapon_state, weapon)
+			var aim_solution := _automatic_aim_solution(unit, target, weapon)
+			if aim_solution.is_empty() or not bool(_can_fire_at_position(unit, aim_solution["position"], weapon).get("legal", false)):
+				continue
+			_fire_weapon(unit, target, weapon_state, weapon, aim_solution)
 			if not group.is_empty():
 				fired_groups[group] = true
 				for sibling_state in weapon_states:
@@ -680,13 +683,57 @@ func _can_fire_in_direction(unit: Dictionary, direction_point: Vector2, weapon: 
 	return {"legal": true, "reason_code": "OK"}
 
 
-func _fire_weapon(unit: Dictionary, target: Dictionary, weapon_state: Dictionary, weapon: Dictionary) -> void:
+func _automatic_aim_solution(unit: Dictionary, target: Dictionary, weapon: Dictionary) -> Dictionary:
+	var origin: Vector2 = unit["position"]
+	var target_position: Vector2 = target["position"]
+	var projectile_speed := _automatic_attack_speed(unit, weapon)
+	var target_velocity := Vector2.RIGHT.rotated(float(target.get("heading", 0.0))) * float(target.get("current_speed", 0.0))
+	var relative_position := target_position - origin
+	var intercept_time := _positive_intercept_time(relative_position, target_velocity, projectile_speed)
+	if intercept_time <= 0.0:
+		intercept_time = relative_position.length() / projectile_speed
+	var predicted_position := _clamp_to_map(target_position + target_velocity * intercept_time)
+	return {
+		"position": predicted_position,
+		"travel_seconds": origin.distance_to(predicted_position) / projectile_speed,
+		"target_velocity": target_velocity,
+	}
+
+
+func _automatic_attack_speed(unit: Dictionary, weapon: Dictionary) -> float:
+	if weapon.get("mount_type", "") == "Torpedo":
+		var projectile: Dictionary = registry.get_definition("projectiles", str(weapon.get("projectile_id", "")))
+		return maxf(1.0, ModifierService.calculate(float(projectile.get("speed", weapon.get("projectile_speed", 1.0))), unit.get("status_effects", []), "ProjectileSpeed", "Torpedo"))
+	return maxf(1.0, float(weapon.get("projectile_speed", 1.0)))
+
+
+func _positive_intercept_time(relative_position: Vector2, target_velocity: Vector2, projectile_speed: float) -> float:
+	var a := target_velocity.length_squared() - projectile_speed * projectile_speed
+	var b := 2.0 * relative_position.dot(target_velocity)
+	var c := relative_position.length_squared()
+	if absf(a) <= 0.0001:
+		return -c / b if b < -0.0001 else -1.0
+	var discriminant := b * b - 4.0 * a * c
+	if discriminant < 0.0:
+		return -1.0
+	var root := sqrt(discriminant)
+	var first := (-b - root) / (2.0 * a)
+	var second := (-b + root) / (2.0 * a)
+	var result := INF
+	if first > 0.0: result = first
+	if second > 0.0: result = minf(result, second)
+	return -1.0 if is_inf(result) else result
+
+
+func _fire_weapon(unit: Dictionary, target: Dictionary, weapon_state: Dictionary, weapon: Dictionary, aim_solution: Dictionary = {}) -> void:
 	var category := str(weapon["mount_type"])
 	var extra_shots := int(round(ModifierService.sum_modifier(unit["status_effects"], "ExtraShots", category)))
 	var shot_count := int(weapon["mount_count"]) * int(weapon["shots_per_mount"]) + extra_shots
 	_set_weapon_reload(unit, weapon_state, weapon)
 	_mark_unit_fired(unit)
-	var base_heading := ((target["position"] as Vector2) - (unit["position"] as Vector2)).angle()
+	var aim_position: Vector2 = aim_solution.get("position", target["position"])
+	var base_heading := (aim_position - (unit["position"] as Vector2)).angle()
+	var impact_positions: Array = []
 	for shot_index in range(shot_count):
 		var spread_offset := 0.0
 		if shot_count > 1: spread_offset = deg_to_rad(float(weapon.get("spread", 0.0))) * (float(shot_index) / float(shot_count - 1) - 0.5)
@@ -694,9 +741,11 @@ func _fire_weapon(unit: Dictionary, target: Dictionary, weapon_state: Dictionary
 		if category == "Torpedo":
 			_spawn_projectile(unit, weapon, attack_id, base_heading + spread_offset)
 		else:
-			var travel_seconds := (unit["position"] as Vector2).distance_to(target["position"] as Vector2) / maxf(1.0, float(weapon.get("projectile_speed", 1.0)))
-			delayed_attacks.append({"attack_id": attack_id, "source_unit_id": unit["entity_id"], "source_weapon_id": weapon["id"], "target_unit_id": target["entity_id"], "origin": unit["position"], "resolve_at_time": float(state["elapsed_time"]) + travel_seconds, "accuracy_modifier": 0.0})
-	_emit("WeaponFired", {"unit_id": unit["entity_id"], "weapon_id": weapon["id"], "target_unit_id": target["entity_id"], "shot_count": shot_count})
+			var impact_position := _salvo_impact_position(unit["position"], aim_position, spread_offset, weapon)
+			impact_positions.append(impact_position)
+			var travel_seconds := (unit["position"] as Vector2).distance_to(impact_position) / maxf(1.0, float(weapon.get("projectile_speed", 1.0)))
+			delayed_attacks.append({"attack_id": attack_id, "source_unit_id": unit["entity_id"], "source_weapon_id": weapon["id"], "target_unit_id": "", "aimed_target_unit_id": target["entity_id"], "target_position": impact_position, "impact_radius": float(weapon.get("impact_radius", 40.0)), "origin": unit["position"], "resolve_at_time": float(state["elapsed_time"]) + travel_seconds, "accuracy_modifier": 0.0})
+	_emit("WeaponFired", {"unit_id": unit["entity_id"], "weapon_id": weapon["id"], "target_unit_id": target["entity_id"], "target_position": aim_position, "impact_positions": impact_positions, "shot_count": shot_count})
 	if extra_shots > 0: _consume_effect(unit, "ExtraShots", category)
 
 
@@ -707,6 +756,7 @@ func _fire_weapon_at_position(unit: Dictionary, target_position: Vector2, weapon
 	_set_weapon_reload(unit, weapon_state, weapon)
 	_mark_unit_fired(unit)
 	var base_heading := (target_position - (unit["position"] as Vector2)).angle()
+	var impact_positions: Array = []
 	for shot_index in range(shot_count):
 		var spread_offset := 0.0
 		if shot_count > 1: spread_offset = deg_to_rad(float(weapon.get("spread", 0.0))) * (float(shot_index) / float(shot_count - 1) - 0.5)
@@ -714,12 +764,18 @@ func _fire_weapon_at_position(unit: Dictionary, target_position: Vector2, weapon
 		if category == "Torpedo":
 			_spawn_projectile(unit, weapon, attack_id, base_heading + spread_offset)
 		else:
-			var impact_offset := Vector2.RIGHT.rotated(base_heading + PI * 0.5) * spread_offset * float(weapon.get("impact_radius", 40.0))
-			var impact_position := _clamp_to_map(target_position + impact_offset)
+			var impact_position := _salvo_impact_position(unit["position"], target_position, spread_offset, weapon)
+			impact_positions.append(impact_position)
 			var travel_seconds := (unit["position"] as Vector2).distance_to(impact_position) / maxf(1.0, float(weapon.get("projectile_speed", 1.0)))
 			delayed_attacks.append({"attack_id": attack_id, "source_unit_id": unit["entity_id"], "source_weapon_id": weapon["id"], "target_unit_id": "", "target_position": impact_position, "impact_radius": float(weapon.get("impact_radius", 40.0)), "origin": unit["position"], "resolve_at_time": float(state["elapsed_time"]) + travel_seconds, "accuracy_modifier": 0.0})
-	_emit("WeaponFired", {"unit_id": unit["entity_id"], "weapon_id": weapon["id"], "target_position": target_position, "shot_count": shot_count, "manual": manual})
+	_emit("WeaponFired", {"unit_id": unit["entity_id"], "weapon_id": weapon["id"], "target_position": target_position, "impact_positions": impact_positions, "shot_count": shot_count, "manual": manual})
 	if extra_shots > 0: _consume_effect(unit, "ExtraShots", category)
+
+
+func _salvo_impact_position(origin: Vector2, target_position: Vector2, spread_offset: float, weapon: Dictionary) -> Vector2:
+	var base_heading := (target_position - origin).angle()
+	var impact_offset := Vector2.RIGHT.rotated(base_heading + PI * 0.5) * spread_offset * float(weapon.get("impact_radius", 40.0))
+	return _clamp_to_map(target_position + impact_offset)
 
 
 func _mark_unit_fired(unit: Dictionary) -> void:
@@ -812,6 +868,8 @@ func _resolve_attack(attack: Dictionary, forced_hit: bool) -> void:
 	var source_snapshot := source.duplicate(true)
 	source_snapshot["position"] = attack.get("origin", source["position"])
 	var result := DamageService.resolve(attack, source_snapshot, target, weapon, formula, random_source, forced_hit)
+	result["impact_position"] = attack.get("target_position", target.get("position", Vector2.ZERO))
+	result["aimed_target_unit_id"] = attack.get("aimed_target_unit_id", attack.get("target_unit_id", ""))
 	target["current_hp"] = float(result["target_hp_after"])
 	_emit("AttackResolved", {"damage_result": result})
 	if bool(result["caused_sinking"]): _sink_unit(target, source["entity_id"])
@@ -831,7 +889,7 @@ func _resolve_area_attack(attack: Dictionary, source: Dictionary, forced_hit: bo
 			candidates.append({"unit": target, "distance": distance})
 	candidates.sort_custom(func(a, b): return float(a["distance"]) < float(b["distance"]) if not is_equal_approx(float(a["distance"]), float(b["distance"])) else str(a["unit"]["entity_id"]) < str(b["unit"]["entity_id"]))
 	if candidates.is_empty():
-		_emit("AttackResolved", {"damage_result": {"attack_id": attack.get("attack_id", ""), "source_unit_id": source.get("entity_id", ""), "target_unit_id": "", "damage_type": weapon.get("mount_type", ""), "hit": false, "hit_reason": "NO_TARGET_IN_AREA", "raw_damage": 0.0, "armor_modifier": 0.0, "armor_reduction": 0.0, "final_damage": 0.0, "target_hp_before": 0.0, "target_hp_after": 0.0, "caused_sinking": false}})
+		_emit("AttackResolved", {"damage_result": {"attack_id": attack.get("attack_id", ""), "source_unit_id": source.get("entity_id", ""), "source_weapon_id": weapon.get("id", ""), "aimed_target_unit_id": attack.get("aimed_target_unit_id", ""), "target_unit_id": "", "impact_position": impact_position, "damage_type": weapon.get("mount_type", ""), "hit": false, "hit_reason": "NO_TARGET_IN_AREA", "raw_damage": 0.0, "armor_modifier": 0.0, "armor_reduction": 0.0, "final_damage": 0.0, "target_hp_before": 0.0, "target_hp_after": 0.0, "caused_sinking": false}})
 		return
 	var target: Dictionary = candidates[0]["unit"]
 	attack["target_unit_id"] = target["entity_id"]

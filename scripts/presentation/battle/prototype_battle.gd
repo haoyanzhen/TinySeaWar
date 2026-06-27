@@ -19,6 +19,16 @@ const RANGE_UNAVAILABLE_FILL := Color(1.0, 0.18, 0.16, 0.075)
 const RANGE_UNAVAILABLE_EDGE := Color(1.0, 0.24, 0.2, 0.72)
 const RANGE_SELECTION_WHITE := Color(1.0, 1.0, 1.0, 0.95)
 const DEFAULT_AREA_TARGET_RADIUS := 48.0
+const MAIN_GUN_SCOPE_HALF_WIDTH_PX := 220.0
+const MAIN_GUN_SCOPE_HALF_HEIGHT_PX := 110.0
+const MAIN_GUN_SCOPE_TICK_SPACING_PX := 16.0
+const MAIN_GUN_SCOPE_CONFIRM_MS := 100
+const MAIN_GUN_SCOPE_LINE := Color(0.86, 0.98, 1.0, 0.42)
+const MAIN_GUN_SCOPE_MAJOR := Color(0.94, 1.0, 1.0, 0.56)
+const MAIN_GUN_SCOPE_CENTER := Color(1.0, 0.79, 0.34, 0.72)
+const MAIN_GUN_SCOPE_INVALID := Color(1.0, 0.44, 0.50, 0.76)
+const MAIN_GUN_SCOPE_SHADOW := Color(0.03, 0.16, 0.20, 0.28)
+const MAIN_GUN_DISPERSION := Color(0.88, 0.98, 1.0, 0.26)
 
 enum OperationMode { NORMAL, AIMING_PRIMARY, TARGETING_SKILL }
 
@@ -49,6 +59,9 @@ var unit_layer: Node2D
 var projectile_layer: Node2D
 var vfx_layer: Node2D
 var effect_director
+var gun_scope_confirmation_position := Vector2.ZERO
+var gun_scope_confirmation_started_msec := 0
+var gun_scope_confirmation_until_msec := 0
 
 
 func _ready() -> void:
@@ -218,19 +231,22 @@ func _texture(path: String) -> Texture2D:
 
 
 func _draw_operation_overlay() -> void:
+	_draw_gun_scope_confirmation()
 	if selected_unit_id.is_empty() or operation_mode == OperationMode.NORMAL: return
 	var selected: Dictionary = session.state.get("units_by_id", {}).get(selected_unit_id, {})
 	if selected.is_empty(): return
 	var cursor := get_global_mouse_position()
 	if operation_mode == OperationMode.AIMING_PRIMARY:
 		var aim_status: Dictionary = session.get_primary_aim_status(selected_unit_id, cursor)
+		var reason_offset := Vector2(18.0, -18.0)
 		if aim_status.get("control_type", "") == "Direction":
 			_draw_directional_aim_overlay(selected, cursor, aim_status)
 		elif aim_status.get("weapon_type", "") == "Gun":
 			_draw_gun_aim_overlay(selected, cursor, aim_status)
+			reason_offset = Vector2(18.0, MAIN_GUN_SCOPE_HALF_HEIGHT_PX + 28.0) * _scope_world_per_pixel()
 		else:
 			_draw_area_target_overlay(selected, cursor, aim_status, float(aim_status.get("impact_radius", DEFAULT_AREA_TARGET_RADIUS)))
-		_draw_aim_reason_label(cursor, str(aim_status.get("reason_code", "OK")), bool(aim_status.get("legal", false)))
+		_draw_aim_reason_label(cursor, str(aim_status.get("reason_code", "OK")), bool(aim_status.get("legal", false)), reason_offset)
 	elif operation_mode == OperationMode.TARGETING_SKILL:
 		_draw_skill_target_overlay(selected, cursor)
 
@@ -270,10 +286,113 @@ func _draw_gun_aim_overlay(selected: Dictionary, cursor: Vector2, aim_status: Di
 	draw_arc(origin, maximum_range, 0.0, TAU, 128, RANGE_UNAVAILABLE_EDGE, 2.0)
 	_draw_fire_arc_sectors(selected, aim_status.get("fire_arcs", []), maximum_range, RANGE_AVAILABLE_FILL, RANGE_AVAILABLE_EDGE)
 	_draw_fire_arc_sectors(selected, aim_status.get("full_salvo_fire_arcs", []), maximum_range, RANGE_FULL_SALVO_FILL, RANGE_FULL_SALVO_EDGE)
-	draw_line(origin, cursor, RANGE_SELECTION_WHITE, 2.0)
 	var target_radius := float(aim_status.get("impact_radius", DEFAULT_AREA_TARGET_RADIUS))
-	draw_circle(cursor, target_radius, Color(1.0, 1.0, 1.0, 0.10))
-	draw_arc(cursor, target_radius, 0.0, TAU, 48, RANGE_SELECTION_WHITE, 2.0)
+	_draw_gun_bearing_line(origin, cursor, target_radius)
+	_draw_main_gun_dispersion(cursor, origin, target_radius, float(aim_status.get("spread_degrees", 0.0)))
+	_draw_main_gun_scope(cursor, bool(aim_status.get("legal", false)))
+
+
+func _draw_gun_bearing_line(origin: Vector2, cursor: Vector2, target_radius: float) -> void:
+	var distance := origin.distance_to(cursor)
+	if distance <= target_radius:
+		return
+	var direction := (cursor - origin) / distance
+	var line_end := cursor - direction * target_radius * 1.2
+	var pixel := _scope_world_per_pixel()
+	var dash_length := 10.0 * pixel
+	var gap_length := 8.0 * pixel
+	var drawn := 0.0
+	var line_length := origin.distance_to(line_end)
+	while drawn < line_length:
+		var segment_end := minf(drawn + dash_length, line_length)
+		draw_line(origin + direction * drawn, origin + direction * segment_end, Color(0.90, 0.98, 1.0, 0.22), pixel, true)
+		drawn += dash_length + gap_length
+
+
+func _draw_main_gun_dispersion(center: Vector2, origin: Vector2, impact_radius: float, spread_degrees: float) -> void:
+	var radii := _main_gun_dispersion_radii(impact_radius, spread_degrees)
+	var firing_angle := (center - origin).angle()
+	var cross_axis_rotation := firing_angle + PI * 0.5
+	var segment_count := 72
+	var pixel := _scope_world_per_pixel()
+	for segment in range(segment_count):
+		if segment % 6 >= 3:
+			continue
+		var start_angle := TAU * float(segment) / float(segment_count)
+		var end_angle := TAU * float(segment + 1) / float(segment_count)
+		var start_point := center + Vector2(cos(start_angle) * radii.x, sin(start_angle) * radii.y).rotated(cross_axis_rotation)
+		var end_point := center + Vector2(cos(end_angle) * radii.x, sin(end_angle) * radii.y).rotated(cross_axis_rotation)
+		draw_line(start_point, end_point, MAIN_GUN_DISPERSION, pixel, true)
+
+
+func _main_gun_dispersion_radii(impact_radius: float, spread_degrees: float) -> Vector2:
+	var lateral_spread := deg_to_rad(maxf(0.0, spread_degrees)) * 0.5
+	return Vector2(impact_radius * (1.0 + lateral_spread), impact_radius)
+
+
+func _draw_main_gun_scope(center: Vector2, legal: bool, scale_multiplier: float = 1.0, alpha_multiplier: float = 1.0) -> void:
+	var pixel := _scope_world_per_pixel() * scale_multiplier
+	var half_width := MAIN_GUN_SCOPE_HALF_WIDTH_PX * pixel
+	var half_height := MAIN_GUN_SCOPE_HALF_HEIGHT_PX * pixel
+	var axis_color := _scope_color(MAIN_GUN_SCOPE_LINE, alpha_multiplier)
+	var major_color := _scope_color(MAIN_GUN_SCOPE_MAJOR, alpha_multiplier)
+	var status_color := _scope_color(MAIN_GUN_SCOPE_CENTER if legal else MAIN_GUN_SCOPE_INVALID, alpha_multiplier)
+	_draw_scope_line(center - Vector2(half_width, 0.0), center + Vector2(half_width, 0.0), axis_color, pixel)
+	_draw_scope_line(center - Vector2(0.0, half_height), center + Vector2(0.0, half_height), axis_color, pixel)
+	_draw_scope_ticks(center, true, int(floor(MAIN_GUN_SCOPE_HALF_WIDTH_PX / MAIN_GUN_SCOPE_TICK_SPACING_PX)), pixel, axis_color, major_color, status_color, legal)
+	_draw_scope_ticks(center, false, int(floor(MAIN_GUN_SCOPE_HALF_HEIGHT_PX / MAIN_GUN_SCOPE_TICK_SPACING_PX)), pixel, axis_color, major_color, status_color, legal)
+	var end_cap := 14.0 * pixel
+	var terminal_color := major_color if legal else status_color
+	_draw_scope_line(center + Vector2(-half_width, -end_cap * 0.5), center + Vector2(-half_width, end_cap * 0.5), terminal_color, pixel)
+	_draw_scope_line(center + Vector2(half_width, -end_cap * 0.5), center + Vector2(half_width, end_cap * 0.5), terminal_color, pixel)
+	_draw_scope_line(center + Vector2(-end_cap * 0.5, -half_height), center + Vector2(end_cap * 0.5, -half_height), terminal_color, pixel)
+	_draw_scope_line(center + Vector2(-end_cap * 0.5, half_height), center + Vector2(end_cap * 0.5, half_height), terminal_color, pixel)
+	draw_circle(center, 2.4 * pixel, status_color, true, -1.0, true)
+
+
+func _draw_scope_ticks(center: Vector2, horizontal_axis: bool, tick_count: int, pixel: float, axis_color: Color, major_color: Color, status_color: Color, legal: bool) -> void:
+	for index in range(-tick_count, tick_count + 1):
+		if index == 0:
+			continue
+		var absolute_index := absi(index)
+		var tick_length_px := 5.0
+		var tick_color := axis_color
+		if absolute_index % 8 == 0:
+			tick_length_px = 14.0
+			tick_color = major_color
+		elif absolute_index % 4 == 0:
+			tick_length_px = 9.0
+			tick_color = major_color
+		if not legal and absolute_index == tick_count:
+			tick_color = status_color
+		var offset := float(index) * MAIN_GUN_SCOPE_TICK_SPACING_PX * pixel
+		var half_tick := tick_length_px * pixel * 0.5
+		if horizontal_axis:
+			_draw_scope_line(center + Vector2(offset, -half_tick), center + Vector2(offset, half_tick), tick_color, pixel)
+		else:
+			_draw_scope_line(center + Vector2(-half_tick, offset), center + Vector2(half_tick, offset), tick_color, pixel)
+
+
+func _draw_scope_line(from: Vector2, to: Vector2, color: Color, width: float) -> void:
+	var shadow_offset := Vector2.ONE * width * 0.75
+	draw_line(from + shadow_offset, to + shadow_offset, _scope_color(MAIN_GUN_SCOPE_SHADOW, color.a / maxf(MAIN_GUN_SCOPE_LINE.a, 0.01)), width * 1.6, true)
+	draw_line(from, to, color, width, true)
+
+
+func _scope_world_per_pixel() -> float:
+	return 1.0 / maxf(battle_camera.zoom.x, 0.01)
+
+
+func _scope_color(color: Color, alpha_multiplier: float) -> Color:
+	return Color(color.r, color.g, color.b, clampf(color.a * alpha_multiplier, 0.0, 1.0))
+
+
+func _draw_gun_scope_confirmation() -> void:
+	var now := Time.get_ticks_msec()
+	if now >= gun_scope_confirmation_until_msec or gun_scope_confirmation_until_msec <= gun_scope_confirmation_started_msec:
+		return
+	var progress := clampf(float(now - gun_scope_confirmation_started_msec) / float(MAIN_GUN_SCOPE_CONFIRM_MS), 0.0, 1.0)
+	_draw_main_gun_scope(gun_scope_confirmation_position, true, lerpf(1.0, 0.92, progress), 1.0 - progress)
 
 
 func _draw_fire_arc_sectors(selected: Dictionary, arcs: Array, maximum_range: float, fill_color: Color, edge_color: Color) -> void:
@@ -323,8 +442,8 @@ func _draw_range_overlay(origin: Vector2, minimum_range: float, maximum_range: f
 		draw_arc(origin, minimum_range, 0.0, TAU, 64, RANGE_UNAVAILABLE_EDGE, 2.0)
 
 
-func _draw_aim_reason_label(cursor: Vector2, reason_code: String, legal: bool) -> void:
-	draw_string(ThemeDB.fallback_font, cursor + Vector2(18.0, -18.0), UiText.reason_name(reason_code), HORIZONTAL_ALIGNMENT_LEFT, -1.0, 16, RANGE_SELECTION_WHITE if legal else RANGE_UNAVAILABLE_EDGE)
+func _draw_aim_reason_label(cursor: Vector2, reason_code: String, legal: bool, offset: Vector2 = Vector2(18.0, -18.0)) -> void:
+	draw_string(ThemeDB.fallback_font, cursor + offset, UiText.reason_name(reason_code), HORIZONTAL_ALIGNMENT_LEFT, -1.0, 16, RANGE_SELECTION_WHITE if legal else RANGE_UNAVAILABLE_EDGE)
 
 
 func _draw_annular_sector(center: Vector2, inner_radius: float, outer_radius: float, start_angle: float, end_angle: float, color: Color) -> void:
@@ -558,6 +677,10 @@ func _confirm_primary_aim(world_position: Vector2) -> void:
 	if not bool(aim_status.get("legal", false)):
 		_push_message("主要武器无法发射：%s" % UiText.reason_name(str(aim_status.get("reason_code", "INVALID_TARGET"))))
 		return
+	if aim_status.get("weapon_type", "") == "Gun":
+		gun_scope_confirmation_position = world_position
+		gun_scope_confirmation_started_msec = Time.get_ticks_msec()
+		gun_scope_confirmation_until_msec = gun_scope_confirmation_started_msec + MAIN_GUN_SCOPE_CONFIRM_MS
 	session.queue_command({"command_id": "ui.primary.%s" % session.state["tick_index"], "command_type": "FirePrimaryWeapon", "issued_at_tick": session.state["tick_index"], "issuer_id": "player", "unit_id": selected_unit_id, "target_position": world_position})
 	operation_mode = OperationMode.NORMAL
 
@@ -663,6 +786,8 @@ func _start_battle(new_level_id: String) -> void:
 	result_character_id = ""
 	operation_mode = OperationMode.NORMAL
 	skill_target_type = ""
+	gun_scope_confirmation_started_msec = 0
+	gun_scope_confirmation_until_msec = 0
 	camera_mode = "Manual"
 	camera_follow_unit_id = ""
 	recent_messages.clear()

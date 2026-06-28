@@ -7,7 +7,7 @@ Sources of truth:
 - `docs/40_art_direction_design.md` section 6
 - `docs/41_character_art_design.md`
 - `docs/45_art_asset_interface_design.md`
-- `docs/46_art_pipeline_design.md`
+- `docs/46_character_art_asset_pipeline.md`
 
 ## Result
 

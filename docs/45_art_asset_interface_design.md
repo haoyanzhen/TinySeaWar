@@ -41,6 +41,15 @@ var water_column := DataRegistry.assets.combat_vfx_asset_path("impact.water.larg
 - `weapon_visual(character_id, weapon_key)` 返回角色武器到公共表现的映射，例如主炮使用哪个炮弹档位、哪个炮口 profile、哪个命中 profile。
 - `vfx_playback_profile(profile_key)` 返回 VFX 播放参数，例如 `duration`、`fps`、`loop`、`anchor`、`z_layer`、`rotation_mode`、`scale`、`follow_owner`、`blend_mode`。
 - `combat_vfx_asset_path(semantic)` 从公共战斗 VFX manifest 返回语义资源路径，例如 `impact.water.large`；表现代码不得手拼公共水柱文件名。
+- `environment_asset_path(semantic)` 从地形、岸基设施和局部环境三个 manifest 返回资源路径。浅水、航道、`visual_regions` 岸线叠层、设施状态和岛岸命中表现均通过该接口查询，不按文件名拼接；纯视觉多边形只能引用 manifest 语义，不能携带碰撞或通行规则。
+
+环境 manifest：
+
+```text
+assets/environment/terrain/terrain_asset_manifest.json
+assets/environment/facilities/facility_asset_manifest.json
+assets/environment/weather/zones/environment_zone_asset_manifest.json
+```
 - 角色目录中的专属 VFX role 可以覆盖公共 profile 的贴图或颜色，但仍需要声明其公共语义，例如 `bismarck.heavy_muzzle -> muzzle_flash.large`。
 
 炮弹曳尾接口：

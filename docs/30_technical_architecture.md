@@ -86,6 +86,12 @@ data/
 - `docs/13_balance_baseline.md`：记录 MVP 初始平衡范围和调参基线。
 - `docs/14_character_balance_design.md`：记录角色基础数值、舰装数值和技能数值草案。
 
+角色美术资产文档职责：
+
+- `docs/41_character_art_design.md`：记录角色原型、视觉方向和专属资产重点。
+- `docs/45_art_asset_interface_design.md`：记录程序与美术资产之间的运行时语义接口。
+- `docs/46_character_art_asset_pipeline.md`：记录角色源图拆分、配置生成、批量处理和 QA 验收流程。
+
 ## 3. MVP 范围
 
 ### 3.1 第一版只做战斗切片
@@ -471,6 +477,8 @@ MVP 规则：
 ## 8. 数据设计
 
 详细数据结构已迁移到 `docs/20_data_schema_design.md`。本文档只保留技术系统说明，舰娘配置、装备底座、舰种枚举、关卡配置和技能配置字段以数据结构设计文档为准。
+
+场景战斗地形遵守同一真源：`terrain_templates.json` 保存审核后的资产局部语义，烘焙后的 `terrain_definitions.json` 同时驱动 Domain 查询、共享导航、小地图和 QA。Domain 不读取 PNG、场景碰撞体或 Shader；`TerrainQueryService` 负责舰体圆扫掠、鱼雷/炮弹线段阻挡和水面光学视线，`RoutePlanner` 只负责低频规划，最终移动仍由 Domain 校验。没有地形引用的关卡继续走既有开阔海域路径。
 
 ## 9. AI 设计
 

@@ -36,6 +36,8 @@ torpedo_power
 anti_air_power
 aviation_power
 max_oxygen
+collision_radius
+collision_half_extents
 variant_tags
 reference_ship_profile
 weapon_mounts
@@ -72,6 +74,8 @@ is_flagship_candidate
 - `anti_air_power`：防空能力，影响防空圈、敌机拦截和空袭削弱。
 - `aviation_power`：航空能力，影响舰载机规模、空袭、侦察和出击效率。
 - `max_oxygen`：最大氧气值，主要用于潜艇；非潜艇可为空或 0。
+- `collision_radius`：旧圆形碰撞兼容值，同时保留给当前地形导航安全距离与旧数据回退；不再是舰船、炮弹和鱼雷相交判定的真源。
+- `collision_half_extents`：随航向旋转的舰装碰撞椭圆半轴 `[纵向, 横向]`。纵向直径应接近运行时舰装绘制宽度；炮弹落区、鱼雷扫掠、舰船重叠分离和鼠标选取统一读取该字段。
 - `variant_tags`：舰娘变体标签，例如 `FastScout`、`TorpedoSpecialist`、`AAEscort`、`HeavyArmor`、`LongRangeGunnery`。
 - `reference_ship_profile`：现实舰船或舰型参考标识，只用于设计说明和调参依据，不作为强制模板。
 - `weapon_mounts`：装备底座列表，描述火炮、鱼雷、防空、航空等装备的底座数量、装填、射角和目标类型。
@@ -117,6 +121,7 @@ turret_turn_speed
 base_projectile_speed
 projectile_speed
 spread
+base_impact_radius
 impact_radius
 accuracy_modifier
 target_types
@@ -148,7 +153,8 @@ aircraft_config_id
 - `base_projectile_speed`：武器配置中的炮弹、鱼雷、舰载机等攻击速度设计基线。
 - `projectile_speed`：当前运行时攻击速度，也是炮弹飞行时间、鱼雷推进和航空编队移动表现的直接真源。当前统一为 `base_projectile_speed * 0.5`。
 - `spread`：散布。
-- `impact_radius`：海域攻击的结算半径。主炮和空袭使用；鱼雷可为空或 0。
+- `base_impact_radius`：舰炮落点圆的设计基线半径。
+- `impact_radius`：海域攻击的运行时结算半径。舰炮当前统一为 `base_impact_radius * 0.5`；空袭保留自身配置，鱼雷可为空或 0。
 - `accuracy_modifier`：命中修正。
 - `target_types`：可攻击目标类型，例如 `Surface`、`Air`、`Submerged`。
 - `weapon_resource_id`：引用具体武器资源或表现资源。
@@ -366,7 +372,7 @@ collision_damage
 - `boundary_type`：边界类型，MVP 固定为不可离开的固定边界。
 - `collision_damage`：单位碰撞卡住时造成的生命值损失。
 
-海面调色配置保存在 `data/environments/ocean_palettes.json`。关卡 `map.ocean_palette` 引用其中一个调色 ID，用于切换纯场景表现，不改变碰撞、侦查、命中、移动或射程规则。
+海面调色配置保存在 `data/environments/ocean_palettes.json`。关卡 `map.ocean_palette` 引用一个共享条件 ID：表现层据此选择海面与天气资产，Domain 据此从 `data/environments/ocean_battle_condition_definitions.json` 解析天气和时段战斗基线。palette 不改变硬碰撞或射程定义，但会通过 `TerrainContext` 影响侦查、移动、命中和航空条件。
 
 海面调色基础字段：
 
@@ -456,7 +462,7 @@ snow_haze_strength
 
 ### 11.1 陆地资产与碰撞边缘配置
 
-陆地资产清单保存在 `assets/environment/land/land_asset_manifest.json`，碰撞候选边缘保存在 `assets/environment/land/land_collision_manifest.json`。当前陆地层是场景扩展资产，不改变 MVP 开阔海域默认规则；只有关卡显式引用并启用地形阻挡时，Domain/寻路层才读取对应碰撞数据。
+陆地资产清单保存在 `assets/environment/land/land_asset_manifest.json`，碰撞候选边缘保存在 `assets/environment/land/land_collision_manifest.json`。候选边缘不进入运行时；正式审核几何位于 `data/terrain/terrain_templates.json`，经烘焙写入 `data/terrain/terrain_definitions.json`。未引用地形的四个开阔海域关卡继续保持原规则，只有关卡显式配置 `terrain_definition_id` 时启用地形系统。
 
 陆地资产清单字段：
 
@@ -526,6 +532,117 @@ polygon_px
 - 不能直接把所有 alpha 边缘等同于硬碰撞。浅水 halo、白沫、视觉阴影和小装饰礁石需要在关卡编辑阶段按语义拆分。
 - 不能从 PNG 透明度在运行时临时推断碰撞真相；运行时应读取已经审核过的多边形配置。
 - 关卡地图仍是通行、碰撞、视线遮挡和地形成本的真源。美术资产只提供候选边缘和视觉外形。
+
+### 11.2 正式地形、导航、环境区与设施配置
+
+运行时配置文件：
+
+```text
+data/terrain/terrain_templates.json
+data/terrain/terrain_definitions.json
+data/terrain/navigation_definitions.json
+data/environments/environment_zone_definitions.json
+data/environments/ocean_battle_condition_definitions.json
+data/facilities/facility_definitions.json
+data/facilities/support_mission_definitions.json
+data/facilities/minefield_definitions.json
+```
+
+`TerrainAssetTemplate` 使用资产局部坐标保存 `obstacles`、`regions`、`visual_regions` 和 `facility_anchors`；`TerrainMap` 保存烘焙后的世界坐标、`visual_instances`、出生点以及导航/环境区/设施布局引用。硬地形 `block_mask` 显式使用 `ShipMovement`、`TorpedoTravel`、`ShellTravel`、`SurfaceOpticalLineOfSight`，水域 `region_type` 使用 `DeepWater`、`CoastalWater`、`ShallowWater`、`ReefOrSandbar`、`NavigationChannel`。`visual_regions` 只保存 `asset_semantic`、透明度、层级和多边形，不进入碰撞、视线或通行查询。
+
+导航配置按碰撞半径和通行标签分 profile，玩家与 AI 只读同一份节点/边。环境区保存规则形状、方向、漂移速度、相对起点的 `drift_path`、强度、阶段、持续时间和公开趋势，不保存 Shader 参数；有路径时沿折线定速推进，无路径时才按 `heading` 直线漂移。设施 layout 只引用审核后的岸线挂点；设施 Definition 保存能力组合和规则字段，资产 manifest 只保存语义与路径。
+
+`MinefieldDefinition` 必须保存 `terrain_definition_id`、审核多边形、`safe_channels`、`controller_facility_id`、所有权和 `known_by_faction`。正式阵营快照只包含该阵营已知或拥有的雷区；全量边界只允许进入全知调试快照。
+
+场景战术结果使用以下正式扩展字段：
+
+```text
+WeatherBattleProfile
+  weather
+  context.base_sea_state
+  context.optical_visibility_multiplier
+  context.weapon_accuracy_modifier
+  context.aviation_delay_multiplier
+  context.aviation_condition
+
+TimeBattleProfile
+  time_of_day
+  context.optical_visibility_multiplier
+  context.weapon_accuracy_modifier
+  context.aviation_delay_multiplier
+
+OceanConditionRules
+  minimum_optical_visibility_multiplier
+  sea_state_rules[]
+
+OceanConditionAliases
+  aliases
+
+global_environment.sea_state_rules[]
+  minimum_sea_state
+  movement_speed_multiplier
+  weapon_accuracy_modifier
+  aviation_delay_multiplier
+  aviation_condition
+
+global_environment.tide
+  initial_phase
+  phases
+  phase_duration
+  open_phases
+
+FacilityDefinition
+  armor
+  armor_thickness
+  suppression_damage_threshold
+  suppression_duration
+  observation_range
+  gunnery_power
+  aviation_power
+  weapon_id | weapon_ids
+  reload_during_suppression
+  service_profile
+
+SupportMissionDefinition
+  mission_type
+  max_range
+  effect_radius
+  effect_duration
+  blocked_aviation_conditions
+  enemy_aviation_accuracy_modifier
+  salvo_count
+  weapon_id
+
+MinefieldDefinition
+  damage
+  controller_rules.on_active
+  controller_rules.on_suppressed
+  controller_rules.on_destroyed
+```
+
+- `map.ocean_palette` 必须能解析为 `{weather}_{time}`，或由 `OceanConditionAliases` 映射到正式组合。当前兼容入口为 `day_clear -> clear_day`、`cloudy -> cloudy_day`、`dusk -> cloudy_dusk`。
+- `ocean_palettes.json` 保存表现参数，`ocean_battle_condition_definitions.json` 保存战斗规则；二者共享 palette 语义但不能互相读取 Shader/规则字段。
+- 天气和时段上下文先组合为全图环境基线，局部环境区随后叠加；光学倍率最终受 `minimum_optical_visibility_multiplier` 下限保护。
+- `sea_state_rules` 按不超过最终海况的最高 `minimum_sea_state` 取一档；背风等区域先改变最终海况，再选择档位。
+- `tide` 使用固定阶段时长循环；`open_phases` 允许新进入潮滩，其他阶段只允许已经位于区内的单位撤离。
+- `service_profile.service_type` 当前为 `Supply` 或 `Repair`。补给使用 `weapon_reload_recovery_ratio`、`skill_cooldown_recovery`；维修使用 `hp_restore_ratio`、`repair_cap_ratio`。
+- `weapon_id` 必须引用现有 Weapon Definition。岸炮和空袭继续使用普通命中、装甲和伤害公式。
+- `reload_during_suppression` 控制武器设施受压制期间是否继续装填；当前岸防炮为 `false`。
+- `blocked_aviation_conditions` 当前支持 `Severe` 与 `Grounded`；`Restricted` 通过到达时间和命中修正表达，不等同于无条件禁飞。
+- `controller_rules` 只切换绑定雷区状态。水雷触发、伤害、阵营知识和安全航道由独立水雷服务处理。
+
+Godot 制作插件通过 `build_authoring_snapshot.py` 将正式模板或地图数据装入可编辑场景，并通过 `apply_authoring_snapshot.py` 回写。`editor_snapshot.json` 只是被忽略的交换文件，不是运行时真源；生产门禁会对模板、环境区、设施布局和雷区执行无损往返测试。
+
+港湾关卡 `map` 新增可选字段：
+
+```text
+terrain_definition_id
+navigation_definition_id
+environment_zone_set_id
+facility_layout_id
+```
+
+这些字段全部为空时，关卡按既有开阔海域规则运行。
 
 ## 12. 关卡配置
 

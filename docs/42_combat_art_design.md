@@ -95,6 +95,8 @@
 
 未命中落水反馈按口径分级：小口径和中口径炮弹不生成水柱，只保留弹道消失与必要的轻量声音反馈；口径达到 280mm 的大口径舰炮才在领域事件给出的固定 `impact_position` 生成 `impact.water.large` 水柱。水柱位置不得追随原瞄准目标。
 
+岛岸阻挡使用独立公共反馈：炮弹按小/中/大口径播放 `environment.shell_terrain_impact.*`，以湿岩、岸尘和横向碎浪区别普通落水；鱼雷撞岸播放 `environment.torpedo_terrain_impact` 并立即移除轨迹。两者位置和法线只消费 Domain 的 `ProjectileBlockedByTerrain` / `ShellBlockedByTerrain`，表现层不得按岛屿贴图猜测命中。
+
 ### 4.2 水面鱼雷
 
 鱼雷必须始终是可读的实体威胁：

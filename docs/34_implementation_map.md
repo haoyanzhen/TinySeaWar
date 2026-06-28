@@ -18,7 +18,19 @@
   - 主控制：`scripts/presentation/battle/prototype_battle.gd`
   - HUD：`scripts/presentation/battle/battle_hud.gd`
   - 海面：`scripts/presentation/battle/ocean_surface.gd`
-  - 独立天气层：`scripts/presentation/battle/weather_overlay.gd`
+- 独立天气层：`scripts/presentation/battle/weather_overlay.gd`
+- 地形/浅水/设施表现：`scripts/presentation/battle/terrain_view.gd`
+- 地形与 TerrainContext 调试：`scripts/presentation/battle/terrain_debug_overlay.gd`（运行时按 F9）
+
+## 场景环境运行时契约
+
+- `OceanSurface` 使用覆盖关卡地图范围的 `Node2D` 和 `canvas_item` Shader；海面纹理、噪声、波纹和天气采样以地图局部坐标为基础，镜头移动时不得变成屏幕贴片。
+- `WeatherOverlay` 是独立 `Node2D`，位于海面之上、战斗单位与 HUD/战术叠层之下；天气环境光和遮罩不得改写单位、UI 或 Domain 状态。
+- `OceanSurface` 与 `WeatherOverlay` 共用 `data/environments/ocean_palettes.json`。时间字段负责颜色、明度与反光，气候字段负责云影、风浪、白沫、雨雾、风暴、闪电和雪层强度；新增组合继续复用同一运行时结构。
+- 同一个 `map.ocean_palette` 由 `TerrainContextService` 对照 `data/environments/ocean_battle_condition_definitions.json` 解析为全局天气和时段战斗条件。表现层与 Domain 共享 ID，不共享 Shader 参数。
+- 两个环境节点的动画时间均由脚本累计并传入 Shader，不直接依赖 Shader `TIME`；战斗暂停时必须同时停止环境时间推进。
+- 地图尺寸和默认海况来自关卡的 `map` 配置，禁止在表现层假定所有关卡尺寸相同；镜头边界按当前地图尺寸和逻辑视口动态计算。
+- 项目继续使用 Compatibility 渲染器；修改海面或天气 Shader 后，至少运行场景展示测试，并用 `render_scene_qa.gd` 检查目标分辨率和代表性海况。
 
 ## 数据与配置
 
@@ -28,7 +40,7 @@
   - `DataRegistry.assets`：读取美术资产索引。
 - 关卡配置：`data/levels/prototype_levels.json`
   - 新增 1v1、3v3、更多战斗模式时优先改这里。
-  - `map.ocean_palette` 控制海面调色板，可引用 5 种气候 x 4 个时间段的组合海域。
+  - `map.ocean_palette` 选择共享的海面/战斗环境条件，可引用 5 种气候 x 4 个时间段的组合海域。
 - 舰船配置：`data/ships/prototype_ships.json`、`data/ships/expanded_roster_ships.json`、`data/ships/phase2_ships.json`
   - 角色基础属性、武器挂载、技能、主要武器组、弹种组、`asset_root`。
   - `base_speed/base_turn_speed/base_detection_range/base_concealment_distance` 保存设计基线；运行字段分别按 0.5 或 1.5 倍写入。
@@ -48,6 +60,9 @@
 - 海面调色板：`data/environments/ocean_palettes.json`
   - 当前包含 20 套气候/时间组合，以及 `day_clear`、`cloudy`、`dusk` 三个兼容入口。
   - 同一配置同时驱动海面 Shader 与独立 WeatherOverlay；雪粒/雪雾资源已正式挂载，当前基础 20 组合默认强度为 0。
+- 海面战斗条件：`data/environments/ocean_battle_condition_definitions.json`
+  - 5 个天气 Profile、4 个时段 Profile、统一海况档位和 3 个兼容 palette 别名。
+  - `scripts/domain/services/terrain_context_service.gd` 负责与局部环境区组合；`battle_session.gd` 只把关卡 palette ID 传入，不从画面反推规则。
 - 表现设置：`data/settings/presentation_settings.json`
   - `window`：固定逻辑画布、主界面可选窗口尺寸与默认尺寸。
   - `camera`：默认缩放、滚轮步长、最近观察范围和最远地图占比。
@@ -80,9 +95,12 @@
   - 投射物与延迟攻击：`_spawn_projectile`、`_update_projectiles`、`_resolve_delayed_attacks`
   - 命中与伤害：`_resolve_attack`、`_resolve_area_attack`
   - 胜负结算：`_check_victory`、`_check_timeout`、`_finish_battle`
+  - 场景战术结果：`_update_facility_weapons`、`_handle_facility_event`、`_resolve_support_mission`、`_apply_mine_trigger`、`_environment_accuracy_modifier`
+  - 敌方环境意图：`_ai_facility_plan`、`_update_ai_support_intents`；设施、潮汐和雷区意图仍转换为普通命令并经过共享合法性校验。
 - 纯计算服务：
   - 伤害：`scripts/domain/services/damage_service.gd`
   - 修正值顺序：`scripts/domain/services/modifier_service.gd`
+  - 舰装椭圆、圆-椭圆和连续扫掠：`scripts/domain/services/collision_geometry_service.gd`
 - 战斗统计：`scripts/infrastructure/analytics/battle_recorder.gd`
 - 随机数：`scripts/infrastructure/random/seeded_random_source.gd`
 
@@ -150,6 +168,8 @@
   - 设计说明：`docs/45_art_asset_interface_design.md`
   - 推荐新代码优先通过 `DataRegistry.assets` 查资源。
 - 角色资源：`assets/characters/{character_id}/processed/`
+  - 生产与验收流程：`docs/46_character_art_asset_pipeline.md`
+  - 批量处理与契约检查：`tools/art_pipeline/`
   - 战斗图层：`battle/*_battle_body_r.png`、`battle/*_battle_rig_base.png`
   - 头像：`ui/*_ui_portrait.png`、`ui/*_ui_portrait_small.png`
   - 横向封面：`ui/*_illust_skill_cutin_alpha.png`
@@ -163,12 +183,22 @@
 - 陆地母版：`assets/environment/land/land_*.png`
 - 陆地资产清单：`assets/environment/land/land_asset_manifest.json`
 - 陆地碰撞候选边缘：`assets/environment/land/land_collision_manifest.json`
+- 审核地形模板/世界几何：`data/terrain/terrain_templates.json`、`data/terrain/terrain_definitions.json`
+- 共享导航：`data/terrain/navigation_definitions.json`、`scripts/application/navigation/route_planner.gd`
+- 纯地形查询/环境上下文/设施/水雷状态：`scripts/domain/services/terrain_query_service.gd`、`terrain_context_service.gd`、`facility_service.gd`、`minefield_service.gd`
+  - `TerrainContextService`：固定 Tick 天气与潮汐、最终海况规则档、机动/命中/航空上下文、潮滩进入与撤离校验。
+  - `FacilityService`：观察源、岸炮状态、交互、服务事务、机场队列、依赖、HP、压制/恢复/摧毁。
+  - `MinefieldService`：连续雷区进入、安全航道、单舰触发、阵营知识、控制站状态和 AI 已知雷区绕行点。
+- 近岸/设施/局部环境资产清单：`assets/environment/terrain/terrain_asset_manifest.json`、`assets/environment/facilities/facility_asset_manifest.json`、`assets/environment/weather/zones/environment_zone_asset_manifest.json`
+- 地形制作插件：`addons/terrain_authoring/`；可在 Template/Map 模式从正式 JSON 加载并回写硬地形、浅水、航道、纯视觉层、环境区、设施挂点/依赖、雷区与安全航道，并在警告未清除时阻止保存。
+- 地形生产与 QA：`tools/terrain/`；`build_scene_combat_pipeline.py` 会在临时目录完成地形/导航烘焙与全量校验，通过后才事务式发布正式 JSON，再生成小地图和 QA；编辑往返入口为 `build_authoring_snapshot.py` / `apply_authoring_snapshot.py`。
 
 ## 测试与调试
 
 - 核心规则测试：`scripts/tests/test_runner.gd`
 - 场景与展示测试：`scripts/tests/scene_presentation_test.gd`
 - 第二期配置与资产映射测试：`scripts/tests/phase2_config_test.gd`
+- 地形制作插件测试：`scripts/tests/terrain_authoring_test.gd`
 - 批量模拟：`scripts/tests/batch_simulation.gd`
 - 截图 QA：`scripts/tests/render_scene_qa.gd`
 - 常用命令：
@@ -177,6 +207,9 @@
   - 展示测试：`godot --headless --path . --script res://scripts/tests/scene_presentation_test.gd`
   - 第二期配置测试：`godot --headless --path . --script res://scripts/tests/phase2_config_test.gd`
   - 格式检查：`git diff --check`
+  - 地形配置校验：`python3 tools/terrain/validate_terrain_definition.py`
+  - 地形生产门禁：`python3 tools/terrain/validate_scene_combat_pipeline.py`
+  - 地形制作插件：`godot --headless --path . --script res://scripts/tests/terrain_authoring_test.gd`
 
 ## 常见修改入口
 

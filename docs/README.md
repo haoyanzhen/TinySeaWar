@@ -30,6 +30,8 @@ Use lowercase English file names with underscores:
 - [14_character_balance_design.md](14_character_balance_design.md)
 - [15_battle_level_design.md](15_battle_level_design.md)
 - [16_enemy_ai_behavior_design.md](16_enemy_ai_behavior_design.md)
+- [17_play_design.md](17_play_design.md)
+- [18_facility_weather_effect_design.md](18_facility_weather_effect_design.md)
 
 ### Data
 
@@ -42,6 +44,7 @@ Use lowercase English file names with underscores:
 - [32_domain_design_phase1.md](32_domain_design_phase1.md)
 - [33_domain_design_phase2.md](33_domain_design_phase2.md)
 - [34_implementation_map.md](34_implementation_map.md)
+- [35_scene_combat_domain_design.md](35_scene_combat_domain_design.md)
 
 ### Art
 
@@ -51,15 +54,10 @@ Use lowercase English file names with underscores:
 - [43_scene_art_design.md](43_scene_art_design.md)
 - [44_ui_art_design.md](44_ui_art_design.md)
 - [45_art_asset_interface_design.md](45_art_asset_interface_design.md)
-- [46_art_pipeline_design.md](46_art_pipeline_design.md)
-- [47_scene_art_implementation_research.md](47_scene_art_implementation_research.md)
-- [48_scene_art_mvp_implementation.md](48_scene_art_mvp_implementation.md)
+- [46_character_art_asset_pipeline.md](46_character_art_asset_pipeline.md)
 
 ### Audit
 
 - [90_design_audit_round4.md](90_design_audit_round4.md)
 - [91_character_phase2_historical_validation.md](91_character_phase2_historical_validation.md)
 - [92_character_phase2_balance_validation.md](92_character_phase2_balance_validation.md)
-- [93_character_phase2_art_asset_audit.md](93_character_phase2_art_asset_audit.md)
-- [94_art_asset_usage_audit.md](94_art_asset_usage_audit.md)
-- [95_art_asset_next_stage_assessment.md](95_art_asset_next_stage_assessment.md)

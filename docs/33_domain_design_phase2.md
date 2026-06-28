@@ -18,8 +18,6 @@
 - `docs/42_combat_art_design.md`
 - `docs/44_ui_art_design.md`
 - `docs/45_art_asset_interface_design.md`
-- `docs/94_art_asset_usage_audit.md`
-- `docs/95_art_asset_next_stage_assessment.md`
 
 ---
 
@@ -87,6 +85,9 @@ Domain 不负责：
 | `WeaponFired` | 炮口、鱼雷、开火动画 | `source_unit_id`、`weapon_id`、`projectile_id`、`origin`、`target_position`、`heading`、`salvo_index`、炮击逐发 `impact_positions` |
 | `ProjectileSpawned` | 创建弹体视图 | `projectile_id`、`source_unit_id`、`weapon_id`、`position`、`heading`、`speed` |
 | `ProjectileExpired` | 弹体淡出 | `projectile_id`、`position`、`reason_code` |
+| `ProjectileBlockedByTerrain` | 鱼雷撞岸并立即移除 | `projectile_id`、`obstacle_id`、`position`、`normal` |
+| `ShellBlockedByTerrain` | 炮弹在岸线终止并播放岩岸/碎浪反馈 | `attack_id`、`source_weapon_id`、`obstacle_id`、`position` |
+| `UnitTerrainCollision` | 舰船触岸提示与调试法线 | `unit_id`、`obstacle_id`、`position`、`normal` |
 | `AttackResolved` | 命中、水花、受击动画 | `damage_result`、`impact_position`、`weapon_id`、`projectile_id` |
 | `AreaAttackResolved` 可选 | 区域落点多反馈 | `attack_id`、`impact_position`、`affected_unit_ids` |
 | `SkillCast` | 技能 VFX 与 cut-in | `unit_id`、`skill_id`、`target_ref` |

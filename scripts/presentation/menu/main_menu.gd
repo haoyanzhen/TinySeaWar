@@ -45,6 +45,7 @@ func _create_buttons() -> void:
 	_add_button("btn_operation", "操作说明", Vector2(284.0, 786.0), Vector2(180.0, 48.0), func(): _show_operation_guide())
 	_add_button("btn_game_intro", "游戏介绍", Vector2(484.0, 786.0), Vector2(180.0, 48.0), func(): _show_game_intro())
 	_add_button("btn_settings", "设置", Vector2(84.0, 848.0), Vector2(180.0, 48.0), func(): _show_settings())
+	_add_button("btn_mode_harbor", "港湾 3v3", Vector2(284.0, 848.0), Vector2(180.0, 48.0), func(): _start_level("level.prototype_harbor_3v3"))
 
 
 func _add_button(node_name: String, label: String, position_value: Vector2, size_value: Vector2, callback: Callable) -> Button:
@@ -202,7 +203,7 @@ func _show_game_intro() -> void:
 
 
 func _mode_body() -> String:
-	return "请选择本次出击模式。\n\n1v1：单舰对决，适合熟悉镜头、选择、主要武器瞄准和旗舰胜负。\n\n3v3：小队舰队战，适合练习角色槽位切换、集火目标、技能和小地图阅读。\n\n5v5：完整小舰队交战，覆盖潜艇、驱逐、巡洋、战列的混合威胁。\n\n11v11：大规模压力战，验证 1-9 / 0 / - 共 11 个操作槽、侦查密度、界面可读性和表现层性能。"
+	return "请选择本次出击模式。\n\n1v1：单舰对决，适合熟悉镜头、选择、主要武器瞄准和旗舰胜负。\n\n3v3：小队舰队战，适合练习角色槽位切换、集火目标、技能和小地图阅读。\n\n5v5：完整小舰队交战，覆盖潜艇、驱逐、巡洋、战列的混合威胁。\n\n11v11：大规模压力战，验证操作槽、侦查密度和表现层性能。\n\n港湾 3v3：验证浅水、航道、岛岸阻挡、海雾/海流和岸基设施。"
 
 
 func _draw_ocean_background(viewport_size: Vector2) -> void:

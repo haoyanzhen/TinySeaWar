@@ -138,6 +138,13 @@ func _draw_minimap(rect: Rect2) -> void:
 	draw_rect(map_rect, Color(0.08, 0.34, 0.46, 0.72), true)
 	draw_rect(map_rect, Color(0.84, 0.98, 1.0, 0.52), false, 1.5)
 	var map_data: Dictionary = snapshot.get("map", {})
+	_draw_minimap_terrain(map_rect, map_data)
+	_draw_minimap_environment_zones(map_rect, map_data)
+	_draw_minimap_minefields(map_rect, map_data)
+	for facility in snapshot.get("facilities", {}).values():
+		var facility_position := _minimap_position(facility.get("position", Vector2.ZERO), map_rect, map_data)
+		var facility_icon := "ui_marker_facility_%s" % str(facility.get("asset_semantic", ""))
+		_draw_icon(facility_icon, Rect2(facility_position - Vector2(7.0, 7.0), Vector2(14.0, 14.0)), Color(1.0, 1.0, 1.0, 0.86))
 	for unit in snapshot.get("units", {}).values():
 		var friendly := str(unit.get("faction_id", "")) == "player"
 		var position := _minimap_position(unit.get("position", Vector2.ZERO), map_rect, map_data)
@@ -153,6 +160,68 @@ func _draw_minimap(rect: Rect2) -> void:
 		draw_rect(Rect2(top_left, bottom_right - top_left), Color(1.0, 1.0, 1.0, 0.0), false, 1.5)
 		_draw_icon("ui_minimap_camera_frame", Rect2(top_left - Vector2(8.0, 8.0), Vector2(16.0, 16.0)), Color(1.0, 1.0, 1.0, 0.8))
 	draw_string(ThemeDB.fallback_font, rect.position + Vector2(14.0, rect.size.y - 14.0), "A/D/W/S 移动镜头  |  1-0/- 选择角色", HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 28.0, 13, TEXT_SOFT)
+
+
+func _draw_minimap_terrain(map_rect: Rect2, map_data: Dictionary) -> void:
+	var terrain_id := str(snapshot.get("terrain_map", {}).get("id", ""))
+	if terrain_id.is_empty():
+		return
+	var path := "res://assets/ui/processed/battle/terrain/minimap_%s.png" % terrain_id.replace(".", "_")
+	var texture := _texture(path)
+	if texture != null:
+		draw_texture_rect(texture, map_rect, false, Color(1.0, 1.0, 1.0, 0.9))
+
+
+func _draw_minimap_environment_zones(map_rect: Rect2, map_data: Dictionary) -> void:
+	for zone in snapshot.get("environment_zones", []):
+		if not bool(zone.get("active", false)):
+			continue
+		var points := PackedVector2Array()
+		var center := Vector2.ZERO
+		for raw_point in zone.get("polygon", []):
+			var point: Vector2 = raw_point if raw_point is Vector2 else Vector2(float(raw_point[0]), float(raw_point[1]))
+			var minimap_point := _minimap_position(point, map_rect, map_data)
+			points.append(minimap_point)
+			center += minimap_point
+		if points.size() >= 3:
+			center /= float(points.size())
+			points.append(points[0])
+			draw_polyline(points, Color(0.72, 0.9, 0.88, 0.42), 1.0)
+			var icon_name := _environment_zone_icon(str(zone.get("effect_id", "")))
+			if not icon_name.is_empty():
+				_draw_icon(icon_name, Rect2(center - Vector2(7.0, 7.0), Vector2(14.0, 14.0)), Color(1.0, 1.0, 1.0, 0.82))
+
+
+func _environment_zone_icon(effect_id: String) -> String:
+	return {
+		"environment.effect.sea_fog": "ui_marker_environment_sea_fog",
+		"environment.effect.rain_squall": "ui_marker_environment_rain_squall",
+		"environment.effect.high_sea": "ui_marker_environment_high_sea",
+		"environment.effect.lee_water": "ui_marker_environment_lee_water",
+		"environment.effect.moonlit_lane": "ui_marker_environment_moonlit_lane",
+		"environment.effect.strong_current": "ui_marker_environment_strong_current",
+		"environment.effect.tidal_water": "ui_marker_environment_tide",
+	}.get(effect_id, "")
+
+
+func _draw_minimap_minefields(map_rect: Rect2, map_data: Dictionary) -> void:
+	for minefield in snapshot.get("minefields", {}).values():
+		var points := PackedVector2Array()
+		for raw_point in minefield.get("polygon", []):
+			var point: Vector2 = raw_point if raw_point is Vector2 else Vector2(float(raw_point[0]), float(raw_point[1]))
+			points.append(_minimap_position(point, map_rect, map_data))
+		if points.size() >= 3:
+			points.append(points[0])
+			draw_polyline(points, Color(1.0, 0.35, 0.28, 0.78), 1.5)
+			_draw_icon("ui_marker_minefield_known", Rect2(points[0] - Vector2(6.0, 6.0), Vector2(12.0, 12.0)))
+		for safe_channel in minefield.get("safe_channels", []):
+			var channel_points := PackedVector2Array()
+			for raw_point in safe_channel:
+				var channel_point: Vector2 = raw_point if raw_point is Vector2 else Vector2(float(raw_point[0]), float(raw_point[1]))
+				channel_points.append(_minimap_position(channel_point, map_rect, map_data))
+			if channel_points.size() >= 3:
+				channel_points.append(channel_points[0])
+				draw_polyline(channel_points, Color(0.38, 1.0, 0.72, 0.78), 1.5)
 
 
 func _draw_log_panel(rect: Rect2) -> void:

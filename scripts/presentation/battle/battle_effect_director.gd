@@ -13,6 +13,7 @@ var vfx_layer: Node2D
 var unit_views := {}
 var projectile_views := {}
 var damage_number_views_by_target := {}
+var terrain_collision_tick_by_unit := {}
 
 
 func setup(new_unit_layer: Node2D, new_projectile_layer: Node2D, new_vfx_layer: Node2D) -> void:
@@ -32,6 +33,7 @@ func clear() -> void:
 	unit_views.clear()
 	projectile_views.clear()
 	damage_number_views_by_target.clear()
+	terrain_collision_tick_by_unit.clear()
 	if projectile_layer != null:
 		for child in projectile_layer.get_children():
 			child.queue_free()
@@ -50,6 +52,12 @@ func consume_events(events: Array, session) -> void:
 		match str(event.get("event_type", "")):
 			"WeaponFired": _handle_weapon_fired(event, session)
 			"ProjectileHit": _handle_projectile_hit(event, session)
+			"ProjectileBlockedByTerrain": _handle_projectile_blocked(event)
+			"ShellBlockedByTerrain": _handle_shell_blocked(event)
+			"UnitTerrainCollision": _handle_unit_terrain_collision(event)
+			"MineTriggered": _spawn_environment_marker("environment.mine_trigger", event.get("position", Vector2.ZERO), "vfx.profile.shell_impact")
+			"FacilityDamaged", "FacilityDestroyed": _handle_facility_damage(event, session)
+			"SupportMissionResolved": _handle_support_resolved(event)
 			"AttackResolved": _handle_attack_resolved(event, session)
 			"SkillCast": _handle_skill_cast(event, session)
 
@@ -130,6 +138,44 @@ func _handle_projectile_hit(event: Dictionary, session) -> void:
 	_spawn_role_vfx(character_id, _impact_role_for_target(character_id), event.get("position", target.get("position", Vector2.ZERO)), 0.0, "vfx.profile.torpedo_impact")
 
 
+func _handle_projectile_blocked(event: Dictionary) -> void:
+	var projectile_id := str(event.get("projectile_id", ""))
+	var projectile_view: Node = projectile_views.get(projectile_id, null)
+	if projectile_view != null and is_instance_valid(projectile_view):
+		projectile_view.queue_free()
+		projectile_views.erase(projectile_id)
+	_spawn_public_vfx("environment.torpedo_terrain_impact", event.get("position", Vector2.ZERO), "vfx.profile.torpedo_impact")
+
+
+func _handle_shell_blocked(event: Dictionary) -> void:
+	var weapon: Dictionary = DataRegistry.registry.get_definition("weapons", str(event.get("source_weapon_id", "")))
+	var size := "small"
+	var caliber := _weapon_caliber_mm(weapon, {}, {})
+	if caliber >= 280.0: size = "large"
+	elif caliber >= 155.0: size = "medium"
+	_spawn_public_vfx("environment.shell_terrain_impact.%s" % size, event.get("position", Vector2.ZERO), "vfx.profile.water_impact.large")
+
+
+func _handle_unit_terrain_collision(event: Dictionary) -> void:
+	var unit_id := str(event.get("unit_id", ""))
+	var tick := int(event.get("tick_index", 0))
+	if tick - int(terrain_collision_tick_by_unit.get(unit_id, -1000)) < 8:
+		return
+	terrain_collision_tick_by_unit[unit_id] = tick
+	_spawn_environment_marker("terrain_collision", event.get("position", Vector2.ZERO), "vfx.profile.skill_area")
+
+
+func _handle_facility_damage(event: Dictionary, session) -> void:
+	var facility: Dictionary = session.state.get("facilities_by_id", {}).get(str(event.get("facility_id", "")), {})
+	if facility.is_empty(): return
+	_spawn_public_vfx("environment.shell_terrain_impact.medium", facility.get("position", Vector2.ZERO), "vfx.profile.shell_impact")
+
+
+func _handle_support_resolved(event: Dictionary) -> void:
+	if str(event.get("effect_type", "")) == "Airstrike":
+		_spawn_public_vfx("impact.water.large", event.get("target_position", Vector2.ZERO), "vfx.profile.water_impact.large")
+
+
 func _handle_attack_resolved(event: Dictionary, session) -> void:
 	var result: Dictionary = event.get("damage_result", {})
 	var source: Dictionary = session.state.get("units_by_id", {}).get(str(result.get("source_unit_id", "")), {})
@@ -204,6 +250,18 @@ func _spawn_public_vfx(semantic: String, world_position: Vector2, profile_id: St
 	if vfx_layer == null:
 		return
 	var texture_path := DataRegistry.assets.combat_vfx_asset_path(semantic)
+	if texture_path.is_empty():
+		return
+	var effect := BattleVfx.new()
+	effect.position = world_position
+	vfx_layer.add_child(effect)
+	effect.configure(texture_path, DataRegistry.assets.vfx_playback_profile(profile_id))
+
+
+func _spawn_environment_marker(semantic: String, world_position: Vector2, profile_id: String) -> void:
+	if vfx_layer == null:
+		return
+	var texture_path := DataRegistry.assets.environment_asset_path(semantic)
 	if texture_path.is_empty():
 		return
 	var effect := BattleVfx.new()

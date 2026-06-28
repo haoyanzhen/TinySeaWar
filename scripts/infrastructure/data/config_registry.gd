@@ -9,10 +9,17 @@ const CATEGORY_PATHS := {
 	"levels": "res://data/levels",
 	"settings": "res://data/settings",
 	"visuals": "res://data/visuals",
+	"facilities": "res://data/facilities",
+}
+const CATEGORY_FILES := {
+	"terrain": ["res://data/terrain/terrain_templates.json", "res://data/terrain/terrain_definitions.json"],
+	"navigation": ["res://data/terrain/navigation_definitions.json"],
+	"environment_zones": ["res://data/environments/environment_zone_definitions.json", "res://data/environments/ocean_battle_condition_definitions.json"],
 }
 const DISTANCE_BASELINE_MULTIPLIER := 1.5
 const MOTION_BASELINE_MULTIPLIER := 0.5
 const ATTACK_SPEED_BASELINE_MULTIPLIER := 0.5
+const GUN_IMPACT_RADIUS_MULTIPLIER := 0.5
 
 var definitions := {}
 var errors: Array[String] = []
@@ -22,9 +29,14 @@ func load_all() -> bool:
 	definitions.clear()
 	errors.clear()
 	var global_ids := {}
-	for category in CATEGORY_PATHS:
+	var categories: Array = CATEGORY_PATHS.keys()
+	for category in CATEGORY_FILES:
+		if category not in categories:
+			categories.append(category)
+	categories.sort()
+	for category in categories:
 		definitions[category] = {}
-		var files := _json_files(CATEGORY_PATHS[category])
+		var files: Array = CATEGORY_FILES[category] if CATEGORY_FILES.has(category) else _json_files(CATEGORY_PATHS[category])
 		for path in files:
 			_load_file(category, path, global_ids)
 	_validate_references()
@@ -98,6 +110,14 @@ func _validate_references() -> void:
 		_validate_settings(settings)
 	for visual in all("visuals"):
 		_validate_visual(visual)
+	for terrain in all("terrain"):
+		_validate_terrain(terrain)
+	for navigation in all("navigation"):
+		_validate_navigation(navigation)
+	for environment_definition in all("environment_zones"):
+		_validate_environment_definition(environment_definition)
+	for facility_definition in all("facilities"):
+		_validate_facility_definition(facility_definition)
 
 
 func _validate_projectile(projectile: Dictionary) -> void:
@@ -122,6 +142,11 @@ func _validate_ship(ship: Dictionary) -> void:
 		_validate_scaled_field(ship, field, "base_%s" % field, MOTION_BASELINE_MULTIPLIER, ship_id)
 	for field in ["detection_range", "concealment_distance"]:
 		_validate_scaled_field(ship, field, "base_%s" % field, DISTANCE_BASELINE_MULTIPLIER, ship_id)
+	var collision_half_extents = ship.get("collision_half_extents", [])
+	if not _valid_positive_pair(collision_half_extents):
+		errors.append("collision_half_extents must be a positive pair in %s" % ship_id)
+	elif float(collision_half_extents[0]) < float(collision_half_extents[1]):
+		errors.append("collision_half_extents longitudinal axis must not be smaller than lateral axis in %s" % ship_id)
 	for weapon_id in ship.get("weapon_mounts", []):
 		if get_definition("weapons", weapon_id).is_empty():
 			errors.append("Missing weapon %s referenced by %s" % [weapon_id, ship_id])
@@ -179,6 +204,8 @@ func _validate_weapon(weapon: Dictionary) -> void:
 	if float(weapon.get("minimum_range", 0.0)) > float(weapon.get("range", 0.0)):
 		errors.append("Invalid range band in %s" % weapon_id)
 	_validate_non_negative_scaled_field(weapon, "projectile_speed", "base_projectile_speed", ATTACK_SPEED_BASELINE_MULTIPLIER, weapon_id)
+	if weapon.get("mount_type", "") == "Gun":
+		_validate_scaled_field(weapon, "impact_radius", "base_impact_radius", GUN_IMPACT_RADIUS_MULTIPLIER, weapon_id)
 	if float(weapon.get("fire_arc_degrees", 0.0)) <= 0.0 or float(weapon.get("fire_arc_degrees", 0.0)) > 360.0:
 		errors.append("Invalid fire arc in %s" % weapon_id)
 	var fire_arcs: Array = weapon.get("fire_arcs", [])
@@ -249,6 +276,22 @@ func _validate_non_negative_scaled_field(definition: Dictionary, effective_field
 
 func _validate_level(level: Dictionary) -> void:
 	var level_id := str(level.get("id", "?"))
+	var map: Dictionary = level.get("map", {})
+	var ocean_palette := str(map.get("ocean_palette", ""))
+	if ocean_palette.is_empty() or not _ocean_condition_exists(ocean_palette):
+		errors.append("Missing ocean battle condition for palette %s referenced by %s" % [ocean_palette, level_id])
+	var terrain_definition_id := str(map.get("terrain_definition_id", ""))
+	if not terrain_definition_id.is_empty() and get_definition("terrain", terrain_definition_id).is_empty():
+		errors.append("Missing terrain %s referenced by %s" % [terrain_definition_id, level_id])
+	var navigation_definition_id := str(map.get("navigation_definition_id", ""))
+	if not navigation_definition_id.is_empty() and get_definition("navigation", navigation_definition_id).is_empty():
+		errors.append("Missing navigation %s referenced by %s" % [navigation_definition_id, level_id])
+	var environment_zone_set_id := str(map.get("environment_zone_set_id", ""))
+	if not environment_zone_set_id.is_empty() and get_definition("environment_zones", environment_zone_set_id).is_empty():
+		errors.append("Missing environment zone set %s referenced by %s" % [environment_zone_set_id, level_id])
+	var facility_layout_id := str(map.get("facility_layout_id", ""))
+	if not facility_layout_id.is_empty() and get_definition("facilities", facility_layout_id).is_empty():
+		errors.append("Missing facility layout %s referenced by %s" % [facility_layout_id, level_id])
 	for fleet_name in ["player_fleet", "enemy_fleet"]:
 		var fleet: Array = level.get(fleet_name, [])
 		var flagship_count := 0
@@ -346,6 +389,190 @@ func _validate_visual(visual: Dictionary) -> void:
 			errors.append("VFX duration must be positive in %s" % visual_id)
 	else:
 		errors.append("Unsupported visual definition id: %s" % visual_id)
+
+
+func _validate_terrain(definition: Dictionary) -> void:
+	var definition_id := str(definition.get("id", "?"))
+	var definition_type := str(definition.get("definition_type", ""))
+	if definition_type not in ["TerrainAssetTemplate", "TerrainMap"]:
+		errors.append("Unsupported terrain definition type in %s" % definition_id)
+		return
+	for obstacle in definition.get("obstacles", []):
+		if obstacle.get("polygon", []).size() < 3:
+			errors.append("Terrain obstacle has fewer than 3 vertices in %s" % definition_id)
+		for block_mask in obstacle.get("block_mask", []):
+			if block_mask not in ["ShipMovement", "TorpedoTravel", "ShellTravel", "SurfaceOpticalLineOfSight"]:
+				errors.append("Unknown terrain block mask in %s" % definition_id)
+	for region in definition.get("regions", []):
+		if region.get("region_type", "") not in ["DeepWater", "CoastalWater", "ShallowWater", "ReefOrSandbar", "NavigationChannel"]:
+			errors.append("Unknown terrain region type in %s" % definition_id)
+	for visual_region in definition.get("visual_regions", []):
+		if visual_region.get("polygon", []).size() < 3 or str(visual_region.get("asset_semantic", "")).is_empty():
+			errors.append("Invalid visual-only terrain region in %s" % definition_id)
+	if definition_type == "TerrainMap":
+		var map_size: Array = definition.get("map_size", [])
+		if not _valid_positive_pair(map_size):
+			errors.append("Invalid terrain map size in %s" % definition_id)
+
+
+func _validate_navigation(definition: Dictionary) -> void:
+	var definition_id := str(definition.get("id", "?"))
+	if definition.get("definition_type", "") != "NavigationGraph":
+		errors.append("Unsupported navigation definition type in %s" % definition_id)
+	if get_definition("terrain", str(definition.get("terrain_definition_id", ""))).is_empty():
+		errors.append("Navigation graph references missing terrain in %s" % definition_id)
+	if definition.get("profiles", []).is_empty():
+		errors.append("Navigation graph has no profiles in %s" % definition_id)
+
+
+func _validate_environment_definition(definition: Dictionary) -> void:
+	var definition_id := str(definition.get("id", "?"))
+	var definition_type := str(definition.get("definition_type", ""))
+	if definition_type not in ["EnvironmentEffect", "EnvironmentZoneSet", "WeatherBattleProfile", "TimeBattleProfile", "OceanConditionRules", "OceanConditionAliases"]:
+		errors.append("Unsupported environment definition type in %s" % definition_id)
+		return
+	if definition_type == "WeatherBattleProfile":
+		if definition.get("weather", "") not in ["clear", "cloudy", "overcast", "rain", "thunderstorm"]:
+			errors.append("Unsupported weather battle profile in %s" % definition_id)
+		_validate_environment_context(definition.get("context", {}), definition_id, true)
+	elif definition_type == "TimeBattleProfile":
+		if definition.get("time_of_day", "") not in ["day", "dawn", "dusk", "night"]:
+			errors.append("Unsupported time battle profile in %s" % definition_id)
+		_validate_environment_context(definition.get("context", {}), definition_id, false)
+	elif definition_type == "OceanConditionRules":
+		if float(definition.get("minimum_optical_visibility_multiplier", 0.0)) <= 0.0 or float(definition.get("minimum_optical_visibility_multiplier", 0.0)) > 1.0:
+			errors.append("Invalid minimum optical visibility in %s" % definition_id)
+		_validate_sea_state_rules(definition.get("sea_state_rules", []), definition_id)
+	elif definition_type == "OceanConditionAliases":
+		for alias in definition.get("aliases", {}):
+			if not _formal_ocean_condition_exists(str(definition["aliases"][alias])):
+				errors.append("Ocean condition alias %s has invalid target in %s" % [alias, definition_id])
+	elif definition_type == "EnvironmentZoneSet":
+		var global_environment: Dictionary = definition.get("global_environment", {})
+		_validate_sea_state_rules(global_environment.get("sea_state_rules", []), definition_id)
+		var tide: Dictionary = global_environment.get("tide", {})
+		if not tide.is_empty():
+			var phases: Array = tide.get("phases", [])
+			if phases.is_empty() or str(tide.get("initial_phase", "")) not in phases or float(tide.get("phase_duration", 0.0)) <= 0.0:
+				errors.append("Environment zone set has invalid tide cycle in %s" % definition_id)
+			for open_phase in tide.get("open_phases", []):
+				if open_phase not in phases: errors.append("Environment zone set has unknown open tide phase in %s" % definition_id)
+		var zone_ids := {}
+		for zone in definition.get("zones", []):
+			var zone_id := str(zone.get("id", ""))
+			if zone_id.is_empty() or zone_ids.has(zone_id):
+				errors.append("Environment zone has missing or duplicate id in %s" % definition_id)
+			zone_ids[zone_id] = true
+			if get_definition("environment_zones", str(zone.get("effect_id", ""))).is_empty():
+				errors.append("Environment zone references missing effect in %s" % definition_id)
+			if zone.get("polygon", []).size() < 3:
+				errors.append("Environment zone has invalid polygon in %s" % definition_id)
+			if float(zone.get("heading", -1.0)) < 0.0 or float(zone.get("heading", 360.0)) >= 360.0:
+				errors.append("Environment zone has invalid heading in %s" % definition_id)
+			if float(zone.get("drift_speed", -1.0)) < 0.0 or float(zone.get("duration", -1.0)) < 0.0:
+				errors.append("Environment zone has invalid drift or duration in %s" % definition_id)
+			if float(zone.get("intensity", -1.0)) < 0.0 or float(zone.get("intensity", 2.0)) > 1.0:
+				errors.append("Environment zone has invalid intensity in %s" % definition_id)
+			var drift_path: Array = zone.get("drift_path", [])
+			var invalid_path_start := false
+			if drift_path.size() >= 2:
+				var first_path_point: Array = drift_path[0]
+				invalid_path_start = first_path_point.size() != 2 or not is_zero_approx(float(first_path_point[0])) or not is_zero_approx(float(first_path_point[1]))
+			if drift_path.size() == 1 or invalid_path_start:
+				errors.append("Environment zone has invalid drift path in %s" % definition_id)
+			if str(zone.get("phase", "")).is_empty() or str(zone.get("public_trend", "")).is_empty():
+				errors.append("Environment zone lacks phase or public trend in %s" % definition_id)
+
+
+func _validate_environment_context(context: Dictionary, definition_id: String, require_sea_state: bool) -> void:
+	if require_sea_state and (int(context.get("base_sea_state", -1)) < 0 or int(context.get("base_sea_state", 6)) > 5):
+		errors.append("Invalid base sea state in %s" % definition_id)
+	if float(context.get("optical_visibility_multiplier", 0.0)) <= 0.0 or float(context.get("aviation_delay_multiplier", 0.0)) <= 0.0:
+		errors.append("Invalid environment multiplier in %s" % definition_id)
+	if context.has("aviation_condition") and context.get("aviation_condition", "") not in ["Normal", "Restricted", "Severe", "Grounded"]:
+		errors.append("Invalid aviation condition in %s" % definition_id)
+
+
+func _validate_sea_state_rules(rules: Array, definition_id: String) -> void:
+	for rule in rules:
+		if int(rule.get("minimum_sea_state", -1)) < 0 or float(rule.get("movement_speed_multiplier", 0.0)) <= 0.0 or float(rule.get("aviation_delay_multiplier", 0.0)) <= 0.0:
+			errors.append("Invalid sea-state rule in %s" % definition_id)
+
+
+func _ocean_condition_exists(palette_id: String) -> bool:
+	var aliases: Dictionary = get_definition("environment_zones", "environment.condition_aliases.ocean").get("aliases", {})
+	return _formal_ocean_condition_exists(str(aliases.get(palette_id, palette_id)))
+
+
+func _formal_ocean_condition_exists(palette_id: String) -> bool:
+	var parts := palette_id.split("_")
+	return parts.size() == 2 and not get_definition("environment_zones", "environment.weather.%s" % parts[0]).is_empty() and not get_definition("environment_zones", "environment.time.%s" % parts[1]).is_empty()
+
+
+func _validate_facility_definition(definition: Dictionary) -> void:
+	var definition_id := str(definition.get("id", "?"))
+	var definition_type := str(definition.get("definition_type", ""))
+	if definition_type not in ["FacilityDefinition", "FacilityLayout", "SupportMissionDefinition", "MinefieldDefinition"]:
+		errors.append("Unsupported facility definition type in %s" % definition_id)
+	elif definition_type == "FacilityDefinition":
+		if float(definition.get("max_hp", 0.0)) <= 0.0:
+			errors.append("Facility max_hp must be positive in %s" % definition_id)
+		if "Suppressible" in definition.get("capabilities", []) and (float(definition.get("suppression_damage_threshold", 0.0)) <= 0.0 or float(definition.get("suppression_duration", 0.0)) <= 0.0):
+			errors.append("Suppressible facility lacks positive suppression rules in %s" % definition_id)
+		var weapon_ids: Array = definition.get("weapon_ids", [])
+		if not str(definition.get("weapon_id", "")).is_empty(): weapon_ids.append(str(definition["weapon_id"]))
+		for weapon_id in weapon_ids:
+			if get_definition("weapons", str(weapon_id)).is_empty(): errors.append("Facility references missing weapon %s in %s" % [weapon_id, definition_id])
+		for mission_id in definition.get("support_mission_ids", []):
+			if get_definition("facilities", str(mission_id)).is_empty(): errors.append("Facility references missing support mission %s in %s" % [mission_id, definition_id])
+		var service_profile: Dictionary = definition.get("service_profile", {})
+		if "ServiceProvider" in definition.get("capabilities", []) and str(service_profile.get("service_type", "")) not in ["Supply", "Repair"]:
+			errors.append("Service facility has invalid service profile in %s" % definition_id)
+	elif definition_type == "SupportMissionDefinition":
+		if definition.get("mission_type", "") not in ["Reconnaissance", "FighterPatrol", "Airstrike"]:
+			errors.append("Unsupported support mission type in %s" % definition_id)
+		for field in ["cooldown", "arrival_time", "charges", "max_range", "effect_radius"]:
+			if float(definition.get(field, 0.0)) <= 0.0: errors.append("Support mission %s must be positive in %s" % [field, definition_id])
+		var support_weapon_id := str(definition.get("weapon_id", ""))
+		if definition.get("mission_type", "") == "Airstrike" and get_definition("weapons", support_weapon_id).is_empty():
+			errors.append("Airstrike mission references missing weapon in %s" % definition_id)
+	elif definition_type == "FacilityLayout":
+		var terrain: Dictionary = get_definition("terrain", str(definition.get("terrain_definition_id", "")))
+		if terrain.is_empty():
+			errors.append("Facility layout references missing terrain in %s" % definition_id)
+		var anchor_ids := {}
+		for anchor in terrain.get("facility_anchors", []): anchor_ids[str(anchor.get("id", ""))] = true
+		var placement_ids := {}
+		for placement in definition.get("placements", []): placement_ids[str(placement.get("id", ""))] = true
+		for placement in definition.get("placements", []):
+			if get_definition("facilities", str(placement.get("definition_id", ""))).is_empty():
+				errors.append("Facility layout references missing facility in %s" % definition_id)
+			if not anchor_ids.has(str(placement.get("anchor_id", ""))):
+				errors.append("Facility layout references missing anchor in %s" % definition_id)
+			for dependency_id in placement.get("requires_all_active", []) + placement.get("requires_any_active", []):
+				if not placement_ids.has(str(dependency_id)):
+					errors.append("Facility layout references missing dependency in %s" % definition_id)
+	elif definition_type == "MinefieldDefinition":
+		if get_definition("terrain", str(definition.get("terrain_definition_id", ""))).is_empty():
+			errors.append("Minefield references missing terrain in %s" % definition_id)
+		if definition.get("polygon", []).size() < 3:
+			errors.append("Minefield has invalid polygon in %s" % definition_id)
+		for safe_channel in definition.get("safe_channels", []):
+			if safe_channel.size() < 3:
+				errors.append("Minefield has invalid safe channel in %s" % definition_id)
+		var controller_id := str(definition.get("controller_facility_id", ""))
+		if not controller_id.is_empty() and not _facility_placement_exists(controller_id):
+			errors.append("Minefield references missing controller in %s" % definition_id)
+		if float(definition.get("damage", 0.0)) <= 0.0:
+			errors.append("Minefield damage must be positive in %s" % definition_id)
+
+
+func _facility_placement_exists(placement_id: String) -> bool:
+	for definition in all("facilities"):
+		if definition.get("definition_type", "") != "FacilityLayout": continue
+		for placement in definition.get("placements", []):
+			if str(placement.get("id", "")) == placement_id: return true
+	return false
 
 
 func _weapon_group_exists(weapon_group_id: String) -> bool:

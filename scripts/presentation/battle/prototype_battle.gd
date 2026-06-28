@@ -3,6 +3,7 @@ extends Node2D
 const BattleSession = preload("res://scripts/application/battle_session.gd")
 const BattleEffectDirector = preload("res://scripts/presentation/battle/battle_effect_director.gd")
 const UiText = preload("res://scripts/presentation/ui_text.gd")
+const CollisionGeometryService = preload("res://scripts/domain/services/collision_geometry_service.gd")
 
 const MAIN_MENU_SCENE := "res://scenes/menu/main_menu.tscn"
 const FIXED_STEP := 0.1
@@ -34,6 +35,8 @@ enum OperationMode { NORMAL, AIMING_PRIMARY, TARGETING_SKILL }
 
 @onready var ocean_surface: Node2D = $OceanSurface
 @onready var weather_overlay: Node2D = $WeatherOverlay
+@onready var terrain_view: Node2D = $TerrainView
+@onready var terrain_debug_overlay: Node2D = $TerrainDebugOverlay
 @onready var battle_camera: Camera2D = $BattleCamera
 @onready var battle_hud: Control = $HUD/BattleHud
 
@@ -135,17 +138,19 @@ func _draw_unit(unit: Dictionary) -> void:
 	var color := Color("#63c7ff") if friendly else Color("#ff6b6b")
 	if life_state == "Sunk": color = Color("#6c7780")
 	var radius := float(unit.get("collision_radius", 22.0))
-	draw_circle(position, radius + 12.0, Color(0.02, 0.08, 0.12, 0.28))
+	var collision_half_extents := CollisionGeometryService.half_extents(unit)
+	var heading := float(unit["heading"])
+	draw_colored_polygon(_world_ellipse_points(position, collision_half_extents + Vector2(12.0, 12.0), heading), Color(0.02, 0.08, 0.12, 0.28))
 	_draw_unit_art(unit, color)
-	draw_arc(position, radius, 0.0, TAU, 40, Color(0.86, 0.97, 1.0, 0.45), 1.5)
-	var heading_vector := Vector2.RIGHT.rotated(float(unit["heading"]))
-	draw_line(position, position + heading_vector * (radius + 34.0), Color(1.0, 1.0, 1.0, 0.75), 2.5)
+	draw_polyline(_world_ellipse_points(position, collision_half_extents, heading, true), Color(0.86, 0.97, 1.0, 0.58), 1.5, true)
+	var heading_vector := Vector2.RIGHT.rotated(heading)
+	draw_line(position, position + heading_vector * (collision_half_extents.x + 34.0), Color(1.0, 1.0, 1.0, 0.75), 2.5)
 	if unit["entity_id"] == selected_unit_id:
 		_draw_icon_centered("ui_marker_selected", position, 0.85, Color.WHITE)
-		draw_arc(position, radius + 19.0, 0.0, TAU, 40, Color("#f8ef9a"), 3.0)
+		draw_polyline(_world_ellipse_points(position, collision_half_extents + Vector2(19.0, 19.0), heading, true), Color("#f8ef9a"), 3.0, true)
 	if unit["entity_id"] == focused_target_id:
 		_draw_icon_centered("ui_marker_target", position, 0.9, Color.WHITE)
-		draw_arc(position, radius + 25.0, 0.0, TAU, 40, Color("#ffb35c"), 3.0)
+		draw_polyline(_world_ellipse_points(position, collision_half_extents + Vector2(25.0, 25.0), heading, true), Color("#ffb35c"), 3.0, true)
 	if bool(unit["is_flagship"]):
 		_draw_icon_centered("ui_marker_flagship", position + Vector2(0.0, -radius - 34.0), 0.42, Color.WHITE)
 	var hp_ratio := float(unit["current_hp"]) / maxf(1.0, float(unit["max_hp"]))
@@ -161,7 +166,7 @@ func _draw_unit_art(unit: Dictionary, fallback_color: Color) -> void:
 	var position: Vector2 = unit["position"]
 	var rotation := float(unit["heading"])
 	var radius := float(unit.get("collision_radius", 22.0))
-	var scales := _unit_art_scales(visuals, radius)
+	var scales := _unit_art_scales(visuals, unit)
 	var life_state := str(unit.get("life_state", "Alive"))
 	var tint := Color(1.0, 1.0, 1.0, 1.0)
 	if life_state == "Sunk":
@@ -171,7 +176,7 @@ func _draw_unit_art(unit: Dictionary, fallback_color: Color) -> void:
 	if visuals.get("body") != null:
 		_draw_texture_centered(visuals["body"], position, rotation, scales["body"], tint)
 	if visuals.get("rig") == null and visuals.get("body") == null:
-		draw_circle(position, radius, fallback_color)
+		draw_colored_polygon(_world_ellipse_points(position, CollisionGeometryService.half_extents(unit), rotation), fallback_color)
 
 
 func _draw_projectile(projectile: Dictionary) -> void:
@@ -207,7 +212,9 @@ func _unit_visuals(unit: Dictionary) -> Dictionary:
 	return visuals
 
 
-func _unit_art_scales(visuals: Dictionary, radius: float) -> Dictionary:
+func _unit_art_scales(visuals: Dictionary, unit: Dictionary) -> Dictionary:
+	var radius := float(unit.get("collision_radius", 22.0))
+	var collision_half_extents := CollisionGeometryService.half_extents(unit)
 	var body_texture: Texture2D = visuals.get("body", null)
 	var rig_texture: Texture2D = visuals.get("rig", null)
 	var body_scale := DEFAULT_UNIT_SCALE
@@ -216,11 +223,20 @@ func _unit_art_scales(visuals: Dictionary, radius: float) -> Dictionary:
 		var body_target_width := clampf(radius * 3.8, 84.0, 126.0)
 		body_scale = body_target_width / maxf(1.0, float(body_texture.get_width()))
 	if rig_texture != null:
-		var rig_target_width := clampf(radius * 5.0, 108.0, 162.0)
+		var rig_target_width := collision_half_extents.x * 2.0
 		rig_scale = rig_target_width / maxf(1.0, float(rig_texture.get_width()))
 	else:
 		rig_scale = body_scale
 	return {"body": body_scale, "rig": rig_scale}
+
+
+func _world_ellipse_points(center: Vector2, extents: Vector2, heading: float, close: bool = false) -> PackedVector2Array:
+	var points := PackedVector2Array()
+	var segment_count := 64
+	for index in range(segment_count + (1 if close else 0)):
+		var angle := TAU * float(index % segment_count) / float(segment_count)
+		points.append(center + Vector2(cos(angle) * extents.x, sin(angle) * extents.y).rotated(heading))
+	return points
 
 
 func _texture(path: String) -> Texture2D:
@@ -470,6 +486,11 @@ func _unhandled_input(event: InputEvent) -> void:
 			_select_slot(slot)
 			return
 		match event.keycode:
+			KEY_F9:
+				terrain_debug_overlay.visible = not terrain_debug_overlay.visible
+				terrain_debug_overlay.queue_redraw()
+				_sync_visuals()
+				_update_hud()
 			KEY_SPACE:
 				if session.state["phase"] == "Paused": session.resume()
 				else: session.pause()
@@ -644,10 +665,10 @@ func _select_slot(slot: int) -> void:
 
 func _select_at(world_position: Vector2, snapshot: Dictionary) -> void:
 	var nearest: Dictionary = {}
-	var nearest_distance := 48.0
+	var nearest_distance := INF
 	for unit in snapshot["units"].values():
-		var distance := (unit["position"] as Vector2).distance_to(world_position)
-		if distance < nearest_distance:
+		var distance := CollisionGeometryService.normalized_distance(world_position, unit["position"], float(unit["heading"]), CollisionGeometryService.half_extents(unit), 8.0)
+		if distance <= 1.0 and distance < nearest_distance:
 			nearest = unit
 			nearest_distance = distance
 	if nearest.is_empty(): return
@@ -738,10 +759,10 @@ func _cancel_operation_mode() -> void:
 
 func _unit_at(world_position: Vector2, snapshot: Dictionary) -> Dictionary:
 	var nearest: Dictionary = {}
-	var nearest_distance := 48.0
+	var nearest_distance := INF
 	for unit in snapshot["units"].values():
-		var distance := (unit["position"] as Vector2).distance_to(world_position)
-		if distance < nearest_distance:
+		var distance := CollisionGeometryService.normalized_distance(world_position, unit["position"], float(unit["heading"]), CollisionGeometryService.half_extents(unit), 8.0)
+		if distance <= 1.0 and distance < nearest_distance:
 			nearest = unit
 			nearest_distance = distance
 	return nearest
@@ -750,10 +771,17 @@ func _unit_at(world_position: Vector2, snapshot: Dictionary) -> Dictionary:
 func _consume_events(events: Array) -> void:
 	if effect_director != null:
 		effect_director.consume_events(events, session)
+	terrain_debug_overlay.record_events(events)
 	for event in events:
 		match event.get("event_type", ""):
 			"UnitSunk": _push_message("%s 已沉没" % _unit_display_name(str(event.get("unit_id", ""))))
 			"SkillCast": _push_message("%s 释放了 %s" % [_unit_display_name(str(event.get("unit_id", ""))), _skill_display_name(str(event.get("skill_id", "")))])
+			"MineTriggered": _push_message("%s 触发水雷，受到 %.0f 伤害" % [_unit_display_name(str(event.get("unit_id", ""))), float(event.get("damage", 0.0))])
+			"FacilitySuppressed": _push_message("岸基设施已被压制")
+			"FacilityRecovered": _push_message("岸基设施恢复运行")
+			"FacilityDestroyed": _push_message("岸基设施已被摧毁")
+			"UnitServiced": _push_message("%s 完成%s" % [_unit_display_name(str(event.get("unit_id", ""))), "维修" if event.get("service_type", "") == "Repair" else "补给"])
+			"SupportMissionResolved": _push_message("岸基航空支援已抵达")
 			"BattleFinished":
 				result_character_id = _random_player_character_id()
 				_push_message("战斗结束，胜利阵营：%s" % UiText.faction_name(str(event.get("result", {}).get("winner_faction", ""))))
@@ -798,6 +826,8 @@ func _start_battle(new_level_id: String) -> void:
 	var map_size := Vector2(float(map_data.get("width", 4096.0)), float(map_data.get("height", 2304.0)))
 	ocean_surface.configure(map_size, current_palette_id)
 	weather_overlay.configure(map_size, current_palette_id)
+	terrain_view.configure(session.state.get("terrain_map", {}), DataRegistry.assets)
+	terrain_debug_overlay.configure(session.state.get("terrain_map", {}), session.terrain_query.debug_spatial_cells())
 	_configure_camera_limits(map_data)
 	_configure_camera_zoom(map_data)
 	_select_slot(1)
@@ -812,7 +842,10 @@ func _start_battle(new_level_id: String) -> void:
 func _sync_visuals() -> void:
 	if effect_director == null or session == null or session.state.is_empty():
 		return
-	effect_director.sync_snapshot(session.snapshot("player", false), selected_unit_id, focused_target_id)
+	var snapshot: Dictionary = session.snapshot("player", terrain_debug_overlay.visible)
+	effect_director.sync_snapshot(snapshot, selected_unit_id, focused_target_id)
+	terrain_view.sync_dynamic(snapshot.get("environment_zones", []), snapshot.get("facilities", {}), snapshot.get("minefields", {}), snapshot.get("support_effects", {}))
+	terrain_debug_overlay.sync_runtime(snapshot.get("terrain_contexts", {}), snapshot.get("facilities", {}), selected_unit_id)
 
 
 func _configure_camera_limits(map_data: Dictionary) -> void:
@@ -844,7 +877,7 @@ func _update_hud() -> void:
 	var selected_name := "未选择"
 	var selected: Dictionary = session.state.get("units_by_id", {}).get(selected_unit_id, {})
 	if not selected.is_empty(): selected_name = str(selected.get("display_name", selected_unit_id))
-	var snapshot: Dictionary = session.snapshot("player", false)
+	var snapshot: Dictionary = session.snapshot("player", terrain_debug_overlay.visible)
 	var half_view := _camera_visible_size() * 0.5
 	snapshot["camera_rect"] = Rect2(battle_camera.position - half_view, half_view * 2.0)
 	snapshot["selected_unit_id"] = selected_unit_id

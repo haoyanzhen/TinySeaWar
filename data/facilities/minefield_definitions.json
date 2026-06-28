@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "definitions": [
+    {
+      "id": "minefield.harbor_outer",
+      "definition_type": "MinefieldDefinition",
+      "display_name": "港湾外侧固定雷区",
+      "terrain_definition_id": "terrain.map.harbor_mouth",
+      "polygon": [[1480, 980], [1850, 920], [1810, 540], [1420, 610]],
+      "safe_channels": [[[1880, 1160], [2220, 1160], [2220, 420], [1880, 420]]],
+      "owner_faction_id": "enemy",
+      "operation_state": "Active",
+      "known_by_faction": ["enemy"],
+      "controller_facility_id": "facility.harbor.mine_control_west",
+      "damage": 420.0,
+      "controller_rules": {"on_active": "Active", "on_suppressed": "Dormant", "on_destroyed": "Disabled"}
+    }
+  ]
+}

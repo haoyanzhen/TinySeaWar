@@ -87,7 +87,7 @@
       "fire_arc_degrees": 290,
       "projectile_speed": 215,
       "spread": 18,
-      "impact_radius": 48,
+      "impact_radius": 24,
       "accuracy_modifier": 0.03,
       "shared_cooldown_group": "iowa_main",
       "projectile_id": "projectile.shell",
@@ -113,7 +113,8 @@
           "center": 90,
           "degrees": 110
         }
-      ]
+      ],
+      "base_impact_radius": 48
     },
     {
       "id": "weapon.iowa_406_he",
@@ -132,7 +133,7 @@
       "fire_arc_degrees": 290,
       "projectile_speed": 200,
       "spread": 24,
-      "impact_radius": 48,
+      "impact_radius": 24,
       "accuracy_modifier": 0,
       "shared_cooldown_group": "iowa_main",
       "projectile_id": "projectile.shell",
@@ -158,7 +159,8 @@
           "center": 90,
           "degrees": 110
         }
-      ]
+      ],
+      "base_impact_radius": 48
     },
     {
       "id": "weapon.iowa_127_he",
@@ -177,7 +179,7 @@
       "fire_arc_degrees": 320,
       "projectile_speed": 160,
       "spread": 18,
-      "impact_radius": 30,
+      "impact_radius": 15,
       "accuracy_modifier": 0.02,
       "shared_cooldown_group": "iowa_secondary",
       "projectile_id": "projectile.shell",
@@ -203,7 +205,8 @@
           "center": 90,
           "degrees": 120
         }
-      ]
+      ],
+      "base_impact_radius": 30
     },
     {
       "id": "weapon.iowa_aa",
@@ -257,7 +260,7 @@
       "fire_arc_degrees": 320,
       "projectile_speed": 165,
       "spread": 18,
-      "impact_radius": 30,
+      "impact_radius": 15,
       "accuracy_modifier": 0.03,
       "shared_cooldown_group": "san_diego_gun",
       "projectile_id": "projectile.shell",
@@ -283,7 +286,8 @@
           "center": 90,
           "degrees": 120
         }
-      ]
+      ],
+      "base_impact_radius": 30
     },
     {
       "id": "weapon.san_diego_torpedo",
@@ -418,7 +422,7 @@
       "fire_arc_degrees": 300,
       "projectile_speed": 150,
       "spread": 20,
-      "impact_radius": 30,
+      "impact_radius": 15,
       "accuracy_modifier": 0.02,
       "shared_cooldown_group": "ward_gun",
       "projectile_id": "projectile.shell",
@@ -444,7 +448,8 @@
           "center": 90,
           "degrees": 120
         }
-      ]
+      ],
+      "base_impact_radius": 30
     },
     {
       "id": "weapon.ward_torpedo",
@@ -509,7 +514,7 @@
       "fire_arc_degrees": 290,
       "projectile_speed": 210,
       "spread": 18,
-      "impact_radius": 48,
+      "impact_radius": 24,
       "accuracy_modifier": 0.03,
       "shared_cooldown_group": "hood_main",
       "projectile_id": "projectile.shell",
@@ -535,7 +540,8 @@
           "center": 90,
           "degrees": 110
         }
-      ]
+      ],
+      "base_impact_radius": 48
     },
     {
       "id": "weapon.hood_381_he",
@@ -554,7 +560,7 @@
       "fire_arc_degrees": 290,
       "projectile_speed": 195,
       "spread": 24,
-      "impact_radius": 48,
+      "impact_radius": 24,
       "accuracy_modifier": 0,
       "shared_cooldown_group": "hood_main",
       "projectile_id": "projectile.shell",
@@ -580,7 +586,8 @@
           "center": 90,
           "degrees": 110
         }
-      ]
+      ],
+      "base_impact_radius": 48
     },
     {
       "id": "weapon.hood_secondary",
@@ -599,7 +606,7 @@
       "fire_arc_degrees": 300,
       "projectile_speed": 150,
       "spread": 18,
-      "impact_radius": 40,
+      "impact_radius": 20,
       "accuracy_modifier": 0.01,
       "shared_cooldown_group": "hood_secondary",
       "projectile_id": "projectile.shell",
@@ -625,7 +632,8 @@
           "center": 90,
           "degrees": 120
         }
-      ]
+      ],
+      "base_impact_radius": 40
     },
     {
       "id": "weapon.sirius_133_he",
@@ -644,7 +652,7 @@
       "fire_arc_degrees": 310,
       "projectile_speed": 165,
       "spread": 18,
-      "impact_radius": 30,
+      "impact_radius": 15,
       "accuracy_modifier": 0.03,
       "shared_cooldown_group": "sirius_main",
       "projectile_id": "projectile.shell",
@@ -670,7 +678,8 @@
           "center": 90,
           "degrees": 120
         }
-      ]
+      ],
+      "base_impact_radius": 30
     },
     {
       "id": "weapon.sirius_aa",
@@ -794,7 +803,7 @@
       "fire_arc_degrees": 300,
       "projectile_speed": 190,
       "spread": 16,
-      "impact_radius": 40,
+      "impact_radius": 20,
       "accuracy_modifier": 0.03,
       "shared_cooldown_group": "kirov_main",
       "projectile_id": "projectile.shell",
@@ -820,7 +829,8 @@
           "center": 90,
           "degrees": 120
         }
-      ]
+      ],
+      "base_impact_radius": 40
     },
     {
       "id": "weapon.kirov_180_he",
@@ -839,7 +849,7 @@
       "fire_arc_degrees": 300,
       "projectile_speed": 175,
       "spread": 22,
-      "impact_radius": 40,
+      "impact_radius": 20,
       "accuracy_modifier": 0.01,
       "shared_cooldown_group": "kirov_main",
       "projectile_id": "projectile.shell",
@@ -865,7 +875,8 @@
           "center": 90,
           "degrees": 120
         }
-      ]
+      ],
+      "base_impact_radius": 40
     },
     {
       "id": "weapon.kirov_torpedo",
@@ -1000,7 +1011,7 @@
       "fire_arc_degrees": 300,
       "projectile_speed": 160,
       "spread": 20,
-      "impact_radius": 30,
+      "impact_radius": 15,
       "accuracy_modifier": 0.01,
       "shared_cooldown_group": "gnevny_gun",
       "projectile_id": "projectile.shell",
@@ -1026,7 +1037,8 @@
           "center": 90,
           "degrees": 120
         }
-      ]
+      ],
+      "base_impact_radius": 30
     },
     {
       "id": "weapon.gnevny_torpedo",
@@ -1091,7 +1103,7 @@
       "fire_arc_degrees": 300,
       "projectile_speed": 190,
       "spread": 16,
-      "impact_radius": 40,
+      "impact_radius": 20,
       "accuracy_modifier": 0.04,
       "shared_cooldown_group": "prinz_main",
       "projectile_id": "projectile.shell",
@@ -1117,7 +1129,8 @@
           "center": 90,
           "degrees": 120
         }
-      ]
+      ],
+      "base_impact_radius": 40
     },
     {
       "id": "weapon.prinz_203_he",
@@ -1136,7 +1149,7 @@
       "fire_arc_degrees": 300,
       "projectile_speed": 175,
       "spread": 22,
-      "impact_radius": 40,
+      "impact_radius": 20,
       "accuracy_modifier": 0.01,
       "shared_cooldown_group": "prinz_main",
       "projectile_id": "projectile.shell",
@@ -1162,7 +1175,8 @@
           "center": 90,
           "degrees": 120
         }
-      ]
+      ],
+      "base_impact_radius": 40
     },
     {
       "id": "weapon.prinz_torpedo",
@@ -1311,7 +1325,7 @@
       "fire_arc_degrees": 270,
       "projectile_speed": 220,
       "spread": 20,
-      "impact_radius": 48,
+      "impact_radius": 24,
       "accuracy_modifier": 0.02,
       "shared_cooldown_group": "yamato_main",
       "projectile_id": "projectile.shell",
@@ -1337,7 +1351,8 @@
           "center": 90,
           "degrees": 90
         }
-      ]
+      ],
+      "base_impact_radius": 48
     },
     {
       "id": "weapon.yamato_460_he",
@@ -1356,7 +1371,7 @@
       "fire_arc_degrees": 270,
       "projectile_speed": 200,
       "spread": 28,
-      "impact_radius": 48,
+      "impact_radius": 24,
       "accuracy_modifier": 0,
       "shared_cooldown_group": "yamato_main",
       "projectile_id": "projectile.shell",
@@ -1382,7 +1397,8 @@
           "center": 90,
           "degrees": 90
         }
-      ]
+      ],
+      "base_impact_radius": 48
     },
     {
       "id": "weapon.yamato_155_he",
@@ -1401,7 +1417,7 @@
       "fire_arc_degrees": 280,
       "projectile_speed": 160,
       "spread": 22,
-      "impact_radius": 40,
+      "impact_radius": 20,
       "accuracy_modifier": 0.01,
       "shared_cooldown_group": "yamato_secondary",
       "projectile_id": "projectile.shell",
@@ -1427,7 +1443,8 @@
           "center": 90,
           "degrees": 100
         }
-      ]
+      ],
+      "base_impact_radius": 40
     },
     {
       "id": "weapon.yukikaze_127_he",
@@ -1446,7 +1463,7 @@
       "fire_arc_degrees": 310,
       "projectile_speed": 160,
       "spread": 18,
-      "impact_radius": 30,
+      "impact_radius": 15,
       "accuracy_modifier": 0.03,
       "shared_cooldown_group": "yukikaze_gun",
       "projectile_id": "projectile.shell",
@@ -1472,7 +1489,8 @@
           "center": 90,
           "degrees": 120
         }
-      ]
+      ],
+      "base_impact_radius": 30
     },
     {
       "id": "weapon.yukikaze_torpedo",
@@ -1572,7 +1590,7 @@
       "fire_arc_degrees": 300,
       "projectile_speed": 160,
       "spread": 20,
-      "impact_radius": 40,
+      "impact_radius": 20,
       "accuracy_modifier": 0.02,
       "shared_cooldown_group": "ning_main",
       "projectile_id": "projectile.shell",
@@ -1598,7 +1616,8 @@
           "center": 90,
           "degrees": 120
         }
-      ]
+      ],
+      "base_impact_radius": 40
     },
     {
       "id": "weapon.ning_140_ap",
@@ -1617,7 +1636,7 @@
       "fire_arc_degrees": 300,
       "projectile_speed": 170,
       "spread": 16,
-      "impact_radius": 40,
+      "impact_radius": 20,
       "accuracy_modifier": 0,
       "shared_cooldown_group": "ning_main",
       "projectile_id": "projectile.shell",
@@ -1643,7 +1662,8 @@
           "center": 90,
           "degrees": 120
         }
-      ]
+      ],
+      "base_impact_radius": 40
     },
     {
       "id": "weapon.ning_torpedo",
@@ -1743,7 +1763,7 @@
       "fire_arc_degrees": 310,
       "projectile_speed": 165,
       "spread": 18,
-      "impact_radius": 30,
+      "impact_radius": 15,
       "accuracy_modifier": 0.03,
       "shared_cooldown_group": "anshan_gun",
       "projectile_id": "projectile.shell",
@@ -1769,7 +1789,8 @@
           "center": 90,
           "degrees": 120
         }
-      ]
+      ],
+      "base_impact_radius": 30
     },
     {
       "id": "weapon.anshan_torpedo",
@@ -1869,7 +1890,7 @@
       "fire_arc_degrees": 300,
       "projectile_speed": 165,
       "spread": 20,
-      "impact_radius": 40,
+      "impact_radius": 20,
       "accuracy_modifier": 0.03,
       "shared_cooldown_group": "chongqing_main",
       "projectile_id": "projectile.shell",
@@ -1895,7 +1916,8 @@
           "center": 90,
           "degrees": 120
         }
-      ]
+      ],
+      "base_impact_radius": 40
     },
     {
       "id": "weapon.chongqing_152_ap",
@@ -1914,7 +1936,7 @@
       "fire_arc_degrees": 300,
       "projectile_speed": 175,
       "spread": 16,
-      "impact_radius": 40,
+      "impact_radius": 20,
       "accuracy_modifier": 0.01,
       "shared_cooldown_group": "chongqing_main",
       "projectile_id": "projectile.shell",
@@ -1940,7 +1962,8 @@
           "center": 90,
           "degrees": 120
         }
-      ]
+      ],
+      "base_impact_radius": 40
     },
     {
       "id": "weapon.chongqing_torpedo",

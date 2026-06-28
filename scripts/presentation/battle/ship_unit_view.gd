@@ -1,6 +1,7 @@
 extends Node2D
 
 const AnimationStateMachine = preload("res://scripts/presentation/battle/animation_state_machine.gd")
+const CollisionGeometryService = preload("res://scripts/domain/services/collision_geometry_service.gd")
 
 const DEFAULT_UNIT_SCALE := 0.28
 const BODY_TARGET_MIN_WIDTH := 84.0
@@ -79,21 +80,23 @@ func _draw() -> void:
 	if unit.is_empty():
 		return
 	var radius := float(unit.get("collision_radius", 22.0))
+	var collision_half_extents := CollisionGeometryService.half_extents(unit)
+	var heading := float(unit.get("heading", 0.0))
 	var friendly := str(unit.get("faction_id", "")) == "player"
 	var fallback_color := Color("#63c7ff") if friendly else Color("#ff6b6b")
 	if str(unit.get("life_state", "Alive")) == "Sunk":
 		fallback_color = Color("#6c7780")
-	draw_circle(Vector2.ZERO, radius + 12.0, Color(0.02, 0.08, 0.12, 0.28))
+	draw_colored_polygon(_ellipse_points(collision_half_extents + Vector2(12.0, 12.0), heading), Color(0.02, 0.08, 0.12, 0.28))
 	_draw_unit_art(fallback_color)
-	draw_arc(Vector2.ZERO, radius, 0.0, TAU, 40, Color(0.86, 0.97, 1.0, 0.45), 1.5)
-	var heading_vector := Vector2.RIGHT.rotated(float(unit.get("heading", 0.0)))
-	draw_line(Vector2.ZERO, heading_vector * (radius + 34.0), Color(1.0, 1.0, 1.0, 0.75), 2.5)
+	draw_polyline(_ellipse_points(collision_half_extents, heading, true), Color(0.86, 0.97, 1.0, 0.58), 1.5, true)
+	var heading_vector := Vector2.RIGHT.rotated(heading)
+	draw_line(Vector2.ZERO, heading_vector * (collision_half_extents.x + 34.0), Color(1.0, 1.0, 1.0, 0.75), 2.5)
 	if selected:
 		_draw_ui_icon("ui_marker_selected", Vector2.ZERO, 0.85)
-		draw_arc(Vector2.ZERO, radius + 19.0, 0.0, TAU, 40, Color("#f8ef9a"), 3.0)
+		draw_polyline(_ellipse_points(collision_half_extents + Vector2(19.0, 19.0), heading, true), Color("#f8ef9a"), 3.0, true)
 	if focused:
 		_draw_ui_icon("ui_marker_target", Vector2.ZERO, 0.9)
-		draw_arc(Vector2.ZERO, radius + 25.0, 0.0, TAU, 40, Color("#ffb35c"), 3.0)
+		draw_polyline(_ellipse_points(collision_half_extents + Vector2(25.0, 25.0), heading, true), Color("#ffb35c"), 3.0, true)
 	if bool(unit.get("is_flagship", false)):
 		_draw_ui_icon("ui_marker_flagship", Vector2(0.0, -radius - 34.0), 0.42)
 	_draw_health_bar(radius, friendly)
@@ -112,7 +115,7 @@ func _draw_unit_art(fallback_color: Color) -> void:
 	elif body_texture != null:
 		_draw_texture_centered(body_texture, heading, body_art_scale, tint)
 	elif rig_texture == null:
-		draw_circle(Vector2.ZERO, float(unit.get("collision_radius", 22.0)), fallback_color)
+		draw_colored_polygon(_ellipse_points(CollisionGeometryService.half_extents(unit), heading), fallback_color)
 
 
 func _draw_health_bar(radius: float, friendly: bool) -> void:
@@ -161,17 +164,27 @@ func _load_static_textures() -> void:
 
 func _unit_art_scales() -> Dictionary:
 	var radius := float(unit.get("collision_radius", 22.0))
+	var collision_half_extents := CollisionGeometryService.half_extents(unit)
 	var body_scale := DEFAULT_UNIT_SCALE
 	var rig_scale := DEFAULT_UNIT_SCALE
 	if body_texture != null:
 		var body_target_width := clampf(radius * BODY_RADIUS_WIDTH_FACTOR, BODY_TARGET_MIN_WIDTH, BODY_TARGET_MAX_WIDTH)
 		body_scale = body_target_width / maxf(1.0, float(body_texture.get_width()))
 	if rig_texture != null:
-		var rig_target_width := clampf(radius * RIG_RADIUS_WIDTH_FACTOR, RIG_TARGET_MIN_WIDTH, RIG_TARGET_MAX_WIDTH)
+		var rig_target_width := collision_half_extents.x * 2.0
 		rig_scale = rig_target_width / maxf(1.0, float(rig_texture.get_width()))
 	else:
 		rig_scale = body_scale
 	return {"body": body_scale, "rig": rig_scale}
+
+
+func _ellipse_points(extents: Vector2, heading: float, close: bool = false) -> PackedVector2Array:
+	var points := PackedVector2Array()
+	var segment_count := 64
+	for index in range(segment_count + (1 if close else 0)):
+		var angle := TAU * float(index % segment_count) / float(segment_count)
+		points.append(Vector2(cos(angle) * extents.x, sin(angle) * extents.y).rotated(heading))
+	return points
 
 
 func _texture(path: String) -> Texture2D:

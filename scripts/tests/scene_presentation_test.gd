@@ -14,6 +14,7 @@ func _run() -> void:
 	root.add_child(menu)
 	await process_frame
 	_check(menu.has_node("btn_mode_1v1") and menu.has_node("btn_mode_3v3") and menu.has_node("btn_mode_5v5") and menu.has_node("btn_mode_11v11"), "main menu exposes 1v1, 3v3, 5v5, and 11v11 buttons")
+	_check(menu.has_node("btn_mode_harbor"), "main menu exposes the harbor terrain validation battle")
 	_check(menu.has_node("btn_settings") and menu.has_node("SettingsOverlay"), "main menu exposes window settings")
 	menu._show_settings()
 	_check(menu.settings_overlay.visible and menu.resolution_selector.item_count == 5, "window settings list configured resolutions")
@@ -35,6 +36,7 @@ func _run() -> void:
 	var battle = scene.instantiate()
 	root.add_child(battle)
 	await process_frame
+	_check(battle.has_node("TerrainView") and battle.has_node("TerrainDebugOverlay"), "battle scene includes terrain presentation and domain debug layers")
 	await process_frame
 	var viewport_size: Vector2 = battle.get_viewport_rect().size
 	var map_data: Dictionary = battle.session.state["map"]
@@ -44,10 +46,11 @@ func _run() -> void:
 	var warspite_snapshot: Dictionary = battle.session.snapshot("player", false)["units"]["unit.player.warspite"]
 	_check(str(warspite_snapshot.get("display_name", "")) == "厌战号", "battle snapshot exposes the Chinese character name")
 	_check(str(warspite_snapshot.get("asset_root", "")).contains("assets/characters/warspite/processed"), "unit snapshot exposes character art root")
-	_check(float(warspite_snapshot.get("collision_radius", 0.0)) > 0.0, "unit snapshot exposes presentation collision radius")
+	_check((warspite_snapshot.get("collision_half_extents", Vector2.ZERO) as Vector2).is_equal_approx(Vector2(75.0, 31.5)), "unit snapshot exposes the heading-aligned elliptical collision hull")
 	var warspite_view = battle.effect_director.unit_views.get("unit.player.warspite", null)
 	_check(warspite_view != null, "battle scene creates a runtime character view")
 	_check(warspite_view.body_texture != null and warspite_view.rig_texture != null, "runtime character view loads body and rig art")
+	_check(is_equal_approx(float(warspite_view.rig_texture.get_width()) * warspite_view.rig_art_scale, 150.0), "rendered rig width matches the collision ellipse longitudinal diameter")
 	_check(warspite_view._texture(warspite_view.animation.current_frame_path()) != null, "runtime character view loads animation frames")
 	var data_registry = root.get_node("DataRegistry")
 	var warspite_main: Dictionary = data_registry.registry.get_definition("weapons", "weapon.warspite_381_ap")
@@ -86,6 +89,21 @@ func _run() -> void:
 	var player_center: Vector2 = battle._player_fleet_center()
 	_check(battle.battle_camera.position.distance_to(player_center) < 4.0, "initial camera centers on player fleet")
 	_check(battle.camera_mode == "Manual", "initial camera remains in manual mode")
+	battle._start_battle("level.prototype_harbor_3v3")
+	await process_frame
+	var harbor_snapshot: Dictionary = battle.session.snapshot("player", true)
+	_check(not harbor_snapshot.get("terrain_map", {}).is_empty(), "harbor scene receives reviewed runtime terrain geometry")
+	_check(battle.terrain_view.static_root.get_child_count() >= 9, "harbor scene renders water regions, six visual-only shore layers, and the land runtime asset")
+	_check(battle.terrain_view.zone_root.get_child_count() >= 17, "soft-terrain presentation consumes fog detail and squall edge layers plus program boundaries")
+	_check(harbor_snapshot.get("facilities", {}).size() == 8 and battle.terrain_view.facility_root.get_child_count() == 8, "harbor facilities share runtime state and presentation placement")
+	battle.terrain_view.sync_dynamic(harbor_snapshot.get("environment_zones", []), harbor_snapshot.get("facilities", {}), battle.session.snapshot("player", true).get("minefields", {}))
+	_check(battle.terrain_view.minefield_root.get_child_count() == 2, "omniscient terrain view renders the fixed minefield and its safe channel")
+	_check(battle.battle_hud._texture("res://assets/ui/processed/battle/terrain/minimap_terrain_map_harbor_mouth.png") != null, "harbor minimap loads the generated geometry mask")
+	_check(battle.battle_hud._environment_zone_icon("environment.effect.rain_squall") == "ui_marker_environment_rain_squall" and battle.battle_hud._texture("res://assets/ui/export/2x/ui_marker_environment_rain_squall.png") != null, "minimap maps local environment rules to the authored environment marker assets")
+	_check(harbor_snapshot.get("global_environment", {}).get("canonical_ocean_palette", "") == "cloudy_dawn", "harbor scene and Domain share the same cloudy-dawn palette condition id")
+	battle._start_battle("level.prototype_3v3")
+	await process_frame
+	warspite_view = battle.effect_director.unit_views.get("unit.player.warspite", null)
 	var camera_center := viewport_size * 0.5
 	for index in range(32):
 		battle._adjust_camera_zoom(0.8, camera_center)

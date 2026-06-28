@@ -3,7 +3,13 @@ extends RefCounted
 const SeededRandomSource = preload("res://scripts/infrastructure/random/seeded_random_source.gd")
 const ModifierService = preload("res://scripts/domain/services/modifier_service.gd")
 const DamageService = preload("res://scripts/domain/services/damage_service.gd")
+const CollisionGeometryService = preload("res://scripts/domain/services/collision_geometry_service.gd")
 const BattleRecorder = preload("res://scripts/infrastructure/analytics/battle_recorder.gd")
+const TerrainQueryService = preload("res://scripts/domain/services/terrain_query_service.gd")
+const TerrainContextService = preload("res://scripts/domain/services/terrain_context_service.gd")
+const FacilityService = preload("res://scripts/domain/services/facility_service.gd")
+const MinefieldService = preload("res://scripts/domain/services/minefield_service.gd")
+const RoutePlanner = preload("res://scripts/application/navigation/route_planner.gd")
 
 const PLAYER_FACTION := "player"
 const ENEMY_FACTION := "enemy"
@@ -15,6 +21,12 @@ var recorder := BattleRecorder.new()
 var state := {}
 var command_queue: Array = []
 var delayed_attacks: Array = []
+var terrain_query = TerrainQueryService.new()
+var terrain_context_service = TerrainContextService.new()
+var facility_service = FacilityService.new()
+var minefield_service = MinefieldService.new()
+var route_planner = RoutePlanner.new()
+var navigation_definition: Dictionary = {}
 var _event_buffer: Array = []
 var _event_sequence := 0
 var _entity_sequence := 0
@@ -51,10 +63,17 @@ func create_battle(level_id: String, seed_value: int = 1) -> Dictionary:
 		"fleets_by_id": {},
 		"units_by_id": {},
 		"projectiles_by_id": {},
+		"terrain_map": {},
+		"environment_zones": [],
+		"global_environment": {},
+		"facilities_by_id": {},
+		"minefields_by_id": {},
+		"support_effects_by_id": {},
 		"visible_by_faction": {PLAYER_FACTION: {}, ENEMY_FACTION: {}},
 		"contacts_by_faction": {PLAYER_FACTION: {}, ENEMY_FACTION: {}},
 		"result": {},
 	}
+	_configure_scene_combat(level)
 	_build_fleet("fleet.player", PLAYER_FACTION, level.get("player_fleet", []))
 	_build_fleet("fleet.enemy", ENEMY_FACTION, level.get("enemy_fleet", []))
 	state["phase"] = "Running"
@@ -96,6 +115,11 @@ func advance_tick(delta: float = 0.1) -> Array:
 		return _event_buffer
 	state["tick_index"] += 1
 	state["elapsed_time"] += delta
+	for environment_event in terrain_context_service.advance(delta):
+		_emit(str(environment_event.get("event_type", "EnvironmentZoneChanged")), environment_event)
+	state["environment_zones"] = terrain_context_service.snapshot()
+	state["global_environment"] = terrain_context_service.global_snapshot()
+	_update_support_effects(delta)
 	_process_commands()
 	_update_cooldowns_and_statuses(delta)
 	_update_movement(delta)
@@ -105,7 +129,14 @@ func advance_tick(delta: float = 0.1) -> Array:
 	_update_ai_intents()
 	_update_auto_skills()
 	_update_weapons()
+	_update_facility_weapons()
 	_resolve_delayed_attacks()
+	for facility_event in facility_service.advance(delta, float(state["elapsed_time"]), state["units_by_id"]):
+		_handle_facility_event(facility_event)
+	state["facilities_by_id"] = facility_service.snapshot()
+	for minefield_event in minefield_service.sync_controllers(state["facilities_by_id"]):
+		_emit(str(minefield_event.get("event_type", "MineFieldStateChanged")), minefield_event)
+	state["minefields_by_id"] = minefield_service.snapshot()
 	_clear_invalid_targets()
 	_check_victory()
 	_check_timeout()
@@ -136,6 +167,7 @@ func snapshot(viewer_faction: String = PLAYER_FACTION, omniscient: bool = false)
 			"ship_class": unit.get("stats", {}).get("ship_class", ""),
 			"asset_root": unit.get("stats", {}).get("asset_root", ""),
 			"collision_radius": unit.get("stats", {}).get("collision_radius", 20.0),
+			"collision_half_extents": _unit_collision_half_extents(unit),
 			"position": unit["position"],
 			"heading": unit["heading"],
 			"current_hp": unit["current_hp"],
@@ -146,10 +178,23 @@ func snapshot(viewer_faction: String = PLAYER_FACTION, omniscient: bool = false)
 			"skill_cooldown_max": unit["skill_state"].get("cooldown_max", 0.0),
 		}
 	var contacts := {}
+	var visible_minefields := {}
+	var unit_terrain_contexts := {}
 	for contact_id in state["contacts_by_faction"].get(viewer_faction, {}):
 		var contact: Dictionary = state["contacts_by_faction"][viewer_faction][contact_id]
 		if not bool(contact.get("visible", false)):
 			contacts[contact_id] = contact.duplicate(true)
+	for unit_id in units:
+		var terrain_context := terrain_context_service.context_at(units[unit_id]["position"])
+		var facility_sources: Array = facility_service.sources_at(units[unit_id]["position"])
+		terrain_context["facility_sources"] = facility_sources
+		terrain_context["effect_sources"].append_array(facility_sources)
+		terrain_context["position"] = units[unit_id]["position"]
+		unit_terrain_contexts[unit_id] = terrain_context
+	for minefield_id in state.get("minefields_by_id", {}):
+		var minefield: Dictionary = state["minefields_by_id"][minefield_id]
+		if omniscient or viewer_faction == str(minefield.get("owner_faction_id", "")) or viewer_faction in minefield.get("known_by_faction", []):
+			visible_minefields[minefield_id] = minefield.duplicate(true)
 	return {
 		"battle_id": state.get("battle_id", ""),
 		"phase": state.get("phase", ""),
@@ -159,6 +204,13 @@ func snapshot(viewer_faction: String = PLAYER_FACTION, omniscient: bool = false)
 		"units": units,
 		"contacts": contacts,
 		"projectiles": state.get("projectiles_by_id", {}).duplicate(true),
+		"terrain_map": state.get("terrain_map", {}).duplicate(true),
+		"environment_zones": state.get("environment_zones", []).duplicate(true),
+		"global_environment": state.get("global_environment", {}).duplicate(true),
+		"facilities": state.get("facilities_by_id", {}).duplicate(true),
+		"minefields": visible_minefields,
+		"support_effects": _visible_support_effects(viewer_faction, omniscient),
+		"terrain_contexts": unit_terrain_contexts,
 		"result": state.get("result", {}).duplicate(true),
 	}
 
@@ -262,6 +314,35 @@ func get_primary_aim_status(unit_id: String, target_position: Vector2) -> Dictio
 	return validation
 
 
+func _configure_scene_combat(level: Dictionary) -> void:
+	terrain_query = TerrainQueryService.new()
+	terrain_context_service = TerrainContextService.new()
+	facility_service = FacilityService.new()
+	minefield_service = MinefieldService.new()
+	route_planner = RoutePlanner.new()
+	navigation_definition = {}
+	var map: Dictionary = level.get("map", {})
+	var terrain_id := str(map.get("terrain_definition_id", ""))
+	var terrain_definition: Dictionary = registry.get_definition("terrain", terrain_id) if not terrain_id.is_empty() else {}
+	if not terrain_definition.is_empty():
+		terrain_query.configure(terrain_definition)
+		state["terrain_map"] = terrain_definition.duplicate(true)
+	var navigation_id := str(map.get("navigation_definition_id", terrain_definition.get("navigation_definition_id", "")))
+	if not navigation_id.is_empty():
+		navigation_definition = registry.get_definition("navigation", navigation_id)
+	var environment_id := str(map.get("environment_zone_set_id", terrain_definition.get("environment_zone_set_id", "")))
+	var environment_set: Dictionary = registry.get_definition("environment_zones", environment_id) if not environment_id.is_empty() else {}
+	terrain_context_service.configure(terrain_query, environment_set, registry.all("environment_zones"), str(map.get("ocean_palette", "day_clear")))
+	state["environment_zones"] = terrain_context_service.snapshot()
+	state["global_environment"] = terrain_context_service.global_snapshot()
+	var facility_layout_id := str(map.get("facility_layout_id", terrain_definition.get("facility_layout_id", "")))
+	var facility_layout: Dictionary = registry.get_definition("facilities", facility_layout_id) if not facility_layout_id.is_empty() else {}
+	facility_service.configure(facility_layout, terrain_definition.get("facility_anchors", []), registry.all("facilities"))
+	state["facilities_by_id"] = facility_service.snapshot()
+	minefield_service.configure(registry.all("facilities"), terrain_id)
+	state["minefields_by_id"] = minefield_service.snapshot()
+
+
 func _validate_level_runtime(level: Dictionary) -> Array[String]:
 	var errors: Array[String] = []
 	var all_entity_ids := {}
@@ -357,8 +438,15 @@ func _apply_command(command: Dictionary) -> Dictionary:
 		"MoveUnits":
 			var target_position = command.get("target_position")
 			if typeof(target_position) != TYPE_VECTOR2: return _rejection(command.get("command_id", ""), "INVALID_TARGET_TYPE")
+			if not _inside_map(target_position): return _rejection(command.get("command_id", ""), "TARGET_POSITION_ON_LAND")
+			var route := route_planner.plan_path(terrain_query, navigation_definition, unit["position"], target_position, float(unit["stats"].get("collision_radius", 20.0)), _movement_tags(unit), terrain_context_service)
+			if not bool(route.get("ok", false)):
+				return _rejection(command.get("command_id", ""), str(route.get("reason_code", "NO_NAVIGATION_PATH")))
+			var environment_route := _validate_environment_route(unit["position"], route.get("waypoints", []))
+			if not bool(environment_route.get("allowed", false)):
+				return _rejection(command.get("command_id", ""), str(environment_route.get("reason_code", "TIDE_ACCESS_RESTRICTED")))
 			var movement_mode := "AutoNavigate" if command.get("issuer_type", "Player") == "AI" else "PlayerMoveOrder"
-			unit["movement_state"] = {"mode": movement_mode, "target_position": _clamp_to_map(target_position)}
+			unit["movement_state"] = {"mode": movement_mode, "target_position": target_position, "waypoints": route.get("waypoints", [target_position]), "waypoint_index": 0}
 			_emit("MoveOrderAccepted", {"unit_id": unit_id, "target_position": unit["movement_state"]["target_position"]})
 			return {"accepted": true}
 		"FocusTarget":
@@ -383,6 +471,27 @@ func _apply_command(command: Dictionary) -> Dictionary:
 			var target_position = command.get("target_position")
 			if typeof(target_position) != TYPE_VECTOR2: return _rejection(command.get("command_id", ""), "INVALID_TARGET_TYPE")
 			return _fire_primary_weapon(unit, target_position, command.get("command_id", ""))
+		"StartFacilityInteraction":
+			var facility_result := facility_service.start_interaction(str(command.get("facility_id", "")), unit, str(command.get("interaction_type", "Activate")))
+			if bool(facility_result.get("accepted", false)) and facility_result.has("event"):
+				var facility_event: Dictionary = facility_result["event"]
+				_emit(str(facility_event.get("event_type", "FacilityInteractionStarted")), facility_event)
+			return facility_result
+		"CancelFacilityInteraction":
+			var cancel_result := facility_service.cancel_interaction(str(command.get("facility_id", "")), unit_id)
+			if bool(cancel_result.get("accepted", false)) and cancel_result.has("event"):
+				var cancel_event: Dictionary = cancel_result["event"]
+				_emit(str(cancel_event.get("event_type", "FacilityInteractionInterrupted")), cancel_event)
+			return cancel_result
+		"RequestSupportMission":
+			var support_target = command.get("target_position")
+			if typeof(support_target) != TYPE_VECTOR2: return _rejection(command.get("command_id", ""), "INVALID_TARGET_TYPE")
+			var support_context := terrain_context_service.context_at(support_target)
+			var support_result := facility_service.request_support(str(command.get("facility_id", "")), str(command.get("mission_definition_id", "")), unit["faction_id"], support_target, float(state["elapsed_time"]), support_context)
+			if bool(support_result.get("accepted", false)) and support_result.has("event"):
+				var support_event: Dictionary = support_result["event"]
+				_emit(str(support_event.get("event_type", "SupportMissionStarted")), support_event)
+			return support_result
 		_:
 			return _rejection(command.get("command_id", ""), "UNKNOWN_COMMAND")
 
@@ -414,18 +523,42 @@ func _update_movement(delta: float) -> void:
 		var unit: Dictionary = state["units_by_id"][unit_id]
 		if unit["life_state"] != "Alive": continue
 		var movement: Dictionary = unit["movement_state"]
-		var target_position: Vector2 = movement.get("target_position", unit["position"])
+		var target_position: Vector2 = _current_movement_target(movement, unit["position"])
 		var distance := (unit["position"] as Vector2).distance_to(target_position)
-		var max_speed := ModifierService.calculate(float(unit["stats"]["speed"]), unit["status_effects"], "Speed")
+		var context := terrain_context_service.context_at(unit["position"])
+		var max_speed := ModifierService.calculate(float(unit["stats"]["speed"]), unit["status_effects"], "Speed") * float(context.get("movement_speed_multiplier", 1.0))
 		var turn_speed := deg_to_rad(ModifierService.calculate(float(unit["stats"]["turn_speed"]), unit["status_effects"], "TurnSpeed"))
 		if distance <= 8.0:
+			_advance_movement_waypoint(movement)
+			target_position = _current_movement_target(movement, unit["position"])
+			distance = (unit["position"] as Vector2).distance_to(target_position)
 			unit["current_speed"] = move_toward(float(unit["current_speed"]), 0.0, max_speed * delta * 2.0)
-			if movement["mode"] == "PlayerMoveOrder": movement["mode"] = "HoldPosition"
+			if _movement_finished(movement) and movement["mode"] == "PlayerMoveOrder": movement["mode"] = "HoldPosition"
 		else:
 			var desired_heading := (target_position - (unit["position"] as Vector2)).angle()
 			unit["heading"] = rotate_toward(float(unit["heading"]), desired_heading, turn_speed * delta)
 			unit["current_speed"] = move_toward(float(unit["current_speed"]), max_speed, max_speed * delta)
-		unit["position"] = _clamp_to_map((unit["position"] as Vector2) + Vector2.RIGHT.rotated(float(unit["heading"])) * float(unit["current_speed"]) * delta)
+		var movement_start: Vector2 = unit["position"]
+		var desired_motion := Vector2.RIGHT.rotated(float(unit["heading"])) * float(unit["current_speed"]) * delta + (context.get("current_vector", Vector2.ZERO) as Vector2) * delta
+		var environment_access := terrain_context_service.movement_segment_access(movement_start, movement_start + desired_motion)
+		if not bool(environment_access.get("allowed", true)):
+			desired_motion = Vector2.ZERO
+			unit["current_speed"] = 0.0
+			movement["mode"] = "HoldPosition"
+			movement["target_position"] = movement_start
+			_emit("UnitTideAccessRestricted", {"unit_id": unit_id, "zone_id": environment_access.get("zone_id", ""), "position": movement_start})
+		if terrain_query.is_configured():
+			var motion_result := terrain_query.resolve_circle_motion(unit["position"], desired_motion, float(unit["stats"].get("collision_radius", 20.0)), _movement_tags(unit))
+			unit["position"] = motion_result["position"]
+			if bool(motion_result.get("collided", false)):
+				unit["current_speed"] = minf(float(unit["current_speed"]), max_speed * 0.25)
+				var hit: Dictionary = motion_result.get("hit", {})
+				_emit("UnitTerrainCollision", {"unit_id": unit_id, "obstacle_id": hit.get("obstacle_id", ""), "position": hit.get("position", unit["position"]), "normal": hit.get("normal", Vector2.ZERO)})
+		else:
+			unit["position"] = _clamp_to_map((unit["position"] as Vector2) + desired_motion)
+		var mine_trigger := minefield_service.resolve_unit_motion(unit, movement_start, unit["position"])
+		if bool(mine_trigger.get("triggered", false)):
+			_apply_mine_trigger(unit, mine_trigger)
 
 
 func _resolve_unit_overlap() -> void:
@@ -437,11 +570,20 @@ func _resolve_unit_overlap() -> void:
 			var second: Dictionary = state["units_by_id"][unit_ids[second_index]]
 			if second["life_state"] != "Alive": continue
 			var delta_position: Vector2 = second["position"] - first["position"]
-			var minimum_distance := float(first["stats"]["collision_radius"]) + float(second["stats"]["collision_radius"])
+			var center_direction := delta_position.normalized() if delta_position.length_squared() > 0.0001 else Vector2.RIGHT
+			var minimum_distance := CollisionGeometryService.separation_distance(
+				_unit_collision_half_extents(first), float(first["heading"]),
+				_unit_collision_half_extents(second), float(second["heading"]),
+				center_direction,
+			)
 			if delta_position.length_squared() <= 0.0001 or delta_position.length() >= minimum_distance: continue
 			var correction := delta_position.normalized() * (minimum_distance - delta_position.length()) * 0.5
-			first["position"] = _clamp_to_map(first["position"] - correction)
-			second["position"] = _clamp_to_map(second["position"] + correction)
+			var first_position: Vector2 = _clamp_to_map(first["position"] - correction)
+			var second_position: Vector2 = _clamp_to_map(second["position"] + correction)
+			if not terrain_query.is_configured() or terrain_query.can_occupy_circle(first_position, float(first["stats"]["collision_radius"]), _movement_tags(first)):
+				first["position"] = first_position
+			if not terrain_query.is_configured() or terrain_query.can_occupy_circle(second_position, float(second["stats"]["collision_radius"]), _movement_tags(second)):
+				second["position"] = second_position
 
 
 func _update_detection(delta: float = 0.1) -> void:
@@ -479,18 +621,46 @@ func _fleet_detects(observer_faction: String, target: Dictionary) -> bool:
 		var observer: Dictionary = state["units_by_id"][observer_id]
 		if observer["faction_id"] != observer_faction or observer["life_state"] != "Alive": continue
 		var detection_range := ModifierService.calculate(float(observer["stats"]["detection_range"]), observer["status_effects"], "DetectionRange")
+		var observer_context := terrain_context_service.context_at(observer["position"])
+		var target_context := terrain_context_service.context_at(target["position"])
+		detection_range *= minf(float(observer_context.get("optical_visibility_multiplier", 1.0)), float(target_context.get("optical_visibility_multiplier", 1.0)))
 		var distance := (observer["position"] as Vector2).distance_to(target["position"] as Vector2)
-		if distance <= detection_range and distance <= concealment: return true
+		if distance <= detection_range and distance <= concealment and terrain_query.has_surface_line_of_sight(observer["position"], target["position"]): return true
+	for source in facility_service.observation_sources(observer_faction):
+		var source_position: Vector2 = source.get("position", Vector2.ZERO)
+		var source_context := terrain_context_service.context_at(source_position)
+		var target_context := terrain_context_service.context_at(target["position"])
+		var detection_range := float(source.get("detection_range", 0.0)) * minf(float(source_context.get("optical_visibility_multiplier", 1.0)), float(target_context.get("optical_visibility_multiplier", 1.0)))
+		var distance := source_position.distance_to(target["position"])
+		if distance <= detection_range and distance <= concealment and terrain_query.has_surface_line_of_sight(source_position, target["position"]): return true
+	for effect in state.get("support_effects_by_id", {}).values():
+		if str(effect.get("effect_type", "")) != "Reconnaissance" or str(effect.get("faction_id", "")) != observer_faction: continue
+		if (effect.get("position", Vector2.ZERO) as Vector2).distance_to(target["position"]) <= float(effect.get("radius", 0.0)): return true
 	return false
 
 
 func _update_ai_intents() -> void:
 	var map_center := Vector2(float(state["map"].get("width", 1200.0)) * 0.5, float(state["map"].get("height", 700.0)) * 0.5)
+	if int(state.get("tick_index", 0)) % 10 == 0:
+		_update_ai_support_intents()
 	for unit_id in _sorted_unit_ids():
 		var unit: Dictionary = state["units_by_id"][unit_id]
 		if unit["life_state"] != "Alive" or unit["movement_state"]["mode"] == "PlayerMoveOrder": continue
 		var target := _select_target(unit)
+		if unit.get("faction_id", "") == ENEMY_FACTION:
+			var facility_plan := _ai_facility_plan(unit, target.is_empty())
+			if not facility_plan.is_empty():
+				if facility_plan.has("interaction_type"):
+					_queue_ai_facility_interaction(unit, str(facility_plan["facility_id"]), str(facility_plan["interaction_type"]))
+				else:
+					_queue_ai_move(unit, facility_plan["target_position"])
+				continue
 		if target.is_empty():
+			var context := terrain_context_service.context_at(unit["position"])
+			var lee_center := terrain_context_service.zone_center_for_effect("environment.effect.lee_water")
+			if int(context.get("sea_state", 0)) >= 4 and lee_center != Vector2.ZERO:
+				_queue_ai_move(unit, lee_center)
+				continue
 			var lane_offset := float(abs(unit_id.hash()) % 180) - 90.0
 			_queue_ai_move(unit, map_center + Vector2(0.0, lane_offset))
 			continue
@@ -535,6 +705,7 @@ func _update_auto_skills() -> void:
 
 
 func _queue_ai_move(unit: Dictionary, target_position: Vector2) -> void:
+	target_position = minefield_service.avoidance_waypoint(str(unit.get("faction_id", "")), unit["position"], target_position)
 	if (unit["movement_state"].get("target_position", unit["position"]) as Vector2).distance_to(target_position) < 8.0: return
 	command_queue.append({
 		"command_id": "ai.move.%s.%s" % [state["tick_index"] + 1, unit["entity_id"]],
@@ -545,6 +716,84 @@ func _queue_ai_move(unit: Dictionary, target_position: Vector2) -> void:
 		"unit_id": unit["entity_id"],
 		"target_position": _clamp_to_map(target_position),
 	})
+
+
+func _ai_facility_plan(unit: Dictionary, allow_capture: bool) -> Dictionary:
+	var facilities: Dictionary = facility_service.snapshot()
+	var candidates: Array = []
+	var hp_ratio := float(unit.get("current_hp", 0.0)) / maxf(1.0, float(unit.get("max_hp", 1.0)))
+	for facility_id in facilities:
+		var facility: Dictionary = facilities[facility_id]
+		if str(facility.get("life_state", "")) != "Alive": continue
+		var definition := facility_service.definition_for(str(facility_id))
+		var interaction_type := ""
+		var priority := 0.0
+		if hp_ratio < 0.55 and facility_service.is_operational(str(facility_id)) and facility.get("faction_id") == unit.get("faction_id") and str(definition.get("service_profile", {}).get("service_type", "")) == "Repair":
+			interaction_type = "Service"
+			priority = 3000.0
+		elif allow_capture and "Ownable" in definition.get("capabilities", []) and "Seize" in definition.get("interaction_types", []) and facility.get("faction_id") != unit.get("faction_id"):
+			interaction_type = "Seize"
+			priority = 1600.0 if "ObservationSource" in definition.get("capabilities", []) or "HazardController" in definition.get("capabilities", []) else 1200.0
+		elif allow_capture and "Activate" in definition.get("interaction_types", []) and facility.get("faction_id") in ["neutral", unit.get("faction_id")] and facility.get("operation_state") == "Dormant":
+			interaction_type = "Activate"
+			priority = 1000.0
+		if interaction_type.is_empty(): continue
+		var interaction: Dictionary = facility.get("interaction", {})
+		if not interaction.is_empty() and str(interaction.get("unit_id", "")) != str(unit.get("entity_id", "")): continue
+		var center := facility_service.interaction_center(str(facility_id))
+		var distance := (unit["position"] as Vector2).distance_to(center)
+		candidates.append({"facility_id": str(facility_id), "interaction_type": interaction_type, "target_position": center, "score": priority - distance})
+	if candidates.is_empty(): return {}
+	candidates.sort_custom(func(a, b): return float(a["score"]) > float(b["score"]) if not is_equal_approx(float(a["score"]), float(b["score"])) else str(a["facility_id"]) < str(b["facility_id"]))
+	var selected: Dictionary = candidates[0]
+	var selected_facility: Dictionary = facilities[selected["facility_id"]]
+	if not selected_facility.get("interaction", {}).is_empty(): return {"target_position": unit["position"]}
+	if Geometry2D.is_point_in_polygon(unit["position"], _polygon(selected_facility.get("interaction_water_polygon", []))):
+		return {"facility_id": selected["facility_id"], "interaction_type": selected["interaction_type"]}
+	return {"target_position": selected["target_position"]}
+
+
+func _queue_ai_facility_interaction(unit: Dictionary, facility_id: String, interaction_type: String) -> void:
+	command_queue.append({
+		"command_id": "ai.facility.%s.%s" % [state["tick_index"] + 1, unit["entity_id"]],
+		"command_type": "StartFacilityInteraction",
+		"issued_at_tick": state["tick_index"] + 1,
+		"issuer_type": "AI",
+		"issuer_id": unit["faction_id"],
+		"unit_id": unit["entity_id"],
+		"facility_id": facility_id,
+		"interaction_type": interaction_type,
+	})
+
+
+func _update_ai_support_intents() -> void:
+	var target: Dictionary = {}
+	var visible_target_ids: Array = state.get("visible_by_faction", {}).get(ENEMY_FACTION, {}).keys()
+	visible_target_ids.sort()
+	for target_id in visible_target_ids:
+		var candidate: Dictionary = state["units_by_id"].get(target_id, {})
+		if candidate.get("life_state", "") == "Alive":
+			target = candidate
+			break
+	if target.is_empty(): return
+	var requester: Dictionary = {}
+	for unit_id in _sorted_unit_ids():
+		var unit: Dictionary = state["units_by_id"][unit_id]
+		if unit.get("faction_id", "") == ENEMY_FACTION and unit.get("life_state", "") == "Alive": requester = unit; break
+	if requester.is_empty(): return
+	var facilities := facility_service.snapshot()
+	var facility_ids: Array = facilities.keys()
+	facility_ids.sort()
+	for facility_id_key in facility_ids:
+		var facility: Dictionary = facilities[facility_id_key]
+		var facility_id := str(facility.get("facility_id", ""))
+		if facility.get("faction_id", "") != ENEMY_FACTION or not facility_service.is_operational(facility_id): continue
+		var definition := facility_service.definition_for(facility_id)
+		if "SupportMissionProvider" not in definition.get("capabilities", []): continue
+		for mission_id in ["support_mission.airstrike", "support_mission.fighter_patrol", "support_mission.air_recon"]:
+			if mission_id not in definition.get("support_mission_ids", []) or int(facility.get("mission_charges_remaining", {}).get(mission_id, 0)) <= 0: continue
+			command_queue.append({"command_id":"ai.support.%s.%s" % [state["tick_index"] + 1, mission_id], "command_type":"RequestSupportMission", "issued_at_tick":state["tick_index"] + 1, "issuer_type":"AI", "issuer_id":ENEMY_FACTION, "unit_id":requester["entity_id"], "facility_id":facility_id, "mission_definition_id":mission_id, "target_position":target["position"]})
+			return
 
 
 func _cast_skill(unit: Dictionary, target_ref: Dictionary, command_id: String) -> Dictionary:
@@ -653,6 +902,53 @@ func _update_weapons() -> void:
 					if sibling.get("shared_cooldown_group", "") == group: sibling_state["reload_remaining"] = weapon_state["reload_remaining"]
 
 
+func _update_facility_weapons() -> void:
+	for facility in facility_service.weapon_platforms():
+		var faction_id := str(facility.get("faction_id", "neutral"))
+		if faction_id == "neutral": continue
+		for weapon_state in facility.get("weapon_states", []):
+			if not bool(weapon_state.get("enabled", true)) or float(weapon_state.get("reload_remaining", 0.0)) > 0.0: continue
+			var weapon: Dictionary = registry.get_definition("weapons", str(weapon_state.get("definition_id", "")))
+			if weapon.is_empty(): continue
+			var target := _select_facility_weapon_target(facility, weapon)
+			if target.is_empty(): continue
+			_fire_facility_weapon(facility, target, weapon)
+
+
+func _select_facility_weapon_target(facility: Dictionary, weapon: Dictionary) -> Dictionary:
+	var candidates: Array = []
+	var origin: Vector2 = facility.get("muzzle_position", facility.get("position", Vector2.ZERO))
+	for target_id in state.get("visible_by_faction", {}).get(str(facility.get("faction_id", "")), {}):
+		var target: Dictionary = state["units_by_id"].get(target_id, {})
+		if target.get("life_state", "") != "Alive" or target.get("faction_id", "") == facility.get("faction_id", ""): continue
+		if _target_type(target) not in weapon.get("target_types", []): continue
+		var distance := origin.distance_to(target["position"])
+		if distance < float(weapon.get("minimum_range", 0.0)) or distance > float(weapon.get("range", 0.0)): continue
+		var heading := deg_to_rad(float(facility.get("heading", 0.0)))
+		if not _angle_in_weapon_fire_arcs(heading, (target["position"] - origin).angle(), weapon): continue
+		if terrain_query.is_configured() and not terrain_query.is_segment_clear(origin, target["position"], "ShellTravel"): continue
+		candidates.append({"target": target, "distance": distance})
+	candidates.sort_custom(func(a, b): return float(a["distance"]) < float(b["distance"]) if not is_equal_approx(float(a["distance"]), float(b["distance"])) else str(a["target"]["entity_id"]) < str(b["target"]["entity_id"]))
+	return {} if candidates.is_empty() else candidates[0]["target"]
+
+
+func _fire_facility_weapon(facility: Dictionary, target: Dictionary, weapon: Dictionary) -> void:
+	var origin: Vector2 = facility.get("muzzle_position", facility.get("position", Vector2.ZERO))
+	var target_position: Vector2 = target["position"]
+	var shot_count := int(weapon.get("mount_count", 1)) * int(weapon.get("shots_per_mount", 1))
+	var impact_positions: Array = []
+	for shot_index in range(shot_count):
+		var spread_offset := deg_to_rad(float(weapon.get("spread", 0.0))) * (float(shot_index) / float(maxi(1, shot_count - 1)) - 0.5) if shot_count > 1 else 0.0
+		var intended_impact := _salvo_impact_position(origin, target_position, spread_offset, weapon)
+		var terrain_hit := _terrain_hit_for_attack(origin, intended_impact, str(facility.get("faction_id", "")))
+		var resolved_impact: Vector2 = terrain_hit.get("position", intended_impact) if bool(terrain_hit.get("hit", false)) else intended_impact
+		impact_positions.append(resolved_impact)
+		var travel_seconds := origin.distance_to(resolved_impact) / maxf(1.0, float(weapon.get("projectile_speed", 1.0)))
+		delayed_attacks.append({"attack_id":_next_entity_id("facility_attack"), "source_unit_id":"", "source_facility_id":facility["facility_id"], "source_weapon_id":weapon["id"], "target_unit_id":"", "aimed_target_unit_id":target["entity_id"], "target_position":resolved_impact, "intended_impact_position":intended_impact, "resolved_impact_position":resolved_impact, "terrain_obstacle_id":terrain_hit.get("obstacle_id", ""), "blocked_by_terrain":bool(terrain_hit.get("hit", false)), "impact_radius":float(weapon.get("impact_radius", 40.0)), "origin":origin, "resolve_at_time":float(state["elapsed_time"]) + travel_seconds, "accuracy_modifier":_environment_accuracy_modifier(str(facility.get("faction_id", "")), origin, intended_impact, "Gun")})
+	facility_service.mark_weapon_fired(str(facility["facility_id"]), str(weapon["id"]), float(weapon.get("reload_time", 1.0)))
+	_emit("FacilityWeaponFired", {"facility_id":facility["facility_id"], "weapon_id":weapon["id"], "target_unit_id":target["entity_id"], "target_position":target_position, "impact_positions":impact_positions, "shot_count":shot_count})
+
+
 func _can_fire(unit: Dictionary, target: Dictionary, weapon: Dictionary) -> bool:
 	if target["life_state"] != "Alive" or not _is_visible_to(unit["faction_id"], target["entity_id"]): return false
 	if not _target_type(target) in weapon.get("target_types", []): return false
@@ -671,6 +967,16 @@ func _can_fire_at_position(unit: Dictionary, target_position: Vector2, weapon: D
 	var target_angle := (target_position - (unit["position"] as Vector2)).angle()
 	if not _angle_in_weapon_fire_arcs(float(unit["heading"]), target_angle, weapon):
 		return {"legal": false, "reason_code": "FIRE_ARC_INVALID"}
+	if weapon.get("mount_type", "") == "Aviation":
+		var source_condition := str(terrain_context_service.context_at(unit["position"]).get("aviation_condition", "Normal"))
+		var target_condition := str(terrain_context_service.context_at(target_position).get("aviation_condition", "Normal"))
+		if source_condition in ["Severe", "Grounded"] or target_condition in ["Severe", "Grounded"]:
+			return {"legal": false, "reason_code": "AVIATION_WEATHER_BLOCKED"}
+	if weapon.get("mount_type", "") == "Gun" and terrain_query.is_configured():
+		var terrain_hit := terrain_query.first_segment_hit(unit["position"], target_position, "ShellTravel")
+		var facility_path_hit := _first_facility_path_hit(unit["position"], target_position, unit["faction_id"])
+		if bool(terrain_hit.get("hit", false)) and (facility_path_hit.is_empty() or float(terrain_hit.get("fraction", 1.0)) + 0.001 < float(facility_path_hit.get("fraction", 1.0))):
+			return {"legal": false, "reason_code": "TERRAIN_BLOCKS_SHELL_PATH", "terrain_hit": terrain_hit}
 	return {"legal": true, "reason_code": "OK"}
 
 
@@ -741,10 +1047,13 @@ func _fire_weapon(unit: Dictionary, target: Dictionary, weapon_state: Dictionary
 		if category == "Torpedo":
 			_spawn_projectile(unit, weapon, attack_id, base_heading + spread_offset)
 		else:
-			var impact_position := _salvo_impact_position(unit["position"], aim_position, spread_offset, weapon)
-			impact_positions.append(impact_position)
-			var travel_seconds := (unit["position"] as Vector2).distance_to(impact_position) / maxf(1.0, float(weapon.get("projectile_speed", 1.0)))
-			delayed_attacks.append({"attack_id": attack_id, "source_unit_id": unit["entity_id"], "source_weapon_id": weapon["id"], "target_unit_id": "", "aimed_target_unit_id": target["entity_id"], "target_position": impact_position, "impact_radius": float(weapon.get("impact_radius", 40.0)), "origin": unit["position"], "resolve_at_time": float(state["elapsed_time"]) + travel_seconds, "accuracy_modifier": 0.0})
+			var intended_impact := _salvo_impact_position(unit["position"], aim_position, spread_offset, weapon)
+			var terrain_hit := _terrain_hit_for_attack(unit["position"], intended_impact, unit["faction_id"]) if category == "Gun" else {"hit": false}
+			var resolved_impact: Vector2 = terrain_hit.get("position", intended_impact) if bool(terrain_hit.get("hit", false)) else intended_impact
+			impact_positions.append(resolved_impact)
+			var travel_seconds := (unit["position"] as Vector2).distance_to(resolved_impact) / maxf(1.0, float(weapon.get("projectile_speed", 1.0)))
+			if category == "Aviation": travel_seconds *= _aviation_delay_multiplier(unit["position"], intended_impact)
+			delayed_attacks.append({"attack_id": attack_id, "source_unit_id": unit["entity_id"], "source_weapon_id": weapon["id"], "target_unit_id": "", "aimed_target_unit_id": target["entity_id"], "target_position": resolved_impact, "intended_impact_position": intended_impact, "resolved_impact_position": resolved_impact, "terrain_obstacle_id": terrain_hit.get("obstacle_id", ""), "blocked_by_terrain": bool(terrain_hit.get("hit", false)), "impact_radius": float(weapon.get("impact_radius", 40.0)), "origin": unit["position"], "resolve_at_time": float(state["elapsed_time"]) + travel_seconds, "accuracy_modifier": _environment_accuracy_modifier(unit["faction_id"], unit["position"], intended_impact, category)})
 	_emit("WeaponFired", {"unit_id": unit["entity_id"], "weapon_id": weapon["id"], "target_unit_id": target["entity_id"], "target_position": aim_position, "impact_positions": impact_positions, "shot_count": shot_count})
 	if extra_shots > 0: _consume_effect(unit, "ExtraShots", category)
 
@@ -764,10 +1073,13 @@ func _fire_weapon_at_position(unit: Dictionary, target_position: Vector2, weapon
 		if category == "Torpedo":
 			_spawn_projectile(unit, weapon, attack_id, base_heading + spread_offset)
 		else:
-			var impact_position := _salvo_impact_position(unit["position"], target_position, spread_offset, weapon)
-			impact_positions.append(impact_position)
-			var travel_seconds := (unit["position"] as Vector2).distance_to(impact_position) / maxf(1.0, float(weapon.get("projectile_speed", 1.0)))
-			delayed_attacks.append({"attack_id": attack_id, "source_unit_id": unit["entity_id"], "source_weapon_id": weapon["id"], "target_unit_id": "", "target_position": impact_position, "impact_radius": float(weapon.get("impact_radius", 40.0)), "origin": unit["position"], "resolve_at_time": float(state["elapsed_time"]) + travel_seconds, "accuracy_modifier": 0.0})
+			var intended_impact := _salvo_impact_position(unit["position"], target_position, spread_offset, weapon)
+			var terrain_hit := _terrain_hit_for_attack(unit["position"], intended_impact, unit["faction_id"]) if category == "Gun" else {"hit": false}
+			var resolved_impact: Vector2 = terrain_hit.get("position", intended_impact) if bool(terrain_hit.get("hit", false)) else intended_impact
+			impact_positions.append(resolved_impact)
+			var travel_seconds := (unit["position"] as Vector2).distance_to(resolved_impact) / maxf(1.0, float(weapon.get("projectile_speed", 1.0)))
+			if category == "Aviation": travel_seconds *= _aviation_delay_multiplier(unit["position"], intended_impact)
+			delayed_attacks.append({"attack_id": attack_id, "source_unit_id": unit["entity_id"], "source_weapon_id": weapon["id"], "target_unit_id": "", "target_position": resolved_impact, "intended_impact_position": intended_impact, "resolved_impact_position": resolved_impact, "terrain_obstacle_id": terrain_hit.get("obstacle_id", ""), "blocked_by_terrain": bool(terrain_hit.get("hit", false)), "impact_radius": float(weapon.get("impact_radius", 40.0)), "origin": unit["position"], "resolve_at_time": float(state["elapsed_time"]) + travel_seconds, "accuracy_modifier": _environment_accuracy_modifier(unit["faction_id"], unit["position"], intended_impact, category)})
 	_emit("WeaponFired", {"unit_id": unit["entity_id"], "weapon_id": weapon["id"], "target_position": target_position, "impact_positions": impact_positions, "shot_count": shot_count, "manual": manual})
 	if extra_shots > 0: _consume_effect(unit, "ExtraShots", category)
 
@@ -804,6 +1116,8 @@ func _spawn_projectile(unit: Dictionary, weapon: Dictionary, attack_id: String, 
 	var projectile_id := _next_entity_id("projectile")
 	var speed := ModifierService.calculate(float(projectile_definition.get("speed", weapon.get("projectile_speed", 0.0))), unit["status_effects"], "ProjectileSpeed", "Torpedo")
 	var radius := ModifierService.calculate(float(projectile_definition.get("collision_radius", 8.0)), unit["status_effects"], "ProjectileRadius", "Torpedo")
+	var launch_direction := Vector2.RIGHT.rotated(heading)
+	var launch_clearance := CollisionGeometryService.radial_extent(_unit_collision_half_extents(unit), float(unit["heading"]), launch_direction)
 	state["projectiles_by_id"][projectile_id] = {
 		"entity_id": projectile_id,
 		"definition_id": projectile_definition["id"],
@@ -811,7 +1125,7 @@ func _spawn_projectile(unit: Dictionary, weapon: Dictionary, attack_id: String, 
 		"source_unit_id": unit["entity_id"],
 		"source_weapon_id": weapon["id"],
 		"faction_id": unit["faction_id"],
-		"position": unit["position"] + Vector2.RIGHT.rotated(heading) * (float(unit["stats"]["collision_radius"]) + 3.0),
+		"position": unit["position"] + launch_direction * (launch_clearance + 3.0),
 		"heading": heading,
 		"speed": speed,
 		"collision_radius": radius,
@@ -827,21 +1141,40 @@ func _update_projectiles(delta: float) -> void:
 	for projectile_id in state["projectiles_by_id"].keys():
 		var projectile: Dictionary = state["projectiles_by_id"][projectile_id]
 		var movement := minf(float(projectile["speed"]) * delta, float(projectile["remaining_range"]))
-		projectile["position"] += Vector2.RIGHT.rotated(float(projectile["heading"])) * movement
-		projectile["travelled_distance"] = float(projectile["travelled_distance"]) + movement
-		projectile["remaining_range"] = float(projectile["remaining_range"]) - movement
-		var hit := false
+		var start: Vector2 = projectile["position"]
+		var current_vector: Vector2 = terrain_context_service.context_at(start).get("current_vector", Vector2.ZERO)
+		var end := start + Vector2.RIGHT.rotated(float(projectile["heading"])) * movement + current_vector * delta
+		var terrain_hit := terrain_query.first_segment_hit(start, end, "TorpedoTravel", float(projectile["collision_radius"])) if terrain_query.is_configured() else {"hit": false, "fraction": 1.0}
+		var unit_hit := {"hit": false, "fraction": 1.0, "target_unit_id": ""}
 		for target_id in _sorted_unit_ids():
 			var target: Dictionary = state["units_by_id"][target_id]
 			if target["life_state"] != "Alive" or target["faction_id"] == projectile["faction_id"] or not _target_type(target) in projectile["target_types"]: continue
-			var collision_distance := float(projectile["collision_radius"]) + float(target["stats"]["collision_radius"])
-			if (projectile["position"] as Vector2).distance_to(target["position"] as Vector2) > collision_distance: continue
-			_emit("ProjectileHit", {"projectile_id": projectile_id, "target_unit_id": target_id, "position": projectile["position"]})
-			_resolve_attack({"attack_id": projectile["attack_id"], "source_unit_id": projectile["source_unit_id"], "source_weapon_id": projectile["source_weapon_id"], "target_unit_id": target_id, "origin": projectile["position"], "accuracy_modifier": 0.0}, true)
+			var fraction := CollisionGeometryService.segment_expanded_ellipse_fraction(
+				start, end, target["position"], float(target["heading"]),
+				_unit_collision_half_extents(target), float(projectile["collision_radius"]),
+			)
+			if fraction < 0.0 or fraction > float(unit_hit["fraction"]) + 0.001:
+				continue
+			if is_equal_approx(fraction, float(unit_hit["fraction"])) and target_id > str(unit_hit["target_unit_id"]):
+				continue
+			unit_hit = {"hit": true, "fraction": fraction, "target_unit_id": target_id}
+		if bool(terrain_hit.get("hit", false)) and (not bool(unit_hit.get("hit", false)) or float(terrain_hit["fraction"]) <= float(unit_hit["fraction"]) + 0.001):
+			projectile["position"] = terrain_hit["position"]
+			_emit("ProjectileBlockedByTerrain", {"projectile_id": projectile_id, "source_unit_id": projectile["source_unit_id"], "source_weapon_id": projectile["source_weapon_id"], "obstacle_id": terrain_hit.get("obstacle_id", ""), "position": terrain_hit["position"], "normal": terrain_hit.get("normal", Vector2.ZERO)})
 			state["projectiles_by_id"].erase(projectile_id)
-			hit = true
-			break
-		if not hit and float(projectile["remaining_range"]) <= 0.0001:
+			continue
+		if bool(unit_hit.get("hit", false)):
+			var impact_position := start.lerp(end, float(unit_hit["fraction"]))
+			projectile["position"] = impact_position
+			_emit("ProjectileHit", {"projectile_id": projectile_id, "target_unit_id": unit_hit["target_unit_id"], "position": impact_position})
+			_resolve_attack({"attack_id": projectile["attack_id"], "source_unit_id": projectile["source_unit_id"], "source_weapon_id": projectile["source_weapon_id"], "target_unit_id": unit_hit["target_unit_id"], "origin": impact_position, "accuracy_modifier": 0.0}, true)
+			state["projectiles_by_id"].erase(projectile_id)
+			continue
+		projectile["position"] = end
+		var actual_distance := start.distance_to(end)
+		projectile["travelled_distance"] = float(projectile["travelled_distance"]) + actual_distance
+		projectile["remaining_range"] = float(projectile["remaining_range"]) - actual_distance
+		if float(projectile["remaining_range"]) <= 0.0001:
 			_emit("ProjectileExpired", {"projectile_id": projectile_id, "position": projectile["position"], "reason_code": "MAX_RANGE"})
 			state["projectiles_by_id"].erase(projectile_id)
 
@@ -850,14 +1183,23 @@ func _resolve_delayed_attacks() -> void:
 	delayed_attacks.sort_custom(func(a, b): return float(a["resolve_at_time"]) < float(b["resolve_at_time"]) if not is_equal_approx(float(a["resolve_at_time"]), float(b["resolve_at_time"])) else str(a["attack_id"]) < str(b["attack_id"]))
 	var remaining: Array = []
 	for attack in delayed_attacks:
-		if float(attack["resolve_at_time"]) <= float(state["elapsed_time"]): _resolve_attack(attack, false)
+		if float(attack["resolve_at_time"]) <= float(state["elapsed_time"]):
+			if bool(attack.get("blocked_by_terrain", false)):
+				_emit("ShellBlockedByTerrain", {"attack_id": attack.get("attack_id", ""), "source_unit_id": attack.get("source_unit_id", ""), "source_weapon_id": attack.get("source_weapon_id", ""), "obstacle_id": attack.get("terrain_obstacle_id", ""), "position": attack.get("resolved_impact_position", attack.get("target_position", Vector2.ZERO)), "intended_impact_position": attack.get("intended_impact_position", Vector2.ZERO)})
+			else:
+				_resolve_attack(attack, false)
 		else: remaining.append(attack)
 	delayed_attacks = remaining
 
 
 func _resolve_attack(attack: Dictionary, forced_hit: bool) -> void:
 	var source: Dictionary = state["units_by_id"].get(str(attack["source_unit_id"]), {})
+	if source.is_empty() and not str(attack.get("source_facility_id", "")).is_empty():
+		source = facility_service.combat_source(str(attack.get("source_facility_id", "")))
 	if source.is_empty(): return
+	if not str(attack.get("target_facility_id", "")).is_empty():
+		_resolve_facility_attack(attack, source, forced_hit)
+		return
 	if str(attack.get("target_unit_id", "")).is_empty():
 		_resolve_area_attack(attack, source, forced_hit)
 		return
@@ -880,20 +1222,209 @@ func _resolve_area_attack(attack: Dictionary, source: Dictionary, forced_hit: bo
 	var impact_position: Vector2 = attack.get("target_position", source["position"])
 	var impact_radius := float(attack.get("impact_radius", weapon.get("impact_radius", 40.0)))
 	var candidates: Array = []
+	var source_faction := _attack_source_faction(attack, source)
 	for target_id in _sorted_unit_ids():
 		var target: Dictionary = state["units_by_id"][target_id]
-		if target["life_state"] != "Alive" or target["faction_id"] == source["faction_id"]: continue
+		if target["life_state"] != "Alive" or target["faction_id"] == source_faction: continue
 		if not _target_type(target) in weapon.get("target_types", []): continue
 		var distance := (target["position"] as Vector2).distance_to(impact_position)
-		if distance <= impact_radius + float(target["stats"].get("collision_radius", 0.0)):
-			candidates.append({"unit": target, "distance": distance})
-	candidates.sort_custom(func(a, b): return float(a["distance"]) < float(b["distance"]) if not is_equal_approx(float(a["distance"]), float(b["distance"])) else str(a["unit"]["entity_id"]) < str(b["unit"]["entity_id"]))
+		if CollisionGeometryService.point_in_expanded_ellipse(
+			impact_position, target["position"], float(target["heading"]),
+			_unit_collision_half_extents(target), impact_radius,
+		):
+			candidates.append({"target_type":"Unit", "target":target, "target_id":str(target["entity_id"]), "distance":distance})
+	for facility_id in state.get("facilities_by_id", {}):
+		var facility: Dictionary = state["facilities_by_id"][facility_id]
+		if str(facility.get("life_state", "")) != "Alive" or str(facility.get("faction_id", "neutral")) in [source_faction, "neutral"]: continue
+		var radius := float(facility.get("target_shape", {}).get("radius", facility_service.definition_for(str(facility_id)).get("target_radius", 24.0)))
+		var distance := (facility.get("position", Vector2.ZERO) as Vector2).distance_to(impact_position)
+		if distance <= impact_radius + radius:
+			candidates.append({"target_type":"Facility", "target":facility, "target_id":str(facility_id), "distance":distance})
+	candidates.sort_custom(func(a, b): return float(a["distance"]) < float(b["distance"]) if not is_equal_approx(float(a["distance"]), float(b["distance"])) else str(a["target_id"]) < str(b["target_id"]))
 	if candidates.is_empty():
 		_emit("AttackResolved", {"damage_result": {"attack_id": attack.get("attack_id", ""), "source_unit_id": source.get("entity_id", ""), "source_weapon_id": weapon.get("id", ""), "aimed_target_unit_id": attack.get("aimed_target_unit_id", ""), "target_unit_id": "", "impact_position": impact_position, "damage_type": weapon.get("mount_type", ""), "hit": false, "hit_reason": "NO_TARGET_IN_AREA", "raw_damage": 0.0, "armor_modifier": 0.0, "armor_reduction": 0.0, "final_damage": 0.0, "target_hp_before": 0.0, "target_hp_after": 0.0, "caused_sinking": false}})
 		return
-	var target: Dictionary = candidates[0]["unit"]
-	attack["target_unit_id"] = target["entity_id"]
+	var selected: Dictionary = candidates[0]
+	if selected["target_type"] == "Facility":
+		attack["target_facility_id"] = selected["target_id"]
+	else:
+		attack["target_unit_id"] = selected["target_id"]
 	_resolve_attack(attack, forced_hit)
+
+
+func _resolve_facility_attack(attack: Dictionary, source: Dictionary, forced_hit: bool) -> void:
+	var facility_id := str(attack.get("target_facility_id", ""))
+	var target := facility_service.target_for_damage(facility_id)
+	if target.is_empty(): return
+	var weapon: Dictionary = registry.get_definition("weapons", str(attack["source_weapon_id"]))
+	var formula: Dictionary = registry.get_definition("formulas", str(weapon.get("formula_id", "")))
+	if weapon.is_empty() or formula.is_empty(): return
+	var source_snapshot := source.duplicate(true)
+	source_snapshot["position"] = attack.get("origin", source.get("position", Vector2.ZERO))
+	var result := DamageService.resolve(attack, source_snapshot, target, weapon, formula, random_source, forced_hit)
+	result["impact_position"] = attack.get("target_position", target.get("position", Vector2.ZERO))
+	result["source_facility_id"] = attack.get("source_facility_id", "")
+	result["target_facility_id"] = facility_id
+	result["target_unit_id"] = ""
+	_emit("AttackResolved", {"damage_result": result})
+	if not bool(result.get("hit", false)): return
+	for event in facility_service.apply_damage(facility_id, float(result.get("final_damage", 0.0)), str(source.get("entity_id", ""))):
+		_handle_facility_event(event)
+	state["facilities_by_id"] = facility_service.snapshot()
+
+
+func _handle_facility_event(event: Dictionary) -> void:
+	var event_type := str(event.get("event_type", "FacilityChanged"))
+	match event_type:
+		"FacilityServiceCompleted": _apply_facility_service(event)
+		"SupportMissionCompleted": _resolve_support_mission(event)
+	_emit(event_type, event)
+
+
+func _apply_facility_service(event: Dictionary) -> void:
+	var unit: Dictionary = state["units_by_id"].get(str(event.get("unit_id", "")), {})
+	if unit.is_empty() or unit.get("life_state", "") != "Alive": return
+	var profile: Dictionary = event.get("service_profile", {})
+	var result := {"unit_id":unit["entity_id"], "facility_id":event.get("facility_id", ""), "service_type":event.get("service_type", "")}
+	match str(event.get("service_type", "")):
+		"Supply":
+			var reload_ratio := clampf(float(profile.get("weapon_reload_recovery_ratio", 0.0)), 0.0, 1.0)
+			for weapon_state in unit.get("weapon_states", []):
+				weapon_state["reload_remaining"] = float(weapon_state.get("reload_remaining", 0.0)) * (1.0 - reload_ratio)
+			var cooldown_before := float(unit.get("skill_state", {}).get("cooldown_remaining", 0.0))
+			unit["skill_state"]["cooldown_remaining"] = maxf(0.0, cooldown_before - float(profile.get("skill_cooldown_recovery", 0.0)))
+			result["weapon_reload_recovery_ratio"] = reload_ratio
+			result["skill_cooldown_recovered"] = cooldown_before - float(unit["skill_state"]["cooldown_remaining"])
+		"Repair":
+			var hp_before := float(unit.get("current_hp", 0.0))
+			var repair_cap := float(unit.get("max_hp", 1.0)) * clampf(float(profile.get("repair_cap_ratio", 1.0)), 0.0, 1.0)
+			unit["current_hp"] = minf(repair_cap, hp_before + float(unit.get("max_hp", 1.0)) * maxf(0.0, float(profile.get("hp_restore_ratio", 0.0))))
+			result["hp_restored"] = float(unit["current_hp"]) - hp_before
+	_emit("UnitServiced", result)
+
+
+func _resolve_support_mission(event: Dictionary) -> void:
+	var mission := facility_service.mission_definition(str(event.get("definition_id", "")))
+	if mission.is_empty(): return
+	var target_position: Vector2 = event.get("target_position", Vector2.ZERO)
+	var context := terrain_context_service.context_at(target_position)
+	if str(context.get("aviation_condition", "Normal")) in mission.get("blocked_aviation_conditions", []):
+		_emit("SupportMissionCancelled", {"mission_id":event.get("mission_id", ""), "definition_id":event.get("definition_id", ""), "facility_id":event.get("facility_id", ""), "reason_code":"AVIATION_WEATHER_BLOCKED"})
+		return
+	var mission_type := str(mission.get("mission_type", ""))
+	if mission_type in ["Reconnaissance", "FighterPatrol"]:
+		state["support_effects_by_id"][str(event["mission_id"])] = {
+			"effect_id": str(event["mission_id"]),
+			"definition_id": str(event["definition_id"]),
+			"effect_type": mission_type,
+			"faction_id": str(event.get("faction_id", "")),
+			"position": target_position,
+			"radius": float(mission.get("effect_radius", 0.0)),
+			"remaining": float(mission.get("effect_duration", 0.0)),
+			"enemy_aviation_accuracy_modifier": float(mission.get("enemy_aviation_accuracy_modifier", 0.0)),
+		}
+		_emit("SupportMissionResolved", {"mission_id":event["mission_id"], "definition_id":event["definition_id"], "effect_type":mission_type, "target_position":target_position})
+		return
+	if mission_type != "Airstrike": return
+	var facility_id := str(event.get("facility_id", ""))
+	var source := facility_service.combat_source(facility_id)
+	var weapon: Dictionary = registry.get_definition("weapons", str(mission.get("weapon_id", "")))
+	if source.is_empty() or weapon.is_empty(): return
+	for salvo_index in range(int(mission.get("salvo_count", 1))):
+		var attack := {
+			"attack_id": _next_entity_id("support_attack"),
+			"source_unit_id": "",
+			"source_facility_id": facility_id,
+			"source_weapon_id": weapon["id"],
+			"target_unit_id": "",
+			"target_position": target_position,
+			"impact_radius": float(mission.get("effect_radius", weapon.get("impact_radius", 40.0))),
+			"origin": source["position"],
+			"accuracy_modifier": _environment_accuracy_modifier(str(event.get("faction_id", "")), source["position"], target_position, "Aviation"),
+		}
+		_resolve_area_attack(attack, source, false)
+	_emit("SupportMissionResolved", {"mission_id":event["mission_id"], "definition_id":event["definition_id"], "effect_type":"Airstrike", "target_position":target_position})
+
+
+func _update_support_effects(delta: float) -> void:
+	for effect_id in state.get("support_effects_by_id", {}).keys():
+		var effect: Dictionary = state["support_effects_by_id"][effect_id]
+		effect["remaining"] = maxf(0.0, float(effect.get("remaining", 0.0)) - delta)
+		if is_zero_approx(float(effect["remaining"])):
+			state["support_effects_by_id"].erase(effect_id)
+			_emit("SupportMissionEffectExpired", {"effect_id":effect_id, "definition_id":effect.get("definition_id", "")})
+
+
+func _visible_support_effects(viewer_faction: String, omniscient: bool) -> Dictionary:
+	var result := {}
+	for effect_id in state.get("support_effects_by_id", {}):
+		var effect: Dictionary = state["support_effects_by_id"][effect_id]
+		if omniscient or str(effect.get("faction_id", "")) == viewer_faction: result[effect_id] = effect.duplicate(true)
+	return result
+
+
+func _environment_accuracy_modifier(faction_id: String, source_position: Vector2, target_position: Vector2, category: String) -> float:
+	var source_modifier := float(terrain_context_service.context_at(source_position).get("weapon_accuracy_modifier", 0.0))
+	var target_modifier := float(terrain_context_service.context_at(target_position).get("weapon_accuracy_modifier", 0.0))
+	var result := minf(source_modifier, target_modifier)
+	if category == "Aviation":
+		for effect in state.get("support_effects_by_id", {}).values():
+			if str(effect.get("effect_type", "")) != "FighterPatrol" or str(effect.get("faction_id", "")) == faction_id: continue
+			var center: Vector2 = effect.get("position", Vector2.ZERO)
+			var radius := float(effect.get("radius", 0.0))
+			if center.distance_to(source_position) <= radius or center.distance_to(target_position) <= radius:
+				result += float(effect.get("enemy_aviation_accuracy_modifier", 0.0))
+	return result
+
+
+func _aviation_delay_multiplier(source_position: Vector2, target_position: Vector2) -> float:
+	return maxf(float(terrain_context_service.context_at(source_position).get("aviation_delay_multiplier", 1.0)), float(terrain_context_service.context_at(target_position).get("aviation_delay_multiplier", 1.0)))
+
+
+func _apply_mine_trigger(unit: Dictionary, trigger: Dictionary) -> void:
+	var hp_before := float(unit.get("current_hp", 0.0))
+	var damage := minf(hp_before, maxf(0.0, float(trigger.get("damage", 0.0))))
+	unit["current_hp"] = maxf(0.0, hp_before - damage)
+	state["minefields_by_id"] = minefield_service.snapshot()
+	_emit("MineTriggered", {"minefield_id":trigger.get("minefield_id", ""), "unit_id":unit["entity_id"], "position":trigger.get("position", unit["position"]), "damage":damage})
+	_emit("AttackResolved", {"damage_result":{"attack_id":_next_entity_id("mine_attack"), "source_unit_id":str(trigger.get("minefield_id", "")), "source_weapon_id":"hazard.minefield", "target_unit_id":unit["entity_id"], "impact_position":trigger.get("position", unit["position"]), "damage_type":"Mine", "hit":true, "hit_rate":1.0, "hit_reason":"MINE_TRIGGER", "raw_damage":damage, "armor_modifier":1.0, "armor_reduction":0.0, "final_damage":damage, "target_hp_before":hp_before, "target_hp_after":unit["current_hp"], "caused_sinking":is_zero_approx(float(unit["current_hp"]))}})
+	if is_zero_approx(float(unit["current_hp"])): _sink_unit(unit, str(trigger.get("minefield_id", "")))
+
+
+func _validate_environment_route(start: Vector2, waypoints: Array) -> Dictionary:
+	var anchor := start
+	for waypoint in waypoints:
+		var result := terrain_context_service.movement_segment_access(anchor, waypoint)
+		if not bool(result.get("allowed", true)): return result
+		anchor = waypoint
+	return {"allowed":true, "reason_code":"OK"}
+
+
+func _terrain_hit_for_attack(origin: Vector2, target_position: Vector2, source_faction: String) -> Dictionary:
+	if not terrain_query.is_configured(): return {"hit":false}
+	var terrain_hit := terrain_query.first_segment_hit(origin, target_position, "ShellTravel")
+	if not bool(terrain_hit.get("hit", false)): return terrain_hit
+	var facility_hit := _first_facility_path_hit(origin, target_position, source_faction)
+	return {"hit":false} if not facility_hit.is_empty() and float(facility_hit.get("fraction", 1.0)) <= float(terrain_hit.get("fraction", 1.0)) + 0.001 else terrain_hit
+
+
+func _first_facility_path_hit(origin: Vector2, target_position: Vector2, source_faction: String) -> Dictionary:
+	var best: Dictionary = {}
+	for facility_id in state.get("facilities_by_id", {}):
+		var facility: Dictionary = state["facilities_by_id"][facility_id]
+		if str(facility.get("life_state", "")) != "Alive" or str(facility.get("faction_id", "neutral")) in [source_faction, "neutral"]: continue
+		var radius := float(facility.get("target_shape", {}).get("radius", 0.0))
+		var fraction := CollisionGeometryService.segment_expanded_ellipse_fraction(origin, target_position, facility.get("position", Vector2.ZERO), 0.0, Vector2(radius, radius))
+		if fraction < 0.0: continue
+		if best.is_empty() or fraction < float(best.get("fraction", 1.0)) - 0.001 or (is_equal_approx(fraction, float(best.get("fraction", 1.0))) and str(facility_id) < str(best.get("facility_id", ""))):
+			best = {"facility_id":str(facility_id), "fraction":fraction}
+	return best
+
+
+func _attack_source_faction(attack: Dictionary, source: Dictionary) -> String:
+	if not str(attack.get("source_facility_id", "")).is_empty():
+		return str(state.get("facilities_by_id", {}).get(str(attack["source_facility_id"]), {}).get("faction_id", "neutral"))
+	return str(source.get("faction_id", "neutral"))
 
 
 func _sink_unit(unit: Dictionary, source_unit_id: String) -> void:
@@ -1153,12 +1684,56 @@ func _target_type(unit: Dictionary) -> String:
 	return "Submerged" if unit["stats"].get("ship_class", "") == "Submarine" else "Surface"
 
 
+func _unit_collision_half_extents(unit: Dictionary) -> Vector2:
+	return CollisionGeometryService.half_extents(unit.get("stats", unit))
+
+
 func _is_visible_to(faction_id: String, target_id: String) -> bool:
 	return state.get("visible_by_faction", {}).get(faction_id, {}).has(target_id)
 
 
 func _clamp_to_map(position: Vector2) -> Vector2:
 	return Vector2(clampf(position.x, 0.0, float(state["map"].get("width", 1200.0))), clampf(position.y, 0.0, float(state["map"].get("height", 700.0))))
+
+
+func _inside_map(position: Vector2) -> bool:
+	return position.x >= 0.0 and position.y >= 0.0 and position.x <= float(state["map"].get("width", 1200.0)) and position.y <= float(state["map"].get("height", 700.0))
+
+
+func _movement_tags(unit: Dictionary) -> Array:
+	var tags: Array = ["Surface"]
+	if str(unit.get("stats", {}).get("ship_class", "")) in ["Destroyer", "LightCruiser"]:
+		tags.append("ShallowDraft")
+	return tags
+
+
+func _polygon(raw: Array) -> PackedVector2Array:
+	var result := PackedVector2Array()
+	for point in raw:
+		result.append(point if point is Vector2 else Vector2(float(point[0]), float(point[1])))
+	return result
+
+
+func _current_movement_target(movement: Dictionary, fallback: Vector2) -> Vector2:
+	var waypoints: Array = movement.get("waypoints", [])
+	var index := int(movement.get("waypoint_index", 0))
+	if index >= 0 and index < waypoints.size():
+		return waypoints[index]
+	return movement.get("target_position", fallback)
+
+
+func _advance_movement_waypoint(movement: Dictionary) -> void:
+	var waypoints: Array = movement.get("waypoints", [])
+	if waypoints.is_empty():
+		return
+	var index := int(movement.get("waypoint_index", 0))
+	if index < waypoints.size():
+		movement["waypoint_index"] = index + 1
+
+
+func _movement_finished(movement: Dictionary) -> bool:
+	var waypoints: Array = movement.get("waypoints", [])
+	return waypoints.is_empty() or int(movement.get("waypoint_index", 0)) >= waypoints.size()
 
 
 func _sorted_unit_ids() -> Array:

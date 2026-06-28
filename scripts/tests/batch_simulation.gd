@@ -19,6 +19,7 @@ func _run() -> void:
 		"level.prototype_3v3": 4200,
 		"level.prototype_5v5": 5200,
 		"level.prototype_11v11": 7200,
+		"level.prototype_harbor_3v3": 4200,
 	}
 	var summaries := {}
 	for level_id in level_ticks:

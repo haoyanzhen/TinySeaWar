@@ -9,6 +9,7 @@ static func mode_name(level_id: String) -> String:
 		"level.prototype_3v3": return "3v3 小队演习"
 		"level.prototype_5v5": return "5v5 舰队战"
 		"level.prototype_11v11": return "11v11 大规模会战"
+		"level.prototype_harbor_3v3": return "3v3 港湾入口"
 		_: return "未知模式"
 
 
@@ -95,6 +96,19 @@ static func reason_name(reason_code: String) -> String:
 		"AMMO_SWITCH_DISABLED": return "无法切换弹药"
 		"SKILL_NOT_FOUND": return "未找到技能"
 		"SKILL_ON_COOLDOWN": return "技能冷却中"
+		"TARGET_POSITION_ON_LAND": return "目标位置在陆地或岸线上"
+		"NO_NAVIGATION_PATH": return "当前舰体无法到达目标"
+		"TERRAIN_BLOCKS_MOVEMENT": return "航路被地形阻挡"
+		"TERRAIN_BLOCKS_SHELL_PATH": return "炮弹路径被岛岸阻挡"
+		"TERRAIN_BLOCKS_LINE_OF_SIGHT": return "视线被岛岸阻挡"
+		"WATER_DEPTH_NOT_ALLOWED": return "当前舰体不能进入该水深"
+		"TIDE_ACCESS_RESTRICTED": return "潮位暂时封闭该浅水通道"
+		"FACILITY_INTERACTION_NOT_ALLOWED": return "当前不能操作该设施"
+		"FACILITY_NOT_ACTIVE": return "设施尚未启用"
+		"FACILITY_SUPPRESSED": return "设施处于压制状态"
+		"FACILITY_OUT_OF_RANGE": return "尚未进入设施交互水域"
+		"SUPPORT_MISSION_UNAVAILABLE": return "支援任务当前不可用"
+		"AVIATION_WEATHER_BLOCKED": return "当前海况不允许航空任务"
 		"INVALID_COMMAND_STRUCTURE", "UNKNOWN_COMMAND": return "无法识别该操作"
 		_: return "操作无法执行"
 

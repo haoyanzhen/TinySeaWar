@@ -4,6 +4,11 @@ const CHARACTER_ROOT := "res://assets/characters"
 const UI_MANIFEST_PATH := "res://assets/ui/qa/ui_asset_manifest.json"
 const COMBAT_VFX_MANIFEST_PATH := "res://assets/vfx/combat/qa/combat_vfx_asset_manifest.json"
 const VISUAL_CONFIG_ROOT := "res://data/visuals"
+const ENVIRONMENT_MANIFEST_PATHS := [
+	"res://assets/environment/terrain/terrain_asset_manifest.json",
+	"res://assets/environment/facilities/facility_asset_manifest.json",
+	"res://assets/environment/weather/zones/environment_zone_asset_manifest.json",
+]
 
 const CHARACTER_CONFIG_SUFFIXES := {
 	"anim": "_anim_config.json",
@@ -30,6 +35,7 @@ var characters := {}
 var ui_assets := {}
 var ui_aliases := {}
 var combat_vfx_assets := {}
+var environment_assets := {}
 var projectile_visuals := {}
 var weapon_visuals := {}
 var vfx_playback_profiles := {}
@@ -41,6 +47,7 @@ func load_all() -> bool:
 	ui_assets.clear()
 	ui_aliases.clear()
 	combat_vfx_assets.clear()
+	environment_assets.clear()
 	projectile_visuals.clear()
 	weapon_visuals.clear()
 	vfx_playback_profiles.clear()
@@ -48,6 +55,7 @@ func load_all() -> bool:
 	_load_characters()
 	_load_ui_assets()
 	_load_combat_vfx_assets()
+	_load_environment_assets()
 	_load_visual_configs()
 	return errors.is_empty()
 
@@ -164,6 +172,14 @@ func combat_vfx_asset_path(semantic: String) -> String:
 	return str(combat_vfx_assets.get(semantic, {}).get("file", ""))
 
 
+func environment_asset(semantic: String) -> Dictionary:
+	return environment_assets.get(semantic, {}).duplicate(true)
+
+
+func environment_asset_path(semantic: String) -> String:
+	return str(environment_assets.get(semantic, {}).get("path", ""))
+
+
 func _load_characters() -> void:
 	var directory := DirAccess.open(CHARACTER_ROOT)
 	if directory == null:
@@ -257,6 +273,31 @@ func _load_combat_vfx_assets() -> void:
 			errors.append("Combat VFX asset without semantic")
 			continue
 		combat_vfx_assets[semantic] = asset
+
+
+func _load_environment_assets() -> void:
+	for manifest_path in ENVIRONMENT_MANIFEST_PATHS:
+		var manifest := _read_json(manifest_path)
+		if manifest.is_empty():
+			errors.append("Missing or invalid environment asset manifest: %s" % manifest_path)
+			continue
+		for raw_asset in manifest.get("assets", []):
+			if typeof(raw_asset) != TYPE_DICTIONARY:
+				errors.append("Non-object environment asset in %s" % manifest_path)
+				continue
+			var asset: Dictionary = _normalize_paths(raw_asset)
+			var semantic := str(asset.get("semantic", ""))
+			var path := str(asset.get("path", ""))
+			if semantic.is_empty() or path.is_empty():
+				errors.append("Environment asset missing semantic/path in %s" % manifest_path)
+				continue
+			if environment_assets.has(semantic):
+				errors.append("Duplicate environment asset semantic: %s" % semantic)
+				continue
+			if not ResourceLoader.exists(path):
+				errors.append("Missing environment asset resource: %s" % path)
+				continue
+			environment_assets[semantic] = asset
 
 
 func _load_visual_configs() -> void:

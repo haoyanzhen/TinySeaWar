@@ -6,7 +6,9 @@
     1024
   ],
   "background_policy": "final textures are transparent PNG; chroma-key sources retained under source/",
-  "collision_policy": "collision polygons are extracted from alpha edge and must be reviewed/tuned before gameplay obstruction is enabled",
+  "collision_policy": "land_collision_manifest.json is candidate-only; reviewed gameplay geometry is authored in data/terrain/terrain_templates.json and baked into terrain_definitions.json",
+  "reviewed_terrain_templates": "res://data/terrain/terrain_templates.json",
+  "runtime_harbor_texture": "res://assets/environment/land/land_harbor_mouth_runtime.png",
   "assets": [
     {
       "id": "land_double_island_long_channel",

@@ -1,0 +1,109 @@
+{
+  "schema_version": 1,
+  "asset_family": "local environment zones",
+  "generated_by": "tools/terrain/build_scene_combat_assets.py",
+  "assets": [
+    {
+      "semantic": "sea_fog_mask",
+      "path": "res://assets/environment/weather/zones/environment_sea_fog_mask.png",
+      "size": [
+        512,
+        512
+      ],
+      "alpha": true
+    },
+    {
+      "semantic": "sea_fog_edge_mask",
+      "path": "res://assets/environment/weather/zones/environment_sea_fog_edge_mask.png",
+      "size": [
+        512,
+        512
+      ],
+      "alpha": true
+    },
+    {
+      "semantic": "sea_fog_detail_mask",
+      "path": "res://assets/environment/weather/zones/environment_sea_fog_detail_mask.png",
+      "size": [
+        512,
+        512
+      ],
+      "alpha": true
+    },
+    {
+      "semantic": "rain_squall_mask",
+      "path": "res://assets/environment/weather/zones/environment_rain_squall_mask.png",
+      "size": [
+        512,
+        512
+      ],
+      "alpha": true,
+      "source_masters": [
+        "res://assets/environment/weather/ocean_weather_storm_shadow_master.png",
+        "res://assets/environment/weather/ocean_weather_rain_lines_master.png",
+        "res://assets/environment/weather/ocean_weather_rain_ripples_master.png"
+      ],
+      "generation_method": "weather_master_alpha_composite"
+    },
+    {
+      "semantic": "rain_squall_edge_mask",
+      "path": "res://assets/environment/weather/zones/environment_rain_squall_edge_mask.png",
+      "size": [
+        512,
+        512
+      ],
+      "alpha": true,
+      "source_masters": [
+        "res://assets/environment/weather/ocean_weather_storm_shadow_master.png",
+        "res://assets/environment/weather/ocean_weather_rain_lines_master.png",
+        "res://assets/environment/weather/ocean_weather_rain_ripples_master.png"
+      ],
+      "generation_method": "weather_master_alpha_composite"
+    },
+    {
+      "semantic": "high_sea_foam_mask",
+      "path": "res://assets/environment/weather/zones/environment_high_sea_foam_mask.png",
+      "size": [
+        512,
+        512
+      ],
+      "alpha": true
+    },
+    {
+      "semantic": "lee_water_mask",
+      "path": "res://assets/environment/weather/zones/environment_lee_water_mask.png",
+      "size": [
+        512,
+        512
+      ],
+      "alpha": true
+    },
+    {
+      "semantic": "moonlit_lane_mask",
+      "path": "res://assets/environment/weather/zones/environment_moonlit_lane_mask.png",
+      "size": [
+        512,
+        512
+      ],
+      "alpha": true
+    },
+    {
+      "semantic": "active_illumination_mask",
+      "path": "res://assets/environment/weather/zones/environment_active_illumination_mask.png",
+      "size": [
+        512,
+        512
+      ],
+      "alpha": true
+    },
+    {
+      "semantic": "strong_current_streak_tile",
+      "path": "res://assets/environment/weather/zones/environment_strong_current_streak_tile.png",
+      "size": [
+        512,
+        512
+      ],
+      "alpha": true
+    }
+  ]
+}

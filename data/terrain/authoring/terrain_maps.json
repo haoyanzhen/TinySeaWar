@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "maps": [
+    {
+      "id": "terrain.map.harbor_mouth",
+      "display_name": "港湾入口近岸战场",
+      "map_size": [4096.0, 2304.0],
+      "geometry_epsilon": 0.001,
+      "instances": [
+        {
+          "id": "harbor_land",
+          "template_id": "terrain.template.harbor_mouth",
+          "position": [2048.0, 1160.0],
+          "scale": [1.62, 1.62],
+          "rotation_degrees": 0.0
+        }
+      ],
+      "spawn_points": [
+        {"id": "player_1", "faction_id": "player", "position": [1800.0, 1810.0], "radius": 34.0, "movement_tags": ["Surface", "ShallowDraft"]},
+        {"id": "player_2", "faction_id": "player", "position": [2048.0, 1870.0], "radius": 34.0, "movement_tags": ["Surface", "ShallowDraft"]},
+        {"id": "player_3", "faction_id": "player", "position": [2296.0, 1810.0], "radius": 34.0, "movement_tags": ["Surface", "ShallowDraft"]},
+        {"id": "enemy_1", "faction_id": "enemy", "position": [1740.0, 300.0], "radius": 34.0, "movement_tags": ["Surface", "ShallowDraft"]},
+        {"id": "enemy_2", "faction_id": "enemy", "position": [2048.0, 250.0], "radius": 34.0, "movement_tags": ["Surface", "ShallowDraft"]},
+        {"id": "enemy_3", "faction_id": "enemy", "position": [2356.0, 300.0], "radius": 34.0, "movement_tags": ["Surface", "ShallowDraft"]}
+      ],
+      "facility_layout_id": "facility.layout.harbor_mouth",
+      "environment_zone_set_id": "environment.zone_set.harbor_mouth",
+      "navigation_definition_id": "navigation.harbor_mouth"
+    }
+  ]
+}

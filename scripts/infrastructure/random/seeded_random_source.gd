@@ -11,5 +11,9 @@ func randf() -> float:
 	return _random.randf()
 
 
+func randfn(mean: float = 0.0, deviation: float = 1.0) -> float:
+	return _random.randfn(mean, deviation)
+
+
 func randi_range(from: int, to: int) -> int:
 	return _random.randi_range(from, to)

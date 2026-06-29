@@ -6,6 +6,17 @@ const root = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
 const DISTANCE_BASELINE_MULTIPLIER = 1.5;
 const ATTACK_SPEED_BASELINE_MULTIPLIER = 0.5;
 const GUN_IMPACT_RADIUS_MULTIPLIER = 0.5;
+const TORPEDO_LANE_SPACING = 80;
+const TORPEDO_MOUNT_LAUNCH_INTERVAL = 1;
+const torpedoSpreadDegrees = (effectiveRange, shots) => shots <= 1 ? 0 :
+  2 * Math.asin(Math.min(1, TORPEDO_LANE_SPACING / (2 * effectiveRange))) * 180 / Math.PI * (shots - 1);
+const torpedoMountFireArcs = (mounts, arc, layout, center) => Array.from({ length: mounts }, (_, index) => {
+  let fireArcs;
+  if (center !== null) fireArcs = [{ center, degrees: arc * 2 }];
+  else if (layout === "wing") fireArcs = [{ center: index < mounts / 2 ? -90 : 90, degrees: arc }];
+  else fireArcs = [{ center: -90, degrees: arc }, { center: 90, degrees: arc }];
+  return { mount_id: `mount_${index + 1}`, fire_arcs: fireArcs };
+});
 const fullSalvoFireArcs = (center, degrees, mounts) => {
   if (mounts <= 1) return [{ center, degrees }];
   const broadsideDegrees = Math.max(30, Math.min(120, degrees - 180));
@@ -50,12 +61,18 @@ const gun = ({ id, name, group, mode = "Automatic", ammo = "HE", mounts, shots, 
   };
 };
 
-const torpedo = ({ id, name, group, mounts, shots, reload, range, arc, speed, spread, submarine = false, center = null }) => {
+const torpedo = ({ id, name, group, mounts, shots, reload, range, arc, speed, spread: _legacySpread, submarine = false, center = null, layout = "centerline" }) => {
+  const effectiveRange = range * DISTANCE_BASELINE_MULTIPLIER;
+  const spread = torpedoSpreadDegrees(effectiveRange, shots);
+  const mountFireArcs = torpedoMountFireArcs(mounts, arc, layout, center);
   const definition = {
     ...common(id, name, group, "ManualPrimary", "Torpedo", mounts, shots, reload, range, speed, spread, 0),
     minimum_range: 20, projectile_id: submarine ? "projectile.submarine_torpedo" : "projectile.surface_torpedo",
     formula_id: submarine ? "formula.submarine_torpedo" : "formula.surface_torpedo", impact_radius: 0,
     armor_damage_modifiers: armor.torpedo, target_types: ["Surface", "Submerged"],
+    torpedo_lane_spacing: TORPEDO_LANE_SPACING, mount_launch_interval: TORPEDO_MOUNT_LAUNCH_INTERVAL,
+    torpedo_angular_sigma_ratio: 0.2,
+    mount_fire_arcs: mountFireArcs,
   };
   if (center === null) {
     definition.fire_arc_center = 90;
@@ -89,11 +106,11 @@ const weapons = [
   gun({ id:"weapon.iowa_127_he", name:"127毫米副炮", group:"iowa_secondary", mounts:10, shots:2, reload:3.2, range:340, arc:160, speed:320, spread:18, accuracy:0.02, formula:"small_he" }),
   aa({ id:"weapon.iowa_aa", name:"衣阿华号防空炮阵", group:"iowa_aa", mounts:10, shots:4, reload:0.55, range:280 }),
   gun({ id:"weapon.san_diego_127_he", name:"127毫米两用炮高爆", group:"san_diego_gun", mounts:8, shots:2, reload:3.2, range:410, arc:160, speed:330, spread:18, accuracy:0.03, formula:"small_he" }),
-  torpedo({ id:"weapon.san_diego_torpedo", name:"533毫米鱼雷", group:"san_diego_torpedo", mounts:2, shots:4, reload:18, range:400, arc:70, speed:140, spread:14 }),
+  torpedo({ id:"weapon.san_diego_torpedo", name:"533毫米鱼雷", group:"san_diego_torpedo", mounts:2, shots:4, reload:18, range:400, arc:70, speed:140, spread:14, layout:"wing" }),
   aa({ id:"weapon.san_diego_aa_heavy", name:"127毫米两用炮防空", group:"san_diego_aa_heavy", mounts:8, shots:2, reload:1.2, range:310 }),
   aa({ id:"weapon.san_diego_aa_rapid", name:"防空炮阵", group:"san_diego_aa_rapid", mounts:8, shots:4, reload:0.45, range:300 }),
   gun({ id:"weapon.ward_102_he", name:"102毫米主炮高爆", group:"ward_gun", mounts:4, shots:1, reload:2.8, range:330, arc:150, speed:300, spread:20, accuracy:0.02, formula:"small_he" }),
-  torpedo({ id:"weapon.ward_torpedo", name:"533毫米鱼雷", group:"ward_torpedo", mounts:4, shots:3, reload:16, range:420, arc:70, speed:150, spread:14 }),
+  torpedo({ id:"weapon.ward_torpedo", name:"533毫米鱼雷", group:"ward_torpedo", mounts:4, shots:3, reload:16, range:420, arc:70, speed:150, spread:14, layout:"wing" }),
   gun({ id:"weapon.hood_381_ap", name:"381毫米主炮（穿甲弹）", group:"hood_main", mode:"ManualPrimary", ammo:"AP", mounts:4, shots:2, reload:9.8, range:700, arc:145, speed:420, spread:18, accuracy:0.03, formula:"large_ap" }),
   gun({ id:"weapon.hood_381_he", name:"381毫米主炮（高爆弹）", group:"hood_main", mode:"ManualPrimary", ammo:"HE", mounts:4, shots:2, reload:9.8, range:670, arc:145, speed:390, spread:24, accuracy:0, formula:"large_he" }),
   gun({ id:"weapon.hood_secondary", name:"护航副炮", group:"hood_secondary", mounts:6, shots:1, reload:3.6, range:320, arc:150, speed:300, spread:18, accuracy:0.01, formula:"medium_he" }),
@@ -103,14 +120,14 @@ const weapons = [
   aa({ id:"weapon.argus_aa", name:"百眼巨人号轻防空", group:"argus_aa", mounts:4, shots:1, reload:1.4, range:220 }),
   gun({ id:"weapon.kirov_180_ap", name:"180毫米主炮（穿甲弹）", group:"kirov_main", ammo:"AP", mounts:3, shots:3, reload:5, range:540, arc:150, speed:380, spread:16, accuracy:0.03, formula:"medium_ap" }),
   gun({ id:"weapon.kirov_180_he", name:"180毫米主炮（高爆弹）", group:"kirov_main", ammo:"HE", mounts:3, shots:3, reload:4.7, range:510, arc:150, speed:350, spread:22, accuracy:0.01, formula:"medium_he" }),
-  torpedo({ id:"weapon.kirov_torpedo", name:"533毫米鱼雷", group:"kirov_torpedo", mounts:2, shots:3, reload:15, range:430, arc:70, speed:145, spread:12 }),
+  torpedo({ id:"weapon.kirov_torpedo", name:"533毫米鱼雷", group:"kirov_torpedo", mounts:2, shots:3, reload:15, range:430, arc:70, speed:145, spread:12, layout:"wing" }),
   aviation({ id:"weapon.pobeda_bomber", name:"攻击机编队", group:"pobeda_airstrike", mounts:2, shots:6, reload:15, range:730, speed:170, spread:24, accuracy:0.03 }),
   aviation({ id:"weapon.pobeda_ap_bomber", name:"航空穿甲弹编队", group:"pobeda_airstrike", mounts:1, shots:4, reload:20, range:710, speed:160, spread:18, accuracy:0.02, formula:"large_ap" }),
   gun({ id:"weapon.gnevny_130_he", name:"130毫米主炮高爆", group:"gnevny_gun", mounts:4, shots:1, reload:2.7, range:360, arc:150, speed:320, spread:20, accuracy:0.01, formula:"small_he" }),
   torpedo({ id:"weapon.gnevny_torpedo", name:"533毫米鱼雷", group:"gnevny_torpedo", mounts:2, shots:3, reload:14, range:440, arc:70, speed:150, spread:12 }),
   gun({ id:"weapon.prinz_203_ap", name:"203毫米主炮（穿甲弹）", group:"prinz_main", ammo:"AP", mounts:4, shots:2, reload:5.3, range:530, arc:150, speed:380, spread:16, accuracy:0.04, formula:"medium_ap" }),
   gun({ id:"weapon.prinz_203_he", name:"203毫米主炮（高爆弹）", group:"prinz_main", ammo:"HE", mounts:4, shots:2, reload:4.8, range:500, arc:150, speed:350, spread:22, accuracy:0.01, formula:"medium_he" }),
-  torpedo({ id:"weapon.prinz_torpedo", name:"533毫米鱼雷", group:"prinz_torpedo", mounts:2, shots:3, reload:16, range:430, arc:75, speed:145, spread:12 }),
+  torpedo({ id:"weapon.prinz_torpedo", name:"533毫米鱼雷", group:"prinz_torpedo", mounts:2, shots:3, reload:16, range:430, arc:75, speed:145, spread:12, layout:"wing" }),
   torpedo({ id:"weapon.u47_fore_torpedo", name:"前部鱼雷发射管", group:"u47_torpedo", mounts:1, shots:4, reload:16, range:470, arc:55, speed:155, spread:8, submarine:true, center:0 }),
   torpedo({ id:"weapon.u47_aft_torpedo", name:"后部鱼雷发射管", group:"u47_torpedo", mounts:1, shots:1, reload:18, range:400, arc:45, speed:145, spread:10, submarine:true, center:180 }),
   gun({ id:"weapon.yamato_460_ap", name:"460毫米主炮（穿甲弹）", group:"yamato_main", mode:"ManualPrimary", ammo:"AP", mounts:3, shots:3, reload:12, range:780, arc:135, speed:440, spread:20, accuracy:0.02, formula:"large_ap" }),
@@ -121,14 +138,14 @@ const weapons = [
   aviation({ id:"weapon.hosho_airstrike", name:"轻空袭队", group:"hosho_airstrike", mounts:1, shots:4, reload:16, range:650, speed:150, spread:28, accuracy:0 }),
   gun({ id:"weapon.ning_140_he", name:"140毫米主炮（高爆弹）", group:"ning_main", ammo:"HE", mounts:3, shots:2, reload:3.6, range:400, arc:150, speed:320, spread:20, accuracy:0.02, formula:"medium_he" }),
   gun({ id:"weapon.ning_140_ap", name:"140毫米主炮（穿甲弹）", group:"ning_main", ammo:"AP", mounts:3, shots:2, reload:4, range:390, arc:150, speed:340, spread:16, accuracy:0, formula:"medium_ap" }),
-  torpedo({ id:"weapon.ning_torpedo", name:"533毫米鱼雷", group:"ning_torpedo", mounts:2, shots:2, reload:17, range:400, arc:70, speed:140, spread:14 }),
+  torpedo({ id:"weapon.ning_torpedo", name:"533毫米鱼雷", group:"ning_torpedo", mounts:2, shots:2, reload:17, range:400, arc:70, speed:140, spread:14, layout:"wing" }),
   aa({ id:"weapon.ning_aa", name:"宁海号防空节点", group:"ning_aa", mounts:5, shots:2, reload:0.9, range:260 }),
   gun({ id:"weapon.anshan_130_he", name:"130毫米主炮高爆", group:"anshan_gun", mounts:4, shots:1, reload:2.7, range:370, arc:155, speed:330, spread:18, accuracy:0.03, formula:"small_he" }),
   torpedo({ id:"weapon.anshan_torpedo", name:"533毫米鱼雷", group:"anshan_torpedo", mounts:2, shots:3, reload:15, range:440, arc:70, speed:150, spread:12 }),
   aa({ id:"weapon.anshan_aa", name:"鞍山号轻防空", group:"anshan_aa", mounts:4, shots:2, reload:0.95, range:250 }),
   gun({ id:"weapon.chongqing_152_he", name:"152毫米主炮（高爆弹）", group:"chongqing_main", ammo:"HE", mounts:4, shots:3, reload:3.6, range:420, arc:150, speed:330, spread:20, accuracy:0.03, formula:"medium_he" }),
   gun({ id:"weapon.chongqing_152_ap", name:"152毫米主炮（穿甲弹）", group:"chongqing_main", ammo:"AP", mounts:4, shots:3, reload:4, range:410, arc:150, speed:350, spread:16, accuracy:0.01, formula:"medium_ap" }),
-  torpedo({ id:"weapon.chongqing_torpedo", name:"533毫米鱼雷", group:"chongqing_torpedo", mounts:2, shots:3, reload:18, range:410, arc:70, speed:140, spread:14 }),
+  torpedo({ id:"weapon.chongqing_torpedo", name:"533毫米鱼雷", group:"chongqing_torpedo", mounts:2, shots:3, reload:18, range:410, arc:70, speed:140, spread:14, layout:"wing" }),
   aa({ id:"weapon.chongqing_aa", name:"重庆号防空节点", group:"chongqing_aa", mounts:6, shots:2, reload:0.8, range:270 }),
 ];
 

@@ -75,6 +75,9 @@ func context_at(position: Vector2) -> Dictionary:
 		"water_regions": terrain_query.regions_at(position) if terrain_query != null else [],
 		"current_vector": Vector2.ZERO,
 		"sea_state": int(global_environment.get("base_sea_state", 0)),
+		"wind_speed": float(global_environment.get("wind_speed", 0.0)),
+		"wind_heading": float(global_environment.get("wind_heading", 0.0)),
+		"torpedo_sigma_multiplier": 1.0,
 		"optical_visibility_multiplier": float(global_environment.get("optical_visibility_multiplier", 1.0)),
 		"aviation_condition": str(global_environment.get("aviation_condition", "Normal")),
 		"aviation_delay_multiplier": float(global_environment.get("aviation_delay_multiplier", 1.0)),
@@ -127,6 +130,10 @@ func context_at(position: Vector2) -> Dictionary:
 			context["sea_state"] = maxi(0, int(context["sea_state"]) + roundi(float(values["sea_state_delta"]) * intensity))
 		if values.has("current_strength"):
 			context["current_vector"] = (context["current_vector"] as Vector2) + Vector2.RIGHT.rotated(deg_to_rad(float(zone.get("heading", 0.0)))) * float(values["current_strength"]) * intensity
+		if values.has("wind_speed"):
+			context["wind_speed"] = maxf(float(context["wind_speed"]), lerpf(float(context["wind_speed"]), float(values["wind_speed"]), intensity))
+		if values.has("wind_speed_add"):
+			context["wind_speed"] = maxf(0.0, float(context["wind_speed"]) + float(values["wind_speed_add"]) * intensity)
 		if values.has("aviation_condition"):
 			context["aviation_condition"] = _more_severe_aviation_condition(str(context["aviation_condition"]), str(values["aviation_condition"]))
 		if values.has("aviation_delay_multiplier"):
@@ -139,6 +146,7 @@ func context_at(position: Vector2) -> Dictionary:
 			context["tide_controls_access"] = bool(values["tide_controls_access"])
 		context["effect_sources"].append({"zone_id": zone.get("id", ""), "effect_id": effect_id, "intensity": intensity})
 	_apply_sea_state_rule(context)
+	_apply_torpedo_sigma_multiplier(context)
 	if bool(context["tide_controls_access"]):
 		var tide: Dictionary = global_environment.get("tide", {})
 		context["tide_access_state"] = "Open" if str(context["tide_phase"]) in tide.get("open_phases", ["Flood", "High"]) else "Restricted"
@@ -247,6 +255,18 @@ func _apply_sea_state_rule(context: Dictionary) -> void:
 		context["aviation_condition"] = _more_severe_aviation_condition(str(context["aviation_condition"]), str(selected["aviation_condition"]))
 
 
+func _apply_torpedo_sigma_multiplier(context: Dictionary) -> void:
+	var reference_sea_state := float(global_environment.get("torpedo_sigma_reference_sea_state", 1.0))
+	var sea_state_step := float(global_environment.get("torpedo_sigma_sea_state_step", 0.35))
+	var wind_threshold := float(global_environment.get("torpedo_sigma_wind_threshold", 4.0))
+	var wind_step := float(global_environment.get("torpedo_sigma_wind_step", 0.06))
+	var maximum := float(global_environment.get("torpedo_sigma_multiplier_max", 3.0))
+	var multiplier := 1.0
+	multiplier += maxf(0.0, float(context.get("sea_state", 0.0)) - reference_sea_state) * sea_state_step
+	multiplier += maxf(0.0, float(context.get("wind_speed", 0.0)) - wind_threshold) * wind_step
+	context["torpedo_sigma_multiplier"] = clampf(multiplier, 1.0, maximum)
+
+
 func _compose_global_environment(authored_environment: Dictionary, ocean_palette_id: String) -> Dictionary:
 	var result: Dictionary = authored_environment.duplicate(true)
 	if ocean_palette_id.is_empty():
@@ -270,6 +290,7 @@ func _compose_global_environment(authored_environment: Dictionary, ocean_palette
 	result["weather"] = str(weather_profile.get("weather", parts[0]))
 	result["time_of_day"] = str(time_profile.get("time_of_day", parts[1]))
 	result["base_sea_state"] = int(weather_context.get("base_sea_state", result.get("base_sea_state", 0)))
+	result["wind_speed"] = maxf(float(result.get("wind_speed", 0.0)), float(weather_context.get("wind_speed", 0.0)))
 	result["optical_visibility_multiplier"] = clampf(
 		float(weather_context.get("optical_visibility_multiplier", 1.0)) * float(time_context.get("optical_visibility_multiplier", 1.0)),
 		float(condition_rules.get("minimum_optical_visibility_multiplier", 0.45)),
@@ -282,6 +303,8 @@ func _compose_global_environment(authored_environment: Dictionary, ocean_palette
 	result["movement_speed_multiplier"] = float(weather_context.get("movement_speed_multiplier", 1.0)) * float(time_context.get("movement_speed_multiplier", 1.0))
 	if result.get("sea_state_rules", []).is_empty():
 		result["sea_state_rules"] = condition_rules.get("sea_state_rules", []).duplicate(true)
+	for field in ["torpedo_sigma_reference_sea_state", "torpedo_sigma_sea_state_step", "torpedo_sigma_wind_threshold", "torpedo_sigma_wind_step", "torpedo_sigma_multiplier_max"]:
+		result[field] = float(condition_rules.get(field, result.get(field, 0.0)))
 	result["condition_sources"] = [
 		{"scope": "GlobalWeather", "effect_id": weather_id, "intensity": 1.0},
 		{"scope": "GlobalTime", "effect_id": time_id, "intensity": 1.0},

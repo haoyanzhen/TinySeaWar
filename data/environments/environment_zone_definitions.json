@@ -2,7 +2,7 @@
   "schema_version": 1,
   "definitions": [
     {"id": "environment.effect.sea_fog", "definition_type": "EnvironmentEffect", "zone_type": "SeaFog", "priority": 60, "stack_rule": "Highest", "context": {"optical_visibility_multiplier": 0.62}},
-    {"id": "environment.effect.rain_squall", "definition_type": "EnvironmentEffect", "zone_type": "RainSquall", "priority": 70, "stack_rule": "Highest", "context": {"optical_visibility_multiplier": 0.72, "aviation_condition": "Restricted"}},
+    {"id": "environment.effect.rain_squall", "definition_type": "EnvironmentEffect", "zone_type": "RainSquall", "priority": 70, "stack_rule": "Highest", "context": {"optical_visibility_multiplier": 0.72, "wind_speed_add": 6.0, "aviation_condition": "Restricted"}},
     {"id": "environment.effect.high_sea", "definition_type": "EnvironmentEffect", "zone_type": "HighSea", "priority": 50, "stack_rule": "Highest", "context": {"sea_state": 4}},
     {"id": "environment.effect.lee_water", "definition_type": "EnvironmentEffect", "zone_type": "LeeWater", "priority": 80, "stack_rule": "Override", "context": {"sea_state_delta": -2}},
     {"id": "environment.effect.moonlit_lane", "definition_type": "EnvironmentEffect", "zone_type": "MoonlitLane", "priority": 55, "stack_rule": "Highest", "context": {"optical_visibility_multiplier": 1.18}},

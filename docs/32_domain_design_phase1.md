@@ -292,6 +292,7 @@ velocity
 movement_state
 targeting_state
 weapon_states
+weapon_group_launch_remaining
 skill_state
 status_effects
 last_fire_time
@@ -315,6 +316,8 @@ primary_weapon_group_id
 instance_id
 definition_id
 owner_unit_id
+mount_index
+mount_id
 reload_remaining
 cooldown_group_id
 current_target_id
@@ -334,6 +337,8 @@ ammo_type
 - 武器发射后只创建攻击或投射物事实，不直接修改目标 HP。
 - `ManualPrimary` 武器只响应合法的主要武器命令，`Automatic` 武器只由武器系统自动触发。
 - HE/AP 模式共享同一物理底座装填，切换模式不能重置冷却。
+- 手动鱼雷的每个 `mount_fire_arcs` 条目生成独立 `WeaponState`；一次命令只选择一个状态并只重置该状态的 `reload_remaining`。
+- `UnitState.weapon_group_launch_remaining` 保存鱼雷组相邻底座发射节流；它不得替代单座完整装填，也不得联动重置未发射底座。
 
 ### 5.5 ProjectileState
 
@@ -344,9 +349,14 @@ entity_id
 definition_id
 source_unit_id
 source_weapon_id
+source_mount_id
 fleet_id
 position
 heading
+ideal_heading
+angular_error
+angular_sigma
+environmental_sigma_multiplier
 speed
 max_range
 travelled_distance
@@ -356,7 +366,7 @@ minimum_detection_distance
 active
 ```
 
-火炮若第一阶段只需要落点和飞行延迟，可以表示为定时 `AttackRequest`，不强制创建参与碰撞的炮弹实体。鱼雷必须创建领域投射物，以保证碰撞与画面表现共享同一位置事实；其失效条件以累计航程达到武器最大射程为准，不以准心位置或公共生命周期提前截断。
+火炮若第一阶段只需要落点和飞行延迟，可以表示为定时 `AttackRequest`，不强制创建参与碰撞的炮弹实体。鱼雷必须创建领域投射物，以保证碰撞与画面表现共享同一位置事实；其失效条件以累计航程达到武器最大射程为准，不以准心位置或公共生命周期提前截断。鱼雷在发射时从战斗 `RandomSource` 独立抽取一次 `Normal(0, angular_sigma)`，将结果写入 `heading` 与上述诊断字段；之后不再重抽，位置、航程、碰撞和观测均按每枚投射物自身状态推进。
 
 `known_projectiles_by_faction` 保存已经由本阵营任一存活舰娘观测到的敌方投射物 ID。鱼雷首次进入任一观察舰经状态修正后的 `minimum_detection_distance` 时写入；写入后持续共享至投射物失效。表现层与 AI 都只能读取阵营过滤快照，不能直接读取全量 `projectiles_by_id`。
 
@@ -771,7 +781,7 @@ AI 在第 8 步生成的战术命令默认进入下一 Tick 命令队列；当�
 
 ## 12. 随机性与可重复性
 
-每场战斗创建独立 `battle_seed`。所有命中、区域技能受击概率和随机散布都使用该战斗的 `RandomSource`。
+每场战斗创建独立 `battle_seed`。所有命中、区域技能受击概率、随机散布和鱼雷发射角高斯误差都使用该战斗的 `RandomSource`。
 
 规则：
 

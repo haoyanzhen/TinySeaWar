@@ -353,8 +353,11 @@ func _primary_text() -> String:
 	if operation_status.is_empty(): return "不可用"
 	var name := str(operation_status.get("primary_name", "主要武器"))
 	var reload := float(operation_status.get("primary_reload_remaining", 0.0))
-	if bool(operation_status.get("primary_ready", false)): return "%s 已就绪" % name
-	return "%s %.1f 秒" % [name, reload]
+	var mount_status := ""
+	if operation_status.get("primary_mount_type", "") == "Torpedo":
+		mount_status = " %s/%s 座" % [operation_status.get("primary_mounts_ready", 0), operation_status.get("primary_mounts_total", 0)]
+	if bool(operation_status.get("primary_ready", false)): return "%s%s 已就绪" % [name, mount_status]
+	return "%s%s %.1f 秒" % [name, mount_status, reload]
 
 
 func _ammo_text() -> String:

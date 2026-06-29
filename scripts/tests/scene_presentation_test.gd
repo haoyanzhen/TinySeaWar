@@ -73,7 +73,7 @@ func _run() -> void:
 	battle.selected_unit_id = shimakaze["entity_id"]
 	battle.operation_mode = 1
 	await process_frame
-	_check(torpedo_aim.get("weapon_type", "") == "Torpedo" and torpedo_aim.get("fire_arcs", []).size() == 2, "torpedo aim overlay receives broadside sectors from the battle session")
+	_check(torpedo_aim.get("weapon_type", "") == "Torpedo" and torpedo_aim.get("fire_arcs", []).size() == 2, "torpedo aim overlay receives merged sectors from all ready centerline mounts")
 	_check(is_equal_approx(float(torpedo_aim.get("range", 0.0)), 765.0), "torpedo range circle renders the 1.5x effective range")
 	_check(battle.has_method("_draw_directional_aim_overlay") and battle.has_method("_draw_gun_aim_overlay") and battle.has_method("_draw_area_target_overlay") and battle.has_method("_draw_skill_target_overlay"), "battle scene uses direction, gun-sector, area, and skill tactical overlays")
 	battle.operation_mode = 0

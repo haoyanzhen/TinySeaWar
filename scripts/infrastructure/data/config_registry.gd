@@ -224,6 +224,41 @@ func _validate_weapon(weapon: Dictionary) -> void:
 		var arc_degrees := float(arc.get("degrees", 0.0))
 		if arc_degrees <= 0.0 or arc_degrees > 360.0:
 			errors.append("Invalid fire arc entry %s in %s" % [arc_index, weapon_id])
+	if weapon.get("mount_type", "") == "Torpedo":
+		var sigma_ratio := float(weapon.get("torpedo_angular_sigma_ratio", -1.0))
+		if absf(sigma_ratio - 0.2) > 0.0001:
+			errors.append("torpedo_angular_sigma_ratio must use the 0.2 baseline in %s" % weapon_id)
+	if weapon.get("mount_type", "") == "Torpedo" and weapon.get("control_mode", "") == "ManualPrimary":
+		var mount_fire_arcs: Array = weapon.get("mount_fire_arcs", [])
+		var mount_count := int(weapon.get("mount_count", 0))
+		if mount_fire_arcs.size() != mount_count:
+			errors.append("Manual torpedo weapon must define one mount_fire_arcs entry per mount in %s" % weapon_id)
+		var mount_ids := {}
+		for mount_index in range(mount_fire_arcs.size()):
+			var mount = mount_fire_arcs[mount_index]
+			if not mount is Dictionary or str(mount.get("mount_id", "")).is_empty() or mount_ids.has(str(mount.get("mount_id", ""))):
+				errors.append("Invalid or duplicate torpedo mount %s in %s" % [mount_index, weapon_id])
+				continue
+			mount_ids[str(mount["mount_id"])] = true
+			var mount_arcs: Array = mount.get("fire_arcs", [])
+			if mount_arcs.is_empty():
+				errors.append("Torpedo mount %s has no fire arcs in %s" % [mount_index, weapon_id])
+			for mount_arc in mount_arcs:
+				if not mount_arc is Dictionary or float(mount_arc.get("degrees", 0.0)) <= 0.0 or float(mount_arc.get("degrees", 0.0)) > 360.0:
+					errors.append("Invalid torpedo mount fire arc %s in %s" % [mount_index, weapon_id])
+		var lane_spacing := float(weapon.get("torpedo_lane_spacing", 0.0))
+		var launch_interval := float(weapon.get("mount_launch_interval", 0.0))
+		if lane_spacing <= 0.0:
+			errors.append("torpedo_lane_spacing must be positive in %s" % weapon_id)
+		if launch_interval < 1.0:
+			errors.append("mount_launch_interval must be at least 1 second in %s" % weapon_id)
+		var shot_count := int(weapon.get("shots_per_mount", 0))
+		var effective_range := float(weapon.get("range", 0.0))
+		if lane_spacing > 0.0 and effective_range > 0.0 and shot_count > 0:
+			var adjacent_angle := 2.0 * asin(minf(1.0, lane_spacing / (2.0 * effective_range)))
+			var expected_spread := rad_to_deg(adjacent_angle) * float(maxi(0, shot_count - 1))
+			if absf(float(weapon.get("spread", -1.0)) - expected_spread) > 0.001:
+				errors.append("Torpedo spread must derive from lane spacing at maximum range in %s" % weapon_id)
 	var full_salvo_fire_arcs: Array = weapon.get("full_salvo_fire_arcs", [])
 	if weapon.get("mount_type", "") == "Gun" and int(weapon.get("mount_count", 0)) > 1 and full_salvo_fire_arcs.is_empty():
 		errors.append("Multi-mount gun must define full_salvo_fire_arcs in %s" % weapon_id)
@@ -437,6 +472,10 @@ func _validate_environment_definition(definition: Dictionary) -> void:
 		if definition.get("weather", "") not in ["clear", "cloudy", "overcast", "rain", "thunderstorm"]:
 			errors.append("Unsupported weather battle profile in %s" % definition_id)
 		_validate_environment_context(definition.get("context", {}), definition_id, true)
+	elif definition_type == "EnvironmentEffect":
+		var effect_context: Dictionary = definition.get("context", {})
+		if float(effect_context.get("wind_speed", 0.0)) < 0.0 or float(effect_context.get("wind_speed_add", 0.0)) < 0.0:
+			errors.append("Invalid environment wind value in %s" % definition_id)
 	elif definition_type == "TimeBattleProfile":
 		if definition.get("time_of_day", "") not in ["day", "dawn", "dusk", "night"]:
 			errors.append("Unsupported time battle profile in %s" % definition_id)
@@ -444,6 +483,10 @@ func _validate_environment_definition(definition: Dictionary) -> void:
 	elif definition_type == "OceanConditionRules":
 		if float(definition.get("minimum_optical_visibility_multiplier", 0.0)) <= 0.0 or float(definition.get("minimum_optical_visibility_multiplier", 0.0)) > 1.0:
 			errors.append("Invalid minimum optical visibility in %s" % definition_id)
+		if int(definition.get("torpedo_sigma_reference_sea_state", -1)) < 0 or int(definition.get("torpedo_sigma_reference_sea_state", 6)) > 5:
+			errors.append("Invalid torpedo sigma reference sea state in %s" % definition_id)
+		if float(definition.get("torpedo_sigma_sea_state_step", -1.0)) < 0.0 or float(definition.get("torpedo_sigma_wind_threshold", -1.0)) < 0.0 or float(definition.get("torpedo_sigma_wind_step", -1.0)) < 0.0 or float(definition.get("torpedo_sigma_multiplier_max", 0.0)) < 1.0:
+			errors.append("Invalid torpedo environmental sigma policy in %s" % definition_id)
 		_validate_sea_state_rules(definition.get("sea_state_rules", []), definition_id)
 	elif definition_type == "OceanConditionAliases":
 		for alias in definition.get("aliases", {}):
@@ -491,6 +534,8 @@ func _validate_environment_context(context: Dictionary, definition_id: String, r
 		errors.append("Invalid base sea state in %s" % definition_id)
 	if float(context.get("optical_visibility_multiplier", 0.0)) <= 0.0 or float(context.get("aviation_delay_multiplier", 0.0)) <= 0.0:
 		errors.append("Invalid environment multiplier in %s" % definition_id)
+	if context.has("wind_speed") and float(context.get("wind_speed", -1.0)) < 0.0:
+		errors.append("Invalid environment wind speed in %s" % definition_id)
 	if context.has("aviation_condition") and context.get("aviation_condition", "") not in ["Normal", "Restricted", "Severe", "Grounded"]:
 		errors.append("Invalid aviation condition in %s" % definition_id)
 

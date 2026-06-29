@@ -90,10 +90,10 @@
   - 自动技能：`_update_auto_skills`
   - 自动武器：`_update_weapons`
   - 自动火炮预判与固定落点：`_automatic_aim_solution`、`_positive_intercept_time`、`_salvo_impact_position`
-  - 手动主要武器：`_fire_primary_weapon`
+  - 手动主要武器与逐座鱼雷选择：`_fire_primary_weapon`、`_validate_primary_fire`、`_weapon_for_state`
   - 弹药切换：`_switch_ammo`
   - 技能释放：`_cast_skill`
-  - 投射物、阵营观测与延迟攻击：`_spawn_projectile`、`_update_projectiles`、`_update_projectile_observation`、`_visible_projectiles`、`_resolve_delayed_attacks`
+  - 投射物、鱼雷角误差、管组间隔、阵营观测与延迟攻击：`_torpedo_error_profile`、`_start_mount_launch_interval`、`_spawn_projectile`、`_update_projectiles`、`_update_projectile_observation`、`_visible_projectiles`、`_resolve_delayed_attacks`
   - 命中与伤害：`_resolve_attack`、`_resolve_area_attack`
   - 胜负结算：`_check_victory`、`_check_timeout`、`_finish_battle`
   - 场景战术结果：`_update_facility_weapons`、`_handle_facility_event`、`_resolve_support_mission`、`_apply_mine_trigger`、`_environment_accuracy_modifier`
@@ -102,6 +102,8 @@
   - 伤害：`scripts/domain/services/damage_service.gd`
   - 修正值顺序：`scripts/domain/services/modifier_service.gd`
   - 舰装椭圆、圆-椭圆和连续扫掠：`scripts/domain/services/collision_geometry_service.gd`
+  - 海况/风速鱼雷 sigma 倍率：`scripts/domain/services/terrain_context_service.gd`
+  - 固定种子均匀与高斯抽样：`scripts/infrastructure/random/seeded_random_source.gd`
 - 战斗统计：`scripts/infrastructure/analytics/battle_recorder.gd`
 - 随机数：`scripts/infrastructure/random/seeded_random_source.gd`
 

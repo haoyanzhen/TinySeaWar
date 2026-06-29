@@ -116,11 +116,15 @@ minimum_range
 fire_arc_center
 fire_arc_degrees
 fire_arcs
+mount_fire_arcs
 full_salvo_fire_arcs
 turret_turn_speed
 base_projectile_speed
 projectile_speed
 spread
+torpedo_lane_spacing
+torpedo_angular_sigma_ratio
+mount_launch_interval
 base_impact_radius
 impact_radius
 accuracy_modifier
@@ -147,12 +151,16 @@ aircraft_config_id
 - `minimum_range`：最小射程，可选。
 - `fire_arc_center`：射角中心，通常相对舰娘航向或舰装底座方向。
 - `fire_arc_degrees`：射角宽度。
-- `fire_arcs`：可选的多扇区射角数组，每项包含相对舰首的 `center` 与总宽度 `degrees`。存在时它是运行时射角真源；旧的单扇区字段保留为兼容和摘要。水面鱼雷通常以左右舷两个扇区表达，潜艇前、后管可以使用同组的两个武器定义分别表达首尾扇区。
+- `fire_arcs`：可选的聚合多扇区射角数组，每项包含相对舰首的 `center` 与总宽度 `degrees`。它是非鱼雷武器的运行时射角真源，也是鱼雷配置的兼容摘要；手动鱼雷的权威射界改由 `mount_fire_arcs` 提供。
+- `mount_fire_arcs`：手动鱼雷必填的逐底座射界数组，长度必须等于 `mount_count`。每项包含唯一 `mount_id` 和非空 `fire_arcs`。运行时合法性、瞄准叠层和底座选择以此字段为真源；聚合 `fire_arcs` 只作兼容摘要。舷侧管组只能声明自身一舷，中心线管组可声明左右舷。
 - `full_salvo_fire_arcs`：多底座舰炮全部底座都能指向目标的齐射扇区。它必须是 `fire_arcs` 或兼容单扇区射界的子集，仅用于表达全底座齐射区与后续逐底座结算；瞄准界面以深绿色显示。
 - `turret_turn_speed`：炮塔、鱼雷管或装备朝向调整速度。
 - `base_projectile_speed`：武器配置中的炮弹、鱼雷、舰载机等攻击速度设计基线。
 - `projectile_speed`：当前运行时攻击速度，也是炮弹飞行时间、鱼雷推进和航空编队移动表现的直接真源。当前统一为 `base_projectile_speed * 0.5`。
-- `spread`：散布。
+- `spread`：单座底座一次发射的总散布。鱼雷按 `torpedo_lane_spacing`、运行时 `range` 和 `shots_per_mount` 反算；不得按全舰 `mount_count * shots_per_mount` 均匀塞入同一扇面。
+- `torpedo_lane_spacing`：鱼雷相邻中心雷道在运行时最大射程处的弦长，当前基线为 `80`。
+- `torpedo_angular_sigma_ratio`：鱼雷基础角误差标准差相对相邻理想雷道张角的比例，当前强制基线为 `0.20`。每枚鱼雷在发射时独立抽样。
+- `mount_launch_interval`：同一鱼雷武器组相邻两座底座发射的最小间隔，必须至少 `1s`。
 - `base_impact_radius`：舰炮落点圆的设计基线半径。
 - `impact_radius`：海域攻击的运行时结算半径。舰炮当前统一为 `base_impact_radius * 0.5`；空袭保留自身配置，鱼雷可为空或 0。
 - `accuracy_modifier`：命中修正。
@@ -166,6 +174,8 @@ MVP 约定：
 - 主炮和鱼雷必须使用射角。
 - `mount_count > 1` 的舰炮必须配置非空 `full_salvo_fire_arcs`。
 - `ManualPrimary` 鱼雷必须显式配置非空 `fire_arcs`；每个扇区的 `degrees` 必须大于 0 且不超过 360。
+- `ManualPrimary` 鱼雷必须为每座底座配置唯一 `mount_fire_arcs`，并满足 `spread = degrees(2 * asin(torpedo_lane_spacing / (2 * range))) * (shots_per_mount - 1)` 与 `torpedo_angular_sigma_ratio = 0.20`。
+- 鱼雷一次命令只选择一座合法、已装填底座；各底座独立冷却，同组使用 `mount_launch_interval` 节流。
 - 防空可先简化为 360 度范围，但仍使用 `reload_time` 周期结算伤害。
 - 航空可先使用固定出击点和目标区域。
 - 反潜装备用于攻击已发现的下潜潜艇。
@@ -581,6 +591,8 @@ data/facilities/minefield_definitions.json
 WeatherBattleProfile
   weather
   context.base_sea_state
+  context.wind_speed
+  context.wind_heading
   context.optical_visibility_multiplier
   context.weapon_accuracy_modifier
   context.aviation_delay_multiplier
@@ -594,6 +606,11 @@ TimeBattleProfile
 
 OceanConditionRules
   minimum_optical_visibility_multiplier
+  torpedo_sigma_reference_sea_state
+  torpedo_sigma_sea_state_step
+  torpedo_sigma_wind_threshold
+  torpedo_sigma_wind_step
+  torpedo_sigma_multiplier_max
   sea_state_rules[]
 
 OceanConditionAliases
@@ -645,6 +662,8 @@ MinefieldDefinition
 - `ocean_palettes.json` 保存表现参数，`ocean_battle_condition_definitions.json` 保存战斗规则；二者共享 palette 语义但不能互相读取 Shader/规则字段。
 - 天气和时段上下文先组合为全图环境基线，局部环境区随后叠加；光学倍率最终受 `minimum_optical_visibility_multiplier` 下限保护。
 - `sea_state_rules` 按不超过最终海况的最高 `minimum_sea_state` 取一档；背风等区域先改变最终海况，再选择档位。
+- `WeatherBattleProfile.context.wind_speed` 为非负风速标量；局部 `EnvironmentEffect.context.wind_speed_add` 可继续叠加。当前飑线使用 `+6`。
+- 鱼雷环境误差倍率为 `clamp(1 + max(0, sea_state - torpedo_sigma_reference_sea_state) * torpedo_sigma_sea_state_step + max(0, wind_speed - torpedo_sigma_wind_threshold) * torpedo_sigma_wind_step, 1, torpedo_sigma_multiplier_max)`；当前字段值分别为 `1 / 0.35 / 4 / 0.06 / 3`。
 - `tide` 使用固定阶段时长循环；`open_phases` 允许新进入潮滩，其他阶段只允许已经位于区内的单位撤离。
 - `service_profile.service_type` 当前为 `Supply` 或 `Repair`。补给使用 `weapon_reload_recovery_ratio`、`skill_cooldown_recovery`；维修使用 `hp_restore_ratio`、`repair_cap_ratio`。
 - `weapon_id` 必须引用现有 Weapon Definition。岸炮和空袭继续使用普通命中、装甲和伤害公式。

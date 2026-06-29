@@ -88,6 +88,7 @@ static func reason_name(reason_code: String) -> String:
 		"UNIT_SUNK": return "单位已沉没"
 		"PRIMARY_WEAPON_UNAVAILABLE": return "没有可用的主要武器"
 		"WEAPON_RELOADING": return "武器装填中"
+		"TORPEDO_MOUNT_INTERVAL": return "鱼雷管组切换中"
 		"TARGET_TOO_CLOSE": return "目标距离过近"
 		"TARGET_OUT_OF_RANGE": return "目标超出射程"
 		"TARGET_NOT_VISIBLE": return "目标尚未发现"

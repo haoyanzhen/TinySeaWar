@@ -14,6 +14,11 @@
       "id": "environment.condition_rules.ocean",
       "definition_type": "OceanConditionRules",
       "minimum_optical_visibility_multiplier": 0.45,
+      "torpedo_sigma_reference_sea_state": 1,
+      "torpedo_sigma_sea_state_step": 0.35,
+      "torpedo_sigma_wind_threshold": 4.0,
+      "torpedo_sigma_wind_step": 0.06,
+      "torpedo_sigma_multiplier_max": 3.0,
       "sea_state_rules": [
         {"minimum_sea_state": 3, "movement_speed_multiplier": 0.96, "weapon_accuracy_modifier": -0.04, "aviation_delay_multiplier": 1.10},
         {"minimum_sea_state": 4, "movement_speed_multiplier": 0.88, "weapon_accuracy_modifier": -0.10, "aviation_delay_multiplier": 1.30, "aviation_condition": "Restricted"},
@@ -25,35 +30,35 @@
       "definition_type": "WeatherBattleProfile",
       "weather": "clear",
       "display_name": "晴朗",
-      "context": {"base_sea_state": 1, "optical_visibility_multiplier": 1.00, "weapon_accuracy_modifier": 0.00, "aviation_delay_multiplier": 1.00, "aviation_condition": "Normal"}
+      "context": {"base_sea_state": 1, "wind_speed": 2.0, "optical_visibility_multiplier": 1.00, "weapon_accuracy_modifier": 0.00, "aviation_delay_multiplier": 1.00, "aviation_condition": "Normal"}
     },
     {
       "id": "environment.weather.cloudy",
       "definition_type": "WeatherBattleProfile",
       "weather": "cloudy",
       "display_name": "多云",
-      "context": {"base_sea_state": 2, "optical_visibility_multiplier": 0.96, "weapon_accuracy_modifier": 0.00, "aviation_delay_multiplier": 1.04, "aviation_condition": "Normal"}
+      "context": {"base_sea_state": 2, "wind_speed": 4.0, "optical_visibility_multiplier": 0.96, "weapon_accuracy_modifier": 0.00, "aviation_delay_multiplier": 1.04, "aviation_condition": "Normal"}
     },
     {
       "id": "environment.weather.overcast",
       "definition_type": "WeatherBattleProfile",
       "weather": "overcast",
       "display_name": "阴云",
-      "context": {"base_sea_state": 3, "optical_visibility_multiplier": 0.88, "weapon_accuracy_modifier": -0.02, "aviation_delay_multiplier": 1.10, "aviation_condition": "Normal"}
+      "context": {"base_sea_state": 3, "wind_speed": 7.0, "optical_visibility_multiplier": 0.88, "weapon_accuracy_modifier": -0.02, "aviation_delay_multiplier": 1.10, "aviation_condition": "Normal"}
     },
     {
       "id": "environment.weather.rain",
       "definition_type": "WeatherBattleProfile",
       "weather": "rain",
       "display_name": "雨",
-      "context": {"base_sea_state": 3, "optical_visibility_multiplier": 0.76, "weapon_accuracy_modifier": -0.05, "aviation_delay_multiplier": 1.25, "aviation_condition": "Restricted"}
+      "context": {"base_sea_state": 3, "wind_speed": 9.0, "optical_visibility_multiplier": 0.76, "weapon_accuracy_modifier": -0.05, "aviation_delay_multiplier": 1.25, "aviation_condition": "Restricted"}
     },
     {
       "id": "environment.weather.thunderstorm",
       "definition_type": "WeatherBattleProfile",
       "weather": "thunderstorm",
       "display_name": "雷雨",
-      "context": {"base_sea_state": 5, "optical_visibility_multiplier": 0.58, "weapon_accuracy_modifier": -0.10, "aviation_delay_multiplier": 1.60, "aviation_condition": "Severe"}
+      "context": {"base_sea_state": 5, "wind_speed": 15.0, "optical_visibility_multiplier": 0.58, "weapon_accuracy_modifier": -0.10, "aviation_delay_multiplier": 1.60, "aviation_condition": "Severe"}
     },
     {
       "id": "environment.time.day",

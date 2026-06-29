@@ -76,6 +76,7 @@ func _test_chinese_display_text() -> void:
 	_check(UiText.mode_name("level.prototype_11v11") == "11v11 大规模会战", "battle mode has a Chinese display label")
 	_check(UiText.ship_class_name("Battleship") == "战列舰", "ship class has a Chinese display label")
 	_check(UiText.reason_name("WEAPON_RELOADING") == "武器装填中", "operation reason has a Chinese display label")
+	_check(UiText.reason_name("TORPEDO_MOUNT_INTERVAL") == "鱼雷管组切换中", "torpedo mount interval has a Chinese operation reason")
 	_check(UiText.character_name("warspite") == "厌战号", "character id has a Chinese display label")
 
 
@@ -198,6 +199,11 @@ func _test_scene_combat_tactical_effects() -> void:
 	var storm := storm_context.context_at(Vector2(50, 50))
 	_check(int(storm["sea_state"]) == 5 and is_equal_approx(float(storm["optical_visibility_multiplier"]), 0.45) and is_equal_approx(float(storm["movement_speed_multiplier"]), 0.80), "thunderstorm night combines weather sea state, visibility floor, and movement penalty")
 	_check(is_equal_approx(float(storm["weapon_accuracy_modifier"]), -0.29) and storm["aviation_condition"] == "Severe" and is_equal_approx(float(storm["aviation_delay_multiplier"]), 2.944), "thunderstorm night combines weather, time, and final sea-state weapon and aviation modifiers")
+	_check(is_equal_approx(float(storm["wind_speed"]), 15.0) and is_equal_approx(float(storm["torpedo_sigma_multiplier"]), 3.0), "thunderstorm wind and sea state cap torpedo angular sigma at three times the calm baseline")
+	var clear_context = TerrainContextService.new()
+	clear_context.configure(query, {}, registry.all("environment_zones"), "clear_day")
+	var clear := clear_context.context_at(Vector2(50, 50))
+	_check(is_equal_approx(float(clear["wind_speed"]), 2.0) and is_equal_approx(float(clear["torpedo_sigma_multiplier"]), 1.0), "clear low-wind water preserves the base torpedo angular sigma")
 	var dawn_context = TerrainContextService.new()
 	dawn_context.configure(query, {}, registry.all("environment_zones"), "clear_dawn")
 	_check(is_equal_approx(float(dawn_context.context_at(Vector2(50, 50))["optical_visibility_multiplier"]), 1.03), "bright dawn condition provides the authored slight optical visibility benefit")
@@ -383,6 +389,12 @@ func _test_runtime_baseline_scales() -> void:
 			_check(not weapon.get("full_salvo_fire_arcs", []).is_empty(), "%s exposes the all-mount full-salvo firing sectors" % weapon.get("id", "?"))
 		if weapon.get("mount_type", "") == "Gun":
 			_check(is_equal_approx(float(weapon.get("impact_radius", 0.0)), float(weapon.get("base_impact_radius", 0.0)) * 0.5), "%s uses the halved shell impact radius" % weapon.get("id", "?"))
+		if weapon.get("mount_type", "") == "Torpedo" and weapon.get("control_mode", "") == "ManualPrimary":
+			var lane_spacing := float(weapon.get("torpedo_lane_spacing", 0.0))
+			var expected_spread := rad_to_deg(2.0 * asin(lane_spacing / (2.0 * effective_range))) * float(int(weapon.get("shots_per_mount", 0)) - 1)
+			_check(lane_spacing == 80.0 and absf(float(weapon.get("spread", 0.0)) - expected_spread) <= 0.001, "%s derives per-mount spread from the battleship-width lane baseline" % weapon.get("id", "?"))
+			_check(is_equal_approx(float(weapon.get("torpedo_angular_sigma_ratio", 0.0)), 0.20), "%s uses the shared twenty-percent adjacent-angle torpedo sigma baseline" % weapon.get("id", "?"))
+			_check(weapon.get("mount_fire_arcs", []).size() == int(weapon.get("mount_count", 0)) and float(weapon.get("mount_launch_interval", 0.0)) >= 1.0, "%s defines independent launcher arcs and the minimum launch interval" % weapon.get("id", "?"))
 	for projectile in registry.all("projectiles"):
 		var base_speed := float(projectile.get("base_speed", 0.0))
 		_check(base_speed >= 0.0 and is_equal_approx(float(projectile.get("speed", 0.0)), base_speed * 0.5), "%s uses the 0.5x runtime projectile and aircraft speed baseline" % projectile.get("id", "?"))
@@ -404,6 +416,15 @@ func _test_runtime_baseline_scales() -> void:
 	_check(is_equal_approx(float(registry.get_definition("projectiles", "projectile.surface_torpedo").get("speed", 0.0)), 82.5), "projectile definitions use the halved runtime movement speed baseline")
 	_check(is_equal_approx(float(registry.get_definition("projectiles", "aircraft.bomber").get("speed", 0.0)), 110.0), "aircraft definitions use the halved runtime movement speed baseline")
 	_check(is_equal_approx(float(registry.get_definition("skills", "skill.warspite_veteran_aim").get("cast_range", 0.0)), 1095.0), "skill range uses the 1.5x runtime distance baseline")
+	var gaussian_a = SeededRandomSource.new(20260629)
+	var gaussian_b = SeededRandomSource.new(20260629)
+	var gaussian_nonzero := false
+	for index in range(6):
+		var sample_a := gaussian_a.randfn(0.0, 0.25)
+		var sample_b := gaussian_b.randfn(0.0, 0.25)
+		_check(is_equal_approx(sample_a, sample_b), "fixed battle seed reproduces Gaussian sample %d" % index)
+		gaussian_nonzero = gaussian_nonzero or not is_zero_approx(sample_a)
+	_check(gaussian_nonzero, "Gaussian random source produces non-zero angular deviations")
 
 
 func _test_elliptical_collision_geometry() -> void:
@@ -581,7 +602,41 @@ func _test_torpedo_fire_arc_rules() -> void:
 	_check(bool(starboard_status.get("legal", false)) and bool(port_status.get("legal", false)), "surface torpedoes allow both broadside sectors")
 	_check(bool(distant_starboard_status.get("legal", false)), "torpedo aim uses direction only and ignores cursor distance")
 	_check(not bool(bow_status.get("legal", true)) and not bool(stern_status.get("legal", true)), "surface torpedoes reject bow and stern blind sectors")
-	_check(starboard_status.get("fire_arcs", []).size() == 2 and is_equal_approx(float(starboard_status.get("spread_degrees", 0.0)), 12.0), "torpedo aim status exposes both firing sectors and configured spread")
+	var shimakaze_weapon: Dictionary = registry.get_definition("weapons", "weapon.shimakaze_610_torpedo")
+	var expected_shimakaze_spread := rad_to_deg(2.0 * asin(80.0 / (2.0 * float(shimakaze_weapon["range"])))) * 4.0
+	_check(starboard_status.get("fire_arcs", []).size() == 2 and is_equal_approx(float(starboard_status.get("spread_degrees", 0.0)), expected_shimakaze_spread), "torpedo aim merges ready centerline-mount sectors and exposes lane-spacing-derived spread")
+	var error_profile: Dictionary = session._torpedo_error_profile(shimakaze, shimakaze_weapon, int(shimakaze_weapon["shots_per_mount"]))
+	var ideal_adjacent_angle := deg_to_rad(float(shimakaze_weapon["spread"])) / float(int(shimakaze_weapon["shots_per_mount"]) - 1)
+	var expected_sigma := ideal_adjacent_angle * 0.20 * float(error_profile["environment_multiplier"])
+	_check(is_equal_approx(float(error_profile["sigma_radians"]), expected_sigma), "torpedo launch sigma is twenty percent of adjacent ideal lane angle times the launch-point environment multiplier")
+	var shimakaze_mount_states: Array = []
+	for weapon_state in shimakaze["weapon_states"]:
+		if weapon_state.get("definition_id", "") == shimakaze_weapon["id"]: shimakaze_mount_states.append(weapon_state)
+	_check(shimakaze_mount_states.size() == 3, "each Shimakaze torpedo launcher creates an independent runtime weapon state")
+	session.drain_events()
+	var first_launch: Dictionary = session._fire_primary_weapon(shimakaze, shimakaze["position"] + Vector2(0.0, 300.0), "torpedo.mount.1")
+	_check(bool(first_launch.get("accepted", false)) and session.state["projectiles_by_id"].size() == 5, "one player confirmation launches only one five-tube mount")
+	var first_mount_attribution := true
+	var first_errors: Array[float] = []
+	var gaussian_metadata_valid := true
+	for projectile in session.state["projectiles_by_id"].values():
+		first_mount_attribution = first_mount_attribution and projectile.get("source_mount_id", "") == "mount_1"
+		first_errors.append(float(projectile.get("angular_error", 0.0)))
+		gaussian_metadata_valid = gaussian_metadata_valid and is_equal_approx(float(projectile.get("angular_sigma", 0.0)), expected_sigma) and is_equal_approx(float(projectile.get("heading", 0.0)) - float(projectile.get("ideal_heading", 0.0)), float(projectile.get("angular_error", 0.0)))
+	_check(first_mount_attribution, "every torpedo in a salvo retains its physical source mount id")
+	var independently_sampled := false
+	for index in range(1, first_errors.size()): independently_sampled = independently_sampled or not is_equal_approx(first_errors[index], first_errors[0])
+	_check(gaussian_metadata_valid and independently_sampled, "each torpedo stores its independently sampled launch error and sigma without altering the ideal lane heading")
+	_check(float(shimakaze_mount_states[0]["reload_remaining"]) > 0.0 and is_zero_approx(float(shimakaze_mount_states[1]["reload_remaining"])) and is_zero_approx(float(shimakaze_mount_states[2]["reload_remaining"])), "only the selected torpedo mount enters its full reload")
+	var immediate_launch: Dictionary = session._fire_primary_weapon(shimakaze, shimakaze["position"] + Vector2(0.0, 300.0), "torpedo.mount.too_soon")
+	_check(immediate_launch.get("reason_code", "") == "TORPEDO_MOUNT_INTERVAL", "a second mount cannot launch inside the one-second group interval")
+	session._update_cooldowns_and_statuses(1.0)
+	var mount_operation_status: Dictionary = session.get_operation_status(shimakaze["entity_id"])
+	_check(int(mount_operation_status.get("primary_mounts_ready", 0)) == 2 and int(mount_operation_status.get("primary_mounts_total", 0)) == 3, "operation status exposes ready and total torpedo mount counts")
+	var second_launch: Dictionary = session._fire_primary_weapon(shimakaze, shimakaze["position"] + Vector2(0.0, 300.0), "torpedo.mount.2")
+	_check(bool(second_launch.get("accepted", false)) and session.state["projectiles_by_id"].size() == 10 and float(shimakaze_mount_states[1]["reload_remaining"]) > 0.0, "the next ready mount can launch after one second without resetting the first mount")
+	var adjacent_angle := deg_to_rad(float(shimakaze_weapon["spread"])) / 4.0
+	_check(is_equal_approx(2.0 * float(shimakaze_weapon["range"]) * sin(adjacent_angle * 0.5), 80.0), "adjacent Shimakaze torpedo lanes are one battleship longitudinal half-extent apart at maximum range")
 	var submarine: Dictionary = session.state["units_by_id"]["unit.player.hai_shih"]
 	submarine["position"] = Vector2(2000.0, 1200.0)
 	submarine["heading"] = 0.0
@@ -590,8 +645,20 @@ func _test_torpedo_fire_arc_rules() -> void:
 	var beam_status: Dictionary = session.get_primary_aim_status(submarine["entity_id"], submarine["position"] + Vector2(0.0, 300.0))
 	_check(bool(fore_status.get("legal", false)) and bool(aft_status.get("legal", false)), "submarine torpedoes retain fore and aft firing sectors")
 	_check(not bool(beam_status.get("legal", true)), "submarine torpedoes reject broadside firing")
-	_check(is_equal_approx(float(fore_status.get("spread_degrees", 0.0)), 10.0) and is_equal_approx(float(aft_status.get("spread_degrees", 0.0)), 12.0), "selected torpedo direction exposes the matching launcher spread")
-	var torpedo_weapon: Dictionary = registry.get_definition("weapons", "weapon.shimakaze_610_torpedo")
+	_check(is_equal_approx(float(fore_status.get("spread_degrees", 0.0)), 20.8476) and is_equal_approx(float(aft_status.get("spread_degrees", 0.0)), 8.0481), "selected submarine direction exposes the matching lane-spacing-derived launcher spread")
+	var side_session = BattleSession.new(registry)
+	side_session.create_battle("level.prototype_11v11", 28)
+	var san_diego: Dictionary = side_session.state["units_by_id"]["unit.player.san_diego"]
+	san_diego["position"] = Vector2(1200.0, 1200.0)
+	san_diego["heading"] = 0.0
+	var port_launch: Dictionary = side_session._fire_primary_weapon(san_diego, san_diego["position"] + Vector2(0.0, -300.0), "torpedo.side.port")
+	_check(bool(port_launch.get("accepted", false)) and side_session.state["projectiles_by_id"].size() == 4, "a cruiser broadside command launches only its port-side mount")
+	side_session._update_cooldowns_and_statuses(1.0)
+	var spent_port_status: Dictionary = side_session.get_primary_aim_status(san_diego["entity_id"], san_diego["position"] + Vector2(0.0, -300.0))
+	var ready_starboard_status: Dictionary = side_session.get_primary_aim_status(san_diego["entity_id"], san_diego["position"] + Vector2(0.0, 300.0))
+	_check(not bool(spent_port_status.get("legal", true)) and bool(ready_starboard_status.get("legal", false)), "a cruiser cannot substitute the opposite-side mount into the spent broadside arc")
+	var torpedo_weapon: Dictionary = shimakaze_weapon
+	session.state["projectiles_by_id"].clear()
 	session.drain_events()
 	session._spawn_projectile(shimakaze, torpedo_weapon, "attack.torpedo.range", PI * 0.5)
 	var projectile_id := str(session.state["projectiles_by_id"].keys()[0])

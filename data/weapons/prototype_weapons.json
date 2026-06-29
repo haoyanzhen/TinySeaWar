@@ -485,7 +485,7 @@
         }
       ],
       "projectile_speed": 85,
-      "spread": 12,
+      "spread": 23.9778,
       "accuracy_modifier": 0,
       "target_types": [
         "Surface",
@@ -503,7 +503,51 @@
         "Air": 0
       },
       "base_range": 510,
-      "base_projectile_speed": 170
+      "base_projectile_speed": 170,
+      "torpedo_lane_spacing": 80.0,
+      "mount_launch_interval": 1.0,
+      "mount_fire_arcs": [
+        {
+          "mount_id": "mount_1",
+          "fire_arcs": [
+            {
+              "center": -90,
+              "degrees": 75
+            },
+            {
+              "center": 90,
+              "degrees": 75
+            }
+          ]
+        },
+        {
+          "mount_id": "mount_2",
+          "fire_arcs": [
+            {
+              "center": -90,
+              "degrees": 75
+            },
+            {
+              "center": 90,
+              "degrees": 75
+            }
+          ]
+        },
+        {
+          "mount_id": "mount_3",
+          "fire_arcs": [
+            {
+              "center": -90,
+              "degrees": 75
+            },
+            {
+              "center": 90,
+              "degrees": 75
+            }
+          ]
+        }
+      ],
+      "torpedo_angular_sigma_ratio": 0.2
     },
     {
       "id": "weapon.hai_shih_fore_torpedo",
@@ -526,7 +570,7 @@
         }
       ],
       "projectile_speed": 72.5,
-      "spread": 10,
+      "spread": 20.8476,
       "accuracy_modifier": 0,
       "target_types": [
         "Surface",
@@ -544,7 +588,21 @@
         "Air": 0
       },
       "base_range": 440,
-      "base_projectile_speed": 145
+      "base_projectile_speed": 145,
+      "torpedo_lane_spacing": 80.0,
+      "mount_launch_interval": 1.0,
+      "mount_fire_arcs": [
+        {
+          "mount_id": "mount_1",
+          "fire_arcs": [
+            {
+              "center": 0,
+              "degrees": 110.0
+            }
+          ]
+        }
+      ],
+      "torpedo_angular_sigma_ratio": 0.2
     },
     {
       "id": "weapon.hai_shih_aft_torpedo",
@@ -567,7 +625,7 @@
         }
       ],
       "projectile_speed": 67.5,
-      "spread": 12,
+      "spread": 8.0481,
       "accuracy_modifier": 0,
       "target_types": [
         "Surface",
@@ -585,7 +643,21 @@
         "Air": 0
       },
       "base_range": 380,
-      "base_projectile_speed": 135
+      "base_projectile_speed": 135,
+      "torpedo_lane_spacing": 80.0,
+      "mount_launch_interval": 1.0,
+      "mount_fire_arcs": [
+        {
+          "mount_id": "mount_1",
+          "fire_arcs": [
+            {
+              "center": 180,
+              "degrees": 90.0
+            }
+          ]
+        }
+      ],
+      "torpedo_angular_sigma_ratio": 0.2
     },
     {
       "ammo_type": "",
@@ -713,6 +785,7 @@
       "weapon_group_id": "hai_shih_torpedo_standardized",
       "control_mode": "Automatic",
       "mount_type": "Torpedo",
+      "torpedo_angular_sigma_ratio": 0.2,
       "mount_count": 1,
       "shots_per_mount": 4,
       "reload_time": 18,

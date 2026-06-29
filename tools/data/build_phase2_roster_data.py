@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import math
 import re
 from pathlib import Path
 from typing import Any
@@ -13,6 +14,28 @@ DISTANCE_BASELINE_MULTIPLIER = 1.5
 MOTION_BASELINE_MULTIPLIER = 0.5
 ATTACK_SPEED_BASELINE_MULTIPLIER = 0.5
 GUN_IMPACT_RADIUS_MULTIPLIER = 0.5
+TORPEDO_LANE_SPACING = 80.0
+TORPEDO_MOUNT_LAUNCH_INTERVAL = 1.0
+WING_TORPEDO_CHARACTERS = {"belfast", "chapayev", "nurnberg", "takao"}
+
+
+def torpedo_spread_degrees(effective_range: float, shots_per_mount: int) -> float:
+    if shots_per_mount <= 1:
+        return 0.0
+    adjacent_angle = 2.0 * math.asin(min(1.0, TORPEDO_LANE_SPACING / (2.0 * effective_range)))
+    return math.degrees(adjacent_angle) * (shots_per_mount - 1)
+
+
+def torpedo_mount_fire_arcs(character_id: str, mount_count: int, fire_arc: float, equipment: str) -> list[dict[str, Any]]:
+    if "前部" in equipment:
+        arcs = lambda _index: [{"center": 0, "degrees": fire_arc * 2.0}]
+    elif "后部" in equipment:
+        arcs = lambda _index: [{"center": 180, "degrees": fire_arc * 2.0}]
+    elif character_id in WING_TORPEDO_CHARACTERS:
+        arcs = lambda index: [{"center": -90 if index < mount_count / 2 else 90, "degrees": fire_arc}]
+    else:
+        arcs = lambda _index: [{"center": -90, "degrees": fire_arc}, {"center": 90, "degrees": fire_arc}]
+    return [{"mount_id": f"mount_{index + 1}", "fire_arcs": arcs(index)} for index in range(mount_count)]
 
 
 def full_salvo_fire_arcs(center: float, degrees: float, mount_count: int) -> list[dict[str, float]]:
@@ -235,6 +258,14 @@ def build_weapons() -> tuple[list[dict[str, Any]], dict[str, list[str]], dict[st
             "shared_cooldown_group": group if ammo in {"HE", "AP"} and group.endswith("_main") else "",
             "armor_damage_modifiers": ARMOR[key if key in ARMOR else "aviation"], "target_types": target_types,
         }
+        if mount_type == "Torpedo":
+            definition["torpedo_lane_spacing"] = TORPEDO_LANE_SPACING
+            definition["mount_launch_interval"] = TORPEDO_MOUNT_LAUNCH_INTERVAL
+            definition["torpedo_angular_sigma_ratio"] = 0.2
+            definition["spread"] = torpedo_spread_degrees(definition["range"], definition["shots_per_mount"])
+            definition["mount_fire_arcs"] = torpedo_mount_fire_arcs(
+                cid, definition["mount_count"], fire_arc, row[1]
+            )
         if mount_type == "Gun":
             definition["full_salvo_fire_arcs"] = full_salvo_fire_arcs(
                 fire_center, fire_degrees, definition["mount_count"]

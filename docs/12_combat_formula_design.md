@@ -304,6 +304,41 @@ HE 与 AP 是同一火炮组的不同武器模式：
 - 鱼雷不命中航空单位。
 - 鱼雷命中后使用鱼雷伤害公式。
 
+发射与散布规则：
+
+```text
+adjacent_angle
+= 2 * asin(torpedo_lane_spacing / (2 * range))
+
+spread
+= degrees(adjacent_angle) * (shots_per_mount - 1)
+
+base_sigma
+= adjacent_angle * torpedo_angular_sigma_ratio
+
+environment_multiplier
+= clamp(
+    1
+    + max(0, sea_state - 1) * 0.35
+    + max(0, wind_speed - 4) * 0.06,
+    1,
+    3
+  )
+
+actual_heading[i]
+= ideal_heading[i]
+  + Normal(0, base_sigma * environment_multiplier)
+```
+
+- 首轮 `torpedo_lane_spacing = 80`，等于当前最大战列舰舰装碰撞椭圆长半轴。
+- `spread` 是单座管组的联装总散布，不再把 `mount_count * shots_per_mount` 塞进同一扇面。
+- 每座管组保存独立 `reload_remaining` 与 `mount_fire_arcs`；一次攻击事实只选择一座并生成 `shots_per_mount` 枚鱼雷。
+- 同组发射间隔 `mount_launch_interval >= 1s`，它只限制相邻底座的发射节奏，不改动各底座的完整装填时间。
+- 上式使用运行时最大射程 `range`，保证相邻中心雷道在极限射程处的弦长为 80；近距离雷道按相同比例自然收拢。
+- `torpedo_angular_sigma_ratio = 0.20`；同一管组内每枚鱼雷分别从固定战斗随机源抽样，误差之间不共享。
+- 环境倍率使用发射点的最终环境上下文。晴朗基线为 `1.00`，阴云约 `1.88`，雨约 `2.00`，雷雨或 5 级海况达到 `3.00` 上限；局部飑线通过附加风速继续放大，背风水域通过降低海况缓解。
+- 发射后保存 `ideal_heading`、`angular_error`、`angular_sigma` 和 `environmental_sigma_multiplier`；鱼雷不在航行途中重复抖动或重抽方向。
+
 观测规则：
 
 ```text

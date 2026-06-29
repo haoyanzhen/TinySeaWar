@@ -15,6 +15,7 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 360,
+      "base_projectile_speed": 180,
       "projectile_speed": 90,
       "spread": 24,
       "impact_radius": 48,
@@ -32,8 +33,7 @@
       },
       "target_types": [
         "Surface"
-      ],
-      "base_projectile_speed": 180
+      ]
     },
     {
       "id": "weapon.enterprise_aa",
@@ -50,6 +50,7 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 360,
+      "base_projectile_speed": 320,
       "projectile_speed": 160,
       "spread": 0,
       "impact_radius": 18,
@@ -67,8 +68,7 @@
       },
       "target_types": [
         "Air"
-      ],
-      "base_projectile_speed": 320
+      ]
     },
     {
       "id": "weapon.iowa_406_ap",
@@ -85,25 +85,12 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 290,
+      "base_projectile_speed": 430,
       "projectile_speed": 215,
       "spread": 18,
       "impact_radius": 24,
       "accuracy_modifier": 0.03,
       "shared_cooldown_group": "iowa_main",
-      "projectile_id": "projectile.shell",
-      "formula_id": "formula.large_ap",
-      "armor_damage_modifiers": {
-        "Unarmored": 0.65,
-        "Light": 0.45,
-        "Medium": 1.1,
-        "Heavy": 1.25,
-        "Submerged": 0,
-        "Air": 0
-      },
-      "target_types": [
-        "Surface"
-      ],
-      "base_projectile_speed": 430,
       "full_salvo_fire_arcs": [
         {
           "center": -90,
@@ -114,7 +101,20 @@
           "degrees": 110
         }
       ],
-      "base_impact_radius": 48
+      "projectile_id": "projectile.shell",
+      "formula_id": "formula.large_ap",
+      "base_impact_radius": 48,
+      "armor_damage_modifiers": {
+        "Unarmored": 0.65,
+        "Light": 0.45,
+        "Medium": 1.1,
+        "Heavy": 1.25,
+        "Submerged": 0,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface"
+      ]
     },
     {
       "id": "weapon.iowa_406_he",
@@ -131,25 +131,12 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 290,
+      "base_projectile_speed": 400,
       "projectile_speed": 200,
       "spread": 24,
       "impact_radius": 24,
       "accuracy_modifier": 0,
       "shared_cooldown_group": "iowa_main",
-      "projectile_id": "projectile.shell",
-      "formula_id": "formula.large_he",
-      "armor_damage_modifiers": {
-        "Unarmored": 1,
-        "Light": 1.1,
-        "Medium": 0.95,
-        "Heavy": 0.75,
-        "Submerged": 0,
-        "Air": 0
-      },
-      "target_types": [
-        "Surface"
-      ],
-      "base_projectile_speed": 400,
       "full_salvo_fire_arcs": [
         {
           "center": -90,
@@ -160,7 +147,20 @@
           "degrees": 110
         }
       ],
-      "base_impact_radius": 48
+      "projectile_id": "projectile.shell",
+      "formula_id": "formula.large_he",
+      "base_impact_radius": 48,
+      "armor_damage_modifiers": {
+        "Unarmored": 1,
+        "Light": 1.1,
+        "Medium": 0.95,
+        "Heavy": 0.75,
+        "Submerged": 0,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface"
+      ]
     },
     {
       "id": "weapon.iowa_127_he",
@@ -177,25 +177,12 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 320,
+      "base_projectile_speed": 320,
       "projectile_speed": 160,
       "spread": 18,
       "impact_radius": 15,
       "accuracy_modifier": 0.02,
       "shared_cooldown_group": "iowa_secondary",
-      "projectile_id": "projectile.shell",
-      "formula_id": "formula.small_he",
-      "armor_damage_modifiers": {
-        "Unarmored": 1.2,
-        "Light": 1.15,
-        "Medium": 0.45,
-        "Heavy": 0.13,
-        "Submerged": 0,
-        "Air": 0
-      },
-      "target_types": [
-        "Surface"
-      ],
-      "base_projectile_speed": 320,
       "full_salvo_fire_arcs": [
         {
           "center": -90,
@@ -206,7 +193,20 @@
           "degrees": 120
         }
       ],
-      "base_impact_radius": 30
+      "projectile_id": "projectile.shell",
+      "formula_id": "formula.small_he",
+      "base_impact_radius": 30,
+      "armor_damage_modifiers": {
+        "Unarmored": 1.2,
+        "Light": 1.15,
+        "Medium": 0.45,
+        "Heavy": 0.13,
+        "Submerged": 0,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface"
+      ]
     },
     {
       "id": "weapon.iowa_aa",
@@ -223,6 +223,7 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 360,
+      "base_projectile_speed": 320,
       "projectile_speed": 160,
       "spread": 0,
       "impact_radius": 18,
@@ -240,8 +241,7 @@
       },
       "target_types": [
         "Air"
-      ],
-      "base_projectile_speed": 320
+      ]
     },
     {
       "id": "weapon.san_diego_127_he",
@@ -258,25 +258,12 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 320,
+      "base_projectile_speed": 330,
       "projectile_speed": 165,
       "spread": 18,
       "impact_radius": 15,
       "accuracy_modifier": 0.03,
       "shared_cooldown_group": "san_diego_gun",
-      "projectile_id": "projectile.shell",
-      "formula_id": "formula.small_he",
-      "armor_damage_modifiers": {
-        "Unarmored": 1.2,
-        "Light": 1.15,
-        "Medium": 0.45,
-        "Heavy": 0.13,
-        "Submerged": 0,
-        "Air": 0
-      },
-      "target_types": [
-        "Surface"
-      ],
-      "base_projectile_speed": 330,
       "full_salvo_fire_arcs": [
         {
           "center": -90,
@@ -287,7 +274,20 @@
           "degrees": 120
         }
       ],
-      "base_impact_radius": 30
+      "projectile_id": "projectile.shell",
+      "formula_id": "formula.small_he",
+      "base_impact_radius": 30,
+      "armor_damage_modifiers": {
+        "Unarmored": 1.2,
+        "Light": 1.15,
+        "Medium": 0.45,
+        "Heavy": 0.13,
+        "Submerged": 0,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface"
+      ]
     },
     {
       "id": "weapon.san_diego_torpedo",
@@ -304,8 +304,9 @@
       "minimum_range": 20,
       "fire_arc_center": 90,
       "fire_arc_degrees": 70,
+      "base_projectile_speed": 140,
       "projectile_speed": 70,
-      "spread": 14,
+      "spread": 22.935322375646066,
       "impact_radius": 0,
       "accuracy_modifier": 0,
       "shared_cooldown_group": "",
@@ -323,6 +324,29 @@
         "Surface",
         "Submerged"
       ],
+      "torpedo_lane_spacing": 80,
+      "mount_launch_interval": 1,
+      "torpedo_angular_sigma_ratio": 0.2,
+      "mount_fire_arcs": [
+        {
+          "mount_id": "mount_1",
+          "fire_arcs": [
+            {
+              "center": -90,
+              "degrees": 70
+            }
+          ]
+        },
+        {
+          "mount_id": "mount_2",
+          "fire_arcs": [
+            {
+              "center": 90,
+              "degrees": 70
+            }
+          ]
+        }
+      ],
       "fire_arcs": [
         {
           "center": -90,
@@ -332,8 +356,7 @@
           "center": 90,
           "degrees": 70
         }
-      ],
-      "base_projectile_speed": 140
+      ]
     },
     {
       "id": "weapon.san_diego_aa_heavy",
@@ -350,6 +373,7 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 360,
+      "base_projectile_speed": 320,
       "projectile_speed": 160,
       "spread": 0,
       "impact_radius": 18,
@@ -367,8 +391,7 @@
       },
       "target_types": [
         "Air"
-      ],
-      "base_projectile_speed": 320
+      ]
     },
     {
       "id": "weapon.san_diego_aa_rapid",
@@ -385,6 +408,7 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 360,
+      "base_projectile_speed": 320,
       "projectile_speed": 160,
       "spread": 0,
       "impact_radius": 18,
@@ -402,8 +426,7 @@
       },
       "target_types": [
         "Air"
-      ],
-      "base_projectile_speed": 320
+      ]
     },
     {
       "id": "weapon.ward_102_he",
@@ -420,25 +443,12 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 300,
+      "base_projectile_speed": 300,
       "projectile_speed": 150,
       "spread": 20,
       "impact_radius": 15,
       "accuracy_modifier": 0.02,
       "shared_cooldown_group": "ward_gun",
-      "projectile_id": "projectile.shell",
-      "formula_id": "formula.small_he",
-      "armor_damage_modifiers": {
-        "Unarmored": 1.2,
-        "Light": 1.15,
-        "Medium": 0.45,
-        "Heavy": 0.13,
-        "Submerged": 0,
-        "Air": 0
-      },
-      "target_types": [
-        "Surface"
-      ],
-      "base_projectile_speed": 300,
       "full_salvo_fire_arcs": [
         {
           "center": -90,
@@ -449,7 +459,20 @@
           "degrees": 120
         }
       ],
-      "base_impact_radius": 30
+      "projectile_id": "projectile.shell",
+      "formula_id": "formula.small_he",
+      "base_impact_radius": 30,
+      "armor_damage_modifiers": {
+        "Unarmored": 1.2,
+        "Light": 1.15,
+        "Medium": 0.45,
+        "Heavy": 0.13,
+        "Submerged": 0,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface"
+      ]
     },
     {
       "id": "weapon.ward_torpedo",
@@ -466,8 +489,9 @@
       "minimum_range": 20,
       "fire_arc_center": 90,
       "fire_arc_degrees": 70,
+      "base_projectile_speed": 150,
       "projectile_speed": 75,
-      "spread": 14,
+      "spread": 14.561103502461009,
       "impact_radius": 0,
       "accuracy_modifier": 0,
       "shared_cooldown_group": "",
@@ -485,6 +509,47 @@
         "Surface",
         "Submerged"
       ],
+      "torpedo_lane_spacing": 80,
+      "mount_launch_interval": 1,
+      "torpedo_angular_sigma_ratio": 0.2,
+      "mount_fire_arcs": [
+        {
+          "mount_id": "mount_1",
+          "fire_arcs": [
+            {
+              "center": -90,
+              "degrees": 70
+            }
+          ]
+        },
+        {
+          "mount_id": "mount_2",
+          "fire_arcs": [
+            {
+              "center": -90,
+              "degrees": 70
+            }
+          ]
+        },
+        {
+          "mount_id": "mount_3",
+          "fire_arcs": [
+            {
+              "center": 90,
+              "degrees": 70
+            }
+          ]
+        },
+        {
+          "mount_id": "mount_4",
+          "fire_arcs": [
+            {
+              "center": 90,
+              "degrees": 70
+            }
+          ]
+        }
+      ],
       "fire_arcs": [
         {
           "center": -90,
@@ -494,8 +559,7 @@
           "center": 90,
           "degrees": 70
         }
-      ],
-      "base_projectile_speed": 150
+      ]
     },
     {
       "id": "weapon.hood_381_ap",
@@ -512,25 +576,12 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 290,
+      "base_projectile_speed": 420,
       "projectile_speed": 210,
       "spread": 18,
       "impact_radius": 24,
       "accuracy_modifier": 0.03,
       "shared_cooldown_group": "hood_main",
-      "projectile_id": "projectile.shell",
-      "formula_id": "formula.large_ap",
-      "armor_damage_modifiers": {
-        "Unarmored": 0.65,
-        "Light": 0.45,
-        "Medium": 1.1,
-        "Heavy": 1.25,
-        "Submerged": 0,
-        "Air": 0
-      },
-      "target_types": [
-        "Surface"
-      ],
-      "base_projectile_speed": 420,
       "full_salvo_fire_arcs": [
         {
           "center": -90,
@@ -541,7 +592,20 @@
           "degrees": 110
         }
       ],
-      "base_impact_radius": 48
+      "projectile_id": "projectile.shell",
+      "formula_id": "formula.large_ap",
+      "base_impact_radius": 48,
+      "armor_damage_modifiers": {
+        "Unarmored": 0.65,
+        "Light": 0.45,
+        "Medium": 1.1,
+        "Heavy": 1.25,
+        "Submerged": 0,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface"
+      ]
     },
     {
       "id": "weapon.hood_381_he",
@@ -558,25 +622,12 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 290,
+      "base_projectile_speed": 390,
       "projectile_speed": 195,
       "spread": 24,
       "impact_radius": 24,
       "accuracy_modifier": 0,
       "shared_cooldown_group": "hood_main",
-      "projectile_id": "projectile.shell",
-      "formula_id": "formula.large_he",
-      "armor_damage_modifiers": {
-        "Unarmored": 1,
-        "Light": 1.1,
-        "Medium": 0.95,
-        "Heavy": 0.75,
-        "Submerged": 0,
-        "Air": 0
-      },
-      "target_types": [
-        "Surface"
-      ],
-      "base_projectile_speed": 390,
       "full_salvo_fire_arcs": [
         {
           "center": -90,
@@ -587,7 +638,20 @@
           "degrees": 110
         }
       ],
-      "base_impact_radius": 48
+      "projectile_id": "projectile.shell",
+      "formula_id": "formula.large_he",
+      "base_impact_radius": 48,
+      "armor_damage_modifiers": {
+        "Unarmored": 1,
+        "Light": 1.1,
+        "Medium": 0.95,
+        "Heavy": 0.75,
+        "Submerged": 0,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface"
+      ]
     },
     {
       "id": "weapon.hood_secondary",
@@ -604,25 +668,12 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 300,
+      "base_projectile_speed": 300,
       "projectile_speed": 150,
       "spread": 18,
       "impact_radius": 20,
       "accuracy_modifier": 0.01,
       "shared_cooldown_group": "hood_secondary",
-      "projectile_id": "projectile.shell",
-      "formula_id": "formula.medium_he",
-      "armor_damage_modifiers": {
-        "Unarmored": 1.15,
-        "Light": 1.2,
-        "Medium": 0.8,
-        "Heavy": 0.45,
-        "Submerged": 0,
-        "Air": 0
-      },
-      "target_types": [
-        "Surface"
-      ],
-      "base_projectile_speed": 300,
       "full_salvo_fire_arcs": [
         {
           "center": -90,
@@ -633,7 +684,20 @@
           "degrees": 120
         }
       ],
-      "base_impact_radius": 40
+      "projectile_id": "projectile.shell",
+      "formula_id": "formula.medium_he",
+      "base_impact_radius": 40,
+      "armor_damage_modifiers": {
+        "Unarmored": 1.15,
+        "Light": 1.2,
+        "Medium": 0.8,
+        "Heavy": 0.45,
+        "Submerged": 0,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface"
+      ]
     },
     {
       "id": "weapon.sirius_133_he",
@@ -650,25 +714,12 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 310,
+      "base_projectile_speed": 330,
       "projectile_speed": 165,
       "spread": 18,
       "impact_radius": 15,
       "accuracy_modifier": 0.03,
       "shared_cooldown_group": "sirius_main",
-      "projectile_id": "projectile.shell",
-      "formula_id": "formula.small_he",
-      "armor_damage_modifiers": {
-        "Unarmored": 1.2,
-        "Light": 1.15,
-        "Medium": 0.45,
-        "Heavy": 0.13,
-        "Submerged": 0,
-        "Air": 0
-      },
-      "target_types": [
-        "Surface"
-      ],
-      "base_projectile_speed": 330,
       "full_salvo_fire_arcs": [
         {
           "center": -90,
@@ -679,7 +730,20 @@
           "degrees": 120
         }
       ],
-      "base_impact_radius": 30
+      "projectile_id": "projectile.shell",
+      "formula_id": "formula.small_he",
+      "base_impact_radius": 30,
+      "armor_damage_modifiers": {
+        "Unarmored": 1.2,
+        "Light": 1.15,
+        "Medium": 0.45,
+        "Heavy": 0.13,
+        "Submerged": 0,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface"
+      ]
     },
     {
       "id": "weapon.sirius_aa",
@@ -696,6 +760,7 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 360,
+      "base_projectile_speed": 320,
       "projectile_speed": 160,
       "spread": 0,
       "impact_radius": 18,
@@ -713,8 +778,7 @@
       },
       "target_types": [
         "Air"
-      ],
-      "base_projectile_speed": 320
+      ]
     },
     {
       "id": "weapon.argus_airstrike",
@@ -731,6 +795,7 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 360,
+      "base_projectile_speed": 150,
       "projectile_speed": 75,
       "spread": 28,
       "impact_radius": 48,
@@ -748,8 +813,7 @@
       },
       "target_types": [
         "Surface"
-      ],
-      "base_projectile_speed": 150
+      ]
     },
     {
       "id": "weapon.argus_aa",
@@ -766,6 +830,7 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 360,
+      "base_projectile_speed": 320,
       "projectile_speed": 160,
       "spread": 0,
       "impact_radius": 18,
@@ -783,8 +848,7 @@
       },
       "target_types": [
         "Air"
-      ],
-      "base_projectile_speed": 320
+      ]
     },
     {
       "id": "weapon.kirov_180_ap",
@@ -801,25 +865,12 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 300,
+      "base_projectile_speed": 380,
       "projectile_speed": 190,
       "spread": 16,
       "impact_radius": 20,
       "accuracy_modifier": 0.03,
       "shared_cooldown_group": "kirov_main",
-      "projectile_id": "projectile.shell",
-      "formula_id": "formula.medium_ap",
-      "armor_damage_modifiers": {
-        "Unarmored": 0.8,
-        "Light": 0.65,
-        "Medium": 1.05,
-        "Heavy": 0.95,
-        "Submerged": 0,
-        "Air": 0
-      },
-      "target_types": [
-        "Surface"
-      ],
-      "base_projectile_speed": 380,
       "full_salvo_fire_arcs": [
         {
           "center": -90,
@@ -830,7 +881,20 @@
           "degrees": 120
         }
       ],
-      "base_impact_radius": 40
+      "projectile_id": "projectile.shell",
+      "formula_id": "formula.medium_ap",
+      "base_impact_radius": 40,
+      "armor_damage_modifiers": {
+        "Unarmored": 0.8,
+        "Light": 0.65,
+        "Medium": 1.05,
+        "Heavy": 0.95,
+        "Submerged": 0,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface"
+      ]
     },
     {
       "id": "weapon.kirov_180_he",
@@ -847,25 +911,12 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 300,
+      "base_projectile_speed": 350,
       "projectile_speed": 175,
       "spread": 22,
       "impact_radius": 20,
       "accuracy_modifier": 0.01,
       "shared_cooldown_group": "kirov_main",
-      "projectile_id": "projectile.shell",
-      "formula_id": "formula.medium_he",
-      "armor_damage_modifiers": {
-        "Unarmored": 1.15,
-        "Light": 1.2,
-        "Medium": 0.8,
-        "Heavy": 0.45,
-        "Submerged": 0,
-        "Air": 0
-      },
-      "target_types": [
-        "Surface"
-      ],
-      "base_projectile_speed": 350,
       "full_salvo_fire_arcs": [
         {
           "center": -90,
@@ -876,7 +927,20 @@
           "degrees": 120
         }
       ],
-      "base_impact_radius": 40
+      "projectile_id": "projectile.shell",
+      "formula_id": "formula.medium_he",
+      "base_impact_radius": 40,
+      "armor_damage_modifiers": {
+        "Unarmored": 1.15,
+        "Light": 1.2,
+        "Medium": 0.8,
+        "Heavy": 0.45,
+        "Submerged": 0,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface"
+      ]
     },
     {
       "id": "weapon.kirov_torpedo",
@@ -893,8 +957,9 @@
       "minimum_range": 20,
       "fire_arc_center": 90,
       "fire_arc_degrees": 70,
+      "base_projectile_speed": 145,
       "projectile_speed": 72.5,
-      "spread": 12,
+      "spread": 14.222032638967923,
       "impact_radius": 0,
       "accuracy_modifier": 0,
       "shared_cooldown_group": "",
@@ -912,6 +977,29 @@
         "Surface",
         "Submerged"
       ],
+      "torpedo_lane_spacing": 80,
+      "mount_launch_interval": 1,
+      "torpedo_angular_sigma_ratio": 0.2,
+      "mount_fire_arcs": [
+        {
+          "mount_id": "mount_1",
+          "fire_arcs": [
+            {
+              "center": -90,
+              "degrees": 70
+            }
+          ]
+        },
+        {
+          "mount_id": "mount_2",
+          "fire_arcs": [
+            {
+              "center": 90,
+              "degrees": 70
+            }
+          ]
+        }
+      ],
       "fire_arcs": [
         {
           "center": -90,
@@ -921,8 +1009,7 @@
           "center": 90,
           "degrees": 70
         }
-      ],
-      "base_projectile_speed": 145
+      ]
     },
     {
       "id": "weapon.pobeda_bomber",
@@ -939,6 +1026,7 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 360,
+      "base_projectile_speed": 170,
       "projectile_speed": 85,
       "spread": 24,
       "impact_radius": 48,
@@ -956,8 +1044,7 @@
       },
       "target_types": [
         "Surface"
-      ],
-      "base_projectile_speed": 170
+      ]
     },
     {
       "id": "weapon.pobeda_ap_bomber",
@@ -974,6 +1061,7 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 360,
+      "base_projectile_speed": 160,
       "projectile_speed": 80,
       "spread": 18,
       "impact_radius": 48,
@@ -991,8 +1079,7 @@
       },
       "target_types": [
         "Surface"
-      ],
-      "base_projectile_speed": 160
+      ]
     },
     {
       "id": "weapon.gnevny_130_he",
@@ -1009,25 +1096,12 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 300,
+      "base_projectile_speed": 320,
       "projectile_speed": 160,
       "spread": 20,
       "impact_radius": 15,
       "accuracy_modifier": 0.01,
       "shared_cooldown_group": "gnevny_gun",
-      "projectile_id": "projectile.shell",
-      "formula_id": "formula.small_he",
-      "armor_damage_modifiers": {
-        "Unarmored": 1.2,
-        "Light": 1.15,
-        "Medium": 0.45,
-        "Heavy": 0.13,
-        "Submerged": 0,
-        "Air": 0
-      },
-      "target_types": [
-        "Surface"
-      ],
-      "base_projectile_speed": 320,
       "full_salvo_fire_arcs": [
         {
           "center": -90,
@@ -1038,7 +1112,20 @@
           "degrees": 120
         }
       ],
-      "base_impact_radius": 30
+      "projectile_id": "projectile.shell",
+      "formula_id": "formula.small_he",
+      "base_impact_radius": 30,
+      "armor_damage_modifiers": {
+        "Unarmored": 1.2,
+        "Light": 1.15,
+        "Medium": 0.45,
+        "Heavy": 0.13,
+        "Submerged": 0,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface"
+      ]
     },
     {
       "id": "weapon.gnevny_torpedo",
@@ -1055,8 +1142,9 @@
       "minimum_range": 20,
       "fire_arc_center": 90,
       "fire_arc_degrees": 70,
+      "base_projectile_speed": 150,
       "projectile_speed": 75,
-      "spread": 12,
+      "spread": 13.898403172288829,
       "impact_radius": 0,
       "accuracy_modifier": 0,
       "shared_cooldown_group": "",
@@ -1074,6 +1162,37 @@
         "Surface",
         "Submerged"
       ],
+      "torpedo_lane_spacing": 80,
+      "mount_launch_interval": 1,
+      "torpedo_angular_sigma_ratio": 0.2,
+      "mount_fire_arcs": [
+        {
+          "mount_id": "mount_1",
+          "fire_arcs": [
+            {
+              "center": -90,
+              "degrees": 70
+            },
+            {
+              "center": 90,
+              "degrees": 70
+            }
+          ]
+        },
+        {
+          "mount_id": "mount_2",
+          "fire_arcs": [
+            {
+              "center": -90,
+              "degrees": 70
+            },
+            {
+              "center": 90,
+              "degrees": 70
+            }
+          ]
+        }
+      ],
       "fire_arcs": [
         {
           "center": -90,
@@ -1083,8 +1202,7 @@
           "center": 90,
           "degrees": 70
         }
-      ],
-      "base_projectile_speed": 150
+      ]
     },
     {
       "id": "weapon.prinz_203_ap",
@@ -1101,25 +1219,12 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 300,
+      "base_projectile_speed": 380,
       "projectile_speed": 190,
       "spread": 16,
       "impact_radius": 20,
       "accuracy_modifier": 0.04,
       "shared_cooldown_group": "prinz_main",
-      "projectile_id": "projectile.shell",
-      "formula_id": "formula.medium_ap",
-      "armor_damage_modifiers": {
-        "Unarmored": 0.8,
-        "Light": 0.65,
-        "Medium": 1.05,
-        "Heavy": 0.95,
-        "Submerged": 0,
-        "Air": 0
-      },
-      "target_types": [
-        "Surface"
-      ],
-      "base_projectile_speed": 380,
       "full_salvo_fire_arcs": [
         {
           "center": -90,
@@ -1130,7 +1235,20 @@
           "degrees": 120
         }
       ],
-      "base_impact_radius": 40
+      "projectile_id": "projectile.shell",
+      "formula_id": "formula.medium_ap",
+      "base_impact_radius": 40,
+      "armor_damage_modifiers": {
+        "Unarmored": 0.8,
+        "Light": 0.65,
+        "Medium": 1.05,
+        "Heavy": 0.95,
+        "Submerged": 0,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface"
+      ]
     },
     {
       "id": "weapon.prinz_203_he",
@@ -1147,25 +1265,12 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 300,
+      "base_projectile_speed": 350,
       "projectile_speed": 175,
       "spread": 22,
       "impact_radius": 20,
       "accuracy_modifier": 0.01,
       "shared_cooldown_group": "prinz_main",
-      "projectile_id": "projectile.shell",
-      "formula_id": "formula.medium_he",
-      "armor_damage_modifiers": {
-        "Unarmored": 1.15,
-        "Light": 1.2,
-        "Medium": 0.8,
-        "Heavy": 0.45,
-        "Submerged": 0,
-        "Air": 0
-      },
-      "target_types": [
-        "Surface"
-      ],
-      "base_projectile_speed": 350,
       "full_salvo_fire_arcs": [
         {
           "center": -90,
@@ -1176,7 +1281,20 @@
           "degrees": 120
         }
       ],
-      "base_impact_radius": 40
+      "projectile_id": "projectile.shell",
+      "formula_id": "formula.medium_he",
+      "base_impact_radius": 40,
+      "armor_damage_modifiers": {
+        "Unarmored": 1.15,
+        "Light": 1.2,
+        "Medium": 0.8,
+        "Heavy": 0.45,
+        "Submerged": 0,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface"
+      ]
     },
     {
       "id": "weapon.prinz_torpedo",
@@ -1193,8 +1311,9 @@
       "minimum_range": 20,
       "fire_arc_center": 90,
       "fire_arc_degrees": 75,
+      "base_projectile_speed": 145,
       "projectile_speed": 72.5,
-      "spread": 12,
+      "spread": 14.222032638967923,
       "impact_radius": 0,
       "accuracy_modifier": 0,
       "shared_cooldown_group": "",
@@ -1212,6 +1331,29 @@
         "Surface",
         "Submerged"
       ],
+      "torpedo_lane_spacing": 80,
+      "mount_launch_interval": 1,
+      "torpedo_angular_sigma_ratio": 0.2,
+      "mount_fire_arcs": [
+        {
+          "mount_id": "mount_1",
+          "fire_arcs": [
+            {
+              "center": -90,
+              "degrees": 75
+            }
+          ]
+        },
+        {
+          "mount_id": "mount_2",
+          "fire_arcs": [
+            {
+              "center": 90,
+              "degrees": 75
+            }
+          ]
+        }
+      ],
       "fire_arcs": [
         {
           "center": -90,
@@ -1221,8 +1363,7 @@
           "center": 90,
           "degrees": 75
         }
-      ],
-      "base_projectile_speed": 145
+      ]
     },
     {
       "id": "weapon.u47_fore_torpedo",
@@ -1239,8 +1380,9 @@
       "minimum_range": 20,
       "fire_arc_center": 0,
       "fire_arc_degrees": 110,
+      "base_projectile_speed": 155,
       "projectile_speed": 77.5,
-      "spread": 8,
+      "spread": 19.515426310155956,
       "impact_radius": 0,
       "accuracy_modifier": 0,
       "shared_cooldown_group": "",
@@ -1258,13 +1400,26 @@
         "Surface",
         "Submerged"
       ],
+      "torpedo_lane_spacing": 80,
+      "mount_launch_interval": 1,
+      "torpedo_angular_sigma_ratio": 0.2,
+      "mount_fire_arcs": [
+        {
+          "mount_id": "mount_1",
+          "fire_arcs": [
+            {
+              "center": 0,
+              "degrees": 110
+            }
+          ]
+        }
+      ],
       "fire_arcs": [
         {
           "center": 0,
           "degrees": 110
         }
-      ],
-      "base_projectile_speed": 155
+      ]
     },
     {
       "id": "weapon.u47_aft_torpedo",
@@ -1281,8 +1436,9 @@
       "minimum_range": 20,
       "fire_arc_center": 180,
       "fire_arc_degrees": 90,
+      "base_projectile_speed": 145,
       "projectile_speed": 72.5,
-      "spread": 10,
+      "spread": 0,
       "impact_radius": 0,
       "accuracy_modifier": 0,
       "shared_cooldown_group": "",
@@ -1300,13 +1456,26 @@
         "Surface",
         "Submerged"
       ],
+      "torpedo_lane_spacing": 80,
+      "mount_launch_interval": 1,
+      "torpedo_angular_sigma_ratio": 0.2,
+      "mount_fire_arcs": [
+        {
+          "mount_id": "mount_1",
+          "fire_arcs": [
+            {
+              "center": 180,
+              "degrees": 90
+            }
+          ]
+        }
+      ],
       "fire_arcs": [
         {
           "center": 180,
           "degrees": 90
         }
-      ],
-      "base_projectile_speed": 145
+      ]
     },
     {
       "id": "weapon.yamato_460_ap",
@@ -1323,25 +1492,12 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 270,
+      "base_projectile_speed": 440,
       "projectile_speed": 220,
       "spread": 20,
       "impact_radius": 24,
       "accuracy_modifier": 0.02,
       "shared_cooldown_group": "yamato_main",
-      "projectile_id": "projectile.shell",
-      "formula_id": "formula.large_ap",
-      "armor_damage_modifiers": {
-        "Unarmored": 0.65,
-        "Light": 0.45,
-        "Medium": 1.1,
-        "Heavy": 1.25,
-        "Submerged": 0,
-        "Air": 0
-      },
-      "target_types": [
-        "Surface"
-      ],
-      "base_projectile_speed": 440,
       "full_salvo_fire_arcs": [
         {
           "center": -90,
@@ -1352,7 +1508,20 @@
           "degrees": 90
         }
       ],
-      "base_impact_radius": 48
+      "projectile_id": "projectile.shell",
+      "formula_id": "formula.large_ap",
+      "base_impact_radius": 48,
+      "armor_damage_modifiers": {
+        "Unarmored": 0.65,
+        "Light": 0.45,
+        "Medium": 1.1,
+        "Heavy": 1.25,
+        "Submerged": 0,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface"
+      ]
     },
     {
       "id": "weapon.yamato_460_he",
@@ -1369,25 +1538,12 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 270,
+      "base_projectile_speed": 400,
       "projectile_speed": 200,
       "spread": 28,
       "impact_radius": 24,
       "accuracy_modifier": 0,
       "shared_cooldown_group": "yamato_main",
-      "projectile_id": "projectile.shell",
-      "formula_id": "formula.large_he",
-      "armor_damage_modifiers": {
-        "Unarmored": 1,
-        "Light": 1.1,
-        "Medium": 0.95,
-        "Heavy": 0.75,
-        "Submerged": 0,
-        "Air": 0
-      },
-      "target_types": [
-        "Surface"
-      ],
-      "base_projectile_speed": 400,
       "full_salvo_fire_arcs": [
         {
           "center": -90,
@@ -1398,7 +1554,20 @@
           "degrees": 90
         }
       ],
-      "base_impact_radius": 48
+      "projectile_id": "projectile.shell",
+      "formula_id": "formula.large_he",
+      "base_impact_radius": 48,
+      "armor_damage_modifiers": {
+        "Unarmored": 1,
+        "Light": 1.1,
+        "Medium": 0.95,
+        "Heavy": 0.75,
+        "Submerged": 0,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface"
+      ]
     },
     {
       "id": "weapon.yamato_155_he",
@@ -1415,25 +1584,12 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 280,
+      "base_projectile_speed": 320,
       "projectile_speed": 160,
       "spread": 22,
       "impact_radius": 20,
       "accuracy_modifier": 0.01,
       "shared_cooldown_group": "yamato_secondary",
-      "projectile_id": "projectile.shell",
-      "formula_id": "formula.medium_he",
-      "armor_damage_modifiers": {
-        "Unarmored": 1.15,
-        "Light": 1.2,
-        "Medium": 0.8,
-        "Heavy": 0.45,
-        "Submerged": 0,
-        "Air": 0
-      },
-      "target_types": [
-        "Surface"
-      ],
-      "base_projectile_speed": 320,
       "full_salvo_fire_arcs": [
         {
           "center": -90,
@@ -1444,7 +1600,20 @@
           "degrees": 100
         }
       ],
-      "base_impact_radius": 40
+      "projectile_id": "projectile.shell",
+      "formula_id": "formula.medium_he",
+      "base_impact_radius": 40,
+      "armor_damage_modifiers": {
+        "Unarmored": 1.15,
+        "Light": 1.2,
+        "Medium": 0.8,
+        "Heavy": 0.45,
+        "Submerged": 0,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface"
+      ]
     },
     {
       "id": "weapon.yukikaze_127_he",
@@ -1461,25 +1630,12 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 310,
+      "base_projectile_speed": 320,
       "projectile_speed": 160,
       "spread": 18,
       "impact_radius": 15,
       "accuracy_modifier": 0.03,
       "shared_cooldown_group": "yukikaze_gun",
-      "projectile_id": "projectile.shell",
-      "formula_id": "formula.small_he",
-      "armor_damage_modifiers": {
-        "Unarmored": 1.2,
-        "Light": 1.15,
-        "Medium": 0.45,
-        "Heavy": 0.13,
-        "Submerged": 0,
-        "Air": 0
-      },
-      "target_types": [
-        "Surface"
-      ],
-      "base_projectile_speed": 320,
       "full_salvo_fire_arcs": [
         {
           "center": -90,
@@ -1490,7 +1646,20 @@
           "degrees": 120
         }
       ],
-      "base_impact_radius": 30
+      "projectile_id": "projectile.shell",
+      "formula_id": "formula.small_he",
+      "base_impact_radius": 30,
+      "armor_damage_modifiers": {
+        "Unarmored": 1.2,
+        "Light": 1.15,
+        "Medium": 0.45,
+        "Heavy": 0.13,
+        "Submerged": 0,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface"
+      ]
     },
     {
       "id": "weapon.yukikaze_torpedo",
@@ -1507,8 +1676,9 @@
       "minimum_range": 20,
       "fire_arc_center": 90,
       "fire_arc_degrees": 70,
+      "base_projectile_speed": 165,
       "projectile_speed": 82.5,
-      "spread": 10,
+      "spread": 18.343352570755744,
       "impact_radius": 0,
       "accuracy_modifier": 0,
       "shared_cooldown_group": "",
@@ -1526,6 +1696,37 @@
         "Surface",
         "Submerged"
       ],
+      "torpedo_lane_spacing": 80,
+      "mount_launch_interval": 1,
+      "torpedo_angular_sigma_ratio": 0.2,
+      "mount_fire_arcs": [
+        {
+          "mount_id": "mount_1",
+          "fire_arcs": [
+            {
+              "center": -90,
+              "degrees": 70
+            },
+            {
+              "center": 90,
+              "degrees": 70
+            }
+          ]
+        },
+        {
+          "mount_id": "mount_2",
+          "fire_arcs": [
+            {
+              "center": -90,
+              "degrees": 70
+            },
+            {
+              "center": 90,
+              "degrees": 70
+            }
+          ]
+        }
+      ],
       "fire_arcs": [
         {
           "center": -90,
@@ -1535,8 +1736,7 @@
           "center": 90,
           "degrees": 70
         }
-      ],
-      "base_projectile_speed": 165
+      ]
     },
     {
       "id": "weapon.hosho_airstrike",
@@ -1553,6 +1753,7 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 360,
+      "base_projectile_speed": 150,
       "projectile_speed": 75,
       "spread": 28,
       "impact_radius": 48,
@@ -1570,8 +1771,7 @@
       },
       "target_types": [
         "Surface"
-      ],
-      "base_projectile_speed": 150
+      ]
     },
     {
       "id": "weapon.ning_140_he",
@@ -1588,25 +1788,12 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 300,
+      "base_projectile_speed": 320,
       "projectile_speed": 160,
       "spread": 20,
       "impact_radius": 20,
       "accuracy_modifier": 0.02,
       "shared_cooldown_group": "ning_main",
-      "projectile_id": "projectile.shell",
-      "formula_id": "formula.medium_he",
-      "armor_damage_modifiers": {
-        "Unarmored": 1.15,
-        "Light": 1.2,
-        "Medium": 0.8,
-        "Heavy": 0.45,
-        "Submerged": 0,
-        "Air": 0
-      },
-      "target_types": [
-        "Surface"
-      ],
-      "base_projectile_speed": 320,
       "full_salvo_fire_arcs": [
         {
           "center": -90,
@@ -1617,7 +1804,20 @@
           "degrees": 120
         }
       ],
-      "base_impact_radius": 40
+      "projectile_id": "projectile.shell",
+      "formula_id": "formula.medium_he",
+      "base_impact_radius": 40,
+      "armor_damage_modifiers": {
+        "Unarmored": 1.15,
+        "Light": 1.2,
+        "Medium": 0.8,
+        "Heavy": 0.45,
+        "Submerged": 0,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface"
+      ]
     },
     {
       "id": "weapon.ning_140_ap",
@@ -1634,25 +1834,12 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 300,
+      "base_projectile_speed": 340,
       "projectile_speed": 170,
       "spread": 16,
       "impact_radius": 20,
       "accuracy_modifier": 0,
       "shared_cooldown_group": "ning_main",
-      "projectile_id": "projectile.shell",
-      "formula_id": "formula.medium_ap",
-      "armor_damage_modifiers": {
-        "Unarmored": 0.8,
-        "Light": 0.65,
-        "Medium": 1.05,
-        "Heavy": 0.95,
-        "Submerged": 0,
-        "Air": 0
-      },
-      "target_types": [
-        "Surface"
-      ],
-      "base_projectile_speed": 340,
       "full_salvo_fire_arcs": [
         {
           "center": -90,
@@ -1663,7 +1850,20 @@
           "degrees": 120
         }
       ],
-      "base_impact_radius": 40
+      "projectile_id": "projectile.shell",
+      "formula_id": "formula.medium_ap",
+      "base_impact_radius": 40,
+      "armor_damage_modifiers": {
+        "Unarmored": 0.8,
+        "Light": 0.65,
+        "Medium": 1.05,
+        "Heavy": 0.95,
+        "Submerged": 0,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface"
+      ]
     },
     {
       "id": "weapon.ning_torpedo",
@@ -1680,8 +1880,9 @@
       "minimum_range": 20,
       "fire_arc_center": 90,
       "fire_arc_degrees": 70,
+      "base_projectile_speed": 140,
       "projectile_speed": 70,
-      "spread": 14,
+      "spread": 7.645107458548689,
       "impact_radius": 0,
       "accuracy_modifier": 0,
       "shared_cooldown_group": "",
@@ -1699,6 +1900,29 @@
         "Surface",
         "Submerged"
       ],
+      "torpedo_lane_spacing": 80,
+      "mount_launch_interval": 1,
+      "torpedo_angular_sigma_ratio": 0.2,
+      "mount_fire_arcs": [
+        {
+          "mount_id": "mount_1",
+          "fire_arcs": [
+            {
+              "center": -90,
+              "degrees": 70
+            }
+          ]
+        },
+        {
+          "mount_id": "mount_2",
+          "fire_arcs": [
+            {
+              "center": 90,
+              "degrees": 70
+            }
+          ]
+        }
+      ],
       "fire_arcs": [
         {
           "center": -90,
@@ -1708,8 +1932,7 @@
           "center": 90,
           "degrees": 70
         }
-      ],
-      "base_projectile_speed": 140
+      ]
     },
     {
       "id": "weapon.ning_aa",
@@ -1726,6 +1949,7 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 360,
+      "base_projectile_speed": 320,
       "projectile_speed": 160,
       "spread": 0,
       "impact_radius": 18,
@@ -1743,8 +1967,7 @@
       },
       "target_types": [
         "Air"
-      ],
-      "base_projectile_speed": 320
+      ]
     },
     {
       "id": "weapon.anshan_130_he",
@@ -1761,25 +1984,12 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 310,
+      "base_projectile_speed": 330,
       "projectile_speed": 165,
       "spread": 18,
       "impact_radius": 15,
       "accuracy_modifier": 0.03,
       "shared_cooldown_group": "anshan_gun",
-      "projectile_id": "projectile.shell",
-      "formula_id": "formula.small_he",
-      "armor_damage_modifiers": {
-        "Unarmored": 1.2,
-        "Light": 1.15,
-        "Medium": 0.45,
-        "Heavy": 0.13,
-        "Submerged": 0,
-        "Air": 0
-      },
-      "target_types": [
-        "Surface"
-      ],
-      "base_projectile_speed": 330,
       "full_salvo_fire_arcs": [
         {
           "center": -90,
@@ -1790,7 +2000,20 @@
           "degrees": 120
         }
       ],
-      "base_impact_radius": 30
+      "projectile_id": "projectile.shell",
+      "formula_id": "formula.small_he",
+      "base_impact_radius": 30,
+      "armor_damage_modifiers": {
+        "Unarmored": 1.2,
+        "Light": 1.15,
+        "Medium": 0.45,
+        "Heavy": 0.13,
+        "Submerged": 0,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface"
+      ]
     },
     {
       "id": "weapon.anshan_torpedo",
@@ -1807,8 +2030,9 @@
       "minimum_range": 20,
       "fire_arc_center": 90,
       "fire_arc_degrees": 70,
+      "base_projectile_speed": 150,
       "projectile_speed": 75,
-      "spread": 12,
+      "spread": 13.898403172288829,
       "impact_radius": 0,
       "accuracy_modifier": 0,
       "shared_cooldown_group": "",
@@ -1826,6 +2050,37 @@
         "Surface",
         "Submerged"
       ],
+      "torpedo_lane_spacing": 80,
+      "mount_launch_interval": 1,
+      "torpedo_angular_sigma_ratio": 0.2,
+      "mount_fire_arcs": [
+        {
+          "mount_id": "mount_1",
+          "fire_arcs": [
+            {
+              "center": -90,
+              "degrees": 70
+            },
+            {
+              "center": 90,
+              "degrees": 70
+            }
+          ]
+        },
+        {
+          "mount_id": "mount_2",
+          "fire_arcs": [
+            {
+              "center": -90,
+              "degrees": 70
+            },
+            {
+              "center": 90,
+              "degrees": 70
+            }
+          ]
+        }
+      ],
       "fire_arcs": [
         {
           "center": -90,
@@ -1835,8 +2090,7 @@
           "center": 90,
           "degrees": 70
         }
-      ],
-      "base_projectile_speed": 150
+      ]
     },
     {
       "id": "weapon.anshan_aa",
@@ -1853,6 +2107,7 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 360,
+      "base_projectile_speed": 320,
       "projectile_speed": 160,
       "spread": 0,
       "impact_radius": 18,
@@ -1870,8 +2125,7 @@
       },
       "target_types": [
         "Air"
-      ],
-      "base_projectile_speed": 320
+      ]
     },
     {
       "id": "weapon.chongqing_152_he",
@@ -1888,25 +2142,12 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 300,
+      "base_projectile_speed": 330,
       "projectile_speed": 165,
       "spread": 20,
       "impact_radius": 20,
       "accuracy_modifier": 0.03,
       "shared_cooldown_group": "chongqing_main",
-      "projectile_id": "projectile.shell",
-      "formula_id": "formula.medium_he",
-      "armor_damage_modifiers": {
-        "Unarmored": 1.15,
-        "Light": 1.2,
-        "Medium": 0.8,
-        "Heavy": 0.45,
-        "Submerged": 0,
-        "Air": 0
-      },
-      "target_types": [
-        "Surface"
-      ],
-      "base_projectile_speed": 330,
       "full_salvo_fire_arcs": [
         {
           "center": -90,
@@ -1917,7 +2158,20 @@
           "degrees": 120
         }
       ],
-      "base_impact_radius": 40
+      "projectile_id": "projectile.shell",
+      "formula_id": "formula.medium_he",
+      "base_impact_radius": 40,
+      "armor_damage_modifiers": {
+        "Unarmored": 1.15,
+        "Light": 1.2,
+        "Medium": 0.8,
+        "Heavy": 0.45,
+        "Submerged": 0,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface"
+      ]
     },
     {
       "id": "weapon.chongqing_152_ap",
@@ -1934,25 +2188,12 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 300,
+      "base_projectile_speed": 350,
       "projectile_speed": 175,
       "spread": 16,
       "impact_radius": 20,
       "accuracy_modifier": 0.01,
       "shared_cooldown_group": "chongqing_main",
-      "projectile_id": "projectile.shell",
-      "formula_id": "formula.medium_ap",
-      "armor_damage_modifiers": {
-        "Unarmored": 0.8,
-        "Light": 0.65,
-        "Medium": 1.05,
-        "Heavy": 0.95,
-        "Submerged": 0,
-        "Air": 0
-      },
-      "target_types": [
-        "Surface"
-      ],
-      "base_projectile_speed": 350,
       "full_salvo_fire_arcs": [
         {
           "center": -90,
@@ -1963,7 +2204,20 @@
           "degrees": 120
         }
       ],
-      "base_impact_radius": 40
+      "projectile_id": "projectile.shell",
+      "formula_id": "formula.medium_ap",
+      "base_impact_radius": 40,
+      "armor_damage_modifiers": {
+        "Unarmored": 0.8,
+        "Light": 0.65,
+        "Medium": 1.05,
+        "Heavy": 0.95,
+        "Submerged": 0,
+        "Air": 0
+      },
+      "target_types": [
+        "Surface"
+      ]
     },
     {
       "id": "weapon.chongqing_torpedo",
@@ -1980,8 +2234,9 @@
       "minimum_range": 20,
       "fire_arc_center": 90,
       "fire_arc_degrees": 70,
+      "base_projectile_speed": 140,
       "projectile_speed": 70,
-      "spread": 14,
+      "spread": 14.91674871268206,
       "impact_radius": 0,
       "accuracy_modifier": 0,
       "shared_cooldown_group": "",
@@ -1999,6 +2254,29 @@
         "Surface",
         "Submerged"
       ],
+      "torpedo_lane_spacing": 80,
+      "mount_launch_interval": 1,
+      "torpedo_angular_sigma_ratio": 0.2,
+      "mount_fire_arcs": [
+        {
+          "mount_id": "mount_1",
+          "fire_arcs": [
+            {
+              "center": -90,
+              "degrees": 70
+            }
+          ]
+        },
+        {
+          "mount_id": "mount_2",
+          "fire_arcs": [
+            {
+              "center": 90,
+              "degrees": 70
+            }
+          ]
+        }
+      ],
       "fire_arcs": [
         {
           "center": -90,
@@ -2008,8 +2286,7 @@
           "center": 90,
           "degrees": 70
         }
-      ],
-      "base_projectile_speed": 140
+      ]
     },
     {
       "id": "weapon.chongqing_aa",
@@ -2026,6 +2303,7 @@
       "minimum_range": 0,
       "fire_arc_center": 0,
       "fire_arc_degrees": 360,
+      "base_projectile_speed": 320,
       "projectile_speed": 160,
       "spread": 0,
       "impact_radius": 18,
@@ -2043,8 +2321,7 @@
       },
       "target_types": [
         "Air"
-      ],
-      "base_projectile_speed": 320
+      ]
     }
   ]
 }

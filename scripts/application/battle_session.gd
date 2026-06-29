@@ -257,6 +257,8 @@ func get_operation_status(unit_id: String) -> Dictionary:
 	var primary_range := 0.0
 	var primary_name := "None"
 	var primary_mount_type := ""
+	var primary_mounts_ready := 0
+	var group_launch_remaining := float(unit.get("weapon_group_launch_remaining", {}).get(primary_group_id, 0.0))
 	for weapon_state in primary_states:
 		var weapon: Dictionary = registry.get_definition("weapons", str(weapon_state["definition_id"]))
 		if primary_name == "None": primary_name = str(weapon.get("display_name", weapon["id"]))
@@ -264,9 +266,13 @@ func get_operation_status(unit_id: String) -> Dictionary:
 		primary_reload = minf(primary_reload, float(weapon_state.get("reload_remaining", 0.0)))
 		primary_reload_max = maxf(primary_reload_max, float(weapon.get("reload_time", 0.0)))
 		primary_range = maxf(primary_range, float(weapon.get("range", 0.0)))
-		if float(weapon_state.get("reload_remaining", 0.0)) <= 0.0: primary_ready = true
+		if float(weapon_state.get("reload_remaining", 0.0)) <= 0.0:
+			primary_mounts_ready += 1
+			if group_launch_remaining <= 0.0: primary_ready = true
 	if primary_states.is_empty():
 		primary_reload = 0.0
+	else:
+		primary_reload = maxf(primary_reload, group_launch_remaining)
 	var ammo_group_id := str(ship.get("ammo_selection_group_id", ""))
 	var ammo_options := _ammo_options_for_ship(ship, ammo_group_id)
 	var skill_cooldown := float(unit["skill_state"].get("cooldown_remaining", 0.0))
@@ -279,8 +285,11 @@ func get_operation_status(unit_id: String) -> Dictionary:
 		"primary_control_type": ship.get("primary_weapon_control_type", ""),
 		"primary_name": primary_name,
 		"primary_mount_type": primary_mount_type,
+		"primary_mounts_ready": primary_mounts_ready,
+		"primary_mounts_total": primary_states.size(),
 		"primary_reload_remaining": primary_reload,
 		"primary_reload_max": primary_reload_max,
+		"primary_mount_launch_remaining": group_launch_remaining,
 		"primary_range": primary_range,
 		"primary_ready": primary_ready and unit.get("life_state", "") == "Alive" and state.get("phase", "") == "Running",
 		"primary_reason": _primary_unavailable_reason(unit, primary_states),
@@ -377,7 +386,20 @@ func _build_unit(member: Dictionary, ship: Dictionary, fleet_id: String, faction
 	var spawn_position := Vector2(float(position_data[0]), float(position_data[1]))
 	var weapon_states: Array = []
 	for weapon_id in ship.get("weapon_mounts", []):
-		weapon_states.append({"instance_id": "%s.%s" % [member["entity_id"], weapon_id], "definition_id": weapon_id, "reload_remaining": 0.0, "enabled": true})
+		var weapon: Dictionary = registry.get_definition("weapons", str(weapon_id))
+		var mount_fire_arcs: Array = weapon.get("mount_fire_arcs", [])
+		if weapon.get("mount_type", "") == "Torpedo" and weapon.get("control_mode", "") == "ManualPrimary" and not mount_fire_arcs.is_empty():
+			for mount_index in range(mount_fire_arcs.size()):
+				weapon_states.append({
+					"instance_id": "%s.%s.%s" % [member["entity_id"], weapon_id, mount_fire_arcs[mount_index].get("mount_id", "mount_%s" % [mount_index + 1])],
+					"definition_id": weapon_id,
+					"mount_index": mount_index,
+					"mount_id": str(mount_fire_arcs[mount_index].get("mount_id", "mount_%s" % [mount_index + 1])),
+					"reload_remaining": 0.0,
+					"enabled": true,
+				})
+		else:
+			weapon_states.append({"instance_id": "%s.%s" % [member["entity_id"], weapon_id], "definition_id": weapon_id, "mount_index": -1, "mount_id": "", "reload_remaining": 0.0, "enabled": true})
 	var skill: Dictionary = registry.get_definition("skills", str(ship.get("skill_id", "")))
 	return {
 		"entity_id": str(member["entity_id"]),
@@ -397,6 +419,7 @@ func _build_unit(member: Dictionary, ship: Dictionary, fleet_id: String, faction
 		"movement_state": {"mode": "AutoNavigate", "target_position": spawn_position},
 		"targeting_state": {"mode": "Automatic", "focused_target_id": "", "current_target_id": ""},
 		"weapon_states": weapon_states,
+		"weapon_group_launch_remaining": {},
 		"skill_state": {"definition_id": ship.get("skill_id", ""), "cooldown_remaining": float(skill.get("cooldown", 0.0)), "cooldown_max": float(skill.get("cooldown", 0.0))},
 		"ammo_state": _build_ammo_state(ship),
 		"status_effects": [],
@@ -512,6 +535,8 @@ func _update_cooldowns_and_statuses(delta: float) -> void:
 		unit["skill_state"]["cooldown_remaining"] = maxf(0.0, float(unit["skill_state"]["cooldown_remaining"]) - delta)
 		for weapon_state in unit["weapon_states"]:
 			weapon_state["reload_remaining"] = maxf(0.0, float(weapon_state["reload_remaining"]) - delta)
+		for group_id in unit.get("weapon_group_launch_remaining", {}).keys():
+			unit["weapon_group_launch_remaining"][group_id] = maxf(0.0, float(unit["weapon_group_launch_remaining"][group_id]) - delta)
 		for index in range(unit["status_effects"].size() - 1, -1, -1):
 			var effect: Dictionary = unit["status_effects"][index]
 			effect["remaining"] = float(effect.get("remaining", 0.0)) - delta
@@ -880,9 +905,10 @@ func _fire_primary_weapon(unit: Dictionary, target_position: Vector2, command_id
 	var validation := _validate_primary_fire(unit, weapon_states, target_position)
 	if not bool(validation.get("legal", false)):
 		return _rejection(command_id, str(validation.get("reason_code", "PRIMARY_WEAPON_UNAVAILABLE")))
-	for weapon_state in validation.get("legal_weapon_states", []):
-		var weapon: Dictionary = registry.get_definition("weapons", str(weapon_state["definition_id"]))
-		_fire_weapon_at_position(unit, target_position, weapon_state, weapon, true)
+	var legal_states: Array = validation.get("legal_weapon_states", [])
+	var weapon_state: Dictionary = legal_states[0]
+	var weapon: Dictionary = registry.get_definition("weapons", str(weapon_state["definition_id"]))
+	_fire_weapon_at_position(unit, target_position, weapon_state, weapon, true)
 	return {"accepted": true}
 
 
@@ -1076,18 +1102,21 @@ func _positive_intercept_time(relative_position: Vector2, target_velocity: Vecto
 func _fire_weapon(unit: Dictionary, target: Dictionary, weapon_state: Dictionary, weapon: Dictionary, aim_solution: Dictionary = {}) -> void:
 	var category := str(weapon["mount_type"])
 	var extra_shots := int(round(ModifierService.sum_modifier(unit["status_effects"], "ExtraShots", category)))
-	var shot_count := int(weapon["mount_count"]) * int(weapon["shots_per_mount"]) + extra_shots
+	var shot_count := (int(weapon["shots_per_mount"]) if category == "Torpedo" else int(weapon["mount_count"]) * int(weapon["shots_per_mount"])) + extra_shots
 	_set_weapon_reload(unit, weapon_state, weapon)
+	_start_mount_launch_interval(unit, weapon)
 	_mark_unit_fired(unit)
 	var aim_position: Vector2 = aim_solution.get("position", target["position"])
 	var base_heading := (aim_position - (unit["position"] as Vector2)).angle()
+	var torpedo_error_profile := _torpedo_error_profile(unit, weapon, shot_count)
 	var impact_positions: Array = []
 	for shot_index in range(shot_count):
 		var spread_offset := 0.0
 		if shot_count > 1: spread_offset = deg_to_rad(float(weapon.get("spread", 0.0))) * (float(shot_index) / float(shot_count - 1) - 0.5)
 		var attack_id := _next_entity_id("attack")
 		if category == "Torpedo":
-			_spawn_projectile(unit, weapon, attack_id, base_heading + spread_offset)
+			var angular_error: float = random_source.randfn(0.0, float(torpedo_error_profile["sigma_radians"]))
+			_spawn_projectile(unit, weapon, attack_id, base_heading + spread_offset + angular_error, str(weapon_state.get("mount_id", "")), angular_error, float(torpedo_error_profile["sigma_radians"]), float(torpedo_error_profile["environment_multiplier"]))
 		else:
 			var intended_impact := _salvo_impact_position(unit["position"], aim_position, spread_offset, weapon)
 			var terrain_hit := _terrain_hit_for_attack(unit["position"], intended_impact, unit["faction_id"]) if category == "Gun" else {"hit": false}
@@ -1096,24 +1125,27 @@ func _fire_weapon(unit: Dictionary, target: Dictionary, weapon_state: Dictionary
 			var travel_seconds := (unit["position"] as Vector2).distance_to(resolved_impact) / maxf(1.0, float(weapon.get("projectile_speed", 1.0)))
 			if category == "Aviation": travel_seconds *= _aviation_delay_multiplier(unit["position"], intended_impact)
 			delayed_attacks.append({"attack_id": attack_id, "source_unit_id": unit["entity_id"], "source_weapon_id": weapon["id"], "target_unit_id": "", "aimed_target_unit_id": target["entity_id"], "target_position": resolved_impact, "intended_impact_position": intended_impact, "resolved_impact_position": resolved_impact, "terrain_obstacle_id": terrain_hit.get("obstacle_id", ""), "blocked_by_terrain": bool(terrain_hit.get("hit", false)), "impact_radius": float(weapon.get("impact_radius", 40.0)), "origin": unit["position"], "resolve_at_time": float(state["elapsed_time"]) + travel_seconds, "accuracy_modifier": _environment_accuracy_modifier(unit["faction_id"], unit["position"], intended_impact, category)})
-	_emit("WeaponFired", {"unit_id": unit["entity_id"], "weapon_id": weapon["id"], "target_unit_id": target["entity_id"], "target_position": aim_position, "impact_positions": impact_positions, "shot_count": shot_count})
+	_emit("WeaponFired", {"unit_id": unit["entity_id"], "weapon_id": weapon["id"], "mount_id": weapon_state.get("mount_id", ""), "target_unit_id": target["entity_id"], "target_position": aim_position, "impact_positions": impact_positions, "shot_count": shot_count})
 	if extra_shots > 0: _consume_effect(unit, "ExtraShots", category)
 
 
 func _fire_weapon_at_position(unit: Dictionary, target_position: Vector2, weapon_state: Dictionary, weapon: Dictionary, manual: bool) -> void:
 	var category := str(weapon["mount_type"])
 	var extra_shots := int(round(ModifierService.sum_modifier(unit["status_effects"], "ExtraShots", category)))
-	var shot_count := int(weapon["mount_count"]) * int(weapon["shots_per_mount"]) + extra_shots
+	var shot_count := (int(weapon["shots_per_mount"]) if category == "Torpedo" else int(weapon["mount_count"]) * int(weapon["shots_per_mount"])) + extra_shots
 	_set_weapon_reload(unit, weapon_state, weapon)
+	_start_mount_launch_interval(unit, weapon)
 	_mark_unit_fired(unit)
 	var base_heading := (target_position - (unit["position"] as Vector2)).angle()
+	var torpedo_error_profile := _torpedo_error_profile(unit, weapon, shot_count)
 	var impact_positions: Array = []
 	for shot_index in range(shot_count):
 		var spread_offset := 0.0
 		if shot_count > 1: spread_offset = deg_to_rad(float(weapon.get("spread", 0.0))) * (float(shot_index) / float(shot_count - 1) - 0.5)
 		var attack_id := _next_entity_id("attack")
 		if category == "Torpedo":
-			_spawn_projectile(unit, weapon, attack_id, base_heading + spread_offset)
+			var angular_error: float = random_source.randfn(0.0, float(torpedo_error_profile["sigma_radians"]))
+			_spawn_projectile(unit, weapon, attack_id, base_heading + spread_offset + angular_error, str(weapon_state.get("mount_id", "")), angular_error, float(torpedo_error_profile["sigma_radians"]), float(torpedo_error_profile["environment_multiplier"]))
 		else:
 			var intended_impact := _salvo_impact_position(unit["position"], target_position, spread_offset, weapon)
 			var terrain_hit := _terrain_hit_for_attack(unit["position"], intended_impact, unit["faction_id"]) if category == "Gun" else {"hit": false}
@@ -1122,7 +1154,7 @@ func _fire_weapon_at_position(unit: Dictionary, target_position: Vector2, weapon
 			var travel_seconds := (unit["position"] as Vector2).distance_to(resolved_impact) / maxf(1.0, float(weapon.get("projectile_speed", 1.0)))
 			if category == "Aviation": travel_seconds *= _aviation_delay_multiplier(unit["position"], intended_impact)
 			delayed_attacks.append({"attack_id": attack_id, "source_unit_id": unit["entity_id"], "source_weapon_id": weapon["id"], "target_unit_id": "", "target_position": resolved_impact, "intended_impact_position": intended_impact, "resolved_impact_position": resolved_impact, "terrain_obstacle_id": terrain_hit.get("obstacle_id", ""), "blocked_by_terrain": bool(terrain_hit.get("hit", false)), "impact_radius": float(weapon.get("impact_radius", 40.0)), "origin": unit["position"], "resolve_at_time": float(state["elapsed_time"]) + travel_seconds, "accuracy_modifier": _environment_accuracy_modifier(unit["faction_id"], unit["position"], intended_impact, category)})
-	_emit("WeaponFired", {"unit_id": unit["entity_id"], "weapon_id": weapon["id"], "target_position": target_position, "impact_positions": impact_positions, "shot_count": shot_count, "manual": manual})
+	_emit("WeaponFired", {"unit_id": unit["entity_id"], "weapon_id": weapon["id"], "mount_id": weapon_state.get("mount_id", ""), "target_position": target_position, "impact_positions": impact_positions, "shot_count": shot_count, "manual": manual})
 	if extra_shots > 0: _consume_effect(unit, "ExtraShots", category)
 
 
@@ -1153,7 +1185,31 @@ func _set_weapon_reload(unit: Dictionary, weapon_state: Dictionary, weapon: Dict
 			sibling_state["reload_remaining"] = reload_time
 
 
-func _spawn_projectile(unit: Dictionary, weapon: Dictionary, attack_id: String, heading: float) -> void:
+func _start_mount_launch_interval(unit: Dictionary, weapon: Dictionary) -> void:
+	if weapon.get("mount_type", "") != "Torpedo":
+		return
+	var group_id := str(weapon.get("weapon_group_id", ""))
+	if group_id.is_empty():
+		return
+	unit["weapon_group_launch_remaining"][group_id] = maxf(1.0, float(weapon.get("mount_launch_interval", 1.0)))
+
+
+func _torpedo_error_profile(unit: Dictionary, weapon: Dictionary, shot_count: int) -> Dictionary:
+	if weapon.get("mount_type", "") != "Torpedo" or shot_count <= 1:
+		return {"sigma_radians": 0.0, "environment_multiplier": 1.0}
+	var adjacent_angle := deg_to_rad(float(weapon.get("spread", 0.0))) / float(shot_count - 1)
+	var environment_context := terrain_context_service.context_at(unit.get("position", Vector2.ZERO))
+	var environment_multiplier := float(environment_context.get("torpedo_sigma_multiplier", 1.0))
+	var sigma_ratio := float(weapon.get("torpedo_angular_sigma_ratio", 0.2))
+	return {
+		"sigma_radians": adjacent_angle * sigma_ratio * environment_multiplier,
+		"environment_multiplier": environment_multiplier,
+		"sea_state": int(environment_context.get("sea_state", 0)),
+		"wind_speed": float(environment_context.get("wind_speed", 0.0)),
+	}
+
+
+func _spawn_projectile(unit: Dictionary, weapon: Dictionary, attack_id: String, heading: float, source_mount_id: String = "", angular_error: float = 0.0, angular_sigma: float = 0.0, environmental_sigma_multiplier: float = 1.0) -> void:
 	var projectile_definition: Dictionary = registry.get_definition("projectiles", str(weapon["projectile_id"]))
 	var projectile_id := _next_entity_id("projectile")
 	var speed := ModifierService.calculate(float(projectile_definition.get("speed", weapon.get("projectile_speed", 0.0))), unit["status_effects"], "ProjectileSpeed", "Torpedo")
@@ -1166,9 +1222,14 @@ func _spawn_projectile(unit: Dictionary, weapon: Dictionary, attack_id: String, 
 		"attack_id": attack_id,
 		"source_unit_id": unit["entity_id"],
 		"source_weapon_id": weapon["id"],
+		"source_mount_id": source_mount_id,
 		"faction_id": unit["faction_id"],
 		"position": unit["position"] + launch_direction * (launch_clearance + 3.0),
 		"heading": heading,
+		"ideal_heading": heading - angular_error,
+		"angular_error": angular_error,
+		"angular_sigma": angular_sigma,
+		"environmental_sigma_multiplier": environmental_sigma_multiplier,
 		"speed": speed,
 		"collision_radius": radius,
 		"minimum_detection_distance": float(projectile_definition.get("minimum_detection_distance", 0.0)),
@@ -1178,7 +1239,7 @@ func _spawn_projectile(unit: Dictionary, weapon: Dictionary, attack_id: String, 
 		"target_types": projectile_definition.get("target_types", []).duplicate(),
 	}
 	state["known_projectiles_by_faction"][unit["faction_id"]][projectile_id] = true
-	_emit("ProjectileSpawned", {"projectile_id": projectile_id, "source_unit_id": unit["entity_id"], "position": state["projectiles_by_id"][projectile_id]["position"]})
+	_emit("ProjectileSpawned", {"projectile_id": projectile_id, "source_unit_id": unit["entity_id"], "source_mount_id": source_mount_id, "position": state["projectiles_by_id"][projectile_id]["position"], "heading": heading, "ideal_heading": heading - angular_error, "angular_error": angular_error, "angular_sigma": angular_sigma, "environmental_sigma_multiplier": environmental_sigma_multiplier})
 
 
 func _update_projectiles(delta: float) -> void:
@@ -1608,6 +1669,9 @@ func _primary_unavailable_reason(unit: Dictionary, primary_states: Array) -> Str
 	if state.get("phase", "") != "Running": return "BATTLE_NOT_RUNNING"
 	if unit.get("life_state", "") != "Alive": return "UNIT_SUNK"
 	if primary_states.is_empty(): return "PRIMARY_WEAPON_UNAVAILABLE"
+	var primary_group_id := str(unit.get("stats", {}).get("primary_weapon_group_id", ""))
+	if float(unit.get("weapon_group_launch_remaining", {}).get(primary_group_id, 0.0)) > 0.0:
+		return "TORPEDO_MOUNT_INTERVAL"
 	for weapon_state in primary_states:
 		if float(weapon_state.get("reload_remaining", 0.0)) <= 0.0:
 			return "OK"
@@ -1618,6 +1682,9 @@ func _validate_primary_fire(unit: Dictionary, weapon_states: Array, target_posit
 	if state.get("phase", "") != "Running": return {"legal": false, "reason_code": "BATTLE_NOT_RUNNING", "legal_weapon_states": []}
 	if unit.get("life_state", "") != "Alive": return {"legal": false, "reason_code": "UNIT_SUNK", "legal_weapon_states": []}
 	if weapon_states.is_empty(): return {"legal": false, "reason_code": "PRIMARY_WEAPON_UNAVAILABLE", "legal_weapon_states": []}
+	var primary_group_id := str(unit.get("stats", {}).get("primary_weapon_group_id", ""))
+	if float(unit.get("weapon_group_launch_remaining", {}).get(primary_group_id, 0.0)) > 0.0:
+		return {"legal": false, "reason_code": "TORPEDO_MOUNT_INTERVAL", "legal_weapon_states": []}
 	var ready_states: Array = []
 	for weapon_state in weapon_states:
 		if float(weapon_state.get("reload_remaining", 0.0)) <= 0.0:
@@ -1626,11 +1693,26 @@ func _validate_primary_fire(unit: Dictionary, weapon_states: Array, target_posit
 	var legal_states: Array = []
 	var last_reason := "TARGET_OUT_OF_RANGE"
 	for weapon_state in ready_states:
-		var weapon: Dictionary = registry.get_definition("weapons", str(weapon_state["definition_id"]))
+		var weapon := _weapon_for_state(weapon_state)
 		var validation := _can_fire_in_direction(unit, target_position, weapon) if weapon.get("mount_type", "") == "Torpedo" else _can_fire_at_position(unit, target_position, weapon)
 		if bool(validation.get("legal", false)): legal_states.append(weapon_state)
 		else: last_reason = str(validation.get("reason_code", last_reason))
+	legal_states.sort_custom(func(a, b): return int(a.get("mount_index", -1)) < int(b.get("mount_index", -1)))
 	return {"legal": not legal_states.is_empty(), "reason_code": "OK" if not legal_states.is_empty() else last_reason, "legal_weapon_states": legal_states}
+
+
+func _weapon_for_state(weapon_state: Dictionary) -> Dictionary:
+	var weapon: Dictionary = registry.get_definition("weapons", str(weapon_state.get("definition_id", "")))
+	if weapon.is_empty() or weapon.get("mount_type", "") != "Torpedo":
+		return weapon
+	var mount_index := int(weapon_state.get("mount_index", -1))
+	var mount_fire_arcs: Array = weapon.get("mount_fire_arcs", [])
+	if mount_index < 0 or mount_index >= mount_fire_arcs.size():
+		return weapon
+	var mounted_weapon := weapon.duplicate(true)
+	mounted_weapon["fire_arcs"] = mount_fire_arcs[mount_index].get("fire_arcs", []).duplicate(true)
+	mounted_weapon["active_mount_id"] = str(mount_fire_arcs[mount_index].get("mount_id", ""))
+	return mounted_weapon
 
 
 func _weapon_fire_arcs(weapon: Dictionary) -> Array:
@@ -1656,7 +1738,7 @@ func _primary_aim_weapons(weapon_states: Array) -> Array:
 	var weapons: Array = []
 	for weapon_state in weapon_states:
 		if float(weapon_state.get("reload_remaining", 0.0)) > 0.0: continue
-		var weapon: Dictionary = registry.get_definition("weapons", str(weapon_state.get("definition_id", "")))
+		var weapon := _weapon_for_state(weapon_state)
 		if not weapon.is_empty():
 			weapons.append(weapon)
 	return weapons
@@ -1672,16 +1754,22 @@ func _common_weapon_type(weapons: Array) -> String:
 
 func _aim_fire_arcs(weapons: Array) -> Array:
 	var result: Array = []
+	var seen := {}
 	for weapon in weapons:
 		for arc in _weapon_fire_arcs(weapon):
-			result.append({
+			var entry := {
 				"center": float(arc.get("center", 0.0)),
 				"degrees": float(arc.get("degrees", 360.0)),
 				"minimum_range": float(weapon.get("minimum_range", 0.0)),
 				"range": float(weapon.get("range", 0.0)),
 				"spread_degrees": float(weapon.get("spread", 0.0)),
 				"weapon_id": str(weapon.get("id", "")),
-			})
+			}
+			var key := "%s|%s|%s|%s|%s" % [entry["center"], entry["degrees"], entry["minimum_range"], entry["range"], entry["spread_degrees"]]
+			if seen.has(key):
+				continue
+			seen[key] = true
+			result.append(entry)
 	return result
 
 

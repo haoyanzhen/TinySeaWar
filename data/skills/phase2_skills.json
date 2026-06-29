@@ -8,7 +8,7 @@
       "cast_range": 420.0,
       "duration": 10.0,
       "description": "建立基础驱逐警戒幕并强化反潜。",
-      "design_values": "侦查 +55；反潜伤害 +18%；敌方鱼雷显示提前 0.8s",
+      "design_values": "侦查 +55；反潜伤害 +18%；自身鱼雷发现距离 +60",
       "effects": [
         {
           "scope": "Self",
@@ -27,12 +27,19 @@
           "category": "AntiSubmarine",
           "stack_group": "fletcher_skill",
           "stack_rule": "Refresh"
+        },
+        {
+          "scope": "Self",
+          "stat": "TorpedoDetectionDistance",
+          "operation": "FlatAdd",
+          "value": 60,
+          "category": "Torpedo",
+          "stack_group": "fletcher_skill",
+          "stack_rule": "Refresh"
         }
       ],
-      "implementation_status": "partial",
-      "unsupported_effects": [
-        "torpedo_warning_lead_seconds"
-      ],
+      "implementation_status": "supported",
+      "unsupported_effects": [],
       "vfx_id": "fletcher.fleet_hunter_screen",
       "base_cast_range": 280.0
     },

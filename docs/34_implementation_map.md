@@ -56,6 +56,7 @@
 - 第二期角色数据生成入口：`tools/data/build_phase2_roster_data.py`
 - 投射物配置：`data/projectiles/projectiles.json`
   - `base_speed` 保存公共投射物 / 舰载机移动速度设计基线，`speed` 保存当前 0.5 倍运行速度。
+  - 鱼雷 `minimum_detection_distance` 保存直接运行的最小发现距离；阵营共享观测由 `BattleSession._update_projectile_observation` 维护。
 - 公式配置：`data/formulas/combat_formulas.json`
 - 海面调色板：`data/environments/ocean_palettes.json`
   - 当前包含 20 套气候/时间组合，以及 `day_clear`、`cloudy`、`dusk` 三个兼容入口。
@@ -92,7 +93,7 @@
   - 手动主要武器：`_fire_primary_weapon`
   - 弹药切换：`_switch_ammo`
   - 技能释放：`_cast_skill`
-  - 投射物与延迟攻击：`_spawn_projectile`、`_update_projectiles`、`_resolve_delayed_attacks`
+  - 投射物、阵营观测与延迟攻击：`_spawn_projectile`、`_update_projectiles`、`_update_projectile_observation`、`_visible_projectiles`、`_resolve_delayed_attacks`
   - 命中与伤害：`_resolve_attack`、`_resolve_area_attack`
   - 胜负结算：`_check_victory`、`_check_timeout`、`_finish_battle`
   - 场景战术结果：`_update_facility_weapons`、`_handle_facility_event`、`_resolve_support_mission`、`_apply_mine_trigger`、`_environment_accuracy_modifier`

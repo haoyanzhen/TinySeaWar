@@ -245,6 +245,7 @@ level_definition_id
 fleets_by_id
 units_by_id
 projectiles_by_id
+known_projectiles_by_faction
 contacts_by_faction
 pending_events
 result
@@ -351,10 +352,13 @@ max_range
 travelled_distance
 remaining_range
 remaining_pierce_count
+minimum_detection_distance
 active
 ```
 
 火炮若第一阶段只需要落点和飞行延迟，可以表示为定时 `AttackRequest`，不强制创建参与碰撞的炮弹实体。鱼雷必须创建领域投射物，以保证碰撞与画面表现共享同一位置事实；其失效条件以累计航程达到武器最大射程为准，不以准心位置或公共生命周期提前截断。
+
+`known_projectiles_by_faction` 保存已经由本阵营任一存活舰娘观测到的敌方投射物 ID。鱼雷首次进入任一观察舰经状态修正后的 `minimum_detection_distance` 时写入；写入后持续共享至投射物失效。表现层与 AI 都只能读取阵营过滤快照，不能直接读取全量 `projectiles_by_id`。
 
 ### 5.6 SkillState
 
@@ -562,6 +566,7 @@ event_type
 | `WeaponFired` | 单位、武器、目标或方向 |
 | `AmmoTypeChanged` | 单位、武器组、新旧弹种 |
 | `ProjectileSpawned` | 投射物和初始状态 |
+| `ProjectileDetected` | 观察阵营、首次观察单位、投射物、位置 |
 | `ProjectileHit` | 投射物、目标、位置 |
 | `ProjectileExpired` | 投射物、最终位置、`MAX_RANGE` 原因 |
 | `AttackResolved` | `DamageResult` |

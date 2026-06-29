@@ -63,6 +63,7 @@ func create_battle(level_id: String, seed_value: int = 1) -> Dictionary:
 		"fleets_by_id": {},
 		"units_by_id": {},
 		"projectiles_by_id": {},
+		"known_projectiles_by_faction": {PLAYER_FACTION: {}, ENEMY_FACTION: {}},
 		"terrain_map": {},
 		"environment_zones": [],
 		"global_environment": {},
@@ -125,6 +126,7 @@ func advance_tick(delta: float = 0.1) -> Array:
 	_update_movement(delta)
 	_resolve_unit_overlap()
 	_update_projectiles(delta)
+	_update_projectile_observation()
 	_update_detection(delta)
 	_update_ai_intents()
 	_update_auto_skills()
@@ -203,7 +205,7 @@ func snapshot(viewer_faction: String = PLAYER_FACTION, omniscient: bool = false)
 		"map": state.get("map", {}).duplicate(true),
 		"units": units,
 		"contacts": contacts,
-		"projectiles": state.get("projectiles_by_id", {}).duplicate(true),
+		"projectiles": _visible_projectiles(viewer_faction, omniscient),
 		"terrain_map": state.get("terrain_map", {}).duplicate(true),
 		"environment_zones": state.get("environment_zones", []).duplicate(true),
 		"global_environment": state.get("global_environment", {}).duplicate(true),
@@ -612,6 +614,46 @@ func _update_detection(delta: float = 0.1) -> void:
 			if bool(contact.get("visible", false)) or newly_lost.has(target_id): continue
 			contact["ghost_remaining"] = float(contact.get("ghost_remaining", 0.0)) - delta
 			if float(contact["ghost_remaining"]) <= 0.0: state["contacts_by_faction"][observer_faction].erase(target_id)
+
+
+func _update_projectile_observation() -> void:
+	for observer_faction in [PLAYER_FACTION, ENEMY_FACTION]:
+		var known: Dictionary = state["known_projectiles_by_faction"][observer_faction]
+		for known_id in known.keys():
+			if not state["projectiles_by_id"].has(known_id):
+				known.erase(known_id)
+		for projectile_id in state["projectiles_by_id"]:
+			if known.has(projectile_id):
+				continue
+			var projectile: Dictionary = state["projectiles_by_id"][projectile_id]
+			if str(projectile.get("faction_id", "")) == observer_faction:
+				known[projectile_id] = true
+				continue
+			var base_distance := float(projectile.get("minimum_detection_distance", 0.0))
+			if base_distance <= 0.0:
+				continue
+			for observer_id in _sorted_unit_ids():
+				var observer: Dictionary = state["units_by_id"][observer_id]
+				if observer.get("faction_id", "") != observer_faction or observer.get("life_state", "") != "Alive":
+					continue
+				var detection_distance := ModifierService.calculate(base_distance, observer.get("status_effects", []), "TorpedoDetectionDistance", "Torpedo")
+				if (observer.get("position", Vector2.ZERO) as Vector2).distance_to(projectile.get("position", Vector2.ZERO)) > detection_distance:
+					continue
+				known[projectile_id] = true
+				_emit("ProjectileDetected", {"observer_faction": observer_faction, "observer_unit_id": observer_id, "projectile_id": projectile_id, "position": projectile.get("position", Vector2.ZERO)})
+				break
+
+
+func _visible_projectiles(viewer_faction: String, omniscient: bool) -> Dictionary:
+	if omniscient:
+		return state.get("projectiles_by_id", {}).duplicate(true)
+	var result := {}
+	var known: Dictionary = state.get("known_projectiles_by_faction", {}).get(viewer_faction, {})
+	for projectile_id in state.get("projectiles_by_id", {}):
+		var projectile: Dictionary = state["projectiles_by_id"][projectile_id]
+		if str(projectile.get("faction_id", "")) == viewer_faction or known.has(projectile_id):
+			result[projectile_id] = projectile.duplicate(true)
+	return result
 
 
 func _fleet_detects(observer_faction: String, target: Dictionary) -> bool:
@@ -1129,11 +1171,13 @@ func _spawn_projectile(unit: Dictionary, weapon: Dictionary, attack_id: String, 
 		"heading": heading,
 		"speed": speed,
 		"collision_radius": radius,
+		"minimum_detection_distance": float(projectile_definition.get("minimum_detection_distance", 0.0)),
 		"max_range": float(weapon.get("range", 0.0)),
 		"travelled_distance": 0.0,
 		"remaining_range": float(weapon.get("range", 0.0)),
 		"target_types": projectile_definition.get("target_types", []).duplicate(),
 	}
+	state["known_projectiles_by_faction"][unit["faction_id"]][projectile_id] = true
 	_emit("ProjectileSpawned", {"projectile_id": projectile_id, "source_unit_id": unit["entity_id"], "position": state["projectiles_by_id"][projectile_id]["position"]})
 
 

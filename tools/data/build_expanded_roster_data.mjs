@@ -151,7 +151,7 @@ const skills = [
   skill("skill.yukikaze_lucky_evasion","幸运回避",34,"Area",360,10,[effect("Self","Evasion","FlatAdd",45,"All","yukikaze_skill"),effect("Self","ProjectileSpeed","PercentAdd",0.12,"Torpedo","yukikaze_skill"),effect("AlliesInArea","ReloadSpeed","PercentAdd",0.11,"All","yukikaze_aura")]),
   skill("skill.hosho_light_training","轻型空袭训练",34,"Self",0,10,[effect("Self","Damage","PercentAdd",0.15,"Aviation","hosho_skill"),effect("Self","DetectionRange","FlatAdd",60,"All","hosho_skill")]),
   skill("skill.ning_coastal_escort","近海护卫",36,"Area",300,12,[effect("AlliesInArea","Damage","PercentAdd",0.25,"AntiAir","ning_skill"),effect("AlliesInArea","Armor","FlatAdd",8,"All","ning_skill"),effect("AlliesInArea","ReloadSpeed","PercentAdd",0.14,"Gun","ning_skill")]),
-  skill("skill.anshan_escort_alert","护航警戒",34,"Area",520,12,[effect("Self","DetectionRange","FlatAdd",80,"All","anshan_skill"),effect("AlliesInArea","Evasion","FlatAdd",10,"All","anshan_aura")]),
+  skill("skill.anshan_escort_alert","护航警戒",34,"Area",520,12,[effect("Self","DetectionRange","FlatAdd",80,"All","anshan_skill"),effect("Self","TorpedoDetectionDistance","FlatAdd",90,"Torpedo","anshan_skill"),effect("AlliesInArea","Evasion","FlatAdd",10,"All","anshan_aura")]),
   skill("skill.chongqing_turning_support","转折支援",40,"Area",420,12,[effect("AlliesInArea","AccuracyPoint","FlatAdd",0.08,"Gun","chongqing_skill"),effect("AlliesInArea","ReloadSpeed","PercentAdd",0.18,"AntiAir","chongqing_skill")]),
 ];
 

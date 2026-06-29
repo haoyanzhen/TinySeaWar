@@ -536,6 +536,15 @@
           "stack_rule": "Refresh"
         },
         {
+          "scope": "Self",
+          "stat": "TorpedoDetectionDistance",
+          "operation": "FlatAdd",
+          "value": 90,
+          "category": "Torpedo",
+          "stack_group": "anshan_skill",
+          "stack_rule": "Refresh"
+        },
+        {
           "scope": "AlliesInArea",
           "stat": "Evasion",
           "operation": "FlatAdd",

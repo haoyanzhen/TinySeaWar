@@ -76,7 +76,7 @@ def effect(scope: str, stat: str, operation: str, value: float, category: str, g
 
 
 SKILL_EFFECTS = {
-    "fletcher": [effect("Self", "DetectionRange", "FlatAdd", 55, "All", "fletcher_skill"), effect("Self", "Damage", "PercentAdd", .18, "AntiSubmarine", "fletcher_skill")],
+    "fletcher": [effect("Self", "DetectionRange", "FlatAdd", 55, "All", "fletcher_skill"), effect("Self", "Damage", "PercentAdd", .18, "AntiSubmarine", "fletcher_skill"), effect("Self", "TorpedoDetectionDistance", "FlatAdd", 60, "Torpedo", "fletcher_skill")],
     "cleveland": [effect("Self", "ReloadSpeed", "PercentAdd", .30, "AntiAir", "cleveland_skill"), effect("Self", "Damage", "PercentAdd", .18, "AntiAir", "cleveland_skill")],
     "baltimore": [effect("Self", "AccuracyPoint", "FlatAdd", .18, "Gun", "baltimore_skill"), effect("Self", "ArmorDamageModifier", "PercentAdd", .12, "Gun", "baltimore_skill")],
     "wahoo": [effect("Self", "ReloadSpeed", "PercentAdd", .28, "Torpedo", "wahoo_skill"), effect("Self", "Damage", "PercentAdd", .12, "Torpedo", "wahoo_skill")],
@@ -103,7 +103,7 @@ SKILL_EFFECTS = {
 }
 
 UNSUPPORTED_EFFECTS = {
-    "fletcher": ["torpedo_warning_lead_seconds"], "cleveland": ["anti_air_radius"],
+    "cleveland": ["anti_air_radius"],
     "baltimore": ["next_salvo_only", "weapon_spread", "target_armor_class_modifier"], "wahoo": ["oxygen_consumption"],
     "jervis": ["torpedo_spread", "class_filtered_aura"], "belfast": ["fire_reveal_multiplier"],
     "illustrious": ["aircraft_hp"], "upholder": ["submerged_only_concealment", "torpedo_spread"],

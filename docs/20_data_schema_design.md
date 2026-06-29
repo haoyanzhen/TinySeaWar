@@ -296,6 +296,27 @@ hit_rate_max
 - `hit_rate_min`：命中率下限。
 - `hit_rate_max`：命中率上限。
 
+### 8.1 投射物配置
+
+实体投射物基础字段：
+
+```text
+id
+behavior
+base_speed
+speed
+lifetime
+collision_radius
+minimum_detection_distance
+target_types
+destroy_on_hit
+pierce_count
+```
+
+- `minimum_detection_distance`：鱼雷进入敌方单舰该距离内时自动被其观测。所有鱼雷型号必须为正数；非鱼雷投射物可省略。
+- 该字段是直接运行值，不套用通用距离倍率。技能通过观察舰状态中的 `TorpedoDetectionDistance` 修正它，不修改投射物 Definition 或 State 中的原始值。
+- 观测成功后把投射物 ID 写入 `known_projectiles_by_faction`，阵营快照只返回己方投射物和该集合中的敌方投射物。
+
 ## 9. 舰载机配置
 
 基础字段：
@@ -835,7 +856,7 @@ limit_max
 
 字段含义：
 
-- `stat`：被修改属性，例如 `ReloadSpeed`、`Damage`、`AccuracyPoint`、`Evasion`、`Armor`、`DetectionRange`、`ConcealmentDistance`。
+- `stat`：被修改属性，例如 `ReloadSpeed`、`Damage`、`AccuracyPoint`、`Evasion`、`Armor`、`DetectionRange`、`ConcealmentDistance`、`TorpedoDetectionDistance`。
 - `operation`：运算类型，可为 `FlatAdd`、`PercentAdd`、`StateMultiply`、`IndependentMultiply`。
 - `value`：修正值。百分比使用小数，例如 `0.20` 表示 `+20%`。
 - `category`：增益类别，例如 `GunDamage`、`TorpedoDamage`、`AllDamage`、`AntiAirReloadSpeed`。
@@ -853,6 +874,7 @@ MVP 约定：
 - `IndependentMultiply` 只用于明确标记的少量核心技能。
 - 命中率增益使用 `AccuracyPoint`，表示增加百分点，不使用命中倍率。
 - 装填增益使用 `ReloadSpeed`，不使用普通的装填时间百分比减少。
+- 鱼雷预警使用 `TorpedoDetectionDistance` 和距离值，不使用“提前秒数”；首轮只允许 `Self` 范围，发现后再由阵营共享。
 
 ## 16. 表现设置配置
 

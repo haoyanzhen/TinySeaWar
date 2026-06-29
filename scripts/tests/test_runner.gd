@@ -49,6 +49,7 @@ func _run() -> void:
 	_test_automatic_lead_and_fixed_impacts()
 	_test_torpedo_fire_arc_rules()
 	_test_detection_and_contact_ghost()
+	_test_torpedo_observation_rules()
 	_test_damage_zero_floor()
 	_test_simultaneous_flagship_victory()
 	_test_determinism()
@@ -682,6 +683,53 @@ func _test_detection_and_contact_ghost() -> void:
 	session._update_detection(0.1)
 	contact = session.state["contacts_by_faction"]["player"].get(enemy["entity_id"], {})
 	_check(not contact.is_empty() and bool(contact.get("visible", false)) and is_equal_approx(float(contact.get("ghost_remaining", -1.0)), 0.0), "rediscovered target replaces the contact ghost immediately")
+
+
+func _test_torpedo_observation_rules() -> void:
+	var surface_torpedo: Dictionary = registry.get_definition("projectiles", "projectile.surface_torpedo")
+	var submarine_torpedo: Dictionary = registry.get_definition("projectiles", "projectile.submarine_torpedo")
+	var air_torpedo: Dictionary = registry.get_definition("projectiles", "projectile.air_torpedo")
+	_check(float(surface_torpedo.get("minimum_detection_distance", 0.0)) == 150.0, "surface torpedo loads its 150-unit observation baseline")
+	_check(float(submarine_torpedo.get("minimum_detection_distance", 0.0)) == 120.0, "submarine torpedo keeps the shortest observation baseline")
+	_check(float(air_torpedo.get("minimum_detection_distance", 0.0)) == 165.0, "air torpedo keeps the longest observation baseline")
+	var session = BattleSession.new(registry)
+	session.create_battle("level.prototype_1v1", 29)
+	var observer: Dictionary = session.state["units_by_id"]["unit.player.warspite"]
+	observer["position"] = Vector2(400.0, 350.0)
+	var projectile := {
+		"entity_id":"projectile.observation.base", "definition_id":"projectile.surface_torpedo",
+		"source_unit_id":"unit.enemy.bismarck", "source_weapon_id":"weapon.test", "faction_id":"enemy",
+		"position":Vector2(551.0, 350.0), "heading":PI, "speed":82.5, "collision_radius":12.0,
+		"minimum_detection_distance":150.0, "remaining_range":600.0, "travelled_distance":0.0, "target_types":["Surface"]
+	}
+	session.state["projectiles_by_id"][projectile["entity_id"]] = projectile
+	session._update_projectile_observation()
+	_check(session.snapshot("player", false)["projectiles"].is_empty(), "enemy torpedo remains hidden just outside its minimum detection distance")
+	_check(session.snapshot("enemy", false)["projectiles"].has(projectile["entity_id"]), "a faction always sees its own torpedo")
+	session._event_buffer = []
+	projectile["position"] = Vector2(550.0, 350.0)
+	session._update_projectile_observation()
+	_check(session.snapshot("player", false)["projectiles"].has(projectile["entity_id"]) and _has_event(session._event_buffer, "ProjectileDetected"), "a torpedo at the distance boundary is detected and shared to the faction snapshot")
+	projectile["position"] = Vector2(900.0, 350.0)
+	session._update_projectile_observation()
+	_check(session.snapshot("player", false)["projectiles"].has(projectile["entity_id"]), "an observed enemy torpedo remains shared after leaving the observing ship's range")
+	var skill: Dictionary = registry.get_definition("skills", "skill.fletcher_fleet_hunter_screen")
+	var warning_effect: Dictionary = {}
+	for effect in skill.get("effects", []):
+		if effect.get("stat", "") == "TorpedoDetectionDistance": warning_effect = effect.duplicate(true)
+	_check(float(warning_effect.get("value", 0.0)) == 60.0 and warning_effect.get("scope", "") == "Self", "Fletcher skill exposes a self-only 60-unit torpedo observation bonus")
+	observer["status_effects"].append(warning_effect)
+	var boosted_projectile: Dictionary = projectile.duplicate(true)
+	boosted_projectile["entity_id"] = "projectile.observation.boosted"
+	boosted_projectile["position"] = Vector2(605.0, 350.0)
+	session.state["projectiles_by_id"][boosted_projectile["entity_id"]] = boosted_projectile
+	session._update_projectile_observation()
+	_check(session.snapshot("player", false)["projectiles"].has(boosted_projectile["entity_id"]), "self skill distance modifier detects every torpedo model through the common observation stat")
+	var anshan: Dictionary = registry.get_definition("skills", "skill.anshan_escort_alert")
+	var anshan_bonus := 0.0
+	for effect in anshan.get("effects", []):
+		if effect.get("stat", "") == "TorpedoDetectionDistance": anshan_bonus = float(effect.get("value", 0.0))
+	_check(anshan_bonus == 90.0, "Anshan escort alert exposes the 90-unit character baseline")
 
 
 func _test_damage_zero_floor() -> void:

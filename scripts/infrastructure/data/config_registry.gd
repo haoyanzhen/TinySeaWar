@@ -126,6 +126,8 @@ func _validate_projectile(projectile: Dictionary) -> void:
 		errors.append("Unsupported projectile behavior in %s" % projectile_id)
 	if float(projectile.get("collision_radius", 0.0)) <= 0.0:
 		errors.append("Projectile radius must be positive in %s" % projectile_id)
+	if projectile_id.begins_with("projectile.") and "torpedo" in projectile_id and float(projectile.get("minimum_detection_distance", 0.0)) <= 0.0:
+		errors.append("Torpedo minimum_detection_distance must be positive in %s" % projectile_id)
 	_validate_non_negative_scaled_field(projectile, "speed", "base_speed", ATTACK_SPEED_BASELINE_MULTIPLIER, projectile_id)
 
 

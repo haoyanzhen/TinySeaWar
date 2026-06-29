@@ -5,6 +5,7 @@ const ModifierService = preload("res://scripts/domain/services/modifier_service.
 const DamageService = preload("res://scripts/domain/services/damage_service.gd")
 const CollisionGeometryService = preload("res://scripts/domain/services/collision_geometry_service.gd")
 const BattleRecorder = preload("res://scripts/infrastructure/analytics/battle_recorder.gd")
+const DamageStatistics = preload("res://scripts/infrastructure/analytics/damage_statistics.gd")
 const TerrainQueryService = preload("res://scripts/domain/services/terrain_query_service.gd")
 const TerrainContextService = preload("res://scripts/domain/services/terrain_context_service.gd")
 const FacilityService = preload("res://scripts/domain/services/facility_service.gd")
@@ -79,6 +80,7 @@ func create_battle(level_id: String, seed_value: int = 1) -> Dictionary:
 	_build_fleet("fleet.enemy", ENEMY_FACTION, level.get("enemy_fleet", []))
 	state["phase"] = "Running"
 	recorder.reset(state["battle_id"], seed_value)
+	recorder.register_units(state["units_by_id"])
 	_emit("BattleStarted", {"level_definition_id": level_id, "fleets": state["fleets_by_id"].keys()})
 	for unit_id in _sorted_unit_ids():
 		var unit: Dictionary = state["units_by_id"][unit_id]
@@ -219,6 +221,18 @@ func snapshot(viewer_faction: String = PLAYER_FACTION, omniscient: bool = false)
 
 func get_statistics() -> Dictionary:
 	return recorder.summary.duplicate(true)
+
+
+func get_unit_damage_statistics(unit_id: String) -> Dictionary:
+	return recorder.unit_damage_statistics(unit_id)
+
+
+func get_all_unit_damage_statistics() -> Dictionary:
+	return recorder.all_unit_damage_statistics()
+
+
+func get_unit_damage_for_category(unit_id: String, category: String, include_contribution: bool = false) -> float:
+	return recorder.unit_damage_for_category(unit_id, category, include_contribution)
 
 
 func get_player_slots() -> Array:
@@ -1315,6 +1329,7 @@ func _resolve_attack(attack: Dictionary, forced_hit: bool) -> void:
 	var source_snapshot := source.duplicate(true)
 	source_snapshot["position"] = attack.get("origin", source["position"])
 	var result := DamageService.resolve(attack, source_snapshot, target, weapon, formula, random_source, forced_hit)
+	result = DamageStatistics.enrich_result(result, weapon, source.get("stats", source), attack)
 	result["impact_position"] = attack.get("target_position", target.get("position", Vector2.ZERO))
 	result["aimed_target_unit_id"] = attack.get("aimed_target_unit_id", attack.get("target_unit_id", ""))
 	target["current_hp"] = float(result["target_hp_after"])
@@ -1347,7 +1362,9 @@ func _resolve_area_attack(attack: Dictionary, source: Dictionary, forced_hit: bo
 			candidates.append({"target_type":"Facility", "target":facility, "target_id":str(facility_id), "distance":distance})
 	candidates.sort_custom(func(a, b): return float(a["distance"]) < float(b["distance"]) if not is_equal_approx(float(a["distance"]), float(b["distance"])) else str(a["target_id"]) < str(b["target_id"]))
 	if candidates.is_empty():
-		_emit("AttackResolved", {"damage_result": {"attack_id": attack.get("attack_id", ""), "source_unit_id": source.get("entity_id", ""), "source_weapon_id": weapon.get("id", ""), "aimed_target_unit_id": attack.get("aimed_target_unit_id", ""), "target_unit_id": "", "impact_position": impact_position, "damage_type": weapon.get("mount_type", ""), "hit": false, "hit_reason": "NO_TARGET_IN_AREA", "raw_damage": 0.0, "armor_modifier": 0.0, "armor_reduction": 0.0, "final_damage": 0.0, "target_hp_before": 0.0, "target_hp_after": 0.0, "caused_sinking": false}})
+		var miss_result := {"attack_id": attack.get("attack_id", ""), "source_unit_id": source.get("entity_id", ""), "source_weapon_id": weapon.get("id", ""), "aimed_target_unit_id": attack.get("aimed_target_unit_id", ""), "target_unit_id": "", "impact_position": impact_position, "damage_type": weapon.get("mount_type", ""), "hit": false, "hit_reason": "NO_TARGET_IN_AREA", "raw_damage": 0.0, "armor_modifier": 0.0, "armor_reduction": 0.0, "base_final_damage": 0.0, "buff_bonus_damage": 0.0, "buff_contribution_weights": {}, "buff_contribution_details": [], "buff_source_skill_ids": [], "final_damage": 0.0, "target_hp_before": 0.0, "target_hp_after": 0.0, "caused_sinking": false}
+		miss_result = DamageStatistics.enrich_result(miss_result, weapon, source.get("stats", source), attack)
+		_emit("AttackResolved", {"damage_result": miss_result})
 		return
 	var selected: Dictionary = candidates[0]
 	if selected["target_type"] == "Facility":
@@ -1367,6 +1384,7 @@ func _resolve_facility_attack(attack: Dictionary, source: Dictionary, forced_hit
 	var source_snapshot := source.duplicate(true)
 	source_snapshot["position"] = attack.get("origin", source.get("position", Vector2.ZERO))
 	var result := DamageService.resolve(attack, source_snapshot, target, weapon, formula, random_source, forced_hit)
+	result = DamageStatistics.enrich_result(result, weapon, source.get("stats", source), attack)
 	result["impact_position"] = attack.get("target_position", target.get("position", Vector2.ZERO))
 	result["source_facility_id"] = attack.get("source_facility_id", "")
 	result["target_facility_id"] = facility_id

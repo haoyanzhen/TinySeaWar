@@ -1,5 +1,7 @@
 extends RefCounted
 
+const DamageStatistics = preload("res://scripts/infrastructure/analytics/damage_statistics.gd")
+
 var summary := {}
 
 
@@ -17,6 +19,16 @@ func reset(battle_id: String, seed_value: int) -> void:
 		"units": {},
 		"result": {},
 	}
+
+
+func register_units(units_by_id: Dictionary) -> void:
+	for unit_id in units_by_id:
+		var unit: Dictionary = units_by_id[unit_id]
+		DamageStatistics.ensure_unit(summary["units"], str(unit_id), {
+			"definition_id": unit.get("definition_id", ""),
+			"display_name": unit.get("display_name", ""),
+			"faction_id": unit.get("faction_id", ""),
+		})
 
 
 func consume(events: Array, elapsed_time: float) -> void:
@@ -37,13 +49,18 @@ func consume(events: Array, elapsed_time: float) -> void:
 
 func _record_damage(result: Dictionary, elapsed_time: float) -> void:
 	var source_id := str(result.get("source_unit_id", ""))
-	var target_id := str(result.get("target_unit_id", ""))
-	if not summary["units"].has(source_id): summary["units"][source_id] = {"damage_dealt": 0.0, "damage_taken": 0.0, "shots": 0, "hits": 0}
-	if not summary["units"].has(target_id): summary["units"][target_id] = {"damage_dealt": 0.0, "damage_taken": 0.0, "shots": 0, "hits": 0}
-	summary["units"][source_id]["shots"] += 1
-	if bool(result.get("hit", false)):
-		summary["units"][source_id]["hits"] += 1
+	if bool(result.get("hit", false)) and not source_id.is_empty():
 		if summary["first_hit_time"] < 0.0: summary["first_hit_time"] = elapsed_time
-	var damage := float(result.get("final_damage", 0.0))
-	summary["units"][source_id]["damage_dealt"] += damage
-	summary["units"][target_id]["damage_taken"] += damage
+	DamageStatistics.record_result(summary["units"], result)
+
+
+func unit_damage_statistics(unit_id: String) -> Dictionary:
+	return DamageStatistics.unit_statistics(summary.get("units", {}), unit_id)
+
+
+func all_unit_damage_statistics() -> Dictionary:
+	return DamageStatistics.all_unit_statistics(summary.get("units", {}))
+
+
+func unit_damage_for_category(unit_id: String, category: String, include_contribution: bool = false) -> float:
+	return DamageStatistics.damage_for_category(summary.get("units", {}), unit_id, category, include_contribution)

@@ -27,6 +27,11 @@ static func resolve(attack: Dictionary, source: Dictionary, target: Dictionary, 
 		"raw_damage": 0.0,
 		"armor_modifier": 0.0,
 		"armor_reduction": 0.0,
+		"base_final_damage": 0.0,
+		"buff_bonus_damage": 0.0,
+		"buff_contribution_weights": {},
+		"buff_contribution_details": [],
+		"buff_source_skill_ids": [],
 		"final_damage": 0.0,
 		"target_hp_before": hp_before,
 		"target_hp_after": hp_before,
@@ -46,10 +51,17 @@ static func resolve(attack: Dictionary, source: Dictionary, target: Dictionary, 
 	var type_damage := 1.0 + ModifierService.sum_modifier(source["status_effects"], "Damage", category)
 	var all_damage := 1.0 + ModifierService.sum_modifier(source["status_effects"], "AllDamage", "All")
 	var reduction := clampf(ModifierService.sum_modifier(target["status_effects"], "DamageReduction", category), 0.0, 0.70)
-	var final_damage := maxf(0.0, penetrated_damage * type_damage * all_damage * maxf(0.30, 1.0 - reduction))
+	var base_final_damage := maxf(0.0, penetrated_damage * maxf(0.30, 1.0 - reduction))
+	var final_damage := maxf(0.0, base_final_damage * type_damage * all_damage)
+	var buff_attribution := _buff_attribution(source["status_effects"], category)
 	result["raw_damage"] = raw_damage
 	result["armor_modifier"] = armor_modifier
 	result["armor_reduction"] = armor_reduction
+	result["base_final_damage"] = base_final_damage
+	result["buff_bonus_damage"] = maxf(0.0, final_damage - base_final_damage)
+	result["buff_contribution_weights"] = buff_attribution["weights"]
+	result["buff_contribution_details"] = buff_attribution["details"]
+	result["buff_source_skill_ids"] = buff_attribution["skill_ids"]
 	result["final_damage"] = final_damage
 	result["target_hp_after"] = maxf(0.0, hp_before - final_damage)
 	result["caused_sinking"] = hp_before > 0.0 and float(result["target_hp_after"]) <= 0.0
@@ -62,3 +74,29 @@ static func _power_stat_for(category: String) -> String:
 		"AntiAir": return "anti_air_power"
 		"Aviation": return "aviation_power"
 		_: return "gunnery_power"
+
+
+static func _buff_attribution(status_effects: Array, category: String) -> Dictionary:
+	var weights := {}
+	var details: Array[Dictionary] = []
+	var skill_ids: Array[String] = []
+	for effect in status_effects:
+		var stat := str(effect.get("stat", ""))
+		if stat not in ["Damage", "AllDamage"]:
+			continue
+		var effect_category := str(effect.get("category", "All"))
+		if stat == "Damage" and effect_category not in ["All", category]:
+			continue
+		var value := float(effect.get("value", 0.0))
+		if value <= 0.0:
+			continue
+		var source_unit_id := str(effect.get("source_unit_id", ""))
+		if not source_unit_id.is_empty():
+			weights[source_unit_id] = float(weights.get(source_unit_id, 0.0)) + value
+		var status_id := str(effect.get("status_id", ""))
+		if not source_unit_id.is_empty():
+			details.append({"source_unit_id": source_unit_id, "source_skill_id": status_id, "weight": value})
+		if not status_id.is_empty() and status_id not in skill_ids:
+			skill_ids.append(status_id)
+	skill_ids.sort()
+	return {"weights": weights, "details": details, "skill_ids": skill_ids}

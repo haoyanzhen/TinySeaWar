@@ -32,6 +32,7 @@ Use lowercase English file names with underscores:
 - [16_enemy_ai_behavior_design.md](16_enemy_ai_behavior_design.md)
 - [17_play_design.md](17_play_design.md)
 - [18_facility_weather_effect_design.md](18_facility_weather_effect_design.md)
+- [19_battle_simulator_design.md](19_battle_simulator_design.md)
 
 ### Data
 

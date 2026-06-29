@@ -682,6 +682,8 @@ enemy_ai_profile_id
 
 AI 配置分为舰队方案、单舰模式和运行时状态。具体行为语义见 `docs/16_enemy_ai_behavior_design.md`。
 
+本节当前是计划中的数据契约；运行时尚未建立独立 AI 配置类别。字段进入正式 JSON 前，必须同步增加注册表加载、引用校验和配置测试。
+
 舰队 AI Profile 基础字段：
 
 ```text
@@ -690,6 +692,8 @@ doctrine_id
 difficulty
 common_rule_set_id
 formation_plan_id
+objective_policy_id
+coordination_policy_id
 group_assignments
 unit_mode_overrides
 ```
@@ -701,6 +705,8 @@ unit_mode_overrides
 - `difficulty`：决策质量档位，只影响决策间隔、评分项和协同程度，不修改战斗属性。
 - `common_rule_set_id`：可选。通用行进、避碰、边界、搜索和地形利用规则引用；省略时使用开阔海域默认规则。
 - `formation_plan_id`：可选。开局阵型、阵位职责、阵位容差和允许转换的阵型方案引用；省略时以关卡出生阵位形成弹性编组，不主动转换阵型。
+- `objective_policy_id`：可选。关卡任务的设施价值、占领饱和、守点半径、中断和回退策略引用；不复制设施状态或地图几何。
+- `coordination_policy_id`：可选。目标伤害预留、技能效果预留、协同窗口和过量伤害处理策略引用。
 - `group_assignments`：战术编组、保护对象、侧翼和组内职责配置。
 - `unit_mode_overrides`：按参战单位 ID 覆盖初始单舰模式和回退模式。
 
@@ -711,6 +717,7 @@ id
 movement_policy
 attack_policy
 skill_policy
+detected_tactic_policy
 preferred_range_ratio
 exposure_tolerance
 fire_discipline
@@ -724,6 +731,7 @@ minimum_hold_time
 - `movement_policy`：行动策略，例如避战侦查、前锋对线、侧翼雷击或保持炮线。
 - `attack_policy`：目标评分、追击限制、主要武器窗口和过量伤害规则。
 - `skill_policy`：技能用途标签、释放阈值、保留条件和同类效果错峰规则。
+- `detected_tactic_policy`：被发现后 `Attack`、`Defend`、`Kite` 的允许集合、评分修正、最短驻留和紧急退出规则。
 - `preferred_range_ratio`：相对当前主要武器射程的期望距离带，不直接复制绝对射程。
 - `exposure_tolerance`：允许持续暴露、承受局部威胁和脱队的风险阈值。
 - `fire_discipline`：`FreeFire`、`SelfDefense`、`HoldUntilWindow` 或 `Silent`。
@@ -744,6 +752,7 @@ avoidance_policy
 search_policy
 terrain_policy
 environment_costs
+projectile_observation_policy
 ```
 
 - `navigation_policy`：短航路长度、重算间隔、转弯前减速和航点到达容差。
@@ -754,6 +763,7 @@ environment_costs
 - `search_policy`：残影置信度衰减、搜索扇区、搜索时限和回归条件。
 - `terrain_policy`：是否允许寻找掩体、最低出口数、最大停留时间和地形类型权重。MVP 开阔海域固定禁用岛屿掩体。
 - `environment_costs`：浅水、海峡、雷区、风暴等公开环境类型的通行或威胁成本。
+- `projectile_observation_policy`：己方已发现投射物的反应窗、危险半径、置信度和规避恢复参数；不能授予对未发现投射物的读取权限。
 
 地图负责提供碰撞多边形、可通行区域、视线遮挡和地形类型；AI Rule Set 只保存使用这些事实的偏好，不复制地图几何，也不能覆盖玩家与 AI 共用的通行合法性。
 

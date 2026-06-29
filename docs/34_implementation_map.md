@@ -196,6 +196,8 @@
 ## 测试与调试
 
 - 核心规则测试：`scripts/tests/test_runner.gd`
+- AI 量化模型：`scripts/application/ai/ai_quantitative_model.gd`
+- AI 量化场景测试：`scripts/tests/ai_behavior_quantitative_test.gd`
 - 场景与展示测试：`scripts/tests/scene_presentation_test.gd`
 - 第二期配置与资产映射测试：`scripts/tests/phase2_config_test.gd`
 - 地形制作插件测试：`scripts/tests/terrain_authoring_test.gd`
@@ -204,6 +206,7 @@
 - 常用命令：
   - 启动检查：`godot --headless --path . --quit-after 2`
   - 核心测试：`godot --headless --path . --script res://scripts/tests/test_runner.gd`
+  - AI 量化测试：`godot --headless --path . --script res://scripts/tests/ai_behavior_quantitative_test.gd`
   - 展示测试：`godot --headless --path . --script res://scripts/tests/scene_presentation_test.gd`
   - 第二期配置测试：`godot --headless --path . --script res://scripts/tests/phase2_config_test.gd`
   - 格式检查：`git diff --check`

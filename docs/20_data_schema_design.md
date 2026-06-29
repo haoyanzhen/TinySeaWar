@@ -948,3 +948,40 @@ shell_trail_color_palette
 - `shell_trail_color_palette`：颜色键到十六进制颜色的映射。
 
 这些字段只属于表现层，不进入 Domain 伤害、命中、弹速、射程或碰撞计算。武器或 `weapon_visual` 可用 `shell_caliber_mm` / `caliber_mm` 显式覆盖口径；未配置时，表现层可从武器名称中的 `xxxmm` 读取，并按炮弹档位兜底。
+
+## 18. 战斗模拟实验配置
+
+当前实验清单位于 `data/simulations/experiments/`，由无图形战斗模拟器读取，不进入可玩关卡菜单，也不修改正式战斗 Definition。
+
+首版字段：
+
+```text
+schema_version
+experiment_id
+description
+simulation_kind
+player_policy_id
+enemy_policy_id
+tick_seconds
+maximum_ticks
+side_swap
+seed_plan
+scenarios
+output_directory
+```
+
+字段含义：
+
+- `schema_version`：当前固定为 `1`，用于拒绝不兼容清单。
+- `experiment_id`：稳定实验 ID，同时用于生成单局 `run_id`。
+- `description`：报告中的实验说明。
+- `simulation_kind`：当前使用 `FullBattleSimulation` 或 `RuleRegression`。
+- `player_policy_id`、`enemy_policy_id`：分别声明双方策略。首版支持 `SessionAutonomy` 和 `BaselineAutopilot`；后者只通过普通领域命令驱动对应阵营的主要武器和技能。旧式单一 `policy_id` 只作为双方相同策略的兼容字段。
+- `tick_seconds`：固定模拟步长，必须为正数；正式对比使用与运行时一致的 `0.1` 秒。
+- `maximum_ticks`：程序保护上限。达到上限记为 `GuardLimit`，不伪装成关卡超时结算。
+- `side_swap`：为 `true` 时，每个场景和种子运行 `original` 与 `swapped` 两局。交换局将原敌方阵容放到玩家出生槽位，将原玩家阵容放到敌方出生槽位，同时保留各阵容的旗舰、角色和内部顺序。
+- `seed_plan`：种子方案。`ExplicitList` 使用 `values`；`SequentialRange` 使用 `start` 和 `count`。
+- `scenarios`：场景数组，每项包含稳定 `scenario_id` 和正式 `level_definition_id`，可选用 `seeds` 覆盖实验级种子。
+- `output_directory`：报告输出目录。当前示例写入被 Git 忽略的 `artifacts/simulations/`。
+
+首版实验必须引用正式关卡配置。Definition 参数覆盖、临时舰队和验收 Profile 在实现相应隔离校验前不得写入正式清单。

@@ -1,0 +1,88 @@
+extends SceneTree
+
+const ConfigRegistry = preload("res://scripts/infrastructure/data/config_registry.gd")
+const ExperimentLoader = preload("res://scripts/infrastructure/simulation/experiment_loader.gd")
+const SimulationRunner = preload("res://scripts/application/simulation/simulation_runner.gd")
+const Aggregator = preload("res://scripts/infrastructure/simulation/simulation_aggregator.gd")
+const ReportWriter = preload("res://scripts/infrastructure/simulation/simulation_report_writer.gd")
+
+var failures: Array[String] = []
+var checks := 0
+
+
+func _init() -> void:
+	call_deferred("_run")
+
+
+func _run() -> void:
+	var loader = ExperimentLoader.new()
+	var invalid_errors := loader.validate_manifest({})
+	_check(not invalid_errors.is_empty(), "invalid manifest is rejected")
+	var manifest := {
+		"schema_version": 1,
+		"experiment_id": "sim.test.determinism",
+		"description": "模拟器确定性集成测试",
+		"simulation_kind": "RuleRegression",
+		"player_policy_id": "BaselineAutopilot",
+		"enemy_policy_id": "BaselineAutopilot",
+		"tick_seconds": 0.1,
+		"maximum_ticks": 2500,
+		"seed_plan": {"type": "ExplicitList", "values": [731]},
+		"scenarios": [{"scenario_id": "one_on_one", "level_definition_id": "level.prototype_1v1"}],
+	}
+	_check(loader.validate_manifest(manifest).is_empty(), "valid manifest passes validation")
+	var registry = ConfigRegistry.new()
+	_check(registry.load_all(), "configuration registry loads")
+	var runner = SimulationRunner.new()
+	var first := runner.run_experiment(registry, manifest)
+	var second := runner.run_experiment(registry, manifest)
+	_check(bool(first.get("ok", false)) and bool(second.get("ok", false)), "experiment runs twice")
+	_check(int(first.get("aggregate", {}).get("planned_runs", 0)) == 1, "seed plan expands to one run")
+	_check(int(first.get("aggregate", {}).get("finished_runs", 0)) == 1, "battle finishes before guard limit")
+	_check(Aggregator.new().deterministic_signature(first) == Aggregator.new().deterministic_signature(second), "same manifest and seed reproduce the same result")
+	var first_run: Dictionary = first.get("runs", [])[0]
+	_check(not first_run.get("units", {}).has(""), "area misses do not create an empty analytics unit")
+	var player_health: Dictionary = first_run.get("fleet_health", {}).get("fleet.player", {})
+	var player_damage_taken := 0.0
+	for unit_id in first_run.get("units", {}):
+		if str(unit_id).begins_with("unit.player."):
+			player_damage_taken += float(first_run["units"][unit_id].get("damage_taken", 0.0))
+	_check(player_damage_taken <= float(player_health.get("initial_hp", 0.0)) + 0.001, "effective damage excludes overkill from damage taken")
+	var player_shots := 0
+	var enemy_shots := 0
+	for unit_id in first_run.get("units", {}):
+		if str(unit_id).begins_with("unit.player."):
+			player_shots += int(first_run["units"][unit_id].get("shots", 0))
+		elif str(unit_id).begins_with("unit.enemy."):
+			enemy_shots += int(first_run["units"][unit_id].get("shots", 0))
+	_check(player_shots > 0, "player formation AI fires weapons")
+	_check(enemy_shots > 0, "enemy formation AI fires weapons")
+	var output_directory := "user://battle_simulator_test"
+	var written := ReportWriter.new().write_all(output_directory, first)
+	_check(bool(written.get("ok", false)), "report artifacts are written")
+	_check(FileAccess.file_exists(output_directory.path_join("report.md")), "Markdown report exists")
+	_check(FileAccess.file_exists(output_directory.path_join("aggregate.json")), "aggregate JSON exists")
+	_check(FileAccess.file_exists(output_directory.path_join("unit_damage.csv")), "per-battle unit damage CSV exists")
+	var swapped_manifest: Dictionary = manifest.duplicate(true)
+	swapped_manifest["experiment_id"] = "sim.test.side_swap"
+	swapped_manifest["side_swap"] = true
+	var swapped := runner.run_experiment(registry, swapped_manifest)
+	_check(int(swapped.get("aggregate", {}).get("planned_runs", 0)) == 2, "side swap expands each seed into an original and swapped run")
+	var swapped_runs: Array = swapped.get("runs", [])
+	_check(swapped_runs[0].get("side_variant", "") == "original" and swapped_runs[1].get("side_variant", "") == "swapped", "paired runs retain stable side variant order")
+	_check(swapped_runs[0].get("units", {}).get("unit.player.warspite", {}).get("definition_id", "") == "ship.warspite", "original run keeps the player lineup on the player side")
+	_check(swapped_runs[1].get("units", {}).get("unit.player.bismarck", {}).get("definition_id", "") == "ship.bismarck", "swapped run places the original enemy lineup on player spawns")
+	_check(swapped_runs[1].get("units", {}).get("unit.enemy.warspite", {}).get("definition_id", "") == "ship.warspite", "swapped run places the original player lineup on enemy spawns")
+	if failures.is_empty():
+		print("PASS: %d battle simulator checks" % checks)
+		quit(0)
+	else:
+		for failure in failures: push_error("FAIL: %s" % failure)
+		print("FAILED: %d of %d battle simulator checks" % [failures.size(), checks])
+		quit(1)
+
+
+func _check(condition: bool, message: String) -> void:
+	checks += 1
+	if not condition:
+		failures.append(message)

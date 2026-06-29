@@ -105,6 +105,10 @@
   - 海况/风速鱼雷 sigma 倍率：`scripts/domain/services/terrain_context_service.gd`
   - 固定种子均匀与高斯抽样：`scripts/infrastructure/random/seeded_random_source.gd`
 - 战斗统计：`scripts/infrastructure/analytics/battle_recorder.gd`
+  - 分类与聚合工具：`scripts/infrastructure/analytics/damage_statistics.gd`
+  - `BattleSession.get_unit_damage_statistics`：取得单舰完整统计。
+  - `BattleSession.get_all_unit_damage_statistics`：取得本局全部舰船统计，包含零伤害舰船。
+  - `BattleSession.get_unit_damage_for_category`：直接查询主炮、副炮、鱼雷、航空、技能、Buff 等分类值。
 - 随机数：`scripts/infrastructure/random/seeded_random_source.gd`
 
 ## 玩家输入与战斗展示
@@ -205,6 +209,15 @@
 - 第二期配置与资产映射测试：`scripts/tests/phase2_config_test.gd`
 - 地形制作插件测试：`scripts/tests/terrain_authoring_test.gd`
 - 批量模拟：`scripts/tests/batch_simulation.gd`
+- 战斗模拟器：
+  - 实验运行：`scripts/application/simulation/simulation_runner.gd`
+  - 清单加载：`scripts/infrastructure/simulation/experiment_loader.gd`
+  - 聚合与报告：`scripts/infrastructure/simulation/simulation_aggregator.gd`、`simulation_report_writer.gd`
+  - 逐舰分类伤害：`scripts/infrastructure/analytics/damage_statistics.gd`；模拟器通过 `BattleSession.get_all_unit_damage_statistics()` 读取，不另算伤害。
+  - 命令入口：`tools/simulation/run_experiment.gd`
+  - 示例实验：`data/simulations/experiments/smoke_single_battle.json`
+  - 独立测试：`scripts/tests/battle_simulator_test.gd`
+  - 伤害统计测试：`scripts/tests/damage_statistics_test.gd`
 - 截图 QA：`scripts/tests/render_scene_qa.gd`
 - 常用命令：
   - 启动检查：`godot --headless --path . --quit-after 2`
@@ -212,6 +225,8 @@
   - AI 量化测试：`godot --headless --path . --script res://scripts/tests/ai_behavior_quantitative_test.gd`
   - 展示测试：`godot --headless --path . --script res://scripts/tests/scene_presentation_test.gd`
   - 第二期配置测试：`godot --headless --path . --script res://scripts/tests/phase2_config_test.gd`
+  - 战斗模拟器测试：`godot --headless --path . --script res://scripts/tests/battle_simulator_test.gd`
+  - 运行示例模拟：`godot --headless --path . --script res://tools/simulation/run_experiment.gd -- res://data/simulations/experiments/smoke_single_battle.json`
   - 格式检查：`git diff --check`
   - 地形配置校验：`python3 tools/terrain/validate_terrain_definition.py`
   - 地形生产门禁：`python3 tools/terrain/validate_scene_combat_pipeline.py`

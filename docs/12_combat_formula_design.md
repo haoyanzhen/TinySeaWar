@@ -233,6 +233,15 @@ MVP 采用“同类加算、异类乘算、特殊效果独立乘算”的统一�
 - 若穿甲结算伤害为 0，后续增伤不能将其变为正伤害。战斗表现需要用特殊颜色或样式标明，例如灰色 `0`、跳弹文字或未击穿提示。
 - MVP 通用伤害不使用随机浮动，保持结算可预测。
 
+### 5.1 伤害统计口径
+
+- 每次 `AttackResolved` 同时携带互斥的 `damage_category`：`main_gun`、`secondary_gun`、`torpedo`、`aviation`、`anti_air`、`anti_submarine`、`skill`、`buff`、`mine` 或 `other`。
+- 主炮/副炮描述武器本身，而不等同于玩家控制的主要武器：明确的 `damage_category` 或 `battery_role` 优先，其次按稳定武器组语义识别 `secondary`，其他 Gun 归为主炮。因此由玩家控制鱼雷的驱逐舰，其自动舰炮仍计为主炮。显式 `source_skill_id`、`source_buff_id` 可以覆盖武器回退分类，供后续直接伤害技能接入。
+- 舰船直接伤害只统计目标实际损失的有效生命；超过目标剩余生命的部分进入 `overkill_damage`，不得计入有效总伤害。
+- `damage_by_category` 是互斥直接伤害分布，各类别之和等于 `damage_dealt`。`damage_by_weapon` 保留武器定义级明细。
+- Buff 增伤是对直接伤害的解释层，不重复进入 `damage_dealt`。增伤部分记录在状态来源舰船的 `contribution_damage_by_category.buff`；多个正向增伤来源按修正值权重分配，并保留技能 ID 明细。
+- 当前 Buff 贡献是稳定、可复现的统计归因，不是战斗结算的第二次伤害，也不反向影响生命值、随机数或事件顺序。
+
 ## 6. 多发武器
 
 多发武器逐发结算。

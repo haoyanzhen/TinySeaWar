@@ -55,6 +55,22 @@
 
 因此正式实现应复用现有基础，逐步替换硬编码批量脚本，而不是平行开发一个简化伤害计算器。
 
+### 2.1 2026-06-29 首个可用版本
+
+当前已实现阶段 A 主干和部分阶段 B 能力：
+
+- `data/simulations/experiments/` 保存版本化实验清单。
+- `SimulationExperimentLoader` 校验清单并展开显式或连续种子。
+- `SimulationRunner` 直接驱动 `BattleSession`，区分正常结束、创建失败和 `GuardLimit`。
+- `BaselineAutopilot` 通过普通命令为双方使用手动主要武器和技能，不绕过装填、射程、射角、侦查和目标规则。
+- `SimulationAggregator` 输出完成率、胜率及 95% Wilson 区间、时长分布、接触/开火/击沉时间、双方射击/命中/伤害、分场景结果和单位平均有效伤害。
+- `SimulationReportWriter` 输出 `runs.jsonl`、`aggregate.json`、`summary.csv` 和 `report.md`。
+- `battle_simulator_test.gd` 独立验证清单、运行、确定性和报告落盘。
+- 实验可用 `side_swap=true` 将原敌方阵容放到玩家出生点、原玩家阵容放到敌方出生点；同场景同种子按 `original` / `swapped` 生成配对结果。
+- 单局逐舰伤害直接读取 `BattleSession.get_all_unit_damage_statistics()`，由 `damage_statistics.gd` 提供有效伤害、承伤、过量伤害、武器类别、武器明细和 Buff 贡献口径。
+
+尚未实现的主要能力是 Definition 参数覆盖、候选参数配对 A/B、并行恢复、完整 AI 动态指标和大规模编成抽样。因此当前状态是“模拟器首版可用”，不是本文全部阶段完成。
+
 ---
 
 ## 3. 设计原则
@@ -465,6 +481,8 @@ actual_run_count
 
 - 定义 ID、舰种、Cost、阵营、旗舰身份。
 - 伤害、承伤、治疗、补给和有效生存时间。
+- `damage_by_category` 保存互斥的主炮、副炮、鱼雷、航空、防空、反潜、技能等有效伤害；`damage_by_weapon` 保存武器级明细，类别和必须能与 `damage_dealt` 对账。
+- `contribution_damage_by_category` 单独保存 Buff 等间接贡献，不重复计入直接伤害；当前 Buff 贡献按正向状态修正值权重归入状态来源舰船。
 - 发射、命中、0 伤害、有效伤害和击沉数。
 - 首次发现时间、被发现累计时间和开火暴露累计时间。
 - 移动距离、平均速度、静止时间、岸线碰撞和边界钳制。

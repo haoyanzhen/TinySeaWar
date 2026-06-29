@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "experiment_id": "sim.smoke.single_battle",
+  "description": "1v1 开阔海域无图形战斗模拟器首轮报告",
+  "simulation_kind": "FullBattleSimulation",
+  "player_policy_id": "BaselineAutopilot",
+  "enemy_policy_id": "BaselineAutopilot",
+  "tick_seconds": 0.1,
+  "maximum_ticks": 2500,
+  "seed_plan": {
+    "type": "ExplicitList",
+    "values": [1201, 1202, 1203, 1204, 1205, 1206]
+  },
+  "scenarios": [
+    {
+      "scenario_id": "prototype_1v1",
+      "level_definition_id": "level.prototype_1v1"
+    }
+  ],
+  "output_directory": "res://artifacts/simulations/sim.smoke.single_battle"
+}

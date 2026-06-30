@@ -11,10 +11,13 @@ const TerrainContextService = preload("res://scripts/domain/services/terrain_con
 const FacilityService = preload("res://scripts/domain/services/facility_service.gd")
 const MinefieldService = preload("res://scripts/domain/services/minefield_service.gd")
 const RoutePlanner = preload("res://scripts/application/navigation/route_planner.gd")
+const AIQuantitativeModel = preload("res://scripts/application/ai/ai_quantitative_model.gd")
 
 const PLAYER_FACTION := "player"
 const ENEMY_FACTION := "enemy"
 const CONTACT_GHOST_DURATION := 60.0
+const AI_DECISION_INTERVAL := 0.5
+const AI_IMMEDIATE_THRESHOLD := 65.0
 
 var registry
 var random_source
@@ -31,6 +34,8 @@ var navigation_definition: Dictionary = {}
 var _event_buffer: Array = []
 var _event_sequence := 0
 var _entity_sequence := 0
+var _full_ai_factions := {ENEMY_FACTION: true}
+var _ai_mode_locks_by_definition := {}
 
 
 func _init(definition_registry = null) -> void:
@@ -180,6 +185,15 @@ func snapshot(viewer_faction: String = PLAYER_FACTION, omniscient: bool = false)
 			"is_flagship": unit["is_flagship"],
 			"skill_cooldown": unit["skill_state"].get("cooldown_remaining", 0.0),
 			"skill_cooldown_max": unit["skill_state"].get("cooldown_max", 0.0),
+			"movement_state": unit.get("movement_state", {}).duplicate(true),
+			"movement_assist_enabled": bool(unit.get("movement_assist_enabled", false)),
+			"secondary_auto_fire_enabled": bool(unit.get("secondary_auto_fire_enabled", true)),
+			"primary_auto_fire_enabled": bool(unit.get("primary_auto_fire_enabled", false)),
+			"skill_auto_cast_enabled": false if unit["faction_id"] == PLAYER_FACTION else bool(unit.get("skill_auto_cast_enabled", true)),
+			"player_route_waypoints": unit.get("player_route_waypoints", []).duplicate(true),
+			"ai_mode_id": str(unit.get("ai_state", {}).get("mode_id", "")),
+			"ai_tactic_id": str(unit.get("ai_state", {}).get("tactic_id", "")),
+			"ai_interrupt": str(unit.get("ai_state", {}).get("active_interrupt", "")),
 		}
 	var contacts := {}
 	var visible_minefields := {}
@@ -221,6 +235,35 @@ func snapshot(viewer_faction: String = PLAYER_FACTION, omniscient: bool = false)
 
 func get_statistics() -> Dictionary:
 	return recorder.summary.duplicate(true)
+
+
+func configure_full_ai_factions(faction_ids: Array) -> void:
+	_full_ai_factions.clear()
+	for faction_id in faction_ids:
+		_full_ai_factions[str(faction_id)] = true
+	for unit_id in state.get("units_by_id", {}):
+		var unit: Dictionary = state["units_by_id"][unit_id]
+		if not _uses_full_ai(unit): continue
+		unit["control_authority"] = "SimulationAI"
+		unit["movement_assist_enabled"] = true
+		unit["secondary_auto_fire_enabled"] = true
+		unit["primary_auto_fire_enabled"] = true
+		unit["primary_auto_fire_suspended"] = false
+		unit["skill_auto_cast_enabled"] = true
+		unit["movement_state"] = {"mode": "AutoNavigate", "target_position": unit["position"], "waypoints": [], "waypoint_index": 0}
+		unit["ai_state"]["mode_id"] = _default_ai_mode(unit.get("stats", {}))
+		unit["ai_state"]["mode_entered_at"] = float(state.get("elapsed_time", 0.0))
+
+
+func configure_ai_mode_locks(mode_locks_by_definition: Dictionary) -> void:
+	_ai_mode_locks_by_definition = mode_locks_by_definition.duplicate(true)
+	for unit_id in state.get("units_by_id", {}):
+		var unit: Dictionary = state["units_by_id"][unit_id]
+		var locked_mode := str(_ai_mode_locks_by_definition.get(str(unit.get("definition_id", "")), ""))
+		if locked_mode.is_empty(): continue
+		unit["ai_state"]["mode_id"] = locked_mode
+		unit["ai_state"]["mode_candidate_id"] = ""
+		unit["ai_state"]["mode_candidate_confirmations"] = 0
 
 
 func get_unit_damage_statistics(unit_id: String) -> Dictionary:
@@ -314,6 +357,13 @@ func get_operation_status(unit_id: String) -> Dictionary:
 		"skill_id": unit["skill_state"].get("definition_id", ""),
 		"skill_cooldown": skill_cooldown,
 		"skill_ready": skill_cooldown <= 0.0 and unit.get("life_state", "") == "Alive" and state.get("phase", "") == "Running",
+		"movement_assist_enabled": bool(unit.get("movement_assist_enabled", false)),
+		"secondary_auto_fire_enabled": bool(unit.get("secondary_auto_fire_enabled", true)),
+		"primary_auto_fire_enabled": bool(unit.get("primary_auto_fire_enabled", false)),
+		"skill_auto_cast_enabled": false,
+		"player_route_waypoints": unit.get("player_route_waypoints", []).duplicate(true),
+		"player_route_remaining": _remaining_player_route(unit),
+		"movement_mode": str(unit.get("movement_state", {}).get("mode", "HoldPosition")),
 	}
 
 
@@ -415,6 +465,8 @@ func _build_unit(member: Dictionary, ship: Dictionary, fleet_id: String, faction
 		else:
 			weapon_states.append({"instance_id": "%s.%s" % [member["entity_id"], weapon_id], "definition_id": weapon_id, "mount_index": -1, "mount_id": "", "reload_remaining": 0.0, "enabled": true})
 	var skill: Dictionary = registry.get_definition("skills", str(ship.get("skill_id", "")))
+	var player_controlled := faction_id == PLAYER_FACTION
+	var initial_movement_mode := "HoldPosition" if player_controlled else "AutoNavigate"
 	return {
 		"entity_id": str(member["entity_id"]),
 		"definition_id": str(ship["id"]),
@@ -430,7 +482,7 @@ func _build_unit(member: Dictionary, ship: Dictionary, fleet_id: String, faction
 		"position": spawn_position,
 		"heading": deg_to_rad(float(member.get("heading", 0.0))),
 		"current_speed": 0.0,
-		"movement_state": {"mode": "AutoNavigate", "target_position": spawn_position},
+		"movement_state": {"mode": initial_movement_mode, "target_position": spawn_position, "waypoints": [], "waypoint_index": 0},
 		"targeting_state": {"mode": "Automatic", "focused_target_id": "", "current_target_id": ""},
 		"weapon_states": weapon_states,
 		"weapon_group_launch_remaining": {},
@@ -438,6 +490,27 @@ func _build_unit(member: Dictionary, ship: Dictionary, fleet_id: String, faction
 		"ammo_state": _build_ammo_state(ship),
 		"status_effects": [],
 		"firing_reveal_remaining": 0.0,
+		"control_authority": "Player" if player_controlled else "EnemyAI",
+		"movement_assist_enabled": false if player_controlled else true,
+		"secondary_auto_fire_enabled": true,
+		"primary_auto_fire_enabled": false if player_controlled else true,
+		"primary_auto_fire_suspended": false,
+		"skill_auto_cast_enabled": false if player_controlled else true,
+		"player_route_waypoints": [],
+		"ai_state": {
+			"mode_id": _default_ai_mode(ship) if not player_controlled else "",
+			"mode_entered_at": 0.0,
+			"tactic_id": "Defend",
+			"active_interrupt": "",
+			"interrupted_movement_state": {},
+			"decision_cooldown": 0.0,
+			"fire_decision_cooldown": 0.0,
+			"skill_decision_cooldown": 0.0,
+			"last_primary_command_tick": -1,
+			"last_skill_command_tick": -1,
+			"mode_candidate_id": "",
+			"mode_candidate_confirmations": 0,
+		},
 	}
 
 
@@ -456,7 +529,10 @@ func _process_commands() -> void:
 	command_queue.sort_custom(func(a, b):
 		var tick_a := int(a.get("issued_at_tick", 0))
 		var tick_b := int(b.get("issued_at_tick", 0))
-		return tick_a < tick_b if tick_a != tick_b else str(a.get("command_id", "")) < str(b.get("command_id", "")))
+		if tick_a != tick_b: return tick_a < tick_b
+		var priority_a := 0 if str(a.get("command_type", "")) == "SetUnitControlState" else 1
+		var priority_b := 0 if str(b.get("command_type", "")) == "SetUnitControlState" else 1
+		return priority_a < priority_b if priority_a != priority_b else str(a.get("command_id", "")) < str(b.get("command_id", "")))
 	var pending := command_queue
 	command_queue = []
 	for command in pending:
@@ -467,6 +543,8 @@ func _process_commands() -> void:
 
 func _apply_command(command: Dictionary) -> Dictionary:
 	if state["phase"] != "Running": return _rejection(command.get("command_id", ""), "BATTLE_NOT_RUNNING")
+	if command.get("command_type", "") == "SetUnitControlState":
+		return _set_unit_control_state(command)
 	var unit_id := str(command.get("unit_id", ""))
 	var unit: Dictionary = state["units_by_id"].get(unit_id, {})
 	if unit.is_empty(): return _rejection(command.get("command_id", ""), "UNIT_NOT_FOUND")
@@ -475,6 +553,8 @@ func _apply_command(command: Dictionary) -> Dictionary:
 	if unit["faction_id"] != issuer_faction: return _rejection(command.get("command_id", ""), "UNIT_NOT_CONTROLLABLE")
 	match command.get("command_type", ""):
 		"MoveUnits":
+			if str(command.get("issuer_type", "")) == "PlayerAssistAI" and str(unit.get("faction_id", "")) == PLAYER_FACTION and str(command.get("movement_mode", "AssistNavigate")) != "ImmediateAvoidance" and not bool(unit.get("movement_assist_enabled", false)):
+				return _rejection(command.get("command_id", ""), "MOVEMENT_ASSIST_DISABLED")
 			var target_position = command.get("target_position")
 			if typeof(target_position) != TYPE_VECTOR2: return _rejection(command.get("command_id", ""), "INVALID_TARGET_TYPE")
 			if not _inside_map(target_position): return _rejection(command.get("command_id", ""), "TARGET_POSITION_ON_LAND")
@@ -484,9 +564,23 @@ func _apply_command(command: Dictionary) -> Dictionary:
 			var environment_route := _validate_environment_route(unit["position"], route.get("waypoints", []))
 			if not bool(environment_route.get("allowed", false)):
 				return _rejection(command.get("command_id", ""), str(environment_route.get("reason_code", "TIDE_ACCESS_RESTRICTED")))
-			var movement_mode := "AutoNavigate" if command.get("issuer_type", "Player") == "AI" else "PlayerMoveOrder"
+			var player_order: bool = str(command.get("issuer_type", "Player")) == "Player" and str(unit["faction_id"]) == PLAYER_FACTION
+			var movement_mode := "PlayerMoveOrder" if player_order else str(command.get("movement_mode", "AssistNavigate" if command.get("issuer_type", "") == "PlayerAssistAI" else "AutoNavigate"))
 			unit["movement_state"] = {"mode": movement_mode, "target_position": target_position, "waypoints": route.get("waypoints", [target_position]), "waypoint_index": 0}
+			if player_order:
+				unit["player_route_waypoints"] = [target_position]
 			_emit("MoveOrderAccepted", {"unit_id": unit_id, "target_position": unit["movement_state"]["target_position"]})
+			return {"accepted": true}
+		"AppendMoveWaypoint":
+			if unit["faction_id"] != PLAYER_FACTION: return _rejection(command.get("command_id", ""), "UNIT_NOT_CONTROLLABLE")
+			var append_position = command.get("target_position")
+			if typeof(append_position) != TYPE_VECTOR2: return _rejection(command.get("command_id", ""), "INVALID_TARGET_TYPE")
+			return _append_player_waypoint(unit, append_position, command.get("command_id", ""))
+		"ClearMoveRoute":
+			if unit["faction_id"] != PLAYER_FACTION: return _rejection(command.get("command_id", ""), "UNIT_NOT_CONTROLLABLE")
+			unit["player_route_waypoints"] = []
+			unit["movement_state"] = {"mode": "AssistNavigate" if bool(unit.get("movement_assist_enabled", false)) else "HoldPosition", "target_position": unit["position"], "waypoints": [], "waypoint_index": 0}
+			_emit("MoveRouteCleared", {"unit_id": unit_id})
 			return {"accepted": true}
 		"FocusTarget":
 			var target_id := str(command.get("target_unit_id", ""))
@@ -507,6 +601,8 @@ func _apply_command(command: Dictionary) -> Dictionary:
 		"SwitchAmmo":
 			return _switch_ammo(unit, command.get("command_id", ""))
 		"FirePrimaryWeapon":
+			if str(command.get("issuer_type", "")) == "PlayerAssistAI" and (not bool(unit.get("primary_auto_fire_enabled", false)) or bool(unit.get("primary_auto_fire_suspended", false))):
+				return _rejection(command.get("command_id", ""), "AUTO_FIRE_DISABLED")
 			var target_position = command.get("target_position")
 			if typeof(target_position) != TYPE_VECTOR2: return _rejection(command.get("command_id", ""), "INVALID_TARGET_TYPE")
 			return _fire_primary_weapon(unit, target_position, command.get("command_id", ""))
@@ -541,12 +637,77 @@ func _validate_command_structure(command: Dictionary) -> Dictionary:
 	return {}
 
 
+func _set_unit_control_state(command: Dictionary) -> Dictionary:
+	if str(command.get("issuer_id", "")) != PLAYER_FACTION:
+		return _rejection(command.get("command_id", ""), "UNIT_NOT_CONTROLLABLE")
+	var unit_ids: Array = command.get("unit_ids", [])
+	if unit_ids.is_empty() and command.has("unit_id"):
+		unit_ids = [str(command.get("unit_id", ""))]
+	if unit_ids.is_empty():
+		return _rejection(command.get("command_id", ""), "INVALID_COMMAND_STRUCTURE")
+	unit_ids = unit_ids.duplicate()
+	unit_ids.sort()
+	var changed: Array = []
+	for unit_id_value in unit_ids:
+		var unit_id := str(unit_id_value)
+		var unit: Dictionary = state.get("units_by_id", {}).get(unit_id, {})
+		if unit.is_empty() or unit.get("faction_id", "") != PLAYER_FACTION or unit.get("life_state", "") != "Alive":
+			continue
+		if command.has("movement_assist_enabled"):
+			unit["movement_assist_enabled"] = bool(command["movement_assist_enabled"])
+			if unit.get("player_route_waypoints", []).is_empty() and str(unit.get("movement_state", {}).get("mode", "")) not in ["ImmediateAvoidance", "PlayerMoveOrder", "PlayerWaypointRoute"]:
+				unit["movement_state"] = {"mode": "AssistNavigate" if bool(unit["movement_assist_enabled"]) else "HoldPosition", "target_position": unit["position"], "waypoints": [], "waypoint_index": 0}
+		if command.has("secondary_auto_fire_enabled"):
+			unit["secondary_auto_fire_enabled"] = bool(command["secondary_auto_fire_enabled"])
+		if command.has("primary_auto_fire_enabled") and not str(unit.get("stats", {}).get("primary_weapon_group_id", "")).is_empty():
+			unit["primary_auto_fire_enabled"] = bool(command["primary_auto_fire_enabled"])
+		if command.has("primary_auto_fire_suspended"):
+			unit["primary_auto_fire_suspended"] = bool(command["primary_auto_fire_suspended"])
+		unit["skill_auto_cast_enabled"] = false
+		changed.append(unit_id)
+		_emit("UnitControlStateChanged", {
+			"unit_id": unit_id,
+			"movement_assist_enabled": bool(unit.get("movement_assist_enabled", false)),
+			"secondary_auto_fire_enabled": bool(unit.get("secondary_auto_fire_enabled", true)),
+			"primary_auto_fire_enabled": bool(unit.get("primary_auto_fire_enabled", false)),
+		})
+	return {"accepted": not changed.is_empty(), "changed_unit_ids": changed, "reason_code": "OK" if not changed.is_empty() else "UNIT_NOT_CONTROLLABLE"}
+
+
+func _append_player_waypoint(unit: Dictionary, target_position: Vector2, command_id: String) -> Dictionary:
+	if not _inside_map(target_position): return _rejection(command_id, "TARGET_POSITION_ON_LAND")
+	var authored_points: Array = unit.get("player_route_waypoints", [])
+	var anchor: Vector2 = authored_points[-1] if not authored_points.is_empty() else unit["position"]
+	var route := route_planner.plan_path(terrain_query, navigation_definition, anchor, target_position, float(unit["stats"].get("collision_radius", 20.0)), _movement_tags(unit), terrain_context_service)
+	if not bool(route.get("ok", false)):
+		return _rejection(command_id, str(route.get("reason_code", "NO_NAVIGATION_PATH")))
+	var environment_route := _validate_environment_route(anchor, route.get("waypoints", []))
+	if not bool(environment_route.get("allowed", false)):
+		return _rejection(command_id, str(environment_route.get("reason_code", "TIDE_ACCESS_RESTRICTED")))
+	var movement: Dictionary = unit.get("movement_state", {})
+	var remaining_waypoints: Array = []
+	if str(movement.get("mode", "")) in ["PlayerMoveOrder", "PlayerWaypointRoute"]:
+		var existing: Array = movement.get("waypoints", [])
+		for index in range(int(movement.get("waypoint_index", 0)), existing.size()):
+			remaining_waypoints.append(existing[index])
+	remaining_waypoints.append_array(route.get("waypoints", [target_position]))
+	authored_points = authored_points.duplicate()
+	authored_points.append(target_position)
+	unit["player_route_waypoints"] = authored_points
+	unit["movement_state"] = {"mode": "PlayerWaypointRoute", "target_position": target_position, "waypoints": remaining_waypoints, "waypoint_index": 0}
+	_emit("MoveWaypointAppended", {"unit_id": unit["entity_id"], "target_position": target_position, "route_size": authored_points.size()})
+	return {"accepted": true}
+
+
 func _update_cooldowns_and_statuses(delta: float) -> void:
 	for unit_id in _sorted_unit_ids():
 		var unit: Dictionary = state["units_by_id"][unit_id]
 		if unit["life_state"] != "Alive": continue
 		unit["firing_reveal_remaining"] = maxf(0.0, float(unit["firing_reveal_remaining"]) - delta)
 		unit["skill_state"]["cooldown_remaining"] = maxf(0.0, float(unit["skill_state"]["cooldown_remaining"]) - delta)
+		unit["ai_state"]["decision_cooldown"] = maxf(0.0, float(unit.get("ai_state", {}).get("decision_cooldown", 0.0)) - delta)
+		unit["ai_state"]["fire_decision_cooldown"] = maxf(0.0, float(unit.get("ai_state", {}).get("fire_decision_cooldown", 0.0)) - delta)
+		unit["ai_state"]["skill_decision_cooldown"] = maxf(0.0, float(unit.get("ai_state", {}).get("skill_decision_cooldown", 0.0)) - delta)
 		for weapon_state in unit["weapon_states"]:
 			weapon_state["reload_remaining"] = maxf(0.0, float(weapon_state["reload_remaining"]) - delta)
 		for group_id in unit.get("weapon_group_launch_remaining", {}).keys():
@@ -574,7 +735,12 @@ func _update_movement(delta: float) -> void:
 			target_position = _current_movement_target(movement, unit["position"])
 			distance = (unit["position"] as Vector2).distance_to(target_position)
 			unit["current_speed"] = move_toward(float(unit["current_speed"]), 0.0, max_speed * delta * 2.0)
-			if _movement_finished(movement) and movement["mode"] == "PlayerMoveOrder": movement["mode"] = "HoldPosition"
+			if _movement_finished(movement) and str(movement.get("mode", "")) in ["PlayerMoveOrder", "PlayerWaypointRoute"]:
+				unit["player_route_waypoints"] = []
+				movement["mode"] = "AssistNavigate" if bool(unit.get("movement_assist_enabled", false)) else "HoldPosition"
+				movement["target_position"] = unit["position"]
+				movement["waypoints"] = []
+				movement["waypoint_index"] = 0
 		else:
 			var desired_heading := (target_position - (unit["position"] as Vector2)).angle()
 			unit["heading"] = rotate_toward(float(unit["heading"]), desired_heading, turn_speed * delta)
@@ -721,59 +887,56 @@ func _fleet_detects(observer_faction: String, target: Dictionary) -> bool:
 
 
 func _update_ai_intents() -> void:
-	var map_center := Vector2(float(state["map"].get("width", 1200.0)) * 0.5, float(state["map"].get("height", 700.0)) * 0.5)
 	if int(state.get("tick_index", 0)) % 10 == 0:
 		_update_ai_support_intents()
 	for unit_id in _sorted_unit_ids():
 		var unit: Dictionary = state["units_by_id"][unit_id]
-		if unit["life_state"] != "Alive" or unit["movement_state"]["mode"] == "PlayerMoveOrder": continue
-		var target := _select_target(unit)
-		if unit.get("faction_id", "") == ENEMY_FACTION:
-			var facility_plan := _ai_facility_plan(unit, target.is_empty())
-			if not facility_plan.is_empty():
-				if facility_plan.has("interaction_type"):
-					_queue_ai_facility_interaction(unit, str(facility_plan["facility_id"]), str(facility_plan["interaction_type"]))
-				else:
-					_queue_ai_move(unit, facility_plan["target_position"])
-				continue
-		if target.is_empty():
-			var context := terrain_context_service.context_at(unit["position"])
-			var lee_center := terrain_context_service.zone_center_for_effect("environment.effect.lee_water")
-			if int(context.get("sea_state", 0)) >= 4 and lee_center != Vector2.ZERO:
-				_queue_ai_move(unit, lee_center)
-				continue
-			var lane_offset := float(abs(unit_id.hash()) % 180) - 90.0
-			_queue_ai_move(unit, map_center + Vector2(0.0, lane_offset))
+		if unit["life_state"] != "Alive": continue
+		if _update_immediate_survival(unit):
 			continue
-		var preferred_range := _preferred_range(unit)
-		var target_position: Vector2 = target["position"]
-		var distance := (unit["position"] as Vector2).distance_to(target_position)
-		if distance > preferred_range:
-			_queue_ai_move(unit, target_position)
-		elif distance < preferred_range * 0.55:
-			_queue_ai_move(unit, _clamp_to_map(unit["position"] + (unit["position"] - target_position).normalized() * 140.0))
+		_recover_from_ai_interrupt(unit)
+		if _uses_full_ai(unit):
+			_update_enemy_ai_intent(unit)
 		else:
-			_queue_ai_move(unit, unit["position"])
+			_update_player_assist_intent(unit)
+	_update_ai_primary_weapons()
 
 
 func _update_auto_skills() -> void:
 	for unit_id in _sorted_unit_ids():
 		var unit: Dictionary = state["units_by_id"][unit_id]
-		if unit.get("faction_id", "") == PLAYER_FACTION: continue
+		if not _uses_full_ai(unit) or not bool(unit.get("skill_auto_cast_enabled", true)): continue
 		if unit["life_state"] != "Alive" or float(unit["skill_state"]["cooldown_remaining"]) > 0.0: continue
+		if float(unit["ai_state"].get("skill_decision_cooldown", 0.0)) > 0.0: continue
+		unit["ai_state"]["skill_decision_cooldown"] = 1.0
+		if int(unit.get("ai_state", {}).get("last_skill_command_tick", -1)) == int(state.get("tick_index", 0)): continue
 		var skill: Dictionary = registry.get_definition("skills", str(unit["skill_state"]["definition_id"]))
 		if skill.is_empty(): continue
 		var target_ref := {}
+		var target := _current_or_select_target(unit)
 		match skill.get("target_type", "Self"):
 			"Enemy":
-				var target := _select_target(unit)
 				if target.is_empty(): continue
 				target_ref = {"type": "Entity", "entity_id": target["entity_id"]}
 			"Area":
-				var area_target := _select_target(unit)
-				if area_target.is_empty(): continue
-				target_ref = {"type": "Position", "position": area_target["position"]}
+				if target.is_empty(): continue
+				target_ref = {"type": "Position", "position": target["position"]}
 			_: target_ref = {"type": "Self"}
+		var hp_safety := float(unit.get("current_hp", 0.0)) / maxf(1.0, float(unit.get("max_hp", 1.0)))
+		var primary_ready := _primary_ready_ratio(unit)
+		var target_value := 0.0 if target.is_empty() else _normalized_target_value(unit, target, false)
+		var nearby_enemy_count := _visible_enemy_count_in_radius(unit, float(skill.get("cast_range", 0.0)))
+		var skill_score := AIQuantitativeModel.skill_expected_value({
+			"direct_value": target_value if not target.is_empty() else 1.0 - hp_safety,
+			"coverage_value": clampf(float(nearby_enemy_count) / 3.0, 0.0, 1.0),
+			"attack_synergy": primary_ready,
+			"defense_urgency": 1.0 - hp_safety,
+			"objective_value": 0.5 if not facility_service.snapshot().is_empty() else 0.0,
+			"group_followup": _ally_weapon_readiness(unit),
+			"waste_risk": 1.0 if target.is_empty() and hp_safety > 0.65 else 0.0,
+			"exposure_cost": 0.0,
+		})
+		if skill_score < 60.0: continue
 		command_queue.append({
 			"command_id": "ai.skill.%s.%s" % [state["tick_index"] + 1, unit_id],
 			"command_type": "CastSkill",
@@ -783,20 +946,350 @@ func _update_auto_skills() -> void:
 			"unit_id": unit_id,
 			"target_ref": target_ref,
 		})
+		unit["ai_state"]["last_skill_command_tick"] = int(state.get("tick_index", 0))
+		_emit("AISkillCommitted", {"unit_id": unit_id, "skill_id": skill.get("id", ""), "score": skill_score})
 
 
-func _queue_ai_move(unit: Dictionary, target_position: Vector2) -> void:
+func _queue_ai_move(unit: Dictionary, target_position: Vector2, issuer_type: String = "AI", movement_mode: String = "AutoNavigate") -> void:
 	target_position = minefield_service.avoidance_waypoint(str(unit.get("faction_id", "")), unit["position"], target_position)
 	if (unit["movement_state"].get("target_position", unit["position"]) as Vector2).distance_to(target_position) < 8.0: return
 	command_queue.append({
 		"command_id": "ai.move.%s.%s" % [state["tick_index"] + 1, unit["entity_id"]],
 		"command_type": "MoveUnits",
 		"issued_at_tick": state["tick_index"] + 1,
-		"issuer_type": "AI",
+		"issuer_type": issuer_type,
 		"issuer_id": unit["faction_id"],
 		"unit_id": unit["entity_id"],
 		"target_position": _clamp_to_map(target_position),
+		"movement_mode": movement_mode,
 	})
+
+
+func _update_player_assist_intent(unit: Dictionary) -> void:
+	var movement_mode := str(unit.get("movement_state", {}).get("mode", "HoldPosition"))
+	if movement_mode in ["PlayerMoveOrder", "PlayerWaypointRoute"]:
+		return
+	if float(unit["ai_state"].get("decision_cooldown", 0.0)) > 0.0:
+		return
+	unit["ai_state"]["decision_cooldown"] = AI_DECISION_INTERVAL
+	if not bool(unit.get("movement_assist_enabled", false)):
+		unit["movement_state"] = {"mode": "HoldPosition", "target_position": unit["position"], "waypoints": [], "waypoint_index": 0}
+		return
+	var target := _select_target(unit, true)
+	if target.is_empty():
+		unit["movement_state"] = {"mode": "HoldPosition", "target_position": unit["position"], "waypoints": [], "waypoint_index": 0}
+		return
+	unit["targeting_state"]["current_target_id"] = str(target["entity_id"])
+	var tactic_scores := AIQuantitativeModel.player_assist_detected_tactic_scores(_detected_tactic_values(unit, target, true))
+	var tactic := AIQuantitativeModel.choose_highest(tactic_scores)
+	_set_ai_tactic(unit, str(tactic.get("id", "Defend")), float(tactic.get("score", 0.0)))
+	var destination := _tactical_destination(unit, target, str(tactic.get("id", "Defend")), "PlayerAssist")
+	_queue_ai_move(unit, destination, "PlayerAssistAI", "AssistNavigate")
+
+
+func _update_enemy_ai_intent(unit: Dictionary) -> void:
+	if float(unit["ai_state"].get("decision_cooldown", 0.0)) > 0.0:
+		return
+	unit["ai_state"]["decision_cooldown"] = AI_DECISION_INTERVAL
+	var target := _select_target(unit)
+	unit["targeting_state"]["current_target_id"] = str(target.get("entity_id", ""))
+	var facility_plan := _ai_facility_plan(unit, target.is_empty())
+	if not facility_plan.is_empty():
+		if facility_plan.has("interaction_type"):
+			_queue_ai_facility_interaction(unit, str(facility_plan["facility_id"]), str(facility_plan["interaction_type"]))
+		else:
+			_queue_ai_move(unit, facility_plan["target_position"])
+		return
+	_update_enemy_mode(unit, target)
+	if target.is_empty():
+		var context := terrain_context_service.context_at(unit["position"])
+		var lee_center := terrain_context_service.zone_center_for_effect("environment.effect.lee_water")
+		if int(context.get("sea_state", 0)) >= 4 and lee_center != Vector2.ZERO:
+			_queue_ai_move(unit, lee_center)
+			return
+		var map_center := _map_center()
+		var search_x := float(state["map"].get("width", 1200.0)) * (0.25 if float(unit["position"].x) >= map_center.x else 0.75)
+		var lane_offset := float(abs(str(unit["entity_id"]).hash()) % 180) - 90.0
+		_queue_ai_move(unit, Vector2(search_x, map_center.y + lane_offset))
+		return
+	var tactic_scores := AIQuantitativeModel.detected_tactic_scores(_detected_tactic_values(unit, target, false))
+	var tactic := AIQuantitativeModel.choose_highest(tactic_scores)
+	_set_ai_tactic(unit, str(tactic.get("id", "Defend")), float(tactic.get("score", 0.0)))
+	var destination := _tactical_destination(unit, target, str(tactic.get("id", "Defend")), str(unit["ai_state"].get("mode_id", "VanguardLine")))
+	_queue_ai_move(unit, destination)
+
+
+func _update_enemy_mode(unit: Dictionary, target: Dictionary) -> void:
+	var locked_mode := str(_ai_mode_locks_by_definition.get(str(unit.get("definition_id", "")), ""))
+	if not locked_mode.is_empty():
+		unit["ai_state"]["mode_id"] = locked_mode
+		unit["ai_state"]["mode_candidate_id"] = ""
+		unit["ai_state"]["mode_candidate_confirmations"] = 0
+		return
+	var scores := AIQuantitativeModel.mode_scores(_enemy_mode_values(unit, target))
+	var allowed := _allowed_ai_modes(unit)
+	var filtered := {}
+	for mode_id in allowed:
+		filtered[mode_id] = float(scores.get(mode_id, 0.0))
+	var choice := AIQuantitativeModel.choose_highest(filtered)
+	var ai_state: Dictionary = unit["ai_state"]
+	var current_id := str(ai_state.get("mode_id", _default_ai_mode(unit.get("stats", {}))))
+	var result := AIQuantitativeModel.switch_with_hysteresis({
+		"current_id": current_id,
+		"candidate_id": str(choice.get("id", current_id)),
+		"current_score": float(filtered.get(current_id, 0.0)),
+		"candidate_score": float(choice.get("score", 0.0)),
+		"elapsed_in_current": float(state.get("elapsed_time", 0.0)) - float(ai_state.get("mode_entered_at", 0.0)),
+		"confirmations": int(ai_state.get("mode_candidate_confirmations", 0)),
+		"emergency": float(unit.get("current_hp", 0.0)) / maxf(1.0, float(unit.get("max_hp", 1.0))) <= 0.2,
+	})
+	ai_state["mode_candidate_id"] = str(choice.get("id", ""))
+	ai_state["mode_candidate_confirmations"] = int(result.get("confirmations", 0))
+	if bool(result.get("switch", false)):
+		var new_mode := str(result.get("selected_id", current_id))
+		ai_state["mode_id"] = new_mode
+		ai_state["mode_entered_at"] = float(state.get("elapsed_time", 0.0))
+		_emit("AIModeChanged", {"unit_id": unit["entity_id"], "old_mode_id": current_id, "new_mode_id": new_mode, "score": choice.get("score", 0.0), "reason": result.get("reason", "")})
+
+
+func _set_ai_tactic(unit: Dictionary, tactic_id: String, score: float) -> void:
+	var old_id := str(unit["ai_state"].get("tactic_id", ""))
+	if old_id == tactic_id:
+		return
+	unit["ai_state"]["tactic_id"] = tactic_id
+	_emit("AITacticChanged", {"unit_id": unit["entity_id"], "old_tactic_id": old_id, "new_tactic_id": tactic_id, "score": score})
+
+
+func _detected_tactic_values(unit: Dictionary, target: Dictionary, player_assist: bool) -> Dictionary:
+	var local := _local_power_context(unit)
+	var hp_safety := float(unit.get("current_hp", 0.0)) / maxf(1.0, float(unit.get("max_hp", 1.0)))
+	var preferred := _preferred_range(unit)
+	var distance := (unit["position"] as Vector2).distance_to(target["position"])
+	var range_advantage := clampf((distance - preferred * 0.6) / maxf(1.0, preferred * 0.8), 0.0, 1.0)
+	var speed_advantage := clampf((float(unit["stats"].get("speed", 0.0)) - float(target["stats"].get("speed", 0.0))) / maxf(1.0, float(unit["stats"].get("speed", 1.0))), 0.0, 1.0)
+	var values := {
+		"local_advantage": float(local.get("advantage", 0.5)),
+		"hp_safety": hp_safety,
+		"weapon_ready": _primary_ready_ratio(unit),
+		"target_opportunity": _normalized_target_value(unit, target, player_assist),
+		"movement_safety": 1.0 - _boundary_risk(unit),
+		"position_safety": 1.0 - _boundary_risk(unit),
+		"attack_route_quality": 1.0 - _boundary_risk(unit),
+		"exposure_risk": float(local.get("pressure", 0.0)),
+		"range_advantage": range_advantage,
+		"speed_advantage": speed_advantage,
+		"exit_quality": 1.0 - _boundary_risk(unit),
+		"weapon_cycle_value": 1.0 - _primary_ready_ratio(unit),
+		"cooldown_need": 1.0 - _primary_ready_ratio(unit),
+	}
+	if not player_assist:
+		values["skill_attack_value"] = 1.0 if float(unit["skill_state"].get("cooldown_remaining", 0.0)) <= 0.0 else 0.0
+		values["group_followup"] = _ally_weapon_readiness(unit)
+		values["group_support"] = float(local.get("friendly_ratio", 0.5))
+		values["objective_defense"] = _protectee_threat(unit, target)
+		values["cover_quality"] = 0.0
+	return values
+
+
+func _tactical_destination(unit: Dictionary, target: Dictionary, tactic_id: String, mode_id: String) -> Vector2:
+	var unit_position: Vector2 = unit["position"]
+	var target_position: Vector2 = target["position"]
+	var away := (unit_position - target_position).normalized()
+	if away == Vector2.ZERO: away = Vector2.RIGHT.rotated(float(unit["heading"]) + PI)
+	var preferred := _preferred_range(unit)
+	var distance := unit_position.distance_to(target_position)
+	if tactic_id == "Kite" or mode_id in ["DisengageRegroup", "CarrierStandoff"]:
+		return _clamp_to_map(unit_position + away * maxf(160.0, preferred * 0.35))
+	if tactic_id == "Defend" or mode_id == "EscortScreen":
+		if mode_id == "EscortScreen":
+			var flagship := _faction_flagship(unit["faction_id"])
+			if not flagship.is_empty():
+				return _clamp_to_map((flagship["position"] as Vector2).lerp(target_position, 0.25))
+		return unit_position if distance >= preferred * 0.55 else _clamp_to_map(unit_position + away * 120.0)
+	if mode_id == "TorpedoFlank":
+		var toward := (target_position - unit_position).normalized()
+		var side_sign := -1.0 if abs(str(unit["entity_id"]).hash()) % 2 == 0 else 1.0
+		return _clamp_to_map(target_position - toward * preferred * 0.75 + toward.orthogonal() * preferred * 0.45 * side_sign)
+	if distance > preferred * 0.9:
+		return target_position
+	if distance < preferred * 0.5:
+		return _clamp_to_map(unit_position + away * 140.0)
+	return unit_position
+
+
+func _update_ai_primary_weapons() -> void:
+	for unit_id in _sorted_unit_ids():
+		var unit: Dictionary = state["units_by_id"][unit_id]
+		if unit.get("life_state", "") != "Alive": continue
+		if float(unit["ai_state"].get("fire_decision_cooldown", 0.0)) > 0.0: continue
+		unit["ai_state"]["fire_decision_cooldown"] = 0.5
+		var player_assist := not _uses_full_ai(unit)
+		if player_assist and (not bool(unit.get("primary_auto_fire_enabled", false)) or bool(unit.get("primary_auto_fire_suspended", false))): continue
+		if int(unit["ai_state"].get("last_primary_command_tick", -1)) == int(state.get("tick_index", 0)): continue
+		if _primary_ready_ratio(unit) <= 0.0: continue
+		var target := _select_target(unit, player_assist)
+		if target.is_empty(): continue
+		unit["targeting_state"]["current_target_id"] = str(target["entity_id"])
+		var primary_states := _weapon_states_for_group(unit, str(unit["stats"].get("primary_weapon_group_id", "")), true)
+		if primary_states.is_empty(): continue
+		var aim_weapon := _weapon_for_state(primary_states[0])
+		var aim_solution := _automatic_aim_solution(unit, target, aim_weapon)
+		if aim_solution.is_empty(): continue
+		var aim_position: Vector2 = aim_solution.get("position", target["position"])
+		var validation := _validate_primary_fire(unit, primary_states, aim_position)
+		if not bool(validation.get("legal", false)): continue
+		var window_values := {
+			"target_value": _normalized_target_value(unit, target, player_assist),
+			"hit_quality": _range_fit(unit, target),
+			"weapon_ready": _primary_ready_ratio(unit),
+			"expected_damage": _weapon_fit(unit, target),
+			"kill_opportunity": 1.0 - float(target.get("current_hp", 0.0)) / maxf(1.0, float(target.get("max_hp", 1.0))),
+			"position_safety": 1.0 - _boundary_risk(unit),
+			"exposure_risk": float(_local_power_context(unit).get("pressure", 0.0)),
+			"friendly_risk": 0.0,
+			"skill_synergy": 1.0 if float(unit["skill_state"].get("cooldown_remaining", 0.0)) <= 0.0 else 0.0,
+			"group_sync": _ally_weapon_readiness(unit),
+			"objective_relevance": _protectee_threat(unit, target),
+			"visible": true,
+			"weapon_legal": true,
+			"path_clear": true,
+		}
+		var fire := AIQuantitativeModel.player_assist_execution(unit, window_values) if player_assist else AIQuantitativeModel.should_fire(window_values, _fire_discipline_for_mode(str(unit["ai_state"].get("mode_id", "VanguardLine"))), true)
+		if not bool(fire.get("primary_auto_fire", fire.get("fire", false))): continue
+		command_queue.append({
+			"command_id": "ai.primary.%s.%s" % [state["tick_index"] + 1, unit_id],
+			"command_type": "FirePrimaryWeapon",
+			"issued_at_tick": state["tick_index"] + 1,
+			"issuer_type": "PlayerAssistAI" if player_assist else "AI",
+			"issuer_id": unit["faction_id"],
+			"unit_id": unit_id,
+			"target_position": aim_position,
+		})
+		unit["ai_state"]["last_primary_command_tick"] = int(state.get("tick_index", 0))
+		_emit("AIFireCommitted", {"unit_id": unit_id, "target_unit_id": target["entity_id"], "score": fire.get("primary_score", fire.get("score", 0.0))})
+
+
+func _update_immediate_survival(unit: Dictionary) -> bool:
+	var threat := _highest_projectile_threat(unit)
+	var action := ""
+	var score := float(threat.get("score", 0.0))
+	var waypoint := unit["position"] as Vector2
+	if score >= AI_IMMEDIATE_THRESHOLD:
+		action = "TorpedoEvasion"
+		waypoint = _torpedo_evasion_waypoint(unit, threat.get("projectile", {}))
+	else:
+		var shore_risk := _projected_shore_risk(unit)
+		if shore_risk >= 75.0:
+			action = "ShoreEscape"
+			score = shore_risk
+			waypoint = _map_center()
+		else:
+			var boundary_risk := _boundary_risk(unit) * 100.0
+			if boundary_risk >= 80.0:
+				action = "BoundaryEscape"
+				score = boundary_risk
+				waypoint = _map_center()
+	if action.is_empty():
+		return false
+	var ai_state: Dictionary = unit["ai_state"]
+	if str(ai_state.get("active_interrupt", "")).is_empty():
+		ai_state["interrupted_movement_state"] = unit.get("movement_state", {}).duplicate(true)
+		ai_state["active_interrupt"] = action
+		_emit("AIInterruptEntered", {"unit_id": unit["entity_id"], "interrupt": action, "score": score})
+	_queue_ai_move(unit, waypoint, "AI" if _uses_full_ai(unit) else "PlayerAssistAI", "ImmediateAvoidance")
+	return true
+
+
+func _uses_full_ai(unit: Dictionary) -> bool:
+	return bool(_full_ai_factions.get(str(unit.get("faction_id", "")), false))
+
+
+func _recover_from_ai_interrupt(unit: Dictionary) -> void:
+	var ai_state: Dictionary = unit["ai_state"]
+	var interrupt := str(ai_state.get("active_interrupt", ""))
+	if interrupt.is_empty(): return
+	var saved: Dictionary = ai_state.get("interrupted_movement_state", {})
+	var resumed := _replan_interrupted_movement(unit, saved)
+	if resumed.is_empty():
+		var fallback_mode := "AutoNavigate" if _uses_full_ai(unit) else ("AssistNavigate" if bool(unit.get("movement_assist_enabled", false)) else "HoldPosition")
+		unit["movement_state"] = {"mode": fallback_mode, "target_position": unit["position"], "waypoints": [], "waypoint_index": 0}
+	else:
+		unit["movement_state"] = resumed
+	ai_state["active_interrupt"] = ""
+	ai_state["interrupted_movement_state"] = {}
+	_emit("AIInterruptCleared", {"unit_id": unit["entity_id"], "interrupt": interrupt})
+
+
+func _replan_interrupted_movement(unit: Dictionary, saved: Dictionary) -> Dictionary:
+	if saved.is_empty(): return {}
+	var saved_mode := str(saved.get("mode", "HoldPosition"))
+	if saved_mode == "HoldPosition":
+		return {"mode": "HoldPosition", "target_position": unit["position"], "waypoints": [], "waypoint_index": 0}
+	var pending: Array = []
+	var saved_waypoints: Array = saved.get("waypoints", [])
+	for index in range(int(saved.get("waypoint_index", 0)), saved_waypoints.size()):
+		pending.append(saved_waypoints[index])
+	while not pending.is_empty() and (unit["position"] as Vector2).distance_to(pending[0]) <= 8.0:
+		pending.pop_front()
+	var first_target: Vector2 = pending[0] if not pending.is_empty() else saved.get("target_position", unit["position"])
+	if (unit["position"] as Vector2).distance_to(first_target) <= 8.0:
+		return {"mode": saved_mode, "target_position": unit["position"], "waypoints": [], "waypoint_index": 0}
+	var route := route_planner.plan_path(terrain_query, navigation_definition, unit["position"], first_target, float(unit["stats"].get("collision_radius", 20.0)), _movement_tags(unit), terrain_context_service)
+	if not bool(route.get("ok", false)): return {}
+	var replanned_waypoints: Array = route.get("waypoints", [first_target]).duplicate()
+	for index in range(1, pending.size()):
+		replanned_waypoints.append(pending[index])
+	var environment_route := _validate_environment_route(unit["position"], replanned_waypoints)
+	if not bool(environment_route.get("allowed", false)): return {}
+	return {"mode": saved_mode, "target_position": saved.get("target_position", first_target), "waypoints": replanned_waypoints, "waypoint_index": 0}
+
+
+func _highest_projectile_threat(unit: Dictionary) -> Dictionary:
+	var best := {"score": 0.0, "projectile": {}}
+	var known: Dictionary = state.get("known_projectiles_by_faction", {}).get(unit["faction_id"], {})
+	var projectile_ids: Array = known.keys()
+	projectile_ids.sort()
+	for projectile_id in projectile_ids:
+		var projectile: Dictionary = state.get("projectiles_by_id", {}).get(projectile_id, {})
+		if projectile.is_empty() or projectile.get("faction_id", "") == unit.get("faction_id", ""): continue
+		var projectile_velocity := Vector2.RIGHT.rotated(float(projectile.get("heading", 0.0))) * float(projectile.get("speed", 0.0))
+		var unit_velocity := Vector2.RIGHT.rotated(float(unit.get("heading", 0.0))) * float(unit.get("current_speed", 0.0))
+		var relative_position: Vector2 = projectile["position"] - unit["position"]
+		var relative_velocity := projectile_velocity - unit_velocity
+		var speed_squared := relative_velocity.length_squared()
+		if speed_squared <= 0.001: continue
+		var time_to_cpa := clampf(-relative_position.dot(relative_velocity) / speed_squared, 0.0, 12.0)
+		var cpa_distance := (relative_position + relative_velocity * time_to_cpa).length()
+		var danger_radius := _unit_collision_half_extents(unit).y + float(projectile.get("collision_radius", 8.0)) + 24.0
+		var reaction_horizon := 8.0 if str(unit["stats"].get("ship_class", "")) in ["Battleship", "Carrier"] else 6.0
+		var score := AIQuantitativeModel.torpedo_threat_score({
+			"visible": true, "approaching": relative_position.dot(relative_velocity) < 0.0,
+			"reaction_horizon": reaction_horizon, "time_to_cpa": time_to_cpa,
+			"danger_radius": danger_radius, "cpa_distance": cpa_distance,
+			"expected_damage_ratio": 0.7, "maneuver_margin": clampf(time_to_cpa / 4.0, 0.0, 1.0),
+		})
+		if score > float(best["score"]):
+			best = {"score": score, "projectile": projectile}
+	return best
+
+
+func _torpedo_evasion_waypoint(unit: Dictionary, projectile: Dictionary) -> Vector2:
+	if projectile.is_empty(): return _map_center()
+	var direction := Vector2.RIGHT.rotated(float(projectile.get("heading", 0.0)))
+	var perpendicular := direction.orthogonal()
+	if perpendicular.dot((unit["position"] as Vector2) - (projectile["position"] as Vector2)) < 0.0:
+		perpendicular = -perpendicular
+	var candidate := _clamp_to_map((unit["position"] as Vector2) + perpendicular * 220.0)
+	if terrain_query.is_configured() and not terrain_query.is_movement_segment_clear(unit["position"], candidate, float(unit["stats"].get("collision_radius", 20.0)), _movement_tags(unit)):
+		candidate = _clamp_to_map((unit["position"] as Vector2) - perpendicular * 220.0)
+	return candidate
+
+
+func _projected_shore_risk(unit: Dictionary) -> float:
+	if not terrain_query.is_configured() or float(unit.get("current_speed", 0.0)) <= 1.0: return 0.0
+	var future := (unit["position"] as Vector2) + Vector2.RIGHT.rotated(float(unit["heading"])) * float(unit["current_speed"]) * 2.0
+	var clear := terrain_query.is_movement_segment_clear(unit["position"], future, float(unit["stats"].get("collision_radius", 20.0)), _movement_tags(unit))
+	return AIQuantitativeModel.shore_risk_score({"clearance_ratio": 0.1 if not clear else 1.0, "future_collision": 1.0 if not clear else 0.0, "turn_room_ratio": 0.25 if not clear else 1.0})
 
 
 func _ai_facility_plan(unit: Dictionary, allow_capture: bool) -> Dictionary:
@@ -959,7 +1452,8 @@ func _update_weapons() -> void:
 	for unit_id in _sorted_unit_ids():
 		var unit: Dictionary = state["units_by_id"][unit_id]
 		if unit["life_state"] != "Alive": continue
-		var target := _select_target(unit)
+		if unit.get("faction_id", "") == PLAYER_FACTION and not bool(unit.get("secondary_auto_fire_enabled", true)): continue
+		var target := _current_or_select_target(unit, unit.get("faction_id", "") == PLAYER_FACTION)
 		if target.is_empty(): continue
 		unit["targeting_state"]["current_target_id"] = target["entity_id"]
 		var fired_groups := {}
@@ -1591,7 +2085,17 @@ func _remaining_hp_ratio(fleet_id: String) -> float:
 	return hp / maxf(1.0, float(fleet["initial_max_hp_total"]))
 
 
-func _select_target(unit: Dictionary) -> Dictionary:
+func _current_or_select_target(unit: Dictionary, player_assist: bool = false) -> Dictionary:
+	var current_id := str(unit.get("targeting_state", {}).get("current_target_id", ""))
+	if not current_id.is_empty() and _is_visible_to(str(unit.get("faction_id", "")), current_id):
+		var current: Dictionary = state.get("units_by_id", {}).get(current_id, {})
+		if current.get("life_state", "") == "Alive": return current
+	var selected := _select_target(unit, player_assist)
+	unit["targeting_state"]["current_target_id"] = str(selected.get("entity_id", ""))
+	return selected
+
+
+func _select_target(unit: Dictionary, player_assist: bool = false) -> Dictionary:
 	var focused_id := str(unit["targeting_state"].get("focused_target_id", ""))
 	if not focused_id.is_empty() and _is_visible_to(unit["faction_id"], focused_id):
 		var focused: Dictionary = state["units_by_id"].get(focused_id, {})
@@ -1601,31 +2105,231 @@ func _select_target(unit: Dictionary) -> Dictionary:
 		var target: Dictionary = state["units_by_id"][target_id]
 		if target["life_state"] == "Alive": candidates.append(target)
 	candidates.sort_custom(func(a, b):
-		var score_a := _target_score(unit, a)
-		var score_b := _target_score(unit, b)
+		var score_a := _target_score(unit, a, player_assist)
+		var score_b := _target_score(unit, b, player_assist)
 		return score_a > score_b if not is_equal_approx(score_a, score_b) else str(a["entity_id"]) < str(b["entity_id"]))
 	return {} if candidates.is_empty() else candidates[0]
 
 
-func _target_score(source: Dictionary, target: Dictionary) -> float:
-	var priorities := {"Submarine": 600.0, "Carrier": 600.0, "Destroyer": 500.0, "Battleship": 400.0, "HeavyCruiser": 300.0, "LightCruiser": 200.0}
-	var score := float(priorities.get(target["stats"].get("ship_class", ""), 0.0))
-	if target["is_flagship"]: score += 75.0
-	score -= (source["position"] as Vector2).distance_to(target["position"] as Vector2) * 0.1
-	score += (1.0 - float(target["current_hp"]) / maxf(1.0, float(target["max_hp"]))) * 50.0
-	return score
+func _target_score(source: Dictionary, target: Dictionary, player_assist: bool = false) -> float:
+	var distance := (source["position"] as Vector2).distance_to(target["position"] as Vector2)
+	var preferred := maxf(1.0, _preferred_range(source))
+	var kill_opportunity := 1.0 - float(target.get("current_hp", 0.0)) / maxf(1.0, float(target.get("max_hp", 1.0)))
+	var turn_cost := absf(wrapf((target["position"] - source["position"]).angle() - float(source.get("heading", 0.0)), -PI, PI)) / PI
+	if player_assist:
+		return AIQuantitativeModel.player_assist_target_score({
+			"visible": true,
+			"legal": true,
+			"immediate_threat": clampf(1.0 - distance / maxf(preferred * 1.4, 1.0), 0.0, 1.0),
+			"weapon_fit": _weapon_fit(source, target),
+			"range_fit": _range_fit(source, target),
+			"kill_opportunity": kill_opportunity,
+			"turn_cost": turn_cost,
+		})
+	var mission_priorities := {"Carrier": 1.0, "Submarine": 0.9, "Destroyer": 0.78, "Battleship": 0.72, "HeavyCruiser": 0.62, "LightCruiser": 0.55}
+	var mission_value := float(mission_priorities.get(target["stats"].get("ship_class", ""), 0.5))
+	if bool(target.get("is_flagship", false)): mission_value = minf(1.0, mission_value + 0.25)
+	var focus_count := 0
+	for ally_id in _sorted_unit_ids():
+		var ally: Dictionary = state["units_by_id"][ally_id]
+		if ally.get("life_state", "") == "Alive" and ally.get("faction_id", "") == source.get("faction_id", "") and str(ally.get("targeting_state", {}).get("current_target_id", "")) == str(target.get("entity_id", "")):
+			focus_count += 1
+	return AIQuantitativeModel.target_score({
+		"visible": true,
+		"legal": true,
+		"mission_value": mission_value,
+		"threat": clampf((1.0 - distance / maxf(preferred * 1.6, 1.0)) + _protectee_threat(source, target), 0.0, 1.0),
+		"weapon_fit": _weapon_fit(source, target),
+		"range_fit": _range_fit(source, target),
+		"kill_opportunity": kill_opportunity,
+		"focus_fire": clampf(float(focus_count) / 2.0, 0.0, 1.0),
+		"objective_relevance": _protectee_threat(source, target),
+		"pursuit_cost": clampf(distance / maxf(preferred * 2.2, 1.0), 0.0, 1.0),
+		"overkill": 0.35 if kill_opportunity > 0.9 and focus_count >= 2 else 0.0,
+	})
+
+
+func _default_ai_mode(ship: Dictionary) -> String:
+	match str(ship.get("ship_class", "")):
+		"Carrier": return "CarrierStandoff"
+		"Battleship": return "GunlineSupport"
+		"Submarine": return "TorpedoFlank"
+		_: return "VanguardLine"
+
+
+func _allowed_ai_modes(unit: Dictionary) -> Array:
+	match str(unit.get("stats", {}).get("ship_class", "")):
+		"Destroyer": return ["ReconAvoid", "VanguardLine", "TorpedoFlank", "EscortScreen", "DisengageRegroup"]
+		"LightCruiser", "HeavyCruiser": return ["VanguardLine", "GunlineSupport", "EscortScreen", "DisengageRegroup"]
+		"Battleship": return ["GunlineSupport", "VanguardLine", "DisengageRegroup"]
+		"Carrier": return ["CarrierStandoff", "DisengageRegroup"]
+		"Submarine": return ["TorpedoFlank", "ReconAvoid", "DisengageRegroup"]
+		_: return ["VanguardLine", "DisengageRegroup"]
+
+
+func _enemy_mode_values(unit: Dictionary, target: Dictionary) -> Dictionary:
+	var local := _local_power_context(unit)
+	var hp_safety := float(unit.get("current_hp", 0.0)) / maxf(1.0, float(unit.get("max_hp", 1.0)))
+	var fleet_center := Vector2.ZERO
+	var ally_count := 0
+	for unit_id in _sorted_unit_ids():
+		var ally: Dictionary = state["units_by_id"][unit_id]
+		if ally.get("life_state", "") != "Alive" or ally.get("faction_id", "") != unit.get("faction_id", ""): continue
+		fleet_center += ally["position"]
+		ally_count += 1
+	if ally_count > 0: fleet_center /= float(ally_count)
+	var cohesion := clampf(1.0 - (unit["position"] as Vector2).distance_to(fleet_center) / 700.0, 0.0, 1.0)
+	var target_valid := 0.0 if target.is_empty() else 1.0
+	var target_high_value := 0.0 if target.is_empty() else (1.0 if target.get("is_flagship", false) or target.get("stats", {}).get("ship_class", "") == "Carrier" else 0.35)
+	return {
+		"hp_safety": hp_safety,
+		"local_pressure": float(local.get("pressure", 0.0)),
+		"boundary_risk": _boundary_risk(unit),
+		"exit_quality": 1.0 - _boundary_risk(unit),
+		"vision_need": 1.0 - clampf(float(state.get("visible_by_faction", {}).get(unit["faction_id"], {}).size()) / 3.0, 0.0, 1.0),
+		"cohesion": cohesion,
+		"recon_route_quality": 1.0 - _boundary_risk(unit),
+		"valid_target": target_valid,
+		"weapon_ready": _primary_ready_ratio(unit),
+		"flank_quality": target_valid * (1.0 - _boundary_risk(unit)),
+		"high_value_exposed": target_high_value,
+		"group_fixing_target": _ally_weapon_readiness(unit),
+		"firing_lane_quality": 1.0 - _boundary_risk(unit),
+		"escort_coverage": float(local.get("friendly_ratio", 0.5)),
+		"protectee_threat": 0.0 if target.is_empty() else _protectee_threat(unit, target),
+		"intercept_quality": target_valid * (1.0 - _boundary_risk(unit)),
+		"defensive_skill_ready": 1.0 if float(unit.get("skill_state", {}).get("cooldown_remaining", 1.0)) <= 0.0 else 0.0,
+	}
+
+
+func _primary_ready_ratio(unit: Dictionary) -> float:
+	var group_id := str(unit.get("stats", {}).get("primary_weapon_group_id", ""))
+	var weapon_states := _weapon_states_for_group(unit, group_id, true)
+	var best := 0.0
+	for weapon_state in weapon_states:
+		if not bool(weapon_state.get("enabled", true)): continue
+		var weapon := _weapon_for_state(weapon_state)
+		var reload_max := maxf(0.1, float(weapon.get("reload_time", 0.1)))
+		best = maxf(best, 1.0 - clampf(float(weapon_state.get("reload_remaining", 0.0)) / reload_max, 0.0, 1.0))
+	return best
+
+
+func _normalized_target_value(source: Dictionary, target: Dictionary, player_assist: bool) -> float:
+	return clampf(_target_score(source, target, player_assist) / 100.0, 0.0, 1.0)
+
+
+func _visible_enemy_count_in_radius(unit: Dictionary, radius: float) -> int:
+	var count := 0
+	var effective_radius := maxf(radius, _preferred_range(unit))
+	for target_id in state.get("visible_by_faction", {}).get(unit["faction_id"], {}):
+		var target: Dictionary = state["units_by_id"].get(target_id, {})
+		if target.get("life_state", "") == "Alive" and (unit["position"] as Vector2).distance_to(target["position"]) <= effective_radius:
+			count += 1
+	return count
+
+
+func _ally_weapon_readiness(unit: Dictionary) -> float:
+	var total := 0.0
+	var count := 0
+	var radius := maxf(450.0, _preferred_range(unit) * 1.3)
+	for ally_id in _sorted_unit_ids():
+		var ally: Dictionary = state["units_by_id"][ally_id]
+		if ally.get("entity_id", "") == unit.get("entity_id", "") or ally.get("life_state", "") != "Alive" or ally.get("faction_id", "") != unit.get("faction_id", ""): continue
+		if (unit["position"] as Vector2).distance_to(ally["position"]) > radius: continue
+		total += _primary_ready_ratio(ally)
+		count += 1
+	return total / float(count) if count > 0 else 0.0
+
+
+func _local_power_context(unit: Dictionary) -> Dictionary:
+	var friendly_power := 0.0
+	var enemy_power := 0.0
+	var friendly_count := 0
+	var radius := maxf(600.0, _preferred_range(unit) * 1.25)
+	for other_id in _sorted_unit_ids():
+		var other: Dictionary = state["units_by_id"][other_id]
+		if other.get("life_state", "") != "Alive" or (unit["position"] as Vector2).distance_to(other["position"]) > radius: continue
+		var hp_ratio := float(other.get("current_hp", 0.0)) / maxf(1.0, float(other.get("max_hp", 1.0)))
+		var power := maxf(1.0, float(other.get("stats", {}).get("cost", 1.0))) * hp_ratio
+		if other.get("faction_id", "") == unit.get("faction_id", ""):
+			friendly_power += power
+			friendly_count += 1
+		elif _is_visible_to(unit["faction_id"], str(other_id)):
+			enemy_power += power
+	var total := friendly_power + enemy_power
+	return {
+		"advantage": friendly_power / total if total > 0.0 else 0.5,
+		"pressure": enemy_power / maxf(1.0, friendly_power),
+		"friendly_ratio": clampf(float(friendly_count) / 3.0, 0.0, 1.0),
+	}
+
+
+func _range_fit(source: Dictionary, target: Dictionary) -> float:
+	var distance := (source["position"] as Vector2).distance_to(target["position"])
+	var preferred := maxf(1.0, _preferred_range(source))
+	var ratio := distance / preferred
+	return clampf(1.0 - absf(ratio - 0.8) / 0.8, 0.0, 1.0)
+
+
+func _weapon_fit(source: Dictionary, target: Dictionary) -> float:
+	var armor_class := str(target.get("stats", {}).get("armor_thickness", "Unarmored"))
+	var target_type := _target_type(target)
+	var best := 0.0
+	for weapon_state in source.get("weapon_states", []):
+		var weapon := _weapon_for_state(weapon_state)
+		if target_type not in weapon.get("target_types", []): continue
+		var modifier := float(weapon.get("armor_damage_modifiers", {}).get(armor_class, 0.0))
+		best = maxf(best, clampf(modifier / 1.25, 0.0, 1.0))
+	return best
+
+
+func _protectee_threat(source: Dictionary, target: Dictionary) -> float:
+	var flagship := _faction_flagship(str(source.get("faction_id", "")))
+	if flagship.is_empty(): return 0.0
+	var distance := (flagship["position"] as Vector2).distance_to(target["position"])
+	return clampf(1.0 - distance / maxf(500.0, _preferred_range(target)), 0.0, 1.0)
+
+
+func _boundary_risk(unit: Dictionary) -> float:
+	var width := float(state.get("map", {}).get("width", 1200.0))
+	var height := float(state.get("map", {}).get("height", 700.0))
+	var future := (unit["position"] as Vector2) + Vector2.RIGHT.rotated(float(unit.get("heading", 0.0))) * float(unit.get("current_speed", 0.0)) * 2.0
+	var clearance := minf(minf(future.x, width - future.x), minf(future.y, height - future.y))
+	return clampf(1.0 - clearance / 140.0, 0.0, 1.0)
+
+
+func _faction_flagship(faction_id: String) -> Dictionary:
+	for fleet_id in state.get("fleets_by_id", {}):
+		var fleet: Dictionary = state["fleets_by_id"][fleet_id]
+		if str(fleet.get("faction_id", "")) != faction_id: continue
+		return state.get("units_by_id", {}).get(str(fleet.get("flagship_unit_id", "")), {})
+	return {}
+
+
+func _fire_discipline_for_mode(mode_id: String) -> String:
+	match mode_id:
+		"ReconAvoid": return "Silent"
+		"TorpedoFlank", "CarrierStandoff": return "HoldUntilWindow"
+		"EscortScreen": return "SelfDefense"
+		_: return "FreeFire"
+
+
+func _map_center() -> Vector2:
+	return Vector2(float(state.get("map", {}).get("width", 1200.0)) * 0.5, float(state.get("map", {}).get("height", 700.0)) * 0.5)
+
+
+func _remaining_player_route(unit: Dictionary) -> int:
+	if str(unit.get("movement_state", {}).get("mode", "")) not in ["PlayerMoveOrder", "PlayerWaypointRoute"]:
+		return 0
+	var movement: Dictionary = unit.get("movement_state", {})
+	return maxi(0, movement.get("waypoints", []).size() - int(movement.get("waypoint_index", 0)))
 
 
 func _preferred_range(unit: Dictionary) -> float:
-	var automatic_maximum := 0.0
-	var fallback_maximum := 250.0
+	var maximum := 250.0
 	for weapon_state in unit["weapon_states"]:
 		var weapon: Dictionary = registry.get_definition("weapons", str(weapon_state["definition_id"]))
-		var range := float(weapon.get("range", 0.0))
-		fallback_maximum = maxf(fallback_maximum, range)
-		if weapon.get("control_mode", "Automatic") == "Automatic":
-			automatic_maximum = maxf(automatic_maximum, range)
-	var maximum := automatic_maximum if automatic_maximum > 0.0 else fallback_maximum
+		maximum = maxf(maximum, float(weapon.get("range", 0.0)))
 	return maximum * 0.72
 
 

@@ -58,6 +58,8 @@
   - `base_speed` 保存公共投射物 / 舰载机移动速度设计基线，`speed` 保存当前 0.5 倍运行速度。
   - 鱼雷 `minimum_detection_distance` 保存直接运行的最小发现距离；阵营共享观测由 `BattleSession._update_projectile_observation` 维护。
 - 公式配置：`data/formulas/combat_formulas.json`
+  - `design_base_damage/design_power_coefficient/design_armor_coefficient` 保存设计量纲。
+  - `base_damage/power_coefficient/armor_coefficient` 保存统一 `0.25` 倍的局内量纲；伤害服务直接读取运行字段。
 - 海面调色板：`data/environments/ocean_palettes.json`
   - 当前包含 20 套气候/时间组合，以及 `day_clear`、`cloudy`、`dusk` 三个兼容入口。
   - 同一配置同时驱动海面 Shader 与独立 WeatherOverlay；雪粒/雪雾资源已正式挂载，当前基础 20 组合默认强度为 0。
@@ -86,8 +88,11 @@
 - 常改位置：
   - 移动：`_update_movement`
   - 索敌与接触残影：`_update_detection`
-  - AI 行为：`_update_ai_intents`
-  - 自动技能：`_update_auto_skills`
+  - AI 分层入口：`_update_ai_intents`；玩家受限辅助：`_update_player_assist_intent`；敌方完整单舰决策：`_update_enemy_ai_intent`
+  - 量化模式/战术/目标：`_update_enemy_mode`、`_detected_tactic_values`、`_target_score`
+  - 鱼雷、岸线与边界即时打断：`_update_immediate_survival`、`_highest_projectile_threat`、`_projected_shore_risk`
+  - 量化主要武器与技能：`_update_ai_primary_weapons`、`_update_auto_skills`
+  - 模拟器双方完整 AI：`configure_full_ai_factions`；只由显式实验策略开启，不改变正常玩家控制默认值。
   - 自动武器：`_update_weapons`
   - 自动火炮预判与固定落点：`_automatic_aim_solution`、`_positive_intercept_time`、`_salvo_impact_position`
   - 手动主要武器与逐座鱼雷选择：`_fire_primary_weapon`、`_validate_primary_fire`、`_weapon_for_state`
@@ -122,7 +127,10 @@
   - E 主要武器瞄准：`_begin_primary_aim`、`_confirm_primary_aim`
   - Q 弹药切换：`_switch_selected_ammo`
   - F 技能：`_begin_or_cast_skill`、`_confirm_skill_target`
-  - V 跟随镜头：`_toggle_follow_selected`
+  - Z 连续多航点：`_toggle_route_placement`、`_append_route_waypoint`
+  - X/C/V 单舰或 `Cmd/Alt` 舰队开关：`_toggle_control_state`；运行时命令为 `SetUnitControlState`
+  - G 跟随镜头：`_toggle_follow_selected`
+  - E 瞄准期间自动主武器暂停：`_queue_primary_auto_suspend`
   - WASD 镜头：`_update_camera`
   - 滚轮缩放与边界：`_adjust_camera_zoom`、`_configure_camera_zoom`、`_clamp_camera_to_map`
   - 战场角色图层：`_draw_unit`、`_draw_unit_art`
@@ -216,6 +224,7 @@
   - 逐舰分类伤害：`scripts/infrastructure/analytics/damage_statistics.gd`；模拟器通过 `BattleSession.get_all_unit_damage_statistics()` 读取，不另算伤害。
   - 命令入口：`tools/simulation/run_experiment.gd`
   - 示例实验：`data/simulations/experiments/smoke_single_battle.json`
+  - 最新 AI 双方对战：`data/simulations/experiments/latest_ai_current_3v3_5v5.json`
   - 独立测试：`scripts/tests/battle_simulator_test.gd`
   - 伤害统计测试：`scripts/tests/damage_statistics_test.gd`
 - 截图 QA：`scripts/tests/render_scene_qa.gd`

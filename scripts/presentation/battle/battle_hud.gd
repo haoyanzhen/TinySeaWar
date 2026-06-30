@@ -50,7 +50,7 @@ func _draw() -> void:
 	_draw_top_status(viewport_size)
 	_draw_fleet_panel(Rect2(Vector2(28.0, 18.0), Vector2(596.0, 142.0)), true)
 	_draw_fleet_panel(Rect2(Vector2(viewport_size.x - 624.0, 18.0), Vector2(596.0, 142.0)), false)
-	_draw_operation_dock(Rect2(Vector2((viewport_size.x - 900.0) * 0.5, viewport_size.y - 112.0), Vector2(900.0, 86.0)))
+	_draw_operation_dock(Rect2(Vector2((viewport_size.x - 900.0) * 0.5, viewport_size.y - 154.0), Vector2(900.0, 128.0)))
 	_draw_minimap(Rect2(Vector2(28.0, viewport_size.y - 266.0), Vector2(330.0, 226.0)))
 	_draw_log_panel(Rect2(Vector2(viewport_size.x - 380.0, 206.0), Vector2(352.0, 300.0)))
 	_draw_selected_panel(Rect2(Vector2(viewport_size.x - 380.0, viewport_size.y - 266.0), Vector2(352.0, 226.0)))
@@ -116,10 +116,16 @@ func _draw_operation_dock(rect: Rect2) -> void:
 		{"key": "E", "icon": "ui_icon_gunfire", "text": _primary_text(), "ready": bool(operation_status.get("primary_ready", false))},
 		{"key": "Q", "icon": "ui_icon_confirm", "text": _ammo_text(), "ready": bool(operation_status.get("q_enabled", false))},
 		{"key": "F", "icon": "ui_icon_skill_ready", "text": _skill_text(), "ready": bool(operation_status.get("skill_ready", false))},
-		{"key": "V", "icon": "ui_icon_camera_follow", "text": "开始跟随" if camera_mode != "Follow" else "正在跟随", "ready": true},
+		{"key": "G", "icon": "ui_icon_camera_follow", "text": "开始跟随" if camera_mode != "Follow" else "正在跟随", "ready": true},
+		{"key": "Z", "icon": "ui_marker_path_endpoint", "text": "结束路径" if operation_mode == "PLACING_ROUTE" else "连续路径", "ready": true},
+		{"key": "X", "icon": "ui_icon_auto_move", "text": "自动航行 开" if bool(operation_status.get("movement_assist_enabled", false)) else "自动航行 关", "ready": bool(operation_status.get("movement_assist_enabled", false))},
+		{"key": "C", "icon": "ui_icon_auto_weapon", "text": "副武器 开" if bool(operation_status.get("secondary_auto_fire_enabled", true)) else "副武器 关", "ready": bool(operation_status.get("secondary_auto_fire_enabled", true))},
+		{"key": "V", "icon": "ui_icon_gunfire", "text": "主武器 开" if bool(operation_status.get("primary_auto_fire_enabled", false)) else "主武器 关", "ready": bool(operation_status.get("primary_auto_fire_enabled", false))},
 	]
 	for index in range(cards.size()):
-		var card_rect := Rect2(rect.position + Vector2(22.0 + index * 214.0, 38.0), Vector2(198.0, 36.0))
+		var column := index % 4
+		var row := int(index / 4)
+		var card_rect := Rect2(rect.position + Vector2(22.0 + column * 214.0, 38.0 + row * 42.0), Vector2(198.0, 36.0))
 		_draw_action_card(card_rect, cards[index])
 
 
@@ -248,6 +254,12 @@ func _draw_selected_panel(rect: Rect2) -> void:
 	var primary := _primary_text()
 	var ammo := _ammo_text()
 	var skill := _skill_text()
+	var control_summary := "航行 %s  |  副武器 %s  |  主武器 %s" % [
+		"开" if bool(operation_status.get("movement_assist_enabled", false)) else "关",
+		"开" if bool(operation_status.get("secondary_auto_fire_enabled", true)) else "关",
+		"开" if bool(operation_status.get("primary_auto_fire_enabled", false)) else "关",
+	]
+	draw_string(ThemeDB.fallback_font, rect.position + Vector2(18.0, 134.0), control_summary, HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 36.0, 13, TEXT_SOFT)
 	draw_string(ThemeDB.fallback_font, rect.position + Vector2(18.0, 154.0), "E  %s" % primary, HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 36.0, 15, TEXT_DARK)
 	draw_string(ThemeDB.fallback_font, rect.position + Vector2(18.0, 178.0), "Q  %s" % ammo, HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 36.0, 15, TEXT_DARK)
 	draw_string(ThemeDB.fallback_font, rect.position + Vector2(18.0, 202.0), "F  %s" % skill, HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 36.0, 15, TEXT_DARK)

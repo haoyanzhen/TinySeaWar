@@ -30,6 +30,7 @@ static func operation_mode_name(mode: String) -> String:
 	match mode:
 		"AIMING_PRIMARY": return "主武器瞄准"
 		"TARGETING_SKILL": return "技能选目标"
+		"PLACING_ROUTE": return "连续布置路径"
 		_: return "常规操作"
 
 
@@ -86,6 +87,8 @@ static func reason_name(reason_code: String) -> String:
 		"UNIT_NOT_FOUND": return "未找到单位"
 		"UNIT_NOT_CONTROLLABLE": return "该单位不可控制"
 		"UNIT_SUNK": return "单位已沉没"
+		"MOVEMENT_ASSIST_DISABLED": return "自动航行已关闭"
+		"AUTO_FIRE_DISABLED": return "主要武器自动开火已关闭或暂停"
 		"PRIMARY_WEAPON_UNAVAILABLE": return "没有可用的主要武器"
 		"WEAPON_RELOADING": return "武器装填中"
 		"TORPEDO_MOUNT_INTERVAL": return "鱼雷管组切换中"

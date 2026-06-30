@@ -298,6 +298,13 @@ status_effects
 last_fire_time
 selected_ammo_by_group
 primary_weapon_group_id
+control_authority
+movement_assist_enabled
+secondary_auto_fire_enabled
+primary_auto_fire_enabled
+skill_auto_cast_enabled
+player_route_waypoints
+player_route_index
 ```
 
 不变量：
@@ -307,6 +314,9 @@ primary_weapon_group_id
 - `Sunk` 单位不能移动、开火、释放技能或成为普通攻击的新目标。
 - 单位只能使用自己 Definition 声明的武器和技能。
 - 运行时属性由基础值和状态效果计算，不直接永久改写基础属性。
+- 玩家控制单位默认 `movement_assist_enabled = false`、`secondary_auto_fire_enabled = true`、`primary_auto_fire_enabled = false`、`skill_auto_cast_enabled = false`；敌方单位由完整 AI 控制，不读取玩家开关。
+- 玩家单位的 `skill_auto_cast_enabled` 是固定安全不变量，任何玩家命令、关卡配置或辅助 AI 都不能将其改为 `true`。
+- 玩家路线只保存已通过命令校验的世界坐标；`player_route_index` 只能指向当前或下一合法途径点。
 
 ### 5.4 WeaponState
 
@@ -499,6 +509,9 @@ issuer_id
 | --- | --- | --- |
 | `StartBattleCommand` | 关卡与双方舰队 | 系统 |
 | `MoveUnitsCommand` | 单位 ID、目标位置 | 玩家或 AI |
+| `AppendMoveWaypointCommand` | 单位 ID、追加目标位置 | 玩家 |
+| `ClearMoveRouteCommand` | 单位 ID | 玩家 |
+| `SetUnitControlStateCommand` | 单位 ID 集合、可选的辅助航行/副武器/主武器布尔值 | 玩家 |
 | `FocusTargetCommand` | 单位 ID、敌方目标 ID | 玩家或 AI |
 | `ClearFocusTargetCommand` | 单位 ID | 玩家或 AI |
 | `CastSkillCommand` | 单位 ID、技能 ID、目标引用 | 玩家或 AI |
@@ -510,7 +523,13 @@ issuer_id
 | `RestartBattleCommand` | 无 | 玩家 |
 | `AdvanceSimulationCommand` | 固定步长 | 系统 |
 
-`Automatic` 武器自动开火不是外部命令，而是一次模拟步内由领域规则产生的内部行为。玩家选择角色、`1` 到 `9`、`0`、`-` 槽位映射、主要武器准心和 `V` 镜头跟踪属于 Presentation 状态，不进入 Domain 命令。表现层只在玩家左键确认瞄准后创建 `FirePrimaryWeaponCommand`。
+`Automatic` 武器自动开火不是外部命令，而是一次模拟步内由领域规则产生的内部行为，但玩家单位必须先满足 `secondary_auto_fire_enabled`。玩家选择角色、`1` 到 `9`、`0`、`-` 槽位映射、主要武器准心、键盘修饰键和 `G` 镜头跟踪属于 Presentation 状态，不进入 Domain 命令。表现层只在玩家左键确认瞄准后创建手动 `FirePrimaryWeaponCommand`。
+
+`AppendMoveWaypointCommand` 对现有玩家路线追加一个点，每个新增航段独立校验；失败只拒绝本次追加。普通右键仍使用 `MoveUnitsCommand` 替换为单点玩家路线。`ClearMoveRouteCommand` 清除剩余玩家途径点，并根据 `movement_assist_enabled` 进入 `AssistNavigate` 或 `HoldPosition`。
+
+`SetUnitControlStateCommand` 不接收“切换”语义，只接收明确布尔目标值，避免混合舰队状态因命令重放产生不同结果。`Cmd/Alt` 与“任一关闭则全开、全部开启则全关”的计算由 Presentation/Application 完成，再把稳定排序的存活玩家单位 ID 和明确值交给 Domain。没有主要武器组的单位忽略 `primary_auto_fire_enabled` 更新。
+
+玩家 `primary_auto_fire_enabled` 为真时，Application 中的受限辅助 AI 可以提交普通 `FirePrimaryWeaponCommand`；该开关不把 `ManualPrimary` 改成 `Automatic`，也不允许 WeaponService 绕过命令校验。
 
 `FirePrimaryWeaponCommand.target_ref` 按主要武器类型解释：主炮和空袭保存世界坐标，鱼雷保存由单位位置指向准心的标准化方向。领域层必须重新校验主炮/空袭射程、全部方向武器的射角、装填和目标类型；鱼雷准心距离不作为射程判定，不能信任表现层显示结果。
 
@@ -649,11 +668,14 @@ Alive -> Sunk
 Idle
 AutoNavigate
 PlayerMoveOrder
+PlayerWaypointRoute
+AssistNavigate
+ImmediateAvoidance
 ApproachTarget
 HoldPosition
 ```
 
-玩家移动命令覆盖自动移动。完成、取消或失效后，单位回到 AI 可接管状态。
+玩家单点或多航点路线覆盖普通辅助移动。即时生存可以临时进入 `ImmediateAvoidance`；危险解除后重新规划到下一合法玩家途径点。玩家路线完成、取消或失效后，仅当 `movement_assist_enabled` 为真时进入 `AssistNavigate`，否则进入 `HoldPosition`。
 
 ### 9.4 TargetingMode
 
@@ -879,11 +901,13 @@ View 不持有可写 `UnitState`。
 
 AI 是命令生产者，不是拥有特权的第二套战斗规则。
 
-AI 可以读取其阵营可见快照和己方完整状态，输出移动、集火和技能命令。AI 不得读取敌方隐藏位置、直接设置目标、跳过射程或强制命中。玩家和 AI 命令经过相同校验。
+敌方完整 AI 可以读取其阵营可见快照和己方完整状态，输出移动、集火、主要武器和技能命令。玩家受限辅助 AI 只能按能力白名单输出移动、局部目标和主要武器命令，永远不能输出自动技能命令。两者都不得读取敌方隐藏位置、直接设置目标、跳过射程或强制命中；玩家和 AI 命令经过相同校验。
 
-自动武器攻击属于单位领域行为，不需要 AI 每次提交开火命令。敌方 AI 若使用配置为 `ManualPrimary` 的武器，必须提交与玩家同结构的 `FirePrimaryWeaponCommand`，不能绕过装填、射程、射角或侦查规则。
+自动副武器攻击属于单位领域行为，不需要 AI 每次提交开火命令；玩家单位还必须开启 `secondary_auto_fire_enabled`。敌方完整 AI或开启 `primary_auto_fire_enabled` 的玩家受限 AI 若使用配置为 `ManualPrimary` 的武器，必须提交与玩家手动操作同结构的 `FirePrimaryWeaponCommand`，不能绕过装填、射程、射角或侦查规则。
 
 舰队战术方案、战术编组、单舰模式、通用航行规则和 AI 短期记忆属于 AI Runtime State，由 Application/策略层维护，不进入 Presentation，也不把关卡行为脚本堆入 `UnitState`。单舰模式只组合行动、攻击和技能策略；短航路、阵位和掩体点只产生移动意图。最终移动、碰撞、边界、地形通行、视线、攻击与技能合法性仍由 Domain 决定。完整模式与通用规则设计见 `docs/16_enemy_ai_behavior_design.md`。
+
+玩家受限辅助 AI 使用独立能力白名单，只能读取领域约束、即时生存、玩家路径、局部执行状态和被发现动作。它不得创建关卡任务、编组职责、战略模式、天气收益、技能连招或自动 `CastSkillCommand`。敌方难度和 AI Profile 不影响玩家受限辅助 AI。
 
 ---
 
@@ -982,6 +1006,17 @@ AI 可以读取其阵营可见快照和己方完整状态，输出移动、集�
 - `E` 本身不创建领域命令；左键确认后只创建一次主要武器命令。
 - 瞄准状态下右键取消不创建 `FirePrimaryWeaponCommand` 或 `MoveUnitsCommand`，也不改变装填状态。
 - 主炮海域坐标、鱼雷中心方向和空袭中心坐标按各自目标类型通过校验与结算。
+- 玩家单位默认副武器自动开火、主要武器不自动开火；关闭副武器后不再创建新自动攻击，开启主要武器后仍只通过普通主要武器命令开火。
+- `SetUnitControlStateCommand` 使用明确值并稳定作用于全部合法单位；无主要武器单位忽略主要武器开关。
+- 玩家受限 AI 在所有控制状态下都不能创建 `CastSkillCommand`。
+
+### 18.3.1 玩家路线与辅助控制
+
+- 连续追加三个合法途径点后按顺序执行；非法第四点只被拒绝，不删除前三点。
+- 普通右键单点命令替换剩余多航点路线。
+- 即时鱼雷规避打断路线后能从当前位置恢复到下一合法途径点。
+- 路线结束时，`X` 开启进入受限辅助航行，`X` 关闭进入保持位置。
+- `Cmd/Alt + X/C/V` 的修饰键不进入 Domain；相同明确控制命令重放得到相同结果。
 
 ### 18.4 技能与状态
 

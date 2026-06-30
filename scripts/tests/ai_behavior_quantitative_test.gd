@@ -22,10 +22,11 @@ func _run() -> void:
 	_test_hierarchical_priority()
 	_test_switch_hysteresis()
 	_test_target_selection_and_information_fairness()
+	_test_player_assist_policy()
 	for result in scenario_results:
 		print(result)
 	if failures.is_empty():
-		print("PASS: %d AI quantitative checks across %d scenario groups" % [checks, 10])
+		print("PASS: %d AI quantitative checks across %d scenario groups" % [checks, 11])
 		quit(0)
 	else:
 		for failure in failures:
@@ -262,6 +263,80 @@ func _test_target_selection_and_information_fairness() -> void:
 	_check(alternate > overreserved, "overkill reservation redirects later attackers to a useful alternate")
 	_check(is_zero_approx(hidden), "hidden real-time enemy state cannot enter attack scoring")
 	_record("targets", {"flagship": flagship, "overreserved": overreserved, "alternate": alternate, "hidden": hidden})
+
+
+func _test_player_assist_policy() -> void:
+	var defaults := AIModel.player_control_defaults()
+	_check(not bool(defaults["movement_assist_enabled"]), "player movement assist defaults off")
+	_check(bool(defaults["secondary_auto_fire_enabled"]), "player secondary auto fire defaults on")
+	_check(not bool(defaults["primary_auto_fire_enabled"]) and not bool(defaults["skill_auto_cast_enabled"]), "player primary and skill automation default off")
+
+	var local_target := {
+		"immediate_threat": 0.8, "weapon_fit": 0.9, "range_fit": 0.75,
+		"kill_opportunity": 0.4, "turn_cost": 0.2,
+	}
+	var polluted_target := local_target.duplicate(true)
+	polluted_target.merge({"mission_value": 1.0, "flagship_value": 1.0, "facility_value": 1.0, "weather_advantage": 1.0}, true)
+	var target_score := AIModel.player_assist_target_score(local_target)
+	_check(is_equal_approx(target_score, AIModel.player_assist_target_score(polluted_target)), "player assist target ignores mission, flagship, facility, and weather strategy")
+
+	var local_tactic := {
+		"local_advantage": 0.85, "hp_safety": 0.9, "weapon_ready": 1.0,
+		"target_opportunity": 0.9, "movement_safety": 0.9, "exposure_risk": 0.2,
+		"position_safety": 0.8, "range_advantage": 0.2, "speed_advantage": 0.2,
+		"exit_quality": 0.5, "weapon_cycle_value": 0.7,
+	}
+	var polluted_tactic := local_tactic.duplicate(true)
+	polluted_tactic.merge({"objective_defense": 1.0, "group_followup": 1.0, "skill_attack_value": 1.0, "weather_advantage": 1.0}, true)
+	var local_scores := AIModel.player_assist_detected_tactic_scores(local_tactic)
+	_check(local_scores == AIModel.player_assist_detected_tactic_scores(polluted_tactic), "player assist tactic ignores objective, group, skill, and weather inputs")
+
+	var held := AIModel.player_assist_decision({
+		"movement_assist_enabled": false, "visible_contact": true,
+		"local_tactic": local_tactic, "mission_scores": {"CaptureFacility": 100.0},
+		"group_scores": {"EscortFlagship": 100.0}, "mode_scores": {"TorpedoFlank": 100.0},
+	})
+	var emergency := AIModel.player_assist_decision({
+		"movement_assist_enabled": false, "visible_contact": true,
+		"immediate_scores": {"TorpedoEvasion": 84.0}, "local_tactic": local_tactic,
+	})
+	var route := AIModel.player_assist_decision({
+		"movement_assist_enabled": true, "visible_contact": true,
+		"has_player_route": true, "local_tactic": local_tactic,
+	})
+	var assisted := AIModel.player_assist_decision({
+		"movement_assist_enabled": true, "visible_contact": true, "local_tactic": local_tactic,
+	})
+	var no_contact := AIModel.player_assist_decision({
+		"movement_assist_enabled": true, "visible_contact": false,
+		"mission_scores": {"CaptureFacility": 100.0}, "weather_advantage": 1.0,
+	})
+	_check(held["action"] == "HoldPosition", "disabled player movement assist ignores full-AI strategic inputs")
+	_check(emergency["layer"] == "ImmediateSurvival" and emergency["action"] == "TorpedoEvasion", "player ship still performs minimum survival action with X off")
+	_check(route["layer"] == "PlayerRoute", "player waypoints override ordinary assist movement")
+	_check(assisted["layer"] == "DetectedTactic" and assisted["action"] == "Attack", "enabled player movement assist uses local detected tactic")
+	_check(no_contact["action"] == "HoldPosition", "player assist does not patrol for objectives or weather without visible contact")
+
+	var primary_window := {
+		"target_value": 0.9, "hit_quality": 0.85, "weapon_ready": 1.0,
+		"expected_damage": 0.8, "kill_opportunity": 0.6, "position_safety": 0.9,
+		"exposure_risk": 0.2, "friendly_risk": 0.0,
+	}
+	var default_execution := AIModel.player_assist_execution(defaults, primary_window)
+	var enabled_control := defaults.duplicate(true)
+	enabled_control["primary_auto_fire_enabled"] = true
+	enabled_control["skill_auto_cast_enabled"] = true
+	var enabled_execution := AIModel.player_assist_execution(enabled_control, primary_window)
+	_check(bool(default_execution["secondary_auto_fire"]) and not bool(default_execution["primary_auto_fire"]), "default player execution automates only secondary weapons")
+	_check(bool(enabled_execution["primary_auto_fire"]), "V-enabled player assist fires a high-quality legal primary window")
+	_check(not bool(default_execution["skill_auto_cast"]) and not bool(enabled_execution["skill_auto_cast"]), "player assist never enables automatic skills")
+	_check(AIModel.fleet_toggle_target([true, false, true]), "mixed fleet toggle resolves to all enabled")
+	_check(not AIModel.fleet_toggle_target([true, true, true]), "fully enabled fleet toggle resolves to all disabled")
+	_record("player_assist", {
+		"target_score": target_score, "tactic": AIModel.choose_highest(local_scores),
+		"held": held, "emergency": emergency, "route": route, "assisted": assisted, "no_contact": no_contact,
+		"default_execution": default_execution, "enabled_execution": enabled_execution,
+	})
 
 
 func _record(name: String, values: Dictionary) -> void:

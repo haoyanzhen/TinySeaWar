@@ -45,6 +45,7 @@ func _run() -> void:
 	_test_full_roster_runtime_data()
 	_test_modifier_order()
 	_test_command_and_skill_rules()
+	_test_runtime_ai_control_rules()
 	_test_operation_design_rules()
 	_test_automatic_lead_and_fixed_impacts()
 	_test_torpedo_fire_arc_rules()
@@ -398,6 +399,10 @@ func _test_runtime_baseline_scales() -> void:
 	for projectile in registry.all("projectiles"):
 		var base_speed := float(projectile.get("base_speed", 0.0))
 		_check(base_speed >= 0.0 and is_equal_approx(float(projectile.get("speed", 0.0)), base_speed * 0.5), "%s uses the 0.5x runtime projectile and aircraft speed baseline" % projectile.get("id", "?"))
+	for formula in registry.all("formulas"):
+		_check(is_equal_approx(float(formula.get("base_damage", 0.0)), float(formula.get("design_base_damage", 0.0)) * 0.25), "%s uses the 0.25x runtime base damage" % formula.get("id", "?"))
+		_check(is_equal_approx(float(formula.get("power_coefficient", 0.0)), float(formula.get("design_power_coefficient", 0.0)) * 0.25), "%s uses the 0.25x runtime power coefficient" % formula.get("id", "?"))
+		_check(is_equal_approx(float(formula.get("armor_coefficient", 0.0)), float(formula.get("design_armor_coefficient", 0.0)) * 0.25), "%s keeps armor reduction in the same 0.25x damage unit")
 	for skill in registry.all("skills"):
 		var base_cast_range := float(skill.get("base_cast_range", 0.0))
 		var expected_cast_range := base_cast_range * 1.5 if base_cast_range > 0.0 else 0.0
@@ -407,6 +412,17 @@ func _test_runtime_baseline_scales() -> void:
 	_check(is_equal_approx(float(warspite.get("speed", 0.0)), 31.0) and is_equal_approx(float(warspite.get("turn_speed", 0.0)), 22.5), "ship movement uses the halved runtime speed and turn baseline")
 	_check(is_equal_approx(float(warspite.get("detection_range", 0.0)), 585.0) and is_equal_approx(float(warspite.get("concealment_distance", 0.0)), 900.0), "ship detection and concealment use the 1.5x runtime distance baseline")
 	_check(is_equal_approx(float(registry.get_definition("weapons", "weapon.warspite_381_ap").get("range", 0.0)), 1080.0), "main-gun UI and rules expose the 1.5x effective range")
+	var large_ap: Dictionary = registry.get_definition("formulas", "formula.large_ap")
+	var runtime_source := {"entity_id":"runtime.source", "position":Vector2.ZERO, "stats":{"gunnery_power":172.0}, "status_effects":[]}
+	var runtime_target := {"entity_id":"runtime.target", "position":Vector2(100.0,0.0), "current_hp":10000.0, "stats":{"armor":98.0,"armor_thickness":"Heavy","evasion":0.0}, "status_effects":[]}
+	var runtime_weapon := {"id":"runtime.weapon", "mount_type":"Gun", "range":1080.0, "accuracy_modifier":0.0, "armor_damage_modifiers":{"Heavy":1.0}}
+	var design_formula := large_ap.duplicate(true)
+	design_formula["base_damage"] = design_formula["design_base_damage"]
+	design_formula["power_coefficient"] = design_formula["design_power_coefficient"]
+	design_formula["armor_coefficient"] = design_formula["design_armor_coefficient"]
+	var runtime_damage: Dictionary = DamageService.resolve({}, runtime_source, runtime_target, runtime_weapon, large_ap, SeededRandomSource.new(7), true)
+	var design_damage: Dictionary = DamageService.resolve({}, runtime_source, runtime_target, runtime_weapon, design_formula, SeededRandomSource.new(7), true)
+	_check(is_equal_approx(float(runtime_damage["final_damage"]), float(design_damage["final_damage"]) * 0.25), "runtime damage result is exactly one quarter of the design-scale result")
 	_check(is_equal_approx(float(registry.get_definition("weapons", "weapon.shimakaze_610_torpedo").get("range", 0.0)), 765.0), "torpedo UI and rules expose the 1.5x effective range")
 	_check(is_equal_approx(float(registry.get_definition("weapons", "weapon.enterprise_airstrike").get("range", 0.0)), 1140.0), "aviation UI and rules expose the 1.5x effective range")
 	_check(is_equal_approx(float(registry.get_definition("weapons", "weapon.warspite_381_ap").get("projectile_speed", 0.0)), 210.0), "main-gun projectiles use the halved runtime attack speed baseline")
@@ -561,7 +577,7 @@ func _test_operation_design_rules() -> void:
 	enemy["movement_state"]["mode"] = "HoldPosition"
 	for index in range(30): session.advance_tick(0.1)
 	var auto_events := session.drain_events()
-	_check(not _has_event(auto_events, "WeaponFired"), "ManualPrimary weapon does not participate in automatic fire")
+	_check(not _has_event_for_source(auto_events, "WeaponFired", player["entity_id"]), "player ManualPrimary weapon stays silent while primary auto fire is disabled")
 	_check(session.get_player_slots()[0]["unit_id"] == "unit.player.warspite", "slot 1 selects the first fleet member")
 	var gun_aim_status: Dictionary = session.get_primary_aim_status(player["entity_id"], enemy["position"])
 	_check(gun_aim_status.get("fire_arcs", []).size() == 1 and gun_aim_status.get("full_salvo_fire_arcs", []).size() == 2, "main-gun aim exposes available and all-mount full-salvo firing sectors")
@@ -586,6 +602,69 @@ func _test_operation_design_rules() -> void:
 	_check(float(ap_state["reload_remaining"]) < reload_after_fire and float(ap_state["reload_remaining"]) > 0.0, "Q does not reset shared reload progress")
 	session._sink_unit(player, "test")
 	_check(session.get_player_slots()[0]["unit_id"] == "unit.player.warspite", "slot remains stable after sinking")
+
+
+func _test_runtime_ai_control_rules() -> void:
+	var session = BattleSession.new(registry)
+	_check(session.create_battle("level.prototype_3v3", 31).get("ok", false), "runtime AI control test battle can be created")
+	var player: Dictionary = session.state["units_by_id"]["unit.player.aurora"]
+	_check(not bool(player.get("movement_assist_enabled", true)) and player["movement_state"]["mode"] == "HoldPosition", "player ship defaults to stationary movement assist off")
+	_check(bool(player.get("secondary_auto_fire_enabled", false)), "player ship defaults to secondary auto fire on")
+	_check(not bool(player.get("primary_auto_fire_enabled", true)) and not bool(player.get("skill_auto_cast_enabled", true)), "player primary auto fire and skill auto cast default off")
+	var player_ids: Array = []
+	for slot_data in session.get_player_slots(): player_ids.append(str(slot_data["unit_id"]))
+	session.queue_command({"command_id":"control.fleet","command_type":"SetUnitControlState","issued_at_tick":0,"issuer_id":"player","unit_ids":player_ids,"movement_assist_enabled":true,"secondary_auto_fire_enabled":false})
+	session.advance_tick(0.1)
+	var fleet_control_applied := true
+	for unit_id in player_ids:
+		var controlled: Dictionary = session.state["units_by_id"][unit_id]
+		fleet_control_applied = fleet_control_applied and bool(controlled["movement_assist_enabled"]) and not bool(controlled["secondary_auto_fire_enabled"])
+	_check(fleet_control_applied, "fleet-scoped X/C state command applies consistently to all player ships")
+	var waypoint := (player["position"] as Vector2) + Vector2(120.0, 40.0)
+	session.queue_command({"command_id":"route.append","command_type":"AppendMoveWaypoint","issued_at_tick":session.state["tick_index"],"issuer_id":"player","unit_id":player["entity_id"],"target_position":waypoint})
+	session.advance_tick(0.1)
+	_check(player["movement_state"]["mode"] == "PlayerWaypointRoute" and player.get("player_route_waypoints", []).size() == 1, "Z-style waypoint command creates a persistent player route")
+	player["skill_state"]["cooldown_remaining"] = 0.0
+	for index in range(12): session.advance_tick(0.1)
+	var skill_events := session.drain_events()
+	_check(not _has_event_for_source(skill_events, "SkillCast", player["entity_id"]), "player assist never releases skills automatically")
+	player["position"] = Vector2(2.0, float(session.state["map"].get("height", 700.0)) * 0.5)
+	player["heading"] = PI
+	player["current_speed"] = 30.0
+	player["ai_state"]["active_interrupt"] = ""
+	_check(session._update_immediate_survival(player) and player["ai_state"]["active_interrupt"] == "BoundaryEscape", "immediate survival overrides player controls near an imminent boundary exit")
+	player["position"] = Vector2(float(session.state["map"].get("width", 1200.0)) * 0.5, float(session.state["map"].get("height", 700.0)) * 0.5)
+	player["current_speed"] = 0.0
+	session._recover_from_ai_interrupt(player)
+	_check(player["movement_state"]["mode"] == "PlayerWaypointRoute" and not player["movement_state"].get("waypoints", []).is_empty(), "cleared survival interrupt replans and resumes the remaining player route")
+	session.queue_command({"command_id":"route.clear","command_type":"ClearMoveRoute","issued_at_tick":session.state["tick_index"],"issuer_id":"player","unit_id":player["entity_id"]})
+	session.advance_tick(0.1)
+	player["movement_assist_enabled"] = true
+	session._queue_ai_move(player, player["position"] + Vector2(100.0, 0.0), "PlayerAssistAI", "AssistNavigate")
+	session.queue_command({"command_id":"control.move.off","command_type":"SetUnitControlState","issued_at_tick":session.state["tick_index"],"issuer_id":"player","unit_id":player["entity_id"],"movement_assist_enabled":false})
+	var move_cancel_events: Array = session.advance_tick(0.1)
+	_check(_has_event_reason(move_cancel_events, "CommandRejected", "MOVEMENT_ASSIST_DISABLED"), "X-off rejects an already queued non-emergency assist move")
+	var fire_session = BattleSession.new(registry)
+	fire_session.create_battle("level.prototype_1v1", 32)
+	var gunner: Dictionary = fire_session.state["units_by_id"]["unit.player.warspite"]
+	var target: Dictionary = fire_session.state["units_by_id"]["unit.enemy.bismarck"]
+	gunner["position"] = Vector2(300.0, 350.0)
+	target["position"] = Vector2(830.0, 350.0)
+	gunner["heading"] = 0.0
+	target["heading"] = PI
+	fire_session.state["visible_by_faction"]["player"] = {target["entity_id"]: true}
+	gunner["primary_auto_fire_enabled"] = true
+	fire_session._update_ai_primary_weapons()
+	fire_session.queue_command({"command_id":"control.suspend","command_type":"SetUnitControlState","issued_at_tick":fire_session.state["tick_index"],"issuer_id":"player","unit_id":gunner["entity_id"],"primary_auto_fire_suspended":true})
+	var suspended_events: Array = fire_session.advance_tick(0.1)
+	_check(not _has_event_for_source(suspended_events, "WeaponFired", gunner["entity_id"]), "entering E aim suspends an already queued player auto-primary shot")
+	fire_session.queue_command({"command_id":"control.resume","command_type":"SetUnitControlState","issued_at_tick":fire_session.state["tick_index"],"issuer_id":"player","unit_id":gunner["entity_id"],"primary_auto_fire_suspended":false})
+	fire_session.advance_tick(0.1)
+	gunner["ai_state"]["fire_decision_cooldown"] = 0.0
+	fire_session._update_ai_primary_weapons()
+	var primary_events: Array = fire_session.advance_tick(0.1)
+	_check(_has_event_for_source(primary_events, "WeaponFired", gunner["entity_id"]), "V-enabled player primary auto fire commits a legal quantified attack window")
+	_check(float(gunner["skill_state"]["cooldown_remaining"]) > 0.0, "player skill remains untouched by primary auto-fire execution")
 
 
 func _test_torpedo_fire_arc_rules() -> void:
@@ -856,6 +935,13 @@ func _has_event_reason(events: Array, event_type: String, reason_code: String) -
 func _has_event(events: Array, event_type: String) -> bool:
 	for event in events:
 		if event.get("event_type", "") == event_type: return true
+	return false
+
+
+func _has_event_for_source(events: Array, event_type: String, source_unit_id: String) -> bool:
+	for event in events:
+		if event.get("event_type", "") == event_type and str(event.get("source_unit_id", event.get("unit_id", ""))) == source_unit_id:
+			return true
 	return false
 
 

@@ -38,6 +38,7 @@ func run_experiment(registry, manifest: Dictionary) -> Dictionary:
 			"tick_seconds": float(manifest.get("tick_seconds", 0.1)),
 			"maximum_ticks": int(manifest.get("maximum_ticks", 1)),
 			"side_swap": bool(manifest.get("side_swap", false)),
+			"ai_mode_locks": manifest.get("ai_mode_locks", {}).duplicate(true),
 			"godot_version": Engine.get_version_info().get("string", "unknown"),
 			"executed_at": Time.get_datetime_string_from_system(false, true),
 			"wall_time_seconds": elapsed_seconds,
@@ -66,6 +67,14 @@ func _run_battle(registry, manifest: Dictionary, scenario: Dictionary, seed_valu
 			"end_state": "CreationFailure",
 			"errors": creation.get("errors", []),
 		}
+	var full_ai_factions: Array[String] = []
+	if _policy_for_faction(manifest, "player") == "LatestRuntimeAI": full_ai_factions.append("player")
+	if _policy_for_faction(manifest, "enemy") == "LatestRuntimeAI": full_ai_factions.append("enemy")
+	if not full_ai_factions.is_empty():
+		session.configure_full_ai_factions(full_ai_factions)
+	var ai_mode_locks: Dictionary = manifest.get("ai_mode_locks", {})
+	if not ai_mode_locks.is_empty():
+		session.configure_ai_mode_locks(ai_mode_locks)
 	var tick_seconds := float(manifest.get("tick_seconds", 0.1))
 	var maximum_ticks := int(scenario.get("maximum_ticks", manifest.get("maximum_ticks", 1)))
 	var ticks_executed := 0

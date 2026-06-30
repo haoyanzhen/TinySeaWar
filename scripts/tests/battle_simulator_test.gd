@@ -73,6 +73,17 @@ func _run() -> void:
 	_check(swapped_runs[0].get("units", {}).get("unit.player.warspite", {}).get("definition_id", "") == "ship.warspite", "original run keeps the player lineup on the player side")
 	_check(swapped_runs[1].get("units", {}).get("unit.player.bismarck", {}).get("definition_id", "") == "ship.bismarck", "swapped run places the original enemy lineup on player spawns")
 	_check(swapped_runs[1].get("units", {}).get("unit.enemy.warspite", {}).get("definition_id", "") == "ship.warspite", "swapped run places the original player lineup on enemy spawns")
+	var latest_ai_manifest: Dictionary = manifest.duplicate(true)
+	latest_ai_manifest["experiment_id"] = "sim.test.latest_runtime_ai"
+	latest_ai_manifest["player_policy_id"] = "LatestRuntimeAI"
+	latest_ai_manifest["enemy_policy_id"] = "LatestRuntimeAI"
+	latest_ai_manifest["side_swap"] = false
+	var latest_ai := runner.run_experiment(registry, latest_ai_manifest)
+	var latest_run: Dictionary = latest_ai.get("runs", [])[0]
+	var latest_player_shots := int(latest_run.get("units", {}).get("unit.player.warspite", {}).get("shots", 0))
+	var latest_enemy_shots := int(latest_run.get("units", {}).get("unit.enemy.bismarck", {}).get("shots", 0))
+	_check(latest_player_shots > 0 and latest_enemy_shots > 0, "latest runtime AI drives primary and automatic fire for both factions")
+	_check(latest_run.get("end_state", "") == "Finished", "latest runtime AI battle reaches a normal result")
 	if failures.is_empty():
 		print("PASS: %d battle simulator checks" % checks)
 		quit(0)

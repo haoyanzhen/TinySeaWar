@@ -28,6 +28,27 @@ static func target_score(values: Dictionary) -> float:
 	)
 
 
+static func player_control_defaults() -> Dictionary:
+	return {
+		"movement_assist_enabled": false,
+		"secondary_auto_fire_enabled": true,
+		"primary_auto_fire_enabled": false,
+		"skill_auto_cast_enabled": false,
+	}
+
+
+static func player_assist_target_score(values: Dictionary) -> float:
+	if not bool(values.get("legal", true)) or not bool(values.get("visible", true)):
+		return 0.0
+	return score100(
+		0.35 * clamp01(float(values.get("immediate_threat", 0.0)))
+		+ 0.30 * clamp01(float(values.get("weapon_fit", 0.0)))
+		+ 0.20 * clamp01(float(values.get("range_fit", 0.0)))
+		+ 0.15 * clamp01(float(values.get("kill_opportunity", 0.0)))
+		- 0.10 * clamp01(float(values.get("turn_cost", 0.0)))
+	)
+
+
 static func torpedo_threat_score(values: Dictionary) -> float:
 	if not bool(values.get("visible", false)) or not bool(values.get("approaching", false)):
 		return 0.0
@@ -142,6 +163,34 @@ static func detected_tactic_scores(values: Dictionary) -> Dictionary:
 	return {"Attack": attack, "Defend": defend, "Kite": kite}
 
 
+static func player_assist_detected_tactic_scores(values: Dictionary) -> Dictionary:
+	var local_advantage := clamp01(float(values.get("local_advantage", 0.5)))
+	var local_pressure := 1.0 - local_advantage
+	var survival_pressure := 1.0 - clamp01(float(values.get("hp_safety", 1.0)))
+	return {
+		"Attack": score100(
+			0.32 * local_advantage
+			+ 0.26 * clamp01(float(values.get("weapon_ready", 0.0)))
+			+ 0.22 * clamp01(float(values.get("target_opportunity", 0.0)))
+			+ 0.20 * clamp01(float(values.get("movement_safety", 0.0)))
+			- 0.15 * clamp01(float(values.get("exposure_risk", 0.0)))
+		),
+		"Defend": score100(
+			0.36 * local_pressure
+			+ 0.30 * survival_pressure
+			+ 0.20 * clamp01(float(values.get("position_safety", 0.0)))
+			+ 0.14 * clamp01(float(values.get("cooldown_need", 0.0)))
+		),
+		"Kite": score100(
+			0.28 * clamp01(float(values.get("range_advantage", 0.0)))
+			+ 0.24 * clamp01(float(values.get("speed_advantage", 0.0)))
+			+ 0.22 * local_pressure
+			+ 0.16 * clamp01(float(values.get("exit_quality", 0.0)))
+			+ 0.10 * clamp01(float(values.get("weapon_cycle_value", 0.0)))
+		),
+	}
+
+
 static func choose_highest(scores: Dictionary) -> Dictionary:
 	var selected_id := ""
 	var selected_score := -1.0
@@ -187,6 +236,31 @@ static func attack_window_score(values: Dictionary) -> float:
 		- 0.10 * clamp01(float(values.get("overkill", 0.0)))
 		- 0.08 * clamp01(float(values.get("friendly_risk", 0.0)))
 	)
+
+
+static func player_assist_primary_window_score(values: Dictionary) -> float:
+	if not bool(values.get("visible", true)) or not bool(values.get("weapon_legal", true)) or not bool(values.get("path_clear", true)):
+		return 0.0
+	return score100(
+		0.25 * clamp01(float(values.get("target_value", 0.0)))
+		+ 0.20 * clamp01(float(values.get("hit_quality", 0.0)))
+		+ 0.20 * clamp01(float(values.get("weapon_ready", 0.0)))
+		+ 0.15 * clamp01(float(values.get("expected_damage", 0.0)))
+		+ 0.10 * clamp01(float(values.get("kill_opportunity", 0.0)))
+		+ 0.10 * clamp01(float(values.get("position_safety", 0.0)))
+		- 0.10 * clamp01(float(values.get("exposure_risk", 0.0)))
+		- 0.10 * clamp01(float(values.get("friendly_risk", 0.0)))
+	)
+
+
+static func player_assist_execution(control_state: Dictionary, primary_values: Dictionary = {}) -> Dictionary:
+	var primary_score := player_assist_primary_window_score(primary_values)
+	return {
+		"secondary_auto_fire": bool(control_state.get("secondary_auto_fire_enabled", true)),
+		"primary_auto_fire": bool(control_state.get("primary_auto_fire_enabled", false)) and primary_score >= 54.0,
+		"primary_score": primary_score,
+		"skill_auto_cast": false,
+	}
 
 
 static func fire_threshold(discipline: String, under_threat: bool = false, emergency: bool = false) -> float:
@@ -266,6 +340,29 @@ static func hierarchical_decision(values: Dictionary) -> Dictionary:
 		return {"layer": "GroupDuty", "action": group_choice["id"], "score": group_choice["score"]}
 	var mode_choice := choose_highest(values.get("mode_scores", {}))
 	return {"layer": "StrategicMode", "action": mode_choice["id"], "score": mode_choice["score"]}
+
+
+static func player_assist_decision(values: Dictionary) -> Dictionary:
+	if not bool(values.get("domain_legal", true)):
+		return {"layer": "DomainConstraint", "action": "Reject", "score": 100.0}
+	var immediate_choice := choose_highest(values.get("immediate_scores", {}))
+	if float(immediate_choice["score"]) >= float(values.get("immediate_threshold", 65.0)):
+		return {"layer": "ImmediateSurvival", "action": immediate_choice["id"], "score": immediate_choice["score"]}
+	if bool(values.get("has_player_route", false)):
+		return {"layer": "PlayerRoute", "action": "FollowWaypoints", "score": 100.0}
+	if not bool(values.get("movement_assist_enabled", false)) or not bool(values.get("visible_contact", false)):
+		return {"layer": "ExecutionControl", "action": "HoldPosition", "score": 0.0}
+	var tactic_choice := choose_highest(player_assist_detected_tactic_scores(values.get("local_tactic", {})))
+	return {"layer": "DetectedTactic", "action": tactic_choice["id"], "score": tactic_choice["score"]}
+
+
+static func fleet_toggle_target(current_states: Array) -> bool:
+	if current_states.is_empty():
+		return false
+	for state in current_states:
+		if not bool(state):
+			return true
+	return false
 
 
 static func switch_with_hysteresis(values: Dictionary) -> Dictionary:

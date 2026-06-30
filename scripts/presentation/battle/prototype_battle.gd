@@ -31,7 +31,7 @@ const MAIN_GUN_SCOPE_INVALID := Color(1.0, 0.44, 0.50, 0.76)
 const MAIN_GUN_SCOPE_SHADOW := Color(0.03, 0.16, 0.20, 0.28)
 const MAIN_GUN_DISPERSION := Color(0.88, 0.98, 1.0, 0.26)
 
-enum OperationMode { NORMAL, AIMING_PRIMARY, TARGETING_SKILL }
+enum OperationMode { NORMAL, AIMING_PRIMARY, TARGETING_SKILL, PLACING_ROUTE }
 
 @onready var ocean_surface: Node2D = $OceanSurface
 @onready var weather_overlay: Node2D = $WeatherOverlay
@@ -248,9 +248,11 @@ func _texture(path: String) -> Texture2D:
 
 func _draw_operation_overlay() -> void:
 	_draw_gun_scope_confirmation()
-	if selected_unit_id.is_empty() or operation_mode == OperationMode.NORMAL: return
+	if selected_unit_id.is_empty(): return
 	var selected: Dictionary = session.state.get("units_by_id", {}).get(selected_unit_id, {})
 	if selected.is_empty(): return
+	_draw_selected_route(selected)
+	if operation_mode == OperationMode.NORMAL or operation_mode == OperationMode.PLACING_ROUTE: return
 	var cursor := get_global_mouse_position()
 	if operation_mode == OperationMode.AIMING_PRIMARY:
 		var aim_status: Dictionary = session.get_primary_aim_status(selected_unit_id, cursor)
@@ -265,6 +267,21 @@ func _draw_operation_overlay() -> void:
 		_draw_aim_reason_label(cursor, str(aim_status.get("reason_code", "OK")), bool(aim_status.get("legal", false)), reason_offset)
 	elif operation_mode == OperationMode.TARGETING_SKILL:
 		_draw_skill_target_overlay(selected, cursor)
+
+
+func _draw_selected_route(selected: Dictionary) -> void:
+	var movement: Dictionary = selected.get("movement_state", {})
+	if str(movement.get("mode", "")) not in ["PlayerMoveOrder", "PlayerWaypointRoute"] and operation_mode != OperationMode.PLACING_ROUTE:
+		return
+	var points := PackedVector2Array([selected.get("position", Vector2.ZERO)])
+	var waypoints: Array = movement.get("waypoints", [])
+	for index in range(int(movement.get("waypoint_index", 0)), waypoints.size()):
+		points.append(waypoints[index])
+	if points.size() >= 2:
+		draw_polyline(points, Color(0.38, 0.92, 1.0, 0.84), 3.0, true)
+	for point_index in range(1, points.size()):
+		draw_circle(points[point_index], 8.0, Color(0.05, 0.22, 0.28, 0.86))
+		draw_arc(points[point_index], 10.0, 0.0, TAU, 24, Color(0.58, 0.98, 1.0, 0.96), 2.0)
 
 
 func _draw_torpedo_aim_overlay(selected: Dictionary, cursor: Vector2, aim_status: Dictionary) -> void:
@@ -498,7 +515,11 @@ func _unhandled_input(event: InputEvent) -> void:
 			KEY_E: _begin_primary_aim()
 			KEY_Q: _switch_selected_ammo()
 			KEY_F: _begin_or_cast_skill()
-			KEY_V: _toggle_follow_selected()
+			KEY_Z: _toggle_route_placement()
+			KEY_X: _toggle_control_state("movement_assist_enabled", "自动航行", event.alt_pressed or event.meta_pressed)
+			KEY_C: _toggle_control_state("secondary_auto_fire_enabled", "副武器自动开火", event.alt_pressed or event.meta_pressed)
+			KEY_V: _toggle_control_state("primary_auto_fire_enabled", "主武器自动开火", event.alt_pressed or event.meta_pressed)
+			KEY_G: _toggle_follow_selected()
 			KEY_ESCAPE: _cancel_operation_mode()
 	if event is InputEventMouseButton and event.pressed:
 		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
@@ -512,6 +533,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			if operation_mode == OperationMode.AIMING_PRIMARY: _confirm_primary_aim(world_position)
 			elif operation_mode == OperationMode.TARGETING_SKILL: _confirm_skill_target(world_position, snapshot)
+			elif operation_mode == OperationMode.PLACING_ROUTE: _append_route_waypoint(world_position)
 			else: _select_at(world_position, snapshot)
 		elif event.button_index == MOUSE_BUTTON_RIGHT:
 			if operation_mode == OperationMode.AIMING_PRIMARY:
@@ -655,6 +677,8 @@ func _slot_for_key(keycode: int) -> int:
 func _select_slot(slot: int) -> void:
 	for slot_data in session.get_player_slots():
 		if int(slot_data["slot"]) != slot: continue
+		if operation_mode == OperationMode.AIMING_PRIMARY:
+			_queue_primary_auto_suspend(false)
 		selected_unit_id = str(slot_data["unit_id"])
 		operation_mode = OperationMode.NORMAL
 		if camera_mode == "Follow": camera_follow_unit_id = selected_unit_id
@@ -682,6 +706,11 @@ func _select_at(world_position: Vector2, snapshot: Dictionary) -> void:
 
 func _begin_primary_aim() -> void:
 	if selected_unit_id.is_empty(): return
+	if operation_mode == OperationMode.AIMING_PRIMARY:
+		_cancel_operation_mode()
+		return
+	if operation_mode != OperationMode.NORMAL:
+		_cancel_operation_mode()
 	var selected: Dictionary = session.state["units_by_id"].get(selected_unit_id, {})
 	if selected.is_empty(): return
 	var operation_status: Dictionary = session.get_operation_status(selected_unit_id)
@@ -689,6 +718,7 @@ func _begin_primary_aim() -> void:
 		_push_message("E 不可用：%s" % UiText.reason_name(str(operation_status.get("primary_reason", "PRIMARY_WEAPON_UNAVAILABLE"))))
 		return
 	operation_mode = OperationMode.AIMING_PRIMARY
+	_queue_primary_auto_suspend(true)
 	_push_message("正在瞄准：%s" % operation_status.get("primary_name", "主要武器"))
 
 
@@ -703,6 +733,7 @@ func _confirm_primary_aim(world_position: Vector2) -> void:
 		gun_scope_confirmation_started_msec = Time.get_ticks_msec()
 		gun_scope_confirmation_until_msec = gun_scope_confirmation_started_msec + MAIN_GUN_SCOPE_CONFIRM_MS
 	session.queue_command({"command_id": "ui.primary.%s" % session.state["tick_index"], "command_type": "FirePrimaryWeapon", "issued_at_tick": session.state["tick_index"], "issuer_id": "player", "unit_id": selected_unit_id, "target_position": world_position})
+	_queue_primary_auto_suspend(false)
 	operation_mode = OperationMode.NORMAL
 
 
@@ -717,6 +748,8 @@ func _switch_selected_ammo() -> void:
 
 func _begin_or_cast_skill() -> void:
 	if selected_unit_id.is_empty(): return
+	if operation_mode != OperationMode.NORMAL:
+		_cancel_operation_mode()
 	var selected: Dictionary = session.state["units_by_id"].get(selected_unit_id, {})
 	if selected.is_empty(): return
 	var operation_status: Dictionary = session.get_operation_status(selected_unit_id)
@@ -752,9 +785,77 @@ func _queue_skill_command(target_ref: Dictionary) -> void:
 
 func _cancel_operation_mode() -> void:
 	if operation_mode == OperationMode.NORMAL: return
+	if operation_mode == OperationMode.AIMING_PRIMARY:
+		_queue_primary_auto_suspend(false)
 	operation_mode = OperationMode.NORMAL
 	skill_target_type = ""
 	_push_message("已取消当前操作")
+
+
+func _toggle_route_placement() -> void:
+	if selected_unit_id.is_empty(): return
+	if operation_mode == OperationMode.PLACING_ROUTE:
+		operation_mode = OperationMode.NORMAL
+		_push_message("路径布置结束")
+		return
+	if operation_mode != OperationMode.NORMAL:
+		_cancel_operation_mode()
+	operation_mode = OperationMode.PLACING_ROUTE
+	_push_message("路径布置：左键连续添加途径点，Z 或 Esc 结束")
+
+
+func _append_route_waypoint(world_position: Vector2) -> void:
+	if selected_unit_id.is_empty(): return
+	session.queue_command({
+		"command_id": "ui.waypoint.%s.%s" % [session.state["tick_index"], Time.get_ticks_msec()],
+		"command_type": "AppendMoveWaypoint",
+		"issued_at_tick": session.state["tick_index"],
+		"issuer_id": "player",
+		"unit_id": selected_unit_id,
+		"target_position": world_position,
+	})
+
+
+func _toggle_control_state(control_field: String, display_name: String, fleet_scope: bool) -> void:
+	if selected_unit_id.is_empty(): return
+	var unit_ids: Array = []
+	if fleet_scope:
+		for slot_data in session.get_player_slots():
+			var fleet_unit_id := str(slot_data["unit_id"])
+			var fleet_unit: Dictionary = session.state.get("units_by_id", {}).get(fleet_unit_id, {})
+			if fleet_unit.get("life_state", "") == "Alive":
+				unit_ids.append(fleet_unit_id)
+	else:
+		unit_ids = [selected_unit_id]
+	unit_ids.sort()
+	var enable := false
+	for unit_id in unit_ids:
+		var unit: Dictionary = session.state.get("units_by_id", {}).get(unit_id, {})
+		if not bool(unit.get(control_field, false)):
+			enable = true
+			break
+	var command := {
+		"command_id": "ui.control.%s.%s" % [control_field, session.state["tick_index"]],
+		"command_type": "SetUnitControlState",
+		"issued_at_tick": session.state["tick_index"],
+		"issuer_id": "player",
+		"unit_ids": unit_ids,
+	}
+	command[control_field] = enable
+	session.queue_command(command)
+	_push_message("%s%s：%s" % ["全舰 " if fleet_scope else "", display_name, "开启" if enable else "关闭"])
+
+
+func _queue_primary_auto_suspend(suspended: bool) -> void:
+	if selected_unit_id.is_empty(): return
+	session.queue_command({
+		"command_id": "ui.control.primary_suspend.%s.%s" % [session.state["tick_index"], int(suspended)],
+		"command_type": "SetUnitControlState",
+		"issued_at_tick": session.state["tick_index"],
+		"issuer_id": "player",
+		"unit_id": selected_unit_id,
+		"primary_auto_fire_suspended": suspended,
+	})
 
 
 func _unit_at(world_position: Vector2, snapshot: Dictionary) -> Dictionary:
@@ -893,6 +994,7 @@ func _operation_mode_name() -> String:
 	match operation_mode:
 		OperationMode.AIMING_PRIMARY: return "AIMING_PRIMARY"
 		OperationMode.TARGETING_SKILL: return "TARGETING_SKILL"
+		OperationMode.PLACING_ROUTE: return "PLACING_ROUTE"
 		_: return "NORMAL"
 
 

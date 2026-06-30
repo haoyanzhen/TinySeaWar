@@ -191,9 +191,24 @@ MVP 约定：
 ```text
 selected_ammo_by_group
 primary_weapon_group_id
+control_authority
+movement_assist_enabled
+secondary_auto_fire_enabled
+primary_auto_fire_enabled
+primary_auto_fire_suspended
+skill_auto_cast_enabled
+player_route_waypoints
+movement_state.waypoint_index
 ```
 
 - `selected_ammo_by_group` 保存每个可切换炮组当前使用的 `HE` 或 `AP`。
+- `control_authority`：`Player` 或 `EnemyAI`，用于选择控制策略，不改变阵营、武器或领域合法性。
+- `movement_assist_enabled`：玩家单位普通移动是否允许受限辅助 AI 接管；默认 `false`。
+- `secondary_auto_fire_enabled`：玩家单位非主要武器组是否允许自动攻击；默认 `true`。
+- `primary_auto_fire_enabled`：玩家单位主要武器组是否允许受限 AI 提交主要武器命令；默认 `false`。
+- `primary_auto_fire_suspended`：进入 `E` 手动瞄准时使用的单场瞬态互斥标记；它不改变 `primary_auto_fire_enabled` 的玩家偏好，退出瞄准后清除。
+- `skill_auto_cast_enabled`：玩家单位固定为 `false`，不提供玩家可写配置或开关。敌方自动技能由完整 AI 策略决定，不复用该字段冒充玩家开关。
+- `player_route_waypoints` 保存玩家显式添加的连续途径点；当前导航段索引复用 `movement_state.waypoint_index`。两者只属于单场战斗状态。
 - 运行时选择不得写回 Definition。
 - 已创建的攻击请求保存发射时的武器模式，后续切换不能改变在途攻击。
 
@@ -281,8 +296,11 @@ MVP 数值应采用三层结构：
 ```text
 id
 attack_type
+design_base_damage
 base_damage
+design_power_coefficient
 power_coefficient
+design_armor_coefficient
 armor_coefficient
 evasion_coefficient
 accuracy_coefficient
@@ -296,9 +314,12 @@ hit_rate_max
 
 - `id`：公式配置唯一标识。
 - `attack_type`：攻击类型，例如 `Gun`、`Torpedo`、`Aviation`、`AntiAir`、`AntiSubmarine`、`Skill`。
-- `base_damage`：基础伤害。
-- `power_coefficient`：分项作战能力参与伤害的系数。
-- `armor_coefficient`：攻击类型或弹种配置的装甲减伤系数，数值越高越容易被目标装甲值抵消。
+- `design_base_damage`：角色与平衡设计使用的基础伤害基线。
+- `base_damage`：局内基础伤害，当前统一为 `design_base_damage * 0.25`。
+- `design_power_coefficient`：分项作战能力参与设计伤害的系数基线。
+- `power_coefficient`：局内作战能力伤害系数，当前统一为 `design_power_coefficient * 0.25`。
+- `design_armor_coefficient`：设计量纲下的装甲固定减伤系数。
+- `armor_coefficient`：局内装甲固定减伤系数，当前统一为 `design_armor_coefficient * 0.25`；它与两个伤害项同步缩放，避免换算后装甲异常压制所有攻击。
 - `evasion_coefficient`：闪避参与命中或受击概率的系数。
 - `accuracy_coefficient`：武器命中修正参与命中的系数。
 - `area_damage_chance`：范围技能对未发现目标造成伤害的概率。
@@ -811,6 +832,8 @@ projectile_observation_policy
 
 为兼容首轮原型，旧式 `target_priority`、`preferred_range` 和 `special_behavior` 可在加载时转换为一个匿名单舰模式；新配置不再把多个特殊行为压缩为单个字符串。
 
+玩家受限辅助策略不读取敌方 AI Profile，首轮使用程序支持的固定策略 ID `player_assist_local_execution`。其允许层固定为领域约束、即时生存、玩家路径、局部执行控制和被发现动作；禁止关卡任务、编组、战略模式、天气收益和技能策略。关卡、角色和难度配置不得覆盖这些禁止项。
+
 ## 14. 技能配置
 
 基础字段：
@@ -976,7 +999,7 @@ output_directory
 - `experiment_id`：稳定实验 ID，同时用于生成单局 `run_id`。
 - `description`：报告中的实验说明。
 - `simulation_kind`：当前使用 `FullBattleSimulation` 或 `RuleRegression`。
-- `player_policy_id`、`enemy_policy_id`：分别声明双方策略。首版支持 `SessionAutonomy` 和 `BaselineAutopilot`；后者只通过普通领域命令驱动对应阵营的主要武器和技能。旧式单一 `policy_id` 只作为双方相同策略的兼容字段。
+- `player_policy_id`、`enemy_policy_id`：分别声明双方策略。首版支持 `SessionAutonomy`、`BaselineAutopilot` 和 `LatestRuntimeAI`。`LatestRuntimeAI` 让对应阵营使用 `BattleSession` 当前完整量化 AI，包括目标评分、模式迟滞、局部战术、预判主要武器、技能收益和即时规避；正常玩家战斗默认仍使用玩家控制/受限辅助。旧式单一 `policy_id` 只作为双方相同策略的兼容字段。
 - `tick_seconds`：固定模拟步长，必须为正数；正式对比使用与运行时一致的 `0.1` 秒。
 - `maximum_ticks`：程序保护上限。达到上限记为 `GuardLimit`，不伪装成关卡超时结算。
 - `side_swap`：为 `true` 时，每个场景和种子运行 `original` 与 `swapped` 两局。交换局将原敌方阵容放到玩家出生槽位，将原玩家阵容放到敌方出生槽位，同时保留各阵容的旗舰、角色和内部顺序。

@@ -20,6 +20,7 @@ const DISTANCE_BASELINE_MULTIPLIER := 1.5
 const MOTION_BASELINE_MULTIPLIER := 0.5
 const ATTACK_SPEED_BASELINE_MULTIPLIER := 0.5
 const GUN_IMPACT_RADIUS_MULTIPLIER := 0.5
+const DAMAGE_BASELINE_MULTIPLIER := 0.25
 
 var definitions := {}
 var errors: Array[String] = []
@@ -104,6 +105,8 @@ func _validate_references() -> void:
 		_validate_skill(skill)
 	for projectile in all("projectiles"):
 		_validate_projectile(projectile)
+	for formula in all("formulas"):
+		_validate_formula(formula)
 	for level in all("levels"):
 		_validate_level(level)
 	for settings in all("settings"):
@@ -129,6 +132,15 @@ func _validate_projectile(projectile: Dictionary) -> void:
 	if projectile_id.begins_with("projectile.") and "torpedo" in projectile_id and float(projectile.get("minimum_detection_distance", 0.0)) <= 0.0:
 		errors.append("Torpedo minimum_detection_distance must be positive in %s" % projectile_id)
 	_validate_non_negative_scaled_field(projectile, "speed", "base_speed", ATTACK_SPEED_BASELINE_MULTIPLIER, projectile_id)
+
+
+func _validate_formula(formula: Dictionary) -> void:
+	var formula_id := str(formula.get("id", "?"))
+	if formula.get("attack_type", "") not in ["Gun", "Torpedo", "Aviation", "AntiAir", "AntiSubmarine", "Skill"]:
+		errors.append("Invalid attack_type in %s" % formula_id)
+	_validate_scaled_field(formula, "base_damage", "design_base_damage", DAMAGE_BASELINE_MULTIPLIER, formula_id)
+	_validate_scaled_field(formula, "power_coefficient", "design_power_coefficient", DAMAGE_BASELINE_MULTIPLIER, formula_id)
+	_validate_non_negative_scaled_field(formula, "armor_coefficient", "design_armor_coefficient", DAMAGE_BASELINE_MULTIPLIER, formula_id)
 
 
 func _validate_ship(ship: Dictionary) -> void:

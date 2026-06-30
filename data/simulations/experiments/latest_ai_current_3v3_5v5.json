@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "experiment_id": "sim.latest_ai.current_3v3_5v5",
+  "description": "当前战斗切片 3v3 与 5v5 固定阵容，双方均使用最新运行时 AI，每场景十局",
+  "simulation_kind": "PolicyEvaluation",
+  "player_policy_id": "LatestRuntimeAI",
+  "enemy_policy_id": "LatestRuntimeAI",
+  "side_swap": false,
+  "tick_seconds": 0.1,
+  "maximum_ticks": 4300,
+  "seed_plan": {
+    "type": "ExplicitList",
+    "values": [4101, 4102, 4103, 4104, 4105, 4106, 4107, 4108, 4109, 4110]
+  },
+  "scenarios": [
+    {"scenario_id": "current_slice_3v3", "level_definition_id": "level.prototype_3v3", "maximum_ticks": 3700},
+    {"scenario_id": "current_slice_5v5", "level_definition_id": "level.prototype_5v5", "maximum_ticks": 4300}
+  ],
+  "output_directory": "res://artifacts/simulations/sim.latest_ai.current_3v3_5v5"
+}

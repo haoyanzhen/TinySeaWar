@@ -68,6 +68,7 @@
 - `battle_simulator_test.gd` 独立验证清单、运行、确定性和报告落盘。
 - 实验可用 `side_swap=true` 将原敌方阵容放到玩家出生点、原玩家阵容放到敌方出生点；同场景同种子按 `original` / `swapped` 生成配对结果。
 - 单局逐舰伤害直接读取 `BattleSession.get_all_unit_damage_statistics()`，由 `damage_statistics.gd` 提供有效伤害、承伤、过量伤害、武器类别、武器明细和 Buff 贡献口径。
+- `LatestRuntimeAI` 策略通过 `BattleSession.configure_full_ai_factions()` 让指定阵营使用当前完整量化 AI；双方都选择该策略时，共用目标评分、模式迟滞、Attack/Defend/Kite、预判主要武器、技能收益和即时规避逻辑，不调用 `BaselineAutopilot`。
 
 尚未实现的主要能力是 Definition 参数覆盖、候选参数配对 A/B、并行恢复、完整 AI 动态指标和大规模编成抽样。因此当前状态是“模拟器首版可用”，不是本文全部阶段完成。
 

@@ -25,8 +25,11 @@
 | 转向 | `base_turn_speed` | `turn_speed` | 0.5 |
 | 武器投射速度 | `base_projectile_speed` | `projectile_speed` | 0.5 |
 | 公共投射物 / 舰载机速度 | `base_speed` | `speed` | 0.5 |
+| 伤害公式基础伤害 | `design_base_damage` | `base_damage` | 0.25 |
+| 作战能力伤害系数 | `design_power_coefficient` | `power_coefficient` | 0.25 |
+| 装甲减伤换算系数 | `design_armor_coefficient` | `armor_coefficient` | 0.25 |
 
-该倍率用于解决当前地图尺度下“航速-射程比”过高的问题：交战空间扩大，但单位推进和转向节奏收敛。领域层和 UI 均直接读取运行字段，不在战斗中再次乘算。武器最小射程暂不随倍率变化。
+距离与运动倍率用于解决当前地图尺度下“航速-射程比”过高的问题：交战空间扩大，但单位推进和转向节奏收敛。伤害相关三项必须同时按 `0.25` 写入运行字段，使装甲前伤害和装甲固定减伤保持同一量纲，最终实际伤害严格等于设计伤害结算的 25%。领域层和 UI 均直接读取运行字段，不在战斗中再次乘算。武器最小射程暂不随倍率变化。
 
 鱼雷 `minimum_detection_distance` 直接使用运行距离，不参与上述 1.5 倍距离换算，避免同一字段被配置和观测系统重复放大。
 

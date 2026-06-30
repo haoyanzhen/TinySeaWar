@@ -4,6 +4,7 @@ const BattleSession = preload("res://scripts/application/battle_session.gd")
 const BattleEffectDirector = preload("res://scripts/presentation/battle/battle_effect_director.gd")
 const UiText = preload("res://scripts/presentation/ui_text.gd")
 const CollisionGeometryService = preload("res://scripts/domain/services/collision_geometry_service.gd")
+const GunDispersionService = preload("res://scripts/domain/services/gun_dispersion_service.gd")
 
 const MAIN_MENU_SCENE := "res://scenes/menu/main_menu.tscn"
 const FIXED_STEP := 0.1
@@ -321,7 +322,7 @@ func _draw_gun_aim_overlay(selected: Dictionary, cursor: Vector2, aim_status: Di
 	_draw_fire_arc_sectors(selected, aim_status.get("full_salvo_fire_arcs", []), maximum_range, RANGE_FULL_SALVO_FILL, RANGE_FULL_SALVO_EDGE)
 	var target_radius := float(aim_status.get("impact_radius", DEFAULT_AREA_TARGET_RADIUS))
 	_draw_gun_bearing_line(origin, cursor, target_radius)
-	_draw_main_gun_dispersion(cursor, origin, target_radius, float(aim_status.get("spread_degrees", 0.0)))
+	_draw_main_gun_dispersion(cursor, origin, float(aim_status.get("spread_degrees", 0.0)))
 	_draw_main_gun_scope(cursor, bool(aim_status.get("legal", false)))
 
 
@@ -342,8 +343,8 @@ func _draw_gun_bearing_line(origin: Vector2, cursor: Vector2, target_radius: flo
 		drawn += dash_length + gap_length
 
 
-func _draw_main_gun_dispersion(center: Vector2, origin: Vector2, impact_radius: float, spread_degrees: float) -> void:
-	var radii := _main_gun_dispersion_radii(impact_radius, spread_degrees)
+func _draw_main_gun_dispersion(center: Vector2, origin: Vector2, spread_degrees: float) -> void:
+	var radii := _main_gun_dispersion_radii(origin.distance_to(center), spread_degrees)
 	var firing_angle := (center - origin).angle()
 	var cross_axis_rotation := firing_angle + PI * 0.5
 	var segment_count := 72
@@ -358,9 +359,14 @@ func _draw_main_gun_dispersion(center: Vector2, origin: Vector2, impact_radius: 
 		draw_line(start_point, end_point, MAIN_GUN_DISPERSION, pixel, true)
 
 
-func _main_gun_dispersion_radii(impact_radius: float, spread_degrees: float) -> Vector2:
-	var lateral_spread := deg_to_rad(maxf(0.0, spread_degrees)) * 0.5
-	return Vector2(impact_radius * (1.0 + lateral_spread), impact_radius)
+func _main_gun_dispersion_radii(distance: float, spread_degrees: float) -> Vector2:
+	var settings: Dictionary = DataRegistry.registry.get_definition("settings", "settings.combat").get("gun_dispersion", {})
+	return GunDispersionService.sigmas(
+		distance,
+		spread_degrees,
+		float(settings.get("sigma_scale", 0.5684105110424833)),
+		float(settings.get("longitudinal_sigma_ratio", 0.5)),
+	)
 
 
 func _draw_main_gun_scope(center: Vector2, legal: bool, scale_multiplier: float = 1.0, alpha_multiplier: float = 1.0) -> void:

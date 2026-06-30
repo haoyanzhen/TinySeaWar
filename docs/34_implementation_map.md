@@ -69,6 +69,8 @@
 - 表现设置：`data/settings/presentation_settings.json`
   - `window`：固定逻辑画布、主界面可选窗口尺寸与默认尺寸。
   - `camera`：默认缩放、滚轮步长、最近观察范围和最远地图占比。
+- 战斗规则设置：`data/settings/combat_settings.json`
+  - `gun_dispersion`：全舰统一椭圆高斯 sigma 系数、纵横比和厌战号标定来源。
 - 战斗表现配置：`data/visuals/`
   - `projectile_visuals.json`：投射物贴图、尺寸、轨迹与颜色。
   - `weapon_visuals.json`、`phase2_weapon_visuals.json`：角色武器组到动画、绑定点、投射物和 VFX 的映射。
@@ -94,7 +96,7 @@
   - 量化主要武器与技能：`_update_ai_primary_weapons`、`_update_auto_skills`
   - 模拟器双方完整 AI：`configure_full_ai_factions`；只由显式实验策略开启，不改变正常玩家控制默认值。
   - 自动武器：`_update_weapons`
-  - 自动火炮预判与固定落点：`_automatic_aim_solution`、`_positive_intercept_time`、`_salvo_impact_position`
+  - 自动火炮预判与高斯固定落点：`_automatic_aim_solution`、`_positive_intercept_time`、`_sample_gun_impact`、`_apply_dispersion_metadata`
   - 手动主要武器与逐座鱼雷选择：`_fire_primary_weapon`、`_validate_primary_fire`、`_weapon_for_state`
   - 弹药切换：`_switch_ammo`
   - 技能释放：`_cast_skill`
@@ -107,6 +109,7 @@
   - 伤害：`scripts/domain/services/damage_service.gd`
   - 修正值顺序：`scripts/domain/services/modifier_service.gd`
   - 舰装椭圆、圆-椭圆和连续扫掠：`scripts/domain/services/collision_geometry_service.gd`
+  - 舰炮椭圆高斯 sigma 与独立采样：`scripts/domain/services/gun_dispersion_service.gd`
   - 海况/风速鱼雷 sigma 倍率：`scripts/domain/services/terrain_context_service.gd`
   - 固定种子均匀与高斯抽样：`scripts/infrastructure/random/seeded_random_source.gd`
 - 战斗统计：`scripts/infrastructure/analytics/battle_recorder.gd`

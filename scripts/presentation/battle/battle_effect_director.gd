@@ -302,41 +302,9 @@ func _shell_flight_destinations(event: Dictionary, session, weapon: Dictionary, 
 				fixed_destinations.append(fixed_impact_positions[index])
 		return fixed_destinations
 	var base_destination := _weapon_fire_destination(event, session, source, launch_position)
-	var base_heading := (base_destination - launch_position).angle()
-	var scatter_radius := _shell_visual_scatter_radius(weapon, count)
 	var destinations: Array = []
-	for shot_index in range(count):
-		destinations.append(base_destination + _shell_visual_scatter_offset(event, session, weapon, shot_index, count, scatter_radius, base_heading))
+	for shot_index in range(count): destinations.append(base_destination)
 	return destinations
-
-
-func _shell_visual_scatter_radius(weapon: Dictionary, shot_count: int) -> float:
-	if shot_count <= 1:
-		return 0.0
-	var impact_radius := float(weapon.get("impact_radius", 36.0))
-	var spread_factor := clampf(float(weapon.get("spread", 0.0)) / 30.0, 0.0, 1.0)
-	return maxf(4.0, impact_radius * lerpf(0.25, 0.45, spread_factor))
-
-
-func _shell_visual_scatter_offset(event: Dictionary, session, weapon: Dictionary, shot_index: int, shot_count: int, scatter_radius: float, base_heading: float) -> Vector2:
-	if shot_count <= 1 or scatter_radius <= 0.0:
-		return Vector2.ZERO
-	var seed_text := "%s:%s:%s:%s:%s" % [
-		session.state.get("tick_index", 0),
-		event.get("unit_id", ""),
-		event.get("weapon_id", weapon.get("id", "")),
-		event.get("target_unit_id", event.get("target_position", "")),
-		shot_index,
-	]
-	var seed := seed_text.hash()
-	var angle := TAU * _unit_noise(seed, 17)
-	var radius := scatter_radius * pow(_unit_noise(seed, 43), 1.85)
-	var local := Vector2.RIGHT.rotated(angle) * radius
-	return local.rotated(base_heading)
-
-
-func _unit_noise(seed: int, salt: int) -> float:
-	return fposmod(sin(float(seed + salt) * 12.9898) * 43758.5453, 1.0)
 
 
 func _weapon_fire_destination(event: Dictionary, session, source: Dictionary, launch_position: Vector2) -> Vector2:

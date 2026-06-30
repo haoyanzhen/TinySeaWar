@@ -478,13 +478,17 @@ issued_at_tick
 resolve_at_tick
 accuracy_modifier
 damage_modifiers
+dispersion_lateral_sigma
+dispersion_longitudinal_sigma
+dispersion_lateral_error
+dispersion_longitudinal_error
 ```
 
 火炮可以使用 `resolve_at_tick` 表达飞行时间；鱼雷在领域碰撞发生后创建对应请求。请求保存发射时已经确定的攻击来源和必要修正，目标防御属性在实际结算时读取，避免表现延迟改变发射事实。
 
 自动武器创建攻击时，使用目标当时的 `position`、`heading`、`current_speed` 与自身实际攻击速度求一次恒速拦截点。炮击将结果写入 `target_position`；实体投射物使用该点确定初始方向。请求可额外保存 `aimed_target_unit_id` 用于统计，但结算不得重新追踪该单位。
 
-`WeaponFired` 事件为炮击附带 `impact_positions`，其顺序与本轮炮弹请求一致。表现层炮弹飞行、水柱和领域伤害必须消费同一组固定世界坐标，不得另行随机一套视觉落点。
+`WeaponFired` 事件为炮击附带 `impact_positions` 与逐发 `dispersion_samples`，其顺序与本轮炮弹请求一致。每发舰炮在发射时从战斗随机源分别抽取垂直/平行发射线的高斯误差并固定世界落点；表现层炮弹飞行、水柱和领域伤害必须消费同一组坐标，不得另行随机一套视觉落点。
 
 ---
 
@@ -803,7 +807,7 @@ AI 在第 8 步生成的战术命令默认进入下一 Tick 命令队列；当�
 
 ## 12. 随机性与可重复性
 
-每场战斗创建独立 `battle_seed`。所有命中、区域技能受击概率、随机散布和鱼雷发射角高斯误差都使用该战斗的 `RandomSource`。
+每场战斗创建独立 `battle_seed`。所有命中、区域技能受击概率、舰炮逐发椭圆高斯落点和鱼雷发射角高斯误差都使用该战斗的 `RandomSource`。
 
 规则：
 

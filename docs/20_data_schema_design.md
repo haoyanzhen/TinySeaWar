@@ -157,7 +157,7 @@ aircraft_config_id
 - `turret_turn_speed`：炮塔、鱼雷管或装备朝向调整速度。
 - `base_projectile_speed`：武器配置中的炮弹、鱼雷、舰载机等攻击速度设计基线。
 - `projectile_speed`：当前运行时攻击速度，也是炮弹飞行时间、鱼雷推进和航空编队移动表现的直接真源。当前统一为 `base_projectile_speed * 0.5`。
-- `spread`：单座底座一次发射的总散布。鱼雷按 `torpedo_lane_spacing`、运行时 `range` 和 `shots_per_mount` 反算；不得按全舰 `mount_count * shots_per_mount` 均匀塞入同一扇面。
+- `spread`：武器散布角。舰炮以它和实际发射距离计算椭圆高斯 sigma，每发独立抽样；鱼雷则把它解释为单座底座的联装总散布，并按 `torpedo_lane_spacing`、运行时 `range` 和 `shots_per_mount` 反算。两类武器不得再把全舰发数均匀塞入同一理想扇面或落点横排。
 - `torpedo_lane_spacing`：鱼雷相邻中心雷道在运行时最大射程处的弦长，当前基线为 `80`。
 - `torpedo_angular_sigma_ratio`：鱼雷基础角误差标准差相对相邻理想雷道张角的比例，当前强制基线为 `0.20`。每枚鱼雷在发射时独立抽样。
 - `mount_launch_interval`：同一鱼雷武器组相邻两座底座发射的最小间隔，必须至少 `1s`。
@@ -898,7 +898,7 @@ limit_max
 
 字段含义：
 
-- `stat`：被修改属性，例如 `ReloadSpeed`、`Damage`、`AccuracyPoint`、`Evasion`、`Armor`、`DetectionRange`、`ConcealmentDistance`、`TorpedoDetectionDistance`。
+- `stat`：被修改属性，例如 `ReloadSpeed`、`Damage`、`AccuracyPoint`、`WeaponSpread`、`Evasion`、`Armor`、`DetectionRange`、`ConcealmentDistance`、`TorpedoDetectionDistance`。
 - `operation`：运算类型，可为 `FlatAdd`、`PercentAdd`、`StateMultiply`、`IndependentMultiply`。
 - `value`：修正值。百分比使用小数，例如 `0.20` 表示 `+20%`。
 - `category`：增益类别，例如 `GunDamage`、`TorpedoDamage`、`AllDamage`、`AntiAirReloadSpeed`。
@@ -947,6 +947,26 @@ camera.max_map_visible_fraction
 - `camera.max_map_visible_fraction`：最远视角在每个轴上最多显示的地图比例，MVP 为 `2/3`。
 
 窗口尺寸属于用户偏好，选中值保存到 `user://tiny_sea_war_settings.cfg`，不写回项目配置。镜头缩放属于表现层状态，不进入 Domain 战斗状态，也不影响模拟随机数。
+
+### 16.1 战斗规则设置
+
+`data/settings/combat_settings.json` 保存所有舰船共享、需要数据校验的战斗常量：
+
+```text
+id = settings.combat
+gun_dispersion.sigma_scale
+gun_dispersion.longitudinal_sigma_ratio
+gun_dispersion.reference_ship_id
+gun_dispersion.reference_weapon_id
+gun_dispersion.reference_range
+gun_dispersion.reference_spread_degrees
+gun_dispersion.reference_battleship_length
+```
+
+- `sigma_scale` 必须为正；当前为 `0.5684105110424833`。
+- `longitudinal_sigma_ratio` 必须位于 `(0, 1]`；当前为 `0.5`。
+- 三个 reference 数值必须满足 `reference_range × radians(reference_spread_degrees) × sigma_scale = reference_battleship_length`，加载时强制校验。
+- reference ID 只记录标定来源并接受引用校验；运行时所有舰炮仍使用同一组系数，不读取角色私有覆盖。
 
 ## 17. 公共战斗表现配置
 

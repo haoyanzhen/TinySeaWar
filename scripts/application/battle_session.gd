@@ -4,6 +4,7 @@ const SeededRandomSource = preload("res://scripts/infrastructure/random/seeded_r
 const ModifierService = preload("res://scripts/domain/services/modifier_service.gd")
 const DamageService = preload("res://scripts/domain/services/damage_service.gd")
 const CollisionGeometryService = preload("res://scripts/domain/services/collision_geometry_service.gd")
+const GunDispersionService = preload("res://scripts/domain/services/gun_dispersion_service.gd")
 const BattleRecorder = preload("res://scripts/infrastructure/analytics/battle_recorder.gd")
 const DamageStatistics = preload("res://scripts/infrastructure/analytics/damage_statistics.gd")
 const TerrainQueryService = preload("res://scripts/domain/services/terrain_query_service.gd")
@@ -385,7 +386,10 @@ func get_primary_aim_status(unit_id: String, target_position: Vector2) -> Dictio
 	var direction_weapon := _direction_weapon_for_aim(unit, aim_weapons, target_position)
 	validation["minimum_range"] = float(direction_weapon.get("minimum_range", 0.0))
 	validation["selected_range"] = float(direction_weapon.get("range", validation["range"]))
-	validation["spread_degrees"] = float(direction_weapon.get("spread", 0.0))
+	var spread_degrees := float(direction_weapon.get("spread", 0.0))
+	if direction_weapon.get("mount_type", "") == "Gun":
+		spread_degrees = ModifierService.calculate(spread_degrees, unit.get("status_effects", []), "WeaponSpread", "Gun")
+	validation["spread_degrees"] = spread_degrees
 	return validation
 
 
@@ -1513,16 +1517,18 @@ func _fire_facility_weapon(facility: Dictionary, target: Dictionary, weapon: Dic
 	var target_position: Vector2 = target["position"]
 	var shot_count := int(weapon.get("mount_count", 1)) * int(weapon.get("shots_per_mount", 1))
 	var impact_positions: Array = []
+	var dispersion_samples: Array = []
 	for shot_index in range(shot_count):
-		var spread_offset := deg_to_rad(float(weapon.get("spread", 0.0))) * (float(shot_index) / float(maxi(1, shot_count - 1)) - 0.5) if shot_count > 1 else 0.0
-		var intended_impact := _salvo_impact_position(origin, target_position, spread_offset, weapon)
+		var dispersion_sample := _sample_gun_impact(origin, target_position, weapon)
+		var intended_impact: Vector2 = dispersion_sample["position"]
 		var terrain_hit := _terrain_hit_for_attack(origin, intended_impact, str(facility.get("faction_id", "")))
 		var resolved_impact: Vector2 = terrain_hit.get("position", intended_impact) if bool(terrain_hit.get("hit", false)) else intended_impact
 		impact_positions.append(resolved_impact)
+		dispersion_samples.append(dispersion_sample)
 		var travel_seconds := origin.distance_to(resolved_impact) / maxf(1.0, float(weapon.get("projectile_speed", 1.0)))
-		delayed_attacks.append({"attack_id":_next_entity_id("facility_attack"), "source_unit_id":"", "source_facility_id":facility["facility_id"], "source_weapon_id":weapon["id"], "target_unit_id":"", "aimed_target_unit_id":target["entity_id"], "target_position":resolved_impact, "intended_impact_position":intended_impact, "resolved_impact_position":resolved_impact, "terrain_obstacle_id":terrain_hit.get("obstacle_id", ""), "blocked_by_terrain":bool(terrain_hit.get("hit", false)), "impact_radius":float(weapon.get("impact_radius", 40.0)), "origin":origin, "resolve_at_time":float(state["elapsed_time"]) + travel_seconds, "accuracy_modifier":_environment_accuracy_modifier(str(facility.get("faction_id", "")), origin, intended_impact, "Gun")})
+		delayed_attacks.append({"attack_id":_next_entity_id("facility_attack"), "source_unit_id":"", "source_facility_id":facility["facility_id"], "source_weapon_id":weapon["id"], "target_unit_id":"", "aimed_target_unit_id":target["entity_id"], "target_position":resolved_impact, "intended_impact_position":intended_impact, "resolved_impact_position":resolved_impact, "terrain_obstacle_id":terrain_hit.get("obstacle_id", ""), "blocked_by_terrain":bool(terrain_hit.get("hit", false)), "impact_radius":float(weapon.get("impact_radius", 40.0)), "origin":origin, "resolve_at_time":float(state["elapsed_time"]) + travel_seconds, "accuracy_modifier":_environment_accuracy_modifier(str(facility.get("faction_id", "")), origin, intended_impact, "Gun"), "dispersion_lateral_sigma":dispersion_sample["lateral_sigma"], "dispersion_longitudinal_sigma":dispersion_sample["longitudinal_sigma"], "dispersion_lateral_error":dispersion_sample["lateral_error"], "dispersion_longitudinal_error":dispersion_sample["longitudinal_error"]})
 	facility_service.mark_weapon_fired(str(facility["facility_id"]), str(weapon["id"]), float(weapon.get("reload_time", 1.0)))
-	_emit("FacilityWeaponFired", {"facility_id":facility["facility_id"], "weapon_id":weapon["id"], "target_unit_id":target["entity_id"], "target_position":target_position, "impact_positions":impact_positions, "shot_count":shot_count})
+	_emit("FacilityWeaponFired", {"facility_id":facility["facility_id"], "weapon_id":weapon["id"], "target_unit_id":target["entity_id"], "target_position":target_position, "impact_positions":impact_positions, "dispersion_samples":dispersion_samples, "shot_count":shot_count})
 
 
 func _can_fire(unit: Dictionary, target: Dictionary, weapon: Dictionary) -> bool:
@@ -1618,6 +1624,7 @@ func _fire_weapon(unit: Dictionary, target: Dictionary, weapon_state: Dictionary
 	var base_heading := (aim_position - (unit["position"] as Vector2)).angle()
 	var torpedo_error_profile := _torpedo_error_profile(unit, weapon, shot_count)
 	var impact_positions: Array = []
+	var dispersion_samples: Array = []
 	for shot_index in range(shot_count):
 		var spread_offset := 0.0
 		if shot_count > 1: spread_offset = deg_to_rad(float(weapon.get("spread", 0.0))) * (float(shot_index) / float(shot_count - 1) - 0.5)
@@ -1626,14 +1633,18 @@ func _fire_weapon(unit: Dictionary, target: Dictionary, weapon_state: Dictionary
 			var angular_error: float = random_source.randfn(0.0, float(torpedo_error_profile["sigma_radians"]))
 			_spawn_projectile(unit, weapon, attack_id, base_heading + spread_offset + angular_error, str(weapon_state.get("mount_id", "")), angular_error, float(torpedo_error_profile["sigma_radians"]), float(torpedo_error_profile["environment_multiplier"]))
 		else:
-			var intended_impact := _salvo_impact_position(unit["position"], aim_position, spread_offset, weapon)
+			var dispersion_sample := _sample_gun_impact(unit["position"], aim_position, weapon, unit["status_effects"]) if category == "Gun" else {}
+			var intended_impact: Vector2 = dispersion_sample["position"] if not dispersion_sample.is_empty() else _salvo_impact_position(unit["position"], aim_position, spread_offset, weapon)
 			var terrain_hit := _terrain_hit_for_attack(unit["position"], intended_impact, unit["faction_id"]) if category == "Gun" else {"hit": false}
 			var resolved_impact: Vector2 = terrain_hit.get("position", intended_impact) if bool(terrain_hit.get("hit", false)) else intended_impact
 			impact_positions.append(resolved_impact)
+			if not dispersion_sample.is_empty(): dispersion_samples.append(dispersion_sample)
 			var travel_seconds := (unit["position"] as Vector2).distance_to(resolved_impact) / maxf(1.0, float(weapon.get("projectile_speed", 1.0)))
 			if category == "Aviation": travel_seconds *= _aviation_delay_multiplier(unit["position"], intended_impact)
-			delayed_attacks.append({"attack_id": attack_id, "source_unit_id": unit["entity_id"], "source_weapon_id": weapon["id"], "target_unit_id": "", "aimed_target_unit_id": target["entity_id"], "target_position": resolved_impact, "intended_impact_position": intended_impact, "resolved_impact_position": resolved_impact, "terrain_obstacle_id": terrain_hit.get("obstacle_id", ""), "blocked_by_terrain": bool(terrain_hit.get("hit", false)), "impact_radius": float(weapon.get("impact_radius", 40.0)), "origin": unit["position"], "resolve_at_time": float(state["elapsed_time"]) + travel_seconds, "accuracy_modifier": _environment_accuracy_modifier(unit["faction_id"], unit["position"], intended_impact, category)})
-	_emit("WeaponFired", {"unit_id": unit["entity_id"], "weapon_id": weapon["id"], "mount_id": weapon_state.get("mount_id", ""), "target_unit_id": target["entity_id"], "target_position": aim_position, "impact_positions": impact_positions, "shot_count": shot_count})
+			var delayed_attack := {"attack_id": attack_id, "source_unit_id": unit["entity_id"], "source_weapon_id": weapon["id"], "target_unit_id": "", "aimed_target_unit_id": target["entity_id"], "target_position": resolved_impact, "intended_impact_position": intended_impact, "resolved_impact_position": resolved_impact, "terrain_obstacle_id": terrain_hit.get("obstacle_id", ""), "blocked_by_terrain": bool(terrain_hit.get("hit", false)), "impact_radius": float(weapon.get("impact_radius", 40.0)), "origin": unit["position"], "resolve_at_time": float(state["elapsed_time"]) + travel_seconds, "accuracy_modifier": _environment_accuracy_modifier(unit["faction_id"], unit["position"], intended_impact, category)}
+			_apply_dispersion_metadata(delayed_attack, dispersion_sample)
+			delayed_attacks.append(delayed_attack)
+	_emit("WeaponFired", {"unit_id": unit["entity_id"], "weapon_id": weapon["id"], "mount_id": weapon_state.get("mount_id", ""), "target_unit_id": target["entity_id"], "target_position": aim_position, "impact_positions": impact_positions, "dispersion_samples": dispersion_samples, "shot_count": shot_count})
 	if extra_shots > 0: _consume_effect(unit, "ExtraShots", category)
 
 
@@ -1647,6 +1658,7 @@ func _fire_weapon_at_position(unit: Dictionary, target_position: Vector2, weapon
 	var base_heading := (target_position - (unit["position"] as Vector2)).angle()
 	var torpedo_error_profile := _torpedo_error_profile(unit, weapon, shot_count)
 	var impact_positions: Array = []
+	var dispersion_samples: Array = []
 	for shot_index in range(shot_count):
 		var spread_offset := 0.0
 		if shot_count > 1: spread_offset = deg_to_rad(float(weapon.get("spread", 0.0))) * (float(shot_index) / float(shot_count - 1) - 0.5)
@@ -1655,14 +1667,18 @@ func _fire_weapon_at_position(unit: Dictionary, target_position: Vector2, weapon
 			var angular_error: float = random_source.randfn(0.0, float(torpedo_error_profile["sigma_radians"]))
 			_spawn_projectile(unit, weapon, attack_id, base_heading + spread_offset + angular_error, str(weapon_state.get("mount_id", "")), angular_error, float(torpedo_error_profile["sigma_radians"]), float(torpedo_error_profile["environment_multiplier"]))
 		else:
-			var intended_impact := _salvo_impact_position(unit["position"], target_position, spread_offset, weapon)
+			var dispersion_sample := _sample_gun_impact(unit["position"], target_position, weapon, unit["status_effects"]) if category == "Gun" else {}
+			var intended_impact: Vector2 = dispersion_sample["position"] if not dispersion_sample.is_empty() else _salvo_impact_position(unit["position"], target_position, spread_offset, weapon)
 			var terrain_hit := _terrain_hit_for_attack(unit["position"], intended_impact, unit["faction_id"]) if category == "Gun" else {"hit": false}
 			var resolved_impact: Vector2 = terrain_hit.get("position", intended_impact) if bool(terrain_hit.get("hit", false)) else intended_impact
 			impact_positions.append(resolved_impact)
+			if not dispersion_sample.is_empty(): dispersion_samples.append(dispersion_sample)
 			var travel_seconds := (unit["position"] as Vector2).distance_to(resolved_impact) / maxf(1.0, float(weapon.get("projectile_speed", 1.0)))
 			if category == "Aviation": travel_seconds *= _aviation_delay_multiplier(unit["position"], intended_impact)
-			delayed_attacks.append({"attack_id": attack_id, "source_unit_id": unit["entity_id"], "source_weapon_id": weapon["id"], "target_unit_id": "", "target_position": resolved_impact, "intended_impact_position": intended_impact, "resolved_impact_position": resolved_impact, "terrain_obstacle_id": terrain_hit.get("obstacle_id", ""), "blocked_by_terrain": bool(terrain_hit.get("hit", false)), "impact_radius": float(weapon.get("impact_radius", 40.0)), "origin": unit["position"], "resolve_at_time": float(state["elapsed_time"]) + travel_seconds, "accuracy_modifier": _environment_accuracy_modifier(unit["faction_id"], unit["position"], intended_impact, category)})
-	_emit("WeaponFired", {"unit_id": unit["entity_id"], "weapon_id": weapon["id"], "mount_id": weapon_state.get("mount_id", ""), "target_position": target_position, "impact_positions": impact_positions, "shot_count": shot_count, "manual": manual})
+			var delayed_attack := {"attack_id": attack_id, "source_unit_id": unit["entity_id"], "source_weapon_id": weapon["id"], "target_unit_id": "", "target_position": resolved_impact, "intended_impact_position": intended_impact, "resolved_impact_position": resolved_impact, "terrain_obstacle_id": terrain_hit.get("obstacle_id", ""), "blocked_by_terrain": bool(terrain_hit.get("hit", false)), "impact_radius": float(weapon.get("impact_radius", 40.0)), "origin": unit["position"], "resolve_at_time": float(state["elapsed_time"]) + travel_seconds, "accuracy_modifier": _environment_accuracy_modifier(unit["faction_id"], unit["position"], intended_impact, category)}
+			_apply_dispersion_metadata(delayed_attack, dispersion_sample)
+			delayed_attacks.append(delayed_attack)
+	_emit("WeaponFired", {"unit_id": unit["entity_id"], "weapon_id": weapon["id"], "mount_id": weapon_state.get("mount_id", ""), "target_position": target_position, "impact_positions": impact_positions, "dispersion_samples": dispersion_samples, "shot_count": shot_count, "manual": manual})
 	if extra_shots > 0: _consume_effect(unit, "ExtraShots", category)
 
 
@@ -1670,6 +1686,29 @@ func _salvo_impact_position(origin: Vector2, target_position: Vector2, spread_of
 	var base_heading := (target_position - origin).angle()
 	var impact_offset := Vector2.RIGHT.rotated(base_heading + PI * 0.5) * spread_offset * float(weapon.get("impact_radius", 40.0))
 	return _clamp_to_map(target_position + impact_offset)
+
+
+func _sample_gun_impact(origin: Vector2, aim_position: Vector2, weapon: Dictionary, status_effects: Array = []) -> Dictionary:
+	var settings := _gun_dispersion_settings()
+	var effective_spread := ModifierService.calculate(float(weapon.get("spread", 0.0)), status_effects, "WeaponSpread", "Gun")
+	var sample := GunDispersionService.sample(origin, aim_position, effective_spread, float(settings["sigma_scale"]), float(settings["longitudinal_sigma_ratio"]), random_source)
+	sample["spread_degrees"] = effective_spread
+	return sample
+
+
+func _gun_dispersion_settings() -> Dictionary:
+	return registry.get_definition("settings", "settings.combat").get("gun_dispersion", {
+		"sigma_scale": 0.5684105110424833,
+		"longitudinal_sigma_ratio": 0.5,
+	})
+
+
+func _apply_dispersion_metadata(attack: Dictionary, sample: Dictionary) -> void:
+	if sample.is_empty(): return
+	attack["dispersion_lateral_sigma"] = float(sample["lateral_sigma"])
+	attack["dispersion_longitudinal_sigma"] = float(sample["longitudinal_sigma"])
+	attack["dispersion_lateral_error"] = float(sample["lateral_error"])
+	attack["dispersion_longitudinal_error"] = float(sample["longitudinal_error"])
 
 
 func _mark_unit_fired(unit: Dictionary) -> void:

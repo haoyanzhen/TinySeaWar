@@ -360,6 +360,9 @@ func _validate_level(level: Dictionary) -> void:
 
 func _validate_settings(settings: Dictionary) -> void:
 	var settings_id := str(settings.get("id", "?"))
+	if settings_id == "settings.combat":
+		_validate_combat_settings(settings)
+		return
 	if settings_id != "settings.presentation":
 		errors.append("Unsupported settings definition id: %s" % settings_id)
 		return
@@ -388,6 +391,25 @@ func _validate_settings(settings: Dictionary) -> void:
 		errors.append("Camera zoom_step must be greater than 1 in %s" % settings_id)
 	if float(camera.get("default_zoom", 0.0)) <= 0.0:
 		errors.append("Camera default_zoom must be positive in %s" % settings_id)
+
+
+func _validate_combat_settings(settings: Dictionary) -> void:
+	var dispersion: Dictionary = settings.get("gun_dispersion", {})
+	var sigma_scale := float(dispersion.get("sigma_scale", 0.0))
+	var longitudinal_ratio := float(dispersion.get("longitudinal_sigma_ratio", 0.0))
+	var reference_range := float(dispersion.get("reference_range", 0.0))
+	var reference_spread := float(dispersion.get("reference_spread_degrees", 0.0))
+	var reference_length := float(dispersion.get("reference_battleship_length", 0.0))
+	if sigma_scale <= 0.0 or longitudinal_ratio <= 0.0 or longitudinal_ratio > 1.0:
+		errors.append("Invalid gun dispersion sigma ratios in settings.combat")
+	if reference_range <= 0.0 or reference_spread <= 0.0 or reference_length <= 0.0:
+		errors.append("Invalid gun dispersion reference values in settings.combat")
+	elif not is_equal_approx(reference_range * deg_to_rad(reference_spread) * sigma_scale, reference_length):
+		errors.append("Gun dispersion reference does not reproduce the battleship-length sigma in settings.combat")
+	if get_definition("ships", str(dispersion.get("reference_ship_id", ""))).is_empty():
+		errors.append("Gun dispersion references a missing ship in settings.combat")
+	if get_definition("weapons", str(dispersion.get("reference_weapon_id", ""))).is_empty():
+		errors.append("Gun dispersion references a missing weapon in settings.combat")
 
 
 func _valid_positive_pair(value: Variant) -> bool:

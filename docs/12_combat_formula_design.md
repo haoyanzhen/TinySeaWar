@@ -260,6 +260,33 @@ MVP 采用“同类加算、异类乘算、特殊效果独立乘算”的统一�
 - 舰炮每发落点使用半径为 `impact_radius` 的圆，与目标随航向旋转的 `collision_half_extents` 椭圆做相交判定；当前舰炮 `impact_radius` 为原设计基线的 50%。
 - 鱼雷多发以实体投射物分别移动和碰撞。
 
+舰炮椭圆高斯散布：
+
+```text
+effective_spread
+= ModifierService(weapon.spread, WeaponSpread, Gun)
+
+sigma_perpendicular
+= firing_distance
+  * radians(effective_spread)
+  * gun_dispersion_sigma_scale
+
+sigma_parallel
+= sigma_perpendicular
+  * gun_dispersion_longitudinal_sigma_ratio
+
+impact_position[i]
+= aim_position
+  + perpendicular_unit * Normal(0, sigma_perpendicular)
+  + firing_unit * Normal(0, sigma_parallel)
+```
+
+- 全舰统一 `gun_dispersion_sigma_scale = 0.5684105110424833`，`gun_dispersion_longitudinal_sigma_ratio = 0.5`，不为角色设置隐藏系数。
+- 统一系数以厌战号 AP 主炮标定：最大射程 `1080`、散布 `14°` 时，垂直发射线的 `1σ = 150`，等于其游戏内舰装椭圆全长；平行发射线的 `1σ = 75`。
+- 每发炮弹独立抽取两次固定种子高斯随机数。短距离射击自然收拢，距离或散布翻倍时两轴 sigma 同比翻倍。
+- `impact_radius` 只表示单发炮弹落点的几何命中圆，不再参与散布尺度计算。抽样落点先参与岛岸路径阻挡，再作为炮弹表现终点和区域伤害中心。
+- 落点圆与目标椭圆相交后，仍进入现有命中、闪避、环境命中修正与伤害流程；几何散布和命中率表达不同层次，不互相替代。
+
 ### 6.1 手动主要武器与自动武器
 
 玩家按 `E` 进入表现层瞄准状态，左键确认后才产生主要武器发射请求；自动武器由武器系统产生发射请求。两种来源进入同一个结算流程：

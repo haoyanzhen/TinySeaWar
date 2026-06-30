@@ -11,6 +11,7 @@ const TerrainQueryService = preload("res://scripts/domain/services/terrain_query
 const TerrainContextService = preload("res://scripts/domain/services/terrain_context_service.gd")
 const RoutePlanner = preload("res://scripts/application/navigation/route_planner.gd")
 const CollisionGeometryService = preload("res://scripts/domain/services/collision_geometry_service.gd")
+const GunDispersionService = preload("res://scripts/domain/services/gun_dispersion_service.gd")
 const MinefieldService = preload("res://scripts/domain/services/minefield_service.gd")
 
 var failures: Array[String] = []
@@ -31,6 +32,7 @@ func _run() -> void:
 	_test_terrain_configuration_and_rules()
 	_test_scene_combat_tactical_effects()
 	_test_runtime_baseline_scales()
+	_test_gun_dispersion_rules()
 	_test_elliptical_collision_geometry()
 	_test_hit_rate_floor()
 	var presentation_settings: Dictionary = registry.get_definition("settings", "settings.presentation")
@@ -441,6 +443,67 @@ func _test_runtime_baseline_scales() -> void:
 		_check(is_equal_approx(sample_a, sample_b), "fixed battle seed reproduces Gaussian sample %d" % index)
 		gaussian_nonzero = gaussian_nonzero or not is_zero_approx(sample_a)
 	_check(gaussian_nonzero, "Gaussian random source produces non-zero angular deviations")
+
+
+func _test_gun_dispersion_rules() -> void:
+	var settings: Dictionary = registry.get_definition("settings", "settings.combat").get("gun_dispersion", {})
+	var sigma_scale := float(settings.get("sigma_scale", 0.0))
+	var longitudinal_ratio := float(settings.get("longitudinal_sigma_ratio", 0.0))
+	var warspite_sigmas := GunDispersionService.sigmas(1080.0, 14.0, sigma_scale, longitudinal_ratio)
+	_check(warspite_sigmas.is_equal_approx(Vector2(150.0, 75.0)), "Warspite maximum-range dispersion calibrates to one battleship length laterally and half that longitudinally")
+	_check(GunDispersionService.sigmas(540.0, 14.0, sigma_scale, longitudinal_ratio).is_equal_approx(Vector2(75.0, 37.5)), "gun dispersion sigma scales linearly with firing distance")
+	var random := SeededRandomSource.new(140381)
+	var lateral_sum := 0.0
+	var longitudinal_sum := 0.0
+	var lateral_square_sum := 0.0
+	var longitudinal_square_sum := 0.0
+	var sample_count := 6000
+	for index in range(sample_count):
+		var sample := GunDispersionService.sample(Vector2.ZERO, Vector2(1080.0, 0.0), 14.0, sigma_scale, longitudinal_ratio, random)
+		var position: Vector2 = sample["position"]
+		var longitudinal := position.x - 1080.0
+		var lateral := position.y
+		lateral_sum += lateral
+		longitudinal_sum += longitudinal
+		lateral_square_sum += lateral * lateral
+		longitudinal_square_sum += longitudinal * longitudinal
+	var lateral_mean := lateral_sum / float(sample_count)
+	var longitudinal_mean := longitudinal_sum / float(sample_count)
+	var lateral_stddev := sqrt(lateral_square_sum / float(sample_count) - lateral_mean * lateral_mean)
+	var longitudinal_stddev := sqrt(longitudinal_square_sum / float(sample_count) - longitudinal_mean * longitudinal_mean)
+	_check(absf(lateral_mean) < 6.0 and absf(longitudinal_mean) < 3.0, "sampled shell ellipse remains centered on the aimed point")
+	_check(absf(lateral_stddev - 150.0) < 6.0 and absf(longitudinal_stddev - 75.0) < 3.0, "sampled shell ellipse reproduces the configured lateral and longitudinal sigma")
+	var deterministic_a := SeededRandomSource.new(381)
+	var deterministic_b := SeededRandomSource.new(381)
+	var deterministic_samples := true
+	for index in range(8):
+		var first := GunDispersionService.sample(Vector2.ZERO, Vector2(1080.0, 0.0), 14.0, sigma_scale, longitudinal_ratio, deterministic_a)
+		var second := GunDispersionService.sample(Vector2.ZERO, Vector2(1080.0, 0.0), 14.0, sigma_scale, longitudinal_ratio, deterministic_b)
+		deterministic_samples = deterministic_samples and (first["position"] as Vector2).is_equal_approx(second["position"])
+	_check(deterministic_samples, "fixed battle seed reproduces every independently sampled shell impact")
+	var session = BattleSession.new(registry)
+	session.create_battle("level.prototype_3v3", 381)
+	var warspite: Dictionary = session.state["units_by_id"]["unit.player.warspite"]
+	warspite["position"] = Vector2(500.0, 1000.0)
+	var weapon: Dictionary = registry.get_definition("weapons", "weapon.warspite_381_ap")
+	var weapon_state := _weapon_state(warspite, weapon["id"])
+	warspite["status_effects"].append({"stat":"WeaponSpread", "operation":"PercentAdd", "value":-0.5, "category":"Gun"})
+	var reduced_sample: Dictionary = session._sample_gun_impact(warspite["position"], Vector2(1580.0, 1000.0), weapon, warspite["status_effects"])
+	_check(is_equal_approx(float(reduced_sample["lateral_sigma"]), 75.0) and is_equal_approx(float(session.get_primary_aim_status(warspite["entity_id"], Vector2(1580.0, 1000.0))["spread_degrees"]), 7.0), "WeaponSpread modifiers scale both runtime sigma and the aiming ellipse")
+	warspite["status_effects"].clear()
+	session.delayed_attacks.clear()
+	session.drain_events()
+	session._fire_weapon_at_position(warspite, Vector2(1580.0, 1000.0), weapon_state, weapon, true)
+	var independent_positions := {}
+	var metadata_valid: bool = session.delayed_attacks.size() == 8
+	for attack in session.delayed_attacks:
+		independent_positions[str(attack["target_position"])] = true
+		metadata_valid = metadata_valid and is_equal_approx(float(attack.get("dispersion_lateral_sigma", 0.0)), 150.0) and is_equal_approx(float(attack.get("dispersion_longitudinal_sigma", 0.0)), 75.0)
+	var fired_event: Dictionary = {}
+	for event in session.drain_events():
+		if event.get("event_type", "") == "WeaponFired": fired_event = event
+	_check(metadata_valid and independent_positions.size() > 1, "every runtime shell receives its own Gaussian impact and diagnostic sigma metadata")
+	_check(fired_event.get("impact_positions", []) == session.delayed_attacks.map(func(attack): return attack["target_position"]), "shell flight presentation receives the exact sampled combat impact positions")
 
 
 func _test_elliptical_collision_geometry() -> void:

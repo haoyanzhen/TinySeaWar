@@ -80,8 +80,8 @@ func _run() -> void:
 	battle.selected_unit_id = "unit.player.warspite"
 	var warspite_aim: Dictionary = battle.session.get_primary_aim_status("unit.player.warspite", warspite_snapshot["position"] + Vector2(0.0, 400.0))
 	_check(warspite_aim.get("fire_arcs", []).size() == 1 and warspite_aim.get("full_salvo_fire_arcs", []).size() == 2, "main-gun overlay receives green available sectors and dark-green all-mount sectors")
-	var dispersion_radii: Vector2 = battle._main_gun_dispersion_radii(float(warspite_aim.get("impact_radius", 0.0)), float(warspite_aim.get("spread_degrees", 0.0)))
-	_check(dispersion_radii.x > dispersion_radii.y and is_equal_approx(dispersion_radii.y, float(warspite_aim.get("impact_radius", 0.0))), "main-gun scope derives lateral dispersion from weapon radius and spread")
+	var dispersion_radii: Vector2 = battle._main_gun_dispersion_radii(1080.0, float(warspite_aim.get("spread_degrees", 0.0)))
+	_check(is_equal_approx(dispersion_radii.x, 150.0) and is_equal_approx(dispersion_radii.y, 75.0), "main-gun scope shows the Warspite-calibrated lateral and longitudinal one-sigma ellipse")
 	_check(battle.has_method("_draw_main_gun_scope") and battle.has_method("_draw_main_gun_dispersion"), "main-gun aiming uses a precise programmatic scope and dispersion overlay")
 	battle._update_hud()
 	_check(is_equal_approx(float(battle.session.get_operation_status("unit.player.warspite").get("primary_range", 0.0)), 1080.0), "HUD operation status displays the 1.5x main-gun range")
@@ -196,6 +196,7 @@ func _run() -> void:
 			"unit_id": "unit.player.warspite",
 			"weapon_id": "weapon.warspite_381_ap",
 			"target_position": warspite_snapshot["position"] + Vector2(360.0, 0.0),
+			"impact_positions": [warspite_snapshot["position"] + Vector2(380.0, 72.0), warspite_snapshot["position"] + Vector2(340.0, -58.0)],
 			"shot_count": 2,
 		}
 	], battle.session)
@@ -212,14 +213,10 @@ func _run() -> void:
 		"unit_id": "unit.player.warspite",
 		"weapon_id": "weapon.warspite_381_ap",
 		"target_position": warspite_snapshot["position"] + Vector2(360.0, 0.0),
-		"shot_count": 8,
+		"impact_positions": [warspite_snapshot["position"] + Vector2(380.0, 72.0), warspite_snapshot["position"] + Vector2(340.0, -58.0)],
+		"shot_count": 2,
 	}, battle.session, battle.session.registry.get_definition("weapons", "weapon.warspite_381_ap"), battle.session.state["units_by_id"]["unit.player.warspite"], warspite_snapshot["position"])
-	var clustered_shells := true
-	for destination in shell_destinations:
-		if (destination as Vector2).distance_to(warspite_snapshot["position"] + Vector2(360.0, 0.0)) > 24.0:
-			clustered_shells = false
-			break
-	_check(clustered_shells, "shell flight visuals cluster around the target area instead of forming a wide fan")
+	_check(shell_destinations == [warspite_snapshot["position"] + Vector2(380.0, 72.0), warspite_snapshot["position"] + Vector2(340.0, -58.0)], "shell flight visuals use the exact independently sampled combat impact positions")
 	battle.session.state["visible_by_faction"]["player"]["unit.enemy.bismarck"] = true
 	var damage_result := {"target_unit_id":"unit.enemy.bismarck","source_unit_id":"unit.player.warspite","source_weapon_id":"weapon.warspite_381_ap","damage_type":"Gun","hit":true,"final_damage":321.0}
 	var damage_numbers_before: int = battle.vfx_layer.get_child_count()

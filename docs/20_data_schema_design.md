@@ -743,7 +743,18 @@ enemy_ai_profile_id
 
 AI 配置分为舰队方案、单舰模式和运行时状态。具体行为语义见 `docs/16_enemy_ai_behavior_design.md`。
 
-本节当前是计划中的数据契约；运行时尚未建立独立 AI 配置类别。字段进入正式 JSON 前，必须同步增加注册表加载、引用校验和配置测试。
+运行时已建立 `data/ai/ai_profiles.json` 配置类别与加载校验。当前首轮 Profile 使用下列已消费字段；更完整的 doctrine、formation plan 和显式 group assignment 仍属于扩展契约。
+
+```text
+id
+difficulty
+decision_interval
+skill_threshold
+target_confirmations
+route_candidate_count
+coordination_threshold
+effect_reservations
+```
 
 舰队 AI Profile 基础字段：
 
@@ -845,13 +856,22 @@ cooldown
 target_type
 base_cast_range
 cast_range
+base_effect_radius
+effect_radius
 effect_type
 effect_value
 modifiers
+effects
+triggered_attacks
+recon_zones
 duration
+description
+design_values
 vfx_id
 ai_tags
 ai_policy_id
+implementation_status
+unsupported_effects
 ```
 
 字段含义：
@@ -862,9 +882,13 @@ ai_policy_id
 - `target_type`：目标类型，例如自身、敌方、区域、旗舰。
 - `base_cast_range`：设计基线释放距离。自身技能或无距离限制技能为 `0`。
 - `cast_range`：当前运行时释放距离。当前统一为 `base_cast_range * 1.5`；自身技能或无距离限制技能保持 `0`。
+- `base_effect_radius`、`effect_radius`：设计与运行时作用半径。它们与施法距离独立；区域中心最远可放到 `cast_range`，但只影响中心周围 `effect_radius` 内的对象。
 - `effect_type`：效果类型，例如炮击强化、鱼雷发射、空袭、防空强化、闪避提升。
 - `effect_value`：效果数值。
 - `modifiers`：结构化增益/减益列表，复杂技能优先使用该字段。
+- `effects`：当前结构化状态效果列表。除基础修正字段外，可声明 `consume_on_fire`、`persistent_until_consumed`、`consume_weapon_group_id`、`bind_selected_target`、`target_armor_classes`、`recipient_ship_classes`、`requires_submerged` 和 `requires_scouted_target`。
+- `triggered_attacks`：技能直接产生的攻击波次，声明武器、波数、间隔、每波数量、蓄力、开火暴露、临时修正和命中后状态；仍经过公共落点、航空、防空、命中与伤害管线。
+- `recon_zones`：技能部署的可被防空摧毁侦察区，声明视野半径、持续时间、航空单位 HP 和被击落后的额外冷却。
 - `duration`：持续时间，瞬发技能可为 0。
 - `vfx_id`：表现资源标识。
 - `ai_tags`：可选。技能 AI 用途标签，例如 `Burst`、`Defense`、`Recon`、`Mobility`、`AreaSupport`；不改变技能效果。
@@ -872,6 +896,10 @@ ai_policy_id
 - `implementation_status`：可选。取值 `supported` 或 `partial`，用于标记该技能的结构化效果是否已被当前战斗系统完整消费。
 - `unsupported_effects`：可选字符串数组。记录已进入配置但尚无对应运行时机制的效果语义；不得将其误报为已生效。
 - `design_values`：可选。保留角色数值文档中的完整技能描述，供审计和后续机制实现对照，不直接执行。
+
+当前 48 名角色技能均要求 `implementation_status = supported` 且 `unsupported_effects` 为空；若后续新增尚未实现的说明项，必须恢复为 `partial`，不能仅写入文本。
+
+技能状态在武器发射时保存修正快照，炮弹或鱼雷到达后不得读取已经过期的新状态。“下一轮”效果保存到指定武器组成功开火并随后消费；自动副炮不能抢先消费战列主炮校射。目标技能可把修正绑定到选中实体或装甲级别，攻击其他目标时不获得该部分收益。
 
 MVP 约定：
 

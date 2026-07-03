@@ -215,9 +215,19 @@
 
 - 核心规则测试：`scripts/tests/test_runner.gd`
 - AI 量化模型：`scripts/application/ai/ai_quantitative_model.gd`
+- AI 阵营观察快照：`scripts/application/ai/ai_observation.gd`
 - AI 量化场景测试：`scripts/tests/ai_behavior_quantitative_test.gd`
+- AI 真实战场输入测试：`scripts/tests/ai_battlefield_input_test.gd`
+- AI 观察隔离测试：`scripts/tests/ai_observation_test.gd`
+- AI 设施任务测试：`scripts/tests/ai_facility_task_test.gd`
+- AI 预留与协同测试：`scripts/tests/ai_coordination_test.gd`
+- AI 编组阵列测试：`scripts/tests/ai_group_formation_test.gd`
+- AI 难度 Profile：`data/ai/ai_profiles.json`
+- AI 难度测试：`scripts/tests/ai_difficulty_profile_test.gd`
+- AI 路线、掩体与恢复测试：`scripts/tests/ai_route_recovery_test.gd`
 - 场景与展示测试：`scripts/tests/scene_presentation_test.gd`
 - 第二期配置与资产映射测试：`scripts/tests/phase2_config_test.gd`
+- 48 角色技能契约与运行时测试：`scripts/tests/skill_runtime_test.gd`
 - 地形制作插件测试：`scripts/tests/terrain_authoring_test.gd`
 - 批量模拟：`scripts/tests/batch_simulation.gd`
 - 战斗模拟器：
@@ -237,6 +247,7 @@
   - AI 量化测试：`godot --headless --path . --script res://scripts/tests/ai_behavior_quantitative_test.gd`
   - 展示测试：`godot --headless --path . --script res://scripts/tests/scene_presentation_test.gd`
   - 第二期配置测试：`godot --headless --path . --script res://scripts/tests/phase2_config_test.gd`
+  - 全角色技能测试：`godot --headless --path . --script res://scripts/tests/skill_runtime_test.gd`
   - 战斗模拟器测试：`godot --headless --path . --script res://scripts/tests/battle_simulator_test.gd`
   - 运行示例模拟：`godot --headless --path . --script res://tools/simulation/run_experiment.gd -- res://data/simulations/experiments/smoke_single_battle.json`
   - 格式检查：`git diff --check`

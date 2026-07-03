@@ -14,3 +14,4 @@
 ## 当前方案
 
 - [t00_coastal_ai_performance_solution.md](t00_coastal_ai_performance_solution.md)：有岸地图 AI 决策与空间查询性能治理方案。
+- [t01_inertial_navigation_and_emergency_avoidance.md](t01_inertial_navigation_and_emergency_avoidance.md)：惯性航行、路径合法性与紧急规避问题记录，详细方案暂缓。

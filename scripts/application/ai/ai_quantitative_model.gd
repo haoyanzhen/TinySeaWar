@@ -323,6 +323,31 @@ static func route_utility(values: Dictionary) -> float:
 	)
 
 
+static func flank_quality(values: Dictionary) -> float:
+	if not bool(values.get("reachable", true)):
+		return 0.0
+	var aspect_angle := absf(wrapf(float(values.get("bearing_from_target", 0.0)) - float(values.get("target_heading", 0.0)), -PI, PI))
+	var broadside_quality := clamp01(1.0 - absf(aspect_angle - PI * 0.5) / (PI * 0.5))
+	var crossfire_quality := clamp01(float(values.get("crossfire_angle", 0.0)) / (PI * 0.5))
+	return score100(
+		0.45 * broadside_quality
+		+ 0.25 * crossfire_quality
+		+ 0.18 * clamp01(float(values.get("distance_fit", 0.0)))
+		+ 0.12 * clamp01(float(values.get("exit_quality", 0.0)))
+	)
+
+
+static func firing_lane_quality(values: Dictionary) -> float:
+	if not bool(values.get("weapon_legal", true)) or not bool(values.get("path_clear", true)):
+		return 0.0
+	return score100(
+		0.32 * clamp01(float(values.get("arc_quality", 0.0)))
+		+ 0.28 * clamp01(float(values.get("range_fit", 0.0)))
+		+ 0.24 * (1.0 - clamp01(float(values.get("friendly_risk", 0.0))))
+		+ 0.16 * clamp01(float(values.get("sustain_quality", 0.0)))
+	)
+
+
 static func hierarchical_decision(values: Dictionary) -> Dictionary:
 	if not bool(values.get("domain_legal", true)):
 		return {"layer": "DomainConstraint", "action": "Reject", "score": 100.0}
@@ -368,6 +393,7 @@ static func fleet_toggle_target(current_states: Array) -> bool:
 static func switch_with_hysteresis(values: Dictionary) -> Dictionary:
 	var current_id := str(values.get("current_id", ""))
 	var candidate_id := str(values.get("candidate_id", ""))
+	var previous_candidate_id := str(values.get("previous_candidate_id", ""))
 	var confirmations := int(values.get("confirmations", 0))
 	if candidate_id.is_empty() or candidate_id == current_id:
 		return {"switch": false, "selected_id": current_id, "confirmations": 0, "reason": "NO_BETTER_CANDIDATE"}
@@ -379,6 +405,8 @@ static func switch_with_hysteresis(values: Dictionary) -> Dictionary:
 	var candidate_score := float(values.get("candidate_score", 0.0))
 	if candidate_score < float(values.get("enter_threshold", 60.0)) or candidate_score < current_score + float(values.get("switch_margin", 15.0)):
 		return {"switch": false, "selected_id": current_id, "confirmations": 0, "reason": "INSUFFICIENT_MARGIN"}
+	if candidate_id != previous_candidate_id:
+		confirmations = 0
 	confirmations += 1
 	if confirmations < int(values.get("required_confirmations", 2)):
 		return {"switch": false, "selected_id": current_id, "confirmations": confirmations, "reason": "AWAITING_CONFIRMATION"}

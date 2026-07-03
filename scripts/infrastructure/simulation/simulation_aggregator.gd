@@ -47,6 +47,9 @@ func _aggregate_core(runs: Array) -> Dictionary:
 	var player_wins := 0
 	var enemy_wins := 0
 	var lineup_wins := {"original_player": 0, "original_enemy": 0}
+	var ai_behavior_totals := {}
+	var total_overkill := 0.0
+	var total_effective_damage := 0.0
 	for run in runs:
 		var end_state := str(run.get("end_state", "Unknown"))
 		result_counts[end_state] = int(result_counts.get(end_state, 0)) + 1
@@ -67,6 +70,8 @@ func _aggregate_core(runs: Array) -> Dictionary:
 		for unit_id in run.get("units", {}):
 			var unit_stats: Dictionary = run["units"][unit_id]
 			var damage := float(unit_stats.get("damage_dealt", 0.0))
+			total_effective_damage += damage
+			total_overkill += float(unit_stats.get("overkill_damage", 0.0))
 			damage_totals[unit_id] = float(damage_totals.get(unit_id, 0.0)) + damage
 			damage_samples[unit_id] = int(damage_samples.get(unit_id, 0)) + 1
 			var faction_id := "player" if str(unit_id).begins_with("unit.player.") else ("enemy" if str(unit_id).begins_with("unit.enemy.") else "")
@@ -74,6 +79,7 @@ func _aggregate_core(runs: Array) -> Dictionary:
 				faction_combat[faction_id]["shots"] += int(unit_stats.get("shots", 0))
 				faction_combat[faction_id]["hits"] += int(unit_stats.get("hits", 0))
 				faction_combat[faction_id]["damage_dealt"] += damage
+		_merge_numeric_metrics(ai_behavior_totals, run.get("ai_behavior", {}))
 	var average_damage_by_unit := {}
 	for unit_id in damage_totals:
 		average_damage_by_unit[unit_id] = float(damage_totals[unit_id]) / maxi(1, int(damage_samples[unit_id]))
@@ -97,7 +103,39 @@ func _aggregate_core(runs: Array) -> Dictionary:
 		"faction_combat": faction_combat,
 		"average_damage_by_unit": average_damage_by_unit,
 		"average_damage_by_ship": _average_damage_by_ship(runs),
+		"ai_behavior": _finalize_ai_behavior(ai_behavior_totals, durations, finished_runs, total_effective_damage, total_overkill),
 	}
+
+
+func _merge_numeric_metrics(target: Dictionary, source: Dictionary) -> void:
+	for key in source:
+		var value = source[key]
+		if value is Dictionary:
+			if not target.has(key): target[key] = {}
+			_merge_numeric_metrics(target[key], value)
+		elif value is int or value is float:
+			target[key] = float(target.get(key, 0.0)) + float(value)
+
+
+func _finalize_ai_behavior(totals: Dictionary, durations: Array[float], finished_runs: int, effective_damage: float, overkill_damage: float) -> Dictionary:
+	var result := totals.duplicate(true)
+	var total_minutes := 0.0
+	for duration in durations: total_minutes += duration / 60.0
+	var ai_unit_minutes := 0.0
+	for dwell in totals.get("mode_dwell_seconds", {}).values(): ai_unit_minutes += float(dwell) / 60.0
+	result["battle_minutes"] = total_minutes
+	result["ai_unit_minutes"] = ai_unit_minutes
+	result["mode_switches_per_minute"] = float(totals.get("mode_switches", 0.0)) / maxf(0.001, ai_unit_minutes)
+	result["tactic_switches_per_minute"] = float(totals.get("tactic_switches", 0.0)) / maxf(0.001, ai_unit_minutes)
+	result["target_switches_per_minute"] = float(totals.get("target_switches", 0.0)) / maxf(0.001, ai_unit_minutes)
+	result["interrupt_recovery_rate"] = float(totals.get("interrupt_clears", 0.0)) / maxf(1.0, float(totals.get("interrupt_entries", 0.0)))
+	result["facility_completion_rate"] = float(totals.get("facility_interactions_completed", 0.0)) / maxf(1.0, float(totals.get("facility_interactions_started", 0.0)))
+	result["average_skill_score"] = float(totals.get("skill_score_total", 0.0)) / maxf(1.0, float(totals.get("skill_commitments", 0.0)))
+	result["average_coordination_score"] = float(totals.get("coordination_score_total", 0.0)) / maxf(1.0, float(totals.get("skill_commitments", 0.0)))
+	result["overkill_damage"] = overkill_damage
+	result["overkill_ratio"] = overkill_damage / maxf(1.0, effective_damage + overkill_damage)
+	result["sample_runs"] = finished_runs
+	return result
 
 
 func _average_damage_by_ship(runs: Array) -> Dictionary:

@@ -131,9 +131,11 @@ func _test_predictive_attack_and_fire_control() -> void:
 	combo_window["group_sync"] = 0.9
 	var with_skill := AIModel.should_fire(combo_window, "HoldUntilWindow")
 	var silent := AIModel.should_fire(combo_window, "Silent")
+	var emergency_silent := AIModel.should_fire(combo_window, "Silent", true, true)
 	_check(not bool(without_skill["fire"]) and bool(with_skill["fire"]), "expected skill and group gain opens a held attack window")
 	_check(not bool(silent["fire"]), "silent discipline preserves concealment outside emergency")
-	_record("fire_control", {"intercept_time": intercept["time"], "without_skill": without_skill, "with_skill": with_skill, "silent": silent})
+	_check(bool(emergency_silent["fire"]), "silent discipline permits a high-value emergency self-defense shot")
+	_record("fire_control", {"intercept_time": intercept["time"], "without_skill": without_skill, "with_skill": with_skill, "silent": silent, "emergency_silent": emergency_silent})
 
 
 func _test_skill_and_group_coordination() -> void:
@@ -185,10 +187,28 @@ func _test_nearshore_cover_and_routes() -> void:
 		"exposure_safety": 0.9, "turn_room": 0.85, "congestion_safety": 0.8,
 		"formation_fit": 0.8, "objective_fit": 0.8,
 	})
+	var broadside_flank := AIModel.flank_quality({
+		"bearing_from_target": PI * 0.5, "target_heading": 0.0,
+		"crossfire_angle": PI * 0.5, "distance_fit": 0.9, "exit_quality": 0.8,
+	})
+	var bow_attack := AIModel.flank_quality({
+		"bearing_from_target": 0.0, "target_heading": 0.0,
+		"crossfire_angle": 0.0, "distance_fit": 0.9, "exit_quality": 0.8,
+	})
+	var clear_lane := AIModel.firing_lane_quality({
+		"weapon_legal": true, "path_clear": true, "arc_quality": 0.9,
+		"range_fit": 0.85, "friendly_risk": 0.0, "sustain_quality": 0.8,
+	})
+	var blocked_lane := AIModel.firing_lane_quality({
+		"weapon_legal": true, "path_clear": false, "arc_quality": 1.0,
+		"range_fit": 1.0, "friendly_risk": 0.0, "sustain_quality": 1.0,
+	})
 	_check(usable_cover >= 70.0, "reachable multi-exit shore cover is usable")
 	_check(trap_cover < 35.0, "dead-end shallow cover is rejected")
 	_check(covered_route > direct_route + 15.0, "safer covered route beats a shorter exposed route")
-	_record("nearshore", {"usable_cover": usable_cover, "trap_cover": trap_cover, "direct_route": direct_route, "covered_route": covered_route})
+	_check(broadside_flank > bow_attack + 40.0, "real target aspect and crossfire geometry favor a broadside flank over a bow chase")
+	_check(clear_lane >= 80.0 and is_zero_approx(blocked_lane), "firing-lane quality rewards a clear sustainable arc and hard-rejects blocked shell paths")
+	_record("nearshore", {"usable_cover": usable_cover, "trap_cover": trap_cover, "direct_route": direct_route, "covered_route": covered_route, "broadside_flank": broadside_flank, "bow_attack": bow_attack, "clear_lane": clear_lane, "blocked_lane": blocked_lane})
 
 
 func _test_hierarchical_priority() -> void:
@@ -222,11 +242,13 @@ func _test_switch_hysteresis() -> void:
 	})
 	var first_confirmation := AIModel.switch_with_hysteresis({
 		"current_id": "ReconAvoid", "candidate_id": "TorpedoFlank",
+		"previous_candidate_id": "",
 		"current_score": 45.0, "candidate_score": 82.0,
 		"elapsed_in_current": 5.0, "confirmations": 0,
 	})
 	var confirmed := AIModel.switch_with_hysteresis({
 		"current_id": "ReconAvoid", "candidate_id": "TorpedoFlank",
+		"previous_candidate_id": "TorpedoFlank",
 		"current_score": 44.0, "candidate_score": 84.0,
 		"elapsed_in_current": 5.5, "confirmations": first_confirmation["confirmations"],
 	})
@@ -235,11 +257,18 @@ func _test_switch_hysteresis() -> void:
 		"current_score": 80.0, "candidate_score": 72.0,
 		"elapsed_in_current": 0.5, "emergency": true,
 	})
+	var changed_candidate := AIModel.switch_with_hysteresis({
+		"current_id": "ReconAvoid", "candidate_id": "GunlineSupport",
+		"previous_candidate_id": "TorpedoFlank",
+		"current_score": 40.0, "candidate_score": 82.0,
+		"elapsed_in_current": 6.0, "confirmations": first_confirmation["confirmations"],
+	})
 	_check(not bool(held["switch"]) and held["reason"] == "MINIMUM_HOLD", "mode remains stable during minimum hold")
 	_check(not bool(first_confirmation["switch"]) and int(first_confirmation["confirmations"]) == 1, "single score spike cannot switch mode")
 	_check(bool(confirmed["switch"]) and confirmed["selected_id"] == "TorpedoFlank", "two consecutive confirmations switch to the better mode")
 	_check(bool(emergency["switch"]) and emergency["selected_id"] == "DisengageRegroup", "emergency survival bypasses mode hold and margin")
-	_record("hysteresis", {"held": held, "first": first_confirmation, "confirmed": confirmed, "emergency": emergency})
+	_check(not bool(changed_candidate["switch"]) and int(changed_candidate["confirmations"]) == 1, "changing the winning candidate resets consecutive mode confirmation")
+	_record("hysteresis", {"held": held, "first": first_confirmation, "confirmed": confirmed, "emergency": emergency, "changed_candidate": changed_candidate})
 
 
 func _test_target_selection_and_information_fairness() -> void:

@@ -424,7 +424,9 @@ func _test_runtime_baseline_scales() -> void:
 	design_formula["armor_coefficient"] = design_formula["design_armor_coefficient"]
 	var runtime_damage: Dictionary = DamageService.resolve({}, runtime_source, runtime_target, runtime_weapon, large_ap, SeededRandomSource.new(7), true)
 	var design_damage: Dictionary = DamageService.resolve({}, runtime_source, runtime_target, runtime_weapon, design_formula, SeededRandomSource.new(7), true)
+	var estimated_damage: Dictionary = DamageService.estimate_attack({}, runtime_source, runtime_target, runtime_weapon, large_ap)
 	_check(is_equal_approx(float(runtime_damage["final_damage"]), float(design_damage["final_damage"]) * 0.25), "runtime damage result is exactly one quarter of the design-scale result")
+	_check(is_equal_approx(float(estimated_damage["damage_on_hit"]), float(runtime_damage["final_damage"])) and is_equal_approx(float(estimated_damage["expected_damage"]), float(estimated_damage["damage_on_hit"]) * float(estimated_damage["hit_rate"])), "AI expected-damage input reuses the authoritative hit and damage formula without consuming randomness")
 	_check(is_equal_approx(float(registry.get_definition("weapons", "weapon.shimakaze_610_torpedo").get("range", 0.0)), 765.0), "torpedo UI and rules expose the 1.5x effective range")
 	_check(is_equal_approx(float(registry.get_definition("weapons", "weapon.enterprise_airstrike").get("range", 0.0)), 1140.0), "aviation UI and rules expose the 1.5x effective range")
 	_check(is_equal_approx(float(registry.get_definition("weapons", "weapon.warspite_381_ap").get("projectile_speed", 0.0)), 210.0), "main-gun projectiles use the halved runtime attack speed baseline")
@@ -698,6 +700,12 @@ func _test_runtime_ai_control_rules() -> void:
 	_check(session._update_immediate_survival(player) and player["ai_state"]["active_interrupt"] == "BoundaryEscape", "immediate survival overrides player controls near an imminent boundary exit")
 	player["position"] = Vector2(float(session.state["map"].get("width", 1200.0)) * 0.5, float(session.state["map"].get("height", 700.0)) * 0.5)
 	player["current_speed"] = 0.0
+	var recovery_started_at := float(session.state["elapsed_time"])
+	_check(session._update_immediate_survival(player), "survival interrupt remains active when danger first falls below the exit threshold")
+	session.state["elapsed_time"] = recovery_started_at + 0.7
+	_check(session._update_immediate_survival(player), "survival interrupt keeps the designed 0.8 second recovery hold")
+	session.state["elapsed_time"] = recovery_started_at + 0.9
+	_check(not session._update_immediate_survival(player), "survival interrupt becomes recoverable after the danger-free hold")
 	session._recover_from_ai_interrupt(player)
 	_check(player["movement_state"]["mode"] == "PlayerWaypointRoute" and not player["movement_state"].get("waypoints", []).is_empty(), "cleared survival interrupt replans and resumes the remaining player route")
 	session.queue_command({"command_id":"route.clear","command_type":"ClearMoveRoute","issued_at_tick":session.state["tick_index"],"issuer_id":"player","unit_id":player["entity_id"]})
@@ -717,6 +725,10 @@ func _test_runtime_ai_control_rules() -> void:
 	target["heading"] = PI
 	fire_session.state["visible_by_faction"]["player"] = {target["entity_id"]: true}
 	gunner["primary_auto_fire_enabled"] = true
+	var enemy_weapon: Dictionary = fire_session._weapon_for_state(target["weapon_states"][0])
+	target["ai_state"]["mode_id"] = "ReconAvoid"
+	_check(not fire_session._automatic_weapon_allowed_by_ai_discipline(target, gunner, enemy_weapon), "ReconAvoid silent discipline blocks ordinary automatic weapon fire")
+	target["ai_state"]["mode_id"] = "VanguardLine"
 	fire_session._update_ai_primary_weapons()
 	fire_session.queue_command({"command_id":"control.suspend","command_type":"SetUnitControlState","issued_at_tick":fire_session.state["tick_index"],"issuer_id":"player","unit_id":gunner["entity_id"],"primary_auto_fire_suspended":true})
 	var suspended_events: Array = fire_session.advance_tick(0.1)
@@ -728,6 +740,45 @@ func _test_runtime_ai_control_rules() -> void:
 	var primary_events: Array = fire_session.advance_tick(0.1)
 	_check(_has_event_for_source(primary_events, "WeaponFired", gunner["entity_id"]), "V-enabled player primary auto fire commits a legal quantified attack window")
 	_check(float(gunner["skill_state"]["cooldown_remaining"]) > 0.0, "player skill remains untouched by primary auto-fire execution")
+
+	var tactic_scores := {"Attack": 90.0, "Defend": 20.0, "Kite": 30.0}
+	target["ai_state"]["tactic_id"] = "Defend"
+	target["ai_state"]["tactic_entered_at"] = 0.0
+	fire_session.state["elapsed_time"] = 5.0
+	_check(fire_session._update_ai_tactic(target, tactic_scores) == "Defend", "detected tactic requires a first confirmation before switching")
+	_check(fire_session._update_ai_tactic(target, tactic_scores) == "Attack", "detected tactic switches after the same better action wins twice")
+	_check(fire_session._fire_discipline_for_mode("CarrierStandoff") == "SelfDefense" and fire_session._fire_discipline_for_mode("DisengageRegroup") == "SelfDefense", "carrier standoff and disengage use their designed self-defense fire discipline")
+
+	var target_session = BattleSession.new(registry)
+	target_session.create_battle("level.prototype_3v3", 33)
+	var target_source: Dictionary = target_session.state["units_by_id"]["unit.enemy.bismarck"]
+	var held_target: Dictionary = target_session.state["units_by_id"]["unit.player.aurora"]
+	var better_target: Dictionary = target_session.state["units_by_id"]["unit.player.warspite"]
+	better_target["current_hp"] = 1.0
+	target_session.state["visible_by_faction"]["enemy"] = {
+		"unit.player.aurora": true,
+		"unit.player.shimakaze": true,
+		"unit.player.warspite": true,
+	}
+	target_session._ai_observations_by_faction.clear()
+	target_source["targeting_state"]["current_target_id"] = held_target["entity_id"]
+	target_source["ai_state"]["target_acquired_at"] = 0.0
+	target_source["ai_state"]["target_switch_ready_at"] = 0.0
+	target_session.state["elapsed_time"] = 5.0
+	_check(target_session._select_target_with_hysteresis(target_source)["entity_id"] == held_target["entity_id"], "target selection holds the current legal target through the first better-candidate confirmation")
+	_check(target_session._select_target_with_hysteresis(target_source)["entity_id"] == better_target["entity_id"], "target selection switches after the same materially better target wins twice")
+
+	gunner["stats"]["cost"] = 100.0
+	target["stats"]["cost"] = 100.0
+	gunner["current_hp"] = gunner["max_hp"]
+	target["current_hp"] = target["max_hp"]
+	gunner["position"] = Vector2(500.0, 350.0)
+	target["position"] = Vector2(650.0, 350.0)
+	fire_session.state["visible_by_faction"]["player"] = {target["entity_id"]: true}
+	fire_session._ai_local_power_cache.clear()
+	fire_session._ai_observations_by_faction.clear()
+	var equal_power_pressure := float(fire_session._local_power_context(gunner).get("pressure", -1.0))
+	_check(is_equal_approx(equal_power_pressure, 1.0 / 6.0), "equal visible local power maps to mild pressure instead of maximum pressure")
 
 
 func _test_torpedo_fire_arc_rules() -> void:
@@ -970,7 +1021,10 @@ func _test_determinism() -> void:
 
 
 func _test_battle_smoke(level_id: String, maximum_ticks: int) -> void:
+	var started := Time.get_ticks_msec()
+	print("SMOKE_START %s" % level_id)
 	var simulation := _simulate(level_id, 20260614, maximum_ticks)
+	print("SMOKE_END %s phase=%s duration=%.1f wall_ms=%d" % [level_id, simulation["phase"], float(simulation.get("stats", {}).get("duration", 0.0)), Time.get_ticks_msec() - started])
 	_check(simulation["phase"] == "Finished", "%s headless battle reaches Finished" % level_id)
 	_check(not simulation["result"].is_empty(), "%s records a battle result" % level_id)
 	_check(simulation["events"].has("WeaponFired") and simulation["events"].has("AttackResolved") and simulation["events"].has("BattleFinished"), "%s emits complete combat event chain" % level_id)

@@ -94,48 +94,65 @@ ARMOR = {
 }
 
 
-def effect(scope: str, stat: str, operation: str, value: float, category: str, group: str) -> dict[str, Any]:
-    return {"scope": scope, "stat": stat, "operation": operation, "value": value, "category": category, "stack_group": group, "stack_rule": "Refresh"}
+def effect(scope: str, stat: str, operation: str, value: float, category: str, group: str, **extra: Any) -> dict[str, Any]:
+    return {"scope": scope, "stat": stat, "operation": operation, "value": value, "category": category, "stack_group": group, "stack_rule": "Refresh", **extra}
 
 
 SKILL_EFFECTS = {
     "fletcher": [effect("Self", "DetectionRange", "FlatAdd", 55, "All", "fletcher_skill"), effect("Self", "Damage", "PercentAdd", .18, "AntiSubmarine", "fletcher_skill"), effect("Self", "TorpedoDetectionDistance", "FlatAdd", 60, "Torpedo", "fletcher_skill")],
-    "cleveland": [effect("Self", "ReloadSpeed", "PercentAdd", .30, "AntiAir", "cleveland_skill"), effect("Self", "Damage", "PercentAdd", .18, "AntiAir", "cleveland_skill")],
-    "baltimore": [effect("Self", "AccuracyPoint", "FlatAdd", .18, "Gun", "baltimore_skill"), effect("Self", "ArmorDamageModifier", "PercentAdd", .12, "Gun", "baltimore_skill")],
-    "wahoo": [effect("Self", "ReloadSpeed", "PercentAdd", .28, "Torpedo", "wahoo_skill"), effect("Self", "Damage", "PercentAdd", .12, "Torpedo", "wahoo_skill")],
-    "jervis": [effect("AlliesInArea", "TurnSpeed", "PercentAdd", .10, "All", "jervis_skill"), effect("AlliesInArea", "Speed", "PercentAdd", .06, "All", "jervis_skill")],
-    "belfast": [effect("EnemiesInArea", "ConcealmentDistance", "FlatAdd", 90, "All", "belfast_skill"), effect("AlliesInArea", "AccuracyPoint", "FlatAdd", .07, "Gun", "belfast_skill")],
-    "illustrious": [effect("Self", "DamageReduction", "PercentAdd", .18, "All", "illustrious_skill"), effect("Self", "ReloadSpeed", "PercentAdd", -.10, "Aviation", "illustrious_skill")],
-    "upholder": [effect("Self", "ConcealmentDistance", "StateMultiply", .82, "All", "upholder_skill"), effect("Self", "ProjectileSpeed", "PercentAdd", .12, "Torpedo", "upholder_skill")],
+    "cleveland": [effect("Self", "ReloadSpeed", "PercentAdd", .30, "AntiAir", "cleveland_skill"), effect("Self", "Damage", "PercentAdd", .18, "AntiAir", "cleveland_skill"), effect("Self", "WeaponRange", "FlatAdd", 50, "AntiAir", "cleveland_skill")],
+    "baltimore": [effect("Self", "AccuracyPoint", "FlatAdd", .18, "Gun", "baltimore_skill", consume_on_fire=True, persistent_until_consumed=True, consume_weapon_group_id="baltimore_main", bind_selected_target=True), effect("Self", "WeaponSpread", "PercentAdd", -.24, "Gun", "baltimore_skill", consume_on_fire=True, persistent_until_consumed=True, consume_weapon_group_id="baltimore_main", bind_selected_target=True), effect("Self", "ArmorDamageModifier", "PercentAdd", .12, "Gun", "baltimore_skill", consume_on_fire=True, persistent_until_consumed=True, consume_weapon_group_id="baltimore_main", bind_selected_target=True, target_armor_classes=["Medium", "Heavy"])],
+    "wahoo": [effect("Self", "ReloadSpeed", "PercentAdd", .28, "Torpedo", "wahoo_skill"), effect("Self", "Damage", "PercentAdd", .12, "Torpedo", "wahoo_skill", consume_on_fire=True, persistent_until_consumed=True, consume_weapon_group_id="wahoo_torpedo"), effect("Self", "OxygenConsumptionRate", "PercentAdd", .35, "All", "wahoo_skill")],
+    "jervis": [effect("AlliesInArea", "TurnSpeed", "PercentAdd", .10, "All", "jervis_skill", recipient_ship_classes=["Destroyer", "LightCruiser"]), effect("AlliesInArea", "Speed", "PercentAdd", .06, "All", "jervis_skill", recipient_ship_classes=["Destroyer", "LightCruiser"]), effect("AlliesInArea", "WeaponSpread", "PercentAdd", -.08, "Torpedo", "jervis_skill", recipient_ship_classes=["Destroyer", "LightCruiser"])],
+    "belfast": [effect("EnemiesInArea", "ConcealmentDistance", "FlatAdd", 90, "All", "belfast_skill"), effect("AlliesInArea", "AccuracyPoint", "FlatAdd", .07, "Gun", "belfast_skill"), effect("Self", "FiringRevealMultiplier", "PercentAdd", -.10, "All", "belfast_skill")],
+    "illustrious": [effect("Self", "DamageReduction", "PercentAdd", .18, "All", "illustrious_skill"), effect("Self", "AircraftHP", "PercentAdd", .22, "Aviation", "illustrious_skill"), effect("Self", "ReloadSpeed", "PercentAdd", -.10, "Aviation", "illustrious_skill")],
+    "upholder": [effect("Self", "ConcealmentDistance", "StateMultiply", .82, "All", "upholder_skill", requires_submerged=True), effect("Self", "ProjectileSpeed", "PercentAdd", .12, "Torpedo", "upholder_skill"), effect("Self", "WeaponSpread", "PercentAdd", -.12, "Torpedo", "upholder_skill")],
     "tashkent": [effect("Self", "Speed", "PercentAdd", .20, "All", "tashkent_skill"), effect("Self", "ReloadSpeed", "PercentAdd", .22, "Gun", "tashkent_skill"), effect("Self", "TurnSpeed", "PercentAdd", -.14, "All", "tashkent_skill")],
-    "chapayev": [effect("Self", "AccuracyPoint", "FlatAdd", .09, "Gun", "chapayev_skill")],
-    "gangut": [effect("Self", "Armor", "FlatAdd", 8, "All", "gangut_skill"), effect("Self", "DamageReduction", "PercentAdd", .08, "All", "gangut_skill"), effect("Self", "Speed", "PercentAdd", -.18, "All", "gangut_skill")],
-    "k_21": [effect("Self", "DetectionRange", "FlatAdd", 80, "All", "k21_skill"), effect("Self", "ProjectileRadius", "FlatAdd", 8, "Torpedo", "k21_skill"), effect("Self", "ProjectileSpeed", "PercentAdd", -.08, "Torpedo", "k21_skill")],
-    "z23": [effect("Self", "ReloadSpeed", "PercentAdd", .18, "Gun", "z23_skill"), effect("Self", "Speed", "PercentAdd", -.08, "All", "z23_skill")],
+    "chapayev": [effect("Self", "WeaponSpread", "PercentAdd", -.24, "Gun", "chapayev_skill"), effect("Self", "AccuracyPoint", "FlatAdd", .09, "Gun", "chapayev_skill"), effect("Self", "FiringRevealMultiplier", "PercentAdd", .12, "All", "chapayev_skill")],
+    "gangut": [effect("Self", "Armor", "FlatAdd", 8, "All", "gangut_skill"), effect("Self", "DamageReduction", "PercentAdd", .08, "All", "gangut_skill"), effect("Self", "Speed", "PercentAdd", -.18, "All", "gangut_skill"), effect("Self", "WeaponSpread", "PercentAdd", -.10, "Gun", "gangut_skill")],
+    "k_21": [effect("Self", "DetectionRange", "FlatAdd", 80, "All", "k21_skill"), effect("Self", "ProjectileRadius", "FlatAdd", 8, "Torpedo", "k21_skill", consume_on_fire=True, persistent_until_consumed=True, consume_weapon_group_id="k_21_torpedo"), effect("Self", "ProjectileSpeed", "PercentAdd", -.08, "Torpedo", "k21_skill")],
+    "z23": [effect("Self", "ReloadSpeed", "PercentAdd", .18, "Gun", "z23_skill"), effect("Self", "WeaponSpread", "PercentAdd", -.15, "Torpedo", "z23_skill", consume_on_fire=True, persistent_until_consumed=True, consume_weapon_group_id="z23_torpedo"), effect("Self", "Speed", "PercentAdd", -.08, "All", "z23_skill")],
     "nurnberg": [effect("Self", "TurnSpeed", "PercentAdd", .16, "All", "nurnberg_skill"), effect("Self", "Evasion", "PercentAdd", .16, "All", "nurnberg_skill"), effect("Self", "AccuracyPoint", "FlatAdd", .04, "Gun", "nurnberg_skill")],
-    "scharnhorst": [effect("Self", "Speed", "PercentAdd", .14, "All", "scharnhorst_skill"), effect("Self", "ReloadSpeed", "PercentAdd", .20, "Gun", "scharnhorst_skill")],
-    "graf_zeppelin": [effect("Self", "Damage", "PercentAdd", .15, "Aviation", "graf_skill"), effect("Self", "ReloadSpeed", "PercentAdd", .20, "Gun", "graf_skill")],
+    "scharnhorst": [effect("Self", "Speed", "PercentAdd", .14, "All", "scharnhorst_skill"), effect("Self", "ReloadSpeed", "PercentAdd", .20, "Gun", "scharnhorst_skill"), effect("Self", "ArmorDamageModifier", "PercentAdd", .12, "Gun", "scharnhorst_skill", bind_selected_target=True, target_armor_classes=["Light", "Medium"])],
+    "graf_zeppelin": [effect("Self", "Damage", "PercentAdd", .15, "Aviation", "graf_skill"), effect("Self", "AircraftHP", "PercentAdd", .10, "Aviation", "graf_skill"), effect("Self", "ReloadSpeed", "PercentAdd", .20, "Gun", "graf_skill")],
     "akizuki": [effect("Self", "Damage", "PercentAdd", .18, "AntiAir", "akizuki_skill"), effect("Self", "ReloadSpeed", "PercentAdd", .16, "AntiAir", "akizuki_skill"), effect("AlliesInArea", "DamageReduction", "PercentAdd", .10, "Aviation", "akizuki_skill")],
-    "takao": [effect("Self", "Damage", "PercentAdd", .18, "Torpedo", "takao_skill"), effect("Self", "ProjectileSpeed", "PercentAdd", .10, "Torpedo", "takao_skill")],
-    "shokaku": [effect("Self", "Damage", "PercentAdd", .18, "Aviation", "shokaku_skill")],
-    "i_19": [effect("Self", "ProjectileSpeed", "PercentAdd", .10, "Torpedo", "i19_skill"), effect("Self", "ProjectileRadius", "FlatAdd", 8, "Torpedo", "i19_skill")],
+    "takao": [effect("Self", "Damage", "PercentAdd", .18, "Torpedo", "takao_skill", consume_on_fire=True, persistent_until_consumed=True, consume_weapon_group_id="takao_torpedo"), effect("Self", "ProjectileSpeed", "PercentAdd", .10, "Torpedo", "takao_skill", consume_on_fire=True, persistent_until_consumed=True, consume_weapon_group_id="takao_torpedo"), effect("Self", "FiringRevealMultiplier", "PercentAdd", .22, "All", "takao_skill", consume_on_fire=True, persistent_until_consumed=True, consume_weapon_group_id="takao_torpedo")],
+    "shokaku": [],
+    "i_19": [effect("Self", "ProjectileSpeed", "PercentAdd", .10, "Torpedo", "i19_skill", requires_scouted_target=True), effect("Self", "ProjectileRadius", "FlatAdd", 8, "Torpedo", "i19_skill", requires_scouted_target=True)],
     "yat_sen": [effect("AlliesInArea", "DetectionRange", "FlatAdd", 55, "All", "yat_sen_skill"), effect("AlliesInArea", "AccuracyPoint", "FlatAdd", .05, "Gun", "yat_sen_skill"), effect("Self", "Armor", "FlatAdd", 6, "All", "yat_sen_skill")],
     "chang_chun": [effect("Self", "DetectionRange", "FlatAdd", 75, "All", "chang_chun_skill"), effect("Self", "ReloadSpeed", "PercentAdd", .16, "Gun", "chang_chun_skill"), effect("AlliesInArea", "Evasion", "FlatAdd", 8, "All", "chang_chun_skill")],
-    "dingyuan": [effect("Self", "Armor", "FlatAdd", 18, "All", "dingyuan_skill"), effect("Self", "DamageReduction", "PercentAdd", .20, "All", "dingyuan_skill"), effect("Self", "TurnSpeed", "PercentAdd", -.22, "All", "dingyuan_skill")],
-    "hai_lung": [effect("Self", "Speed", "PercentAdd", .10, "All", "hai_lung_skill"), effect("Self", "ReloadSpeed", "PercentAdd", -.12, "Torpedo", "hai_lung_skill")],
+    "dingyuan": [effect("Self", "Armor", "FlatAdd", 18, "All", "dingyuan_skill"), effect("Self", "DamageReduction", "PercentAdd", .20, "All", "dingyuan_skill"), effect("Self", "TurnSpeed", "PercentAdd", -.22, "All", "dingyuan_skill"), effect("Self", "WeaponSpread", "PercentAdd", -.20, "Gun", "dingyuan_skill", consume_on_fire=True, persistent_until_consumed=True, consume_weapon_group_id="dingyuan_main")],
+    "hai_lung": [effect("Self", "OxygenConsumptionRate", "PercentAdd", -.30, "All", "hai_lung_skill"), effect("Self", "Speed", "PercentAdd", .10, "All", "hai_lung_skill", requires_submerged=True), effect("Self", "ReloadSpeed", "PercentAdd", -.12, "Torpedo", "hai_lung_skill")],
 }
 
-UNSUPPORTED_EFFECTS = {
-    "cleveland": ["anti_air_radius"],
-    "baltimore": ["next_salvo_only", "weapon_spread", "target_armor_class_modifier"], "wahoo": ["oxygen_consumption"],
-    "jervis": ["torpedo_spread", "class_filtered_aura"], "belfast": ["fire_reveal_multiplier"],
-    "illustrious": ["aircraft_hp"], "upholder": ["submerged_only_concealment", "torpedo_spread"],
-    "chapayev": ["weapon_spread", "fire_reveal_multiplier"], "gangut": ["weapon_spread"],
-    "k_21": ["next_salvo_only"], "z23": ["torpedo_spread", "next_salvo_only"],
-    "scharnhorst": ["target_armor_class_modifier"], "graf_zeppelin": ["aircraft_hp"],
-    "takao": ["next_salvo_only", "fire_reveal_multiplier"], "shokaku": ["multi_wave_airstrike", "second_wave_accuracy", "aircraft_hp"],
-    "i_19": ["scout_aircraft_vision", "scouted_target_condition"], "dingyuan": ["next_salvo_spread"],
-    "hai_lung": ["oxygen_consumption", "submerged_only_speed"],
+SKILL_RUNTIME = {
+    "fletcher": {"target_type": "Self", "effect_radius": 420, "ai_tags": ["Recon", "AntiSubmarine", "TorpedoWarning", "Defense"]},
+    "cleveland": {"target_type": "Self", "ai_tags": ["AntiAir", "Defense"]},
+    "baltimore": {"target_type": "Enemy", "ai_tags": ["Burst", "TargetAttack"]},
+    "wahoo": {"target_type": "Self", "ai_tags": ["Burst", "Torpedo"]},
+    "jervis": {"target_type": "Self", "effect_radius": 495, "ai_tags": ["Mobility", "AreaSupport"]},
+    "belfast": {"target_type": "Area", "effect_radius": 240, "ai_tags": ["Recon", "Control", "AreaSupport"]},
+    "illustrious": {"target_type": "Self", "ai_tags": ["Defense", "Aviation"]},
+    "upholder": {"target_type": "Self", "ai_tags": ["Concealment", "Torpedo"]},
+    "tashkent": {"target_type": "Self", "ai_tags": ["Burst", "Mobility"]},
+    "chapayev": {"target_type": "Self", "ai_tags": ["Burst"]},
+    "gangut": {"target_type": "Self", "ai_tags": ["Defense", "Burst"]},
+    "k_21": {"target_type": "Self", "ai_tags": ["Recon", "Torpedo"]},
+    "z23": {"target_type": "Self", "ai_tags": ["Burst", "Torpedo"]},
+    "nurnberg": {"target_type": "Self", "ai_tags": ["Defense", "Mobility"]},
+    "scharnhorst": {"target_type": "Enemy", "ai_tags": ["Burst", "TargetAttack", "Mobility"]},
+    "graf_zeppelin": {"target_type": "Area", "effect_radius": 65, "ai_tags": ["Aviation", "AreaAttack"], "triggered_attacks": [{"weapon_id": "weapon.graf_zeppelin_bomber"}]},
+    "akizuki": {"target_type": "Self", "effect_radius": 450, "ai_tags": ["AntiAir", "Defense", "AreaSupport"]},
+    "takao": {"target_type": "Self", "ai_tags": ["Burst", "Torpedo"]},
+    "shokaku": {"target_type": "Area", "effect_radius": 75, "ai_tags": ["Aviation", "AreaAttack", "Burst"], "triggered_attacks": [
+        {"weapon_id": "weapon.shokaku_bomber", "modifiers": [effect("Self", "Damage", "PercentAdd", .18, "Aviation", "shokaku_skill"), effect("Self", "AircraftHP", "PercentAdd", .08, "Aviation", "shokaku_skill")]},
+        {"weapon_id": "weapon.shokaku_torpedo_bomber", "charge_time": 2.0, "modifiers": [effect("Self", "Damage", "PercentAdd", .18, "Aviation", "shokaku_skill"), effect("Self", "AccuracyPoint", "FlatAdd", .08, "Aviation", "shokaku_skill"), effect("Self", "AircraftHP", "PercentAdd", .08, "Aviation", "shokaku_skill")]},
+    ]},
+    "i_19": {"target_type": "Area", "effect_radius": 600, "ai_tags": ["Recon", "Torpedo"], "recon_zones": [{"radius": 600, "duration": 18, "aircraft_hp": 350}]},
+    "yat_sen": {"target_type": "Self", "effect_radius": 480, "ai_tags": ["Recon", "AreaSupport"]},
+    "chang_chun": {"target_type": "Self", "effect_radius": 570, "ai_tags": ["Recon", "AreaSupport"]},
+    "dingyuan": {"target_type": "Self", "ai_tags": ["Defense", "Burst"]},
+    "hai_lung": {"target_type": "Self", "ai_tags": ["Resource", "Concealment"]},
 }
 
 
@@ -287,13 +304,17 @@ def build_skills() -> tuple[list[dict[str, Any]], dict[str, str]]:
         skill_id = f"skill.{cid}_{plan['skill_role']}"
         ids[cid] = skill_id
         is_self = row[4] == "自身"
-        definitions.append({
+        runtime = SKILL_RUNTIME.get(cid, {})
+        target_type = str(runtime.get("target_type", "Self" if is_self else "Area"))
+        definition = {
             "id": skill_id, "display_name": row[1], "cooldown": number(row[3]),
-            "target_type": "Self" if is_self else "Area", "base_cast_range": 0 if is_self else number(row[4]), "cast_range": 0 if is_self else number(row[4]) * DISTANCE_BASELINE_MULTIPLIER,
+            "target_type": target_type, "base_cast_range": 0 if target_type == "Self" else number(row[4]), "cast_range": 0 if target_type == "Self" else number(row[4]) * DISTANCE_BASELINE_MULTIPLIER,
             "duration": number(row[5]), "description": row[6], "design_values": row[7],
-            "effects": SKILL_EFFECTS[cid], "implementation_status": "partial" if cid in UNSUPPORTED_EFFECTS else "supported",
-            "unsupported_effects": UNSUPPORTED_EFFECTS.get(cid, []), "vfx_id": f"{cid}.{plan['skill_role']}",
-        })
+            "effects": SKILL_EFFECTS[cid], "implementation_status": "supported",
+            "unsupported_effects": [], "vfx_id": f"{cid}.{plan['skill_role']}",
+        }
+        definition.update(runtime)
+        definitions.append(definition)
     return definitions, ids
 
 

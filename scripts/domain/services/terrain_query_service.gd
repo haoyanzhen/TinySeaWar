@@ -8,14 +8,19 @@ var map_size := Vector2.ZERO
 var obstacles: Array = []
 var regions: Array = []
 var obstacle_cells: Dictionary = {}
+var region_cells: Dictionary = {}
 
 
 func configure(definition: Dictionary) -> void:
 	terrain_definition = definition.duplicate(true)
 	map_size = _vector2(definition.get("map_size", [0.0, 0.0]))
 	obstacles = definition.get("obstacles", []).duplicate(true)
+	for obstacle in obstacles:
+		obstacle["_polygon"] = _polygon(obstacle.get("polygon", []))
 	obstacles.sort_custom(func(a, b): return str(a.get("id", "")) < str(b.get("id", "")))
 	regions = definition.get("regions", []).duplicate(true)
+	for region in regions:
+		region["_polygon"] = _polygon(region.get("polygon", []))
 	regions.sort_custom(func(a, b):
 		var priority_a := int(a.get("priority", 0))
 		var priority_b := int(b.get("priority", 0))
@@ -33,7 +38,7 @@ func first_segment_hit(start: Vector2, end: Vector2, block_mask: String, sweep_r
 	for obstacle in _obstacles_in_bounds(start, end, maxf(0.0, sweep_radius)):
 		if block_mask not in obstacle.get("block_mask", []):
 			continue
-		var polygon := _polygon(obstacle.get("polygon", []))
+		var polygon: PackedVector2Array = obstacle.get("_polygon", PackedVector2Array())
 		var fraction := _sweep_polygon_fraction(start, displacement, maxf(0.0, sweep_radius), polygon)
 		if fraction < 0.0 or fraction > float(best["fraction"]) + EPSILON:
 			continue
@@ -66,7 +71,7 @@ func can_occupy_circle(center: Vector2, radius: float, movement_tags: Array = []
 	for obstacle in _obstacles_in_bounds(center, center, maxf(0.0, radius)):
 		if "ShipMovement" not in obstacle.get("block_mask", []):
 			continue
-		var polygon := _polygon(obstacle.get("polygon", []))
+		var polygon: PackedVector2Array = obstacle.get("_polygon", PackedVector2Array())
 		if _point_in_polygon(center, polygon):
 			return false
 		for index in range(polygon.size()):
@@ -114,9 +119,12 @@ func resolve_circle_motion(start: Vector2, displacement: Vector2, radius: float,
 
 func regions_at(position: Vector2) -> Array:
 	var result: Array = []
-	for region in regions:
-		if _point_in_polygon(position, _polygon(region.get("polygon", []))):
-			result.append(region.duplicate(true))
+	for region_index in region_cells.get(_cell_for(position), []):
+		var region: Dictionary = regions[int(region_index)]
+		if _point_in_polygon(position, region.get("_polygon", PackedVector2Array())):
+			var copy := region.duplicate(false)
+			copy.erase("_polygon")
+			result.append(copy)
 	return result
 
 
@@ -145,8 +153,9 @@ func debug_spatial_cells() -> Dictionary:
 
 func _build_spatial_index() -> void:
 	obstacle_cells.clear()
+	region_cells.clear()
 	for obstacle_index in range(obstacles.size()):
-		var polygon := _polygon(obstacles[obstacle_index].get("polygon", []))
+		var polygon: PackedVector2Array = obstacles[obstacle_index].get("_polygon", PackedVector2Array())
 		if polygon.is_empty(): continue
 		var bounds := _polygon_bounds(polygon)
 		var min_cell := _cell_for(bounds.position)
@@ -156,6 +165,17 @@ func _build_spatial_index() -> void:
 				var cell := Vector2i(cell_x, cell_y)
 				if not obstacle_cells.has(cell): obstacle_cells[cell] = []
 				obstacle_cells[cell].append(obstacle_index)
+	for region_index in range(regions.size()):
+		var polygon: PackedVector2Array = regions[region_index].get("_polygon", PackedVector2Array())
+		if polygon.is_empty(): continue
+		var bounds := _polygon_bounds(polygon)
+		var min_cell := _cell_for(bounds.position)
+		var max_cell := _cell_for(bounds.position + bounds.size)
+		for cell_y in range(min_cell.y, max_cell.y + 1):
+			for cell_x in range(min_cell.x, max_cell.x + 1):
+				var cell := Vector2i(cell_x, cell_y)
+				if not region_cells.has(cell): region_cells[cell] = []
+				region_cells[cell].append(region_index)
 
 
 func _obstacles_in_bounds(start: Vector2, end: Vector2, padding: float) -> Array:

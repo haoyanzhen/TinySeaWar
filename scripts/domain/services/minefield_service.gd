@@ -24,6 +24,8 @@ func configure(definitions: Array, terrain_definition_id: String) -> void:
 			"damage": float(definition.get("damage", 0.0)),
 			"triggered_unit_ids": [],
 			"controller_rules": definition.get("controller_rules", {}).duplicate(true),
+			"_polygon": _polygon(definition.get("polygon", [])),
+			"_safe_channel_polygons": _polygons(definition.get("safe_channels", [])),
 		}
 
 
@@ -108,38 +110,48 @@ func avoidance_waypoint(faction_id: String, start: Vector2, target: Vector2) -> 
 
 
 func snapshot() -> Dictionary:
-	return minefields_by_id.duplicate(true)
+	var result := minefields_by_id.duplicate(true)
+	for minefield in result.values():
+		minefield.erase("_polygon")
+		minefield.erase("_safe_channel_polygons")
+	return result
 
 
 func _first_unsafe_fraction(start: Vector2, end: Vector2, minefield: Dictionary) -> float:
-	var distance := start.distance_to(end)
-	var steps := maxi(1, ceili(distance / 4.0))
-	var previous_fraction := 0.0
 	if _unsafe_at(start, minefield):
 		return 0.0
-	for index in range(1, steps + 1):
-		var fraction := float(index) / float(steps)
-		var unsafe := _unsafe_at(start.lerp(end, fraction), minefield)
-		if not unsafe:
-			previous_fraction = fraction
-			continue
-		var low := previous_fraction
-		var high := fraction
-		for iteration in range(14):
-			var middle := (low + high) * 0.5
-			if _unsafe_at(start.lerp(end, middle), minefield): high = middle
-			else: low = middle
-		return high
+	var fractions: Array[float] = [0.0, 1.0]
+	_append_polygon_intersections(fractions, start, end, minefield.get("_polygon", PackedVector2Array()))
+	for channel_polygon in minefield.get("_safe_channel_polygons", []):
+		_append_polygon_intersections(fractions, start, end, channel_polygon)
+	fractions.sort()
+	for index in range(fractions.size() - 1):
+		var low := fractions[index]
+		var high := fractions[index + 1]
+		if high - low <= EPSILON: continue
+		if _unsafe_at(start.lerp(end, (low + high) * 0.5), minefield):
+			return low
 	return -1.0
 
 
 func _unsafe_at(position: Vector2, minefield: Dictionary) -> bool:
-	if not Geometry2D.is_point_in_polygon(position, _polygon(minefield.get("polygon", []))):
+	if not Geometry2D.is_point_in_polygon(position, minefield.get("_polygon", PackedVector2Array())):
 		return false
-	for safe_channel in minefield.get("safe_channels", []):
-		if Geometry2D.is_point_in_polygon(position, _polygon(safe_channel)):
+	for safe_channel in minefield.get("_safe_channel_polygons", []):
+		if Geometry2D.is_point_in_polygon(position, safe_channel):
 			return false
 	return true
+
+
+func _append_polygon_intersections(fractions: Array[float], start: Vector2, end: Vector2, polygon: PackedVector2Array) -> void:
+	var displacement := end - start
+	var length_squared := displacement.length_squared()
+	if length_squared <= EPSILON: return
+	for index in range(polygon.size()):
+		var hit = Geometry2D.segment_intersects_segment(start, end, polygon[index], polygon[(index + 1) % polygon.size()])
+		if hit == null: continue
+		var fraction := clampf(((hit as Vector2) - start).dot(displacement) / length_squared, 0.0, 1.0)
+		if fraction not in fractions: fractions.append(fraction)
 
 
 func _add_knowledge(minefield: Dictionary, faction_id: String) -> void:
@@ -169,6 +181,12 @@ func _polygon(raw: Array) -> PackedVector2Array:
 	var result := PackedVector2Array()
 	for point in raw:
 		result.append(_vector2(point))
+	return result
+
+
+func _polygons(raw_polygons: Array) -> Array:
+	var result: Array = []
+	for raw in raw_polygons: result.append(_polygon(raw))
 	return result
 
 

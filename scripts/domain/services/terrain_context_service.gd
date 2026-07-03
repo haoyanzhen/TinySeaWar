@@ -34,6 +34,7 @@ func configure(query, zone_set: Dictionary, effects: Array, ocean_palette_id: St
 		zone["remaining_time"] = float(zone.get("duration", 0.0))
 		zone["active"] = bool(zone.get("active", true))
 		zone["base_polygon"] = zone.get("polygon", []).duplicate(true)
+		zone["base_polygon_packed"] = _packed_polygon(zone["base_polygon"])
 		zones.append(zone)
 	zones.sort_custom(func(a, b): return str(a.get("id", "")) < str(b.get("id", "")))
 
@@ -154,18 +155,38 @@ func context_at(position: Vector2) -> Dictionary:
 
 
 func movement_segment_access(start: Vector2, end: Vector2) -> Dictionary:
-	var allowed_start_zones := _restricted_tide_zone_ids_at(start)
-	var distance := start.distance_to(end)
-	var steps := maxi(1, ceili(distance / 4.0))
-	for index in range(1, steps + 1):
-		var fraction := float(index) / float(steps)
-		var current_zones := _restricted_tide_zone_ids_at(start.lerp(end, fraction))
-		for zone_id in allowed_start_zones.duplicate():
-			if zone_id not in current_zones: allowed_start_zones.erase(zone_id)
-		for zone_id in current_zones:
-			if zone_id not in allowed_start_zones:
-				return {"allowed": false, "reason_code": "TIDE_ACCESS_RESTRICTED", "zone_id": zone_id, "fraction": fraction}
+	for zone in zones:
+		if not _is_restricted_tide_zone(zone): continue
+		var polygon := _world_polygon(zone)
+		var starts_inside := Geometry2D.is_point_in_polygon(start, polygon)
+		var ends_inside := Geometry2D.is_point_in_polygon(end, polygon)
+		if not starts_inside and ends_inside:
+			return {"allowed": false, "reason_code": "TIDE_ACCESS_RESTRICTED", "zone_id": zone.get("id", ""), "fraction": _first_polygon_intersection_fraction(start, end, polygon)}
+		if starts_inside: continue
+		var entry_fraction := _first_polygon_intersection_fraction(start, end, polygon)
+		if entry_fraction >= 0.0:
+			return {"allowed": false, "reason_code": "TIDE_ACCESS_RESTRICTED", "zone_id": zone.get("id", ""), "fraction": entry_fraction}
 	return {"allowed": true, "reason_code": "OK", "fraction": 1.0}
+
+
+func _is_restricted_tide_zone(zone: Dictionary) -> bool:
+	if not bool(zone.get("active", false)): return false
+	var effect: Dictionary = effects_by_id.get(str(zone.get("effect_id", "")), {})
+	if not bool(effect.get("context", {}).get("tide_controls_access", false)): return false
+	var tide: Dictionary = global_environment.get("tide", {})
+	return str(_tide_phase()) not in tide.get("open_phases", ["Flood", "High"])
+
+
+func _first_polygon_intersection_fraction(start: Vector2, end: Vector2, polygon: PackedVector2Array) -> float:
+	var best := INF
+	var displacement := end - start
+	var length_squared := displacement.length_squared()
+	if length_squared <= 0.000001: return -1.0
+	for index in range(polygon.size()):
+		var hit = Geometry2D.segment_intersects_segment(start, end, polygon[index], polygon[(index + 1) % polygon.size()])
+		if hit == null: continue
+		best = minf(best, clampf(((hit as Vector2) - start).dot(displacement) / length_squared, 0.0, 1.0))
+	return -1.0 if is_inf(best) else best
 
 
 func zone_center_for_effect(effect_id: String) -> Vector2:
@@ -205,8 +226,14 @@ func _zone_contains(zone: Dictionary, position: Vector2) -> bool:
 func _world_polygon(zone: Dictionary) -> PackedVector2Array:
 	var result := PackedVector2Array()
 	var offset: Vector2 = zone.get("position", Vector2.ZERO)
-	for point in zone.get("base_polygon", []):
-		result.append(_vector2(point) + offset)
+	for point in zone.get("base_polygon_packed", PackedVector2Array()):
+		result.append(point + offset)
+	return result
+
+
+func _packed_polygon(raw: Array) -> PackedVector2Array:
+	var result := PackedVector2Array()
+	for point in raw: result.append(_vector2(point))
 	return result
 
 

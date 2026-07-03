@@ -10,6 +10,7 @@ const CATEGORY_PATHS := {
 	"settings": "res://data/settings",
 	"visuals": "res://data/visuals",
 	"facilities": "res://data/facilities",
+	"ai_profiles": "res://data/ai",
 }
 const CATEGORY_FILES := {
 	"terrain": ["res://data/terrain/terrain_templates.json", "res://data/terrain/terrain_definitions.json"],
@@ -121,6 +122,20 @@ func _validate_references() -> void:
 		_validate_environment_definition(environment_definition)
 	for facility_definition in all("facilities"):
 		_validate_facility_definition(facility_definition)
+	for profile in all("ai_profiles"):
+		_validate_ai_profile(profile)
+
+
+func _validate_ai_profile(profile: Dictionary) -> void:
+	var profile_id := str(profile.get("id", "?"))
+	if str(profile.get("difficulty", "")) not in ["Easy", "Standard", "Hard"]:
+		errors.append("Invalid AI difficulty in %s" % profile_id)
+	if float(profile.get("decision_interval", 0.0)) <= 0.0:
+		errors.append("AI decision_interval must be positive in %s" % profile_id)
+	if float(profile.get("skill_threshold", -1.0)) < 0.0 or float(profile.get("skill_threshold", 101.0)) > 100.0:
+		errors.append("Invalid AI skill_threshold in %s" % profile_id)
+	if int(profile.get("target_confirmations", 0)) < 1 or int(profile.get("route_candidate_count", 0)) < 1:
+		errors.append("Invalid AI confirmation or route count in %s" % profile_id)
 
 
 func _validate_projectile(projectile: Dictionary) -> void:
@@ -341,6 +356,9 @@ func _validate_level(level: Dictionary) -> void:
 	var facility_layout_id := str(map.get("facility_layout_id", ""))
 	if not facility_layout_id.is_empty() and get_definition("facilities", facility_layout_id).is_empty():
 		errors.append("Missing facility layout %s referenced by %s" % [facility_layout_id, level_id])
+	var ai_profile_id := str(level.get("enemy_ai_profile_id", "ai.profile.standard"))
+	if get_definition("ai_profiles", ai_profile_id).is_empty():
+		errors.append("Missing AI profile %s referenced by %s" % [ai_profile_id, level_id])
 	for fleet_name in ["player_fleet", "enemy_fleet"]:
 		var fleet: Array = level.get(fleet_name, [])
 		var flagship_count := 0

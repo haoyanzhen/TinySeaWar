@@ -1,11 +1,12 @@
 {
   "schema_version": 1,
   "experiment_id": "sim.latest_ai.current_3v3_5v5",
-  "description": "当前战斗切片 3v3 与 5v5 固定阵容，双方均使用最新运行时 AI，每场景十局",
+  "description": "当前战斗切片 3v3 与 5v5，双方均使用最新运行时 AI，每场景十个种子并执行出生侧交换",
   "simulation_kind": "PolicyEvaluation",
   "player_policy_id": "LatestRuntimeAI",
   "enemy_policy_id": "LatestRuntimeAI",
-  "side_swap": false,
+  "ai_profile_id": "ai.profile.standard",
+  "side_swap": true,
   "tick_seconds": 0.1,
   "maximum_ticks": 4300,
   "seed_plan": {

@@ -5,36 +5,57 @@
       "display_name": "多波次空袭",
       "cooldown": 45,
       "target_type": "Area",
-      "cast_range": 1140.0,
+      "base_cast_range": 760,
+      "cast_range": 1140,
       "duration": 12,
-      "effects": [
-        {
-          "scope": "Self",
-          "stat": "Damage",
-          "operation": "PercentAdd",
-          "value": 0.2,
-          "category": "Aviation",
-          "stack_group": "enterprise_skill",
-          "stack_rule": "Refresh"
-        },
-        {
-          "scope": "Self",
-          "stat": "AccuracyPoint",
-          "operation": "FlatAdd",
-          "value": 0.1,
-          "category": "Aviation",
-          "stack_group": "enterprise_skill",
-          "stack_rule": "Refresh"
-        }
+      "effects": [],
+      "implementation_status": "supported",
+      "unsupported_effects": [],
+      "description": "指定区域连续派出两批攻击机。",
+      "design_values": "2 波；每波 6 机；航空伤害 +20%；对已侦查目标命中率 +10 个百分点",
+      "effect_radius": 60,
+      "ai_tags": [
+        "Burst",
+        "AreaAttack",
+        "Aviation"
       ],
-      "base_cast_range": 760.0
+      "triggered_attacks": [
+        {
+          "weapon_id": "weapon.enterprise_airstrike",
+          "waves": 2,
+          "wave_interval": 2,
+          "shots_per_wave": 6,
+          "modifiers": [
+            {
+              "scope": "Self",
+              "stat": "Damage",
+              "operation": "PercentAdd",
+              "value": 0.2,
+              "category": "Aviation",
+              "stack_group": "enterprise_skill",
+              "stack_rule": "Refresh"
+            },
+            {
+              "scope": "Self",
+              "stat": "AccuracyPoint",
+              "operation": "FlatAdd",
+              "value": 0.1,
+              "category": "Aviation",
+              "stack_group": "enterprise_skill",
+              "stack_rule": "Refresh",
+              "requires_scouted_target": true
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "skill.iowa_radar_salvo",
       "display_name": "雷达校准齐射",
       "cooldown": 42,
       "target_type": "Enemy",
-      "cast_range": 1140.0,
+      "base_cast_range": 760,
+      "cast_range": 1140,
       "duration": 8,
       "effects": [
         {
@@ -44,7 +65,11 @@
           "value": 0.18,
           "category": "Gun",
           "stack_group": "iowa_skill",
-          "stack_rule": "Refresh"
+          "stack_rule": "Refresh",
+          "consume_on_fire": true,
+          "persistent_until_consumed": true,
+          "consume_weapon_group_id": "iowa_main",
+          "bind_selected_target": true
         },
         {
           "scope": "Self",
@@ -53,17 +78,40 @@
           "value": 0.1,
           "category": "Gun",
           "stack_group": "iowa_skill",
-          "stack_rule": "Refresh"
+          "stack_rule": "Refresh",
+          "consume_on_fire": true,
+          "persistent_until_consumed": true,
+          "consume_weapon_group_id": "iowa_main",
+          "bind_selected_target": true
+        },
+        {
+          "scope": "Self",
+          "stat": "FiringRevealMultiplier",
+          "operation": "PercentAdd",
+          "value": 0.2,
+          "category": "All",
+          "stack_group": "iowa_skill",
+          "stack_rule": "Refresh",
+          "consume_on_fire": true,
+          "persistent_until_consumed": true,
+          "consume_weapon_group_id": "iowa_main"
         }
       ],
-      "base_cast_range": 760.0
+      "implementation_status": "supported",
+      "unsupported_effects": [],
+      "description": "主炮进入校准状态，对选定目标集中射击。",
+      "ai_tags": [
+        "Burst",
+        "TargetAttack"
+      ]
     },
     {
       "id": "skill.san_diego_aa_center",
       "display_name": "防空弹幕中心",
       "cooldown": 36,
-      "target_type": "Area",
-      "cast_range": 495.0,
+      "target_type": "Self",
+      "base_cast_range": 0,
+      "cast_range": 0,
       "duration": 10,
       "effects": [
         {
@@ -86,6 +134,15 @@
         },
         {
           "scope": "AlliesInArea",
+          "stat": "WeaponRange",
+          "operation": "FlatAdd",
+          "value": 60,
+          "category": "AntiAir",
+          "stack_group": "san_diego_skill",
+          "stack_rule": "Refresh"
+        },
+        {
+          "scope": "AlliesInArea",
           "stat": "DamageReduction",
           "operation": "PercentAdd",
           "value": 0.2,
@@ -94,13 +151,23 @@
           "stack_rule": "Refresh"
         }
       ],
-      "base_cast_range": 330.0
+      "implementation_status": "supported",
+      "unsupported_effects": [],
+      "base_effect_radius": 330,
+      "effect_radius": 495,
+      "description": "强化自身防空圈并保护附近友军。",
+      "ai_tags": [
+        "Defense",
+        "AntiAir",
+        "AreaSupport"
+      ]
     },
     {
       "id": "skill.ward_first_alert",
       "display_name": "第一警戒",
       "cooldown": 28,
       "target_type": "Self",
+      "base_cast_range": 0,
       "cast_range": 0,
       "duration": 12,
       "effects": [
@@ -132,14 +199,22 @@
           "stack_rule": "Refresh"
         }
       ],
-      "base_cast_range": 0.0
+      "implementation_status": "supported",
+      "unsupported_effects": [],
+      "description": "提升侦查并快速压制近距离目标。",
+      "ai_tags": [
+        "Recon",
+        "Mobility",
+        "Burst"
+      ]
     },
     {
       "id": "skill.hood_fleet_glory",
       "display_name": "舰队荣光",
       "cooldown": 48,
-      "target_type": "Area",
-      "cast_range": 645.0,
+      "target_type": "Self",
+      "base_cast_range": 0,
+      "cast_range": 0,
       "duration": 14,
       "effects": [
         {
@@ -162,7 +237,7 @@
         },
         {
           "scope": "AlliesInArea",
-          "stat": "ConcealmentDistance",
+          "stat": "FiringRevealMultiplier",
           "operation": "PercentAdd",
           "value": -0.08,
           "category": "All",
@@ -170,14 +245,23 @@
           "stack_rule": "Refresh"
         }
       ],
-      "base_cast_range": 430.0
+      "implementation_status": "supported",
+      "unsupported_effects": [],
+      "base_effect_radius": 430,
+      "effect_radius": 645,
+      "description": "提升周围友军机动和士气。",
+      "ai_tags": [
+        "Mobility",
+        "AreaSupport"
+      ]
     },
     {
       "id": "skill.sirius_silver_escort",
       "display_name": "银白护航圈",
       "cooldown": 38,
-      "target_type": "Area",
-      "cast_range": 465.0,
+      "target_type": "Self",
+      "base_cast_range": 0,
+      "cast_range": 0,
       "duration": 12,
       "effects": [
         {
@@ -208,100 +292,154 @@
           "stack_rule": "Refresh"
         }
       ],
-      "base_cast_range": 310.0
+      "implementation_status": "supported",
+      "unsupported_effects": [],
+      "base_effect_radius": 310,
+      "effect_radius": 465,
+      "description": "展开护航光环，拦截航空并提升友军命中。",
+      "ai_tags": [
+        "AntiAir",
+        "AreaSupport"
+      ]
     },
     {
       "id": "skill.argus_training_scout",
       "display_name": "训练侦察队",
       "cooldown": 32,
-      "target_type": "Self",
-      "cast_range": 0,
+      "target_type": "Area",
+      "base_cast_range": 820,
+      "cast_range": 1230,
       "duration": 35,
-      "effects": [
-        {
-          "scope": "Self",
-          "stat": "DetectionRange",
-          "operation": "FlatAdd",
-          "value": 80,
-          "category": "All",
-          "stack_group": "argus_skill",
-          "stack_rule": "Refresh"
-        },
-        {
-          "scope": "Self",
-          "stat": "AccuracyPoint",
-          "operation": "FlatAdd",
-          "value": 0.06,
-          "category": "Aviation",
-          "stack_group": "argus_skill",
-          "stack_rule": "Refresh"
-        }
+      "effects": [],
+      "implementation_status": "supported",
+      "unsupported_effects": [],
+      "effect_radius": 570,
+      "description": "部署早期侦查机，暴露指定空域。",
+      "ai_tags": [
+        "Recon",
+        "AreaSupport"
       ],
-      "base_cast_range": 0.0
+      "recon_zones": [
+        {
+          "radius": 570,
+          "duration": 35,
+          "aircraft_hp": 350,
+          "destroyed_cooldown_penalty": 8
+        }
+      ]
     },
     {
       "id": "skill.kirov_ice_suppression",
       "display_name": "冰线压制",
       "cooldown": 38,
       "target_type": "Area",
-      "cast_range": 810.0,
+      "base_cast_range": 540,
+      "cast_range": 810,
       "duration": 6,
-      "effects": [
-        {
-          "scope": "Self",
-          "stat": "Damage",
-          "operation": "PercentAdd",
-          "value": 0.12,
-          "category": "Gun",
-          "stack_group": "kirov_skill",
-          "stack_rule": "Refresh"
-        },
-        {
-          "scope": "EnemiesInArea",
-          "stat": "TurnSpeed",
-          "operation": "PercentAdd",
-          "value": -0.15,
-          "category": "All",
-          "stack_group": "kirov_slow",
-          "stack_rule": "Refresh"
-        }
+      "effects": [],
+      "implementation_status": "supported",
+      "unsupported_effects": [],
+      "effect_radius": 60,
+      "description": "向扇形区域进行高压炮击。",
+      "ai_tags": [
+        "Burst",
+        "AreaAttack",
+        "Control"
       ],
-      "base_cast_range": 540.0
+      "triggered_attacks": [
+        {
+          "weapon_id": "weapon.kirov_180_ap",
+          "shots_per_wave": 9,
+          "modifiers": [
+            {
+              "scope": "Self",
+              "stat": "Damage",
+              "operation": "PercentAdd",
+              "value": 0.12,
+              "category": "Gun",
+              "stack_group": "kirov_skill",
+              "stack_rule": "Refresh"
+            }
+          ],
+          "on_hit_effects": [
+            {
+              "scope": "EnemiesInArea",
+              "stat": "TurnSpeed",
+              "operation": "PercentAdd",
+              "value": -0.15,
+              "category": "All",
+              "stack_group": "kirov_slow",
+              "stack_rule": "Refresh",
+              "duration": 6
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "skill.pobeda_air_support",
       "display_name": "方案航空支援",
       "cooldown": 44,
-      "target_type": "Self",
-      "cast_range": 0,
+      "target_type": "Area",
+      "base_cast_range": 740,
+      "cast_range": 1110,
       "duration": 14,
-      "effects": [
+      "effects": [],
+      "implementation_status": "supported",
+      "unsupported_effects": [],
+      "effect_radius": 70,
+      "description": "派出混合航空编队支援前线。",
+      "ai_tags": [
+        "Burst",
+        "AreaAttack",
+        "Aviation"
+      ],
+      "triggered_attacks": [
         {
-          "scope": "Self",
-          "stat": "Damage",
-          "operation": "PercentAdd",
-          "value": 0.2,
-          "category": "Aviation",
-          "stack_group": "pobeda_skill",
-          "stack_rule": "Refresh"
+          "weapon_id": "weapon.pobeda_bomber",
+          "modifiers": [
+            {
+              "scope": "Self",
+              "stat": "AircraftHP",
+              "operation": "PercentAdd",
+              "value": 0.2,
+              "category": "Aviation",
+              "stack_group": "pobeda_skill",
+              "stack_rule": "Refresh"
+            }
+          ]
         },
         {
-          "scope": "Self",
-          "stat": "AccuracyPoint",
-          "operation": "FlatAdd",
-          "value": 0.08,
-          "category": "Aviation",
-          "stack_group": "pobeda_skill",
-          "stack_rule": "Refresh"
+          "weapon_id": "weapon.pobeda_ap_bomber",
+          "modifiers": [
+            {
+              "scope": "Self",
+              "stat": "AircraftHP",
+              "operation": "PercentAdd",
+              "value": 0.2,
+              "category": "Aviation",
+              "stack_group": "pobeda_skill",
+              "stack_rule": "Refresh"
+            },
+            {
+              "scope": "Self",
+              "stat": "AviationDamageFloor",
+              "operation": "FlatAdd",
+              "value": 0.35,
+              "category": "Aviation",
+              "stack_group": "pobeda_skill",
+              "stack_rule": "Refresh"
+            }
+          ]
         }
-      ],
-      "base_cast_range": 0.0
+      ]
     },
     {
       "id": "skill.gnevny_snow_torpedo",
       "display_name": "雪线雷击",
       "cooldown": 32,
       "target_type": "Self",
+      "base_cast_range": 0,
       "cast_range": 0,
       "duration": 6,
       "effects": [
@@ -321,16 +459,39 @@
           "value": 2,
           "category": "Torpedo",
           "stack_group": "gnevny_skill",
-          "stack_rule": "Refresh"
+          "stack_rule": "Refresh",
+          "consume_on_fire": true,
+          "persistent_until_consumed": true,
+          "consume_weapon_group_id": "gnevny_torpedo"
+        },
+        {
+          "scope": "Self",
+          "stat": "WeaponSpread",
+          "operation": "PercentAdd",
+          "value": -0.2,
+          "category": "Torpedo",
+          "stack_group": "gnevny_skill",
+          "stack_rule": "Refresh",
+          "consume_on_fire": true,
+          "persistent_until_consumed": true,
+          "consume_weapon_group_id": "gnevny_torpedo"
         }
       ],
-      "base_cast_range": 0.0
+      "implementation_status": "supported",
+      "unsupported_effects": [],
+      "description": "快速突进并发射密集鱼雷。",
+      "ai_tags": [
+        "Burst",
+        "Torpedo",
+        "Mobility"
+      ]
     },
     {
       "id": "skill.prinz_precision_evasion",
       "display_name": "精密规避",
       "cooldown": 34,
       "target_type": "Self",
+      "base_cast_range": 0,
       "cast_range": 0,
       "duration": 8,
       "effects": [
@@ -350,16 +511,26 @@
           "value": 0.12,
           "category": "Gun",
           "stack_group": "prinz_skill",
-          "stack_rule": "Refresh"
+          "stack_rule": "Refresh",
+          "consume_on_fire": true,
+          "persistent_until_consumed": true,
+          "consume_weapon_group_id": "prinz_main"
         }
       ],
-      "base_cast_range": 0.0
+      "implementation_status": "supported",
+      "unsupported_effects": [],
+      "description": "进行规避机动并强化下一轮炮击。",
+      "ai_tags": [
+        "Defense",
+        "Burst"
+      ]
     },
     {
       "id": "skill.u47_silent_ambush",
       "display_name": "静默伏击",
       "cooldown": 36,
       "target_type": "Self",
+      "base_cast_range": 0,
       "cast_range": 0,
       "duration": 12,
       "effects": [
@@ -370,7 +541,8 @@
           "value": 0.75,
           "category": "All",
           "stack_group": "u47_skill",
-          "stack_rule": "Refresh"
+          "stack_rule": "Refresh",
+          "requires_submerged": true
         },
         {
           "scope": "Self",
@@ -379,46 +551,83 @@
           "value": 0.18,
           "category": "Torpedo",
           "stack_group": "u47_skill",
+          "stack_rule": "Refresh",
+          "consume_on_fire": true,
+          "persistent_until_consumed": true,
+          "consume_weapon_group_id": "u47_torpedo"
+        },
+        {
+          "scope": "Self",
+          "stat": "OxygenConsumptionRate",
+          "operation": "PercentAdd",
+          "value": 0.3,
+          "category": "All",
+          "stack_group": "u47_skill",
           "stack_rule": "Refresh"
         }
       ],
-      "base_cast_range": 0.0
+      "implementation_status": "supported",
+      "unsupported_effects": [],
+      "description": "降低暴露并准备伏击鱼雷。",
+      "ai_tags": [
+        "Concealment",
+        "Burst",
+        "Torpedo"
+      ]
     },
     {
       "id": "skill.yamato_full_salvo",
       "display_name": "主炮全开",
       "cooldown": 55,
-      "target_type": "Self",
-      "cast_range": 0,
-      "duration": 8,
-      "effects": [
-        {
-          "scope": "Self",
-          "stat": "Damage",
-          "operation": "PercentAdd",
-          "value": 0.25,
-          "category": "Gun",
-          "stack_group": "yamato_skill",
-          "stack_rule": "Refresh"
-        },
-        {
-          "scope": "Self",
-          "stat": "AccuracyPoint",
-          "operation": "FlatAdd",
-          "value": -0.03,
-          "category": "Gun",
-          "stack_group": "yamato_skill",
-          "stack_rule": "Refresh"
-        }
+      "target_type": "Area",
+      "base_cast_range": 790,
+      "cast_range": 1185,
+      "duration": 2,
+      "effects": [],
+      "implementation_status": "supported",
+      "unsupported_effects": [],
+      "effect_radius": 70,
+      "description": "超重型主炮齐射，压制远距离目标。",
+      "ai_tags": [
+        "Burst",
+        "AreaAttack"
       ],
-      "base_cast_range": 0.0
+      "triggered_attacks": [
+        {
+          "weapon_id": "weapon.yamato_460_ap",
+          "shots_per_wave": 9,
+          "charge_time": 2,
+          "firing_reveal_multiplier": 1.25,
+          "modifiers": [
+            {
+              "scope": "Self",
+              "stat": "Damage",
+              "operation": "PercentAdd",
+              "value": 0.25,
+              "category": "Gun",
+              "stack_group": "yamato_skill",
+              "stack_rule": "Refresh"
+            },
+            {
+              "scope": "Self",
+              "stat": "WeaponSpread",
+              "operation": "PercentAdd",
+              "value": 0.1,
+              "category": "Gun",
+              "stack_group": "yamato_skill",
+              "stack_rule": "Refresh"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "skill.yukikaze_lucky_evasion",
       "display_name": "幸运回避",
       "cooldown": 34,
-      "target_type": "Area",
-      "cast_range": 540.0,
+      "target_type": "Self",
+      "base_cast_range": 0,
+      "cast_range": 0,
       "duration": 10,
       "effects": [
         {
@@ -446,46 +655,79 @@
           "value": 0.11,
           "category": "All",
           "stack_group": "yukikaze_aura",
-          "stack_rule": "Refresh"
+          "stack_rule": "Refresh",
+          "duration": 6
         }
       ],
-      "base_cast_range": 360.0
+      "implementation_status": "supported",
+      "unsupported_effects": [],
+      "base_effect_radius": 360,
+      "effect_radius": 540,
+      "description": "提升自身闪避，并在规避窗口加快附近友军装填。",
+      "ai_tags": [
+        "Defense",
+        "AreaSupport"
+      ]
     },
     {
       "id": "skill.hosho_light_training",
       "display_name": "轻型空袭训练",
       "cooldown": 34,
-      "target_type": "Self",
-      "cast_range": 0,
+      "target_type": "Area",
+      "base_cast_range": 660,
+      "cast_range": 990,
       "duration": 10,
-      "effects": [
+      "effects": [],
+      "implementation_status": "supported",
+      "unsupported_effects": [],
+      "effect_radius": 440,
+      "description": "派出小规模训练航空队。",
+      "ai_tags": [
+        "AreaAttack",
+        "Aviation",
+        "Recon"
+      ],
+      "triggered_attacks": [
         {
-          "scope": "Self",
-          "stat": "Damage",
-          "operation": "PercentAdd",
-          "value": 0.15,
-          "category": "Aviation",
-          "stack_group": "hosho_skill",
-          "stack_rule": "Refresh"
-        },
-        {
-          "scope": "Self",
-          "stat": "DetectionRange",
-          "operation": "FlatAdd",
-          "value": 60,
-          "category": "All",
-          "stack_group": "hosho_skill",
-          "stack_rule": "Refresh"
+          "weapon_id": "weapon.hosho_airstrike",
+          "shots_per_wave": 4,
+          "modifiers": [
+            {
+              "scope": "Self",
+              "stat": "Damage",
+              "operation": "PercentAdd",
+              "value": 0.15,
+              "category": "Aviation",
+              "stack_group": "hosho_skill",
+              "stack_rule": "Refresh"
+            },
+            {
+              "scope": "Self",
+              "stat": "AircraftHP",
+              "operation": "PercentAdd",
+              "value": -0.1,
+              "category": "Aviation",
+              "stack_group": "hosho_skill",
+              "stack_rule": "Refresh"
+            }
+          ]
         }
       ],
-      "base_cast_range": 0.0
+      "recon_zones": [
+        {
+          "radius": 440,
+          "duration": 10,
+          "aircraft_hp": 315
+        }
+      ]
     },
     {
       "id": "skill.ning_coastal_escort",
       "display_name": "近海护卫",
       "cooldown": 36,
-      "target_type": "Area",
-      "cast_range": 450.0,
+      "target_type": "Self",
+      "base_cast_range": 0,
+      "cast_range": 0,
       "duration": 12,
       "effects": [
         {
@@ -516,14 +758,23 @@
           "stack_rule": "Refresh"
         }
       ],
-      "base_cast_range": 300.0
+      "implementation_status": "supported",
+      "unsupported_effects": [],
+      "base_effect_radius": 300,
+      "effect_radius": 450,
+      "description": "强化近海防卫和中近程火力。",
+      "ai_tags": [
+        "Defense",
+        "AreaSupport"
+      ]
     },
     {
       "id": "skill.anshan_escort_alert",
       "display_name": "护航警戒",
       "cooldown": 34,
-      "target_type": "Area",
-      "cast_range": 780.0,
+      "target_type": "Self",
+      "base_cast_range": 0,
+      "cast_range": 0,
       "duration": 12,
       "effects": [
         {
@@ -554,14 +805,25 @@
           "stack_rule": "Refresh"
         }
       ],
-      "base_cast_range": 520.0
+      "implementation_status": "supported",
+      "unsupported_effects": [],
+      "base_effect_radius": 520,
+      "effect_radius": 780,
+      "description": "展开早期驱逐护航警戒，提高侦查和鱼雷预警。",
+      "ai_tags": [
+        "Recon",
+        "TorpedoWarning",
+        "Defense",
+        "AreaSupport"
+      ]
     },
     {
       "id": "skill.chongqing_turning_support",
       "display_name": "转折支援",
       "cooldown": 40,
-      "target_type": "Area",
-      "cast_range": 630.0,
+      "target_type": "Self",
+      "base_cast_range": 0,
+      "cast_range": 0,
       "duration": 12,
       "effects": [
         {
@@ -581,9 +843,27 @@
           "category": "AntiAir",
           "stack_group": "chongqing_skill",
           "stack_rule": "Refresh"
+        },
+        {
+          "scope": "AlliesInArea",
+          "stat": "ZeroDamageReloadProc",
+          "operation": "FlatAdd",
+          "value": 0.09,
+          "category": "All",
+          "stack_group": "chongqing_skill",
+          "stack_rule": "Refresh",
+          "proc_duration": 3
         }
       ],
-      "base_cast_range": 420.0
+      "implementation_status": "supported",
+      "unsupported_effects": [],
+      "base_effect_radius": 420,
+      "effect_radius": 630,
+      "description": "提供近海支援范围光，提升友军持续作战。",
+      "ai_tags": [
+        "Defense",
+        "AreaSupport"
+      ]
     }
   ]
 }

@@ -104,6 +104,16 @@ func cancel_interaction(facility_id: String, unit_id: String) -> Dictionary:
 	return {"accepted": true, "event": {"event_type": "FacilityInteractionInterrupted", "facility_id": facility_id, "unit_id": unit_id}}
 
 
+func active_interaction_for_unit(unit_id: String) -> Dictionary:
+	for facility_id in _sorted_ids():
+		var interaction: Dictionary = facilities_by_id[facility_id].get("interaction", {})
+		if str(interaction.get("unit_id", "")) == unit_id:
+			var result := interaction.duplicate(true)
+			result["facility_id"] = facility_id
+			return result
+	return {}
+
+
 func request_support(facility_id: String, mission_id: String, faction_id: String, target_position: Vector2, elapsed_time: float, environment_context: Dictionary = {}) -> Dictionary:
 	var facility: Dictionary = facilities_by_id.get(facility_id, {})
 	var definition: Dictionary = definition_for(facility_id)
@@ -157,10 +167,11 @@ func advance(delta: float, elapsed_time: float, units_by_id: Dictionary) -> Arra
 			continue
 		var unit: Dictionary = units_by_id.get(str(interaction.get("unit_id", "")), {})
 		if unit.is_empty() or unit.get("life_state") != "Alive" or str(facility.get("life_state", "")) != "Alive" or str(facility.get("operation_state", "")) == "Suppressed" or not Geometry2D.is_point_in_polygon(unit["position"], _polygon(facility.get("interaction_water_polygon", []))):
+			var reason_code := "UNIT_UNAVAILABLE" if unit.is_empty() or unit.get("life_state") != "Alive" else ("FACILITY_UNAVAILABLE" if str(facility.get("life_state", "")) != "Alive" or str(facility.get("operation_state", "")) == "Suppressed" else "UNIT_LEFT_INTERACTION_AREA")
 			if str(interaction.get("interaction_type", "")) in ["Activate", "Seize"] and str(facility.get("operation_state", "")) == "Activating":
 				facility["operation_state"] = str(facility.get("previous_operation_state", "Dormant"))
 			facility["interaction"] = {}
-			events.append({"event_type": "FacilityInteractionInterrupted", "facility_id": facility_id, "unit_id": interaction.get("unit_id", "")})
+			events.append({"event_type": "FacilityInteractionInterrupted", "facility_id": facility_id, "unit_id": interaction.get("unit_id", ""), "reason_code": reason_code})
 			continue
 		interaction["progress"] = float(interaction.get("progress", 0.0)) + delta
 		if float(interaction["progress"]) + 0.001 < float(interaction.get("duration", 1.0)):

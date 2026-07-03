@@ -7,6 +7,11 @@
       "target_type": "Enemy",
       "cast_range": 1095.0,
       "duration": 1.0,
+      "description": "进行高精度主炮射击。",
+      "design_values": "下一轮主炮散布 -35%；命中率 +20 个百分点；若目标 Heavy，穿甲补正 +8%",
+      "implementation_status": "supported",
+      "unsupported_effects": [],
+      "ai_tags": ["Burst", "TargetAttack"],
       "effects": [
         {
           "scope": "Self",
@@ -15,7 +20,24 @@
           "value": 0.2,
           "category": "Gun",
           "stack_group": "warspite_skill",
-          "stack_rule": "Refresh"
+          "stack_rule": "Refresh",
+          "consume_on_fire": true,
+          "persistent_until_consumed": true,
+          "consume_weapon_group_id": "warspite_main",
+          "bind_selected_target": true
+        },
+        {
+          "scope": "Self",
+          "stat": "WeaponSpread",
+          "operation": "PercentAdd",
+          "value": -0.35,
+          "category": "Gun",
+          "stack_group": "warspite_skill",
+          "stack_rule": "Refresh",
+          "consume_on_fire": true,
+          "persistent_until_consumed": true,
+          "consume_weapon_group_id": "warspite_main",
+          "bind_selected_target": true
         },
         {
           "scope": "Self",
@@ -24,7 +46,12 @@
           "value": 0.08,
           "category": "Gun",
           "stack_group": "warspite_skill",
-          "stack_rule": "Refresh"
+          "stack_rule": "Refresh",
+          "consume_on_fire": true,
+          "persistent_until_consumed": true,
+          "consume_weapon_group_id": "warspite_main",
+          "bind_selected_target": true,
+          "target_armor_classes": ["Heavy"]
         }
       ],
       "base_cast_range": 730.0
@@ -36,6 +63,10 @@
       "target_type": "Enemy",
       "cast_range": 1095.0,
       "duration": 8.0,
+      "description": "锁定高价值目标并提升穿甲效果。",
+      "implementation_status": "supported",
+      "unsupported_effects": [],
+      "ai_tags": ["Burst", "Defense", "TargetAttack"],
       "effects": [
         {
           "scope": "Self",
@@ -44,7 +75,8 @@
           "value": 0.12,
           "category": "Gun",
           "stack_group": "bismarck_skill",
-          "stack_rule": "Refresh"
+          "stack_rule": "Refresh",
+          "bind_selected_target": true
         },
         {
           "scope": "Self",
@@ -53,7 +85,8 @@
           "value": 0.15,
           "category": "Gun",
           "stack_group": "bismarck_skill",
-          "stack_rule": "Refresh"
+          "stack_rule": "Refresh",
+          "bind_selected_target": true
         },
         {
           "scope": "Self",
@@ -74,6 +107,12 @@
       "target_type": "Area",
       "cast_range": 720.0,
       "duration": 10.0,
+      "effect_radius": 270.0,
+      "base_effect_radius": 180.0,
+      "description": "用探照灯标记敌人并鼓舞友军。",
+      "implementation_status": "supported",
+      "unsupported_effects": [],
+      "ai_tags": ["Recon", "AreaSupport", "Control"],
       "effects": [
         {
           "scope": "AlliesInArea",
@@ -103,6 +142,10 @@
       "target_type": "Self",
       "cast_range": 0,
       "duration": 10.0,
+      "description": "开启精密火控，压制中距离敌人。",
+      "implementation_status": "supported",
+      "unsupported_effects": [],
+      "ai_tags": ["Burst"],
       "effects": [
         {
           "scope": "Self",
@@ -115,12 +158,22 @@
         },
         {
           "scope": "Self",
-          "stat": "AccuracyPoint",
-          "operation": "FlatAdd",
-          "value": 0.08,
+          "stat": "WeaponSpread",
+          "operation": "PercentAdd",
+          "value": -0.25,
           "category": "Gun",
           "stack_group": "hindenburg_skill",
           "stack_rule": "Refresh"
+        },
+        {
+          "scope": "Self",
+          "stat": "ArmorDamageModifier",
+          "operation": "PercentAdd",
+          "value": 0.08,
+          "category": "Gun",
+          "stack_group": "hindenburg_skill",
+          "stack_rule": "Refresh",
+          "target_armor_classes": ["Medium", "Heavy"]
         }
       ],
       "base_cast_range": 0.0
@@ -132,6 +185,10 @@
       "target_type": "Self",
       "cast_range": 0,
       "duration": 20.0,
+      "description": "发射超密集高速鱼雷。",
+      "implementation_status": "supported",
+      "unsupported_effects": [],
+      "ai_tags": ["Burst", "Torpedo"],
       "effects": [
         {
           "scope": "Self",
@@ -140,7 +197,10 @@
           "value": 5.0,
           "category": "Torpedo",
           "stack_group": "shimakaze_skill",
-          "stack_rule": "Replace"
+          "stack_rule": "Replace",
+          "consume_on_fire": true,
+          "persistent_until_consumed": true,
+          "consume_weapon_group_id": "shimakaze_torpedo"
         },
         {
           "scope": "Self",
@@ -149,7 +209,22 @@
           "value": 0.15,
           "category": "Torpedo",
           "stack_group": "shimakaze_skill",
-          "stack_rule": "Refresh"
+          "stack_rule": "Refresh",
+          "consume_on_fire": true,
+          "persistent_until_consumed": true,
+          "consume_weapon_group_id": "shimakaze_torpedo"
+        },
+        {
+          "scope": "Self",
+          "stat": "ReloadTime",
+          "operation": "FlatAdd",
+          "value": 4.0,
+          "category": "Torpedo",
+          "stack_group": "shimakaze_skill",
+          "stack_rule": "Refresh",
+          "consume_on_fire": true,
+          "persistent_until_consumed": true,
+          "consume_weapon_group_id": "shimakaze_torpedo"
         }
       ],
       "base_cast_range": 0.0
@@ -161,6 +236,10 @@
       "target_type": "Self",
       "cast_range": 0,
       "duration": 10.0,
+      "description": "进行训练式潜航伏击。",
+      "implementation_status": "supported",
+      "unsupported_effects": [],
+      "ai_tags": ["Concealment", "Burst", "Torpedo"],
       "effects": [
         {
           "scope": "Self",
@@ -169,7 +248,8 @@
           "value": 0.85,
           "category": "All",
           "stack_group": "hai_shih_skill",
-          "stack_rule": "Refresh"
+          "stack_rule": "Refresh",
+          "requires_submerged": true
         },
         {
           "scope": "Self",
@@ -177,6 +257,18 @@
           "operation": "PercentAdd",
           "value": 0.12,
           "category": "Torpedo",
+          "stack_group": "hai_shih_skill",
+          "stack_rule": "Refresh",
+          "consume_on_fire": true,
+          "persistent_until_consumed": true,
+          "consume_weapon_group_id": "hai_shih_torpedo"
+        },
+        {
+          "scope": "Self",
+          "stat": "OxygenConsumptionRate",
+          "operation": "PercentAdd",
+          "value": 0.2,
+          "category": "All",
           "stack_group": "hai_shih_skill",
           "stack_rule": "Refresh"
         }

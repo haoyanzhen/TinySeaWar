@@ -84,6 +84,13 @@ func _run() -> void:
 	var latest_enemy_shots := int(latest_run.get("units", {}).get("unit.enemy.bismarck", {}).get("shots", 0))
 	_check(latest_player_shots > 0 and latest_enemy_shots > 0, "latest runtime AI drives primary and automatic fire for both factions")
 	_check(latest_run.get("end_state", "") == "Finished", "latest runtime AI battle reaches a normal result")
+	var behavior: Dictionary = latest_ai.get("aggregate", {}).get("ai_behavior", {})
+	_check(float(behavior.get("fire_commitments", 0.0)) > 0.0, "AI behavior aggregate records fire commitments")
+	_check(behavior.has("mode_switches_per_minute") and behavior.has("tactic_switches_per_minute"), "AI behavior aggregate reports normalized switch rates")
+	_check(behavior.has("overkill_ratio") and float(behavior.get("overkill_ratio", -1.0)) >= 0.0, "AI behavior aggregate reports overkill ratio")
+	_check(latest_run.get("ai_behavior", {}).has("mode_dwell_seconds"), "individual run retains mode dwell evidence")
+	_check(latest_run.get("ai_behavior", {}).has("route_unavailable"), "individual run retains unavailable-route evidence")
+	_check(not latest_run.get("unit_end_states", {}).is_empty(), "individual run retains final movement evidence")
 	if failures.is_empty():
 		print("PASS: %d battle simulator checks" % checks)
 		quit(0)

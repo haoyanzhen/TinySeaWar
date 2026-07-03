@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "experiment_id": "sim.latest_ai.harbor_3v3",
+  "description": "港湾 3v3 双方标准运行时 AI，设施、地形、掩体、路线与恢复专项",
+  "simulation_kind": "PolicyEvaluation",
+  "player_policy_id": "LatestRuntimeAI",
+  "enemy_policy_id": "LatestRuntimeAI",
+  "ai_profile_id": "ai.profile.standard",
+  "side_swap": false,
+  "tick_seconds": 0.1,
+  "maximum_ticks": 4300,
+  "seed_plan": {"type": "SequentialRange", "start": 6201, "count": 20},
+  "scenarios": [
+    {"scenario_id": "harbor_3v3", "level_definition_id": "level.prototype_harbor_3v3", "maximum_ticks": 4300}
+  ],
+  "output_directory": "res://artifacts/simulations/sim.latest_ai.harbor_3v3"
+}

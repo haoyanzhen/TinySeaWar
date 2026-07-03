@@ -14,6 +14,8 @@ func run_experiment(registry, manifest: Dictionary) -> Dictionary:
 	for scenario in manifest.get("scenarios", []):
 		if registry.get_definition("levels", str(scenario.get("level_definition_id", ""))).is_empty():
 			errors.append("Unknown level_definition_id: %s" % scenario.get("level_definition_id", ""))
+	if registry.get_definition("ai_profiles", str(manifest.get("ai_profile_id", "ai.profile.standard"))).is_empty():
+		errors.append("Unknown ai_profile_id: %s" % manifest.get("ai_profile_id", ""))
 	if not errors.is_empty():
 		return {"ok": false, "errors": errors, "runs": [], "aggregate": {}}
 	var started_usec := Time.get_ticks_usec()
@@ -39,6 +41,7 @@ func run_experiment(registry, manifest: Dictionary) -> Dictionary:
 			"maximum_ticks": int(manifest.get("maximum_ticks", 1)),
 			"side_swap": bool(manifest.get("side_swap", false)),
 			"ai_mode_locks": manifest.get("ai_mode_locks", {}).duplicate(true),
+			"ai_profile_id": str(manifest.get("ai_profile_id", "ai.profile.standard")),
 			"godot_version": Engine.get_version_info().get("string", "unknown"),
 			"executed_at": Time.get_datetime_string_from_system(false, true),
 			"wall_time_seconds": elapsed_seconds,
@@ -72,6 +75,9 @@ func _run_battle(registry, manifest: Dictionary, scenario: Dictionary, seed_valu
 	if _policy_for_faction(manifest, "enemy") == "LatestRuntimeAI": full_ai_factions.append("enemy")
 	if not full_ai_factions.is_empty():
 		session.configure_full_ai_factions(full_ai_factions)
+	var profile_result := session.configure_ai_profile(str(manifest.get("ai_profile_id", "ai.profile.standard")))
+	if not bool(profile_result.get("accepted", false)):
+		return {"run_id": run_id, "scenario_id": scenario_id, "seed": seed_value, "side_variant": side_variant, "end_state": "CreationFailure", "errors": [profile_result.get("reason_code", "AI_PROFILE_NOT_FOUND")]}
 	var ai_mode_locks: Dictionary = manifest.get("ai_mode_locks", {})
 	if not ai_mode_locks.is_empty():
 		session.configure_ai_mode_locks(ai_mode_locks)
@@ -112,9 +118,32 @@ func _run_battle(registry, manifest: Dictionary, scenario: Dictionary, seed_valu
 		"first_sinking_time": float(stats.get("first_sinking_time", -1.0)),
 		"commands": int(stats.get("commands", 0)),
 		"skill_casts": int(stats.get("skill_casts", 0)),
+		"ai_behavior": stats.get("ai_behavior", {}).duplicate(true),
 		"fleet_health": fleet_health,
+		"unit_end_states": _unit_end_states(session.state),
 		"units": unit_damage_statistics,
 	}
+
+
+func _unit_end_states(battle_state: Dictionary) -> Dictionary:
+	var result := {}
+	var unit_ids: Array = battle_state.get("units_by_id", {}).keys()
+	unit_ids.sort()
+	for unit_id in unit_ids:
+		var unit: Dictionary = battle_state["units_by_id"][unit_id]
+		result[str(unit_id)] = {
+			"definition_id": unit.get("definition_id", ""),
+			"faction_id": unit.get("faction_id", ""),
+			"life_state": unit.get("life_state", ""),
+			"position": unit.get("position", Vector2.ZERO),
+			"movement_mode": unit.get("movement_state", {}).get("mode", ""),
+			"movement_target": unit.get("movement_state", {}).get("target_position", unit.get("position", Vector2.ZERO)),
+			"ai_mode": unit.get("ai_state", {}).get("mode_id", ""),
+			"ai_tactic": unit.get("ai_state", {}).get("tactic_id", ""),
+			"level_task": unit.get("ai_state", {}).get("level_task", ""),
+			"active_interrupt": unit.get("ai_state", {}).get("active_interrupt", ""),
+		}
+	return result
 
 
 func _registry_for_side_variant(registry, level_id: String, side_variant: String):

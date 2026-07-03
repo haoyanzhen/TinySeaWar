@@ -4,8 +4,9 @@
       "id": "skill.fletcher_fleet_hunter_screen",
       "display_name": "舰队猎潜幕",
       "cooldown": 36.0,
-      "target_type": "Area",
-      "cast_range": 420.0,
+      "target_type": "Self",
+      "base_cast_range": 0,
+      "cast_range": 0,
       "duration": 10.0,
       "description": "建立基础驱逐警戒幕并强化反潜。",
       "design_values": "侦查 +55；反潜伤害 +18%；自身鱼雷发现距离 +60",
@@ -41,14 +42,21 @@
       "implementation_status": "supported",
       "unsupported_effects": [],
       "vfx_id": "fletcher.fleet_hunter_screen",
-      "base_cast_range": 280.0
+      "effect_radius": 420,
+      "ai_tags": [
+        "Recon",
+        "AntiSubmarine",
+        "TorpedoWarning",
+        "Defense"
+      ]
     },
     {
       "id": "skill.cleveland_layered_aa_net",
       "display_name": "层叠防空网",
       "cooldown": 36.0,
-      "target_type": "Area",
-      "cast_range": 495.0,
+      "target_type": "Self",
+      "base_cast_range": 0,
+      "cast_range": 0,
       "duration": 10.0,
       "description": "两用炮与近程防空分层拦截。",
       "design_values": "防空装填速度 +30%；防空伤害 +18%；防空半径 +50",
@@ -70,20 +78,31 @@
           "category": "AntiAir",
           "stack_group": "cleveland_skill",
           "stack_rule": "Refresh"
+        },
+        {
+          "scope": "Self",
+          "stat": "WeaponRange",
+          "operation": "FlatAdd",
+          "value": 50,
+          "category": "AntiAir",
+          "stack_group": "cleveland_skill",
+          "stack_rule": "Refresh"
         }
       ],
-      "implementation_status": "partial",
-      "unsupported_effects": [
-        "anti_air_radius"
-      ],
+      "implementation_status": "supported",
+      "unsupported_effects": [],
       "vfx_id": "cleveland.layered_aa_net",
-      "base_cast_range": 330.0
+      "ai_tags": [
+        "AntiAir",
+        "Defense"
+      ]
     },
     {
       "id": "skill.baltimore_radar_ap_calibration",
       "display_name": "雷达穿甲校射",
       "cooldown": 42.0,
-      "target_type": "Area",
+      "target_type": "Enemy",
+      "base_cast_range": 600.0,
       "cast_range": 900.0,
       "duration": 9.0,
       "description": "以雷达校准下一轮穿甲齐射。",
@@ -96,7 +115,24 @@
           "value": 0.18,
           "category": "Gun",
           "stack_group": "baltimore_skill",
-          "stack_rule": "Refresh"
+          "stack_rule": "Refresh",
+          "consume_on_fire": true,
+          "persistent_until_consumed": true,
+          "consume_weapon_group_id": "baltimore_main",
+          "bind_selected_target": true
+        },
+        {
+          "scope": "Self",
+          "stat": "WeaponSpread",
+          "operation": "PercentAdd",
+          "value": -0.24,
+          "category": "Gun",
+          "stack_group": "baltimore_skill",
+          "stack_rule": "Refresh",
+          "consume_on_fire": true,
+          "persistent_until_consumed": true,
+          "consume_weapon_group_id": "baltimore_main",
+          "bind_selected_target": true
         },
         {
           "scope": "Self",
@@ -105,23 +141,31 @@
           "value": 0.12,
           "category": "Gun",
           "stack_group": "baltimore_skill",
-          "stack_rule": "Refresh"
+          "stack_rule": "Refresh",
+          "consume_on_fire": true,
+          "persistent_until_consumed": true,
+          "consume_weapon_group_id": "baltimore_main",
+          "bind_selected_target": true,
+          "target_armor_classes": [
+            "Medium",
+            "Heavy"
+          ]
         }
       ],
-      "implementation_status": "partial",
-      "unsupported_effects": [
-        "next_salvo_only",
-        "weapon_spread",
-        "target_armor_class_modifier"
-      ],
+      "implementation_status": "supported",
+      "unsupported_effects": [],
       "vfx_id": "baltimore.radar_ap_calibration",
-      "base_cast_range": 600.0
+      "ai_tags": [
+        "Burst",
+        "TargetAttack"
+      ]
     },
     {
       "id": "skill.wahoo_continuous_hunt",
       "display_name": "连续猎杀",
       "cooldown": 40.0,
       "target_type": "Self",
+      "base_cast_range": 0,
       "cast_range": 0,
       "duration": 12.0,
       "description": "以高风险方式缩短伏击循环。",
@@ -143,22 +187,36 @@
           "value": 0.12,
           "category": "Torpedo",
           "stack_group": "wahoo_skill",
+          "stack_rule": "Refresh",
+          "consume_on_fire": true,
+          "persistent_until_consumed": true,
+          "consume_weapon_group_id": "wahoo_torpedo"
+        },
+        {
+          "scope": "Self",
+          "stat": "OxygenConsumptionRate",
+          "operation": "PercentAdd",
+          "value": 0.35,
+          "category": "All",
+          "stack_group": "wahoo_skill",
           "stack_rule": "Refresh"
         }
       ],
-      "implementation_status": "partial",
-      "unsupported_effects": [
-        "oxygen_consumption"
-      ],
+      "implementation_status": "supported",
+      "unsupported_effects": [],
       "vfx_id": "wahoo.continuous_hunt",
-      "base_cast_range": 0.0
+      "ai_tags": [
+        "Burst",
+        "Torpedo"
+      ]
     },
     {
       "id": "skill.jervis_flotilla_leader",
       "display_name": "舰队领舰",
       "cooldown": 40.0,
-      "target_type": "Area",
-      "cast_range": 495.0,
+      "target_type": "Self",
+      "base_cast_range": 0,
+      "cast_range": 0,
       "duration": 10.0,
       "description": "提升附近驱逐与轻巡的基础机动协同。",
       "design_values": "友军转向 +10%；航速 +6%；鱼雷散布 -8%",
@@ -170,7 +228,11 @@
           "value": 0.1,
           "category": "All",
           "stack_group": "jervis_skill",
-          "stack_rule": "Refresh"
+          "stack_rule": "Refresh",
+          "recipient_ship_classes": [
+            "Destroyer",
+            "LightCruiser"
+          ]
         },
         {
           "scope": "AlliesInArea",
@@ -179,22 +241,41 @@
           "value": 0.06,
           "category": "All",
           "stack_group": "jervis_skill",
-          "stack_rule": "Refresh"
+          "stack_rule": "Refresh",
+          "recipient_ship_classes": [
+            "Destroyer",
+            "LightCruiser"
+          ]
+        },
+        {
+          "scope": "AlliesInArea",
+          "stat": "WeaponSpread",
+          "operation": "PercentAdd",
+          "value": -0.08,
+          "category": "Torpedo",
+          "stack_group": "jervis_skill",
+          "stack_rule": "Refresh",
+          "recipient_ship_classes": [
+            "Destroyer",
+            "LightCruiser"
+          ]
         }
       ],
-      "implementation_status": "partial",
-      "unsupported_effects": [
-        "torpedo_spread",
-        "class_filtered_aura"
-      ],
+      "implementation_status": "supported",
+      "unsupported_effects": [],
       "vfx_id": "jervis.flotilla_leader",
-      "base_cast_range": 330.0
+      "effect_radius": 495,
+      "ai_tags": [
+        "Mobility",
+        "AreaSupport"
+      ]
     },
     {
       "id": "skill.belfast_radar_suppression",
       "display_name": "雷达压制",
       "cooldown": 42.0,
       "target_type": "Area",
+      "base_cast_range": 500.0,
       "cast_range": 750.0,
       "duration": 10.0,
       "description": "暴露区域内目标并支援炮击。",
@@ -217,20 +298,33 @@
           "category": "Gun",
           "stack_group": "belfast_skill",
           "stack_rule": "Refresh"
+        },
+        {
+          "scope": "Self",
+          "stat": "FiringRevealMultiplier",
+          "operation": "PercentAdd",
+          "value": -0.1,
+          "category": "All",
+          "stack_group": "belfast_skill",
+          "stack_rule": "Refresh"
         }
       ],
-      "implementation_status": "partial",
-      "unsupported_effects": [
-        "fire_reveal_multiplier"
-      ],
+      "implementation_status": "supported",
+      "unsupported_effects": [],
       "vfx_id": "belfast.radar_suppression",
-      "base_cast_range": 500.0
+      "effect_radius": 240,
+      "ai_tags": [
+        "Recon",
+        "Control",
+        "AreaSupport"
+      ]
     },
     {
       "id": "skill.illustrious_armored_flight_deck",
       "display_name": "装甲飞行甲板",
       "cooldown": 46.0,
       "target_type": "Self",
+      "base_cast_range": 0,
       "cast_range": 0,
       "duration": 12.0,
       "description": "强化本体防护并稳定舰载机出击。",
@@ -247,6 +341,15 @@
         },
         {
           "scope": "Self",
+          "stat": "AircraftHP",
+          "operation": "PercentAdd",
+          "value": 0.22,
+          "category": "Aviation",
+          "stack_group": "illustrious_skill",
+          "stack_rule": "Refresh"
+        },
+        {
+          "scope": "Self",
           "stat": "ReloadSpeed",
           "operation": "PercentAdd",
           "value": -0.1,
@@ -255,18 +358,20 @@
           "stack_rule": "Refresh"
         }
       ],
-      "implementation_status": "partial",
-      "unsupported_effects": [
-        "aircraft_hp"
-      ],
+      "implementation_status": "supported",
+      "unsupported_effects": [],
       "vfx_id": "illustrious.armored_flight_deck",
-      "base_cast_range": 0.0
+      "ai_tags": [
+        "Defense",
+        "Aviation"
+      ]
     },
     {
       "id": "skill.upholder_coastal_ambush",
       "display_name": "近海伏击",
       "cooldown": 34.0,
       "target_type": "Self",
+      "base_cast_range": 0,
       "cast_range": 0,
       "duration": 10.0,
       "description": "在短距离内提高雷击把握。",
@@ -279,7 +384,8 @@
           "value": 0.82,
           "category": "All",
           "stack_group": "upholder_skill",
-          "stack_rule": "Refresh"
+          "stack_rule": "Refresh",
+          "requires_submerged": true
         },
         {
           "scope": "Self",
@@ -289,21 +395,31 @@
           "category": "Torpedo",
           "stack_group": "upholder_skill",
           "stack_rule": "Refresh"
+        },
+        {
+          "scope": "Self",
+          "stat": "WeaponSpread",
+          "operation": "PercentAdd",
+          "value": -0.12,
+          "category": "Torpedo",
+          "stack_group": "upholder_skill",
+          "stack_rule": "Refresh"
         }
       ],
-      "implementation_status": "partial",
-      "unsupported_effects": [
-        "submerged_only_concealment",
-        "torpedo_spread"
-      ],
+      "implementation_status": "supported",
+      "unsupported_effects": [],
       "vfx_id": "upholder.coastal_ambush",
-      "base_cast_range": 0.0
+      "ai_tags": [
+        "Concealment",
+        "Torpedo"
+      ]
     },
     {
       "id": "skill.tashkent_blue_cruiser",
       "display_name": "蓝色巡洋舰",
       "cooldown": 38.0,
       "target_type": "Self",
+      "base_cast_range": 0,
       "cast_range": 0,
       "duration": 8.0,
       "description": "高速航行中强化驱逐领舰炮火。",
@@ -340,18 +456,31 @@
       "implementation_status": "supported",
       "unsupported_effects": [],
       "vfx_id": "tashkent.blue_cruiser",
-      "base_cast_range": 0.0
+      "ai_tags": [
+        "Burst",
+        "Mobility"
+      ]
     },
     {
       "id": "skill.chapayev_long_range_fire_control",
       "display_name": "远程火控站",
       "cooldown": 40.0,
-      "target_type": "Area",
-      "cast_range": 855.0,
+      "target_type": "Self",
+      "base_cast_range": 0,
+      "cast_range": 0,
       "duration": 10.0,
       "description": "提升中远距离持续炮击精度。",
       "design_values": "主炮散布 -24%；命中率 +9 个百分点；开火破隐比例 +12%",
       "effects": [
+        {
+          "scope": "Self",
+          "stat": "WeaponSpread",
+          "operation": "PercentAdd",
+          "value": -0.24,
+          "category": "Gun",
+          "stack_group": "chapayev_skill",
+          "stack_rule": "Refresh"
+        },
         {
           "scope": "Self",
           "stat": "AccuracyPoint",
@@ -360,21 +489,30 @@
           "category": "Gun",
           "stack_group": "chapayev_skill",
           "stack_rule": "Refresh"
+        },
+        {
+          "scope": "Self",
+          "stat": "FiringRevealMultiplier",
+          "operation": "PercentAdd",
+          "value": 0.12,
+          "category": "All",
+          "stack_group": "chapayev_skill",
+          "stack_rule": "Refresh"
         }
       ],
-      "implementation_status": "partial",
-      "unsupported_effects": [
-        "weapon_spread",
-        "fire_reveal_multiplier"
-      ],
+      "implementation_status": "supported",
+      "unsupported_effects": [],
       "vfx_id": "chapayev.long_range_fire_control",
-      "base_cast_range": 570.0
+      "ai_tags": [
+        "Burst"
+      ]
     },
     {
       "id": "skill.gangut_steel_line",
       "display_name": "钢铁阵线",
       "cooldown": 52.0,
       "target_type": "Self",
+      "base_cast_range": 0,
       "cast_range": 0,
       "duration": 10.0,
       "description": "降低机动换取旧式装甲和稳定齐射。",
@@ -406,21 +544,32 @@
           "category": "All",
           "stack_group": "gangut_skill",
           "stack_rule": "Refresh"
+        },
+        {
+          "scope": "Self",
+          "stat": "WeaponSpread",
+          "operation": "PercentAdd",
+          "value": -0.1,
+          "category": "Gun",
+          "stack_group": "gangut_skill",
+          "stack_rule": "Refresh"
         }
       ],
-      "implementation_status": "partial",
-      "unsupported_effects": [
-        "weapon_spread"
-      ],
+      "implementation_status": "supported",
+      "unsupported_effects": [],
       "vfx_id": "gangut.steel_line",
-      "base_cast_range": 0.0
+      "ai_tags": [
+        "Defense",
+        "Burst"
+      ]
     },
     {
       "id": "skill.k_21_polar_tracking",
       "display_name": "极地追踪",
       "cooldown": 38.0,
-      "target_type": "Area",
-      "cast_range": 630.0,
+      "target_type": "Self",
+      "base_cast_range": 0,
+      "cast_range": 0,
       "duration": 12.0,
       "description": "扩大潜航侦查并准备远程伏击。",
       "design_values": "侦查 +80；下一轮鱼雷命中碰撞半径 +8%；鱼雷速度 -8%",
@@ -441,7 +590,10 @@
           "value": 8,
           "category": "Torpedo",
           "stack_group": "k21_skill",
-          "stack_rule": "Refresh"
+          "stack_rule": "Refresh",
+          "consume_on_fire": true,
+          "persistent_until_consumed": true,
+          "consume_weapon_group_id": "k_21_torpedo"
         },
         {
           "scope": "Self",
@@ -453,18 +605,20 @@
           "stack_rule": "Refresh"
         }
       ],
-      "implementation_status": "partial",
-      "unsupported_effects": [
-        "next_salvo_only"
-      ],
+      "implementation_status": "supported",
+      "unsupported_effects": [],
       "vfx_id": "k_21.polar_tracking",
-      "base_cast_range": 420.0
+      "ai_tags": [
+        "Recon",
+        "Torpedo"
+      ]
     },
     {
       "id": "skill.z23_gun_torpedo_conversion",
       "display_name": "重炮雷击转换",
       "cooldown": 36.0,
       "target_type": "Self",
+      "base_cast_range": 0,
       "cast_range": 0,
       "duration": 10.0,
       "description": "在重炮压制与雷击窗口间切换。",
@@ -481,6 +635,18 @@
         },
         {
           "scope": "Self",
+          "stat": "WeaponSpread",
+          "operation": "PercentAdd",
+          "value": -0.15,
+          "category": "Torpedo",
+          "stack_group": "z23_skill",
+          "stack_rule": "Refresh",
+          "consume_on_fire": true,
+          "persistent_until_consumed": true,
+          "consume_weapon_group_id": "z23_torpedo"
+        },
+        {
+          "scope": "Self",
           "stat": "Speed",
           "operation": "PercentAdd",
           "value": -0.08,
@@ -489,19 +655,20 @@
           "stack_rule": "Refresh"
         }
       ],
-      "implementation_status": "partial",
-      "unsupported_effects": [
-        "torpedo_spread",
-        "next_salvo_only"
-      ],
+      "implementation_status": "supported",
+      "unsupported_effects": [],
       "vfx_id": "z23.gun_torpedo_conversion",
-      "base_cast_range": 0.0
+      "ai_tags": [
+        "Burst",
+        "Torpedo"
+      ]
     },
     {
       "id": "skill.nurnberg_stern_evasion_fire",
       "display_name": "艉向规避射击",
       "cooldown": 36.0,
       "target_type": "Self",
+      "base_cast_range": 0,
       "cast_range": 0,
       "duration": 8.0,
       "description": "转向脱离时维持基础主炮输出。",
@@ -538,13 +705,17 @@
       "implementation_status": "supported",
       "unsupported_effects": [],
       "vfx_id": "nurnberg.stern_evasion_fire",
-      "base_cast_range": 0.0
+      "ai_tags": [
+        "Defense",
+        "Mobility"
+      ]
     },
     {
       "id": "skill.scharnhorst_high_speed_interception",
       "display_name": "高速截击",
       "cooldown": 46.0,
-      "target_type": "Area",
+      "target_type": "Enemy",
+      "base_cast_range": 720.0,
       "cast_range": 1080.0,
       "duration": 10.0,
       "description": "追击巡洋舰并进行快速齐射。",
@@ -567,20 +738,37 @@
           "category": "Gun",
           "stack_group": "scharnhorst_skill",
           "stack_rule": "Refresh"
+        },
+        {
+          "scope": "Self",
+          "stat": "ArmorDamageModifier",
+          "operation": "PercentAdd",
+          "value": 0.12,
+          "category": "Gun",
+          "stack_group": "scharnhorst_skill",
+          "stack_rule": "Refresh",
+          "bind_selected_target": true,
+          "target_armor_classes": [
+            "Light",
+            "Medium"
+          ]
         }
       ],
-      "implementation_status": "partial",
-      "unsupported_effects": [
-        "target_armor_class_modifier"
-      ],
+      "implementation_status": "supported",
+      "unsupported_effects": [],
       "vfx_id": "scharnhorst.high_speed_interception",
-      "base_cast_range": 720.0
+      "ai_tags": [
+        "Burst",
+        "TargetAttack",
+        "Mobility"
+      ]
     },
     {
       "id": "skill.graf_zeppelin_experimental_air_wing",
       "display_name": "试验航空联队",
       "cooldown": 44.0,
       "target_type": "Area",
+      "base_cast_range": 730.0,
       "cast_range": 1095.0,
       "duration": 12.0,
       "description": "派出试验编队并强化本体自卫。",
@@ -597,6 +785,15 @@
         },
         {
           "scope": "Self",
+          "stat": "AircraftHP",
+          "operation": "PercentAdd",
+          "value": 0.1,
+          "category": "Aviation",
+          "stack_group": "graf_skill",
+          "stack_rule": "Refresh"
+        },
+        {
+          "scope": "Self",
           "stat": "ReloadSpeed",
           "operation": "PercentAdd",
           "value": 0.2,
@@ -605,19 +802,27 @@
           "stack_rule": "Refresh"
         }
       ],
-      "implementation_status": "partial",
-      "unsupported_effects": [
-        "aircraft_hp"
-      ],
+      "implementation_status": "supported",
+      "unsupported_effects": [],
       "vfx_id": "graf_zeppelin.experimental_air_wing",
-      "base_cast_range": 730.0
+      "effect_radius": 65,
+      "ai_tags": [
+        "Aviation",
+        "AreaAttack"
+      ],
+      "triggered_attacks": [
+        {
+          "weapon_id": "weapon.graf_zeppelin_bomber"
+        }
+      ]
     },
     {
       "id": "skill.akizuki_long_ten_cm_air_guard",
       "display_name": "长十厘米护空",
       "cooldown": 38.0,
-      "target_type": "Area",
-      "cast_range": 450.0,
+      "target_type": "Self",
+      "base_cast_range": 0,
+      "cast_range": 0,
       "duration": 9.0,
       "description": "以两用炮保护附近友军。",
       "design_values": "防空伤害 +18%；防空装填速度 +16%；友军航空伤害减免 10%",
@@ -653,14 +858,20 @@
       "implementation_status": "supported",
       "unsupported_effects": [],
       "vfx_id": "akizuki.long_ten_cm_air_guard",
-      "base_cast_range": 300.0
+      "effect_radius": 450,
+      "ai_tags": [
+        "AntiAir",
+        "Defense",
+        "AreaSupport"
+      ]
     },
     {
       "id": "skill.takao_night_torpedo",
       "display_name": "夜战雷击",
       "cooldown": 40.0,
-      "target_type": "Area",
-      "cast_range": 780.0,
+      "target_type": "Self",
+      "base_cast_range": 0,
+      "cast_range": 0,
       "duration": 1.0,
       "description": "隐蔽接近后发射重型鱼雷。",
       "design_values": "下一轮鱼雷伤害 +18%；鱼雷速度 +10%；发射后破隐比例 +22%",
@@ -672,7 +883,10 @@
           "value": 0.18,
           "category": "Torpedo",
           "stack_group": "takao_skill",
-          "stack_rule": "Refresh"
+          "stack_rule": "Refresh",
+          "consume_on_fire": true,
+          "persistent_until_consumed": true,
+          "consume_weapon_group_id": "takao_torpedo"
         },
         {
           "scope": "Self",
@@ -681,51 +895,117 @@
           "value": 0.1,
           "category": "Torpedo",
           "stack_group": "takao_skill",
-          "stack_rule": "Refresh"
+          "stack_rule": "Refresh",
+          "consume_on_fire": true,
+          "persistent_until_consumed": true,
+          "consume_weapon_group_id": "takao_torpedo"
+        },
+        {
+          "scope": "Self",
+          "stat": "FiringRevealMultiplier",
+          "operation": "PercentAdd",
+          "value": 0.22,
+          "category": "All",
+          "stack_group": "takao_skill",
+          "stack_rule": "Refresh",
+          "consume_on_fire": true,
+          "persistent_until_consumed": true,
+          "consume_weapon_group_id": "takao_torpedo"
         }
       ],
-      "implementation_status": "partial",
-      "unsupported_effects": [
-        "next_salvo_only",
-        "fire_reveal_multiplier"
-      ],
+      "implementation_status": "supported",
+      "unsupported_effects": [],
       "vfx_id": "takao.night_torpedo",
-      "base_cast_range": 520.0
+      "ai_tags": [
+        "Burst",
+        "Torpedo"
+      ]
     },
     {
       "id": "skill.shokaku_coordinated_strike_wave",
       "display_name": "协同攻击波",
       "cooldown": 46.0,
       "target_type": "Area",
+      "base_cast_range": 770.0,
       "cast_range": 1155.0,
       "duration": 14.0,
       "description": "轰炸机与鱼雷机错峰进入目标区。",
       "design_values": "2 波；航空伤害 +18%；第二波命中率 +8 个百分点；舰载机 HP +8%",
-      "effects": [
-        {
-          "scope": "Self",
-          "stat": "Damage",
-          "operation": "PercentAdd",
-          "value": 0.18,
-          "category": "Aviation",
-          "stack_group": "shokaku_skill",
-          "stack_rule": "Refresh"
-        }
-      ],
-      "implementation_status": "partial",
-      "unsupported_effects": [
-        "multi_wave_airstrike",
-        "second_wave_accuracy",
-        "aircraft_hp"
-      ],
+      "effects": [],
+      "implementation_status": "supported",
+      "unsupported_effects": [],
       "vfx_id": "shokaku.coordinated_strike_wave",
-      "base_cast_range": 770.0
+      "effect_radius": 75,
+      "ai_tags": [
+        "Aviation",
+        "AreaAttack",
+        "Burst"
+      ],
+      "triggered_attacks": [
+        {
+          "weapon_id": "weapon.shokaku_bomber",
+          "modifiers": [
+            {
+              "scope": "Self",
+              "stat": "Damage",
+              "operation": "PercentAdd",
+              "value": 0.18,
+              "category": "Aviation",
+              "stack_group": "shokaku_skill",
+              "stack_rule": "Refresh"
+            },
+            {
+              "scope": "Self",
+              "stat": "AircraftHP",
+              "operation": "PercentAdd",
+              "value": 0.08,
+              "category": "Aviation",
+              "stack_group": "shokaku_skill",
+              "stack_rule": "Refresh"
+            }
+          ]
+        },
+        {
+          "weapon_id": "weapon.shokaku_torpedo_bomber",
+          "charge_time": 2.0,
+          "modifiers": [
+            {
+              "scope": "Self",
+              "stat": "Damage",
+              "operation": "PercentAdd",
+              "value": 0.18,
+              "category": "Aviation",
+              "stack_group": "shokaku_skill",
+              "stack_rule": "Refresh"
+            },
+            {
+              "scope": "Self",
+              "stat": "AccuracyPoint",
+              "operation": "FlatAdd",
+              "value": 0.08,
+              "category": "Aviation",
+              "stack_group": "shokaku_skill",
+              "stack_rule": "Refresh"
+            },
+            {
+              "scope": "Self",
+              "stat": "AircraftHP",
+              "operation": "PercentAdd",
+              "value": 0.08,
+              "category": "Aviation",
+              "stack_group": "shokaku_skill",
+              "stack_rule": "Refresh"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "skill.i_19_floatplane_vanguard",
       "display_name": "水上机先导",
       "cooldown": 40.0,
       "target_type": "Area",
+      "base_cast_range": 760.0,
       "cast_range": 1140.0,
       "duration": 18.0,
       "description": "放出侦察机为远程鱼雷标定海域。",
@@ -738,7 +1018,8 @@
           "value": 0.1,
           "category": "Torpedo",
           "stack_group": "i19_skill",
-          "stack_rule": "Refresh"
+          "stack_rule": "Refresh",
+          "requires_scouted_target": true
         },
         {
           "scope": "Self",
@@ -747,23 +1028,33 @@
           "value": 8,
           "category": "Torpedo",
           "stack_group": "i19_skill",
-          "stack_rule": "Refresh"
+          "stack_rule": "Refresh",
+          "requires_scouted_target": true
         }
       ],
-      "implementation_status": "partial",
-      "unsupported_effects": [
-        "scout_aircraft_vision",
-        "scouted_target_condition"
-      ],
+      "implementation_status": "supported",
+      "unsupported_effects": [],
       "vfx_id": "i_19.floatplane_vanguard",
-      "base_cast_range": 760.0
+      "effect_radius": 600,
+      "ai_tags": [
+        "Recon",
+        "Torpedo"
+      ],
+      "recon_zones": [
+        {
+          "radius": 600,
+          "duration": 18,
+          "aircraft_hp": 350
+        }
+      ]
     },
     {
       "id": "skill.yat_sen_mobile_command_post",
       "display_name": "机动司令台",
       "cooldown": 36.0,
-      "target_type": "Area",
-      "cast_range": 480.0,
+      "target_type": "Self",
+      "base_cast_range": 0,
+      "cast_range": 0,
       "duration": 12.0,
       "description": "低成本提供侦查与火炮支援。",
       "design_values": "友军侦查 +55；火炮命中率 +5 个百分点；自身装甲 +6",
@@ -799,14 +1090,19 @@
       "implementation_status": "supported",
       "unsupported_effects": [],
       "vfx_id": "yat_sen.mobile_command_post",
-      "base_cast_range": 320.0
+      "effect_radius": 480,
+      "ai_tags": [
+        "Recon",
+        "AreaSupport"
+      ]
     },
     {
       "id": "skill.chang_chun_forward_escort",
       "display_name": "前出护航",
       "cooldown": 34.0,
-      "target_type": "Area",
-      "cast_range": 570.0,
+      "target_type": "Self",
+      "base_cast_range": 0,
+      "cast_range": 0,
       "duration": 12.0,
       "description": "提前发现威胁并维持炮火。",
       "design_values": "侦查 +75；小口径高爆装填速度 +16%；范围内友军闪避 +8",
@@ -842,13 +1138,18 @@
       "implementation_status": "supported",
       "unsupported_effects": [],
       "vfx_id": "chang_chun.forward_escort",
-      "base_cast_range": 380.0
+      "effect_radius": 570,
+      "ai_tags": [
+        "Recon",
+        "AreaSupport"
+      ]
     },
     {
       "id": "skill.dingyuan_ironclad_anchor",
       "display_name": "铁甲中坚",
       "cooldown": 52.0,
       "target_type": "Self",
+      "base_cast_range": 0,
       "cast_range": 0,
       "duration": 14.0,
       "description": "以低速铁甲姿态承担持续火力。",
@@ -880,20 +1181,34 @@
           "category": "All",
           "stack_group": "dingyuan_skill",
           "stack_rule": "Refresh"
+        },
+        {
+          "scope": "Self",
+          "stat": "WeaponSpread",
+          "operation": "PercentAdd",
+          "value": -0.2,
+          "category": "Gun",
+          "stack_group": "dingyuan_skill",
+          "stack_rule": "Refresh",
+          "consume_on_fire": true,
+          "persistent_until_consumed": true,
+          "consume_weapon_group_id": "dingyuan_main"
         }
       ],
-      "implementation_status": "partial",
-      "unsupported_effects": [
-        "next_salvo_spread"
-      ],
+      "implementation_status": "supported",
+      "unsupported_effects": [],
       "vfx_id": "dingyuan.ironclad_anchor",
-      "base_cast_range": 0.0
+      "ai_tags": [
+        "Defense",
+        "Burst"
+      ]
     },
     {
       "id": "skill.hai_lung_endurance_training",
       "display_name": "长航潜训",
       "cooldown": 42.0,
       "target_type": "Self",
+      "base_cast_range": 0,
       "cast_range": 0,
       "duration": 16.0,
       "description": "降低输出换取更长潜航窗口。",
@@ -901,12 +1216,22 @@
       "effects": [
         {
           "scope": "Self",
+          "stat": "OxygenConsumptionRate",
+          "operation": "PercentAdd",
+          "value": -0.3,
+          "category": "All",
+          "stack_group": "hai_lung_skill",
+          "stack_rule": "Refresh"
+        },
+        {
+          "scope": "Self",
           "stat": "Speed",
           "operation": "PercentAdd",
           "value": 0.1,
           "category": "All",
           "stack_group": "hai_lung_skill",
-          "stack_rule": "Refresh"
+          "stack_rule": "Refresh",
+          "requires_submerged": true
         },
         {
           "scope": "Self",
@@ -918,13 +1243,13 @@
           "stack_rule": "Refresh"
         }
       ],
-      "implementation_status": "partial",
-      "unsupported_effects": [
-        "oxygen_consumption",
-        "submerged_only_speed"
-      ],
+      "implementation_status": "supported",
+      "unsupported_effects": [],
       "vfx_id": "hai_lung.endurance_training",
-      "base_cast_range": 0.0
+      "ai_tags": [
+        "Resource",
+        "Concealment"
+      ]
     }
   ]
 }

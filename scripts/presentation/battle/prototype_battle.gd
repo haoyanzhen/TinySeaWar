@@ -464,8 +464,9 @@ func _draw_skill_target_overlay(selected: Dictionary, cursor: Vector2) -> void:
 	if skill_target_type == "Enemy":
 		draw_arc(cursor, 34.0, 0.0, TAU, 36, RANGE_SELECTION_WHITE, 2.0)
 	else:
-		draw_circle(cursor, DEFAULT_AREA_TARGET_RADIUS, Color(1.0, 1.0, 1.0, 0.10))
-		draw_arc(cursor, DEFAULT_AREA_TARGET_RADIUS, 0.0, TAU, 48, RANGE_SELECTION_WHITE, 2.0)
+		var effect_radius := float(skill.get("effect_radius", DEFAULT_AREA_TARGET_RADIUS))
+		draw_circle(cursor, effect_radius, Color(1.0, 1.0, 1.0, 0.10))
+		draw_arc(cursor, effect_radius, 0.0, TAU, 48, RANGE_SELECTION_WHITE, 2.0)
 	var label := "技能目标：%s" % UiText.target_type_name(skill_target_type)
 	if not legal:
 		label = "%s / %s" % [label, UiText.reason_name("TARGET_OUT_OF_RANGE")]
@@ -768,7 +769,7 @@ func _begin_or_cast_skill() -> void:
 		_queue_skill_command({"type": "Self"})
 	else:
 		operation_mode = OperationMode.TARGETING_SKILL
-		_push_message("请选择技能目标：%s" % UiText.target_type_name(skill_target_type))
+		_push_message("%s：%s；请选择%s" % [skill.get("display_name", "技能"), skill.get("description", ""), UiText.target_type_name(skill_target_type)])
 
 
 func _confirm_skill_target(world_position: Vector2, snapshot: Dictionary) -> void:

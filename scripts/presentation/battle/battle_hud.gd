@@ -53,7 +53,7 @@ func _draw() -> void:
 	_draw_operation_dock(Rect2(Vector2((viewport_size.x - 900.0) * 0.5, viewport_size.y - 154.0), Vector2(900.0, 128.0)))
 	_draw_minimap(Rect2(Vector2(28.0, viewport_size.y - 266.0), Vector2(330.0, 226.0)))
 	_draw_log_panel(Rect2(Vector2(viewport_size.x - 380.0, 206.0), Vector2(352.0, 300.0)))
-	_draw_selected_panel(Rect2(Vector2(viewport_size.x - 380.0, viewport_size.y - 266.0), Vector2(352.0, 226.0)))
+	_draw_selected_panel(Rect2(Vector2(viewport_size.x - 380.0, viewport_size.y - 286.0), Vector2(352.0, 246.0)))
 	if snapshot.get("phase", "") == "Paused":
 		_draw_pause_panel(viewport_size)
 	if not snapshot.get("result", {}).is_empty():
@@ -263,6 +263,7 @@ func _draw_selected_panel(rect: Rect2) -> void:
 	draw_string(ThemeDB.fallback_font, rect.position + Vector2(18.0, 154.0), "E  %s" % primary, HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 36.0, 15, TEXT_DARK)
 	draw_string(ThemeDB.fallback_font, rect.position + Vector2(18.0, 178.0), "Q  %s" % ammo, HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 36.0, 15, TEXT_DARK)
 	draw_string(ThemeDB.fallback_font, rect.position + Vector2(18.0, 202.0), "F  %s" % skill, HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 36.0, 15, TEXT_DARK)
+	draw_string(ThemeDB.fallback_font, rect.position + Vector2(18.0, 226.0), _skill_description(), HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 36.0, 12, TEXT_SOFT)
 
 
 func _draw_pause_panel(viewport_size: Vector2) -> void:
@@ -384,6 +385,12 @@ func _skill_text() -> String:
 	var cooldown := float(operation_status.get("skill_cooldown", 0.0))
 	if bool(operation_status.get("skill_ready", false)): return "%s 已就绪" % skill_name
 	return "%s %.1f 秒" % [skill_name, cooldown]
+
+
+func _skill_description() -> String:
+	if operation_status.is_empty(): return ""
+	var skill := DataRegistry.registry.get_definition("skills", str(operation_status.get("skill_id", "")))
+	return str(skill.get("description", skill.get("design_values", "")))
 
 
 func _short_name(display_name: String) -> String:

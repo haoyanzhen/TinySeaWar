@@ -918,7 +918,7 @@ unsupported_effects
 - `effect_type`：效果类型，例如炮击强化、鱼雷发射、空袭、防空强化、闪避提升。
 - `effect_value`：效果数值。
 - `modifiers`：结构化增益/减益列表，复杂技能优先使用该字段。
-- `effects`：当前结构化状态效果列表。除基础修正字段外，可声明 `consume_on_fire`、`persistent_until_consumed`、`consume_weapon_group_id`、`bind_selected_target`、`target_armor_classes`、`recipient_ship_classes`、`requires_submerged` 和 `requires_scouted_target`。
+- `effects`：当前结构化状态效果列表。除基础修正字段外，可声明 `consume_on_fire`、`persistent_until_consumed`、`consume_weapon_group_id`、`bind_selected_target`、`target_armor_classes`、`recipient_ship_classes`、`requires_submerged`、`requires_scouted_target` 和 `end_on_source_sunk`。最后一项默认为 `false`；只有效果必须依赖来源存活时才设为 `true`。
 - `triggered_attacks`：技能直接产生的攻击波次，声明武器、波数、间隔、每波数量、蓄力、开火暴露、临时修正和命中后状态；仍经过公共落点、航空、防空、命中与伤害管线。
 - `recon_zones`：技能部署的可被防空摧毁侦察区，声明视野半径、持续时间、航空单位 HP 和被击落后的额外冷却。
 - `duration`：持续时间，瞬发技能可为 0。

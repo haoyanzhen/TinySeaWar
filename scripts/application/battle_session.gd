@@ -2500,6 +2500,7 @@ func _queue_skill_attack(source: Dictionary, skill: Dictionary, attack_spec: Dic
 	var launch_effects := _active_status_effects(source).duplicate(true)
 	launch_effects.append_array(temporary_effects)
 	for wave_index in range(waves):
+		var launch_at_time := float(state["elapsed_time"]) + charge_time + wave_index * wave_interval
 		for shot_index in range(shot_count):
 			var impact_position := target_position
 			var dispersion_sample := {}
@@ -2523,14 +2524,15 @@ func _queue_skill_attack(source: Dictionary, skill: Dictionary, attack_spec: Dic
 				"impact_radius": float(attack_spec.get("impact_radius", weapon.get("impact_radius", 40.0))),
 				"terrain_obstacle_id": terrain_hit.get("obstacle_id", ""),
 				"blocked_by_terrain": bool(terrain_hit.get("hit", false)),
-				"resolve_at_time": float(state["elapsed_time"]) + charge_time + wave_index * wave_interval + travel_seconds,
+				"launch_at_time": launch_at_time,
+				"resolve_at_time": launch_at_time + travel_seconds,
 				"accuracy_modifier": _environment_accuracy_modifier(source["faction_id"], source["position"], impact_position, str(weapon.get("mount_type", ""))),
 				"source_status_effects": launch_effects.duplicate(true),
 				"on_hit_effects": attack_spec.get("on_hit_effects", []).duplicate(true),
 			}
 			_apply_dispersion_metadata(attack, dispersion_sample)
 			delayed_attacks.append(attack)
-	_emit("SkillAttackLaunched", {"unit_id":source["entity_id"], "skill_id":skill["id"], "weapon_id":weapon["id"], "waves":waves, "shots_per_wave":shot_count, "target_position":target_position})
+	_emit("SkillAttackScheduled", {"unit_id":source["entity_id"], "skill_id":skill["id"], "weapon_id":weapon["id"], "waves":waves, "shots_per_wave":shot_count, "target_position":target_position})
 
 
 func _update_weapons() -> void:
@@ -3267,7 +3269,29 @@ func _sink_unit(unit: Dictionary, source_unit_id: String) -> void:
 	unit["status_effects"].clear()
 	var sunk_unit_id := str(unit.get("entity_id", ""))
 	command_queue = command_queue.filter(func(command): return str(command.get("unit_id", "")) != sunk_unit_id)
+	delayed_attacks = delayed_attacks.filter(func(attack): return str(attack.get("source_unit_id", "")) != sunk_unit_id or float(attack.get("launch_at_time", -INF)) <= float(state.get("elapsed_time", 0.0)))
+	var active_facility_action := facility_service.active_action_for_unit(sunk_unit_id)
+	if not active_facility_action.is_empty():
+		var cancellation := facility_service.cancel_action(str(active_facility_action.get("facility_id", "")), sunk_unit_id)
+		if bool(cancellation.get("accepted", false)) and cancellation.has("event"): _handle_facility_event(cancellation["event"])
+	unit["movement_state"] = {"mode":"HoldPosition", "target_position":unit.get("position", Vector2.ZERO), "waypoints":[], "waypoint_index":0}
+	unit["player_route_waypoints"] = []
+	unit["player_facility_target_id"] = ""
+	unit["targeting_state"] = {"mode":"Automatic", "focused_target_id":"", "current_target_id":""}
+	unit["weapon_group_launch_remaining"] = {}
+	unit["ai_state"]["level_task"] = ""
+	unit["ai_state"]["task_target_ref"] = {}
+	unit["ai_state"]["active_interrupt"] = ""
+	unit["ai_state"]["interrupted_movement_state"] = {}
 	_ai_damage_reservations.erase(sunk_unit_id)
+	_ai_effect_reservations.erase(sunk_unit_id)
+	for other in state.get("units_by_id", {}).values():
+		other["status_effects"] = other.get("status_effects", []).filter(func(effect): return not (str(effect.get("source_unit_id", "")) == sunk_unit_id and bool(effect.get("end_on_source_sunk", false))))
+	for effect_id in state.get("skill_effects_by_id", {}).keys():
+		var world_effect: Dictionary = state["skill_effects_by_id"][effect_id]
+		if str(world_effect.get("source_unit_id", "")) == sunk_unit_id and bool(world_effect.get("end_on_source_sunk", false)):
+			state["skill_effects_by_id"].erase(effect_id)
+	_emit("UnitPendingActionsCancelled", {"unit_id":sunk_unit_id})
 	_emit("UnitSunk", {"unit_id": unit["entity_id"], "source_unit_id": source_unit_id})
 	if unit["is_flagship"]: _emit("FlagshipSunk", {"fleet_id": unit["fleet_id"], "unit_id": unit["entity_id"]})
 

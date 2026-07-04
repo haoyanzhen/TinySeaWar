@@ -55,6 +55,7 @@ func _run() -> void:
 	_test_torpedo_observation_rules()
 	_test_damage_zero_floor()
 	_test_simultaneous_flagship_victory()
+	_test_sinking_action_boundary()
 	_test_determinism()
 	_test_battle_smoke("level.prototype_1v1", 3200)
 	_test_battle_smoke("level.prototype_3v3", 4200)
@@ -1021,6 +1022,40 @@ func _test_determinism() -> void:
 	_check(first["result"] == second["result"], "same seed produces same battle result")
 	_check(first["events"] == second["events"], "same seed produces identical event type sequence")
 	_check(first["stats"] == second["stats"], "same seed produces identical analytics")
+
+
+func _test_sinking_action_boundary() -> void:
+	var session = BattleSession.new(registry)
+	session.create_battle("level.prototype_harbor_3v3", 20260709)
+	var source: Dictionary = session.state["units_by_id"]["unit.player.shimakaze"]
+	var target: Dictionary = session.state["units_by_id"]["unit.enemy.gnevny"]
+	var ally: Dictionary = session.state["units_by_id"]["unit.player.aurora"]
+	var facility_id := "facility.harbor.observation_west"
+	source["position"] = session.facility_service.interaction_center(facility_id)
+	session.facility_service.declare_control(facility_id, source)
+	session.command_queue = [
+		{"command_id":"pending.move", "command_type":"MoveUnits", "unit_id":source["entity_id"]},
+		{"command_id":"other.move", "command_type":"MoveUnits", "unit_id":ally["entity_id"]},
+	]
+	session.delayed_attacks = [
+		{"attack_id":"launched", "source_unit_id":source["entity_id"], "launch_at_time":0.0, "resolve_at_time":10.0},
+		{"attack_id":"not_launched", "source_unit_id":source["entity_id"], "launch_at_time":10.0, "resolve_at_time":12.0},
+	]
+	session.state["projectiles_by_id"]["projectile.sunk_source"] = {"entity_id":"projectile.sunk_source", "source_unit_id":source["entity_id"], "position":source["position"]}
+	ally["status_effects"] = [
+		{"status_id":"persist", "source_unit_id":source["entity_id"], "end_on_source_sunk":false, "remaining":5.0},
+		{"status_id":"dependent", "source_unit_id":source["entity_id"], "end_on_source_sunk":true, "remaining":5.0},
+	]
+	session.state["skill_effects_by_id"]["effect.persist"] = {"source_unit_id":source["entity_id"], "end_on_source_sunk":false, "remaining":5.0}
+	session.state["skill_effects_by_id"]["effect.dependent"] = {"source_unit_id":source["entity_id"], "end_on_source_sunk":true, "remaining":5.0}
+	session._sink_unit(source, target["entity_id"])
+	_check(source["movement_state"]["mode"] == "HoldPosition" and source["ai_state"]["level_task"].is_empty() and source["player_facility_target_id"].is_empty(), "sinking stops navigation, AI, tasks, and player facility intent")
+	_check(session.command_queue.size() == 1 and session.command_queue[0]["unit_id"] == ally["entity_id"] and session.facility_service.active_action_for_unit(source["entity_id"]).is_empty(), "sinking removes pending commands and facility work")
+	_check(session.delayed_attacks.size() == 1 and session.delayed_attacks[0]["attack_id"] == "launched" and session.state["projectiles_by_id"].has("projectile.sunk_source"), "sinking cancels unlaunched attacks but preserves launched attacks and projectiles")
+	_check(ally["status_effects"].size() == 1 and ally["status_effects"][0]["status_id"] == "persist" and session.state["skill_effects_by_id"].has("effect.persist") and not session.state["skill_effects_by_id"].has("effect.dependent"), "continuous effects obey their own source dependency")
+	var hp_before := float(target["current_hp"])
+	session._resolve_attack({"attack_id":"post_sink_hit", "source_unit_id":source["entity_id"], "source_weapon_id":"weapon.warspite_381_ap", "target_unit_id":target["entity_id"], "target_position":target["position"], "origin":source["position"], "source_status_effects":[]}, true)
+	_check(float(target["current_hp"]) < hp_before, "ammunition launched before sinking can still hit through the shared attack resolver")
 
 
 func _test_battle_smoke(level_id: String, maximum_ticks: int) -> void:

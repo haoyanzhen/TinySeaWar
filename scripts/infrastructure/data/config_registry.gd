@@ -657,6 +657,13 @@ func _validate_facility_definition(definition: Dictionary) -> void:
 			var observation_rules: Dictionary = definition.get("observation_rules", {})
 			if str(observation_rules.get("contact_type", "")) != "Optical" or not observation_rules.has("weather_affected") or not observation_rules.has("time_affected") or not observation_rules.has("local_visibility_affected") or not observation_rules.has("line_of_sight_required") or float(definition.get("observation_range", 0.0)) <= 0.0:
 				errors.append("Optical observation facility lacks explicit sensor rules in %s" % definition_id)
+		if "SensorSource" in definition.get("capabilities", []):
+			var radar_rules: Dictionary = definition.get("radar_rules", {})
+			if str(radar_rules.get("contact_type", "")) != "Radar" or float(radar_rules.get("detection_range", 0.0)) <= 0.0 or bool(radar_rules.get("weather_affected", true)) or bool(radar_rules.get("time_affected", true)) or bool(radar_rules.get("local_visibility_affected", true)) or bool(radar_rules.get("line_of_sight_required", true)) or str(radar_rules.get("contact_accuracy", "")) != "ExactPosition" or str(radar_rules.get("stealth_break_policy", "")) != "ExplicitStateOnly":
+				errors.append("Radar facility lacks independent sensor rules in %s" % definition_id)
+			var activation_rules: Dictionary = definition.get("activation_rules", {})
+			if str(activation_rules.get("type", "")) != "ScenarioEvent" or str(activation_rules.get("event_id", "")).is_empty():
+				errors.append("Radar facility lacks scenario activation rules in %s" % definition_id)
 		if "CombatDisposition" in operation_modes:
 			var disposition: Dictionary = definition.get("combat_disposition", {})
 			for field in ["suppressible", "destroyable", "silentable", "damage_floor_ratio"]:

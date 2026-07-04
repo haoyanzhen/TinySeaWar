@@ -3,6 +3,7 @@ extends Node2D
 var terrain_map: Dictionary = {}
 var contexts: Dictionary = {}
 var facilities: Dictionary = {}
+var contacts: Dictionary = {}
 var selected_unit_id := ""
 var recent_hits: Array = []
 var spatial_cells: Dictionary = {}
@@ -14,10 +15,11 @@ func configure(definition: Dictionary, domain_spatial_cells: Dictionary = {}) ->
 	queue_redraw()
 
 
-func sync_runtime(unit_contexts: Dictionary, facility_states: Dictionary, selected_id: String) -> void:
+func sync_runtime(unit_contexts: Dictionary, facility_states: Dictionary, selected_id: String, contact_states: Dictionary = {}) -> void:
 	contexts = unit_contexts.duplicate(true)
 	facilities = facility_states.duplicate(true)
 	selected_unit_id = selected_id
+	contacts = contact_states.duplicate(true)
 	queue_redraw()
 
 
@@ -55,6 +57,12 @@ func _draw() -> void:
 		var normal: Vector2 = hit.get("normal", Vector2.ZERO)
 		draw_circle(position, 8.0, Color(1.0, 0.78, 0.18, 0.9))
 		draw_line(position, position + normal * 42.0, Color(1.0, 0.95, 0.5, 0.95), 3.0)
+	for contact in contacts.values():
+		if contact.get("primary_contact_type", "") != "Radar": continue
+		var contact_position: Vector2 = contact.get("last_known_position", Vector2.ZERO)
+		draw_circle(contact_position, 16.0, Color(0.25, 0.9, 1.0, 0.22))
+		draw_arc(contact_position, 20.0, 0.0, TAU, 20, Color(0.35, 0.9, 1.0, 0.9), 2.0)
+		draw_string(ThemeDB.fallback_font, contact_position + Vector2(24.0, -8.0), "Radar | %s" % contact.get("contact_accuracy", ""), HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color(0.55, 0.95, 1.0))
 	if contexts.has(selected_unit_id):
 		var context: Dictionary = contexts[selected_unit_id]
 		var unit_position: Vector2 = context.get("position", Vector2.ZERO)

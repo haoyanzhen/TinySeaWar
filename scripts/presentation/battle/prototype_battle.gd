@@ -110,8 +110,10 @@ func _draw() -> void:
 	_draw_map_boundary(snapshot)
 	for contact in snapshot["contacts"].values():
 		var ghost_position: Vector2 = contact["last_known_position"]
-		_draw_icon_centered("ui_icon_unknown_contact", ghost_position, 0.55, Color(1.0, 0.55, 0.6, 0.65))
-		draw_arc(ghost_position, 33.0, 0.0, TAU, 28, Color(1.0, 0.55, 0.6, 0.55), 2.0)
+		var radar_contact := str(contact.get("primary_contact_type", "")) == "Radar"
+		var contact_color := Color(0.35, 0.9, 1.0, 0.78) if radar_contact else Color(1.0, 0.55, 0.6, 0.65)
+		_draw_icon_centered("ui_icon_unknown_contact", ghost_position, 0.55, contact_color)
+		draw_arc(ghost_position, 33.0, 0.0, TAU, 28, contact_color, 2.0)
 	_draw_operation_overlay()
 
 
@@ -963,6 +965,8 @@ func _consume_events(events: Array) -> void:
 			"FacilityOperationStateChanged":
 				if event.get("operation_state", "") == "Silent": _push_message("岸基设施因通信中断进入静默")
 				elif event.get("operation_state", "") == "Disabled": _push_message("岸基设施暂时失能")
+			"ContactAcquired":
+				if event.get("primary_contact_type", "") == "Radar" and event.get("observer_faction", "") == "player": _push_message("雷达发现新的水面接触")
 			"UnitServiced": _push_message("%s 完成%s" % [_unit_display_name(str(event.get("unit_id", ""))), "维修" if event.get("service_type", "") == "Repair" else "补给"])
 			"SupportMissionResolved": _push_message("岸基航空支援已抵达")
 			"BattleFinished":
@@ -1029,7 +1033,7 @@ func _sync_visuals() -> void:
 	var snapshot: Dictionary = session.snapshot("player", terrain_debug_overlay.visible)
 	effect_director.sync_snapshot(snapshot, selected_unit_id, focused_target_id)
 	terrain_view.sync_dynamic(snapshot.get("environment_zones", []), snapshot.get("facilities", {}), snapshot.get("minefields", {}), snapshot.get("support_effects", {}))
-	terrain_debug_overlay.sync_runtime(snapshot.get("terrain_contexts", {}), snapshot.get("facilities", {}), selected_unit_id)
+	terrain_debug_overlay.sync_runtime(snapshot.get("terrain_contexts", {}), snapshot.get("facilities", {}), selected_unit_id, snapshot.get("contacts", {}))
 
 
 func _configure_camera_limits(map_data: Dictionary) -> void:

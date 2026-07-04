@@ -157,6 +157,19 @@ func active_action_for_unit(unit_id: String) -> Dictionary:
 	return {}
 
 
+func activate_from_scenario(facility_id: String, faction_id: String, event_id: String) -> Dictionary:
+	var facility: Dictionary = facilities_by_id.get(facility_id, {})
+	var definition := definition_for(facility_id)
+	var rules: Dictionary = definition.get("activation_rules", {})
+	if facility.is_empty() or facility.get("life_state", "") != "Alive" or str(rules.get("type", "")) != "ScenarioEvent" or str(rules.get("event_id", "")) != event_id:
+		return {"accepted":false, "reason_code":"FACILITY_ACTIVATION_NOT_ALLOWED"}
+	if not faction_id.is_empty() and str(facility.get("faction_id", "")) != faction_id:
+		return {"accepted":false, "reason_code":"FACILITY_ACTIVATION_NOT_ALLOWED"}
+	facility["desired_operation_state"] = "Active"
+	var state_change := _refresh_operation_state(facility_id)
+	return {"accepted":true, "event":{"event_type":"FacilityActivated", "facility_id":facility_id, "faction_id":facility.get("faction_id", ""), "operation_state":facility.get("operation_state", "")}, "state_change":state_change}
+
+
 func request_support(facility_id: String, mission_id: String, faction_id: String, target_position: Vector2, elapsed_time: float, environment_context: Dictionary = {}) -> Dictionary:
 	var facility: Dictionary = facilities_by_id.get(facility_id, {})
 	var definition: Dictionary = definition_for(facility_id)
@@ -417,6 +430,24 @@ func observation_sources(faction_id: String) -> Array:
 			"time_affected": bool(rules.get("time_affected", true)),
 			"local_visibility_affected": bool(rules.get("local_visibility_affected", true)),
 			"line_of_sight_required": bool(rules.get("line_of_sight_required", true)),
+		})
+	return result
+
+
+func radar_sources(faction_id: String) -> Array:
+	var result: Array = []
+	for facility_id in _sorted_ids():
+		if not is_operational(facility_id): continue
+		var facility: Dictionary = facilities_by_id[facility_id]
+		var definition := definition_for(facility_id)
+		if facility.get("faction_id") != faction_id or "SensorSource" not in definition.get("capabilities", []): continue
+		var rules: Dictionary = definition.get("radar_rules", {})
+		result.append({
+			"facility_id":facility_id, "position":facility.get("observation_position", facility.get("position", Vector2.ZERO)),
+			"detection_range":float(rules.get("detection_range", 0.0)), "contact_type":str(rules.get("contact_type", "Radar")),
+			"weather_affected":bool(rules.get("weather_affected", false)), "time_affected":bool(rules.get("time_affected", false)),
+			"local_visibility_affected":bool(rules.get("local_visibility_affected", false)), "line_of_sight_required":bool(rules.get("line_of_sight_required", false)),
+			"contact_accuracy":str(rules.get("contact_accuracy", "ExactPosition")), "stealth_break_policy":str(rules.get("stealth_break_policy", "ExplicitStateOnly")),
 		})
 	return result
 

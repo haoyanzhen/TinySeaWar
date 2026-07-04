@@ -25,7 +25,9 @@ static func from_battle_state(state: Dictionary, observer_faction: String):
 		if str(unit.get("faction_id", "")) == observer_faction:
 			observation.friendly_units[unit_id] = unit.duplicate(true)
 		elif visible.has(unit_id) and unit.get("life_state", "") == "Alive":
-			observation.visible_enemies[unit_id] = unit.duplicate(true)
+			var observed_unit: Dictionary = unit.duplicate(true)
+			observed_unit["contact_types"] = state.get("contact_types_by_faction", {}).get(observer_faction, {}).get(unit_id, []).duplicate()
+			observation.visible_enemies[unit_id] = observed_unit
 	for contact_id in state.get("contacts_by_faction", {}).get(observer_faction, {}):
 		var contact: Dictionary = state["contacts_by_faction"][observer_faction][contact_id]
 		if not bool(contact.get("visible", false)):

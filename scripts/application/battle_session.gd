@@ -111,6 +111,7 @@ func create_battle(level_id: String, seed_value: int = 1) -> Dictionary:
 		"support_effects_by_id": {},
 		"skill_effects_by_id": {},
 		"visible_by_faction": {PLAYER_FACTION: {}, ENEMY_FACTION: {}},
+		"contact_types_by_faction": {PLAYER_FACTION: {}, ENEMY_FACTION: {}},
 		"contacts_by_faction": {PLAYER_FACTION: {}, ENEMY_FACTION: {}},
 		"ai_groups_by_faction": {PLAYER_FACTION: {}, ENEMY_FACTION: {}},
 		"result": {},
@@ -240,6 +241,9 @@ func snapshot(viewer_faction: String = PLAYER_FACTION, omniscient: bool = false)
 			"ai_mode_id": str(unit.get("ai_state", {}).get("mode_id", "")),
 			"ai_tactic_id": str(unit.get("ai_state", {}).get("tactic_id", "")),
 			"ai_interrupt": str(unit.get("ai_state", {}).get("active_interrupt", "")),
+			"radar_stealth_state": str(unit.get("radar_stealth_state", "Exposed")),
+			"contact_types": state.get("contact_types_by_faction", {}).get(viewer_faction, {}).get(unit_id, []).duplicate(),
+			"primary_contact_type": _primary_contact_type(state.get("contact_types_by_faction", {}).get(viewer_faction, {}).get(unit_id, [])),
 		}
 	var contacts := {}
 	var visible_minefields := {}
@@ -247,7 +251,7 @@ func snapshot(viewer_faction: String = PLAYER_FACTION, omniscient: bool = false)
 	var unit_terrain_contexts := {}
 	for contact_id in state["contacts_by_faction"].get(viewer_faction, {}):
 		var contact: Dictionary = state["contacts_by_faction"][viewer_faction][contact_id]
-		if not bool(contact.get("visible", false)):
+		if not bool(contact.get("visible", false)) or str(contact.get("primary_contact_type", "")) == "Radar":
 			contacts[contact_id] = contact.duplicate(true)
 	for unit_id in units:
 		var terrain_context := terrain_context_service.context_at(units[unit_id]["position"])
@@ -321,6 +325,18 @@ func configure_ai_mode_locks(mode_locks_by_definition: Dictionary) -> void:
 		unit["ai_state"]["mode_id"] = locked_mode
 		unit["ai_state"]["mode_candidate_id"] = ""
 		unit["ai_state"]["mode_candidate_confirmations"] = 0
+
+
+func activate_facility_from_scenario(facility_id: String, event_id: String) -> Dictionary:
+	var facility: Dictionary = facility_service.facilities_by_id.get(facility_id, {})
+	var result := facility_service.activate_from_scenario(facility_id, str(facility.get("faction_id", "")), event_id)
+	if not bool(result.get("accepted", false)): return result
+	var state_change: Dictionary = result.get("state_change", {})
+	if not state_change.is_empty(): _emit(str(state_change.get("event_type", "FacilityOperationStateChanged")), state_change)
+	var activation_event: Dictionary = result.get("event", {})
+	_emit(str(activation_event.get("event_type", "FacilityActivated")), activation_event)
+	state["facilities_by_id"] = facility_service.snapshot()
+	return result
 
 
 func get_unit_damage_statistics(unit_id: String) -> Dictionary:
@@ -601,6 +617,7 @@ func _build_unit(member: Dictionary, ship: Dictionary, fleet_id: String, faction
 		"ammo_state": _build_ammo_state(ship),
 		"status_effects": [],
 		"depth_state": "Submerged" if ship.get("ship_class", "") == "Submarine" else "Surface",
+		"radar_stealth_state": "Stealthed" if bool(ship.get("radar_stealth", false)) else "Exposed",
 		"oxygen_state": {"current": float(ship.get("max_oxygen", 0.0)), "maximum": float(ship.get("max_oxygen", 0.0))},
 		"firing_reveal_remaining": 0.0,
 		"control_authority": "Player" if player_controlled else "EnemyAI",
@@ -1159,21 +1176,31 @@ func _update_detection(delta: float = 0.1) -> void:
 	for observer_faction in [PLAYER_FACTION, ENEMY_FACTION]:
 		var previous_visible: Dictionary = state["visible_by_faction"][observer_faction]
 		var next_visible := {}
+		var next_contact_types := {}
 		var newly_lost := {}
 		for target_id in _sorted_unit_ids():
 			var target: Dictionary = state["units_by_id"][target_id]
 			if target["life_state"] != "Alive" or target["faction_id"] == observer_faction: continue
-			if _fleet_detects(observer_faction, target): next_visible[target_id] = true
+			var contact_types := _fleet_detection_types(observer_faction, target)
+			if not contact_types.is_empty():
+				next_visible[target_id] = true
+				next_contact_types[target_id] = contact_types
 		state["visible_by_faction"][observer_faction] = next_visible
+		state["contact_types_by_faction"][observer_faction] = next_contact_types
 		for target_id in next_visible:
 			var target: Dictionary = state["units_by_id"][target_id]
-			state["contacts_by_faction"][observer_faction][target_id] = {"unit_id": target_id, "visible": true, "last_known_position": target["position"], "ghost_remaining": 0.0}
-			if not previous_visible.has(target_id): _emit("ContactAcquired", {"observer_faction": observer_faction, "target_unit_id": target_id, "position": target["position"]})
+			var contact_types: Array = next_contact_types.get(target_id, [])
+			var primary_type := _primary_contact_type(contact_types)
+			var previous_contact: Dictionary = state["contacts_by_faction"][observer_faction].get(target_id, {})
+			state["contacts_by_faction"][observer_faction][target_id] = {"unit_id": target_id, "visible": true, "last_known_position": target["position"], "ghost_remaining": 0.0, "contact_types":contact_types.duplicate(), "primary_contact_type":primary_type, "contact_accuracy":"ExactPosition"}
+			if not previous_visible.has(target_id): _emit("ContactAcquired", {"observer_faction": observer_faction, "target_unit_id": target_id, "position": target["position"], "contact_types":contact_types.duplicate(), "primary_contact_type":primary_type, "contact_accuracy":"ExactPosition"})
+			elif previous_contact.get("contact_types", []) != contact_types: _emit("ContactTypeChanged", {"observer_faction":observer_faction, "target_unit_id":target_id, "position":target["position"], "old_contact_types":previous_contact.get("contact_types", []).duplicate(), "contact_types":contact_types.duplicate(), "primary_contact_type":primary_type})
 		for target_id in previous_visible:
 			if next_visible.has(target_id): continue
 			var target: Dictionary = state["units_by_id"].get(target_id, {})
 			var last_position: Vector2 = target.get("position", Vector2.ZERO)
-			state["contacts_by_faction"][observer_faction][target_id] = {"unit_id": target_id, "visible": false, "last_known_position": last_position, "ghost_remaining": CONTACT_GHOST_DURATION}
+			var old_contact: Dictionary = state["contacts_by_faction"][observer_faction].get(target_id, {})
+			state["contacts_by_faction"][observer_faction][target_id] = {"unit_id": target_id, "visible": false, "last_known_position": last_position, "ghost_remaining": CONTACT_GHOST_DURATION, "contact_types":old_contact.get("contact_types", []).duplicate(), "primary_contact_type":old_contact.get("primary_contact_type", "Optical"), "contact_accuracy":old_contact.get("contact_accuracy", "ExactPosition")}
 			newly_lost[target_id] = true
 			_emit("ContactLost", {"observer_faction": observer_faction, "target_unit_id": target_id, "last_known_position": last_position, "ghost_duration": CONTACT_GHOST_DURATION})
 		for target_id in state["contacts_by_faction"][observer_faction].keys():
@@ -1224,6 +1251,11 @@ func _visible_projectiles(viewer_faction: String, omniscient: bool) -> Dictionar
 
 
 func _fleet_detects(observer_faction: String, target: Dictionary) -> bool:
+	return not _fleet_detection_types(observer_faction, target).is_empty()
+
+
+func _fleet_detection_types(observer_faction: String, target: Dictionary) -> Array[String]:
+	var result: Array[String] = []
 	var concealment := ModifierService.calculate(float(target["stats"]["concealment_distance"]), _active_status_effects(target), "ConcealmentDistance")
 	if float(target["firing_reveal_remaining"]) > 0.0: concealment *= float(target["stats"]["fire_concealment_multiplier"])
 	for observer_id in _sorted_unit_ids():
@@ -1234,7 +1266,9 @@ func _fleet_detects(observer_faction: String, target: Dictionary) -> bool:
 		var target_context := terrain_context_service.context_at(target["position"])
 		detection_range *= minf(float(observer_context.get("optical_visibility_multiplier", 1.0)), float(target_context.get("optical_visibility_multiplier", 1.0)))
 		var distance := (observer["position"] as Vector2).distance_to(target["position"] as Vector2)
-		if distance <= detection_range and distance <= concealment and terrain_query.has_surface_line_of_sight(observer["position"], target["position"]): return true
+		if distance <= detection_range and distance <= concealment and terrain_query.has_surface_line_of_sight(observer["position"], target["position"]):
+			result.append("Optical")
+			break
 	for source in facility_service.observation_sources(observer_faction):
 		var source_position: Vector2 = source.get("position", Vector2.ZERO)
 		var source_context := terrain_context_service.context_at(source_position)
@@ -1244,14 +1278,33 @@ func _fleet_detects(observer_faction: String, target: Dictionary) -> bool:
 			detection_range *= minf(float(source_context.get("optical_visibility_multiplier", 1.0)), float(target_context.get("optical_visibility_multiplier", 1.0)))
 		var distance := source_position.distance_to(target["position"])
 		var line_of_sight_ok := not bool(source.get("line_of_sight_required", true)) or terrain_query.has_surface_line_of_sight(source_position, target["position"])
-		if distance <= detection_range and distance <= concealment and line_of_sight_ok: return true
+		if distance <= detection_range and distance <= concealment and line_of_sight_ok:
+			if "Optical" not in result: result.append("Optical")
+			break
+	if str(target.get("radar_stealth_state", "Exposed")) != "Stealthed":
+		for source in facility_service.radar_sources(observer_faction):
+			var source_position: Vector2 = source.get("position", Vector2.ZERO)
+			var distance := source_position.distance_to(target["position"])
+			var line_of_sight_ok := not bool(source.get("line_of_sight_required", false)) or terrain_query.has_surface_line_of_sight(source_position, target["position"])
+			if distance <= float(source.get("detection_range", 0.0)) and line_of_sight_ok:
+				result.append("Radar")
+				break
 	for effect in state.get("support_effects_by_id", {}).values():
 		if str(effect.get("effect_type", "")) != "Reconnaissance" or str(effect.get("faction_id", "")) != observer_faction: continue
-		if (effect.get("position", Vector2.ZERO) as Vector2).distance_to(target["position"]) <= float(effect.get("radius", 0.0)): return true
+		if (effect.get("position", Vector2.ZERO) as Vector2).distance_to(target["position"]) <= float(effect.get("radius", 0.0)):
+			if "Optical" not in result: result.append("Optical")
+			break
 	for effect in state.get("skill_effects_by_id", {}).values():
 		if str(effect.get("effect_type", "")) != "Reconnaissance" or str(effect.get("faction_id", "")) != observer_faction: continue
-		if (effect.get("position", Vector2.ZERO) as Vector2).distance_to(target["position"]) <= float(effect.get("radius", 0.0)): return true
-	return false
+		if (effect.get("position", Vector2.ZERO) as Vector2).distance_to(target["position"]) <= float(effect.get("radius", 0.0)):
+			if "Optical" not in result: result.append("Optical")
+			break
+	result.sort()
+	return result
+
+
+func _primary_contact_type(contact_types: Array) -> String:
+	return "Optical" if "Optical" in contact_types else ("Radar" if "Radar" in contact_types else "")
 
 
 func _update_ai_intents() -> void:

@@ -879,8 +879,12 @@ RequestSupportMissionCommand
 
 雷达与通信站组合 `SensorSource` 和/或 `CommandRelay`：
 
-- 雷达观察使用独立传感器通道，不复用光学观察的海雾标签冒充雷达规则。
-- 地形是否阻挡雷达由传感器 Definition 显式声明；在该规则完成前，雷达站保持未启用状态。
+- 港湾雷达默认敌方、休眠，不提供 `AreaControl`；仅接受 `activation_rules` 指定的关卡事件激活，压制时移出传感器集合，摧毁后永久失能。
+- 雷达观察使用独立 `Radar` 传感器通道与 `contact_types_by_faction`，不复用光学观察的海雾、昼夜、隐蔽距离或开火暴露规则。
+- 当前 `radar_rules` 定稿为探测距离 `1400`、`ExactPosition`：岛岸不遮挡，不读取天气/时段/局部能见度倍率；接触每 Tick 刷新精确位置并可按普通阵营接触参与目标选择。
+- 舰船运行态 `radar_stealth_state = Stealthed` 时不被雷达发现；`ExplicitStateOnly` 表示只有显式状态变化才能解除，不因光学发现或开火自动破除。光学仍可独立发现雷达隐身目标。
+- 同一目标可同时保存 `Optical` 和 `Radar` 来源，光学优先作为主显示类型；纯雷达接触在战场与小地图使用青色未知接触标记，F9 调试层显示 `Radar | ExactPosition`。
+- 雷达接触只写入设施所属阵营的 `visible_by_faction`、`contacts_by_faction` 和 AI 观察快照，不向对侧泄露；获得雷达所有权或激活雷达不改变其他设施。
 - 通信站只扩展允许的命令、设施依赖或支援联络，不直接写入目标 HP、装填或命中结果。
 - 主动工作、被压制和失去依赖时通过 FacilityState 改变能力集合。
 - AI 与玩家从相同阵营快照读取雷达接触和通信可用性。

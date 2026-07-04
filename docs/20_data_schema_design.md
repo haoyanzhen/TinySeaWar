@@ -30,6 +30,7 @@ detection_range
 base_concealment_distance
 concealment_distance
 fire_concealment_multiplier
+radar_stealth # optional, default false
 evasion
 gunnery_power
 torpedo_power
@@ -67,6 +68,7 @@ is_flagship_candidate
 - `base_concealment_distance`：设计基线隐蔽距离。
 - `concealment_distance`：当前运行时隐蔽距离，表示目标能被发现的最大距离，数值越小越难被发现。当前统一为 `base_concealment_distance * 1.5`。
 - `fire_concealment_multiplier`：开火破隐比例。舰娘开火后，当前隐蔽距离按该比例放大。
+- `radar_stealth`：可选初始雷达隐身标记，默认 `false`；运行时复制为 `radar_stealth_state = Exposed | Stealthed`，只影响 `Radar` 接触，不改变光学隐蔽与开火暴露。
 - 开火后的再隐蔽时间不使用独立配置字段，运行时按 `实时 concealment_distance / 实时 speed` 计算。
 - `evasion`：闪避能力。
 - `gunnery_power`：火炮能力，影响主炮、副炮和炮击技能。
@@ -199,6 +201,7 @@ primary_auto_fire_suspended
 skill_auto_cast_enabled
 player_route_waypoints
 movement_state.waypoint_index
+radar_stealth_state
 ```
 
 - `selected_ammo_by_group` 保存每个可切换炮组当前使用的 `HE` 或 `AP`。
@@ -689,6 +692,18 @@ FacilityDefinition
     time_affected
     local_visibility_affected
     line_of_sight_required
+  activation_rules
+    type # ScenarioEvent
+    event_id
+  radar_rules
+    contact_type # Radar
+    detection_range
+    weather_affected
+    time_affected
+    local_visibility_affected
+    line_of_sight_required
+    contact_accuracy # ExactPosition
+    stealth_break_policy # ExplicitStateOnly
   combat_disposition
     suppressible
     destroyable
@@ -759,6 +774,7 @@ MinefieldDefinition
 - `MineDeployment` 远程命令另外使用 `control_radius`、`area_side_length`、`duration`、`mine_count`、`cooldown`、`charges` 和水雷伤害/碰撞/发现参数；随机种子由战斗种子、Tick 与设施 ID 确定。
 - `automatic_operation` 只列出设施自行运行的能力，不创建重复“使用设施”命令；`combat_disposition` 只声明公共攻击管线允许造成的压制、摧毁和静默结果。
 - `ObservationSource` 必须声明 `observation_rules`；海岸观察站固定使用 `Optical`，并明确受天气、时段、局部能见度和岛岸视线影响，不能作为未来雷达规则的隐式默认值。
+- `SensorSource` 必须声明独立 `radar_rules`。港湾雷达固定为 `Radar + ExactPosition`，不读取天气、时段、局部海雾或光学倍率，也不要求岛岸视线；`ExplicitStateOnly` 表示雷达隐身只由显式状态移除，开火和普通光学暴露不会自动破除。
 - 设施依赖由关卡放置声明；`requires_matching_faction=true` 时，依赖设施除 `Alive + Active` 外还必须与使用方同阵营。依赖失效后运行态进入 `Silent`（允许静默）或 `Disabled`，恢复、占领和依赖变化时重新计算，不修改所有权。
 - `weapon_id` 必须引用现有 Weapon Definition。岸炮和空袭继续使用普通命中、装甲和伤害公式。
 - `durability_reference_id` 从稳定舰船 Definition 解析 HP、装甲与火力属性；`weapon_mount_reference` 复用武器 Definition 的伤害、散布、穿深、装填和弹药，仅覆盖设施实际炮塔数与每塔炮管数。当前岸炮引用 `ship.warspite` 及其 381mm AP/HE，按单座联装结算两发。

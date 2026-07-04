@@ -159,7 +159,8 @@ func _draw_minimap(rect: Rect2) -> void:
 		_draw_icon(icon_name, Rect2(position - Vector2(7.0, 7.0), Vector2(14.0, 14.0)))
 	for contact in snapshot.get("contacts", {}).values():
 		var contact_position := _minimap_position(contact.get("last_known_position", Vector2.ZERO), map_rect, map_data)
-		_draw_icon("ui_icon_unknown_contact", Rect2(contact_position - Vector2(6.0, 6.0), Vector2(12.0, 12.0)), Color(1.0, 0.72, 0.72, 0.8))
+		var contact_color := Color(0.35, 0.9, 1.0, 0.9) if contact.get("primary_contact_type", "") == "Radar" else Color(1.0, 0.72, 0.72, 0.8)
+		_draw_icon("ui_icon_unknown_contact", Rect2(contact_position - Vector2(6.0, 6.0), Vector2(12.0, 12.0)), contact_color)
 	if snapshot.has("camera_rect"):
 		var camera_rect: Rect2 = snapshot["camera_rect"]
 		var top_left := _minimap_position(camera_rect.position, map_rect, map_data)

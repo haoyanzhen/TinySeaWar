@@ -629,6 +629,10 @@ func _validate_facility_definition(definition: Dictionary) -> void:
 				errors.append("Berthing-service facility lacks valid service rules in %s" % definition_id)
 		if "RemoteCommand" in operation_modes and str(definition.get("remote_command", {}).get("command_type", "")).is_empty():
 			errors.append("Remote-command facility lacks command rules in %s" % definition_id)
+		var remote_command: Dictionary = definition.get("remote_command", {})
+		if str(remote_command.get("command_type", "")) == "MineDeployment":
+			for field in ["control_radius", "area_side_length", "duration", "mine_count", "cooldown", "charges", "mine_damage", "mine_trigger_radius", "detection_distance"]:
+				if float(remote_command.get(field, 0.0)) <= 0.0: errors.append("Mine deployment %s must be positive in %s" % [field, definition_id])
 		if "AutomaticOperation" in operation_modes and definition.get("automatic_operation", {}).get("capability_ids", []).is_empty():
 			errors.append("Automatic facility lacks capability rules in %s" % definition_id)
 		if "CombatDisposition" in operation_modes and not definition.get("combat_disposition", {}).has("destroyable"):

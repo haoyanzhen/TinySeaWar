@@ -136,6 +136,17 @@ func _create_support_effect(effect: Dictionary) -> void:
 
 
 func _create_minefield(minefield: Dictionary) -> void:
+	if str(minefield.get("mine_type", "")) == "DeployedMine":
+		if str(minefield.get("operation_state", "")) != "Active": return
+		var marker := Polygon2D.new()
+		var points := PackedVector2Array()
+		for index in range(8): points.append(Vector2.RIGHT.rotated(TAU * float(index) / 8.0) * 7.0)
+		marker.polygon = points
+		marker.position = minefield.get("position", Vector2.ZERO)
+		marker.color = Color(1.0, 0.42, 0.24, 0.82)
+		marker.z_index = 8
+		minefield_root.add_child(marker)
+		return
 	var polygon := _polygon_node(minefield.get("polygon", []), Color(0.95, 0.25, 0.18, 0.16), "", 4)
 	polygon.name = str(minefield.get("definition_id", "Minefield"))
 	minefield_root.add_child(polygon)

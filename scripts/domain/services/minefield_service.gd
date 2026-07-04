@@ -3,10 +3,12 @@ extends RefCounted
 const EPSILON := 0.001
 
 var minefields_by_id: Dictionary = {}
+var deployed_sequence := 0
 
 
 func configure(definitions: Array, terrain_definition_id: String) -> void:
 	minefields_by_id.clear()
+	deployed_sequence = 0
 	for definition in definitions:
 		if str(definition.get("definition_type", "")) != "MinefieldDefinition":
 			continue
@@ -71,6 +73,11 @@ func resolve_unit_motion(unit: Dictionary, start: Vector2, end: Vector2) -> Dict
 		var minefield: Dictionary = minefields_by_id[minefield_id]
 		if str(minefield.get("operation_state", "")) != "Active":
 			continue
+		if str(minefield.get("mine_type", "")) == "DeployedMine":
+			var fraction := _point_contact_fraction(start, end, minefield.get("position", Vector2.ZERO), float(minefield.get("trigger_radius", 18.0)) + float(unit.get("stats", {}).get("collision_radius", 20.0)))
+			if fraction >= 0.0 and fraction <= float(best.get("fraction", 1.0)):
+				best = {"triggered":true, "fraction":fraction, "position":start.lerp(end, fraction), "minefield_id":minefield_id, "damage":float(minefield.get("damage", 0.0))}
+			continue
 		if str(minefield.get("owner_faction_id", "neutral")) == str(unit.get("faction_id", "")):
 			continue
 		if str(unit.get("entity_id", "")) in minefield.get("triggered_unit_ids", []):
@@ -90,9 +97,37 @@ func resolve_unit_motion(unit: Dictionary, start: Vector2, end: Vector2) -> Dict
 	if not bool(best.get("triggered", false)):
 		return best
 	var triggered_field: Dictionary = minefields_by_id[str(best["minefield_id"])]
+	if str(triggered_field.get("mine_type", "")) == "DeployedMine":
+		triggered_field["operation_state"] = "Triggered"
+		_add_knowledge(triggered_field, str(unit.get("faction_id", "")))
+		return best
 	triggered_field["triggered_unit_ids"].append(str(unit.get("entity_id", "")))
 	_add_knowledge(triggered_field, str(unit.get("faction_id", "")))
 	return best
+
+
+func deploy_random_batch(deployment: Dictionary, terrain_query) -> Array:
+	var rules: Dictionary = deployment.get("rules", {})
+	var center: Vector2 = deployment.get("target_position", Vector2.ZERO)
+	var half_side := float(rules.get("area_side_length", 0.0)) * 0.5
+	var random := RandomNumberGenerator.new()
+	random.seed = int(deployment.get("random_seed", 1))
+	var events: Array = []
+	for index in range(int(rules.get("mine_count", 0))):
+		var position := center + Vector2(random.randf_range(-half_side, half_side), random.randf_range(-half_side, half_side))
+		deployed_sequence += 1
+		var mine_id := "mine.deployed.%06d" % deployed_sequence
+		var valid: bool = terrain_query == null or not terrain_query.is_configured() or terrain_query.can_occupy_circle(position, 1.0, ["ShallowDraft", "ReefCapable"])
+		minefields_by_id[mine_id] = {"definition_id":"mine.dynamic", "display_name":"部署水雷", "mine_type":"DeployedMine", "position":position, "owner_faction_id":deployment.get("faction_id", "neutral"), "operation_state":"Active" if valid else "Invalid", "known_by_faction":[deployment.get("faction_id", "")], "damage":float(rules.get("mine_damage", 0.0)), "trigger_radius":float(rules.get("mine_trigger_radius", 18.0)), "detection_distance":float(rules.get("detection_distance", 75.0)), "deployment_id":deployment.get("mission_id", "")}
+		events.append({"event_type":"MineDeployed" if valid else "MineDeploymentInvalidated", "mine_id":mine_id, "position":position, "deployment_id":deployment.get("mission_id", "")})
+	return events
+
+
+func _point_contact_fraction(start: Vector2, end: Vector2, point: Vector2, radius: float) -> float:
+	var displacement := end - start
+	if displacement.length_squared() <= EPSILON: return 0.0 if start.distance_to(point) <= radius else -1.0
+	var fraction := clampf((point - start).dot(displacement) / displacement.length_squared(), 0.0, 1.0)
+	return fraction if start.lerp(end, fraction).distance_to(point) <= radius else -1.0
 
 
 func avoidance_waypoint(faction_id: String, start: Vector2, target: Vector2) -> Vector2:

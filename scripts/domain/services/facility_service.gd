@@ -2,6 +2,7 @@ extends RefCounted
 
 var facilities_by_id: Dictionary = {}
 var support_missions: Array = []
+var mine_deployments: Array = []
 var definitions_by_id: Dictionary = {}
 var mission_sequence := 0
 
@@ -9,6 +10,7 @@ var mission_sequence := 0
 func configure(layout: Dictionary, anchors: Array, definitions: Array) -> void:
 	facilities_by_id.clear()
 	support_missions.clear()
+	mine_deployments.clear()
 	definitions_by_id.clear()
 	mission_sequence = 0
 	for definition in definitions:
@@ -51,9 +53,11 @@ func configure(layout: Dictionary, anchors: Array, definitions: Array) -> void:
 			"interaction_state": "Idle",
 			"control_state": {},
 			"service_state": {},
+			"last_interruption_reason": "",
 			"suppression_remaining": 0.0,
 			"cooldown_remaining": 0.0,
 			"charges_remaining": int(definition.get("charges", 0)),
+			"remote_charges_remaining": int(definition.get("remote_command", {}).get("charges", 0)),
 			"mission_charges_remaining": mission_charges,
 			"weapon_states": weapon_states,
 			"requires_all_active": placement.get("requires_all_active", []).duplicate(),
@@ -83,6 +87,7 @@ func declare_control(facility_id: String, unit: Dictionary) -> Dictionary:
 		"duration": float(definition.get("area_control", {}).get("duration", 5.0)),
 		"entered_area": inside,
 	}
+	facility["last_interruption_reason"] = ""
 	facility["interaction_state"] = "Controlling" if inside else "Idle"
 	return {"accepted": true, "event": {"event_type": "FacilityControlDeclared", "facility_id": facility_id, "unit_id": unit["entity_id"], "faction_id": unit_faction}}
 
@@ -103,6 +108,7 @@ func request_service(facility_id: String, unit: Dictionary) -> Dictionary:
 	if absf(wrapf(float(unit.get("heading", 0.0)) - deg_to_rad(float(facility.get("heading", 0.0))), -PI, PI)) > tolerance:
 		return {"accepted": false, "reason_code": "BERTH_HEADING_INVALID"}
 	facility["service_state"] = {"unit_id": str(unit["entity_id"]), "progress": 0.0, "duration": float(profile.get("duration", 1.0)), "service_type": str(profile.get("service_type", ""))}
+	facility["last_interruption_reason"] = ""
 	facility["interaction_state"] = str(profile.get("berth_state", "Moored"))
 	return {"accepted": true, "event": {"event_type": "FacilityServiceStarted", "facility_id": facility_id, "unit_id": unit["entity_id"], "service_type": profile.get("service_type", "")}}
 
@@ -171,6 +177,27 @@ func request_support(facility_id: String, mission_id: String, faction_id: String
 	return {"accepted": true, "event": {"event_type": "SupportMissionStarted", "facility_id": facility_id, "mission_id": mission_state["mission_id"], "definition_id": mission_id, "target_position": target_position}}
 
 
+func request_mine_deployment(facility_id: String, unit: Dictionary, target_position: Vector2, elapsed_time: float, units_by_id: Dictionary, random_seed: int) -> Dictionary:
+	var facility: Dictionary = facilities_by_id.get(facility_id, {})
+	var definition := definition_for(facility_id)
+	var rules: Dictionary = definition.get("remote_command", {})
+	if facility.is_empty() or str(rules.get("command_type", "")) != "MineDeployment": return {"accepted": false, "reason_code": "MINE_DEPLOYMENT_UNAVAILABLE"}
+	if not is_operational(facility_id) or facility.get("faction_id", "") != unit.get("faction_id", ""): return {"accepted": false, "reason_code": "FACILITY_NOT_ACTIVE"}
+	if float(facility.get("cooldown_remaining", 0.0)) > 0.0 or int(facility.get("remote_charges_remaining", 0)) <= 0: return {"accepted": false, "reason_code": "MINE_DEPLOYMENT_UNAVAILABLE"}
+	if (facility.get("position", Vector2.ZERO) as Vector2).distance_to(target_position) > float(rules.get("control_radius", 0.0)): return {"accepted": false, "reason_code": "TARGET_OUT_OF_RANGE"}
+	var half_side := float(rules.get("area_side_length", 0.0)) * 0.5
+	for other in units_by_id.values():
+		var other_position: Vector2 = other.get("position", Vector2.ZERO)
+		if other.get("life_state", "") == "Alive" and other.get("faction_id", "") != unit.get("faction_id", "") and absf(other_position.x - target_position.x) <= half_side and absf(other_position.y - target_position.y) <= half_side:
+			return {"accepted": false, "reason_code": "MINE_AREA_CONTAINS_ENEMY"}
+	facility["cooldown_remaining"] = float(rules.get("cooldown", 0.0))
+	facility["remote_charges_remaining"] = int(facility.get("remote_charges_remaining", 0)) - 1
+	mission_sequence += 1
+	var task := {"mission_id":"mine_deployment.%06d" % mission_sequence, "facility_id":facility_id, "faction_id":unit.get("faction_id", ""), "target_position":target_position, "resolve_at_time":elapsed_time + float(rules.get("duration", 10.0)), "rules":rules.duplicate(true), "random_seed":random_seed}
+	mine_deployments.append(task)
+	return {"accepted":true, "event":{"event_type":"MineDeploymentStarted", "facility_id":facility_id, "mission_id":task["mission_id"], "unit_id":unit.get("entity_id", ""), "target_position":target_position, "duration":rules.get("duration", 10.0)}}
+
+
 func advance(delta: float, elapsed_time: float, units_by_id: Dictionary) -> Array:
 	var events: Array = []
 	for facility_id in _sorted_ids():
@@ -197,6 +224,18 @@ func advance(delta: float, elapsed_time: float, units_by_id: Dictionary) -> Arra
 		else:
 			events.append({"event_type": "SupportMissionCompleted", "mission_id": mission["mission_id"], "definition_id": mission["definition_id"], "facility_id": mission["facility_id"], "faction_id": mission["faction_id"], "target_position": mission["target_position"]})
 	support_missions = remaining
+	var remaining_mines: Array = []
+	for deployment in mine_deployments:
+		if float(deployment.get("resolve_at_time", INF)) > elapsed_time:
+			remaining_mines.append(deployment)
+			continue
+		if not is_operational(str(deployment.get("facility_id", ""))):
+			events.append({"event_type":"MineDeploymentCancelled", "facility_id":deployment.get("facility_id", ""), "mission_id":deployment.get("mission_id", ""), "reason_code":"FACILITY_NOT_ACTIVE"})
+		else:
+			var completed: Dictionary = deployment.duplicate(true)
+			completed["event_type"] = "MineDeploymentCompleted"
+			events.append(completed)
+	mine_deployments = remaining_mines
 	return events
 
 
@@ -258,6 +297,7 @@ func _interrupt_action(facility_id: String, facility: Dictionary, unit_id: Strin
 	facility["control_state"] = {}
 	facility["service_state"] = {}
 	facility["interaction_state"] = "Interrupted"
+	facility["last_interruption_reason"] = reason_code
 	events.append({"event_type": "FacilityActionInterrupted", "facility_id": facility_id, "unit_id": unit_id, "reason_code": reason_code})
 
 
@@ -394,6 +434,9 @@ func snapshot() -> Dictionary:
 	for mission in support_missions:
 		var facility_id := str(mission.get("facility_id", ""))
 		if result.has(facility_id): result[facility_id]["service_queue"].append(mission.duplicate(true))
+	for deployment in mine_deployments:
+		var facility_id := str(deployment.get("facility_id", ""))
+		if result.has(facility_id): result[facility_id]["service_queue"].append(deployment.duplicate(true))
 	return result
 
 

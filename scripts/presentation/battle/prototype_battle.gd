@@ -45,6 +45,7 @@ var session
 var level_id := "level.prototype_3v3"
 var accumulator := 0.0
 var selected_unit_id := ""
+var selected_facility_id := ""
 var focused_target_id := ""
 var recent_messages: Array[String] = []
 var camera_mode := "Manual"
@@ -527,6 +528,11 @@ func _unhandled_input(event: InputEvent) -> void:
 			KEY_C: _toggle_control_state("secondary_auto_fire_enabled", "副武器自动开火", event.alt_pressed or event.meta_pressed)
 			KEY_V: _toggle_control_state("primary_auto_fire_enabled", "主武器自动开火", event.alt_pressed or event.meta_pressed)
 			KEY_G: _toggle_follow_selected()
+			KEY_H: _queue_facility_control()
+			KEY_J: _queue_facility_service_or_approach()
+			KEY_K: _queue_facility_support(event.shift_pressed, event.meta_pressed or event.ctrl_pressed)
+			KEY_L: _queue_facility_mine()
+			KEY_BACKSPACE, KEY_U: _queue_facility_cancel()
 			KEY_ESCAPE: _cancel_operation_mode()
 	if event is InputEventMouseButton and event.pressed:
 		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
@@ -536,6 +542,12 @@ func _unhandled_input(event: InputEvent) -> void:
 			_adjust_camera_zoom(1.0 / float(camera_settings.get("zoom_step", 1.0)), event.position)
 			return
 		var snapshot: Dictionary = session.snapshot("player", false)
+		if event.button_index == MOUSE_BUTTON_LEFT and operation_mode == OperationMode.NORMAL:
+			var minimap_facility: Dictionary = _minimap_facility_at(event.position, snapshot)
+			if not minimap_facility.is_empty():
+				selected_facility_id = str(minimap_facility.get("facility_id", ""))
+				_push_message("已选择设施：%s" % minimap_facility.get("display_name", selected_facility_id))
+				return
 		var world_position := get_global_mouse_position()
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			if operation_mode == OperationMode.AIMING_PRIMARY: _confirm_primary_aim(world_position)
@@ -702,13 +714,72 @@ func _select_at(world_position: Vector2, snapshot: Dictionary) -> void:
 		if distance <= 1.0 and distance < nearest_distance:
 			nearest = unit
 			nearest_distance = distance
-	if nearest.is_empty(): return
+	if nearest.is_empty():
+		var facility: Dictionary = _facility_at(world_position, snapshot)
+		if not facility.is_empty():
+			selected_facility_id = str(facility.get("facility_id", ""))
+			_push_message("已选择设施：%s" % facility.get("display_name", selected_facility_id))
+		return
 	if nearest["faction_id"] == "player":
 		selected_unit_id = nearest["entity_id"]
 		if camera_mode == "Follow": camera_follow_unit_id = selected_unit_id
 	else:
 		focused_target_id = nearest["entity_id"]
 		if not selected_unit_id.is_empty(): session.queue_command({"command_id": "ui.focus.%s" % session.state["tick_index"], "command_type": "FocusTarget", "issued_at_tick": session.state["tick_index"], "issuer_id": "player", "unit_id": selected_unit_id, "target_unit_id": focused_target_id})
+
+
+func _facility_at(world_position: Vector2, snapshot: Dictionary) -> Dictionary:
+	var nearest: Dictionary = {}
+	var nearest_distance := 54.0
+	for facility in snapshot.get("facilities", {}).values():
+		var distance := world_position.distance_to(facility.get("position", Vector2.ZERO))
+		if distance <= nearest_distance:
+			nearest = facility
+			nearest_distance = distance
+	return nearest
+
+
+func _minimap_facility_at(screen_position: Vector2, snapshot: Dictionary) -> Dictionary:
+	var outer := Rect2(Vector2(28.0, get_viewport_rect().size.y - 266.0), Vector2(330.0, 226.0))
+	var map_rect := Rect2(outer.position + Vector2(14.0, 36.0), outer.size - Vector2(28.0, 52.0))
+	if not map_rect.has_point(screen_position): return {}
+	var map_data: Dictionary = snapshot.get("map", {})
+	var world: Vector2 = Vector2((screen_position.x - map_rect.position.x) / map_rect.size.x * float(map_data.get("width", 1.0)), (screen_position.y - map_rect.position.y) / map_rect.size.y * float(map_data.get("height", 1.0)))
+	var scale: Vector2 = Vector2(float(map_data.get("width", 1.0)) / map_rect.size.x, float(map_data.get("height", 1.0)) / map_rect.size.y)
+	var candidate: Dictionary = _facility_at(world, {"facilities": snapshot.get("facilities", {})})
+	if candidate.is_empty() or (candidate.get("position", Vector2.ZERO) as Vector2).distance_to(world) > 12.0 * maxf(scale.x, scale.y): return {}
+	return candidate
+
+
+func _queue_facility_control() -> void:
+	_queue_facility_command("DeclareFacilityControl")
+
+
+func _queue_facility_service_or_approach() -> void:
+	if selected_unit_id.is_empty() or selected_facility_id.is_empty(): return
+	var status: Dictionary = session.get_facility_action_status(selected_unit_id, selected_facility_id)
+	_queue_facility_command("RequestFacilityService" if bool(status.get("service_ready", false)) else "ApproachFacility")
+
+
+func _queue_facility_support(patrol: bool = false, recon: bool = false) -> void:
+	if selected_unit_id.is_empty() or selected_facility_id.is_empty(): return
+	var mission_id := "support_mission.air_recon" if recon else ("support_mission.fighter_patrol" if patrol else "support_mission.airstrike")
+	session.queue_command({"command_id":"ui.facility.support.%s" % session.state["tick_index"], "command_type":"RequestSupportMission", "issued_at_tick":session.state["tick_index"], "issuer_id":"player", "unit_id":selected_unit_id, "facility_id":selected_facility_id, "mission_definition_id":mission_id, "target_position":get_global_mouse_position()})
+
+
+func _queue_facility_mine() -> void:
+	_queue_facility_command("RequestMineDeployment", {"target_position": get_global_mouse_position()})
+
+
+func _queue_facility_cancel() -> void:
+	_queue_facility_command("CancelFacilityAction")
+
+
+func _queue_facility_command(command_type: String, extra: Dictionary = {}) -> void:
+	if selected_unit_id.is_empty() or selected_facility_id.is_empty(): return
+	var command: Dictionary = {"command_id":"ui.facility.%s.%s" % [command_type, session.state["tick_index"]], "command_type":command_type, "issued_at_tick":session.state["tick_index"], "issuer_id":"player", "unit_id":selected_unit_id, "facility_id":selected_facility_id}
+	command.merge(extra, true)
+	session.queue_command(command)
 
 
 func _begin_primary_aim() -> void:
@@ -918,6 +989,7 @@ func _start_battle(new_level_id: String) -> void:
 		return
 	accumulator = 0.0
 	selected_unit_id = ""
+	selected_facility_id = ""
 	focused_target_id = ""
 	result_character_id = ""
 	operation_mode = OperationMode.NORMAL
@@ -989,6 +1061,8 @@ func _update_hud() -> void:
 	var half_view := _camera_visible_size() * 0.5
 	snapshot["camera_rect"] = Rect2(battle_camera.position - half_view, half_view * 2.0)
 	snapshot["selected_unit_id"] = selected_unit_id
+	snapshot["selected_facility_id"] = selected_facility_id
+	snapshot["facility_action_status"] = session.get_facility_action_status(selected_unit_id, selected_facility_id) if not selected_unit_id.is_empty() and not selected_facility_id.is_empty() else {}
 	snapshot["focused_target_id"] = focused_target_id
 	if not snapshot.get("result", {}).is_empty():
 		if result_character_id.is_empty():

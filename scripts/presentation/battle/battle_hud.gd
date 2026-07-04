@@ -151,6 +151,7 @@ func _draw_minimap(rect: Rect2) -> void:
 		var facility_position := _minimap_position(facility.get("position", Vector2.ZERO), map_rect, map_data)
 		var facility_icon := "ui_marker_facility_%s" % str(facility.get("asset_semantic", ""))
 		_draw_icon(facility_icon, Rect2(facility_position - Vector2(7.0, 7.0), Vector2(14.0, 14.0)), Color(1.0, 1.0, 1.0, 0.86))
+		if str(facility.get("facility_id", "")) == str(snapshot.get("selected_facility_id", "")): draw_arc(facility_position, 11.0, 0.0, TAU, 20, Color("#f8ef9a"), 2.0)
 	for unit in snapshot.get("units", {}).values():
 		var friendly := str(unit.get("faction_id", "")) == "player"
 		var position := _minimap_position(unit.get("position", Vector2.ZERO), map_rect, map_data)
@@ -212,6 +213,11 @@ func _environment_zone_icon(effect_id: String) -> String:
 
 func _draw_minimap_minefields(map_rect: Rect2, map_data: Dictionary) -> void:
 	for minefield in snapshot.get("minefields", {}).values():
+		if str(minefield.get("mine_type", "")) == "DeployedMine":
+			if str(minefield.get("operation_state", "")) == "Active":
+				var mine_position := _minimap_position(minefield.get("position", Vector2.ZERO), map_rect, map_data)
+				_draw_icon("ui_marker_minefield_known", Rect2(mine_position - Vector2(5.0, 5.0), Vector2(10.0, 10.0)))
+			continue
 		var points := PackedVector2Array()
 		for raw_point in minefield.get("polygon", []):
 			var point: Vector2 = raw_point if raw_point is Vector2 else Vector2(float(raw_point[0]), float(raw_point[1]))
@@ -242,6 +248,10 @@ func _draw_log_panel(rect: Rect2) -> void:
 
 
 func _draw_selected_panel(rect: Rect2) -> void:
+	var facility := _selected_facility()
+	if not facility.is_empty():
+		_draw_facility_panel(rect, facility)
+		return
 	_draw_panel(rect, "当前角色")
 	var selected := _selected_unit()
 	if selected.is_empty():
@@ -264,6 +274,31 @@ func _draw_selected_panel(rect: Rect2) -> void:
 	draw_string(ThemeDB.fallback_font, rect.position + Vector2(18.0, 178.0), "Q  %s" % ammo, HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 36.0, 15, TEXT_DARK)
 	draw_string(ThemeDB.fallback_font, rect.position + Vector2(18.0, 202.0), "F  %s" % skill, HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 36.0, 15, TEXT_DARK)
 	draw_string(ThemeDB.fallback_font, rect.position + Vector2(18.0, 226.0), _skill_description(), HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 36.0, 12, TEXT_SOFT)
+
+
+func _draw_facility_panel(rect: Rect2, facility: Dictionary) -> void:
+	_draw_panel(rect, "设施操作")
+	var status: Dictionary = snapshot.get("facility_action_status", {})
+	draw_string(ThemeDB.fallback_font, rect.position + Vector2(18.0, 58.0), str(facility.get("display_name", facility.get("facility_id", "?"))), HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 36.0, 20, TEXT_DARK)
+	draw_string(ThemeDB.fallback_font, rect.position + Vector2(18.0, 82.0), "阵营 %s  |  运行 %s  |  交互 %s" % [facility.get("faction_id", "neutral"), facility.get("operation_state", "Dormant"), facility.get("interaction_state", "Idle")], HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 36.0, 13, TEXT_SOFT)
+	var control_ratio := float(status.get("control_progress_ratio", 0.0))
+	var service_ratio := float(status.get("service_progress_ratio", 0.0))
+	draw_string(ThemeDB.fallback_font, rect.position + Vector2(18.0, 106.0), "控制 %.0f%%  |  服务 %.0f%%  |  泊位 %s" % [control_ratio * 100.0, service_ratio * 100.0, "占用" if not str(status.get("berth_unit_id", "")).is_empty() else "空闲"], HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 36.0, 13, TEXT_DARK)
+	var prerequisites := "区域 %s  低速 %s  朝向 %s" % ["✓" if bool(status.get("inside_interaction_water", false)) else "×", "✓" if bool(status.get("berth_speed_ok", false)) else "×", "✓" if bool(status.get("berth_heading_ok", false)) else "×"]
+	draw_string(ThemeDB.fallback_font, rect.position + Vector2(18.0, 130.0), prerequisites, HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 36.0, 13, TEXT_SOFT)
+	var interruption := str(status.get("last_interruption_reason", ""))
+	if not interruption.is_empty(): draw_string(ThemeDB.fallback_font, rect.position + Vector2(18.0, 151.0), "上次中断：%s" % interruption, HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 36.0, 12, Color("#a14b4b"))
+	var actions := [
+		{"key":"H", "icon":"ui_icon_facility_seize", "text":"控制/占领", "ready":status.get("control_ready", false)},
+		{"key":"J", "icon":"ui_icon_facility_service_complete", "text":"补给/维修或接近", "ready":status.get("service_ready", false)},
+		{"key":"K", "icon":"ui_icon_mission_airstrike", "text":"空袭/⇧巡逻/⌘侦察", "ready":status.get("support_ready", false)},
+		{"key":"L", "icon":"ui_marker_minefield_known", "text":"布雷", "ready":status.get("mine_ready", false)},
+		{"key":"U", "icon":"ui_icon_facility_service_interrupted", "text":"取消/离泊", "ready":status.get("can_cancel", false)},
+	]
+	for index in range(actions.size()):
+		var column := index % 2
+		var row := int(index / 2)
+		_draw_action_card(Rect2(rect.position + Vector2(18.0 + column * 158.0, 164.0 + row * 30.0), Vector2(148.0, 26.0)), actions[index])
 
 
 func _draw_pause_panel(viewport_size: Vector2) -> void:
@@ -360,6 +395,12 @@ func _selected_unit() -> Dictionary:
 	var selected_id := str(snapshot.get("selected_unit_id", ""))
 	if selected_id.is_empty(): return {}
 	return snapshot.get("units", {}).get(selected_id, {})
+
+
+func _selected_facility() -> Dictionary:
+	var selected_id := str(snapshot.get("selected_facility_id", ""))
+	if selected_id.is_empty(): return {}
+	return snapshot.get("facilities", {}).get(selected_id, {})
 
 
 func _primary_text() -> String:

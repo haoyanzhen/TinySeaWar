@@ -240,6 +240,7 @@ func snapshot(viewer_faction: String = PLAYER_FACTION, omniscient: bool = false)
 		}
 	var contacts := {}
 	var visible_minefields := {}
+	var visible_facilities: Dictionary = state.get("facilities_by_id", {}).duplicate(true) if omniscient else _ai_observation_for(viewer_faction).known_facilities.duplicate(true)
 	var unit_terrain_contexts := {}
 	for contact_id in state["contacts_by_faction"].get(viewer_faction, {}):
 		var contact: Dictionary = state["contacts_by_faction"][viewer_faction][contact_id]
@@ -268,7 +269,7 @@ func snapshot(viewer_faction: String = PLAYER_FACTION, omniscient: bool = false)
 		"terrain_map": state.get("terrain_map", {}).duplicate(true),
 		"environment_zones": state.get("environment_zones", []).duplicate(true),
 		"global_environment": state.get("global_environment", {}).duplicate(true),
-		"facilities": state.get("facilities_by_id", {}).duplicate(true),
+		"facilities": visible_facilities,
 		"minefields": visible_minefields,
 		"support_effects": _visible_support_effects(viewer_faction, omniscient),
 		"skill_effects": _visible_skill_effects(viewer_faction, omniscient),
@@ -445,6 +446,37 @@ func get_primary_aim_status(unit_id: String, target_position: Vector2) -> Dictio
 	return validation
 
 
+func get_facility_action_status(unit_id: String, facility_id: String) -> Dictionary:
+	var unit: Dictionary = state.get("units_by_id", {}).get(unit_id, {})
+	var facility: Dictionary = _ai_observation_for(PLAYER_FACTION).known_facilities.get(facility_id, {})
+	if unit.is_empty() or facility.is_empty(): return {"available": false, "reason_code": "FACILITY_NOT_KNOWN"}
+	var definition := facility_service.definition_for(facility_id)
+	var modes: Array = definition.get("operation_modes", [])
+	var control: Dictionary = facility.get("control_state", {})
+	var service: Dictionary = facility.get("service_state", {})
+	var control_duration := maxf(0.001, float(control.get("duration", definition.get("area_control", {}).get("duration", 1.0))))
+	var service_duration := maxf(0.001, float(service.get("duration", definition.get("berthing_service", {}).get("duration", 1.0))))
+	var inside: bool = Geometry2D.is_point_in_polygon(unit.get("position", Vector2.ZERO), _polygon(facility.get("interaction_water_polygon", [])))
+	var berth: Dictionary = definition.get("berthing_service", {})
+	var heading_ok: bool = absf(wrapf(float(unit.get("heading", 0.0)) - deg_to_rad(float(facility.get("heading", 0.0))), -PI, PI)) <= deg_to_rad(float(berth.get("heading_tolerance_degrees", 180.0)))
+	var speed_ok: bool = absf(float(unit.get("current_speed", 0.0))) <= float(berth.get("max_entry_speed", 0.0))
+	return {
+		"available": true, "facility_id": facility_id, "display_name": facility.get("display_name", facility_id),
+		"faction_id": facility.get("faction_id", "neutral"), "life_state": facility.get("life_state", "Alive"), "operation_state": facility.get("operation_state", "Dormant"),
+		"interaction_state": facility.get("interaction_state", "Idle"), "last_interruption_reason": facility.get("last_interruption_reason", ""),
+		"operation_modes": modes.duplicate(), "service_type": berth.get("service_type", ""),
+		"control_progress_ratio": clampf(float(control.get("progress", 0.0)) / control_duration, 0.0, 1.0),
+		"service_progress_ratio": clampf(float(service.get("progress", 0.0)) / service_duration, 0.0, 1.0),
+		"control_executor_unit_id": control.get("executor_unit_id", ""), "berth_unit_id": service.get("unit_id", ""),
+		"inside_interaction_water": inside, "berth_speed_ok": speed_ok, "berth_heading_ok": heading_ok,
+		"control_ready": "AreaControl" in modes and facility.get("life_state", "") == "Alive" and facility.get("operation_state", "") != "Suppressed" and control.is_empty(),
+		"service_ready": "BerthingService" in modes and facility_service.is_operational(facility_id) and facility.get("faction_id", "") == unit.get("faction_id", "") and inside and speed_ok and heading_ok and service.is_empty(),
+		"support_ready": "RemoteCommand" in modes and str(definition.get("remote_command", {}).get("command_type", "")) == "SupportMission" and facility_service.is_operational(facility_id) and facility.get("faction_id", "") == unit.get("faction_id", ""),
+		"mine_ready": "RemoteCommand" in modes and str(definition.get("remote_command", {}).get("command_type", "")) == "MineDeployment" and facility_service.is_operational(facility_id) and facility.get("faction_id", "") == unit.get("faction_id", ""),
+		"can_cancel": str(control.get("executor_unit_id", "")) == unit_id or str(service.get("unit_id", "")) == unit_id,
+	}
+
+
 func _configure_scene_combat(level: Dictionary) -> void:
 	terrain_query = TerrainQueryService.new()
 	terrain_context_service = TerrainContextService.new()
@@ -556,6 +588,7 @@ func _build_unit(member: Dictionary, ship: Dictionary, fleet_id: String, faction
 		"primary_auto_fire_suspended": false,
 		"skill_auto_cast_enabled": false if player_controlled else true,
 		"player_route_waypoints": [],
+		"player_facility_target_id": "",
 		"ai_state": {
 			"mode_id": _default_ai_mode(ship) if not player_controlled else "",
 			"mode_entered_at": 0.0,
@@ -580,6 +613,11 @@ func _build_unit(member: Dictionary, ship: Dictionary, fleet_id: String, faction
 			"level_task": "",
 			"task_target_ref": {},
 			"task_score": 0.0,
+			"task_started_at": 0.0,
+			"task_failures": 0,
+			"facility_failure_counts": {},
+			"task_blocked_facility_id": "",
+			"task_blocked_until": 0.0,
 			"group_id": "",
 			"group_role": "",
 			"formation_id": "",
@@ -690,11 +728,13 @@ func _apply_command(command: Dictionary) -> Dictionary:
 		"DeclareFacilityControl":
 			var facility_result := facility_service.declare_control(str(command.get("facility_id", "")), unit)
 			if bool(facility_result.get("accepted", false)) and facility_result.has("event"):
+				if unit["faction_id"] == PLAYER_FACTION: unit["player_facility_target_id"] = str(command.get("facility_id", ""))
 				_ai_objective_plan_cache.erase(unit_id)
 				state["facilities_by_id"] = facility_service.snapshot()
 				_ai_observations_by_faction.clear()
 				var facility_event: Dictionary = facility_result["event"]
 				_emit(str(facility_event.get("event_type", "FacilityControlDeclared")), facility_event)
+			elif str(command.get("issuer_type", "")) == "AI": _record_ai_facility_failure(unit, str(command.get("facility_id", "")))
 			return facility_result
 		"RequestFacilityService":
 			var service_result := facility_service.request_service(str(command.get("facility_id", "")), unit)
@@ -702,10 +742,19 @@ func _apply_command(command: Dictionary) -> Dictionary:
 				state["facilities_by_id"] = facility_service.snapshot()
 				var service_event: Dictionary = service_result["event"]
 				_emit(str(service_event.get("event_type", "FacilityServiceStarted")), service_event)
+			elif str(command.get("issuer_type", "")) == "AI": _record_ai_facility_failure(unit, str(command.get("facility_id", "")))
 			return service_result
+		"ApproachFacility":
+			var approach_facility_id := str(command.get("facility_id", ""))
+			if unit["faction_id"] != PLAYER_FACTION or not _ai_observation_for(PLAYER_FACTION).known_facilities.has(approach_facility_id):
+				return _rejection(command.get("command_id", ""), "FACILITY_NOT_KNOWN")
+			unit["player_facility_target_id"] = approach_facility_id
+			_emit("FacilityApproachAssigned", {"unit_id": unit_id, "facility_id": approach_facility_id})
+			return {"accepted": true}
 		"CancelFacilityAction":
 			var cancel_result := facility_service.cancel_action(str(command.get("facility_id", "")), unit_id)
 			if bool(cancel_result.get("accepted", false)) and cancel_result.has("event"):
+				if unit["faction_id"] == PLAYER_FACTION: unit["player_facility_target_id"] = ""
 				var cancel_event: Dictionary = cancel_result["event"]
 				_emit(str(cancel_event.get("event_type", "FacilityActionInterrupted")), cancel_event)
 			return cancel_result
@@ -718,6 +767,16 @@ func _apply_command(command: Dictionary) -> Dictionary:
 				var support_event: Dictionary = support_result["event"]
 				_emit(str(support_event.get("event_type", "SupportMissionStarted")), support_event)
 			return support_result
+		"RequestMineDeployment":
+			var mine_target = command.get("target_position")
+			if typeof(mine_target) != TYPE_VECTOR2: return _rejection(command.get("command_id", ""), "INVALID_TARGET_TYPE")
+			var mine_seed := int(state.get("battle_seed", 1)) ^ int(state.get("tick_index", 0) * 7919) ^ int(str(command.get("facility_id", "")).hash())
+			var mine_result := facility_service.request_mine_deployment(str(command.get("facility_id", "")), unit, mine_target, float(state.get("elapsed_time", 0.0)), state["units_by_id"], mine_seed)
+			if bool(mine_result.get("accepted", false)) and mine_result.has("event"):
+				var mine_event: Dictionary = mine_result["event"]
+				_emit(str(mine_event.get("event_type", "MineDeploymentStarted")), mine_event)
+			elif str(command.get("issuer_type", "")) == "AI": _record_ai_facility_failure(unit, str(command.get("facility_id", "")))
+			return mine_result
 		_:
 			return _rejection(command.get("command_id", ""), "UNKNOWN_COMMAND")
 
@@ -1393,6 +1452,14 @@ func _update_player_assist_intent(unit: Dictionary) -> void:
 	if not bool(unit.get("movement_assist_enabled", false)):
 		unit["movement_state"] = {"mode": "HoldPosition", "target_position": unit["position"], "waypoints": [], "waypoint_index": 0}
 		return
+	var facility_id := str(unit.get("player_facility_target_id", ""))
+	if not facility_id.is_empty():
+		var known_facility: Dictionary = _ai_observation_for(PLAYER_FACTION).known_facilities.get(facility_id, {})
+		if known_facility.is_empty() or known_facility.get("life_state", "") != "Alive":
+			unit["player_facility_target_id"] = ""
+		else:
+			_queue_ai_move(unit, facility_service.interaction_center(facility_id), "PlayerAssistAI", "AssistNavigate")
+			return
 	if target.is_empty():
 		unit["movement_state"] = {"mode": "HoldPosition", "target_position": unit["position"], "waypoints": [], "waypoint_index": 0}
 		return
@@ -1407,6 +1474,11 @@ func _update_enemy_ai_intent(unit: Dictionary) -> void:
 		return
 	unit["ai_state"]["decision_cooldown"] = float(_ai_profile.get("decision_interval", AI_DECISION_INTERVAL))
 	var target := _select_target_with_hysteresis(unit)
+	var ai_state: Dictionary = unit["ai_state"]
+	if not str(ai_state.get("level_task", "")).is_empty() and float(state.get("elapsed_time", 0.0)) - float(ai_state.get("task_started_at", 0.0)) >= 12.0:
+		var active_action := facility_service.active_action_for_unit(str(unit.get("entity_id", "")))
+		if not active_action.is_empty(): facility_service.cancel_action(str(active_action.get("facility_id", "")), str(unit.get("entity_id", "")))
+		_record_ai_facility_failure(unit, str(ai_state.get("task_target_ref", {}).get("facility_id", "")))
 	var facility_plan := _scheduled_ai_facility_plan(unit, target.is_empty())
 	if not facility_plan.is_empty():
 		if bool(facility_plan.get("hold_interaction", false)):
@@ -2015,6 +2087,7 @@ func _ai_facility_plan(unit: Dictionary, allow_capture: bool) -> Dictionary:
 	var capture_slot_available := _facility_capture_slot_available(unit)
 	for facility_id in facilities:
 		var facility: Dictionary = facilities[facility_id]
+		if str(unit.get("ai_state", {}).get("task_blocked_facility_id", "")) == str(facility_id) and float(unit.get("ai_state", {}).get("task_blocked_until", 0.0)) > float(state.get("elapsed_time", 0.0)): continue
 		if str(facility.get("life_state", "")) != "Alive": continue
 		var definition := facility_service.definition_for(str(facility_id))
 		var action_type := ""
@@ -2195,6 +2268,7 @@ func _set_ai_facility_task(unit: Dictionary, plan: Dictionary) -> void:
 	ai_state["objective_role"] = str(plan.get("objective_role", ""))
 	ai_state["group_role"] = "ObjectiveRunner" if ai_state["level_task"] in ["CaptureFacility", "ServiceFacility"] else ("Screen" if ai_state["level_task"] == "DefendFacility" else ai_state.get("group_role", ""))
 	if old_task != ai_state["level_task"] or old_facility != str(plan.get("facility_id", "")):
+		ai_state["task_started_at"] = float(state.get("elapsed_time", 0.0))
 		_emit("AILevelTaskChanged", {"unit_id": unit["entity_id"], "old_task": old_task, "level_task": ai_state["level_task"], "facility_id": plan.get("facility_id", ""), "score": plan.get("score", 0.0)})
 
 
@@ -2206,10 +2280,22 @@ func _clear_ai_facility_task(unit: Dictionary) -> void:
 	ai_state["task_target_ref"] = {}
 	ai_state["task_score"] = 0.0
 	ai_state["objective_role"] = ""
+	ai_state["task_started_at"] = 0.0
 	var group: Dictionary = state.get("ai_groups_by_faction", {}).get(unit.get("faction_id", ""), {}).get(str(ai_state.get("group_id", "")), {})
 	var leader: Dictionary = state.get("units_by_id", {}).get(str(group.get("leader_unit_id", "")), {})
 	ai_state["group_role"] = _default_group_role(unit, leader, int(ai_state.get("formation_slot_index", 0)))
 	_emit("AILevelTaskChanged", {"unit_id": unit["entity_id"], "old_task": old_task, "level_task": "", "facility_id": "", "score": 0.0})
+
+
+func _record_ai_facility_failure(unit: Dictionary, facility_id: String) -> void:
+	var ai_state: Dictionary = unit["ai_state"]
+	ai_state["task_failures"] = int(ai_state.get("task_failures", 0)) + 1
+	var counts: Dictionary = ai_state.get("facility_failure_counts", {})
+	counts[facility_id] = int(counts.get(facility_id, 0)) + 1
+	ai_state["facility_failure_counts"] = counts
+	ai_state["task_blocked_facility_id"] = facility_id
+	ai_state["task_blocked_until"] = INF if int(counts[facility_id]) >= 2 else float(state.get("elapsed_time", 0.0)) + minf(15.0, 4.0 * float(ai_state["task_failures"]))
+	_clear_ai_facility_task(unit)
 
 
 func _queue_ai_facility_action(unit: Dictionary, facility_id: String, action_type: String) -> void:
@@ -2258,7 +2344,20 @@ func _update_ai_support_intents(faction_id: String = ENEMY_FACTION) -> void:
 			var range_margin := maxf(20.0, float(target.get("stats", {}).get("speed", 0.0)) * 0.5)
 			if (facility.get("position", Vector2.ZERO) as Vector2).distance_to(target["position"]) > maximum_range - range_margin: continue
 			command_queue.append({"command_id":"ai.support.%s.%s.%s" % [state["tick_index"] + 1, faction_id, mission_id], "command_type":"RequestSupportMission", "issued_at_tick":state["tick_index"] + 1, "issuer_type":"AI", "issuer_id":faction_id, "unit_id":requester["entity_id"], "facility_id":facility_id, "mission_definition_id":mission_id, "target_position":target["position"]})
+			_set_ai_facility_task(requester, {"task_type":"AirportSupport", "facility_id":facility_id, "score":70.0, "objective_role":"RemoteSupport"})
 			return
+	for facility_id_key in facility_ids:
+		var facility: Dictionary = live_facilities.get(facility_id_key, facilities[facility_id_key])
+		var facility_id := str(facility.get("facility_id", ""))
+		var definition := facility_service.definition_for(facility_id)
+		if facility.get("faction_id", "") != faction_id or not facility_service.is_operational(facility_id) or str(definition.get("remote_command", {}).get("command_type", "")) != "MineDeployment": continue
+		if float(facility.get("cooldown_remaining", 0.0)) > 0.0 or int(facility.get("remote_charges_remaining", 0)) <= 0: continue
+		var rules: Dictionary = definition.get("remote_command", {})
+		var direction := (target.get("position", Vector2.ZERO) as Vector2) - (facility.get("position", Vector2.ZERO) as Vector2)
+		var mine_target := (facility.get("position", Vector2.ZERO) as Vector2) + direction.normalized() * minf(float(rules.get("control_radius", 0.0)) * 0.65, direction.length() * 0.5)
+		command_queue.append({"command_id":"ai.mine.%s.%s" % [state["tick_index"] + 1, faction_id], "command_type":"RequestMineDeployment", "issued_at_tick":state["tick_index"] + 1, "issuer_type":"AI", "issuer_id":faction_id, "unit_id":requester["entity_id"], "facility_id":facility_id, "target_position":mine_target})
+		_set_ai_facility_task(requester, {"task_type":"MineDeployment", "facility_id":facility_id, "score":68.0, "objective_role":"RemoteSupport"})
+		return
 
 
 func _cast_skill(unit: Dictionary, target_ref: Dictionary, command_id: String) -> Dictionary:
@@ -2965,6 +3064,12 @@ func _handle_facility_event(event: Dictionary) -> void:
 	match event_type:
 		"FacilityServiceCompleted": _apply_facility_service(event)
 		"SupportMissionCompleted": _resolve_support_mission(event)
+		"MineDeploymentCompleted":
+			for mine_event in minefield_service.deploy_random_batch(event, terrain_query): _emit(str(mine_event.get("event_type", "MineDeployed")), mine_event)
+		"FacilityActionInterrupted":
+			var unit: Dictionary = state.get("units_by_id", {}).get(str(event.get("unit_id", "")), {})
+			if not unit.is_empty() and _uses_full_ai(unit):
+				_record_ai_facility_failure(unit, str(event.get("facility_id", "")))
 	_emit(event_type, event)
 
 

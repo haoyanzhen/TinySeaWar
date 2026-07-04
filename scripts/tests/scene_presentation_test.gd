@@ -108,6 +108,18 @@ func _run() -> void:
 	_check(battle.terrain_view.static_root.get_child_count() >= 9, "harbor scene renders water regions, six visual-only shore layers, and the land runtime asset")
 	_check(battle.terrain_view.zone_root.get_child_count() >= 17, "soft-terrain presentation consumes fog detail and squall edge layers plus program boundaries")
 	_check(harbor_snapshot.get("facilities", {}).size() == 8 and battle.terrain_view.facility_root.get_child_count() == 8, "harbor facilities share runtime state and presentation placement")
+	var world_facility: Dictionary = harbor_snapshot["facilities"]["facility.harbor.observation_west"]
+	_check(battle._facility_at(world_facility["position"], harbor_snapshot).get("facility_id", "") == world_facility["facility_id"], "world facility markers can select a known facility")
+	var minimap_outer := Rect2(Vector2(28.0, viewport_size.y - 266.0), Vector2(330.0, 226.0))
+	var minimap_rect := Rect2(minimap_outer.position + Vector2(14.0, 36.0), minimap_outer.size - Vector2(28.0, 52.0))
+	var minimap_point: Vector2 = battle.battle_hud._minimap_position(world_facility["position"], minimap_rect, harbor_snapshot["map"])
+	_check(battle._minimap_facility_at(minimap_point, harbor_snapshot).get("facility_id", "") == world_facility["facility_id"], "minimap facility markers can select a known facility")
+	battle.selected_unit_id = "unit.player.shimakaze"
+	battle.selected_facility_id = world_facility["facility_id"]
+	battle._update_hud()
+	var facility_status: Dictionary = battle.session.get_facility_action_status(battle.selected_unit_id, battle.selected_facility_id)
+	_check(facility_status.has("control_progress_ratio") and facility_status.has("service_progress_ratio") and facility_status.has("berth_speed_ok") and facility_status.has("last_interruption_reason"), "facility HUD receives prerequisites, progress, berth state, and interruption feedback")
+	_check(not battle.battle_hud._selected_facility().is_empty(), "facility selection opens the facility operation panel")
 	battle.terrain_view.sync_dynamic(harbor_snapshot.get("environment_zones", []), harbor_snapshot.get("facilities", {}), battle.session.snapshot("player", true).get("minefields", {}))
 	_check(battle.terrain_view.minefield_root.get_child_count() == 2, "omniscient terrain view renders the fixed minefield and its safe channel")
 	_check(battle.battle_hud._texture("res://assets/ui/processed/battle/terrain/minimap_terrain_map_harbor_mouth.png") != null, "harbor minimap loads the generated geometry mask")

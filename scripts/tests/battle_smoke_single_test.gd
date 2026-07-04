@@ -23,7 +23,8 @@ func _run() -> void:
 		push_error("Battle creation failed: %s" % creation.get("errors", []))
 		quit(1)
 		return
-	session.configure_full_ai_factions(["player", "enemy"])
+	if args.size() <= 2 or str(args[2]) != "default_control":
+		session.configure_full_ai_factions(["player", "enemy"])
 	var profile_result: Dictionary = session.configure_ai_profile("ai.profile.standard")
 	if not bool(profile_result.get("accepted", false)):
 		push_error("AI profile configuration failed: %s" % profile_result)

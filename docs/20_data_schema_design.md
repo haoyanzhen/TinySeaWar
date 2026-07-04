@@ -665,6 +665,15 @@ FacilityDefinition
   remote_command
     command_type
     mission_ids[]
+    control_radius
+    area_side_length
+    duration
+    mine_count
+    cooldown
+    charges
+    mine_damage
+    mine_trigger_radius
+    detection_distance
   automatic_operation.capability_ids[]
   combat_disposition
     suppressible
@@ -708,6 +717,7 @@ MinefieldDefinition
 - `area_control` 保存控制持续时间；控制意图可以在进入交互水域前声明，进度只在执行舰进入后累计，同阵营只有一个 `executor_unit_id`。
 - `berthing_service.service_type` 当前为 `Supply` 或 `Repair`，并显式保存泊位数、入泊速度、朝向容差和服务持续时间。补给继续使用 `weapon_reload_recovery_ratio`、`skill_cooldown_recovery`；维修使用 `hp_restore_ratio`、`repair_cap_ratio`。
 - `remote_command` 描述不要求舰船靠近的命令类别及合法任务引用；次数、冷却、航程和环境限制仍由具体任务 Definition 校验。
+- `MineDeployment` 远程命令另外使用 `control_radius`、`area_side_length`、`duration`、`mine_count`、`cooldown`、`charges` 和水雷伤害/碰撞/发现参数；随机种子由战斗种子、Tick 与设施 ID 确定。
 - `automatic_operation` 只列出设施自行运行的能力，不创建重复“使用设施”命令；`combat_disposition` 只声明公共攻击管线允许造成的压制、摧毁和静默结果。
 - `weapon_id` 必须引用现有 Weapon Definition。岸炮和空袭继续使用普通命中、装甲和伤害公式。
 - `reload_during_suppression` 控制武器设施受压制期间是否继续装填；当前岸防炮为 `false`。

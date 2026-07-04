@@ -245,6 +245,9 @@ shore_risk = 100 * (
 
 ```text
 CaptureFacility
+ServiceFacility
+AirportSupport
+MineDeployment
 DefendFacility
 SuppressFacility
 BlockPassage
@@ -275,6 +278,9 @@ capture_score = 100 * (
 - `facility_value` 由观察、岸炮、机场、通信、水雷控制、补给和维修能力组合决定。
 - `assignment_saturation` 防止全队涌向同一设施；达到任务所需舰数后取 `1`。
 - 占领舰被攻击、敌方进入防守半径或生存分显著下降时，不必坚持读条；重新比较继续、撤离和请求护航。
+- 完整 AI 只从本阵营 `AIObservation.known_facilities` 创建 `CaptureFacility`、`ServiceFacility`、`AirportSupport` 或 `MineDeployment`。区域控制先声明一次，进入水域后由 Domain 自动累计；靠泊条件满足后才申请一次服务，不逐 Tick 重复命令。
+- 设施行动中断后立即清除当前任务；首次失败对该设施施加递增重评冷却，同一单位对同一设施两次失败后本局放弃。单次设施任务连续占用超过 `12s` 时无条件放弃并恢复搜索或接敌，避免任务长期锁死战斗决策。
+- 玩家受限辅助只执行玩家指定设施的接近路线，不运行设施评分、任务分配、远程支援或布雷决策。
 
 #### 设施防守评分
 

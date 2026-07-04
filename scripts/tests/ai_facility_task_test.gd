@@ -119,6 +119,86 @@ func _run() -> void:
 	controller["faction_id"] = "player"
 	_check(modes_session.facility_service.request_service(supply_id, controller)["accepted"], "berthing service accepts valid faction, position, speed, heading, and free berth")
 	_check(modes_session._apply_command({"command_id":"legacy.facility","command_type":"StartFacilityInteraction","issuer_id":"player","issuer_type":"Player","unit_id":controller["entity_id"],"facility_id":supply_id}).get("reason_code", "") == "UNKNOWN_COMMAND", "legacy unified facility command is not a normal runtime entry")
+
+	var player_assist_session = BattleSession.new(registry)
+	player_assist_session.create_battle("level.prototype_harbor_3v3", 20260705)
+	var assisted: Dictionary = player_assist_session.state["units_by_id"]["unit.player.shimakaze"]
+	assisted["movement_assist_enabled"] = true
+	var assisted_facility_id := "facility.harbor.observation_west"
+	_check(player_assist_session._apply_command({"command_id":"player.approach", "command_type":"ApproachFacility", "issuer_id":"player", "issuer_type":"Player", "unit_id":assisted["entity_id"], "facility_id":assisted_facility_id})["accepted"], "player can explicitly assign a known facility approach")
+	player_assist_session._update_player_assist_intent(assisted)
+	var assist_command: Dictionary = player_assist_session.command_queue.back()
+	_check((assist_command.get("target_position", Vector2.ZERO) as Vector2).distance_to(player_assist_session.facility_service.interaction_center(assisted_facility_id)) < 1.0 and assisted["player_facility_target_id"] == assisted_facility_id, "limited assist approaches only the player-assigned facility")
+	player_assist_session.facility_service.facilities_by_id["facility.harbor.supply_west"]["faction_id"] = "enemy"
+	player_assist_session._ai_observations_by_faction.clear()
+	assisted["ai_state"]["decision_cooldown"] = 0.0
+	player_assist_session._update_player_assist_intent(assisted)
+	_check(assisted["player_facility_target_id"] == assisted_facility_id, "limited assist does not switch to a newly valuable facility")
+
+	var player_rule_session = BattleSession.new(registry)
+	var ai_rule_session = BattleSession.new(registry)
+	player_rule_session.create_battle("level.prototype_harbor_3v3", 20260706)
+	ai_rule_session.create_battle("level.prototype_harbor_3v3", 20260706)
+	var player_executor: Dictionary = player_rule_session.state["units_by_id"]["unit.player.shimakaze"]
+	var ai_executor: Dictionary = ai_rule_session.state["units_by_id"]["unit.enemy.gnevny"]
+	var symmetry_id := "facility.harbor.observation_west"
+	player_executor["position"] = player_rule_session.facility_service.interaction_center(symmetry_id)
+	ai_executor["position"] = ai_rule_session.facility_service.interaction_center(symmetry_id)
+	var player_control := player_rule_session._apply_command({"command_id":"symmetry.player", "command_type":"DeclareFacilityControl", "issuer_id":"player", "issuer_type":"Player", "unit_id":player_executor["entity_id"], "facility_id":symmetry_id})
+	var ai_control := ai_rule_session._apply_command({"command_id":"symmetry.ai", "command_type":"DeclareFacilityControl", "issuer_id":"enemy", "issuer_type":"AI", "unit_id":ai_executor["entity_id"], "facility_id":symmetry_id})
+	_check(player_control["accepted"] and ai_control["accepted"] and player_rule_session.facility_service.facilities_by_id[symmetry_id]["interaction_state"] == ai_rule_session.facility_service.facilities_by_id[symmetry_id]["interaction_state"], "player and AI control commands share the same domain transition")
+	ai_rule_session._set_ai_facility_task(ai_executor, {"task_type":"CaptureFacility", "facility_id":symmetry_id, "score":80.0})
+	ai_rule_session._handle_facility_event({"event_type":"FacilityActionInterrupted", "unit_id":ai_executor["entity_id"], "facility_id":symmetry_id, "reason_code":"UNIT_LEFT_INTERACTION_AREA"})
+	_check(ai_executor["ai_state"]["level_task"].is_empty() and ai_executor["ai_state"]["task_blocked_facility_id"] == symmetry_id and float(ai_executor["ai_state"]["task_blocked_until"]) > 0.0, "interrupted full AI task is abandoned and temporarily blocked before rescoring")
+	ai_rule_session._record_ai_facility_failure(ai_executor, symmetry_id)
+	_check(is_inf(float(ai_executor["ai_state"]["task_blocked_until"])), "two failures make the unit abandon the same facility for the battle")
+	ai_executor["ai_state"]["level_task"] = "ServiceFacility"; ai_executor["ai_state"]["task_started_at"] = -20.0
+	var visible_target: Dictionary = ai_rule_session.state["units_by_id"]["unit.player.shimakaze"]
+	ai_rule_session.state["visible_by_faction"]["enemy"] = {visible_target["entity_id"]: true}
+	ai_rule_session._ai_observations_by_faction.clear()
+	ai_rule_session._update_enemy_ai_intent(ai_executor)
+	_check(ai_executor["ai_state"]["level_task"] != "ServiceFacility", "stale facility work cannot indefinitely block re-engagement")
+
+	var mine_session = BattleSession.new(registry)
+	mine_session.create_battle("level.prototype_harbor_3v3", 20260707)
+	var mine_facility_id := "facility.harbor.mine_control_west"
+	var mine_facility: Dictionary = mine_session.facility_service.facilities_by_id[mine_facility_id]
+	mine_facility["faction_id"] = "player"; mine_facility["operation_state"] = "Active"; mine_facility["previous_operation_state"] = "Active"
+	var mine_requester: Dictionary = mine_session.state["units_by_id"]["unit.player.shimakaze"]
+	var mine_target: Vector2 = mine_facility["position"] + Vector2(450.0, 0.0)
+	for enemy_id in ["unit.enemy.gnevny", "unit.enemy.anshan", "unit.enemy.ning_hai"]: mine_session.state["units_by_id"][enemy_id]["position"] = Vector2(3900.0, 2000.0)
+	var mine_request := mine_session._apply_command({"command_id":"mine.player", "command_type":"RequestMineDeployment", "issuer_id":"player", "issuer_type":"Player", "unit_id":mine_requester["entity_id"], "facility_id":mine_facility_id, "target_position":mine_target})
+	_check(mine_request["accepted"], "player mine action enters the shared remote-command rules")
+	var mine_events: Array = mine_session.facility_service.advance(10.1, 10.1, mine_session.state["units_by_id"])
+	for mine_event in mine_events: mine_session._handle_facility_event(mine_event)
+	var deployed_count := 0
+	for minefield in mine_session.minefield_service.minefields_by_id.values():
+		if minefield.get("mine_type", "") == "DeployedMine": deployed_count += 1
+	_check(deployed_count == 12, "completed mine task creates the authored random batch")
+
+	var remote_ai_session = BattleSession.new(registry)
+	remote_ai_session.create_battle("level.prototype_harbor_3v3", 20260708)
+	var remote_target: Dictionary = remote_ai_session.state["units_by_id"]["unit.player.shimakaze"]
+	remote_ai_session.state["visible_by_faction"]["enemy"] = {remote_target["entity_id"]: true}
+	remote_ai_session._ai_observations_by_faction.clear()
+	remote_ai_session._update_ai_support_intents("enemy")
+	var airport_task_found := false
+	for command in remote_ai_session.command_queue:
+		if command.get("command_type", "") == "RequestSupportMission": airport_task_found = true
+	_check(airport_task_found, "full AI creates an airport support task from known facilities")
+	remote_ai_session.command_queue.clear()
+	remote_ai_session.facility_service.facilities_by_id["facility.harbor.airfield_east"]["operation_state"] = "Suppressed"
+	var ai_mine: Dictionary = remote_ai_session.facility_service.facilities_by_id["facility.harbor.mine_control_west"]
+	ai_mine["faction_id"] = "enemy"; ai_mine["operation_state"] = "Active"; ai_mine["previous_operation_state"] = "Active"
+	for remote_unit in remote_ai_session.state["units_by_id"].values():
+		if remote_unit.get("faction_id", "") == "player": remote_unit["position"] = Vector2(3900.0, 2100.0)
+	remote_ai_session.state["facilities_by_id"] = remote_ai_session.facility_service.snapshot()
+	remote_ai_session._ai_observations_by_faction.clear()
+	remote_ai_session._update_ai_support_intents("enemy")
+	var mine_task_found := false
+	for command in remote_ai_session.command_queue:
+		if command.get("command_type", "") == "RequestMineDeployment": mine_task_found = true
+	_check(mine_task_found, "full AI creates a remote mine deployment task")
 	if failures.is_empty():
 		print("PASS: %d AI facility task checks" % checks)
 		quit(0)

@@ -695,6 +695,11 @@ func _validate_facility_definition(definition: Dictionary) -> void:
 			errors.append("Unsupported support mission type in %s" % definition_id)
 		for field in ["cooldown", "arrival_time", "charges", "max_range", "effect_radius"]:
 			if float(definition.get(field, 0.0)) <= 0.0: errors.append("Support mission %s must be positive in %s" % [field, definition_id])
+		if float(definition.get("launch_time", -1.0)) < 0.0 or float(definition.get("launch_time", 0.0)) >= float(definition.get("arrival_time", 0.0)):
+			errors.append("Support mission launch_time must precede arrival in %s" % definition_id)
+		var state_policy: Dictionary = definition.get("facility_state_policy", {})
+		if str(state_policy.get("Preparing", "")) not in ["Cancel", "Continue"] or str(state_policy.get("EnRoute", "")) not in ["Cancel", "Continue"]:
+			errors.append("Support mission lacks valid facility state policy in %s" % definition_id)
 		var support_weapon_id := str(definition.get("weapon_id", ""))
 		if definition.get("mission_type", "") == "Airstrike" and get_definition("weapons", support_weapon_id).is_empty():
 			errors.append("Airstrike mission references missing weapon in %s" % definition_id)

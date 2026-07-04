@@ -178,17 +178,20 @@ func request_support(facility_id: String, mission_id: String, faction_id: String
 	facility["cooldown_remaining"] = float(mission.get("cooldown", 0.0))
 	mission_sequence += 1
 	var arrival_multiplier := float(environment_context.get("aviation_delay_multiplier", 1.0))
+	var launch_time := maxf(0.0, float(mission.get("launch_time", 0.0)))
 	var mission_state := {
 		"mission_id": "mission.%06d" % mission_sequence,
 		"definition_id": mission_id,
 		"facility_id": facility_id,
 		"faction_id": faction_id,
 		"target_position": target_position,
+		"launch_at_time": elapsed_time + launch_time,
 		"resolve_at_time": elapsed_time + float(mission.get("arrival_time", 0.0)) * arrival_multiplier,
-		"state": "Started",
+		"state": "Preparing" if launch_time > 0.0 else "EnRoute",
+		"facility_state_policy": mission.get("facility_state_policy", {"Preparing":"Cancel", "EnRoute":"Continue"}).duplicate(true),
 	}
 	support_missions.append(mission_state)
-	return {"accepted": true, "event": {"event_type": "SupportMissionStarted", "facility_id": facility_id, "mission_id": mission_state["mission_id"], "definition_id": mission_id, "target_position": target_position}}
+	return {"accepted": true, "event": {"event_type": "SupportMissionStarted", "facility_id": facility_id, "mission_id": mission_state["mission_id"], "definition_id": mission_id, "target_position": target_position, "mission_state": mission_state["state"]}}
 
 
 func request_mine_deployment(facility_id: String, unit: Dictionary, target_position: Vector2, elapsed_time: float, units_by_id: Dictionary, random_seed: int) -> Dictionary:
@@ -237,13 +240,24 @@ func advance(delta: float, elapsed_time: float, units_by_id: Dictionary) -> Arra
 		if not dependency_change.is_empty(): events.append(dependency_change)
 	var remaining: Array = []
 	for mission in support_missions:
+		var mission_state := str(mission.get("state", "Preparing"))
+		var facility_available := is_operational(str(mission.get("facility_id", "")))
+		var policy: Dictionary = mission.get("facility_state_policy", {})
+		if mission_state == "Preparing":
+			if not facility_available and str(policy.get("Preparing", "Cancel")) == "Cancel":
+				events.append({"event_type": "SupportMissionCancelled", "mission_id": mission["mission_id"], "definition_id": mission["definition_id"], "facility_id": mission["facility_id"], "mission_state":"Preparing", "reason_code": "FACILITY_NOT_ACTIVE"})
+				continue
+			if float(mission.get("launch_at_time", INF)) <= elapsed_time:
+				mission["state"] = "EnRoute"
+				mission_state = "EnRoute"
+				events.append({"event_type":"SupportMissionLaunched", "mission_id":mission["mission_id"], "definition_id":mission["definition_id"], "facility_id":mission["facility_id"], "faction_id":mission["faction_id"], "target_position":mission["target_position"]})
 		if float(mission.get("resolve_at_time", INF)) > elapsed_time:
 			remaining.append(mission)
 			continue
-		if not is_operational(str(mission.get("facility_id", ""))):
-			events.append({"event_type": "SupportMissionCancelled", "mission_id": mission["mission_id"], "definition_id": mission["definition_id"], "facility_id": mission["facility_id"], "reason_code": "FACILITY_NOT_ACTIVE"})
+		if mission_state == "EnRoute" and (facility_available or str(policy.get("EnRoute", "Continue")) == "Continue"):
+			events.append({"event_type": "SupportMissionCompleted", "mission_id": mission["mission_id"], "definition_id": mission["definition_id"], "facility_id": mission["facility_id"], "faction_id": mission["faction_id"], "target_position": mission["target_position"], "mission_state":"EnRoute"})
 		else:
-			events.append({"event_type": "SupportMissionCompleted", "mission_id": mission["mission_id"], "definition_id": mission["definition_id"], "facility_id": mission["facility_id"], "faction_id": mission["faction_id"], "target_position": mission["target_position"]})
+			events.append({"event_type": "SupportMissionCancelled", "mission_id": mission["mission_id"], "definition_id": mission["definition_id"], "facility_id": mission["facility_id"], "mission_state":mission_state, "reason_code": "FACILITY_NOT_ACTIVE"})
 	support_missions = remaining
 	var remaining_mines: Array = []
 	for deployment in mine_deployments:

@@ -20,7 +20,7 @@
         {"id": "facility.harbor.supply_west", "definition_id": "facility.forward_supply_point", "anchor_id": "harbor_land.supply_west", "faction_id": "neutral", "operation_state": "Dormant"},
         {"id": "facility.harbor.radar_east", "definition_id": "facility.radar_station", "anchor_id": "harbor_land.radar_east", "faction_id": "enemy", "operation_state": "Dormant"},
         {"id": "facility.harbor.communication_east", "definition_id": "facility.communication_station", "anchor_id": "harbor_land.communication_east", "faction_id": "enemy", "operation_state": "Active"},
-        {"id": "facility.harbor.airfield_east", "definition_id": "facility.coastal_airfield", "anchor_id": "harbor_land.airfield_east", "faction_id": "enemy", "operation_state": "Active", "requires_all_active": ["facility.harbor.communication_east"], "dependency_rules": {"requires_matching_faction": true}},
+        {"id": "facility.harbor.airfield_east", "definition_id": "facility.coastal_airfield", "anchor_id": "harbor_land.airfield_east", "faction_id": "enemy", "operation_state": "Active", "requires_any_active": ["facility.harbor.communication_east"], "dependency_rules": {"requires_matching_faction": true}},
         {"id": "facility.harbor.repair_berth_east", "definition_id": "facility.repair_berth", "anchor_id": "harbor_land.repair_berth_east", "faction_id": "neutral", "operation_state": "Dormant"}
       ]
     }

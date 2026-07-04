@@ -723,6 +723,7 @@ FacilityLayout.placements[]
 
 SupportMissionDefinition
   mission_type
+  launch_time
   max_range
   effect_radius
   effect_duration
@@ -730,6 +731,9 @@ SupportMissionDefinition
   enemy_aviation_accuracy_modifier
   salvo_count
   weapon_id
+  facility_state_policy
+    Preparing # Cancel | Continue
+    EnRoute # Cancel | Continue
 
 MinefieldDefinition
   damage
@@ -760,6 +764,7 @@ MinefieldDefinition
 - `durability_reference_id` 从稳定舰船 Definition 解析 HP、装甲与火力属性；`weapon_mount_reference` 复用武器 Definition 的伤害、散布、穿深、装填和弹药，仅覆盖设施实际炮塔数与每塔炮管数。当前岸炮引用 `ship.warspite` 及其 381mm AP/HE，按单座联装结算两发。
 - `reload_during_suppression` 控制武器设施受压制期间是否继续装填；当前岸防炮为 `false`。
 - `blocked_aviation_conditions` 当前支持 `Severe` 与 `Grounded`；`Restricted` 通过到达时间和命中修正表达，不等同于无条件禁飞。
+- 机场任务使用 `Preparing -> EnRoute -> Completed | Cancelled`。`launch_time` 必须早于 `arrival_time`；`facility_state_policy` 分阶段声明机场被压制、失能或静默后的处理。当前准备阶段取消，已经离场的任务继续到达并按普通侦查/航空攻击规则结算。
 - `controller_rules` 只切换绑定雷区状态。水雷触发、伤害、阵营知识和安全航道由独立水雷服务处理。
 
 Godot 制作插件通过 `build_authoring_snapshot.py` 将正式模板或地图数据装入可编辑场景，并通过 `apply_authoring_snapshot.py` 回写。`editor_snapshot.json` 只是被忽略的交换文件，不是运行时真源；生产门禁会对模板、环境区、设施布局和雷区执行无损往返测试。

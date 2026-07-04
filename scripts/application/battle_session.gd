@@ -764,6 +764,7 @@ func _apply_command(command: Dictionary) -> Dictionary:
 			var environment_route := _validate_environment_route(unit["position"], route.get("waypoints", []))
 			if not bool(environment_route.get("allowed", false)):
 				return _rejection(command.get("command_id", ""), str(environment_route.get("reason_code", "TIDE_ACCESS_RESTRICTED")))
+			_undock_for_move_order(unit)
 			var player_order: bool = str(command.get("issuer_type", "Player")) == "Player" and str(unit["faction_id"]) == PLAYER_FACTION
 			var movement_mode := "PlayerMoveOrder" if player_order else str(command.get("movement_mode", "AssistNavigate" if command.get("issuer_type", "") == "PlayerAssistAI" else "AutoNavigate"))
 			unit["movement_state"] = {"mode": movement_mode, "target_position": target_position, "waypoints": route.get("waypoints", [target_position]), "waypoint_index": 0}
@@ -822,6 +823,7 @@ func _apply_command(command: Dictionary) -> Dictionary:
 			if bool(service_result.get("accepted", false)) and service_result.has("event"):
 				state["facilities_by_id"] = facility_service.snapshot()
 				var service_event: Dictionary = service_result["event"]
+				if service_event.get("berth_state", "") == "Docked": _dock_unit_for_service(unit, service_event)
 				_emit(str(service_event.get("event_type", "FacilityServiceStarted")), service_event)
 			elif str(command.get("issuer_type", "")) == "AI": _record_ai_facility_failure(unit, str(command.get("facility_id", "")))
 			return service_result
@@ -991,6 +993,11 @@ func _update_movement(delta: float) -> void:
 	for unit_id in _sorted_unit_ids():
 		var unit: Dictionary = state["units_by_id"][unit_id]
 		if unit["life_state"] != "Alive": continue
+		var docked_action := _docked_action_for_unit(unit_id)
+		if not docked_action.is_empty():
+			unit["position"] = docked_action.get("dock_position", unit.get("position", Vector2.ZERO))
+			unit["current_speed"] = 0.0
+			continue
 		var movement: Dictionary = unit["movement_state"]
 		var target_position: Vector2 = _current_movement_target(movement, unit["position"])
 		var distance := (unit["position"] as Vector2).distance_to(target_position)
@@ -1193,12 +1200,16 @@ func _resolve_unit_overlap() -> void:
 				center_direction,
 			)
 			if delta_position.length_squared() <= 0.0001 or delta_position.length() >= minimum_distance: continue
-			var correction := delta_position.normalized() * (minimum_distance - delta_position.length()) * 0.5
+			var first_docked := not _docked_action_for_unit(str(first.get("entity_id", ""))).is_empty()
+			var second_docked := not _docked_action_for_unit(str(second.get("entity_id", ""))).is_empty()
+			if first_docked and second_docked: continue
+			var correction_scale := 1.0 if first_docked or second_docked else 0.5
+			var correction := delta_position.normalized() * (minimum_distance - delta_position.length()) * correction_scale
 			var first_position: Vector2 = _clamp_to_map(first["position"] - correction)
 			var second_position: Vector2 = _clamp_to_map(second["position"] + correction)
-			if not terrain_query.is_configured() or terrain_query.can_occupy_circle(first_position, float(first["stats"]["collision_radius"]), _movement_tags(first)):
+			if not first_docked and (not terrain_query.is_configured() or terrain_query.can_occupy_circle(first_position, float(first["stats"]["collision_radius"]), _movement_tags(first))):
 				first["position"] = first_position
-			if not terrain_query.is_configured() or terrain_query.can_occupy_circle(second_position, float(second["stats"]["collision_radius"]), _movement_tags(second)):
+			if not second_docked and (not terrain_query.is_configured() or terrain_query.can_occupy_circle(second_position, float(second["stats"]["collision_radius"]), _movement_tags(second))):
 				second["position"] = second_position
 
 
@@ -3234,6 +3245,9 @@ func _resolve_attack(attack: Dictionary, forced_hit: bool) -> void:
 	result["impact_position"] = attack.get("target_position", target.get("position", Vector2.ZERO))
 	result["aimed_target_unit_id"] = attack.get("aimed_target_unit_id", attack.get("target_unit_id", ""))
 	target["current_hp"] = float(result["target_hp_after"])
+	if not bool(result.get("caused_sinking", false)):
+		var repair_interruption := facility_service.interrupt_service_on_unit_damage(str(target.get("entity_id", "")), float(result.get("final_damage", 0.0)), float(target.get("max_hp", 1.0)))
+		if not repair_interruption.is_empty(): _handle_facility_event(repair_interruption)
 	if bool(result.get("hit", false)):
 		for effect in attack.get("on_hit_effects", []):
 			_apply_status(target, effect, float(effect.get("duration", 0.1)), str(attack.get("source_skill_id", "")), str(source.get("entity_id", "")))
@@ -3348,7 +3362,9 @@ func _handle_facility_event(event: Dictionary) -> void:
 		var task_unit: Dictionary = state.get("units_by_id", {}).get(str(event.get("unit_id", "")), {})
 		if not task_unit.is_empty(): _reset_ai_passive_memory(task_unit)
 	match event_type:
-		"FacilityServiceCompleted": _apply_facility_service(event)
+		"FacilityServiceCompleted":
+			_apply_facility_service(event)
+			_release_docked_unit(event)
 		"SupportMissionCompleted": _resolve_support_mission(event)
 		"MineDeploymentCompleted":
 			for mine_event in minefield_service.deploy_random_batch(event, terrain_query):
@@ -3356,10 +3372,40 @@ func _handle_facility_event(event: Dictionary) -> void:
 					facility_service.record_mine_deployment_result(str(mine_event.get("facility_id", "")), {"result":"Completed", "mission_id":mine_event.get("deployment_id", ""), "active_count":mine_event.get("active_count", 0), "invalid_count":mine_event.get("invalid_count", 0)})
 				_emit(str(mine_event.get("event_type", "MineDeployed")), mine_event)
 		"FacilityActionInterrupted":
+			_release_docked_unit(event)
 			var unit: Dictionary = state.get("units_by_id", {}).get(str(event.get("unit_id", "")), {})
 			if not unit.is_empty() and _uses_full_ai(unit):
 				_record_ai_facility_failure(unit, str(event.get("facility_id", "")))
 	_emit(event_type, event)
+
+
+func _dock_unit_for_service(unit: Dictionary, event: Dictionary) -> void:
+	var dock_position: Vector2 = event.get("dock_position", unit.get("position", Vector2.ZERO))
+	unit["position"] = dock_position
+	unit["current_speed"] = 0.0
+	unit["movement_state"] = {"mode":"Docked", "target_position":dock_position, "waypoints":[], "waypoint_index":0}
+	unit["player_route_waypoints"] = []
+
+
+func _release_docked_unit(event: Dictionary) -> void:
+	if str(event.get("service_type", "")) != "Repair": return
+	var unit: Dictionary = state.get("units_by_id", {}).get(str(event.get("unit_id", "")), {})
+	if unit.is_empty() or str(unit.get("movement_state", {}).get("mode", "")) != "Docked": return
+	unit["current_speed"] = 0.0
+	unit["movement_state"] = {"mode":"HoldPosition", "target_position":unit.get("position", Vector2.ZERO), "waypoints":[], "waypoint_index":0}
+
+
+func _docked_action_for_unit(unit_id: String) -> Dictionary:
+	var action := facility_service.active_action_for_unit(unit_id)
+	if action.get("action_type", "") != "Service" or action.get("service_type", "") != "Repair" or str(action.get("phase", "")) not in ["Docked", "Servicing"]: return {}
+	return action
+
+
+func _undock_for_move_order(unit: Dictionary) -> void:
+	var action := _docked_action_for_unit(str(unit.get("entity_id", "")))
+	if action.is_empty(): return
+	var cancellation := facility_service.cancel_action(str(action.get("facility_id", "")), str(unit.get("entity_id", "")))
+	if bool(cancellation.get("accepted", false)) and cancellation.has("event"): _handle_facility_event(cancellation["event"])
 
 
 func _apply_facility_service(event: Dictionary) -> void:
@@ -3522,6 +3568,9 @@ func _apply_mine_trigger(unit: Dictionary, trigger: Dictionary) -> void:
 	state["minefields_by_id"] = minefield_service.snapshot()
 	_emit("MineTriggered", {"minefield_id":trigger.get("minefield_id", ""), "unit_id":unit["entity_id"], "position":trigger.get("position", unit["position"]), "damage":result.get("final_damage", 0.0)})
 	_emit("AttackResolved", {"damage_result":result})
+	if not bool(result.get("caused_sinking", false)):
+		var repair_interruption := facility_service.interrupt_service_on_unit_damage(str(unit.get("entity_id", "")), float(result.get("final_damage", 0.0)), float(unit.get("max_hp", 1.0)))
+		if not repair_interruption.is_empty(): _handle_facility_event(repair_interruption)
 	if is_zero_approx(float(unit["current_hp"])): _sink_unit(unit, str(trigger.get("minefield_id", "")))
 
 
@@ -3572,8 +3621,8 @@ func _sink_unit(unit: Dictionary, source_unit_id: String) -> void:
 	delayed_attacks = delayed_attacks.filter(func(attack): return str(attack.get("source_unit_id", "")) != sunk_unit_id or float(attack.get("launch_at_time", -INF)) <= float(state.get("elapsed_time", 0.0)))
 	var active_facility_action := facility_service.active_action_for_unit(sunk_unit_id)
 	if not active_facility_action.is_empty():
-		var cancellation := facility_service.cancel_action(str(active_facility_action.get("facility_id", "")), sunk_unit_id)
-		if bool(cancellation.get("accepted", false)) and cancellation.has("event"): _handle_facility_event(cancellation["event"])
+		var cancellation := facility_service.interrupt_action_for_unit(sunk_unit_id, "UNIT_SUNK")
+		if not cancellation.is_empty(): _handle_facility_event(cancellation)
 	unit["movement_state"] = {"mode":"HoldPosition", "target_position":unit.get("position", Vector2.ZERO), "waypoints":[], "waypoint_index":0}
 	unit["player_route_waypoints"] = []
 	unit["player_facility_target_id"] = ""

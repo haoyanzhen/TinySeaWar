@@ -44,7 +44,7 @@
 | 雷达站 | `ui_marker_facility_radar_station.png` | `facility.radar_station.*` | 敌方休眠，由关卡事件激活；1400 范围精确位置雷达接触，不受光学倍率或岛岸阻挡，显式雷达隐身可规避 |
 | 通信站 | `ui_marker_facility_communication_station.png` | `facility.communication_station.*` | 敌方激活且可占领/压制/摧毁；只服务同阵营且显式声明依赖的设施，普通占领不转移下游，整套易手必须触发关卡规则 |
 | 水雷控制站 | `ui_marker_facility_mine_control_station.png` | `facility.mine_control_station.*` | 占领后在控制半径内执行 10 秒方形区域布雷；压制或摧毁取消进行中任务，已独立布设水雷继续存在 |
-| 港口维修泊位 | `ui_marker_facility_repair_berth.png` | `facility.repair_berth.*` | 9 秒服务后恢复最大 HP 的 28%，单场最高恢复到最大 HP 的 80% |
+| 港口维修泊位 | `ui_marker_facility_repair_berth.png` | `facility.repair_berth.*` | 占领后同阵营舰低速、对准方向进入单泊位 `Docked` 并定点保持，再计时 9 秒；恢复最大 HP 的 28%，单场最高恢复到 80% |
 
 设施世界资产位于 `assets/environment/facilities/`，UI 标识位于 `assets/ui/processed/battle/terrain/`，正式语义清单为 `assets/environment/facilities/facility_asset_manifest.json`。
 
@@ -65,6 +65,8 @@
 | 服务完成 | `ui_icon_facility_service_complete.png` | 补给或维修效果已经结算 |
 
 场景设施额外使用 `facility.state.active/suppressed/offline/servicing` 等覆盖层。事件图标只短暂提示结果，状态覆盖层负责持续表达，二者不能互相替代。
+
+维修泊位的 `Docked` 是正式运动约束而非普通区域停留：泊位记录进坞位置，维修舰不受自身推进、水流或舰体重叠修正推动，但仍可被攻击、命中、沉没并参与胜负判定。有效移动指令或显式离泊、单次达到最大 HP `12%` 的重击、驶出泊位、设施受击/压制/摧毁以及维修舰沉没都会中断并重置进度。
 
 ### 3.3 机场任务与水雷
 

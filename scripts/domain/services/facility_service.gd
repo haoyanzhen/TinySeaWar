@@ -126,10 +126,11 @@ func request_service(facility_id: String, unit: Dictionary) -> Dictionary:
 	var tolerance := deg_to_rad(float(profile.get("heading_tolerance_degrees", 180.0)))
 	if absf(wrapf(float(unit.get("heading", 0.0)) - deg_to_rad(float(facility.get("heading", 0.0))), -PI, PI)) > tolerance:
 		return {"accepted": false, "reason_code": "BERTH_HEADING_INVALID"}
-	facility["service_state"] = {"unit_id": str(unit["entity_id"]), "progress": 0.0, "duration": float(profile.get("duration", 1.0)), "service_type": str(profile.get("service_type", ""))}
+	var berth_state := str(profile.get("berth_state", "Moored"))
+	facility["service_state"] = {"unit_id": str(unit["entity_id"]), "progress": 0.0, "duration": float(profile.get("duration", 1.0)), "service_type": str(profile.get("service_type", "")), "phase":berth_state, "dock_position":unit.get("position", Vector2.ZERO)}
 	facility["last_interruption_reason"] = ""
-	facility["interaction_state"] = str(profile.get("berth_state", "Moored"))
-	return {"accepted": true, "event": {"event_type": "FacilityServiceStarted", "facility_id": facility_id, "unit_id": unit["entity_id"], "service_type": profile.get("service_type", "")}}
+	facility["interaction_state"] = berth_state
+	return {"accepted": true, "event": {"event_type": "FacilityServiceStarted", "facility_id": facility_id, "unit_id": unit["entity_id"], "service_type": profile.get("service_type", ""), "berth_state":berth_state, "dock_position":unit.get("position", Vector2.ZERO)}}
 
 
 func cancel_action(facility_id: String, unit_id: String) -> Dictionary:
@@ -142,7 +143,31 @@ func cancel_action(facility_id: String, unit_id: String) -> Dictionary:
 	facility["control_state"] = {}
 	facility["service_state"] = {}
 	facility["interaction_state"] = "Idle"
-	return {"accepted": true, "event": {"event_type": "FacilityActionInterrupted", "facility_id": facility_id, "unit_id": unit_id, "reason_code": "CANCELLED"}}
+	return {"accepted": true, "event": {"event_type": "FacilityActionInterrupted", "facility_id": facility_id, "unit_id": unit_id, "service_type":service.get("service_type", ""), "reason_code": "UNDOCKED" if not service.is_empty() else "CANCELLED"}}
+
+
+func interrupt_service_on_unit_damage(unit_id: String, damage: float, max_hp: float) -> Dictionary:
+	for facility_id in _sorted_ids():
+		var facility: Dictionary = facilities_by_id[facility_id]
+		var service: Dictionary = facility.get("service_state", {})
+		if str(service.get("unit_id", "")) != unit_id: continue
+		var profile: Dictionary = definition_for(facility_id).get("berthing_service", {})
+		var threshold := max_hp * maxf(0.0, float(profile.get("interrupt_on_heavy_damage_ratio", 0.0)))
+		if threshold <= 0.0 or damage + 0.001 < threshold: return {}
+		var events: Array = []
+		_interrupt_action(facility_id, facility, unit_id, "UNIT_HEAVY_DAMAGE", events)
+		return events[0] if not events.is_empty() else {}
+	return {}
+
+
+func interrupt_action_for_unit(unit_id: String, reason_code: String) -> Dictionary:
+	var action := active_action_for_unit(unit_id)
+	if action.is_empty(): return {}
+	var facility_id := str(action.get("facility_id", ""))
+	var facility: Dictionary = facilities_by_id.get(facility_id, {})
+	var events: Array = []
+	_interrupt_action(facility_id, facility, unit_id, reason_code, events)
+	return events[0] if not events.is_empty() else {}
 
 
 func active_action_for_unit(unit_id: String) -> Dictionary:
@@ -391,6 +416,11 @@ func _advance_service(facility_id: String, facility: Dictionary, delta: float, u
 		if not available or bool(profile.get("interrupt_on_leave", true)):
 			_interrupt_action(facility_id, facility, str(service.get("unit_id", "")), "UNIT_LEFT_INTERACTION_AREA" if available else "FACILITY_UNAVAILABLE", events)
 		return
+	if str(service.get("phase", "")) == "Docked":
+		service["phase"] = "Servicing"
+		facility["interaction_state"] = "Servicing"
+		events.append({"event_type":"FacilityDockingCompleted", "facility_id":facility_id, "unit_id":unit.get("entity_id", ""), "service_type":service.get("service_type", ""), "dock_position":service.get("dock_position", unit.get("position", Vector2.ZERO))})
+		return
 	facility["interaction_state"] = "Servicing"
 	service["progress"] = float(service.get("progress", 0.0)) + delta
 	if float(service["progress"]) + 0.001 < float(service.get("duration", 1.0)): return
@@ -400,11 +430,12 @@ func _advance_service(facility_id: String, facility: Dictionary, delta: float, u
 
 
 func _interrupt_action(facility_id: String, facility: Dictionary, unit_id: String, reason_code: String, events: Array) -> void:
+	var service_type := str(facility.get("service_state", {}).get("service_type", ""))
 	facility["control_state"] = {}
 	facility["service_state"] = {}
 	facility["interaction_state"] = "Interrupted"
 	facility["last_interruption_reason"] = reason_code
-	events.append({"event_type": "FacilityActionInterrupted", "facility_id": facility_id, "unit_id": unit_id, "reason_code": reason_code})
+	events.append({"event_type": "FacilityActionInterrupted", "facility_id": facility_id, "unit_id": unit_id, "service_type":service_type, "reason_code": reason_code})
 
 
 func apply_damage(facility_id: String, damage: float, source_id: String = "") -> Array:

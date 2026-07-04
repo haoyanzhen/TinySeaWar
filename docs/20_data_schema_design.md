@@ -775,6 +775,8 @@ MinefieldDefinition
 - `initial_state_profiles` 为同类设施提供带控制策略的关卡初态；岸防炮的 `enemy_active` 禁止普通交互夺取，`player_dormant` 只允许当前所有者完成激活。
 - `berthing_service.service_type` 当前为 `Supply` 或 `Repair`，并显式保存泊位数、入泊速度、朝向容差和服务持续时间。补给继续使用 `weapon_reload_recovery_ratio`、`skill_cooldown_recovery`；维修使用 `hp_restore_ratio`、`repair_cap_ratio`。
 - 靠泊服务必须显式声明离泊与设施受击是否中断，以及中断后的进度策略；当前补给和维修均为两类中断启用、`progress_on_interrupt=Reset`。单泊位由 `service_state` 独占，第二艘舰在完成或中断前不能进入。
+- 维修泊位必须声明 `berth_state=Docked`、`dock_position_policy=EntryPosition` 与 `hold_while_docked=true`。`interrupt_on_move_order`、`interrupt_on_heavy_damage_ratio`、`interrupt_on_facility_unavailable`、`interrupt_on_sink` 和 `interrupt_on_undock` 分别定义移动、重击、设施失效、沉没与离泊中断；当前重击阈值为单次最终伤害达到最大 HP 的 `0.12`。
+- 维修 `service_state` 保存 `{unit_id, service_type, phase, dock_position, progress, duration}`，阶段为 `Docked -> Servicing -> Completed | Interrupted`；`Docked` 建立后的下一次服务推进只切换到 `Servicing`，不计入九秒维修时间。
 - `remote_command` 描述不要求舰船靠近的命令类别及合法任务引用；次数、冷却、航程和环境限制仍由具体任务 Definition 校验。
 - `MineDeployment` 远程命令使用 `control_radius`、`area_side_length`、`duration`、`mine_count`、`cooldown`、`charges`、`mine_trigger_radius` 与 `random_seed_policy`；当前种子由战斗种子、Tick 与设施 ID 确定。
 - `detection_reference = {ship_id, full_length_multiplier}` 从舰船 `collision_half_extents` 的纵轴全长解析水雷基础发现距离；当前引用 `ship.warspite × 0.5`。`damage_reference = {ship_id, weapon_id}` 必须引用该舰船实际挂载的武器，水雷接触时复用该武器的 Formula、装甲倍率和公共伤害结算；当前引用 `ship.shimakaze + weapon.shimakaze_610_torpedo`。

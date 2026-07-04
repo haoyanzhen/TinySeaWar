@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "experiment_id": "sim.latest_ai.harbor_equal_cost.gate_1",
+  "description": "等 Cost 港湾 3v3：1 种子冒烟门禁与侧别交换",
+  "simulation_kind": "PolicyEvaluation",
+  "player_policy_id": "LatestRuntimeAI",
+  "enemy_policy_id": "LatestRuntimeAI",
+  "ai_profile_id": "ai.profile.standard",
+  "side_swap": true,
+  "tick_seconds": 0.1,
+  "maximum_ticks": 4300,
+  "seed_plan": {"type": "SequentialRange", "start": 6401, "count": 1},
+  "scenarios": [{"scenario_id": "harbor_equal_cost_3v3", "level_definition_id": "level.prototype_harbor_3v3", "maximum_ticks": 4300}],
+  "output_directory": "res://artifacts/simulations/sim.latest_ai.harbor_equal_cost.gate_1"
+}

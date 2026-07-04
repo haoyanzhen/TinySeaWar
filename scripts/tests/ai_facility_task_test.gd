@@ -24,7 +24,7 @@ func _run() -> void:
 	session._ai_observations_by_faction.clear()
 	var assigned: Array[String] = []
 	var capture_plans := 0
-	for unit_id in ["unit.enemy.gnevny", "unit.enemy.anshan", "unit.enemy.ning_hai"]:
+	for unit_id in ["unit.enemy.kirov", "unit.enemy.anshan", "unit.enemy.ning_hai"]:
 		var unit: Dictionary = session.state["units_by_id"][unit_id]
 		var plan: Dictionary = session._ai_facility_plan(unit, true)
 		if not plan.is_empty():
@@ -33,7 +33,7 @@ func _run() -> void:
 	_check(capture_plans == 1, "objective saturation assigns one capture runner while the group remains available")
 	_check(assigned.size() == 1 and not assigned[0].is_empty(), "capture runner retains a concrete facility target")
 	var runner: Dictionary = {}
-	for unit_id in ["unit.enemy.gnevny", "unit.enemy.anshan", "unit.enemy.ning_hai"]:
+	for unit_id in ["unit.enemy.kirov", "unit.enemy.anshan", "unit.enemy.ning_hai"]:
 		var candidate: Dictionary = session.state["units_by_id"][unit_id]
 		if str(candidate.get("ai_state", {}).get("level_task", "")) == "CaptureFacility":
 			runner = candidate
@@ -41,8 +41,12 @@ func _run() -> void:
 	var runner_facility_id := str(runner.get("ai_state", {}).get("task_target_ref", {}).get("facility_id", ""))
 	var runner_facility: Dictionary = session.state["facilities_by_id"].get(runner_facility_id, {})
 	if not runner.is_empty() and not runner_facility.is_empty():
+		session._clear_ai_facility_task(runner)
+		runner = session.state["units_by_id"]["unit.enemy.anshan"]
 		runner["position"] = session.facility_service.interaction_center(runner_facility_id)
-		runner["movement_state"] = {"mode": "AutoNavigate", "target_position": runner["position"] + Vector2(300.0, 0.0), "waypoints": [runner["position"] + Vector2(300.0, 0.0)], "waypoint_index": 0}
+		runner["heading"] = 0.0
+		var travel_target: Vector2 = runner["position"] + Vector2(300.0, 0.0)
+		runner["movement_state"] = {"mode": "AutoNavigate", "target_position": travel_target, "waypoints": [travel_target], "waypoint_index": 0}
 		runner["current_speed"] = 50.0
 		var movement_before: Dictionary = runner["movement_state"].duplicate(true)
 		var speed_before := float(runner["current_speed"])
@@ -60,12 +64,12 @@ func _run() -> void:
 			session._update_movement(0.5)
 		var interaction_events: Array = session.facility_service.advance(0.5, 0.5, session.state["units_by_id"])
 		_check(_has_event(interaction_events, "FacilityActionInterrupted") and session.facility_service.active_action_for_unit(str(runner["entity_id"])).is_empty(), "leaving the interaction water interrupts ordinary facility work")
-	var defender: Dictionary = session.state["units_by_id"]["unit.enemy.gnevny"]
+	var defender: Dictionary = session.state["units_by_id"]["unit.enemy.anshan"]
 	var battery: Dictionary = session.state["facilities_by_id"]["facility.harbor.battery_west"]
 	var intruder: Dictionary = session.state["units_by_id"]["unit.player.shimakaze"]
 	intruder["position"] = battery["position"]
 	session.state["visible_by_faction"]["enemy"] = {intruder["entity_id"]: true}
-	for unit_id in ["unit.enemy.gnevny", "unit.enemy.anshan", "unit.enemy.ning_hai"]:
+	for unit_id in ["unit.enemy.kirov", "unit.enemy.anshan", "unit.enemy.ning_hai"]:
 		session._clear_ai_facility_task(session.state["units_by_id"][unit_id])
 	session._ai_observations_by_faction.clear()
 	session._ai_local_power_cache.clear()
@@ -90,7 +94,7 @@ func _run() -> void:
 	var control_id := "facility.harbor.observation_west"
 	var controller: Dictionary = modes_session.state["units_by_id"]["unit.player.shimakaze"]
 	var friendly: Dictionary = modes_session.state["units_by_id"]["unit.player.aurora"]
-	var contesting_enemy: Dictionary = modes_session.state["units_by_id"]["unit.enemy.gnevny"]
+	var contesting_enemy: Dictionary = modes_session.state["units_by_id"]["unit.enemy.kirov"]
 	controller["position"] = Vector2(200.0, 200.0)
 	_check(modes_session.facility_service.declare_control(control_id, controller)["accepted"], "area control intent can be declared before entering its water")
 	_check(not modes_session.facility_service.declare_control(control_id, friendly)["accepted"], "area control accepts only one executing ship")
@@ -140,7 +144,7 @@ func _run() -> void:
 	player_rule_session.create_battle("level.prototype_harbor_3v3", 20260706)
 	ai_rule_session.create_battle("level.prototype_harbor_3v3", 20260706)
 	var player_executor: Dictionary = player_rule_session.state["units_by_id"]["unit.player.shimakaze"]
-	var ai_executor: Dictionary = ai_rule_session.state["units_by_id"]["unit.enemy.gnevny"]
+	var ai_executor: Dictionary = ai_rule_session.state["units_by_id"]["unit.enemy.kirov"]
 	var symmetry_id := "facility.harbor.observation_west"
 	player_executor["position"] = player_rule_session.facility_service.interaction_center(symmetry_id)
 	ai_executor["position"] = ai_rule_session.facility_service.interaction_center(symmetry_id)
@@ -166,7 +170,7 @@ func _run() -> void:
 	mine_facility["faction_id"] = "player"; mine_facility["operation_state"] = "Active"; mine_facility["previous_operation_state"] = "Active"
 	var mine_requester: Dictionary = mine_session.state["units_by_id"]["unit.player.shimakaze"]
 	var mine_target: Vector2 = mine_facility["position"] + Vector2(450.0, 0.0)
-	for enemy_id in ["unit.enemy.gnevny", "unit.enemy.anshan", "unit.enemy.ning_hai"]: mine_session.state["units_by_id"][enemy_id]["position"] = Vector2(3900.0, 2000.0)
+	for enemy_id in ["unit.enemy.kirov", "unit.enemy.anshan", "unit.enemy.ning_hai"]: mine_session.state["units_by_id"][enemy_id]["position"] = Vector2(3900.0, 2000.0)
 	var mine_request := mine_session._apply_command({"command_id":"mine.player", "command_type":"RequestMineDeployment", "issuer_id":"player", "issuer_type":"Player", "unit_id":mine_requester["entity_id"], "facility_id":mine_facility_id, "target_position":mine_target})
 	_check(mine_request["accepted"], "player mine action enters the shared remote-command rules")
 	var mine_events: Array = mine_session.facility_service.advance(10.1, 10.1, mine_session.state["units_by_id"])

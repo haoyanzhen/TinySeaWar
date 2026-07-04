@@ -374,6 +374,15 @@ func _validate_level(level: Dictionary) -> void:
 				flagship_count += 1
 		if flagship_count != 1:
 			errors.append("%s/%s must contain exactly one flagship" % [level_id, fleet_name])
+	if bool(level.get("require_equal_fleet_cost", false)):
+		var fleet_costs := {}
+		for fleet_name in ["player_fleet", "enemy_fleet"]:
+			var total_cost := 0
+			for member in level.get(fleet_name, []):
+				total_cost += int(get_definition("ships", str(member.get("ship_id", ""))).get("cost", 0))
+			fleet_costs[fleet_name] = total_cost
+		if int(fleet_costs.get("player_fleet", 0)) != int(fleet_costs.get("enemy_fleet", 0)):
+			errors.append("Equal-cost level %s has player/enemy costs %d/%d" % [level_id, fleet_costs.get("player_fleet", 0), fleet_costs.get("enemy_fleet", 0)])
 
 
 func _validate_settings(settings: Dictionary) -> void:

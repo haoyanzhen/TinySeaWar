@@ -89,6 +89,18 @@ func _test_terrain_configuration_and_rules() -> void:
 	_check(registry.all("navigation").size() == 1, "shared harbor navigation graph loads")
 	_check(registry.all("environment_zones").size() == 19, "seven local effects, one harbor zone set, and eleven ocean condition definitions load")
 	_check(registry.all("facilities").size() == 13, "facility, support mission, minefield, and harbor layout definitions load")
+	var harbor_level: Dictionary = registry.get_definition("levels", "level.prototype_harbor_3v3")
+	var harbor_costs := {"player":0, "enemy":0}
+	for member in harbor_level.get("player_fleet", []): harbor_costs["player"] += int(registry.get_definition("ships", str(member.get("ship_id", ""))).get("cost", 0))
+	for member in harbor_level.get("enemy_fleet", []): harbor_costs["enemy"] += int(registry.get_definition("ships", str(member.get("ship_id", ""))).get("cost", 0))
+	_check(bool(harbor_level.get("require_equal_fleet_cost", false)) and harbor_costs["player"] == 12 and harbor_costs["enemy"] == 12, "harbor balance verification requires equal 12 Cost fleets")
+	var invalid_cost_registry = ConfigRegistry.new()
+	invalid_cost_registry.load_all()
+	invalid_cost_registry.errors.clear()
+	var invalid_harbor := harbor_level.duplicate(true)
+	invalid_harbor["enemy_fleet"].pop_back()
+	invalid_cost_registry._validate_level(invalid_harbor)
+	_check(not invalid_cost_registry.errors.filter(func(error): return str(error).contains("Equal-cost level")).is_empty(), "equal-cost level validation rejects mismatched fleets")
 	var terrain_definition: Dictionary = registry.get_definition("terrain", "terrain.map.harbor_mouth")
 	var query = TerrainQueryService.new()
 	query.configure(terrain_definition)
@@ -352,7 +364,7 @@ func _test_scene_combat_tactical_effects() -> void:
 
 	var ai_session = BattleSession.new(registry)
 	ai_session.create_battle("level.prototype_harbor_3v3", 1207)
-	var ai_unit: Dictionary = ai_session.state["units_by_id"]["unit.enemy.gnevny"]
+	var ai_unit: Dictionary = ai_session.state["units_by_id"]["unit.enemy.kirov"]
 	var facility_plan := ai_session._ai_facility_plan(ai_unit, true)
 	_check(not facility_plan.is_empty(), "AI creates a facility capture or activation objective from its legal faction view")
 	var safe_waypoint: Vector2 = ai_session.minefield_service.avoidance_waypoint("enemy", Vector2(1400,700), Vector2(1650,700))
@@ -1028,7 +1040,7 @@ func _test_sinking_action_boundary() -> void:
 	var session = BattleSession.new(registry)
 	session.create_battle("level.prototype_harbor_3v3", 20260709)
 	var source: Dictionary = session.state["units_by_id"]["unit.player.shimakaze"]
-	var target: Dictionary = session.state["units_by_id"]["unit.enemy.gnevny"]
+	var target: Dictionary = session.state["units_by_id"]["unit.enemy.kirov"]
 	var ally: Dictionary = session.state["units_by_id"]["unit.player.aurora"]
 	var facility_id := "facility.harbor.observation_west"
 	source["position"] = session.facility_service.interaction_center(facility_id)

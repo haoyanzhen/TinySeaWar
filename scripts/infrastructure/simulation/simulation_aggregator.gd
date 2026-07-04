@@ -50,6 +50,9 @@ func _aggregate_core(runs: Array) -> Dictionary:
 	var ai_behavior_totals := {}
 	var total_overkill := 0.0
 	var total_effective_damage := 0.0
+	var facility_usage_runs := 0
+	var timeout_runs := 0
+	var behavior_anomaly_count := 0
 	for run in runs:
 		var end_state := str(run.get("end_state", "Unknown"))
 		result_counts[end_state] = int(result_counts.get(end_state, 0)) + 1
@@ -63,6 +66,10 @@ func _aggregate_core(runs: Array) -> Dictionary:
 		if lineup_wins.has(winner_lineup): lineup_wins[winner_lineup] += 1
 		var reason := str(run.get("finish_reason", "UNKNOWN"))
 		finish_reason_counts[reason] = int(finish_reason_counts.get(reason, 0)) + 1
+		if reason.to_upper().contains("TIME"): timeout_runs += 1
+		var run_ai: Dictionary = run.get("ai_behavior", {})
+		if int(run_ai.get("facility_interactions_started", 0)) > 0: facility_usage_runs += 1
+		behavior_anomaly_count += int(run_ai.get("path_stuck_events", 0)) + int(run_ai.get("route_unavailable", 0)) + int(run_ai.get("ai_command_rejections", 0))
 		durations.append(float(run.get("duration", 0.0)))
 		_append_non_negative(first_detection_times, float(run.get("first_detection_time", -1.0)))
 		_append_non_negative(first_fire_times, float(run.get("first_fire_time", -1.0)))
@@ -94,6 +101,11 @@ func _aggregate_core(runs: Array) -> Dictionary:
 		"enemy_wins": enemy_wins,
 		"lineup_wins": lineup_wins,
 		"original_player_lineup_win_rate": float(lineup_wins["original_player"]) / finished_runs if finished_runs > 0 else 0.0,
+		"spawn_side_player_win_rate": win_rate,
+		"facility_usage_rate": float(facility_usage_runs) / finished_runs if finished_runs > 0 else 0.0,
+		"timeout_rate": float(timeout_runs) / finished_runs if finished_runs > 0 else 0.0,
+		"behavior_anomaly_count": behavior_anomaly_count,
+		"behavior_anomalies_per_run": float(behavior_anomaly_count) / finished_runs if finished_runs > 0 else 0.0,
 		"player_win_rate": win_rate,
 		"player_win_rate_95": _wilson_interval(player_wins, finished_runs),
 		"duration": _distribution(durations),

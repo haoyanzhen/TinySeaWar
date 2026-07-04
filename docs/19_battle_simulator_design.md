@@ -863,6 +863,8 @@ tools/
 | `sim.smoke.current_levels` | 当前五个可玩关卡 | 每关 6 | 替代现有硬编码冒烟，检查正常结束 |
 | `sim.regression.open_sea` | 1v1 / 3v3 / 5v5 / 11v11 | 每关 10 | 开阔海域规则与确定性回归 |
 | `sim.regression.harbor` | 港湾 3v3 | 10 | 地形、设施、环境和水雷回归 |
+
+港湾均衡验收固定使用双方等 Cost 关卡、`LatestRuntimeAI` 标准 Profile 和侧别交换，并按相同种子前缀执行 `1 -> 3 -> 20` 门禁；任一级失败即停止扩量。报告必须同时给出原始阵容胜率、玩家出生侧胜率、至少发生一次设施操作的对局占比、超时率，以及路径卡住、无路可达和 AI 命令拒绝合计的行为异常/局。
 | `sim.ai.dynamic_representative` | 五个当前关卡 | 每关按 1、3、20 阶梯执行 | AI 行为动态验收 |
 | `sim.balance.phase1_roles` | 第一期角色代表编成 | 每组 50 | 舰种职责和 Cost 初筛 |
 | `sim.environment.palette_pairs` | 代表舰队 × 20 palette | 每组 30 | 时间天气影响与极端组合检查 |

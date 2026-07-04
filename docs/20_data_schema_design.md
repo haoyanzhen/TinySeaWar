@@ -737,6 +737,8 @@ facility_layout_id
 
 这些字段全部为空时，关卡按既有开阔海域规则运行。
 
+`require_equal_fleet_cost` 默认为 `false`；设为 `true` 时，加载器汇总 `player_fleet` 与 `enemy_fleet` 引用舰船的 `cost`，两侧不完全相等则配置加载失败。该字段用于均衡验证关卡，不给战斗单位附加属性修正。
+
 ## 12. 关卡配置
 
 基础字段：
@@ -745,6 +747,7 @@ facility_layout_id
 id
 display_name
 battle_mode
+require_equal_fleet_cost
 resource_limit
 max_player_units
 enemy_fleet

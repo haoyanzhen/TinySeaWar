@@ -16,7 +16,7 @@ func _run() -> void:
 	_check(registry.load_all(), "configuration registry loads")
 	var session = BattleSession.new(registry)
 	_check(session.create_battle("level.prototype_harbor_3v3", 20260630).get("ok", false), "harbor route fixture starts")
-	var unit: Dictionary = session.state["units_by_id"]["unit.enemy.gnevny"]
+	var unit: Dictionary = session.state["units_by_id"]["unit.enemy.kirov"]
 	var target: Dictionary = session.state["units_by_id"]["unit.player.shimakaze"]
 	session.drain_events()
 	session.configure_ai_profile("ai.profile.easy")

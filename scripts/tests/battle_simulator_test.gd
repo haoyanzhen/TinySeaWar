@@ -88,6 +88,8 @@ func _run() -> void:
 	_check(float(behavior.get("fire_commitments", 0.0)) > 0.0, "AI behavior aggregate records fire commitments")
 	_check(behavior.has("mode_switches_per_minute") and behavior.has("tactic_switches_per_minute"), "AI behavior aggregate reports normalized switch rates")
 	_check(behavior.has("overkill_ratio") and float(behavior.get("overkill_ratio", -1.0)) >= 0.0, "AI behavior aggregate reports overkill ratio")
+	var aggregate: Dictionary = latest_ai.get("aggregate", {})
+	_check(aggregate.has("original_player_lineup_win_rate") and aggregate.has("spawn_side_player_win_rate") and aggregate.has("facility_usage_rate") and aggregate.has("timeout_rate") and aggregate.has("behavior_anomalies_per_run"), "balance report aggregates lineup, spawn side, facility use, timeout, and behavior anomalies")
 	_check(latest_run.get("ai_behavior", {}).has("mode_dwell_seconds"), "individual run retains mode dwell evidence")
 	_check(latest_run.get("ai_behavior", {}).has("route_unavailable"), "individual run retains unavailable-route evidence")
 	_check(not latest_run.get("unit_end_states", {}).is_empty(), "individual run retains final movement evidence")

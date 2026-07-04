@@ -268,18 +268,21 @@ func _test_scene_combat_tactical_effects() -> void:
 	var supply: Dictionary = service_session.facility_service.facilities_by_id[supply_id]
 	supply["faction_id"] = "player"; supply["operation_state"] = "Active"; supply["previous_operation_state"] = "Active"
 	service_unit["position"] = service_session.facility_service.interaction_center(supply_id)
+	service_unit["current_speed"] = 0.0
 	service_unit["weapon_states"][0]["reload_remaining"] = 10.0
 	service_unit["skill_state"]["cooldown_remaining"] = 20.0
-	_check(service_session.facility_service.start_interaction(supply_id, service_unit, "Service")["accepted"], "active friendly supply point accepts an independent service transaction")
+	_check(service_session.facility_service.request_service(supply_id, service_unit)["accepted"], "active friendly supply point accepts an independent berthing service transaction")
 	for event in service_session.facility_service.advance(7.1, 7.1, service_session.state["units_by_id"]): service_session._handle_facility_event(event)
 	_check(is_zero_approx(float(service_unit["weapon_states"][0]["reload_remaining"])) and is_equal_approx(float(service_unit["skill_state"]["cooldown_remaining"]), 8.0), "supply completion restores weapon readiness and skill resource time")
 	var repair_id := "facility.harbor.repair_berth_east"
 	var repair: Dictionary = service_session.facility_service.facilities_by_id[repair_id]
 	repair["faction_id"] = "player"; repair["operation_state"] = "Active"; repair["previous_operation_state"] = "Active"
 	service_unit["position"] = service_session.facility_service.interaction_center(repair_id)
+	service_unit["current_speed"] = 0.0
+	service_unit["heading"] = deg_to_rad(float(repair.get("heading", 0.0)))
 	service_unit["current_hp"] = service_unit["max_hp"] * 0.30
 	var hp_before_repair := float(service_unit["current_hp"])
-	_check(service_session.facility_service.start_interaction(repair_id, service_unit, "Service")["accepted"], "repair berth accepts its own service transaction")
+	_check(service_session.facility_service.request_service(repair_id, service_unit)["accepted"], "repair berth accepts its own service transaction")
 	for event in service_session.facility_service.advance(9.1, 16.2, service_session.state["units_by_id"]): service_session._handle_facility_event(event)
 	_check(float(service_unit["current_hp"]) > hp_before_repair and float(service_unit["current_hp"]) <= float(service_unit["max_hp"]) * 0.80, "repair berth restores HP without exceeding the authored battle repair cap")
 
@@ -301,10 +304,10 @@ func _test_scene_combat_tactical_effects() -> void:
 	var interrupted_unit: Dictionary = interrupted_session.state["units_by_id"]["unit.player.shimakaze"]
 	var interrupted_id := "facility.harbor.observation_west"
 	interrupted_unit["position"] = interrupted_session.facility_service.interaction_center(interrupted_id)
-	_check(interrupted_session.facility_service.start_interaction(interrupted_id, interrupted_unit, "Activate")["accepted"], "dormant facility begins activation from its authored interaction water")
+	_check(interrupted_session.facility_service.declare_control(interrupted_id, interrupted_unit)["accepted"], "dormant facility begins control from its authored interaction water")
 	var interrupted_events: Array = interrupted_session.facility_service.apply_damage(interrupted_id, 1.0, "test")
 	var interrupted_facility: Dictionary = interrupted_session.facility_service.facilities_by_id[interrupted_id]
-	_check(_has_event(interrupted_events, "FacilityInteractionInterrupted") and interrupted_facility["interaction"].is_empty() and interrupted_facility["operation_state"] == "Dormant", "incoming damage interrupts activation and restores the prior operation state")
+	_check(_has_event(interrupted_events, "FacilityActionInterrupted") and interrupted_facility["control_state"].is_empty() and interrupted_facility["operation_state"] == "Dormant", "incoming damage interrupts control and preserves the prior operation state")
 	var formula_session = BattleSession.new(registry)
 	formula_session.create_battle("level.prototype_harbor_3v3", 1214)
 	var formula_source: Dictionary = formula_session.state["units_by_id"]["unit.player.shimakaze"]

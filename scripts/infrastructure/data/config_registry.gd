@@ -616,6 +616,23 @@ func _validate_facility_definition(definition: Dictionary) -> void:
 	elif definition_type == "FacilityDefinition":
 		if float(definition.get("max_hp", 0.0)) <= 0.0:
 			errors.append("Facility max_hp must be positive in %s" % definition_id)
+		var operation_modes: Array = definition.get("operation_modes", [])
+		var allowed_modes := ["AreaControl", "BerthingService", "RemoteCommand", "AutomaticOperation", "CombatDisposition"]
+		if operation_modes.is_empty(): errors.append("Facility lacks operation_modes in %s" % definition_id)
+		for mode in operation_modes:
+			if mode not in allowed_modes: errors.append("Facility has invalid operation mode %s in %s" % [mode, definition_id])
+		if "AreaControl" in operation_modes and (not bool(definition.get("area_control", {}).get("enabled", false)) or float(definition.get("area_control", {}).get("duration", 0.0)) <= 0.0):
+			errors.append("Area-control facility lacks valid control rules in %s" % definition_id)
+		if "BerthingService" in operation_modes:
+			var berth: Dictionary = definition.get("berthing_service", {})
+			if str(berth.get("service_type", "")) not in ["Supply", "Repair"] or float(berth.get("duration", 0.0)) <= 0.0 or int(berth.get("berth_count", 0)) <= 0 or float(berth.get("max_entry_speed", -1.0)) < 0.0 or float(berth.get("heading_tolerance_degrees", -1.0)) < 0.0:
+				errors.append("Berthing-service facility lacks valid service rules in %s" % definition_id)
+		if "RemoteCommand" in operation_modes and str(definition.get("remote_command", {}).get("command_type", "")).is_empty():
+			errors.append("Remote-command facility lacks command rules in %s" % definition_id)
+		if "AutomaticOperation" in operation_modes and definition.get("automatic_operation", {}).get("capability_ids", []).is_empty():
+			errors.append("Automatic facility lacks capability rules in %s" % definition_id)
+		if "CombatDisposition" in operation_modes and not definition.get("combat_disposition", {}).has("destroyable"):
+			errors.append("Combat facility lacks disposition rules in %s" % definition_id)
 		if "Suppressible" in definition.get("capabilities", []) and (float(definition.get("suppression_damage_threshold", 0.0)) <= 0.0 or float(definition.get("suppression_duration", 0.0)) <= 0.0):
 			errors.append("Suppressible facility lacks positive suppression rules in %s" % definition_id)
 		var weapon_ids: Array = definition.get("weapon_ids", [])
@@ -624,9 +641,6 @@ func _validate_facility_definition(definition: Dictionary) -> void:
 			if get_definition("weapons", str(weapon_id)).is_empty(): errors.append("Facility references missing weapon %s in %s" % [weapon_id, definition_id])
 		for mission_id in definition.get("support_mission_ids", []):
 			if get_definition("facilities", str(mission_id)).is_empty(): errors.append("Facility references missing support mission %s in %s" % [mission_id, definition_id])
-		var service_profile: Dictionary = definition.get("service_profile", {})
-		if "ServiceProvider" in definition.get("capabilities", []) and str(service_profile.get("service_type", "")) not in ["Supply", "Repair"]:
-			errors.append("Service facility has invalid service profile in %s" % definition_id)
 	elif definition_type == "SupportMissionDefinition":
 		if definition.get("mission_type", "") not in ["Reconnaissance", "FighterPatrol", "Airstrike"]:
 			errors.append("Unsupported support mission type in %s" % definition_id)

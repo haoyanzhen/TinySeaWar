@@ -48,6 +48,8 @@
 
 设施世界资产位于 `assets/environment/facilities/`，UI 标识位于 `assets/ui/processed/battle/terrain/`，正式语义清单为 `assets/environment/facilities/facility_asset_manifest.json`。
 
+设施操作按职责组合五类模式：区域控制负责取得所有权，靠泊服务负责补给与维修，远程指挥负责机场任务与布雷，自动运行负责岸炮、观察、雷达和通信，战斗处置负责公共攻击产生的压制与摧毁。普通玩家语义统一显示为“控制/占领”；`Activate` 不作为水面舰通用操作，只保留给关卡初始化、脚本事件或明确标记的特殊设施。
+
 ### 3.2 状态与事件图标
 
 | 状态/事件 | 图标 | 使用条件 |

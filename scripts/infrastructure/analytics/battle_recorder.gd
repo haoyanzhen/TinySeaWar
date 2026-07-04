@@ -89,9 +89,9 @@ func consume(events: Array, elapsed_time: float) -> void:
 			"CommandRejected":
 				if str(event.get("issuer_type", "")) in ["AI", "PlayerAssistAI"]:
 					_record_counted_type("ai_command_rejections", "rejections_by_reason", str(event.get("reason_code", "UNKNOWN")))
-			"FacilityInteractionStarted": summary["ai_behavior"]["facility_interactions_started"] += 1
-			"FacilitySeized", "FacilityActivated", "FacilityServiceCompleted": summary["ai_behavior"]["facility_interactions_completed"] += 1
-			"FacilityInteractionInterrupted": summary["ai_behavior"]["facility_interactions_interrupted"] += 1
+			"FacilityControlDeclared", "FacilityServiceStarted": summary["ai_behavior"]["facility_interactions_started"] += 1
+			"FacilityControlCompleted", "FacilityServiceCompleted": summary["ai_behavior"]["facility_interactions_completed"] += 1
+			"FacilityActionInterrupted": summary["ai_behavior"]["facility_interactions_interrupted"] += 1
 			"BattleFinished":
 				_finalize_ai_dwell(elapsed_time)
 				summary["result"] = event.get("result", {}).duplicate(true)

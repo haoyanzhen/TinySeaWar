@@ -651,6 +651,25 @@ global_environment.tide
   open_phases
 
 FacilityDefinition
+  operation_modes[] # AreaControl | BerthingService | RemoteCommand | AutomaticOperation | CombatDisposition
+  area_control
+    enabled
+    duration
+  berthing_service
+    service_type
+    duration
+    berth_count
+    max_entry_speed
+    heading_tolerance_degrees
+    berth_state
+  remote_command
+    command_type
+    mission_ids[]
+  automatic_operation.capability_ids[]
+  combat_disposition
+    suppressible
+    destroyable
+    silentable
   armor
   armor_thickness
   suppression_damage_threshold
@@ -660,7 +679,6 @@ FacilityDefinition
   aviation_power
   weapon_id | weapon_ids
   reload_during_suppression
-  service_profile
 
 SupportMissionDefinition
   mission_type
@@ -686,7 +704,11 @@ MinefieldDefinition
 - `WeatherBattleProfile.context.wind_speed` 为非负风速标量；局部 `EnvironmentEffect.context.wind_speed_add` 可继续叠加。当前飑线使用 `+6`。
 - 鱼雷环境误差倍率为 `clamp(1 + max(0, sea_state - torpedo_sigma_reference_sea_state) * torpedo_sigma_sea_state_step + max(0, wind_speed - torpedo_sigma_wind_threshold) * torpedo_sigma_wind_step, 1, torpedo_sigma_multiplier_max)`；当前字段值分别为 `1 / 0.35 / 4 / 0.06 / 3`。
 - `tide` 使用固定阶段时长循环；`open_phases` 允许新进入潮滩，其他阶段只允许已经位于区内的单位撤离。
-- `service_profile.service_type` 当前为 `Supply` 或 `Repair`。补给使用 `weapon_reload_recovery_ratio`、`skill_cooldown_recovery`；维修使用 `hp_restore_ratio`、`repair_cap_ratio`。
+- `operation_modes` 只允许 `AreaControl`、`BerthingService`、`RemoteCommand`、`AutomaticOperation` 和 `CombatDisposition`；声明某模式时必须同时提供对应对象，不再用一组 `interaction_types` 混合表达占领、服务和远程任务。
+- `area_control` 保存控制持续时间；控制意图可以在进入交互水域前声明，进度只在执行舰进入后累计，同阵营只有一个 `executor_unit_id`。
+- `berthing_service.service_type` 当前为 `Supply` 或 `Repair`，并显式保存泊位数、入泊速度、朝向容差和服务持续时间。补给继续使用 `weapon_reload_recovery_ratio`、`skill_cooldown_recovery`；维修使用 `hp_restore_ratio`、`repair_cap_ratio`。
+- `remote_command` 描述不要求舰船靠近的命令类别及合法任务引用；次数、冷却、航程和环境限制仍由具体任务 Definition 校验。
+- `automatic_operation` 只列出设施自行运行的能力，不创建重复“使用设施”命令；`combat_disposition` 只声明公共攻击管线允许造成的压制、摧毁和静默结果。
 - `weapon_id` 必须引用现有 Weapon Definition。岸炮和空袭继续使用普通命中、装甲和伤害公式。
 - `reload_during_suppression` 控制武器设施受压制期间是否继续装填；当前岸防炮为 `false`。
 - `blocked_aviation_conditions` 当前支持 `Severe` 与 `Grounded`；`Restricted` 通过到达时间和命中修正表达，不等同于无条件禁飞。

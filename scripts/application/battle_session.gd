@@ -687,20 +687,27 @@ func _apply_command(command: Dictionary) -> Dictionary:
 			var target_position = command.get("target_position")
 			if typeof(target_position) != TYPE_VECTOR2: return _rejection(command.get("command_id", ""), "INVALID_TARGET_TYPE")
 			return _fire_primary_weapon(unit, target_position, command.get("command_id", ""))
-		"StartFacilityInteraction":
-			var facility_result := facility_service.start_interaction(str(command.get("facility_id", "")), unit, str(command.get("interaction_type", "Activate")))
+		"DeclareFacilityControl":
+			var facility_result := facility_service.declare_control(str(command.get("facility_id", "")), unit)
 			if bool(facility_result.get("accepted", false)) and facility_result.has("event"):
 				_ai_objective_plan_cache.erase(unit_id)
 				state["facilities_by_id"] = facility_service.snapshot()
 				_ai_observations_by_faction.clear()
 				var facility_event: Dictionary = facility_result["event"]
-				_emit(str(facility_event.get("event_type", "FacilityInteractionStarted")), facility_event)
+				_emit(str(facility_event.get("event_type", "FacilityControlDeclared")), facility_event)
 			return facility_result
-		"CancelFacilityInteraction":
-			var cancel_result := facility_service.cancel_interaction(str(command.get("facility_id", "")), unit_id)
+		"RequestFacilityService":
+			var service_result := facility_service.request_service(str(command.get("facility_id", "")), unit)
+			if bool(service_result.get("accepted", false)) and service_result.has("event"):
+				state["facilities_by_id"] = facility_service.snapshot()
+				var service_event: Dictionary = service_result["event"]
+				_emit(str(service_event.get("event_type", "FacilityServiceStarted")), service_event)
+			return service_result
+		"CancelFacilityAction":
+			var cancel_result := facility_service.cancel_action(str(command.get("facility_id", "")), unit_id)
 			if bool(cancel_result.get("accepted", false)) and cancel_result.has("event"):
 				var cancel_event: Dictionary = cancel_result["event"]
-				_emit(str(cancel_event.get("event_type", "FacilityInteractionInterrupted")), cancel_event)
+				_emit(str(cancel_event.get("event_type", "FacilityActionInterrupted")), cancel_event)
 			return cancel_result
 		"RequestSupportMission":
 			var support_target = command.get("target_position")
@@ -1404,8 +1411,8 @@ func _update_enemy_ai_intent(unit: Dictionary) -> void:
 	if not facility_plan.is_empty():
 		if bool(facility_plan.get("hold_interaction", false)):
 			return
-		elif facility_plan.has("interaction_type"):
-			_queue_ai_facility_interaction(unit, str(facility_plan["facility_id"]), str(facility_plan["interaction_type"]))
+		elif facility_plan.has("action_type"):
+			_queue_ai_facility_action(unit, str(facility_plan["facility_id"]), str(facility_plan["action_type"]))
 		else:
 			_queue_ai_move(unit, facility_plan["target_position"])
 		return
@@ -2010,45 +2017,33 @@ func _ai_facility_plan(unit: Dictionary, allow_capture: bool) -> Dictionary:
 		var facility: Dictionary = facilities[facility_id]
 		if str(facility.get("life_state", "")) != "Alive": continue
 		var definition := facility_service.definition_for(str(facility_id))
-		var interaction_type := ""
+		var action_type := ""
 		var task_type := ""
 		var objective_role := ""
 		var score := 0.0
 		var center := facility_service.interaction_center(str(facility_id))
 		var contest_pressure := _facility_contest_pressure(unit, center)
-		var is_repair: bool = hp_ratio < 0.55 and facility_service.is_operational(str(facility_id)) and facility.get("faction_id") == unit.get("faction_id") and str(definition.get("service_profile", {}).get("service_type", "")) == "Repair"
-		var is_seize: bool = allow_capture and capture_slot_available and "Ownable" in definition.get("capabilities", []) and "Seize" in definition.get("interaction_types", []) and facility.get("faction_id") != unit.get("faction_id")
-		var is_activate: bool = allow_capture and capture_slot_available and "Activate" in definition.get("interaction_types", []) and facility.get("faction_id") in ["neutral", unit.get("faction_id")] and facility.get("operation_state") == "Dormant"
+		var is_repair: bool = hp_ratio < 0.55 and facility_service.is_operational(str(facility_id)) and facility.get("faction_id") == unit.get("faction_id") and str(definition.get("berthing_service", {}).get("service_type", "")) == "Repair"
+		var is_control: bool = allow_capture and capture_slot_available and "AreaControl" in definition.get("operation_modes", []) and bool(definition.get("area_control", {}).get("enabled", false)) and (facility.get("faction_id") != unit.get("faction_id") or facility.get("operation_state") == "Dormant")
 		var is_defense: bool = facility.get("faction_id") == unit.get("faction_id") and facility_service.is_operational(str(facility_id)) and contest_pressure > 0.0
-		if not is_repair and not is_seize and not is_activate and not is_defense: continue
+		if not is_repair and not is_control and not is_defense: continue
 		var distance := (unit["position"] as Vector2).distance_to(center)
 		var path_quality := _facility_route_quality(unit, str(facility_id), center)
 		var saturation := _facility_assignment_saturation(unit, str(facility_id), 1)
 		var facility_value := _facility_value(definition)
 		var role_fit := _facility_role_fit(unit, definition)
 		if is_repair:
-			interaction_type = "Service"
+			action_type = "Service"
 			task_type = "ServiceFacility"
 			score = 100.0 * (0.55 * (1.0 - hp_ratio) + 0.25 * path_quality + 0.20 * (1.0 - saturation))
-		elif is_seize:
-			interaction_type = "Seize"
+		elif is_control:
+			action_type = "Control"
 			task_type = "CaptureFacility"
 			score = AIQuantitativeModel.facility_capture_score({
 				"known": true, "seizable": true, "path_valid": path_quality > 0.0,
 				"facility_value": facility_value, "survival": hp_ratio,
 				"path_quality": path_quality, "role_fit": role_fit,
 				"ownership_need": 1.0, "followup_value": facility_value,
-				"time_margin": _facility_time_margin(unit, definition, distance),
-				"contest_pressure": contest_pressure, "assignment_saturation": saturation,
-			})
-		elif is_activate:
-			interaction_type = "Activate"
-			task_type = "CaptureFacility"
-			score = AIQuantitativeModel.facility_capture_score({
-				"known": true, "seizable": true, "path_valid": path_quality > 0.0,
-				"facility_value": facility_value, "survival": hp_ratio,
-				"path_quality": path_quality, "role_fit": role_fit,
-				"ownership_need": 0.8, "followup_value": facility_value,
 				"time_margin": _facility_time_margin(unit, definition, distance),
 				"contest_pressure": contest_pressure, "assignment_saturation": saturation,
 			})
@@ -2066,11 +2061,11 @@ func _ai_facility_plan(unit: Dictionary, allow_capture: bool) -> Dictionary:
 			})
 			center = _facility_defense_position(unit, center, objective_role)
 		if task_type.is_empty(): continue
-		var interaction: Dictionary = facility.get("interaction", {})
-		if not interaction_type.is_empty() and not interaction.is_empty() and str(interaction.get("unit_id", "")) != str(unit.get("entity_id", "")): continue
+		var active_action := facility_service.active_action_for_unit(str(unit.get("entity_id", "")))
+		if not action_type.is_empty() and active_action.is_empty() and (not facility.get("control_state", {}).is_empty() or not facility.get("service_state", {}).is_empty()): continue
 		var threshold := 60.0 if task_type == "DefendFacility" else (35.0 if task_type == "ServiceFacility" else 42.0)
 		if score < threshold: continue
-		candidates.append({"facility_id": str(facility_id), "interaction_type": interaction_type, "task_type": task_type, "objective_role": objective_role, "target_position": center, "score": score})
+		candidates.append({"facility_id": str(facility_id), "action_type": action_type, "task_type": task_type, "objective_role": objective_role, "target_position": center, "score": score})
 	if candidates.is_empty():
 		_clear_ai_facility_task(unit)
 		return {}
@@ -2080,13 +2075,15 @@ func _ai_facility_plan(unit: Dictionary, allow_capture: bool) -> Dictionary:
 	var selected_facility: Dictionary = facilities[selected["facility_id"]]
 	if str(selected.get("task_type", "")) == "DefendFacility":
 		return {"target_position": selected["target_position"], "task_type": selected["task_type"], "score": selected["score"]}
-	var selected_interaction: Dictionary = selected_facility.get("interaction", {})
-	if not selected_interaction.is_empty():
-		if str(selected_interaction.get("unit_id", "")) == str(unit.get("entity_id", "")):
+	var selected_action := facility_service.active_action_for_unit(str(unit.get("entity_id", "")))
+	if not selected_action.is_empty() and str(selected_action.get("facility_id", "")) == str(selected["facility_id"]):
+		if Geometry2D.is_point_in_polygon(unit["position"], _polygon(selected_facility.get("interaction_water_polygon", []))):
 			return {"hold_interaction": true, "facility_id": selected["facility_id"], "task_type": selected["task_type"], "score": selected["score"]}
-		return {"target_position": unit["position"], "task_type": selected["task_type"], "score": selected["score"]}
+		return {"target_position": selected["target_position"], "task_type": selected["task_type"], "score": selected["score"]}
+	if str(selected.get("action_type", "")) == "Control":
+		return {"facility_id": selected["facility_id"], "action_type": "Control", "task_type": selected["task_type"], "score": selected["score"]}
 	if Geometry2D.is_point_in_polygon(unit["position"], _polygon(selected_facility.get("interaction_water_polygon", []))):
-		return {"facility_id": selected["facility_id"], "interaction_type": selected["interaction_type"], "task_type": selected["task_type"], "score": selected["score"]}
+		return {"facility_id": selected["facility_id"], "action_type": selected["action_type"], "task_type": selected["task_type"], "score": selected["score"]}
 	return {"target_position": selected["target_position"], "task_type": selected["task_type"], "score": selected["score"]}
 
 
@@ -2156,7 +2153,7 @@ func _facility_role_fit(unit: Dictionary, definition: Dictionary) -> float:
 	elif ship_class in ["HeavyCruiser", "Submarine"]: fit = 0.78
 	elif ship_class == "Battleship": fit = 0.55
 	elif ship_class == "Carrier": fit = 0.35
-	if "ServiceProvider" in definition.get("capabilities", []) and str(definition.get("service_profile", {}).get("service_type", "")) == "Repair":
+	if "BerthingService" in definition.get("operation_modes", []) and str(definition.get("berthing_service", {}).get("service_type", "")) == "Repair":
 		fit = maxf(fit, 0.85 if ship_class in ["Battleship", "Carrier"] else 0.75)
 	return fit
 
@@ -2183,7 +2180,7 @@ func _facility_contest_pressure(unit: Dictionary, center: Vector2) -> float:
 
 func _facility_time_margin(unit: Dictionary, definition: Dictionary, distance: float) -> float:
 	var speed := maxf(1.0, float(unit.get("stats", {}).get("speed", 1.0)))
-	var required_time := distance / speed + float(definition.get("interaction_duration", 0.0))
+	var required_time := distance / speed + maxf(float(definition.get("area_control", {}).get("duration", 0.0)), float(definition.get("berthing_service", {}).get("duration", 0.0)))
 	var remaining := maxf(0.0, float(state.get("time_limit", 0.0)) - float(state.get("elapsed_time", 0.0)))
 	return clampf((remaining - required_time) / maxf(30.0, required_time), 0.0, 1.0)
 
@@ -2215,16 +2212,15 @@ func _clear_ai_facility_task(unit: Dictionary) -> void:
 	_emit("AILevelTaskChanged", {"unit_id": unit["entity_id"], "old_task": old_task, "level_task": "", "facility_id": "", "score": 0.0})
 
 
-func _queue_ai_facility_interaction(unit: Dictionary, facility_id: String, interaction_type: String) -> void:
+func _queue_ai_facility_action(unit: Dictionary, facility_id: String, action_type: String) -> void:
 	command_queue.append({
 		"command_id": "ai.facility.%s.%s" % [state["tick_index"] + 1, unit["entity_id"]],
-		"command_type": "StartFacilityInteraction",
+		"command_type": "DeclareFacilityControl" if action_type == "Control" else "RequestFacilityService",
 		"issued_at_tick": state["tick_index"] + 1,
 		"issuer_type": "AI",
 		"issuer_id": unit["faction_id"],
 		"unit_id": unit["entity_id"],
 		"facility_id": facility_id,
-		"interaction_type": interaction_type,
 	})
 
 
@@ -2975,7 +2971,7 @@ func _handle_facility_event(event: Dictionary) -> void:
 func _apply_facility_service(event: Dictionary) -> void:
 	var unit: Dictionary = state["units_by_id"].get(str(event.get("unit_id", "")), {})
 	if unit.is_empty() or unit.get("life_state", "") != "Alive": return
-	var profile: Dictionary = event.get("service_profile", {})
+	var profile: Dictionary = event.get("service_rules", {})
 	var result := {"unit_id":unit["entity_id"], "facility_id":event.get("facility_id", ""), "service_type":event.get("service_type", "")}
 	match str(event.get("service_type", "")):
 		"Supply":

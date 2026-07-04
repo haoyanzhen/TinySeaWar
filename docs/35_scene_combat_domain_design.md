@@ -182,7 +182,9 @@ position
 heading
 life_state
 operation_state
-interaction_progress
+interaction_state
+control_state
+service_state
 suppression_remaining
 cooldown_remaining
 charges_remaining
@@ -744,14 +746,28 @@ HazardController
 
 不同设施只选择所需能力与配置。
 
-### 13.2 运行状态
+### 13.2 五类操作模式与状态
+
+每个 `FacilityDefinition` 通过 `operation_modes` 组合以下职责，模式各自拥有数据、状态和命令，不共享一个近距离交互事务：
+
+| 模式 | 领域职责 | 命令入口 |
+| --- | --- | --- |
+| `AreaControl` | 单执行舰控制、争夺与所有权变化 | `DeclareFacilityControlCommand` |
+| `BerthingService` | 泊位、低速/位置/朝向、占用和服务 | `RequestFacilityServiceCommand` |
+| `RemoteCommand` | 支援或布雷的状态、阵营、依赖、次数、冷却、航程和环境校验 | 对应远程任务命令 |
+| `AutomaticOperation` | 观察、岸炮、雷达、通信和已部署实体自行运行 | 无重复使用命令 |
+| `CombatDisposition` | 公共攻击、命中、伤害、压制和摧毁 | 普通攻击命令 |
+
+区域控制使用 `control_state = {executor_unit_id, faction_id, progress, duration, entered_area}`；服务使用 `service_state = {unit_id, service_type, progress, duration}`；设施交互显示态使用 `Idle | Controlling | Contested | Moored | Docked | Servicing | Interrupted`。`Approaching` 属于单位任务，不写入设施占用状态。
+
+区域控制先声明意图，执行舰进入交互水域后自动累计。MVP 每个设施同时只接受一艘控制执行舰，友舰不叠加速度；敌舰进入同一控制水域时进度暂停并显示 `Contested`。靠泊服务必须在申请时通过所有权、运行状态、依赖、泊位、位置、低速、占用和必要朝向检查。
+
+设施通用运行状态：
 
 设施通用状态：
 
 ```text
-Hidden
 Dormant
-Activating
 Active
 Suppressed
 Destroyed
@@ -761,24 +777,25 @@ Destroyed
 
 - `Destroyed` 不可恢复为其他状态，除非未来战斗规则明确支持重建。
 - `Suppressed` 设施不执行武器、观察、服务和支援任务。
-- `Activating` 只有在交互条件持续合法时推进。
-- 所有权变化、激活完成、压制和摧毁必须提交领域事件。
+- 所有权变化、控制完成、服务、压制和摧毁必须提交领域事件。
 - 设施不能由 Presentation 直接改旗或重置冷却。
 
 ### 13.3 交互命令
 
-建议新增：
+正式命令：
 
 ```text
-StartFacilityInteractionCommand
-CancelFacilityInteractionCommand
+DeclareFacilityControlCommand
+RequestFacilityServiceCommand
+CancelFacilityActionCommand
 RequestSupportMissionCommand
 ```
 
-命令统一校验：
+控制声明只要求单位、阵营、设施与模式合法；舰船可以先声明再接近。进度阶段持续校验交互水域、争夺、设施和执行舰状态。服务申请必须当场满足：
 
 - 操作者存活且属于命令阵营。
-- 操作者位于合法交互水域。
+- 操作者位于合法交互水域且泊位未被占用。
+- 航速不超过服务配置上限，朝向落在配置容差内。
 - 舰船类型或能力允许该交互。
 - 设施状态允许激活、夺取或服务。
 - 周围威胁、移动状态和中断条件满足关卡规则。
@@ -787,17 +804,9 @@ RequestSupportMissionCommand
 
 普通区域控制和未建立靠泊的设施交互不改变舰船运动规则：接受交互意图时不清空既有航路、不把航速归零，也不抵消推进、水流、海况、碰撞或外力。舰船被自身运动或水流带出交互水域时，控制进度或尚未建立靠泊的服务立即按 `UNIT_LEFT_INTERACTION_AREA` 中断。只有维修泊位等明确进入 `Docked` 的靠泊服务，才可以按其独立契约提供定点保持。
 
-`StartFacilityInteractionCommand` 需要携带明确 `interaction_type`：
-
-```text
-Activate
-Seize
-Service
-```
-
-- `Activate` 用于己方休眠设施或允许激活的中立设施。
-- `Seize` 只用于 Definition 标记为可夺取的中立或轻度守备设施。
-- `Service` 用于补给或维修，不改变设施所有权。
+- 普通玩家与 AI 使用 `DeclareFacilityControlCommand` 表达“控制/占领”，完成后同时取得所有权并进入合法运行态。
+- `Activate` 只用于关卡初始化、脚本事件或特殊待激活设施，不作为普通水面舰语义。
+- 补给和维修只使用 `RequestFacilityServiceCommand`，不改变设施所有权。
 - `Suppress` 由攻击、状态或专用任务触发，不伪装成占领交互。
 - `Destroy` 由 Damageable 设施的正常伤害与生命周期处理。
 - 加固岸炮、机场等设施可配置为不可夺取，只能压制或摧毁。
@@ -832,7 +841,7 @@ Service
 - 服务完成后通过领域效果修改合法资源或状态。
 - 不直接调用 UI、动画或角色配置文件。
 
-港湾首轮基线由 Definition 的 `service_profile` 配置：完成 7 秒补给后，当前武器装填进度恢复至就绪，并缩短 12 秒技能冷却；这些值是可调原型基线，不写死在设施服务中。
+港湾首轮基线由 Definition 的 `berthing_service` 配置：完成 7 秒补给后，当前武器装填进度恢复至就绪，并缩短 12 秒技能冷却；这些值是可调原型基线，不写死在设施服务中。
 
 ### 13.7 近岸机场
 
@@ -889,16 +898,16 @@ controller_facility_id
 
 ### 13.11 设施控制语义
 
-设施控制统一区分：
+设施结果统一区分：
 
 ```text
-激活 Activate：建立己方设施运行状态
-夺取 Seize：改变允许夺取设施的所有权
+控制 Control：普通水面舰取得设施所有权并建立合法运行状态
+特殊激活 Activate：仅供关卡初始化、脚本事件或特殊设施建立运行状态
 压制 Suppress：暂时关闭设施能力
 摧毁 Destroy：永久结束设施生命周期
 ```
 
-程序上必须分别记录交互类型、所有权变化和运行状态，不能用单一“占领进度”同时表达四种行为。
+程序上必须分别记录控制状态、所有权变化和运行状态，不能用单一“占领进度”同时表达全部结果。
 
 ### 13.12 设施依赖网络
 
@@ -987,10 +996,9 @@ SurfaceLineOfSightRestored
 EnvironmentZoneChanged
 EnvironmentForecastChanged
 FacilityDiscovered
-FacilityInteractionStarted
-FacilityInteractionInterrupted
-FacilityActivated
-FacilitySeized
+FacilityControlDeclared
+FacilityControlCompleted
+FacilityActionInterrupted
 FacilityOwnershipChanged
 FacilitySuppressed
 FacilityRecovered
@@ -1221,7 +1229,7 @@ scripts/presentation/battle/
 - 岸炮被自身岛屿遮挡时不能攻击背面目标。
 - 设施交互在条件失效时正确中断。
 - 普通设施交互不清空航路、归零航速或抵消水流，驶出交互水域会中断；只有已建立 `Docked` 的靠泊服务可定点保持。
-- `Activate`、`Seize`、`Service`、`Suppress` 和 `Destroy` 不混用状态或进度。
+- `Control`、`Service`、`RemoteCommand`、`AutomaticOperation` 和 `CombatDisposition` 不混用状态、命令或进度。
 - 雷达与通信站只提供已声明的传感器或联络能力。
 - 水雷控制站只改变绑定雷区，且不泄露未发现雷区边界。
 - 补给点与维修泊位使用独立服务事务和中断结果。

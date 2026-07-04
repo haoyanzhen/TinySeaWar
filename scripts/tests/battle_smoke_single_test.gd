@@ -36,7 +36,7 @@ func _run() -> void:
 		for event in session.advance_tick(0.1):
 			var event_type := str(event.get("event_type", ""))
 			event_types[event_type] = true
-			if event_type in ["FacilityInteractionStarted", "FacilitySeized", "FacilityActivated", "FacilityServiceCompleted", "FacilityInteractionInterrupted", "CommandRejected"]:
+			if event_type in ["FacilityControlDeclared", "FacilityControlCompleted", "FacilityServiceStarted", "FacilityServiceCompleted", "FacilityActionInterrupted", "CommandRejected"]:
 				diagnostic_events.append(event.duplicate(true))
 		ticks += 1
 	var passed: bool = session.state.get("phase", "") == "Finished" and event_types.has("WeaponFired") and event_types.has("AttackResolved") and event_types.has("BattleFinished")

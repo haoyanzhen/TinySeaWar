@@ -83,8 +83,7 @@ func _draw() -> void:
 		var facility_position: Vector2 = facility.get("position", Vector2.ZERO)
 		var facility_label := "%s | %s | %s | cd %.1f" % [facility.get("display_name", facility.get("facility_id", "")), facility.get("faction_id", ""), facility.get("operation_state", ""), facility.get("cooldown_remaining", 0.0)]
 		draw_string(ThemeDB.fallback_font, facility_position + Vector2(22.0, -18.0), facility_label, HORIZONTAL_ALIGNMENT_LEFT, -1, 13, Color(1.0, 0.84, 0.45))
-		var interaction: Dictionary = facility.get("interaction", {})
-		var interaction_label := str(interaction.get("interaction_type", "none"))
+		var interaction_label := str(facility.get("interaction_state", "Idle"))
 		var dependency_names := PackedStringArray()
 		for dependency_id in facility.get("requires_all_active", []):
 			dependency_names.append(str(dependency_id))

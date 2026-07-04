@@ -48,7 +48,9 @@ func configure(layout: Dictionary, anchors: Array, definitions: Array) -> void:
 			"previous_operation_state": operation_state,
 			"current_hp": float(definition.get("max_hp", 1.0)),
 			"max_hp": float(definition.get("max_hp", 1.0)),
-			"interaction": {},
+			"interaction_state": "Idle",
+			"control_state": {},
+			"service_state": {},
 			"suppression_remaining": 0.0,
 			"cooldown_remaining": 0.0,
 			"charges_remaining": int(definition.get("charges", 0)),
@@ -59,56 +61,77 @@ func configure(layout: Dictionary, anchors: Array, definitions: Array) -> void:
 		}
 
 
-func start_interaction(facility_id: String, unit: Dictionary, interaction_type: String) -> Dictionary:
+func declare_control(facility_id: String, unit: Dictionary) -> Dictionary:
 	var facility: Dictionary = facilities_by_id.get(facility_id, {})
 	if facility.is_empty() or str(facility.get("life_state", "")) != "Alive":
-		return {"accepted": false, "reason_code": "FACILITY_INTERACTION_NOT_ALLOWED"}
+		return {"accepted": false, "reason_code": "FACILITY_CONTROL_NOT_ALLOWED"}
 	var definition: Dictionary = definition_for(facility_id)
-	if interaction_type not in definition.get("interaction_types", []) or not facility.get("interaction", {}).is_empty():
-		return {"accepted": false, "reason_code": "FACILITY_INTERACTION_NOT_ALLOWED"}
+	if "AreaControl" not in definition.get("operation_modes", []) or not bool(definition.get("area_control", {}).get("enabled", false)) or not facility.get("control_state", {}).is_empty():
+		return {"accepted": false, "reason_code": "FACILITY_CONTROL_NOT_ALLOWED"}
 	if facility["operation_state"] == "Suppressed":
 		return {"accepted": false, "reason_code": "FACILITY_SUPPRESSED"}
+	if str(unit.get("life_state", "")) != "Alive":
+		return {"accepted": false, "reason_code": "UNIT_UNAVAILABLE"}
+	var unit_faction := str(unit.get("faction_id", ""))
+	if "Ownable" not in definition.get("capabilities", []) or str(facility.get("faction_id", "neutral")) == unit_faction and str(facility.get("operation_state", "")) == "Active":
+		return {"accepted": false, "reason_code": "FACILITY_CONTROL_NOT_ALLOWED"}
+	var inside := Geometry2D.is_point_in_polygon(unit["position"], _polygon(facility.get("interaction_water_polygon", [])))
+	facility["control_state"] = {
+		"executor_unit_id": str(unit["entity_id"]),
+		"faction_id": unit_faction,
+		"progress": 0.0,
+		"duration": float(definition.get("area_control", {}).get("duration", 5.0)),
+		"entered_area": inside,
+	}
+	facility["interaction_state"] = "Controlling" if inside else "Idle"
+	return {"accepted": true, "event": {"event_type": "FacilityControlDeclared", "facility_id": facility_id, "unit_id": unit["entity_id"], "faction_id": unit_faction}}
+
+
+func request_service(facility_id: String, unit: Dictionary) -> Dictionary:
+	var facility: Dictionary = facilities_by_id.get(facility_id, {})
+	var definition := definition_for(facility_id)
+	var profile: Dictionary = definition.get("berthing_service", {})
+	if facility.is_empty() or "BerthingService" not in definition.get("operation_modes", []) or not facility.get("service_state", {}).is_empty():
+		return {"accepted": false, "reason_code": "FACILITY_SERVICE_NOT_ALLOWED"}
+	if not is_operational(facility_id) or str(facility.get("faction_id", "")) != str(unit.get("faction_id", "")):
+		return {"accepted": false, "reason_code": "FACILITY_NOT_ACTIVE"}
 	if str(unit.get("life_state", "")) != "Alive" or not Geometry2D.is_point_in_polygon(unit["position"], _polygon(facility.get("interaction_water_polygon", []))):
 		return {"accepted": false, "reason_code": "FACILITY_OUT_OF_RANGE"}
-	var unit_faction := str(unit.get("faction_id", ""))
-	match interaction_type:
-		"Activate":
-			if str(facility.get("operation_state", "")) != "Dormant" or str(facility.get("faction_id", "neutral")) not in ["neutral", unit_faction]:
-				return {"accepted": false, "reason_code": "FACILITY_INTERACTION_NOT_ALLOWED"}
-		"Seize":
-			if "Ownable" not in definition.get("capabilities", []) or not bool(definition.get("seizable", true)) or str(facility.get("faction_id", "neutral")) == unit_faction:
-				return {"accepted": false, "reason_code": "FACILITY_INTERACTION_NOT_ALLOWED"}
-		"Service":
-			if "ServiceProvider" not in definition.get("capabilities", []) or str(facility.get("operation_state", "")) != "Active" or str(facility.get("faction_id", "")) != unit_faction or not _dependencies_active(facility):
-				return {"accepted": false, "reason_code": "FACILITY_NOT_ACTIVE"}
-	facility["operation_state"] = "Activating" if interaction_type in ["Activate", "Seize"] else facility["operation_state"]
-	facility["interaction"] = {
-		"unit_id": str(unit["entity_id"]),
-		"interaction_type": interaction_type,
-		"progress": 0.0,
-		"duration": float(definition.get("interaction_duration", 5.0)),
-		"faction_id": unit_faction,
-		"service_type": str(definition.get("service_profile", {}).get("service_type", "")),
-	}
-	return {"accepted": true, "event": {"event_type": "FacilityInteractionStarted", "facility_id": facility_id, "unit_id": unit["entity_id"], "interaction_type": interaction_type}}
+	if absf(float(unit.get("current_speed", 0.0))) > float(profile.get("max_entry_speed", 0.0)):
+		return {"accepted": false, "reason_code": "BERTH_SPEED_TOO_HIGH"}
+	var tolerance := deg_to_rad(float(profile.get("heading_tolerance_degrees", 180.0)))
+	if absf(wrapf(float(unit.get("heading", 0.0)) - deg_to_rad(float(facility.get("heading", 0.0))), -PI, PI)) > tolerance:
+		return {"accepted": false, "reason_code": "BERTH_HEADING_INVALID"}
+	facility["service_state"] = {"unit_id": str(unit["entity_id"]), "progress": 0.0, "duration": float(profile.get("duration", 1.0)), "service_type": str(profile.get("service_type", ""))}
+	facility["interaction_state"] = str(profile.get("berth_state", "Moored"))
+	return {"accepted": true, "event": {"event_type": "FacilityServiceStarted", "facility_id": facility_id, "unit_id": unit["entity_id"], "service_type": profile.get("service_type", "")}}
 
 
-func cancel_interaction(facility_id: String, unit_id: String) -> Dictionary:
+func cancel_action(facility_id: String, unit_id: String) -> Dictionary:
 	var facility: Dictionary = facilities_by_id.get(facility_id, {})
-	if facility.is_empty() or str(facility.get("interaction", {}).get("unit_id", "")) != unit_id:
-		return {"accepted": false, "reason_code": "FACILITY_INTERACTION_NOT_ALLOWED"}
-	var interaction_type := str(facility.get("interaction", {}).get("interaction_type", ""))
-	if interaction_type in ["Activate", "Seize"]:
-		facility["operation_state"] = str(facility.get("previous_operation_state", "Dormant"))
-	facility["interaction"] = {}
-	return {"accepted": true, "event": {"event_type": "FacilityInteractionInterrupted", "facility_id": facility_id, "unit_id": unit_id}}
+	if facility.is_empty(): return {"accepted": false, "reason_code": "FACILITY_ACTION_NOT_FOUND"}
+	var control: Dictionary = facility.get("control_state", {})
+	var service: Dictionary = facility.get("service_state", {})
+	if str(control.get("executor_unit_id", "")) != unit_id and str(service.get("unit_id", "")) != unit_id:
+		return {"accepted": false, "reason_code": "FACILITY_ACTION_NOT_FOUND"}
+	facility["control_state"] = {}
+	facility["service_state"] = {}
+	facility["interaction_state"] = "Idle"
+	return {"accepted": true, "event": {"event_type": "FacilityActionInterrupted", "facility_id": facility_id, "unit_id": unit_id, "reason_code": "CANCELLED"}}
 
 
-func active_interaction_for_unit(unit_id: String) -> Dictionary:
+func active_action_for_unit(unit_id: String) -> Dictionary:
 	for facility_id in _sorted_ids():
-		var interaction: Dictionary = facilities_by_id[facility_id].get("interaction", {})
-		if str(interaction.get("unit_id", "")) == unit_id:
-			var result := interaction.duplicate(true)
+		var control: Dictionary = facilities_by_id[facility_id].get("control_state", {})
+		if str(control.get("executor_unit_id", "")) == unit_id:
+			var result := control.duplicate(true)
+			result["action_type"] = "Control"
+			result["facility_id"] = facility_id
+			return result
+		var service: Dictionary = facilities_by_id[facility_id].get("service_state", {})
+		if str(service.get("unit_id", "")) == unit_id:
+			var result := service.duplicate(true)
+			result["action_type"] = "Service"
 			result["facility_id"] = facility_id
 			return result
 	return {}
@@ -162,38 +185,8 @@ func advance(delta: float, elapsed_time: float, units_by_id: Dictionary) -> Arra
 		if suppression_before > 0.0 and is_zero_approx(float(facility["suppression_remaining"])) and str(facility.get("life_state", "")) == "Alive":
 			facility["operation_state"] = str(facility.get("previous_operation_state", "Dormant"))
 			events.append({"event_type": "FacilityRecovered", "facility_id": facility_id, "operation_state": facility["operation_state"]})
-		var interaction: Dictionary = facility.get("interaction", {})
-		if interaction.is_empty():
-			continue
-		var unit: Dictionary = units_by_id.get(str(interaction.get("unit_id", "")), {})
-		if unit.is_empty() or unit.get("life_state") != "Alive" or str(facility.get("life_state", "")) != "Alive" or str(facility.get("operation_state", "")) == "Suppressed" or not Geometry2D.is_point_in_polygon(unit["position"], _polygon(facility.get("interaction_water_polygon", []))):
-			var reason_code := "UNIT_UNAVAILABLE" if unit.is_empty() or unit.get("life_state") != "Alive" else ("FACILITY_UNAVAILABLE" if str(facility.get("life_state", "")) != "Alive" or str(facility.get("operation_state", "")) == "Suppressed" else "UNIT_LEFT_INTERACTION_AREA")
-			if str(interaction.get("interaction_type", "")) in ["Activate", "Seize"] and str(facility.get("operation_state", "")) == "Activating":
-				facility["operation_state"] = str(facility.get("previous_operation_state", "Dormant"))
-			facility["interaction"] = {}
-			events.append({"event_type": "FacilityInteractionInterrupted", "facility_id": facility_id, "unit_id": interaction.get("unit_id", ""), "reason_code": reason_code})
-			continue
-		interaction["progress"] = float(interaction.get("progress", 0.0)) + delta
-		if float(interaction["progress"]) + 0.001 < float(interaction.get("duration", 1.0)):
-			continue
-		var interaction_type := str(interaction.get("interaction_type", "Activate"))
-		if interaction_type in ["Activate", "Seize"]:
-			var old_faction := str(facility.get("faction_id", "neutral"))
-			facility["faction_id"] = str(interaction.get("faction_id", old_faction))
-			facility["operation_state"] = "Active"
-			facility["previous_operation_state"] = "Active"
-			if old_faction != str(facility["faction_id"]):
-				events.append({"event_type": "FacilityOwnershipChanged", "facility_id": facility_id, "old_faction_id": old_faction, "faction_id": facility["faction_id"]})
-			events.append({"event_type": "FacilitySeized" if interaction_type == "Seize" else "FacilityActivated", "facility_id": facility_id, "faction_id": facility["faction_id"]})
-		else:
-			events.append({
-				"event_type": "FacilityServiceCompleted",
-				"facility_id": facility_id,
-				"unit_id": unit["entity_id"],
-				"service_type": interaction.get("service_type", ""),
-				"service_profile": definition_for(facility_id).get("service_profile", {}).duplicate(true),
-			})
-		facility["interaction"] = {}
+		_advance_control(facility_id, facility, delta, units_by_id, events)
+		_advance_service(facility_id, facility, delta, units_by_id, events)
 	var remaining: Array = []
 	for mission in support_missions:
 		if float(mission.get("resolve_at_time", INF)) > elapsed_time:
@@ -207,23 +200,83 @@ func advance(delta: float, elapsed_time: float, units_by_id: Dictionary) -> Arra
 	return events
 
 
+func _advance_control(facility_id: String, facility: Dictionary, delta: float, units_by_id: Dictionary, events: Array) -> void:
+	var control: Dictionary = facility.get("control_state", {})
+	if control.is_empty(): return
+	var unit: Dictionary = units_by_id.get(str(control.get("executor_unit_id", "")), {})
+	if unit.is_empty() or unit.get("life_state") != "Alive" or str(facility.get("life_state", "")) != "Alive" or str(facility.get("operation_state", "")) == "Suppressed":
+		_interrupt_action(facility_id, facility, str(control.get("executor_unit_id", "")), "UNIT_UNAVAILABLE" if unit.is_empty() or unit.get("life_state") != "Alive" else "FACILITY_UNAVAILABLE", events)
+		return
+	var polygon := _polygon(facility.get("interaction_water_polygon", []))
+	var inside := Geometry2D.is_point_in_polygon(unit["position"], polygon)
+	if not inside:
+		if bool(control.get("entered_area", false)):
+			_interrupt_action(facility_id, facility, str(unit.get("entity_id", "")), "UNIT_LEFT_INTERACTION_AREA", events)
+		else:
+			facility["interaction_state"] = "Idle"
+		return
+	control["entered_area"] = true
+	var contested := false
+	for other in units_by_id.values():
+		if other.get("life_state") == "Alive" and other.get("faction_id") != control.get("faction_id") and Geometry2D.is_point_in_polygon(other.get("position", Vector2.ZERO), polygon):
+			contested = true
+			break
+	facility["interaction_state"] = "Contested" if contested else "Controlling"
+	if contested: return
+	control["progress"] = float(control.get("progress", 0.0)) + delta
+	if float(control["progress"]) + 0.001 < float(control.get("duration", 1.0)): return
+	var old_faction := str(facility.get("faction_id", "neutral"))
+	facility["faction_id"] = str(control.get("faction_id", old_faction))
+	facility["operation_state"] = "Active"
+	facility["previous_operation_state"] = "Active"
+	facility["control_state"] = {}
+	facility["interaction_state"] = "Idle"
+	if old_faction != str(facility["faction_id"]):
+		events.append({"event_type": "FacilityOwnershipChanged", "facility_id": facility_id, "old_faction_id": old_faction, "faction_id": facility["faction_id"]})
+	events.append({"event_type": "FacilityControlCompleted", "facility_id": facility_id, "unit_id": unit.get("entity_id", ""), "faction_id": facility["faction_id"]})
+
+
+func _advance_service(facility_id: String, facility: Dictionary, delta: float, units_by_id: Dictionary, events: Array) -> void:
+	var service: Dictionary = facility.get("service_state", {})
+	if service.is_empty(): return
+	var unit: Dictionary = units_by_id.get(str(service.get("unit_id", "")), {})
+	var profile: Dictionary = definition_for(facility_id).get("berthing_service", {})
+	var available: bool = not unit.is_empty() and unit.get("life_state") == "Alive" and is_operational(facility_id) and unit.get("faction_id") == facility.get("faction_id")
+	var in_berth: bool = available and Geometry2D.is_point_in_polygon(unit.get("position", Vector2.ZERO), _polygon(facility.get("interaction_water_polygon", [])))
+	if not in_berth:
+		_interrupt_action(facility_id, facility, str(service.get("unit_id", "")), "UNIT_LEFT_INTERACTION_AREA" if available else "FACILITY_UNAVAILABLE", events)
+		return
+	facility["interaction_state"] = "Servicing"
+	service["progress"] = float(service.get("progress", 0.0)) + delta
+	if float(service["progress"]) + 0.001 < float(service.get("duration", 1.0)): return
+	events.append({"event_type": "FacilityServiceCompleted", "facility_id": facility_id, "unit_id": unit["entity_id"], "service_type": service.get("service_type", ""), "service_rules": profile.duplicate(true)})
+	facility["service_state"] = {}
+	facility["interaction_state"] = "Idle"
+
+
+func _interrupt_action(facility_id: String, facility: Dictionary, unit_id: String, reason_code: String, events: Array) -> void:
+	facility["control_state"] = {}
+	facility["service_state"] = {}
+	facility["interaction_state"] = "Interrupted"
+	events.append({"event_type": "FacilityActionInterrupted", "facility_id": facility_id, "unit_id": unit_id, "reason_code": reason_code})
+
+
 func apply_damage(facility_id: String, damage: float, source_id: String = "") -> Array:
 	var facility: Dictionary = facilities_by_id.get(facility_id, {})
 	if facility.is_empty() or str(facility.get("life_state", "")) != "Alive" or damage <= 0.0:
 		return []
 	var events: Array = []
-	if not facility.get("interaction", {}).is_empty():
-		var interrupted_type := str(facility.get("interaction", {}).get("interaction_type", ""))
-		events.append({"event_type":"FacilityInteractionInterrupted", "facility_id":facility_id, "unit_id":facility.get("interaction", {}).get("unit_id", ""), "reason_code":"FACILITY_DAMAGED"})
-		facility["interaction"] = {}
-		if interrupted_type in ["Activate", "Seize"] and str(facility.get("operation_state", "")) == "Activating": facility["operation_state"] = str(facility.get("previous_operation_state", "Dormant"))
+	var action := _facility_action(facility)
+	if not action.is_empty(): _interrupt_action(facility_id, facility, str(action.get("unit_id", "")), "FACILITY_DAMAGED", events)
 	var hp_before := float(facility.get("current_hp", 0.0))
 	facility["current_hp"] = maxf(0.0, hp_before - damage)
 	events.append({"event_type": "FacilityDamaged", "facility_id": facility_id, "source_id": source_id, "damage": damage, "hp_before": hp_before, "hp_after": facility["current_hp"]})
 	if is_zero_approx(float(facility["current_hp"])):
 		facility["life_state"] = "Destroyed"
 		facility["operation_state"] = "Destroyed"
-		facility["interaction"] = {}
+		facility["control_state"] = {}
+		facility["service_state"] = {}
+		facility["interaction_state"] = "Interrupted"
 		facility["suppression_remaining"] = 0.0
 		events.append({"event_type": "FacilityDestroyed", "facility_id": facility_id, "source_id": source_id})
 		return events
@@ -238,16 +291,23 @@ func suppress(facility_id: String, duration: float, source_id: String = "") -> A
 	if facility.is_empty() or str(facility.get("life_state", "")) != "Alive" or duration <= 0.0:
 		return []
 	var events: Array = []
-	if not facility.get("interaction", {}).is_empty():
-		events.append({"event_type":"FacilityInteractionInterrupted", "facility_id":facility_id, "unit_id":facility.get("interaction", {}).get("unit_id", ""), "reason_code":"FACILITY_SUPPRESSED"})
+	var action := _facility_action(facility)
+	if not action.is_empty(): _interrupt_action(facility_id, facility, str(action.get("unit_id", "")), "FACILITY_SUPPRESSED", events)
 	if str(facility.get("operation_state", "")) != "Suppressed":
 		var previous_state := str(facility.get("operation_state", "Dormant"))
-		facility["previous_operation_state"] = "Dormant" if previous_state == "Activating" else previous_state
+		facility["previous_operation_state"] = previous_state
 	facility["operation_state"] = "Suppressed"
 	facility["suppression_remaining"] = maxf(float(facility.get("suppression_remaining", 0.0)), duration)
-	facility["interaction"] = {}
 	events.append({"event_type": "FacilitySuppressed", "facility_id": facility_id, "source_id": source_id, "duration": duration})
 	return events
+
+
+func _facility_action(facility: Dictionary) -> Dictionary:
+	var control: Dictionary = facility.get("control_state", {})
+	if not control.is_empty(): return {"unit_id": control.get("executor_unit_id", "")}
+	var service: Dictionary = facility.get("service_state", {})
+	if not service.is_empty(): return {"unit_id": service.get("unit_id", "")}
+	return {}
 
 
 func observation_sources(faction_id: String) -> Array:

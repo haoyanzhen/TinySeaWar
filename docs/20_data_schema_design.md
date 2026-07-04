@@ -652,6 +652,10 @@ global_environment.tide
 
 FacilityDefinition
   operation_modes[] # AreaControl | BerthingService | RemoteCommand | AutomaticOperation | CombatDisposition
+  initial_state_profiles.{profile_id}
+    faction_id
+    operation_state # Dormant | Active
+    control_policy # LockedWhileActive | ActivateOwnerOnly | SeizeOrActivate
   area_control
     enabled
     capturable
@@ -687,6 +691,12 @@ FacilityDefinition
     destroyable
     silentable
     damage_floor_ratio
+  durability_reference_id
+  weapon_mount_reference
+    weapon_ids[]
+    mount_count
+    shots_per_mount
+    default_ammo_type
   armor
   armor_thickness
   suppression_damage_threshold
@@ -703,6 +713,7 @@ FacilityLayout.placements[]
   anchor_id
   faction_id
   operation_state # Dormant | Active
+  initial_state_profile
   requires_all_active[]
   requires_any_active[]
   dependency_rules.requires_matching_faction
@@ -734,6 +745,7 @@ MinefieldDefinition
 - `operation_modes` 只允许 `AreaControl`、`BerthingService`、`RemoteCommand`、`AutomaticOperation` 和 `CombatDisposition`；声明某模式时必须同时提供对应对象，不再用一组 `interaction_types` 混合表达占领、服务和远程任务。
 - `area_control` 保存控制持续时间；控制意图可以在进入交互水域前声明，进度只在执行舰进入后累计，同阵营只有一个 `executor_unit_id`。
 - `area_control.capturable`、`combat_disposition.suppressible/destroyable/silentable` 与 `damage_floor_ratio` 显式声明设施允许的生命周期结果；不可摧毁设施必须使用 `(0, 1)` 的伤害下限，可摧毁设施必须使用 `0`。
+- `initial_state_profiles` 为同类设施提供带控制策略的关卡初态；岸防炮的 `enemy_active` 禁止普通交互夺取，`player_dormant` 只允许当前所有者完成激活。
 - `berthing_service.service_type` 当前为 `Supply` 或 `Repair`，并显式保存泊位数、入泊速度、朝向容差和服务持续时间。补给继续使用 `weapon_reload_recovery_ratio`、`skill_cooldown_recovery`；维修使用 `hp_restore_ratio`、`repair_cap_ratio`。
 - `remote_command` 描述不要求舰船靠近的命令类别及合法任务引用；次数、冷却、航程和环境限制仍由具体任务 Definition 校验。
 - `MineDeployment` 远程命令另外使用 `control_radius`、`area_side_length`、`duration`、`mine_count`、`cooldown`、`charges` 和水雷伤害/碰撞/发现参数；随机种子由战斗种子、Tick 与设施 ID 确定。
@@ -741,6 +753,7 @@ MinefieldDefinition
 - `ObservationSource` 必须声明 `observation_rules`；海岸观察站固定使用 `Optical`，并明确受天气、时段、局部能见度和岛岸视线影响，不能作为未来雷达规则的隐式默认值。
 - 设施依赖由关卡放置声明；`requires_matching_faction=true` 时，依赖设施除 `Alive + Active` 外还必须与使用方同阵营。依赖失效后运行态进入 `Silent`（允许静默）或 `Disabled`，恢复、占领和依赖变化时重新计算，不修改所有权。
 - `weapon_id` 必须引用现有 Weapon Definition。岸炮和空袭继续使用普通命中、装甲和伤害公式。
+- `durability_reference_id` 从稳定舰船 Definition 解析 HP、装甲与火力属性；`weapon_mount_reference` 复用武器 Definition 的伤害、散布、穿深、装填和弹药，仅覆盖设施实际炮塔数与每塔炮管数。当前岸炮引用 `ship.warspite` 及其 381mm AP/HE，按单座联装结算两发。
 - `reload_during_suppression` 控制武器设施受压制期间是否继续装填；当前岸防炮为 `false`。
 - `blocked_aviation_conditions` 当前支持 `Severe` 与 `Grounded`；`Restricted` 通过到达时间和命中修正表达，不等同于无条件禁飞。
 - `controller_rules` 只切换绑定雷区状态。水雷触发、伤害、阵营知识和安全航道由独立水雷服务处理。

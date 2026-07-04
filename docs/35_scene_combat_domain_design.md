@@ -832,12 +832,18 @@ RequestSupportMissionCommand
 
 岸防炮作为固定 `WeaponPlatform` 复用 WeaponService 的装填、目标、射界和攻击事实：
 
+- 关卡初态使用显式 Profile：`enemy_active` 为敌方激活且普通水面交互锁定，`player_dormant` 为己方休眠且只能由己方完成激活。
+- 耐久、防护与炮术属性通过 `durability_reference_id = ship.warspite` 解析经典战列舰基线，不在设施数据复制一套漂移数值。
+- 炮塔通过 `weapon_mount_reference` 引用厌战 381mm AP/HE 的伤害、散布、穿深、装填和弹药规则，但覆盖为一座联装炮塔，每轮两发；中/重甲选 AP，轻甲/无甲选 HE。
 - 没有移动状态。
 - 目标必须由己方合法发现。
 - 炮弹同样受岛屿和岸线 `ShellTravel` 阻挡。
 - 固定炮位不能穿过承载岛屿攻击背面目标。
 - 被压制后暂停开火和装填行为由设施规则明确处理。
+- 岸炮 `destroyable=false`，HP 受伤害下限保护，攻击只产生实际伤害、受限反馈和累计压制，不得进入 `Destroyed`。
+- 同阵营任一已声明通信依赖可用时运行；通信暂时受压制时进入 `Disabled`，恢复后重算；全部依赖被摧毁或转为异阵营后进入 `Silent`。
 - 岸炮不能读取隐藏敌舰位置或绕过命中与伤害服务。
+- 岸炮控制与激活只改变自身，不转移或激活通信站及其他设施。
 
 ### 13.6 前沿补给点
 

@@ -510,10 +510,23 @@ func _configure_scene_combat(level: Dictionary) -> void:
 	state["global_environment"] = terrain_context_service.global_snapshot()
 	var facility_layout_id := str(map.get("facility_layout_id", terrain_definition.get("facility_layout_id", "")))
 	var facility_layout: Dictionary = registry.get_definition("facilities", facility_layout_id) if not facility_layout_id.is_empty() else {}
-	facility_service.configure(facility_layout, terrain_definition.get("facility_anchors", []), registry.all("facilities"))
+	facility_service.configure(facility_layout, terrain_definition.get("facility_anchors", []), _resolved_facility_definitions())
 	state["facilities_by_id"] = facility_service.snapshot()
 	minefield_service.configure(registry.all("facilities"), terrain_id)
 	state["minefields_by_id"] = minefield_service.snapshot()
+
+
+func _resolved_facility_definitions() -> Array:
+	var result: Array = []
+	for raw_definition in registry.all("facilities"):
+		var definition: Dictionary = raw_definition.duplicate(true)
+		var durability_reference_id := str(definition.get("durability_reference_id", ""))
+		if not durability_reference_id.is_empty():
+			var ship: Dictionary = registry.get_definition("ships", durability_reference_id)
+			for field in ["max_hp", "armor", "armor_thickness", "gunnery_power", "aviation_power"]:
+				if ship.has(field): definition[field] = ship[field]
+		result.append(definition)
+	return result
 
 
 func _validate_level_runtime(level: Dictionary) -> Array[String]:
@@ -2725,7 +2738,11 @@ func _update_facility_weapons() -> void:
 			if weapon.is_empty(): continue
 			var target := _select_facility_weapon_target(facility, weapon)
 			if target.is_empty(): continue
+			var selected_ammo := "AP" if str(target.get("stats", {}).get("armor_thickness", "Unarmored")) in ["Medium", "Heavy"] else "HE"
+			facility["selected_ammo_type"] = selected_ammo
+			if not str(weapon.get("ammo_type", "")).is_empty() and str(weapon.get("ammo_type", "")) != selected_ammo: continue
 			_fire_facility_weapon(facility, target, weapon)
+			break
 
 
 func _select_facility_weapon_target(facility: Dictionary, weapon: Dictionary) -> Dictionary:
@@ -2748,7 +2765,8 @@ func _select_facility_weapon_target(facility: Dictionary, weapon: Dictionary) ->
 func _fire_facility_weapon(facility: Dictionary, target: Dictionary, weapon: Dictionary) -> void:
 	var origin: Vector2 = facility.get("muzzle_position", facility.get("position", Vector2.ZERO))
 	var target_position: Vector2 = target["position"]
-	var shot_count := int(weapon.get("mount_count", 1)) * int(weapon.get("shots_per_mount", 1))
+	var mount_reference: Dictionary = facility_service.definition_for(str(facility.get("facility_id", ""))).get("weapon_mount_reference", {})
+	var shot_count := int(mount_reference.get("mount_count", weapon.get("mount_count", 1))) * int(mount_reference.get("shots_per_mount", weapon.get("shots_per_mount", 1)))
 	var impact_positions: Array = []
 	var dispersion_samples: Array = []
 	for shot_index in range(shot_count):

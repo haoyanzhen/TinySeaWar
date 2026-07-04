@@ -623,8 +623,11 @@ func _validate_facility_definition(definition: Dictionary) -> void:
 	if definition_type not in ["FacilityDefinition", "FacilityLayout", "SupportMissionDefinition", "MinefieldDefinition"]:
 		errors.append("Unsupported facility definition type in %s" % definition_id)
 	elif definition_type == "FacilityDefinition":
-		if float(definition.get("max_hp", 0.0)) <= 0.0:
+		var durability_reference_id := str(definition.get("durability_reference_id", ""))
+		if durability_reference_id.is_empty() and float(definition.get("max_hp", 0.0)) <= 0.0:
 			errors.append("Facility max_hp must be positive in %s" % definition_id)
+		elif not durability_reference_id.is_empty() and get_definition("ships", durability_reference_id).is_empty():
+			errors.append("Facility durability reference is missing in %s" % definition_id)
 		var operation_modes: Array = definition.get("operation_modes", [])
 		var allowed_modes := ["AreaControl", "BerthingService", "RemoteCommand", "AutomaticOperation", "CombatDisposition"]
 		if operation_modes.is_empty(): errors.append("Facility lacks operation_modes in %s" % definition_id)
@@ -667,8 +670,22 @@ func _validate_facility_definition(definition: Dictionary) -> void:
 			errors.append("Suppressible facility lacks positive suppression rules in %s" % definition_id)
 		var weapon_ids: Array = definition.get("weapon_ids", [])
 		if not str(definition.get("weapon_id", "")).is_empty(): weapon_ids.append(str(definition["weapon_id"]))
+		var mount_reference: Dictionary = definition.get("weapon_mount_reference", {})
+		weapon_ids.append_array(mount_reference.get("weapon_ids", []))
+		if not mount_reference.is_empty() and (int(mount_reference.get("mount_count", 0)) <= 0 or int(mount_reference.get("shots_per_mount", 0)) <= 0 or str(mount_reference.get("default_ammo_type", "")) not in ["AP", "HE"]):
+			errors.append("Facility weapon mount reference is invalid in %s" % definition_id)
+		var referenced_ammo_types: Array[String] = []
 		for weapon_id in weapon_ids:
-			if get_definition("weapons", str(weapon_id)).is_empty(): errors.append("Facility references missing weapon %s in %s" % [weapon_id, definition_id])
+			var referenced_weapon: Dictionary = get_definition("weapons", str(weapon_id))
+			if referenced_weapon.is_empty(): errors.append("Facility references missing weapon %s in %s" % [weapon_id, definition_id])
+			elif not str(referenced_weapon.get("ammo_type", "")).is_empty(): referenced_ammo_types.append(str(referenced_weapon.get("ammo_type", "")))
+		if not mount_reference.is_empty() and str(mount_reference.get("default_ammo_type", "")) not in referenced_ammo_types:
+			errors.append("Facility default ammo is not provided by its weapon references in %s" % definition_id)
+		var profiles: Dictionary = definition.get("initial_state_profiles", {})
+		for profile_id in profiles:
+			var profile: Dictionary = profiles[profile_id]
+			if str(profile.get("operation_state", "")) not in ["Dormant", "Active"] or str(profile.get("control_policy", "")) not in ["LockedWhileActive", "ActivateOwnerOnly", "SeizeOrActivate"] or str(profile.get("faction_id", "")).is_empty():
+				errors.append("Facility initial state profile %s is invalid in %s" % [profile_id, definition_id])
 		for mission_id in definition.get("support_mission_ids", []):
 			if get_definition("facilities", str(mission_id)).is_empty(): errors.append("Facility references missing support mission %s in %s" % [mission_id, definition_id])
 	elif definition_type == "SupportMissionDefinition":
@@ -688,11 +705,16 @@ func _validate_facility_definition(definition: Dictionary) -> void:
 		var placement_ids := {}
 		for placement in definition.get("placements", []): placement_ids[str(placement.get("id", ""))] = true
 		for placement in definition.get("placements", []):
-			if get_definition("facilities", str(placement.get("definition_id", ""))).is_empty():
+			var placed_definition: Dictionary = get_definition("facilities", str(placement.get("definition_id", "")))
+			if placed_definition.is_empty():
 				errors.append("Facility layout references missing facility in %s" % definition_id)
 			if not anchor_ids.has(str(placement.get("anchor_id", ""))):
 				errors.append("Facility layout references missing anchor in %s" % definition_id)
-			if str(placement.get("operation_state", "")) not in ["Dormant", "Active"]:
+			var initial_profile_id := str(placement.get("initial_state_profile", ""))
+			var initial_profile: Dictionary = placed_definition.get("initial_state_profiles", {}).get(initial_profile_id, {})
+			if not initial_profile_id.is_empty() and initial_profile.is_empty():
+				errors.append("Facility layout references missing initial state profile in %s" % definition_id)
+			if str(placement.get("operation_state", initial_profile.get("operation_state", ""))) not in ["Dormant", "Active"]:
 				errors.append("Facility placement has invalid initial operation state in %s" % definition_id)
 			var all_dependencies: Array = placement.get("requires_all_active", []) + placement.get("requires_any_active", [])
 			var seen_dependencies := {}

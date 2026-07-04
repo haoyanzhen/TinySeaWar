@@ -27,17 +27,22 @@ func configure(layout: Dictionary, anchors: Array, definitions: Array) -> void:
 		for mission_id in definition.get("support_mission_ids", []):
 			mission_charges[str(mission_id)] = int(definitions_by_id.get(str(mission_id), {}).get("charges", 0))
 		var weapon_states: Array = []
-		for weapon_id in definition.get("weapon_ids", [definition.get("weapon_id", "")]):
+		var mount_reference: Dictionary = definition.get("weapon_mount_reference", {})
+		var weapon_ids: Array = mount_reference.get("weapon_ids", definition.get("weapon_ids", [definition.get("weapon_id", "")]))
+		for weapon_id in weapon_ids:
 			if str(weapon_id).is_empty(): continue
 			weapon_states.append({"definition_id": str(weapon_id), "reload_remaining": 0.0, "enabled": true})
-		var operation_state := str(placement.get("operation_state", "Dormant"))
+		var initial_profile: Dictionary = definition.get("initial_state_profiles", {}).get(str(placement.get("initial_state_profile", "")), {})
+		var operation_state := str(placement.get("operation_state", initial_profile.get("operation_state", "Dormant")))
+		var initial_faction := str(placement.get("faction_id", initial_profile.get("faction_id", "neutral")))
 		facilities_by_id[str(placement["id"])] = {
 			"facility_id": str(placement["id"]),
 			"definition_id": str(placement["definition_id"]),
 			"display_name": str(definition.get("display_name", placement["id"])),
 			"asset_semantic": str(definition.get("asset_semantic", "")),
 			"capabilities": definition.get("capabilities", []).duplicate(),
-			"faction_id": str(placement.get("faction_id", "neutral")),
+			"faction_id": initial_faction,
+			"control_policy": str(placement.get("control_policy", initial_profile.get("control_policy", "SeizeOrActivate"))),
 			"position": _vector2(anchor.get("position", [0.0, 0.0])),
 			"muzzle_position": _vector2(anchor.get("muzzle_position", anchor.get("position", [0.0, 0.0]))),
 			"observation_position": _vector2(anchor.get("observation_position", anchor.get("position", [0.0, 0.0]))),
@@ -61,6 +66,7 @@ func configure(layout: Dictionary, anchors: Array, definitions: Array) -> void:
 			"remote_charges_remaining": int(definition.get("remote_command", {}).get("charges", 0)),
 			"mission_charges_remaining": mission_charges,
 			"weapon_states": weapon_states,
+			"selected_ammo_type": str(mount_reference.get("default_ammo_type", "")),
 			"requires_all_active": placement.get("requires_all_active", []).duplicate(),
 			"requires_any_active": placement.get("requires_any_active", []).duplicate(),
 			"dependency_rules": placement.get("dependency_rules", {"requires_matching_faction": true}).duplicate(true),
@@ -80,6 +86,11 @@ func declare_control(facility_id: String, unit: Dictionary) -> Dictionary:
 	if str(unit.get("life_state", "")) != "Alive":
 		return {"accepted": false, "reason_code": "UNIT_UNAVAILABLE"}
 	var unit_faction := str(unit.get("faction_id", ""))
+	var control_policy := str(facility.get("control_policy", "SeizeOrActivate"))
+	if control_policy == "LockedWhileActive" and str(facility.get("desired_operation_state", "")) == "Active":
+		return {"accepted": false, "reason_code": "FACILITY_CONTROL_NOT_ALLOWED"}
+	if control_policy == "ActivateOwnerOnly" and str(facility.get("faction_id", "")) != unit_faction:
+		return {"accepted": false, "reason_code": "FACILITY_CONTROL_NOT_ALLOWED"}
 	if "Ownable" not in definition.get("capabilities", []) or str(facility.get("faction_id", "neutral")) == unit_faction and str(facility.get("operation_state", "")) == "Active":
 		return {"accepted": false, "reason_code": "FACILITY_CONTROL_NOT_ALLOWED"}
 	var inside := Geometry2D.is_point_in_polygon(unit["position"], _polygon(facility.get("interaction_water_polygon", [])))
@@ -402,8 +413,9 @@ func weapon_platforms() -> Array:
 
 
 func mark_weapon_fired(facility_id: String, weapon_id: String, reload_time: float) -> void:
+	var mount_weapon_ids: Array = definition_for(facility_id).get("weapon_mount_reference", {}).get("weapon_ids", [weapon_id])
 	for weapon_state in facilities_by_id.get(facility_id, {}).get("weapon_states", []):
-		if str(weapon_state.get("definition_id", "")) == weapon_id:
+		if str(weapon_state.get("definition_id", "")) in mount_weapon_ids:
 			weapon_state["reload_remaining"] = reload_time
 
 
@@ -518,10 +530,26 @@ func _refresh_operation_state(facility_id: String) -> Dictionary:
 		elif _dependencies_active(facility):
 			new_state = "Active"
 		else:
-			new_state = "Silent" if bool(definition_for(facility_id).get("combat_disposition", {}).get("silentable", false)) else "Disabled"
+			var permanent_dependency_loss := _dependency_failure_is_permanent(facility)
+			new_state = "Silent" if permanent_dependency_loss and bool(definition_for(facility_id).get("combat_disposition", {}).get("silentable", false)) else "Disabled"
 	facility["operation_state"] = new_state
 	if old_state == new_state: return {}
 	return {"event_type":"FacilityOperationStateChanged", "facility_id":facility_id, "old_operation_state":old_state, "operation_state":new_state, "dependencies_active":_dependencies_active(facility)}
+
+
+func _dependency_failure_is_permanent(facility: Dictionary) -> bool:
+	var requires_matching_faction := bool(facility.get("dependency_rules", {}).get("requires_matching_faction", true))
+	for dependency_id in facility.get("requires_all_active", []):
+		var dependency: Dictionary = facilities_by_id.get(dependency_id, {})
+		if dependency.is_empty() or str(dependency.get("life_state", "")) == "Destroyed": return true
+		if requires_matching_faction and str(dependency.get("faction_id", "")) != str(facility.get("faction_id", "")): return true
+	var any_dependencies: Array = facility.get("requires_any_active", [])
+	if not any_dependencies.is_empty():
+		for dependency_id in any_dependencies:
+			var dependency: Dictionary = facilities_by_id.get(dependency_id, {})
+			if not dependency.is_empty() and str(dependency.get("life_state", "")) == "Alive" and (not requires_matching_faction or str(dependency.get("faction_id", "")) == str(facility.get("faction_id", ""))): return false
+		return true
+	return false
 
 
 func validate_runtime_state(facility_id: String) -> Array[String]:

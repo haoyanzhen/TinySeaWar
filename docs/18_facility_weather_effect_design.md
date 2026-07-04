@@ -39,7 +39,7 @@
 | --- | --- | --- | --- |
 | 海岸观察站 | `ui_marker_facility_coastal_observation_post.png` | `facility.coastal_observation_post.*` | 激活后成为固定光学观察源，范围 1150；受视距、海雾、昼夜和岛岸遮挡影响 |
 | 岸防炮 | `ui_marker_facility_coastal_battery.png` | `facility.coastal_battery.*` | 支持敌方锁定激活/己方休眠待激活；耐久与防护引用厌战经典战列舰，单座联装炮引用其 381mm AP/HE；压制或通信失效时停火 |
-| 前沿补给点 | `ui_marker_facility_forward_supply_point.png` | `facility.forward_supply_point.*` | 7 秒服务后完成当前武器装填，并缩短 12 秒技能冷却 |
+| 前沿补给点 | `ui_marker_facility_forward_supply_point.png` | `facility.forward_supply_point.*` | 中立休眠，需先占领；同阵营舰低速进入单泊位并连续服务 7 秒，完成装填并缩短 12 秒技能冷却，离泊/受击/压制会中断 |
 | 近岸机场 | `ui_marker_facility_coastal_airfield.png` | `facility.coastal_airfield.*` | 提供航空侦察、战斗机巡逻和空袭；受天气、海况、冷却、次数及通信依赖限制 |
 | 雷达站 | `ui_marker_facility_radar_station.png` | `facility.radar_station.*` | 当前仅显示设施和生命周期；独立雷达传感器规则未完成前保持禁用 |
 | 通信站 | `ui_marker_facility_communication_station.png` | `facility.communication_station.*` | 作为机场和岸炮的显式依赖；失效时关闭依赖能力，不直接造成伤害或侦查 |

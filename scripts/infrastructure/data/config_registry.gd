@@ -643,6 +643,8 @@ func _validate_facility_definition(definition: Dictionary) -> void:
 			var berth: Dictionary = definition.get("berthing_service", {})
 			if str(berth.get("service_type", "")) not in ["Supply", "Repair"] or float(berth.get("duration", 0.0)) <= 0.0 or int(berth.get("berth_count", 0)) <= 0 or float(berth.get("max_entry_speed", -1.0)) < 0.0 or float(berth.get("heading_tolerance_degrees", -1.0)) < 0.0:
 				errors.append("Berthing-service facility lacks valid service rules in %s" % definition_id)
+			if not berth.has("interrupt_on_leave") or not berth.has("interrupt_on_facility_damage") or str(berth.get("progress_on_interrupt", "")) not in ["Reset"]:
+				errors.append("Berthing-service facility lacks interruption rules in %s" % definition_id)
 		if "RemoteCommand" in operation_modes and str(definition.get("remote_command", {}).get("command_type", "")).is_empty():
 			errors.append("Remote-command facility lacks command rules in %s" % definition_id)
 		var remote_command: Dictionary = definition.get("remote_command", {})

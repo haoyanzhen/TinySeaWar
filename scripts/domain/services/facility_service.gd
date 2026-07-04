@@ -305,7 +305,8 @@ func _advance_service(facility_id: String, facility: Dictionary, delta: float, u
 	var available: bool = not unit.is_empty() and unit.get("life_state") == "Alive" and is_operational(facility_id) and unit.get("faction_id") == facility.get("faction_id")
 	var in_berth: bool = available and Geometry2D.is_point_in_polygon(unit.get("position", Vector2.ZERO), _polygon(facility.get("interaction_water_polygon", [])))
 	if not in_berth:
-		_interrupt_action(facility_id, facility, str(service.get("unit_id", "")), "UNIT_LEFT_INTERACTION_AREA" if available else "FACILITY_UNAVAILABLE", events)
+		if not available or bool(profile.get("interrupt_on_leave", true)):
+			_interrupt_action(facility_id, facility, str(service.get("unit_id", "")), "UNIT_LEFT_INTERACTION_AREA" if available else "FACILITY_UNAVAILABLE", events)
 		return
 	facility["interaction_state"] = "Servicing"
 	service["progress"] = float(service.get("progress", 0.0)) + delta
@@ -331,7 +332,10 @@ func apply_damage(facility_id: String, damage: float, source_id: String = "") ->
 	var definition := definition_for(facility_id)
 	var disposition: Dictionary = definition.get("combat_disposition", {})
 	var action := _facility_action(facility)
-	if not action.is_empty(): _interrupt_action(facility_id, facility, str(action.get("unit_id", "")), "FACILITY_DAMAGED", events)
+	if not action.is_empty():
+		var interrupt_on_damage := true
+		if action.get("action_type", "") == "Service": interrupt_on_damage = bool(definition.get("berthing_service", {}).get("interrupt_on_facility_damage", true))
+		if interrupt_on_damage: _interrupt_action(facility_id, facility, str(action.get("unit_id", "")), "FACILITY_DAMAGED", events)
 	var hp_before := float(facility.get("current_hp", 0.0))
 	var destroyable := bool(disposition.get("destroyable", true))
 	var damage_floor := 0.0 if destroyable else float(facility.get("max_hp", 1.0)) * clampf(float(disposition.get("damage_floor_ratio", 0.01)), 0.0, 1.0)
@@ -376,9 +380,9 @@ func suppress(facility_id: String, duration: float, source_id: String = "") -> A
 
 func _facility_action(facility: Dictionary) -> Dictionary:
 	var control: Dictionary = facility.get("control_state", {})
-	if not control.is_empty(): return {"unit_id": control.get("executor_unit_id", "")}
+	if not control.is_empty(): return {"unit_id": control.get("executor_unit_id", ""), "action_type":"Control"}
 	var service: Dictionary = facility.get("service_state", {})
-	if not service.is_empty(): return {"unit_id": service.get("unit_id", "")}
+	if not service.is_empty(): return {"unit_id": service.get("unit_id", ""), "action_type":"Service"}
 	return {}
 
 

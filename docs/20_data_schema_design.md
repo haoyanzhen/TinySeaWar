@@ -667,6 +667,9 @@ FacilityDefinition
     max_entry_speed
     heading_tolerance_degrees
     berth_state
+    interrupt_on_leave
+    interrupt_on_facility_damage
+    progress_on_interrupt # Reset
   remote_command
     command_type
     mission_ids[]
@@ -747,6 +750,7 @@ MinefieldDefinition
 - `area_control.capturable`、`combat_disposition.suppressible/destroyable/silentable` 与 `damage_floor_ratio` 显式声明设施允许的生命周期结果；不可摧毁设施必须使用 `(0, 1)` 的伤害下限，可摧毁设施必须使用 `0`。
 - `initial_state_profiles` 为同类设施提供带控制策略的关卡初态；岸防炮的 `enemy_active` 禁止普通交互夺取，`player_dormant` 只允许当前所有者完成激活。
 - `berthing_service.service_type` 当前为 `Supply` 或 `Repair`，并显式保存泊位数、入泊速度、朝向容差和服务持续时间。补给继续使用 `weapon_reload_recovery_ratio`、`skill_cooldown_recovery`；维修使用 `hp_restore_ratio`、`repair_cap_ratio`。
+- 靠泊服务必须显式声明离泊与设施受击是否中断，以及中断后的进度策略；当前补给和维修均为两类中断启用、`progress_on_interrupt=Reset`。单泊位由 `service_state` 独占，第二艘舰在完成或中断前不能进入。
 - `remote_command` 描述不要求舰船靠近的命令类别及合法任务引用；次数、冷却、航程和环境限制仍由具体任务 Definition 校验。
 - `MineDeployment` 远程命令另外使用 `control_radius`、`area_side_length`、`duration`、`mine_count`、`cooldown`、`charges` 和水雷伤害/碰撞/发现参数；随机种子由战斗种子、Tick 与设施 ID 确定。
 - `automatic_operation` 只列出设施自行运行的能力，不创建重复“使用设施”命令；`combat_disposition` 只声明公共攻击管线允许造成的压制、摧毁和静默结果。

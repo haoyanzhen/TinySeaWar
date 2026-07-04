@@ -111,6 +111,7 @@ static func facility_capture_score(values: Dictionary) -> float:
 		+ 0.12 * clamp01(float(values.get("ownership_need", 0.0)))
 		+ 0.10 * clamp01(float(values.get("followup_value", 0.0)))
 		+ 0.08 * clamp01(float(values.get("time_margin", 0.0)))
+		+ 0.18 * clamp01(float(values.get("engagement_pressure", 0.0)))
 		- 0.20 * clamp01(float(values.get("contest_pressure", 0.0)))
 		- 0.15 * clamp01(float(values.get("assignment_saturation", 0.0)))
 	)
@@ -135,6 +136,7 @@ static func detected_tactic_scores(values: Dictionary) -> Dictionary:
 	var local_advantage := clamp01(float(values.get("local_advantage", 0.5)))
 	var local_pressure := 1.0 - local_advantage
 	var survival_pressure := 1.0 - clamp01(float(values.get("hp_safety", 1.0)))
+	var engagement_pressure := clamp01(float(values.get("engagement_pressure", 0.0)))
 	var attack := score100(
 		0.24 * local_advantage
 		+ 0.19 * clamp01(float(values.get("weapon_ready", 0.0)))
@@ -142,6 +144,7 @@ static func detected_tactic_scores(values: Dictionary) -> Dictionary:
 		+ 0.15 * clamp01(float(values.get("skill_attack_value", 0.0)))
 		+ 0.14 * clamp01(float(values.get("group_followup", 0.0)))
 		+ 0.12 * clamp01(float(values.get("attack_route_quality", 0.0)))
+		+ 0.30 * engagement_pressure
 		- 0.15 * clamp01(float(values.get("exposure_risk", 0.0)))
 	)
 	var defend := score100(
@@ -151,6 +154,7 @@ static func detected_tactic_scores(values: Dictionary) -> Dictionary:
 		+ 0.16 * survival_pressure
 		+ 0.11 * clamp01(float(values.get("cooldown_need", 0.0)))
 		+ 0.09 * clamp01(float(values.get("group_support", 0.0)))
+		- 0.25 * engagement_pressure
 	)
 	var kite := score100(
 		0.23 * clamp01(float(values.get("range_advantage", 0.0)))
@@ -159,6 +163,7 @@ static func detected_tactic_scores(values: Dictionary) -> Dictionary:
 		+ 0.16 * clamp01(float(values.get("exit_quality", 0.0)))
 		+ 0.13 * survival_pressure
 		+ 0.10 * clamp01(float(values.get("weapon_cycle_value", 0.0)))
+		- 0.20 * engagement_pressure
 	)
 	return {"Attack": attack, "Defend": defend, "Kite": kite}
 
@@ -209,13 +214,14 @@ static func mode_scores(values: Dictionary) -> Dictionary:
 	var low_hp := 1.0 - hp_safety
 	var pressure := clamp01(float(values.get("local_pressure", 0.0)))
 	var boundary_safety := 1.0 - clamp01(float(values.get("boundary_risk", 0.0)))
+	var engagement_pressure := clamp01(float(values.get("engagement_pressure", 0.0)))
 	return {
-		"DisengageRegroup": score100(0.34 * low_hp + 0.25 * pressure + 0.21 * (1.0 - boundary_safety) + 0.20 * clamp01(float(values.get("exit_quality", 0.0)))),
-		"ReconAvoid": score100(0.34 * clamp01(float(values.get("vision_need", 0.0))) + 0.24 * hp_safety + 0.20 * boundary_safety + 0.12 * clamp01(float(values.get("cohesion", 0.0))) + 0.10 * clamp01(float(values.get("recon_route_quality", 0.0)))),
-		"VanguardLine": score100(0.28 * clamp01(float(values.get("valid_target", 0.0))) + 0.22 * hp_safety + 0.18 * clamp01(float(values.get("cohesion", 0.0))) + 0.17 * (1.0 - pressure) + 0.15 * clamp01(float(values.get("weapon_ready", 0.0)))),
-		"TorpedoFlank": score100(0.26 * clamp01(float(values.get("flank_quality", 0.0))) + 0.22 * clamp01(float(values.get("weapon_ready", 0.0))) + 0.20 * clamp01(float(values.get("high_value_exposed", 0.0))) + 0.14 * hp_safety + 0.10 * boundary_safety + 0.08 * clamp01(float(values.get("group_fixing_target", 0.0)))),
-		"GunlineSupport": score100(0.25 * clamp01(float(values.get("valid_target", 0.0))) + 0.21 * clamp01(float(values.get("weapon_ready", 0.0))) + 0.18 * clamp01(float(values.get("cohesion", 0.0))) + 0.14 * boundary_safety + 0.12 * hp_safety + 0.10 * clamp01(float(values.get("firing_lane_quality", 0.0)))),
-		"CarrierStandoff": score100(0.25 * (1.0 - pressure) + 0.21 * boundary_safety + 0.18 * hp_safety + 0.14 * clamp01(float(values.get("valid_target", 0.0))) + 0.12 * clamp01(float(values.get("exit_quality", 0.0))) + 0.10 * clamp01(float(values.get("escort_coverage", 0.0)))),
+		"DisengageRegroup": score100(0.34 * low_hp + 0.25 * pressure + 0.21 * (1.0 - boundary_safety) + 0.20 * clamp01(float(values.get("exit_quality", 0.0))) - 0.28 * engagement_pressure),
+		"ReconAvoid": score100(0.34 * clamp01(float(values.get("vision_need", 0.0))) + 0.24 * hp_safety + 0.20 * boundary_safety + 0.12 * clamp01(float(values.get("cohesion", 0.0))) + 0.10 * clamp01(float(values.get("recon_route_quality", 0.0))) - 0.18 * engagement_pressure),
+		"VanguardLine": score100(0.28 * clamp01(float(values.get("valid_target", 0.0))) + 0.22 * hp_safety + 0.18 * clamp01(float(values.get("cohesion", 0.0))) + 0.17 * (1.0 - pressure) + 0.15 * clamp01(float(values.get("weapon_ready", 0.0))) + 0.22 * engagement_pressure),
+		"TorpedoFlank": score100(0.26 * clamp01(float(values.get("flank_quality", 0.0))) + 0.22 * clamp01(float(values.get("weapon_ready", 0.0))) + 0.20 * clamp01(float(values.get("high_value_exposed", 0.0))) + 0.14 * hp_safety + 0.10 * boundary_safety + 0.08 * clamp01(float(values.get("group_fixing_target", 0.0))) + 0.18 * engagement_pressure),
+		"GunlineSupport": score100(0.25 * clamp01(float(values.get("valid_target", 0.0))) + 0.21 * clamp01(float(values.get("weapon_ready", 0.0))) + 0.18 * clamp01(float(values.get("cohesion", 0.0))) + 0.14 * boundary_safety + 0.12 * hp_safety + 0.10 * clamp01(float(values.get("firing_lane_quality", 0.0))) + 0.16 * engagement_pressure),
+		"CarrierStandoff": score100(0.25 * (1.0 - pressure) + 0.21 * boundary_safety + 0.18 * hp_safety + 0.14 * clamp01(float(values.get("valid_target", 0.0))) + 0.12 * clamp01(float(values.get("exit_quality", 0.0))) + 0.10 * clamp01(float(values.get("escort_coverage", 0.0))) - 0.15 * engagement_pressure),
 		"EscortScreen": score100(0.28 * clamp01(float(values.get("protectee_threat", 0.0))) + 0.20 * clamp01(float(values.get("intercept_quality", 0.0))) + 0.18 * clamp01(float(values.get("cohesion", 0.0))) + 0.14 * hp_safety + 0.12 * clamp01(float(values.get("defensive_skill_ready", 0.0))) + 0.08 * boundary_safety),
 	}
 
@@ -232,6 +238,7 @@ static func attack_window_score(values: Dictionary) -> float:
 		+ 0.12 * clamp01(float(values.get("group_sync", 0.0)))
 		+ 0.07 * clamp01(float(values.get("kill_opportunity", 0.0)))
 		+ 0.05 * clamp01(float(values.get("objective_relevance", 0.0)))
+		+ 0.12 * clamp01(float(values.get("engagement_pressure", 0.0)))
 		- 0.12 * clamp01(float(values.get("exposure_risk", 0.0)))
 		- 0.10 * clamp01(float(values.get("overkill", 0.0)))
 		- 0.08 * clamp01(float(values.get("friendly_risk", 0.0)))

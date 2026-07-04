@@ -30,6 +30,9 @@ func reset(battle_id: String, seed_value: int) -> void:
 			"damage_reservations": 0, "effect_reservations": 0, "skill_holds": 0, "skill_holds_by_reason": {},
 			"ai_command_rejections": 0, "rejections_by_reason": {},
 			"facility_interactions_started": 0, "facility_interactions_completed": 0, "facility_interactions_interrupted": 0,
+			"passive_duration_seconds": 0.0, "engagement_pressure_triggers": 0,
+			"engagement_response_time_total": 0.0, "engagement_response_count": 0,
+			"long_idle_events": 0,
 			"mode_dwell_seconds": {}, "tactic_dwell_seconds": {},
 		},
 	}
@@ -92,6 +95,12 @@ func consume(events: Array, elapsed_time: float) -> void:
 			"FacilityControlDeclared", "FacilityServiceStarted": summary["ai_behavior"]["facility_interactions_started"] += 1
 			"FacilityControlCompleted", "FacilityServiceCompleted": summary["ai_behavior"]["facility_interactions_completed"] += 1
 			"FacilityActionInterrupted": summary["ai_behavior"]["facility_interactions_interrupted"] += 1
+			"AIEngagementPressureTriggered": summary["ai_behavior"]["engagement_pressure_triggers"] += 1
+			"AIEngagementPressureSample": summary["ai_behavior"]["passive_duration_seconds"] += float(event.get("duration", 0.0))
+			"AIEngagementPressureResolved":
+				summary["ai_behavior"]["engagement_response_count"] += 1
+				summary["ai_behavior"]["engagement_response_time_total"] += float(event.get("response_time", 0.0))
+			"AILongIdleDetected": summary["ai_behavior"]["long_idle_events"] += 1
 			"BattleFinished":
 				_finalize_ai_dwell(elapsed_time)
 				summary["result"] = event.get("result", {}).duplicate(true)

@@ -144,6 +144,7 @@ func _finalize_ai_behavior(totals: Dictionary, durations: Array[float], finished
 	result["facility_completion_rate"] = float(totals.get("facility_interactions_completed", 0.0)) / maxf(1.0, float(totals.get("facility_interactions_started", 0.0)))
 	result["average_skill_score"] = float(totals.get("skill_score_total", 0.0)) / maxf(1.0, float(totals.get("skill_commitments", 0.0)))
 	result["average_coordination_score"] = float(totals.get("coordination_score_total", 0.0)) / maxf(1.0, float(totals.get("skill_commitments", 0.0)))
+	result["average_engagement_response_seconds"] = float(totals.get("engagement_response_time_total", 0.0)) / maxf(1.0, float(totals.get("engagement_response_count", 0.0)))
 	result["overkill_damage"] = overkill_damage
 	result["overkill_ratio"] = overkill_damage / maxf(1.0, effective_damage + overkill_damage)
 	result["sample_runs"] = finished_runs

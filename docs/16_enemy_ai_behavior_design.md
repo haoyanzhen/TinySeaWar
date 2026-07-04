@@ -776,9 +776,20 @@ damage_reservations
 effect_reservations
 recent_damage_by_source
 decision_cooldown
+continuous_evasion_seconds
+no_effective_movement_seconds
+no_engagement_seconds
+no_effective_attack_seconds
+engagement_pressure
 ```
 
 这些状态属于 Application/策略层，不进入 Presentation，也不把关卡行为脚本堆入 `UnitState`。
+
+### 10.3 长时间消极行为的接敌压力
+
+完整 AI 按单位累计连续回避、无有效位移、无可见接敌和无有效攻击时长。四项计时超过各自宽限后归一化，并等权合成为 `engagement_pressure`；它是可解释评分项，不是到点强制冲锋：压力提高 `Attack`、`VanguardLine`、`TorpedoFlank`、`GunlineSupport`、设施争夺和合法开火窗口评分，同时降低 `Defend`、`Kite`、`ReconAvoid`、`DisengageRegroup` 与 `CarrierStandoff` 评分。
+
+即时威胁或耐久低于 `35%` 时暂停压力；主要武器处于装填低就绪、正在执行明确关卡任务或护航时将压力倍率降至最多 `0.35`。有效开火、进入合法接敌窗口、完成设施任务或显著位移会重置对应计时；威胁与回避结束后计时按衰减而非硬切换处理。运行时在压力达到 `0.25` 时输出触发原因、四项分量、豁免倍率和评分修正，并记录累计消极时长、触发次数、触发后接敌时间与连续 `20s` 无显著位移事件。
 
 ---
 

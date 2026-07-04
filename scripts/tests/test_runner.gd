@@ -796,6 +796,39 @@ func _test_runtime_ai_control_rules() -> void:
 	var equal_power_pressure := float(fire_session._local_power_context(gunner).get("pressure", -1.0))
 	_check(is_equal_approx(equal_power_pressure, 1.0 / 6.0), "equal visible local power maps to mild pressure instead of maximum pressure")
 
+	fire_session.state["visible_by_faction"]["enemy"] = {}
+	fire_session._ai_observations_by_faction.clear()
+	fire_session._ai_local_power_cache.clear()
+	target["ai_state"]["active_interrupt"] = ""
+	target["ai_state"]["level_task"] = ""
+	target["ai_state"]["mode_id"] = "ReconAvoid"
+	target["ai_state"]["tactic_id"] = "Defend"
+	target["ai_state"]["continuous_evasion_seconds"] = 22.0
+	target["ai_state"]["no_effective_movement_seconds"] = 26.0
+	target["ai_state"]["no_engagement_seconds"] = 36.0
+	target["ai_state"]["last_effective_attack_at"] = 0.0
+	target["ai_state"]["passive_sample_elapsed"] = 0.0
+	fire_session.state["elapsed_time"] = 40.0
+	fire_session.drain_events()
+	fire_session._update_ai_engagement_memory(0.1)
+	var passive_pressure := float(target["ai_state"].get("engagement_pressure", 0.0))
+	_check(passive_pressure >= 0.25 and _has_event(fire_session.drain_events(), "AIEngagementPressureTriggered"), "full AI records passive timers and emits an explainable engagement-pressure trigger")
+	target["ai_state"]["active_interrupt"] = "TorpedoEvasion"
+	fire_session._ai_local_power_cache.clear()
+	fire_session._update_ai_engagement_memory(0.1)
+	_check(is_zero_approx(float(target["ai_state"].get("engagement_pressure", -1.0))), "real immediate danger pauses passive engagement pressure")
+	target["ai_state"]["active_interrupt"] = ""
+	target["ai_state"]["level_task"] = "DefendFacility"
+	var task_exemption: Dictionary = fire_session._ai_engagement_pressure_exemption(target)
+	_check(float(task_exemption.get("multiplier", 1.0)) <= 0.35 and "LEVEL_TASK" in task_exemption.get("reasons", []), "explicit objective work reduces passive pressure without a forced-charge timeout")
+	target["ai_state"]["level_task"] = ""
+	target["ai_state"]["engagement_pressure_triggered"] = true
+	target["ai_state"]["engagement_pressure_started_at"] = 35.0
+	fire_session.drain_events()
+	fire_session._mark_ai_effective_attack(target)
+	var attack_reset_events: Array = fire_session.drain_events()
+	_check(is_zero_approx(float(target["ai_state"].get("engagement_pressure", -1.0))) and is_zero_approx(float(target["ai_state"].get("no_effective_attack_seconds", -1.0))) and _has_event(attack_reset_events, "AIEngagementPressureResolved"), "effective fire resets attack passivity and records trigger-to-engagement time")
+
 
 func _test_torpedo_fire_arc_rules() -> void:
 	var session = BattleSession.new(registry)

@@ -16,6 +16,7 @@ func _run() -> void:
 	_test_objective_tasks()
 	_test_detected_tactics()
 	_test_strategic_modes()
+	_test_engagement_pressure()
 	_test_predictive_attack_and_fire_control()
 	_test_skill_and_group_coordination()
 	_test_nearshore_cover_and_routes()
@@ -26,7 +27,7 @@ func _run() -> void:
 	for result in scenario_results:
 		print(result)
 	if failures.is_empty():
-		print("PASS: %d AI quantitative checks across %d scenario groups" % [checks, 11])
+		print("PASS: %d AI quantitative checks across %d scenario groups" % [checks, 12])
 		quit(0)
 	else:
 		for failure in failures:
@@ -113,6 +114,32 @@ func _test_strategic_modes() -> void:
 	_check(AIModel.choose_highest(disengage)["id"] == "DisengageRegroup", "critical survival pressure selects disengage")
 	_check(AIModel.choose_highest(escort)["id"] == "EscortScreen", "protectee threat selects escort screen")
 	_record("modes", {"recon": AIModel.choose_highest(recon), "flank": AIModel.choose_highest(flank), "disengage": AIModel.choose_highest(disengage), "escort": AIModel.choose_highest(escort)})
+
+
+func _test_engagement_pressure() -> void:
+	var defensive_values := {
+		"local_advantage": 0.4, "hp_safety": 0.8, "weapon_ready": 0.3,
+		"target_opportunity": 0.3, "objective_defense": 1.0, "cover_quality": 0.95,
+		"cooldown_need": 0.7, "group_support": 0.9,
+		"range_advantage": 0.1, "speed_advantage": 0.1, "exit_quality": 0.3,
+	}
+	var passive := AIModel.detected_tactic_scores(defensive_values)
+	var pressured_values := defensive_values.duplicate(true)
+	pressured_values["engagement_pressure"] = 1.0
+	var pressured := AIModel.detected_tactic_scores(pressured_values)
+	_check(AIModel.choose_highest(passive)["id"] == "Defend" and AIModel.choose_highest(pressured)["id"] == "Attack", "accumulated passivity quantitatively changes defense into active engagement")
+	_check(float(pressured["Attack"]) > float(passive["Attack"]) and float(pressured["Defend"]) < float(passive["Defend"]) and float(pressured["Kite"]) < float(passive["Kite"]), "engagement pressure explains attack gain and defensive score penalties")
+	var mode_values := {"hp_safety":0.9, "vision_need":1.0, "boundary_risk":0.0, "cohesion":0.8, "recon_route_quality":0.9, "valid_target":1.0, "weapon_ready":1.0, "local_pressure":0.0}
+	var passive_modes := AIModel.mode_scores(mode_values)
+	mode_values["engagement_pressure"] = 1.0
+	var pressured_modes := AIModel.mode_scores(mode_values)
+	_check(float(pressured_modes["VanguardLine"]) > float(passive_modes["VanguardLine"]) and float(pressured_modes["ReconAvoid"]) < float(passive_modes["ReconAvoid"]), "mode pressure rewards approach while reducing prolonged avoidance")
+	var capture_base := AIModel.facility_capture_score({"facility_value":0.5, "survival":0.8, "path_quality":0.8, "role_fit":0.7, "ownership_need":0.5, "followup_value":0.5, "time_margin":0.7})
+	var capture_pressured := AIModel.facility_capture_score({"facility_value":0.5, "survival":0.8, "path_quality":0.8, "role_fit":0.7, "ownership_need":0.5, "followup_value":0.5, "time_margin":0.7, "engagement_pressure":1.0})
+	var fire_base := AIModel.attack_window_score({"target_value":0.5, "hit_quality":0.5, "weapon_ready":0.5, "expected_damage":0.5})
+	var fire_pressured := AIModel.attack_window_score({"target_value":0.5, "hit_quality":0.5, "weapon_ready":0.5, "expected_damage":0.5, "engagement_pressure":1.0})
+	_check(capture_pressured > capture_base and fire_pressured > fire_base, "passivity increases area-contest and firing-window scores")
+	_record("engagement_pressure", {"passive_tactic":AIModel.choose_highest(passive), "pressured_tactic":AIModel.choose_highest(pressured), "passive_modes":passive_modes, "pressured_modes":pressured_modes, "capture_gain":capture_pressured-capture_base, "fire_gain":fire_pressured-fire_base})
 
 
 func _test_predictive_attack_and_fire_control() -> void:

@@ -27,6 +27,8 @@ const AI_TACTIC_SWITCH_MARGIN := 12.0
 const AI_TARGET_MINIMUM_HOLD := 2.0
 const AI_TARGET_SWITCH_MARGIN := 12.0
 const AI_TARGET_SWITCH_COOLDOWN := 1.5
+const AI_ENGAGEMENT_PRESSURE_TRIGGER := 0.25
+const AI_LONG_IDLE_SECONDS := 20.0
 
 var registry
 var random_source
@@ -176,6 +178,7 @@ func advance_tick(delta: float = 0.1) -> Array:
 	_update_projectiles(delta)
 	_update_projectile_observation()
 	_update_detection(delta)
+	_update_ai_engagement_memory(delta)
 	_update_ai_intents()
 	_update_auto_skills()
 	_update_weapons()
@@ -628,6 +631,18 @@ func _build_unit(member: Dictionary, ship: Dictionary, fleet_id: String, faction
 			"path_recovery_count": 0,
 			"objective_role": "",
 			"last_route_command_at": -1000.0,
+			"passive_sample_position": spawn_position,
+			"passive_sample_elapsed": 0.0,
+			"continuous_evasion_seconds": 0.0,
+			"no_effective_movement_seconds": 0.0,
+			"no_engagement_seconds": 0.0,
+			"no_effective_attack_seconds": 0.0,
+			"last_effective_attack_at": 0.0,
+			"engagement_pressure": 0.0,
+			"engagement_pressure_started_at": -1.0,
+			"engagement_pressure_triggered": false,
+			"passive_report_accumulator": 0.0,
+			"long_idle_reported": false,
 		},
 	}
 
@@ -973,6 +988,127 @@ func _update_ai_path_progress(unit: Dictionary, movement: Dictionary) -> void:
 	if not bool(ai_state.get("path_stuck", false)) and float(state.get("elapsed_time", 0.0)) - float(ai_state.get("last_progress_at", 0.0)) >= 4.0:
 		ai_state["path_stuck"] = true
 		_emit("AIPathStuck", {"unit_id": unit.get("entity_id", ""), "position": position, "target_position": movement.get("target_position", position)})
+
+
+func _update_ai_engagement_memory(delta: float) -> void:
+	for unit_id in _sorted_unit_ids():
+		var unit: Dictionary = state["units_by_id"][unit_id]
+		if unit.get("life_state", "") != "Alive" or not _uses_full_ai(unit): continue
+		var ai_state: Dictionary = unit["ai_state"]
+		var observation = _ai_observation_for(str(unit.get("faction_id", "")))
+		var has_contact: bool = not observation.visible_enemies.is_empty()
+		var active_interrupt := str(ai_state.get("active_interrupt", ""))
+		var defensive_evasion := not active_interrupt.is_empty() or str(ai_state.get("tactic_id", "")) == "Kite" or str(ai_state.get("mode_id", "")) == "DisengageRegroup"
+		ai_state["continuous_evasion_seconds"] = float(ai_state.get("continuous_evasion_seconds", 0.0)) + delta if defensive_evasion else maxf(0.0, float(ai_state.get("continuous_evasion_seconds", 0.0)) - delta * 2.0)
+		ai_state["no_engagement_seconds"] = 0.0 if has_contact else float(ai_state.get("no_engagement_seconds", 0.0)) + delta
+		ai_state["no_effective_attack_seconds"] = maxf(0.0, float(state.get("elapsed_time", 0.0)) - float(ai_state.get("last_effective_attack_at", 0.0)))
+
+		ai_state["passive_sample_elapsed"] = float(ai_state.get("passive_sample_elapsed", 0.0)) + delta
+		if float(ai_state["passive_sample_elapsed"]) >= 1.0:
+			var sample_seconds := float(ai_state["passive_sample_elapsed"])
+			var sample_position: Vector2 = ai_state.get("passive_sample_position", unit.get("position", Vector2.ZERO))
+			var moved_distance := sample_position.distance_to(unit.get("position", Vector2.ZERO))
+			var significant_distance := maxf(18.0, float(unit.get("stats", {}).get("speed", 0.0)) * 0.18)
+			if moved_distance >= significant_distance:
+				ai_state["no_effective_movement_seconds"] = maxf(0.0, float(ai_state.get("no_effective_movement_seconds", 0.0)) - sample_seconds * 2.0)
+				ai_state["long_idle_reported"] = false
+			else:
+				ai_state["no_effective_movement_seconds"] = float(ai_state.get("no_effective_movement_seconds", 0.0)) + sample_seconds
+			ai_state["passive_sample_position"] = unit.get("position", Vector2.ZERO)
+			ai_state["passive_sample_elapsed"] = 0.0
+			if float(ai_state.get("no_effective_movement_seconds", 0.0)) >= AI_LONG_IDLE_SECONDS and not bool(ai_state.get("long_idle_reported", false)):
+				ai_state["long_idle_reported"] = true
+				_emit("AILongIdleDetected", {"unit_id": unit_id, "duration": ai_state["no_effective_movement_seconds"], "position": unit.get("position", Vector2.ZERO)})
+
+		var components := {
+			"continuous_evasion": clampf((float(ai_state.get("continuous_evasion_seconds", 0.0)) - 6.0) / 18.0, 0.0, 1.0),
+			"no_effective_movement": clampf((float(ai_state.get("no_effective_movement_seconds", 0.0)) - 8.0) / 22.0, 0.0, 1.0),
+			"no_engagement": clampf((float(ai_state.get("no_engagement_seconds", 0.0)) - 12.0) / 30.0, 0.0, 1.0),
+			"no_effective_attack": clampf((float(ai_state.get("no_effective_attack_seconds", 0.0)) - 15.0) / 30.0, 0.0, 1.0),
+		}
+		var raw_pressure := 0.25 * (float(components["continuous_evasion"]) + float(components["no_effective_movement"]) + float(components["no_engagement"]) + float(components["no_effective_attack"]))
+		var exemption := _ai_engagement_pressure_exemption(unit)
+		var pressure := clampf(raw_pressure * float(exemption.get("multiplier", 1.0)), 0.0, 1.0)
+		ai_state["engagement_pressure"] = pressure
+		var triggered := bool(ai_state.get("engagement_pressure_triggered", false))
+		if pressure >= AI_ENGAGEMENT_PRESSURE_TRIGGER and not triggered:
+			ai_state["engagement_pressure_triggered"] = true
+			ai_state["engagement_pressure_started_at"] = float(state.get("elapsed_time", 0.0))
+			_emit("AIEngagementPressureTriggered", {"unit_id": unit_id, "pressure": pressure, "components": components, "exemption_multiplier": exemption.get("multiplier", 1.0), "exemption_reasons": exemption.get("reasons", []), "score_adjustments": _ai_engagement_score_adjustments(pressure)})
+		elif pressure < 0.10 and triggered:
+			ai_state["engagement_pressure_triggered"] = false
+			ai_state["engagement_pressure_started_at"] = -1.0
+			ai_state["passive_report_accumulator"] = 0.0
+		if pressure >= AI_ENGAGEMENT_PRESSURE_TRIGGER:
+			ai_state["passive_report_accumulator"] = float(ai_state.get("passive_report_accumulator", 0.0)) + delta
+			if float(ai_state["passive_report_accumulator"]) >= 1.0:
+				_emit("AIEngagementPressureSample", {"unit_id": unit_id, "duration": ai_state["passive_report_accumulator"], "pressure": pressure})
+				ai_state["passive_report_accumulator"] = 0.0
+		if bool(ai_state.get("engagement_pressure_triggered", false)) and _ai_has_engagement_window(unit, observation):
+			var response_time := maxf(0.0, float(state.get("elapsed_time", 0.0)) - float(ai_state.get("engagement_pressure_started_at", state.get("elapsed_time", 0.0))))
+			_emit("AIEngagementPressureResolved", {"unit_id": unit_id, "response_time": response_time, "reason": "ENGAGEMENT_WINDOW"})
+			_reset_ai_passive_memory(unit)
+
+
+func _ai_engagement_pressure_exemption(unit: Dictionary) -> Dictionary:
+	var multiplier := 1.0
+	var reasons: Array[String] = []
+	var hp_ratio := float(unit.get("current_hp", 0.0)) / maxf(1.0, float(unit.get("max_hp", 1.0)))
+	var local_pressure := float(_local_power_context(unit).get("pressure", 0.0))
+	if local_pressure >= 0.75 or not str(unit.get("ai_state", {}).get("active_interrupt", "")).is_empty():
+		multiplier = 0.0
+		reasons.append("IMMEDIATE_THREAT")
+	elif hp_ratio <= 0.35:
+		multiplier = 0.0
+		reasons.append("LOW_HP")
+	if _primary_ready_ratio(unit) <= 0.15:
+		multiplier = minf(multiplier, 0.35)
+		reasons.append("PRIMARY_RELOADING")
+	var level_task := str(unit.get("ai_state", {}).get("level_task", ""))
+	if not level_task.is_empty():
+		multiplier = minf(multiplier, 0.35)
+		reasons.append("LEVEL_TASK")
+	if str(unit.get("ai_state", {}).get("mode_id", "")) == "EscortScreen":
+		multiplier = minf(multiplier, 0.35)
+		reasons.append("ESCORT")
+	return {"multiplier": multiplier, "reasons": reasons}
+
+
+func _ai_has_engagement_window(unit: Dictionary, observation) -> bool:
+	var preferred := maxf(1.0, _preferred_range(unit))
+	for target in observation.visible_enemies.values():
+		if target.get("life_state", "") != "Alive": continue
+		if (unit.get("position", Vector2.ZERO) as Vector2).distance_to(target.get("position", Vector2.ZERO)) > preferred * 1.25: continue
+		for weapon_state in unit.get("weapon_states", []):
+			var weapon := _weapon_for_state(weapon_state)
+			if not weapon.is_empty() and _can_fire(unit, target, weapon): return true
+	return false
+
+
+func _ai_engagement_score_adjustments(pressure: float) -> Dictionary:
+	return {"attack": 30.0 * pressure, "defend": -25.0 * pressure, "kite": -20.0 * pressure, "vanguard": 22.0 * pressure, "flank": 18.0 * pressure, "facility_capture": 18.0 * pressure, "fire_window": 12.0 * pressure}
+
+
+func _reset_ai_passive_memory(unit: Dictionary, reset_movement: bool = true) -> void:
+	var ai_state: Dictionary = unit.get("ai_state", {})
+	ai_state["continuous_evasion_seconds"] = 0.0
+	ai_state["no_engagement_seconds"] = 0.0
+	ai_state["no_effective_attack_seconds"] = 0.0
+	if reset_movement: ai_state["no_effective_movement_seconds"] = 0.0
+	ai_state["engagement_pressure"] = 0.0
+	ai_state["engagement_pressure_triggered"] = false
+	ai_state["engagement_pressure_started_at"] = -1.0
+	ai_state["passive_report_accumulator"] = 0.0
+
+
+func _mark_ai_effective_attack(unit: Dictionary) -> void:
+	if not _uses_full_ai(unit): return
+	var ai_state: Dictionary = unit.get("ai_state", {})
+	if bool(ai_state.get("engagement_pressure_triggered", false)):
+		var response_time := maxf(0.0, float(state.get("elapsed_time", 0.0)) - float(ai_state.get("engagement_pressure_started_at", state.get("elapsed_time", 0.0))))
+		_emit("AIEngagementPressureResolved", {"unit_id": unit.get("entity_id", ""), "response_time": response_time, "reason": "WEAPON_FIRED"})
+	ai_state["last_effective_attack_at"] = float(state.get("elapsed_time", 0.0))
+	_reset_ai_passive_memory(unit)
 
 
 func _resolve_unit_overlap() -> void:
@@ -1608,6 +1744,7 @@ func _detected_tactic_values(unit: Dictionary, target: Dictionary, player_assist
 		"exit_quality": float(battlefield.get("exit_quality", 0.0)),
 		"weapon_cycle_value": 1.0 - _primary_ready_ratio(unit),
 		"cooldown_need": 1.0 - _primary_ready_ratio(unit),
+		"engagement_pressure": float(unit.get("ai_state", {}).get("engagement_pressure", 0.0)) if not player_assist else 0.0,
 	}
 	if not player_assist:
 		values["skill_attack_value"] = 1.0 if float(unit["skill_state"].get("cooldown_remaining", 0.0)) <= 0.0 else 0.0
@@ -1829,6 +1966,7 @@ func _update_ai_primary_weapons() -> void:
 			"group_sync": _attack_window_group_sync(unit),
 			"objective_relevance": _protectee_threat(unit, target),
 			"overkill": clampf(_reserved_damage_for_target(str(target.get("entity_id", "")), str(unit.get("entity_id", ""))) / maxf(1.0, float(target.get("current_hp", 1.0))), 0.0, 1.0),
+			"engagement_pressure": 0.0 if player_assist else float(unit.get("ai_state", {}).get("engagement_pressure", 0.0)),
 			"visible": true,
 			"weapon_legal": true,
 			"path_clear": true,
@@ -1952,6 +2090,7 @@ func _recover_from_ai_interrupt(unit: Dictionary) -> void:
 	ai_state["active_interrupt"] = ""
 	ai_state["interrupted_movement_state"] = {}
 	ai_state["interrupt_recovery_started_at"] = -1.0
+	if _uses_full_ai(unit): _reset_ai_passive_memory(unit)
 	_emit("AIInterruptCleared", {"unit_id": unit["entity_id"], "interrupt": interrupt})
 
 
@@ -2119,6 +2258,7 @@ func _ai_facility_plan(unit: Dictionary, allow_capture: bool) -> Dictionary:
 				"ownership_need": 1.0, "followup_value": facility_value,
 				"time_margin": _facility_time_margin(unit, definition, distance),
 				"contest_pressure": contest_pressure, "assignment_saturation": saturation,
+				"engagement_pressure": float(unit.get("ai_state", {}).get("engagement_pressure", 0.0)),
 			})
 		elif is_defense:
 			task_type = "DefendFacility"
@@ -2729,6 +2869,7 @@ func _fire_weapon(unit: Dictionary, target: Dictionary, weapon_state: Dictionary
 			var delayed_attack := {"attack_id": attack_id, "source_unit_id": unit["entity_id"], "source_weapon_id": weapon["id"], "target_unit_id": "", "aimed_target_unit_id": target["entity_id"], "target_position": resolved_impact, "intended_impact_position": intended_impact, "resolved_impact_position": resolved_impact, "terrain_obstacle_id": terrain_hit.get("obstacle_id", ""), "blocked_by_terrain": bool(terrain_hit.get("hit", false)), "impact_radius": float(weapon.get("impact_radius", 40.0)), "origin": unit["position"], "resolve_at_time": float(state["elapsed_time"]) + travel_seconds, "accuracy_modifier": _environment_accuracy_modifier(unit["faction_id"], unit["position"], intended_impact, category), "source_status_effects":launch_effects.duplicate(true)}
 			_apply_dispersion_metadata(delayed_attack, dispersion_sample)
 			delayed_attacks.append(delayed_attack)
+	_mark_ai_effective_attack(unit)
 	_emit("WeaponFired", {"unit_id": unit["entity_id"], "weapon_id": weapon["id"], "mount_id": weapon_state.get("mount_id", ""), "target_unit_id": target["entity_id"], "target_position": aim_position, "impact_positions": impact_positions, "dispersion_samples": dispersion_samples, "shot_count": shot_count})
 	_consume_on_fire_effects(unit, weapon)
 
@@ -2764,6 +2905,7 @@ func _fire_weapon_at_position(unit: Dictionary, target_position: Vector2, weapon
 			var delayed_attack := {"attack_id": attack_id, "source_unit_id": unit["entity_id"], "source_weapon_id": weapon["id"], "target_unit_id": "", "target_position": resolved_impact, "intended_impact_position": intended_impact, "resolved_impact_position": resolved_impact, "terrain_obstacle_id": terrain_hit.get("obstacle_id", ""), "blocked_by_terrain": bool(terrain_hit.get("hit", false)), "impact_radius": float(weapon.get("impact_radius", 40.0)), "origin": unit["position"], "resolve_at_time": float(state["elapsed_time"]) + travel_seconds, "accuracy_modifier": _environment_accuracy_modifier(unit["faction_id"], unit["position"], intended_impact, category), "source_status_effects":launch_effects.duplicate(true)}
 			_apply_dispersion_metadata(delayed_attack, dispersion_sample)
 			delayed_attacks.append(delayed_attack)
+	_mark_ai_effective_attack(unit)
 	_emit("WeaponFired", {"unit_id": unit["entity_id"], "weapon_id": weapon["id"], "mount_id": weapon_state.get("mount_id", ""), "target_position": target_position, "impact_positions": impact_positions, "dispersion_samples": dispersion_samples, "shot_count": shot_count, "manual": manual})
 	_consume_on_fire_effects(unit, weapon)
 
@@ -3063,6 +3205,9 @@ func _resolve_facility_attack(attack: Dictionary, source: Dictionary, forced_hit
 
 func _handle_facility_event(event: Dictionary) -> void:
 	var event_type := str(event.get("event_type", "FacilityChanged"))
+	if event_type in ["FacilityControlCompleted", "FacilityServiceCompleted"]:
+		var task_unit: Dictionary = state.get("units_by_id", {}).get(str(event.get("unit_id", "")), {})
+		if not task_unit.is_empty(): _reset_ai_passive_memory(task_unit)
 	match event_type:
 		"FacilityServiceCompleted": _apply_facility_service(event)
 		"SupportMissionCompleted": _resolve_support_mission(event)
@@ -3520,6 +3665,7 @@ func _enemy_mode_values(unit: Dictionary, target: Dictionary) -> Dictionary:
 		"protectee_threat": 0.0 if target.is_empty() else _protectee_threat(unit, target),
 		"intercept_quality": target_valid * (1.0 - _boundary_risk(unit)),
 		"defensive_skill_ready": 1.0 if float(unit.get("skill_state", {}).get("cooldown_remaining", 1.0)) <= 0.0 else 0.0,
+		"engagement_pressure": float(unit.get("ai_state", {}).get("engagement_pressure", 0.0)),
 	}
 
 
@@ -3688,6 +3834,7 @@ func _automatic_weapon_allowed_by_ai_discipline(unit: Dictionary, target: Dictio
 		"exposure_risk": float(_local_power_context(unit).get("pressure", 0.0)),
 		"overkill": 0.0,
 		"friendly_risk": _friendly_fire_risk(unit, target, weapon, aim_position),
+		"engagement_pressure": float(unit.get("ai_state", {}).get("engagement_pressure", 0.0)),
 		"visible": _is_visible_to(str(unit.get("faction_id", "")), str(target.get("entity_id", ""))),
 		"weapon_legal": _can_fire(unit, target, weapon),
 		"path_clear": bool(fire_validation.get("legal", false)),

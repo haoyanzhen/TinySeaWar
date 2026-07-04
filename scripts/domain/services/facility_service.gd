@@ -68,6 +68,7 @@ func configure(layout: Dictionary, anchors: Array, definitions: Array) -> void:
 			"cooldown_remaining": 0.0,
 			"charges_remaining": int(definition.get("charges", 0)),
 			"remote_charges_remaining": int(definition.get("remote_command", {}).get("charges", 0)),
+			"last_mine_deployment_result": {},
 			"mission_charges_remaining": mission_charges,
 			"weapon_states": weapon_states,
 			"selected_ammo_type": str(mount_reference.get("default_ammo_type", "")),
@@ -234,24 +235,50 @@ func request_support(facility_id: String, mission_id: String, faction_id: String
 
 
 func request_mine_deployment(facility_id: String, unit: Dictionary, target_position: Vector2, elapsed_time: float, units_by_id: Dictionary, random_seed: int) -> Dictionary:
+	var validation := validate_mine_deployment(facility_id, unit, target_position, units_by_id)
+	if not bool(validation.get("accepted", false)):
+		return validation
 	var facility: Dictionary = facilities_by_id.get(facility_id, {})
 	var definition := definition_for(facility_id)
 	var rules: Dictionary = definition.get("remote_command", {})
+	facility["cooldown_remaining"] = float(rules.get("cooldown", 0.0))
+	facility["remote_charges_remaining"] = int(facility.get("remote_charges_remaining", 0)) - 1
+	facility["last_mine_deployment_result"] = {}
+	mission_sequence += 1
+	var duration := float(rules.get("duration", 10.0))
+	var task := {"mission_id":"mine_deployment.%06d" % mission_sequence, "facility_id":facility_id, "faction_id":unit.get("faction_id", ""), "target_position":target_position, "started_at_time":elapsed_time, "duration":duration, "resolve_at_time":elapsed_time + duration, "rules":rules.duplicate(true), "random_seed":random_seed}
+	mine_deployments.append(task)
+	return {"accepted":true, "event":{"event_type":"MineDeploymentStarted", "facility_id":facility_id, "mission_id":task["mission_id"], "unit_id":unit.get("entity_id", ""), "target_position":target_position, "duration":duration, "area_side_length":rules.get("area_side_length", 0.0)}}
+
+
+func validate_mine_deployment(facility_id: String, unit: Dictionary, target_position: Vector2, units_by_id: Dictionary) -> Dictionary:
+	var facility: Dictionary = facilities_by_id.get(facility_id, {})
+	var rules: Dictionary = definition_for(facility_id).get("remote_command", {})
 	if facility.is_empty() or str(rules.get("command_type", "")) != "MineDeployment": return {"accepted": false, "reason_code": "MINE_DEPLOYMENT_UNAVAILABLE"}
 	if not is_operational(facility_id) or facility.get("faction_id", "") != unit.get("faction_id", ""): return {"accepted": false, "reason_code": "FACILITY_NOT_ACTIVE"}
-	if float(facility.get("cooldown_remaining", 0.0)) > 0.0 or int(facility.get("remote_charges_remaining", 0)) <= 0: return {"accepted": false, "reason_code": "MINE_DEPLOYMENT_UNAVAILABLE"}
+	if float(facility.get("cooldown_remaining", 0.0)) > 0.0 or int(facility.get("remote_charges_remaining", 0)) <= 0 or not mine_deployment_status(facility_id).is_empty(): return {"accepted": false, "reason_code": "MINE_DEPLOYMENT_UNAVAILABLE"}
 	if (facility.get("position", Vector2.ZERO) as Vector2).distance_to(target_position) > float(rules.get("control_radius", 0.0)): return {"accepted": false, "reason_code": "TARGET_OUT_OF_RANGE"}
 	var half_side := float(rules.get("area_side_length", 0.0)) * 0.5
 	for other in units_by_id.values():
 		var other_position: Vector2 = other.get("position", Vector2.ZERO)
 		if other.get("life_state", "") == "Alive" and other.get("faction_id", "") != unit.get("faction_id", "") and absf(other_position.x - target_position.x) <= half_side and absf(other_position.y - target_position.y) <= half_side:
 			return {"accepted": false, "reason_code": "MINE_AREA_CONTAINS_ENEMY"}
-	facility["cooldown_remaining"] = float(rules.get("cooldown", 0.0))
-	facility["remote_charges_remaining"] = int(facility.get("remote_charges_remaining", 0)) - 1
-	mission_sequence += 1
-	var task := {"mission_id":"mine_deployment.%06d" % mission_sequence, "facility_id":facility_id, "faction_id":unit.get("faction_id", ""), "target_position":target_position, "resolve_at_time":elapsed_time + float(rules.get("duration", 10.0)), "rules":rules.duplicate(true), "random_seed":random_seed}
-	mine_deployments.append(task)
-	return {"accepted":true, "event":{"event_type":"MineDeploymentStarted", "facility_id":facility_id, "mission_id":task["mission_id"], "unit_id":unit.get("entity_id", ""), "target_position":target_position, "duration":rules.get("duration", 10.0)}}
+	return {"accepted": true, "reason_code": "OK"}
+
+
+func mine_deployment_status(facility_id: String, elapsed_time: float = 0.0) -> Dictionary:
+	for deployment in mine_deployments:
+		if str(deployment.get("facility_id", "")) != facility_id: continue
+		var status: Dictionary = deployment.duplicate(true)
+		var duration := maxf(0.001, float(status.get("duration", 10.0)))
+		status["progress_ratio"] = clampf((elapsed_time - float(status.get("started_at_time", elapsed_time))) / duration, 0.0, 1.0)
+		return status
+	return {}
+
+
+func record_mine_deployment_result(facility_id: String, result: Dictionary) -> void:
+	var facility: Dictionary = facilities_by_id.get(facility_id, {})
+	if not facility.is_empty(): facility["last_mine_deployment_result"] = result.duplicate(true)
 
 
 func advance(delta: float, elapsed_time: float, units_by_id: Dictionary) -> Array:
@@ -300,15 +327,18 @@ func advance(delta: float, elapsed_time: float, units_by_id: Dictionary) -> Arra
 	support_missions = remaining
 	var remaining_mines: Array = []
 	for deployment in mine_deployments:
+		var deployment_facility_id := str(deployment.get("facility_id", ""))
+		if not is_operational(deployment_facility_id):
+			var cancelled_facility: Dictionary = facilities_by_id.get(deployment_facility_id, {})
+			cancelled_facility["last_mine_deployment_result"] = {"result":"Cancelled", "mission_id":deployment.get("mission_id", ""), "reason_code":"FACILITY_NOT_ACTIVE"}
+			events.append({"event_type":"MineDeploymentCancelled", "facility_id":deployment_facility_id, "mission_id":deployment.get("mission_id", ""), "reason_code":"FACILITY_NOT_ACTIVE"})
+			continue
 		if float(deployment.get("resolve_at_time", INF)) > elapsed_time:
 			remaining_mines.append(deployment)
 			continue
-		if not is_operational(str(deployment.get("facility_id", ""))):
-			events.append({"event_type":"MineDeploymentCancelled", "facility_id":deployment.get("facility_id", ""), "mission_id":deployment.get("mission_id", ""), "reason_code":"FACILITY_NOT_ACTIVE"})
-		else:
-			var completed: Dictionary = deployment.duplicate(true)
-			completed["event_type"] = "MineDeploymentCompleted"
-			events.append(completed)
+		var completed: Dictionary = deployment.duplicate(true)
+		completed["event_type"] = "MineDeploymentCompleted"
+		events.append(completed)
 	mine_deployments = remaining_mines
 	return events
 

@@ -37,7 +37,7 @@
 | 岸防炮 | 使用正式武器 Definition、阵营接触、射程、射界、岛岸阻挡、延迟炮击和 `DamageService`；压制、依赖失效或摧毁后停火 | `_update_facility_weapons()`、`_resolve_facility_attack()` |
 | 补给与维修 | 补给恢复武器装填和技能冷却资源；维修恢复结构 HP 且受单场维修上限约束；离开服务区或设施失效会中断 | `FacilityService.advance()`、`_apply_facility_service()` |
 | 机场任务 | 侦察生成限时航空观察区，巡逻生成限时航空防护区，空袭复用现有航空武器与伤害公式 | `_resolve_support_mission()`、`support_effects_by_id` |
-| 水雷 | 连续检测进入雷区且排除安全航道；触发固定伤害、只触发单舰一次并向受害阵营公开边界；绑定控制站可停用或转移所有权 | `MinefieldService`、`_apply_mine_trigger()` |
+| 水雷 | 固定雷区连续检测进入且排除安全航道；动态水雷逐枚接触、发现和失效；两者均无阵营豁免并通过公共鱼雷伤害管线结算 | `MinefieldService`、`_update_mine_observation()`、`_apply_mine_trigger()` |
 | 设施生命周期 | 设施拥有 HP、装甲、压制阈值、恢复计时与不可逆摧毁态；依赖失效只关闭能力，不连锁摧毁或改旗 | `FacilityService.apply_damage()`、`suppress()`、`advance()` |
 | AI 场景战术 | 敌方可争夺/激活已知设施、低耐久时寻找维修、自动申请机场任务、规避已知雷区并在无接触时寻找背风水域；所有意图仍转为普通命令 | `_ai_facility_plan()`、`_update_ai_support_intents()`、共享 `RoutePlanner` |
 
@@ -894,22 +894,26 @@ RequestSupportMissionCommand
 
 ### 13.9 水雷控制站
 
-水雷控制站组合 `HazardController`，控制关卡预先配置的 `MineFieldState`：
+水雷控制站组合 `AreaControl + RemoteCommand + CombatDisposition`。港湾初态为中立、休眠；占领并激活后可在 `control_radius` 内提交方形布雷区域：
 
 ```text
-minefield_id
-polygon
-owner_faction_id
-operation_state
-known_by_faction
-controller_facility_id
+mission_id
+facility_id
+faction_id
+target_position
+started_at_time
+resolve_at_time
+random_seed
+rules
 ```
 
-- 控制站只能启用、停用或切换其明确引用的雷区，不能运行时任意生成全图水雷。
-- 雷区位置、发现、扫除、触发和伤害由独立水雷规则负责，不由设施脚本直接扣血。
-- 控制站被压制或夺取后的雷区状态必须由配置明确，不使用隐式猜测。
-- 已知安全航道和雷区情报进入阵营快照，AI 不读取未发现雷区的真实边界。
-- 港湾固定雷区单次触发伤害基线为 420，同一单位不会在同一雷区重复触发；控制站压制时雷区转为 `Dormant`，摧毁后转为 `Disabled`，夺取并激活后所有权随控制站转移。
+- 选区中心到设施不得超过控制半径，正方形范围内存在当前敌方单位时拒绝提交；同一控制站同一时间只允许一个布雷任务。
+- 任务固定持续 `10s`，压制、摧毁、失能或静默立即取消尚未完成的任务。完成时使用确定性种子一次生成整批水雷，不逐枚提前生效。
+- 每枚水雷只抽取一次位置；落入陆地或岛屿者只将自身标记为 `Invalid`，不重抽且不影响同批其他个体。有效动态水雷不绑定控制站生命周期，控制站失效、易手或摧毁均不清空既有水雷。
+- 固定雷区仍可通过 `controller_rules` 绑定控制站状态；它与动态水雷是两类显式契约，不能互相套用清空或停用规则。
+- 水雷不区分敌我，任意阵营舰船接触均可触发。动态水雷发现复用鱼雷的 `TorpedoDetectionDistance` 修正，任一观察者发现后加入 `known_by_faction`，随阵营快照共享；AI 与玩家都不能读取未发现水雷。
+- 基础发现距离通过 `ship.warspite` 舰体纵轴全长的一半解析；伤害通过 `ship.shimakaze + weapon.shimakaze_610_torpedo` 解析纸面基线，并进入 `DamageService` 的鱼雷、装甲、减伤与沉没结算，不由设施或水雷服务直接扣血。
+- 玩家设施面板显示次数、冷却、10 秒进度和批次有效/失效数量；战场显示控制半径、方形区域和非法原因。
 
 ### 13.10 港口维修泊位
 

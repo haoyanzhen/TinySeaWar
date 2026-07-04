@@ -178,6 +178,7 @@ func advance_tick(delta: float = 0.1) -> Array:
 	_resolve_unit_overlap()
 	_update_projectiles(delta)
 	_update_projectile_observation()
+	_update_mine_observation()
 	_update_detection(delta)
 	_update_ai_engagement_memory(delta)
 	_update_ai_intents()
@@ -487,6 +488,8 @@ func get_facility_action_status(unit_id: String, facility_id: String) -> Diction
 	var berth: Dictionary = definition.get("berthing_service", {})
 	var disposition: Dictionary = definition.get("combat_disposition", {})
 	var suppression_threshold := maxf(0.001, float(definition.get("suppression_damage_threshold", 1.0)))
+	var remote: Dictionary = definition.get("remote_command", {})
+	var mine_status := facility_service.mine_deployment_status(facility_id, float(state.get("elapsed_time", 0.0)))
 	var heading_ok: bool = absf(wrapf(float(unit.get("heading", 0.0)) - deg_to_rad(float(facility.get("heading", 0.0))), -PI, PI)) <= deg_to_rad(float(berth.get("heading_tolerance_degrees", 180.0)))
 	var speed_ok: bool = absf(float(unit.get("current_speed", 0.0))) <= float(berth.get("max_entry_speed", 0.0))
 	return {
@@ -505,9 +508,19 @@ func get_facility_action_status(unit_id: String, facility_id: String) -> Diction
 		"control_ready": "AreaControl" in modes and bool(definition.get("area_control", {}).get("capturable", false)) and facility.get("life_state", "") == "Alive" and facility.get("operation_state", "") != "Suppressed" and control.is_empty(),
 		"service_ready": "BerthingService" in modes and facility_service.is_operational(facility_id) and facility.get("faction_id", "") == unit.get("faction_id", "") and inside and speed_ok and heading_ok and service.is_empty(),
 		"support_ready": "RemoteCommand" in modes and str(definition.get("remote_command", {}).get("command_type", "")) == "SupportMission" and facility_service.is_operational(facility_id) and facility.get("faction_id", "") == unit.get("faction_id", ""),
-		"mine_ready": "RemoteCommand" in modes and str(definition.get("remote_command", {}).get("command_type", "")) == "MineDeployment" and facility_service.is_operational(facility_id) and facility.get("faction_id", "") == unit.get("faction_id", ""),
+		"mine_ready": "RemoteCommand" in modes and str(remote.get("command_type", "")) == "MineDeployment" and facility_service.is_operational(facility_id) and facility.get("faction_id", "") == unit.get("faction_id", "") and mine_status.is_empty() and float(facility.get("cooldown_remaining", 0.0)) <= 0.0 and int(facility.get("remote_charges_remaining", 0)) > 0,
+		"mine_control_radius": float(remote.get("control_radius", 0.0)), "mine_area_side_length": float(remote.get("area_side_length", 0.0)),
+		"mine_duration": float(remote.get("duration", 0.0)), "mine_progress_ratio": float(mine_status.get("progress_ratio", 0.0)),
+		"mine_charges_remaining": int(facility.get("remote_charges_remaining", 0)), "mine_cooldown_remaining": float(facility.get("cooldown_remaining", 0.0)),
+		"last_mine_deployment_result": facility.get("last_mine_deployment_result", {}).duplicate(true),
 		"can_cancel": str(control.get("executor_unit_id", "")) == unit_id or str(service.get("unit_id", "")) == unit_id,
 	}
+
+
+func get_mine_deployment_preview(unit_id: String, facility_id: String, target_position: Vector2) -> Dictionary:
+	var unit: Dictionary = state.get("units_by_id", {}).get(unit_id, {})
+	if unit.is_empty(): return {"accepted":false, "reason_code":"UNIT_UNAVAILABLE"}
+	return facility_service.validate_mine_deployment(facility_id, unit, target_position, state.get("units_by_id", {}))
 
 
 func _configure_scene_combat(level: Dictionary) -> void:
@@ -536,7 +549,7 @@ func _configure_scene_combat(level: Dictionary) -> void:
 	var facility_layout: Dictionary = registry.get_definition("facilities", facility_layout_id) if not facility_layout_id.is_empty() else {}
 	facility_service.configure(facility_layout, terrain_definition.get("facility_anchors", []), _resolved_facility_definitions())
 	state["facilities_by_id"] = facility_service.snapshot()
-	minefield_service.configure(registry.all("facilities"), terrain_id)
+	minefield_service.configure(_resolved_facility_definitions(), terrain_id)
 	state["minefields_by_id"] = minefield_service.snapshot()
 
 
@@ -549,6 +562,15 @@ func _resolved_facility_definitions() -> Array:
 			var ship: Dictionary = registry.get_definition("ships", durability_reference_id)
 			for field in ["max_hp", "armor", "armor_thickness", "gunnery_power", "aviation_power"]:
 				if ship.has(field): definition[field] = ship[field]
+		var detection_reference: Dictionary = definition.get("detection_reference", {})
+		if detection_reference.is_empty(): detection_reference = definition.get("remote_command", {}).get("detection_reference", {})
+		if not detection_reference.is_empty():
+			var reference_ship: Dictionary = registry.get_definition("ships", str(detection_reference.get("ship_id", "")))
+			var half_extents: Array = reference_ship.get("collision_half_extents", [])
+			if not half_extents.is_empty():
+				var resolved_distance := float(half_extents[0]) * 2.0 * float(detection_reference.get("full_length_multiplier", 0.5))
+				if definition.has("remote_command"): definition["remote_command"]["detection_distance"] = resolved_distance
+				else: definition["detection_distance"] = resolved_distance
 		result.append(definition)
 	return result
 
@@ -1244,6 +1266,24 @@ func _update_projectile_observation() -> void:
 				known[projectile_id] = true
 				_emit("ProjectileDetected", {"observer_faction": observer_faction, "observer_unit_id": observer_id, "projectile_id": projectile_id, "position": projectile.get("position", Vector2.ZERO)})
 				break
+
+
+func _update_mine_observation() -> void:
+	var minefields: Dictionary = minefield_service.snapshot()
+	for observer_faction in [PLAYER_FACTION, ENEMY_FACTION]:
+		for mine_id in minefields:
+			var mine: Dictionary = minefields[mine_id]
+			if str(mine.get("mine_type", "")) != "DeployedMine" or str(mine.get("operation_state", "")) != "Active" or observer_faction in mine.get("known_by_faction", []): continue
+			var base_distance := float(mine.get("detection_distance", 0.0))
+			for observer_id in _sorted_unit_ids():
+				var observer: Dictionary = state["units_by_id"][observer_id]
+				if observer.get("faction_id", "") != observer_faction or observer.get("life_state", "") != "Alive": continue
+				var detection_distance := ModifierService.calculate(base_distance, _active_status_effects(observer), "TorpedoDetectionDistance", "Torpedo")
+				if (observer.get("position", Vector2.ZERO) as Vector2).distance_to(mine.get("position", Vector2.ZERO)) > detection_distance: continue
+				if minefield_service.discover_deployed_mine(mine_id, observer_faction):
+					_emit("MineDetected", {"observer_faction":observer_faction, "observer_unit_id":observer_id, "mine_id":mine_id, "position":mine.get("position", Vector2.ZERO), "detection_distance":detection_distance})
+				break
+	state["minefields_by_id"] = minefield_service.snapshot()
 
 
 func _visible_projectiles(viewer_faction: String, omniscient: bool) -> Dictionary:
@@ -3311,7 +3351,10 @@ func _handle_facility_event(event: Dictionary) -> void:
 		"FacilityServiceCompleted": _apply_facility_service(event)
 		"SupportMissionCompleted": _resolve_support_mission(event)
 		"MineDeploymentCompleted":
-			for mine_event in minefield_service.deploy_random_batch(event, terrain_query): _emit(str(mine_event.get("event_type", "MineDeployed")), mine_event)
+			for mine_event in minefield_service.deploy_random_batch(event, terrain_query):
+				if mine_event.get("event_type", "") == "MineDeploymentBatchResolved":
+					facility_service.record_mine_deployment_result(str(mine_event.get("facility_id", "")), {"result":"Completed", "mission_id":mine_event.get("deployment_id", ""), "active_count":mine_event.get("active_count", 0), "invalid_count":mine_event.get("invalid_count", 0)})
+				_emit(str(mine_event.get("event_type", "MineDeployed")), mine_event)
 		"FacilityActionInterrupted":
 			var unit: Dictionary = state.get("units_by_id", {}).get(str(event.get("unit_id", "")), {})
 			if not unit.is_empty() and _uses_full_ai(unit):
@@ -3460,12 +3503,25 @@ func _aviation_delay_multiplier(source_position: Vector2, target_position: Vecto
 
 
 func _apply_mine_trigger(unit: Dictionary, trigger: Dictionary) -> void:
-	var hp_before := float(unit.get("current_hp", 0.0))
-	var damage := minf(hp_before, maxf(0.0, float(trigger.get("damage", 0.0))))
-	unit["current_hp"] = maxf(0.0, hp_before - damage)
+	var reference: Dictionary = trigger.get("damage_reference", {})
+	var source_ship: Dictionary = registry.get_definition("ships", str(reference.get("ship_id", ""))).duplicate(true)
+	var weapon: Dictionary = registry.get_definition("weapons", str(reference.get("weapon_id", "")))
+	var formula: Dictionary = registry.get_definition("formulas", str(weapon.get("formula_id", "")))
+	var result: Dictionary
+	if not source_ship.is_empty() and not weapon.is_empty() and not formula.is_empty():
+		var mine_source := {"entity_id":str(trigger.get("minefield_id", "")), "position":trigger.get("position", unit.get("position", Vector2.ZERO)), "status_effects":[], "stats":source_ship}
+		var attack := {"attack_id":_next_entity_id("mine_attack"), "source_weapon_id":weapon.get("id", ""), "target_unit_id":unit.get("entity_id", ""), "impact_position":trigger.get("position", unit.get("position", Vector2.ZERO))}
+		result = DamageService.resolve(attack, mine_source, unit, weapon, formula, random_source, true)
+		result["hit_reason"] = "MINE_TRIGGER"
+		unit["current_hp"] = result["target_hp_after"]
+	else:
+		var hp_before := float(unit.get("current_hp", 0.0))
+		var damage := minf(hp_before, maxf(0.0, float(trigger.get("damage", 0.0))))
+		unit["current_hp"] = maxf(0.0, hp_before - damage)
+		result = {"attack_id":_next_entity_id("mine_attack"), "source_unit_id":str(trigger.get("minefield_id", "")), "source_weapon_id":"hazard.minefield", "target_unit_id":unit["entity_id"], "impact_position":trigger.get("position", unit["position"]), "damage_type":"Mine", "hit":true, "hit_rate":1.0, "hit_reason":"MINE_TRIGGER", "raw_damage":damage, "armor_modifier":1.0, "armor_reduction":0.0, "final_damage":damage, "target_hp_before":hp_before, "target_hp_after":unit["current_hp"], "caused_sinking":is_zero_approx(float(unit["current_hp"]))}
 	state["minefields_by_id"] = minefield_service.snapshot()
-	_emit("MineTriggered", {"minefield_id":trigger.get("minefield_id", ""), "unit_id":unit["entity_id"], "position":trigger.get("position", unit["position"]), "damage":damage})
-	_emit("AttackResolved", {"damage_result":{"attack_id":_next_entity_id("mine_attack"), "source_unit_id":str(trigger.get("minefield_id", "")), "source_weapon_id":"hazard.minefield", "target_unit_id":unit["entity_id"], "impact_position":trigger.get("position", unit["position"]), "damage_type":"Mine", "hit":true, "hit_rate":1.0, "hit_reason":"MINE_TRIGGER", "raw_damage":damage, "armor_modifier":1.0, "armor_reduction":0.0, "final_damage":damage, "target_hp_before":hp_before, "target_hp_after":unit["current_hp"], "caused_sinking":is_zero_approx(float(unit["current_hp"]))}})
+	_emit("MineTriggered", {"minefield_id":trigger.get("minefield_id", ""), "unit_id":unit["entity_id"], "position":trigger.get("position", unit["position"]), "damage":result.get("final_damage", 0.0)})
+	_emit("AttackResolved", {"damage_result":result})
 	if is_zero_approx(float(unit["current_hp"])): _sink_unit(unit, str(trigger.get("minefield_id", "")))
 
 

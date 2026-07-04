@@ -649,8 +649,9 @@ func _validate_facility_definition(definition: Dictionary) -> void:
 			errors.append("Remote-command facility lacks command rules in %s" % definition_id)
 		var remote_command: Dictionary = definition.get("remote_command", {})
 		if str(remote_command.get("command_type", "")) == "MineDeployment":
-			for field in ["control_radius", "area_side_length", "duration", "mine_count", "cooldown", "charges", "mine_damage", "mine_trigger_radius", "detection_distance"]:
+			for field in ["control_radius", "area_side_length", "duration", "mine_count", "cooldown", "charges", "mine_trigger_radius"]:
 				if float(remote_command.get(field, 0.0)) <= 0.0: errors.append("Mine deployment %s must be positive in %s" % [field, definition_id])
+			_validate_mine_references(remote_command, definition_id)
 		if "AutomaticOperation" in operation_modes and definition.get("automatic_operation", {}).get("capability_ids", []).is_empty():
 			errors.append("Automatic facility lacks capability rules in %s" % definition_id)
 		if "ObservationSource" in definition.get("capabilities", []):
@@ -762,8 +763,19 @@ func _validate_facility_definition(definition: Dictionary) -> void:
 		var controller_id := str(definition.get("controller_facility_id", ""))
 		if not controller_id.is_empty() and not _facility_placement_exists(controller_id):
 			errors.append("Minefield references missing controller in %s" % definition_id)
-		if float(definition.get("damage", 0.0)) <= 0.0:
-			errors.append("Minefield damage must be positive in %s" % definition_id)
+		_validate_mine_references(definition, definition_id)
+
+
+func _validate_mine_references(source: Dictionary, definition_id: String) -> void:
+	var detection_reference: Dictionary = source.get("detection_reference", {})
+	var length_ship: Dictionary = get_definition("ships", str(detection_reference.get("ship_id", "")))
+	if length_ship.is_empty() or float(detection_reference.get("full_length_multiplier", 0.0)) <= 0.0:
+		errors.append("Mine detection reference is invalid in %s" % definition_id)
+	var damage_reference: Dictionary = source.get("damage_reference", {})
+	var damage_ship := str(damage_reference.get("ship_id", ""))
+	var damage_weapon := str(damage_reference.get("weapon_id", ""))
+	if get_definition("ships", damage_ship).is_empty() or get_definition("weapons", damage_weapon).is_empty() or damage_weapon not in get_definition("ships", damage_ship).get("weapon_mounts", []):
+		errors.append("Mine damage reference is invalid in %s" % definition_id)
 
 
 func _facility_placement_exists(placement_id: String) -> bool:

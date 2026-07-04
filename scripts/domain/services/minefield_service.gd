@@ -24,6 +24,8 @@ func configure(definitions: Array, terrain_definition_id: String) -> void:
 			"known_by_faction": definition.get("known_by_faction", []).duplicate(),
 			"controller_facility_id": str(definition.get("controller_facility_id", "")),
 			"damage": float(definition.get("damage", 0.0)),
+			"damage_reference": definition.get("damage_reference", {}).duplicate(true),
+			"detection_distance": float(definition.get("detection_distance", 0.0)),
 			"triggered_unit_ids": [],
 			"controller_rules": definition.get("controller_rules", {}).duplicate(true),
 			"_polygon": _polygon(definition.get("polygon", [])),
@@ -76,9 +78,7 @@ func resolve_unit_motion(unit: Dictionary, start: Vector2, end: Vector2) -> Dict
 		if str(minefield.get("mine_type", "")) == "DeployedMine":
 			var fraction := _point_contact_fraction(start, end, minefield.get("position", Vector2.ZERO), float(minefield.get("trigger_radius", 18.0)) + float(unit.get("stats", {}).get("collision_radius", 20.0)))
 			if fraction >= 0.0 and fraction <= float(best.get("fraction", 1.0)):
-				best = {"triggered":true, "fraction":fraction, "position":start.lerp(end, fraction), "minefield_id":minefield_id, "damage":float(minefield.get("damage", 0.0))}
-			continue
-		if str(minefield.get("owner_faction_id", "neutral")) == str(unit.get("faction_id", "")):
+				best = {"triggered":true, "fraction":fraction, "position":start.lerp(end, fraction), "minefield_id":minefield_id, "damage":float(minefield.get("damage", 0.0)), "damage_reference":minefield.get("damage_reference", {}).duplicate(true)}
 			continue
 		if str(unit.get("entity_id", "")) in minefield.get("triggered_unit_ids", []):
 			continue
@@ -93,6 +93,7 @@ func resolve_unit_motion(unit: Dictionary, start: Vector2, end: Vector2) -> Dict
 			"position": start.lerp(end, fraction),
 			"minefield_id": minefield_id,
 			"damage": float(minefield.get("damage", 0.0)),
+			"damage_reference": minefield.get("damage_reference", {}).duplicate(true),
 		}
 	if not bool(best.get("triggered", false)):
 		return best
@@ -113,14 +114,27 @@ func deploy_random_batch(deployment: Dictionary, terrain_query) -> Array:
 	var random := RandomNumberGenerator.new()
 	random.seed = int(deployment.get("random_seed", 1))
 	var events: Array = []
+	var active_count := 0
+	var invalid_count := 0
 	for index in range(int(rules.get("mine_count", 0))):
 		var position := center + Vector2(random.randf_range(-half_side, half_side), random.randf_range(-half_side, half_side))
 		deployed_sequence += 1
 		var mine_id := "mine.deployed.%06d" % deployed_sequence
 		var valid: bool = terrain_query == null or not terrain_query.is_configured() or terrain_query.can_occupy_circle(position, 1.0, ["ShallowDraft", "ReefCapable"])
-		minefields_by_id[mine_id] = {"definition_id":"mine.dynamic", "display_name":"部署水雷", "mine_type":"DeployedMine", "position":position, "owner_faction_id":deployment.get("faction_id", "neutral"), "operation_state":"Active" if valid else "Invalid", "known_by_faction":[deployment.get("faction_id", "")], "damage":float(rules.get("mine_damage", 0.0)), "trigger_radius":float(rules.get("mine_trigger_radius", 18.0)), "detection_distance":float(rules.get("detection_distance", 75.0)), "deployment_id":deployment.get("mission_id", "")}
+		minefields_by_id[mine_id] = {"definition_id":"mine.dynamic", "display_name":"部署水雷", "mine_type":"DeployedMine", "position":position, "owner_faction_id":deployment.get("faction_id", "neutral"), "operation_state":"Active" if valid else "Invalid", "known_by_faction":[deployment.get("faction_id", "")], "damage":float(rules.get("mine_damage", 0.0)), "damage_reference":rules.get("damage_reference", {}).duplicate(true), "trigger_radius":float(rules.get("mine_trigger_radius", 18.0)), "detection_distance":float(rules.get("detection_distance", 75.0)), "deployment_id":deployment.get("mission_id", "")}
+		if valid: active_count += 1
+		else: invalid_count += 1
 		events.append({"event_type":"MineDeployed" if valid else "MineDeploymentInvalidated", "mine_id":mine_id, "position":position, "deployment_id":deployment.get("mission_id", "")})
+	events.append({"event_type":"MineDeploymentBatchResolved", "facility_id":deployment.get("facility_id", ""), "deployment_id":deployment.get("mission_id", ""), "requested_count":int(rules.get("mine_count", 0)), "active_count":active_count, "invalid_count":invalid_count})
 	return events
+
+
+func discover_deployed_mine(mine_id: String, faction_id: String) -> bool:
+	var mine: Dictionary = minefields_by_id.get(mine_id, {})
+	if mine.is_empty() or str(mine.get("mine_type", "")) != "DeployedMine" or str(mine.get("operation_state", "")) != "Active" or faction_id in mine.get("known_by_faction", []):
+		return false
+	_add_knowledge(mine, faction_id)
+	return true
 
 
 func _point_contact_fraction(start: Vector2, end: Vector2, point: Vector2, radius: float) -> float:

@@ -43,7 +43,7 @@
 | 近岸机场 | `ui_marker_facility_coastal_airfield.png` | `facility.coastal_airfield.*` | 敌方激活、不可占领/摧毁；提供侦察、战斗机巡逻和空袭，准备阶段随机场失效取消，已离场任务继续；受天气、冷却、次数及通信限制 |
 | 雷达站 | `ui_marker_facility_radar_station.png` | `facility.radar_station.*` | 敌方休眠，由关卡事件激活；1400 范围精确位置雷达接触，不受光学倍率或岛岸阻挡，显式雷达隐身可规避 |
 | 通信站 | `ui_marker_facility_communication_station.png` | `facility.communication_station.*` | 敌方激活且可占领/压制/摧毁；只服务同阵营且显式声明依赖的设施，普通占领不转移下游，整套易手必须触发关卡规则 |
-| 水雷控制站 | `ui_marker_facility_mine_control_station.png` | `facility.mine_control_station.*` | 控制绑定雷区的启停和所有权；压制使雷区休眠，摧毁使其失效 |
+| 水雷控制站 | `ui_marker_facility_mine_control_station.png` | `facility.mine_control_station.*` | 占领后在控制半径内执行 10 秒方形区域布雷；压制或摧毁取消进行中任务，已独立布设水雷继续存在 |
 | 港口维修泊位 | `ui_marker_facility_repair_berth.png` | `facility.repair_berth.*` | 9 秒服务后恢复最大 HP 的 28%，单场最高恢复到最大 HP 的 80% |
 
 设施世界资产位于 `assets/environment/facilities/`，UI 标识位于 `assets/ui/processed/battle/terrain/`，正式语义清单为 `assets/environment/facilities/facility_asset_manifest.json`。
@@ -73,10 +73,14 @@
 | 航空侦察 | `ui_icon_mission_air_recon.png` | 到达后生成半径 620、持续 18 秒的航空观察区 |
 | 战斗机巡逻 | `ui_icon_mission_fighter_patrol.png` | 生成半径 520、持续 22 秒的防护区，区内敌方航空命中 `-0.28` |
 | 空袭 | `ui_icon_mission_airstrike.png` | 到达后使用正式航空武器连续结算 3 次 |
-| 已知雷区 | `ui_marker_minefield_known.png` | 显示已掌握边界；驶入危险区域触发 420 伤害 |
+| 已知雷区/水雷 | `ui_marker_minefield_known.png` | 固定雷区显示已掌握边界，动态水雷显示已发现位置；任意阵营舰船接触都会触发，并进入普通鱼雷伤害与装甲结算 |
 | 未知雷区 | `ui_marker_minefield_unknown.png` | 仅用于全知调试或未来模糊情报，不向普通阵营泄露真实边界 |
 | 失效雷区 | `ui_marker_minefield_disabled.png` | 雷区已被控制站关闭或摧毁，不再触发 |
 | 安全航道 | `ui_marker_minefield_safe_channel.png` | 雷区内明确不触发水雷的通行带 |
+
+水雷控制站默认中立休眠，可占领、压制和摧毁。玩家选择控制半径内的正方形区域时会看到范围、合法性和任务进度；区域包含现有敌舰时禁止提交。完成后按固定种子一次生成整批水雷，落在陆地或岛屿内的个体直接失效且不重抽，结果反馈分别报告有效和失效数量。
+
+动态水雷沿用鱼雷发现规则：基础发现距离取 `ship.warspite` 全长的 `0.5`，`TorpedoDetectionDistance` 修正同样生效，任一舰船发现后立即写入本阵营共享知识。纸面伤害引用 `ship.shimakaze + weapon.shimakaze_610_torpedo`，不保存易漂移的独立伤害副本。
 
 ---
 

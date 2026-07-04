@@ -94,6 +94,8 @@ static func reason_name(reason_code: String) -> String:
 		"TORPEDO_MOUNT_INTERVAL": return "鱼雷管组切换中"
 		"TARGET_TOO_CLOSE": return "目标距离过近"
 		"TARGET_OUT_OF_RANGE": return "目标超出射程"
+		"MINE_AREA_CONTAINS_ENEMY": return "区域内已有敌方单位"
+		"MINE_DEPLOYMENT_UNAVAILABLE": return "布雷任务暂不可用"
 		"TARGET_NOT_VISIBLE": return "目标尚未发现"
 		"FIRE_ARC_INVALID": return "目标不在射界内"
 		"INVALID_TARGET", "INVALID_TARGET_TYPE": return "目标无效"

@@ -776,7 +776,9 @@ MinefieldDefinition
 - `berthing_service.service_type` 当前为 `Supply` 或 `Repair`，并显式保存泊位数、入泊速度、朝向容差和服务持续时间。补给继续使用 `weapon_reload_recovery_ratio`、`skill_cooldown_recovery`；维修使用 `hp_restore_ratio`、`repair_cap_ratio`。
 - 靠泊服务必须显式声明离泊与设施受击是否中断，以及中断后的进度策略；当前补给和维修均为两类中断启用、`progress_on_interrupt=Reset`。单泊位由 `service_state` 独占，第二艘舰在完成或中断前不能进入。
 - `remote_command` 描述不要求舰船靠近的命令类别及合法任务引用；次数、冷却、航程和环境限制仍由具体任务 Definition 校验。
-- `MineDeployment` 远程命令另外使用 `control_radius`、`area_side_length`、`duration`、`mine_count`、`cooldown`、`charges` 和水雷伤害/碰撞/发现参数；随机种子由战斗种子、Tick 与设施 ID 确定。
+- `MineDeployment` 远程命令使用 `control_radius`、`area_side_length`、`duration`、`mine_count`、`cooldown`、`charges`、`mine_trigger_radius` 与 `random_seed_policy`；当前种子由战斗种子、Tick 与设施 ID 确定。
+- `detection_reference = {ship_id, full_length_multiplier}` 从舰船 `collision_half_extents` 的纵轴全长解析水雷基础发现距离；当前引用 `ship.warspite × 0.5`。`damage_reference = {ship_id, weapon_id}` 必须引用该舰船实际挂载的武器，水雷接触时复用该武器的 Formula、装甲倍率和公共伤害结算；当前引用 `ship.shimakaze + weapon.shimakaze_610_torpedo`。
+- `in_progress_facility_policy` 明确压制、摧毁、失能或静默对进行中布雷的影响，当前均为 `Cancel`；`deployed_mine_controller_policy = Independent` 表示已布设水雷不随控制站失效而清空或停用。
 - `automatic_operation` 只列出设施自行运行的能力，不创建重复“使用设施”命令；`combat_disposition` 只声明公共攻击管线允许造成的压制、摧毁和静默结果。
 - `ObservationSource` 必须声明 `observation_rules`；海岸观察站固定使用 `Optical`，并明确受天气、时段、局部能见度和岛岸视线影响，不能作为未来雷达规则的隐式默认值。
 - `SensorSource` 必须声明独立 `radar_rules`。港湾雷达固定为 `Radar + ExactPosition`，不读取天气、时段、局部海雾或光学倍率，也不要求岛岸视线；`ExplicitStateOnly` 表示雷达隐身只由显式状态移除，开火和普通光学暴露不会自动破除。
@@ -787,7 +789,7 @@ MinefieldDefinition
 - `reload_during_suppression` 控制武器设施受压制期间是否继续装填；当前岸防炮为 `false`。
 - `blocked_aviation_conditions` 当前支持 `Severe` 与 `Grounded`；`Restricted` 通过到达时间和命中修正表达，不等同于无条件禁飞。
 - 机场任务使用 `Preparing -> EnRoute -> Completed | Cancelled`。`launch_time` 必须早于 `arrival_time`；`facility_state_policy` 分阶段声明机场被压制、失能或静默后的处理。当前准备阶段取消，已经离场的任务继续到达并按普通侦查/航空攻击规则结算。
-- `controller_rules` 只切换绑定雷区状态。水雷触发、伤害、阵营知识和安全航道由独立水雷服务处理。
+- `controller_rules` 只切换关卡预设固定雷区状态。动态水雷独立存续；水雷触发、伤害、阵营知识、地形失效和安全航道均由独立水雷服务处理。
 
 Godot 制作插件通过 `build_authoring_snapshot.py` 将正式模板或地图数据装入可编辑场景，并通过 `apply_authoring_snapshot.py` 回写。`editor_snapshot.json` 只是被忽略的交换文件，不是运行时真源；生产门禁会对模板、环境区、设施布局和雷区执行无损往返测试。
 

@@ -12,7 +12,8 @@
       "operation_state": "Active",
       "known_by_faction": ["enemy"],
       "controller_facility_id": "facility.harbor.mine_control_west",
-      "damage": 420.0,
+      "damage_reference": {"ship_id": "ship.shimakaze", "weapon_id": "weapon.shimakaze_610_torpedo"},
+      "detection_reference": {"ship_id": "ship.warspite", "full_length_multiplier": 0.5},
       "controller_rules": {"on_active": "Active", "on_suppressed": "Dormant", "on_destroyed": "Disabled"}
     }
   ]

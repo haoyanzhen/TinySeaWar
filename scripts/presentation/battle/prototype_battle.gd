@@ -114,7 +114,31 @@ func _draw() -> void:
 		var contact_color := Color(0.35, 0.9, 1.0, 0.78) if radar_contact else Color(1.0, 0.55, 0.6, 0.65)
 		_draw_icon_centered("ui_icon_unknown_contact", ghost_position, 0.55, contact_color)
 		draw_arc(ghost_position, 33.0, 0.0, TAU, 28, contact_color, 2.0)
+	_draw_mine_deployment_overlay(snapshot)
 	_draw_operation_overlay()
+
+
+func _draw_mine_deployment_overlay(snapshot: Dictionary) -> void:
+	if selected_unit_id.is_empty() or selected_facility_id.is_empty(): return
+	var status := session.get_facility_action_status(selected_unit_id, selected_facility_id)
+	var control_radius := float(status.get("mine_control_radius", 0.0))
+	var area_side := float(status.get("mine_area_side_length", 0.0))
+	if control_radius <= 0.0 or area_side <= 0.0: return
+	var facility: Dictionary = snapshot.get("facilities", {}).get(selected_facility_id, {})
+	if facility.is_empty(): return
+	var cursor := get_global_mouse_position()
+	var preview := session.get_mine_deployment_preview(selected_unit_id, selected_facility_id, cursor)
+	var legal := bool(preview.get("accepted", false))
+	var edge := RANGE_AVAILABLE_EDGE if legal else RANGE_UNAVAILABLE_EDGE
+	var fill := RANGE_AVAILABLE_FILL if legal else RANGE_UNAVAILABLE_FILL
+	draw_circle(facility.get("position", Vector2.ZERO), control_radius, Color(fill, 0.045))
+	draw_arc(facility.get("position", Vector2.ZERO), control_radius, 0.0, TAU, 128, edge, 2.0)
+	draw_rect(Rect2(cursor - Vector2.ONE * area_side * 0.5, Vector2.ONE * area_side), fill, true)
+	draw_rect(Rect2(cursor - Vector2.ONE * area_side * 0.5, Vector2.ONE * area_side), edge, false, 2.0)
+	var progress := float(status.get("mine_progress_ratio", 0.0))
+	var label := "布雷区域" if progress <= 0.0 else "布雷进行中 %.0f%%" % (progress * 100.0)
+	if not legal: label = "%s / %s" % [label, UiText.reason_name(str(preview.get("reason_code", "MINE_DEPLOYMENT_UNAVAILABLE")))]
+	draw_string(ThemeDB.fallback_font, cursor + Vector2(18.0, -18.0), label, HORIZONTAL_ALIGNMENT_LEFT, -1.0, 16, edge)
 
 
 func _create_presentation_layers() -> void:

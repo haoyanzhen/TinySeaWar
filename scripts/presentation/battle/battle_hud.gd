@@ -286,8 +286,13 @@ func _draw_facility_panel(rect: Rect2, facility: Dictionary) -> void:
 	var service_ratio := float(status.get("service_progress_ratio", 0.0))
 	draw_string(ThemeDB.fallback_font, rect.position + Vector2(18.0, 106.0), "控制 %.0f%%  |  服务 %.0f%%  |  泊位 %s" % [control_ratio * 100.0, service_ratio * 100.0, "占用" if not str(status.get("berth_unit_id", "")).is_empty() else "空闲"], HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 36.0, 13, TEXT_DARK)
 	var prerequisites := "区域 %s  低速 %s  朝向 %s" % ["✓" if bool(status.get("inside_interaction_water", false)) else "×", "✓" if bool(status.get("berth_speed_ok", false)) else "×", "✓" if bool(status.get("berth_heading_ok", false)) else "×"]
+	if float(status.get("mine_control_radius", 0.0)) > 0.0:
+		prerequisites = "布雷 %.0f%%  次数 %d  冷却 %.1fs" % [float(status.get("mine_progress_ratio", 0.0)) * 100.0, int(status.get("mine_charges_remaining", 0)), float(status.get("mine_cooldown_remaining", 0.0))]
 	draw_string(ThemeDB.fallback_font, rect.position + Vector2(18.0, 130.0), prerequisites, HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 36.0, 13, TEXT_SOFT)
 	var interruption := str(status.get("last_interruption_reason", ""))
+	var mine_result: Dictionary = status.get("last_mine_deployment_result", {})
+	if not mine_result.is_empty():
+		interruption = "布雷结果：有效 %d / 失效 %d" % [int(mine_result.get("active_count", 0)), int(mine_result.get("invalid_count", 0))] if mine_result.get("result", "") == "Completed" else "布雷已取消"
 	if not interruption.is_empty(): draw_string(ThemeDB.fallback_font, rect.position + Vector2(18.0, 151.0), "上次中断：%s" % interruption, HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 36.0, 12, Color("#a14b4b"))
 	var actions := [
 		{"key":"H", "icon":"ui_icon_facility_seize", "text":"控制/占领", "ready":status.get("control_ready", false)},

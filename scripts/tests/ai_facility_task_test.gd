@@ -40,9 +40,18 @@ func _run() -> void:
 		runner["position"] = session.facility_service.interaction_center(runner_facility_id)
 		runner["movement_state"] = {"mode": "AutoNavigate", "target_position": runner["position"] + Vector2(300.0, 0.0), "waypoints": [runner["position"] + Vector2(300.0, 0.0)], "waypoint_index": 0}
 		runner["current_speed"] = 50.0
+		var movement_before: Dictionary = runner["movement_state"].duplicate(true)
+		var speed_before := float(runner["current_speed"])
+		var position_before: Vector2 = runner["position"]
 		var start_result: Dictionary = session._apply_command({"command_id": "test.facility.start", "command_type": "StartFacilityInteraction", "issuer_id": "enemy", "issuer_type": "AI", "unit_id": runner["entity_id"], "facility_id": runner_facility_id, "interaction_type": "Seize"})
 		_check(bool(start_result.get("accepted", false)), "capture runner can start its assigned facility interaction")
-		_check(str(runner.get("movement_state", {}).get("mode", "")) == "HoldPosition" and is_zero_approx(float(runner.get("current_speed", -1.0))), "starting facility work cancels navigation and stops the runner")
+		_check(runner["movement_state"] == movement_before and is_equal_approx(float(runner["current_speed"]), speed_before), "ordinary facility work preserves navigation and speed")
+		session._update_movement(0.5)
+		_check((runner["position"] as Vector2).distance_to(position_before) > 1.0, "ordinary facility work does not hold station or cancel propulsion")
+		for index in range(20):
+			session._update_movement(0.5)
+		var interaction_events: Array = session.facility_service.advance(0.5, 0.5, session.state["units_by_id"])
+		_check(_has_event(interaction_events, "FacilityInteractionInterrupted") and session.facility_service.active_interaction_for_unit(str(runner["entity_id"])).is_empty(), "leaving the interaction water interrupts ordinary facility work")
 		session._ai_observations_by_faction.clear()
 		session._ai_objective_plan_cache.clear()
 		var active_plan: Dictionary = session._ai_facility_plan(runner, true)
@@ -84,3 +93,10 @@ func _check(condition: bool, label: String) -> void:
 	checks += 1
 	if not condition:
 		failures.append(label)
+
+
+func _has_event(events: Array, event_type: String) -> bool:
+	for event in events:
+		if str(event.get("event_type", "")) == event_type:
+			return true
+	return false

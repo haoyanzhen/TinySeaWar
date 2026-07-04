@@ -785,6 +785,8 @@ RequestSupportMissionCommand
 
 交互进度属于 FacilityState 或独立 InteractionState，不依赖舰船持续停在 UI 圆圈的表现判断。
 
+普通区域控制和未建立靠泊的设施交互不改变舰船运动规则：接受交互意图时不清空既有航路、不把航速归零，也不抵消推进、水流、海况、碰撞或外力。舰船被自身运动或水流带出交互水域时，控制进度或尚未建立靠泊的服务立即按 `UNIT_LEFT_INTERACTION_AREA` 中断。只有维修泊位等明确进入 `Docked` 的靠泊服务，才可以按其独立契约提供定点保持。
+
 `StartFacilityInteractionCommand` 需要携带明确 `interaction_type`：
 
 ```text
@@ -1218,6 +1220,7 @@ scripts/presentation/battle/
 - 观察站被压制后不再提供发现来源。
 - 岸炮被自身岛屿遮挡时不能攻击背面目标。
 - 设施交互在条件失效时正确中断。
+- 普通设施交互不清空航路、归零航速或抵消水流，驶出交互水域会中断；只有已建立 `Docked` 的靠泊服务可定点保持。
 - `Activate`、`Seize`、`Service`、`Suppress` 和 `Destroy` 不混用状态或进度。
 - 雷达与通信站只提供已声明的传感器或联络能力。
 - 水雷控制站只改变绑定雷区，且不泄露未发现雷区边界。

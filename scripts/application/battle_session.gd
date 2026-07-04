@@ -690,11 +690,6 @@ func _apply_command(command: Dictionary) -> Dictionary:
 		"StartFacilityInteraction":
 			var facility_result := facility_service.start_interaction(str(command.get("facility_id", "")), unit, str(command.get("interaction_type", "Activate")))
 			if bool(facility_result.get("accepted", false)) and facility_result.has("event"):
-				# Facility work represents mooring/holding station. Carrying the previous
-				# navigation order forward makes a ship leave the interaction polygon on
-				# the next movement tick and turns valid tasks into retry storms.
-				unit["movement_state"] = {"mode": "HoldPosition", "target_position": unit["position"], "waypoints": [], "waypoint_index": 0}
-				unit["current_speed"] = 0.0
 				_ai_objective_plan_cache.erase(unit_id)
 				state["facilities_by_id"] = facility_service.snapshot()
 				_ai_observations_by_faction.clear()
@@ -873,12 +868,6 @@ func _update_movement(delta: float) -> void:
 			unit["current_speed"] = move_toward(float(unit["current_speed"]), max_speed, max_speed * delta)
 		var movement_start: Vector2 = unit["position"]
 		var desired_motion := Vector2.RIGHT.rotated(float(unit["heading"])) * float(unit["current_speed"]) * delta + (context.get("current_vector", Vector2.ZERO) as Vector2) * delta
-		# Interaction polygons describe a mooring/station-keeping area. A unit
-		# actively operating a facility must counter ambient current as well as
-		# cancel its prior propulsion, otherwise valid work is interrupted by drift.
-		if not facility_service.active_interaction_for_unit(str(unit_id)).is_empty():
-			desired_motion = Vector2.ZERO
-			unit["current_speed"] = 0.0
 		var environment_access := terrain_context_service.movement_segment_access(movement_start, movement_start + desired_motion)
 		if not bool(environment_access.get("allowed", true)):
 			desired_motion = Vector2.ZERO

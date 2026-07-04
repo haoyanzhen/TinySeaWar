@@ -220,6 +220,7 @@
 - AI 真实战场输入测试：`scripts/tests/ai_battlefield_input_test.gd`
 - AI 观察隔离测试：`scripts/tests/ai_observation_test.gd`
 - AI 设施任务测试：`scripts/tests/ai_facility_task_test.gd`
+- 设施专项与综合契约测试：`scripts/tests/facility_state_lifecycle_test.gd`、`observation_post_test.gd`、`coastal_battery_test.gd`、`supply_point_test.gd`、`airfield_mission_test.gd`、`radar_station_test.gd`、`communication_station_test.gd`、`mine_control_station_test.gd`、`repair_berth_test.gd`、`facility_integration_contract_test.gd`
 - AI 预留与协同测试：`scripts/tests/ai_coordination_test.gd`
 - AI 编组阵列测试：`scripts/tests/ai_group_formation_test.gd`
 - AI 难度 Profile：`data/ai/ai_profiles.json`

@@ -169,11 +169,12 @@ func _create_facility(facility: Dictionary) -> void:
 	sprite.modulate = _facility_modulate(str(facility.get("faction_id", "neutral")), str(facility.get("operation_state", "Dormant")))
 	sprite.z_index = 20
 	facility_root.add_child(sprite)
-	var overlay_semantic: String = {
+	var interaction_state := str(facility.get("interaction_state", "Idle"))
+	var overlay_semantic: String = "facility.state.servicing" if interaction_state in ["Docked", "Servicing"] else {
 		"Active": "facility.state.active",
 		"Suppressed": "facility.state.suppressed",
 		"Dormant": "facility.state.offline",
-		"Silent": "facility.state.offline",
+		"Silent": "facility.state.communication_disrupted",
 		"Disabled": "facility.state.offline",
 	}.get(str(facility.get("operation_state", "Dormant")), "")
 	if overlay_semantic.is_empty():

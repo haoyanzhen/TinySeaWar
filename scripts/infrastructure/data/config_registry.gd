@@ -648,6 +648,10 @@ func _validate_facility_definition(definition: Dictionary) -> void:
 				if float(remote_command.get(field, 0.0)) <= 0.0: errors.append("Mine deployment %s must be positive in %s" % [field, definition_id])
 		if "AutomaticOperation" in operation_modes and definition.get("automatic_operation", {}).get("capability_ids", []).is_empty():
 			errors.append("Automatic facility lacks capability rules in %s" % definition_id)
+		if "ObservationSource" in definition.get("capabilities", []):
+			var observation_rules: Dictionary = definition.get("observation_rules", {})
+			if str(observation_rules.get("contact_type", "")) != "Optical" or not observation_rules.has("weather_affected") or not observation_rules.has("time_affected") or not observation_rules.has("local_visibility_affected") or not observation_rules.has("line_of_sight_required") or float(definition.get("observation_range", 0.0)) <= 0.0:
+				errors.append("Optical observation facility lacks explicit sensor rules in %s" % definition_id)
 		if "CombatDisposition" in operation_modes:
 			var disposition: Dictionary = definition.get("combat_disposition", {})
 			for field in ["suppressible", "destroyable", "silentable", "damage_floor_ratio"]:

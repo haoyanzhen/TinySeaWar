@@ -379,7 +379,16 @@ func observation_sources(faction_id: String) -> Array:
 		var definition := definition_for(facility_id)
 		if facility.get("faction_id") != faction_id or "ObservationSource" not in definition.get("capabilities", []): continue
 		var observation_position: Vector2 = facility.get("observation_position", facility["position"])
-		result.append({"facility_id": facility_id, "position": observation_position, "detection_range": float(definition.get("observation_range", 0.0))})
+		var rules: Dictionary = definition.get("observation_rules", {})
+		result.append({
+			"facility_id": facility_id, "position": observation_position,
+			"detection_range": float(definition.get("observation_range", 0.0)),
+			"contact_type": str(rules.get("contact_type", "Optical")),
+			"weather_affected": bool(rules.get("weather_affected", true)),
+			"time_affected": bool(rules.get("time_affected", true)),
+			"local_visibility_affected": bool(rules.get("local_visibility_affected", true)),
+			"line_of_sight_required": bool(rules.get("line_of_sight_required", true)),
+		})
 	return result
 
 

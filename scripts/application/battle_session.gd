@@ -1226,9 +1226,12 @@ func _fleet_detects(observer_faction: String, target: Dictionary) -> bool:
 		var source_position: Vector2 = source.get("position", Vector2.ZERO)
 		var source_context := terrain_context_service.context_at(source_position)
 		var target_context := terrain_context_service.context_at(target["position"])
-		var detection_range := float(source.get("detection_range", 0.0)) * minf(float(source_context.get("optical_visibility_multiplier", 1.0)), float(target_context.get("optical_visibility_multiplier", 1.0)))
+		var detection_range := float(source.get("detection_range", 0.0))
+		if bool(source.get("weather_affected", true)) or bool(source.get("time_affected", true)) or bool(source.get("local_visibility_affected", true)):
+			detection_range *= minf(float(source_context.get("optical_visibility_multiplier", 1.0)), float(target_context.get("optical_visibility_multiplier", 1.0)))
 		var distance := source_position.distance_to(target["position"])
-		if distance <= detection_range and distance <= concealment and terrain_query.has_surface_line_of_sight(source_position, target["position"]): return true
+		var line_of_sight_ok := not bool(source.get("line_of_sight_required", true)) or terrain_query.has_surface_line_of_sight(source_position, target["position"])
+		if distance <= detection_range and distance <= concealment and line_of_sight_ok: return true
 	for effect in state.get("support_effects_by_id", {}).values():
 		if str(effect.get("effect_type", "")) != "Reconnaissance" or str(effect.get("faction_id", "")) != observer_faction: continue
 		if (effect.get("position", Vector2.ZERO) as Vector2).distance_to(target["position"]) <= float(effect.get("radius", 0.0)): return true

@@ -886,6 +886,9 @@ RequestSupportMissionCommand
 - 同一目标可同时保存 `Optical` 和 `Radar` 来源，光学优先作为主显示类型；纯雷达接触在战场与小地图使用青色未知接触标记，F9 调试层显示 `Radar | ExactPosition`。
 - 雷达接触只写入设施所属阵营的 `visible_by_faction`、`contacts_by_faction` 和 AI 观察快照，不向对侧泄露；获得雷达所有权或激活雷达不改变其他设施。
 - 通信站只扩展允许的命令、设施依赖或支援联络，不直接写入目标 HP、装填或命中结果。
+- 港湾通信站默认敌方、激活，允许区域控制、压制和摧毁；压制期间同阵营声明式消费者进入 `Disabled`，恢复时重新计算，摧毁后该来源永久移除并使无其他来源的消费者进入 `Silent`。
+- 依赖同时要求设施 ID 被明确列入 `requires_all_active/requires_any_active`、通信站 `Alive + Active` 且所有权阵营一致；未声明依赖的雷达等设施不受影响。
+- 普通占领只改变通信站自身所有权：原阵营岸炮/机场因阵营不匹配静默，但所有权不转移。整套岸防易手只能由 `FacilityLayout.system_handover_rules` 指定事件触发，且只转移明列成员。
 - 主动工作、被压制和失去依赖时通过 FacilityState 改变能力集合。
 - AI 与玩家从相同阵营快照读取雷达接触和通信可用性。
 

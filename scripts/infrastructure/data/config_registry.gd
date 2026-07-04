@@ -740,6 +740,17 @@ func _validate_facility_definition(definition: Dictionary) -> void:
 				seen_dependencies[str(dependency_id)] = true
 			if not all_dependencies.is_empty() and not placement.get("dependency_rules", {}).has("requires_matching_faction"):
 				errors.append("Facility dependency lacks faction rule in %s" % definition_id)
+		var handover_event_ids := {}
+		for rule in definition.get("system_handover_rules", []):
+			var event_id := str(rule.get("event_id", ""))
+			var control_id := str(rule.get("control_facility_id", ""))
+			var facility_ids: Array = rule.get("facility_ids", [])
+			if event_id.is_empty() or handover_event_ids.has(event_id) or not placement_ids.has(control_id) or facility_ids.is_empty():
+				errors.append("Facility layout has invalid system handover rule in %s" % definition_id)
+			handover_event_ids[event_id] = true
+			for facility_id in facility_ids:
+				if not placement_ids.has(str(facility_id)) or str(facility_id) == control_id:
+					errors.append("Facility handover references invalid member in %s" % definition_id)
 	elif definition_type == "MinefieldDefinition":
 		if get_definition("terrain", str(definition.get("terrain_definition_id", ""))).is_empty():
 			errors.append("Minefield references missing terrain in %s" % definition_id)

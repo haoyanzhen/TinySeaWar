@@ -339,6 +339,14 @@ func activate_facility_from_scenario(facility_id: String, event_id: String) -> D
 	return result
 
 
+func handover_facility_system_from_scenario(event_id: String, faction_id: String) -> Dictionary:
+	var result := facility_service.apply_system_handover(event_id, faction_id)
+	if not bool(result.get("accepted", false)): return result
+	for event in result.get("events", []): _emit(str(event.get("event_type", "FacilityChanged")), event)
+	state["facilities_by_id"] = facility_service.snapshot()
+	return result
+
+
 func get_unit_damage_statistics(unit_id: String) -> Dictionary:
 	return recorder.unit_damage_statistics(unit_id)
 

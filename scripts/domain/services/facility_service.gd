@@ -4,6 +4,7 @@ var facilities_by_id: Dictionary = {}
 var support_missions: Array = []
 var mine_deployments: Array = []
 var definitions_by_id: Dictionary = {}
+var system_handover_rules_by_event: Dictionary = {}
 var mission_sequence := 0
 
 
@@ -12,9 +13,12 @@ func configure(layout: Dictionary, anchors: Array, definitions: Array) -> void:
 	support_missions.clear()
 	mine_deployments.clear()
 	definitions_by_id.clear()
+	system_handover_rules_by_event.clear()
 	mission_sequence = 0
 	for definition in definitions:
 		definitions_by_id[str(definition.get("id", ""))] = definition.duplicate(true)
+	for rule in layout.get("system_handover_rules", []):
+		system_handover_rules_by_event[str(rule.get("event_id", ""))] = rule.duplicate(true)
 	var anchors_by_id := {}
 	for anchor in anchors:
 		anchors_by_id[str(anchor.get("id", ""))] = anchor
@@ -168,6 +172,28 @@ func activate_from_scenario(facility_id: String, faction_id: String, event_id: S
 	facility["desired_operation_state"] = "Active"
 	var state_change := _refresh_operation_state(facility_id)
 	return {"accepted":true, "event":{"event_type":"FacilityActivated", "facility_id":facility_id, "faction_id":facility.get("faction_id", ""), "operation_state":facility.get("operation_state", "")}, "state_change":state_change}
+
+
+func apply_system_handover(event_id: String, faction_id: String) -> Dictionary:
+	var rule: Dictionary = system_handover_rules_by_event.get(event_id, {})
+	if rule.is_empty(): return {"accepted":false, "reason_code":"FACILITY_HANDOVER_NOT_ALLOWED"}
+	var control_id := str(rule.get("control_facility_id", ""))
+	var control: Dictionary = facilities_by_id.get(control_id, {})
+	if control.is_empty() or control.get("life_state", "") != "Alive" or control.get("faction_id", "") != faction_id or not is_operational(control_id):
+		return {"accepted":false, "reason_code":"FACILITY_HANDOVER_CONTROL_INVALID"}
+	var events: Array = []
+	for facility_id in rule.get("facility_ids", []):
+		var facility: Dictionary = facilities_by_id.get(str(facility_id), {})
+		if facility.is_empty() or facility.get("life_state", "") != "Alive": continue
+		var old_faction := str(facility.get("faction_id", "neutral"))
+		if old_faction == faction_id: continue
+		facility["faction_id"] = faction_id
+		events.append({"event_type":"FacilityOwnershipChanged", "facility_id":str(facility_id), "old_faction_id":old_faction, "faction_id":faction_id, "source_event_id":event_id})
+	for facility_id in _sorted_ids():
+		var state_change := _refresh_operation_state(facility_id)
+		if not state_change.is_empty(): events.append(state_change)
+	events.append({"event_type":"FacilitySystemHandedOver", "event_id":event_id, "control_facility_id":control_id, "faction_id":faction_id, "facility_ids":rule.get("facility_ids", []).duplicate()})
+	return {"accepted":true, "events":events}
 
 
 func request_support(facility_id: String, mission_id: String, faction_id: String, target_position: Vector2, elapsed_time: float, environment_context: Dictionary = {}) -> Dictionary:

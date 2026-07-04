@@ -22,6 +22,9 @@
         {"id": "facility.harbor.communication_east", "definition_id": "facility.communication_station", "anchor_id": "harbor_land.communication_east", "faction_id": "enemy", "operation_state": "Active"},
         {"id": "facility.harbor.airfield_east", "definition_id": "facility.coastal_airfield", "anchor_id": "harbor_land.airfield_east", "faction_id": "enemy", "operation_state": "Active", "requires_any_active": ["facility.harbor.communication_east"], "dependency_rules": {"requires_matching_faction": true}},
         {"id": "facility.harbor.repair_berth_east", "definition_id": "facility.repair_berth", "anchor_id": "harbor_land.repair_berth_east", "faction_id": "neutral", "operation_state": "Dormant"}
+      ],
+      "system_handover_rules": [
+        {"event_id": "harbor.defense_system_handover", "control_facility_id": "facility.harbor.communication_east", "facility_ids": ["facility.harbor.battery_west", "facility.harbor.airfield_east", "facility.harbor.radar_east"]}
       ]
     }
   ]

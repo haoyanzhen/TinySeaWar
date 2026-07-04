@@ -736,6 +736,11 @@ FacilityLayout.placements[]
   requires_any_active[]
   dependency_rules.requires_matching_faction
 
+FacilityLayout.system_handover_rules[]
+  event_id
+  control_facility_id
+  facility_ids[]
+
 SupportMissionDefinition
   mission_type
   launch_time
@@ -776,6 +781,7 @@ MinefieldDefinition
 - `ObservationSource` 必须声明 `observation_rules`；海岸观察站固定使用 `Optical`，并明确受天气、时段、局部能见度和岛岸视线影响，不能作为未来雷达规则的隐式默认值。
 - `SensorSource` 必须声明独立 `radar_rules`。港湾雷达固定为 `Radar + ExactPosition`，不读取天气、时段、局部海雾或光学倍率，也不要求岛岸视线；`ExplicitStateOnly` 表示雷达隐身只由显式状态移除，开火和普通光学暴露不会自动破除。
 - 设施依赖由关卡放置声明；`requires_matching_faction=true` 时，依赖设施除 `Alive + Active` 外还必须与使用方同阵营。依赖失效后运行态进入 `Silent`（允许静默）或 `Disabled`，恢复、占领和依赖变化时重新计算，不修改所有权。
+- `system_handover_rules` 是整套岸防易手的唯一批量入口：接收阵营必须已控制且可用指定通信站，事件只转移 `facility_ids` 明列成员并逐一重算运行态。普通通信站占领绝不隐式调用该规则。
 - `weapon_id` 必须引用现有 Weapon Definition。岸炮和空袭继续使用普通命中、装甲和伤害公式。
 - `durability_reference_id` 从稳定舰船 Definition 解析 HP、装甲与火力属性；`weapon_mount_reference` 复用武器 Definition 的伤害、散布、穿深、装填和弹药，仅覆盖设施实际炮塔数与每塔炮管数。当前岸炮引用 `ship.warspite` 及其 381mm AP/HE，按单座联装结算两发。
 - `reload_during_suppression` 控制武器设施受压制期间是否继续装填；当前岸防炮为 `false`。

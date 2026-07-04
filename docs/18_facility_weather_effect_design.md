@@ -42,7 +42,7 @@
 | 前沿补给点 | `ui_marker_facility_forward_supply_point.png` | `facility.forward_supply_point.*` | 中立休眠，需先占领；同阵营舰低速进入单泊位并连续服务 7 秒，完成装填并缩短 12 秒技能冷却，离泊/受击/压制会中断 |
 | 近岸机场 | `ui_marker_facility_coastal_airfield.png` | `facility.coastal_airfield.*` | 敌方激活、不可占领/摧毁；提供侦察、战斗机巡逻和空袭，准备阶段随机场失效取消，已离场任务继续；受天气、冷却、次数及通信限制 |
 | 雷达站 | `ui_marker_facility_radar_station.png` | `facility.radar_station.*` | 敌方休眠，由关卡事件激活；1400 范围精确位置雷达接触，不受光学倍率或岛岸阻挡，显式雷达隐身可规避 |
-| 通信站 | `ui_marker_facility_communication_station.png` | `facility.communication_station.*` | 作为机场和岸炮的显式依赖；失效时关闭依赖能力，不直接造成伤害或侦查 |
+| 通信站 | `ui_marker_facility_communication_station.png` | `facility.communication_station.*` | 敌方激活且可占领/压制/摧毁；只服务同阵营且显式声明依赖的设施，普通占领不转移下游，整套易手必须触发关卡规则 |
 | 水雷控制站 | `ui_marker_facility_mine_control_station.png` | `facility.mine_control_station.*` | 控制绑定雷区的启停和所有权；压制使雷区休眠，摧毁使其失效 |
 | 港口维修泊位 | `ui_marker_facility_repair_berth.png` | `facility.repair_berth.*` | 9 秒服务后恢复最大 HP 的 28%，单场最高恢复到最大 HP 的 80% |
 

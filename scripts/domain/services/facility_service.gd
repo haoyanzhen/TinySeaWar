@@ -47,7 +47,7 @@ func configure(layout: Dictionary, anchors: Array, definitions: Array) -> void:
 			"shore_obstacle_id": str(anchor.get("shore_obstacle_id", "")),
 			"life_state": "Alive",
 			"operation_state": operation_state,
-			"previous_operation_state": operation_state,
+			"desired_operation_state": operation_state,
 			"current_hp": float(definition.get("max_hp", 1.0)),
 			"max_hp": float(definition.get("max_hp", 1.0)),
 			"interaction_state": "Idle",
@@ -55,6 +55,7 @@ func configure(layout: Dictionary, anchors: Array, definitions: Array) -> void:
 			"service_state": {},
 			"last_interruption_reason": "",
 			"suppression_remaining": 0.0,
+			"suppression_damage_accumulated": 0.0,
 			"cooldown_remaining": 0.0,
 			"charges_remaining": int(definition.get("charges", 0)),
 			"remote_charges_remaining": int(definition.get("remote_command", {}).get("charges", 0)),
@@ -62,7 +63,9 @@ func configure(layout: Dictionary, anchors: Array, definitions: Array) -> void:
 			"weapon_states": weapon_states,
 			"requires_all_active": placement.get("requires_all_active", []).duplicate(),
 			"requires_any_active": placement.get("requires_any_active", []).duplicate(),
+			"dependency_rules": placement.get("dependency_rules", {"requires_matching_faction": true}).duplicate(true),
 		}
+	for facility_id in _sorted_ids(): _refresh_operation_state(facility_id)
 
 
 func declare_control(facility_id: String, unit: Dictionary) -> Dictionary:
@@ -70,7 +73,7 @@ func declare_control(facility_id: String, unit: Dictionary) -> Dictionary:
 	if facility.is_empty() or str(facility.get("life_state", "")) != "Alive":
 		return {"accepted": false, "reason_code": "FACILITY_CONTROL_NOT_ALLOWED"}
 	var definition: Dictionary = definition_for(facility_id)
-	if "AreaControl" not in definition.get("operation_modes", []) or not bool(definition.get("area_control", {}).get("enabled", false)) or not facility.get("control_state", {}).is_empty():
+	if "AreaControl" not in definition.get("operation_modes", []) or not bool(definition.get("area_control", {}).get("enabled", false)) or not bool(definition.get("area_control", {}).get("capturable", false)) or not facility.get("control_state", {}).is_empty():
 		return {"accepted": false, "reason_code": "FACILITY_CONTROL_NOT_ALLOWED"}
 	if facility["operation_state"] == "Suppressed":
 		return {"accepted": false, "reason_code": "FACILITY_SUPPRESSED"}
@@ -209,11 +212,18 @@ func advance(delta: float, elapsed_time: float, units_by_id: Dictionary) -> Arra
 				weapon_state["reload_remaining"] = maxf(0.0, float(weapon_state.get("reload_remaining", 0.0)) - delta)
 		var suppression_before := float(facility.get("suppression_remaining", 0.0))
 		facility["suppression_remaining"] = maxf(0.0, suppression_before - delta)
-		if suppression_before > 0.0 and is_zero_approx(float(facility["suppression_remaining"])) and str(facility.get("life_state", "")) == "Alive":
-			facility["operation_state"] = str(facility.get("previous_operation_state", "Dormant"))
-			events.append({"event_type": "FacilityRecovered", "facility_id": facility_id, "operation_state": facility["operation_state"]})
+		var recovered := suppression_before > 0.0 and is_zero_approx(float(facility["suppression_remaining"])) and str(facility.get("life_state", "")) == "Alive"
+		var state_change := _refresh_operation_state(facility_id)
+		if not state_change.is_empty():
+			state_change["event_type"] = "FacilityRecovered" if recovered else "FacilityOperationStateChanged"
+			events.append(state_change)
 		_advance_control(facility_id, facility, delta, units_by_id, events)
 		_advance_service(facility_id, facility, delta, units_by_id, events)
+	# Dependency owners and states may change later in the deterministic ID pass.
+	# A second refresh removes ordering dependence before consumers receive the snapshot.
+	for facility_id in _sorted_ids():
+		var dependency_change := _refresh_operation_state(facility_id)
+		if not dependency_change.is_empty(): events.append(dependency_change)
 	var remaining: Array = []
 	for mission in support_missions:
 		if float(mission.get("resolve_at_time", INF)) > elapsed_time:
@@ -266,12 +276,13 @@ func _advance_control(facility_id: String, facility: Dictionary, delta: float, u
 	if float(control["progress"]) + 0.001 < float(control.get("duration", 1.0)): return
 	var old_faction := str(facility.get("faction_id", "neutral"))
 	facility["faction_id"] = str(control.get("faction_id", old_faction))
-	facility["operation_state"] = "Active"
-	facility["previous_operation_state"] = "Active"
+	facility["desired_operation_state"] = "Active"
+	var state_change := _refresh_operation_state(facility_id)
 	facility["control_state"] = {}
 	facility["interaction_state"] = "Idle"
 	if old_faction != str(facility["faction_id"]):
 		events.append({"event_type": "FacilityOwnershipChanged", "facility_id": facility_id, "old_faction_id": old_faction, "faction_id": facility["faction_id"]})
+	if not state_change.is_empty(): events.append(state_change)
 	events.append({"event_type": "FacilityControlCompleted", "facility_id": facility_id, "unit_id": unit.get("entity_id", ""), "faction_id": facility["faction_id"]})
 
 
@@ -306,23 +317,36 @@ func apply_damage(facility_id: String, damage: float, source_id: String = "") ->
 	if facility.is_empty() or str(facility.get("life_state", "")) != "Alive" or damage <= 0.0:
 		return []
 	var events: Array = []
+	var definition := definition_for(facility_id)
+	var disposition: Dictionary = definition.get("combat_disposition", {})
 	var action := _facility_action(facility)
 	if not action.is_empty(): _interrupt_action(facility_id, facility, str(action.get("unit_id", "")), "FACILITY_DAMAGED", events)
 	var hp_before := float(facility.get("current_hp", 0.0))
-	facility["current_hp"] = maxf(0.0, hp_before - damage)
-	events.append({"event_type": "FacilityDamaged", "facility_id": facility_id, "source_id": source_id, "damage": damage, "hp_before": hp_before, "hp_after": facility["current_hp"]})
-	if is_zero_approx(float(facility["current_hp"])):
+	var destroyable := bool(disposition.get("destroyable", true))
+	var damage_floor := 0.0 if destroyable else float(facility.get("max_hp", 1.0)) * clampf(float(disposition.get("damage_floor_ratio", 0.01)), 0.0, 1.0)
+	var hp_after := maxf(damage_floor, hp_before - damage)
+	var applied_damage := maxf(0.0, hp_before - hp_after)
+	facility["current_hp"] = hp_after
+	events.append({"event_type": "FacilityDamaged", "facility_id": facility_id, "source_id": source_id, "damage": applied_damage, "requested_damage": damage, "hp_before": hp_before, "hp_after": hp_after})
+	if applied_damage + 0.001 < damage:
+		events.append({"event_type": "FacilityDamageLimited", "facility_id": facility_id, "source_id": source_id, "damage_floor": damage_floor, "prevented_damage": damage - applied_damage})
+	if destroyable and is_zero_approx(float(facility["current_hp"])):
 		facility["life_state"] = "Destroyed"
-		facility["operation_state"] = "Destroyed"
+		facility["operation_state"] = "Disabled"
 		facility["control_state"] = {}
 		facility["service_state"] = {}
 		facility["interaction_state"] = "Interrupted"
 		facility["suppression_remaining"] = 0.0
 		events.append({"event_type": "FacilityDestroyed", "facility_id": facility_id, "source_id": source_id})
 		return events
-	var definition := definition_for(facility_id)
-	if "Suppressible" in definition.get("capabilities", []) and damage >= float(definition.get("suppression_damage_threshold", INF)):
-		events.append_array(suppress(facility_id, float(definition.get("suppression_duration", 0.0)), source_id))
+	if bool(disposition.get("suppressible", false)):
+		var threshold := float(definition.get("suppression_damage_threshold", INF))
+		facility["suppression_damage_accumulated"] = float(facility.get("suppression_damage_accumulated", 0.0)) + damage
+		events.append({"event_type": "FacilitySuppressionAccumulated", "facility_id": facility_id, "source_id": source_id, "accumulated_damage": facility["suppression_damage_accumulated"], "threshold": threshold})
+		if threshold > 0.0 and float(facility["suppression_damage_accumulated"]) >= threshold:
+			var threshold_count := maxi(1, floori(float(facility["suppression_damage_accumulated"]) / threshold))
+			facility["suppression_damage_accumulated"] = fmod(float(facility["suppression_damage_accumulated"]), threshold)
+			events.append_array(suppress(facility_id, float(definition.get("suppression_duration", 0.0)) * mini(3, threshold_count), source_id))
 	return events
 
 
@@ -333,9 +357,6 @@ func suppress(facility_id: String, duration: float, source_id: String = "") -> A
 	var events: Array = []
 	var action := _facility_action(facility)
 	if not action.is_empty(): _interrupt_action(facility_id, facility, str(action.get("unit_id", "")), "FACILITY_SUPPRESSED", events)
-	if str(facility.get("operation_state", "")) != "Suppressed":
-		var previous_state := str(facility.get("operation_state", "Dormant"))
-		facility["previous_operation_state"] = previous_state
 	facility["operation_state"] = "Suppressed"
 	facility["suppression_remaining"] = maxf(float(facility.get("suppression_remaining", 0.0)), duration)
 	events.append({"event_type": "FacilitySuppressed", "facility_id": facility_id, "source_id": source_id, "duration": duration})
@@ -459,16 +480,56 @@ func interaction_center(facility_id: String) -> Vector2:
 
 
 func _dependencies_active(facility: Dictionary) -> bool:
+	var requires_matching_faction := bool(facility.get("dependency_rules", {}).get("requires_matching_faction", true))
 	for dependency_id in facility.get("requires_all_active", []):
 		var dependency: Dictionary = facilities_by_id.get(dependency_id, {})
-		if str(dependency.get("life_state", "")) != "Alive" or str(dependency.get("operation_state", "")) != "Active": return false
+		if str(dependency.get("life_state", "")) != "Alive" or str(dependency.get("operation_state", "")) != "Active" or requires_matching_faction and str(dependency.get("faction_id", "")) != str(facility.get("faction_id", "")): return false
 	var any_dependencies: Array = facility.get("requires_any_active", [])
 	if not any_dependencies.is_empty():
 		for dependency_id in any_dependencies:
 			var dependency: Dictionary = facilities_by_id.get(dependency_id, {})
-			if str(dependency.get("life_state", "")) == "Alive" and str(dependency.get("operation_state", "")) == "Active": return true
+			if str(dependency.get("life_state", "")) == "Alive" and str(dependency.get("operation_state", "")) == "Active" and (not requires_matching_faction or str(dependency.get("faction_id", "")) == str(facility.get("faction_id", ""))): return true
 		return false
 	return true
+
+
+func _refresh_operation_state(facility_id: String) -> Dictionary:
+	var facility: Dictionary = facilities_by_id.get(facility_id, {})
+	if facility.is_empty(): return {}
+	var old_state := str(facility.get("operation_state", "Dormant"))
+	var new_state := "Dormant"
+	if str(facility.get("life_state", "")) != "Alive":
+		new_state = "Disabled"
+	elif float(facility.get("suppression_remaining", 0.0)) > 0.0:
+		new_state = "Suppressed"
+	else:
+		var desired := str(facility.get("desired_operation_state", "Dormant"))
+		if desired != "Active":
+			new_state = desired
+		elif _dependencies_active(facility):
+			new_state = "Active"
+		else:
+			new_state = "Silent" if bool(definition_for(facility_id).get("combat_disposition", {}).get("silentable", false)) else "Disabled"
+	facility["operation_state"] = new_state
+	if old_state == new_state: return {}
+	return {"event_type":"FacilityOperationStateChanged", "facility_id":facility_id, "old_operation_state":old_state, "operation_state":new_state, "dependencies_active":_dependencies_active(facility)}
+
+
+func validate_runtime_state(facility_id: String) -> Array[String]:
+	var facility: Dictionary = facilities_by_id.get(facility_id, {})
+	if facility.is_empty(): return ["FACILITY_NOT_FOUND"]
+	var errors: Array[String] = []
+	var operation := str(facility.get("operation_state", ""))
+	if operation not in ["Dormant", "Active", "Suppressed", "Silent", "Disabled"]: errors.append("INVALID_OPERATION_STATE")
+	if str(facility.get("life_state", "")) == "Destroyed" and operation != "Disabled": errors.append("DESTROYED_NOT_DISABLED")
+	if operation == "Active" and not _dependencies_active(facility): errors.append("ACTIVE_WITH_INVALID_DEPENDENCY")
+	if operation == "Suppressed" and float(facility.get("suppression_remaining", 0.0)) <= 0.0: errors.append("SUPPRESSED_WITHOUT_DURATION")
+	if str(facility.get("interaction_state", "")) not in ["Idle", "Controlling", "Contested", "Moored", "Docked", "Servicing", "Interrupted"]: errors.append("INVALID_INTERACTION_STATE")
+	var disposition: Dictionary = definition_for(facility_id).get("combat_disposition", {})
+	if not bool(disposition.get("destroyable", true)):
+		var floor_hp := float(facility.get("max_hp", 1.0)) * float(disposition.get("damage_floor_ratio", 0.0))
+		if float(facility.get("current_hp", 0.0)) + 0.001 < floor_hp: errors.append("HP_BELOW_DAMAGE_FLOOR")
+	return errors
 
 
 func _sorted_ids() -> Array:

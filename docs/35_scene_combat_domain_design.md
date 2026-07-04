@@ -177,15 +177,17 @@ active
 ```text
 facility_id
 definition_id
-faction_id
+faction_id # 独立所有权维度
 position
 heading
 life_state
 operation_state
+desired_operation_state
 interaction_state
 control_state
 service_state
 suppression_remaining
+suppression_damage_accumulated
 cooldown_remaining
 charges_remaining
 weapon_states
@@ -762,21 +764,25 @@ HazardController
 
 区域控制先声明意图，执行舰进入交互水域后自动累计。MVP 每个设施同时只接受一艘控制执行舰，友舰不叠加速度；敌舰进入同一控制水域时进度暂停并显示 `Contested`。靠泊服务必须在申请时通过所有权、运行状态、依赖、泊位、位置、低速、占用和必要朝向检查。
 
-设施通用运行状态：
+设施四个状态维度彼此独立：`life_state = Alive | Destroyed`，`faction_id` 保存所有权，`operation_state` 保存运行状态，`interaction_state` 保存当前控制或服务占用。
 
-设施通用状态：
+设施通用运行状态：
 
 ```text
 Dormant
 Active
 Suppressed
-Destroyed
+Silent
+Disabled
 ```
 
 状态不变量：
 
-- `Destroyed` 不可恢复为其他状态，除非未来战斗规则明确支持重建。
+- `Destroyed` 只属于生命状态；对应运行态必须为 `Disabled`，不可恢复，除非未来战斗规则明确支持重建。
 - `Suppressed` 设施不执行武器、观察、服务和支援任务。
+- `Active` 必须同时满足生命、期望运行态、依赖状态和同阵营依赖；依赖失效时进入 `Silent` 或 `Disabled`，依赖恢复时重新计算。
+- 压制不改变 `faction_id`；压制恢复、区域控制完成和依赖状态/阵营变化都重新计算合法运行态。
+- `destroyable=false` 的设施使用 `damage_floor_ratio` 限制 HP 下限，超出伤害产生 `FacilityDamageLimited`；所有 `suppressible=true` 设施按累计伤害跨越阈值进入压制。
 - 所有权变化、控制完成、服务、压制和摧毁必须提交领域事件。
 - 设施不能由 Presentation 直接改旗或重置冷却。
 

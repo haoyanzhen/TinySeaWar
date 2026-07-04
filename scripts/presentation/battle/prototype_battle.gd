@@ -959,6 +959,7 @@ func _consume_events(events: Array) -> void:
 			"FacilitySuppressed": _push_message("岸基设施已被压制")
 			"FacilityRecovered": _push_message("岸基设施恢复运行")
 			"FacilityDestroyed": _push_message("岸基设施已被摧毁")
+			"FacilityDamageLimited": _push_message("岸基设施达到不可摧毁伤害下限")
 			"UnitServiced": _push_message("%s 完成%s" % [_unit_display_name(str(event.get("unit_id", ""))), "维修" if event.get("service_type", "") == "Repair" else "补给"])
 			"SupportMissionResolved": _push_message("岸基航空支援已抵达")
 			"BattleFinished":

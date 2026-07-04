@@ -630,8 +630,12 @@ func _validate_facility_definition(definition: Dictionary) -> void:
 		if operation_modes.is_empty(): errors.append("Facility lacks operation_modes in %s" % definition_id)
 		for mode in operation_modes:
 			if mode not in allowed_modes: errors.append("Facility has invalid operation mode %s in %s" % [mode, definition_id])
-		if "AreaControl" in operation_modes and (not bool(definition.get("area_control", {}).get("enabled", false)) or float(definition.get("area_control", {}).get("duration", 0.0)) <= 0.0):
-			errors.append("Area-control facility lacks valid control rules in %s" % definition_id)
+		if "AreaControl" in operation_modes:
+			var area_control: Dictionary = definition.get("area_control", {})
+			if not bool(area_control.get("enabled", false)) or not bool(area_control.get("capturable", false)) or float(area_control.get("duration", 0.0)) <= 0.0:
+				errors.append("Area-control facility lacks valid control rules in %s" % definition_id)
+			if "Ownable" not in definition.get("capabilities", []) or "Interactable" not in definition.get("capabilities", []):
+				errors.append("Capturable facility lacks Ownable/Interactable capabilities in %s" % definition_id)
 		if "BerthingService" in operation_modes:
 			var berth: Dictionary = definition.get("berthing_service", {})
 			if str(berth.get("service_type", "")) not in ["Supply", "Repair"] or float(berth.get("duration", 0.0)) <= 0.0 or int(berth.get("berth_count", 0)) <= 0 or float(berth.get("max_entry_speed", -1.0)) < 0.0 or float(berth.get("heading_tolerance_degrees", -1.0)) < 0.0:
@@ -644,8 +648,17 @@ func _validate_facility_definition(definition: Dictionary) -> void:
 				if float(remote_command.get(field, 0.0)) <= 0.0: errors.append("Mine deployment %s must be positive in %s" % [field, definition_id])
 		if "AutomaticOperation" in operation_modes and definition.get("automatic_operation", {}).get("capability_ids", []).is_empty():
 			errors.append("Automatic facility lacks capability rules in %s" % definition_id)
-		if "CombatDisposition" in operation_modes and not definition.get("combat_disposition", {}).has("destroyable"):
-			errors.append("Combat facility lacks disposition rules in %s" % definition_id)
+		if "CombatDisposition" in operation_modes:
+			var disposition: Dictionary = definition.get("combat_disposition", {})
+			for field in ["suppressible", "destroyable", "silentable", "damage_floor_ratio"]:
+				if not disposition.has(field): errors.append("Combat facility lacks %s in %s" % [field, definition_id])
+			var floor_ratio := float(disposition.get("damage_floor_ratio", -1.0))
+			if bool(disposition.get("destroyable", true)) and not is_zero_approx(floor_ratio):
+				errors.append("Destroyable facility must use zero damage floor in %s" % definition_id)
+			if not bool(disposition.get("destroyable", true)) and (floor_ratio <= 0.0 or floor_ratio >= 1.0):
+				errors.append("Non-destroyable facility requires a damage floor between zero and one in %s" % definition_id)
+			if bool(disposition.get("suppressible", false)) != ("Suppressible" in definition.get("capabilities", [])):
+				errors.append("Suppressible capability and disposition disagree in %s" % definition_id)
 		if "Suppressible" in definition.get("capabilities", []) and (float(definition.get("suppression_damage_threshold", 0.0)) <= 0.0 or float(definition.get("suppression_duration", 0.0)) <= 0.0):
 			errors.append("Suppressible facility lacks positive suppression rules in %s" % definition_id)
 		var weapon_ids: Array = definition.get("weapon_ids", [])
@@ -675,9 +688,18 @@ func _validate_facility_definition(definition: Dictionary) -> void:
 				errors.append("Facility layout references missing facility in %s" % definition_id)
 			if not anchor_ids.has(str(placement.get("anchor_id", ""))):
 				errors.append("Facility layout references missing anchor in %s" % definition_id)
-			for dependency_id in placement.get("requires_all_active", []) + placement.get("requires_any_active", []):
+			if str(placement.get("operation_state", "")) not in ["Dormant", "Active"]:
+				errors.append("Facility placement has invalid initial operation state in %s" % definition_id)
+			var all_dependencies: Array = placement.get("requires_all_active", []) + placement.get("requires_any_active", [])
+			var seen_dependencies := {}
+			for dependency_id in all_dependencies:
 				if not placement_ids.has(str(dependency_id)):
 					errors.append("Facility layout references missing dependency in %s" % definition_id)
+				if str(dependency_id) == str(placement.get("id", "")) or seen_dependencies.has(str(dependency_id)):
+					errors.append("Facility layout has self or duplicate dependency in %s" % definition_id)
+				seen_dependencies[str(dependency_id)] = true
+			if not all_dependencies.is_empty() and not placement.get("dependency_rules", {}).has("requires_matching_faction"):
+				errors.append("Facility dependency lacks faction rule in %s" % definition_id)
 	elif definition_type == "MinefieldDefinition":
 		if get_definition("terrain", str(definition.get("terrain_definition_id", ""))).is_empty():
 			errors.append("Minefield references missing terrain in %s" % definition_id)

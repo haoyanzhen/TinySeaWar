@@ -461,6 +461,8 @@ func get_facility_action_status(unit_id: String, facility_id: String) -> Diction
 	var service_duration := maxf(0.001, float(service.get("duration", definition.get("berthing_service", {}).get("duration", 1.0))))
 	var inside: bool = Geometry2D.is_point_in_polygon(unit.get("position", Vector2.ZERO), _polygon(facility.get("interaction_water_polygon", [])))
 	var berth: Dictionary = definition.get("berthing_service", {})
+	var disposition: Dictionary = definition.get("combat_disposition", {})
+	var suppression_threshold := maxf(0.001, float(definition.get("suppression_damage_threshold", 1.0)))
 	var heading_ok: bool = absf(wrapf(float(unit.get("heading", 0.0)) - deg_to_rad(float(facility.get("heading", 0.0))), -PI, PI)) <= deg_to_rad(float(berth.get("heading_tolerance_degrees", 180.0)))
 	var speed_ok: bool = absf(float(unit.get("current_speed", 0.0))) <= float(berth.get("max_entry_speed", 0.0))
 	return {
@@ -471,8 +473,12 @@ func get_facility_action_status(unit_id: String, facility_id: String) -> Diction
 		"control_progress_ratio": clampf(float(control.get("progress", 0.0)) / control_duration, 0.0, 1.0),
 		"service_progress_ratio": clampf(float(service.get("progress", 0.0)) / service_duration, 0.0, 1.0),
 		"control_executor_unit_id": control.get("executor_unit_id", ""), "berth_unit_id": service.get("unit_id", ""),
+		"dependencies_active": facility.get("dependencies_active", true),
+		"suppression_remaining": facility.get("suppression_remaining", 0.0),
+		"suppression_progress_ratio": clampf(float(facility.get("suppression_damage_accumulated", 0.0)) / suppression_threshold, 0.0, 1.0),
+		"destroyable": disposition.get("destroyable", true), "damage_floor_ratio": disposition.get("damage_floor_ratio", 0.0),
 		"inside_interaction_water": inside, "berth_speed_ok": speed_ok, "berth_heading_ok": heading_ok,
-		"control_ready": "AreaControl" in modes and facility.get("life_state", "") == "Alive" and facility.get("operation_state", "") != "Suppressed" and control.is_empty(),
+		"control_ready": "AreaControl" in modes and bool(definition.get("area_control", {}).get("capturable", false)) and facility.get("life_state", "") == "Alive" and facility.get("operation_state", "") != "Suppressed" and control.is_empty(),
 		"service_ready": "BerthingService" in modes and facility_service.is_operational(facility_id) and facility.get("faction_id", "") == unit.get("faction_id", "") and inside and speed_ok and heading_ok and service.is_empty(),
 		"support_ready": "RemoteCommand" in modes and str(definition.get("remote_command", {}).get("command_type", "")) == "SupportMission" and facility_service.is_operational(facility_id) and facility.get("faction_id", "") == unit.get("faction_id", ""),
 		"mine_ready": "RemoteCommand" in modes and str(definition.get("remote_command", {}).get("command_type", "")) == "MineDeployment" and facility_service.is_operational(facility_id) and facility.get("faction_id", "") == unit.get("faction_id", ""),
@@ -2236,7 +2242,7 @@ func _ai_facility_plan(unit: Dictionary, allow_capture: bool) -> Dictionary:
 		var center := facility_service.interaction_center(str(facility_id))
 		var contest_pressure := _facility_contest_pressure(unit, center)
 		var is_repair: bool = hp_ratio < 0.55 and facility_service.is_operational(str(facility_id)) and facility.get("faction_id") == unit.get("faction_id") and str(definition.get("berthing_service", {}).get("service_type", "")) == "Repair"
-		var is_control: bool = allow_capture and capture_slot_available and "AreaControl" in definition.get("operation_modes", []) and bool(definition.get("area_control", {}).get("enabled", false)) and (facility.get("faction_id") != unit.get("faction_id") or facility.get("operation_state") == "Dormant")
+		var is_control: bool = allow_capture and capture_slot_available and "AreaControl" in definition.get("operation_modes", []) and bool(definition.get("area_control", {}).get("enabled", false)) and bool(definition.get("area_control", {}).get("capturable", false)) and (facility.get("faction_id") != unit.get("faction_id") or facility.get("operation_state") == "Dormant")
 		var is_defense: bool = facility.get("faction_id") == unit.get("faction_id") and facility_service.is_operational(str(facility_id)) and contest_pressure > 0.0
 		if not is_repair and not is_control and not is_defense: continue
 		var distance := (unit["position"] as Vector2).distance_to(center)
@@ -3196,9 +3202,20 @@ func _resolve_facility_attack(attack: Dictionary, source: Dictionary, forced_hit
 	result["source_facility_id"] = attack.get("source_facility_id", "")
 	result["target_facility_id"] = facility_id
 	result["target_unit_id"] = ""
+	if not bool(result.get("hit", false)):
+		_emit("AttackResolved", {"damage_result": result})
+		return
+	var facility_events := facility_service.apply_damage(facility_id, float(result.get("final_damage", 0.0)), str(source.get("entity_id", "")))
+	var resolved_facility: Dictionary = facility_service.facilities_by_id.get(facility_id, {})
+	var actual_damage := 0.0
+	for facility_event in facility_events:
+		if facility_event.get("event_type", "") == "FacilityDamaged": actual_damage = float(facility_event.get("damage", 0.0))
+	result["final_damage"] = actual_damage
+	result["target_hp_after"] = resolved_facility.get("current_hp", result.get("target_hp_after", 0.0))
+	result["caused_sinking"] = resolved_facility.get("life_state", "") == "Destroyed"
+	result["facility_damage_limited"] = facility_events.any(func(event): return event.get("event_type", "") == "FacilityDamageLimited")
 	_emit("AttackResolved", {"damage_result": result})
-	if not bool(result.get("hit", false)): return
-	for event in facility_service.apply_damage(facility_id, float(result.get("final_damage", 0.0)), str(source.get("entity_id", ""))):
+	for event in facility_events:
 		_handle_facility_event(event)
 	state["facilities_by_id"] = facility_service.snapshot()
 

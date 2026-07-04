@@ -654,6 +654,7 @@ FacilityDefinition
   operation_modes[] # AreaControl | BerthingService | RemoteCommand | AutomaticOperation | CombatDisposition
   area_control
     enabled
+    capturable
     duration
   berthing_service
     service_type
@@ -679,6 +680,7 @@ FacilityDefinition
     suppressible
     destroyable
     silentable
+    damage_floor_ratio
   armor
   armor_thickness
   suppression_damage_threshold
@@ -688,6 +690,16 @@ FacilityDefinition
   aviation_power
   weapon_id | weapon_ids
   reload_during_suppression
+
+FacilityLayout.placements[]
+  id
+  definition_id
+  anchor_id
+  faction_id
+  operation_state # Dormant | Active
+  requires_all_active[]
+  requires_any_active[]
+  dependency_rules.requires_matching_faction
 
 SupportMissionDefinition
   mission_type
@@ -715,10 +727,12 @@ MinefieldDefinition
 - `tide` 使用固定阶段时长循环；`open_phases` 允许新进入潮滩，其他阶段只允许已经位于区内的单位撤离。
 - `operation_modes` 只允许 `AreaControl`、`BerthingService`、`RemoteCommand`、`AutomaticOperation` 和 `CombatDisposition`；声明某模式时必须同时提供对应对象，不再用一组 `interaction_types` 混合表达占领、服务和远程任务。
 - `area_control` 保存控制持续时间；控制意图可以在进入交互水域前声明，进度只在执行舰进入后累计，同阵营只有一个 `executor_unit_id`。
+- `area_control.capturable`、`combat_disposition.suppressible/destroyable/silentable` 与 `damage_floor_ratio` 显式声明设施允许的生命周期结果；不可摧毁设施必须使用 `(0, 1)` 的伤害下限，可摧毁设施必须使用 `0`。
 - `berthing_service.service_type` 当前为 `Supply` 或 `Repair`，并显式保存泊位数、入泊速度、朝向容差和服务持续时间。补给继续使用 `weapon_reload_recovery_ratio`、`skill_cooldown_recovery`；维修使用 `hp_restore_ratio`、`repair_cap_ratio`。
 - `remote_command` 描述不要求舰船靠近的命令类别及合法任务引用；次数、冷却、航程和环境限制仍由具体任务 Definition 校验。
 - `MineDeployment` 远程命令另外使用 `control_radius`、`area_side_length`、`duration`、`mine_count`、`cooldown`、`charges` 和水雷伤害/碰撞/发现参数；随机种子由战斗种子、Tick 与设施 ID 确定。
 - `automatic_operation` 只列出设施自行运行的能力，不创建重复“使用设施”命令；`combat_disposition` 只声明公共攻击管线允许造成的压制、摧毁和静默结果。
+- 设施依赖由关卡放置声明；`requires_matching_faction=true` 时，依赖设施除 `Alive + Active` 外还必须与使用方同阵营。依赖失效后运行态进入 `Silent`（允许静默）或 `Disabled`，恢复、占领和依赖变化时重新计算，不修改所有权。
 - `weapon_id` 必须引用现有 Weapon Definition。岸炮和空袭继续使用普通命中、装甲和伤害公式。
 - `reload_during_suppression` 控制武器设施受压制期间是否继续装填；当前岸防炮为 `false`。
 - `blocked_aviation_conditions` 当前支持 `Severe` 与 `Grounded`；`Restricted` 通过到达时间和命中修正表达，不等同于无条件禁飞。

@@ -173,6 +173,8 @@ func _create_facility(facility: Dictionary) -> void:
 		"Active": "facility.state.active",
 		"Suppressed": "facility.state.suppressed",
 		"Dormant": "facility.state.offline",
+		"Silent": "facility.state.offline",
+		"Disabled": "facility.state.offline",
 	}.get(str(facility.get("operation_state", "Dormant")), "")
 	if overlay_semantic.is_empty():
 		return
@@ -213,6 +215,8 @@ func _facility_modulate(faction_id: String, operation_state: String) -> Color:
 	elif faction_id == "enemy": color = Color(1.0, 0.82, 0.78)
 	if operation_state == "Dormant": color *= Color(0.72, 0.76, 0.76, 0.85)
 	elif operation_state == "Suppressed": color *= Color(0.86, 0.7, 0.48, 0.9)
+	elif operation_state == "Silent": color *= Color(0.58, 0.66, 0.76, 0.82)
+	elif operation_state == "Disabled": color *= Color(0.48, 0.5, 0.52, 0.72)
 	return color
 
 

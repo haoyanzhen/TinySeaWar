@@ -19,6 +19,7 @@ func reset(battle_id: String, seed_value: int) -> void:
 		"commands": 0,
 		"skill_casts": 0,
 		"units": {},
+		"non_ship_damage": {},
 		"result": {},
 		"ai_behavior": {
 			"mode_switches": 0, "tactic_switches": 0, "target_switches": 0,
@@ -140,7 +141,7 @@ func _record_damage(result: Dictionary, elapsed_time: float) -> void:
 	var source_id := str(result.get("source_unit_id", ""))
 	if bool(result.get("hit", false)) and not source_id.is_empty():
 		if summary["first_hit_time"] < 0.0: summary["first_hit_time"] = elapsed_time
-	DamageStatistics.record_result(summary["units"], result)
+	DamageStatistics.record_result(summary["units"], summary["non_ship_damage"], result)
 
 
 func unit_damage_statistics(unit_id: String) -> Dictionary:
@@ -149,6 +150,14 @@ func unit_damage_statistics(unit_id: String) -> Dictionary:
 
 func all_unit_damage_statistics() -> Dictionary:
 	return DamageStatistics.all_unit_statistics(summary.get("units", {}))
+
+
+func non_ship_damage_statistics(source_id: String) -> Dictionary:
+	return DamageStatistics.non_ship_statistics(summary.get("non_ship_damage", {}), source_id)
+
+
+func all_non_ship_damage_statistics() -> Dictionary:
+	return DamageStatistics.all_non_ship_statistics(summary.get("non_ship_damage", {}))
 
 
 func unit_damage_for_category(unit_id: String, category: String, include_contribution: bool = false) -> float:

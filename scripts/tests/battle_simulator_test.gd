@@ -42,6 +42,12 @@ func _run() -> void:
 	_check(Aggregator.new().deterministic_signature(first) == Aggregator.new().deterministic_signature(second), "same manifest and seed reproduce the same result")
 	var first_run: Dictionary = first.get("runs", [])[0]
 	_check(not first_run.get("units", {}).has(""), "area misses do not create an empty analytics unit")
+	var non_ship_aggregate := Aggregator.new().aggregate([{
+		"end_state":"Finished", "winner_faction":"player", "winner_lineup":"original_player", "finish_reason":"FLAGSHIP_SUNK", "duration":1.0,
+		"units":{"unit.player.test":{"lineup_id":"original_player", "definition_id":"ship.test", "display_name":"测试舰", "damage_dealt":10.0, "damage_taken":0.0, "contribution_damage":0.0, "damage_by_category":{}, "overkill_damage":0.0, "shots":1, "hits":1}},
+		"non_ship_damage":{"facility.test":{"source_id":"facility.test", "source_kind":"Facility", "display_name":"测试炮台", "damage_dealt":20.0, "damage_taken":0.0, "overkill_damage":0.0, "shots":1, "hits":1, "damage_by_category":{"main_gun":20.0}}},
+	}])
+	_check(not non_ship_aggregate.get("average_damage_by_ship", {}).has("|") and non_ship_aggregate.get("average_damage_by_non_ship", {}).has("facility.test"), "non-ship damage aggregates separately without creating a blank ship grouping key")
 	var player_health: Dictionary = first_run.get("fleet_health", {}).get("fleet.player", {})
 	var player_damage_taken := 0.0
 	for unit_id in first_run.get("units", {}):

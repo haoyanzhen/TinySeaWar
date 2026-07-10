@@ -46,6 +46,7 @@ Use lowercase English file names with underscores:
 - [33_domain_design_phase2.md](33_domain_design_phase2.md)
 - [34_implementation_map.md](34_implementation_map.md)
 - [35_scene_combat_domain_design.md](35_scene_combat_domain_design.md)
+- [36_balance_testing_design.md](36_balance_testing_design.md)
 
 ### Technical Solutions
 
@@ -67,4 +68,3 @@ Use lowercase English file names with underscores:
 - [90_design_audit_round4.md](90_design_audit_round4.md)
 - [91_character_phase2_historical_validation.md](91_character_phase2_historical_validation.md)
 - [92_character_phase2_balance_validation.md](92_character_phase2_balance_validation.md)
-- [93_ai_navigation_facility_review.md](93_ai_navigation_facility_review.md)

@@ -115,6 +115,7 @@ func _aggregate_core(runs: Array) -> Dictionary:
 		"faction_combat": faction_combat,
 		"average_damage_by_unit": average_damage_by_unit,
 		"average_damage_by_ship": _average_damage_by_ship(runs),
+		"average_damage_by_non_ship": _average_damage_by_non_ship(runs),
 		"ai_behavior": _finalize_ai_behavior(ai_behavior_totals, durations, finished_runs, total_effective_damage, total_overkill),
 	}
 
@@ -184,15 +185,52 @@ func _average_damage_by_ship(runs: Array) -> Dictionary:
 	return totals
 
 
+func _average_damage_by_non_ship(runs: Array) -> Dictionary:
+	var totals := {}
+	for run in runs:
+		if run.get("end_state", "") != "Finished": continue
+		for source_id in run.get("non_ship_damage", {}):
+			var source: Dictionary = run["non_ship_damage"][source_id]
+			if not totals.has(source_id):
+				totals[source_id] = {
+					"source_id": source_id,
+					"source_kind": source.get("source_kind", "NonShip"),
+					"definition_id": source.get("definition_id", ""),
+					"display_name": source.get("display_name", source_id),
+					"faction_id": source.get("faction_id", ""),
+					"battles": 0,
+					"damage_dealt": 0.0,
+					"damage_taken": 0.0,
+					"overkill_damage": 0.0,
+					"shots": 0,
+					"hits": 0,
+					"damage_by_category": {},
+				}
+			var entry: Dictionary = totals[source_id]
+			entry["battles"] += 1
+			for key in ["damage_dealt", "damage_taken", "overkill_damage"]:
+				entry[key] = float(entry.get(key, 0.0)) + float(source.get(key, 0.0))
+			for key in ["shots", "hits"]:
+				entry[key] = int(entry.get(key, 0)) + int(source.get(key, 0))
+			for category in source.get("damage_by_category", {}):
+				entry["damage_by_category"][category] = float(entry["damage_by_category"].get(category, 0.0)) + float(source["damage_by_category"][category])
+	for source_id in totals:
+		var count := maxi(1, int(totals[source_id]["battles"]))
+		for key in ["damage_dealt", "damage_taken", "overkill_damage"]:
+			totals[source_id]["average_%s" % key] = float(totals[source_id][key]) / count
+	return totals
+
+
 func deterministic_signature(result: Dictionary) -> String:
 	var signatures: Array[String] = []
 	for run in result.get("runs", []):
-		signatures.append("%s|%s|%s|%.3f|%s" % [
+		signatures.append("%s|%s|%s|%.3f|%s|%s" % [
 			str(run.get("run_id", "")),
 			str(run.get("end_state", "")),
 			str(run.get("winner_faction", "")),
 			float(run.get("duration", 0.0)),
 			JSON.stringify(run.get("units", {})),
+			JSON.stringify(run.get("non_ship_damage", {})),
 		])
 	return "\n".join(signatures)
 

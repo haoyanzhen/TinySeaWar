@@ -1,7 +1,7 @@
 # 惯性航行与紧急规避技术问题
 
 > 状态：问题已记录，技术方案暂缓
-> 关联设计：`docs/16_enemy_ai_behavior_design.md`、`docs/35_scene_combat_domain_design.md`、`docs/93_ai_navigation_facility_review.md`
+> 关联设计：`docs/16_enemy_ai_behavior_design.md`、`docs/35_scene_combat_domain_design.md`、`workorder/20260702-ai-navigation-facility-harbor.md`
 
 ## 1. 当前问题
 

@@ -356,6 +356,14 @@ func get_all_unit_damage_statistics() -> Dictionary:
 	return recorder.all_unit_damage_statistics()
 
 
+func get_non_ship_damage_statistics(source_id: String) -> Dictionary:
+	return recorder.non_ship_damage_statistics(source_id)
+
+
+func get_all_non_ship_damage_statistics() -> Dictionary:
+	return recorder.all_non_ship_damage_statistics()
+
+
 func get_unit_damage_for_category(unit_id: String, category: String, include_contribution: bool = false) -> float:
 	return recorder.unit_damage_for_category(unit_id, category, include_contribution)
 
@@ -3242,6 +3250,8 @@ func _resolve_attack(attack: Dictionary, forced_hit: bool) -> void:
 		attack["damage_multiplier"] = float(attack.get("damage_multiplier", 1.0)) * _aviation_survival_ratio(attack, source_snapshot)
 	var result := DamageService.resolve(attack, source_snapshot, target, weapon, formula, random_source, forced_hit)
 	result = DamageStatistics.enrich_result(result, weapon, source.get("stats", source), attack)
+	_annotate_non_ship_damage_result(result, attack)
+	result["geometry_intersection"] = bool(attack.get("geometry_intersection", false))
 	result["impact_position"] = attack.get("target_position", target.get("position", Vector2.ZERO))
 	result["aimed_target_unit_id"] = attack.get("aimed_target_unit_id", attack.get("target_unit_id", ""))
 	target["current_hp"] = float(result["target_hp_after"])
@@ -3312,6 +3322,7 @@ func _resolve_area_attack(attack: Dictionary, source: Dictionary, forced_hit: bo
 	candidates.sort_custom(func(a, b): return float(a["distance"]) < float(b["distance"]) if not is_equal_approx(float(a["distance"]), float(b["distance"])) else str(a["target_id"]) < str(b["target_id"]))
 	if candidates.is_empty():
 		var miss_result := {"attack_id": attack.get("attack_id", ""), "source_unit_id": source.get("entity_id", ""), "source_weapon_id": weapon.get("id", ""), "aimed_target_unit_id": attack.get("aimed_target_unit_id", ""), "target_unit_id": "", "impact_position": impact_position, "damage_type": weapon.get("mount_type", ""), "hit": false, "hit_reason": "NO_TARGET_IN_AREA", "raw_damage": 0.0, "armor_modifier": 0.0, "armor_reduction": 0.0, "base_final_damage": 0.0, "buff_bonus_damage": 0.0, "buff_contribution_weights": {}, "buff_contribution_details": [], "buff_source_skill_ids": [], "final_damage": 0.0, "target_hp_before": 0.0, "target_hp_after": 0.0, "caused_sinking": false}
+		miss_result["geometry_intersection"] = false
 		miss_result = DamageStatistics.enrich_result(miss_result, weapon, source.get("stats", source), attack)
 		_emit("AttackResolved", {"damage_result": miss_result})
 		return
@@ -3320,6 +3331,7 @@ func _resolve_area_attack(attack: Dictionary, source: Dictionary, forced_hit: bo
 		attack["target_facility_id"] = selected["target_id"]
 	else:
 		attack["target_unit_id"] = selected["target_id"]
+	attack["geometry_intersection"] = true
 	_resolve_attack(attack, forced_hit)
 
 
@@ -3334,6 +3346,7 @@ func _resolve_facility_attack(attack: Dictionary, source: Dictionary, forced_hit
 	source_snapshot["position"] = attack.get("origin", source.get("position", Vector2.ZERO))
 	var result := DamageService.resolve(attack, source_snapshot, target, weapon, formula, random_source, forced_hit)
 	result = DamageStatistics.enrich_result(result, weapon, source.get("stats", source), attack)
+	_annotate_non_ship_damage_result(result, attack)
 	result["impact_position"] = attack.get("target_position", target.get("position", Vector2.ZERO))
 	result["source_facility_id"] = attack.get("source_facility_id", "")
 	result["target_facility_id"] = facility_id
@@ -3558,13 +3571,15 @@ func _apply_mine_trigger(unit: Dictionary, trigger: Dictionary) -> void:
 		var mine_source := {"entity_id":str(trigger.get("minefield_id", "")), "position":trigger.get("position", unit.get("position", Vector2.ZERO)), "status_effects":[], "stats":source_ship}
 		var attack := {"attack_id":_next_entity_id("mine_attack"), "source_weapon_id":weapon.get("id", ""), "target_unit_id":unit.get("entity_id", ""), "impact_position":trigger.get("position", unit.get("position", Vector2.ZERO))}
 		result = DamageService.resolve(attack, mine_source, unit, weapon, formula, random_source, true)
+		result["source_hazard_id"] = str(trigger.get("minefield_id", ""))
+		result["damage_category"] = "mine"
 		result["hit_reason"] = "MINE_TRIGGER"
 		unit["current_hp"] = result["target_hp_after"]
 	else:
 		var hp_before := float(unit.get("current_hp", 0.0))
 		var damage := minf(hp_before, maxf(0.0, float(trigger.get("damage", 0.0))))
 		unit["current_hp"] = maxf(0.0, hp_before - damage)
-		result = {"attack_id":_next_entity_id("mine_attack"), "source_unit_id":str(trigger.get("minefield_id", "")), "source_weapon_id":"hazard.minefield", "target_unit_id":unit["entity_id"], "impact_position":trigger.get("position", unit["position"]), "damage_type":"Mine", "hit":true, "hit_rate":1.0, "hit_reason":"MINE_TRIGGER", "raw_damage":damage, "armor_modifier":1.0, "armor_reduction":0.0, "final_damage":damage, "target_hp_before":hp_before, "target_hp_after":unit["current_hp"], "caused_sinking":is_zero_approx(float(unit["current_hp"]))}
+		result = {"attack_id":_next_entity_id("mine_attack"), "source_unit_id":str(trigger.get("minefield_id", "")), "source_hazard_id":str(trigger.get("minefield_id", "")), "source_weapon_id":"hazard.minefield", "target_unit_id":unit["entity_id"], "impact_position":trigger.get("position", unit["position"]), "damage_type":"Mine", "hit":true, "hit_rate":1.0, "hit_reason":"MINE_TRIGGER", "raw_damage":damage, "armor_modifier":1.0, "armor_reduction":0.0, "final_damage":damage, "target_hp_before":hp_before, "target_hp_after":unit["current_hp"], "caused_sinking":is_zero_approx(float(unit["current_hp"]))}
 	state["minefields_by_id"] = minefield_service.snapshot()
 	_emit("MineTriggered", {"minefield_id":trigger.get("minefield_id", ""), "unit_id":unit["entity_id"], "position":trigger.get("position", unit["position"]), "damage":result.get("final_damage", 0.0)})
 	_emit("AttackResolved", {"damage_result":result})
@@ -3602,6 +3617,23 @@ func _first_facility_path_hit(origin: Vector2, target_position: Vector2, source_
 		if best.is_empty() or fraction < float(best.get("fraction", 1.0)) - 0.001 or (is_equal_approx(fraction, float(best.get("fraction", 1.0))) and str(facility_id) < str(best.get("facility_id", ""))):
 			best = {"facility_id":str(facility_id), "fraction":fraction}
 	return best
+
+
+func _annotate_non_ship_damage_result(result: Dictionary, attack: Dictionary) -> void:
+	var source_facility_id := str(attack.get("source_facility_id", ""))
+	if not source_facility_id.is_empty():
+		var source_facility: Dictionary = state.get("facilities_by_id", {}).get(source_facility_id, {})
+		result["source_facility_id"] = source_facility_id
+		result["source_definition_id"] = str(source_facility.get("definition_id", ""))
+		result["source_display_name"] = str(source_facility.get("display_name", source_facility_id))
+		result["source_faction_id"] = str(source_facility.get("faction_id", ""))
+	var target_facility_id := str(attack.get("target_facility_id", ""))
+	if not target_facility_id.is_empty():
+		var target_facility: Dictionary = state.get("facilities_by_id", {}).get(target_facility_id, {})
+		result["target_facility_id"] = target_facility_id
+		result["target_definition_id"] = str(target_facility.get("definition_id", ""))
+		result["target_display_name"] = str(target_facility.get("display_name", target_facility_id))
+		result["target_faction_id"] = str(target_facility.get("faction_id", ""))
 
 
 func _attack_source_faction(attack: Dictionary, source: Dictionary) -> String:

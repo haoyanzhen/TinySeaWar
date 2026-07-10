@@ -15,6 +15,7 @@ func _init() -> void:
 
 func _run() -> void:
 	_test_classification_and_aggregation()
+	_test_non_ship_damage_separation()
 	_test_battle_session_accessors()
 	if failures.is_empty():
 		print("PASS: %d damage statistics checks" % checks)
@@ -77,6 +78,39 @@ func _test_classification_and_aggregation() -> void:
 	_check(recorder.unit_damage_statistics("unit.unknown")["damage_dealt"] == 0.0, "unknown ship query returns a stable zero-filled structure")
 
 
+func _test_non_ship_damage_separation() -> void:
+	var recorder = BattleRecorder.new()
+	recorder.reset("battle.statistics.non_ship", 2)
+	recorder.register_units({
+		"unit.target": {"definition_id":"ship.target", "display_name":"目标舰", "faction_id":"player"},
+		"unit.attacker": {"definition_id":"ship.attacker", "display_name":"攻击舰", "faction_id":"enemy"},
+	})
+	var facility_result := {
+		"source_unit_id":"facility.harbor.battery_west", "source_facility_id":"facility.harbor.battery_west",
+		"source_definition_id":"facility.coastal_battery", "source_display_name":"西岸炮台", "source_faction_id":"enemy",
+		"source_weapon_id":"weapon.battery", "target_unit_id":"unit.target", "damage_type":"Gun", "hit":true,
+		"final_damage":75.0, "target_hp_before":500.0,
+	}
+	var mine_result := {
+		"source_unit_id":"minefield.harbor.inner", "source_hazard_id":"minefield.harbor.inner",
+		"source_weapon_id":"hazard.minefield", "target_unit_id":"unit.target", "damage_type":"Mine", "hit":true,
+		"final_damage":25.0, "target_hp_before":425.0,
+	}
+	var facility_target_result := {
+		"source_unit_id":"unit.attacker", "source_weapon_id":"weapon.main", "target_unit_id":"",
+		"target_facility_id":"facility.harbor.observation_west", "target_definition_id":"facility.observation_post",
+		"target_display_name":"西侧观察站", "target_faction_id":"player", "damage_type":"Gun", "hit":true,
+		"final_damage":30.0, "target_hp_before":300.0,
+	}
+	recorder.consume([_event(facility_result), _event(mine_result), _event(facility_target_result)], 1.0)
+	var ships := recorder.all_unit_damage_statistics()
+	var non_ships := recorder.all_non_ship_damage_statistics()
+	_check(not ships.has("facility.harbor.battery_west") and not ships.has("minefield.harbor.inner"), "facility and hazard sources never enter the ship statistics collection")
+	_check(is_equal_approx(float(non_ships["facility.harbor.battery_west"]["damage_dealt"]), 75.0) and non_ships["facility.harbor.battery_west"]["source_kind"] == "Facility", "facility damage is retained in a stable non-ship source entry")
+	_check(is_equal_approx(float(non_ships["minefield.harbor.inner"]["damage_by_category"]["mine"]), 25.0) and non_ships["minefield.harbor.inner"]["source_kind"] == "Hazard", "hazard damage retains its category in non-ship statistics")
+	_check(is_equal_approx(float(non_ships["facility.harbor.observation_west"]["damage_taken"]), 30.0), "facility targets retain non-ship damage taken for future analysis")
+
+
 func _test_battle_session_accessors() -> void:
 	var registry = ConfigRegistry.new()
 	_check(registry.load_all(), "configuration registry loads for battle integration")
@@ -85,6 +119,7 @@ func _test_battle_session_accessors() -> void:
 	var all_units := session.get_all_unit_damage_statistics()
 	_check(all_units.has("unit.player.warspite") and all_units.has("unit.enemy.bismarck"), "battle registers every ship before damage occurs")
 	_check(session.get_unit_damage_for_category("unit.player.warspite", "main_gun") == 0.0, "battle category accessor is immediately safe to consume")
+	_check(session.get_all_non_ship_damage_statistics().is_empty(), "battle non-ship accessor is safe before any facility or hazard damage occurs")
 
 
 func _result(weapon_id: String, damage: float, hp_before: float) -> Dictionary:

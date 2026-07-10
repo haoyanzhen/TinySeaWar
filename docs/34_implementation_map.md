@@ -116,6 +116,7 @@
   - 分类与聚合工具：`scripts/infrastructure/analytics/damage_statistics.gd`
   - `BattleSession.get_unit_damage_statistics`：取得单舰完整统计。
   - `BattleSession.get_all_unit_damage_statistics`：取得本局全部舰船统计，包含零伤害舰船。
+  - `BattleSession.get_all_non_ship_damage_statistics`：取得设施、危险源等非舰船的后台伤害统计；与舰船集合并列，不进入玩家逐舰展示。
   - `BattleSession.get_unit_damage_for_category`：直接查询主炮、副炮、鱼雷、航空、技能、Buff 等分类值。
 - 随机数：`scripts/infrastructure/random/seeded_random_source.gd`
 
@@ -235,12 +236,14 @@
   - 实验运行：`scripts/application/simulation/simulation_runner.gd`
   - 清单加载：`scripts/infrastructure/simulation/experiment_loader.gd`
   - 聚合与报告：`scripts/infrastructure/simulation/simulation_aggregator.gd`、`simulation_report_writer.gd`
-  - 逐舰分类伤害：`scripts/infrastructure/analytics/damage_statistics.gd`；模拟器通过 `BattleSession.get_all_unit_damage_statistics()` 读取，不另算伤害。
+  - 逐舰分类伤害：`scripts/infrastructure/analytics/damage_statistics.gd`；模拟器通过 `BattleSession.get_all_unit_damage_statistics()` 读取，不另算伤害；非舰船来源并列写入单局 `non_ship_damage` 与聚合 `average_damage_by_non_ship`，不混入逐舰报表。
   - 命令入口：`tools/simulation/run_experiment.gd`
   - 示例实验：`data/simulations/experiments/smoke_single_battle.json`
   - 最新 AI 双方对战：`data/simulations/experiments/latest_ai_current_3v3_5v5.json`
   - 独立测试：`scripts/tests/battle_simulator_test.gd`
   - 伤害统计测试：`scripts/tests/damage_statistics_test.gd`
+  - 平衡性子项测试：`tools/simulation/run_damage_ttk_balance.gd`；统计与图表：`tools/simulation/analyze_damage_ttk_balance.py`
+  - 平衡性测试设计：`docs/36_balance_testing_design.md`
 - 截图 QA：`scripts/tests/render_scene_qa.gd`
 - 常用命令：
   - 启动检查：`godot --headless --path . --quit-after 2`
@@ -251,6 +254,7 @@
   - 全角色技能测试：`godot --headless --path . --script res://scripts/tests/skill_runtime_test.gd`
   - 战斗模拟器测试：`godot --headless --path . --script res://scripts/tests/battle_simulator_test.gd`
   - 运行示例模拟：`godot --headless --path . --script res://tools/simulation/run_experiment.gd -- res://data/simulations/experiments/smoke_single_battle.json`
+  - 运行伤害/舰炮/TTK 平衡子项：`godot --headless --path . --script res://tools/simulation/run_damage_ttk_balance.gd`，再运行 `python3 tools/simulation/analyze_damage_ttk_balance.py`
   - 格式检查：`git diff --check`
   - 地形配置校验：`python3 tools/terrain/validate_terrain_definition.py`
   - 地形生产门禁：`python3 tools/terrain/validate_scene_combat_pipeline.py`

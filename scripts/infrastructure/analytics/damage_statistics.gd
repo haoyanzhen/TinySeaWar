@@ -34,6 +34,13 @@ static func empty_unit_statistics(metadata: Dictionary = {}) -> Dictionary:
 	}
 
 
+static func empty_non_ship_statistics(metadata: Dictionary = {}) -> Dictionary:
+	var statistics := empty_unit_statistics(metadata)
+	statistics["source_kind"] = str(metadata.get("source_kind", "NonShip"))
+	statistics["source_id"] = str(metadata.get("source_id", ""))
+	return statistics
+
+
 static func ensure_unit(units: Dictionary, unit_id: String, metadata: Dictionary = {}) -> Dictionary:
 	if unit_id.is_empty():
 		return {}
@@ -44,6 +51,18 @@ static func ensure_unit(units: Dictionary, unit_id: String, metadata: Dictionary
 			if str(units[unit_id].get(key, "")).is_empty() and metadata.has(key):
 				units[unit_id][key] = str(metadata[key])
 	return units[unit_id]
+
+
+static func ensure_non_ship(non_ship_damage: Dictionary, source_id: String, metadata: Dictionary = {}) -> Dictionary:
+	if source_id.is_empty():
+		return {}
+	if not non_ship_damage.has(source_id):
+		non_ship_damage[source_id] = empty_non_ship_statistics(metadata.merged({"source_id": source_id}, true))
+	else:
+		for key in ["definition_id", "display_name", "faction_id", "source_kind"]:
+			if str(non_ship_damage[source_id].get(key, "")).is_empty() and metadata.has(key):
+				non_ship_damage[source_id][key] = str(metadata[key])
+	return non_ship_damage[source_id]
 
 
 static func enrich_result(result: Dictionary, weapon: Dictionary = {}, source_ship: Dictionary = {}, context: Dictionary = {}) -> Dictionary:
@@ -89,11 +108,13 @@ static func category_for(result: Dictionary, weapon: Dictionary = {}, source_shi
 		_: return "other"
 
 
-static func record_result(units: Dictionary, result: Dictionary) -> Dictionary:
-	var source_id := str(result.get("source_unit_id", ""))
-	var target_id := str(result.get("target_unit_id", ""))
-	var source_stats := ensure_unit(units, source_id)
-	var target_stats := ensure_unit(units, target_id)
+static func record_result(units: Dictionary, non_ship_damage: Dictionary, result: Dictionary) -> Dictionary:
+	var source_descriptor := _source_descriptor(result)
+	var target_descriptor := _target_descriptor(result)
+	var source_id := str(source_descriptor.get("entity_id", ""))
+	var target_id := str(target_descriptor.get("entity_id", ""))
+	var source_stats := ensure_unit(units, source_id) if source_descriptor.get("is_ship", false) else ensure_non_ship(non_ship_damage, source_id, source_descriptor)
+	var target_stats := ensure_unit(units, target_id) if target_descriptor.get("is_ship", false) else ensure_non_ship(non_ship_damage, target_id, target_descriptor)
 	var category := category_for(result)
 	var damage := maxf(0.0, float(result.get("final_damage", 0.0)))
 	var hp_before := maxf(0.0, float(result.get("target_hp_before", damage)))
@@ -120,6 +141,16 @@ static func record_result(units: Dictionary, result: Dictionary) -> Dictionary:
 	}
 
 
+static func non_ship_statistics(non_ship_damage: Dictionary, source_id: String) -> Dictionary:
+	if not non_ship_damage.has(source_id):
+		return empty_non_ship_statistics()
+	return non_ship_damage[source_id].duplicate(true)
+
+
+static func all_non_ship_statistics(non_ship_damage: Dictionary) -> Dictionary:
+	return non_ship_damage.duplicate(true)
+
+
 static func unit_statistics(units: Dictionary, unit_id: String) -> Dictionary:
 	if not units.has(unit_id):
 		return empty_unit_statistics()
@@ -136,6 +167,43 @@ static func damage_for_category(units: Dictionary, unit_id: String, category: St
 	if include_contribution:
 		total += float(statistics.get("contribution_damage_by_category", {}).get(category, 0.0))
 	return total
+
+
+static func _source_descriptor(result: Dictionary) -> Dictionary:
+	var facility_id := str(result.get("source_facility_id", ""))
+	if not facility_id.is_empty():
+		return _non_ship_descriptor(facility_id, "Facility", result, "source")
+	var hazard_id := str(result.get("source_hazard_id", ""))
+	if not hazard_id.is_empty():
+		return _non_ship_descriptor(hazard_id, "Hazard", result, "source")
+	var unit_id := str(result.get("source_unit_id", ""))
+	if unit_id.begins_with("unit."):
+		return {"entity_id": unit_id, "is_ship": true}
+	if unit_id.is_empty():
+		return {}
+	return _non_ship_descriptor(unit_id, "NonShip", result, "source")
+
+
+static func _target_descriptor(result: Dictionary) -> Dictionary:
+	var facility_id := str(result.get("target_facility_id", ""))
+	if not facility_id.is_empty():
+		return _non_ship_descriptor(facility_id, "Facility", result, "target")
+	var unit_id := str(result.get("target_unit_id", ""))
+	if unit_id.begins_with("unit."):
+		return {"entity_id": unit_id, "is_ship": true}
+	return {}
+
+
+static func _non_ship_descriptor(entity_id: String, source_kind: String, result: Dictionary, role: String) -> Dictionary:
+	return {
+		"entity_id": entity_id,
+		"source_id": entity_id,
+		"source_kind": source_kind,
+		"definition_id": str(result.get("%s_definition_id" % role, "")),
+		"display_name": str(result.get("%s_display_name" % role, entity_id)),
+		"faction_id": str(result.get("%s_faction_id" % role, "")),
+		"is_ship": false,
+	}
 
 
 static func _record_buff_contribution(units: Dictionary, result: Dictionary, fallback_source_id: String, effective_damage: float, final_damage: float) -> void:

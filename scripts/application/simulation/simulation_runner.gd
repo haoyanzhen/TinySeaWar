@@ -98,6 +98,7 @@ func _run_battle(registry, manifest: Dictionary, scenario: Dictionary, seed_valu
 	var result: Dictionary = stats.get("result", {})
 	var fleet_health := _fleet_health(session.state)
 	var unit_damage_statistics: Dictionary = session.get_all_unit_damage_statistics()
+	var non_ship_damage_statistics: Dictionary = session.get_all_non_ship_damage_statistics()
 	_annotate_lineups(unit_damage_statistics, side_variant)
 	var winner_faction := str(result.get("winner_faction", ""))
 	return {
@@ -122,6 +123,7 @@ func _run_battle(registry, manifest: Dictionary, scenario: Dictionary, seed_valu
 		"fleet_health": fleet_health,
 		"unit_end_states": _unit_end_states(session.state),
 		"units": unit_damage_statistics,
+		"non_ship_damage": non_ship_damage_statistics,
 	}
 
 

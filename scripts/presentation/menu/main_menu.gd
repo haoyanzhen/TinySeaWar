@@ -7,6 +7,18 @@ const PANEL_STROKE := Color(0.48, 0.82, 0.95, 0.62)
 const TEXT_DARK := Color("#123443")
 const TEXT_SOFT := Color("#5d8793")
 const ACCENT := Color("#ffc857")
+const COASTAL_LEVELS := [
+	["港湾入口", "level.prototype_harbor_3v3"],
+	["破碎环礁", "level.prototype_broken_atoll_3v3"],
+	["中央沙洲", "level.prototype_central_sandbar_3v3"],
+	["新月岛", "level.prototype_crescent_bay_3v3"],
+	["双岛长海峡", "level.prototype_double_island_long_channel_3v3"],
+	["双航道礁线", "level.prototype_dual_channel_reef_line_3v3"],
+	["细长群岛", "level.prototype_long_archipelago_3v3"],
+	["大岛偏置", "level.prototype_offset_large_island_3v3"],
+	["环岛泻湖", "level.prototype_ring_lagoon_3v3"],
+	["散岛群", "level.prototype_scattered_islands_3v3"],
+]
 
 var texture_cache: Dictionary = {}
 var cover_character_id := "warspite"
@@ -17,6 +29,7 @@ var info_panel_visible := true
 var settings_overlay: Control
 var resolution_selector: OptionButton
 var resolution_status: Label
+var coastal_level_selector: OptionButton
 
 
 func _ready() -> void:
@@ -45,7 +58,22 @@ func _create_buttons() -> void:
 	_add_button("btn_operation", "操作说明", Vector2(284.0, 786.0), Vector2(180.0, 48.0), func(): _show_operation_guide())
 	_add_button("btn_game_intro", "游戏介绍", Vector2(484.0, 786.0), Vector2(180.0, 48.0), func(): _show_game_intro())
 	_add_button("btn_settings", "设置", Vector2(84.0, 848.0), Vector2(180.0, 48.0), func(): _show_settings())
-	_add_button("btn_mode_harbor", "港湾 3v3", Vector2(284.0, 848.0), Vector2(180.0, 48.0), func(): _start_level("level.prototype_harbor_3v3"))
+	coastal_level_selector = OptionButton.new()
+	coastal_level_selector.name = "coastal_level_selector"
+	coastal_level_selector.position = Vector2(284.0, 848.0)
+	coastal_level_selector.size = Vector2(380.0, 48.0)
+	coastal_level_selector.focus_mode = Control.FOCUS_ALL
+	for entry in COASTAL_LEVELS:
+		coastal_level_selector.add_item("3v3 %s" % entry[0])
+		coastal_level_selector.set_item_metadata(coastal_level_selector.item_count - 1, entry[1])
+	add_child(coastal_level_selector)
+	_add_button("btn_mode_coastal", "开始近岸战", Vector2(684.0, 848.0), Vector2(180.0, 48.0), _start_selected_coastal)
+
+
+func _start_selected_coastal() -> void:
+	if coastal_level_selector == null or coastal_level_selector.item_count == 0:
+		return
+	_start_level(str(coastal_level_selector.get_item_metadata(coastal_level_selector.selected)))
 
 
 func _add_button(node_name: String, label: String, position_value: Vector2, size_value: Vector2, callback: Callable) -> Button:

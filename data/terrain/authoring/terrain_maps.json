@@ -26,6 +26,150 @@
       "facility_layout_id": "facility.layout.harbor_mouth",
       "environment_zone_set_id": "environment.zone_set.harbor_mouth",
       "navigation_definition_id": "navigation.harbor_mouth"
+    },
+    {
+      "id": "terrain.map.broken_atoll",
+      "display_name": "破碎环礁近岸战场",
+      "map_size": [4096.0, 2304.0],
+      "geometry_epsilon": 0.001,
+      "instances": [{"id": "broken_atoll_land", "template_id": "terrain.template.broken_atoll", "position": [2048.0, 1152.0], "scale": [1.62, 1.62], "rotation_degrees": 0.0}],
+      "spawn_points": [
+        {"id": "player_1", "faction_id": "player", "position": [520.0, 1152.0], "radius": 34.0, "movement_tags": ["Surface", "ShallowDraft"]},
+        {"id": "player_2", "faction_id": "player", "position": [600.0, 900.0], "radius": 34.0, "movement_tags": ["Surface", "ShallowDraft"]},
+        {"id": "player_3", "faction_id": "player", "position": [600.0, 1404.0], "radius": 34.0, "movement_tags": ["Surface", "ShallowDraft"]},
+        {"id": "enemy_1", "faction_id": "enemy", "position": [3576.0, 1152.0], "radius": 34.0, "movement_tags": ["Surface", "ShallowDraft"]},
+        {"id": "enemy_2", "faction_id": "enemy", "position": [3496.0, 900.0], "radius": 34.0, "movement_tags": ["Surface", "ShallowDraft"]},
+        {"id": "enemy_3", "faction_id": "enemy", "position": [3496.0, 1404.0], "radius": 34.0, "movement_tags": ["Surface", "ShallowDraft"]}
+      ],
+      "navigation_definition_id": "navigation.broken_atoll"
+    },
+    {
+      "id": "terrain.map.central_sandbar",
+      "display_name": "中央沙洲近岸战场",
+      "map_size": [4096.0, 2304.0],
+      "geometry_epsilon": 0.001,
+      "instances": [{"id": "central_sandbar_land", "template_id": "terrain.template.central_sandbar", "position": [2048.0, 1152.0], "scale": [1.62, 1.62], "rotation_degrees": 0.0}],
+      "spawn_points": [
+        {"id": "player_1", "faction_id": "player", "position": [520.0, 1152.0], "radius": 34.0, "movement_tags": ["Surface", "ShallowDraft"]},
+        {"id": "player_2", "faction_id": "player", "position": [600.0, 900.0], "radius": 34.0, "movement_tags": ["Surface", "ShallowDraft"]},
+        {"id": "player_3", "faction_id": "player", "position": [600.0, 1404.0], "radius": 34.0, "movement_tags": ["Surface", "ShallowDraft"]},
+        {"id": "enemy_1", "faction_id": "enemy", "position": [3576.0, 1152.0], "radius": 34.0, "movement_tags": ["Surface", "ShallowDraft"]},
+        {"id": "enemy_2", "faction_id": "enemy", "position": [3496.0, 900.0], "radius": 34.0, "movement_tags": ["Surface", "ShallowDraft"]},
+        {"id": "enemy_3", "faction_id": "enemy", "position": [3496.0, 1404.0], "radius": 34.0, "movement_tags": ["Surface", "ShallowDraft"]}
+      ],
+      "navigation_definition_id": "navigation.central_sandbar"
+    },
+    {
+      "id": "terrain.map.crescent_bay",
+      "display_name": "新月岛近岸战场",
+      "map_size": [4096.0, 2304.0],
+      "geometry_epsilon": 0.001,
+      "instances": [{"id": "crescent_bay_land", "template_id": "terrain.template.crescent_bay", "position": [2048.0, 1152.0], "scale": [1.62, 1.62], "rotation_degrees": 0.0}],
+      "spawn_points": [
+        {"id": "player_1", "faction_id": "player", "position": [520.0, 1152.0], "radius": 34.0, "movement_tags": ["Surface", "ShallowDraft"]},
+        {"id": "player_2", "faction_id": "player", "position": [600.0, 900.0], "radius": 34.0, "movement_tags": ["Surface", "ShallowDraft"]},
+        {"id": "player_3", "faction_id": "player", "position": [600.0, 1404.0], "radius": 34.0, "movement_tags": ["Surface", "ShallowDraft"]},
+        {"id": "enemy_1", "faction_id": "enemy", "position": [3576.0, 1152.0], "radius": 34.0, "movement_tags": ["Surface", "ShallowDraft"]},
+        {"id": "enemy_2", "faction_id": "enemy", "position": [3496.0, 900.0], "radius": 34.0, "movement_tags": ["Surface", "ShallowDraft"]},
+        {"id": "enemy_3", "faction_id": "enemy", "position": [3496.0, 1404.0], "radius": 34.0, "movement_tags": ["Surface", "ShallowDraft"]}
+      ],
+      "navigation_definition_id": "navigation.crescent_bay"
+    },
+    {
+      "id": "terrain.map.double_island_long_channel",
+      "display_name": "双岛长海峡近岸战场",
+      "map_size": [4096.0, 2304.0],
+      "geometry_epsilon": 0.001,
+      "instances": [{"id": "double_island_land", "template_id": "terrain.template.double_island_long_channel", "position": [2048.0, 1152.0], "scale": [1.62, 1.62], "rotation_degrees": 0.0}],
+      "spawn_points": [
+        {"id": "player_1", "faction_id": "player", "position": [1050.0, 2160.0], "radius": 34.0, "movement_tags": ["Surface", "ShallowDraft"]},
+        {"id": "player_2", "faction_id": "player", "position": [900.0, 2070.0], "radius": 34.0, "movement_tags": ["Surface", "ShallowDraft"]},
+        {"id": "player_3", "faction_id": "player", "position": [900.0, 2250.0], "radius": 34.0, "movement_tags": ["Surface", "ShallowDraft"]},
+        {"id": "enemy_1", "faction_id": "enemy", "position": [3046.0, 2160.0], "radius": 34.0, "movement_tags": ["Surface", "ShallowDraft"]},
+        {"id": "enemy_2", "faction_id": "enemy", "position": [3196.0, 2070.0], "radius": 34.0, "movement_tags": ["Surface", "ShallowDraft"]},
+        {"id": "enemy_3", "faction_id": "enemy", "position": [3196.0, 2250.0], "radius": 34.0, "movement_tags": ["Surface", "ShallowDraft"]}
+      ],
+      "navigation_definition_id": "navigation.double_island_long_channel"
+    },
+    {
+      "id": "terrain.map.dual_channel_reef_line",
+      "display_name": "双航道礁线近岸战场",
+      "map_size": [4096.0, 2304.0],
+      "geometry_epsilon": 0.001,
+      "instances": [{"id": "dual_channel_land", "template_id": "terrain.template.dual_channel_reef_line", "position": [2048.0, 1152.0], "scale": [1.62, 1.62], "rotation_degrees": 0.0}],
+      "spawn_points": [
+        {"id": "player_1", "faction_id": "player", "position": [520.0, 1152.0], "radius": 34.0, "movement_tags": ["Surface", "ShallowDraft"]},
+        {"id": "player_2", "faction_id": "player", "position": [600.0, 900.0], "radius": 34.0, "movement_tags": ["Surface", "ShallowDraft"]},
+        {"id": "player_3", "faction_id": "player", "position": [600.0, 1404.0], "radius": 34.0, "movement_tags": ["Surface", "ShallowDraft"]},
+        {"id": "enemy_1", "faction_id": "enemy", "position": [3576.0, 1152.0], "radius": 34.0, "movement_tags": ["Surface", "ShallowDraft"]},
+        {"id": "enemy_2", "faction_id": "enemy", "position": [3496.0, 900.0], "radius": 34.0, "movement_tags": ["Surface", "ShallowDraft"]},
+        {"id": "enemy_3", "faction_id": "enemy", "position": [3496.0, 1404.0], "radius": 34.0, "movement_tags": ["Surface", "ShallowDraft"]}
+      ],
+      "navigation_definition_id": "navigation.dual_channel_reef_line"
+    },
+    {
+      "id": "terrain.map.long_archipelago",
+      "display_name": "细长群岛近岸战场",
+      "map_size": [4096.0, 2304.0],
+      "geometry_epsilon": 0.001,
+      "instances": [{"id": "long_archipelago_land", "template_id": "terrain.template.long_archipelago", "position": [2048.0, 1152.0], "scale": [1.62, 1.62], "rotation_degrees": 0.0}],
+      "spawn_points": [
+        {"id": "player_1", "faction_id": "player", "position": [520.0, 1152.0], "radius": 34.0, "movement_tags": ["Surface", "ShallowDraft"]},
+        {"id": "player_2", "faction_id": "player", "position": [600.0, 900.0], "radius": 34.0, "movement_tags": ["Surface", "ShallowDraft"]},
+        {"id": "player_3", "faction_id": "player", "position": [600.0, 1404.0], "radius": 34.0, "movement_tags": ["Surface", "ShallowDraft"]},
+        {"id": "enemy_1", "faction_id": "enemy", "position": [3576.0, 1152.0], "radius": 34.0, "movement_tags": ["Surface", "ShallowDraft"]},
+        {"id": "enemy_2", "faction_id": "enemy", "position": [3496.0, 900.0], "radius": 34.0, "movement_tags": ["Surface", "ShallowDraft"]},
+        {"id": "enemy_3", "faction_id": "enemy", "position": [3496.0, 1404.0], "radius": 34.0, "movement_tags": ["Surface", "ShallowDraft"]}
+      ],
+      "navigation_definition_id": "navigation.long_archipelago"
+    },
+    {
+      "id": "terrain.map.offset_large_island",
+      "display_name": "大岛偏置近岸战场",
+      "map_size": [4096.0, 2304.0],
+      "geometry_epsilon": 0.001,
+      "instances": [{"id": "offset_island_land", "template_id": "terrain.template.offset_large_island", "position": [2048.0, 1152.0], "scale": [1.62, 1.62], "rotation_degrees": 0.0}],
+      "spawn_points": [
+        {"id": "player_1", "faction_id": "player", "position": [520.0, 1152.0], "radius": 34.0, "movement_tags": ["Surface", "ShallowDraft"]},
+        {"id": "player_2", "faction_id": "player", "position": [600.0, 900.0], "radius": 34.0, "movement_tags": ["Surface", "ShallowDraft"]},
+        {"id": "player_3", "faction_id": "player", "position": [600.0, 1404.0], "radius": 34.0, "movement_tags": ["Surface", "ShallowDraft"]},
+        {"id": "enemy_1", "faction_id": "enemy", "position": [3576.0, 1152.0], "radius": 34.0, "movement_tags": ["Surface", "ShallowDraft"]},
+        {"id": "enemy_2", "faction_id": "enemy", "position": [3496.0, 900.0], "radius": 34.0, "movement_tags": ["Surface", "ShallowDraft"]},
+        {"id": "enemy_3", "faction_id": "enemy", "position": [3496.0, 1404.0], "radius": 34.0, "movement_tags": ["Surface", "ShallowDraft"]}
+      ],
+      "navigation_definition_id": "navigation.offset_large_island"
+    },
+    {
+      "id": "terrain.map.ring_lagoon",
+      "display_name": "环岛泻湖近岸战场",
+      "map_size": [4096.0, 2304.0],
+      "geometry_epsilon": 0.001,
+      "instances": [{"id": "ring_lagoon_land", "template_id": "terrain.template.ring_lagoon", "position": [2048.0, 1152.0], "scale": [1.62, 1.62], "rotation_degrees": 0.0}],
+      "spawn_points": [
+        {"id": "player_1", "faction_id": "player", "position": [1050.0, 2160.0], "radius": 34.0, "movement_tags": ["Surface", "ShallowDraft"]},
+        {"id": "player_2", "faction_id": "player", "position": [900.0, 2070.0], "radius": 34.0, "movement_tags": ["Surface", "ShallowDraft"]},
+        {"id": "player_3", "faction_id": "player", "position": [900.0, 2250.0], "radius": 34.0, "movement_tags": ["Surface", "ShallowDraft"]},
+        {"id": "enemy_1", "faction_id": "enemy", "position": [3046.0, 2160.0], "radius": 34.0, "movement_tags": ["Surface", "ShallowDraft"]},
+        {"id": "enemy_2", "faction_id": "enemy", "position": [3196.0, 2070.0], "radius": 34.0, "movement_tags": ["Surface", "ShallowDraft"]},
+        {"id": "enemy_3", "faction_id": "enemy", "position": [3196.0, 2250.0], "radius": 34.0, "movement_tags": ["Surface", "ShallowDraft"]}
+      ],
+      "navigation_definition_id": "navigation.ring_lagoon"
+    },
+    {
+      "id": "terrain.map.scattered_islands",
+      "display_name": "散岛群近岸战场",
+      "map_size": [4096.0, 2304.0],
+      "geometry_epsilon": 0.001,
+      "instances": [{"id": "scattered_islands_land", "template_id": "terrain.template.scattered_islands", "position": [2048.0, 1152.0], "scale": [1.62, 1.62], "rotation_degrees": 0.0}],
+      "spawn_points": [
+        {"id": "player_1", "faction_id": "player", "position": [520.0, 1152.0], "radius": 34.0, "movement_tags": ["Surface", "ShallowDraft"]},
+        {"id": "player_2", "faction_id": "player", "position": [600.0, 900.0], "radius": 34.0, "movement_tags": ["Surface", "ShallowDraft"]},
+        {"id": "player_3", "faction_id": "player", "position": [600.0, 1404.0], "radius": 34.0, "movement_tags": ["Surface", "ShallowDraft"]},
+        {"id": "enemy_1", "faction_id": "enemy", "position": [3576.0, 1152.0], "radius": 34.0, "movement_tags": ["Surface", "ShallowDraft"]},
+        {"id": "enemy_2", "faction_id": "enemy", "position": [3496.0, 900.0], "radius": 34.0, "movement_tags": ["Surface", "ShallowDraft"]},
+        {"id": "enemy_3", "faction_id": "enemy", "position": [3496.0, 1404.0], "radius": 34.0, "movement_tags": ["Surface", "ShallowDraft"]}
+      ],
+      "navigation_definition_id": "navigation.scattered_islands"
     }
   ]
 }

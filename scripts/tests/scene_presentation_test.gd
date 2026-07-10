@@ -14,7 +14,8 @@ func _run() -> void:
 	root.add_child(menu)
 	await process_frame
 	_check(menu.has_node("btn_mode_1v1") and menu.has_node("btn_mode_3v3") and menu.has_node("btn_mode_5v5") and menu.has_node("btn_mode_11v11"), "main menu exposes 1v1, 3v3, 5v5, and 11v11 buttons")
-	_check(menu.has_node("btn_mode_harbor"), "main menu exposes the harbor terrain validation battle")
+	_check(menu.has_node("btn_mode_coastal") and menu.has_node("coastal_level_selector"), "main menu exposes the coastal battle selector")
+	_check(menu.coastal_level_selector.item_count == 10, "coastal selector exposes all ten runtime maps")
 	_check(menu.has_node("btn_settings") and menu.has_node("SettingsOverlay"), "main menu exposes window settings")
 	menu._show_settings()
 	_check(menu.settings_overlay.visible and menu.resolution_selector.item_count == 5, "window settings list configured resolutions")
@@ -123,6 +124,12 @@ func _run() -> void:
 	battle.terrain_view.sync_dynamic(harbor_snapshot.get("environment_zones", []), harbor_snapshot.get("facilities", {}), battle.session.snapshot("player", true).get("minefields", {}))
 	_check(battle.terrain_view.minefield_root.get_child_count() == 2, "omniscient terrain view renders the fixed minefield and its safe channel")
 	_check(battle.battle_hud._texture("res://assets/ui/processed/battle/terrain/minimap_terrain_map_harbor_mouth.png") != null, "harbor minimap loads the generated geometry mask")
+	battle._start_battle("level.prototype_broken_atoll_3v3")
+	await process_frame
+	var atoll_snapshot: Dictionary = battle.session.snapshot("player", true)
+	_check(atoll_snapshot.get("terrain_map", {}).get("id", "") == "terrain.map.broken_atoll", "non-harbor coastal level receives its runtime terrain geometry")
+	_check(atoll_snapshot.get("facilities", {}).is_empty(), "non-harbor coastal level does not inherit harbor facilities")
+	_check(battle.battle_hud._texture("res://assets/ui/processed/battle/terrain/minimap_terrain_map_broken_atoll.png") != null, "non-harbor coastal minimap loads its generated geometry mask")
 	_check(battle.battle_hud._environment_zone_icon("environment.effect.rain_squall") == "ui_marker_environment_rain_squall" and battle.battle_hud._texture("res://assets/ui/export/2x/ui_marker_environment_rain_squall.png") != null, "minimap maps local environment rules to the authored environment marker assets")
 	_check(harbor_snapshot.get("global_environment", {}).get("canonical_ocean_palette", "") == "cloudy_dawn", "harbor scene and Domain share the same cloudy-dawn palette condition id")
 	battle._start_battle("level.prototype_3v3")

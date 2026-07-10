@@ -28,8 +28,9 @@ func _run() -> void:
 	registry = ConfigRegistry.new()
 	_check(registry.load_all(), "configuration registry loads: %s" % str(registry.errors))
 	_check(registry.all("ships").size() == 48, "all 48 phase-one and phase-two character ship definitions load")
-	_check(registry.all("levels").size() == 5, "four open-sea levels and the harbor terrain level load")
+	_check(registry.all("levels").size() == 14, "four open-sea levels and all ten coastal terrain levels load")
 	_test_terrain_configuration_and_rules()
+	_test_coastal_runtime_levels()
 	_test_scene_combat_tactical_effects()
 	_test_runtime_baseline_scales()
 	_test_gun_dispersion_rules()
@@ -85,8 +86,8 @@ func _test_chinese_display_text() -> void:
 
 
 func _test_terrain_configuration_and_rules() -> void:
-	_check(registry.all("terrain").size() == 11, "ten island terrain templates and one harbor runtime map load")
-	_check(registry.all("navigation").size() == 1, "shared harbor navigation graph loads")
+	_check(registry.all("terrain").size() == 20, "ten island terrain templates and ten runtime maps load")
+	_check(registry.all("navigation").size() == 10, "all ten coastal navigation graphs load")
 	_check(registry.all("environment_zones").size() == 19, "seven local effects, one harbor zone set, and eleven ocean condition definitions load")
 	_check(registry.all("facilities").size() == 13, "facility, support mission, minefield, and harbor layout definitions load")
 	var harbor_level: Dictionary = registry.get_definition("levels", "level.prototype_harbor_3v3")
@@ -184,6 +185,39 @@ func _test_terrain_configuration_and_rules() -> void:
 	var first_replay := _terrain_replay_signature(907)
 	var second_replay := _terrain_replay_signature(907)
 	_check(first_replay == second_replay, "fixed seed reproduces harbor environment, facility, route, and terrain events")
+
+
+func _test_coastal_runtime_levels() -> void:
+	var coastal_ids := [
+		"harbor_mouth", "broken_atoll", "central_sandbar", "crescent_bay",
+		"double_island_long_channel", "dual_channel_reef_line", "long_archipelago",
+		"offset_large_island", "ring_lagoon", "scattered_islands",
+	]
+	for coastal_id in coastal_ids:
+		var level_id := "level.prototype_harbor_3v3" if coastal_id == "harbor_mouth" else "level.prototype_%s_3v3" % coastal_id
+		var session = BattleSession.new(registry)
+		var creation: Dictionary = session.create_battle(level_id, 20260710)
+		_check(creation.get("ok", false), "%s creates a battle session" % level_id)
+		_check(session.state.get("terrain_map", {}).get("id", "") == "terrain.map.%s" % coastal_id, "%s loads its authored terrain map" % level_id)
+		_check(not session.navigation_definition.is_empty(), "%s loads its shared navigation graph" % level_id)
+		var level: Dictionary = registry.get_definition("levels", level_id)
+		var terrain_spawns: Array = session.state.get("terrain_map", {}).get("spawn_points", [])
+		for faction_id in ["player", "enemy"]:
+			var fleet: Array = level.get("%s_fleet" % faction_id, [])
+			var authored: Array = terrain_spawns.filter(func(spawn): return spawn.get("faction_id", "") == faction_id)
+			var all_match := fleet.size() == authored.size()
+			for member in fleet:
+				var member_position := _as_vector2(member.get("position", Vector2.ZERO))
+				all_match = all_match and authored.any(func(spawn): return _as_vector2(spawn.get("position", Vector2.ZERO)).distance_to(member_position) < 0.1)
+			_check(all_match, "%s %s fleet uses the reviewed terrain spawn points" % [level_id, faction_id])
+
+
+func _as_vector2(value: Variant) -> Vector2:
+	if value is Vector2:
+		return value
+	if value is Array and value.size() >= 2:
+		return Vector2(float(value[0]), float(value[1]))
+	return Vector2.ZERO
 
 
 func _terrain_replay_signature(seed_value: int) -> Dictionary:

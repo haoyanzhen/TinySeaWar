@@ -62,13 +62,17 @@ def bake_profile(terrain: dict, profile: dict, cell_size: float) -> dict:
 				continue
 			node_id = "n_%02d_%02d" % (column, row)
 			nodes[(column, row)] = {"id": node_id, "position": [round(position[0], 3), round(position[1], 3)], "neighbors": []}
+	# Each undirected grid edge only needs one deterministic geometry query.
+	# Publish both directions after that query so the runtime graph is unchanged.
 	for coordinate, node in sorted(nodes.items()):
 		column, row = coordinate
-		for dx, dy in ((-1, -1), (0, -1), (1, -1), (-1, 0), (1, 0), (-1, 1), (0, 1), (1, 1)):
+		for dx, dy in ((1, 0), (-1, 1), (0, 1), (1, 1)):
 			neighbor = nodes.get((column + dx, row + dy))
 			if neighbor is None or not _segment_clear(node["position"], neighbor["position"], radius, terrain.get("obstacles", []), terrain.get("regions", []), tags):
 				continue
 			node["neighbors"].append(neighbor["id"])
+			neighbor["neighbors"].append(node["id"])
+	for node in nodes.values():
 		node["neighbors"].sort()
 	return {**profile, "cell_size": cell_size, "nodes": [nodes[key] for key in sorted(nodes)]}
 

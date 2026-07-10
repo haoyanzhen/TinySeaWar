@@ -120,14 +120,14 @@ func _draw() -> void:
 
 func _draw_mine_deployment_overlay(snapshot: Dictionary) -> void:
 	if selected_unit_id.is_empty() or selected_facility_id.is_empty(): return
-	var status := session.get_facility_action_status(selected_unit_id, selected_facility_id)
+	var status: Dictionary = session.get_facility_action_status(selected_unit_id, selected_facility_id)
 	var control_radius := float(status.get("mine_control_radius", 0.0))
 	var area_side := float(status.get("mine_area_side_length", 0.0))
 	if control_radius <= 0.0 or area_side <= 0.0: return
 	var facility: Dictionary = snapshot.get("facilities", {}).get(selected_facility_id, {})
 	if facility.is_empty(): return
 	var cursor := get_global_mouse_position()
-	var preview := session.get_mine_deployment_preview(selected_unit_id, selected_facility_id, cursor)
+	var preview: Dictionary = session.get_mine_deployment_preview(selected_unit_id, selected_facility_id, cursor)
 	var legal := bool(preview.get("accepted", false))
 	var edge := RANGE_AVAILABLE_EDGE if legal else RANGE_UNAVAILABLE_EDGE
 	var fill := RANGE_AVAILABLE_FILL if legal else RANGE_UNAVAILABLE_FILL

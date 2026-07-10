@@ -202,7 +202,7 @@
 - 陆地母版：`assets/environment/land/land_*.png`
 - 陆地资产清单：`assets/environment/land/land_asset_manifest.json`
 - 陆地碰撞候选边缘：`assets/environment/land/land_collision_manifest.json`
-- 审核地形模板/世界几何：`data/terrain/terrain_templates.json`、`data/terrain/terrain_definitions.json`
+- 审核地形模板/地图实例/世界几何：`data/terrain/terrain_templates.json`、`data/terrain/authoring/terrain_maps.json`、`data/terrain/terrain_definitions.json`；当前十类模板均有对应运行时地图。
 - 共享导航：`data/terrain/navigation_definitions.json`、`scripts/application/navigation/route_planner.gd`
 - 纯地形查询/环境上下文/设施/水雷状态：`scripts/domain/services/terrain_query_service.gd`、`terrain_context_service.gd`、`facility_service.gd`、`minefield_service.gd`
   - `TerrainContextService`：固定 Tick 天气与潮汐、最终海况规则档、机动/命中/航空上下文、潮滩进入与撤离校验。
@@ -215,6 +215,7 @@
 ## 测试与调试
 
 - 核心规则测试：`scripts/tests/test_runner.gd`
+- 十图运行时地图、导航与出生专项：`scripts/tests/coastal_runtime_test.gd`
 - AI 量化模型：`scripts/application/ai/ai_quantitative_model.gd`
 - AI 阵营观察快照：`scripts/application/ai/ai_observation.gd`
 - AI 量化场景测试：`scripts/tests/ai_behavior_quantitative_test.gd`

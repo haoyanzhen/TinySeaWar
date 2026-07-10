@@ -10,6 +10,15 @@ static func mode_name(level_id: String) -> String:
 		"level.prototype_5v5": return "5v5 舰队战"
 		"level.prototype_11v11": return "11v11 大规模会战"
 		"level.prototype_harbor_3v3": return "3v3 港湾入口"
+		"level.prototype_broken_atoll_3v3": return "3v3 破碎环礁"
+		"level.prototype_central_sandbar_3v3": return "3v3 中央沙洲"
+		"level.prototype_crescent_bay_3v3": return "3v3 新月岛"
+		"level.prototype_double_island_long_channel_3v3": return "3v3 双岛长海峡"
+		"level.prototype_dual_channel_reef_line_3v3": return "3v3 双航道礁线"
+		"level.prototype_long_archipelago_3v3": return "3v3 细长群岛"
+		"level.prototype_offset_large_island_3v3": return "3v3 大岛偏置"
+		"level.prototype_ring_lagoon_3v3": return "3v3 环岛泻湖"
+		"level.prototype_scattered_islands_3v3": return "3v3 散岛群"
 		_: return "未知模式"
 
 

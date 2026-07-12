@@ -684,7 +684,7 @@ ApproachTarget
 HoldPosition
 ```
 
-玩家单点或多航点路线覆盖普通辅助移动。即时生存可以临时进入 `ImmediateAvoidance`；危险解除后重新规划到下一合法玩家途径点。玩家路线完成、取消或失效后，仅当 `movement_assist_enabled` 为真时进入 `AssistNavigate`，否则进入 `HoldPosition`。
+玩家单点或多航点只表达目标意图并覆盖普通辅助移动，运行时转换为战略走廊和动力学控制，不直接跟随折线。白名单高威胁攻击可把航行状态从 `NormalNavigation` 临时切换为 `EmergencyEvasion`；危险解除后从 Domain 真实状态重新接入战略走廊，不返回旧数学航点。玩家路线完成、取消或失效后，仅当 `movement_assist_enabled` 为真时进入 `AssistNavigate`，否则进入 `HoldPosition`。
 
 ### 9.4 TargetingMode
 
@@ -916,7 +916,7 @@ AI 是命令生产者，不是拥有特权的第二套战斗规则。
 
 自动副武器攻击属于单位领域行为，不需要 AI 每次提交开火命令；玩家单位还必须开启 `secondary_auto_fire_enabled`。敌方完整 AI或开启 `primary_auto_fire_enabled` 的玩家受限 AI 若使用配置为 `ManualPrimary` 的武器，必须提交与玩家手动操作同结构的 `FirePrimaryWeaponCommand`，不能绕过装填、射程、射角或侦查规则。
 
-舰队战术方案、战术编组、单舰模式、通用航行规则和 AI 短期记忆属于 AI Runtime State，由 Application/策略层维护，不进入 Presentation，也不把关卡行为脚本堆入 `UnitState`。单舰模式只组合行动、攻击和技能策略；短航路、阵位和掩体点只产生移动意图。最终移动、碰撞、边界、地形通行、视线、攻击与技能合法性仍由 Domain 决定。完整模式与通用规则设计见 `docs/16_enemy_ai_behavior_design.md`。
+舰队战术方案、战术编组、单舰模式、战略走廊、动力学控制计划和 AI 短期记忆属于 AI/Application Runtime State，由 Application/策略层维护，不进入 Presentation，也不把关卡行为脚本堆入 `UnitState`。单舰模式只组合行动、攻击和技能策略；走廊、阵位和掩体区域只产生移动意图。最终推进/转向积分、碰撞、边界、地形通行、视线、攻击与技能合法性仍由 Domain 决定。完整模式与通用规则设计见 `docs/16_enemy_ai_behavior_design.md` 和 `docs/technical/t01_inertial_navigation_and_emergency_avoidance.md`。
 
 玩家受限辅助 AI 使用独立能力白名单，只能读取领域约束、即时生存、玩家路径、局部执行状态和被发现动作。它不得创建关卡任务、编组职责、战略模式、天气收益、技能连招或自动 `CastSkillCommand`。敌方难度和 AI Profile 不影响玩家受限辅助 AI。
 

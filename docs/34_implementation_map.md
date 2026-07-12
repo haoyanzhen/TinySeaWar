@@ -88,11 +88,12 @@
   - 主要武器瞄准校验：`get_primary_aim_status`
   - 多扇区射角：`_weapon_fire_arcs`、`_angle_in_weapon_fire_arcs`
 - 常改位置：
-  - 移动：`_update_movement`
+  - 航迹状态机与规划：`_update_navigation_plans`、`_plan_normal_trajectory`、`_plan_emergency_trajectory`；运行时状态为 `NormalNavigation / EmergencyEvasion / SafetyHold`。
+  - 权威移动执行：`_update_movement`；只执行轨迹规划产生的推力/转向控制，不直接追踪折线航点。
   - 索敌与接触残影：`_update_detection`
   - AI 分层入口：`_update_ai_intents`；玩家受限辅助：`_update_player_assist_intent`；敌方完整单舰决策：`_update_enemy_ai_intent`
   - 量化模式/战术/目标：`_update_enemy_mode`、`_detected_tactic_values`、`_target_score`
-  - 鱼雷、岸线与边界即时打断：`_update_immediate_survival`、`_highest_projectile_threat`、`_projected_shore_risk`
+  - 高威胁攻击扫描：`_navigation_high_threats`、`_is_committed_high_threat_attack`、`_highest_projectile_threat`；岸线、边界和普通避碰归常规航迹。
   - 量化主要武器与技能：`_update_ai_primary_weapons`、`_update_auto_skills`
   - 模拟器双方完整 AI：`configure_full_ai_factions`；只由显式实验策略开启，不改变正常玩家控制默认值。
   - 自动武器：`_update_weapons`
@@ -111,6 +112,10 @@
   - 舰装椭圆、圆-椭圆和连续扫掠：`scripts/domain/services/collision_geometry_service.gd`
   - 舰炮椭圆高斯 sigma 与独立采样：`scripts/domain/services/gun_dispersion_service.gd`
   - 海况/风速鱼雷 sigma 倍率：`scripts/domain/services/terrain_context_service.gd`
+  - 同源舰船推进、转向、水流与倒车积分：`scripts/domain/services/ship_motion_service.gd`
+  - 有限候选常规/紧急动力学轨迹：`scripts/application/navigation/trajectory_planner.gd`
+  - 稀疏拓扑走廊、廉价接图、A* 与走廊门生成：`scripts/application/navigation/route_planner.gd`
+  - 战略走廊统一排队、优先级、每 Tick请求数预算与单位取消：`scripts/application/navigation/navigation_request_broker.gd`；当前不合并、不缓存，单条 A* 仍不可抢占
   - 固定种子均匀与高斯抽样：`scripts/infrastructure/random/seeded_random_source.gd`
 - 战斗统计：`scripts/infrastructure/analytics/battle_recorder.gd`
   - 分类与聚合工具：`scripts/infrastructure/analytics/damage_statistics.gd`
@@ -228,6 +233,7 @@
 - AI 难度 Profile：`data/ai/ai_profiles.json`
 - AI 难度测试：`scripts/tests/ai_difficulty_profile_test.gd`
 - AI 路线、掩体与恢复测试：`scripts/tests/ai_route_recovery_test.gd`
+- 航行走廊、动力学航迹、倒车、威胁白名单与状态机测试：`scripts/tests/trajectory_navigation_test.gd`
 - 场景与展示测试：`scripts/tests/scene_presentation_test.gd`
 - 第二期配置与资产映射测试：`scripts/tests/phase2_config_test.gd`
 - 48 角色技能契约与运行时测试：`scripts/tests/skill_runtime_test.gd`

@@ -25,6 +25,9 @@ base_speed
 speed
 base_turn_speed
 turn_speed
+reverse_speed_ratio # optional, default 0.25
+acceleration_ratio # optional, default 1.0
+braking_ratio # optional, default 2.0
 base_detection_range
 detection_range
 base_concealment_distance
@@ -63,6 +66,9 @@ is_flagship_candidate
 - `speed`：当前运行时最大航速。当前统一为 `base_speed * 0.5`。
 - `base_turn_speed`：设计基线转向速度。
 - `turn_speed`：当前运行时转向速度。当前统一为 `base_turn_speed * 0.5`。
+- `reverse_speed_ratio`：倒车最大速度相对当前前进最大航速的比例，默认 `0.25`；前进转倒车必须先制动到近零。
+- `acceleration_ratio`：每秒加速能力相对当前最大航速的比例，默认 `1.0`。
+- `braking_ratio`：每秒制动能力相对当前最大航速的比例，默认 `2.0`；同时用于前进/倒车换向前的过零过程。
 - `base_detection_range`：设计基线侦查范围。
 - `detection_range`：当前运行时侦查范围。当前统一为 `base_detection_range * 1.5`。
 - `base_concealment_distance`：设计基线隐蔽距离。

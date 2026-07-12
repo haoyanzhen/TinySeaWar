@@ -86,7 +86,7 @@ Domain 不读取纹理像素，不依赖场景树、导航节点、Godot 物理�
 Application 负责流程协调和低频规划：
 
 - 从关卡 Definition 创建领域地形和设施状态。
-- 把玩家目的地或 AI 移动意图转换为可执行短航路。
+- 把玩家目的地或 AI 移动意图转换为战略航行走廊，再生成可执行的短时动力学控制。
 - 维护 AI 的环境任务、路线重算和战术记忆。
 - 将领域命令按固定顺序送入 `BattleSession`。
 - 生成阵营受限的快照和一次性事件。
@@ -360,7 +360,8 @@ Application 流程：
 
 ```text
 MoveCommand.target_position
-  -> RoutePlanner 生成短航路
+  -> RoutePlanner 生成战略走廊骨架
+  -> TrajectoryPlanner 生成推力/转向控制
   -> Domain 校验每个航段
   -> 写入 MovementState.waypoints
 ```

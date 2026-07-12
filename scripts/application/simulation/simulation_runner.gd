@@ -143,7 +143,7 @@ func _unit_end_states(battle_state: Dictionary) -> Dictionary:
 			"ai_mode": unit.get("ai_state", {}).get("mode_id", ""),
 			"ai_tactic": unit.get("ai_state", {}).get("tactic_id", ""),
 			"level_task": unit.get("ai_state", {}).get("level_task", ""),
-			"active_interrupt": unit.get("ai_state", {}).get("active_interrupt", ""),
+			"active_interrupt": "TorpedoEvasion" if str(unit.get("navigation_state", {}).get("state", "NormalNavigation")) == "EmergencyEvasion" else "",
 		}
 	return result
 

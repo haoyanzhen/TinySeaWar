@@ -58,11 +58,12 @@ func _run() -> void:
 	_test_simultaneous_flagship_victory()
 	_test_sinking_action_boundary()
 	_test_determinism()
-	_test_battle_smoke("level.prototype_1v1", 3200)
-	_test_battle_smoke("level.prototype_3v3", 4200)
-	_test_battle_smoke("level.prototype_5v5", 5200)
-	_test_battle_smoke("level.prototype_11v11", 7200)
-	_test_battle_smoke("level.prototype_harbor_3v3", 4400)
+	if "skip_smoke" not in OS.get_cmdline_user_args():
+		_test_battle_smoke("level.prototype_1v1", 3200)
+		_test_battle_smoke("level.prototype_3v3", 4200)
+		_test_battle_smoke("level.prototype_5v5", 5200)
+		_test_battle_smoke("level.prototype_11v11", 7200)
+		_test_battle_smoke("level.prototype_harbor_3v3", 4400)
 	if failures.is_empty():
 		print("PASS: %d checks" % checks)
 		quit(0)
@@ -746,18 +747,10 @@ func _test_runtime_ai_control_rules() -> void:
 	player["position"] = Vector2(2.0, float(session.state["map"].get("height", 700.0)) * 0.5)
 	player["heading"] = PI
 	player["current_speed"] = 30.0
-	player["ai_state"]["active_interrupt"] = ""
-	_check(session._update_immediate_survival(player) and player["ai_state"]["active_interrupt"] == "BoundaryEscape", "immediate survival overrides player controls near an imminent boundary exit")
-	player["position"] = Vector2(float(session.state["map"].get("width", 1200.0)) * 0.5, float(session.state["map"].get("height", 700.0)) * 0.5)
-	player["current_speed"] = 0.0
-	var recovery_started_at := float(session.state["elapsed_time"])
-	_check(session._update_immediate_survival(player), "survival interrupt remains active when danger first falls below the exit threshold")
-	session.state["elapsed_time"] = recovery_started_at + 0.7
-	_check(session._update_immediate_survival(player), "survival interrupt keeps the designed 0.8 second recovery hold")
-	session.state["elapsed_time"] = recovery_started_at + 0.9
-	_check(not session._update_immediate_survival(player), "survival interrupt becomes recoverable after the danger-free hold")
-	session._recover_from_ai_interrupt(player)
-	_check(player["movement_state"]["mode"] == "PlayerWaypointRoute" and not player["movement_state"].get("waypoints", []).is_empty(), "cleared survival interrupt replans and resumes the remaining player route")
+	player["navigation_state"]["trajectory_dirty"] = true
+	session._update_navigation_plans()
+	_check(player["navigation_state"].get("state", "") != "EmergencyEvasion", "boundary handling remains in normal navigation instead of attack evasion")
+	_check(player["movement_state"]["mode"] == "PlayerWaypointRoute" and not player["movement_state"].get("corridor_points", []).is_empty(), "normal navigation preserves the player corridor intent")
 	session.queue_command({"command_id":"route.clear","command_type":"ClearMoveRoute","issued_at_tick":session.state["tick_index"],"issuer_id":"player","unit_id":player["entity_id"]})
 	session.advance_tick(0.1)
 	player["movement_assist_enabled"] = true
@@ -833,7 +826,7 @@ func _test_runtime_ai_control_rules() -> void:
 	fire_session.state["visible_by_faction"]["enemy"] = {}
 	fire_session._ai_observations_by_faction.clear()
 	fire_session._ai_local_power_cache.clear()
-	target["ai_state"]["active_interrupt"] = ""
+	target["navigation_state"]["state"] = "NormalNavigation"
 	target["ai_state"]["level_task"] = ""
 	target["ai_state"]["mode_id"] = "ReconAvoid"
 	target["ai_state"]["tactic_id"] = "Defend"
@@ -847,11 +840,11 @@ func _test_runtime_ai_control_rules() -> void:
 	fire_session._update_ai_engagement_memory(0.1)
 	var passive_pressure := float(target["ai_state"].get("engagement_pressure", 0.0))
 	_check(passive_pressure >= 0.25 and _has_event(fire_session.drain_events(), "AIEngagementPressureTriggered"), "full AI records passive timers and emits an explainable engagement-pressure trigger")
-	target["ai_state"]["active_interrupt"] = "TorpedoEvasion"
+	target["navigation_state"]["state"] = "EmergencyEvasion"
 	fire_session._ai_local_power_cache.clear()
 	fire_session._update_ai_engagement_memory(0.1)
 	_check(is_zero_approx(float(target["ai_state"].get("engagement_pressure", -1.0))), "real immediate danger pauses passive engagement pressure")
-	target["ai_state"]["active_interrupt"] = ""
+	target["navigation_state"]["state"] = "NormalNavigation"
 	target["ai_state"]["level_task"] = "DefendFacility"
 	var task_exemption: Dictionary = fire_session._ai_engagement_pressure_exemption(target)
 	_check(float(task_exemption.get("multiplier", 1.0)) <= 0.35 and "LEVEL_TASK" in task_exemption.get("reasons", []), "explicit objective work reduces passive pressure without a forced-charge timeout")

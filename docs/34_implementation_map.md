@@ -39,6 +39,7 @@
   - `DataRegistry.registry`：读取战斗配置。
   - `DataRegistry.assets`：读取美术资产索引。
 - 关卡配置：`data/levels/prototype_levels.json`
+- 首批正式关卡与目标：`data/levels/formal_level_01.json`、`data/objectives/level_objectives.json`
   - 新增 1v1、3v3、更多战斗模式时优先改这里。
   - `map.ocean_palette` 选择共享的海面/战斗环境条件，可引用 5 种气候 x 4 个时间段的组合海域。
 - 舰船配置：`data/ships/prototype_ships.json`、`data/ships/expanded_roster_ships.json`、`data/ships/phase2_ships.json`
@@ -173,18 +174,18 @@
 
 ## 主界面与流程
 
+- 关卡目标、接替增援与进度存档尚未实施；契约与建议分层见 `docs/technical/t02_level_objective_reinforcement_progress_solution.md`。实施时局内目标事实归 Battle Domain，增援和结算事务归 Application，存档读写归 Infrastructure，菜单/HUD 只消费快照。
+
 - 流程状态：`scripts/application/game_flow.gd`
   - `selected_level_id` 记录主界面选择的关卡。
   - `window_size_options`、`apply_window_size` 负责读取、应用并持久化窗口尺寸。
   - `_configure_content_scaling` 固定逻辑画布并启用等比界面缩放。
 - 主界面：`scripts/presentation/menu/main_menu.gd`
-  - 按钮创建：`_create_buttons`
-  - 开始战斗：`_start_level`
-  - 模式说明：`_show_mode_select`
-  - 操作说明：`_show_operation_guide`
-  - 游戏介绍：`_show_game_intro`
-  - 界面设置：`_create_settings_panel`、`_show_settings`、`_apply_selected_window_size`
-  - 随机横向封面：`_random_character_id`、`_draw_cover_art`
+  - 一级入口：`_show_tutorial`、`_show_challenge`、`_show_custom`
+  - 自定义地图/天气：`_refresh_custom_maps`、`_load_weather_options`
+  - 全角色锁定卡与编成：`_build_ship_cards`、`_toggle_ship`、`_refresh_fleet_state`
+  - 自定义战斗启动：`_start_custom_battle`；运行时 Definition 由 `GameFlow.configure_custom_battle` 组装
+  - 操作说明与界面设置：`_show_help`、`_show_settings`
 
 ## 美术资产
 
@@ -210,6 +211,7 @@
 - 审核地形模板/地图实例/世界几何：`data/terrain/terrain_templates.json`、`data/terrain/authoring/terrain_maps.json`、`data/terrain/terrain_definitions.json`；当前十类模板均有对应运行时地图。
 - 共享导航：`data/terrain/navigation_definitions.json`、`scripts/application/navigation/route_planner.gd`
 - 纯地形查询/环境上下文/设施/水雷状态：`scripts/domain/services/terrain_query_service.gd`、`terrain_context_service.gd`、`facility_service.gd`、`minefield_service.gd`
+- 教学/挑战目标状态与任务结算：`scripts/domain/services/level_objective_service.gd`；当前运行时覆盖 T-01 双航点自然交战与 S-01 旗舰任务。
   - `TerrainContextService`：固定 Tick 天气与潮汐、最终海况规则档、机动/命中/航空上下文、潮滩进入与撤离校验。
   - `FacilityService`：观察源、岸炮状态、交互、服务事务、机场队列、依赖、HP、压制/恢复/摧毁。
   - `MinefieldService`：连续雷区进入、安全航道、单舰触发、阵营知识、控制站状态和 AI 已知雷区绕行点。
@@ -220,6 +222,7 @@
 ## 测试与调试
 
 - 核心规则测试：`scripts/tests/test_runner.gd`
+- 首批正式关卡目标专项：`scripts/tests/level_objective_runtime_test.gd`
 - 十图运行时地图、导航与出生专项：`scripts/tests/coastal_runtime_test.gd`
 - AI 量化模型：`scripts/application/ai/ai_quantitative_model.gd`
 - AI 阵营观察快照：`scripts/application/ai/ai_observation.gd`

@@ -1,0 +1,27 @@
+{
+  "definitions": [
+    {
+      "id": "objective.t01_navigation",
+      "objective_kind": "TutorialNavigation",
+      "title": "航向与选择",
+      "player_unit_id": "unit.player.t01.sirius",
+      "enemy_flagship_unit_id": "unit.enemy.t01.ward",
+      "waypoint_zones": [
+        {"id": "waypoint.t01.01", "position": [1884.16, 898.56], "radius": 90.0, "label": "航点一"},
+        {"id": "waypoint.t01.02", "position": [2088.96, 1152.0], "radius": 90.0, "label": "航点二"}
+      ],
+      "locked_player_commands": ["FirePrimaryWeapon", "CastSkill", "SwitchAmmo", "SetUnitControlState"],
+      "completion_text": "完成两个航点并击沉沃德",
+      "failure_text": "天狼星沉没"
+    },
+    {
+      "id": "objective.s01_flagship",
+      "objective_kind": "FlagshipMission",
+      "title": "首轮接敌",
+      "player_flagship_unit_id": "unit.player.s01.warspite",
+      "enemy_flagship_unit_id": "unit.enemy.s01.hindenburg",
+      "completion_text": "击沉敌方旗舰兴登堡",
+      "failure_text": "己方旗舰厌战沉没"
+    }
+  ]
+}

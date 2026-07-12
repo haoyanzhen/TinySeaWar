@@ -5,6 +5,9 @@ const OCEAN_PALETTE_PATH := "res://data/environments/ocean_palettes.json"
 
 static func mode_name(level_id: String) -> String:
 	match level_id:
+		"level.tutorial.t01": return "T-01 航向与选择"
+		"level.challenge.s01": return "S-01 首轮接敌"
+		"level.custom_runtime": return "自定义战斗"
 		"level.prototype_1v1": return "1v1 单舰对决"
 		"level.prototype_3v3": return "3v3 小队演习"
 		"level.prototype_5v5": return "5v5 舰队战"
@@ -98,6 +101,7 @@ static func reason_name(reason_code: String) -> String:
 		"UNIT_SUNK": return "单位已沉没"
 		"MOVEMENT_ASSIST_DISABLED": return "自动航行已关闭"
 		"AUTO_FIRE_DISABLED": return "主要武器自动开火已关闭或暂停"
+		"TUTORIAL_ACTION_LOCKED": return "该能力将在后续教学中开放"
 		"PRIMARY_WEAPON_UNAVAILABLE": return "没有可用的主要武器"
 		"WEAPON_RELOADING": return "武器装填中"
 		"TORPEDO_MOUNT_INTERVAL": return "鱼雷管组切换中"

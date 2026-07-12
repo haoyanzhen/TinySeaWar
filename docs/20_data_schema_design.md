@@ -832,6 +832,9 @@ difficulty_index
 time_limit
 stalemate_duration
 enemy_ai_profile_id
+objective_set_id
+tutorial_stage_plan
+reinforcement_schedule
 ```
 
 字段含义：
@@ -848,6 +851,13 @@ enemy_ai_profile_id
 - `time_limit`：关卡时间限制，MVP 默认 20 分钟。
 - `stalemate_duration`：无伤害记录多久后允许手动结束，MVP 默认 60 秒。
 - `enemy_ai_profile_id`：敌方 AI 行为配置引用，用于覆盖默认目标优先级或特殊操作。
+- `objective_set_id`：可选的声明式关卡目标引用；省略时保持现有旗舰/超时兼容结算。
+- `tutorial_stage_plan`：可选的教学阶段与能力限制方案；由航点、接触、操作完成或武器窗口等可理解事件推进，不使用纯倒计时制造静止靶。
+- `reinforcement_schedule`：可选的预注册接替增援波次，需指定最早时间、同时上限、审核出生点和舰队成员。
+
+目标条件白名单、运行状态、增援确定性顺序、23 关映射以及 `PlayerProgressSave` 的详细 Schema 和校验见 `docs/technical/t02_level_objective_reinforcement_progress_solution.md`。配置不得嵌入任意脚本或布尔表达式。
+
+首个运行时子集位于 `data/objectives/level_objectives.json` 和 `data/levels/formal_level_01.json`。当前程序支持 `TutorialNavigation` 与 `FlagshipMission` 两类目标；前者保存两个审核航点、教学锁定命令和自然交战阶段，后者保存双方旗舰引用与完成/取消文案。新增类型前必须扩展加载校验、纯 Domain 目标服务和专项测试，不能只增加 JSON 字符串。
 
 ## 13. AI 配置
 

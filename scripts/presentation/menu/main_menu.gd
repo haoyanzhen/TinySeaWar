@@ -1,310 +1,430 @@
 extends Control
 
-const UiText = preload("res://scripts/presentation/ui_text.gd")
 const BATTLE_SCENE := "res://scenes/battle/prototype_battle.tscn"
-const PANEL_FILL := Color(0.93, 0.98, 1.0, 0.88)
-const PANEL_STROKE := Color(0.48, 0.82, 0.95, 0.62)
-const TEXT_DARK := Color("#123443")
-const TEXT_SOFT := Color("#5d8793")
-const ACCENT := Color("#ffc857")
-const COASTAL_LEVELS := [
-	["港湾入口", "level.prototype_harbor_3v3"],
-	["破碎环礁", "level.prototype_broken_atoll_3v3"],
-	["中央沙洲", "level.prototype_central_sandbar_3v3"],
-	["新月岛", "level.prototype_crescent_bay_3v3"],
-	["双岛长海峡", "level.prototype_double_island_long_channel_3v3"],
-	["双航道礁线", "level.prototype_dual_channel_reef_line_3v3"],
-	["细长群岛", "level.prototype_long_archipelago_3v3"],
-	["大岛偏置", "level.prototype_offset_large_island_3v3"],
-	["环岛泻湖", "level.prototype_ring_lagoon_3v3"],
-	["散岛群", "level.prototype_scattered_islands_3v3"],
-]
+const PALETTE_PATH := "res://data/environments/ocean_palettes.json"
+const TEXT_DARK := Color("#244b5a")
+const TEXT_SOFT := Color("#5a7883")
+const SKY_BLUE := Color("#2fbae6")
+const MINT := Color("#35c99a")
+const LOCKED := Color("#9aaeb6")
+const PANEL_FILL := Color(0.97, 0.99, 1.0, 0.94)
+const PANEL_STROKE := Color("#8dd9e8")
 
-var texture_cache: Dictionary = {}
-var cover_character_id := "warspite"
-var info_title := "选择模式"
-var info_body := ""
-var mode_buttons: Array[Button] = []
-var info_panel_visible := true
-var settings_overlay: Control
-var resolution_selector: OptionButton
-var resolution_status: Label
-var coastal_level_selector: OptionButton
+const CUSTOM_SIZES := [
+	{"label": "1v1 单舰对决", "count": 1, "cost": 12, "base": "level.prototype_1v1"},
+	{"label": "3v3 小型舰队", "count": 3, "cost": 22, "base": "level.prototype_3v3"},
+	{"label": "5v5 中型舰队", "count": 5, "cost": 34, "base": "level.prototype_5v5"},
+	{"label": "11v11 大型舰队", "count": 11, "cost": 64, "base": "level.prototype_11v11"},
+]
+const MAP_OPTIONS := [
+	{"label": "开阔海域", "level": "level.prototype_3v3", "sizes": [1, 3, 5, 11]},
+	{"label": "港湾入口", "level": "level.prototype_harbor_3v3", "sizes": [3]},
+	{"label": "破碎环礁", "level": "level.prototype_broken_atoll_3v3", "sizes": [3]},
+	{"label": "中央沙洲", "level": "level.prototype_central_sandbar_3v3", "sizes": [3]},
+	{"label": "新月岛", "level": "level.prototype_crescent_bay_3v3", "sizes": [3]},
+	{"label": "双岛长海峡", "level": "level.prototype_double_island_long_channel_3v3", "sizes": [3]},
+	{"label": "双航道礁线", "level": "level.prototype_dual_channel_reef_line_3v3", "sizes": [3]},
+	{"label": "细长群岛", "level": "level.prototype_long_archipelago_3v3", "sizes": [3]},
+	{"label": "大岛偏置", "level": "level.prototype_offset_large_island_3v3", "sizes": [3]},
+	{"label": "环岛泻湖", "level": "level.prototype_ring_lagoon_3v3", "sizes": [3]},
+	{"label": "散岛群", "level": "level.prototype_scattered_islands_3v3", "sizes": [3]},
+]
+const TUTORIALS := [
+	["T-01", "航向与选择", "移动、连续航点、镜头与旗舰胜利目标"],
+	["T-02", "主炮与弹药", "瞄准、HE/AP、射角、装填和装甲伤害"],
+	["T-03", "技能窗口", "技能目标、冷却与自动交火边界"],
+	["T-04", "重甲压制", "大口径压制、副武器自动能力与月光区"],
+	["T-05", "隐蔽雷击", "侦查、隐蔽、雷击角度与脱离"],
+	["T-06", "航母猎杀", "目标价值、护航与自动索敌"],
+	["T-07", "侦查共享", "前出接触与舰队共享目标"],
+	["T-08", "编队考核", "框选、集火、自动开关与旗舰保护"],
+]
+const CHALLENGES := {
+	"小型海战 · 3v3": [["S-01", "首轮接敌"], ["S-02", "侧翼雷线"], ["S-03", "航空诱饵"], ["S-04", "双向伏击"], ["S-05", "狼群门槛"]],
+	"中型海战 · 5v5": [["M-01", "港湾扩编"], ["M-02", "泻湖护航"], ["M-03", "群岛雷击"], ["M-04", "风暴猎场"], ["M-05", "海峡封锁"]],
+	"大型海战 · 11v11": [["L-01", "舰队展开"], ["L-02", "岛侧航空走廊"], ["L-03", "双航道巨炮"], ["L-04", "风暴群岛合围"], ["L-05", "雷夜环礁终局"]],
+}
+
+var content: VBoxContainer
+var custom_size_selector: OptionButton
+var custom_map_selector: OptionButton
+var custom_weather_selector: OptionButton
+var fleet_grid: GridContainer
+var custom_status: Label
+var custom_start_button: Button
+var selected_ship_ids: Array[String] = []
+var ship_buttons: Dictionary = {}
 
 
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_STOP
-	cover_character_id = _random_character_id()
-	info_body = _mode_body()
-	_create_buttons()
-	_create_settings_panel()
-	queue_redraw()
+	_build_shell()
+	_show_home()
 
 
 func _draw() -> void:
-	var viewport_size := size
-	_draw_ocean_background(viewport_size)
-	_draw_cover_art(Rect2(Vector2(viewport_size.x * 0.43, 36.0), Vector2(viewport_size.x * 0.55, viewport_size.y - 72.0)))
-	_draw_title_panel(Rect2(Vector2(56.0, 56.0), Vector2(620.0, 190.0)))
-	_draw_info_panel(Rect2(Vector2(56.0, 284.0), Vector2(650.0, 420.0)))
-	_draw_footer(Rect2(Vector2(56.0, viewport_size.y - 142.0), Vector2(650.0, 88.0)))
+	draw_rect(Rect2(Vector2.ZERO, size), Color("#d8eef3"), true)
+	for index in range(16):
+		var y := 30.0 + index * 72.0
+		draw_line(Vector2(0.0, y), Vector2(size.x, y + sin(index) * 24.0), Color(0.3, 0.67, 0.78, 0.09), 3.0)
 
 
-func _create_buttons() -> void:
-	_add_button("btn_mode_1v1", "开始 1v1", Vector2(84.0, 724.0), Vector2(180.0, 48.0), func(): _start_level("level.prototype_1v1"))
-	_add_button("btn_mode_3v3", "开始 3v3", Vector2(284.0, 724.0), Vector2(180.0, 48.0), func(): _start_level("level.prototype_3v3"))
-	_add_button("btn_mode_5v5", "开始 5v5", Vector2(484.0, 724.0), Vector2(180.0, 48.0), func(): _start_level("level.prototype_5v5"))
-	_add_button("btn_mode_11v11", "开始 11v11", Vector2(84.0, 786.0), Vector2(180.0, 48.0), func(): _start_level("level.prototype_11v11"))
-	_add_button("btn_operation", "操作说明", Vector2(284.0, 786.0), Vector2(180.0, 48.0), func(): _show_operation_guide())
-	_add_button("btn_game_intro", "游戏介绍", Vector2(484.0, 786.0), Vector2(180.0, 48.0), func(): _show_game_intro())
-	_add_button("btn_settings", "设置", Vector2(84.0, 848.0), Vector2(180.0, 48.0), func(): _show_settings())
-	coastal_level_selector = OptionButton.new()
-	coastal_level_selector.name = "coastal_level_selector"
-	coastal_level_selector.position = Vector2(284.0, 848.0)
-	coastal_level_selector.size = Vector2(380.0, 48.0)
-	coastal_level_selector.focus_mode = Control.FOCUS_ALL
-	for entry in COASTAL_LEVELS:
-		coastal_level_selector.add_item("3v3 %s" % entry[0])
-		coastal_level_selector.set_item_metadata(coastal_level_selector.item_count - 1, entry[1])
-	add_child(coastal_level_selector)
-	_add_button("btn_mode_coastal", "开始近岸战", Vector2(684.0, 848.0), Vector2(180.0, 48.0), _start_selected_coastal)
+func _build_shell() -> void:
+	var root_margin := MarginContainer.new()
+	root_margin.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	root_margin.add_theme_constant_override("margin_left", 54)
+	root_margin.add_theme_constant_override("margin_top", 40)
+	root_margin.add_theme_constant_override("margin_right", 54)
+	root_margin.add_theme_constant_override("margin_bottom", 40)
+	add_child(root_margin)
+	var rows := VBoxContainer.new()
+	rows.add_theme_constant_override("separation", 20)
+	root_margin.add_child(rows)
+	var header := _panel()
+	header.custom_minimum_size = Vector2(0, 112)
+	rows.add_child(header)
+	var header_margin := MarginContainer.new()
+	header_margin.add_theme_constant_override("margin_left", 30)
+	header_margin.add_theme_constant_override("margin_top", 18)
+	header.add_child(header_margin)
+	var title := Label.new()
+	title.text = "小小海战  /  作战指挥部"
+	title.add_theme_font_size_override("font_size", 38)
+	title.add_theme_color_override("font_color", TEXT_DARK)
+	header_margin.add_child(title)
+
+	var body := HBoxContainer.new()
+	body.add_theme_constant_override("separation", 20)
+	body.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	rows.add_child(body)
+	var navigation := _panel()
+	navigation.custom_minimum_size = Vector2(270, 0)
+	body.add_child(navigation)
+	var nav_margin := MarginContainer.new()
+	nav_margin.add_theme_constant_override("margin_left", 18)
+	nav_margin.add_theme_constant_override("margin_top", 22)
+	nav_margin.add_theme_constant_override("margin_right", 18)
+	navigation.add_child(nav_margin)
+	var nav := VBoxContainer.new()
+	nav.add_theme_constant_override("separation", 14)
+	nav_margin.add_child(nav)
+	_add_nav(nav, "教学", _show_tutorial)
+	_add_nav(nav, "挑战", _show_challenge)
+	_add_nav(nav, "自定义", _show_custom)
+	var spacer := Control.new()
+	spacer.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	nav.add_child(spacer)
+	_add_nav(nav, "操作说明", _show_help)
+	_add_nav(nav, "设置", _show_settings)
+
+	var content_panel := _panel()
+	content_panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	body.add_child(content_panel)
+	var content_margin := MarginContainer.new()
+	content_margin.add_theme_constant_override("margin_left", 30)
+	content_margin.add_theme_constant_override("margin_top", 24)
+	content_margin.add_theme_constant_override("margin_right", 30)
+	content_margin.add_theme_constant_override("margin_bottom", 24)
+	content_panel.add_child(content_margin)
+	content = VBoxContainer.new()
+	content.add_theme_constant_override("separation", 16)
+	content_margin.add_child(content)
 
 
-func _start_selected_coastal() -> void:
-	if coastal_level_selector == null or coastal_level_selector.item_count == 0:
-		return
-	_start_level(str(coastal_level_selector.get_item_metadata(coastal_level_selector.selected)))
+func _panel() -> PanelContainer:
+	var panel := PanelContainer.new()
+	var style := StyleBoxFlat.new()
+	style.bg_color = PANEL_FILL
+	style.border_color = PANEL_STROKE
+	style.set_border_width_all(2)
+	style.set_corner_radius_all(14)
+	panel.add_theme_stylebox_override("panel", style)
+	return panel
 
 
-func _add_button(node_name: String, label: String, position_value: Vector2, size_value: Vector2, callback: Callable) -> Button:
+func _add_nav(parent: VBoxContainer, label: String, callback: Callable) -> void:
 	var button := Button.new()
-	button.name = node_name
 	button.text = label
-	button.position = position_value
-	button.size = size_value
-	button.focus_mode = Control.FOCUS_ALL
+	button.custom_minimum_size = Vector2(0, 58)
+	button.add_theme_font_size_override("font_size", 22)
 	button.pressed.connect(callback)
-	add_child(button)
-	mode_buttons.append(button)
-	return button
+	parent.add_child(button)
+
+
+func _clear_content() -> void:
+	for child in content.get_children():
+		content.remove_child(child)
+		child.queue_free()
+	selected_ship_ids.clear()
+	ship_buttons.clear()
+
+
+func _heading(title_text: String, body_text: String) -> void:
+	var title := Label.new()
+	title.text = title_text
+	title.add_theme_font_size_override("font_size", 32)
+	title.add_theme_color_override("font_color", TEXT_DARK)
+	content.add_child(title)
+	var body := Label.new()
+	body.text = body_text
+	body.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	body.add_theme_font_size_override("font_size", 18)
+	body.add_theme_color_override("font_color", TEXT_SOFT)
+	content.add_child(body)
+
+
+func _show_home() -> void:
+	_clear_content()
+	_heading("选择作战入口", "教学用于理解操作、自动能力与海战概念；挑战使用固定舰队完成递进任务；自定义允许选择海域、天气并编成己方舰队。")
+	var cards := HBoxContainer.new()
+	cards.add_theme_constant_override("separation", 18)
+	cards.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	content.add_child(cards)
+	for entry in [["教学", "8 个默认开放训练关", _show_tutorial], ["挑战", "3 个规模章节，共 15 关", _show_challenge], ["自定义", "地图、天气与舰队编成", _show_custom]]:
+		var button := Button.new()
+		button.text = "%s\n\n%s" % [entry[0], entry[1]]
+		button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		button.add_theme_font_size_override("font_size", 24)
+		button.pressed.connect(entry[2])
+		cards.add_child(button)
+
+
+func _show_tutorial() -> void:
+	_clear_content()
+	_heading("教学", "所有教学默认开放。正式关卡数据尚未接入运行时，以下入口先展示完整教学结构。")
+	var scroll := ScrollContainer.new()
+	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	content.add_child(scroll)
+	var list := VBoxContainer.new()
+	list.add_theme_constant_override("separation", 10)
+	list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	scroll.add_child(list)
+	for tutorial in TUTORIALS:
+		var button := Button.new()
+		var implemented: bool = str(tutorial[0]) == "T-01"
+		button.text = "%s  %s\n%s    · %s" % [tutorial[0], tutorial[1], tutorial[2], "可开始" if implemented else "默认开放 · 待关卡接入"]
+		button.custom_minimum_size = Vector2(0, 70)
+		button.disabled = not implemented
+		button.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		if implemented: button.pressed.connect(func(): _start_level("level.tutorial.t01"))
+		list.add_child(button)
+
+
+func _show_challenge() -> void:
+	_clear_content()
+	_heading("挑战", "每个规模章节默认开放第一关，成功后开放同章下一关。任务完成即胜利；正式关卡数据接入前保持禁用。")
+	var columns := HBoxContainer.new()
+	columns.add_theme_constant_override("separation", 14)
+	columns.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	content.add_child(columns)
+	for chapter_name in CHALLENGES:
+		var column := VBoxContainer.new()
+		column.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		column.add_theme_constant_override("separation", 10)
+		columns.add_child(column)
+		var title := Label.new()
+		title.text = chapter_name
+		title.add_theme_font_size_override("font_size", 22)
+		title.add_theme_color_override("font_color", TEXT_DARK)
+		column.add_child(title)
+		var levels: Array = CHALLENGES[chapter_name]
+		for index in range(levels.size()):
+			var button := Button.new()
+			var implemented: bool = str(levels[index][0]) == "S-01"
+			var state_text := "可开始" if implemented else ("默认开放 · 待接入" if index == 0 else "完成前一关后开放")
+			button.text = "%s  %s\n%s" % [levels[index][0], levels[index][1], state_text]
+			button.custom_minimum_size = Vector2(0, 80)
+			button.disabled = not implemented
+			button.alignment = HORIZONTAL_ALIGNMENT_LEFT
+			if implemented: button.pressed.connect(func(): _start_level("level.challenge.s01"))
+			column.add_child(button)
+
+
+func _show_custom() -> void:
+	_clear_content()
+	_heading("自定义战斗", "选择规模、已验收地图和 20 套天气，再从全部角色中选择已解锁舰船。第一艘入选舰自动担任旗舰。")
+	var selectors := HBoxContainer.new()
+	selectors.add_theme_constant_override("separation", 12)
+	content.add_child(selectors)
+	custom_size_selector = _selector_with_label(selectors, "规模")
+	for option in CUSTOM_SIZES:
+		custom_size_selector.add_item(option["label"])
+	custom_size_selector.select(1)
+	custom_size_selector.item_selected.connect(func(_index): _refresh_custom_maps(); _refresh_fleet_state())
+	custom_map_selector = _selector_with_label(selectors, "地图")
+	custom_weather_selector = _selector_with_label(selectors, "天气与时段")
+	_load_weather_options()
+	_refresh_custom_maps()
+
+	custom_status = Label.new()
+	custom_status.add_theme_font_size_override("font_size", 18)
+	custom_status.add_theme_color_override("font_color", TEXT_DARK)
+	content.add_child(custom_status)
+	var scroll := ScrollContainer.new()
+	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	content.add_child(scroll)
+	fleet_grid = GridContainer.new()
+	fleet_grid.columns = 4
+	fleet_grid.add_theme_constant_override("h_separation", 10)
+	fleet_grid.add_theme_constant_override("v_separation", 10)
+	fleet_grid.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	scroll.add_child(fleet_grid)
+	_build_ship_cards()
+	custom_start_button = Button.new()
+	custom_start_button.text = "开始自定义战斗"
+	custom_start_button.custom_minimum_size = Vector2(0, 54)
+	custom_start_button.add_theme_font_size_override("font_size", 22)
+	custom_start_button.pressed.connect(_start_custom_battle)
+	content.add_child(custom_start_button)
+	_refresh_fleet_state()
+
+
+func _selector_with_label(parent: HBoxContainer, label_text: String) -> OptionButton:
+	var group := VBoxContainer.new()
+	group.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	parent.add_child(group)
+	var label := Label.new()
+	label.text = label_text
+	label.add_theme_color_override("font_color", TEXT_SOFT)
+	group.add_child(label)
+	var selector := OptionButton.new()
+	selector.custom_minimum_size = Vector2(0, 46)
+	group.add_child(selector)
+	return selector
+
+
+func _load_weather_options() -> void:
+	var file := FileAccess.open(PALETTE_PATH, FileAccess.READ)
+	if file == null:
+		return
+	var parsed = JSON.parse_string(file.get_as_text())
+	if parsed is not Dictionary:
+		return
+	var palettes: Dictionary = parsed.get("palettes", {})
+	var ids: Array = palettes.keys()
+	for legacy_id in ["day_clear", "cloudy", "dusk"]:
+		ids.erase(legacy_id)
+	ids.sort()
+	for palette_id in ids:
+		custom_weather_selector.add_item(str(palettes[palette_id].get("display_name", palette_id)))
+		custom_weather_selector.set_item_metadata(custom_weather_selector.item_count - 1, palette_id)
+	var clear_day_index := ids.find("clear_day")
+	if clear_day_index >= 0:
+		custom_weather_selector.select(clear_day_index)
+
+
+func _refresh_custom_maps() -> void:
+	if custom_map_selector == null:
+		return
+	custom_map_selector.clear()
+	var count := int(CUSTOM_SIZES[custom_size_selector.selected]["count"])
+	for option in MAP_OPTIONS:
+		if count not in option["sizes"]:
+			continue
+		custom_map_selector.add_item(option["label"])
+		var map_level_id := str(CUSTOM_SIZES[custom_size_selector.selected]["base"]) if option["label"] == "开阔海域" else str(option["level"])
+		custom_map_selector.set_item_metadata(custom_map_selector.item_count - 1, map_level_id)
+
+
+func _build_ship_cards() -> void:
+	var flow := get_node_or_null("/root/GameFlow")
+	for ship in DataRegistry.registry.all("ships"):
+		var ship_id := str(ship.get("id", ""))
+		var unlocked: bool = flow != null and bool(flow.is_ship_unlocked(ship_id))
+		var button := Button.new()
+		button.toggle_mode = true
+		button.disabled = not unlocked
+		button.custom_minimum_size = Vector2(285, 82)
+		button.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		button.text = "%s\n%s · Lv.%d · Cost %d\n%s" % [ship.get("display_name", ship_id), ship.get("ship_class", ""), int(ship.get("level", 1)), int(ship.get("cost", 0)), "已解锁" if unlocked else "未解锁"]
+		button.tooltip_text = "可加入编成" if unlocked else "通过教学或挑战关解锁"
+		button.add_theme_color_override("font_disabled_color", LOCKED)
+		button.toggled.connect(func(pressed: bool, id := ship_id): _toggle_ship(id, pressed))
+		fleet_grid.add_child(button)
+		ship_buttons[ship_id] = button
+
+
+func _toggle_ship(ship_id: String, pressed: bool) -> void:
+	if pressed:
+		if ship_id not in selected_ship_ids:
+			selected_ship_ids.append(ship_id)
+	else:
+		selected_ship_ids.erase(ship_id)
+	_refresh_fleet_state()
+
+
+func _refresh_fleet_state() -> void:
+	if custom_size_selector == null or custom_status == null:
+		return
+	var option: Dictionary = CUSTOM_SIZES[custom_size_selector.selected]
+	var required := int(option["count"])
+	var cap := int(option["cost"])
+	while selected_ship_ids.size() > required:
+		var removed: String = selected_ship_ids.pop_back()
+		if ship_buttons.has(removed):
+			ship_buttons[removed].set_pressed_no_signal(false)
+	var used := 0
+	for ship_id in selected_ship_ids:
+		used += int(DataRegistry.registry.get_definition("ships", ship_id).get("cost", 0))
+	custom_status.text = "已选 %d/%d    Cost %d/%d    %s" % [selected_ship_ids.size(), required, used, cap, "第一艘为旗舰" if not selected_ship_ids.is_empty() else "请选择舰船"]
+	custom_status.add_theme_color_override("font_color", TEXT_DARK if used <= cap else Color("#e83f5b"))
+	if custom_start_button != null:
+		custom_start_button.disabled = selected_ship_ids.size() != required or used > cap or custom_map_selector.item_count == 0 or custom_weather_selector.item_count == 0
+
+
+func _start_custom_battle() -> void:
+	var flow := get_node_or_null("/root/GameFlow")
+	if flow == null:
+		return
+	var size_option: Dictionary = CUSTOM_SIZES[custom_size_selector.selected]
+	var result: Dictionary = flow.configure_custom_battle(
+		str(size_option["base"]),
+		str(custom_map_selector.get_item_metadata(custom_map_selector.selected)),
+		str(custom_weather_selector.get_item_metadata(custom_weather_selector.selected)),
+		selected_ship_ids
+	)
+	if not result.get("ok", false):
+		custom_status.text = "无法创建自定义战斗：%s" % result.get("error", "UNKNOWN")
+		return
+	var error := get_tree().change_scene_to_file(BATTLE_SCENE)
+	if error != OK:
+		custom_status.text = "无法进入战斗场景：%s" % error
 
 
 func _start_level(level_id: String) -> void:
 	var flow := get_node_or_null("/root/GameFlow")
-	if flow != null:
-		flow.select_level(level_id)
+	if flow != null: flow.select_level(level_id)
 	var error := get_tree().change_scene_to_file(BATTLE_SCENE)
-	if error != OK:
-		push_error("Could not start battle scene: %s" % error)
+	if error != OK: push_error("Could not start level %s: %s" % [level_id, error])
 
 
-func _create_settings_panel() -> void:
-	settings_overlay = Control.new()
-	settings_overlay.name = "SettingsOverlay"
-	settings_overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	settings_overlay.mouse_filter = Control.MOUSE_FILTER_STOP
-	settings_overlay.z_index = 100
-	settings_overlay.visible = false
-	add_child(settings_overlay)
-
-	var shade := ColorRect.new()
-	shade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	shade.color = Color(0.02, 0.12, 0.17, 0.58)
-	shade.mouse_filter = Control.MOUSE_FILTER_STOP
-	settings_overlay.add_child(shade)
-
-	var panel := PanelContainer.new()
-	panel.name = "SettingsPanel"
-	panel.set_anchors_preset(Control.PRESET_CENTER)
-	panel.position = Vector2(-270.0, -170.0)
-	panel.size = Vector2(540.0, 340.0)
-	var panel_style := StyleBoxFlat.new()
-	panel_style.bg_color = Color("eefaff")
-	panel_style.border_color = PANEL_STROKE
-	panel_style.set_border_width_all(2)
-	panel_style.set_corner_radius_all(12)
-	panel.add_theme_stylebox_override("panel", panel_style)
-	settings_overlay.add_child(panel)
-
-	var margin := MarginContainer.new()
-	margin.add_theme_constant_override("margin_left", 34)
-	margin.add_theme_constant_override("margin_top", 28)
-	margin.add_theme_constant_override("margin_right", 34)
-	margin.add_theme_constant_override("margin_bottom", 28)
-	panel.add_child(margin)
-	var content := VBoxContainer.new()
-	content.add_theme_constant_override("separation", 18)
-	margin.add_child(content)
-
-	var title := Label.new()
-	title.text = "界面设置"
-	title.add_theme_font_size_override("font_size", 30)
-	title.add_theme_color_override("font_color", TEXT_DARK)
-	content.add_child(title)
-	var hint := Label.new()
-	hint.text = "选择游戏窗口大小，应用后立即生效。"
-	hint.add_theme_font_size_override("font_size", 18)
-	hint.add_theme_color_override("font_color", TEXT_SOFT)
-	content.add_child(hint)
-
-	resolution_selector = OptionButton.new()
-	resolution_selector.name = "ResolutionSelector"
-	resolution_selector.custom_minimum_size = Vector2(0.0, 48.0)
-	resolution_selector.add_theme_font_size_override("font_size", 18)
-	for option in _window_size_options():
-		resolution_selector.add_item("%d x %d" % [option.x, option.y])
-	content.add_child(resolution_selector)
-	resolution_status = Label.new()
-	resolution_status.add_theme_font_size_override("font_size", 16)
-	resolution_status.add_theme_color_override("font_color", TEXT_SOFT)
-	content.add_child(resolution_status)
-
-	var actions := HBoxContainer.new()
-	actions.alignment = BoxContainer.ALIGNMENT_END
-	actions.add_theme_constant_override("separation", 12)
-	content.add_child(actions)
-	var close_button := Button.new()
-	close_button.name = "CloseSettingsButton"
-	close_button.text = "关闭"
-	close_button.custom_minimum_size = Vector2(110.0, 44.0)
-	close_button.pressed.connect(func(): settings_overlay.hide())
-	actions.add_child(close_button)
-	var apply_button := Button.new()
-	apply_button.name = "ApplySettingsButton"
-	apply_button.text = "应用"
-	apply_button.custom_minimum_size = Vector2(110.0, 44.0)
-	apply_button.pressed.connect(_apply_selected_window_size)
-	actions.add_child(apply_button)
+func _show_help() -> void:
+	_clear_content()
+	_heading("操作说明", "1-9 / 0 / - 选舰；右键移动；Z 连续航点；X 自动航行；C 副武器自动开火；V 主要武器自动开火；E 主要武器瞄准；Q 切换弹药；F 技能；G 镜头跟踪；空格暂停。\n\n教学入口会逐步解释这些能力、自动开关、侦查共享、雷击、主炮伤害和旗舰目标。")
 
 
 func _show_settings() -> void:
-	var current_size := _current_window_size()
-	var options := _window_size_options()
+	_clear_content()
+	_heading("界面设置", "选择窗口尺寸，应用后立即生效。")
+	var selector := OptionButton.new()
+	selector.custom_minimum_size = Vector2(520, 52)
+	var flow := get_node_or_null("/root/GameFlow")
+	var options: Array[Vector2i] = flow.window_size_options() if flow != null else []
 	for index in range(options.size()):
-		if options[index] == current_size:
-			resolution_selector.select(index)
-			break
-	resolution_status.text = "当前：%d x %d" % [current_size.x, current_size.y]
-	settings_overlay.show()
-
-
-func _apply_selected_window_size() -> void:
-	var options := _window_size_options()
-	var selected_index := resolution_selector.selected
-	if selected_index < 0 or selected_index >= options.size():
-		resolution_status.text = "未找到可用的界面尺寸。"
-		return
-	var selected_size := options[selected_index]
-	var flow := get_node_or_null("/root/GameFlow")
-	if flow == null or not flow.apply_window_size(selected_size):
-		resolution_status.text = "设置保存失败。"
-		return
-	resolution_status.text = "已应用：%d x %d" % [selected_size.x, selected_size.y]
-
-
-func _window_size_options() -> Array[Vector2i]:
-	var flow := get_node_or_null("/root/GameFlow")
-	return flow.window_size_options() if flow != null else []
-
-
-func _current_window_size() -> Vector2i:
-	var flow := get_node_or_null("/root/GameFlow")
-	return flow.current_window_size if flow != null else Vector2i(1920, 1080)
-
-
-func _show_mode_select() -> void:
-	info_title = "选择模式"
-	info_body = _mode_body()
-	queue_redraw()
-
-
-func _show_operation_guide() -> void:
-	info_title = "操作说明"
-	info_body = "基础界面：\n- 顶部为敌我舰队，左下为小地图，右侧为日志与选中角色。\n- 底部两排操作槽显示武器、技能、路径、自动控制与镜头状态。\n\n键鼠操作：\n- 1-9 / 0 / - 选舰；左键选择/确认；右键下达单点移动；滚轮缩放。\n- Z：进入连续路径模式，左键追加途径点，再按 Z 或 Esc 结束。\n- X：自动航行；C：副武器自动开火；V：主要武器自动开火。\n- 按住 Cmd 或 Alt 再按 X/C/V：对全部存活己方舰船生效。\n- E：主要武器瞄准；Q：切换弹种；F：手动释放技能。\n- G：跟踪镜头；W/A/S/D：移动镜头；空格：暂停；Esc：取消。"
-	queue_redraw()
-
-
-func _show_game_intro() -> void:
-	info_title = "游戏介绍"
-	info_body = "小小海战是开阔海域中的轻量二维舰队战。己方舰船默认静止并自动使用副武器；玩家负责规划航线、决定主要武器和技能时机，也可按舰开启受限辅助航行与主要武器自动开火。\n\n核心玩法：\n- 保持己方旗舰存活，同时寻找机会击沉敌方旗舰。\n- 用 Z/右键规划航线，通过 E 抓住主要武器窗口，Q 切换合适弹种。\n- 使用 G 跟随关键角色，用小地图观察整体态势。\n\n胜利条件：\n- 击沉敌方旗舰立即胜利。\n- 时间耗尽时，按双方剩余总耐久比例判定胜负。\n- 双方旗舰同一结算周期沉没时，当前规则判定玩家胜利。"
-	queue_redraw()
-
-
-func _mode_body() -> String:
-	return "请选择本次出击模式。\n\n1v1：单舰对决，适合熟悉镜头、选择、主要武器瞄准和旗舰胜负。\n\n3v3：小队舰队战，适合练习角色槽位切换、集火目标、技能和小地图阅读。\n\n5v5：完整小舰队交战，覆盖潜艇、驱逐、巡洋、战列的混合威胁。\n\n11v11：大规模压力战，验证操作槽、侦查密度和表现层性能。\n\n港湾 3v3：验证浅水、航道、岛岸阻挡、海雾/海流和岸基设施。"
-
-
-func _draw_ocean_background(viewport_size: Vector2) -> void:
-	draw_rect(Rect2(Vector2.ZERO, viewport_size), Color("#d8eef3"), true)
-	for index in range(18):
-		var y := float(index) * 74.0 + 28.0
-		var color := Color(0.3, 0.67, 0.78, 0.12 if index % 2 == 0 else 0.07)
-		draw_line(Vector2(0.0, y), Vector2(viewport_size.x, y + sin(index) * 28.0), color, 3.0)
-	draw_rect(Rect2(Vector2.ZERO, viewport_size), Color(1.0, 1.0, 1.0, 0.22), true)
-
-
-func _draw_cover_art(rect: Rect2) -> void:
-	var texture := _character_texture(cover_character_id, "illust_skill_cutin_alpha")
-	if texture == null:
-		return
-	var cover_draw_rect := _cover_rect(texture, rect)
-	draw_texture_rect(texture, cover_draw_rect, false, Color(1.0, 1.0, 1.0, 0.92))
-	draw_rect(Rect2(rect.position + Vector2(18.0, rect.size.y - 112.0), Vector2(rect.size.x - 36.0, 74.0)), Color(0.04, 0.18, 0.24, 0.36), true)
-	draw_string(ThemeDB.fallback_font, rect.position + Vector2(44.0, rect.size.y - 70.0), "本次封面：%s" % UiText.character_name(cover_character_id), HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 88.0, 24, Color.WHITE)
-
-
-func _draw_title_panel(rect: Rect2) -> void:
-	_draw_panel(rect)
-	draw_string(ThemeDB.fallback_font, rect.position + Vector2(26.0, 58.0), "小小海战", HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 52.0, 44, TEXT_DARK)
-	draw_string(ThemeDB.fallback_font, rect.position + Vector2(28.0, 100.0), "开阔海域舰队战术原型", HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 56.0, 20, TEXT_SOFT)
-	draw_string(ThemeDB.fallback_font, rect.position + Vector2(28.0, 142.0), "选择模式，阅读操作，再把舰队带上海面。", HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 56.0, 18, TEXT_DARK)
-
-
-func _draw_info_panel(rect: Rect2) -> void:
-	_draw_panel(rect)
-	draw_string(ThemeDB.fallback_font, rect.position + Vector2(28.0, 42.0), info_title, HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 56.0, 28, TEXT_DARK)
-	draw_rect(Rect2(rect.position + Vector2(28.0, 62.0), Vector2(96.0, 4.0)), ACCENT, true)
-	draw_multiline_string(ThemeDB.fallback_font, rect.position + Vector2(28.0, 112.0), info_body, HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 56.0, 18, -1, TEXT_DARK)
-
-
-func _draw_footer(rect: Rect2) -> void:
-	_draw_panel(rect)
-	draw_string(ThemeDB.fallback_font, rect.position + Vector2(24.0, 36.0), "提示：先用 1v1 熟悉 E 瞄准，再进入 3v3 / 5v5 练习多角色切换。", HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 48.0, 18, TEXT_SOFT)
-	draw_string(ThemeDB.fallback_font, rect.position + Vector2(24.0, 66.0), "11v11 是大规模压力模式，主界面封面每次启动随机选择角色横向立绘。", HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 48.0, 16, TEXT_SOFT)
-
-
-func _draw_panel(rect: Rect2) -> void:
-	draw_rect(rect, PANEL_FILL, true)
-	draw_rect(rect, PANEL_STROKE, false, 2.0)
-	draw_rect(Rect2(rect.position, Vector2(rect.size.x, 5.0)), Color(0.43, 0.82, 0.96, 0.82), true)
-
-
-func _random_character_id() -> String:
-	var ids: Array[String] = []
-	for ship in DataRegistry.registry.all("ships"):
-		var slug := str(ship.get("id", "")).trim_prefix("ship.")
-		if _character_texture(slug, "illust_skill_cutin_alpha") != null:
-			ids.append(slug)
-	if ids.is_empty():
-		return "warspite"
-	var rng := RandomNumberGenerator.new()
-	rng.randomize()
-	return ids[rng.randi_range(0, ids.size() - 1)]
-
-
-func _character_texture(character_id: String, asset_name: String) -> Texture2D:
-	var path := "res://assets/characters/%s/processed/ui/%s_%s.png" % [character_id, character_id, asset_name]
-	return _texture(path)
-
-
-func _texture(path: String) -> Texture2D:
-	if texture_cache.has(path): return texture_cache[path]
-	var resource := load(path)
-	texture_cache[path] = resource if resource is Texture2D else null
-	return texture_cache[path]
-
-
-func _cover_rect(texture: Texture2D, rect: Rect2) -> Rect2:
-	var scale_value := maxf(rect.size.x / texture.get_width(), rect.size.y / texture.get_height())
-	var draw_size := texture.get_size() * scale_value
-	return Rect2(rect.position + (rect.size - draw_size) * 0.5, draw_size)
+		selector.add_item("%d × %d" % [options[index].x, options[index].y])
+		if options[index] == flow.current_window_size:
+			selector.select(index)
+	content.add_child(selector)
+	var status := Label.new()
+	status.add_theme_color_override("font_color", TEXT_SOFT)
+	content.add_child(status)
+	var apply := Button.new()
+	apply.text = "应用"
+	apply.custom_minimum_size = Vector2(180, 50)
+	apply.pressed.connect(func():
+		if flow != null and selector.selected >= 0 and flow.apply_window_size(options[selector.selected]):
+			status.text = "已应用：%d × %d" % [options[selector.selected].x, options[selector.selected].y]
+		else:
+			status.text = "设置保存失败。"
+	)
+	content.add_child(apply)

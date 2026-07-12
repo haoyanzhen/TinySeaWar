@@ -15,3 +15,4 @@
 
 - [t00_coastal_ai_performance_solution.md](t00_coastal_ai_performance_solution.md)：有岸地图 AI 决策与空间查询性能治理方案。
 - [t01_inertial_navigation_and_emergency_avoidance.md](t01_inertial_navigation_and_emergency_avoidance.md)：`3-5s` 战略走廊、`1.0s` 常规动力学航迹与 `0.1s` 高威胁紧急避险状态机。
+- [t02_level_objective_reinforcement_progress_solution.md](t02_level_objective_reinforcement_progress_solution.md)：23 个教学/挑战关的声明式目标、接替增援与幂等进度存档契约。

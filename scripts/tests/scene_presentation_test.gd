@@ -1,5 +1,7 @@
 extends SceneTree
 
+const BattleSession = preload("res://scripts/application/battle_session.gd")
+
 var failures: Array[String] = []
 var checks := 0
 
@@ -13,23 +15,41 @@ func _run() -> void:
 	var menu = menu_scene.instantiate()
 	root.add_child(menu)
 	await process_frame
-	_check(menu.has_node("btn_mode_1v1") and menu.has_node("btn_mode_3v3") and menu.has_node("btn_mode_5v5") and menu.has_node("btn_mode_11v11"), "main menu exposes 1v1, 3v3, 5v5, and 11v11 buttons")
-	_check(menu.has_node("btn_mode_coastal") and menu.has_node("coastal_level_selector"), "main menu exposes the coastal battle selector")
-	_check(menu.coastal_level_selector.item_count == 10, "coastal selector exposes all ten runtime maps")
-	_check(menu.has_node("btn_settings") and menu.has_node("SettingsOverlay"), "main menu exposes window settings")
-	menu._show_settings()
-	_check(menu.settings_overlay.visible and menu.resolution_selector.item_count == 5, "window settings list configured resolutions")
 	var flow = root.get_node_or_null("GameFlow")
+	_check(not menu.has_node("btn_mode_1v1") and not menu.has_node("btn_mode_coastal"), "main menu removes direct prototype battle entry buttons")
+	menu._show_tutorial()
+	var tutorial_buttons := _descendants_of_type(menu.content, "Button")
+	_check(tutorial_buttons.size() == 8, "tutorial entry exposes all eight designed training levels")
+	_check(tutorial_buttons.filter(func(button): return not button.disabled).size() == 1 and tutorial_buttons[0].text.contains("T-01"), "tutorial entry enables the implemented T-01 level")
+	menu._show_challenge()
+	var challenge_buttons := _descendants_of_type(menu.content, "Button")
+	_check(challenge_buttons.size() == 15, "challenge entry exposes all fifteen designed challenge levels")
+	_check(challenge_buttons.filter(func(button): return not button.disabled).size() == 1 and challenge_buttons.any(func(button): return not button.disabled and button.text.contains("S-01")), "challenge entry enables the implemented S-01 level")
+	menu._show_custom()
+	_check(menu.custom_size_selector.item_count == 4 and menu.custom_map_selector.item_count == 11 and menu.custom_weather_selector.item_count == 20, "custom entry exposes four scales, all 3v3 maps, and twenty weather palettes")
+	_check(menu.ship_buttons.size() == 48, "custom fleet builder lists all configured characters")
+	var unlocked_cards := 0
+	var locked_cards := 0
+	for ship_id in menu.ship_buttons:
+		if menu.ship_buttons[ship_id].disabled: locked_cards += 1
+		else: unlocked_cards += 1
+	_check(unlocked_cards == 6 and locked_cards == 42, "custom fleet builder distinguishes the six compatibility-unlocked ships from locked characters")
+	var custom_ship_ids: Array[String] = ["ship.ward", "ship.gnevny", "ship.argus"]
+	var custom_result: Dictionary = flow.configure_custom_battle("level.prototype_3v3", "level.prototype_harbor_3v3", "clear_night", custom_ship_ids)
+	var custom_level: Dictionary = root.get_node("DataRegistry").registry.get_definition("levels", "level.custom_runtime")
+	_check(custom_result.get("ok", false) and custom_level.get("player_fleet", []).size() == 3, "custom fleet selection builds a runtime level with the selected roster")
+	_check(custom_level.get("map", {}).get("terrain_definition_id", "") == "terrain.map.harbor_mouth" and custom_level.get("map", {}).get("ocean_palette", "") == "clear_night", "custom runtime level applies the selected map and weather")
+	var custom_session = BattleSession.new(root.get_node("DataRegistry").registry)
+	_check(custom_session.create_battle("level.custom_runtime", 901).get("ok", false), "custom runtime level creates a playable battle session")
+	flow.select_level("level.prototype_3v3")
 	_check(flow != null and flow.logical_viewport_size() == Vector2i(1920, 1080), "window settings keep a fixed 1920x1080 logical canvas")
 	_check(root.content_scale_size == Vector2i(1920, 1080), "root window applies the configured logical canvas size")
 	_check(root.content_scale_mode == Window.CONTENT_SCALE_MODE_CANVAS_ITEMS and root.content_scale_aspect == Window.CONTENT_SCALE_ASPECT_KEEP, "root window scales canvas items while preserving aspect ratio")
 	_check(menu.size == Vector2(1920.0, 1080.0), "main menu retains its full logical layout instead of being cropped to the physical window")
-	menu.settings_overlay.hide()
-	_check(menu._character_texture(menu.cover_character_id, "illust_skill_cutin_alpha") != null, "main menu loads a random horizontal character cover")
-	menu._show_operation_guide()
-	_check(menu.info_title == "操作说明" and menu.info_body.contains("E"), "main menu operation guide is available")
-	menu._show_game_intro()
-	_check(menu.info_title == "游戏介绍" and menu.info_body.contains("胜利条件"), "main menu game introduction is available")
+	menu._show_settings()
+	_check(_descendants_of_type(menu.content, "OptionButton").size() == 1, "main menu retains window settings after the entry redesign")
+	menu._show_help()
+	_check(_descendants_of_type(menu.content, "Label").size() >= 2, "main menu operation guide remains available")
 	menu.queue_free()
 	await process_frame
 
@@ -280,3 +300,12 @@ func _run() -> void:
 func _check(condition: bool, message: String) -> void:
 	checks += 1
 	if not condition: failures.append(message)
+
+
+func _descendants_of_type(node: Node, class_name_value: String) -> Array[Node]:
+	var result: Array[Node] = []
+	for child in node.get_children():
+		if child.is_class(class_name_value):
+			result.append(child)
+		result.append_array(_descendants_of_type(child, class_name_value))
+	return result

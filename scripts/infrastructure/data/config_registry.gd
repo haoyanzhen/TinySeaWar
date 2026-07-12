@@ -7,6 +7,7 @@ const CATEGORY_PATHS := {
 	"skills": "res://data/skills",
 	"formulas": "res://data/formulas",
 	"levels": "res://data/levels",
+	"objectives": "res://data/objectives",
 	"settings": "res://data/settings",
 	"visuals": "res://data/visuals",
 	"facilities": "res://data/facilities",
@@ -110,6 +111,8 @@ func _validate_references() -> void:
 		_validate_formula(formula)
 	for level in all("levels"):
 		_validate_level(level)
+	for objective in all("objectives"):
+		_validate_objective(objective)
 	for settings in all("settings"):
 		_validate_settings(settings)
 	for visual in all("visuals"):
@@ -359,6 +362,9 @@ func _validate_level(level: Dictionary) -> void:
 	var ai_profile_id := str(level.get("enemy_ai_profile_id", "ai.profile.standard"))
 	if get_definition("ai_profiles", ai_profile_id).is_empty():
 		errors.append("Missing AI profile %s referenced by %s" % [ai_profile_id, level_id])
+	var objective_set_id := str(level.get("objective_set_id", ""))
+	if not objective_set_id.is_empty() and get_definition("objectives", objective_set_id).is_empty():
+		errors.append("Missing objective %s referenced by %s" % [objective_set_id, level_id])
 	for fleet_name in ["player_fleet", "enemy_fleet"]:
 		var fleet: Array = level.get(fleet_name, [])
 		var flagship_count := 0
@@ -383,6 +389,22 @@ func _validate_level(level: Dictionary) -> void:
 			fleet_costs[fleet_name] = total_cost
 		if int(fleet_costs.get("player_fleet", 0)) != int(fleet_costs.get("enemy_fleet", 0)):
 			errors.append("Equal-cost level %s has player/enemy costs %d/%d" % [level_id, fleet_costs.get("player_fleet", 0), fleet_costs.get("enemy_fleet", 0)])
+
+
+func _validate_objective(objective: Dictionary) -> void:
+	var objective_id := str(objective.get("id", "?"))
+	var kind := str(objective.get("objective_kind", ""))
+	if kind not in ["TutorialNavigation", "FlagshipMission"]:
+		errors.append("Unsupported objective kind in %s" % objective_id)
+	if str(objective.get("title", "")).is_empty():
+		errors.append("Missing objective title in %s" % objective_id)
+	if kind == "TutorialNavigation":
+		var zones: Array = objective.get("waypoint_zones", [])
+		if zones.size() != 2:
+			errors.append("Tutorial navigation objective %s must contain two waypoint zones" % objective_id)
+		for zone in zones:
+			if not _valid_positive_pair(zone.get("position", [])) or float(zone.get("radius", 0.0)) <= 0.0:
+				errors.append("Invalid waypoint zone in %s" % objective_id)
 
 
 func _validate_settings(settings: Dictionary) -> void:

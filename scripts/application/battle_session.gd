@@ -12,6 +12,7 @@ const TerrainContextService = preload("res://scripts/domain/services/terrain_con
 const FacilityService = preload("res://scripts/domain/services/facility_service.gd")
 const MinefieldService = preload("res://scripts/domain/services/minefield_service.gd")
 const RoutePlanner = preload("res://scripts/application/navigation/route_planner.gd")
+const LevelObjectiveService = preload("res://scripts/domain/services/level_objective_service.gd")
 const NavigationRequestBroker = preload("res://scripts/application/navigation/navigation_request_broker.gd")
 const TrajectoryPlanner = preload("res://scripts/application/navigation/trajectory_planner.gd")
 const ShipMotionService = preload("res://scripts/domain/services/ship_motion_service.gd")
@@ -45,6 +46,7 @@ var terrain_context_service = TerrainContextService.new()
 var facility_service = FacilityService.new()
 var minefield_service = MinefieldService.new()
 var route_planner = RoutePlanner.new()
+var level_objective_service = LevelObjectiveService.new()
 var navigation_request_broker = NavigationRequestBroker.new()
 var trajectory_planner = TrajectoryPlanner.new()
 var navigation_definition: Dictionary = {}
@@ -110,6 +112,10 @@ func create_battle(level_id: String, seed_value: int = 1) -> Dictionary:
 	if level.is_empty():
 		return {"ok": false, "errors": ["LEVEL_NOT_FOUND"]}
 	_ai_profile = registry.get_definition("ai_profiles", str(level.get("enemy_ai_profile_id", "ai.profile.standard"))).duplicate(true)
+	level_objective_service = LevelObjectiveService.new()
+	var objective_definition: Dictionary = registry.get_definition("objectives", str(level.get("objective_set_id", "")))
+	if not objective_definition.is_empty():
+		level_objective_service.setup(objective_definition)
 	var validation_errors := _validate_level_runtime(level)
 	if not validation_errors.is_empty():
 		return {"ok": false, "errors": validation_errors}
@@ -155,10 +161,14 @@ func create_battle(level_id: String, seed_value: int = 1) -> Dictionary:
 		"contacts_by_faction": {PLAYER_FACTION: {}, ENEMY_FACTION: {}},
 		"ai_groups_by_faction": {PLAYER_FACTION: {}, ENEMY_FACTION: {}},
 		"result": {},
+		"level_objective": level_objective_service.snapshot(),
 	}
 	_configure_scene_combat(level)
 	_build_fleet("fleet.player", PLAYER_FACTION, level.get("player_fleet", []))
 	_build_fleet("fleet.enemy", ENEMY_FACTION, level.get("enemy_fleet", []))
+	if level_objective_service.snapshot().get("objective_kind", "") == "TutorialNavigation":
+		for unit_id in state["fleets_by_id"]["fleet.player"]["unit_ids"]:
+			state["units_by_id"][unit_id]["secondary_auto_fire_enabled"] = false
 	_rebuild_ai_groups(ENEMY_FACTION)
 	state["phase"] = "Running"
 	recorder.reset(state["battle_id"], seed_value)
@@ -243,6 +253,7 @@ func advance_tick(delta: float = 0.1) -> Array:
 		_emit(str(minefield_event.get("event_type", "MineFieldStateChanged")), minefield_event)
 	state["minefields_by_id"] = minefield_service.snapshot()
 	_clear_invalid_targets()
+	_update_level_objective()
 	_check_victory()
 	_check_timeout()
 	_assert_invariants()
@@ -337,6 +348,7 @@ func snapshot(viewer_faction: String = PLAYER_FACTION, omniscient: bool = false)
 		"skill_effects": _visible_skill_effects(viewer_faction, omniscient),
 		"terrain_contexts": unit_terrain_contexts,
 		"result": state.get("result", {}).duplicate(true),
+		"level_objective": state.get("level_objective", {}).duplicate(true),
 	}
 
 
@@ -825,6 +837,8 @@ func _process_commands() -> void:
 
 func _apply_command(command: Dictionary) -> Dictionary:
 	if state["phase"] != "Running": return _rejection(command.get("command_id", ""), "BATTLE_NOT_RUNNING")
+	if str(command.get("issuer_id", PLAYER_FACTION)) == PLAYER_FACTION and str(command.get("command_type", "")) in level_objective_service.locked_player_commands():
+		return _rejection(command.get("command_id", ""), "TUTORIAL_ACTION_LOCKED")
 	if command.get("command_type", "") == "SetUnitControlState":
 		return _set_unit_control_state(command)
 	var unit_id := str(command.get("unit_id", ""))
@@ -1675,6 +1689,7 @@ func _update_ai_intents() -> void:
 	for unit_id in _sorted_unit_ids():
 		var unit: Dictionary = state["units_by_id"][unit_id]
 		if unit["life_state"] != "Alive": continue
+		if level_objective_service.actions_locked_for(unit): continue
 		if _uses_full_ai(unit):
 			_update_enemy_ai_intent(unit)
 		else:
@@ -1685,6 +1700,7 @@ func _update_ai_intents() -> void:
 func _update_auto_skills() -> void:
 	for unit_id in _sorted_unit_ids():
 		var unit: Dictionary = state["units_by_id"][unit_id]
+		if level_objective_service.actions_locked_for(unit): continue
 		if not _uses_full_ai(unit) or not bool(unit.get("skill_auto_cast_enabled", true)): continue
 		if unit["life_state"] != "Alive" or float(unit["skill_state"]["cooldown_remaining"]) > 0.0: continue
 		if float(unit["ai_state"].get("skill_decision_cooldown", 0.0)) > 0.0: continue
@@ -2274,6 +2290,7 @@ func _update_ai_primary_weapons() -> void:
 	for unit_id in _sorted_unit_ids():
 		var unit: Dictionary = state["units_by_id"][unit_id]
 		if unit.get("life_state", "") != "Alive": continue
+		if level_objective_service.actions_locked_for(unit): continue
 		if float(unit["ai_state"].get("fire_decision_cooldown", 0.0)) > 0.0: continue
 		unit["ai_state"]["fire_decision_cooldown"] = 0.5
 		var player_assist := not _uses_full_ai(unit)
@@ -2849,6 +2866,7 @@ func _update_weapons() -> void:
 	for unit_id in _sorted_unit_ids():
 		var unit: Dictionary = state["units_by_id"][unit_id]
 		if unit["life_state"] != "Alive": continue
+		if level_objective_service.actions_locked_for(unit): continue
 		if unit.get("faction_id", "") == PLAYER_FACTION and not bool(unit.get("secondary_auto_fire_enabled", true)): continue
 		var target := _current_or_select_target(unit, unit.get("faction_id", "") == PLAYER_FACTION)
 		if target.is_empty(): continue
@@ -3709,6 +3727,7 @@ func _sink_unit(unit: Dictionary, source_unit_id: String) -> void:
 
 func _check_victory() -> void:
 	if state["phase"] != "Running": return
+	if not str(state.get("level_objective", {}).get("objective_set_id", "")).is_empty(): return
 	var player_flagship: Dictionary = state["units_by_id"][state["fleets_by_id"]["fleet.player"]["flagship_unit_id"]]
 	var enemy_flagship: Dictionary = state["units_by_id"][state["fleets_by_id"]["fleet.enemy"]["flagship_unit_id"]]
 	var player_sunk: bool = player_flagship["life_state"] == "Sunk"
@@ -3725,9 +3744,25 @@ func _check_timeout() -> void:
 	_finish_battle(PLAYER_FACTION if player_ratio >= enemy_ratio else ENEMY_FACTION, "TIME_LIMIT")
 
 
+func _update_level_objective() -> void:
+	if str(state.get("level_objective", {}).get("objective_set_id", "")).is_empty(): return
+	var previous_engagement := bool(state.get("level_objective", {}).get("engagement_unlocked", false))
+	var update: Dictionary = level_objective_service.advance(state)
+	state["level_objective"] = level_objective_service.snapshot()
+	for objective_event in update.get("events", []):
+		var event: Dictionary = objective_event
+		_emit(str(event.get("event_type", "LevelObjectiveAdvanced")), event)
+	if not previous_engagement and bool(state["level_objective"].get("engagement_unlocked", false)):
+		for unit_id in state["fleets_by_id"]["fleet.player"]["unit_ids"]:
+			state["units_by_id"][unit_id]["secondary_auto_fire_enabled"] = true
+	var terminal: Dictionary = update.get("terminal", {})
+	if not terminal.is_empty() and state.get("phase", "") == "Running":
+		_finish_battle(str(terminal.get("winner_faction", "")), str(terminal.get("reason", "LEVEL_OBJECTIVE_COMPLETED")))
+
+
 func _finish_battle(winner: String, reason: String) -> void:
 	state["phase"] = "Finished"
-	state["result"] = {"winner_faction": winner, "reason": reason, "elapsed_time": state["elapsed_time"]}
+	state["result"] = {"winner_faction": winner, "reason": reason, "elapsed_time": state["elapsed_time"], "level_objective": state.get("level_objective", {}).duplicate(true)}
 	_emit("BattleFinished", {"result": state["result"].duplicate(true)})
 
 

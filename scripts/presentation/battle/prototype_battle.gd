@@ -979,6 +979,10 @@ func _consume_events(events: Array) -> void:
 	terrain_debug_overlay.record_events(events)
 	for event in events:
 		match event.get("event_type", ""):
+			"LevelObjectiveAdvanced": _push_message("教学进度：%s（%d/%d）" % [event.get("label", "航点"), int(event.get("step", 0)), int(event.get("step_count", 0))])
+			"TutorialStageChanged": _push_message(str(event.get("summary", "进入交战阶段")))
+			"LevelObjectiveCompleted": _push_message("任务完成：%s" % event.get("summary", ""))
+			"LevelObjectiveFailed": _push_message("任务失败：%s" % event.get("summary", ""))
 			"UnitSunk": _push_message("%s 已沉没" % _unit_display_name(str(event.get("unit_id", ""))))
 			"SkillCast": _push_message("%s 释放了 %s" % [_unit_display_name(str(event.get("unit_id", ""))), _skill_display_name(str(event.get("skill_id", "")))])
 			"MineTriggered": _push_message("%s 触发水雷，受到 %.0f 伤害" % [_unit_display_name(str(event.get("unit_id", ""))), float(event.get("damage", 0.0))])
@@ -995,6 +999,9 @@ func _consume_events(events: Array) -> void:
 			"SupportMissionResolved": _push_message("岸基航空支援已抵达")
 			"BattleFinished":
 				result_character_id = _random_player_character_id()
+				if str(event.get("result", {}).get("winner_faction", "")) == "player":
+					var flow := get_node_or_null("/root/GameFlow")
+					if flow != null: flow.record_level_victory(level_id)
 				_push_message("战斗结束，胜利阵营：%s" % UiText.faction_name(str(event.get("result", {}).get("winner_faction", ""))))
 
 

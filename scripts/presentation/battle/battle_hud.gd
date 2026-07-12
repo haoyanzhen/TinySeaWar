@@ -48,6 +48,7 @@ func _draw() -> void:
 	if snapshot.is_empty(): return
 	var viewport_size := size
 	_draw_top_status(viewport_size)
+	_draw_level_objective(viewport_size)
 	_draw_fleet_panel(Rect2(Vector2(28.0, 18.0), Vector2(596.0, 142.0)), true)
 	_draw_fleet_panel(Rect2(Vector2(viewport_size.x - 624.0, 18.0), Vector2(596.0, 142.0)), false)
 	_draw_operation_dock(Rect2(Vector2((viewport_size.x - 900.0) * 0.5, viewport_size.y - 154.0), Vector2(900.0, 128.0)))
@@ -68,6 +69,17 @@ func _draw_top_status(viewport_size: Vector2) -> void:
 	draw_string(ThemeDB.fallback_font, panel.position + Vector2(24.0, 32.0), "小小海战", HORIZONTAL_ALIGNMENT_LEFT, panel.size.x - 48.0, 22, TEXT_DARK)
 	draw_string(ThemeDB.fallback_font, panel.position + Vector2(24.0, 58.0), title, HORIZONTAL_ALIGNMENT_LEFT, panel.size.x - 48.0, 18, TEXT_SOFT)
 	_draw_icon("ui_icon_pause" if phase == "Running" else "ui_icon_continue", Rect2(panel.position + Vector2(panel.size.x - 58.0, 18.0), Vector2(36.0, 36.0)))
+
+
+func _draw_level_objective(viewport_size: Vector2) -> void:
+	var objective: Dictionary = snapshot.get("level_objective", {})
+	if objective.is_empty(): return
+	var panel := Rect2(Vector2((viewport_size.x - 560.0) * 0.5, 100.0), Vector2(560.0, 54.0))
+	_draw_panel(panel, "")
+	var status := str(objective.get("status", "Active"))
+	var prefix := "任务" if objective.get("objective_kind", "") != "TutorialNavigation" else "教学"
+	var text := "%s · %s：%s" % [prefix, objective.get("title", ""), objective.get("summary", "")]
+	draw_string(ThemeDB.fallback_font, panel.position + Vector2(18.0, 34.0), text, HORIZONTAL_ALIGNMENT_LEFT, panel.size.x - 36.0, 17, TEXT_DARK if status == "Active" else Color("#35c99a"))
 
 
 func _draw_fleet_panel(rect: Rect2, friendly: bool) -> void:

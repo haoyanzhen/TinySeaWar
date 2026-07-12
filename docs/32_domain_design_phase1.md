@@ -49,6 +49,8 @@ Domain 层的目标是让战斗规则可以脱离 Godot 场景树运行，从而
 - UI 选择状态和界面布局。
 - 角色养成、抽卡、装备更换和长期存档。
 
+教学/挑战的局内目标状态仍属于 Battle Simulation；跨局完成记录、首通奖励和舰船解锁属于战斗外 Progression 支撑域，只消费最终 `LevelFinished`，不反向修改 `BattleState`。完整边界见 `docs/technical/t02_level_objective_reinforcement_progress_solution.md`。
+
 ### 2.2 支撑域
 
 第一阶段包含三个支撑域：

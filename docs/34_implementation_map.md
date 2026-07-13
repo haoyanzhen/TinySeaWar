@@ -180,6 +180,7 @@
   - `selected_level_id` 记录主界面选择的关卡。
   - `window_size_options`、`apply_window_size` 负责读取、应用并持久化窗口尺寸。
   - `_configure_content_scaling` 固定逻辑画布并启用等比界面缩放。
+  - 正式关卡进度通过 `scripts/infrastructure/persistence/progress_save_store.gd` 使用正式/候选/恢复三槽、递增 revision、SHA-256 写后校验与启动恢复；`GameFlow.record_level_victory` 只负责可信结算合并。
 - 主界面：`scripts/presentation/menu/main_menu.gd`
   - 一级入口：`_show_tutorial`、`_show_challenge`、`_show_custom`
   - 自定义地图/天气：`_refresh_custom_maps`、`_load_weather_options`
@@ -223,6 +224,7 @@
 
 - 核心规则测试：`scripts/tests/test_runner.gd`
 - 首批正式关卡目标专项：`scripts/tests/level_objective_runtime_test.gd`
+- 进度存档三槽、校验与恢复专项：`scripts/tests/progress_save_store_test.gd`
 - 十图运行时地图、导航与出生专项：`scripts/tests/coastal_runtime_test.gd`
 - AI 量化模型：`scripts/application/ai/ai_quantitative_model.gd`
 - AI 阵营观察快照：`scripts/application/ai/ai_observation.gd`

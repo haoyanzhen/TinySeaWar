@@ -1,6 +1,7 @@
 extends Node
 
 const UiText = preload("res://scripts/presentation/ui_text.gd")
+const ProgressSaveStore = preload("res://scripts/infrastructure/persistence/progress_save_store.gd")
 const DEFAULT_LEVEL_ID := "level.prototype_3v3"
 const USER_SETTINGS_PATH := "user://tiny_sea_war_settings.cfg"
 const USER_PROGRESS_PATH := "user://tiny_sea_war_progress.json"
@@ -14,6 +15,7 @@ var current_window_size := Vector2i(1920, 1080)
 var unlocked_ship_ids: Array[String] = []
 var completed_challenge_level_ids: Array[String] = []
 var _progress_document: Dictionary = {}
+var _progress_store = ProgressSaveStore.new()
 
 
 func _ready() -> void:
@@ -41,12 +43,8 @@ func is_ship_unlocked(ship_id: String) -> bool:
 
 
 func _load_unlocked_ships() -> void:
-	var file := FileAccess.open(USER_PROGRESS_PATH, FileAccess.READ)
-	if file == null:
-		return
-	var parsed = JSON.parse_string(file.get_as_text())
-	if parsed is not Dictionary or parsed.get("unlocked_ship_ids", null) is not Array:
-		push_warning("Ignoring invalid progress save while loading ship unlocks")
+	var parsed := _progress_store.load_best(USER_PROGRESS_PATH)
+	if parsed.is_empty():
 		return
 	_progress_document = parsed.duplicate(true)
 	var loaded: Array[String] = []
@@ -77,16 +75,10 @@ func record_level_victory(level_id: String) -> bool:
 	_progress_document["unlocked_ship_ids"] = unlocked_ship_ids.duplicate()
 	_progress_document["completed_challenge_level_ids"] = completed_challenge_level_ids.duplicate()
 	_progress_document["updated_at_utc"] = Time.get_datetime_string_from_system(true)
-	var temp_path := "%s.tmp" % USER_PROGRESS_PATH
-	var file := FileAccess.open(temp_path, FileAccess.WRITE)
-	if file == null: return false
-	file.store_string(JSON.stringify(_progress_document, "  "))
-	file.close()
-	var target_absolute := ProjectSettings.globalize_path(USER_PROGRESS_PATH)
-	var temp_absolute := ProjectSettings.globalize_path(temp_path)
-	if FileAccess.file_exists(USER_PROGRESS_PATH):
-		DirAccess.remove_absolute(target_absolute)
-	return DirAccess.rename_absolute(temp_absolute, target_absolute) == OK
+	var saved := _progress_store.save(USER_PROGRESS_PATH, _progress_document)
+	if saved:
+		_progress_document = _progress_store.load_best(USER_PROGRESS_PATH)
+	return saved
 
 
 func configure_custom_battle(base_level_id: String, map_level_id: String, ocean_palette: String, player_ship_ids: Array[String]) -> Dictionary:

@@ -55,6 +55,10 @@ func pending_count() -> int:
 	return _queue.size()
 
 
-func cancel_for_unit(unit_id: String) -> void:
+func cancel_for_unit(unit_id: String) -> int:
+	var cancelled := 0
 	for index in range(_queue.size() - 1, -1, -1):
-		if str(_queue[index].get("unit_id", "")) == unit_id: _queue.remove_at(index)
+		if str(_queue[index].get("unit_id", "")) == unit_id:
+			_queue.remove_at(index)
+			cancelled += 1
+	return cancelled

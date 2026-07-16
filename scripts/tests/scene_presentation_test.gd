@@ -126,6 +126,8 @@ func _run() -> void:
 	battle._append_route_waypoint(warspite_snapshot["position"] + Vector2(120.0, 30.0))
 	battle.session.advance_tick(0.1)
 	_check(battle.session.state["units_by_id"]["unit.player.warspite"]["movement_state"]["mode"] == "PlayerWaypointRoute", "route placement UI submits an append-waypoint command")
+	var displayed_route: PackedVector2Array = battle._selected_route_points(battle.session.state["units_by_id"]["unit.player.warspite"])
+	_check(displayed_route.size() >= 2 and displayed_route[-1].is_equal_approx(warspite_snapshot["position"] + Vector2(120.0, 30.0)), "manual route overlay reads the active corridor instead of retired legacy waypoints")
 	battle._toggle_route_placement()
 	battle._toggle_control_state("movement_assist_enabled", "自动航行", false)
 	battle._toggle_control_state("primary_auto_fire_enabled", "主武器自动开火", false)

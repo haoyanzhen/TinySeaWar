@@ -341,15 +341,24 @@ func _draw_selected_route(selected: Dictionary) -> void:
 	var movement: Dictionary = selected.get("movement_state", {})
 	if str(movement.get("mode", "")) not in ["PlayerMoveOrder", "PlayerWaypointRoute"] and operation_mode != OperationMode.PLACING_ROUTE:
 		return
-	var points := PackedVector2Array([selected.get("position", Vector2.ZERO)])
-	var waypoints: Array = movement.get("waypoints", [])
-	for index in range(int(movement.get("waypoint_index", 0)), waypoints.size()):
-		points.append(waypoints[index])
+	var points := _selected_route_points(selected)
 	if points.size() >= 2:
 		draw_polyline(points, Color(0.38, 0.92, 1.0, 0.84), 3.0, true)
 	for point_index in range(1, points.size()):
 		draw_circle(points[point_index], 8.0, Color(0.05, 0.22, 0.28, 0.86))
 		draw_arc(points[point_index], 10.0, 0.0, TAU, 24, Color(0.58, 0.98, 1.0, 0.96), 2.0)
+
+
+func _selected_route_points(selected: Dictionary) -> PackedVector2Array:
+	var points := PackedVector2Array([selected.get("position", Vector2.ZERO)])
+	var movement: Dictionary = selected.get("movement_state", {})
+	var corridor_points: Array = movement.get("corridor_points", [])
+	for index in range(int(movement.get("corridor_index", 0)), corridor_points.size()):
+		points.append(corridor_points[index])
+	if corridor_points.is_empty():
+		for authored_point in selected.get("player_route_waypoints", []):
+			points.append(authored_point)
+	return points
 
 
 func _draw_torpedo_aim_overlay(selected: Dictionary, cursor: Vector2, aim_status: Dictionary) -> void:

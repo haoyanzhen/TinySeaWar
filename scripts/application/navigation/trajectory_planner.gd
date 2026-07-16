@@ -13,25 +13,38 @@ const NORMAL_SAMPLE_STEP := 1.5
 const EMERGENCY_SAMPLE_STEP := 0.1
 
 
-func plan_normal(motion_state: Dictionary, goal: Vector2, radius: float, movement_tags: Array, terrain_query, terrain_context, nearby_units: Array = []) -> Dictionary:
+func arrival_tolerance(radius: float) -> float:
+	return maxf(12.0, radius * 0.5)
+
+
+func plan_normal(motion_state: Dictionary, goal: Vector2, radius: float, movement_tags: Array, terrain_query, terrain_context, nearby_units: Array = [], final_approach: bool = false) -> Dictionary:
 	var desired_direction := goal - (motion_state.get("position", Vector2.ZERO) as Vector2)
 	var desired_angle := 0.0 if desired_direction == Vector2.ZERO else wrapf(desired_direction.angle() - float(motion_state.get("heading", 0.0)), -PI, PI)
 	var preferred_turn := clampf(desired_angle / maxf(0.01, float(motion_state.get("turn_rate_limit", 0.01)) * NORMAL_HORIZON), -1.0, 1.0)
-	var templates := [
-		{"thrust_ratio": 1.0, "turn_ratio": preferred_turn},
-		{"thrust_ratio": 0.75, "turn_ratio": preferred_turn},
-		{"thrust_ratio": 0.45, "turn_ratio": preferred_turn},
-		{"thrust_ratio": 0.0, "turn_ratio": preferred_turn},
-		{"thrust_ratio": 0.75, "turn_ratio": clampf(preferred_turn - 0.35, -1.0, 1.0)},
-		{"thrust_ratio": 0.75, "turn_ratio": clampf(preferred_turn + 0.35, -1.0, 1.0)},
-		{"thrust_ratio": 0.45, "turn_ratio": -1.0},
-		{"thrust_ratio": 0.45, "turn_ratio": 1.0},
-		{"thrust_ratio": 0.0, "turn_ratio": -1.0},
-		{"thrust_ratio": 0.0, "turn_ratio": 1.0},
-		{"thrust_ratio": -0.25, "turn_ratio": -0.5},
-		{"thrust_ratio": -0.25, "turn_ratio": 0.5},
-	]
-	return _select_plan(templates.slice(0, NORMAL_CANDIDATE_LIMIT), motion_state, goal, NORMAL_HORIZON, NORMAL_SAMPLE_STEP, radius, movement_tags, terrain_query, terrain_context, nearby_units, [], false)
+	var maximum_speed := maxf(0.01, float(motion_state.get("maximum_speed", 0.0)))
+	var remaining_distance := maxf(0.0, desired_direction.length() - arrival_tolerance(radius))
+	var approach_thrust := clampf(remaining_distance / (maximum_speed * NORMAL_HORIZON), 0.03, 1.0) if remaining_distance > 0.0 else 0.0
+	var use_arrival_control := final_approach and desired_direction.length() <= maxf(maximum_speed * 1.5, arrival_tolerance(radius) * 4.0)
+	var templates := []
+	if use_arrival_control:
+		templates = [
+			{"thrust_ratio": approach_thrust, "turn_ratio": preferred_turn},
+			{"thrust_ratio": 1.0, "turn_ratio": preferred_turn},
+			{"thrust_ratio": 0.45, "turn_ratio": preferred_turn},
+			{"thrust_ratio": 0.0, "turn_ratio": preferred_turn},
+			{"thrust_ratio": approach_thrust, "turn_ratio": clampf(preferred_turn - 0.35, -1.0, 1.0)},
+			{"thrust_ratio": approach_thrust, "turn_ratio": clampf(preferred_turn + 0.35, -1.0, 1.0)},
+		]
+	else:
+		templates = [
+			{"thrust_ratio": 1.0, "turn_ratio": preferred_turn},
+			{"thrust_ratio": 0.75, "turn_ratio": preferred_turn},
+			{"thrust_ratio": 0.45, "turn_ratio": preferred_turn},
+			{"thrust_ratio": 0.0, "turn_ratio": preferred_turn},
+			{"thrust_ratio": 0.75, "turn_ratio": clampf(preferred_turn - 0.35, -1.0, 1.0)},
+			{"thrust_ratio": 0.75, "turn_ratio": clampf(preferred_turn + 0.35, -1.0, 1.0)},
+		]
+	return _select_plan(templates.slice(0, NORMAL_CANDIDATE_LIMIT), motion_state, goal, NORMAL_HORIZON, NORMAL_SAMPLE_STEP, radius, movement_tags, terrain_query, terrain_context, nearby_units, [], false, use_arrival_control)
 
 
 func plan_emergency(motion_state: Dictionary, threats: Array, radius: float, movement_tags: Array, terrain_query, terrain_context, nearby_units: Array = [], extended: bool = false) -> Dictionary:
@@ -46,10 +59,10 @@ func plan_emergency(motion_state: Dictionary, threats: Array, radius: float, mov
 		templates.append({"thrust_ratio": 1.0, "turn_ratio": 0.0})
 		templates.append({"thrust_ratio": 0.0, "turn_ratio": 0.0, "allow_controlled_contact": true})
 	var limit := EMERGENCY_TOTAL_LIMIT if extended else EMERGENCY_BASE_LIMIT
-	return _select_plan(templates.slice(0, limit), motion_state, motion_state.get("position", Vector2.ZERO), EMERGENCY_HORIZON, EMERGENCY_SAMPLE_STEP, radius, movement_tags, terrain_query, terrain_context, nearby_units, threats, true)
+	return _select_plan(templates.slice(0, limit), motion_state, motion_state.get("position", Vector2.ZERO), EMERGENCY_HORIZON, EMERGENCY_SAMPLE_STEP, radius, movement_tags, terrain_query, terrain_context, nearby_units, threats, true, false)
 
 
-func _select_plan(templates: Array, initial_state: Dictionary, goal: Vector2, horizon: float, sample_step: float, radius: float, movement_tags: Array, terrain_query, terrain_context, nearby_units: Array, threats: Array, emergency: bool) -> Dictionary:
+func _select_plan(templates: Array, initial_state: Dictionary, goal: Vector2, horizon: float, sample_step: float, radius: float, movement_tags: Array, terrain_query, terrain_context, nearby_units: Array, threats: Array, emergency: bool, final_approach: bool) -> Dictionary:
 	var candidates: Array = []
 	for index in range(templates.size()):
 		var control: Dictionary = templates[index]
@@ -58,12 +71,16 @@ func _select_plan(templates: Array, initial_state: Dictionary, goal: Vector2, ho
 		var terminal: Vector2 = simulation.get("terminal", initial_state.get("position", Vector2.ZERO))
 		var threat_score := _threat_safety(simulation.get("samples", []), terminal, threats, initial_state)
 		var progress := 0.0
+		var origin: Vector2 = initial_state.get("position", Vector2.ZERO)
 		if not emergency:
-			var start: Vector2 = initial_state.get("position", Vector2.ZERO)
-			progress = start.distance_to(goal) - terminal.distance_to(goal)
+			progress = origin.distance_to(goal) - terminal.distance_to(goal)
 		var continuity := 1.0 - absf(float(control.get("turn_ratio", 0.0))) * 0.15
 		var contact_cost := 0.4 if bool(simulation.get("controlled_contact", false)) else 0.0
-		var score := threat_score * 10000.0 + progress * 10.0 + continuity - contact_cost
+		var stall_cost := 0.0
+		if final_approach:
+			if origin.distance_to(goal) > arrival_tolerance(radius) and origin.distance_to(terminal) < 0.5:
+				stall_cost = 1000.0
+		var score := threat_score * 10000.0 + progress * 10.0 + continuity - contact_cost - stall_cost
 		candidates.append({"control": control, "simulation": simulation, "score": score, "index": index, "threat_safety": threat_score})
 	if candidates.is_empty():
 		return {"ok": false, "reason_code": "NO_SAFE_TRAJECTORY", "candidate_count": templates.size()}

@@ -741,6 +741,9 @@ func _build_unit(member: Dictionary, ship: Dictionary, fleet_id: String, faction
 			"tracked_threat_ids": [],
 			"trajectory_dirty": true,
 			"strategic_update_due": false,
+			"intent_revision": 0,
+			"pending_route_requests": 0,
+			"route_waiting": false,
 		},
 		"targeting_state": {"mode": "Automatic", "focused_target_id": "", "current_target_id": ""},
 		"weapon_states": weapon_states,
@@ -868,6 +871,10 @@ func _apply_command(command: Dictionary) -> Dictionary:
 	if unit["faction_id"] != issuer_faction: return _rejection(command.get("command_id", ""), "UNIT_NOT_CONTROLLABLE")
 	match command.get("command_type", ""):
 		"MoveUnits":
+			var issuer_type := str(command.get("issuer_type", "Player"))
+			var requested_mode := str(command.get("movement_mode", "AssistNavigate" if issuer_type == "PlayerAssistAI" else "AutoNavigate"))
+			if issuer_type in ["AI", "PlayerAssistAI"] and requested_mode != "ImmediateAvoidance" and str(unit.get("movement_state", {}).get("mode", "")) in ["PlayerMoveOrder", "PlayerWaypointRoute"]:
+				return _rejection(command.get("command_id", ""), "PLAYER_NAVIGATION_ACTIVE")
 			if str(command.get("issuer_type", "")) == "PlayerAssistAI" and str(unit.get("faction_id", "")) == PLAYER_FACTION and str(command.get("movement_mode", "AssistNavigate")) != "ImmediateAvoidance" and not bool(unit.get("movement_assist_enabled", false)):
 				return _rejection(command.get("command_id", ""), "MOVEMENT_ASSIST_DISABLED")
 			var target_position = command.get("target_position")
@@ -877,6 +884,7 @@ func _apply_command(command: Dictionary) -> Dictionary:
 			var player_order: bool = str(command.get("issuer_type", "Player")) == "Player" and str(unit["faction_id"]) == PLAYER_FACTION
 			var movement_mode := "PlayerMoveOrder" if player_order else str(command.get("movement_mode", "AssistNavigate" if command.get("issuer_type", "") == "PlayerAssistAI" else "AutoNavigate"))
 			if player_order:
+				_begin_navigation_intent(unit)
 				unit["player_route_waypoints"] = [target_position]
 			_submit_navigation_request(unit, unit["position"], target_position, "Replace", movement_mode, str(command.get("command_id", "")), 0 if player_order else 10)
 			_emit("MoveOrderQueued", {"unit_id": unit_id, "target_position": target_position})
@@ -888,6 +896,7 @@ func _apply_command(command: Dictionary) -> Dictionary:
 			return _append_player_waypoint(unit, append_position, command.get("command_id", ""))
 		"ClearMoveRoute":
 			if unit["faction_id"] != PLAYER_FACTION: return _rejection(command.get("command_id", ""), "UNIT_NOT_CONTROLLABLE")
+			_begin_navigation_intent(unit)
 			unit["player_route_waypoints"] = []
 			unit["movement_state"] = _new_movement_state("AssistNavigate" if bool(unit.get("movement_assist_enabled", false)) else "HoldPosition", unit["position"], [])
 			_mark_navigation_dirty(unit)
@@ -1030,6 +1039,8 @@ func _set_unit_control_state(command: Dictionary) -> Dictionary:
 func _append_player_waypoint(unit: Dictionary, target_position: Vector2, command_id: String) -> Dictionary:
 	if not _inside_map(target_position): return _rejection(command_id, "TARGET_POSITION_ON_LAND")
 	var authored_points: Array = unit.get("player_route_waypoints", [])
+	if authored_points.is_empty():
+		_begin_navigation_intent(unit)
 	var anchor: Vector2 = authored_points[-1] if not authored_points.is_empty() else unit["position"]
 	authored_points = authored_points.duplicate()
 	authored_points.append(target_position)
@@ -1038,6 +1049,15 @@ func _append_player_waypoint(unit: Dictionary, target_position: Vector2, command
 	_emit("MoveWaypointQueued", {"unit_id": unit["entity_id"], "target_position": target_position, "route_size": authored_points.size()})
 	_record_tutorial_action("AppendMoveWaypoint", str(unit.get("entity_id", "")))
 	return {"accepted": true}
+
+
+func _begin_navigation_intent(unit: Dictionary) -> int:
+	var navigation: Dictionary = unit.get("navigation_state", {})
+	var cancelled := navigation_request_broker.cancel_for_unit(str(unit.get("entity_id", "")))
+	navigation["intent_revision"] = int(navigation.get("intent_revision", 0)) + 1
+	navigation["pending_route_requests"] = maxi(0, int(navigation.get("pending_route_requests", 0)) - cancelled)
+	navigation["route_waiting"] = int(navigation["pending_route_requests"]) > 0
+	return int(navigation["intent_revision"])
 
 
 func _record_tutorial_action(action_id: String, unit_id: String, facts: Dictionary = {}) -> Dictionary:
@@ -1066,6 +1086,7 @@ func _submit_navigation_request(unit: Dictionary, start: Vector2, target: Vector
 		"radius":float(unit.get("stats", {}).get("collision_radius", 20.0)),
 		"movement_tags":_movement_tags(unit), "apply_mode":apply_mode,
 		"movement_mode":movement_mode, "command_id":command_id, "priority":priority,
+		"intent_revision":int(navigation.get("intent_revision", 0)),
 	})
 
 
@@ -1078,6 +1099,9 @@ func _update_navigation_requests() -> void:
 		var navigation: Dictionary = unit.get("navigation_state", {})
 		navigation["pending_route_requests"] = maxi(0, int(navigation.get("pending_route_requests", 1)) - 1)
 		navigation["route_waiting"] = int(navigation["pending_route_requests"]) > 0
+		if int(request.get("intent_revision", -1)) != int(navigation.get("intent_revision", 0)):
+			_emit("NavigationRequestDiscarded", {"unit_id":unit["entity_id"], "command_id":request.get("command_id", ""), "reason_code":"STALE_INTENT_REVISION"})
+			continue
 		var result: Dictionary = completed.get("result", {})
 		if not bool(result.get("ok", false)):
 			_emit("NavigationRequestFailed", {"unit_id":unit["entity_id"], "command_id":request.get("command_id", ""), "start":request.get("start", Vector2.ZERO), "target":request.get("target", Vector2.ZERO), "reason_code":result.get("reason_code", "NO_NAVIGATION_PATH"), "elapsed_usec":completed.get("elapsed_usec", 0), "route_profile":completed.get("route_profile", {})})
@@ -1229,7 +1253,7 @@ func _plan_normal_trajectory(unit: Dictionary) -> void:
 	var motion_state := ShipMotionService.state_for_unit(unit, terrain_context_service.context_at(unit["position"]), _active_status_effects(unit), ModifierService)
 	motion_state["map_width"] = float(state.get("map", {}).get("width", 0.0))
 	motion_state["map_height"] = float(state.get("map", {}).get("height", 0.0))
-	var result := trajectory_planner.plan_normal(motion_state, goal, float(unit["stats"].get("collision_radius", 20.0)), _movement_tags(unit), terrain_query, terrain_context_service, _nearby_navigation_units(unit))
+	var result := trajectory_planner.plan_normal(motion_state, goal, float(unit["stats"].get("collision_radius", 20.0)), _movement_tags(unit), terrain_query, terrain_context_service, _nearby_navigation_units(unit), _current_corridor_goal_is_final(unit))
 	if not bool(result.get("ok", false)):
 		_profile_increment("trajectory_failures_per_tick")
 		navigation["state"] = "SafetyHold"
@@ -1316,21 +1340,31 @@ func _current_corridor_goal(unit: Dictionary) -> Vector2:
 	return movement.get("target_position", unit.get("position", Vector2.ZERO))
 
 
+func _current_corridor_goal_is_final(unit: Dictionary) -> bool:
+	var movement: Dictionary = unit.get("movement_state", {})
+	var points: Array = movement.get("corridor_points", [])
+	var index := int(movement.get("corridor_index", 0))
+	return points.is_empty() or index >= points.size() - 1
+
+
 func _advance_corridor_progress(unit: Dictionary) -> void:
 	var movement: Dictionary = unit.get("movement_state", {})
 	var points: Array = movement.get("corridor_points", [])
 	var index := int(movement.get("corridor_index", 0))
-	var reach_distance := maxf(12.0, absf(float(unit.get("current_speed", 0.0))) * 0.8)
+	var arrival_distance := trajectory_planner.arrival_tolerance(float(unit.get("stats", {}).get("collision_radius", 20.0)))
+	var transit_reach_distance := maxf(arrival_distance, absf(float(unit.get("current_speed", 0.0))) * 0.8)
 	var gates: Array = movement.get("corridor_gates", [])
 	while index < points.size():
 		var gate_radius := float(gates[index].get("radius", 0.0)) if index < gates.size() else 0.0
-		if (unit.get("position", Vector2.ZERO) as Vector2).distance_to(points[index]) > maxf(reach_distance, gate_radius): break
+		var is_final_point := index == points.size() - 1
+		var point_reach_distance := arrival_distance if is_final_point else maxf(transit_reach_distance, gate_radius)
+		if (unit.get("position", Vector2.ZERO) as Vector2).distance_to(points[index]) > point_reach_distance: break
 		index += 1
 		movement["corridor_index"] = index
 		unit.get("navigation_state", {})["trajectory_dirty"] = true
 	if index < points.size(): return
 	var final_target: Vector2 = movement.get("target_position", unit.get("position", Vector2.ZERO))
-	if (unit.get("position", Vector2.ZERO) as Vector2).distance_to(final_target) > reach_distance: return
+	if (unit.get("position", Vector2.ZERO) as Vector2).distance_to(final_target) > arrival_distance: return
 	if str(movement.get("mode", "")) in ["PlayerMoveOrder", "PlayerWaypointRoute"]:
 		unit["player_route_waypoints"] = []
 	movement["mode"] = "AssistNavigate" if bool(unit.get("movement_assist_enabled", false)) else "HoldPosition"
@@ -1733,6 +1767,8 @@ func _update_ai_intents() -> void:
 		var unit: Dictionary = state["units_by_id"][unit_id]
 		if unit["life_state"] != "Alive": continue
 		if level_objective_service.uses_authored_staging_movement(unit): continue
+		if str(unit.get("faction_id", "")) == PLAYER_FACTION and str(unit.get("movement_state", {}).get("mode", "")) in ["PlayerMoveOrder", "PlayerWaypointRoute"]:
+			continue
 		if _uses_full_ai(unit):
 			_update_enemy_ai_intent(unit)
 		else:
@@ -1946,6 +1982,8 @@ func _known_hostile_torpedo_count(source: Dictionary) -> int:
 
 
 func _queue_ai_move(unit: Dictionary, target_position: Vector2, issuer_type: String = "AI", movement_mode: String = "AutoNavigate") -> void:
+	if str(unit.get("faction_id", "")) == PLAYER_FACTION and movement_mode != "ImmediateAvoidance" and str(unit.get("movement_state", {}).get("mode", "")) in ["PlayerMoveOrder", "PlayerWaypointRoute"]:
+		return
 	target_position = minefield_service.avoidance_waypoint(str(unit.get("faction_id", "")), unit["position"], target_position)
 	var current_target: Vector2 = unit.get("movement_state", {}).get("target_position", unit.get("position", Vector2.ZERO))
 	if issuer_type == "AI" and movement_mode != "ImmediateAvoidance":

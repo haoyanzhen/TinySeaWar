@@ -617,6 +617,21 @@ func _validate_visual(visual: Dictionary) -> void:
 				errors.append("Shell trail width must be positive in %s" % visual_id)
 			if float(visual.get("shell_trail_duration", 0.0)) <= 0.0:
 				errors.append("Shell trail duration must be positive in %s" % visual_id)
+			if float(visual.get("shell_trail_outer_width_multiplier", 0.0)) < 1.0:
+				errors.append("Shell trail outer width multiplier must be at least 1 in %s" % visual_id)
+			var outer_alpha := float(visual.get("shell_trail_outer_alpha", -1.0))
+			if outer_alpha < 0.0 or outer_alpha > 1.0:
+				errors.append("Shell trail outer alpha must be within [0, 1] in %s" % visual_id)
+			if float(visual.get("shell_trail_head_glow_radius", -1.0)) < 0.0:
+				errors.append("Shell trail head glow radius must be non-negative in %s" % visual_id)
+			if float(visual.get("shell_trail_afterimage_seconds", -1.0)) < 0.0:
+				errors.append("Shell trail afterimage duration must be non-negative in %s" % visual_id)
+			var afterimage_samples := int(visual.get("shell_trail_afterimage_samples", -1))
+			if afterimage_samples < 0 or afterimage_samples > 8:
+				errors.append("Shell trail afterimage samples must be within [0, 8] in %s" % visual_id)
+			var segment_count := int(visual.get("shell_trail_segment_count", 0))
+			if segment_count < 2 or segment_count > 12:
+				errors.append("Shell trail segment count must be within [2, 12] in %s" % visual_id)
 	elif visual_id.begins_with("weapon_visual."):
 		if str(visual.get("character_id", "")).is_empty():
 			errors.append("Missing character_id in %s" % visual_id)

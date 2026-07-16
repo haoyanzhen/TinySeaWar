@@ -91,7 +91,7 @@
 
 炮弹本体通常使用单张 Sprite，由程序沿直线、抛物线或区域落点曲线移动。炮塔旋转、炮口闪光、弹体和命中特效必须是独立节点。
 
-所有舰炮开火后都应生成轻量炮弹飞行表现节点，用于补足炮弹离膛方向、飞行时间和齐射数量的可读性。节点按武器 `projectile_speed` 从炮口飞向 Domain 已独立抽样并固定的 `impact_positions`，在炮弹后方绘制曳尾；多发齐射呈现垂直发射线较宽、平行发射线较窄的椭圆高斯落区，不表现为从炮口均匀张开的扇形，也不在表现层再次随机。曳尾长度默认按 `口径 mm * shell_trail_caliber_pixel_multiplier` 计算，MVP 初始倍率为 `0.1`，倍率必须作为独立配置项保留，不能写死在贴图或代码常量里。曳尾颜色使用公共色盘选择：整洁白 `clean_white`、火光黄 `fire_yellow`、夕阳红 `sunset_red`；穿甲弹优先使用整洁白，高爆弹优先使用火光黄，超重或技能强化炮击可使用夕阳红。曳尾需要从炮弹到尾端逐渐变细、变淡，避免看起来像鱼雷水迹。
+所有舰炮开火后都应生成轻量炮弹飞行表现节点，用于补足炮弹离膛方向、飞行时间和齐射数量的可读性。节点按武器 `projectile_speed` 从炮口飞向 Domain 已独立抽样并固定的 `impact_positions`，在炮弹后方绘制曳尾；多发齐射呈现垂直发射线较宽、平行发射线较窄的椭圆高斯落区，不表现为从炮口均匀张开的扇形，也不在表现层再次随机。曳尾按 `<140mm` 小口径、`140-279mm` 中口径、`280-419mm` 大口径、`>=420mm` 超重型分为四档，并同时扩大长度、宽度、外层光晕、弹头光点与残影，不只依赖长度变化。长度仍按 `口径 mm * shell_trail_caliber_pixel_multiplier` 计算，当前四档倍率为 `0.11/0.16/0.18/0.20`；大口径对 127mm 小口径的可见长度至少为 `3.5x`、宽度至少为 `3x`。小口径不保留位置残影，中口径只保留克制残影，大口径和超重型才逐档增加残影采样。镜头缩放只允许在 `0.85-1.6` 范围内补偿屏幕可见尺寸，避免远景消失或近景过度膨胀。曳尾颜色使用公共色盘选择：整洁白 `clean_white`、火光黄 `fire_yellow`、夕阳红 `sunset_red`；穿甲弹优先使用整洁白，高爆弹优先使用火光黄，超重或技能强化炮击可使用夕阳红。曳尾需要从炮弹到尾端逐渐变细、变淡，避免看起来像鱼雷水迹。
 
 未命中落水反馈按口径分级：小口径和中口径炮弹不生成水柱，只保留弹道消失与必要的轻量声音反馈；口径达到 280mm 的大口径舰炮才在领域事件给出的固定 `impact_position` 生成 `impact.water.large` 水柱。水柱位置不得追随原瞄准目标。
 
@@ -329,7 +329,7 @@ vfx_asw_depth_charge_bubble_01.png
 
 每个 profile 至少需要记录 `duration`、`fps` 或 `frame_count`、`loop`、`anchor`、`z_layer`、`rotation_mode`、`scale`、`follow_owner`、`blend_mode`。角色专属覆盖只替换贴图、颜色或局部装饰，不改变伤害时点和运动规则。
 
-炮弹 visual 还需要记录 `shell_trail_caliber_pixel_multiplier`、`shell_trail_width`、`shell_trail_duration`、`shell_trail_color_key` 和 `shell_trail_color_palette`。其中倍率控制口径到像素长度的换算；宽度、持续时间和颜色只影响表现，不影响弹速、命中和伤害时点。
+炮弹 visual 还需要记录 `shell_trail_caliber_pixel_multiplier`、`shell_trail_width`、`shell_trail_duration`、外层光晕、弹头光晕、残影采样、分段数、`shell_trail_color_key` 和 `shell_trail_color_palette`。其中倍率控制口径到像素长度的换算；宽度、持续时间、光晕、残影和颜色只影响表现，不影响弹速、命中和伤害时点。
 
 ## 10. 验收标准
 

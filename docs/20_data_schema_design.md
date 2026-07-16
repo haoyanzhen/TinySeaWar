@@ -1131,19 +1131,31 @@ gun_dispersion.reference_battleship_length
 shell_trail_caliber_pixel_multiplier
 shell_trail_width
 shell_trail_duration
+shell_trail_outer_width_multiplier
+shell_trail_outer_alpha
+shell_trail_head_glow_radius
+shell_trail_afterimage_seconds
+shell_trail_afterimage_samples
+shell_trail_segment_count
 shell_trail_color_key
 shell_trail_color_palette
 ```
 
 字段含义：
 
-- `shell_trail_caliber_pixel_multiplier`：炮弹曳尾长度倍率。运行时按 `武器口径 mm * 倍率` 计算像素长度，MVP 默认 `0.1`。
+- `shell_trail_caliber_pixel_multiplier`：炮弹曳尾长度倍率。运行时按 `武器口径 mm * 倍率` 计算像素长度；当前小/中/大/超重型四档分别为 `0.11/0.16/0.18/0.20`。
 - `shell_trail_width`：曳尾线宽，仅影响表现。
-- `shell_trail_duration`：曳尾淡出时间，仅影响表现。
+- `shell_trail_duration`：弹体抵达落点后曳尾继续淡出的时间，仅影响表现。
+- `shell_trail_outer_width_multiplier`：外层光晕相对核心宽度的倍率，必须至少为 `1`。
+- `shell_trail_outer_alpha`：外层光晕透明度，范围为 `[0, 1]`。
+- `shell_trail_head_glow_radius`：弹头附加光晕的逻辑像素半径，必须非负。
+- `shell_trail_afterimage_seconds`：飞行过程中保留位置残影的时间，`0` 表示关闭。
+- `shell_trail_afterimage_samples`：残影采样数，范围为 `[0, 8]`；小口径应保持为 `0` 以控制速射炮视觉噪声。
+- `shell_trail_segment_count`：程序化渐细尾迹的分段数，范围为 `[2, 12]`。
 - `shell_trail_color_key`：默认颜色键，例如 `clean_white`、`fire_yellow`、`sunset_red`。
 - `shell_trail_color_palette`：颜色键到十六进制颜色的映射。
 
-这些字段只属于表现层，不进入 Domain 伤害、命中、弹速、射程或碰撞计算。武器或 `weapon_visual` 可用 `shell_caliber_mm` / `caliber_mm` 显式覆盖口径；未配置时，表现层可从武器名称中的 `xxxmm` 读取，并按炮弹档位兜底。
+这些字段只属于表现层，不进入 Domain 伤害、命中、弹速、射程或碰撞计算。武器或 `weapon_visual` 可用 `shell_caliber_mm` / `caliber_mm` 显式覆盖口径；未配置时，表现层可从武器名称中的 `xxxmm` 读取，并按炮弹档位兜底。公共外观按 `<140mm` 小口径、`140-279mm` 中口径、`280-419mm` 大口径、`>=420mm` 超重型选择；口径选择优先于缺失或泛化的 `projectile.shell` 表现映射。
 
 ## 18. 战斗模拟实验配置
 

@@ -54,10 +54,10 @@ assets/environment/weather/zones/environment_zone_asset_manifest.json
 
 炮弹曳尾接口：
 
-- 炮弹类 `projectile_visual` 可提供 `shell_trail_caliber_pixel_multiplier`，默认 MVP 为 `0.1`，运行时按 `口径 mm * 倍率` 计算曳尾像素长度。
-- 可选字段 `shell_trail_width`、`shell_trail_duration`、`shell_trail_color_key`、`shell_trail_color_palette` 只控制表现；它们不参与伤害、弹速、命中或领域判定。
+- 炮弹类 `projectile_visual` 可提供 `shell_trail_caliber_pixel_multiplier`，运行时按 `口径 mm * 倍率` 计算曳尾像素长度；当前小/中/大/超重型四档倍率为 `0.11/0.16/0.18/0.20`。
+- 可选字段 `shell_trail_width`、`shell_trail_duration`、`shell_trail_outer_width_multiplier`、`shell_trail_outer_alpha`、`shell_trail_head_glow_radius`、`shell_trail_afterimage_seconds`、`shell_trail_afterimage_samples`、`shell_trail_segment_count`、`shell_trail_color_key`、`shell_trail_color_palette` 只控制表现；它们不参与伤害、弹速、命中或领域判定。
 - `weapon_visual` 或武器数据可用 `shell_caliber_mm` / `caliber_mm` 覆盖口径；没有覆盖时运行时从武器名称中的 `xxxmm` 读取，再按炮弹档位兜底。
-- 表现层按 `WeaponFired` 事件创建炮弹飞行节点，飞行节点使用公共炮弹 sprite，并在炮弹当前位置后方绘制渐变曳尾。多发炮击的表现落点集中在目标区域附近，不按炮口等角度扇出。
+- 表现层按 `WeaponFired` 事件创建炮弹飞行节点，按 `<140/140-279/280-419/>=420mm` 选择小/中/大/超重型公共炮弹 sprite，并在炮弹当前位置后方绘制渐变曳尾。公共档位由真实口径决定，避免缺少角色专属映射时退回统一中口径外观；多发炮击的表现落点集中在目标区域附近，不按炮口等角度扇出。
 - 推荐公共颜色键为 `clean_white`、`fire_yellow`、`sunset_red`。
 
 建议配置入口：

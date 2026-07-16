@@ -5,7 +5,9 @@ const ProjectileView = preload("res://scripts/presentation/battle/projectile_vie
 const BattleVfx = preload("res://scripts/presentation/battle/battle_vfx.gd")
 const DamageNumberView = preload("res://scripts/presentation/battle/damage_number_view.gd")
 const ShellFlightView = preload("res://scripts/presentation/battle/shell_flight_view.gd")
+const SMALL_GUN_CALIBER_MAX_MM := 140.0
 const LARGE_GUN_CALIBER_MM := 280.0
+const SUPERHEAVY_GUN_CALIBER_MM := 420.0
 
 var unit_layer: Node2D
 var projectile_layer: Node2D
@@ -274,14 +276,12 @@ func _spawn_shell_flights(event: Dictionary, session, weapon: Dictionary, weapon
 	if projectile_layer == null or str(weapon.get("mount_type", "")) != "Gun":
 		return
 	var projectile_visual_id := str(weapon_visual.get("projectile_visual_id", weapon.get("projectile_id", "")))
-	var projectile_visual := DataRegistry.assets.projectile_visual(projectile_visual_id)
-	if projectile_visual.is_empty() or str(projectile_visual.get("projectile_type", "")) != "Shell":
+	var fallback_visual := DataRegistry.assets.projectile_visual(projectile_visual_id)
+	if fallback_visual.is_empty() or str(fallback_visual.get("projectile_type", "")) != "Shell":
 		return
-	var multiplier := float(weapon_visual.get("shell_trail_caliber_pixel_multiplier", projectile_visual.get("shell_trail_caliber_pixel_multiplier", 0.1)))
-	var caliber_mm := _weapon_caliber_mm(weapon, weapon_visual, projectile_visual)
-	var length_px := maxf(1.0, caliber_mm * multiplier)
-	var width_px := float(weapon_visual.get("shell_trail_width", projectile_visual.get("shell_trail_width", 1.5)))
-	var trail_fade_seconds := float(weapon_visual.get("shell_trail_duration", projectile_visual.get("shell_trail_duration", 0.18)))
+	var caliber_mm := _weapon_caliber_mm(weapon, weapon_visual, fallback_visual)
+	var projectile_visual := _caliber_shell_visual(caliber_mm, fallback_visual)
+	var trail_profile := _shell_trail_profile(caliber_mm, weapon_visual, projectile_visual)
 	var color := _shell_trail_color(weapon, weapon_visual, projectile_visual)
 	for destination in _shell_flight_destinations(event, session, weapon, source, launch_position):
 		var travel_seconds := launch_position.distance_to(destination) / maxf(1.0, float(weapon.get("projectile_speed", 1.0)))
@@ -289,7 +289,34 @@ func _spawn_shell_flights(event: Dictionary, session, weapon: Dictionary, weapon
 		var flight := ShellFlightView.new()
 		flight.z_index = 18
 		projectile_layer.add_child(flight)
-		flight.configure(launch_position, destination, projectile_visual, color, length_px, width_px, duration_seconds, trail_fade_seconds)
+		flight.configure(launch_position, destination, projectile_visual, color, trail_profile, duration_seconds)
+
+
+func _caliber_shell_visual(caliber_mm: float, fallback_visual: Dictionary = {}) -> Dictionary:
+	var visual_id := "visual.projectile.shell.medium"
+	if caliber_mm < SMALL_GUN_CALIBER_MAX_MM:
+		visual_id = "visual.projectile.shell.small"
+	elif caliber_mm >= SUPERHEAVY_GUN_CALIBER_MM:
+		visual_id = "visual.projectile.shell.superheavy"
+	elif caliber_mm >= LARGE_GUN_CALIBER_MM:
+		visual_id = "visual.projectile.shell.large"
+	var resolved := DataRegistry.assets.projectile_visual(visual_id)
+	return fallback_visual if resolved.is_empty() else resolved
+
+
+func _shell_trail_profile(caliber_mm: float, weapon_visual: Dictionary, projectile_visual: Dictionary) -> Dictionary:
+	var multiplier := float(weapon_visual.get("shell_trail_caliber_pixel_multiplier", projectile_visual.get("shell_trail_caliber_pixel_multiplier", 0.1)))
+	return {
+		"length": maxf(1.0, caliber_mm * multiplier),
+		"width": float(weapon_visual.get("shell_trail_width", projectile_visual.get("shell_trail_width", 1.5))),
+		"fade_duration": float(weapon_visual.get("shell_trail_duration", projectile_visual.get("shell_trail_duration", 0.18))),
+		"outer_width_multiplier": float(weapon_visual.get("shell_trail_outer_width_multiplier", projectile_visual.get("shell_trail_outer_width_multiplier", 2.0))),
+		"outer_alpha": float(weapon_visual.get("shell_trail_outer_alpha", projectile_visual.get("shell_trail_outer_alpha", 0.14))),
+		"head_glow_radius": float(weapon_visual.get("shell_trail_head_glow_radius", projectile_visual.get("shell_trail_head_glow_radius", 2.0))),
+		"afterimage_seconds": float(weapon_visual.get("shell_trail_afterimage_seconds", projectile_visual.get("shell_trail_afterimage_seconds", 0.0))),
+		"afterimage_samples": int(weapon_visual.get("shell_trail_afterimage_samples", projectile_visual.get("shell_trail_afterimage_samples", 0))),
+		"segment_count": int(weapon_visual.get("shell_trail_segment_count", projectile_visual.get("shell_trail_segment_count", 6))),
+	}
 
 
 func _shell_flight_destinations(event: Dictionary, session, weapon: Dictionary, source: Dictionary, launch_position: Vector2) -> Array:

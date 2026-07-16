@@ -92,6 +92,30 @@ func _run() -> void:
 	var warspite_secondary_visual: Dictionary = data_registry.assets.weapon_visual("warspite", "warspite_secondary")
 	_check(battle.effect_director._is_large_caliber_gun(warspite_main, warspite_main_visual), "381mm main guns qualify for miss water columns")
 	_check(not battle.effect_director._is_large_caliber_gun(warspite_secondary, warspite_secondary_visual), "152mm secondary guns do not qualify for miss water columns")
+	var small_shell_visual: Dictionary = battle.effect_director._caliber_shell_visual(127.0)
+	var medium_shell_visual: Dictionary = battle.effect_director._caliber_shell_visual(203.0)
+	var large_shell_visual: Dictionary = battle.effect_director._caliber_shell_visual(381.0)
+	var superheavy_shell_visual: Dictionary = battle.effect_director._caliber_shell_visual(460.0)
+	_check(
+		str(small_shell_visual.get("id", "")).ends_with("small")
+		and str(medium_shell_visual.get("id", "")).ends_with("medium")
+		and str(large_shell_visual.get("id", "")).ends_with("large")
+		and str(superheavy_shell_visual.get("id", "")).ends_with("superheavy"),
+		"shell presentation selects small, medium, large, and superheavy visuals from authoritative caliber",
+	)
+	var small_trail: Dictionary = battle.effect_director._shell_trail_profile(127.0, {}, small_shell_visual)
+	var large_trail: Dictionary = battle.effect_director._shell_trail_profile(381.0, {}, large_shell_visual)
+	var superheavy_trail: Dictionary = battle.effect_director._shell_trail_profile(460.0, {}, superheavy_shell_visual)
+	_check(
+		float(large_trail.get("length", 0.0)) >= float(small_trail.get("length", 1.0)) * 3.5
+		and float(large_trail.get("width", 0.0)) >= float(small_trail.get("width", 1.0)) * 3.0,
+		"381mm trails are at least 3.5x longer and 3x wider than 127mm trails",
+	)
+	_check(
+		float(superheavy_trail.get("afterimage_seconds", 0.0)) > float(large_trail.get("afterimage_seconds", 0.0))
+		and int(superheavy_trail.get("afterimage_samples", 0)) > int(large_trail.get("afterimage_samples", 0)),
+		"superheavy trails retain more and longer afterimages than large-caliber trails",
+	)
 	var vfx_count_before_miss: int = battle.vfx_layer.get_child_count()
 	battle.effect_director._handle_attack_resolved({"damage_result":{"source_unit_id":"unit.player.warspite","source_weapon_id":"weapon.warspite_381_ap","target_unit_id":"","hit":false,"impact_position":Vector2(900.0, 700.0)}}, battle.session)
 	var vfx_count_after_large_miss: int = battle.vfx_layer.get_child_count()

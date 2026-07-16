@@ -653,6 +653,13 @@ func _test_asset_catalog() -> void:
 	_check(assets.battle_asset_path("bismarck", "rig_base").ends_with("bismarck_battle_rig_base.png"), "battle asset resolves by semantic suffix")
 	_check(assets.ui_asset_path("ui.icon.torpedo", "2x").ends_with("/2x/ui_icon_torpedo.png"), "UI asset resolves by semantic key and export scale")
 	_check(not assets.projectile_visual("projectile.surface_torpedo").is_empty(), "projectile visual resolves by projectile id")
+	var small_shell_visual: Dictionary = assets.projectile_visual("visual.projectile.shell.small")
+	var large_shell_visual: Dictionary = assets.projectile_visual("visual.projectile.shell.large")
+	_check(
+		float(large_shell_visual.get("shell_trail_caliber_pixel_multiplier", 0.0)) > float(small_shell_visual.get("shell_trail_caliber_pixel_multiplier", 0.0))
+		and float(large_shell_visual.get("shell_trail_width", 0.0)) > float(small_shell_visual.get("shell_trail_width", 0.0)) * 3.0,
+		"projectile visual data preserves strong caliber-based shell trail separation",
+	)
 	_check(assets.weapon_visual("shimakaze", "shimakaze_torpedo").get("fire_animation_state", "") == "firepower", "weapon visual resolves by character and weapon group")
 	_check(float(assets.vfx_playback_profile("vfx.profile.shell_impact").get("duration", 0.0)) > 0.0, "VFX playback profile resolves by semantic id")
 	_check(assets.combat_vfx_asset_path("impact.water.large").ends_with("vfx_impact_water_large_01.png"), "public large-caliber water-column art resolves by combat VFX semantic")

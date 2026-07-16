@@ -251,6 +251,7 @@
   - 聚合与报告：`scripts/infrastructure/simulation/simulation_aggregator.gd`、`simulation_report_writer.gd`
   - 逐舰分类伤害：`scripts/infrastructure/analytics/damage_statistics.gd`；模拟器通过 `BattleSession.get_all_unit_damage_statistics()` 读取，不另算伤害；非舰船来源并列写入单局 `non_ship_damage` 与聚合 `average_damage_by_non_ship`，不混入逐舰报表。
   - 命令入口：`tools/simulation/run_experiment.gd`
+  - 正式关卡胜率实验：`data/simulations/experiments/level_t01_win_rate_20.json`、`level_s01_win_rate_20.json`；两者强制 20 个不同种子并按聚合战斗统计报告结算，同时生成逐舰伤害报告。
   - 示例实验：`data/simulations/experiments/smoke_single_battle.json`
   - 最新 AI 双方对战：`data/simulations/experiments/latest_ai_current_3v3_5v5.json`
   - 独立测试：`scripts/tests/battle_simulator_test.gd`

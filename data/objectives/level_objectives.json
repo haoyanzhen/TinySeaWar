@@ -6,11 +6,20 @@
       "title": "航向与选择",
       "player_unit_id": "unit.player.t01.sirius",
       "enemy_flagship_unit_id": "unit.enemy.t01.ward",
+      "enemy_staging_position": [2850.0, 950.0],
       "waypoint_zones": [
         {"id": "waypoint.t01.01", "position": [1884.16, 898.56], "radius": 90.0, "label": "航点一"},
         {"id": "waypoint.t01.02", "position": [2088.96, 1152.0], "radius": 90.0, "label": "航点二"}
       ],
+      "required_actions": [
+        {"action_id": "SelectTutorialUnit", "required_count": 1, "instruction": "选择天狼星（点击舰船或按数字键 1）"},
+        {"action_id": "EnableCameraFollow", "required_count": 1, "instruction": "按 G 开启镜头跟随"},
+        {"action_id": "AppendMoveWaypoint", "required_count": 2, "instruction": "按 Z 进入路径布置，依次点击两个标记航点"}
+      ],
       "locked_player_commands": ["FirePrimaryWeapon", "CastSkill", "SwitchAmmo", "SetUnitControlState"],
+      "lock_enemy_primary_and_skill": true,
+      "lock_enemy_automatic_weapons": true,
+      "ability_limit_text": "本关关闭手动主炮、技能、弹药切换和开关；完成航行后开启受限辅助与自动主炮；沃德先驶往训练待机区且不还击",
       "completion_text": "完成两个航点并击沉沃德",
       "failure_text": "天狼星沉没"
     },

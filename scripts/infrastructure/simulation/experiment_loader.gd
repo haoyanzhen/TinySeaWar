@@ -46,6 +46,31 @@ func validate_manifest(manifest: Dictionary) -> Array[String]:
 		var seeds := seeds_for(manifest, scenario)
 		if seeds.is_empty():
 			errors.append("Scenario %s has no seeds" % scenario_id)
+		var unique_seeds := {}
+		for seed_value in seeds:
+			if unique_seeds.has(seed_value): errors.append("Scenario %s contains duplicate seed %s" % [scenario_id, seed_value])
+			unique_seeds[seed_value] = true
+	if str(manifest.get("simulation_kind", "")) == "LevelWinRateEvaluation":
+		if bool(manifest.get("side_swap", false)):
+			errors.append("LevelWinRateEvaluation requires side_swap=false so every battle uses a distinct seed")
+		var planned_runs := 0
+		var evaluation_seeds := {}
+		for scenario in scenarios:
+			var scenario_seeds := seeds_for(manifest, scenario)
+			planned_runs += scenario_seeds.size()
+			for seed_value in scenario_seeds:
+				if evaluation_seeds.has(seed_value):
+					errors.append("LevelWinRateEvaluation reuses seed %s across planned battles" % seed_value)
+				evaluation_seeds[seed_value] = true
+		if planned_runs != 20:
+			errors.append("LevelWinRateEvaluation must contain exactly 20 planned battles, got %d" % planned_runs)
+		var evaluation: Dictionary = manifest.get("win_rate_evaluation", {})
+		if float(evaluation.get("target_player_win_rate", -1.0)) < 0.0 or float(evaluation.get("target_player_win_rate", 2.0)) > 1.0:
+			errors.append("LevelWinRateEvaluation requires target_player_win_rate in [0, 1]")
+		if float(evaluation.get("tolerance", -1.0)) < 0.0:
+			errors.append("LevelWinRateEvaluation requires non-negative tolerance")
+		if str(evaluation.get("settlement_source", "")) != "BattleStatisticsReport":
+			errors.append("LevelWinRateEvaluation settlement_source must be BattleStatisticsReport")
 	return errors
 
 

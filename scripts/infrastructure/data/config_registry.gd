@@ -420,6 +420,14 @@ func _validate_objective(objective: Dictionary) -> void:
 		for zone in zones:
 			if not _valid_positive_pair(zone.get("position", [])) or float(zone.get("radius", 0.0)) <= 0.0:
 				errors.append("Invalid waypoint zone in %s" % objective_id)
+		if not _valid_positive_pair(objective.get("enemy_staging_position", [])):
+			errors.append("Invalid enemy staging position in %s" % objective_id)
+		var action_ids := {}
+		for requirement in objective.get("required_actions", []):
+			var action_id := str(requirement.get("action_id", ""))
+			if action_id.is_empty() or action_ids.has(action_id) or int(requirement.get("required_count", 0)) <= 0:
+				errors.append("Invalid or duplicate tutorial action in %s" % objective_id)
+			action_ids[action_id] = true
 
 
 func _validate_settings(settings: Dictionary) -> void:

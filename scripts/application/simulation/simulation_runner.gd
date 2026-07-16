@@ -26,6 +26,8 @@ func run_experiment(registry, manifest: Dictionary) -> Dictionary:
 			if bool(manifest.get("side_swap", false)):
 				runs.append(_run_battle(registry, manifest, scenario, seed_value, "swapped"))
 	var aggregate := Aggregator.new().aggregate(runs)
+	if str(manifest.get("simulation_kind", "")) == "LevelWinRateEvaluation":
+		aggregate["win_rate_evaluation"] = _win_rate_evaluation(manifest, aggregate)
 	var elapsed_seconds := float(Time.get_ticks_usec() - started_usec) / 1000000.0
 	return {
 		"ok": true,
@@ -101,18 +103,21 @@ func _run_battle(registry, manifest: Dictionary, scenario: Dictionary, seed_valu
 	var non_ship_damage_statistics: Dictionary = session.get_all_non_ship_damage_statistics()
 	_annotate_lineups(unit_damage_statistics, side_variant)
 	var winner_faction := str(result.get("winner_faction", ""))
+	var finish_reason := str(result.get("reason", "GUARD_LIMIT" if not finished else "UNKNOWN"))
+	var end_state := "Finished" if finished else "GuardLimit"
+	if finish_reason == "LEVEL_TECHNICAL_LIMIT": end_state = "TechnicalLimit"
 	return {
 		"run_id": run_id,
 		"scenario_id": scenario_id,
 		"level_definition_id": level_id,
 		"seed": seed_value,
 		"side_variant": side_variant,
-		"end_state": "Finished" if finished else "GuardLimit",
+		"end_state": end_state,
 		"ticks_executed": ticks_executed,
 		"duration": float(stats.get("duration", session.state.get("elapsed_time", 0.0))),
 		"winner_faction": winner_faction,
 		"winner_lineup": _lineup_for_faction(winner_faction, side_variant),
-		"finish_reason": str(result.get("reason", "GUARD_LIMIT" if not finished else "UNKNOWN")),
+		"finish_reason": finish_reason,
 		"first_detection_time": float(stats.get("first_detection_time", -1.0)),
 		"first_fire_time": float(stats.get("first_fire_time", -1.0)),
 		"first_hit_time": float(stats.get("first_hit_time", -1.0)),
@@ -124,6 +129,7 @@ func _run_battle(registry, manifest: Dictionary, scenario: Dictionary, seed_valu
 		"unit_end_states": _unit_end_states(session.state),
 		"units": unit_damage_statistics,
 		"non_ship_damage": non_ship_damage_statistics,
+		"level_objective": session.state.get("level_objective", {}).duplicate(true),
 	}
 
 
@@ -194,6 +200,8 @@ func _lineup_for_faction(faction_id: String, side_variant: String) -> String:
 
 
 func _queue_policy_commands(session, registry, player_policy_id: String, enemy_policy_id: String) -> void:
+	if player_policy_id == "TutorialT01Deterministic":
+		_queue_t01_tutorial_commands(session)
 	var unit_ids: Array = session.state.get("units_by_id", {}).keys()
 	unit_ids.sort()
 	for unit_id in unit_ids:
@@ -217,6 +225,36 @@ func _queue_policy_commands(session, registry, player_policy_id: String, enemy_p
 					"target_position": target["position"],
 				})
 		_queue_ready_skill(session, registry, unit, target)
+
+
+func _queue_t01_tutorial_commands(session) -> void:
+	var objective: Dictionary = session.state.get("level_objective", {})
+	if objective.get("objective_set_id", "") != "objective.t01_navigation" or objective.get("status", "") != "Active": return
+	var unit_id := "unit.player.t01.sirius"
+	var counts: Dictionary = objective.get("action_counts", {})
+	if bool(objective.get("engagement_unlocked", false)):
+		return
+	# Leave two seconds for the instructional text to be read before executing the
+	# deterministic legal solution; this also mirrors the runtime objective test.
+	if int(session.state.get("tick_index", 0)) < 20: return
+	for action_id in ["SelectTutorialUnit", "EnableCameraFollow"]:
+		if int(counts.get(action_id, 0)) > 0: continue
+		session.queue_command({
+			"command_id": "simulation.t01.%s.%d" % [action_id, int(session.state.get("tick_index", 0))],
+			"command_type": "RecordTutorialAction", "issued_at_tick": int(session.state.get("tick_index", 0)),
+			"issuer_type": "SimulationPolicy", "issuer_id": "player", "unit_id": unit_id, "action_id": action_id,
+		})
+	var queued_count := int(counts.get("AppendMoveWaypoint", 0))
+	var zones: Array = objective.get("waypoint_zones", [])
+	for index in range(queued_count, mini(2, zones.size())):
+		var pair: Array = zones[index].get("position", [])
+		if pair.size() != 2: continue
+		session.queue_command({
+			"command_id": "simulation.t01.waypoint.%d" % index,
+			"command_type": "AppendMoveWaypoint", "issued_at_tick": int(session.state.get("tick_index", 0)),
+			"issuer_type": "Player", "issuer_id": "player", "unit_id": unit_id,
+			"target_position": Vector2(float(pair[0]), float(pair[1])),
+		})
 
 
 func _first_visible_target(session, unit: Dictionary) -> Dictionary:
@@ -260,6 +298,28 @@ func _queue_ready_skill(session, registry, unit: Dictionary, target: Dictionary)
 func _policy_for_faction(manifest: Dictionary, faction_id: String) -> String:
 	var field_name := "%s_policy_id" % faction_id
 	return str(manifest.get(field_name, manifest.get("policy_id", "SessionAutonomy")))
+
+
+func _win_rate_evaluation(manifest: Dictionary, aggregate: Dictionary) -> Dictionary:
+	var contract: Dictionary = manifest.get("win_rate_evaluation", {})
+	var target := float(contract.get("target_player_win_rate", 0.0))
+	var tolerance := float(contract.get("tolerance", 0.0))
+	var finished := int(aggregate.get("finished_runs", 0))
+	var planned := int(aggregate.get("planned_runs", 0))
+	var observed := float(aggregate.get("player_win_rate", 0.0))
+	var sample_complete := planned == 20 and finished == 20
+	var within_target := observed >= target - tolerance - 0.000001 and observed <= target + tolerance + 0.000001
+	return {
+		"settlement_source": "BattleStatisticsReport",
+		"required_battles": 20,
+		"valid_battles": finished,
+		"target_player_win_rate": target,
+		"tolerance": tolerance,
+		"observed_player_win_rate": observed,
+		"sample_complete": sample_complete,
+		"within_target": within_target,
+		"passed": sample_complete and within_target,
+	}
 
 
 func _fleet_health(state: Dictionary) -> Dictionary:

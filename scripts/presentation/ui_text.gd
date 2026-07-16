@@ -88,6 +88,9 @@ static func result_reason_name(reason: String) -> String:
 		"FLAGSHIP_SUNK": return "旗舰沉没"
 		"FLAGSHIP_SUNK_SIMULTANEOUS": return "双方旗舰同时沉没"
 		"TIME_LIMIT": return "战斗时间耗尽"
+		"LEVEL_OBJECTIVE_COMPLETED": return "关卡任务完成"
+		"LEVEL_OBJECTIVE_CANCELLED": return "关卡任务已取消"
+		"LEVEL_TECHNICAL_LIMIT": return "达到技术保护上限，本局不计入任务结算"
 		_: return "战斗结束"
 
 

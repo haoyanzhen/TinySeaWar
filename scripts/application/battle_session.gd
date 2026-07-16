@@ -169,6 +169,13 @@ func create_battle(level_id: String, seed_value: int = 1) -> Dictionary:
 	if level_objective_service.snapshot().get("objective_kind", "") == "TutorialNavigation":
 		for unit_id in state["fleets_by_id"]["fleet.player"]["unit_ids"]:
 			state["units_by_id"][unit_id]["secondary_auto_fire_enabled"] = false
+		var staging_pair: Array = state["level_objective"].get("enemy_staging_position", [])
+		if staging_pair.size() == 2:
+			var staging_position := Vector2(float(staging_pair[0]), float(staging_pair[1]))
+			for unit_id in state["fleets_by_id"]["fleet.enemy"]["unit_ids"]:
+				var staging_unit: Dictionary = state["units_by_id"][unit_id]
+				staging_unit["movement_state"] = _new_movement_state("AutoNavigate", staging_position, [])
+				_mark_navigation_dirty(staging_unit)
 	_rebuild_ai_groups(ENEMY_FACTION)
 	state["phase"] = "Running"
 	recorder.reset(state["battle_id"], seed_value)
@@ -846,7 +853,9 @@ func _process_commands() -> void:
 
 func _apply_command(command: Dictionary) -> Dictionary:
 	if state["phase"] != "Running": return _rejection(command.get("command_id", ""), "BATTLE_NOT_RUNNING")
-	if str(command.get("issuer_id", PLAYER_FACTION)) == PLAYER_FACTION and str(command.get("command_type", "")) in level_objective_service.locked_player_commands():
+	if command.get("command_type", "") == "RecordTutorialAction":
+		return _record_tutorial_action(str(command.get("action_id", "")), str(command.get("unit_id", "")))
+	if str(command.get("issuer_id", PLAYER_FACTION)) == PLAYER_FACTION and str(command.get("issuer_type", "Player")) == "Player" and str(command.get("command_type", "")) in level_objective_service.locked_player_commands():
 		return _rejection(command.get("command_id", ""), "TUTORIAL_ACTION_LOCKED")
 	if command.get("command_type", "") == "SetUnitControlState":
 		return _set_unit_control_state(command)
@@ -1017,7 +1026,17 @@ func _append_player_waypoint(unit: Dictionary, target_position: Vector2, command
 	unit["player_route_waypoints"] = authored_points
 	_submit_navigation_request(unit, anchor, target_position, "Append", "PlayerWaypointRoute", command_id, 0)
 	_emit("MoveWaypointQueued", {"unit_id": unit["entity_id"], "target_position": target_position, "route_size": authored_points.size()})
+	_record_tutorial_action("AppendMoveWaypoint", str(unit.get("entity_id", "")))
 	return {"accepted": true}
+
+
+func _record_tutorial_action(action_id: String, unit_id: String) -> Dictionary:
+	var result: Dictionary = level_objective_service.record_action(action_id, unit_id, int(state.get("tick_index", 0)))
+	state["level_objective"] = level_objective_service.snapshot()
+	for action_event in result.get("events", []):
+		var event: Dictionary = action_event
+		_emit(str(event.get("event_type", "TutorialActionRecorded")), event)
+	return {"accepted": bool(result.get("accepted", false)), "reason_code": str(result.get("reason_code", "TUTORIAL_ACTION_NOT_REQUIRED"))}
 
 
 func _submit_navigation_request(unit: Dictionary, start: Vector2, target: Vector2, apply_mode: String, movement_mode: String, command_id: String, priority: int) -> void:
@@ -1698,7 +1717,7 @@ func _update_ai_intents() -> void:
 	for unit_id in _sorted_unit_ids():
 		var unit: Dictionary = state["units_by_id"][unit_id]
 		if unit["life_state"] != "Alive": continue
-		if level_objective_service.actions_locked_for(unit): continue
+		if level_objective_service.uses_authored_staging_movement(unit): continue
 		if _uses_full_ai(unit):
 			_update_enemy_ai_intent(unit)
 		else:
@@ -1709,7 +1728,7 @@ func _update_ai_intents() -> void:
 func _update_auto_skills() -> void:
 	for unit_id in _sorted_unit_ids():
 		var unit: Dictionary = state["units_by_id"][unit_id]
-		if level_objective_service.actions_locked_for(unit): continue
+		if level_objective_service.skill_locked_for(unit): continue
 		if not _uses_full_ai(unit) or not bool(unit.get("skill_auto_cast_enabled", true)): continue
 		if unit["life_state"] != "Alive" or float(unit["skill_state"]["cooldown_remaining"]) > 0.0: continue
 		if float(unit["ai_state"].get("skill_decision_cooldown", 0.0)) > 0.0: continue
@@ -2299,7 +2318,7 @@ func _update_ai_primary_weapons() -> void:
 	for unit_id in _sorted_unit_ids():
 		var unit: Dictionary = state["units_by_id"][unit_id]
 		if unit.get("life_state", "") != "Alive": continue
-		if level_objective_service.actions_locked_for(unit): continue
+		if level_objective_service.primary_locked_for(unit): continue
 		if float(unit["ai_state"].get("fire_decision_cooldown", 0.0)) > 0.0: continue
 		unit["ai_state"]["fire_decision_cooldown"] = 0.5
 		var player_assist := not _uses_full_ai(unit)
@@ -2877,7 +2896,7 @@ func _update_weapons() -> void:
 	for unit_id in _sorted_unit_ids():
 		var unit: Dictionary = state["units_by_id"][unit_id]
 		if unit["life_state"] != "Alive": continue
-		if level_objective_service.actions_locked_for(unit): continue
+		if level_objective_service.automatic_weapons_locked_for(unit): continue
 		if unit.get("faction_id", "") == PLAYER_FACTION and not bool(unit.get("secondary_auto_fire_enabled", true)): continue
 		var target := _current_or_select_target(unit, unit.get("faction_id", "") == PLAYER_FACTION)
 		if target.is_empty(): continue
@@ -3750,6 +3769,9 @@ func _check_victory() -> void:
 
 func _check_timeout() -> void:
 	if state["phase"] != "Running" or float(state["elapsed_time"]) < float(state["time_limit"]): return
+	if not str(state.get("level_objective", {}).get("objective_set_id", "")).is_empty():
+		_finish_battle("", "LEVEL_TECHNICAL_LIMIT")
+		return
 	var player_ratio := _remaining_hp_ratio("fleet.player")
 	var enemy_ratio := _remaining_hp_ratio("fleet.enemy")
 	_finish_battle(PLAYER_FACTION if player_ratio >= enemy_ratio else ENEMY_FACTION, "TIME_LIMIT")
@@ -3764,8 +3786,16 @@ func _update_level_objective() -> void:
 		var event: Dictionary = objective_event
 		_emit(str(event.get("event_type", "LevelObjectiveAdvanced")), event)
 	if not previous_engagement and bool(state["level_objective"].get("engagement_unlocked", false)):
+		_full_ai_factions[PLAYER_FACTION] = true
 		for unit_id in state["fleets_by_id"]["fleet.player"]["unit_ids"]:
-			state["units_by_id"][unit_id]["secondary_auto_fire_enabled"] = true
+			var tutorial_unit: Dictionary = state["units_by_id"][unit_id]
+			tutorial_unit["control_authority"] = "TutorialAssistAI"
+			tutorial_unit["movement_assist_enabled"] = true
+			tutorial_unit["secondary_auto_fire_enabled"] = true
+			tutorial_unit["primary_auto_fire_enabled"] = true
+			tutorial_unit["player_route_waypoints"] = []
+			tutorial_unit["movement_state"] = _new_movement_state("AutoNavigate", tutorial_unit["position"], [])
+			_mark_navigation_dirty(tutorial_unit)
 	var terminal: Dictionary = update.get("terminal", {})
 	if not terminal.is_empty() and state.get("phase", "") == "Running":
 		_finish_battle(str(terminal.get("winner_faction", "")), str(terminal.get("reason", "LEVEL_OBJECTIVE_COMPLETED")))

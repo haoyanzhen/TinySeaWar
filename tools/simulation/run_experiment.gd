@@ -36,7 +36,10 @@ func _run() -> void:
 	print("SIMULATION_REPORT=%s" % output_directory.path_join("report.md"))
 	print(JSON.stringify(result.get("aggregate", {}), "  "))
 	var aggregate: Dictionary = result.get("aggregate", {})
-	quit(0 if int(aggregate.get("finished_runs", 0)) == int(aggregate.get("planned_runs", -1)) else 2)
+	var complete := int(aggregate.get("finished_runs", 0)) == int(aggregate.get("planned_runs", -1))
+	var evaluation: Dictionary = aggregate.get("win_rate_evaluation", {})
+	var accepted := evaluation.is_empty() or bool(evaluation.get("passed", false))
+	quit(0 if complete and accepted else (3 if complete else 2))
 
 
 func _fail(errors: Array) -> void:

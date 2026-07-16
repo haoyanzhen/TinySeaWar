@@ -31,6 +31,22 @@ func _run() -> void:
 		"scenarios": [{"scenario_id": "one_on_one", "level_definition_id": "level.prototype_1v1"}],
 	}
 	_check(loader.validate_manifest(manifest).is_empty(), "valid manifest passes validation")
+	var win_rate_manifest: Dictionary = manifest.duplicate(true)
+	win_rate_manifest["simulation_kind"] = "LevelWinRateEvaluation"
+	win_rate_manifest["seed_plan"] = {"type":"SequentialRange", "start":9001, "count":20}
+	win_rate_manifest["win_rate_evaluation"] = {"settlement_source":"BattleStatisticsReport", "target_player_win_rate":0.6, "tolerance":0.05}
+	_check(loader.validate_manifest(win_rate_manifest).is_empty(), "win-rate manifest accepts exactly 20 distinct battle seeds and report settlement")
+	var short_win_rate_manifest: Dictionary = win_rate_manifest.duplicate(true)
+	short_win_rate_manifest["seed_plan"] = {"type":"SequentialRange", "start":9001, "count":19}
+	_check(loader.validate_manifest(short_win_rate_manifest).any(func(error): return str(error).contains("exactly 20")), "win-rate manifest rejects a sample other than 20 battles")
+	var duplicate_win_rate_manifest: Dictionary = win_rate_manifest.duplicate(true)
+	var duplicate_seeds: Array = range(9001, 9020)
+	duplicate_seeds.append(9001)
+	duplicate_win_rate_manifest["seed_plan"] = {"type":"ExplicitList", "values":duplicate_seeds}
+	_check(loader.validate_manifest(duplicate_win_rate_manifest).any(func(error): return str(error).contains("duplicate seed")), "win-rate manifest rejects repeated seeds")
+	var swapped_win_rate_manifest: Dictionary = win_rate_manifest.duplicate(true)
+	swapped_win_rate_manifest["side_swap"] = true
+	_check(loader.validate_manifest(swapped_win_rate_manifest).any(func(error): return str(error).contains("side_swap=false")), "win-rate manifest rejects paired side swaps that would reuse battle seeds")
 	var registry = ConfigRegistry.new()
 	_check(registry.load_all(), "configuration registry loads")
 	var runner = SimulationRunner.new()

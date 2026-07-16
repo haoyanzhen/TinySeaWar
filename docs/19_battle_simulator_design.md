@@ -412,7 +412,7 @@ validated definitions
 - `SequentialRange`：用于常规批量实验。
 - `Derived`：由实验 ID、场景 ID 和重复索引稳定派生。
 
-报告必须保存实际种子列表，不能只保存“随机 100 局”。
+报告必须保存实际种子列表，不能只保存“随机 N 局”。正式 `LevelWinRateEvaluation` 按 `docs/36_balance_testing_design.md` 固定为 20 场且种子不得重复。
 
 ### 7.2 配对种子
 

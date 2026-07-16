@@ -111,6 +111,7 @@ func _markdown(result: Dictionary) -> String:
 	var aggregate: Dictionary = result.get("aggregate", {})
 	var duration: Dictionary = aggregate.get("duration", {})
 	var interval: Array = aggregate.get("player_win_rate_95", [0.0, 0.0])
+	var evaluation: Dictionary = aggregate.get("win_rate_evaluation", {})
 	var lines: Array[String] = [
 		"# 战斗模拟报告",
 		"",
@@ -146,6 +147,23 @@ func _markdown(result: Dictionary) -> String:
 		"",
 		"结束原因：`%s`" % JSON.stringify(aggregate.get("finish_reason_counts", {})),
 		"",
+	]
+	if not evaluation.is_empty():
+		lines.append_array([
+			"## 胜率结算",
+			"",
+			"本实验固定运行 20 场不同种子；是否达标只读取本战斗统计报告的聚合结果，不以单场日志代替结算。",
+			"",
+			"| 结算项 | 结果 |",
+			"| --- | ---: |",
+			"| 有效场次 | %d / 20 |" % int(evaluation.get("valid_battles", 0)),
+			"| 目标胜率 | %.1f%% |" % (float(evaluation.get("target_player_win_rate", 0.0)) * 100.0),
+			"| 允许误差 | ±%.1f 个百分点 |" % (float(evaluation.get("tolerance", 0.0)) * 100.0),
+			"| 报告胜率 | %.1f%% |" % (float(evaluation.get("observed_player_win_rate", 0.0)) * 100.0),
+			"| 结算 | %s |" % ("通过" if bool(evaluation.get("passed", false)) else "未通过"),
+			"",
+		])
+	lines.append_array([
 		"## AI 行为指标",
 		"",
 		"| 指标 | 结果 |",
@@ -170,7 +188,7 @@ func _markdown(result: Dictionary) -> String:
 		"",
 		"| 场景 | 完成 | 玩家侧胜率 | 平均时长 | 玩家/敌方射击 |",
 		"| --- | ---: | ---: | ---: | ---: |",
-	]
+	])
 	var by_scenario: Dictionary = aggregate.get("by_scenario_variant", {})
 	var scenario_ids: Array = by_scenario.keys()
 	scenario_ids.sort()

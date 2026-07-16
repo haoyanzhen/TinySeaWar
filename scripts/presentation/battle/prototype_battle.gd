@@ -108,6 +108,7 @@ func _draw() -> void:
 	if session == null or session.state.is_empty(): return
 	var snapshot: Dictionary = session.snapshot("player", false)
 	_draw_map_boundary(snapshot)
+	_draw_level_objective_markers(snapshot)
 	for contact in snapshot["contacts"].values():
 		var ghost_position: Vector2 = contact["last_known_position"]
 		var radar_contact := str(contact.get("primary_contact_type", "")) == "Radar"
@@ -116,6 +117,28 @@ func _draw() -> void:
 		draw_arc(ghost_position, 33.0, 0.0, TAU, 28, contact_color, 2.0)
 	_draw_mine_deployment_overlay(snapshot)
 	_draw_operation_overlay()
+
+
+func _draw_level_objective_markers(snapshot: Dictionary) -> void:
+	var objective: Dictionary = snapshot.get("level_objective", {})
+	if objective.get("objective_kind", "") != "TutorialNavigation" or objective.get("status", "") != "Active": return
+	var current_step := int(objective.get("current_step", 0))
+	var zones: Array = objective.get("waypoint_zones", [])
+	for index in range(zones.size()):
+		var zone: Dictionary = zones[index]
+		var pair: Array = zone.get("position", [])
+		if pair.size() != 2: continue
+		var center := Vector2(float(pair[0]), float(pair[1]))
+		var radius := float(zone.get("radius", 80.0))
+		var completed := index < current_step
+		var active := index == current_step
+		var edge := Color("#67e6a3") if completed else (Color("#ffe072") if active else Color(0.76, 0.9, 0.96, 0.6))
+		var fill := Color(edge, 0.14 if active else 0.07)
+		draw_circle(center, radius, fill)
+		draw_arc(center, radius, 0.0, TAU, 64, edge, 5.0 if active else 2.5)
+		draw_circle(center, 10.0, Color(edge, 0.9))
+		var label := "%d · %s%s" % [index + 1, str(zone.get("label", "教学航点")), "（当前目标）" if active else ("（完成）" if completed else "")]
+		draw_string(ThemeDB.fallback_font, center + Vector2(-100.0, -radius - 18.0), label, HORIZONTAL_ALIGNMENT_CENTER, 200.0, 18, edge)
 
 
 func _draw_mine_deployment_overlay(snapshot: Dictionary) -> void:
@@ -701,6 +724,7 @@ func _toggle_follow_selected() -> void:
 		camera_mode = "Follow"
 		camera_follow_unit_id = selected_unit_id
 		_clamp_camera_to_map()
+		_report_tutorial_action("EnableCameraFollow", selected_unit_id)
 
 
 func _slot_for_key(keycode: int) -> int:
@@ -728,6 +752,7 @@ func _select_slot(slot: int) -> void:
 		operation_mode = OperationMode.NORMAL
 		if camera_mode == "Follow": camera_follow_unit_id = selected_unit_id
 		_push_message("已选择 %d 号角色：%s" % [slot, slot_data.get("display_name", selected_unit_id)])
+		_report_tutorial_action("SelectTutorialUnit", selected_unit_id)
 		return
 	_push_message("%d 号角色不可用" % slot)
 
@@ -749,6 +774,7 @@ func _select_at(world_position: Vector2, snapshot: Dictionary) -> void:
 	if nearest["faction_id"] == "player":
 		selected_unit_id = nearest["entity_id"]
 		if camera_mode == "Follow": camera_follow_unit_id = selected_unit_id
+		_report_tutorial_action("SelectTutorialUnit", selected_unit_id)
 	else:
 		focused_target_id = nearest["entity_id"]
 		if not selected_unit_id.is_empty(): session.queue_command({"command_id": "ui.focus.%s" % session.state["tick_index"], "command_type": "FocusTarget", "issued_at_tick": session.state["tick_index"], "issuer_id": "player", "unit_id": selected_unit_id, "target_unit_id": focused_target_id})
@@ -917,6 +943,18 @@ func _append_route_waypoint(world_position: Vector2) -> void:
 		"issuer_id": "player",
 		"unit_id": selected_unit_id,
 		"target_position": world_position,
+	})
+
+
+func _report_tutorial_action(action_id: String, unit_id: String) -> void:
+	session.queue_command({
+		"command_id": "ui.tutorial.%s.%s.%s" % [action_id, session.state.get("tick_index", 0), Time.get_ticks_msec()],
+		"command_type": "RecordTutorialAction",
+		"issued_at_tick": session.state.get("tick_index", 0),
+		"issuer_type": "Player",
+		"issuer_id": "player",
+		"unit_id": unit_id,
+		"action_id": action_id,
 	})
 
 

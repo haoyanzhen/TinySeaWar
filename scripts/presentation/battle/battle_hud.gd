@@ -74,12 +74,20 @@ func _draw_top_status(viewport_size: Vector2) -> void:
 func _draw_level_objective(viewport_size: Vector2) -> void:
 	var objective: Dictionary = snapshot.get("level_objective", {})
 	if objective.is_empty(): return
-	var panel := Rect2(Vector2((viewport_size.x - 560.0) * 0.5, 100.0), Vector2(560.0, 54.0))
+	var tutorial := objective.get("objective_kind", "") == "TutorialNavigation"
+	var panel_height := 82.0 if tutorial else 54.0
+	var panel := Rect2(Vector2((viewport_size.x - 620.0) * 0.5, 100.0), Vector2(620.0, panel_height))
 	_draw_panel(panel, "")
 	var status := str(objective.get("status", "Active"))
-	var prefix := "任务" if objective.get("objective_kind", "") != "TutorialNavigation" else "教学"
+	var prefix := "教学" if tutorial else "任务"
 	var text := "%s · %s：%s" % [prefix, objective.get("title", ""), objective.get("summary", "")]
 	draw_string(ThemeDB.fallback_font, panel.position + Vector2(18.0, 34.0), text, HORIZONTAL_ALIGNMENT_LEFT, panel.size.x - 36.0, 17, TEXT_DARK if status == "Active" else Color("#35c99a"))
+	if tutorial:
+		var instruction := "当前操作：%s" % objective.get("instruction", "")
+		draw_string(ThemeDB.fallback_font, panel.position + Vector2(18.0, 59.0), instruction, HORIZONTAL_ALIGNMENT_LEFT, panel.size.x - 36.0, 16, Color("#225f73"))
+		var limit_text := str(objective.get("ability_limit_text", ""))
+		if not limit_text.is_empty():
+			draw_string(ThemeDB.fallback_font, panel.position + Vector2(18.0, 78.0), limit_text, HORIZONTAL_ALIGNMENT_LEFT, panel.size.x - 36.0, 13, TEXT_SOFT)
 
 
 func _draw_fleet_panel(rect: Rect2, friendly: bool) -> void:
@@ -339,6 +347,9 @@ func _draw_result_panel(viewport_size: Vector2) -> void:
 	var subtitle := "敌方旗舰已经失去作战能力。" if player_won else "己方旗舰失去作战能力。"
 	if str(result.get("reason", "")) == "TIME_LIMIT":
 		subtitle = "时间耗尽，按双方剩余总耐久比例判定。"
+	elif str(result.get("reason", "")) == "LEVEL_TECHNICAL_LIMIT":
+		title = "本局无效"
+		subtitle = "达到技术保护上限；本局不判定任务胜负，也不写入进度。"
 	_draw_result_character(Rect2(rect.position + Vector2(34.0, 28.0), Vector2(400.0, 548.0)))
 	draw_string(ThemeDB.fallback_font, rect.position + Vector2(470.0, 92.0), title, HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 520.0, 54, TEXT_DARK)
 	draw_rect(Rect2(rect.position + Vector2(472.0, 112.0), Vector2(132.0, 5.0)), Color("#70db84") if player_won else Color("#ff9a8c"), true)

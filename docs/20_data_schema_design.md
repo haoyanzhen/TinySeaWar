@@ -862,7 +862,7 @@ reinforcement_schedule
 
 目标条件白名单、运行状态、增援确定性顺序、23 关映射以及 `PlayerProgressSave` 的详细 Schema 和校验见 `docs/technical/t02_level_objective_reinforcement_progress_solution.md`。配置不得嵌入任意脚本或布尔表达式。
 
-首个运行时子集位于 `data/objectives/level_objectives.json` 和 `data/levels/formal_level_01.json`。当前程序支持 `TutorialNavigation` 与 `FlagshipMission` 两类目标；前者保存两个审核航点、教学锁定命令和自然交战阶段，后者保存双方旗舰引用与完成/取消文案。新增类型前必须扩展加载校验、纯 Domain 目标服务和专项测试，不能只增加 JSON 字符串。
+首个运行时子集位于 `data/objectives/level_objectives.json` 和 `data/levels/formal_level_01.json`。当前程序支持 `TutorialNavigation` 与 `FlagshipMission` 两类目标；前者保存两个审核航点、必做操作、教学锁定命令、HUD 指令、敌方待机航点和自然交战阶段，后者保存双方旗舰引用与完成/取消文案。`enemy_staging_position` 只在教学交战解锁前提供敌方审核航行目标，阶段解锁后恢复正式 AI 决策；不得借此跳过公共航行规则。新增类型前必须扩展加载校验、纯 Domain 目标服务和专项测试，不能只增加 JSON 字符串。
 
 ## 13. AI 配置
 
@@ -1156,12 +1156,15 @@ schema_version
 experiment_id
 description
 simulation_kind
+authorization
 player_policy_id
 enemy_policy_id
+ai_profile_id
 tick_seconds
 maximum_ticks
 side_swap
 seed_plan
+win_rate_evaluation
 scenarios
 output_directory
 ```
@@ -1171,12 +1174,15 @@ output_directory
 - `schema_version`：当前固定为 `1`，用于拒绝不兼容清单。
 - `experiment_id`：稳定实验 ID，同时用于生成单局 `run_id`。
 - `description`：报告中的实验说明。
-- `simulation_kind`：当前使用 `FullBattleSimulation` 或 `RuleRegression`。
-- `player_policy_id`、`enemy_policy_id`：分别声明双方策略。首版支持 `SessionAutonomy`、`BaselineAutopilot` 和 `LatestRuntimeAI`。`LatestRuntimeAI` 让对应阵营使用 `BattleSession` 当前完整量化 AI，包括目标评分、模式迟滞、局部战术、预判主要武器、技能收益和即时规避；正常玩家战斗默认仍使用玩家控制/受限辅助。旧式单一 `policy_id` 只作为双方相同策略的兼容字段。
+- `simulation_kind`：使用 `FullBattleSimulation`、`RuleRegression` 或正式胜率实验 `LevelWinRateEvaluation`。
+- `authorization`：正式批量实验的人工授权说明。
+- `player_policy_id`、`enemy_policy_id`：分别声明双方策略。首版支持 `SessionAutonomy`、`BaselineAutopilot`、`LatestRuntimeAI` 和 T-01 专用的 `TutorialT01Deterministic`。后者只执行关卡要求的选择、镜头跟随和合法航点，并在交战阶段依赖关卡开启的受限辅助；正常玩家战斗仍使用玩家控制/受限辅助。旧式单一 `policy_id` 只作为双方相同策略的兼容字段。
+- `ai_profile_id`：双方批量 AI 使用的同一难度 Profile。
 - `tick_seconds`：固定模拟步长，必须为正数；正式对比使用与运行时一致的 `0.1` 秒。
 - `maximum_ticks`：程序保护上限。达到上限记为 `GuardLimit`，不伪装成关卡超时结算。
 - `side_swap`：为 `true` 时，每个场景和种子运行 `original` 与 `swapped` 两局。交换局将原敌方阵容放到玩家出生槽位，将原玩家阵容放到敌方出生槽位，同时保留各阵容的旗舰、角色和内部顺序。
 - `seed_plan`：种子方案。`ExplicitList` 使用 `values`；`SequentialRange` 使用 `start` 和 `count`。
+- `win_rate_evaluation`：仅用于 `LevelWinRateEvaluation`，包含 `settlement_source=BattleStatisticsReport`、`target_player_win_rate` 与 `tolerance`。该类型强制恰好 20 个互不重复种子并要求 `side_swap=false`，避免一对原始/交换局复用种子；只有 20 场均形成有效战斗统计且聚合胜率进入目标区间才通过。
 - `scenarios`：场景数组，每项包含稳定 `scenario_id` 和正式 `level_definition_id`，可选用 `seeds` 覆盖实验级种子。
 - `output_directory`：报告输出目录。当前示例写入被 Git 忽略的 `artifacts/simulations/`。
 

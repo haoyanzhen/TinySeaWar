@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "experiment_id": "sim.level.s01.win_rate_20",
+  "description": "S-01 首轮接敌正式 20 场多种子胜率验收；双方使用简单档最新运行时 AI，按战斗统计报告结算",
+  "authorization": "用户于 2026-07-16 明确指定所有胜率实验固定运行 20 场",
+  "simulation_kind": "LevelWinRateEvaluation",
+  "player_policy_id": "LatestRuntimeAI",
+  "enemy_policy_id": "LatestRuntimeAI",
+  "ai_profile_id": "ai.profile.easy",
+  "side_swap": false,
+  "tick_seconds": 0.1,
+  "maximum_ticks": 12000,
+  "seed_plan": {
+    "type": "SequentialRange",
+    "start": 7401,
+    "count": 20
+  },
+  "win_rate_evaluation": {
+    "settlement_source": "BattleStatisticsReport",
+    "target_player_win_rate": 0.6,
+    "tolerance": 0.05
+  },
+  "scenarios": [
+    {"scenario_id": "challenge_s01", "level_definition_id": "level.challenge.s01"}
+  ],
+  "output_directory": "res://artifacts/simulations/sim.level.s01.win_rate_20"
+}

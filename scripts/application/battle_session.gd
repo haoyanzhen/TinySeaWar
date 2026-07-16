@@ -472,18 +472,21 @@ func get_operation_status(unit_id: String) -> Dictionary:
 	var primary_name := "None"
 	var primary_mount_type := ""
 	var primary_mounts_ready := 0
+	var primary_enabled := false
 	var group_launch_remaining := float(unit.get("weapon_group_launch_remaining", {}).get(primary_group_id, 0.0))
 	for weapon_state in primary_states:
 		var weapon: Dictionary = registry.get_definition("weapons", str(weapon_state["definition_id"]))
 		if primary_name == "None": primary_name = str(weapon.get("display_name", weapon["id"]))
 		if primary_mount_type.is_empty(): primary_mount_type = str(weapon.get("mount_type", ""))
+		if not bool(weapon_state.get("enabled", true)): continue
+		primary_enabled = true
 		primary_reload = minf(primary_reload, float(weapon_state.get("reload_remaining", 0.0)))
 		primary_reload_max = maxf(primary_reload_max, float(weapon.get("reload_time", 0.0)))
 		primary_range = maxf(primary_range, _effective_weapon_range(unit, weapon))
 		if float(weapon_state.get("reload_remaining", 0.0)) <= 0.0:
 			primary_mounts_ready += 1
 			if group_launch_remaining <= 0.0: primary_ready = true
-	if primary_states.is_empty():
+	if primary_states.is_empty() or not primary_enabled:
 		primary_reload = 0.0
 	else:
 		primary_reload = maxf(primary_reload, group_launch_remaining)
@@ -680,9 +683,13 @@ func _build_fleet(fleet_id: String, faction_id: String, members: Array) -> void:
 func _build_unit(member: Dictionary, ship: Dictionary, fleet_id: String, faction_id: String, operation_slot: int) -> Dictionary:
 	var position_data: Array = member.get("position", [0.0, 0.0])
 	var spawn_position := Vector2(float(position_data[0]), float(position_data[1]))
+	var configured_group_states = member.get("weapon_group_states", {})
+	var initial_group_states: Dictionary = configured_group_states if typeof(configured_group_states) == TYPE_DICTIONARY else {}
 	var weapon_states: Array = []
 	for weapon_id in ship.get("weapon_mounts", []):
 		var weapon: Dictionary = registry.get_definition("weapons", str(weapon_id))
+		var weapon_group_id := str(weapon.get("weapon_group_id", ""))
+		var availability_state := str(initial_group_states.get(weapon_group_id, "Enabled"))
 		var mount_fire_arcs: Array = weapon.get("mount_fire_arcs", [])
 		if weapon.get("mount_type", "") == "Torpedo" and weapon.get("control_mode", "") == "ManualPrimary" and not mount_fire_arcs.is_empty():
 			for mount_index in range(mount_fire_arcs.size()):
@@ -692,10 +699,12 @@ func _build_unit(member: Dictionary, ship: Dictionary, fleet_id: String, faction
 					"mount_index": mount_index,
 					"mount_id": str(mount_fire_arcs[mount_index].get("mount_id", "mount_%s" % [mount_index + 1])),
 					"reload_remaining": 0.0,
-					"enabled": true,
+					"weapon_group_id": weapon_group_id,
+					"availability_state": availability_state,
+					"enabled": availability_state == "Enabled",
 				})
 		else:
-			weapon_states.append({"instance_id": "%s.%s" % [member["entity_id"], weapon_id], "definition_id": weapon_id, "mount_index": -1, "mount_id": "", "reload_remaining": 0.0, "enabled": true})
+			weapon_states.append({"instance_id": "%s.%s" % [member["entity_id"], weapon_id], "definition_id": weapon_id, "mount_index": -1, "mount_id": "", "reload_remaining": 0.0, "weapon_group_id": weapon_group_id, "availability_state": availability_state, "enabled": availability_state == "Enabled"})
 	var skill: Dictionary = registry.get_definition("skills", str(ship.get("skill_id", "")))
 	var player_controlled := faction_id == PLAYER_FACTION
 	var initial_movement_mode := "HoldPosition" if player_controlled else "AutoNavigate"
@@ -2302,7 +2311,9 @@ func _update_ai_primary_weapons() -> void:
 		unit["targeting_state"]["current_target_id"] = str(target["entity_id"])
 		var primary_states := _weapon_states_for_group(unit, str(unit["stats"].get("primary_weapon_group_id", "")), true)
 		if primary_states.is_empty(): continue
-		var aim_weapon := _weapon_for_state(primary_states[0])
+		var enabled_primary_states := primary_states.filter(func(weapon_state): return bool(weapon_state.get("enabled", true)))
+		if enabled_primary_states.is_empty(): continue
+		var aim_weapon := _weapon_for_state(enabled_primary_states[0])
 		var aim_solution := _automatic_aim_solution(unit, target, aim_weapon)
 		if aim_solution.is_empty(): continue
 		var aim_position: Vector2 = aim_solution.get("position", target["position"])
@@ -4476,6 +4487,7 @@ func _primary_unavailable_reason(unit: Dictionary, primary_states: Array) -> Str
 	if state.get("phase", "") != "Running": return "BATTLE_NOT_RUNNING"
 	if unit.get("life_state", "") != "Alive": return "UNIT_SUNK"
 	if primary_states.is_empty(): return "PRIMARY_WEAPON_UNAVAILABLE"
+	if primary_states.all(func(weapon_state): return not bool(weapon_state.get("enabled", true))): return "WEAPON_GROUP_DISABLED"
 	var primary_group_id := str(unit.get("stats", {}).get("primary_weapon_group_id", ""))
 	if float(unit.get("weapon_group_launch_remaining", {}).get(primary_group_id, 0.0)) > 0.0:
 		return "TORPEDO_MOUNT_INTERVAL"
@@ -4494,9 +4506,11 @@ func _validate_primary_fire(unit: Dictionary, weapon_states: Array, target_posit
 		return {"legal": false, "reason_code": "TORPEDO_MOUNT_INTERVAL", "legal_weapon_states": []}
 	var ready_states: Array = []
 	for weapon_state in weapon_states:
-		if float(weapon_state.get("reload_remaining", 0.0)) <= 0.0:
+		if bool(weapon_state.get("enabled", true)) and float(weapon_state.get("reload_remaining", 0.0)) <= 0.0:
 			ready_states.append(weapon_state)
-	if ready_states.is_empty(): return {"legal": false, "reason_code": "WEAPON_RELOADING", "legal_weapon_states": []}
+	if ready_states.is_empty():
+		var reason_code := "WEAPON_GROUP_DISABLED" if weapon_states.all(func(weapon_state): return not bool(weapon_state.get("enabled", true))) else "WEAPON_RELOADING"
+		return {"legal": false, "reason_code": reason_code, "legal_weapon_states": []}
 	var legal_states: Array = []
 	var last_reason := "TARGET_OUT_OF_RANGE"
 	for weapon_state in ready_states:
@@ -4544,6 +4558,7 @@ func _angle_in_weapon_fire_arcs(unit_heading: float, target_angle: float, weapon
 func _primary_aim_weapons(weapon_states: Array) -> Array:
 	var weapons: Array = []
 	for weapon_state in weapon_states:
+		if not bool(weapon_state.get("enabled", true)): continue
 		if float(weapon_state.get("reload_remaining", 0.0)) > 0.0: continue
 		var weapon := _weapon_for_state(weapon_state)
 		if not weapon.is_empty():

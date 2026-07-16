@@ -339,6 +339,7 @@ aim_heading
 fire_sequence_index
 enabled
 weapon_group_id
+availability_state
 control_mode
 ammo_type
 ```
@@ -347,6 +348,7 @@ ammo_type
 
 - `reload_remaining >= 0`。
 - 武器只有在单位存活、启用、装填完成、目标合法且满足射程/射角时才能开火。
+- 关卡成员可按 `weapon_group_id` 把单场初始 `availability_state` 设为 `Enabled` 或 `Disabled`；未声明组默认启用，`enabled` 由该状态派生，且自动与手动开火必须执行同一检查。
 - 同一 `shared_cooldown_group` 在同一模拟时刻最多允许一种模式开火。
 - 武器发射后只创建攻击或投射物事实，不直接修改目标 HP。
 - `ManualPrimary` 武器只响应合法的主要武器命令，`Automatic` 武器只由武器系统自动触发。

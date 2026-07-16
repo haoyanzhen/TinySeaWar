@@ -104,6 +104,14 @@ func _test_terrain_configuration_and_rules() -> void:
 	invalid_harbor["enemy_fleet"].pop_back()
 	invalid_cost_registry._validate_level(invalid_harbor)
 	_check(not invalid_cost_registry.errors.filter(func(error): return str(error).contains("Equal-cost level")).is_empty(), "equal-cost level validation rejects mismatched fleets")
+	var invalid_weapon_state_registry = ConfigRegistry.new()
+	invalid_weapon_state_registry.load_all()
+	invalid_weapon_state_registry.errors.clear()
+	var invalid_weapon_state_level: Dictionary = registry.get_definition("levels", "level.prototype_1v1").duplicate(true)
+	invalid_weapon_state_level["player_fleet"][0]["weapon_group_states"] = {"unknown_group":"Enabled", "warspite_main":"Broken"}
+	invalid_weapon_state_registry._validate_level(invalid_weapon_state_level)
+	_check(not invalid_weapon_state_registry.errors.filter(func(error): return str(error).contains("Unknown weapon group")).is_empty(), "level validation rejects weapon groups not mounted by the configured ship")
+	_check(not invalid_weapon_state_registry.errors.filter(func(error): return str(error).contains("Invalid weapon group state")).is_empty(), "level validation rejects unsupported initial weapon group states")
 	var terrain_definition: Dictionary = registry.get_definition("terrain", "terrain.map.harbor_mouth")
 	var query = TerrainQueryService.new()
 	query.configure(terrain_definition)
@@ -683,6 +691,27 @@ func _test_command_and_skill_rules() -> void:
 
 
 func _test_operation_design_rules() -> void:
+	var original_level: Dictionary = registry.get_definition("levels", "level.prototype_1v1").duplicate(true)
+	var weapon_state_level: Dictionary = original_level.duplicate(true)
+	weapon_state_level["player_fleet"][0]["weapon_group_states"] = {"warspite_main":"Disabled", "warspite_secondary":"Disabled"}
+	registry.definitions["levels"]["level.prototype_1v1"] = weapon_state_level
+	var weapon_state_session = BattleSession.new(registry)
+	weapon_state_session.create_battle("level.prototype_1v1", 20)
+	registry.definitions["levels"]["level.prototype_1v1"] = original_level
+	var configured_warspite: Dictionary = weapon_state_session.state["units_by_id"]["unit.player.warspite"]
+	var configured_main_states := weapon_state_session._weapon_states_for_group(configured_warspite, "warspite_main", false)
+	var configured_secondary_states := weapon_state_session._weapon_states_for_group(configured_warspite, "warspite_secondary", false)
+	_check(configured_main_states.all(func(state): return state.get("availability_state", "") == "Disabled" and not bool(state.get("enabled", true))), "level member state disables every runtime instance in the configured main weapon group")
+	_check(configured_secondary_states.all(func(state): return state.get("availability_state", "") == "Disabled" and not bool(state.get("enabled", true))), "level member state disables the configured automatic weapon group")
+	var configured_enemy: Dictionary = weapon_state_session.state["units_by_id"]["unit.enemy.bismarck"]
+	configured_warspite["position"] = Vector2(300.0, 350.0)
+	configured_enemy["position"] = Vector2(700.0, 350.0)
+	weapon_state_session.state["visible_by_faction"]["player"] = {configured_enemy["entity_id"]:true}
+	weapon_state_session._update_weapons()
+	_check(not _has_event_for_source(weapon_state_session.drain_events(), "WeaponFired", configured_warspite["entity_id"]), "automatic fire obeys the level-configured disabled weapon group state")
+	weapon_state_session.queue_command({"command_id":"primary.disabled","command_type":"FirePrimaryWeapon","issued_at_tick":0,"issuer_id":"player","unit_id":configured_warspite["entity_id"],"target_position":configured_enemy["position"]})
+	var disabled_fire_events: Array = weapon_state_session.advance_tick(0.1)
+	_check(_has_event_reason(disabled_fire_events, "CommandRejected", "WEAPON_GROUP_DISABLED"), "manual primary fire obeys the level-configured disabled weapon group state")
 	var session = BattleSession.new(registry)
 	session.create_battle("level.prototype_1v1", 21)
 	var player: Dictionary = session.state["units_by_id"]["unit.player.warspite"]

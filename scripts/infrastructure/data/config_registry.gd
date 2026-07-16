@@ -370,8 +370,23 @@ func _validate_level(level: Dictionary) -> void:
 		var flagship_count := 0
 		var entity_ids := {}
 		for member in fleet:
-			if get_definition("ships", str(member.get("ship_id", ""))).is_empty():
+			var ship: Dictionary = get_definition("ships", str(member.get("ship_id", "")))
+			if ship.is_empty():
 				errors.append("Missing ship in %s/%s" % [level_id, fleet_name])
+			var group_states = member.get("weapon_group_states", {})
+			if typeof(group_states) != TYPE_DICTIONARY:
+				errors.append("Invalid weapon_group_states in %s/%s" % [level_id, fleet_name])
+			else:
+				var mounted_group_ids := {}
+				for weapon_id in ship.get("weapon_mounts", []):
+					var weapon: Dictionary = get_definition("weapons", str(weapon_id))
+					mounted_group_ids[str(weapon.get("weapon_group_id", ""))] = true
+				for group_id_value in group_states:
+					var group_id := str(group_id_value)
+					if group_id.is_empty() or not mounted_group_ids.has(group_id):
+						errors.append("Unknown weapon group %s in %s/%s" % [group_id, level_id, fleet_name])
+					if str(group_states[group_id_value]) not in ["Enabled", "Disabled"]:
+						errors.append("Invalid weapon group state for %s in %s/%s" % [group_id, level_id, fleet_name])
 			var entity_id := str(member.get("entity_id", ""))
 			if entity_id.is_empty() or entity_ids.has(entity_id):
 				errors.append("Invalid or duplicate entity id in %s/%s" % [level_id, fleet_name])

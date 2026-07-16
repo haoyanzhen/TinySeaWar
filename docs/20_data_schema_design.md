@@ -220,6 +220,7 @@ radar_stealth_state
 - `player_route_waypoints` 保存玩家显式添加的连续途径点；当前导航段索引复用 `movement_state.waypoint_index`。两者只属于单场战斗状态。
 - 运行时选择不得写回 Definition。
 - 已创建的攻击请求保存发射时的武器模式，后续切换不能改变在途攻击。
+- 关卡舰队成员可选声明 `weapon_group_states: {weapon_group_id: Enabled | Disabled}`。组 ID 必须属于该成员引用舰船的实际挂载武器组，未声明组默认 `Enabled`；该字段只生成单场 `WeaponState.availability_state` 与派生布尔值 `enabled`，不得修改共享 Ship/Weapon Definition，自动与手动开火必须统一拒绝 `Disabled` 状态。
 
 ## 4. 装甲厚度枚举
 
@@ -815,6 +816,8 @@ facility_layout_id
 这些字段全部为空时，关卡按既有开阔海域规则运行。
 
 `require_equal_fleet_cost` 默认为 `false`；设为 `true` 时，加载器汇总 `player_fleet` 与 `enemy_fleet` 引用舰船的 `cost`，两侧不完全相等则配置加载失败。该字段用于均衡验证关卡，不给战斗单位附加属性修正。
+
+`player_fleet` 与 `enemy_fleet` 的成员对象均可使用上述 `weapon_group_states` 覆盖本场初始武器组状态；加载器必须拒绝非对象值、未挂载的组 ID 和 `Enabled | Disabled` 之外的状态。
 
 ## 12. 关卡配置
 

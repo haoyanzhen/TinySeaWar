@@ -103,6 +103,7 @@ static func reason_name(reason_code: String) -> String:
 		"AUTO_FIRE_DISABLED": return "主要武器自动开火已关闭或暂停"
 		"TUTORIAL_ACTION_LOCKED": return "该能力将在后续教学中开放"
 		"PRIMARY_WEAPON_UNAVAILABLE": return "没有可用的主要武器"
+		"WEAPON_GROUP_DISABLED": return "该武器组在本场战斗中不可用"
 		"WEAPON_RELOADING": return "武器装填中"
 		"TORPEDO_MOUNT_INTERVAL": return "鱼雷管组切换中"
 		"TARGET_TOO_CLOSE": return "目标距离过近"

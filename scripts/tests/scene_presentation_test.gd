@@ -27,6 +27,14 @@ func _run() -> void:
 	_check(challenge_buttons.filter(func(button): return not button.disabled).size() == 1 and challenge_buttons.any(func(button): return not button.disabled and button.text.contains("S-01")), "challenge entry enables the implemented S-01 level")
 	menu._show_custom()
 	_check(menu.custom_size_selector.item_count == 4 and menu.custom_map_selector.item_count == 11 and menu.custom_weather_selector.item_count == 20, "custom entry exposes four scales, all 3v3 maps, and twenty weather palettes")
+	var all_sizes_expose_all_maps := true
+	for size_index in range(menu.custom_size_selector.item_count):
+		menu.custom_size_selector.select(size_index)
+		menu._refresh_custom_maps()
+		all_sizes_expose_all_maps = all_sizes_expose_all_maps and menu.custom_map_selector.item_count == 11
+	menu.custom_size_selector.select(1)
+	menu._refresh_custom_maps()
+	_check(all_sizes_expose_all_maps, "every custom battle scale exposes open sea and all ten reviewed coastal maps")
 	_check(menu.ship_buttons.size() == 48, "custom fleet builder lists all configured characters")
 	var unlocked_cards := 0
 	var locked_cards := 0
@@ -39,8 +47,11 @@ func _run() -> void:
 	var custom_level: Dictionary = root.get_node("DataRegistry").registry.get_definition("levels", "level.custom_runtime")
 	_check(custom_result.get("ok", false) and custom_level.get("player_fleet", []).size() == 3, "custom fleet selection builds a runtime level with the selected roster")
 	_check(custom_level.get("map", {}).get("terrain_definition_id", "") == "terrain.map.harbor_mouth" and custom_level.get("map", {}).get("ocean_palette", "") == "clear_night", "custom runtime level applies the selected map and weather")
+	_check(custom_level.get("player_fleet", [])[0].get("position", []) == root.get_node("DataRegistry").registry.get_definition("levels", "level.prototype_harbor_3v3").get("player_fleet", [])[0].get("position", []) and custom_level.get("enemy_fleet", [])[0].get("position", []) == root.get_node("DataRegistry").registry.get_definition("levels", "level.prototype_harbor_3v3").get("enemy_fleet", [])[0].get("position", []), "custom runtime level uses the selected map's reviewed spawn slots for both fleets")
 	var custom_session = BattleSession.new(root.get_node("DataRegistry").registry)
 	_check(custom_session.create_battle("level.custom_runtime", 901).get("ok", false), "custom runtime level creates a playable battle session")
+	_test_custom_map_spawns(flow, root.get_node("DataRegistry").registry)
+	_test_custom_open_sea_spawns(flow, root.get_node("DataRegistry").registry)
 	flow.select_level("level.prototype_3v3")
 	_check(flow != null and flow.logical_viewport_size() == Vector2i(1920, 1080), "window settings keep a fixed 1920x1080 logical canvas")
 	_check(root.content_scale_size == Vector2i(1920, 1080), "root window applies the configured logical canvas size")
@@ -295,6 +306,72 @@ func _run() -> void:
 		for failure in failures: push_error("FAIL: %s" % failure)
 		print("FAILED: %d of %d scene presentation checks" % [failures.size(), checks])
 		quit(1)
+
+
+func _test_custom_map_spawns(flow, registry) -> void:
+	var coastal_level_ids := [
+		"level.prototype_harbor_3v3",
+		"level.prototype_broken_atoll_3v3",
+		"level.prototype_central_sandbar_3v3",
+		"level.prototype_crescent_bay_3v3",
+		"level.prototype_double_island_long_channel_3v3",
+		"level.prototype_dual_channel_reef_line_3v3",
+		"level.prototype_long_archipelago_3v3",
+		"level.prototype_offset_large_island_3v3",
+		"level.prototype_ring_lagoon_3v3",
+		"level.prototype_scattered_islands_3v3",
+	]
+	var original_unlocks: Array[String] = flow.unlocked_ship_ids.duplicate()
+	flow.unlocked_ship_ids.assign(registry.all("ships").map(func(ship): return str(ship.get("id", ""))))
+	for base_level_id in ["level.prototype_1v1", "level.prototype_3v3", "level.prototype_5v5", "level.prototype_11v11"]:
+		var base_level: Dictionary = registry.get_definition("levels", base_level_id)
+		var selected_ship_ids: Array[String] = []
+		for member in base_level.get("player_fleet", []): selected_ship_ids.append(str(member.get("ship_id", "")))
+		for map_level_id in coastal_level_ids:
+			var configured: Dictionary = flow.configure_custom_battle(base_level_id, map_level_id, "clear_day", selected_ship_ids)
+			var custom_level: Dictionary = registry.get_definition("levels", "level.custom_runtime")
+			var terrain: Dictionary = registry.get_definition("terrain", str(custom_level.get("map", {}).get("terrain_definition_id", "")))
+			var slots_match := bool(configured.get("ok", false))
+			for faction_id in ["player", "enemy"]:
+				var fleet_name := "%s_fleet" % faction_id
+				var expected: Array = terrain.get("spawn_points", []).filter(func(spawn): return str(spawn.get("faction_id", "")) == faction_id)
+				expected.sort_custom(func(a, b): return int(str(a.get("id", "")).trim_prefix("%s_" % faction_id)) < int(str(b.get("id", "")).trim_prefix("%s_" % faction_id)))
+				var actual: Array = custom_level.get(fleet_name, [])
+				slots_match = slots_match and actual.size() == base_level.get(fleet_name, []).size()
+				for index in range(actual.size()):
+					slots_match = slots_match and actual[index].get("position", []) == expected[index].get("position", []) and is_equal_approx(float(actual[index].get("heading", 0.0)), float(expected[index].get("heading", 0.0)))
+			_check(slots_match, "%s on %s maps both fleets onto its reviewed spawn slots" % [base_level_id, map_level_id])
+			var session = BattleSession.new(registry)
+			var created: Dictionary = session.create_battle("level.custom_runtime", 902)
+			var all_spawns_clear := bool(created.get("ok", false))
+			var units: Array = session.state.get("units_by_id", {}).values()
+			for unit in units:
+				all_spawns_clear = all_spawns_clear and session.terrain_query.can_occupy_circle(unit.get("position", Vector2.ZERO), float(unit.get("stats", {}).get("collision_radius", 20.0)), session._movement_tags(unit))
+			for first_index in range(units.size()):
+				for second_index in range(first_index + 1, units.size()):
+					if units[first_index].get("faction_id", "") != units[second_index].get("faction_id", ""): continue
+					var required_distance := float(units[first_index].get("stats", {}).get("collision_radius", 20.0)) + float(units[second_index].get("stats", {}).get("collision_radius", 20.0))
+					all_spawns_clear = all_spawns_clear and (units[first_index].get("position", Vector2.ZERO) as Vector2).distance_to(units[second_index].get("position", Vector2.ZERO)) > required_distance
+			_check(all_spawns_clear, "%s on %s starts every unit in separated navigable water" % [base_level_id, map_level_id])
+	flow.unlocked_ship_ids.assign(original_unlocks)
+
+
+func _test_custom_open_sea_spawns(flow, registry) -> void:
+	for level_id in ["level.prototype_1v1", "level.prototype_3v3", "level.prototype_5v5", "level.prototype_11v11"]:
+		var base_level: Dictionary = registry.get_definition("levels", level_id)
+		var selected_ship_ids: Array[String] = []
+		for _index in range(base_level.get("player_fleet", []).size()):
+			selected_ship_ids.append("ship.ward")
+		var configured: Dictionary = flow.configure_custom_battle(level_id, level_id, "clear_day", selected_ship_ids)
+		var custom_level: Dictionary = registry.get_definition("levels", "level.custom_runtime")
+		var slots_match := bool(configured.get("ok", false))
+		for fleet_name in ["player_fleet", "enemy_fleet"]:
+			var expected: Array = base_level.get(fleet_name, [])
+			var actual: Array = custom_level.get(fleet_name, [])
+			slots_match = slots_match and actual.size() == expected.size()
+			for index in range(mini(actual.size(), expected.size())):
+				slots_match = slots_match and actual[index].get("position", []) == expected[index].get("position", []) and is_equal_approx(float(actual[index].get("heading", 0.0)), float(expected[index].get("heading", 0.0)))
+		_check(slots_match, "%s custom open-sea battle preserves both reviewed formations" % level_id)
 
 
 func _check(condition: bool, message: String) -> void:

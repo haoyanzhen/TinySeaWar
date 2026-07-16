@@ -533,6 +533,17 @@ func _validate_terrain(definition: Dictionary) -> void:
 		var map_size: Array = definition.get("map_size", [])
 		if not _valid_positive_pair(map_size):
 			errors.append("Invalid terrain map size in %s" % definition_id)
+		var spawn_ids := {}
+		for faction_id in ["player", "enemy"]:
+			var faction_spawns: Array = definition.get("spawn_points", []).filter(func(spawn): return str(spawn.get("faction_id", "")) == faction_id)
+			if faction_spawns.size() != 11:
+				errors.append("Terrain map %s must provide 11 %s spawn slots" % [definition_id, faction_id])
+			for spawn in faction_spawns:
+				var spawn_id := str(spawn.get("id", ""))
+				if spawn_id.is_empty() or spawn_ids.has(spawn_id): errors.append("Terrain map has missing or duplicate spawn id in %s" % definition_id)
+				spawn_ids[spawn_id] = true
+				if not _valid_positive_pair(spawn.get("position", [])) or float(spawn.get("radius", 0.0)) < 46.0 or not spawn.has("heading") or spawn.get("movement_tags", []) != ["Surface"]:
+					errors.append("Terrain map has invalid large-fleet spawn contract in %s" % definition_id)
 
 
 func _validate_navigation(definition: Dictionary) -> void:

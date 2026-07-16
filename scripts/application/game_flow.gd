@@ -86,9 +86,14 @@ func configure_custom_battle(base_level_id: String, map_level_id: String, ocean_
 	var map_level: Dictionary = DataRegistry.registry.get_definition("levels", map_level_id)
 	if base_level.is_empty() or map_level.is_empty():
 		return {"ok": false, "error": "CUSTOM_LEVEL_SOURCE_MISSING"}
-	var spawn_slots: Array = base_level.get("player_fleet", [])
-	if player_ship_ids.size() != spawn_slots.size():
+	var base_player_fleet: Array = base_level.get("player_fleet", [])
+	var base_enemy_fleet: Array = base_level.get("enemy_fleet", [])
+	var player_spawn_slots := _custom_spawn_slots(map_level, "player")
+	var enemy_spawn_slots := _custom_spawn_slots(map_level, "enemy")
+	if player_ship_ids.size() != base_player_fleet.size():
 		return {"ok": false, "error": "CUSTOM_FLEET_SIZE_MISMATCH"}
+	if player_spawn_slots.size() < base_player_fleet.size() or enemy_spawn_slots.size() < base_enemy_fleet.size():
+		return {"ok": false, "error": "CUSTOM_MAP_SPAWN_COUNT_MISMATCH"}
 	var custom_level := base_level.duplicate(true)
 	custom_level["id"] = CUSTOM_LEVEL_ID
 	custom_level["display_name"] = "自定义战斗"
@@ -101,7 +106,7 @@ func configure_custom_battle(base_level_id: String, map_level_id: String, ocean_
 		var ship_id := player_ship_ids[index]
 		if not is_ship_unlocked(ship_id) or DataRegistry.registry.get_definition("ships", ship_id).is_empty():
 			return {"ok": false, "error": "CUSTOM_SHIP_LOCKED_OR_MISSING", "ship_id": ship_id}
-		var slot: Dictionary = spawn_slots[index]
+		var slot: Dictionary = player_spawn_slots[index]
 		custom_fleet.append({
 			"entity_id": "unit.player.custom.%02d" % (index + 1),
 			"ship_id": ship_id,
@@ -110,9 +115,28 @@ func configure_custom_battle(base_level_id: String, map_level_id: String, ocean_
 			"is_flagship": index == 0,
 		})
 	custom_level["player_fleet"] = custom_fleet
+	var custom_enemy_fleet: Array = []
+	for index in range(base_enemy_fleet.size()):
+		var member: Dictionary = base_enemy_fleet[index].duplicate(true)
+		var slot: Dictionary = enemy_spawn_slots[index]
+		member["position"] = slot.get("position", []).duplicate()
+		member["heading"] = float(slot.get("heading", 0.0))
+		custom_enemy_fleet.append(member)
+	custom_level["enemy_fleet"] = custom_enemy_fleet
 	DataRegistry.registry.definitions.get("levels", {})[CUSTOM_LEVEL_ID] = custom_level
 	select_level(CUSTOM_LEVEL_ID)
 	return {"ok": true, "level_id": CUSTOM_LEVEL_ID}
+
+
+func _custom_spawn_slots(map_level: Dictionary, faction_id: String) -> Array:
+	var map: Dictionary = map_level.get("map", {})
+	var terrain_id := str(map.get("terrain_definition_id", ""))
+	if terrain_id.is_empty():
+		return map_level.get("%s_fleet" % faction_id, []).duplicate(true)
+	var terrain: Dictionary = DataRegistry.registry.get_definition("terrain", terrain_id)
+	var result: Array = terrain.get("spawn_points", []).filter(func(spawn): return str(spawn.get("faction_id", "")) == faction_id)
+	result.sort_custom(func(a, b): return int(str(a.get("id", "")).trim_prefix("%s_" % faction_id)) < int(str(b.get("id", "")).trim_prefix("%s_" % faction_id)))
+	return result
 
 
 func selected_mode_label() -> String:

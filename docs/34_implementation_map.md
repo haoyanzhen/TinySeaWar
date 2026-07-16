@@ -225,7 +225,8 @@
 - 核心规则测试：`scripts/tests/test_runner.gd`
 - 首批正式关卡目标专项：`scripts/tests/level_objective_runtime_test.gd`
 - 进度存档三槽、校验与恢复专项：`scripts/tests/progress_save_store_test.gd`
-- 十图运行时地图、导航与出生专项：`scripts/tests/coastal_runtime_test.gd`
+- 十图运行时地图、导航与每侧 11 槽专项：`scripts/tests/coastal_runtime_test.gd`
+- 自定义四规模 × 十图出生映射、舰体通行与同阵营分离：`scripts/tests/scene_presentation_test.gd`
 - AI 量化模型：`scripts/application/ai/ai_quantitative_model.gd`
 - AI 阵营观察快照：`scripts/application/ai/ai_observation.gd`
 - AI 量化场景测试：`scripts/tests/ai_behavior_quantitative_test.gd`

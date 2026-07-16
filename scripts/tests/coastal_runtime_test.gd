@@ -31,10 +31,11 @@ func _run() -> void:
 		for faction_id in ["player", "enemy"]:
 			var fleet: Array = level.get("%s_fleet" % faction_id, [])
 			var authored: Array = terrain_spawns.filter(func(spawn): return spawn.get("faction_id", "") == faction_id)
-			var all_match := fleet.size() == authored.size()
+			authored.sort_custom(func(a, b): return int(str(a.get("id", "")).trim_prefix("%s_" % faction_id)) < int(str(b.get("id", "")).trim_prefix("%s_" % faction_id)))
+			var all_match := authored.size() == 11
 			for member in fleet:
-				var member_position := _as_vector2(member.get("position", Vector2.ZERO))
-				all_match = all_match and authored.any(func(spawn): return _as_vector2(spawn.get("position", Vector2.ZERO)).distance_to(member_position) < 0.1)
+				var member_index := fleet.find(member)
+				all_match = all_match and member_index < authored.size() and _as_vector2(authored[member_index].get("position", Vector2.ZERO)).distance_to(_as_vector2(member.get("position", Vector2.ZERO))) < 0.1
 			_check(all_match, "%s %s fleet uses reviewed terrain spawns" % [level_id, faction_id])
 	if failures.is_empty():
 		print("PASS: %d coastal runtime checks" % checks)

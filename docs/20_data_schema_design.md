@@ -611,6 +611,8 @@ data/facilities/minefield_definitions.json
 
 `TerrainAssetTemplate` 使用资产局部坐标保存 `obstacles`、`regions`、`visual_regions` 和 `facility_anchors`；`TerrainMap` 保存烘焙后的世界坐标、`visual_instances`、出生点以及导航/环境区/设施布局引用。硬地形 `block_mask` 显式使用 `ShipMovement`、`TorpedoTravel`、`ShellTravel`、`SurfaceOpticalLineOfSight`，水域 `region_type` 使用 `DeepWater`、`CoastalWater`、`ShallowWater`、`ReefOrSandbar`、`NavigationChannel`。`visual_regions` 只保存 `asset_semantic`、透明度、层级和多边形，不进入碰撞、视线或通行查询。
 
+近岸 `TerrainMap.spawn_points` 必须为 `player_1..player_11` 与 `enemy_1..enemy_11` 各保存一个确定性槽，字段包括 `id`、`faction_id`、`position`、`heading`、`radius` 和 `movement_tags`。当前通用自定义战斗槽统一使用半径至少 `46` 与 `["Surface"]`，保证大型深吃水舰可用；不同规模取每侧编号前 `1/3/5/11` 个槽。槽位必须在地图边界内、不与硬地形或非法水域相交、同阵营不重叠，并能通过三档共享导航连接到对方接敌区域。运行时不得用开阔海域坐标替代所选近岸地图槽位。
+
 导航配置按碰撞半径和通行标签分 profile，玩家与 AI 只读同一份节点/边。环境区保存规则形状、方向、漂移速度、相对起点的 `drift_path`、强度、阶段、持续时间和公开趋势，不保存 Shader 参数；有路径时沿折线定速推进，无路径时才按 `heading` 直线漂移。设施 layout 只引用审核后的岸线挂点；设施 Definition 保存能力组合和规则字段，资产 manifest 只保存语义与路径。
 
 `MinefieldDefinition` 必须保存 `terrain_definition_id`、审核多边形、`safe_channels`、`controller_facility_id`、所有权和 `known_by_faction`。正式阵营快照只包含该阵营已知或拥有的雷区；全量边界只允许进入全知调试快照。

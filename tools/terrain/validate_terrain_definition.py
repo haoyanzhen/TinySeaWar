@@ -149,10 +149,27 @@ def validate(args: argparse.Namespace) -> list[str]:
 			_validate_polygon("%s/%s" % (terrain_id, region["id"]), region.get("polygon", []), map_size, errors)
 		for visual_region in terrain.get("visual_regions", []):
 			_validate_polygon("%s/%s" % (terrain_id, visual_region["id"]), visual_region.get("polygon", []), map_size, errors)
-		for spawn in terrain.get("spawn_points", []):
+		spawns = terrain.get("spawn_points", [])
+		spawn_ids = {spawn.get("id") for spawn in spawns}
+		if len(spawn_ids) != len(spawns):
+			errors.append("%s has duplicate spawn ids" % terrain_id)
+		for faction_id in ("player", "enemy"):
+			faction_spawns = [spawn for spawn in spawns if spawn.get("faction_id") == faction_id]
+			if len(faction_spawns) != 11 or {spawn.get("id") for spawn in faction_spawns} != {"%s_%d" % (faction_id, index) for index in range(1, 12)}:
+				errors.append("%s must provide numbered %s_1..11 spawn slots" % (terrain_id, faction_id))
+		for spawn in spawns:
 			position, radius = spawn.get("position", []), float(spawn.get("radius", 0.0))
-			if len(position) != 2 or not circle_clear(position, radius, obstacles):
+			inside_bounds = len(position) == 2 and radius >= 46.0 and radius <= position[0] <= map_size[0] - radius and radius <= position[1] <= map_size[1] - radius
+			if not inside_bounds or not circle_clear(position, radius, obstacles) or not _movement_allowed(position, spawn.get("movement_tags", []), terrain.get("regions", [])):
 				errors.append("%s spawn %s intersects hard terrain" % (terrain_id, spawn.get("id", "?")))
+			if "heading" not in spawn or not -180.0 <= float(spawn.get("heading", 999.0)) <= 180.0:
+				errors.append("%s spawn %s has invalid heading" % (terrain_id, spawn.get("id", "?")))
+		for faction_id in ("player", "enemy"):
+			faction_spawns = [spawn for spawn in spawns if spawn.get("faction_id") == faction_id]
+			for first_index, first in enumerate(faction_spawns):
+				for second in faction_spawns[first_index + 1:]:
+					if math.dist(first["position"], second["position"]) < float(first["radius"]) + float(second["radius"]):
+						errors.append("%s %s spawn slots overlap" % (terrain_id, faction_id))
 		for anchor in terrain.get("facility_anchors", []):
 			_validate_polygon("%s/%s interaction" % (terrain_id, anchor["id"]), anchor.get("interaction_water_polygon", []), map_size, errors)
 			if anchor.get("shore_obstacle_id") not in obstacle_ids:
@@ -182,6 +199,12 @@ def validate(args: argparse.Namespace) -> list[str]:
 					if not circle_clear(node["position"], radius, obstacles) or not _movement_allowed(node["position"], tags, terrain.get("regions", [])):
 						errors.append("%s contains an invalid navigation node %s" % (profile_id, node.get("id", "?")))
 						break
+				for faction_id in ("player", "enemy"):
+					faction_spawns = [spawn for spawn in spawns if spawn.get("faction_id") == faction_id]
+					for spawn in faction_spawns[1:]:
+						if not _reachable(profile, faction_spawns[0]["position"], spawn["position"]):
+							errors.append("%s cannot connect all %s spawn slots" % (profile_id, faction_id))
+							break
 				if player_spawns and enemy_spawns and not _reachable(profile, player_spawns[0]["position"], enemy_spawns[0]["position"]):
 					errors.append("%s cannot connect opposing fleet approach areas" % profile_id)
 	if _has_dependency_cycle(facilities):

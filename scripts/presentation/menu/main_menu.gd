@@ -18,16 +18,16 @@ const CUSTOM_SIZES := [
 ]
 const MAP_OPTIONS := [
 	{"label": "开阔海域", "level": "level.prototype_3v3", "sizes": [1, 3, 5, 11]},
-	{"label": "港湾入口", "level": "level.prototype_harbor_3v3", "sizes": [3]},
-	{"label": "破碎环礁", "level": "level.prototype_broken_atoll_3v3", "sizes": [3]},
-	{"label": "中央沙洲", "level": "level.prototype_central_sandbar_3v3", "sizes": [3]},
-	{"label": "新月岛", "level": "level.prototype_crescent_bay_3v3", "sizes": [3]},
-	{"label": "双岛长海峡", "level": "level.prototype_double_island_long_channel_3v3", "sizes": [3]},
-	{"label": "双航道礁线", "level": "level.prototype_dual_channel_reef_line_3v3", "sizes": [3]},
-	{"label": "细长群岛", "level": "level.prototype_long_archipelago_3v3", "sizes": [3]},
-	{"label": "大岛偏置", "level": "level.prototype_offset_large_island_3v3", "sizes": [3]},
-	{"label": "环岛泻湖", "level": "level.prototype_ring_lagoon_3v3", "sizes": [3]},
-	{"label": "散岛群", "level": "level.prototype_scattered_islands_3v3", "sizes": [3]},
+	{"label": "港湾入口", "level": "level.prototype_harbor_3v3", "sizes": [1, 3, 5, 11]},
+	{"label": "破碎环礁", "level": "level.prototype_broken_atoll_3v3", "sizes": [1, 3, 5, 11]},
+	{"label": "中央沙洲", "level": "level.prototype_central_sandbar_3v3", "sizes": [1, 3, 5, 11]},
+	{"label": "新月岛", "level": "level.prototype_crescent_bay_3v3", "sizes": [1, 3, 5, 11]},
+	{"label": "双岛长海峡", "level": "level.prototype_double_island_long_channel_3v3", "sizes": [1, 3, 5, 11]},
+	{"label": "双航道礁线", "level": "level.prototype_dual_channel_reef_line_3v3", "sizes": [1, 3, 5, 11]},
+	{"label": "细长群岛", "level": "level.prototype_long_archipelago_3v3", "sizes": [1, 3, 5, 11]},
+	{"label": "大岛偏置", "level": "level.prototype_offset_large_island_3v3", "sizes": [1, 3, 5, 11]},
+	{"label": "环岛泻湖", "level": "level.prototype_ring_lagoon_3v3", "sizes": [1, 3, 5, 11]},
+	{"label": "散岛群", "level": "level.prototype_scattered_islands_3v3", "sizes": [1, 3, 5, 11]},
 ]
 const TUTORIALS := [
 	["T-01", "航向与选择", "移动、连续航点、镜头与旗舰胜利目标"],

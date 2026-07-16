@@ -17,11 +17,103 @@
         {"action_id": "AppendMoveWaypoint", "required_count": 2, "instruction": "按 Z 进入路径布置，依次点击两个标记航点"}
       ],
       "locked_player_commands": ["FirePrimaryWeapon", "CastSkill", "SwitchAmmo", "SetUnitControlState"],
+      "initial_player_control_state": {"movement_assist_enabled": false, "secondary_auto_fire_enabled": false, "primary_auto_fire_enabled": false},
+      "engagement_player_control_state": {"movement_assist_enabled": true, "secondary_auto_fire_enabled": true, "primary_auto_fire_enabled": true},
       "lock_enemy_primary_and_skill": true,
       "lock_enemy_automatic_weapons": true,
       "ability_limit_text": "本关关闭手动主炮、技能、弹药切换和开关；完成航行后开启受限辅助与自动主炮；沃德先驶往训练待机区且不还击",
       "completion_text": "完成两个航点并击沉沃德",
       "failure_text": "天狼星沉没"
+    },
+    {
+      "id": "objective.t02_gunnery",
+      "objective_kind": "TutorialGunnery",
+      "title": "主炮与弹药",
+      "engagement_trigger": "RequiredActionsComplete",
+      "protected_player_unit_ids": ["unit.player.t02.warspite"],
+      "required_enemy_unit_ids": ["unit.enemy.t02.aurora"],
+      "enemy_staging_positions": {
+        "unit.enemy.t02.aurora": [1900.0, 1152.0]
+      },
+      "required_actions": [
+        {"action_id": "SwitchAmmo", "unit_id": "unit.player.t02.warspite", "ammo_group_id": "warspite_main", "required_count": 1, "instruction": "按 Q 将厌战主炮从 AP 切换为 HE，观察装填不会重置"},
+        {"action_id": "ManualPrimaryFire", "unit_id": "unit.player.t02.warspite", "weapon_group_id": "warspite_main", "required_count": 1, "instruction": "目标进入射程后按 E 瞄准标记海域，左键合法发射一次主炮"}
+      ],
+      "locked_player_commands": ["CastSkill"],
+      "locked_player_commands_until_engagement": ["MoveUnits", "AppendMoveWaypoint", "ClearMoveRoute", "SetUnitControlState"],
+      "initial_player_control_state": {"movement_assist_enabled": false, "secondary_auto_fire_enabled": false, "primary_auto_fire_enabled": false},
+      "engagement_player_control_state": {"movement_assist_enabled": true, "secondary_auto_fire_enabled": true, "primary_auto_fire_enabled": true},
+      "lock_enemy_primary_and_skill": true,
+      "lock_enemy_automatic_weapons": true,
+      "intro_text": "学习切换主炮弹种并完成一次合法手动炮击",
+      "engagement_instruction": "保持厌战存活，继续观察大口径主炮的射界、装填与装甲伤害",
+      "ability_limit_text": "当前仅开放 Q 切弹与 E 手动主炮；技能、移动和自动开关暂时关闭，阿芙乐尔驶入训练位且不还击",
+      "engagement_ability_text": "操作完成：已开放移动、受限辅助、副武器与主炮自动能力；技能仍关闭",
+      "world_markers": [
+        {"id": "marker.t02.aurora", "marker_type": "Unit", "unit_id": "unit.enemy.t02.aurora", "radius": 72.0, "label": "主炮训练目标"}
+      ],
+      "completion_text": "完成切弹与手动主炮教学并击沉阿芙乐尔",
+      "failure_text": "厌战沉没"
+    },
+    {
+      "id": "objective.t03_skill",
+      "objective_kind": "TutorialSkill",
+      "title": "技能窗口",
+      "engagement_trigger": "RequiredActionsComplete",
+      "protected_player_unit_ids": ["unit.player.t03.iowa"],
+      "required_enemy_unit_ids": ["unit.enemy.t03.kirov"],
+      "enemy_staging_positions": {
+        "unit.enemy.t03.kirov": [1950.0, 1152.0]
+      },
+      "required_actions": [
+        {"action_id": "CastSkill", "unit_id": "unit.player.t03.iowa", "skill_id": "skill.iowa_radar_salvo", "required_count": 1, "instruction": "基洛夫进入合法窗口后按 F，选择目标并施放“雷达校准齐射”"}
+      ],
+      "locked_player_commands": ["SwitchAmmo"],
+      "locked_player_commands_until_engagement": ["MoveUnits", "AppendMoveWaypoint", "ClearMoveRoute", "FirePrimaryWeapon", "SetUnitControlState"],
+      "initial_player_control_state": {"movement_assist_enabled": false, "secondary_auto_fire_enabled": false, "primary_auto_fire_enabled": false},
+      "engagement_player_control_state": {"movement_assist_enabled": true, "secondary_auto_fire_enabled": true, "primary_auto_fire_enabled": true},
+      "lock_enemy_primary_and_skill": true,
+      "lock_enemy_automatic_weapons": true,
+      "intro_text": "等待合法技能窗口并施放雷达校准齐射",
+      "engagement_instruction": "保持衣阿华存活，观察技能增益如何被下一轮主炮消耗",
+      "ability_limit_text": "当前仅开放 F 主动技能；移动、主炮、切弹和自动开关暂时关闭，基洛夫驶入技能窗口且不还击",
+      "engagement_ability_text": "技能成功：已开放移动、手动/自动主炮和副武器；观察校准齐射收益被下一轮主炮消耗",
+      "world_markers": [
+        {"id": "marker.t03.kirov", "marker_type": "Unit", "unit_id": "unit.enemy.t03.kirov", "radius": 72.0, "label": "技能训练目标"}
+      ],
+      "completion_text": "施放雷达校准齐射并击沉基洛夫",
+      "failure_text": "衣阿华沉没"
+    },
+    {
+      "id": "objective.t04_armor",
+      "objective_kind": "TutorialArmor",
+      "title": "重甲压制",
+      "engagement_trigger": "FirstContact",
+      "protected_player_unit_ids": ["unit.player.t04.warspite"],
+      "required_enemy_unit_ids": ["unit.enemy.t04.hindenburg", "unit.enemy.t04.aurora"],
+      "contact_target_unit_ids": ["unit.enemy.t04.hindenburg", "unit.enemy.t04.aurora"],
+      "enemy_staging_positions": {
+		"unit.enemy.t04.hindenburg": [1650.0, 967.68],
+		"unit.enemy.t04.aurora": [1550.0, 1336.32]
+      },
+	  "engagement_enemy_mode_locks": {"ship.hindenburg": "VanguardLine", "ship.aurora": "VanguardLine"},
+      "required_actions": [],
+      "locked_player_commands": ["CastSkill", "SwitchAmmo"],
+      "locked_player_commands_until_engagement": ["MoveUnits", "AppendMoveWaypoint", "ClearMoveRoute", "FirePrimaryWeapon", "SetUnitControlState"],
+      "initial_player_control_state": {"movement_assist_enabled": false, "secondary_auto_fire_enabled": true, "primary_auto_fire_enabled": false},
+      "engagement_player_control_state": {"movement_assist_enabled": true, "secondary_auto_fire_enabled": true, "primary_auto_fire_enabled": true},
+      "lock_enemy_primary_and_skill": true,
+      "lock_enemy_automatic_weapons": true,
+      "intro_text": "观察敌巡洋舰穿过月光水域并建立首次接触",
+      "pre_engagement_instruction": "观察中央月光水域；等待沃德或厌战按公开侦查规则建立接触",
+      "engagement_instruction": "保持厌战存活，击沉兴登堡与阿芙乐尔",
+      "ability_limit_text": "沃德副武器自动能力保持开启；兴登堡使用 HE 训练弹；首次真实接触前暂时关闭移动、主炮、技能、切弹与自动开关",
+      "engagement_ability_text": "已建立接触：兴登堡保持 HE 训练弹，双方恢复简单 AI 交战；己方开放移动、手动/自动主炮与副武器；保持厌战存活",
+      "world_markers": [
+        {"id": "marker.t04.moonlit", "marker_type": "Area", "position": [1975.0, 1152.0], "radius": 420.0, "label": "中央月光水域"}
+      ],
+      "completion_text": "厌战存活并击沉兴登堡与阿芙乐尔",
+      "failure_text": "厌战沉没"
     },
     {
       "id": "objective.s01_flagship",

@@ -373,6 +373,21 @@ func _validate_level(level: Dictionary) -> void:
 			var ship: Dictionary = get_definition("ships", str(member.get("ship_id", "")))
 			if ship.is_empty():
 				errors.append("Missing ship in %s/%s" % [level_id, fleet_name])
+			if member.has("initial_skill_cooldown"):
+				var skill: Dictionary = get_definition("skills", str(ship.get("skill_id", "")))
+				var initial_skill_cooldown := float(member.get("initial_skill_cooldown", -1.0))
+				if initial_skill_cooldown < 0.0 or initial_skill_cooldown > float(skill.get("cooldown", 0.0)):
+					errors.append("Invalid initial skill cooldown in %s/%s" % [level_id, fleet_name])
+			if member.has("initial_ammo_type"):
+				var initial_ammo_type := str(member.get("initial_ammo_type", ""))
+				var ammo_group_id := str(ship.get("ammo_selection_group_id", ""))
+				var available_ammo_types := {}
+				for weapon_id in ship.get("weapon_mounts", []):
+					var weapon: Dictionary = get_definition("weapons", str(weapon_id))
+					if str(weapon.get("weapon_group_id", "")) == ammo_group_id:
+						available_ammo_types[str(weapon.get("ammo_type", ""))] = true
+				if initial_ammo_type.is_empty() or not available_ammo_types.has(initial_ammo_type):
+					errors.append("Invalid initial ammo type in %s/%s" % [level_id, fleet_name])
 			var group_states = member.get("weapon_group_states", {})
 			if typeof(group_states) != TYPE_DICTIONARY:
 				errors.append("Invalid weapon_group_states in %s/%s" % [level_id, fleet_name])
@@ -409,10 +424,15 @@ func _validate_level(level: Dictionary) -> void:
 func _validate_objective(objective: Dictionary) -> void:
 	var objective_id := str(objective.get("id", "?"))
 	var kind := str(objective.get("objective_kind", ""))
-	if kind not in ["TutorialNavigation", "FlagshipMission"]:
+	var tutorial_kinds := ["TutorialNavigation", "TutorialGunnery", "TutorialSkill", "TutorialArmor"]
+	if kind not in tutorial_kinds + ["FlagshipMission"]:
 		errors.append("Unsupported objective kind in %s" % objective_id)
 	if str(objective.get("title", "")).is_empty():
 		errors.append("Missing objective title in %s" % objective_id)
+	if kind not in tutorial_kinds: return
+	var objective_units := _objective_units(objective_id)
+	if objective_units.is_empty():
+		errors.append("Tutorial objective %s is not referenced by a level" % objective_id)
 	if kind == "TutorialNavigation":
 		var zones: Array = objective.get("waypoint_zones", [])
 		if zones.size() != 2:
@@ -422,12 +442,98 @@ func _validate_objective(objective: Dictionary) -> void:
 				errors.append("Invalid waypoint zone in %s" % objective_id)
 		if not _valid_positive_pair(objective.get("enemy_staging_position", [])):
 			errors.append("Invalid enemy staging position in %s" % objective_id)
-		var action_ids := {}
-		for requirement in objective.get("required_actions", []):
-			var action_id := str(requirement.get("action_id", ""))
-			if action_id.is_empty() or action_ids.has(action_id) or int(requirement.get("required_count", 0)) <= 0:
-				errors.append("Invalid or duplicate tutorial action in %s" % objective_id)
-			action_ids[action_id] = true
+	else:
+		if str(objective.get("engagement_trigger", "")) not in ["RequiredActionsComplete", "FirstContact"]:
+			errors.append("Invalid engagement trigger in %s" % objective_id)
+		var staging_positions = objective.get("enemy_staging_positions", {})
+		if not staging_positions is Dictionary or staging_positions.is_empty():
+			errors.append("Tutorial objective %s requires enemy staging positions" % objective_id)
+		else:
+			for unit_id_value in staging_positions:
+				var unit_id := str(unit_id_value)
+				if not objective_units.has(unit_id) or str(objective_units[unit_id].get("faction_id", "")) != "enemy" or not _valid_positive_pair(staging_positions[unit_id_value]):
+					errors.append("Invalid enemy staging unit or position %s in %s" % [unit_id, objective_id])
+	for field_name in ["protected_player_unit_ids", "required_enemy_unit_ids", "contact_target_unit_ids"]:
+		var seen_units := {}
+		for unit_id_value in objective.get(field_name, []):
+			var unit_id := str(unit_id_value)
+			if unit_id.is_empty() or seen_units.has(unit_id) or not objective_units.has(unit_id):
+				errors.append("Invalid or duplicate %s unit %s in %s" % [field_name, unit_id, objective_id])
+			seen_units[unit_id] = true
+			var expected_faction := "player" if field_name == "protected_player_unit_ids" else "enemy"
+			if str(objective_units.get(unit_id, {}).get("faction_id", "")) != expected_faction:
+				errors.append("Wrong faction for %s unit %s in %s" % [field_name, unit_id, objective_id])
+	if kind != "TutorialNavigation":
+		if objective.get("protected_player_unit_ids", []).is_empty() or objective.get("required_enemy_unit_ids", []).is_empty():
+			errors.append("Tutorial objective %s requires protected player and enemy unit lists" % objective_id)
+	if kind == "TutorialArmor" and (str(objective.get("engagement_trigger", "")) != "FirstContact" or objective.get("contact_target_unit_ids", []).is_empty()):
+		errors.append("Tutorial armor objective %s requires a first-contact target" % objective_id)
+	var action_ids := {}
+	var allowed_actions := ["SelectTutorialUnit", "EnableCameraFollow", "AppendMoveWaypoint", "SwitchAmmo", "ManualPrimaryFire", "CastSkill"]
+	for requirement in objective.get("required_actions", []):
+		var action_id := str(requirement.get("action_id", ""))
+		if action_id not in allowed_actions or action_ids.has(action_id) or int(requirement.get("required_count", 0)) <= 0 or str(requirement.get("instruction", "")).is_empty():
+			errors.append("Invalid or duplicate tutorial action in %s" % objective_id)
+		action_ids[action_id] = true
+		var unit_id := str(requirement.get("unit_id", objective.get("player_unit_id", "")))
+		if not unit_id.is_empty() and (not objective_units.has(unit_id) or str(objective_units[unit_id].get("faction_id", "")) != "player"):
+			errors.append("Tutorial action %s references invalid player unit in %s" % [action_id, objective_id])
+		var ship: Dictionary = get_definition("ships", str(objective_units.get(unit_id, {}).get("ship_id", "")))
+		if requirement.has("skill_id") and (get_definition("skills", str(requirement.get("skill_id", ""))).is_empty() or str(ship.get("skill_id", "")) != str(requirement.get("skill_id", ""))):
+			errors.append("Tutorial action %s references an invalid mounted skill in %s" % [action_id, objective_id])
+		if requirement.has("weapon_group_id") and str(ship.get("primary_weapon_group_id", "")) != str(requirement.get("weapon_group_id", "")):
+			errors.append("Tutorial action %s references an invalid primary weapon group in %s" % [action_id, objective_id])
+		if requirement.has("ammo_group_id") and str(ship.get("ammo_selection_group_id", "")) != str(requirement.get("ammo_group_id", "")):
+			errors.append("Tutorial action %s references an invalid ammo group in %s" % [action_id, objective_id])
+	if kind == "TutorialGunnery" and (not action_ids.has("SwitchAmmo") or not action_ids.has("ManualPrimaryFire")):
+		errors.append("Tutorial gunnery objective %s requires switch-ammo and manual-fire actions" % objective_id)
+	if kind == "TutorialSkill" and not action_ids.has("CastSkill"):
+		errors.append("Tutorial skill objective %s requires a skill-cast action" % objective_id)
+	var allowed_commands := ["MoveUnits", "AppendMoveWaypoint", "ClearMoveRoute", "FirePrimaryWeapon", "CastSkill", "SwitchAmmo", "SetUnitControlState"]
+	for field_name in ["locked_player_commands", "locked_player_commands_until_engagement"]:
+		var seen_commands := {}
+		for command_type_value in objective.get(field_name, []):
+			var command_type := str(command_type_value)
+			if command_type not in allowed_commands or seen_commands.has(command_type):
+				errors.append("Invalid or duplicate tutorial command lock %s in %s" % [command_type, objective_id])
+			seen_commands[command_type] = true
+	for field_name in ["initial_player_control_state", "engagement_player_control_state"]:
+		var control_state = objective.get(field_name, {})
+		if not control_state is Dictionary or control_state.is_empty():
+			errors.append("Missing tutorial control state %s in %s" % [field_name, objective_id])
+			continue
+		for control_field in control_state:
+			if str(control_field) not in ["movement_assist_enabled", "secondary_auto_fire_enabled", "primary_auto_fire_enabled"] or typeof(control_state[control_field]) != TYPE_BOOL:
+				errors.append("Invalid tutorial control state field %s in %s" % [control_field, objective_id])
+	var allowed_ai_modes := ["ReconAvoid", "VanguardLine", "TorpedoFlank", "EscortScreen", "GunlineSupport", "CarrierStandoff", "DisengageRegroup"]
+	for ship_id_value in objective.get("engagement_enemy_mode_locks", {}):
+		var ship_id := str(ship_id_value)
+		var mode_id := str(objective.get("engagement_enemy_mode_locks", {})[ship_id_value])
+		var enemy_uses_ship := objective_units.values().any(func(unit): return unit.get("faction_id", "") == "enemy" and unit.get("ship_id", "") == ship_id)
+		if not enemy_uses_ship or mode_id not in allowed_ai_modes:
+			errors.append("Invalid tutorial enemy mode lock %s/%s in %s" % [ship_id, mode_id, objective_id])
+	var marker_ids := {}
+	for marker in objective.get("world_markers", []):
+		var marker_id := str(marker.get("id", ""))
+		var marker_type := str(marker.get("marker_type", ""))
+		if marker_id.is_empty() or marker_ids.has(marker_id) or marker_type not in ["Unit", "Area"] or str(marker.get("label", "")).is_empty() or float(marker.get("radius", 0.0)) <= 0.0:
+			errors.append("Invalid or duplicate tutorial world marker in %s" % objective_id)
+		marker_ids[marker_id] = true
+		if marker_type == "Unit" and not objective_units.has(str(marker.get("unit_id", ""))):
+			errors.append("Tutorial marker references invalid unit in %s" % objective_id)
+		if marker_type == "Area" and not _valid_positive_pair(marker.get("position", [])):
+			errors.append("Tutorial marker has invalid area position in %s" % objective_id)
+
+
+func _objective_units(objective_id: String) -> Dictionary:
+	var result := {}
+	for level in all("levels"):
+		if str(level.get("objective_set_id", "")) != objective_id: continue
+		for fleet_name in ["player_fleet", "enemy_fleet"]:
+			var faction_id := "player" if fleet_name == "player_fleet" else "enemy"
+			for member in level.get(fleet_name, []):
+				result[str(member.get("entity_id", ""))] = {"faction_id": faction_id, "ship_id": str(member.get("ship_id", ""))}
+	return result
 
 
 func _validate_settings(settings: Dictionary) -> void:

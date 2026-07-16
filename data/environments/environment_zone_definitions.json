@@ -9,6 +9,14 @@
     {"id": "environment.effect.strong_current", "definition_type": "EnvironmentEffect", "zone_type": "StrongCurrent", "priority": 45, "stack_rule": "VectorAdd", "context": {"current_strength": 9.0}},
     {"id": "environment.effect.tidal_water", "definition_type": "EnvironmentEffect", "zone_type": "TidalWater", "priority": 65, "stack_rule": "Override", "context": {"tide_controls_access": true}},
     {
+      "id": "environment.zone_set.t04_moonlit_lane",
+      "definition_type": "EnvironmentZoneSet",
+      "global_environment": {"wind_heading": 0.0, "wind_speed": 2.0, "seed_offset": 404},
+      "zones": [
+        {"id": "zone.t04.moonlit_lane", "effect_id": "environment.effect.moonlit_lane", "polygon": [[1550, 560], [2400, 560], [2400, 1744], [1550, 1744]], "position": [0, 0], "heading": 0.0, "drift_speed": 0.0, "intensity": 0.75, "phase": "Stable", "duration": 0.0, "public_trend": "Stable"}
+      ]
+    },
+    {
       "id": "environment.zone_set.harbor_mouth",
       "definition_type": "EnvironmentZoneSet",
       "global_environment": {

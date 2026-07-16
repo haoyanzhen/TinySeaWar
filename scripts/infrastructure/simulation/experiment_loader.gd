@@ -24,6 +24,11 @@ func validate_manifest(manifest: Dictionary) -> Array[String]:
 		errors.append("tick_seconds must be positive")
 	if int(manifest.get("maximum_ticks", 0)) <= 0:
 		errors.append("maximum_ticks must be positive")
+	var allowed_policies := ["SessionAutonomy", "BaselineAutopilot", "LatestRuntimeAI", "TutorialT01Deterministic", "TutorialT02Deterministic", "TutorialT03Deterministic", "TutorialT04Deterministic"]
+	for faction_id in ["player", "enemy"]:
+		var policy_id := str(manifest.get("%s_policy_id" % faction_id, manifest.get("policy_id", "SessionAutonomy")))
+		if policy_id not in allowed_policies:
+			errors.append("Unsupported %s policy_id: %s" % [faction_id, policy_id])
 	var scenarios = manifest.get("scenarios", [])
 	if not scenarios is Array or scenarios.is_empty():
 		errors.append("At least one simulation scenario is required")
@@ -71,6 +76,18 @@ func validate_manifest(manifest: Dictionary) -> Array[String]:
 			errors.append("LevelWinRateEvaluation requires non-negative tolerance")
 		if str(evaluation.get("settlement_source", "")) != "BattleStatisticsReport":
 			errors.append("LevelWinRateEvaluation settlement_source must be BattleStatisticsReport")
+		if float(evaluation.get("minimum_p10_duration", 0.0)) < 0.0:
+			errors.append("LevelWinRateEvaluation minimum_p10_duration must be non-negative")
+		if float(evaluation.get("maximum_enemy_damage_before_engagement", 0.0)) < 0.0:
+			errors.append("LevelWinRateEvaluation maximum enemy pre-engagement damage must be non-negative")
+		if int(evaluation.get("maximum_policy_command_rejections", 0)) < 0:
+			errors.append("LevelWinRateEvaluation maximum_policy_command_rejections must be non-negative")
+		var action_ids := {}
+		for action_id_value in evaluation.get("required_objective_action_ids", []):
+			var action_id := str(action_id_value)
+			if action_id.is_empty() or action_ids.has(action_id):
+				errors.append("LevelWinRateEvaluation required objective action ids must be unique and non-empty")
+			action_ids[action_id] = true
 	return errors
 
 

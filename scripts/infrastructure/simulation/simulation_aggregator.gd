@@ -53,7 +53,11 @@ func _aggregate_core(runs: Array) -> Dictionary:
 	var facility_usage_runs := 0
 	var timeout_runs := 0
 	var behavior_anomaly_count := 0
+	var enemy_damage_before_engagement := 0.0
+	var policy_command_rejections := 0
 	for run in runs:
+		enemy_damage_before_engagement += float(run.get("enemy_damage_before_engagement", 0.0))
+		policy_command_rejections += int(run.get("policy_command_rejections", 0))
 		var end_state := str(run.get("end_state", "Unknown"))
 		result_counts[end_state] = int(result_counts.get(end_state, 0)) + 1
 		if end_state != "Finished":
@@ -106,6 +110,8 @@ func _aggregate_core(runs: Array) -> Dictionary:
 		"timeout_rate": float(timeout_runs) / finished_runs if finished_runs > 0 else 0.0,
 		"behavior_anomaly_count": behavior_anomaly_count,
 		"behavior_anomalies_per_run": float(behavior_anomaly_count) / finished_runs if finished_runs > 0 else 0.0,
+		"enemy_damage_before_engagement": enemy_damage_before_engagement,
+		"policy_command_rejections": policy_command_rejections,
 		"player_win_rate": win_rate,
 		"player_win_rate_95": _wilson_interval(player_wins, finished_runs),
 		"duration": _distribution(durations),

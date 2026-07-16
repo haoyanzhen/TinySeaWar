@@ -166,16 +166,16 @@ func create_battle(level_id: String, seed_value: int = 1) -> Dictionary:
 	_configure_scene_combat(level)
 	_build_fleet("fleet.player", PLAYER_FACTION, level.get("player_fleet", []))
 	_build_fleet("fleet.enemy", ENEMY_FACTION, level.get("enemy_fleet", []))
-	if level_objective_service.snapshot().get("objective_kind", "") == "TutorialNavigation":
+	if level_objective_service.is_tutorial():
+		var initial_control_state := level_objective_service.initial_player_control_state()
 		for unit_id in state["fleets_by_id"]["fleet.player"]["unit_ids"]:
-			state["units_by_id"][unit_id]["secondary_auto_fire_enabled"] = false
-		var staging_pair: Array = state["level_objective"].get("enemy_staging_position", [])
-		if staging_pair.size() == 2:
-			var staging_position := Vector2(float(staging_pair[0]), float(staging_pair[1]))
-			for unit_id in state["fleets_by_id"]["fleet.enemy"]["unit_ids"]:
-				var staging_unit: Dictionary = state["units_by_id"][unit_id]
-				staging_unit["movement_state"] = _new_movement_state("AutoNavigate", staging_position, [])
-				_mark_navigation_dirty(staging_unit)
+			_apply_tutorial_control_state(state["units_by_id"][unit_id], initial_control_state)
+		for unit_id in state["fleets_by_id"]["fleet.enemy"]["unit_ids"]:
+			var staging_unit: Dictionary = state["units_by_id"][unit_id]
+			var staging_position := level_objective_service.staging_position_for(staging_unit)
+			if staging_position.is_equal_approx(Vector2.INF): continue
+			staging_unit["movement_state"] = _new_movement_state("AutoNavigate", staging_position, [])
+			_mark_navigation_dirty(staging_unit)
 	_rebuild_ai_groups(ENEMY_FACTION)
 	state["phase"] = "Running"
 	recorder.reset(state["battle_id"], seed_value)
@@ -376,7 +376,8 @@ func configure_full_ai_factions(faction_ids: Array) -> void:
 		unit["primary_auto_fire_enabled"] = true
 		unit["primary_auto_fire_suspended"] = false
 		unit["skill_auto_cast_enabled"] = true
-		unit["movement_state"] = _new_movement_state("AutoNavigate", unit["position"], [])
+		var tutorial_staging_position := level_objective_service.staging_position_for(unit)
+		unit["movement_state"] = _new_movement_state("AutoNavigate", tutorial_staging_position if not tutorial_staging_position.is_equal_approx(Vector2.INF) else unit["position"], [])
 		_mark_navigation_dirty(unit)
 		unit["ai_state"]["mode_id"] = _default_ai_mode(unit.get("stats", {}))
 		unit["ai_state"]["mode_entered_at"] = float(state.get("elapsed_time", 0.0))
@@ -744,8 +745,8 @@ func _build_unit(member: Dictionary, ship: Dictionary, fleet_id: String, faction
 		"targeting_state": {"mode": "Automatic", "focused_target_id": "", "current_target_id": ""},
 		"weapon_states": weapon_states,
 		"weapon_group_launch_remaining": {},
-		"skill_state": {"definition_id": ship.get("skill_id", ""), "cooldown_remaining": float(skill.get("cooldown", 0.0)), "cooldown_max": float(skill.get("cooldown", 0.0))},
-		"ammo_state": _build_ammo_state(ship),
+		"skill_state": {"definition_id": ship.get("skill_id", ""), "cooldown_remaining": float(member.get("initial_skill_cooldown", skill.get("cooldown", 0.0))), "cooldown_max": float(skill.get("cooldown", 0.0))},
+		"ammo_state": _build_ammo_state(ship, str(member.get("initial_ammo_type", ""))),
 		"status_effects": [],
 		"depth_state": "Submerged" if ship.get("ship_class", "") == "Submarine" else "Surface",
 		"radar_stealth_state": "Stealthed" if bool(ship.get("radar_stealth", false)) else "Exposed",
@@ -824,12 +825,12 @@ func _new_movement_state(mode: String, target_position: Vector2, corridor_points
 	}
 
 
-func _build_ammo_state(ship: Dictionary) -> Dictionary:
+func _build_ammo_state(ship: Dictionary, initial_ammo_override: String = "") -> Dictionary:
 	var ammo_group_id := str(ship.get("ammo_selection_group_id", ""))
 	if ammo_group_id.is_empty():
 		return {}
 	var ammo_options := _ammo_options_for_ship(ship, ammo_group_id)
-	var selected_ammo := str(ship.get("initial_ammo_type", ""))
+	var selected_ammo := initial_ammo_override if not initial_ammo_override.is_empty() else str(ship.get("initial_ammo_type", ""))
 	if selected_ammo.is_empty() or not selected_ammo in ammo_options:
 		selected_ammo = ammo_options[0] if not ammo_options.is_empty() else ""
 	return {ammo_group_id: selected_ammo}
@@ -907,15 +908,24 @@ func _apply_command(command: Dictionary) -> Dictionary:
 			unit["targeting_state"]["focused_target_id"] = ""
 			return {"accepted": true}
 		"CastSkill":
-			return _cast_skill(unit, command.get("target_ref", {}), command.get("command_id", ""))
+			var cast_result := _cast_skill(unit, command.get("target_ref", {}), command.get("command_id", ""))
+			if bool(cast_result.get("accepted", false)) and _is_player_tutorial_command(command):
+				_record_tutorial_action("CastSkill", unit_id, {"skill_id": str(unit.get("skill_state", {}).get("definition_id", ""))})
+			return cast_result
 		"SwitchAmmo":
-			return _switch_ammo(unit, command.get("command_id", ""))
+			var switch_result := _switch_ammo(unit, command.get("command_id", ""))
+			if bool(switch_result.get("accepted", false)) and _is_player_tutorial_command(command):
+				_record_tutorial_action("SwitchAmmo", unit_id, {"ammo_group_id": str(unit.get("stats", {}).get("ammo_selection_group_id", ""))})
+			return switch_result
 		"FirePrimaryWeapon":
 			if str(command.get("issuer_type", "")) == "PlayerAssistAI" and (not bool(unit.get("primary_auto_fire_enabled", false)) or bool(unit.get("primary_auto_fire_suspended", false))):
 				return _rejection(command.get("command_id", ""), "AUTO_FIRE_DISABLED")
 			var target_position = command.get("target_position")
 			if typeof(target_position) != TYPE_VECTOR2: return _rejection(command.get("command_id", ""), "INVALID_TARGET_TYPE")
-			return _fire_primary_weapon(unit, target_position, command.get("command_id", ""))
+			var fire_result := _fire_primary_weapon(unit, target_position, command.get("command_id", ""))
+			if bool(fire_result.get("accepted", false)) and _is_player_tutorial_command(command):
+				_record_tutorial_action("ManualPrimaryFire", unit_id, {"weapon_group_id": str(unit.get("stats", {}).get("primary_weapon_group_id", ""))})
+			return fire_result
 		"DeclareFacilityControl":
 			var facility_result := facility_service.declare_control(str(command.get("facility_id", "")), unit)
 			if bool(facility_result.get("accepted", false)) and facility_result.has("event"):
@@ -1030,13 +1040,18 @@ func _append_player_waypoint(unit: Dictionary, target_position: Vector2, command
 	return {"accepted": true}
 
 
-func _record_tutorial_action(action_id: String, unit_id: String) -> Dictionary:
-	var result: Dictionary = level_objective_service.record_action(action_id, unit_id, int(state.get("tick_index", 0)))
+func _record_tutorial_action(action_id: String, unit_id: String, facts: Dictionary = {}) -> Dictionary:
+	var result: Dictionary = level_objective_service.record_action(action_id, unit_id, int(state.get("tick_index", 0)), facts)
 	state["level_objective"] = level_objective_service.snapshot()
 	for action_event in result.get("events", []):
 		var event: Dictionary = action_event
 		_emit(str(event.get("event_type", "TutorialActionRecorded")), event)
 	return {"accepted": bool(result.get("accepted", false)), "reason_code": str(result.get("reason_code", "TUTORIAL_ACTION_NOT_REQUIRED"))}
+
+
+func _is_player_tutorial_command(command: Dictionary) -> bool:
+	if str(command.get("issuer_id", PLAYER_FACTION)) != PLAYER_FACTION: return false
+	return str(command.get("issuer_type", "Player")) in ["Player", "SimulationPolicy"]
 
 
 func _submit_navigation_request(unit: Dictionary, start: Vector2, target: Vector2, apply_mode: String, movement_mode: String, command_id: String, priority: int) -> void:
@@ -3787,18 +3802,33 @@ func _update_level_objective() -> void:
 		_emit(str(event.get("event_type", "LevelObjectiveAdvanced")), event)
 	if not previous_engagement and bool(state["level_objective"].get("engagement_unlocked", false)):
 		_full_ai_factions[PLAYER_FACTION] = true
+		var engagement_control_state := level_objective_service.engagement_player_control_state()
 		for unit_id in state["fleets_by_id"]["fleet.player"]["unit_ids"]:
 			var tutorial_unit: Dictionary = state["units_by_id"][unit_id]
 			tutorial_unit["control_authority"] = "TutorialAssistAI"
-			tutorial_unit["movement_assist_enabled"] = true
-			tutorial_unit["secondary_auto_fire_enabled"] = true
-			tutorial_unit["primary_auto_fire_enabled"] = true
+			_apply_tutorial_control_state(tutorial_unit, engagement_control_state)
 			tutorial_unit["player_route_waypoints"] = []
-			tutorial_unit["movement_state"] = _new_movement_state("AutoNavigate", tutorial_unit["position"], [])
+			tutorial_unit["movement_state"] = _new_movement_state("AutoNavigate" if bool(tutorial_unit.get("movement_assist_enabled", false)) else "HoldPosition", tutorial_unit["position"], [])
 			_mark_navigation_dirty(tutorial_unit)
+		var enemy_mode_locks := level_objective_service.engagement_enemy_mode_locks()
+		for ship_id in enemy_mode_locks:
+			_ai_mode_locks_by_definition[str(ship_id)] = str(enemy_mode_locks[ship_id])
+		for unit_id in state["fleets_by_id"]["fleet.enemy"]["unit_ids"]:
+			var enemy_unit: Dictionary = state["units_by_id"][unit_id]
+			var locked_mode := str(enemy_mode_locks.get(str(enemy_unit.get("definition_id", "")), ""))
+			if locked_mode.is_empty(): continue
+			enemy_unit["ai_state"]["mode_id"] = locked_mode
+			enemy_unit["ai_state"]["mode_candidate_id"] = ""
+			enemy_unit["ai_state"]["mode_candidate_confirmations"] = 0
 	var terminal: Dictionary = update.get("terminal", {})
 	if not terminal.is_empty() and state.get("phase", "") == "Running":
 		_finish_battle(str(terminal.get("winner_faction", "")), str(terminal.get("reason", "LEVEL_OBJECTIVE_COMPLETED")))
+
+
+func _apply_tutorial_control_state(unit: Dictionary, control_state: Dictionary) -> void:
+	for field_name in ["movement_assist_enabled", "secondary_auto_fire_enabled", "primary_auto_fire_enabled"]:
+		if control_state.has(field_name): unit[field_name] = bool(control_state[field_name])
+	unit["skill_auto_cast_enabled"] = false
 
 
 func _finish_battle(winner: String, reason: String) -> void:

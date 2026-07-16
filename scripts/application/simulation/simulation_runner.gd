@@ -27,7 +27,7 @@ func run_experiment(registry, manifest: Dictionary) -> Dictionary:
 				runs.append(_run_battle(registry, manifest, scenario, seed_value, "swapped"))
 	var aggregate := Aggregator.new().aggregate(runs)
 	if str(manifest.get("simulation_kind", "")) == "LevelWinRateEvaluation":
-		aggregate["win_rate_evaluation"] = _win_rate_evaluation(manifest, aggregate)
+		aggregate["win_rate_evaluation"] = _win_rate_evaluation(manifest, aggregate, runs)
 	var elapsed_seconds := float(Time.get_ticks_usec() - started_usec) / 1000000.0
 	return {
 		"ok": true,
@@ -86,14 +86,26 @@ func _run_battle(registry, manifest: Dictionary, scenario: Dictionary, seed_valu
 	var tick_seconds := float(manifest.get("tick_seconds", 0.1))
 	var maximum_ticks := int(scenario.get("maximum_ticks", manifest.get("maximum_ticks", 1)))
 	var ticks_executed := 0
+	var enemy_damage_before_engagement := 0.0
+	var policy_command_rejections := 0
 	while session.state.get("phase", "") == "Running" and ticks_executed < maximum_ticks:
+		var engagement_before_tick := bool(session.state.get("level_objective", {}).get("engagement_unlocked", true))
 		_queue_policy_commands(
 			session,
 			run_registry,
 			_policy_for_faction(manifest, "player"),
 			_policy_for_faction(manifest, "enemy")
 		)
-		session.advance_tick(tick_seconds)
+		var tick_events: Array = session.advance_tick(tick_seconds)
+		for event in tick_events:
+			if str(event.get("event_type", "")) == "CommandRejected" and str(event.get("issuer_type", "")) == "SimulationPolicy":
+				policy_command_rejections += 1
+		if not engagement_before_tick:
+			for event in tick_events:
+				if str(event.get("event_type", "")) != "AttackResolved": continue
+				var damage_result: Dictionary = event.get("damage_result", {})
+				if str(damage_result.get("source_unit_id", "")).begins_with("unit.enemy.") and str(damage_result.get("target_unit_id", "")).begins_with("unit.player."):
+					enemy_damage_before_engagement += float(damage_result.get("final_damage", 0.0))
 		ticks_executed += 1
 	var stats: Dictionary = session.get_statistics()
 	var finished: bool = str(session.state.get("phase", "")) == "Finished"
@@ -124,6 +136,8 @@ func _run_battle(registry, manifest: Dictionary, scenario: Dictionary, seed_valu
 		"first_sinking_time": float(stats.get("first_sinking_time", -1.0)),
 		"commands": int(stats.get("commands", 0)),
 		"skill_casts": int(stats.get("skill_casts", 0)),
+		"enemy_damage_before_engagement": enemy_damage_before_engagement,
+		"policy_command_rejections": policy_command_rejections,
 		"ai_behavior": stats.get("ai_behavior", {}).duplicate(true),
 		"fleet_health": fleet_health,
 		"unit_end_states": _unit_end_states(session.state),
@@ -200,8 +214,11 @@ func _lineup_for_faction(faction_id: String, side_variant: String) -> String:
 
 
 func _queue_policy_commands(session, registry, player_policy_id: String, enemy_policy_id: String) -> void:
-	if player_policy_id == "TutorialT01Deterministic":
-		_queue_t01_tutorial_commands(session)
+	match player_policy_id:
+		"TutorialT01Deterministic": _queue_t01_tutorial_commands(session)
+		"TutorialT02Deterministic": _queue_t02_tutorial_commands(session)
+		"TutorialT03Deterministic": _queue_t03_tutorial_commands(session, registry)
+		"TutorialT04Deterministic": pass
 	var unit_ids: Array = session.state.get("units_by_id", {}).keys()
 	unit_ids.sort()
 	for unit_id in unit_ids:
@@ -257,6 +274,50 @@ func _queue_t01_tutorial_commands(session) -> void:
 		})
 
 
+func _queue_t02_tutorial_commands(session) -> void:
+	var objective: Dictionary = session.state.get("level_objective", {})
+	if objective.get("objective_set_id", "") != "objective.t02_gunnery" or objective.get("status", "") != "Active" or bool(objective.get("engagement_unlocked", false)): return
+	if int(session.state.get("tick_index", 0)) < 20: return
+	var unit_id := "unit.player.t02.warspite"
+	var counts: Dictionary = objective.get("action_counts", {})
+	if int(counts.get("SwitchAmmo", 0)) <= 0:
+		session.queue_command({
+			"command_id": "simulation.t02.ammo", "command_type": "SwitchAmmo",
+			"issued_at_tick": int(session.state.get("tick_index", 0)), "issuer_type": "SimulationPolicy",
+			"issuer_id": "player", "unit_id": unit_id,
+		})
+		return
+	if int(counts.get("ManualPrimaryFire", 0)) > 0: return
+	var unit: Dictionary = session.state.get("units_by_id", {}).get(unit_id, {})
+	var target := _first_visible_target(session, unit)
+	if target.is_empty(): return
+	var aim_status: Dictionary = session.get_primary_aim_status(unit_id, target.get("position", Vector2.ZERO))
+	if not bool(aim_status.get("legal", false)): return
+	session.queue_command({
+		"command_id": "simulation.t02.primary.%d" % int(session.state.get("tick_index", 0)),
+		"command_type": "FirePrimaryWeapon", "issued_at_tick": int(session.state.get("tick_index", 0)),
+		"issuer_type": "SimulationPolicy", "issuer_id": "player", "unit_id": unit_id,
+		"target_position": target.get("position", Vector2.ZERO),
+	})
+
+
+func _queue_t03_tutorial_commands(session, registry) -> void:
+	var objective: Dictionary = session.state.get("level_objective", {})
+	if objective.get("objective_set_id", "") != "objective.t03_skill" or objective.get("status", "") != "Active" or bool(objective.get("engagement_unlocked", false)): return
+	if int(session.state.get("tick_index", 0)) < 20 or int(objective.get("action_counts", {}).get("CastSkill", 0)) > 0: return
+	var unit: Dictionary = session.state.get("units_by_id", {}).get("unit.player.t03.iowa", {})
+	var target := _first_visible_target(session, unit)
+	if target.is_empty(): return
+	var skill: Dictionary = registry.get_definition("skills", "skill.iowa_radar_salvo")
+	if (unit.get("position", Vector2.ZERO) as Vector2).distance_to(target.get("position", Vector2.ZERO)) > float(skill.get("cast_range", 0.0)): return
+	session.queue_command({
+		"command_id": "simulation.t03.skill.%d" % int(session.state.get("tick_index", 0)),
+		"command_type": "CastSkill", "issued_at_tick": int(session.state.get("tick_index", 0)),
+		"issuer_type": "SimulationPolicy", "issuer_id": "player", "unit_id": "unit.player.t03.iowa",
+		"target_ref": {"type": "Entity", "entity_id": str(target.get("entity_id", ""))},
+	})
+
+
 func _first_visible_target(session, unit: Dictionary) -> Dictionary:
 	var faction_id := str(unit.get("faction_id", ""))
 	var target_ids: Array = session.state.get("visible_by_faction", {}).get(faction_id, {}).keys()
@@ -300,7 +361,7 @@ func _policy_for_faction(manifest: Dictionary, faction_id: String) -> String:
 	return str(manifest.get(field_name, manifest.get("policy_id", "SessionAutonomy")))
 
 
-func _win_rate_evaluation(manifest: Dictionary, aggregate: Dictionary) -> Dictionary:
+func _win_rate_evaluation(manifest: Dictionary, aggregate: Dictionary, runs: Array = []) -> Dictionary:
 	var contract: Dictionary = manifest.get("win_rate_evaluation", {})
 	var target := float(contract.get("target_player_win_rate", 0.0))
 	var tolerance := float(contract.get("tolerance", 0.0))
@@ -309,6 +370,24 @@ func _win_rate_evaluation(manifest: Dictionary, aggregate: Dictionary) -> Dictio
 	var observed := float(aggregate.get("player_win_rate", 0.0))
 	var sample_complete := planned == 20 and finished == 20
 	var within_target := observed >= target - tolerance - 0.000001 and observed <= target + tolerance + 0.000001
+	var minimum_p10_duration := float(contract.get("minimum_p10_duration", 0.0))
+	var observed_p10_duration := float(aggregate.get("duration", {}).get("p10", 0.0))
+	var duration_passed := observed_p10_duration + 0.000001 >= minimum_p10_duration
+	var required_action_ids: Array = contract.get("required_objective_action_ids", [])
+	var objective_evidence_passed := true
+	for run in runs:
+		var objective: Dictionary = run.get("level_objective", {})
+		if bool(contract.get("require_engagement_unlocked", false)) and not bool(objective.get("engagement_unlocked", false)):
+			objective_evidence_passed = false
+		for action_id in required_action_ids:
+			if int(objective.get("action_counts", {}).get(str(action_id), 0)) <= 0:
+				objective_evidence_passed = false
+	var maximum_early_damage := float(contract.get("maximum_enemy_damage_before_engagement", INF))
+	var observed_early_damage := float(aggregate.get("enemy_damage_before_engagement", 0.0))
+	var early_damage_passed := observed_early_damage <= maximum_early_damage + 0.000001
+	var maximum_policy_rejections := int(contract.get("maximum_policy_command_rejections", 0))
+	var observed_policy_rejections := int(aggregate.get("policy_command_rejections", 0))
+	var policy_rejections_passed := observed_policy_rejections <= maximum_policy_rejections
 	return {
 		"settlement_source": "BattleStatisticsReport",
 		"required_battles": 20,
@@ -318,7 +397,18 @@ func _win_rate_evaluation(manifest: Dictionary, aggregate: Dictionary) -> Dictio
 		"observed_player_win_rate": observed,
 		"sample_complete": sample_complete,
 		"within_target": within_target,
-		"passed": sample_complete and within_target,
+		"minimum_p10_duration": minimum_p10_duration,
+		"observed_p10_duration": observed_p10_duration,
+		"duration_passed": duration_passed,
+		"required_objective_action_ids": required_action_ids.duplicate(),
+		"objective_evidence_passed": objective_evidence_passed,
+		"maximum_enemy_damage_before_engagement": maximum_early_damage,
+		"observed_enemy_damage_before_engagement": observed_early_damage,
+		"early_damage_passed": early_damage_passed,
+		"maximum_policy_command_rejections": maximum_policy_rejections,
+		"observed_policy_command_rejections": observed_policy_rejections,
+		"policy_rejections_passed": policy_rejections_passed,
+		"passed": sample_complete and within_target and duration_passed and objective_evidence_passed and early_damage_passed and policy_rejections_passed,
 	}
 
 

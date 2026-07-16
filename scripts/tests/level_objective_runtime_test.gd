@@ -1,6 +1,7 @@
 extends SceneTree
 
 const BattleSession = preload("res://scripts/application/battle_session.gd")
+const ConfigRegistry = preload("res://scripts/infrastructure/data/config_registry.gd")
 
 var checks := 0
 var failures: Array[String] = []
@@ -45,6 +46,11 @@ func _run() -> void:
 	_check(tutorial.state.get("result", {}).get("winner_faction", "") == "player" and tutorial.state.get("result", {}).get("reason", "") == "LEVEL_OBJECTIVE_COMPLETED", "T-01 completes only after navigation and Ward is sunk")
 	_check(finish_events.any(func(event): return event.get("event_type", "") == "LevelObjectiveCompleted") and finish_events.any(func(event): return event.get("event_type", "") == "BattleFinished"), "T-01 emits objective and battle completion events")
 
+	_test_t02_gunnery(registry)
+	_test_t03_skill(registry)
+	_test_t04_armor(registry)
+	_test_tutorial_definition_validation(registry)
+
 	var challenge = BattleSession.new(registry)
 	_check(challenge.create_battle("level.challenge.s01", 102).get("ok", false), "S-01 creates from formal runtime data")
 	_check(challenge.state.get("terrain_map", {}).get("id", "") == "terrain.map.central_sandbar" and challenge.state.get("level_objective", {}).get("objective_set_id", "") == "objective.s01_flagship", "S-01 loads K-S01 central sandbar and its mission")
@@ -75,6 +81,109 @@ func _run() -> void:
 		for failure in failures: push_error("FAIL: %s" % failure)
 		print("FAILED: %d of %d level objective runtime checks" % [failures.size(), checks])
 		quit(1)
+
+
+func _test_t02_gunnery(registry) -> void:
+	var session = BattleSession.new(registry)
+	_check(session.create_battle("level.tutorial.t02", 7401).get("ok", false), "T-02 creates from formal runtime data")
+	var warspite: Dictionary = session.state["units_by_id"]["unit.player.t02.warspite"]
+	var aurora: Dictionary = session.state["units_by_id"]["unit.enemy.t02.aurora"]
+	var aurora_start: Vector2 = aurora["position"]
+	var aurora_hp := float(aurora["current_hp"])
+	var early_events: Array = []
+	for _tick in range(40): early_events.append_array(session.advance_tick(0.1))
+	_check((aurora["position"] as Vector2).distance_to(aurora_start) > 0.1 and not early_events.any(func(event): return event.get("event_type", "") in ["WeaponFired", "SkillCast"]), "T-02 moves Aurora naturally without attacking before the required actions")
+	_check(is_equal_approx(float(aurora["current_hp"]), aurora_hp) and not bool(warspite.get("movement_assist_enabled", true)) and not bool(warspite.get("secondary_auto_fire_enabled", true)), "T-02 preserves public HP while exposing its initial player restrictions")
+	session.queue_command({"command_id":"test.t02.ammo","command_type":"SwitchAmmo","issued_at_tick":session.state["tick_index"],"issuer_type":"Player","issuer_id":"player","unit_id":"unit.player.t02.warspite"})
+	session.advance_tick(0.1)
+	_check(session.state["level_objective"].get("action_counts", {}).get("SwitchAmmo", 0) == 1 and warspite.get("ammo_state", {}).get("warspite_main", "") == "HE", "T-02 records only a successful real ammo switch")
+	var target_visible := false
+	for _tick in range(700):
+		if session.state.get("visible_by_faction", {}).get("player", {}).has("unit.enemy.t02.aurora") and bool(session.get_primary_aim_status("unit.player.t02.warspite", aurora["position"]).get("legal", false)):
+			target_visible = true
+			break
+		session.advance_tick(0.1)
+	_check(target_visible, "T-02 natural staging reaches a visible legal manual-gunnery window")
+	if target_visible:
+		session.queue_command({"command_id":"test.t02.primary","command_type":"FirePrimaryWeapon","issued_at_tick":session.state["tick_index"],"issuer_type":"Player","issuer_id":"player","unit_id":"unit.player.t02.warspite","target_position":aurora["position"]})
+		var unlock_events := session.advance_tick(0.1)
+		_check(session.state["level_objective"].get("action_counts", {}).get("ManualPrimaryFire", 0) == 1 and bool(session.state["level_objective"].get("engagement_unlocked", false)), "T-02 records a legal manual primary shot and unlocks engagement")
+		_check(unlock_events.any(func(event): return event.get("event_type", "") == "TutorialStageChanged") and bool(warspite.get("movement_assist_enabled", false)) and bool(warspite.get("primary_auto_fire_enabled", false)), "T-02 visibly restores authored assist and automatic capabilities")
+	aurora["life_state"] = "Sunk"; aurora["current_hp"] = 0.0
+	session.advance_tick(0.1)
+	_check(session.state.get("result", {}).get("winner_faction", "") == "player" and session.state.get("result", {}).get("reason", "") == "LEVEL_OBJECTIVE_COMPLETED", "T-02 requires its real actions before the target sinking completes the level")
+
+
+func _test_t03_skill(registry) -> void:
+	var session = BattleSession.new(registry)
+	_check(session.create_battle("level.tutorial.t03", 7501).get("ok", false), "T-03 creates from formal runtime data")
+	var iowa: Dictionary = session.state["units_by_id"]["unit.player.t03.iowa"]
+	var kirov: Dictionary = session.state["units_by_id"]["unit.enemy.t03.kirov"]
+	var early_events: Array = []
+	var target_visible := false
+	for _tick in range(700):
+		if session.state.get("visible_by_faction", {}).get("player", {}).has("unit.enemy.t03.kirov"):
+			target_visible = true
+			break
+		early_events.append_array(session.advance_tick(0.1))
+	_check(target_visible and not early_events.any(func(event): return event.get("event_type", "") in ["WeaponFired", "SkillCast"]), "T-03 reaches a public skill window without either side attacking early")
+	if target_visible:
+		session.queue_command({"command_id":"test.t03.skill","command_type":"CastSkill","issued_at_tick":session.state["tick_index"],"issuer_type":"Player","issuer_id":"player","unit_id":"unit.player.t03.iowa","target_ref":{"type":"Entity","entity_id":"unit.enemy.t03.kirov"}})
+		var unlock_events := session.advance_tick(0.1)
+		if session.state["level_objective"].get("action_counts", {}).get("CastSkill", 0) != 1:
+			print("T03_DIAGNOSTIC events=%s objective=%s iowa_pos=%s kirov_pos=%s distance=%.2f" % [unlock_events, session.state["level_objective"], iowa["position"], kirov["position"], (iowa["position"] as Vector2).distance_to(kirov["position"])])
+		_check(session.state["level_objective"].get("action_counts", {}).get("CastSkill", 0) == 1 and bool(session.state["level_objective"].get("engagement_unlocked", false)), "T-03 records the specified successful SkillCast fact and unlocks engagement")
+		_check(unlock_events.any(func(event): return event.get("event_type", "") == "SkillCast" and event.get("skill_id", "") == "skill.iowa_radar_salvo") and bool(iowa.get("primary_auto_fire_enabled", false)), "T-03 uses the public skill command and restores main-gun automation afterward")
+	kirov["life_state"] = "Sunk"; kirov["current_hp"] = 0.0
+	session.advance_tick(0.1)
+	_check(session.state.get("result", {}).get("winner_faction", "") == "player", "T-03 completes after the specified skill and Kirov sinking")
+
+
+func _test_t04_armor(registry) -> void:
+	var session = BattleSession.new(registry)
+	_check(session.create_battle("level.tutorial.t04", 7601).get("ok", false), "T-04 creates from formal runtime data")
+	var warspite: Dictionary = session.state["units_by_id"]["unit.player.t04.warspite"]
+	var ward: Dictionary = session.state["units_by_id"]["unit.player.t04.ward"]
+	_check(session.state.get("environment_zones", []).any(func(zone): return zone.get("zone_id", zone.get("id", "")) == "zone.t04.moonlit_lane") and bool(ward.get("secondary_auto_fire_enabled", false)), "T-04 loads the public moonlit lane and visibly keeps Ward secondary automation enabled")
+	var staging_events: Array = []
+	for _tick in range(1000):
+		if bool(session.state["level_objective"].get("engagement_unlocked", false)): break
+		staging_events.append_array(session.advance_tick(0.1))
+	if not bool(session.state["level_objective"].get("engagement_unlocked", false)):
+		print("T04_DIAGNOSTIC objective=%s player_visible=%s warspite_pos=%s ward_pos=%s hindenburg_pos=%s aurora_pos=%s contexts=%s" % [session.state["level_objective"], session.state.get("visible_by_faction", {}).get("player", {}), warspite["position"], ward["position"], session.state["units_by_id"]["unit.enemy.t04.hindenburg"]["position"], session.state["units_by_id"]["unit.enemy.t04.aurora"]["position"], {"ward":session.terrain_context_service.context_at(ward["position"]),"aurora":session.terrain_context_service.context_at(session.state["units_by_id"]["unit.enemy.t04.aurora"]["position"])}])
+	_check(bool(session.state["level_objective"].get("engagement_unlocked", false)) and session.state["level_objective"].get("current_step", 0) == 1, "T-04 unlocks only after a real player-faction contact")
+	_check(not staging_events.any(func(event): return event.get("event_type", "") in ["WeaponFired", "SkillCast", "AttackResolved"]), "T-04 deals no damage before the authored first-contact stage")
+	_check(bool(warspite.get("movement_assist_enabled", false)) and bool(warspite.get("primary_auto_fire_enabled", false)), "T-04 restores the authored player assist and main-gun automation on contact")
+	for enemy_id in ["unit.enemy.t04.hindenburg", "unit.enemy.t04.aurora"]:
+		var enemy: Dictionary = session.state["units_by_id"][enemy_id]
+		enemy["life_state"] = "Sunk"; enemy["current_hp"] = 0.0
+	session.advance_tick(0.1)
+	_check(session.state.get("result", {}).get("winner_faction", "") == "player" and warspite.get("life_state", "") == "Alive", "T-04 requires both cruisers sunk while Warspite remains alive")
+
+
+func _test_tutorial_definition_validation(registry) -> void:
+	var invalid_trigger: Dictionary = registry.get_definition("objectives", "objective.t04_armor").duplicate(true)
+	invalid_trigger["engagement_trigger"] = "Timer"
+	_check(_validation_errors(registry, invalid_trigger).any(func(error): return str(error).contains("engagement trigger")), "tutorial validation rejects an unsupported stage trigger")
+	var invalid_skill: Dictionary = registry.get_definition("objectives", "objective.t03_skill").duplicate(true)
+	invalid_skill["required_actions"][0]["skill_id"] = "skill.missing"
+	_check(_validation_errors(registry, invalid_skill).any(func(error): return str(error).contains("mounted skill")), "tutorial validation rejects an unknown or unmounted required skill")
+	var invalid_staging: Dictionary = registry.get_definition("objectives", "objective.t02_gunnery").duplicate(true)
+	invalid_staging["enemy_staging_positions"] = {"unit.enemy.missing":[100.0, 100.0]}
+	_check(_validation_errors(registry, invalid_staging).any(func(error): return str(error).contains("staging unit")), "tutorial validation rejects an unknown authored staging unit")
+	var invalid_marker: Dictionary = registry.get_definition("objectives", "objective.t04_armor").duplicate(true)
+	invalid_marker["world_markers"][0]["marker_type"] = "HiddenTarget"
+	_check(_validation_errors(registry, invalid_marker).any(func(error): return str(error).contains("world marker")), "tutorial validation rejects an unsupported world marker")
+	var invalid_control: Dictionary = registry.get_definition("objectives", "objective.t02_gunnery").duplicate(true)
+	invalid_control["initial_player_control_state"]["damage_multiplier"] = 2.0
+	_check(_validation_errors(registry, invalid_control).any(func(error): return str(error).contains("control state field")), "tutorial validation rejects hidden stat changes in stage control data")
+
+
+func _validation_errors(registry, objective: Dictionary) -> Array[String]:
+	var validator = ConfigRegistry.new()
+	validator.definitions = registry.definitions.duplicate(true)
+	validator._validate_objective(objective)
+	return validator.errors
 
 
 func _pair(value: Array) -> Vector2:

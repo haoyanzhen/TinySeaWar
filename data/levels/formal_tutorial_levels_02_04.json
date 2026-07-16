@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "definitions": [
+    {
+      "id": "level.tutorial.t02",
+      "display_name": "T-02 主炮与弹药",
+      "battle_mode": "TutorialBattle",
+      "objective_set_id": "objective.t02_gunnery",
+      "enemy_ai_profile_id": "ai.profile.easy",
+      "map": {"width": 4096.0, "height": 2304.0, "ocean_palette": "clear_dawn"},
+      "time_limit": 600.0,
+      "player_fleet": [
+        {"entity_id": "unit.player.t02.warspite", "ship_id": "ship.warspite", "position": [1474.56, 1152.0], "heading": 0.0, "is_flagship": true}
+      ],
+      "enemy_fleet": [
+        {"entity_id": "unit.enemy.t02.aurora", "ship_id": "ship.aurora", "position": [2621.44, 1152.0], "heading": 180.0, "is_flagship": true}
+      ]
+    },
+    {
+      "id": "level.tutorial.t03",
+      "display_name": "T-03 技能窗口",
+      "battle_mode": "TutorialBattle",
+      "objective_set_id": "objective.t03_skill",
+      "enemy_ai_profile_id": "ai.profile.easy",
+      "map": {"width": 4096.0, "height": 2304.0, "ocean_palette": "clear_dusk"},
+      "time_limit": 600.0,
+      "player_fleet": [
+        {"entity_id": "unit.player.t03.iowa", "ship_id": "ship.iowa", "position": [1474.56, 1152.0], "heading": 0.0, "is_flagship": true, "initial_skill_cooldown": 0.0}
+      ],
+      "enemy_fleet": [
+        {"entity_id": "unit.enemy.t03.kirov", "ship_id": "ship.kirov", "position": [2621.44, 1152.0], "heading": 180.0, "is_flagship": true}
+      ]
+    },
+    {
+      "id": "level.tutorial.t04",
+      "display_name": "T-04 重甲压制",
+      "battle_mode": "TutorialBattle",
+      "objective_set_id": "objective.t04_armor",
+      "enemy_ai_profile_id": "ai.profile.easy",
+      "map": {
+        "width": 4096.0,
+        "height": 2304.0,
+        "ocean_palette": "clear_night",
+        "environment_zone_set_id": "environment.zone_set.t04_moonlit_lane"
+      },
+      "time_limit": 600.0,
+      "player_fleet": [
+        {"entity_id": "unit.player.t04.warspite", "ship_id": "ship.warspite", "position": [1146.88, 967.68], "heading": 0.0, "is_flagship": true},
+        {"entity_id": "unit.player.t04.ward", "ship_id": "ship.ward", "position": [1146.88, 1336.32], "heading": 0.0, "is_flagship": false}
+      ],
+      "enemy_fleet": [
+        {"entity_id": "unit.enemy.t04.hindenburg", "ship_id": "ship.hindenburg", "position": [2949.12, 967.68], "heading": 180.0, "is_flagship": true, "initial_ammo_type": "HE"},
+        {"entity_id": "unit.enemy.t04.aurora", "ship_id": "ship.aurora", "position": [2949.12, 1336.32], "heading": 180.0, "is_flagship": false}
+      ]
+    }
+  ]
+}

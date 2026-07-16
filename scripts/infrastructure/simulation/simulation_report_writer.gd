@@ -37,7 +37,7 @@ func _write_text(path: String, content: String, errors: Array[String]) -> void:
 
 
 func _csv(result: Dictionary) -> String:
-	var lines := ["run_id,scenario_id,level_definition_id,seed,side_variant,end_state,winner_faction,winner_lineup,finish_reason,duration,ticks_executed"]
+	var lines := ["run_id,scenario_id,level_definition_id,seed,side_variant,end_state,winner_faction,winner_lineup,finish_reason,duration,ticks_executed,enemy_damage_before_engagement,policy_command_rejections"]
 	for run in result.get("runs", []):
 		lines.append(",".join([
 			_csv_cell(run.get("run_id", "")),
@@ -51,6 +51,8 @@ func _csv(result: Dictionary) -> String:
 			_csv_cell(run.get("finish_reason", "")),
 			"%.3f" % float(run.get("duration", 0.0)),
 			str(int(run.get("ticks_executed", 0))),
+			"%.3f" % float(run.get("enemy_damage_before_engagement", 0.0)),
+			str(int(run.get("policy_command_rejections", 0))),
 		]))
 	return "\n".join(lines) + "\n"
 
@@ -138,6 +140,8 @@ func _markdown(result: Dictionary) -> String:
 		"| 设施使用局占比 | %.1f%% |" % (float(aggregate.get("facility_usage_rate", 0.0)) * 100.0),
 		"| 超时率 | %.1f%% |" % (float(aggregate.get("timeout_rate", 0.0)) * 100.0),
 		"| 行为异常/局 | %.2f |" % float(aggregate.get("behavior_anomalies_per_run", 0.0)),
+		"| 教学解锁前敌方伤害 | %.2f |" % float(aggregate.get("enemy_damage_before_engagement", 0.0)),
+		"| 教学策略命令拒绝 | %d |" % int(aggregate.get("policy_command_rejections", 0)),
 		"| 玩家侧胜率 95%% 区间 | %.1f%% - %.1f%% |" % [float(interval[0]) * 100.0, float(interval[1]) * 100.0],
 		"| 平均战斗时长 | %.2fs |" % float(duration.get("mean", 0.0)),
 		"| 中位战斗时长 | %.2fs |" % float(duration.get("median", 0.0)),
@@ -160,6 +164,10 @@ func _markdown(result: Dictionary) -> String:
 			"| 目标胜率 | %.1f%% |" % (float(evaluation.get("target_player_win_rate", 0.0)) * 100.0),
 			"| 允许误差 | ±%.1f 个百分点 |" % (float(evaluation.get("tolerance", 0.0)) * 100.0),
 			"| 报告胜率 | %.1f%% |" % (float(evaluation.get("observed_player_win_rate", 0.0)) * 100.0),
+			"| P10 时长门槛 / 实测 | %.2fs / %.2fs |" % [float(evaluation.get("minimum_p10_duration", 0.0)), float(evaluation.get("observed_p10_duration", 0.0))],
+			"| 必做动作证据 | %s |" % ("通过" if bool(evaluation.get("objective_evidence_passed", false)) else "未通过"),
+			"| 解锁前敌方伤害 | %.2f / %.2f |" % [float(evaluation.get("observed_enemy_damage_before_engagement", 0.0)), float(evaluation.get("maximum_enemy_damage_before_engagement", 0.0))],
+			"| 教学策略命令拒绝 | %d / %d |" % [int(evaluation.get("observed_policy_command_rejections", 0)), int(evaluation.get("maximum_policy_command_rejections", 0))],
 			"| 结算 | %s |" % ("通过" if bool(evaluation.get("passed", false)) else "未通过"),
 			"",
 		])

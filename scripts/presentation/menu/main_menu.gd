@@ -39,6 +39,12 @@ const TUTORIALS := [
 	["T-07", "侦查共享", "前出接触与舰队共享目标"],
 	["T-08", "编队考核", "框选、集火、自动开关与旗舰保护"],
 ]
+const IMPLEMENTED_TUTORIAL_LEVEL_IDS := {
+	"T-01": "level.tutorial.t01",
+	"T-02": "level.tutorial.t02",
+	"T-03": "level.tutorial.t03",
+	"T-04": "level.tutorial.t04",
+}
 const CHALLENGES := {
 	"小型海战 · 3v3": [["S-01", "首轮接敌"], ["S-02", "侧翼雷线"], ["S-03", "航空诱饵"], ["S-04", "双向伏击"], ["S-05", "狼群门槛"]],
 	"中型海战 · 5v5": [["M-01", "港湾扩编"], ["M-02", "泻湖护航"], ["M-03", "群岛雷击"], ["M-04", "风暴猎场"], ["M-05", "海峡封锁"]],
@@ -191,7 +197,7 @@ func _show_home() -> void:
 
 func _show_tutorial() -> void:
 	_clear_content()
-	_heading("教学", "所有教学默认开放。正式关卡数据尚未接入运行时，以下入口先展示完整教学结构。")
+	_heading("教学", "所有教学默认开放。T-01 至 T-04 已接入正式运行时，其余入口展示后续教学结构。")
 	var scroll := ScrollContainer.new()
 	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	content.add_child(scroll)
@@ -201,12 +207,14 @@ func _show_tutorial() -> void:
 	scroll.add_child(list)
 	for tutorial in TUTORIALS:
 		var button := Button.new()
-		var implemented: bool = str(tutorial[0]) == "T-01"
+		var tutorial_code := str(tutorial[0])
+		var level_id := str(IMPLEMENTED_TUTORIAL_LEVEL_IDS.get(tutorial_code, ""))
+		var implemented := not level_id.is_empty()
 		button.text = "%s  %s\n%s    · %s" % [tutorial[0], tutorial[1], tutorial[2], "可开始" if implemented else "默认开放 · 待关卡接入"]
 		button.custom_minimum_size = Vector2(0, 70)
 		button.disabled = not implemented
 		button.alignment = HORIZONTAL_ALIGNMENT_LEFT
-		if implemented: button.pressed.connect(func(): _start_level("level.tutorial.t01"))
+		if implemented: button.pressed.connect(func(): _start_level(level_id))
 		list.add_child(button)
 
 

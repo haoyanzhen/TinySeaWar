@@ -6,6 +6,9 @@ const OCEAN_PALETTE_PATH := "res://data/environments/ocean_palettes.json"
 static func mode_name(level_id: String) -> String:
 	match level_id:
 		"level.tutorial.t01": return "T-01 航向与选择"
+		"level.tutorial.t02": return "T-02 主炮与弹药"
+		"level.tutorial.t03": return "T-03 技能窗口"
+		"level.tutorial.t04": return "T-04 重甲压制"
 		"level.challenge.s01": return "S-01 首轮接敌"
 		"level.custom_runtime": return "自定义战斗"
 		"level.prototype_1v1": return "1v1 单舰对决"

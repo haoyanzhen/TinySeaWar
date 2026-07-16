@@ -74,7 +74,7 @@ func _draw_top_status(viewport_size: Vector2) -> void:
 func _draw_level_objective(viewport_size: Vector2) -> void:
 	var objective: Dictionary = snapshot.get("level_objective", {})
 	if objective.is_empty(): return
-	var tutorial := objective.get("objective_kind", "") == "TutorialNavigation"
+	var tutorial := bool(objective.get("is_tutorial", false))
 	var panel_height := 82.0 if tutorial else 54.0
 	var panel := Rect2(Vector2((viewport_size.x - 620.0) * 0.5, 100.0), Vector2(620.0, panel_height))
 	_draw_panel(panel, "")

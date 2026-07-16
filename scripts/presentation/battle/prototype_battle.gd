@@ -121,7 +121,7 @@ func _draw() -> void:
 
 func _draw_level_objective_markers(snapshot: Dictionary) -> void:
 	var objective: Dictionary = snapshot.get("level_objective", {})
-	if objective.get("objective_kind", "") != "TutorialNavigation" or objective.get("status", "") != "Active": return
+	if not bool(objective.get("is_tutorial", false)) or objective.get("status", "") != "Active": return
 	var current_step := int(objective.get("current_step", 0))
 	var zones: Array = objective.get("waypoint_zones", [])
 	for index in range(zones.size()):
@@ -139,6 +139,23 @@ func _draw_level_objective_markers(snapshot: Dictionary) -> void:
 		draw_circle(center, 10.0, Color(edge, 0.9))
 		var label := "%d · %s%s" % [index + 1, str(zone.get("label", "教学航点")), "（当前目标）" if active else ("（完成）" if completed else "")]
 		draw_string(ThemeDB.fallback_font, center + Vector2(-100.0, -radius - 18.0), label, HORIZONTAL_ALIGNMENT_CENTER, 200.0, 18, edge)
+	for marker in objective.get("world_markers", []):
+		var marker_type := str(marker.get("marker_type", ""))
+		var center := Vector2.INF
+		if marker_type == "Unit":
+			var marked_unit: Dictionary = snapshot.get("units", {}).get(str(marker.get("unit_id", "")), {})
+			if marked_unit.is_empty(): continue
+			center = marked_unit.get("position", Vector2.INF)
+		elif marker_type == "Area":
+			var pair: Array = marker.get("position", [])
+			if pair.size() != 2: continue
+			center = Vector2(float(pair[0]), float(pair[1]))
+		if center.is_equal_approx(Vector2.INF): continue
+		var radius := float(marker.get("radius", 72.0))
+		var marker_color := Color("#a7d7ff") if marker_type == "Area" else Color("#ffe072")
+		draw_circle(center, radius, Color(marker_color, 0.08))
+		draw_arc(center, radius, 0.0, TAU, 64, marker_color, 3.0)
+		draw_string(ThemeDB.fallback_font, center + Vector2(-120.0, -radius - 16.0), str(marker.get("label", "教学标记")), HORIZONTAL_ALIGNMENT_CENTER, 240.0, 18, marker_color)
 
 
 func _draw_mine_deployment_overlay(snapshot: Dictionary) -> void:

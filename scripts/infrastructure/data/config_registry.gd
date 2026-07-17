@@ -137,8 +137,8 @@ func _validate_ai_profile(profile: Dictionary) -> void:
 		errors.append("AI decision_interval must be positive in %s" % profile_id)
 	if float(profile.get("skill_threshold", -1.0)) < 0.0 or float(profile.get("skill_threshold", 101.0)) > 100.0:
 		errors.append("Invalid AI skill_threshold in %s" % profile_id)
-	if int(profile.get("target_confirmations", 0)) < 1 or int(profile.get("route_candidate_count", 0)) < 1:
-		errors.append("Invalid AI confirmation or route count in %s" % profile_id)
+	if int(profile.get("target_confirmations", 0)) < 1:
+		errors.append("Invalid AI target confirmation count in %s" % profile_id)
 
 
 func _validate_projectile(projectile: Dictionary) -> void:
@@ -424,7 +424,7 @@ func _validate_level(level: Dictionary) -> void:
 func _validate_objective(objective: Dictionary) -> void:
 	var objective_id := str(objective.get("id", "?"))
 	var kind := str(objective.get("objective_kind", ""))
-	var tutorial_kinds := ["TutorialNavigation", "TutorialGunnery", "TutorialSkill", "TutorialArmor"]
+	var tutorial_kinds := ["TutorialNavigation", "TutorialGunnery", "TutorialSkill", "TutorialArmor", "TutorialTorpedo", "TutorialCarrierHunt", "TutorialSharedContact", "TutorialCommand"]
 	if kind not in tutorial_kinds + ["FlagshipMission"]:
 		errors.append("Unsupported objective kind in %s" % objective_id)
 	if str(objective.get("title", "")).is_empty():
@@ -466,10 +466,10 @@ func _validate_objective(objective: Dictionary) -> void:
 	if kind != "TutorialNavigation":
 		if objective.get("protected_player_unit_ids", []).is_empty() or objective.get("required_enemy_unit_ids", []).is_empty():
 			errors.append("Tutorial objective %s requires protected player and enemy unit lists" % objective_id)
-	if kind == "TutorialArmor" and (str(objective.get("engagement_trigger", "")) != "FirstContact" or objective.get("contact_target_unit_ids", []).is_empty()):
+	if kind in ["TutorialArmor", "TutorialTorpedo", "TutorialCarrierHunt"] and (str(objective.get("engagement_trigger", "")) != "FirstContact" or objective.get("contact_target_unit_ids", []).is_empty()):
 		errors.append("Tutorial armor objective %s requires a first-contact target" % objective_id)
 	var action_ids := {}
-	var allowed_actions := ["SelectTutorialUnit", "EnableCameraFollow", "AppendMoveWaypoint", "SwitchAmmo", "ManualPrimaryFire", "CastSkill"]
+	var allowed_actions := ["SelectTutorialUnit", "EnableCameraFollow", "AppendMoveWaypoint", "SwitchAmmo", "ManualPrimaryFire", "CastSkill", "TorpedoHit", "EstablishSharedContact", "SharedTargetGunHit", "GroupFocusTarget"]
 	for requirement in objective.get("required_actions", []):
 		var action_id := str(requirement.get("action_id", ""))
 		if action_id not in allowed_actions or action_ids.has(action_id) or int(requirement.get("required_count", 0)) <= 0 or str(requirement.get("instruction", "")).is_empty():

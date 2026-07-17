@@ -67,6 +67,8 @@ func record_level_victory(level_id: String) -> bool:
 		"level.tutorial.t02": ship_unlock_id = "ship.gnevny"
 		"level.tutorial.t03": ship_unlock_id = "ship.argus"
 		"level.tutorial.t04": ship_unlock_id = "ship.hosho"
+		"level.tutorial.t05": ship_unlock_id = "ship.hai_shih"
+		"level.tutorial.t06": ship_unlock_id = "ship.u_47"
 		"level.challenge.s01": ship_unlock_id = "ship.anshan"
 		_: return false
 	if not ship_unlock_id.is_empty() and ship_unlock_id not in unlocked_ship_ids:

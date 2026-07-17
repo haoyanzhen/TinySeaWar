@@ -28,8 +28,8 @@ func _run() -> void:
 	registry = ConfigRegistry.new()
 	_check(registry.load_all(), "configuration registry loads: %s" % str(registry.errors))
 	_check(registry.all("ships").size() == 48, "all 48 phase-one and phase-two character ship definitions load")
-	_check(registry.all("levels").size() == 19, "four open-sea, ten coastal, and five formal levels load")
-	_check(registry.all("objectives").size() == 5, "T-01 through T-04 and S-01 objective definitions load")
+	_check(registry.all("levels").size() == 23, "four open-sea, ten coastal, and nine formal levels load")
+	_check(registry.all("objectives").size() == 9, "T-01 through T-08 and S-01 objective definitions load")
 	_test_terrain_configuration_and_rules()
 	_test_coastal_runtime_levels()
 	_test_scene_combat_tactical_effects()
@@ -1113,7 +1113,8 @@ func _test_simultaneous_flagship_victory() -> void:
 	session.state["units_by_id"]["unit.enemy.bismarck"]["life_state"] = "Sunk"
 	session.state["units_by_id"]["unit.enemy.bismarck"]["current_hp"] = 0.0
 	session._check_victory()
-	_check(session.state["result"].get("winner_faction", "") == "player", "simultaneous flagship sinking awards player victory")
+	_check(session.state["result"].get("winner_faction", "").is_empty(), "simultaneous flagship sinking is a draw")
+	_check(session.state["result"].get("reason", "") == "FLAGSHIP_SUNK_SIMULTANEOUS", "simultaneous flagship draw keeps its distinct finish reason")
 
 
 func _test_determinism() -> void:

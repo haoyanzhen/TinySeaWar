@@ -20,7 +20,7 @@ func _run() -> void:
 	var hard: Dictionary = registry.get_definition("ai_profiles", "ai.profile.hard")
 	_check(float(easy["decision_interval"]) > float(standard["decision_interval"]) and float(standard["decision_interval"]) > float(hard["decision_interval"]), "difficulty changes decision cadence monotonically")
 	_check(float(easy["skill_threshold"]) > float(standard["skill_threshold"]) and float(standard["skill_threshold"]) > float(hard["skill_threshold"]), "difficulty changes skill selectivity monotonically")
-	_check(int(easy["route_candidate_count"]) < int(standard["route_candidate_count"]) and int(standard["route_candidate_count"]) < int(hard["route_candidate_count"]), "difficulty changes route candidate budget monotonically")
+	_check(not easy.has("route_candidate_count") and not standard.has("route_candidate_count") and not hard.has("route_candidate_count"), "difficulty profiles do not override the shared navigation candidate budget")
 	var session = BattleSession.new(registry)
 	_check(session.create_battle("level.prototype_3v3", 20260630).get("ok", false), "difficulty fixture starts")
 	var source: Dictionary = session.state["units_by_id"]["unit.enemy.bismarck"]

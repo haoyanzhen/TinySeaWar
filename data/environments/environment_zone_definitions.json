@@ -34,6 +34,8 @@
 	        {"id": "zone.harbor.inbound_current", "effect_id": "environment.effect.strong_current", "polygon": [[1840, 1230], [2240, 1230], [2310, 0], [1780, 0]], "position": [0, 0], "heading": 90.0, "drift_speed": 0.0, "intensity": 0.65, "phase": "Flood", "duration": 120.0, "public_trend": "Weakening"},
 	        {"id": "zone.harbor.tidal_flats", "effect_id": "environment.effect.tidal_water", "polygon": [[1510, 2050], [1810, 1990], [1790, 1430], [1450, 1510]], "position": [0, 0], "heading": 0.0, "drift_speed": 0.0, "intensity": 0.45, "phase": "Flood", "duration": 120.0, "public_trend": "Opening"}
       ]
-    }
+    },
+    {"id":"environment.zone_set.t06_bay_fog","definition_type":"EnvironmentZoneSet","global_environment":{"wind_heading":0.0,"wind_speed":3.0,"seed_offset":606},"zones":[{"id":"zone.t06.bay_fog","effect_id":"environment.effect.sea_fog","polygon":[[1650,650],[2450,650],[2450,1650],[1650,1650]],"position":[0,0],"heading":0.0,"drift_speed":0.0,"intensity":0.65,"phase":"Stable","duration":0.0,"public_trend":"Stable"}]},
+    {"id":"environment.zone_set.t08_command","definition_type":"EnvironmentZoneSet","global_environment":{"wind_heading":0.0,"wind_speed":3.0,"seed_offset":808},"zones":[{"id":"zone.t08.moonlit","effect_id":"environment.effect.moonlit_lane","polygon":[[1650,600],[2450,600],[2450,1700],[1650,1700]],"position":[0,0],"heading":0.0,"drift_speed":0.0,"intensity":0.6,"phase":"Stable","duration":0.0,"public_trend":"Stable"},{"id":"zone.t08.west_fog","effect_id":"environment.effect.sea_fog","polygon":[[700,400],[1350,400],[1350,1000],[700,1000]],"position":[0,0],"heading":0.0,"drift_speed":0.0,"intensity":0.55,"phase":"Stable","duration":0.0,"public_trend":"Stable"}]}
   ]
 }

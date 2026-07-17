@@ -219,6 +219,10 @@ func _queue_policy_commands(session, registry, player_policy_id: String, enemy_p
 		"TutorialT02Deterministic": _queue_t02_tutorial_commands(session)
 		"TutorialT03Deterministic": _queue_t03_tutorial_commands(session, registry)
 		"TutorialT04Deterministic": pass
+		"TutorialT05Deterministic": _queue_t05_tutorial_commands(session)
+		"TutorialT06Deterministic": pass
+		"TutorialT07Deterministic": pass
+		"TutorialT08Deterministic": _queue_t08_tutorial_commands(session)
 	var unit_ids: Array = session.state.get("units_by_id", {}).keys()
 	unit_ids.sort()
 	for unit_id in unit_ids:
@@ -316,6 +320,29 @@ func _queue_t03_tutorial_commands(session, registry) -> void:
 		"issuer_type": "SimulationPolicy", "issuer_id": "player", "unit_id": "unit.player.t03.iowa",
 		"target_ref": {"type": "Entity", "entity_id": str(target.get("entity_id", ""))},
 	})
+
+
+func _queue_t05_tutorial_commands(session) -> void:
+	var objective: Dictionary = session.state.get("level_objective", {})
+	if objective.get("objective_set_id", "") != "objective.t05_torpedo" or int(objective.get("action_counts", {}).get("TorpedoHit", 0)) > 0: return
+	var unit_id := "unit.player.t05.shimakaze"
+	var unit: Dictionary = session.state.get("units_by_id", {}).get(unit_id, {})
+	var target := _first_visible_target(session, unit)
+	if target.is_empty(): return
+	var aim_status: Dictionary = session.get_primary_aim_status(unit_id, target.get("position", Vector2.ZERO))
+	if not bool(aim_status.get("legal", false)): return
+	session.queue_command({"command_id": "simulation.t05.torpedo.%d" % int(session.state.get("tick_index", 0)), "command_type": "FirePrimaryWeapon", "issued_at_tick": int(session.state.get("tick_index", 0)), "issuer_type": "SimulationPolicy", "issuer_id": "player", "unit_id": unit_id, "target_position": target.get("position", Vector2.ZERO)})
+
+
+func _queue_t08_tutorial_commands(session) -> void:
+	var objective: Dictionary = session.state.get("level_objective", {})
+	if objective.get("objective_set_id", "") != "objective.t08_command" or bool(objective.get("engagement_unlocked", false)): return
+	var target: Dictionary = session.state.get("units_by_id", {}).get("unit.enemy.t08.hindenburg", {})
+	if target.is_empty(): return
+	for unit_id in ["unit.player.t08.warspite", "unit.player.t08.san_diego"]:
+		var unit: Dictionary = session.state.get("units_by_id", {}).get(unit_id, {})
+		if unit.is_empty() or not session.state.get("visible_by_faction", {}).get("player", {}).has(target.get("entity_id", "")): continue
+		session.queue_command({"command_id": "simulation.t08.focus.%s.%d" % [unit_id, int(session.state.get("tick_index", 0))], "command_type": "FocusTarget", "issued_at_tick": int(session.state.get("tick_index", 0)), "issuer_type": "SimulationPolicy", "issuer_id": "player", "unit_id": unit_id, "target_unit_id": target.get("entity_id", "")})
 
 
 func _first_visible_target(session, unit: Dictionary) -> Dictionary:

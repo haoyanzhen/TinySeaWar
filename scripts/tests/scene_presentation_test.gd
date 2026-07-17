@@ -21,7 +21,7 @@ func _run() -> void:
 	var tutorial_buttons := _descendants_of_type(menu.content, "Button")
 	_check(tutorial_buttons.size() == 8, "tutorial entry exposes all eight designed training levels")
 	var enabled_tutorial_buttons := tutorial_buttons.filter(func(button): return not button.disabled)
-	_check(enabled_tutorial_buttons.size() == 4 and ["T-01", "T-02", "T-03", "T-04"].all(func(code): return enabled_tutorial_buttons.any(func(button): return button.text.contains(code))), "tutorial entry enables the implemented T-01 through T-04 levels")
+	_check(enabled_tutorial_buttons.size() == 8 and ["T-01", "T-02", "T-03", "T-04", "T-05", "T-06", "T-07", "T-08"].all(func(code): return enabled_tutorial_buttons.any(func(button): return button.text.contains(code))), "tutorial entry enables all eight implemented training levels")
 	menu._show_challenge()
 	var challenge_buttons := _descendants_of_type(menu.content, "Button")
 	_check(challenge_buttons.size() == 15, "challenge entry exposes all fifteen designed challenge levels")

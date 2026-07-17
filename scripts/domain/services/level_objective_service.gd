@@ -135,6 +135,9 @@ func advance(battle_state: Dictionary) -> Dictionary:
 		"TutorialNavigation": _advance_tutorial_navigation(battle_state, events)
 		"TutorialGunnery", "TutorialSkill": _advance_required_action_tutorial(events)
 		"TutorialArmor": _advance_first_contact_tutorial(battle_state, events)
+		"TutorialTorpedo", "TutorialCarrierHunt": _advance_first_contact_tutorial(battle_state, events)
+		"TutorialSharedContact": _advance_shared_contact_tutorial(battle_state, events)
+		"TutorialCommand": _advance_command_tutorial(battle_state, events)
 		"FlagshipMission": pass
 	var terminal := _terminal_result(battle_state)
 	if not terminal.is_empty():
@@ -189,6 +192,33 @@ func _advance_first_contact_tutorial(battle_state: Dictionary, events: Array) ->
 			return
 
 
+func _advance_shared_contact_tutorial(battle_state: Dictionary, events: Array) -> void:
+	if bool(runtime_state.get("engagement_unlocked", false)): return
+	var scout_id := str(definition.get("scout_player_unit_id", ""))
+	var target_id := str(definition.get("shared_contact_target_unit_id", ""))
+	var scout: Dictionary = battle_state.get("units_by_id", {}).get(scout_id, {})
+	var target: Dictionary = battle_state.get("units_by_id", {}).get(target_id, {})
+	if scout.is_empty() or target.is_empty() or scout.get("life_state", "") != "Alive": return
+	if battle_state.get("visible_by_faction", {}).get("player", {}).has(target_id):
+		record_action("EstablishSharedContact", scout_id, int(battle_state.get("tick_index", 0)), {"target_unit_id": target_id})
+		runtime_state["current_step"] = 1
+		_unlock_engagement(str(definition.get("engagement_instruction", "共享接触建立")), events)
+
+
+func _advance_command_tutorial(battle_state: Dictionary, events: Array) -> void:
+	if bool(runtime_state.get("engagement_unlocked", false)): return
+	var target_id := str(definition.get("command_target_unit_id", ""))
+	var focused := 0
+	for unit_id in definition.get("command_player_unit_ids", []):
+		var unit: Dictionary = battle_state.get("units_by_id", {}).get(str(unit_id), {})
+		if unit.get("life_state", "") == "Alive" and str(unit.get("targeting_state", {}).get("focused_target_id", "")) == target_id:
+			focused += 1
+	if focused >= int(definition.get("minimum_group_focus_count", 2)):
+		record_action("GroupFocusTarget", "", int(battle_state.get("tick_index", 0)), {"target_unit_id": target_id})
+		runtime_state["current_step"] = 1
+		if _required_actions_complete(): _unlock_engagement(str(definition.get("engagement_instruction", "集火指令已确认")), events)
+
+
 func _unlock_engagement(summary: String, events: Array) -> void:
 	if bool(runtime_state.get("engagement_unlocked", false)): return
 	runtime_state["engagement_unlocked"] = true
@@ -206,6 +236,13 @@ func _terminal_result(battle_state: Dictionary) -> Dictionary:
 	for protected_id in definition.get("protected_player_unit_ids", []):
 		var protected: Dictionary = battle_state.get("units_by_id", {}).get(str(protected_id), {})
 		if protected.is_empty() or protected.get("life_state", "") == "Sunk":
+			return {"winner_faction": "enemy", "reason": "LEVEL_OBJECTIVE_CANCELLED"}
+	var minimum_alive := int(definition.get("minimum_player_alive", 0))
+	if minimum_alive > 0:
+		var alive_count := 0
+		for unit_id in battle_state.get("fleets_by_id", {}).get("fleet.player", {}).get("unit_ids", []):
+			if battle_state.get("units_by_id", {}).get(str(unit_id), {}).get("life_state", "") == "Alive": alive_count += 1
+		if alive_count < minimum_alive:
 			return {"winner_faction": "enemy", "reason": "LEVEL_OBJECTIVE_CANCELLED"}
 	if str(definition.get("objective_kind", "")) == "FlagshipMission":
 		var enemy_flagship := _flagship(battle_state, "fleet.enemy")

@@ -24,7 +24,7 @@ func validate_manifest(manifest: Dictionary) -> Array[String]:
 		errors.append("tick_seconds must be positive")
 	if int(manifest.get("maximum_ticks", 0)) <= 0:
 		errors.append("maximum_ticks must be positive")
-	var allowed_policies := ["SessionAutonomy", "BaselineAutopilot", "LatestRuntimeAI", "TutorialT01Deterministic", "TutorialT02Deterministic", "TutorialT03Deterministic", "TutorialT04Deterministic"]
+	var allowed_policies := ["SessionAutonomy", "BaselineAutopilot", "LatestRuntimeAI", "TutorialT01Deterministic", "TutorialT02Deterministic", "TutorialT03Deterministic", "TutorialT04Deterministic", "TutorialT05Deterministic", "TutorialT06Deterministic", "TutorialT07Deterministic", "TutorialT08Deterministic"]
 	for faction_id in ["player", "enemy"]:
 		var policy_id := str(manifest.get("%s_policy_id" % faction_id, manifest.get("policy_id", "SessionAutonomy")))
 		if policy_id not in allowed_policies:

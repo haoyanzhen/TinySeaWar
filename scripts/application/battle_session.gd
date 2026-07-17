@@ -3393,6 +3393,12 @@ func _resolve_attack(attack: Dictionary, forced_hit: bool) -> void:
 	if is_zero_approx(float(result.get("final_damage", 0.0))):
 		_apply_zero_damage_reactions(target)
 	_emit("AttackResolved", {"damage_result": result})
+	if bool(result.get("hit", false)) and str(source.get("faction_id", "")) == PLAYER_FACTION:
+		var mount_type := str(weapon.get("mount_type", ""))
+		if mount_type == "Torpedo":
+			_record_tutorial_action("TorpedoHit", str(source.get("entity_id", "")), {"target_unit_id": str(target.get("entity_id", ""))})
+		elif mount_type == "Gun":
+			_record_tutorial_action("SharedTargetGunHit", str(source.get("entity_id", "")), {"target_unit_id": str(target.get("entity_id", ""))})
 	if bool(result["caused_sinking"]): _sink_unit(target, source["entity_id"])
 
 
@@ -3816,8 +3822,11 @@ func _check_victory() -> void:
 	var player_sunk: bool = player_flagship["life_state"] == "Sunk"
 	var enemy_sunk: bool = enemy_flagship["life_state"] == "Sunk"
 	if not player_sunk and not enemy_sunk: return
+	if player_sunk and enemy_sunk:
+		_finish_battle("", "FLAGSHIP_SUNK_SIMULTANEOUS")
+		return
 	var winner := PLAYER_FACTION if enemy_sunk else ENEMY_FACTION
-	_finish_battle(winner, "FLAGSHIP_SUNK_SIMULTANEOUS" if player_sunk and enemy_sunk else "FLAGSHIP_SUNK")
+	_finish_battle(winner, "FLAGSHIP_SUNK")
 
 
 func _check_timeout() -> void:

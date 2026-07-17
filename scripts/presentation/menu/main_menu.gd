@@ -44,6 +44,10 @@ const IMPLEMENTED_TUTORIAL_LEVEL_IDS := {
 	"T-02": "level.tutorial.t02",
 	"T-03": "level.tutorial.t03",
 	"T-04": "level.tutorial.t04",
+	"T-05": "level.tutorial.t05",
+	"T-06": "level.tutorial.t06",
+	"T-07": "level.tutorial.t07",
+	"T-08": "level.tutorial.t08",
 }
 const CHALLENGES := {
 	"小型海战 · 3v3": [["S-01", "首轮接敌"], ["S-02", "侧翼雷线"], ["S-03", "航空诱饵"], ["S-04", "双向伏击"], ["S-05", "狼群门槛"]],
@@ -197,7 +201,7 @@ func _show_home() -> void:
 
 func _show_tutorial() -> void:
 	_clear_content()
-	_heading("教学", "所有教学默认开放。T-01 至 T-04 已接入正式运行时，其余入口展示后续教学结构。")
+	_heading("教学", "所有教学默认开放。八个教学关均已接入正式运行时。")
 	var scroll := ScrollContainer.new()
 	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	content.add_child(scroll)

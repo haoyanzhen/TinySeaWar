@@ -1,304 +1,181 @@
-# 当前程序实现速查
+# 当前实现位置速查
 
-本文档用于后续修改时快速定位代码位置。它不是设计文档，只记录“现在程序怎么分层、改什么先看哪里”。
+> **功能与边界**：本文只回答“当前代码、数据、场景、工具和测试在哪里”。规则归 `10–19`，字段契约归 `20–26`，架构与 Domain 边界归 `30/32/33/35/37/38`，完成状态只见 `00_project_status.md`。路径变化时更新本文，不在此复制公式、数值或验收结论。
 
-项目阶段完成度、已知缺口和测试快照见 `docs/00_project_status.md`。
+## 1. 启动与主流程
 
-## 入口与场景
+| 入口 | 当前文件 |
+|---|---|
+| 数据与资产总入口 | `autoload/data_registry.gd` |
+| 游戏流、菜单到战斗 | `scripts/application/game_flow.gd` |
+| 单局战斗协调 | `scripts/application/battle_session.gd` |
+| 主菜单场景与脚本 | `scenes/menu/main_menu.tscn`、`scripts/presentation/menu/main_menu.gd` |
+| 战斗场景与协调脚本 | `scenes/battle/prototype_battle.tscn`、`scripts/presentation/battle/prototype_battle.gd` |
 
-- Godot 项目入口：`project.godot`
-  - 主场景：`scenes/menu/main_menu.tscn`
-  - 自动加载：
-    - `DataRegistry` -> `autoload/data_registry.gd`
-    - `GameFlow` -> `scripts/application/game_flow.gd`
-- 主界面：`scenes/menu/main_menu.tscn`
-  - 脚本：`scripts/presentation/menu/main_menu.gd`
-  - 负责模式选择、操作说明、游戏介绍、随机横向角色封面。
-- 战斗场景：`scenes/battle/prototype_battle.tscn`
-  - 主控制：`scripts/presentation/battle/prototype_battle.gd`
-  - HUD：`scripts/presentation/battle/battle_hud.gd`
-  - 海面：`scripts/presentation/battle/ocean_surface.gd`
-- 独立天气层：`scripts/presentation/battle/weather_overlay.gd`
-- 地形/浅水/设施表现：`scripts/presentation/battle/terrain_view.gd`
-- 地形与 TerrainContext 调试：`scripts/presentation/battle/terrain_debug_overlay.gd`（运行时按 F9）
+## 2. 配置加载与公共设置
 
-## 场景环境运行时契约
+| 职责 | 当前文件/目录 |
+|---|---|
+| 配置加载、索引、校验 | `scripts/infrastructure/data/config_registry.gd` |
+| 资产语义解析 | `scripts/infrastructure/assets/asset_catalog.gd` |
+| 战斗公共设置 | `data/settings/combat_settings.json` |
+| 表现公共设置 | `data/settings/presentation_settings.json` |
+| 公式配置 | `data/formulas/combat_formulas.json` |
+| 数据目录说明 | `data/README.md` |
 
-- `OceanSurface` 使用覆盖关卡地图范围的 `Node2D` 和 `canvas_item` Shader；海面纹理、噪声、波纹和天气采样以地图局部坐标为基础，镜头移动时不得变成屏幕贴片。
-- `WeatherOverlay` 是独立 `Node2D`，位于海面之上、战斗单位与 HUD/战术叠层之下；天气环境光和遮罩不得改写单位、UI 或 Domain 状态。
-- `OceanSurface` 与 `WeatherOverlay` 共用 `data/environments/ocean_palettes.json`。时间字段负责颜色、明度与反光，气候字段负责云影、风浪、白沫、雨雾、风暴、闪电和雪层强度；新增组合继续复用同一运行时结构。
-- 同一个 `map.ocean_palette` 由 `TerrainContextService` 对照 `data/environments/ocean_battle_condition_definitions.json` 解析为全局天气和时段战斗条件。表现层与 Domain 共享 ID，不共享 Shader 参数。
-- 两个环境节点的动画时间均由脚本累计并传入 Shader，不直接依赖 Shader `TIME`；战斗暂停时必须同时停止环境时间推进。
-- 地图尺寸和默认海况来自关卡的 `map` 配置，禁止在表现层假定所有关卡尺寸相同；镜头边界按当前地图尺寸和逻辑视口动态计算。
-- 项目继续使用 Compatibility 渲染器；修改海面或天气 Shader 后，至少运行场景展示测试，并用 `render_scene_qa.gd` 检查目标分辨率和代表性海况。
+新增或改字段前先查 `docs/20_data_schema_design.md`，再进入对应的 `21–26` 子契约和加载校验。
 
-## 数据与配置
+## 3. 核心战斗数据
 
-- 配置加载与校验：`scripts/infrastructure/data/config_registry.gd`
-- 全局数据入口：`autoload/data_registry.gd`
-  - `DataRegistry.registry`：读取战斗配置。
-  - `DataRegistry.assets`：读取美术资产索引。
-- 关卡配置：`data/levels/prototype_levels.json`
-- 首批正式关卡与目标：`data/levels/formal_level_01.json`、`data/objectives/level_objectives.json`
-  - 新增 1v1、3v3、更多战斗模式时优先改这里。
-  - `map.ocean_palette` 选择共享的海面/战斗环境条件，可引用 5 种气候 x 4 个时间段的组合海域。
-- 舰船配置：`data/ships/prototype_ships.json`、`data/ships/expanded_roster_ships.json`、`data/ships/phase2_ships.json`
-  - 角色基础属性、武器挂载、技能、主要武器组、弹种组、`asset_root`。
-  - `base_speed/base_turn_speed/base_detection_range/base_concealment_distance` 保存设计基线；运行字段分别按 0.5 或 1.5 倍写入。
-- 武器配置：`data/weapons/prototype_weapons.json`、`data/weapons/expanded_roster_weapons.json`、`data/weapons/phase2_weapons.json`
-  - 自动武器与 `ManualPrimary` 主要武器。
-  - HE/AP 共享冷却依赖相同 `weapon_group_id`。
-  - `base_range` 保存设计基线，`range` 保存当前 1.5 倍有效射程；领域与 UI 均直接读取 `range`。
-  - `base_projectile_speed` 保存炮弹、鱼雷、舰载机等攻击速度设计基线，`projectile_speed` 保存当前 0.5 倍运行速度。
-  - 舰炮 `fire_arcs` 表示至少一座底座可射区，`full_salvo_fire_arcs` 表示全部底座齐射区。
-- 技能配置：`data/skills/prototype_skills.json`、`data/skills/expanded_roster_skills.json`、`data/skills/phase2_skills.json`
-  - `base_cast_range` 保存设计基线，`cast_range` 保存当前 1.5 倍有效释放距离。
-- 扩展角色武器/技能生成入口：`tools/data/build_expanded_roster_data.mjs`
-- 第二期角色数据生成入口：`tools/data/build_phase2_roster_data.py`
-- 投射物配置：`data/projectiles/projectiles.json`
-  - `base_speed` 保存公共投射物 / 舰载机移动速度设计基线，`speed` 保存当前 0.5 倍运行速度。
-  - 鱼雷 `minimum_detection_distance` 保存直接运行的最小发现距离；阵营共享观测由 `BattleSession._update_projectile_observation` 维护。
-- 公式配置：`data/formulas/combat_formulas.json`
-  - `design_base_damage/design_power_coefficient/design_armor_coefficient` 保存设计量纲。
-  - `base_damage/power_coefficient/armor_coefficient` 保存统一 `0.25` 倍的局内量纲；伤害服务直接读取运行字段。
-- 海面调色板：`data/environments/ocean_palettes.json`
-  - 当前包含 20 套气候/时间组合，以及 `day_clear`、`cloudy`、`dusk` 三个兼容入口。
-  - 同一配置同时驱动海面 Shader 与独立 WeatherOverlay；雪粒/雪雾资源已正式挂载，当前基础 20 组合默认强度为 0。
-- 海面战斗条件：`data/environments/ocean_battle_condition_definitions.json`
-  - 5 个天气 Profile、4 个时段 Profile、统一海况档位和 3 个兼容 palette 别名。
-  - `scripts/domain/services/terrain_context_service.gd` 负责与局部环境区组合；`battle_session.gd` 只把关卡 palette ID 传入，不从画面反推规则。
-- 表现设置：`data/settings/presentation_settings.json`
-  - `window`：固定逻辑画布、主界面可选窗口尺寸与默认尺寸。
-  - `camera`：默认缩放、滚轮步长、最近观察范围和最远地图占比。
-- 战斗规则设置：`data/settings/combat_settings.json`
-  - `gun_dispersion`：全舰统一椭圆高斯 sigma 系数、纵横比和厌战号标定来源。
-- 战斗表现配置：`data/visuals/`
-  - `projectile_visuals.json`：投射物贴图、尺寸、轨迹与颜色。
-  - `weapon_visuals.json`、`phase2_weapon_visuals.json`：角色武器组到动画、绑定点、投射物和 VFX 的映射。
-  - `vfx_playback_profiles.json`：公共 VFX 的时长、缩放、淡入淡出和混合参数。
+| 数据类别 | 当前文件/目录 |
+|---|---|
+| 舰船定义 | `data/ships/prototype_ships.json`、`expanded_roster_ships.json`、`phase2_ships.json` |
+| 武器定义 | `data/weapons/prototype_weapons.json`、`expanded_roster_weapons.json`、`phase2_weapons.json` |
+| 技能定义 | `data/skills/prototype_skills.json`、`expanded_roster_skills.json`、`phase2_skills.json` |
+| 投射物定义 | `data/projectiles/projectiles.json` |
+| AI Profile | `data/ai/ai_profiles.json` |
 
-## 战斗核心
+## 4. 关卡、目标与进度
 
-- 战斗会话主逻辑：`scripts/application/battle_session.gd`
-  - 创建战斗：`create_battle`
-  - 固定步进：`advance_tick`
-  - 玩家命令入口：`queue_command`
-  - 给 UI 的只读状态：`snapshot`
-  - 玩家槽位：`get_player_slots`
-  - 操作状态：`get_operation_status`
-  - 主要武器瞄准校验：`get_primary_aim_status`
-  - 多扇区射角：`_weapon_fire_arcs`、`_angle_in_weapon_fire_arcs`
-- 常改位置：
-  - 航迹状态机与规划：`_update_navigation_plans`、`_plan_normal_trajectory`、`_plan_emergency_trajectory`；运行时状态为 `NormalNavigation / EmergencyEvasion / SafetyHold`。
-  - 权威移动执行：`_update_movement`；只执行轨迹规划产生的推力/转向控制，不直接追踪折线航点。
-  - 索敌与接触残影：`_update_detection`
-  - AI 分层入口：`_update_ai_intents`；玩家受限辅助：`_update_player_assist_intent`；敌方完整单舰决策：`_update_enemy_ai_intent`
-  - 量化模式/战术/目标：`_update_enemy_mode`、`_detected_tactic_values`、`_target_score`
-  - 高威胁攻击扫描：`_navigation_high_threats`、`_is_committed_high_threat_attack`、`_highest_projectile_threat`；岸线、边界和普通避碰归常规航迹。
-  - 量化主要武器与技能：`_update_ai_primary_weapons`、`_update_auto_skills`
-  - 模拟器双方完整 AI：`configure_full_ai_factions`；只由显式实验策略开启，不改变正常玩家控制默认值。
-  - 自动武器：`_update_weapons`
-  - 自动火炮预判与高斯固定落点：`_automatic_aim_solution`、`_positive_intercept_time`、`_sample_gun_impact`、`_apply_dispersion_metadata`
-  - 手动主要武器与逐座鱼雷选择：`_fire_primary_weapon`、`_validate_primary_fire`、`_weapon_for_state`
-  - 弹药切换：`_switch_ammo`
-  - 技能释放：`_cast_skill`
-  - 投射物、鱼雷角误差、管组间隔、阵营观测与延迟攻击：`_torpedo_error_profile`、`_start_mount_launch_interval`、`_spawn_projectile`、`_update_projectiles`、`_update_projectile_observation`、`_visible_projectiles`、`_resolve_delayed_attacks`
-  - 命中与伤害：`_resolve_attack`、`_resolve_area_attack`
-  - 胜负结算：`_check_victory`、`_check_timeout`、`_finish_battle`
-  - 场景战术结果：`_update_facility_weapons`、`_handle_facility_event`、`_resolve_support_mission`、`_apply_mine_trigger`、`_environment_accuracy_modifier`
-  - 敌方环境意图：`_ai_facility_plan`、`_update_ai_support_intents`；设施、潮汐和雷区意图仍转换为普通命令并经过共享合法性校验。
-- 纯计算服务：
-  - 伤害：`scripts/domain/services/damage_service.gd`
-  - 修正值顺序：`scripts/domain/services/modifier_service.gd`
-  - 舰装椭圆、圆-椭圆和连续扫掠：`scripts/domain/services/collision_geometry_service.gd`
-  - 舰炮椭圆高斯 sigma 与独立采样：`scripts/domain/services/gun_dispersion_service.gd`
-  - 海况/风速鱼雷 sigma 倍率：`scripts/domain/services/terrain_context_service.gd`
-  - 同源舰船推进、转向、水流与倒车积分：`scripts/domain/services/ship_motion_service.gd`
-  - 有限候选常规/紧急动力学轨迹：`scripts/application/navigation/trajectory_planner.gd`
-  - 稀疏拓扑走廊、廉价接图、A* 与走廊门生成：`scripts/application/navigation/route_planner.gd`
-  - 战略走廊统一排队、优先级、每 Tick请求数预算与单位取消：`scripts/application/navigation/navigation_request_broker.gd`；当前不合并、不缓存，单条 A* 仍不可抢占
-  - 固定种子均匀与高斯抽样：`scripts/infrastructure/random/seeded_random_source.gd`
-- 战斗统计：`scripts/infrastructure/analytics/battle_recorder.gd`
-  - 分类与聚合工具：`scripts/infrastructure/analytics/damage_statistics.gd`
-  - `BattleSession.get_unit_damage_statistics`：取得单舰完整统计。
-  - `BattleSession.get_all_unit_damage_statistics`：取得本局全部舰船统计，包含零伤害舰船。
-  - `BattleSession.get_all_non_ship_damage_statistics`：取得设施、危险源等非舰船的后台伤害统计；与舰船集合并列，不进入玩家逐舰展示。
-  - `BattleSession.get_unit_damage_for_category`：直接查询主炮、副炮、鱼雷、航空、技能、Buff 等分类值。
-- 随机数：`scripts/infrastructure/random/seeded_random_source.gd`
+| 职责 | 当前文件/目录 |
+|---|---|
+| 原型与海岸验证关卡 | `data/levels/prototype_levels.json` |
+| 首个正式教学/挑战关 | `data/levels/formal_level_01.json` |
+| T-02 至 T-04 正式关卡 | `data/levels/formal_tutorial_levels_02_04.json` |
+| T-05 至 T-08 正式关卡 | `data/levels/formal_tutorial_levels_05_08.json` |
+| 声明式目标定义 | `data/objectives/level_objectives.json` |
+| 目标运行时服务 | `scripts/domain/services/level_objective_service.gd` |
+| 进度存档 | `scripts/infrastructure/persistence/progress_save_store.gd` |
+| 目标运行时测试 | `scripts/tests/level_objective_runtime_test.gd` |
+| 进度存档测试 | `scripts/tests/progress_save_store_test.gd` |
 
-## 玩家输入与战斗展示
+关卡、目标、进度或接替增援是否已形成运行闭环，只以 `docs/00_project_status.md` 为准。
 
-- 中文显示文本：`scripts/presentation/ui_text.gd`
-  - 统一转换模式、阶段、镜头、操作、海域、舰种、目标类型、阵营、结算原因、拒绝原因和角色 ID。
-  - Domain 与配置引用仍使用稳定英文枚举，不直接显示给玩家。
-- 战斗输入、镜头、单位绘制：`scripts/presentation/battle/prototype_battle.gd`
-  - 数字键选槽位：`_slot_for_key`、`_select_slot`
-  - 鼠标选择/集火/移动：`_unhandled_input`、`_select_at`
-  - E 主要武器瞄准：`_begin_primary_aim`、`_confirm_primary_aim`
-  - Q 弹药切换：`_switch_selected_ammo`
-  - F 技能：`_begin_or_cast_skill`、`_confirm_skill_target`
-  - Z 连续多航点：`_toggle_route_placement`、`_append_route_waypoint`
-  - X/C/V 单舰或 `Cmd/Alt` 舰队开关：`_toggle_control_state`；运行时命令为 `SetUnitControlState`
-  - G 跟随镜头：`_toggle_follow_selected`
-  - E 瞄准期间自动主武器暂停：`_queue_primary_auto_suspend`
-  - WASD 镜头：`_update_camera`
-  - 滚轮缩放与边界：`_adjust_camera_zoom`、`_configure_camera_zoom`、`_clamp_camera_to_map`
-  - 战场角色图层：`_draw_unit`、`_draw_unit_art`
-  - 瞄准叠层：`_draw_operation_overlay`
-  - 红/绿/深绿/白主炮射界：`_draw_gun_aim_overlay`、`_draw_fire_arc_sectors`
-  - 红/绿/白方向与战术范围叠层：`_draw_directional_aim_overlay`、`_draw_area_target_overlay`、`_draw_skill_target_overlay`、`_draw_annular_sector`
-  - HUD 数据推送：`_update_hud`
-- 战斗表现导演：`scripts/presentation/battle/battle_effect_director.gd`
-  - 角色、投射物、VFX 同步：`sync_snapshot`、`consume_events`
-  - 命中跳字：`_spawn_damage_number`、`_damage_number_entry`
-  - 大口径未命中水柱：`_spawn_large_gun_water_column`；小/中口径未命中不生成水柱。
-- 角色战场视图：`scripts/presentation/battle/ship_unit_view.gd`
-  - 角色本体、舰装、状态图标、血条、动画和绑定点。
-- 角色动画状态机：`scripts/presentation/battle/animation_state_machine.gd`
-- 公共表现节点：
-  - 投射物：`scripts/presentation/battle/projectile_view.gd`
-  - 炮弹飞行与轨迹：`scripts/presentation/battle/shell_flight_view.gd`
-  - VFX：`scripts/presentation/battle/battle_vfx.gd`
-- 伤害跳字节点：`scripts/presentation/battle/damage_number_view.gd`
-  - 运行时字体绘制、描边、动效、0.25 秒合并和每目标最多 3 组。
-- HUD：`scripts/presentation/battle/battle_hud.gd`
-  - 顶部状态：`_draw_top_status`
-  - 敌我头像栏：`_draw_fleet_panel`、`_draw_roster_cell`
-  - 操作槽：`_draw_operation_dock`
-  - 小地图：`_draw_minimap`
-  - 战斗日志：`_draw_log_panel`
-  - 选中单位面板：`_draw_selected_panel`
-  - 暂停面板：`_draw_pause_panel`
-  - 结算画面：`_draw_result_panel`
-  - 返回主界面/再玩一次按钮：`return_to_menu_requested`、`restart_requested`
+## 5. 核心战斗服务
 
-## 主界面与流程
+| 职责 | 当前文件 |
+|---|---|
+| 伤害与结算 | `scripts/domain/services/damage_service.gd` |
+| 修正聚合 | `scripts/domain/services/modifier_service.gd` |
+| 舰船运动 | `scripts/domain/services/ship_motion_service.gd` |
+| 火炮散布 | `scripts/domain/services/gun_dispersion_service.gd` |
+| 几何碰撞 | `scripts/domain/services/collision_geometry_service.gd` |
+| 确定性随机源 | `scripts/infrastructure/random/seeded_random_source.gd` |
+| 核心规则回归 | `scripts/tests/test_runner.gd` |
+| 技能运行时测试 | `scripts/tests/skill_runtime_test.gd` |
 
-- 关卡目标、接替增援与进度存档尚未实施；契约与建议分层见 `docs/technical/t02_level_objective_reinforcement_progress_solution.md`。实施时局内目标事实归 Battle Domain，增援和结算事务归 Application，存档读写归 Infrastructure，菜单/HUD 只消费快照。
+侦查、武器调度、技能编排和部分状态协调目前仍由 `scripts/application/battle_session.gd` 承载。是否进一步拆服务属于架构变更，不在本文判定。
 
-- 流程状态：`scripts/application/game_flow.gd`
-  - `selected_level_id` 记录主界面选择的关卡。
-  - `window_size_options`、`apply_window_size` 负责读取、应用并持久化窗口尺寸。
-  - `_configure_content_scaling` 固定逻辑画布并启用等比界面缩放。
-  - 正式关卡进度通过 `scripts/infrastructure/persistence/progress_save_store.gd` 使用正式/候选/恢复三槽、递增 revision、SHA-256 写后校验与启动恢复；`GameFlow.record_level_victory` 只负责可信结算合并。
-- 主界面：`scripts/presentation/menu/main_menu.gd`
-  - 一级入口：`_show_tutorial`、`_show_challenge`、`_show_custom`
-  - 自定义地图/天气：`_refresh_custom_maps`、`_load_weather_options`
-  - 全角色锁定卡与编成：`_build_ship_cards`、`_toggle_ship`、`_refresh_fleet_state`
-  - 自定义战斗启动：`_start_custom_battle`；运行时 Definition 由 `GameFlow.configure_custom_battle` 组装
-  - 操作说明与界面设置：`_show_help`、`_show_settings`
+## 6. AI 与导航
 
-## 美术资产
+| 职责 | 当前文件 |
+|---|---|
+| 阵营合法观察 | `scripts/application/ai/ai_observation.gd` |
+| 量化决策模型 | `scripts/application/ai/ai_quantitative_model.gd` |
+| 战略路线规划 | `scripts/application/navigation/route_planner.gd` |
+| 路线请求预算 | `scripts/application/navigation/navigation_request_broker.gd` |
+| 常规/紧急航迹候选 | `scripts/application/navigation/trajectory_planner.gd` |
+| AI 观察测试 | `scripts/tests/ai_observation_test.gd` |
+| AI 行为与难度测试 | `scripts/tests/ai_behavior_quantitative_test.gd`、`ai_difficulty_profile_test.gd` |
+| 编组与协同测试 | `scripts/tests/ai_group_formation_test.gd`、`ai_coordination_test.gd` |
+| 航迹与恢复测试 | `scripts/tests/trajectory_navigation_test.gd`、`ai_route_recovery_test.gd` |
+| 导航性能测试 | `scripts/tests/ai_navigation_performance_test.gd` |
 
-- 资产接口：`scripts/infrastructure/assets/asset_catalog.gd`
-  - 设计说明：`docs/45_art_asset_interface_design.md`
-  - 推荐新代码优先通过 `DataRegistry.assets` 查资源。
-- 角色资源：`assets/characters/{character_id}/processed/`
-  - 生产与验收流程：`docs/46_character_art_asset_pipeline.md`
-  - 批量处理与契约检查：`tools/art_pipeline/`
-  - 战斗图层：`battle/*_battle_body_r.png`、`battle/*_battle_rig_base.png`
-  - 头像：`ui/*_ui_portrait.png`、`ui/*_ui_portrait_small.png`
-  - 横向封面：`ui/*_illust_skill_cutin_alpha.png`
-  - 纵向结算立绘：`ui/*_illust_full_alpha.png`
-- UI 图标：`assets/ui/export/2x/`
-- UI 语义清单：`assets/ui/qa/ui_asset_manifest.json`
-- 海面 Shader：`assets/environments/ocean/common/ocean_surface.gdshader`
-- 海面贴图：`assets/environments/ocean/common/ocean_*_tile.png`
-- 天气层 Shader：`assets/environment/weather/weather_overlay.gdshader`
-- 天气母版：`assets/environment/weather/ocean_weather_*_master.png`
-- 陆地母版：`assets/environment/land/land_*.png`
-- 陆地资产清单：`assets/environment/land/land_asset_manifest.json`
-- 陆地碰撞候选边缘：`assets/environment/land/land_collision_manifest.json`
-- 审核地形模板/地图实例/世界几何：`data/terrain/terrain_templates.json`、`data/terrain/authoring/terrain_maps.json`、`data/terrain/terrain_definitions.json`；当前十类模板均有对应运行时地图。
-- 共享导航：`data/terrain/navigation_definitions.json`、`scripts/application/navigation/route_planner.gd`
-- 纯地形查询/环境上下文/设施/水雷状态：`scripts/domain/services/terrain_query_service.gd`、`terrain_context_service.gd`、`facility_service.gd`、`minefield_service.gd`
-- 教学/挑战目标状态与任务结算：`scripts/domain/services/level_objective_service.gd`；当前运行时覆盖 T-01 双航点自然交战与 S-01 旗舰任务。
-  - `TerrainContextService`：固定 Tick 天气与潮汐、最终海况规则档、机动/命中/航空上下文、潮滩进入与撤离校验。
-  - `FacilityService`：观察源、岸炮状态、交互、服务事务、机场队列、依赖、HP、压制/恢复/摧毁。
-  - `MinefieldService`：连续雷区进入、安全航道、单舰触发、阵营知识、控制站状态和 AI 已知雷区绕行点。
-- 近岸/设施/局部环境资产清单：`assets/environment/terrain/terrain_asset_manifest.json`、`assets/environment/facilities/facility_asset_manifest.json`、`assets/environment/weather/zones/environment_zone_asset_manifest.json`
-- 地形制作插件：`addons/terrain_authoring/`；可在 Template/Map 模式从正式 JSON 加载并回写硬地形、浅水、航道、纯视觉层、环境区、设施挂点/依赖、雷区与安全航道，并在警告未清除时阻止保存。
-- 地形生产与 QA：`tools/terrain/`；`build_scene_combat_pipeline.py` 会在临时目录完成地形/导航烘焙与全量校验，通过后才事务式发布正式 JSON，再生成小地图和 QA；编辑往返入口为 `build_authoring_snapshot.py` / `apply_authoring_snapshot.py`。
+## 7. 硬地形与场景空间
 
-## 测试与调试
+| 职责 | 当前文件/目录 |
+|---|---|
+| 地形运行定义 | `data/terrain/terrain_definitions.json` |
+| 导航图定义 | `data/terrain/navigation_definitions.json` |
+| 地形模板与作者输入 | `data/terrain/terrain_templates.json`、`data/terrain/authoring/terrain_maps.json` |
+| 地形与射线查询 | `scripts/domain/services/terrain_query_service.gd` |
+| 地形上下文组合 | `scripts/domain/services/terrain_context_service.gd` |
+| 地形场景视图 | `scripts/presentation/battle/terrain_view.gd` |
+| 地形调试叠层 | `scripts/presentation/battle/terrain_debug_overlay.gd` |
+| 构建与校验工具 | `tools/terrain/` |
+| 海岸运行时测试 | `scripts/tests/coastal_runtime_test.gd` |
+| 作者数据测试 | `scripts/tests/terrain_authoring_test.gd` |
 
-- 核心规则测试：`scripts/tests/test_runner.gd`
-- 首批正式关卡目标专项：`scripts/tests/level_objective_runtime_test.gd`
-- 进度存档三槽、校验与恢复专项：`scripts/tests/progress_save_store_test.gd`
-- 十图运行时地图、导航与每侧 11 槽专项：`scripts/tests/coastal_runtime_test.gd`
-- 自定义四规模 × 十图出生映射、舰体通行与同阵营分离：`scripts/tests/scene_presentation_test.gd`
-- AI 量化模型：`scripts/application/ai/ai_quantitative_model.gd`
-- AI 阵营观察快照：`scripts/application/ai/ai_observation.gd`
-- AI 量化场景测试：`scripts/tests/ai_behavior_quantitative_test.gd`
-- AI 真实战场输入测试：`scripts/tests/ai_battlefield_input_test.gd`
-- AI 观察隔离测试：`scripts/tests/ai_observation_test.gd`
-- AI 设施任务测试：`scripts/tests/ai_facility_task_test.gd`
-- 设施专项与综合契约测试：`scripts/tests/facility_state_lifecycle_test.gd`、`observation_post_test.gd`、`coastal_battery_test.gd`、`supply_point_test.gd`、`airfield_mission_test.gd`、`radar_station_test.gd`、`communication_station_test.gd`、`mine_control_station_test.gd`、`repair_berth_test.gd`、`facility_integration_contract_test.gd`
-- AI 预留与协同测试：`scripts/tests/ai_coordination_test.gd`
-- AI 编组阵列测试：`scripts/tests/ai_group_formation_test.gd`
-- AI 难度 Profile：`data/ai/ai_profiles.json`
-- AI 难度测试：`scripts/tests/ai_difficulty_profile_test.gd`
-- AI 路线、掩体与恢复测试：`scripts/tests/ai_route_recovery_test.gd`
-- 航行走廊、动力学航迹、倒车、威胁白名单与状态机测试：`scripts/tests/trajectory_navigation_test.gd`
-- 场景与展示测试：`scripts/tests/scene_presentation_test.gd`
-- 第二期配置与资产映射测试：`scripts/tests/phase2_config_test.gd`
-- 48 角色技能契约与运行时测试：`scripts/tests/skill_runtime_test.gd`
-- 地形制作插件测试：`scripts/tests/terrain_authoring_test.gd`
-- 批量模拟：`scripts/tests/batch_simulation.gd`
-- 战斗模拟器：
-  - 实验运行：`scripts/application/simulation/simulation_runner.gd`
-  - 清单加载：`scripts/infrastructure/simulation/experiment_loader.gd`
-  - 聚合与报告：`scripts/infrastructure/simulation/simulation_aggregator.gd`、`simulation_report_writer.gd`
-  - 逐舰分类伤害：`scripts/infrastructure/analytics/damage_statistics.gd`；模拟器通过 `BattleSession.get_all_unit_damage_statistics()` 读取，不另算伤害；非舰船来源并列写入单局 `non_ship_damage` 与聚合 `average_damage_by_non_ship`，不混入逐舰报表。
-  - 命令入口：`tools/simulation/run_experiment.gd`
-  - 正式关卡胜率实验：`data/simulations/experiments/level_t01_win_rate_20.json`、`level_s01_win_rate_20.json`；两者强制 20 个不同种子并按聚合战斗统计报告结算，同时生成逐舰伤害报告。
-  - 示例实验：`data/simulations/experiments/smoke_single_battle.json`
-  - 最新 AI 双方对战：`data/simulations/experiments/latest_ai_current_3v3_5v5.json`
-  - 独立测试：`scripts/tests/battle_simulator_test.gd`
-  - 伤害统计测试：`scripts/tests/damage_statistics_test.gd`
-  - 平衡性子项测试：`tools/simulation/run_damage_ttk_balance.gd`；统计与图表：`tools/simulation/analyze_damage_ttk_balance.py`
-  - 平衡性测试设计：`docs/36_balance_testing_design.md`
-- 截图 QA：`scripts/tests/render_scene_qa.gd`
-- 常用命令：
-  - 启动检查：`godot --headless --path . --quit-after 2`
-  - 核心测试：`godot --headless --path . --script res://scripts/tests/test_runner.gd`
-  - AI 量化测试：`godot --headless --path . --script res://scripts/tests/ai_behavior_quantitative_test.gd`
-  - 展示测试：`godot --headless --path . --script res://scripts/tests/scene_presentation_test.gd`
-  - 第二期配置测试：`godot --headless --path . --script res://scripts/tests/phase2_config_test.gd`
-  - 全角色技能测试：`godot --headless --path . --script res://scripts/tests/skill_runtime_test.gd`
-  - 战斗模拟器测试：`godot --headless --path . --script res://scripts/tests/battle_simulator_test.gd`
-  - 运行示例模拟：`godot --headless --path . --script res://tools/simulation/run_experiment.gd -- res://data/simulations/experiments/smoke_single_battle.json`
-  - 运行伤害/舰炮/TTK 平衡子项：`godot --headless --path . --script res://tools/simulation/run_damage_ttk_balance.gd`，再运行 `python3 tools/simulation/analyze_damage_ttk_balance.py`
-  - 格式检查：`git diff --check`
-  - 地形配置校验：`python3 tools/terrain/validate_terrain_definition.py`
-  - 地形生产门禁：`python3 tools/terrain/validate_scene_combat_pipeline.py`
-  - 地形制作插件：`godot --headless --path . --script res://scripts/tests/terrain_authoring_test.gd`
+地形、环境、设施三类规则已分别由 `docs/35_scene_combat_domain_design.md`、`37_environment_runtime_domain_design.md`、`38_facility_combat_domain_design.md` 定义。
 
-## 常见修改入口
+## 8. 环境运行时
 
-- 新增角色：按所属批次修改 `data/ships/prototype_ships.json` 或 `data/ships/expanded_roster_ships.json`，再确认 `assets/characters/{id}/processed/` 资产完整。
-- 新增武器或调整手动主武器：修改对应批次武器 JSON；扩展角色优先改生成入口并重新生成，必要时再改 `battle_session.gd` 的 `_fire_primary_weapon`、`_validate_primary_fire`。
-- 调整伤害：优先改 `data/formulas/combat_formulas.json` 和 `damage_service.gd`。
-- 调整 HE/AP：看舰船的 `ammo_selection_group_id`，武器的 `weapon_group_id`、`ammo_type`。
-- 调整胜利条件：改 `battle_session.gd` 的 `_check_victory`、`_check_timeout`。
-- 新增关卡/模式：改 `data/levels/prototype_levels.json`，主界面按钮改 `main_menu.gd`。
-- 调整键鼠操作：改 `prototype_battle.gd` 的 `_unhandled_input` 和相关 `_begin/_confirm` 函数。
-- 调整 HUD 布局：改 `battle_hud.gd`。
-- 调整结算画面：改 `battle_hud.gd` 的 `_draw_result_panel` 和 `_draw_result_character`。
-- 调整主界面文案/按钮：改 `main_menu.gd`。
-- 调整海面颜色、气候、时间、雨雾、闪电或雪层强度：改 `data/environments/ocean_palettes.json`。
-- 调整海面算法：改 `assets/environments/ocean/common/ocean_surface.gdshader`。
-- 调整独立天气层合成：改 `assets/environment/weather/weather_overlay.gdshader`。
-- 调整陆地/岛屿视觉资产：改 `assets/environment/land/` 下透明 PNG 和 `land_asset_manifest.json`。
-- 调整陆地碰撞候选边缘：重新运行 `tools/art_pipeline/process_land_art.py`，并人工复核 `land_collision_manifest.json` 后再接入关卡。
-- 调整投射物、武器动画/VFX 映射：改 `data/visuals/`，并同步 `asset_catalog.gd`、配置校验和第二期配置测试。
-- 音效、音乐和语音当前没有运行时入口；建立音频方案前不要在表现脚本中零散硬编码音频路径。
+| 职责 | 当前文件/目录 |
+|---|---|
+| 全局海战环境条件 | `data/environments/ocean_battle_condition_definitions.json` |
+| 局部环境区 | `data/environments/environment_zone_definitions.json` |
+| 海面调色板 | `data/environments/ocean_palettes.json` |
+| 环境上下文服务 | `scripts/domain/services/terrain_context_service.gd` |
+| 海面表现 | `scripts/presentation/battle/ocean_surface.gd` |
+| 天气叠层 | `scripts/presentation/battle/weather_overlay.gd` |
 
-## 分层约定
+## 9. 设施与水雷
 
-- `data/` 保存数值与关卡配置。
-- `scripts/application/` 保存战斗会话、流程状态等应用层逻辑。
-- `scripts/domain/` 保存不依赖场景的纯计算服务。
-- `scripts/infrastructure/` 保存配置、资产、随机数、统计等基础设施。
-- `scripts/presentation/` 保存场景、输入、绘制和 UI。
-- UI 与场景不直接修改领域规则；玩家操作应转换为命令交给 `BattleSession`。
+| 职责 | 当前文件/目录 |
+|---|---|
+| 设施定义 | `data/facilities/facility_definitions.json` |
+| 支援任务定义 | `data/facilities/support_mission_definitions.json` |
+| 水雷定义 | `data/facilities/minefield_definitions.json` |
+| 设施状态与任务 | `scripts/domain/services/facility_service.gd` |
+| 水雷状态与触发 | `scripts/domain/services/minefield_service.gd` |
+| 设施总契约测试 | `scripts/tests/facility_integration_contract_test.gd` |
+| 生命周期测试 | `scripts/tests/facility_state_lifecycle_test.gd` |
+| 岸炮 | `scripts/tests/coastal_battery_test.gd` |
+| 观察站/雷达 | `scripts/tests/observation_post_test.gd`、`radar_station_test.gd` |
+| 补给维修 | `scripts/tests/supply_point_test.gd`、`repair_berth_test.gd` |
+| 通信/机场/水雷 | `scripts/tests/communication_station_test.gd`、`airfield_mission_test.gd`、`mine_control_station_test.gd` |
+| AI 设施任务 | `scripts/tests/ai_facility_task_test.gd` |
+
+## 10. 战斗表现与 HUD
+
+| 职责 | 当前文件 |
+|---|---|
+| 单位视图 | `scripts/presentation/battle/ship_unit_view.gd` |
+| 动画状态机 | `scripts/presentation/battle/animation_state_machine.gd` |
+| 事件与效果编排 | `scripts/presentation/battle/battle_effect_director.gd` |
+| 实体投射物视图 | `scripts/presentation/battle/projectile_view.gd` |
+| 炮弹飞行表现 | `scripts/presentation/battle/shell_flight_view.gd` |
+| 公共战斗 VFX | `scripts/presentation/battle/battle_vfx.gd` |
+| 伤害数字 | `scripts/presentation/battle/damage_number_view.gd` |
+| 战斗 HUD | `scripts/presentation/battle/battle_hud.gd` |
+| UI 文本 | `scripts/presentation/ui_text.gd` |
+| 场景表现测试 | `scripts/tests/scene_presentation_test.gd` |
+| 场景 QA 渲染 | `scripts/tests/render_scene_qa.gd` |
+
+表现配置位于 `data/visuals/`，包括武器、投射物、VFX 播放 Profile 和第二期映射。角色运行时资产位于 `assets/characters/{character_id}/processed/`；公共 VFX、环境和 UI 资产分别位于 `assets/vfx/`、`assets/environment|environments/` 与 `assets/ui/`。
+
+## 11. 模拟、统计与报告
+
+| 职责 | 当前文件/目录 |
+|---|---|
+| 实验清单 | `data/simulations/experiments/` |
+| 实验加载 | `scripts/infrastructure/simulation/experiment_loader.gd` |
+| 单次/批次运行协调 | `scripts/application/simulation/simulation_runner.gd` |
+| 聚合统计 | `scripts/infrastructure/simulation/simulation_aggregator.gd` |
+| 报告写出 | `scripts/infrastructure/simulation/simulation_report_writer.gd` |
+| 战斗事实记录 | `scripts/infrastructure/analytics/battle_recorder.gd` |
+| 伤害统计 | `scripts/infrastructure/analytics/damage_statistics.gd` |
+| 命令行实验入口 | `tools/simulation/run_experiment.gd` |
+| 平衡分析工具 | `tools/simulation/analyze_damage_ttk_balance.py`、`run_damage_ttk_balance.gd` |
+| 模拟器测试 | `scripts/tests/battle_simulator_test.gd`、`batch_simulation.gd` |
+| 单局冒烟 | `scripts/tests/battle_smoke_single_test.gd` |
+
+实验产物写入 `artifacts/simulations/`，属于生成结果，不是配置真源。
+
+## 12. 常见改动入口
+
+| 要修改的内容 | 先读的设计真源 | 再定位的实现 |
+|---|---|---|
+| 核心规则/结算 | `10`、`12`、`32` | `battle_session.gd`、`scripts/domain/services/`、`test_runner.gd` |
+| 操作与 HUD | `11`、`33`、`44` | `prototype_battle.gd`、`battle_hud.gd` |
+| 角色/武器/技能 | `13`、`14`、`21` | `data/ships|weapons|skills/`、`config_registry.gd` |
+| 关卡目标/进度 | `15`、`23`、`technical/t02` | `data/levels|objectives/`、`level_objective_service.gd`、`progress_save_store.gd` |
+| AI 决策 | `16`、`24` | `scripts/application/ai/`、`data/ai/` |
+| 导航性能 | `technical/t00`、`technical/t01` | `scripts/application/navigation/`、`ship_motion_service.gd` |
+| 硬地形 | `35`、`22` | `data/terrain/`、`terrain_query_service.gd`、`tools/terrain/` |
+| 天气/局部环境 | `18`、`37`、`22` | `data/environments/`、`terrain_context_service.gd` |
+| 设施/水雷 | `18`、`38`、`22` | `data/facilities/`、`facility_service.gd`、`minefield_service.gd` |
+| 表现资产 | `33`、`40–47`、`25` | `scripts/presentation/`、`data/visuals/`、`assets/` |
+| 模拟实验 | `19`、`26`、`36` | `data/simulations/`、`scripts/*/simulation/`、`tools/simulation/` |
+
+路径不存在或职责已移动时，应先修正本文，再更新引用；不要为了符合旧路引恢复过期目录。

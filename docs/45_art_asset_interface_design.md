@@ -1,5 +1,7 @@
 # 程序-美术资产接口设计
 
+> **功能与边界**：本文是程序通过稳定语义查询角色、UI、公共战斗 VFX 和环境资产的接口真源，负责 `AssetCatalog` 入口、manifest、绑定点语义、回退与禁止硬编码规则。视觉目标见 `40-44`，表现字段见 `docs/25_presentation_data_schema.md`，生产与 QA 见 `docs/46_character_art_asset_pipeline.md`、`docs/47_scene_art_asset_pipeline.md`。本文不维护具体表现数值、战斗规则、当前资产完成度或表现节点算法。
+
 ## 目标
 
 程序侧不直接拼接角色、UI、动画、VFX 和绑定点文件名，而是通过稳定语义查询资源。美术侧继续使用现有目录和后处理工具输出，不额外复制一套资产真源。
@@ -9,7 +11,7 @@
 - 角色运行时资产仍位于 `assets/characters/{character_id}/processed/`。
 - 角色装配配置仍位于 `assets/characters/{character_id}/processed/config/`。
 - UI 语义清单仍位于 `assets/ui/qa/ui_asset_manifest.json`。
-- `data/` 仍只保存战斗数值和关卡配置，不保存美术裁切、绑定点或资源派生信息。
+- `data/visuals/` 保存投射物表现、武器表现映射和 VFX 播放参数；角色裁切、绑定点和资源派生信息仍只保存在 processed 配置与资产 manifest 中。
 
 ## 运行时接口
 
@@ -54,13 +56,12 @@ assets/environment/weather/zones/environment_zone_asset_manifest.json
 
 炮弹曳尾接口：
 
-- 炮弹类 `projectile_visual` 可提供 `shell_trail_caliber_pixel_multiplier`，运行时按 `口径 mm * 倍率` 计算曳尾像素长度；当前小/中/大/超重型四档倍率为 `0.11/0.16/0.18/0.20`。
-- 可选字段 `shell_trail_width`、`shell_trail_duration`、`shell_trail_outer_width_multiplier`、`shell_trail_outer_alpha`、`shell_trail_head_glow_radius`、`shell_trail_afterimage_seconds`、`shell_trail_afterimage_samples`、`shell_trail_segment_count`、`shell_trail_color_key`、`shell_trail_color_palette` 只控制表现；它们不参与伤害、弹速、命中或领域判定。
-- `weapon_visual` 或武器数据可用 `shell_caliber_mm` / `caliber_mm` 覆盖口径；没有覆盖时运行时从武器名称中的 `xxxmm` 读取，再按炮弹档位兜底。
-- 表现层按 `WeaponFired` 事件创建炮弹飞行节点，按 `<140/140-279/280-419/>=420mm` 选择小/中/大/超重型公共炮弹 sprite，并在炮弹当前位置后方绘制渐变曳尾。公共档位由真实口径决定，避免缺少角色专属映射时退回统一中口径外观；多发炮击的表现落点集中在目标区域附近，不按炮口等角度扇出。
-- 推荐公共颜色键为 `clean_white`、`fire_yellow`、`sunset_red`。
+- `projectile_visual` 返回口径档位、弹体、曳尾和颜色等表现参数；字段形状及校验只见 `docs/25_presentation_data_schema.md`。
+- `weapon_visual` 将角色武器或武器组映射到公共投射物和 VFX Profile；缺少角色覆盖时必须使用明确公共回退。
+- 口径档位、倍率、宽度、持续时间、颜色和残影的当前精确值只由 `data/visuals/` 拥有，接口文档不复制。
+- 表现节点只消费已经成立的战斗事件和固定落点，不在资产查询层重新计算射击、命中或散布。
 
-建议配置入口：
+表现配置入口：
 
 - `data/visuals/projectile_visuals.json`
 - `data/visuals/weapon_visuals.json`

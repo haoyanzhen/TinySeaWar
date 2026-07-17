@@ -1,8 +1,10 @@
-# 美术设计文档
+# 角色美术方向与通用资产契约
+
+> **功能与边界**：本文是角色本体、舰装轮廓、阵营/性格/等级视觉语言和单角色通用资产包的美术真源。角色名单与个体视觉重点见 `docs/41_character_art_design.md`，公共战斗特效见 `docs/42_combat_art_design.md`，运行时语义接口见 `docs/45_art_asset_interface_design.md`，生产、拆件和 QA 流程见 `docs/46_character_art_asset_pipeline.md`。本文不维护角色数值、碰撞规则、当前资产完成度、物理目录实现或工具命令。
 
 ## 1. 美术方向
 
-Tinny Sea War 的战斗表现采用 2D 二次元舰娘风格。角色以舰娘本体作为情感和识别核心，战斗信息由舰装、底座、航迹、武器节点、特效和 UI 辅助表达。
+Tiny Sea War 的战斗表现采用 2D 二次元舰娘风格。角色以舰娘本体作为情感和识别核心，战斗信息由舰装、底座、航迹、武器节点、特效和 UI 辅助表达。
 
 通用 UI 视觉语言、组件、战斗 HUD、战场叠层、弹窗、动效与交付规范统一见 `docs/44_ui_art_design.md`。本文档中的 UI 内容主要定义角色头像、技能图标、舰种图标和角色立绘与界面的接口。
 
@@ -373,11 +375,10 @@ UI 资产包采用统一契约：半身立绘、技能 cut-in、默认/认真/�
 
 战场单位的玩法占位与视觉尺寸必须分离：
 
-- `collision_half_extents` 表示随航向旋转的规则舰装椭圆，并应接近舰装底座的主要可见外轮廓；炮弹、鱼雷、舰船重叠和选取共用该范围。
-- `collision_radius` 仅保留为旧数据与当前地形导航的兼容安全值，不再代表舰船对武器的真实受击范围。
+- 规则占位字段及其几何语义以 `docs/21_combat_data_schema.md` 和 `docs/35_scene_combat_domain_design.md` 为准；美术只要求舰装主要轮廓与权威占位具有可读对应关系，不重新定义碰撞。
 - 角色本体和舰装底座使用独立缩放，不能用本体缩放直接套到舰装，否则宽舰装会遮挡多艘小船。
-- MVP 运行时本体目标宽度按 `collision_radius * 3.8` 计算，并限制在 `84-126px`，最大/最小不超过 1.5 倍。
-- MVP 运行时舰装目标宽度直接使用 `collision_half_extents.x * 2`，数据生成基线仍按旧半径推导并限制在 `108-162px`。
+- 同屏最小与最大角色本体的可见宽度差控制在可读范围内，不能因规则半径差异形成悬殊的角色缩放。
+- 舰装宽度以权威椭圆长轴为视觉参考，并与角色本体独立限制，避免大舰装遮挡相邻小型单位。
 - 碰撞椭圆需要在角色图层之上有轻量描边，帮助玩家判断真实规则占位。
 - 战列、航母仍可比驱逐和潜艇更有体量，但不得大到遮挡多艘小船或使碰撞范围无法判断。
 
@@ -428,51 +429,12 @@ UI 资产包采用统一契约：半身立绘、技能 cut-in、默认/认真/�
 
 ### 6.7 文件命名与交付规范
 
-单角色建议使用统一目录：
+本节只保留交付不变量：
 
-```text
-assets/characters/{character_id}/concept/
-assets/characters/{character_id}/battle/
-assets/characters/{character_id}/ui/
-assets/characters/{character_id}/vfx/
-assets/characters/{character_id}/meta/
-```
+- 所有运行时战场图必须使用透明背景；角色本体、舰装底座和武器节点必须可独立绑定。
+- 每个可旋转武器必须提供旋转中心和发射点语义。
+- 头像、立绘和战场单位必须保持同一发型、主色与核心配饰。
+- 角色包必须满足本章的完整资产清单，不能因源 sheet 缺项而降低完成口径。
+- 公共弹体、拖尾、命中和预警不得在角色包中重复交付；角色只提供确有辨识价值的覆盖层。
 
-命名示例：
-
-```text
-enterprise_cv6_concept_full.png
-enterprise_cv6_illust_full_alpha.png
-enterprise_cv6_illust_half_alpha.png
-enterprise_cv6_illust_skill_cutin_alpha.png
-enterprise_cv6_expr_default.png
-enterprise_cv6_expr_serious.png
-enterprise_cv6_expr_hit.png
-enterprise_cv6_ui_chibi_head.png
-enterprise_cv6_ui_class_carrier.png
-enterprise_cv6_battle_body_r.png
-enterprise_cv6_battle_rig_base.png
-enterprise_cv6_battle_turret_main_01.png
-enterprise_cv6_battle_aircraft_01.png
-enterprise_cv6_anim_idle.anim
-enterprise_cv6_anim_move.anim
-enterprise_cv6_anim_attack.anim
-enterprise_cv6_anim_hit.anim
-enterprise_cv6_anim_firepower.anim
-enterprise_cv6_ui_portrait.png
-enterprise_cv6_ui_skill.png
-enterprise_cv6_vfx_skill_area.png
-enterprise_cv6_meta_bind_points.json
-```
-
-交付检查：
-
-- 所有战场 PNG 需要透明背景。
-- 角色本体、舰装底座、武器节点分层清楚，不能烘焙成一张不可拆图。
-- 每个可旋转武器必须标注旋转中心和发射点。
-- 每名角色必须交付半身立绘、全身立绘、技能 cut-in、基础表情差分、待机动画、移动动画、攻击动画、受击动画和火力动画。
-- 每名角色的 UI 资产包必须同时包含三个基础表情、头像、小头像、Q 版头像、技能图标和舰种图标；不允许仅因源 sheet 缺项就将角色包标记为完成。
-- 头像和战场单位必须保留同一发型、主色和核心配饰。
-- 阵营徽章使用抽象化设计，避免直接复刻真实政治符号。
-- 技能图标需要体现技能类型，例如炮击、鱼雷、防空、航空、潜航或护航。
-- 角色武器配置必须引用公共战斗美术 profile；只有核心辨识度无法由公共 profile 表达时，才在角色 `vfx/` 中追加专属弹体、拖尾或命中特效。
+源文件、processed 输出、配置命名、目录和验收命令统一由 `docs/46_character_art_asset_pipeline.md` 维护；运行时绑定点和资源查询语义统一由 `docs/45_art_asset_interface_design.md` 维护。

@@ -1,10 +1,10 @@
 # 设施与天气效果策划
 
-## 1. 文档目标
+## 1. 文档功能与边界
 
-本文统一整理岸基设施、设施状态、支援任务、水雷、局部环境标识，以及 5 种天气 × 4 个时段的全局战斗效果。目标是让玩家看到的海面、天气层和地图标识，与 Domain 实际采用的侦查、机动、命中和航空条件保持一致。
+本文是 Tiny Sea War 设施、局部环境、天气和时段的玩法效果真源，负责定义它们带来什么战术选择、首轮数值如何组合，以及玩家必须获得哪些语义反馈。
 
-本文负责玩法含义、信息优先级、首轮数值和组合体验；程序契约见 `docs/35_scene_combat_domain_design.md`，场景表现参数见 `docs/43_scene_art_design.md`，UI 通用规格见 `docs/44_ui_art_design.md`。
+本文不定义 Domain 状态机、命令字段、资产文件名、程序路径或当前完成度。硬地形、环境运行时和设施程序契约分别见 `docs/35_scene_combat_domain_design.md`、`docs/37_environment_runtime_domain_design.md`、`docs/38_facility_combat_domain_design.md`；场景表现见 `docs/43_scene_art_design.md`，UI 和资产语义见 `docs/44_ui_art_design.md`、`docs/45_art_asset_interface_design.md`，当前接入状态见 `docs/00_project_status.md`。
 
 核心原则：
 
@@ -35,52 +35,48 @@
 
 ### 3.1 八类设施
 
-| 设施 | UI 语义/文件 | 场景资产语义 | 当前战斗效果 |
+| 设施 | UI 语义 | 场景资产语义 | 战斗效果 |
 | --- | --- | --- | --- |
-| 海岸观察站 | `ui_marker_facility_coastal_observation_post.png` | `facility.coastal_observation_post.*` | 激活后成为固定光学观察源，范围 1150；受视距、海雾、昼夜和岛岸遮挡影响 |
-| 岸防炮 | `ui_marker_facility_coastal_battery.png` | `facility.coastal_battery.*` | 支持敌方锁定激活/己方休眠待激活；耐久与防护引用厌战经典战列舰，单座联装炮引用其 381mm AP/HE；压制或通信失效时停火 |
-| 前沿补给点 | `ui_marker_facility_forward_supply_point.png` | `facility.forward_supply_point.*` | 中立休眠，需先占领；同阵营舰低速进入单泊位并连续服务 7 秒，完成装填并缩短 12 秒技能冷却，离泊/受击/压制会中断 |
-| 近岸机场 | `ui_marker_facility_coastal_airfield.png` | `facility.coastal_airfield.*` | 敌方激活、不可占领/摧毁；提供侦察、战斗机巡逻和空袭，准备阶段随机场失效取消，已离场任务继续；受天气、冷却、次数及通信限制 |
-| 雷达站 | `ui_marker_facility_radar_station.png` | `facility.radar_station.*` | 敌方休眠，由关卡事件激活；1400 范围精确位置雷达接触，不受光学倍率或岛岸阻挡，显式雷达隐身可规避 |
-| 通信站 | `ui_marker_facility_communication_station.png` | `facility.communication_station.*` | 敌方激活且可占领/压制/摧毁；只服务同阵营且显式声明依赖的设施，普通占领不转移下游，整套易手必须触发关卡规则 |
-| 水雷控制站 | `ui_marker_facility_mine_control_station.png` | `facility.mine_control_station.*` | 占领后在控制半径内执行 10 秒方形区域布雷；压制或摧毁取消进行中任务，已独立布设水雷继续存在 |
-| 港口维修泊位 | `ui_marker_facility_repair_berth.png` | `facility.repair_berth.*` | 占领后同阵营舰低速、对准方向进入单泊位 `Docked` 并定点保持，再计时 9 秒；恢复最大 HP 的 28%，单场最高恢复到 80% |
-
-设施世界资产位于 `assets/environment/facilities/`，UI 标识位于 `assets/ui/processed/battle/terrain/`，正式语义清单为 `assets/environment/facilities/facility_asset_manifest.json`。
+| 海岸观察站 | 观察站类型与阵营/状态覆盖 | `facility.coastal_observation_post.*` | 激活后成为固定光学观察源，范围 1150；受视距、海雾、昼夜和岛岸遮挡影响 |
+| 岸防炮 | 岸炮类型与阵营/状态覆盖 | `facility.coastal_battery.*` | 支持敌方锁定激活/己方休眠待激活；耐久与防护引用厌战经典战列舰，单座联装炮引用其 381mm AP/HE；压制或通信失效时停火 |
+| 前沿补给点 | 补给类型与服务状态 | `facility.forward_supply_point.*` | 中立休眠，需先占领；同阵营舰低速进入单泊位并连续服务 7 秒，完成装填并缩短 12 秒技能冷却，离泊/受击/压制会中断 |
+| 近岸机场 | 机场类型与任务状态 | `facility.coastal_airfield.*` | 敌方激活、不可占领/摧毁；提供侦察、战斗机巡逻和空袭，准备阶段若机场失效则取消，已离场任务继续；受天气、冷却、次数及通信限制 |
+| 雷达站 | 雷达类型与接触状态 | `facility.radar_station.*` | 敌方休眠，由关卡事件激活；1400 范围精确位置雷达接触，不受光学倍率或岛岸阻挡，显式雷达隐身可规避 |
+| 通信站 | 通信类型与依赖状态 | `facility.communication_station.*` | 敌方激活且可占领/压制/摧毁；只服务同阵营且显式声明依赖的设施，普通占领不转移下游，整套易手必须触发关卡规则 |
+| 水雷控制站 | 水雷控制类型与任务状态 | `facility.mine_control_station.*` | 占领后在控制半径内执行 10 秒方形区域布雷；压制或摧毁取消进行中任务，已独立布设水雷继续存在 |
+| 港口维修泊位 | 维修类型与服务状态 | `facility.repair_berth.*` | 占领后同阵营舰低速、对准方向进入单泊位 `Docked` 并定点保持，再计时 9 秒；恢复最大 HP 的 28%，单场最高恢复到 80% |
 
 设施操作按职责组合五类模式：区域控制负责取得所有权，靠泊服务负责补给与维修，远程指挥负责机场任务与布雷，自动运行负责岸炮、观察、雷达和通信，战斗处置负责公共攻击产生的压制与摧毁。普通玩家语义统一显示为“控制/占领”；`Activate` 不作为水面舰通用操作，只保留给关卡初始化、脚本事件或明确标记的特殊设施。
 
-设施生命、所有权、运行和交互分别表达：生命为 `Alive | Destroyed`，所有权使用阵营 ID，运行态为 `Dormant | Active | Suppressed | Silent | Disabled`，交互态为 `Idle | Controlling | Contested | Moored | Docked | Servicing | Interrupted`。依赖设施必须同时处于可运行状态并属于同一阵营；压制不改变所有权，恢复时重新检查依赖。不可摧毁设施在数据声明的 HP 下限停止掉血，但继续累计压制伤害并提供受击、伤害受限和压制反馈。
+设施需要分别反馈生命、所有权、运行和交互状态；依赖设施必须处于可运行状态且属于同一阵营，压制不改变所有权。完整状态、转换和中断契约只在 `docs/38_facility_combat_domain_design.md` 定义。
 
 ### 3.2 状态与事件图标
 
-| 状态/事件 | 图标 | 使用条件 |
+| 状态/事件 | 表现语义 | 使用条件 |
 | --- | --- | --- |
-| 激活 | `ui_icon_facility_active.png` | 激活完成或设施恢复运行 |
-| 夺取 | `ui_icon_facility_seize.png` | 夺取交互开始、进行或所有权变化 |
-| 压制 | `ui_icon_facility_suppressed.png` | 能力暂时关闭、压制倒计时进行中 |
-| 恢复 | `ui_icon_facility_recovered.png` | 压制结束并恢复到此前运行态 |
-| 摧毁 | `ui_icon_facility_destroyed.png` | HP 归零并进入不可逆摧毁态 |
-| 服务中断 | `ui_icon_facility_service_interrupted.png` | 舰船离开、受击或设施失效导致服务取消 |
-| 服务完成 | `ui_icon_facility_service_complete.png` | 补给或维修效果已经结算 |
+| 激活 | 激活/恢复事件标识 | 激活完成或设施恢复运行 |
+| 夺取 | 控制进度与易手标识 | 夺取交互开始、进行或所有权变化 |
+| 压制 | 压制状态与倒计时 | 能力暂时关闭、压制倒计时进行中 |
+| 恢复 | 恢复事件标识 | 压制结束并恢复到此前运行态 |
+| 摧毁 | 摧毁状态标识 | HP 归零并进入不可逆摧毁态 |
+| 服务中断 | 服务中断事件标识 | 舰船离开、受击或设施失效导致服务取消 |
+| 服务完成 | 服务完成事件标识 | 补给或维修效果已经结算 |
 
 场景设施额外使用 `facility.state.active/suppressed/offline/servicing` 等覆盖层。事件图标只短暂提示结果，状态覆盖层负责持续表达，二者不能互相替代。
 
-运行表现按语义区分：`Suppressed` 使用压制覆盖层，`Silent` 使用通信中断覆盖层，`Dormant/Disabled` 使用离线覆盖层，`Docked/Servicing` 优先使用服务覆盖层；不可摧毁设施在操作面板明确显示“不可摧毁”和 HP 下限。纯雷达接触保持青色未知目标标记，已发现动态水雷在战场和小地图显示独立雷点。
-
-维修泊位的 `Docked` 是正式运动约束而非普通区域停留：泊位记录进坞位置，维修舰不受自身推进、水流或舰体重叠修正推动，但仍可被攻击、命中、沉没并参与胜负判定。有效移动指令或显式离泊、单次达到最大 HP `12%` 的重击、驶出泊位、设施受击/压制/摧毁以及维修舰沉没都会中断并重置进度。
+持续覆盖层必须区分压制、通信中断、离线和服务状态；不可摧毁设施需要明确显示伤害下限。纯雷达接触保持未知目标语义，已发现动态水雷显示独立雷点。维修泊位的定点约束、受击中断和离泊流程属于 Domain 契约，以 `docs/38_facility_combat_domain_design.md` 为准。
 
 ### 3.3 机场任务与水雷
 
-| 类别 | 图标 | 当前效果 |
+| 类别 | 表现语义 | 战斗效果 |
 | --- | --- | --- |
-| 航空侦察 | `ui_icon_mission_air_recon.png` | 到达后生成半径 620、持续 18 秒的航空观察区 |
-| 战斗机巡逻 | `ui_icon_mission_fighter_patrol.png` | 生成半径 520、持续 22 秒的防护区，区内敌方航空命中 `-0.28` |
-| 空袭 | `ui_icon_mission_airstrike.png` | 到达后使用正式航空武器连续结算 3 次 |
-| 已知雷区/水雷 | `ui_marker_minefield_known.png` | 固定雷区显示已掌握边界，动态水雷显示已发现位置；任意阵营舰船接触都会触发，并进入普通鱼雷伤害与装甲结算 |
-| 未知雷区 | `ui_marker_minefield_unknown.png` | 仅用于全知调试或未来模糊情报，不向普通阵营泄露真实边界 |
-| 失效雷区 | `ui_marker_minefield_disabled.png` | 雷区已被控制站关闭或摧毁，不再触发 |
-| 安全航道 | `ui_marker_minefield_safe_channel.png` | 雷区内明确不触发水雷的通行带 |
+| 航空侦察 | 侦察任务与观察区 | 到达后生成半径 620、持续 18 秒的航空观察区 |
+| 战斗机巡逻 | 巡逻任务与防护区 | 生成半径 520、持续 22 秒的防护区，区内敌方航空命中 `-0.28` |
+| 空袭 | 空袭任务与攻击区 | 到达后使用正式航空武器连续结算 3 次 |
+| 已知雷区/水雷 | 已知边界或已发现雷点 | 固定雷区显示已掌握边界，动态水雷显示已发现位置；任意阵营舰船接触都会触发，并进入普通鱼雷伤害与装甲结算 |
+| 未知雷区 | 模糊情报或全知调试语义 | 仅用于全知调试或未来模糊情报，不向普通阵营泄露真实边界 |
+| 失效雷区 | 失效状态 | 雷区已被控制站关闭或摧毁，不再触发 |
+| 安全航道 | 安全通行带 | 雷区内明确不触发水雷的通行带 |
 
 水雷控制站默认中立休眠，可占领、压制和摧毁。玩家选择控制半径内的正方形区域时会看到范围、合法性和任务进度；区域包含现有敌舰时禁止提交。完成后按固定种子一次生成整批水雷，落在陆地或岛屿内的个体直接失效且不重抽，结果反馈分别报告有效和失效数量。
 
@@ -90,17 +86,17 @@
 
 ## 4. 局部环境标识与效果
 
-| 环境 | 标识 | 场景资源 | 当前战斗效果 |
-| --- | --- | --- | --- |
-| 海雾 | `ui_marker_environment_sea_fog.png` | `sea_fog_mask/edge/detail` | 局部光学能见度乘以 `0.62`；不阻挡移动、炮弹或鱼雷 |
-| 飑线 | `ui_marker_environment_rain_squall.png` | `rain_squall_mask/edge` | 局部光学能见度乘以 `0.72`，航空条件至少为 `Restricted`，风速 `+6` 并放大鱼雷角误差 |
-| 高海况 | `ui_marker_environment_high_sea.png` | `high_sea_foam_mask` | 将局部海况向 4 级插值，最终海况影响航速、命中、航空和鱼雷角误差 |
-| 背风水域 | `ui_marker_environment_lee_water.png` | `lee_water_mask` | 最终海况降低 2 级，为恶劣天气下的近岸稳定航路，并缓解鱼雷角误差 |
-| 月光水域 | `ui_marker_environment_moonlit_lane.png` | `moonlit_lane_mask` | 局部光学能见度乘以 `1.18`，不穿透岛岸，不创造观察者 |
-| 强流 | `ui_marker_environment_strong_current.png` | `strong_current_streak_tile` | 按方向施加基础强度 9 的流速向量，影响舰船、鱼雷和路线成本 |
-| 潮汐水域 | `ui_marker_environment_tide.png` | `active_illumination_mask` | `Flood/High` 可进入，`Ebb/Low` 禁止新进入但允许已在区内单位撤离 |
-| 区域边界 | `ui_marker_environment_zone_boundary.png` | 程序边线 | 表达规则边界，不代表独立效果 |
-| 移动趋势 | `ui_marker_environment_movement_trend.png` | 程序方向提示 | 表达公开漂移方向和短期趋势，不提供未来精确位置 |
+| 环境 | 标识语义 | 战斗效果 |
+| --- | --- | --- |
+| 海雾 | 雾区、边界与细节 | 局部光学能见度乘以 `0.62`；不阻挡移动、炮弹或鱼雷 |
+| 飑线 | 雨区、边界与移动趋势 | 局部光学能见度乘以 `0.72`，航空条件至少为 `Restricted`，风速 `+6` 并放大鱼雷角误差 |
+| 高海况 | 强浪与白沫范围 | 将局部海况向 4 级插值，最终海况影响航速、命中、航空和鱼雷角误差 |
+| 背风水域 | 稳定水域范围 | 最终海况降低 2 级，为恶劣天气下的近岸稳定航路，并缓解鱼雷角误差 |
+| 月光水域 | 局部照明范围 | 局部光学能见度乘以 `1.18`，不穿透岛岸，不创造观察者 |
+| 强流 | 水流方向与强度 | 按方向施加基础强度 9 的流速向量，影响舰船、鱼雷和路线成本 |
+| 潮汐水域 | 潮态与通行范围 | `Flood/High` 可进入，`Ebb/Low` 禁止新进入但允许已在区内单位撤离 |
+| 区域边界 | 规则边界 | 表达规则边界，不代表独立效果 |
+| 移动趋势 | 公开趋势提示 | 表达公开漂移方向和短期趋势，不提供未来精确位置 |
 
 局部天气与全局天气采用叠加关系。例如“雨夜中的海雾”先得到雨夜基础能见度，再乘海雾修正并受最低能见度保护；“雷雨中的背风水域”降低最终海况，但不会消除雷雨本身的低能见度和航空限制。
 
@@ -142,7 +138,7 @@
 | 黄昏 | `0.90` | `-0.01` | `1.05` | 黄红昏沉与低角度光照降低辨识，效果克制 |
 | 夜间 | `0.72` | `-0.03` | `1.15` | 显著缩短光学接触距离，月光区和观察站价值上升 |
 
-时段不改变设施 HP、服务收益、水雷伤害和潮汐周期。观察站仍受时段能见度影响；雷达未来使用独立传感器规则，不继承光学倍率。
+时段不改变设施 HP、服务收益、水雷伤害和潮汐周期。观察站仍受时段能见度影响；雷达使用独立传感器规则，不继承光学倍率。
 
 ---
 
@@ -197,13 +193,13 @@ Ocean palette ID
 - 关键状态变化通过事件图标和战斗日志反馈；不要求玩家仅从设施贴图猜测规则。
 - AI 使用最终 `TerrainContext` 评估接触、路线、背风、潮汐、机场合法性和雷区，不读取 Shader 的雨线、闪电帧或屏幕亮度。
 
-后续 UI 可增加天气效果详情浮层，但首轮实现不能因为缺少浮层而隐藏局部环境边界或错误显示设施状态。
+UI 可以提供天气效果详情浮层，但即使没有浮层，也不能隐藏局部环境边界或错误显示设施状态。
 
 ---
 
 ## 10. 数据与验收
 
-运行时规则真源：
+运行时数据真源：
 
 ```text
 data/environments/ocean_battle_condition_definitions.json
@@ -213,15 +209,7 @@ data/facilities/support_mission_definitions.json
 data/facilities/minefield_definitions.json
 ```
 
-表现真源：
-
-```text
-data/environments/ocean_palettes.json
-assets/environment/weather/
-assets/environment/weather/zones/
-assets/environment/facilities/
-assets/ui/processed/battle/terrain/
-```
+表现参数以 `data/environments/ocean_palettes.json` 为准；场景、UI 和资产文件的具体位置、命名与发现规则只以 `docs/43_scene_art_design.md`、`docs/44_ui_art_design.md`、`docs/45_art_asset_interface_design.md` 及正式 manifest 为准。
 
 验收要求：
 

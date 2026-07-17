@@ -1,5 +1,7 @@
 # 角色美术资产生产与验收管线
 
+> **功能与边界**：本文是角色源图、拆件、透明化、配置生成、批处理和 QA 的生产流程真源。通用资产包由 `docs/40_art_direction_design.md` 定义，个体视觉重点由 `docs/41_character_art_design.md` 定义，运行时语义接口由 `docs/45_art_asset_interface_design.md` 定义，当前完成度只见 `docs/00_project_status.md`。本文不维护角色数值、公共战斗 VFX、运行时完成状态或场景环境资产流程。
+
 ## 1. 目标
 
 将 AI 生成的角色美术汇总图，稳定转为可进入游戏绑定测试的单件透明资产和配置数据。
@@ -9,25 +11,18 @@
 ```text
 试产 sheet
 -> 程序清背景、拆件、补 padding、生成配置
--> Codex 通过 Computer Use 做视觉确认
+-> 人工视觉确认
 -> 程序生成/更新 QA 报告
 -> 进入绑定和战斗场景测试
 ```
 
-人工目检环节由 Codex 通过 Computer Use 执行，不依赖用户手动逐张检查。
+人工目检可以由支持本地图片和预览页的审查工具执行，但必须记录审查人、产物和 `pass/polish/blocker` 结论；不得仅凭脚本退出码代替视觉确认。
 
 ## 2. 输入
 
 ### 2.1 资产契约
 
 `docs/40_art_direction_design.md` 的「单角色美术资产清单」是生成、后处理和验收的唯一契约。流水线不得以「源图中没有」作为忽略必需资产的理由。
-
-每名角色的统一 UI 资产包包含：
-
-- 半身立绘和技能 cut-in。
-- 默认、认真、受击三个基础表情。
-- 头像、小头像和 Q 版头像。
-- 技能图标和 MVP 六类舰种图标。
 
 全身立绘必须从已验收的角色设定稿输出到正式处理目录，不得只留在 `concept/` 中。
 
@@ -58,7 +53,7 @@ assets/characters/{id}/meta/
 
 ## 3. 配置
 
-后续应把裁切、绑定和配置生成从脚本内置数据迁移到角色级配置：
+第二期角色以角色级计划作为强制生产契约；第一期兼容包可以在缺少计划时继续使用已验收的舰种模板：
 
 ```text
 assets/characters/{id}/postprocess_plan.json
@@ -107,9 +102,9 @@ assets/characters/{id}/postprocess_plan.json
 - 同一状态的四张透明帧需要归一到相同画布尺寸并保持稳定视觉中心，避免 Godot `AnimatedSprite2D` 播放时产生画布跳动。
 - 四帧画面驱动角色姿态；精确炮塔旋转、炮口、投射物、后坐位移和 VFX 仍使用 Godot 独立节点与补间。
 
-## 5. Codex Computer Use 视觉确认
+## 5. 人工视觉确认
 
-程序生成预览页后，Codex 使用 Computer Use 打开本地预览页并检查。
+程序生成预览页后，审查者必须在可显示本地图片的环境中完成目检。
 
 预览页要求：
 
@@ -117,7 +112,7 @@ assets/characters/{id}/postprocess_plan.json
 - 每张卡片显示源文件路径。
 - 按角色和资产类型分组。
 
-Codex 视觉检查项：
+视觉检查项：
 
 - 是否存在矩形白底、灰底、棋盘底或黑底残留。
 - 是否有白边、黑边或明显 halo。
@@ -127,7 +122,7 @@ Codex 视觉检查项：
 - 是否保留足够透明 padding。
 - 小尺寸下角色和舰种是否仍可读。
 
-Codex 输出判断：
+输出判断：
 
 - `pass`：可进入绑定测试。
 - `polish`：可进入绑定测试，但最终导入前需要美术精修。
@@ -168,19 +163,19 @@ assets/characters/qa/character_roster_processed_contact.png
 预览页建议支持两种模式：
 
 - 常规模式：使用相对路径引用图片，页面体积小，适合本地服务器或引擎工具中查看。
-- 稳定 QA 模式：将 PNG 以 data URI 嵌入 HTML，避免浏览器 `file://` 路径加载失败；适合 Codex 使用 Computer Use 做视觉确认。批量角色较多时应按角色或资产类型分页，避免单页过大。
+- 稳定 QA 模式：将 PNG 以 data URI 嵌入 HTML，避免浏览器 `file://` 路径加载失败；适合自动化审查环境读取。批量角色较多时应按角色或资产类型分页，避免单页过大。
 
-## 7. 后续工具化方向
+## 7. 当前工具入口
 
-建议将当前脚本拆成通用命令：
+当前正式入口：
 
 ```bash
-python3 tools/art_pipeline/postprocess_character.py enterprise_cv6
-python3 tools/art_pipeline/postprocess_character.py enterprise_cv6 --preview
-python3 tools/art_pipeline/build_edge_qa_preview.py
-python3 tools/art_pipeline/check_processed_assets.py
+python3 tools/art_pipeline/postprocess_generated_character.py enterprise_cv6
+python3 tools/art_pipeline/batch_character_art.py enterprise_cv6 --process --preview
 python3 tools/art_pipeline/check_character_asset_contract.py
 ```
+
+工具的当前路径只作生产入口；代码位置总路引仍以 `docs/34_implementation_map.md` 为准。
 
 ## 8. 批量生产控制
 
@@ -206,4 +201,4 @@ assets/characters/qa/character_art_batch_report.md
 
 `tools/art_pipeline/build_anchor_derived_mvp_sheets.py` 和 `tools/art_pipeline/build_procedural_animation_master.py` 只能用于 smoke test / placeholder 检查。它们不得写入 `assets/characters/{id}/ui`、`battle`、`vfx` 或 `processed` 等运行时源目录；显式使用 `--allow-placeholder` 时也只能输出到 `assets/characters/qa/*_placeholders/`，并写入 `batch_ready_allowed=false` 的 provenance。缺少真实 gpt-image-2 / reference-image 产物时应保持资产缺失，不生成虚假的正式资产面板。
 
-其中 `--preview` 或 `build_edge_qa_preview.py` 负责生成视觉检查页，Codex 使用 Computer Use 完成视觉确认后，再将结果写入 QA 报告。默认后处理应优先保持快路径，不自动生成大体积嵌入式预览页。
+其中 `--preview` 负责生成视觉检查页，人工确认后再将结果写入 QA 报告。默认后处理应优先保持快路径，不自动生成大体积嵌入式预览页。

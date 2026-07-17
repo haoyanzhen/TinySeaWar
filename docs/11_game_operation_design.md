@@ -1,8 +1,10 @@
 # 战斗操作设计
 
-## 1. 文档目的
+## 1. 文档功能与边界
 
-本文档定义 Tiny Sea War 第一阶段战斗的玩家输入、单位选择、多航点路径、受限辅助 AI、武器自动开火、技能和视角跟踪规则。具体武器数值见 `docs/14_character_balance_design.md`，AI 行为边界见 `docs/16_enemy_ai_behavior_design.md`，数据字段见 `docs/20_data_schema_design.md`，领域命令见 `docs/32_domain_design_phase1.md`。
+本文是 Tiny Sea War 战斗操作的唯一设计入口，负责定义玩家输入、选择状态、连续航点、准心解释、辅助开关、技能操作、设施操作、镜头和可见反馈，即“玩家如何表达战术意图”。
+
+本文不定义命中、伤害、装填或设施效果本身，也不定义敌方 AI 的评分策略。武器与角色数值见 `docs/14_character_balance_design.md`，结算规则见 `docs/12_combat_formula_design.md`，AI 能力边界见 `docs/16_enemy_ai_behavior_design.md`，设施效果与 Domain 状态分别见 `docs/18_facility_weather_effect_design.md` 和 `docs/38_facility_combat_domain_design.md`，战斗/设施字段与核心命令见 `docs/21_combat_data_schema.md`、`docs/22_scene_environment_data_schema.md`、`docs/32_domain_design_phase1.md`。
 
 设计目标：
 
@@ -61,7 +63,7 @@
 - 设施面板显示所有权、生命/运行/交互状态、控制与服务进度、争夺、泊位占用、位置/低速/朝向前置条件和最近一次中断原因。
 - 面板提供控制/占领、补给/维修、机场支援、布雷、取消和离泊入口；所有入口只创建普通领域命令，不直接改设施或舰船状态。
 - `J` 在尚未满足靠泊条件时只记录玩家指定的接近目标。`X` 开启后受限辅助可以为该目标规划接近路线，但不评估设施价值、不选择其他设施，也不自动改变玩家指定目标；抵达后仍由玩家申请服务。
-- 维修申请通过位置、低速和进坞方向检查后进入 `Docked` 并定点保持，随后才开始维修计时。`U` / `Backspace` 或新的有效移动指令会先离泊并中断维修；沉没、单次达到最大 HP `12%` 的重击、驶出泊位或设施失效也会中断且重置进度。
+- 维修申请通过公共靠泊合法性后进入进坞与服务流程；离泊键或新的有效移动指令会取消当前服务。进坞条件、重击中断阈值、恢复上限和状态转换不在本文重复定义，以 `docs/18_facility_weather_effect_design.md`、`docs/38_facility_combat_domain_design.md` 为准。
 
 ---
 
@@ -225,7 +227,7 @@
 
 ## 10. 角色兼容性原则
 
-当前 24 名角色均能映射到可控主要武器：拥有鱼雷者控制鱼雷，战列舰控制大口径主炮，航母控制攻击飞行中队，其余角色控制明确标记的主炮。完整映射见 `docs/14_character_balance_design.md`。
+每个可加载角色都必须显式映射到至多一个可控主要武器组；完整逐角色映射见 `docs/14_character_balance_design.md`，当前覆盖状态见 `docs/00_project_status.md`。
 
 兼容不代表无需配置。每名角色仍必须明确：
 

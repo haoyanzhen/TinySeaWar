@@ -2,7 +2,7 @@
 
 > 状态：方案定稿且核心运行时已实施；全部高威胁类别实战覆盖、带画面人工航行审查和剩余绝对性能门槛待完成
 > 适用范围：开阔海域、港湾、岛屿、浅水、航道、潮汐、设施、雷区与动态舰船共存的战斗地图
-> 关联设计：`docs/16_enemy_ai_behavior_design.md`、`docs/20_data_schema_design.md`、`docs/32_domain_design_phase1.md`、`docs/35_scene_combat_domain_design.md`
+> 关联设计：`docs/16_enemy_ai_behavior_design.md`、`docs/21_combat_data_schema.md`、`docs/22_scene_environment_data_schema.md`、`docs/24_ai_data_schema.md`、`docs/32_domain_design_phase1.md`、`docs/35_scene_combat_domain_design.md`
 > 关联方案：`docs/technical/t00_coastal_ai_performance_solution.md`
 
 ## 1. 结论
@@ -564,7 +564,7 @@ EmergencyState
 - `trajectory_switch_improvement_threshold`
 - `minimum_progress_threshold`
 
-若引入速度相关最大侧向能力，可增加独立运动字段；在此之前由现有 `turn_speed` 提供统一转向上限。简化倒车至少需要倒车速度比例、前进转倒车的近零阈值和倒车加速度/制动约束。高威胁白名单应由武器、航空编队和技能的正式语义标签提供。新增字段实施时必须同步 `docs/20_data_schema_design.md`、加载校验和负例测试，本设计阶段不声称字段已存在。
+若引入速度相关最大侧向能力，可增加独立运动字段；在此之前由现有 `turn_speed` 提供统一转向上限。简化倒车至少需要倒车速度比例、前进转倒车的近零阈值和倒车加速度/制动约束。高威胁白名单应由武器、航空编队和技能的正式语义标签提供。新增字段实施时必须同步所属的 `docs/21_combat_data_schema.md` 或 `docs/24_ai_data_schema.md`、加载校验和负例测试，本设计阶段不声称字段已存在。
 
 ## 14. 实施阶段
 
@@ -696,4 +696,4 @@ interrupt_resume_success / corridor_reentry / corridor_replans
 7. 全局走廊请求服从 `t00` Broker、revision 和预算，不合并、不缓存。
 8. 港湾及至少两类不同岸线地图通过 3v3 自动验证和人工可读性检查。
 9. 无高频全局重规划、长距离精细轨迹膨胀、持续蛇形、非受控撞岸、瓶颈死锁、紧急状态滥用或退出振荡；受控触岸能够通过停车/倒车恢复。
-10. `docs/00_project_status.md`、`docs/20_data_schema_design.md`、实现索引和相关测试按实际实施状态同步更新。
+10. `docs/00_project_status.md`、所属 `docs/21-24` 数据契约、实现索引和相关测试按实际实施状态同步更新。

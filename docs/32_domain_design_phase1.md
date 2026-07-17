@@ -1,1088 +1,251 @@
-# 第一阶段 Domain 设计
-
-## 1. 文档目的
-
-本文档补充 `docs/31_program_design_phase1.md`，定义第一阶段战斗程序的领域边界、核心对象、状态规则、命令、事件和系统协作方式。
-
-Domain 层的目标是让战斗规则可以脱离 Godot 场景树运行，从而支持：
-
-- 公式和状态规则自动测试。
-- 无画面批量战斗模拟。
-- 表现层替换而不改变战斗结果。
-- 后续加入航空、潜艇、阵型和新战斗模式时复用现有规则。
-- 将来需要回放、确定性调试或联机时保留演进空间。
-
-本文所称 Domain，不要求实现完整的企业级 DDD。第一阶段采用轻量领域模型：明确状态所有权和业务规则，同时避免仓储框架、依赖注入容器、通用消息中间件等不必要设施。
-
-相关文档：
-
-- `docs/31_program_design_phase1.md`
-- `docs/11_game_operation_design.md`
-- `docs/10_game_core_mechanics.md`
-- `docs/20_data_schema_design.md`
-- `docs/12_combat_formula_design.md`
-- `docs/13_balance_baseline.md`
-
----
-
-## 2. 领域边界
-
-### 2.1 核心域：Battle Simulation
-
-第一阶段的核心域是单场战斗模拟，负责：
-
-- 战斗生命周期。
-- 舰队和旗舰状态。
-- 单位移动意图与战场位置。
-- 侦查与阵营共享视野。
-- 目标选择和攻击授权。
-- 武器装填、发射和投射物命中。
-- 技能释放和状态效果。
-- 伤害、沉没和胜负结算。
-- 可用于复盘的领域事件和统计事实。
-
-核心域不负责：
-
-- 图片、动画、粒子、音效和镜头。
-- 鼠标、键盘或触摸输入解析。
-- JSON 文件读取和 Godot Resource 导入。
-- UI 选择状态和界面布局。
-- 角色养成、抽卡、装备更换和长期存档。
-
-教学/挑战的局内目标状态仍属于 Battle Simulation；跨局完成记录、首通奖励和舰船解锁属于战斗外 Progression 支撑域，只消费最终 `LevelFinished`，不反向修改 `BattleState`。完整边界见 `docs/technical/t02_level_objective_reinforcement_progress_solution.md`。
-
-### 2.2 支撑域
-
-第一阶段包含三个支撑域：
-
-| 支撑域 | 职责 | 不应承担 |
-| --- | --- | --- |
-| Battle Configuration | 将角色、武器、技能、投射物和关卡配置转换为经过验证的定义对象 | 修改战斗中的运行时状态 |
-| Battle Presentation | 将领域快照和事件转换为 Godot 节点、动画、VFX、音效和 HUD | 决定命中、伤害或胜负 |
-| Battle Analytics | 消费领域事件，生成战斗统计和调参报告 | 反向修改战斗结果 |
-
-### 2.3 上下文关系
-
-```mermaid
-flowchart LR
-  Config["Battle Configuration"] -->|Definitions| Domain["Battle Simulation"]
-  Input["Player / AI Input"] -->|Commands| Domain
-  Domain -->|Snapshots| Presentation["Battle Presentation"]
-  Domain -->|Domain Events| Presentation
-  Domain -->|Domain Events| Analytics["Battle Analytics"]
-```
-
-依赖方向必须指向 Domain。Domain 不引用 Godot 场景、图片路径、UI 控件或统计输出格式。
-
----
-
-## 3. 分层与目录
-
-建议在现有 `scripts/` 下增加明确分层：
-
-```text
-scripts/
-  domain/
-    battle/
-      battle_state.gd
-      battle_rules.gd
-      battle_result.gd
-    fleets/
-      fleet_state.gd
-      faction_id.gd
-    units/
-      unit_state.gd
-      unit_stats.gd
-      movement_state.gd
-      targeting_state.gd
-    weapons/
-      weapon_state.gd
-      cooldown_group_state.gd
-      attack_request.gd
-      damage_result.gd
-    projectiles/
-      projectile_state.gd
-    skills/
-      skill_state.gd
-      effect_spec.gd
-    detection/
-      contact_state.gd
-      visibility_state.gd
-    status/
-      status_effect.gd
-      stat_modifier.gd
-    commands/
-      battle_command.gd
-    events/
-      battle_event.gd
-    services/
-      detection_service.gd
-      targeting_service.gd
-      weapon_service.gd
-      collision_service.gd
-      damage_service.gd
-      modifier_service.gd
-      victory_service.gd
-
-  application/
-    battle_session.gd
-    command_dispatcher.gd
-    simulation_clock.gd
-    battle_snapshot.gd
-
-  infrastructure/
-    data/
-      json_config_loader.gd
-      config_validator.gd
-      definition_registry.gd
-    analytics/
-      battle_recorder.gd
-    random/
-      seeded_random_source.gd
-
-  presentation/
-    battle/
-      battle_controller.gd
-      ship_unit_view.gd
-      projectile_view.gd
-    ui/
-      battle_hud.gd
-```
-
-目录表达依赖方向，不要求每个对象都单独建立脚本。简单值对象可以按内聚性合并，但不得把 Domain 类放回具体场景脚本中。
-
-### 3.1 各层职责
-
-**Domain**
-
-- 保存战斗真状态。
-- 执行不变量和公式。
-- 接受已经标准化的领域命令。
-- 产生领域事件。
-- 不继承 `Node`，优先使用 `RefCounted` 或纯数据对象。
-
-**Application**
-
-- 组织一场战斗的用例和执行顺序。
-- 将玩家、AI 和系统请求送入 Domain。
-- 管理固定步长、命令队列、快照和事件发布。
-- 不复制领域公式。
-
-**Infrastructure**
-
-- 读取 JSON、建立定义注册表。
-- 提供可注入随机数源。
-- 保存统计和调试输出。
-- 实现 Domain 所需的外部适配。
-
-**Presentation**
-
-- 使用 Godot 节点显示领域状态。
-- 将输入转换为 Application 命令。
-- 根据事件播放一次性反馈。
-- 不直接修改领域对象内部字段。
-
----
-
-## 4. 定义数据与运行时状态
-
-必须严格区分 Definition 和 State。
-
-### 4.1 Definition
-
-Definition 来源于 `data/` JSON，加载后只读，在多场战斗间复用。
-
-主要类型：
-
-- `ShipDefinition`
-- `WeaponDefinition`
-- `ProjectileDefinition`
-- `SkillDefinition`
-- `FormulaDefinition`
-- `LevelDefinition`
-- `AIProfileDefinition`
-
-Definition 只描述初始能力和引用关系，不包含当前生命、剩余冷却、当前位置或当前目标。
-
-### 4.2 State
-
-State 只属于一场具体战斗，可以随模拟过程变化。
-
-主要类型：
-
-- `BattleState`
-- `FleetState`
-- `UnitState`
-- `WeaponState`
-- `SkillState`
-- `ProjectileState`
-- `ContactState`
-- `StatusEffect`
-
-创建战斗时，由 Definition 生成全新的 State。不得直接在 Definition 上扣血、写冷却或缓存当前目标。
-
-### 4.3 标识规则
-
-使用两类 ID：
-
-- `definition_id`：稳定内容 ID，例如 `ship.warspite`、`weapon.381mm_ap`。
-- `entity_id`：单场战斗内唯一 ID，例如 `unit.player.001`、`projectile.000143`。
-
-领域引用一律使用 ID，不长期持有 Godot Node 引用。实体沉没或销毁后，旧 ID 查询应返回不存在，而不是保留悬空对象。
-
----
-
-## 5. 聚合与状态所有权
-
-### 5.1 BattleState 作为战斗聚合根
-
-`BattleState` 是单场战斗的唯一聚合根，拥有：
-
-```text
-battle_id
-phase
-elapsed_time
-tick_index
-level_definition_id
-fleets_by_id
-units_by_id
-projectiles_by_id
-known_projectiles_by_faction
-contacts_by_faction
-pending_events
-result
-```
-
-所有会改变战斗真状态的操作必须通过 `BattleSession` 调用领域行为，不能由 UI、场景节点或统计模块直接改字典。
-
-第一阶段单位最多 6 个、投射物规模有限，使用单聚合足够简单。后续若大规模战斗产生性能问题，可以拆分存储和更新系统，但 `BattleState` 仍然是逻辑上的一致性边界。
-
-### 5.2 FleetState
-
-`FleetState` 拥有一方舰队级状态：
-
-```text
-fleet_id
-faction_id
-unit_ids
-flagship_unit_id
-initial_max_hp_total
-shared_contacts
-```
-
-不变量：
-
-- 每支参战舰队必须且只能有一名旗舰。
-- 旗舰必须属于该舰队。
-- `initial_max_hp_total` 在开战后不可改变。
-- 沉没单位仍保留在 `unit_ids` 中，直到战斗结束，以便统计和超时结算。
-
-### 5.3 UnitState
-
-`UnitState` 是舰娘在战斗中的运行时实体：
-
-```text
-entity_id
-definition_id
-fleet_id
-life_state
-base_stats
-runtime_stats
-position
-heading
-velocity
-movement_state
-targeting_state
-weapon_states
-weapon_group_launch_remaining
-skill_state
-status_effects
-last_fire_time
-selected_ammo_by_group
-primary_weapon_group_id
-control_authority
-movement_assist_enabled
-secondary_auto_fire_enabled
-primary_auto_fire_enabled
-skill_auto_cast_enabled
-player_route_waypoints
-player_route_index
-```
-
-不变量：
-
-- `current_hp` 始终位于 `0..max_hp`。
-- HP 到 0 后只能从 `Alive` 进入 `Sunk`，不能在第一阶段复活。
-- `Sunk` 单位不能移动、开火、释放技能或成为普通攻击的新目标。
-- 单位进入 `Sunk` 时立即清除 AI/关卡任务、航行、设施行动、待处理命令、未到发射时刻的技能攻击波次和源单位预留；已经离膛的投射物、已到发射时刻的延迟攻击与已经出动的独立航空实体不随来源沉没而删除。
-- 已经生效的状态和世界效果默认继续按自身持续时间结束；只有显式声明 `end_on_source_sunk = true` 的来源依赖效果在来源沉没时移除。
-- 单位只能使用自己 Definition 声明的武器和技能。
-- 运行时属性由基础值和状态效果计算，不直接永久改写基础属性。
-- 玩家控制单位默认 `movement_assist_enabled = false`、`secondary_auto_fire_enabled = true`、`primary_auto_fire_enabled = false`、`skill_auto_cast_enabled = false`；敌方单位由完整 AI 控制，不读取玩家开关。
-- 玩家单位的 `skill_auto_cast_enabled` 是固定安全不变量，任何玩家命令、关卡配置或辅助 AI 都不能将其改为 `true`。
-- 玩家路线只保存已通过命令校验的世界坐标；`player_route_index` 只能指向当前或下一合法途径点。
-
-### 5.4 WeaponState
-
-每个装备底座配置生成一个 `WeaponState`：
-
-```text
-instance_id
-definition_id
-owner_unit_id
-mount_index
-mount_id
-reload_remaining
-cooldown_group_id
-current_target_id
-aim_heading
-fire_sequence_index
-enabled
-weapon_group_id
-availability_state
-control_mode
-ammo_type
-```
-
-不变量：
-
-- `reload_remaining >= 0`。
-- 武器只有在单位存活、启用、装填完成、目标合法且满足射程/射角时才能开火。
-- 关卡成员可按 `weapon_group_id` 把单场初始 `availability_state` 设为 `Enabled` 或 `Disabled`；未声明组默认启用，`enabled` 由该状态派生，且自动与手动开火必须执行同一检查。
-- 同一 `shared_cooldown_group` 在同一模拟时刻最多允许一种模式开火。
-- 武器发射后只创建攻击或投射物事实，不直接修改目标 HP。
-- `ManualPrimary` 武器只响应合法的主要武器命令，`Automatic` 武器只由武器系统自动触发。
-- HE/AP 模式共享同一物理底座装填，切换模式不能重置冷却。
-- 手动鱼雷的每个 `mount_fire_arcs` 条目生成独立 `WeaponState`；一次命令只选择一个状态并只重置该状态的 `reload_remaining`。
-- `UnitState.weapon_group_launch_remaining` 保存鱼雷组相邻底座发射节流；它不得替代单座完整装填，也不得联动重置未发射底座。
-
-### 5.5 ProjectileState
-
-鱼雷和需要领域级飞行过程的攻击使用 `ProjectileState`：
-
-```text
-entity_id
-definition_id
-source_unit_id
-source_weapon_id
-source_mount_id
-fleet_id
-position
-heading
-ideal_heading
-angular_error
-angular_sigma
-environmental_sigma_multiplier
-speed
-max_range
-travelled_distance
-remaining_range
-remaining_pierce_count
-minimum_detection_distance
-active
-```
-
-火炮若第一阶段只需要落点和飞行延迟，可以表示为定时 `AttackRequest`，不强制创建参与碰撞的炮弹实体。鱼雷必须创建领域投射物，以保证碰撞与画面表现共享同一位置事实；其失效条件以累计航程达到武器最大射程为准，不以准心位置或公共生命周期提前截断。鱼雷在发射时从战斗 `RandomSource` 独立抽取一次 `Normal(0, angular_sigma)`，将结果写入 `heading` 与上述诊断字段；之后不再重抽，位置、航程、碰撞和观测均按每枚投射物自身状态推进。
-
-`known_projectiles_by_faction` 保存已经由本阵营任一存活舰娘观测到的敌方投射物 ID。鱼雷首次进入任一观察舰经状态修正后的 `minimum_detection_distance` 时写入；写入后持续共享至投射物失效。表现层与 AI 都只能读取阵营过滤快照，不能直接读取全量 `projectiles_by_id`。
-
-### 5.6 SkillState
-
-```text
-definition_id
-owner_unit_id
-cooldown_remaining
-cast_state
-pending_target
-```
-
-不变量：
-
-- 冷却从开局开始计时。
-- 沉没单位不能释放技能。
-- 目标必须符合技能目标类型、阵营、可见性和释放距离。
-- 释放成功后才进入冷却；取消目标选择不消耗冷却。
-- 施法距离和效果半径分别校验，不能用一个字段同时表示两者。
-- “下一轮”效果在武器发射事实成立时消费，已发射攻击保存当时的状态快照。
-- 技能触发攻击、侦察区、航空 HP、防空拦截、氧气和潜航条件仍属于 Domain/Application 状态，不由表现层模拟。
-
----
-
-## 6. 值对象
-
-值对象按值比较，不拥有独立生命周期。
-
-### 6.1 基础值对象
-
-| 类型 | 内容 | 规则 |
-| --- | --- | --- |
-| `BattleTime` | 秒或固定 Tick | 不为负数 |
-| `WorldPosition` | `x, y` | Domain 不依赖 Node2D |
-| `Heading` | 标准化角度 | 始终规范到统一范围 |
-| `Distance` | 世界距离 | 不为负数 |
-| `HitPoints` | 当前值和最大值 | 当前值不超过最大值 |
-| `RangeBand` | 最小和最大射程 | 最小值不大于最大值 |
-| `FireArc` | 中心角和宽度 | 宽度位于合法范围 |
-| `CollisionCircle` | 中心位置和半径 | 半径大于 0 |
-| `TargetRef` | 目标实体或区域位置 | 类型必须与命令匹配 |
-
-第一阶段可以在 Domain 内使用 `Vector2` 进行纯数学运算，因为它是 Godot 的值类型；但领域接口不得要求调用场景树、物理节点或相机。
-
-### 6.2 UnitStats
-
-`UnitStats` 表示经过状态结算后的属性快照：
-
-```text
-max_hp
-armor
-armor_thickness
-speed
-turn_speed
-detection_range
-concealment_distance
-fire_concealment_multiplier
-evasion
-gunnery_power
-torpedo_power
-anti_air_power
-aviation_power
-```
-
-`base_stats` 来自 Definition。`runtime_stats` 由 `ModifierService` 根据当前状态效果计算。状态变化后标记脏位，按需重算，不允许不同系统各自实现一套属性叠加。
-
-### 6.3 DamageResult
-
-伤害结算返回不可变结果：
-
-```text
-attack_id
-source_unit_id
-target_unit_id
-damage_type
-hit
-hit_reason
-raw_damage
-armor_modifier
-armor_reduction
-final_damage
-target_hp_before
-target_hp_after
-caused_sinking
-```
-
-表现层根据 `DamageResult` 决定显示未命中、跳弹、0 伤害或有效伤害，但不能修改其中数值。
-
-### 6.4 AttackRequest
-
-`AttackRequest` 表示一次已经获准、等待命中或伤害结算的攻击：
-
-```text
-attack_id
-source_unit_id
-source_weapon_id
-damage_type
-target_ref
-origin
-issued_at_tick
-resolve_at_tick
-accuracy_modifier
-damage_modifiers
-dispersion_lateral_sigma
-dispersion_longitudinal_sigma
-dispersion_lateral_error
-dispersion_longitudinal_error
-```
-
-火炮可以使用 `resolve_at_tick` 表达飞行时间；鱼雷在领域碰撞发生后创建对应请求。请求保存发射时已经确定的攻击来源和必要修正，目标防御属性在实际结算时读取，避免表现延迟改变发射事实。
-
-自动武器创建攻击时，使用目标当时的 `position`、`heading`、`current_speed` 与自身实际攻击速度求一次恒速拦截点。炮击将结果写入 `target_position`；实体投射物使用该点确定初始方向。请求可额外保存 `aimed_target_unit_id` 用于统计，但结算不得重新追踪该单位。
-
-`WeaponFired` 事件为炮击附带 `impact_positions` 与逐发 `dispersion_samples`，其顺序与本轮炮弹请求一致。每发舰炮在发射时从战斗随机源分别抽取垂直/平行发射线的高斯误差并固定世界落点；表现层炮弹飞行、水柱和领域伤害必须消费同一组坐标，不得另行随机一套视觉落点。
-
----
-
-## 7. 领域命令
-
-命令表示希望战斗执行的意图。命令可以被拒绝，不等于已经发生的事实。
-
-### 7.1 命令结构
-
-所有命令包含：
-
-```text
-command_id
-issued_at_tick
-issuer_type
-issuer_id
-```
-
-第一阶段命令：
-
-| 命令 | 关键字段 | 发起方 |
-| --- | --- | --- |
-| `StartBattleCommand` | 关卡与双方舰队 | 系统 |
-| `MoveUnitsCommand` | 单位 ID、目标位置 | 玩家或 AI |
-| `AppendMoveWaypointCommand` | 单位 ID、追加目标位置 | 玩家 |
-| `ClearMoveRouteCommand` | 单位 ID | 玩家 |
-| `SetUnitControlStateCommand` | 单位 ID 集合、可选的辅助航行/副武器/主武器布尔值 | 玩家 |
-| `FocusTargetCommand` | 单位 ID、敌方目标 ID | 玩家或 AI |
-| `ClearFocusTargetCommand` | 单位 ID | 玩家或 AI |
-| `CastSkillCommand` | 单位 ID、技能 ID、目标引用 | 玩家或 AI |
-| `SwitchAmmoCommand` | 单位 ID、武器组 ID、目标弹种 | 玩家 |
-| `FirePrimaryWeaponCommand` | 单位 ID、武器组 ID、目标引用（海域坐标或方向） | 玩家或 AI |
-| `CancelSkillTargetingCommand` | 单位 ID | 玩家 |
-| `PauseBattleCommand` | 无 | 玩家或系统 |
-| `ResumeBattleCommand` | 无 | 玩家或系统 |
-| `RestartBattleCommand` | 无 | 玩家 |
-| `AdvanceSimulationCommand` | 固定步长 | 系统 |
-
-`Automatic` 武器自动开火不是外部命令，而是一次模拟步内由领域规则产生的内部行为，但玩家单位必须先满足 `secondary_auto_fire_enabled`。玩家选择角色、`1` 到 `9`、`0`、`-` 槽位映射、主要武器准心、键盘修饰键和 `G` 镜头跟踪属于 Presentation 状态，不进入 Domain 命令。表现层只在玩家左键确认瞄准后创建手动 `FirePrimaryWeaponCommand`。
-
-`AppendMoveWaypointCommand` 对现有玩家路线追加一个点，每个新增航段独立校验；失败只拒绝本次追加。普通右键仍使用 `MoveUnitsCommand` 替换为单点玩家路线。`ClearMoveRouteCommand` 清除剩余玩家途径点，并根据 `movement_assist_enabled` 进入 `AssistNavigate` 或 `HoldPosition`。
-
-`SetUnitControlStateCommand` 不接收“切换”语义，只接收明确布尔目标值，避免混合舰队状态因命令重放产生不同结果。`Cmd/Alt` 与“任一关闭则全开、全部开启则全关”的计算由 Presentation/Application 完成，再把稳定排序的存活玩家单位 ID 和明确值交给 Domain。没有主要武器组的单位忽略 `primary_auto_fire_enabled` 更新。
-
-玩家 `primary_auto_fire_enabled` 为真时，Application 中的受限辅助 AI 可以提交普通 `FirePrimaryWeaponCommand`；该开关不把 `ManualPrimary` 改成 `Automatic`，也不允许 WeaponService 绕过命令校验。
-
-`FirePrimaryWeaponCommand.target_ref` 按主要武器类型解释：主炮和空袭保存世界坐标，鱼雷保存由单位位置指向准心的标准化方向。领域层必须重新校验主炮/空袭射程、全部方向武器的射角、装填和目标类型；鱼雷准心距离不作为射程判定，不能信任表现层显示结果。
-
-主要武器瞄准状态下的鼠标右键取消属于 Presentation 状态切换，不创建领域命令。输入层必须消费该次右键，避免同时生成 `MoveUnitsCommand`。
-
-### 7.2 命令校验
-
-命令校验分两层：
-
-1. 结构校验：字段存在、ID 格式正确、目标类型正确。
-2. 领域校验：单位归属、存活状态、目标可见性、技能冷却和释放距离。
-
-拒绝命令时返回 `CommandRejection`，至少包含：
-
-```text
-command_id
-reason_code
-message
-```
-
-稳定的 `reason_code` 用于 UI 提示和自动测试，例如：
-
-- `BATTLE_NOT_RUNNING`
-- `UNIT_NOT_FOUND`
-- `UNIT_NOT_CONTROLLABLE`
-- `UNIT_SUNK`
-- `TARGET_NOT_VISIBLE`
-- `TARGET_OUT_OF_RANGE`
-- `SKILL_ON_COOLDOWN`
-- `WEAPON_NOT_MANUAL_PRIMARY`
-- `WEAPON_RELOADING`
-- `INVALID_AMMO_TYPE`
-- `TARGET_OUTSIDE_FIRE_ARC`
-- `INVALID_TARGET_TYPE`
-
-无效玩家命令不能让战斗进入部分修改状态。
-
----
-
-## 8. 领域事件
-
-事件表示领域中已经发生的事实。事件只追加，不反向执行游戏逻辑。
-
-### 8.1 事件公共字段
-
-```text
-event_id
-battle_id
-tick_index
-event_type
-```
-
-建议事件：
-
-| 事件 | 关键数据 |
-| --- | --- |
-| `BattleStarted` | 舰队、旗舰、关卡 |
-| `UnitSpawned` | 单位、阵营、出生位置 |
-| `MoveOrderAccepted` | 单位、目标位置 |
-| `FocusTargetChanged` | 单位、新旧目标 |
-| `ContactAcquired` | 观察阵营、目标、位置 |
-| `ContactLost` | 观察阵营、目标、最后位置、残影到期时间 |
-| `WeaponFired` | 单位、武器、目标或方向 |
-| `AmmoTypeChanged` | 单位、武器组、新旧弹种 |
-| `ProjectileSpawned` | 投射物和初始状态 |
-| `ProjectileDetected` | 观察阵营、首次观察单位、投射物、位置 |
-| `ProjectileHit` | 投射物、目标、位置 |
-| `ProjectileExpired` | 投射物、最终位置、`MAX_RANGE` 原因 |
-| `AttackResolved` | `DamageResult` |
-| `StatusApplied` | 来源、目标、状态、持续时间 |
-| `StatusExpired` | 目标、状态 |
-| `SkillCast` | 单位、技能、目标 |
-| `UnitSunk` | 单位、最后伤害来源 |
-| `FlagshipSunk` | 舰队、单位 |
-| `BattleFinished` | 结果和结束原因 |
-
-### 8.2 事件使用规则
-
-- Domain 在一次模拟步结束前将事件写入本步事件缓冲。
-- Application 在状态提交后一次性发布事件。
-- Presentation 使用事件播放炮口闪光、命中反馈、cut-in 和沉没动画。
-- Analytics 使用同一事件生成统计。
-- 高频位置变化使用快照同步，不逐帧发送 `UnitMoved` 全局事件。
-- 事件消费者不能回写 Domain 状态；需要改变战斗时必须提交新命令。
-
-### 8.3 事件顺序
-
-同一 Tick 内使用稳定顺序：
-
-1. 命令接受事件。
-2. 侦查变化事件。
-3. 武器或技能释放事件。
-4. 投射物命中事件。
-5. 伤害结算事件。
-6. 沉没事件。
-7. 旗舰与战斗结束事件。
-
-该顺序用于测试、统计和表现，不表示所有系统必须通过事件互相驱动。核心结算仍由 `BattleSession` 在同一模拟步内直接编排。
-
----
-
-## 9. 战斗状态机
-
-### 9.1 BattlePhase
-
-```mermaid
-stateDiagram-v2
-  [*] --> Preparing
-  Preparing --> Running: definitions validated and units spawned
-  Running --> Paused: pause accepted
-  Paused --> Running: resume accepted
-  Running --> Resolving: victory condition reached
-  Resolving --> Finished: result committed
-  Finished --> [*]
-```
-
-规则：
-
-- `Preparing` 不推进战斗时间。
-- `Paused` 不推进领域模拟，也不接受第一阶段战术命令。
-- `Resolving` 只完成当前 Tick 已产生的伤害、沉没和胜负事件。
-- `Finished` 后拒绝所有战术命令。
-- 重开由 Application 创建新的 `BattleState`，不是把旧状态逐字段还原。
-
-### 9.2 UnitLifeState
-
-```text
-Alive -> Sunk
-```
-
-第一阶段不需要 `Dying` 作为领域状态。沉没动画属于 Presentation；领域在 HP 到 0 时立即视为 `Sunk`，避免动画期间继续开火或被选为目标。
-
-### 9.3 MovementMode
-
-```text
-Idle
-AutoNavigate
-PlayerMoveOrder
-PlayerWaypointRoute
-AssistNavigate
-ImmediateAvoidance
-ApproachTarget
-HoldPosition
-```
-
-玩家单点或多航点只表达目标意图并覆盖普通辅助移动，运行时转换为战略走廊和动力学控制，不直接跟随折线。白名单高威胁攻击可把航行状态从 `NormalNavigation` 临时切换为 `EmergencyEvasion`；危险解除后从 Domain 真实状态重新接入战略走廊，不返回旧数学航点。玩家路线完成、取消或失效后，仅当 `movement_assist_enabled` 为真时进入 `AssistNavigate`，否则进入 `HoldPosition`。
-
-### 9.4 TargetingMode
-
-```text
-Automatic
-Focused
-NoTarget
-```
-
-`Focused` 目标失去侦查、沉没或不再合法时，清除集火并回到 `Automatic`。不能继续追踪不可见目标的真实位置。
-
----
-
-## 10. 核心领域服务
-
-### 10.1 DetectionService
-
-输入观察方与目标的属性、状态和位置，输出每个阵营的可见目标集合、接触变化和 `ContactState` 更新。
-
-规则：
-
-- 侦查按阵营共享。
-- 只记录最后已知位置，不向观察方暴露隐藏单位实时位置。
-- 第一阶段默认残影最长 1 分钟。
-- 重获目标时移除旧残影。
-
-### 10.2 TargetingService
-
-负责从合法候选中选择目标：
-
-1. 过滤沉没、同阵营和不可见目标。
-2. 过滤武器目标类型、射程和必要射角。
-3. 优先处理仍然合法的玩家集火目标。
-4. 使用 AI Profile 对舰种、旗舰、距离和剩余生命评分。
-5. 使用稳定的实体 ID 作为同分决胜，保证可重复测试。
-
-### 10.3 ModifierService
-
-负责所有属性修正：
-
-```text
-(基础值 + FlatAdd 总和)
-* (1 + PercentAdd 总和)
-* StateMultiply 连乘
-* IndependentMultiply 连乘
-```
-
-同名效果、叠加组、上限和刷新规则以 `docs/12_combat_formula_design.md` 为准。其他服务只能读取计算后的 `UnitStats`，不能自行遍历状态效果做局部修正。
-
-### 10.4 WeaponService
-
-`WeaponService` 负责武器运行时规则：
-
-- 推进装填和共享冷却组。
-- 校验手动主要武器命令和 HE/AP 切换命令。
-- 验证单位状态、目标类型、可见性、射程和射角。
-- 仅为 `Automatic` 武器根据自动目标优先级选择合法模式。
-- 为 `ManualPrimary` 武器使用玩家命令提供的单位、方向或区域目标。
-- 生成 `AttackRequest` 或 `ProjectileState`。
-- 提交 `WeaponFired` 和 `ProjectileSpawned` 事件。
-
-它不直接扣除目标 HP，也不播放武器表现。
-
-### 10.5 CollisionService
-
-舰船之间以及舰船与武器之间的领域碰撞使用随航向旋转的椭圆舰装船体，不以 Godot `Area2D`、贴图透明像素或 `body_entered` 回调作为命中真相。鱼雷自身和炮弹落点仍是圆形，并分别通过连续扫掠或圆-椭圆相交查询目标。
-
-`CollisionService` 负责：
-
-- 单位椭圆之间沿中心连线方向的重叠检测和简单分离。
-- 鱼雷圆沿连续路径与合法目标椭圆的扫掠检测。
-- 炮弹落点圆与目标椭圆的相交检测。
-- 战场边界约束。
-- 碰撞对的稳定排序，避免容器遍历顺序改变结果。
-
-Godot 碰撞节点只用于调试显示或表现辅助。舰船椭圆半轴来自运行时 Definition 的 `collision_half_extents`，领域模拟、鼠标选取和 View 必须使用同一配置值；`collision_radius` 只保留给旧数据回退和当前地形导航安全距离。
-
-第一阶段单位碰撞伤害如启用，采用固定伤害和每对单位独立冷却，不引入质量、动量或 Godot 刚体求解。
-
-### 10.6 DamageService
-
-`DamageService` 是纯计算服务，输入 `AttackRequest` 和目标快照，输出 `DamageResult`。
-
-它不负责扣除 HP、生成动画、删除投射物或判断整场战斗胜负。命中随机数必须来自注入的 `RandomSource`，不得直接调用全局随机函数。
-
-### 10.7 VictoryService
-
-每次产生沉没或达到时间限制后运行：
-
-- 玩家旗舰沉没且敌方旗舰存活：失败。
-- 敌方旗舰沉没且玩家旗舰存活：胜利。
-- 同一 Tick 双方旗舰沉没：按当前设计判玩家胜利。
-- 其他情况继续战斗。
-
-超时和手动结束若第一阶段启用，应作为可替换 `BattleRule`，不要写死在 `BattleController`。
-
----
-
-## 11. 固定步长与一次 Tick 的处理顺序
-
-Domain 使用固定模拟步长，例如 `0.05s` 或 `0.1s`。渲染帧率不改变领域规则速度。
-
-一次 Tick 推荐顺序：
-
-1. Application 收集并排序本 Tick 命令。
-2. Domain 校验和应用移动、集火、弹药、主要武器和技能命令。
-3. 更新状态持续时间和技能/武器冷却。
-4. 更新单位航向、速度和位置。
-5. 处理边界和单位简单分离。
-6. 更新投射物位置与生命周期。
-7. 按侦查频率运行 DetectionService。
-8. 按 AI 频率更新自动移动和目标意图。
-9. 处理本 Tick 已接受的手动主要武器请求，并检查自动武器开火条件。
-10. 处理投射物碰撞和延时攻击到达。
-11. 计算并应用伤害。
-12. 处理沉没、目标失效和状态清理。
-13. 运行 VictoryService。
-14. 提交本 Tick 事件并生成只读快照。
-
-同一 Tick 内产生的新投射物默认从下一 Tick 开始移动，避免发射顺序依赖容器遍历细节。伤害导致的沉没在当前 Tick 立即生效。
-
-技能多波攻击保存独立 `launch_at_time`。来源在该时刻之前沉没的波次属于未发射行为并取消；到达或超过该时刻的攻击已经成为独立攻击事实，继续按固定落点、投射物、命中和伤害规则结算。
-
-AI 在第 8 步生成的战术命令默认进入下一 Tick 命令队列；当前 Tick 的自动普通攻击只使用此前已经确定的移动和目标意图。这样可以保持玩家命令、AI 命令和自动武器行为的顺序稳定。
-
----
-
-## 12. 随机性与可重复性
+# 战斗核心 Domain 设计
 
-每场战斗创建独立 `battle_seed`。所有命中、区域技能受击概率、舰炮逐发椭圆高斯落点和鱼雷发射角高斯误差都使用该战斗的 `RandomSource`。
+> **功能与边界**：本文定义核心战斗运行时状态的所有权、命令、事件、固定 Tick 顺序和服务协作，是规则代码的 Domain 契约。字段形状见 `20–24`，AI 决策见 `16_enemy_ai_behavior_design.md`，硬地形/环境/设施分别见 `35/37/38`，代码位置见 `34_implementation_map.md`，完成状态只见 `00_project_status.md`。
 
-规则：
+## 1. 设计目标
 
-- 相同 Definition、初始状态、命令序列、固定步长和随机种子应得到相同领域结果。
-- 表现层随机粒子和镜头抖动使用独立随机源，不消耗战斗随机序列。
-- 战斗统计记录随机种子，便于重现异常对局。
-- 第一阶段不要求跨 Godot 版本的永久确定性，但同一运行版本中应可复现。
+核心 Domain 必须满足：
 
----
+- 不依赖 Godot 场景树、输入设备、HUD 或具体资产。
+- 玩家、AI、教学脚本和模拟器通过同一命令与规则入口行动。
+- 规则只在固定 Tick 中改变，给定相同输入与种子可复现。
+- 权威状态、观察快照和事实事件彼此分离。
+- 开阔海域与场景子域复用同一移动、攻击、侦查和伤害链。
 
-## 13. Application 用例
+本文不复制按键、公式、角色数值、关卡目标、数据字段清单或实现完成度。
 
-### 13.1 创建战斗
+## 2. Definition、State 与 View
 
-```text
-LevelDefinition
-+ FleetLoadout(player)
-+ FleetLoadout(enemy)
-+ battle_seed
--> validate
--> build BattleState
--> emit BattleStarted and UnitSpawned
-```
+### 2.1 Definition
 
-失败时返回配置错误，不进入 `Running`。
+Definition 是加载后只读的设计输入，包括舰船、武器、技能、关卡和关联 ID。其字段契约见 `20_data_schema_design.md`、`21_combat_data_schema.md` 与 `23_level_progress_data_schema.md`。
 
-### 13.2 下达移动命令
+Domain 可以引用 Definition，但不得修改它。多个战斗会话共享 Definition 时不能共享任何可变运行状态。
 
-```text
-UI input
--> MoveUnitsCommand
--> CommandDispatcher
--> ownership and state validation
--> update MovementState
--> MoveOrderAccepted
-```
+### 2.2 Runtime State
 
-### 13.3 下达集火命令
+Runtime State 是单局权威事实，例如：
 
-只有当前阵营已发现的敌方单位可以成为集火目标。目标失去侦查时，集火立即失效；残影位置不保留实体锁定。
+- Tick、阶段、时限和结算状态。
+- 单位位置、航向、速度、HP、存活、暴露和控制状态。
+- 武器装填、弹药、管组和待发射状态。
+- 技能冷却、施放阶段和效果实例。
+- 投射物位置、速度、来源、目标语义和有效性。
 
-### 13.4 释放技能
+运行时状态只由当前 `BattleState` 或其拥有的子状态持有。
 
-```text
-CastSkillCommand
--> validate owner, cooldown, target and range
--> execute reusable effects
--> apply status / spawn attack / create area effect
--> start cooldown
--> SkillCast and effect events
-```
+### 2.3 Snapshot 与 Event
 
-若某个技能包含多个效果，命令必须整体通过校验后再执行，避免只应用一半效果。
+- Snapshot 是指定观察者在某 Tick 后可读取的状态投影。
+- Event 是本 Tick 已发生事实的一次性记录。
+- Snapshot 不接受外部写入；Event 不承担长期状态保存。
+- 阵营观察过滤在发布边界完成，消费者不得获得未发现敌方的权威字段。
 
-### 13.5 推进模拟
+## 3. 聚合与所有权
 
-Godot `_physics_process(delta)` 只负责累积真实时间，并以固定步长调用 `BattleSession.advance_tick()`。Presentation 在两个领域快照之间插值显示，不能把插值位置写回 Domain。
+### 3.1 BattleState
 
----
+`BattleState` 是单局聚合根，拥有：
 
-## 14. Presentation 映射
+- 战斗 ID、种子、当前 Tick、阶段和剩余时间。
+- 各阵营、单位、投射物、效果与命令队列。
+- 场景子域状态的稳定引用。
+- 已生成事件、统计累积和最终结果。
 
-### 14.1 View 与领域实体关系
+只有战斗会话可以推进 `BattleState`。结算完成后，除允许的展示计时外，规则状态不得继续变化。
 
-每个 `ShipUnitView` 保存一个 `entity_id`，通过 `BattleSnapshot` 查找领域状态：
+### 3.2 FleetState
 
-```text
-entity_id -> UnitSnapshot -> position / heading / hp / visibility
-```
+`FleetState` 保存阵营级事实：阵营 ID、旗舰单位、合法观察集合、队伍共享信息和阵营统计。旗舰引用必须指向本阵营有效单位定义；旗舰沉没的胜负语义由核心规则统一结算。
 
-View 不持有可写 `UnitState`。
+### 3.3 UnitState
 
-### 14.2 快照内容
+`UnitState` 保存单位级可变事实：
 
-快照只暴露表现需要的数据：
+- 身份、阵营与只读 Definition 引用。
+- 位置、航向、速度、航迹与运动控制状态。
+- HP、存活、装甲相关派生输入和状态效果。
+- 武器槽、技能槽、目标、观察与控制权。
 
-- 单位 ID、阵营、位置、航向和生命。
-- 当前可见性和最后已知接触。
-- 武器瞄准方向和装填百分比。
-- 技能冷却百分比。
-- 投射物位置和方向。
-- 战斗阶段和时间。
+单位死亡后不能接受产生新规则效果的主动命令；其已生成投射物是否继续存在由投射物规则决定。
 
-敌方隐藏单位不得出现在玩家可见快照中。调试模式可以使用独立的全知快照，但不能被正式 UI 调用。
+### 3.4 WeaponState
 
-鼠标准心位置由 Presentation 使用摄像机变换实时计算，不进入战斗快照，也不消耗模拟随机数。主炮和空袭的合法区域、鱼雷方向扇面可由只读武器状态派生显示。
+`WeaponState` 由单位拥有，保存装填、弹药、射击序列和物理发射组状态。武器 Definition 描述静态能力，WeaponState 描述本局可用性。武器不得自行绕过目标合法性、射界、资源或环境查询。
 
-### 14.3 一次性表现
+### 3.5 ProjectileState
 
-炮口火光、技能 cut-in、命中反馈、伤害数字、沉没动画和胜负界面由领域事件触发，而不是从快照变化猜测。
+`ProjectileState` 保存实体投射物的权威运动与来源信息。表现层的炮弹飞行动画不是权威 ProjectileState；是否生成实体状态由攻击类别决定。投射物碰撞与失效由 Domain 推进，不由节点碰撞回调直接裁决。
 
----
+### 3.6 SkillState 与 EffectState
 
-## 15. AI 在领域中的位置
+`SkillState` 保存冷却、充能与施放阶段。持续效果实例保存来源、目标、剩余时间、叠加语义和稳定 ID。效果只能通过统一修正查询参与结算，不能直接改写 Definition。
 
-AI 是命令生产者，不是拥有特权的第二套战斗规则。
+## 4. 命令契约
 
-敌方完整 AI 可以读取其阵营可见快照和己方完整状态，输出移动、集火、主要武器和技能命令。玩家受限辅助 AI 只能按能力白名单输出移动、局部目标和主要武器命令，永远不能输出自动技能命令。两者都不得读取敌方隐藏位置、直接设置目标、跳过射程或强制命中；玩家和 AI 命令经过相同校验。
+### 4.1 当前核心命令
 
-自动副武器攻击属于单位领域行为，不需要 AI 每次提交开火命令；玩家单位还必须开启 `secondary_auto_fire_enabled`。敌方完整 AI或开启 `primary_auto_fire_enabled` 的玩家受限 AI 若使用配置为 `ManualPrimary` 的武器，必须提交与玩家手动操作同结构的 `FirePrimaryWeaponCommand`，不能绕过装填、射程、射角或侦查规则。
+核心战斗队列使用以下命令类型：
 
-舰队战术方案、战术编组、单舰模式、战略走廊、动力学控制计划和 AI 短期记忆属于 AI/Application Runtime State，由 Application/策略层维护，不进入 Presentation，也不把关卡行为脚本堆入 `UnitState`。单舰模式只组合行动、攻击和技能策略；走廊、阵位和掩体区域只产生移动意图。最终推进/转向积分、碰撞、边界、地形通行、视线、攻击与技能合法性仍由 Domain 决定。完整模式与通用规则设计见 `docs/16_enemy_ai_behavior_design.md` 和 `docs/technical/t01_inertial_navigation_and_emergency_avoidance.md`。
+- `MoveUnits`
+- `AppendMoveWaypoint`
+- `ClearMoveRoute`
+- `FocusTarget`
+- `SetUnitControlState`
+- `FirePrimaryWeapon`
+- `CastSkill`
+- `SwitchAmmo`
 
-玩家受限辅助 AI 使用独立能力白名单，只能读取领域约束、即时生存、玩家路径、局部执行状态和被发现动作。它不得创建关卡任务、编组职责、战略模式、天气收益、技能连招或自动 `CastSkillCommand`。敌方难度和 AI Profile 不影响玩家受限辅助 AI。
+命令至少携带发布者、目标实体、目标 Tick 或入队顺序、负载和稳定序号。命令名以运行时枚举为准，不另加 `Command` 后缀。
 
----
+场景设施命令见 `38_facility_combat_domain_design.md`。`RecordTutorialAction` 是 Application/实验记录，不进入核心规则队列。创建、暂停、重启、推进和退出战斗是 Application 用例，也不是 Domain 战术命令。
 
-## 16. 第一阶段扩展点
+### 4.2 校验顺序
 
-扩展点只定义稳定边界，不要求提前实现最终功能。
+每条命令按统一顺序校验：
 
-### 16.1 航空与防空
+1. 结构与实体引用有效。
+2. 发布者拥有控制权限。
+3. 战斗阶段允许该行为。
+4. 单位存活且状态允许。
+5. 目标、资源、距离、射界和子域条件合法。
+6. 接受命令并改变相应意图或状态。
 
-- 舰载机可实现为新的 `CombatEntityState`，复用实体 ID、位置、阵营和伤害接口。
-- 防空仍使用 `WeaponState`，目标类型为 `Air`。
-- 不修改 `DamageResult` 和战斗事件公共结构。
+失败产生稳定拒绝原因；不得因命令来自玩家、AI 或测试而放宽公共规则。
 
-### 16.2 潜艇与反潜
+### 4.3 同 Tick 排序
 
-- 为 `UnitState` 增加 `depth_state` 和氧气状态。
-- 侦查通过状态修正计算，不建立第二套侦查系统。
-- 武器合法目标过滤增加 `Submerged`。
+同 Tick 命令按稳定键排序，至少包含目标 Tick、来源优先级、发布者/单位 ID 与入队序号。排序规则必须可复现，并避免依赖 Dictionary 遍历顺序或渲染帧先后。
 
-### 16.3 阵型
+## 5. 事件契约
 
-- 阵型系统生成多个单位的移动命令或内部移动意图。
-- 单位仍由自身移动状态执行，不由阵型系统直接写坐标。
+### 5.1 事件原则
 
-### 16.4 新战斗模式
+- 事件名称使用已发生事实的过去式或完成语义。
+- 每个事件包含 Tick、事件 ID、事实主体和必要上下文。
+- 同一事实只发一次；表现重播必须按事件 ID 去重。
+- 统计使用事实事件或权威结算数据，不解析展示文本。
 
-- 使用 `BattleRule` 组合出生、目标和胜负规则。
-- `BattleState` 保存活动规则 ID。
-- 占点、突围或护送不应通过修改旗舰沉没逻辑硬编码实现。
+### 5.2 事件类别
 
-### 16.5 回放与联机
+当前事件按用途分组：
 
-第一阶段保留战斗种子、初始定义版本和命令日志。它们足以支持调试级重放研究，但当前不承诺完整玩家回放或网络确定性。
+- 移动与控制：路线改变、控制状态改变、运动受阻。
+- 观察：目标发现、接触丢失、暴露状态改变。
+- 武器：开始射击、弹丸生成、`AmmoSwitched`、拒绝射击。
+- 命中与伤害：接触、装甲结果、有效/过量伤害、单位沉没。
+- 技能与效果：施放、效果添加/刷新/移除。
+- 战斗流程：阶段改变、时限到达、战斗结束。
+- 场景子域：由 `35/37/38` 定义的地形、环境与设施事实。
 
----
+完整枚举应在代码和测试中维护；本文只规定稳定语义，避免复制一份易过期列表。
 
-## 17. 错误处理与不变量保护
+## 6. 战斗阶段与状态机
 
-### 17.1 配置错误
+### 6.1 战斗阶段
 
-以下错误阻止战斗启动：
+战斗至少区分初始化、运行、暂停/挂起和已结算。初始化完成前不接受战术命令；暂停不推进规则 Tick；已结算不再生成攻击或新任务。
 
-- 重复 Definition ID。
-- 缺失武器、技能、投射物或公式引用。
-- 舰队无旗舰或多个旗舰。
-- 不支持的投射物行为枚举。
-- 非法射程、冷却、生命或装甲值。
-- Prototype 角色缺少运行时资产装配配置。
+### 6.2 单位生命状态
 
-### 17.2 运行时错误
+单位从存活进入沉没结算后不可逆。沉没事实、目标引用清理、任务取消和胜负检查必须在同一 Tick 的确定顺序中完成。
 
-- 玩家非法命令返回可识别拒绝原因，不中断战斗。
-- 配置已验证后仍出现缺失引用，视为程序错误并记录上下文。
-- 表现层节点缺失不能改变领域状态；允许使用占位表现继续调试。
-- Domain 不应静默修复严重非法状态，例如负最大生命或重复实体 ID。
+### 6.3 武器与技能
 
-### 17.3 调试断言
+武器和技能状态机必须显式表示不可用、准备、执行/发射、冷却或装填。表现动画可以延长视觉生命周期，但不能反向延长规则阶段。
 
-开发构建每个 Tick 后可选检查：
+### 6.4 控制权
 
-- 所有实体 ID 唯一。
-- 所有武器 Owner 存在。
-- 所有舰队单位引用存在。
-- 当前 HP 合法。
-- 沉没单位无活动投射请求和技能释放。
-- 已结束战斗不再推进时间。
+玩家直接控制、受限辅助和完整 AI 都通过 `SetUnitControlState` 与同一命令入口切换。控制权决定谁能发布意图，不改变单位合法动作或规则能力。
 
----
+## 7. Domain 服务职责
 
-## 18. Domain 测试矩阵
+Domain 服务保持无场景节点、少状态或显式状态：
 
-### 18.1 聚合不变量
+- **MotionService**：推进、转向、制动、倒车、水流输入和最终位移校验。
+- **ObservationService**：侦查、隐蔽、视线、暴露与阵营接触。
+- **WeaponService**：装填、目标/射界合法性、攻击展开和弹药切换。
+- **ProjectileService**：实体投射物推进、碰撞候选和失效。
+- **DamageService**：攻击合法性之后的接触、命中、装甲、伤害与统计事实。
+- **SkillService**：施放合法性、效果创建、持续时间与修正查询。
+- **VictoryService**：旗舰、时限、取消条件与最终结果。
+- **TerrainQueryService**：消费 `35` 的硬地形查询。
+- **EnvironmentQueryService**：消费 `37` 的环境上下文。
+- **FacilityService**：消费和推进 `38` 的设施状态与任务。
 
-- 无旗舰或双旗舰不能创建战斗。
-- 沉没单位不能接受移动、集火和技能命令。
-- 重开创建全新聚合，不残留旧冷却和状态。
+服务间通过明确输入与返回值协作，不通过全局节点或单例暗改状态。
 
-### 18.2 侦查
+## 8. 固定 Tick 权威顺序
 
-- 双条件边界内发现目标。
-- 开火破隐改变可见关系。
-- 开火暴露持续时间按实时隐蔽距离除以实时航速计算。
-- 丢失目标生成固定位置残影。
-- 残影最长 1 分钟后过期。
-- 目标重新被发现时残影立即被真实接触覆盖。
-- 集火目标丢失侦查后解除。
+单个规则 Tick 的规范顺序为：
 
-### 18.3 武器与伤害
+1. 读取并稳定排序本 Tick 命令。
+2. 校验命令，更新控制意图、路线、目标、技能或设施任务。
+3. 推进全局环境、区域上下文和设施生命周期。
+4. 更新观察与合法目标信息，供 AI 下一决策窗和本 Tick 行为使用。
+5. 计算导航/控制输入并推进单位运动，执行地形与边界权威校验。
+6. 推进装填、冷却、技能效果和持续状态。
+7. 展开武器与技能攻击，生成落点事实或实体投射物。
+8. 推进投射物并收集接触候选。
+9. 统一结算命中、装甲、伤害、沉没与统计。
+10. 结算关卡取消条件、旗舰胜负和时限结果。
+11. 生成观察者快照与有序事件，递增 Tick。
 
-- 射程、射角和装填任一不满足时不能开火。
-- 共享冷却组同 Tick 只能选择一个模式。
-- 鱼雷碰撞只命中合法阵营和目标类型。
-- 命中、0 伤害、有效伤害和沉没结果正确。
-- 多发武器逐发结算。
-- 同一角色不能加载两个不同武器组的 `ManualPrimary` 配置。
-- `E` 本身不创建领域命令；左键确认后只创建一次主要武器命令。
-- 瞄准状态下右键取消不创建 `FirePrimaryWeaponCommand` 或 `MoveUnitsCommand`，也不改变装填状态。
-- 主炮海域坐标、鱼雷中心方向和空袭中心坐标按各自目标类型通过校验与结算。
-- 玩家单位默认副武器自动开火、主要武器不自动开火；关闭副武器后不再创建新自动攻击，开启主要武器后仍只通过普通主要武器命令开火。
-- `SetUnitControlStateCommand` 使用明确值并稳定作用于全部合法单位；无主要武器单位忽略主要武器开关。
-- 玩家受限 AI 在所有控制状态下都不能创建 `CastSkillCommand`。
+若某类攻击需要更细的公式顺序，以 `12_combat_formula_design.md` 为准，但不得改变以上“输入—推进—结算—发布”的阶段边界。
 
-### 18.3.1 玩家路线与辅助控制
+## 9. 胜负不变量
 
-- 连续追加三个合法途径点后按顺序执行；非法第四点只被拒绝，不删除前三点。
-- 普通右键单点命令替换剩余多航点路线。
-- 即时鱼雷规避打断路线后能从当前位置恢复到下一合法途径点。
-- 路线结束时，`X` 开启进入受限辅助航行，`X` 关闭进入保持位置。
-- `Cmd/Alt + X/C/V` 的修饰键不进入 Domain；相同明确控制命令重放得到相同结果。
+- 旗舰身份在战斗创建时确定并可验证。
+- 任一方旗舰沉没时，胜负在本 Tick 所有伤害结算完成后判断。
+- 同一 Tick 双方旗舰均沉没，结果为平局，`winner_faction` 为空，原因使用同时沉没语义。
+- 只沉没一方旗舰时，另一方胜利。
+- 时间耗尽和关卡取消条件按 `10`、`12`、`15` 的权威规则结算。
+- 结算事件只能产生一次。
 
-### 18.4 技能与状态
+## 10. 场景子域集成
 
-- 取消选目标不进入冷却。
-- 多效果技能要么全部执行，要么全部拒绝。
-- 同名状态按叠加规则更新。
-- 状态到期后运行时属性恢复。
+核心服务通过以下最小接口读取场景：
 
-### 18.5 胜负
+- `35`：点/形状通行性、扫掠碰撞、射线遮挡、区域与部署锚点查询。
+- `37`：给定位置、Tick 和实体类别的环境上下文。
+- `38`：设施可用性、归属、任务、效果源与设施事件。
 
-- 任一旗舰沉没立即进入结算。
-- 同 Tick 双旗舰沉没按当前规则判玩家胜利。
-- 非旗舰沉没不结束战斗。
-- `Finished` 后拒绝新命令。
+场景子域返回事实或查询结果；核心服务负责把结果纳入移动、观察、攻击和伤害。任何设施或环境都不能通过表现节点直接改 HP、命中或发现状态。
 
-### 18.6 可重复性
+## 11. AI 与自动控制边界
 
-- 相同种子和命令日志得到相同事件序列及结果。
-- 表现层随机操作不改变领域结果。
+AI 是命令生产者，不是规则裁决者：
 
----
+- 只读取所属阵营合法观察、公共定义和允许的场景查询。
+- 在决策窗内输出与玩家相同的命令。
+- 不直接修改位置、装填、目标可见性、伤害或设施状态。
+- 导航规划产生路线/控制建议，最终运动仍由 MotionService 校验。
 
-## 19. 第一阶段实现约束
+评分、难度、迟滞与编组策略见 `16_enemy_ai_behavior_design.md`；AI 配置字段见 `24_ai_data_schema.md`。
 
-实现时必须遵守：
+## 12. 确定性与错误处理
 
-1. `ShipUnitView` 和其他 Godot Node 不是战斗真状态。
-2. Domain 不通过信号直接寻找或修改场景节点。
-3. UI 不直接扣血、改冷却、设置当前位置或强制目标。
-4. Definition 在战斗中不可变，State 不写回配置文件。
-5. 所有伤害走同一个 `DamageService`。
-6. 所有领域碰撞走同一个 `CollisionService`，不依赖场景物理回调决定结果。
-7. 所有属性修正走同一个 `ModifierService`。
-8. 玩家与 AI 使用相同命令和合法性规则。
-9. 战斗随机数由单场种子控制。
-10. 一次 Tick 的处理顺序固定且可测试。
-11. 新角色应主要增加 Definition 和资产，不修改核心 Domain。
+### 12.1 确定性
 
----
+- 会话持有随机源，所有概率抽取均可由种子重放。
+- 实体和事件 ID 使用稳定生成规则。
+- 空间候选、状态效果和命令在结算前稳定排序。
+- 不读取渲染帧 delta 作为规则输入。
 
-## 20. 完成标准
+### 12.2 不变量失败
 
-Domain 设计实现达到以下条件后，可以认为第一阶段领域基础成立：
+对加载期可发现的错误，应拒绝创建战斗；对运行期非法命令，应拒绝该命令并保留会话；对内部不变量破坏，应记录 Tick、实体、命令与种子并中止该次实验，不能静默修复成另一种规则结果。
 
-- 无 Godot 场景树也能创建并推进一场 1v1 或 3v3 战斗。
-- 玩家和 AI 命令通过同一入口修改领域状态。
-- 侦查、武器、伤害、技能、沉没和胜负形成完整事件链。
-- Presentation 只依赖快照和事件即可显示战斗。
-- 同一随机种子和命令序列能够复现结果。
-- 公式、状态机和聚合不变量有自动测试。
-- 新增同类角色不需要添加角色专属领域实体。
-- 航空、潜艇、阵型和新战斗模式可以沿本文定义的扩展点加入，而不需要推翻命令、事件、伤害和状态所有权。
+## 13. 最小验证矩阵
 
-Domain 层是否合格，不以类和接口数量衡量，而以规则是否只有一个权威实现、状态是否有明确所有者、战斗是否可脱离表现层重复验证来衡量。
+Domain 回归至少覆盖：
+
+- 同种子、同命令序列得到同结果和事件顺序。
+- 非法控制、无效目标、资源不足和阶段错误被一致拒绝。
+- 移动、地形、观察、武器、投射物、技能和设施按固定顺序协作。
+- 隐藏目标不出现在敌对观察快照和 AI 输入中。
+- 沉没单位无法继续发起规则动作。
+- 单方旗舰沉没、同 Tick 双旗舰沉没和超时结果正确且只结算一次。
+- Definition 在多局运行前后不发生改变，多会话状态彼此隔离。
+
+具体测试文件位置见 `34_implementation_map.md`；当前通过情况见 `00_project_status.md`。

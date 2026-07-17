@@ -1,4 +1,6 @@
-# 第一阶段程序设计参考说明
+# 第一阶段程序设计参考说明（历史存档）
+
+> 存档说明：本文记录第一阶段 3v3 原型的早期实施范围，已不再作为当前架构、实现状态或代码位置的权威来源。当前技术边界见 `docs/30_technical_architecture.md`、`docs/32_domain_design_phase1.md` 与 `docs/33_domain_design_phase2.md`；当前代码位置见 `docs/34_implementation_map.md`；完成状态只见 `docs/00_project_status.md`。
 
 ## 1. 文档目的
 
@@ -20,10 +22,13 @@
 - `docs/11_game_operation_design.md`
 - `docs/30_technical_architecture.md`
 - `docs/10_game_core_mechanics.md`
-- `docs/20_data_schema_design.md`
+- `docs/20_data_schema_design.md`（数据契约索引）
+- `docs/21_combat_data_schema.md`
+- `docs/23_level_progress_data_schema.md`
+- `docs/24_ai_data_schema.md`
 - `docs/12_combat_formula_design.md`
 - `docs/13_balance_baseline.md`
-- `docs/90_design_audit_round4.md`
+- `docs/history/90_design_audit_round4.md`
 
 ---
 

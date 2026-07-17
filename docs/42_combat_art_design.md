@@ -1,6 +1,6 @@
 # 战斗美术设计文档
 
-## 1. 定位与边界
+## 1. 功能与边界
 
 本文档定义 TinySeaWar 的武器、投射物、攻击过程和命中反馈。目标是在六类 MVP 舰种之间形成清楚差异，同时控制逐角色制作成本。
 
@@ -8,8 +8,9 @@
 
 - 角色美术定义“该角色打起来是什么感觉”：武器轮廓、发射节点、齐射节奏、功能色和少量专属特效。
 - 公共战斗美术提供可复用的炮弹、鱼雷、舰载机、拖尾、炮焰、爆炸、水柱、范围圈和预警图形。
-- 战斗数据配置决定速度、轨迹、散布、数量、间隔、射角、转向、范围和资源引用。
-- 程序负责瞄准、节点绑定、轨迹计算、补间、碰撞、伤害时点、对象池和特效播放。
+- 战斗规则、速度、散布、数量、间隔、射角、转向和伤害时点由 `docs/10_game_core_mechanics.md`、`docs/12_combat_formula_design.md` 与 `docs/21_combat_data_schema.md` 拥有。
+- 纯表现字段和当前精确值分别由 `docs/25_presentation_data_schema.md` 与 `data/visuals/` 拥有；资源查询语义见 `docs/45_art_asset_interface_design.md`。
+- 伤害跳字、战术叠层和 HUD 归 `docs/44_ui_art_design.md`；本文不维护当前实现路径、资产完成度或规则算法。
 
 原则上不为每名角色逐帧绘制完整炮弹或鱼雷飞行动画。采用“公共类别资产 + 武器规格预设 + 角色覆盖层 + 少量标志性专属资产”的四层结构。
 
@@ -91,7 +92,7 @@
 
 炮弹本体通常使用单张 Sprite，由程序沿直线、抛物线或区域落点曲线移动。炮塔旋转、炮口闪光、弹体和命中特效必须是独立节点。
 
-所有舰炮开火后都应生成轻量炮弹飞行表现节点，用于补足炮弹离膛方向、飞行时间和齐射数量的可读性。节点按武器 `projectile_speed` 从炮口飞向 Domain 已独立抽样并固定的 `impact_positions`，在炮弹后方绘制曳尾；多发齐射呈现垂直发射线较宽、平行发射线较窄的椭圆高斯落区，不表现为从炮口均匀张开的扇形，也不在表现层再次随机。曳尾按 `<140mm` 小口径、`140-279mm` 中口径、`280-419mm` 大口径、`>=420mm` 超重型分为四档，并同时扩大长度、宽度、外层光晕、弹头光点与残影，不只依赖长度变化。长度仍按 `口径 mm * shell_trail_caliber_pixel_multiplier` 计算，当前四档倍率为 `0.11/0.16/0.18/0.20`；大口径对 127mm 小口径的可见长度至少为 `3.5x`、宽度至少为 `3x`。小口径不保留位置残影，中口径只保留克制残影，大口径和超重型才逐档增加残影采样。镜头缩放只允许在 `0.85-1.6` 范围内补偿屏幕可见尺寸，避免远景消失或近景过度膨胀。曳尾颜色使用公共色盘选择：整洁白 `clean_white`、火光黄 `fire_yellow`、夕阳红 `sunset_red`；穿甲弹优先使用整洁白，高爆弹优先使用火光黄，超重或技能强化炮击可使用夕阳红。曳尾需要从炮弹到尾端逐渐变细、变淡，避免看起来像鱼雷水迹。
+所有舰炮开火后都应生成轻量炮弹飞行表现，用于补足离膛方向、飞行时间和齐射数量的可读性。表现层只消费 Domain 已固定的落点，不再次随机，也不把椭圆散布画成炮口均匀张开的扇形。公共炮弹按口径形成由轻到重的档位，长度、宽度、光晕、弹头和残影应共同递增；曳尾从弹体向尾端逐渐变细、变淡，并与鱼雷水迹保持明显区别。具体档位、倍率、颜色和缩放补偿只由 `data/visuals/` 维护。
 
 未命中落水反馈按口径分级：小口径和中口径炮弹不生成水柱，只保留弹道消失与必要的轻量声音反馈；口径达到 280mm 的大口径舰炮才在领域事件给出的固定 `impact_position` 生成 `impact.water.large` 水柱。水柱位置不得追随原瞄准目标。
 
@@ -175,32 +176,7 @@ MVP 航空流程只要求三个清楚状态：从航母起飞、被防空击毁�
 
 ### 4.8 伤害跳动数字
 
-伤害跳动数字只补充命中反馈，不替代爆炸、水柱、装甲火花和音效。程序使用运行时字体绘制数字，不为每个数字烘焙位图。跳字只在玩家可见或玩家自身受击的目标上出现；未发现敌人、潜航未暴露单位和超出视野目标即使命中，也不得通过跳字泄露实时位置。
-
-运行时规则：
-
-- 同一单位 0.25 秒内受到多段小伤害时允许合并为一组，例如 `128 x3`。
-- 每个目标同时最多显示 3 组跳字；低优先级小伤害优先合并或被新高优先级命中替换。
-- 数字锚点位于受击单位上方，避开生命条、旗舰标记、主要武器准心和技能落区。
-- 伤害为 0、未命中、格挡、跳弹或免疫可以显示短标签，但字号与动效优先级低于真实伤害。
-- 普通伤害显示整数；治疗、护盾和修复使用 `+` 前缀；暴击、穿透和核心区命中不使用长文字覆盖战场，应通过描边、短暂停顿、闪光或角标表达。
-
-表现分级：
-
-| 命中类型 | 颜色与描边 | 建议字号 | 动效 |
-| --- | --- | ---: | --- |
-| 小口径炮、副炮、机枪 | 灰色填充，深色描边 | 10-14 px | 快速上浮，420-520 ms |
-| 中口径炮、重巡主炮 | 晴空蓝填充，白色内描边，深青外阴影 | 20-26 px | 上浮，520-640 ms |
-| 大口径主炮、战列舰重炮 | 日光黄到橙色填充，深青描边 | 42-58 px | 上浮 42-56 px，680-820 ms |
-| 穿甲有效命中 | 日光黄填充，白色高光，黑色描边 | 44-62 px | 短暂停顿后弹起 |
-| 鱼雷命中 | 珊瑚红填充，白色内描边，深蓝水影 | 20-26 px | 从命中侧弹出后上浮，720-900 ms |
-| 航空炸弹/空袭 | 紫罗兰或橙黄填充，浅白描边 | 20-26 px | 垂直弹出，620-780 ms |
-| 防空命中飞机 | 浅蓝白 | 10-14 px | 向击落方向漂移，420-560 ms |
-| 反潜与水下爆炸 | 潜航蓝填充，白色气泡描边 | 34-48 px | 缓慢上浮，700-900 ms |
-| 持续伤害 | 对应状态色填充，低饱和描边 | 10-14 px | 小幅上浮或淡出，480-600 ms |
-| 治疗/修复 | 薄荷绿填充，白色描边，前缀 `+` | 24-34 px | 柔和上浮 |
-
-跳字层级位于命中特效和单位头顶信息之间，低于鱼雷、空袭、旗舰危急、主要武器准心和技能预警。同屏跳字过多时，优先保留玩家选中目标、旗舰、主要武器命中、鱼雷命中和空袭命中。
+伤害数字是 UI 战术叠层，不是公共命中 VFX。本文只要求它不能替代爆炸、水柱、装甲火花等实体反馈，也不得泄露未发现目标；字体、颜色、合并、限流、层级和动效统一见 `docs/44_ui_art_design.md`。
 
 ## 5. 六舰种攻击表现矩阵
 
@@ -217,37 +193,9 @@ MVP 航空流程只要求三个清楚状态：从航母起飞、被防空击毁�
 
 ## 6. 运动与参数化规则
 
-推荐运动类型：
+公共表现可以使用线性、抛物线、路径跟随、区域到达或瞬时光束等视觉运动类型，但它们不得改变 Domain 运动与伤害时点。鱼雷和常规航空攻击必须保留实体或路径到达过程，不能用瞬时光束代替。
 
-- `Linear`：直射炮弹、鱼雷、机枪曳光。
-- `BallisticArc`：中远程舰炮、航空炸弹。
-- `Homing`：允许转向的鱼雷或特殊技能投射物。
-- `PathFollow`：舰载机编队和侦察机。
-- `AreaArrival`：多枚炮弹/炸弹按区域和延迟到达。
-- `InstantBeam`：只用于锁定线、搜索光或极少数非实体效果，不用于鱼雷和常规航空伤害。
-
-角色武器表现配置至少需要：
-
-```text
-projectile_profile_id
-muzzle_vfx_id
-trail_vfx_id
-impact_vfx_id
-warning_vfx_id
-launch_points
-salvo_pattern
-salvo_count
-launch_interval
-speed
-arc_height
-spread
-turn_rate
-scale
-color_accent
-camera_feedback_profile
-```
-
-其中位置、旋转、抛物线高度、散布、扇面和到达时间由程序计算。美术资源不携带固定战场坐标。
+表现配置只声明投射物外观、炮口/拖尾/命中/预警 Profile、绑定点、缩放、颜色和镜头反馈；字段形状见 `docs/25_presentation_data_schema.md`。齐射数量、发射间隔、速度、散布、转向和射程属于战斗数据，见 `docs/21_combat_data_schema.md`。美术资源不得携带固定战场坐标。
 
 ## 7. 功能色、层级与可读性
 
@@ -260,38 +208,7 @@ camera_feedback_profile
 
 ## 8. 资产目录与命名
 
-```text
-assets/vfx/combat/projectiles/shells/
-assets/vfx/combat/projectiles/torpedoes/
-assets/vfx/combat/aircraft/
-assets/vfx/combat/muzzle/
-assets/vfx/combat/trails/
-assets/vfx/combat/impacts/
-assets/vfx/combat/warnings/
-assets/vfx/combat/antiair/
-assets/vfx/combat/antisubmarine/
-assets/vfx/combat/skills/
-data/combat/projectile_profiles/
-data/combat/weapon_vfx_profiles/
-```
-
-命名示例：
-
-```text
-projectile_shell_heavy_ap.png
-projectile_torpedo_fast.png
-vfx_muzzle_gun_large_01.png
-vfx_trail_shell_gold_short.png
-vfx_particle_torpedo_bubble_01.png
-vfx_particle_torpedo_wake_short_01.png
-vfx_impact_armor_heavy_01.png
-vfx_impact_water_large_01.png
-vfx_warning_torpedo_fan.png
-vfx_antiair_flak_burst_01.png
-vfx_asw_depth_charge_bubble_01.png
-```
-
-角色目录只保存专属覆盖资源和对公共 profile 的引用，不复制公共弹体。
+公共战斗资源与角色专属覆盖必须分开。角色目录只保存专属覆盖和公共 Profile 引用，不复制公共弹体。当前物理目录只见 `docs/34_implementation_map.md`，程序查询与 manifest 语义只见 `docs/45_art_asset_interface_design.md`。
 
 ## 9. MVP 公共资产清单
 
@@ -309,27 +226,7 @@ vfx_asw_depth_charge_bubble_01.png
 
 ### 9.1 公共表现语义
 
-公共战斗美术应优先以语义 profile 被程序引用，而不是直接绑定到某名角色的文件名。角色目录中的专属 VFX 可以作为覆盖层，但需要映射到公共语义，方便同一套战斗逻辑复用。
-
-推荐首批公共语义：
-
-| 类别 | 语义 key | 用途 |
-| --- | --- | --- |
-| 炮击 | `muzzle_flash.small` / `muzzle_flash.medium` / `muzzle_flash.large` | 小、中、大口径炮口焰和烟 |
-| 炮击 | `shell.trail.short` / `shell.trail.medium` / `shell.trail.long` | 炮弹拖尾和曳光 |
-| 命中 | `impact.water.small` / `impact.water.medium` / `impact.water.large` | 落水和近失水柱 |
-| 命中 | `impact.armor.spark` / `impact.armor.flash` | 命中舰体、装甲跳弹或穿透反馈 |
-| 鱼雷 | `torpedo.trail.surface` / `torpedo.trail.submerged` | 水面鱼雷与潜射鱼雷的粒子尾迹 profile，贴图只提供泡沫、浪线和低亮光点元素 |
-| 鱼雷 | `torpedo.warning.line` / `torpedo.warning.fan` | 鱼雷线形、扇形预警 |
-| 航空 | `aircraft.path` / `aircraft.launch_trail` / `aircraft.landing_trail` / `aircraft.airstrike_area` | 舰载机路径、起飞/降落尾迹和空袭范围 |
-| 航空 | `aircraft.intercept_hit` / `aircraft.fall` | 舰载机被防空命中、2-4 帧小爆炸和缩小淡出 |
-| 防空 | `aa.tracer.light` / `aa.tracer.medium` / `aa.burst.small` | 克制的防空曳光和小型空爆 |
-| 潜艇 | `submarine.underwater_shadow` / `submarine.bubble_trail` / `submarine.sonar_pulse` | 潜航、气泡和声呐反馈 |
-| 航迹 | `wake.destroyer_fast` / `wake.cruiser` / `wake.battleship_heavy` / `wake.carrier_wide` / `wake.submarine_low` | 舰种基础移动反馈 |
-
-每个 profile 至少需要记录 `duration`、`fps` 或 `frame_count`、`loop`、`anchor`、`z_layer`、`rotation_mode`、`scale`、`follow_owner`、`blend_mode`。角色专属覆盖只替换贴图、颜色或局部装饰，不改变伤害时点和运动规则。
-
-炮弹 visual 还需要记录 `shell_trail_caliber_pixel_multiplier`、`shell_trail_width`、`shell_trail_duration`、外层光晕、弹头光晕、残影采样、分段数、`shell_trail_color_key` 和 `shell_trail_color_palette`。其中倍率控制口径到像素长度的换算；宽度、持续时间、光晕、残影和颜色只影响表现，不影响弹速、命中和伤害时点。
+公共战斗美术必须通过语义 Profile 被程序引用，不能绑定到角色文件名。角色覆盖只替换贴图、颜色或局部装饰，不改变伤害时点和运动规则。正式语义、别名、Profile 字段和回退分别由 `docs/45_art_asset_interface_design.md`、`docs/25_presentation_data_schema.md` 与 `data/visuals/` 维护。
 
 ## 10. 验收标准
 
@@ -343,46 +240,3 @@ vfx_asw_depth_charge_bubble_01.png
 - 公共资源与角色专属资源分开存放；角色包不因复用公共弹体而重复计数。
 - 所有透明图无底色、白边、黑边、错误裁切或不可解释的纹理残留。
 - 技能演出服从侦查与信息规则，不通过特效泄露未发现目标。
-
-## 11. 从场景文档迁入的战斗表现归属
-
-以下内容原先混在场景美术文档中，现统一归入战斗美术。场景层只提供海面、天气、边界和陆地承载，不再定义这些战斗反馈的形态。
-
-### 11.1 潜艇与水下战斗反馈
-
-- 下潜过程：角色本体降低亮度，舰装逐渐被水面遮罩覆盖，留下水下阴影和气泡。
-- 下潜状态：保留低对比阴影、潜望镜点或声呐波纹；敌方未发现时不显示这些提示。
-- 上浮过程：水面鼓起、环形白沫扩散，角色与舰装恢复正常色彩。
-- 氧气不足：使用 UI 图标和单位周围短促气泡提示，不用全屏蓝色滤镜。
-- 反潜攻击：深水炸弹落点先出现冷白收缩环，随后产生水下闪光和圆柱形水爆。
-
-### 11.2 航空、防空与公共命中反馈
-
-- 舰载机路径使用细而清楚的白黄引导线，不与鱼雷轨迹共色。
-- 起飞点使用短促甲板灯或召唤阵，不制作覆盖角色的大型常驻法阵。
-- 空袭范围使用稀疏斜线填充和边缘脉冲，中心保持透明以便观察单位。
-- 防空圈使用青绿色圆环，开火时沿圆环出现短促脉冲和曳光点。
-- 飞机被击落时使用小型火花、烟尾和海面溅落，避免形成与舰娘沉没相同的大水柱。
-
-### 11.3 公共战斗特效资产
-
-| 类型 | MVP 资产 | 表现要求 |
-| --- | --- | --- |
-| 航迹 | 轻型、中型、重型、潜航 4 套 | 可随速度拉伸，转向时形成弧线 |
-| 水花 | 小型移动水花、炮弹入水、中型命中、大型重炮水柱 | 尺寸和持续时间有明显层级 |
-| 炮烟 | 小、中、大 3 套 | 与炮口节点分离，可旋转和淡出 |
-| 炮口闪光 | 小口径、中口径、大口径 3 套 | 短促，高亮中心不过曝 |
-| 鱼雷 | 水面鱼雷、水下鱼雷、预警线、命中爆水 | 轨迹持续可见，不能与移动路径混淆 |
-| 航空 | 起飞尾迹、飞行路径、投弹提示、坠机烟尾 | 强调从出击到到达的过程 |
-| 防空 | 防空圈、曳光弹、拦截火花 | 青绿功能色，覆盖区域清楚 |
-| 潜艇 | 气泡、潜航阴影、上浮白沫、声呐波纹 | 低亮、克制，保持神秘感 |
-| 受击 | 金属火花、甲板烟、海面冲击环 | 与角色受击动画同步但独立播放 |
-| 沉没 | 小型、中型、大型沉没 3 套 | 逐步降低、旋涡、残烟和扩散波纹 |
-
-规模规则：
-
-- 驱逐和轻型单位使用短、尖、快速消散的水花和航迹。
-- 巡洋舰使用中等宽度、节奏清楚的连续反馈。
-- 战列和航母使用宽航迹、大水柱和较长烟尘，但不得遮住相邻单位超过关键反馈时长。
-- 潜艇特效主要位于水下状态表现，不使用大面积高亮火焰。
-- 11v11 时同类烟尘和水花应支持数量上限、透明度衰减和远处简化版本。

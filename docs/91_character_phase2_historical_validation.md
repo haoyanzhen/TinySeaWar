@@ -1,8 +1,12 @@
 # 第二期角色历史考据验证
 
+> 复核日期：2026-07-17
+>
+> **功能与边界**：本文是第二期角色历史原型、时期、舰种映射和主要武装轮廓的独立考据记录，只用于解释游戏抽象与争议，不是当前配置、平衡或实现状态真源。当前精确配置见 `data/`，角色设计见 `docs/14_character_balance_design.md`，完成状态只见 `docs/00_project_status.md`。
+
 ## 1. 验证范围与方法
 
-本报告只验证 `docs/14_character_balance_design.md` 第二期 24 名角色的历史原型、时期、舰种映射和主要武装轮廓，不评价 Cost、伤害、冷却或技能强度。数值平衡另见 `docs/92_character_phase2_balance_validation.md`。
+本报告只验证 `docs/14_character_balance_design.md` 第二期 24 名角色的历史原型、时期、舰种映射和主要武装轮廓，不评价 Cost、伤害、冷却或技能强度。静态纸面审查另见 `docs/92_character_phase2_static_balance_review.md`。
 
 验证采用两步法：先确认舰名、舰级、完工状态与服役时期，再确认主炮、鱼雷管、舰载机或特殊设备的数量级。游戏中的射程、装填、伤害、侦查和技能均不作为史实主张。舰种映射按 MVP 六舰种执行，前无畏舰、驱逐领舰和未完工航母会单独标注。
 
@@ -28,7 +32,7 @@
 | 恰巴耶夫 | 68-K 型轻巡；4 座三联装 152mm 主炮、2 座三联装鱼雷管。 | 以战后完成状态作为角色原型。 | 通过 |
 | 甘古特 | 甘古特级无畏舰；4 座三联装 305mm 主炮，低速老式战列轮廓明确。 | 采用现代化后综合防护倾向，未逐项复刻副炮改装。 | 通过（抽象） |
 | K-21 | K 级远洋潜艇；6 具艏管、4 具艉管，并有远洋侦察与巡逻经历。 | 省略甲板炮和布雷能力，避免引入 MVP 外机制。 | 通过（抽象） |
-| Z23 | 1936A 型驱逐舰；后期重炮配置为 1 座双联装加 3 座单装 150mm 炮，2 座四联装鱼雷管。 | 舰装表用 4 个炮座、每座 1-2 管表达混合炮座。 | 通过（抽象） |
+| Z23 | 1936A 型驱逐舰；后期重炮配置为 1 座双联装加 3 座单装 150mm 炮，2 座四联装鱼雷管。 | 当前数据统一抽象为 4 座双联装主炮；这是规则可执行性优先的强化抽象，不复刻混合单/双联布局。 | 通过（抽象） |
 | 纽伦堡 | 莱比锡级轻巡；3 座三联装 150mm 主炮，完工时 4 座三联装鱼雷管。 | 采用完工时鱼雷轮廓；不把后续拆除的艉部鱼雷管混入同一史实状态。 | 通过 |
 | 沙恩霍斯特 | 沙恩霍斯特级主力舰；3 座三联装 283mm 主炮，高航速。 | MVP 归类为战列；省略后期加装鱼雷，突出高速炮战。 | 通过（抽象） |
 | 齐柏林伯爵 | 德国航母计划首舰，下水但未完工服役；计划配置航空联队与重型舰炮。 | 所有战斗表现均是假想完成状态，必须保留 `UnfinishedCarrier`。 | 条件通过 |
@@ -51,15 +55,15 @@
 
 ## 4. 资料索引
 
-本轮使用以下公开舰史入口交叉核对舰名、舰级、武装与完工状态；页面中的游戏数值不作为史实来源。
+本轮使用以下公开舰史入口交叉核对舰名、舰级、武装与完工状态；页面中的游戏数值不作为史实来源。资料索引支持本报告的历史语境，不意味着单一页面独立证明表中全部细节；有争议的精确装备状态仍应在后续修改时保留逐条来源。
 
-- 美系：[USS Fletcher](https://en.wikipedia.org/wiki/USS_Fletcher_(DD-445))、[USS Cleveland](https://en.wikipedia.org/wiki/USS_Cleveland_(CL-55))、[USS Baltimore](https://en.wikipedia.org/wiki/USS_Baltimore_(CA-68))、[USS Wahoo](https://en.wikipedia.org/wiki/USS_Wahoo_(SS-238))；各页所列 DANFS 与舰级专著用于二次核对。
-- 英系：[Imperial War Museums — HMS Belfast](https://www.iwm.org.uk/visits/hms-belfast)、[HMS Jervis](https://en.wikipedia.org/wiki/HMS_Jervis)、[HMS Illustrious](https://en.wikipedia.org/wiki/HMS_Illustrious_(87))、[HMS Upholder](https://en.wikipedia.org/wiki/HMS_Upholder_(P37))。
+- 美系：[Naval History and Heritage Command — USS Fletcher](https://www.history.navy.mil/research/histories/ship-histories/danfs/f/fletcher.html)、[USS Cleveland](https://en.wikipedia.org/wiki/USS_Cleveland_(CL-55))、[USS Baltimore](https://en.wikipedia.org/wiki/USS_Baltimore_(CA-68))、[Naval History and Heritage Command — USS Wahoo](https://www.history.navy.mil/content/history/nhhc/browse-by-topic/ships/submarines/wahoo-ss-238.html)。
+- 英系：[Imperial War Museums — HMS Belfast](https://www.iwm.org.uk/visits/hms-belfast)、[HMS Jervis](https://en.wikipedia.org/wiki/HMS_Jervis)、[HMS Illustrious](https://en.wikipedia.org/wiki/HMS_Illustrious_(87))、[HMS Upholder](https://en.wikipedia.org/wiki/HMS_Upholder_(P37))。IWM 页面只用于舰船身份和保存状态入口，不单独支持本文的武装数量判断。
 - 苏系：[Tashkent-class destroyer](https://en.wikipedia.org/wiki/Tashkent-class_destroyer)、[Chapayev-class cruiser](https://en.wikipedia.org/wiki/Chapayev-class_cruiser)、[Gangut](https://en.wikipedia.org/wiki/Russian_battleship_Gangut_(1911))、[K-21](https://en.wikipedia.org/wiki/Soviet_submarine_K-21)。
 - 德系：[Z23](https://en.wikipedia.org/wiki/German_destroyer_Z23)、[Nürnberg](https://en.wikipedia.org/wiki/German_cruiser_N%C3%BCrnberg)、[Scharnhorst](https://en.wikipedia.org/wiki/German_battleship_Scharnhorst)、[Graf Zeppelin](https://en.wikipedia.org/wiki/German_aircraft_carrier_Graf_Zeppelin)。
 - 日系：[Akizuki](https://en.wikipedia.org/wiki/Japanese_destroyer_Akizuki_(1941))、[Takao](https://en.wikipedia.org/wiki/Japanese_cruiser_Takao_(1930))、[Shōkaku](https://en.wikipedia.org/wiki/Japanese_aircraft_carrier_Sh%C5%8Dkaku)、[I-19](https://en.wikipedia.org/wiki/Japanese_submarine_I-19)。
-- 中系：[Yat Sen](https://en.wikipedia.org/wiki/Chinese_cruiser_Yat_Sen)、[Rekordny / Chang Chun](https://en.wikipedia.org/wiki/Soviet_destroyer_Rekordny)、[Dingyuan](https://en.wikipedia.org/wiki/Chinese_ironclad_Dingyuan)、[USS Cutlass / Hai Lung](https://en.wikipedia.org/wiki/USS_Cutlass_(SS-478))。
+- 中系：[Yat Sen](https://en.wikipedia.org/wiki/Chinese_cruiser_Yat_Sen)、[Rekordny / Chang Chun](https://en.wikipedia.org/wiki/Soviet_destroyer_Rekordny)、[Dingyuan](https://en.wikipedia.org/wiki/Chinese_ironclad_Dingyuan)、[Naval History and Heritage Command — USS Cutlass / Hai Lung](https://www.history.navy.mil/research/histories/ship-histories/danfs/c/cutlass-ss-478.html)。
 
 ## 5. 历史验证结论
 
-第二期 24 名角色中，22 名为“通过”或“通过（抽象）”；2 名为必须持续显著标注的条件通过对象，即未完工航母齐柏林伯爵和跨时代舰种映射定远。没有发现虚构实舰或把未服役方案误写为已服役舰的情况。修正纽伦堡与逸仙的武器底座后，舰装轮廓可以进入后续美术和数据设计。
+第二期 24 名角色中，22 名为“通过”或“通过（抽象）”；2 名为必须持续显著标注的条件通过对象，即未完工航母齐柏林伯爵和跨时代舰种映射定远。没有发现虚构实舰或把未服役方案误写为已服役舰的情况。本记录曾为后续美术和数据设计提供输入；当前数据、资产覆盖和运行状态必须分别回到 `data/`、对应美术文档与 `docs/00_project_status.md` 判断。

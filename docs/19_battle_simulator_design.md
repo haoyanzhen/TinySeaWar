@@ -1,8 +1,10 @@
 # 战斗模拟器设计
 
-## 1. 文档定位
+## 1. 文档功能与边界
 
-本文定义 Tiny Sea War 无图形战斗模拟器的目标、实验模型、执行流程、数据契约、统计口径、报告结构、确定性要求和实施顺序。
+本文是 Tiny Sea War 无图形战斗模拟平台的技术设计真源，负责定义实验如何展开、会话如何隔离执行、随机源如何保持确定性、单局如何记录、失败如何分类、结果如何恢复与发布，即“模拟器如何可靠运行并保存实验事实”。
+
+本文不定义战斗规则、AI 策略本身、平衡样本授权、测试族、目标阈值、结论边界、当前完成度或代码速查位置。战斗与 AI 真源见 `docs/10_game_core_mechanics.md` 至 `docs/18_facility_weather_effect_design.md`，平衡实验方法只以 `docs/36_balance_testing_design.md` 为准，当前状态与代码入口分别见 `docs/00_project_status.md`、`docs/34_implementation_map.md`，实验字段见 `docs/26_simulation_data_schema.md`。
 
 模拟器用于快速回答以下问题：
 
@@ -14,64 +16,22 @@
 - 天气、时段、局部环境、设施、地形和出生位置是否带来预期影响。
 - 一组候选参数相对当前基线改善了什么，又牺牲了什么。
 
-本文不重新定义侦查、命中、伤害、移动、地形、设施、AI 或胜负规则。规则真源仍然是：
-
-- 核心玩法：`docs/10_game_core_mechanics.md`
-- 战斗公式：`docs/12_combat_formula_design.md`
-- 平衡范围：`docs/13_balance_baseline.md`
-- 角色草案：`docs/14_character_balance_design.md`
-- 关卡与节奏：`docs/15_battle_level_design.md`
-- AI 行为：`docs/16_enemy_ai_behavior_design.md`
-- 趣味验收：`docs/17_play_design.md`
-- 设施与环境：`docs/18_facility_weather_effect_design.md`
-- 数据字段：`docs/20_data_schema_design.md`
-- Domain 边界：`docs/32_domain_design_phase1.md`
-- 场景战斗契约：`docs/35_scene_combat_domain_design.md`
-- 平衡性测试设计：`docs/36_balance_testing_design.md`
-
-模拟器是规则运行器、实验编排器和分析工具，不是另一套战斗系统。
+所有规则真源已在本节边界列明；模拟器只是规则运行器、实验编排器和事实记录器，不是另一套战斗系统。
 
 ---
 
-## 2. 当前基线与缺口
+## 2. 平台能力边界
 
-项目已经具备模拟器的最小技术基础：
+完整平台应支持以下稳定能力：
 
-- `BattleSession` 不依赖战斗场景即可创建和推进战斗。
-- `advance_tick()` 使用固定步长执行移动、侦查、AI、武器、伤害、地形、设施和胜负逻辑。
-- `SeededRandomSource` 为单场战斗提供种子随机源。
-- `BattleRecorder` 消费领域事件并输出基础统计。
-- `scripts/tests/batch_simulation.gd` 能无画面运行五个现有关卡，每关固定执行 6 局。
+- 直接运行与可玩战斗同源的完整 `BattleSession` 固定 Tick 规则。
+- 由实验清单组合场景、舰队、策略、种子、侧别和候选参数。
+- 隔离应用参数覆盖，支持侧别交换、配对种子和基线/候选比较。
+- 结构化记录单局事实、异常类别、聚合指标、配置指纹和复现信息。
+- 在串行、并行、中断恢复和不同报告级别下保持单局确定性。
+- 输出适合机器处理与人工复核的 JSONL、JSON、CSV 和 Markdown 产物。
 
-该入口当前属于冒烟与回归测试，不是完整平衡模拟器。主要缺口包括：
-
-- 关卡、舰队、AI、种子、Tick、重复次数和输出字段写死在脚本中。
-- 不能安全地应用临时参数覆盖并比较基线与候选方案。
-- 不能建立舰队交换、出生侧交换和配对种子实验。
-- 统计粒度不足，无法解释角色、武器、技能、AI、环境和设施贡献。
-- 没有置信区间、异常局检测、样本充分性提示和回归阈值。
-- 没有实验清单、配置指纹、代码版本和结果文件之间的稳定追踪关系。
-- 没有把模拟未结束、非法命令、规则断言、无接敌和数据缺失当成独立失败类别。
-- 输出是一次性控制台 JSON，不适合作为持续调参、趋势比较和人工复核依据。
-
-因此正式实现应复用现有基础，逐步替换硬编码批量脚本，而不是平行开发一个简化伤害计算器。
-
-### 2.1 2026-06-29 首个可用版本
-
-当前已实现阶段 A 主干和部分阶段 B 能力：
-
-- `data/simulations/experiments/` 保存版本化实验清单。
-- `SimulationExperimentLoader` 校验清单并展开显式或连续种子。
-- `SimulationRunner` 直接驱动 `BattleSession`，区分正常结束、创建失败和 `GuardLimit`。
-- `BaselineAutopilot` 通过普通命令为双方使用手动主要武器和技能，不绕过装填、射程、射角、侦查和目标规则。
-- `SimulationAggregator` 输出完成率、胜率及 95% Wilson 区间、时长分布、接触/开火/击沉时间、双方射击/命中/伤害、分场景结果和单位平均有效伤害。
-- `SimulationReportWriter` 输出 `runs.jsonl`、`aggregate.json`、`summary.csv` 和 `report.md`。
-- `battle_simulator_test.gd` 独立验证清单、运行、确定性和报告落盘。
-- 实验可用 `side_swap=true` 将原敌方阵容放到玩家出生点、原玩家阵容放到敌方出生点；同场景同种子按 `original` / `swapped` 生成配对结果。
-- 单局逐舰伤害直接读取 `BattleSession.get_all_unit_damage_statistics()`，由 `damage_statistics.gd` 提供有效伤害、承伤、过量伤害、武器类别、武器明细和 Buff 贡献口径。设施、水雷及后续非舰船来源独立写入并列的 `BattleSession.get_all_non_ship_damage_statistics()`；它保留来源、类别、伤害、承伤和过量伤害，当前只进入机器可读的单局/聚合数据，不展开到面向玩家的逐舰报告。
-- `LatestRuntimeAI` 策略通过 `BattleSession.configure_full_ai_factions()` 让指定阵营使用当前完整量化 AI；双方都选择该策略时，共用目标评分、模式迟滞、Attack/Defend/Kite、预判主要武器、技能收益和即时规避逻辑，不调用 `BaselineAutopilot`。
-
-尚未实现的主要能力是 Definition 参数覆盖、候选参数配对 A/B、并行恢复、完整 AI 动态指标和大规模编成抽样。因此当前状态是“模拟器首版可用”，不是本文全部阶段完成。
+本节只规定平台能力，不用已实现清单或待办清单代替设计目标。各能力当前是否落地只见 `docs/00_project_status.md`，代码职责与入口只见 `docs/34_implementation_map.md`。
 
 ---
 
@@ -562,16 +522,7 @@ AI 指标遵循 `docs/16_enemy_ai_behavior_design.md`：
 
 ### 9.3 样本量与人工指定
 
-默认样本量只服务于单个功能或性能改动的快速验收：
-
-| 用途 | 每代表场景种子数 | 说明 |
-| --- | ---: | --- |
-| 单局冒烟 | 1 | 先检查能启动、能结束且关键战斗事件完整 |
-| 小样本门禁 | 3 | 单局通过后检查不同种子均能正常结算与产出指标 |
-| 默认 AI/性能验收 | 1 -> 3 | 只检查单项改动可运行、可复现、指标完整且无新增异常 |
-| 大版本统计、固定回归、平衡筛查、关键 A/B | 20 以上 | 仅当人工在任务、工单或用户指令中明确指定为“大版本改动”时执行，并记录指定范围与目的 |
-
-默认执行顺序必须是 `1 -> 3`，任一阶段失败时先停止、定位和修复。不得因结果接近门槛、方差较高或稀有事件重要而自行扩大到 20 局及以上；必须先取得人工对大版本统计验证的明确指定。20+ 样本的规模由该指定决定，历史 20/40 局及更大批次继续保留为证据，不因本规则失效。
+模拟器必须支持显式种子列表、重复次数、配对种子和侧别变体，但不得自行决定样本规模或扩大实验。默认冒烟、大版本统计、`LevelWinRateEvaluation` 和人工指定规则只以 `docs/36_balance_testing_design.md` 为准。
 
 ### 9.4 多重比较
 
@@ -619,17 +570,7 @@ CSV 面向表格分析，至少提供：
 
 ### 10.3 Markdown
 
-Markdown 报告面向设计复核，顺序建议为：
-
-1. 结论摘要。
-2. 实验问题与候选参数。
-3. 样本、场景和策略。
-4. 主要指标与区间。
-5. 分层结果。
-6. 异常局与代表种子。
-7. 风险、不能下的结论和下一步建议。
-
-报告应列出最值得人工复盘的种子，例如最快斩首、最长无接敌、最大逆转、异常高伤害和路线失败局。
+Markdown 是面向设计复核的派生产物，必须能追溯到机器可读结果，并列出值得人工复盘的异常或代表种子。报告叙事结构、必备结论和“不能下的结论”只由 `docs/36_balance_testing_design.md` 规定。
 
 ---
 
@@ -653,66 +594,17 @@ Markdown 报告面向设计复核，顺序建议为：
 
 ### 11.3 节奏门禁
 
-对照现有目标：
-
-- 小船被集火约 5-12 秒沉没。
-- 大船被持续磨血约 60-120 秒沉没。
-- 3v3、5v5、11v11 目标完成时间分别约 4-7、6-9、8-12 分钟。
-- 不得频繁达到 20 分钟硬时限。
-- 不得长期无目标追逐、无法接敌或主要武器持续空转。
-
-这些区间用于发现偏离，不要求每个极端编成都落在区间内。
+模拟器负责计算和输出节奏指标，不在平台文档复制目标区间。当前节奏范围以 `docs/13_balance_baseline.md` 为准，具体实验门禁以 `docs/36_balance_testing_design.md` 为准。
 
 ### 11.4 行为与平衡门禁
 
-- AI 行为指标先通过，再解释胜率。
-- 强势方案不能只在单一侧别、地图或种子组成立。
-- 候选不得以明显增加撞岸、技能浪费、非法命令或超时换取胜率。
-- 单角色增强不能使多数合法编成中出现无替代的唯一最优解。
-- 角色、武器或技能贡献异常时能追溯到具体事件和规则路径。
-
-验收 Profile 可以自动给出 `pass`、`warn`、`fail`，但正式数值写回仍由设计者决定。
+模拟器必须提供行为、平衡和异常指标，并允许验收 Profile 输出 `pass`、`warn`、`fail`；指标解释、阈值选择和正式数值写回决策只按 `docs/16_enemy_ai_behavior_design.md`、`docs/36_balance_testing_design.md` 执行。
 
 ---
 
-## 12. 程序分层与建议落点
+## 12. 程序分层职责
 
-模拟器遵守现有分层：
-
-```text
-scripts/
-  application/
-    simulation/
-      simulation_runner.gd
-      experiment_expander.gd
-      policy_controller.gd
-  infrastructure/
-    simulation/
-      experiment_loader.gd
-      definition_overlay.gd
-      simulation_writer.gd
-      simulation_aggregator.gd
-      simulation_comparator.gd
-    analytics/
-      battle_recorder.gd
-      simulation_recorder.gd
-  tests/
-    batch_simulation.gd
-    simulation_regression_test.gd
-
-data/
-  simulations/
-    experiments/
-    scenarios/
-    policies/
-    acceptance_profiles/
-
-tools/
-  simulation/
-    run_experiment.gd
-```
-
-职责：
+具体文件位置只在 `docs/34_implementation_map.md` 维护。模拟器各层必须保持以下职责：
 
 - `BattleSession`：唯一整局规则协调入口，不认识实验矩阵或 CSV。
 - `SimulationRunner`：创建会话、驱动策略、推进 Tick、分类结束状态。
@@ -724,9 +616,7 @@ tools/
 - `SimulationComparator`：生成配对 A/B 差值和门禁结果。
 - `SimulationWriter`：负责 JSONL、JSON、CSV 和 Markdown。
 
-现有 `scripts/tests/batch_simulation.gd` 在迁移期保留为快速冒烟入口，最终应改为调用 `SimulationRunner` 的一个小型内置实验，而不是继续维护独立循环和统计逻辑。
-
-模拟配置正式落地前，必须在 `docs/20_data_schema_design.md` 补充字段，并在 `docs/34_implementation_map.md` 更新入口。本文只定义目标契约，不表示这些目录和字段当前已经实现。
+模拟配置正式落地时必须同步 `docs/26_simulation_data_schema.md` 和 `docs/34_implementation_map.md`。本文只定义分层职责，不通过列出候选路径表示文件已经实现。
 
 ---
 
@@ -735,7 +625,7 @@ tools/
 第一阶段性能目标以开发机无图形运行作为口径：
 
 - 1v1、3v3 和 5v5 应明显快于实时速度。
-- 11v11 与港湾关卡允许较慢；如人工明确指定 20 局及以上的性能统计批次，该批次不应依赖场景渲染，且性能专项独立于功能正确性门禁。
+- 11v11 与港湾关卡允许较慢；性能专项不依赖场景渲染，且独立于功能正确性门禁。
 - 默认聚合模式不保存每 Tick 全量快照。
 - 事件记录量应能按 `summary`、`diagnostic`、`trace` 三档切换。
 - `trace` 只用于少量异常种子，不用于数百局常规矩阵。
@@ -803,17 +693,17 @@ tools/
 
 ---
 
-## 15. 实施顺序
+## 15. 平台演进顺序
 
 ### 阶段 A：正式批量运行骨架
 
-1. 把现有硬编码批量循环抽成 `SimulationRunner`。
+1. 建立统一 `SimulationRunner`。
 2. 支持实验清单、显式种子、固定 Tick、最大 Tick 和结构化输出。
-3. 修正并统一完成局、异常局和 GuardLimit 的统计口径。
+3. 统一完成局、异常局和 GuardLimit 的统计口径。
 4. 保存配置指纹、代码版本和可复现命令。
-5. 用现有五个关卡建立冒烟实验。
+5. 用当前代表关卡集建立冒烟实验。
 
-完成标志：可以通过一个实验清单运行五个关卡，并输出可追踪的单局与聚合 JSON。
+完成标志：可以通过一个实验清单运行当前代表关卡集，并输出可追踪的单局与聚合 JSON。
 
 ### 阶段 B：统计与报告
 
@@ -844,28 +734,15 @@ tools/
 
 ---
 
-## 16. 首轮标准实验集
+## 16. 标准实验归属
 
-正式实现后，建议先建立以下具名实验；除非人工明确指定为大版本验证，所有实验均使用 `1 -> 3`：
-
-| 实验 ID | 场景 | 种子 | 目的 |
-| --- | --- | ---: | --- |
-| `sim.smoke.current_levels` | 当前五个可玩关卡 | 每关 1 -> 3 | 替代现有硬编码冒烟，检查正常结束 |
-| `sim.regression.open_sea` | 1v1 / 3v3 / 5v5 / 11v11 | 每关 1 -> 3 | 开阔海域规则与确定性回归 |
-| `sim.regression.harbor` | 港湾 3v3 | 1 -> 3 | 地形、设施、环境和水雷回归 |
-
-港湾均衡的大版本验证固定使用双方等 Cost 关卡、`LatestRuntimeAI` 标准 Profile 和侧别交换；只有人工明确指定后才能执行 20 局及以上的完整批次。报告必须同时给出原始阵容胜率、玩家出生侧胜率、至少发生一次设施操作的对局占比、超时率，以及路径卡住、无路可达和 AI 命令拒绝合计的行为异常/局。
-| `sim.ai.dynamic_representative` | 五个当前关卡 | 每关 1 -> 3；20+ 仅人工指定 | AI 行为动态验收 |
-| `sim.balance.phase1_roles` | 第一期角色代表编成 | 每组 1 -> 3；20+ 仅人工指定 | 舰种职责和 Cost 初筛 |
-| `sim.environment.palette_pairs` | 代表舰队 × 20 palette | 每组 1 -> 3；20+ 仅人工指定 | 时间天气影响与极端组合检查 |
-
-首轮不立即穷举 48 名角色的所有组合。第二期角色尚未完整进入关卡与动态平衡验收，应先建立合法测试舰队、策略覆盖和专项场景，再扩大矩阵。
+模拟器应支持关卡冒烟、规则回归、AI 行为、角色与舰种、地图环境、关卡胜率和参数 A/B 等具名实验，但具体实验 ID、场景集、样本数、侧别要求和报告字段只在 `docs/36_balance_testing_design.md` 与版本化实验清单中维护。平台文档不保存会随关卡数量和验证策略变化的标准实验副本。
 
 ---
 
 ## 17. 完成标准
 
-战斗模拟器达到首个可用版本，需要同时满足：
+战斗模拟器达到完整设计目标，需要同时满足：
 
 - 无场景树和图形渲染即可运行与可玩战斗相同的完整规则。
 - 实验可配置关卡、舰队、策略、候选参数、种子、重复数、侧别和输出级别。
@@ -875,7 +752,7 @@ tools/
 - 单位、武器、技能、AI、环境和设施指标能由领域事件追溯。
 - 报告包含分布、区间、分层结果、A/B 差值和代表种子。
 - 批量模拟不直接修改正式配置，不建立第二套公式或 AI 特权。
-- 现有五个关卡有冒烟实验，代表关卡有固定回归种子集。
+- 当前代表关卡集有冒烟实验，并具有固定回归种子集。
 - 模拟器结论明确区分“规则正确”“自动策略下数值合理”和“人工实机体验通过”。
 
 模拟器的价值不在于替设计者宣布一个角色“平衡”，而在于把调参从零散观感变成可复现、可解释、能快速排除错误方向的实验过程。

@@ -138,7 +138,7 @@ func advance(battle_state: Dictionary) -> Dictionary:
 		"TutorialTorpedo", "TutorialCarrierHunt": _advance_first_contact_tutorial(battle_state, events)
 		"TutorialSharedContact": _advance_shared_contact_tutorial(battle_state, events)
 		"TutorialCommand": _advance_command_tutorial(battle_state, events)
-		"FlagshipMission": pass
+		"FlagshipMission", "ChallengeMission": pass
 	var terminal := _terminal_result(battle_state)
 	if not terminal.is_empty():
 		var completed: bool = str(terminal.get("winner_faction", "")) == "player"
@@ -237,6 +237,19 @@ func _terminal_result(battle_state: Dictionary) -> Dictionary:
 		var protected: Dictionary = battle_state.get("units_by_id", {}).get(str(protected_id), {})
 		if protected.is_empty() or protected.get("life_state", "") == "Sunk":
 			return {"winner_faction": "enemy", "reason": "LEVEL_OBJECTIVE_CANCELLED"}
+	var required_any: Array = definition.get("required_any_player_unit_ids", [])
+	if not required_any.is_empty():
+		var survivors := 0
+		for unit_id in required_any:
+			if battle_state.get("units_by_id", {}).get(str(unit_id), {}).get("life_state", "") == "Alive": survivors += 1
+		if survivors < int(definition.get("minimum_required_any_player_alive", 1)):
+			return {"winner_faction": "enemy", "reason": "LEVEL_OBJECTIVE_CANCELLED"}
+	var hp_unit_id := str(definition.get("minimum_player_hp_ratio_unit_id", ""))
+	if not hp_unit_id.is_empty():
+		var hp_unit: Dictionary = battle_state.get("units_by_id", {}).get(hp_unit_id, {})
+		var hp_ratio := float(hp_unit.get("current_hp", 0.0)) / maxf(1.0, float(hp_unit.get("max_hp", 1.0)))
+		if hp_unit.is_empty() or hp_ratio <= float(definition.get("minimum_player_hp_ratio", 0.0)):
+			return {"winner_faction": "enemy", "reason": "LEVEL_OBJECTIVE_CANCELLED"}
 	var minimum_alive := int(definition.get("minimum_player_alive", 0))
 	if minimum_alive > 0:
 		var alive_count := 0
@@ -249,6 +262,28 @@ func _terminal_result(battle_state: Dictionary) -> Dictionary:
 		if enemy_flagship.get("life_state", "") == "Sunk":
 			return {"winner_faction": "player", "reason": "LEVEL_OBJECTIVE_COMPLETED"}
 		return {}
+	if str(definition.get("objective_kind", "")) == "ChallengeMission":
+		var ordered_targets: Array = definition.get("ordered_enemy_unit_ids", [])
+		if not ordered_targets.is_empty():
+			for index in range(ordered_targets.size()):
+				var target: Dictionary = battle_state.get("units_by_id", {}).get(str(ordered_targets[index]), {})
+				if target.get("life_state", "") != "Sunk": continue
+				for prior_index in range(index):
+					if battle_state.get("units_by_id", {}).get(str(ordered_targets[prior_index]), {}).get("life_state", "") != "Sunk":
+						return {"winner_faction": "enemy", "reason": "LEVEL_OBJECTIVE_CANCELLED"}
+			if ordered_targets.all(func(unit_id): return battle_state.get("units_by_id", {}).get(str(unit_id), {}).get("life_state", "") == "Sunk"):
+				return {"winner_faction": "player", "reason": "LEVEL_OBJECTIVE_COMPLETED"}
+			return {}
+		var required_enemy_ids: Array = definition.get("required_enemy_unit_ids", [])
+		for enemy_id in required_enemy_ids:
+			if battle_state.get("units_by_id", {}).get(str(enemy_id), {}).get("life_state", "") != "Sunk": return {}
+		var minimum_enemy_sunk := int(definition.get("minimum_enemy_sunk", 0))
+		if minimum_enemy_sunk > 0:
+			var sunk_count := 0
+			for unit_id in battle_state.get("fleets_by_id", {}).get("fleet.enemy", {}).get("unit_ids", []):
+				if battle_state.get("units_by_id", {}).get(str(unit_id), {}).get("life_state", "") == "Sunk": sunk_count += 1
+			if sunk_count < minimum_enemy_sunk: return {}
+		return {"winner_faction": "player", "reason": "LEVEL_OBJECTIVE_COMPLETED"}
 	if not is_tutorial(): return {}
 	var required_enemy_ids: Array = definition.get("required_enemy_unit_ids", [])
 	if required_enemy_ids.is_empty():

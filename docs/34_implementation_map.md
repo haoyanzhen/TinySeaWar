@@ -40,7 +40,7 @@
 | 职责 | 当前文件/目录 |
 |---|---|
 | 原型与海岸验证关卡 | `data/levels/prototype_levels.json` |
-| 首个正式教学/挑战关 | `data/levels/formal_level_01.json` |
+| S-01 至 S-05 正式挑战关 | `data/levels/formal_level_01.json` |
 | T-02 至 T-04 正式关卡 | `data/levels/formal_tutorial_levels_02_04.json` |
 | T-05 至 T-08 正式关卡 | `data/levels/formal_tutorial_levels_05_08.json` |
 | 声明式目标定义 | `data/objectives/level_objectives.json` |

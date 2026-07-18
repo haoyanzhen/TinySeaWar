@@ -419,16 +419,45 @@ func _validate_level(level: Dictionary) -> void:
 			fleet_costs[fleet_name] = total_cost
 		if int(fleet_costs.get("player_fleet", 0)) != int(fleet_costs.get("enemy_fleet", 0)):
 			errors.append("Equal-cost level %s has player/enemy costs %d/%d" % [level_id, fleet_costs.get("player_fleet", 0), fleet_costs.get("enemy_fleet", 0)])
+	var initial_ids := {}
+	for fleet_name in ["player_fleet", "enemy_fleet"]:
+		for member in level.get(fleet_name, []): initial_ids[str(member.get("entity_id", ""))] = true
+	var wave_ids := {}
+	for wave_value in level.get("reinforcement_waves", []):
+		var wave: Dictionary = wave_value
+		var wave_id := str(wave.get("wave_id", ""))
+		if wave_id.is_empty() or wave_ids.has(wave_id) or str(wave.get("faction_id", "")) not in ["player", "enemy"] or float(wave.get("earliest_time", -1.0)) < 0.0 or int(wave.get("concurrent_unit_cap", 0)) <= 0:
+			errors.append("Invalid reinforcement wave in %s" % level_id)
+		wave_ids[wave_id] = true
+		for member_value in wave.get("members", []):
+			var member: Dictionary = member_value
+			var entity_id := str(member.get("entity_id", ""))
+			if entity_id.is_empty() or initial_ids.has(entity_id) or bool(member.get("is_flagship", false)) or get_definition("ships", str(member.get("ship_id", ""))).is_empty() or not _valid_positive_pair(member.get("position", [])):
+				errors.append("Invalid reinforcement member in %s/%s" % [level_id, wave_id])
+			initial_ids[entity_id] = true
 
 
 func _validate_objective(objective: Dictionary) -> void:
 	var objective_id := str(objective.get("id", "?"))
 	var kind := str(objective.get("objective_kind", ""))
 	var tutorial_kinds := ["TutorialNavigation", "TutorialGunnery", "TutorialSkill", "TutorialArmor", "TutorialTorpedo", "TutorialCarrierHunt", "TutorialSharedContact", "TutorialCommand"]
-	if kind not in tutorial_kinds + ["FlagshipMission"]:
+	if kind not in tutorial_kinds + ["FlagshipMission", "ChallengeMission"]:
 		errors.append("Unsupported objective kind in %s" % objective_id)
 	if str(objective.get("title", "")).is_empty():
 		errors.append("Missing objective title in %s" % objective_id)
+	if kind == "ChallengeMission":
+		var challenge_units := _objective_units(objective_id)
+		if challenge_units.is_empty(): errors.append("Challenge objective %s is not referenced by a level" % objective_id)
+		for field_name in ["protected_player_unit_ids", "required_any_player_unit_ids", "required_enemy_unit_ids", "ordered_enemy_unit_ids"]:
+			for unit_id_value in objective.get(field_name, []):
+				var unit_id := str(unit_id_value)
+				var expected_faction := "player" if field_name in ["protected_player_unit_ids", "required_any_player_unit_ids"] else "enemy"
+				if unit_id.is_empty() or not challenge_units.has(unit_id) or str(challenge_units[unit_id].get("faction_id", "")) != expected_faction:
+					errors.append("Invalid challenge unit %s in %s" % [unit_id, objective_id])
+		if objective.get("required_enemy_unit_ids", []).is_empty() and objective.get("ordered_enemy_unit_ids", []).is_empty(): errors.append("Challenge objective %s requires enemy completion targets" % objective_id)
+		var hp_unit_id := str(objective.get("minimum_player_hp_ratio_unit_id", ""))
+		if not hp_unit_id.is_empty() and (not challenge_units.has(hp_unit_id) or str(challenge_units[hp_unit_id].get("faction_id", "")) != "player" or float(objective.get("minimum_player_hp_ratio", 0.0)) <= 0.0): errors.append("Invalid challenge HP protection in %s" % objective_id)
+		return
 	if kind not in tutorial_kinds: return
 	var objective_units := _objective_units(objective_id)
 	if objective_units.is_empty():
@@ -532,6 +561,10 @@ func _objective_units(objective_id: String) -> Dictionary:
 		for fleet_name in ["player_fleet", "enemy_fleet"]:
 			var faction_id := "player" if fleet_name == "player_fleet" else "enemy"
 			for member in level.get(fleet_name, []):
+				result[str(member.get("entity_id", ""))] = {"faction_id": faction_id, "ship_id": str(member.get("ship_id", ""))}
+		for wave in level.get("reinforcement_waves", []):
+			var faction_id := str(wave.get("faction_id", ""))
+			for member in wave.get("members", []):
 				result[str(member.get("entity_id", ""))] = {"faction_id": faction_id, "ship_id": str(member.get("ship_id", ""))}
 	return result
 

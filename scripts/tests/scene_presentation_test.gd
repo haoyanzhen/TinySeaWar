@@ -25,7 +25,7 @@ func _run() -> void:
 	menu._show_challenge()
 	var challenge_buttons := _descendants_of_type(menu.content, "Button")
 	_check(challenge_buttons.size() == 15, "challenge entry exposes all fifteen designed challenge levels")
-	_check(challenge_buttons.filter(func(button): return not button.disabled).size() == 1 and challenge_buttons.any(func(button): return not button.disabled and button.text.contains("S-01")), "challenge entry enables the implemented S-01 level")
+	_check(challenge_buttons.any(func(button): return not button.disabled and button.text.contains("S-01")), "challenge entry always enables the first implemented S challenge")
 	menu._show_custom()
 	_check(menu.custom_size_selector.item_count == 4 and menu.custom_map_selector.item_count == 11 and menu.custom_weather_selector.item_count == 20, "custom entry exposes four scales, all 3v3 maps, and twenty weather palettes")
 	var all_sizes_expose_all_maps := true

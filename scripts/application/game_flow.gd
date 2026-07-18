@@ -70,9 +70,16 @@ func record_level_victory(level_id: String) -> bool:
 		"level.tutorial.t05": ship_unlock_id = "ship.hai_shih"
 		"level.tutorial.t06": ship_unlock_id = "ship.u_47"
 		"level.challenge.s01": ship_unlock_id = "ship.anshan"
+		"level.challenge.s02": ship_unlock_id = "ship.aurora"
+		"level.challenge.s03": ship_unlock_id = "ship.sirius"
+		"level.challenge.s04": ship_unlock_id = "ship.ning_hai"
+		"level.challenge.s05": ship_unlock_id = "ship.chongqing"
 		_: return false
 	if not ship_unlock_id.is_empty() and ship_unlock_id not in unlocked_ship_ids:
 		unlocked_ship_ids.append(ship_unlock_id)
+	if level_id == "level.challenge.s05":
+		for ship_id in ["ship.yukikaze", "ship.hood", "ship.san_diego"]:
+			if ship_id not in unlocked_ship_ids: unlocked_ship_ids.append(ship_id)
 	if level_id.begins_with("level.challenge.") and level_id not in completed_challenge_level_ids:
 		completed_challenge_level_ids.append(level_id)
 	_progress_document["schema_version"] = 1

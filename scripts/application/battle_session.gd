@@ -162,10 +162,12 @@ func create_battle(level_id: String, seed_value: int = 1) -> Dictionary:
 		"ai_groups_by_faction": {PLAYER_FACTION: {}, ENEMY_FACTION: {}},
 		"result": {},
 		"level_objective": level_objective_service.snapshot(),
+		"reinforcement_waves": [],
 	}
 	_configure_scene_combat(level)
 	_build_fleet("fleet.player", PLAYER_FACTION, level.get("player_fleet", []))
 	_build_fleet("fleet.enemy", ENEMY_FACTION, level.get("enemy_fleet", []))
+	_initialize_reinforcements(level)
 	if level_objective_service.is_tutorial():
 		var initial_control_state := level_objective_service.initial_player_control_state()
 		for unit_id in state["fleets_by_id"]["fleet.player"]["unit_ids"]:
@@ -219,6 +221,7 @@ func advance_tick(delta: float = 0.1) -> Array:
 	_performance_tick_counts = {}
 	state["tick_index"] += 1
 	state["elapsed_time"] += delta
+	_update_reinforcements()
 	_ai_observations_by_faction.clear()
 	_expire_ai_damage_reservations()
 	_expire_ai_effect_reservations()
@@ -672,6 +675,11 @@ func _validate_level_runtime(level: Dictionary) -> Array[String]:
 			all_entity_ids[entity_id] = true
 			if bool(member.get("is_flagship", false)): flagship_count += 1
 		if flagship_count != 1: errors.append("INVALID_FLAGSHIP_COUNT")
+	for wave in level.get("reinforcement_waves", []):
+		for member in wave.get("members", []):
+			var entity_id := str(member.get("entity_id", ""))
+			if all_entity_ids.has(entity_id): errors.append("DUPLICATE_ENTITY_ID")
+			all_entity_ids[entity_id] = true
 	return errors
 
 
@@ -686,6 +694,41 @@ func _build_fleet(fleet_id: String, faction_id: String, members: Array) -> void:
 		fleet["initial_max_hp_total"] += unit["max_hp"]
 		if unit["is_flagship"]: fleet["flagship_unit_id"] = unit["entity_id"]
 	state["fleets_by_id"][fleet_id] = fleet
+
+
+func _initialize_reinforcements(level: Dictionary) -> void:
+	var waves: Array = []
+	for wave_definition_value in level.get("reinforcement_waves", []):
+		var wave_definition: Dictionary = wave_definition_value.duplicate(true)
+		waves.append({"wave_id": str(wave_definition.get("wave_id", "")), "definition": wave_definition, "status": "Pending", "spawned_at_tick": -1})
+	state["reinforcement_waves"] = waves
+
+
+func _update_reinforcements() -> void:
+	var waves: Array = state.get("reinforcement_waves", [])
+	for wave in waves:
+		if str(wave.get("status", "")) != "Pending": continue
+		var definition: Dictionary = wave.get("definition", {})
+		if float(state.get("elapsed_time", 0.0)) < float(definition.get("earliest_time", 0.0)): continue
+		var faction_id := str(definition.get("faction_id", ""))
+		var fleet_id := "fleet.%s" % faction_id
+		var fleet: Dictionary = state.get("fleets_by_id", {}).get(fleet_id, {})
+		var alive_count := 0
+		for unit_id in fleet.get("unit_ids", []):
+			if state["units_by_id"].get(str(unit_id), {}).get("life_state", "") == "Alive": alive_count += 1
+		if alive_count >= int(definition.get("concurrent_unit_cap", 3)): continue
+		for member_value in definition.get("members", []):
+			var member: Dictionary = member_value
+			var ship: Dictionary = registry.get_definition("ships", str(member.get("ship_id", "")))
+			var unit := _build_unit(member, ship, fleet_id, faction_id, fleet["unit_ids"].size() + 1)
+			state["units_by_id"][unit["entity_id"]] = unit
+			fleet["unit_ids"].append(unit["entity_id"])
+			_emit("UnitSpawned", {"unit_id": unit["entity_id"], "faction_id": faction_id, "position": unit["position"], "is_flagship": false, "reinforcement_wave_id": wave.get("wave_id", "")})
+		wave["status"] = "Spawned"
+		wave["spawned_at_tick"] = int(state.get("tick_index", 0))
+		_emit("ReinforcementWaveSpawned", {"wave_id": wave.get("wave_id", ""), "faction_id": faction_id})
+		_rebuild_ai_groups(faction_id)
+		break
 
 
 func _build_unit(member: Dictionary, ship: Dictionary, fleet_id: String, faction_id: String, operation_slot: int) -> Dictionary:

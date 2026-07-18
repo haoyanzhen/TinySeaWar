@@ -242,13 +242,16 @@ func _show_challenge() -> void:
 		var levels: Array = CHALLENGES[chapter_name]
 		for index in range(levels.size()):
 			var button := Button.new()
-			var implemented: bool = str(levels[index][0]) == "S-01"
-			var state_text := "可开始" if implemented else ("默认开放 · 待接入" if index == 0 else "完成前一关后开放")
+			var level_code := str(levels[index][0])
+			var level_id := "level.challenge.%s" % level_code.to_lower()
+			var implemented: bool = level_code.begins_with("S-")
+			var unlocked: bool = index == 0 or (chapter_name == "小型海战 · 3v3" and ("level.challenge.s%02d" % index) in GameFlow.completed_challenge_level_ids)
+			var state_text := "可开始" if implemented and unlocked else ("完成前一关后开放" if implemented else ("默认开放 · 待接入" if index == 0 else "完成前一关后开放"))
 			button.text = "%s  %s\n%s" % [levels[index][0], levels[index][1], state_text]
 			button.custom_minimum_size = Vector2(0, 80)
-			button.disabled = not implemented
+			button.disabled = not implemented or not unlocked
 			button.alignment = HORIZONTAL_ALIGNMENT_LEFT
-			if implemented: button.pressed.connect(func(): _start_level("level.challenge.s01"))
+			if implemented and unlocked: button.pressed.connect(func(): _start_level(level_id))
 			column.add_child(button)
 
 

@@ -16,6 +16,7 @@ map
 time_limit
 require_equal_fleet_cost?
 player_fleet[], enemy_fleet[]
+reinforcement_waves[]?
 ```
 
 - `battle_mode`：`OpenSeaEqualBattle | CoastalEqualBattle | TutorialBattle | ChallengeBattle | CustomBattle`。新增模式必须同步加载校验和菜单/结算语义。
@@ -25,6 +26,8 @@ player_fleet[], enemy_fleet[]
 - `enemy_ai_profile_id` 省略时使用 `ai.profile.standard`；显式值必须引用合法 AI Profile。
 - `require_equal_fleet_cost` 默认 `false`；为 `true` 时加载器按所有初始成员引用舰船 Cost 校验两侧相等。
 - 旗舰引用必须属于对应舰队且每侧恰有一个有效旗舰。
+
+`reinforcement_waves[]` 的成员在开局不进入舰队、视野或损失统计；运行时按 `earliest_time`、`concurrent_unit_cap`、`wave_id` 与审核出生点顺序生成。每波包含 `wave_id, faction_id, earliest_time, concurrent_unit_cap, spawn_point_id, members[]`；波 ID 与所有初始/预备实体 ID 必须唯一，预备成员不得是旗舰。
 
 ## 3. FleetMemberDefinition
 
@@ -47,6 +50,9 @@ title, completion_text, failure_text
 player_unit_id?
 player_flagship_unit_id?, enemy_flagship_unit_id?
 protected_player_unit_ids[]?, required_enemy_unit_ids[]?
+required_any_player_unit_ids[]?, minimum_required_any_player_alive?
+ordered_enemy_unit_ids[]?, minimum_enemy_sunk?
+minimum_player_hp_ratio_unit_id?, minimum_player_hp_ratio?
 contact_target_unit_ids[]?
 required_actions[]?
 world_markers[]?
@@ -65,10 +71,26 @@ ability_limit_text?, engagement_ability_text?
 waypoint_zones[]?
 ```
 
-- `objective_kind` 当前只允许 `TutorialNavigation | TutorialGunnery | TutorialSkill | TutorialArmor | FlagshipMission`。
+- `objective_kind` 当前只允许 `TutorialNavigation | TutorialGunnery | TutorialSkill | TutorialArmor | TutorialTorpedo | TutorialCarrierHunt | TutorialSharedContact | TutorialCommand | FlagshipMission | ChallengeMission`。
+- `ChallengeMission` 只使用白名单任务事实：指定目标沉没、指定敌方沉没数量、按列出的敌方 ID 顺序沉没、指定保护舰存活、指定集合的最少存活数和单舰 HP 比例下限。顺序破坏、保护舰沉没、集合存活不足或 HP 触及下限均立即取消。
 - 教学动作、命令锁、世界标识、控制状态和单位引用必须属于加载器白名单并能在引用关卡中解析。
 - 教学能力限制必须显式列出；不得通过修改 HP、伤害、命中、装填或无敌状态模拟教学。
-- 通用条件树、分阶段计划和接替增援仍只存在于 t02 技术方案，尚未成为当前运行配置字段；实施时必须先扩展本契约和加载负例。
+- 通用条件树和教学分阶段计划仍只存在于 t02 技术方案；当前接替增援已成为关卡 Definition 字段，加载器校验波、成员与目标引用。
+
+教学类型的专属约束：
+
+| `objective_kind` | 交战触发与必需事实 |
+|---|---|
+| `TutorialNavigation` | 恰好两个合法 `waypoint_zones`，并提供 `enemy_staging_position`。 |
+| `TutorialGunnery` | `engagement_trigger=RequiredActionsComplete`；`required_actions` 同时包含 `SwitchAmmo` 与 `ManualPrimaryFire`。 |
+| `TutorialSkill` | `engagement_trigger=RequiredActionsComplete`；`required_actions` 包含 `CastSkill`，且技能属于动作单位。 |
+| `TutorialArmor` | `engagement_trigger=FirstContact`；提供非空 `contact_target_unit_ids`。 |
+| `TutorialTorpedo` | `engagement_trigger=FirstContact`；提供非空 `contact_target_unit_ids`，以白名单动作 `TorpedoHit` 记录必做命中。 |
+| `TutorialCarrierHunt` | `engagement_trigger=FirstContact`；提供非空 `contact_target_unit_ids`，由 `required_enemy_unit_ids` 表达必须击沉的航母目标。 |
+| `TutorialSharedContact` | `engagement_trigger=RequiredActionsComplete`；提供 `scout_player_unit_id`、`shared_contact_target_unit_id`，并以 `EstablishSharedContact`、`SharedTargetGunHit` 记录共享接触与后续命中。 |
+| `TutorialCommand` | `engagement_trigger=RequiredActionsComplete`；提供 `command_target_unit_id`、`command_player_unit_ids` 和正数 `minimum_group_focus_count`，并以 `GroupFocusTarget` 记录集火。 |
+
+除 `TutorialNavigation` 外，所有教学类型都必须提供非空 `protected_player_unit_ids`、`required_enemy_unit_ids`、`enemy_staging_positions`、`initial_player_control_state` 和 `engagement_player_control_state`；其中单位 ID 必须属于引用本目标的关卡，且阵营与字段语义一致。
 
 ## 5. PlayerProgressSave
 

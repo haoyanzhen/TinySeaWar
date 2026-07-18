@@ -74,6 +74,8 @@ func _run() -> void:
 	technical_limit.advance_tick(0.1)
 	_check(technical_limit.state.get("result", {}).get("winner_faction", "") == "" and technical_limit.state.get("result", {}).get("reason", "") == "LEVEL_TECHNICAL_LIMIT", "formal objective technical limit produces an invalid sample instead of mission victory or defeat")
 
+	_test_s_challenges(registry)
+
 	if failures.is_empty():
 		print("PASS: %d level objective runtime checks" % checks)
 		quit(0)
@@ -81,6 +83,42 @@ func _run() -> void:
 		for failure in failures: push_error("FAIL: %s" % failure)
 		print("FAILED: %d of %d level objective runtime checks" % [failures.size(), checks])
 		quit(1)
+
+
+func _test_s_challenges(registry) -> void:
+	var s02 = BattleSession.new(registry)
+	_check(s02.create_battle("level.challenge.s02", 8201).get("ok", false), "S-02 creates with its reviewed large-island deployment")
+	for unit_id in ["unit.player.s02.chongqing", "unit.player.s02.yukikaze"]:
+		var unit: Dictionary = s02.state["units_by_id"][unit_id]
+		unit["life_state"] = "Sunk"; unit["current_hp"] = 0.0
+	s02.advance_tick(0.1)
+	_check(s02.state.get("result", {}).get("winner_faction", "") == "enemy", "S-02 cancels when both named flank ships sink")
+	var s03 = BattleSession.new(registry)
+	s03.create_battle("level.challenge.s03", 8301)
+	var early_flagship: Dictionary = s03.state["units_by_id"]["unit.enemy.s03.bismarck"]
+	early_flagship["life_state"] = "Sunk"; early_flagship["current_hp"] = 0.0
+	s03.advance_tick(0.1)
+	_check(s03.state.get("result", {}).get("winner_faction", "") == "enemy", "S-03 rejects a flagship kill before the carrier")
+	var s04 = BattleSession.new(registry)
+	s04.create_battle("level.challenge.s04", 8401)
+	var hood: Dictionary = s04.state["units_by_id"]["unit.player.s04.hood"]
+	hood["current_hp"] = hood["max_hp"] * 0.3
+	s04.advance_tick(0.1)
+	_check(s04.state.get("result", {}).get("winner_faction", "") == "enemy", "S-04 cancels at Hood's 30 percent protection threshold")
+	var s04_wave = BattleSession.new(registry)
+	s04_wave.create_battle("level.challenge.s04", 8402)
+	var replaced_unit: Dictionary = s04_wave.state["units_by_id"]["unit.enemy.s04.san_diego"]
+	replaced_unit["life_state"] = "Sunk"; replaced_unit["current_hp"] = 0.0
+	s04_wave.state["elapsed_time"] = 120.0
+	s04_wave.advance_tick(0.1)
+	_check(s04_wave.state.get("reinforcement_waves", [])[0].get("status", "") == "Spawned" and s04_wave.state["units_by_id"].has("unit.enemy.s04.ward"), "S-04 deterministically spawns Ward after the authored replacement time")
+	var s05 = BattleSession.new(registry)
+	s05.create_battle("level.challenge.s05", 8501)
+	for unit_id in ["unit.enemy.s05.bismarck", "unit.enemy.s05.hindenburg", "unit.enemy.s05.u47"]:
+		var unit: Dictionary = s05.state["units_by_id"][unit_id]
+		unit["life_state"] = "Sunk"; unit["current_hp"] = 0.0
+	s05.advance_tick(0.1)
+	_check(s05.state.get("result", {}).get("winner_faction", "") == "player", "S-05 requires its flagship and three enemy losses before immediate success")
 
 
 func _test_t02_gunnery(registry) -> void:

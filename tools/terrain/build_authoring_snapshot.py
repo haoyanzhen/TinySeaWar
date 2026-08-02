@@ -86,6 +86,8 @@ def _map_snapshot(args: argparse.Namespace) -> dict:
 	for mine in sorted(mines.values(), key=lambda item: item["id"]):
 		if mine.get("definition_type") != "MinefieldDefinition":
 			continue
+		if mine.get("terrain_definition_id", terrain["id"]) != terrain["id"]:
+			continue
 		metadata = {key: value for key, value in mine.items() if key not in {"id", "polygon", "safe_channels", "definition_type", "display_name"}}
 		metadata["display_name"] = mine.get("display_name", mine["id"])
 		polygons.append({"id": mine["id"], "semantic_type": "Minefield", "polygon": mine["polygon"], "metadata": metadata})

@@ -49,7 +49,7 @@ def _points(polygon, scale, offset):
 	return [(offset[0] + float(point[0]) * scale, offset[1] + float(point[1]) * scale) for point in polygon]
 
 
-def _draw_semantics(image: Image.Image, definition: dict, box, show_labels=True) -> None:
+def _draw_semantics(image: Image.Image, definition: dict, box, show_labels=True, spawn_count=0) -> None:
 	draw = ImageDraw.Draw(image, "RGBA")
 	source_size = definition.get("local_size", definition.get("map_size", [1024, 1024]))
 	scale, offset = _fit_transform(source_size, box)
@@ -73,6 +73,9 @@ def _draw_semantics(image: Image.Image, definition: dict, box, show_labels=True)
 		if len(polygon) >= 3:
 			draw.line(polygon + [polygon[0]], fill=(255, 206, 91, 190), width=2)
 	for spawn in definition.get("spawn_points", []):
+		spawn_suffix = str(spawn.get("id", "")).rsplit("_", 1)[-1]
+		if spawn_count > 0 and spawn_suffix.isdigit() and int(spawn_suffix) > spawn_count:
+			continue
 		position = _points([spawn["position"]], scale, offset)[0]
 		color = (98, 229, 184, 255) if spawn.get("faction_id") == "player" else (235, 105, 103, 255)
 		radius = max(3.0, float(spawn.get("radius", 20.0)) * scale)
@@ -121,20 +124,25 @@ def render_templates(path: Path) -> None:
 	image.save(path)
 
 
-def render_map(path: Path) -> None:
-	definition = read_json(ROOT / "data/terrain/terrain_definitions.json")["definitions"][0]
+def render_map(path: Path, terrain_id: str, spawn_count: int, view_size: tuple[float, float] | None) -> None:
+	definitions = read_json(ROOT / "data/terrain/terrain_definitions.json")["definitions"]
+	definition = next((item for item in definitions if item["id"] == terrain_id), None)
+	if definition is None:
+		raise ValueError("Unknown terrain map %s" % terrain_id)
 	image = _background((1920, 1080))
 	box = (30, 40, 1860, 1000)
-	_draw_semantics(image, definition, box)
+	_draw_semantics(image, definition, box, spawn_count=spawn_count)
 	_paste_visuals(image, definition, box)
 	draw = ImageDraw.Draw(image, "RGBA")
 	scale, offset = _fit_transform(definition["map_size"], box)
-	query_specs = [
-		("ShipMovement", [700, 1060], [2050, 1060], 28.0, (104, 236, 190, 210)),
-		("TorpedoTravel", [700, 1120], [2050, 1120], 8.0, (246, 213, 91, 220)),
-		("ShellTravel", [700, 1180], [2050, 1180], 0.0, (240, 139, 105, 220)),
-		("SurfaceOpticalLineOfSight", [700, 1240], [2050, 1240], 0.0, (194, 169, 239, 220)),
-	]
+	query_specs = []
+	if terrain_id == "terrain.map.harbor_mouth":
+		query_specs = [
+			("ShipMovement", [700, 1060], [2050, 1060], 28.0, (104, 236, 190, 210)),
+			("TorpedoTravel", [700, 1120], [2050, 1120], 8.0, (246, 213, 91, 220)),
+			("ShellTravel", [700, 1180], [2050, 1180], 0.0, (240, 139, 105, 220)),
+			("SurfaceOpticalLineOfSight", [700, 1240], [2050, 1240], 0.0, (194, 169, 239, 220)),
+		]
 	for mask, start, end, radius, color in query_specs:
 		hit = first_hit(definition, start, end, radius, mask)
 		start_draw, end_draw = _points([start, end], scale, offset)
@@ -144,8 +152,19 @@ def render_map(path: Path) -> None:
 			draw.ellipse([hit_draw[0]-6, hit_draw[1]-6, hit_draw[0]+6, hit_draw[1]+6], fill=color, outline=(255,255,255,240), width=2)
 			normal = hit.get("normal", [0.0, 0.0])
 			draw.line([hit_draw, (hit_draw[0]+normal[0]*30, hit_draw[1]+normal[1]*30)], fill=(255,255,255,230), width=2)
+	if view_size is not None:
+		map_width, map_height = definition["map_size"]
+		view_width, view_height = view_size
+		view_origin = [(map_width - view_width) * 0.5, (map_height - view_height) * 0.5]
+		top_left, bottom_right = _points(
+			[view_origin, [view_origin[0] + view_width, view_origin[1] + view_height]],
+			scale,
+			offset,
+		)
+		draw.rectangle([top_left, bottom_right], outline=(255, 225, 112, 245), width=4)
+		draw.text((top_left[0] + 14, top_left[1] + 12), "current coastal max view  %.0f x %.0f" % view_size, font=_font(20), fill=(255, 235, 146, 255))
 	draw.rectangle([30, 40, 1890, 1040], outline=(125, 206, 211, 230), width=3)
-	draw.text((52, 54), "Harbor mouth runtime map: reviewed geometry + spawns + facility anchors", font=_font(27), fill=(239, 251, 247, 255))
+	draw.text((52, 54), "%s: reviewed geometry + %s-ship fleet slots" % (definition["id"], spawn_count), font=_font(27), fill=(239, 251, 247, 255))
 	path.parent.mkdir(parents=True, exist_ok=True)
 	image.save(path)
 
@@ -154,11 +173,20 @@ def main() -> None:
 	parser = argparse.ArgumentParser()
 	parser.add_argument("--mode", choices=["templates", "map"], default="templates")
 	parser.add_argument("--out", default="assets/environment/qa/terrain_template_review.png")
+	parser.add_argument("--terrain-id", default="terrain.map.harbor_mouth")
+	parser.add_argument("--spawn-count", type=int, default=3)
+	parser.add_argument("--view-size", default="")
 	args = parser.parse_args()
+	view_size = None
+	if args.view_size:
+		parts = args.view_size.lower().split("x")
+		if len(parts) != 2:
+			raise ValueError("--view-size must use WIDTHxHEIGHT")
+		view_size = (float(parts[0]), float(parts[1]))
 	if args.mode == "templates":
 		render_templates(ROOT / args.out)
 	else:
-		render_map(ROOT / args.out)
+		render_map(ROOT / args.out, args.terrain_id, args.spawn_count, view_size)
 
 
 if __name__ == "__main__":

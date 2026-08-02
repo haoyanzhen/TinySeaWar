@@ -8,7 +8,16 @@ import heapq
 import math
 import sys
 
-from terrain_geometry import circle_clear, point_in_polygon, read_json, write_json
+from terrain_geometry import (
+	circle_clear,
+	distance_point_to_segment,
+	point_in_polygon,
+	read_json,
+	segments_intersect,
+	write_json,
+)
+
+NAVIGATION_EPSILON = 0.001
 
 PROFILES = [
 	{"id": "navigation.profile.small_shallow", "radius": 20.0, "movement_tags": ["Surface", "ShallowDraft"]},
@@ -31,14 +40,67 @@ def _region_allows(point: list[float], regions: list[dict], tags: set[str]) -> b
 	return True
 
 
-def _segment_clear(start: list[float], end: list[float], radius: float, obstacles: list[dict], regions: list[dict], tags: set[str]) -> bool:
-	distance = math.dist(start, end)
-	steps = max(1, int(math.ceil(distance / max(6.0, radius * 0.4))))
-	for index in range(steps + 1):
-		t = float(index) / float(steps)
-		point = [start[0] + (end[0] - start[0]) * t, start[1] + (end[1] - start[1]) * t]
-		if not circle_clear(point, radius, obstacles):
+def _segment_distance(a: list[float], b: list[float], c: list[float], d: list[float]) -> float:
+	if segments_intersect(a, b, c, d):
+		return 0.0
+	return min(
+		distance_point_to_segment(a, c, d),
+		distance_point_to_segment(b, c, d),
+		distance_point_to_segment(c, a, b),
+		distance_point_to_segment(d, a, b),
+	)
+
+
+def _segment_intersection_fraction(a: list[float], b: list[float], c: list[float], d: list[float]) -> float:
+	rx, ry = b[0] - a[0], b[1] - a[1]
+	sx, sy = d[0] - c[0], d[1] - c[1]
+	denominator = rx * sy - ry * sx
+	if abs(denominator) <= NAVIGATION_EPSILON:
+		return -1.0
+	cax, cay = c[0] - a[0], c[1] - a[1]
+	t = (cax * sy - cay * sx) / denominator
+	u = (cax * ry - cay * rx) / denominator
+	t_epsilon = NAVIGATION_EPSILON / max(math.hypot(rx, ry), NAVIGATION_EPSILON)
+	u_epsilon = NAVIGATION_EPSILON / max(math.hypot(sx, sy), NAVIGATION_EPSILON)
+	if t < -t_epsilon or t > 1.0 + t_epsilon or u < -u_epsilon or u > 1.0 + u_epsilon:
+		return -1.0
+	return max(0.0, min(1.0, t))
+
+
+def _swept_circle_clear(start: list[float], end: list[float], radius: float, obstacles: list[dict]) -> bool:
+	for obstacle in obstacles:
+		if "ShipMovement" not in obstacle.get("block_mask", []):
+			continue
+		polygon = obstacle.get("polygon", [])
+		if point_in_polygon(start, polygon) or point_in_polygon(end, polygon):
 			return False
+		for index, edge_start in enumerate(polygon):
+			edge_end = polygon[(index + 1) % len(polygon)]
+			if _segment_distance(start, end, edge_start, edge_end) <= radius + NAVIGATION_EPSILON:
+				return False
+	return True
+
+
+def _segment_clear(start: list[float], end: list[float], radius: float, obstacles: list[dict], regions: list[dict], tags: set[str]) -> bool:
+	if not _swept_circle_clear(start, end, radius, obstacles):
+		return False
+	fractions = [0.0, 1.0]
+	for region in regions:
+		polygon = region.get("polygon", [])
+		for index, edge_start in enumerate(polygon):
+			fraction = _segment_intersection_fraction(start, end, edge_start, polygon[(index + 1) % len(polygon)])
+			if fraction >= 0.0:
+				fractions.append(fraction)
+	fractions.sort()
+	samples: list[float] = []
+	for fraction in fractions:
+		if not samples or abs(samples[-1] - fraction) > NAVIGATION_EPSILON:
+			samples.append(fraction)
+	if not _region_allows(start, regions, tags) or not _region_allows(end, regions, tags):
+		return False
+	for index in range(len(samples) - 1):
+		t = (samples[index] + samples[index + 1]) * 0.5
+		point = [start[0] + (end[0] - start[0]) * t, start[1] + (end[1] - start[1]) * t]
 		if not _region_allows(point, regions, tags):
 			return False
 	return True

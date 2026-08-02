@@ -19,12 +19,24 @@ def main() -> int:
 	parser.add_argument("--terrain", default="data/terrain/terrain_definitions.json")
 	parser.add_argument("--out-dir", default="assets/ui/processed/battle/terrain")
 	parser.add_argument("--width", type=int, default=512)
+	parser.add_argument("--terrain-id", action="append", default=[])
 	args = parser.parse_args()
 	if args.width < 64:
 		return 1
 	document = read_json(ROOT / args.terrain)
-	manifest = {"schema_version": 1, "generated_by": "tools/terrain/build_minimap_masks.py", "masks": []}
-	for terrain in document.get("definitions", []):
+	manifest_path = ROOT / args.out_dir / "terrain_minimap_manifest.json"
+	if args.terrain_id and manifest_path.is_file():
+		manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+	else:
+		manifest = {"schema_version": 1, "generated_by": "tools/terrain/build_minimap_masks.py", "masks": []}
+	selected_ids = set(args.terrain_id)
+	terrains = [
+		terrain for terrain in document.get("definitions", [])
+		if not selected_ids or terrain.get("id") in selected_ids
+	]
+	if selected_ids and {terrain.get("id") for terrain in terrains} != selected_ids:
+		return 1
+	for terrain in terrains:
 		map_width, map_height = terrain["map_size"]
 		height = max(1, round(args.width * map_height / map_width))
 		image = Image.new("RGBA", (args.width, height), (0, 0, 0, 0))
@@ -40,8 +52,13 @@ def main() -> int:
 		path = ROOT / args.out_dir / filename
 		path.parent.mkdir(parents=True, exist_ok=True)
 		image.save(path)
-		manifest["masks"].append({"terrain_definition_id": terrain["id"], "path": "res://%s" % path.relative_to(ROOT).as_posix(), "size": [args.width, height]})
-	manifest_path = ROOT / args.out_dir / "terrain_minimap_manifest.json"
+		entry = {"terrain_definition_id": terrain["id"], "path": "res://%s" % path.relative_to(ROOT).as_posix(), "size": [args.width, height]}
+		manifest["masks"] = [
+			current for current in manifest.get("masks", [])
+			if current.get("terrain_definition_id") != terrain["id"]
+		]
+		manifest["masks"].append(entry)
+	manifest["masks"].sort(key=lambda item: item["terrain_definition_id"])
 	manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 	return 0
 

@@ -391,6 +391,29 @@ def build_environment_vfx() -> list[dict]:
 	return assets
 
 
+def build_coastal_land_assets() -> list[dict]:
+	manifest_path = ROOT / "assets/environment/land/land_asset_manifest.json"
+	document = json.loads(manifest_path.read_text(encoding="utf-8"))
+	assets: list[dict] = []
+	for land in document.get("assets", []):
+		path = str(land.get("runtime_texture_16x9", ""))
+		semantic = str(land.get("runtime_semantic_16x9", ""))
+		source_master = str(land.get("source_master", ""))
+		size = land.get("runtime_size_16x9", [])
+		if not path or not semantic or not source_master or len(size) != 2:
+			continue
+		assets.append({
+			"semantic": semantic,
+			"path": path,
+			"size": [int(size[0]), int(size[1])],
+			"alpha": True,
+			"source_masters": [source_master],
+			"generation_method": str(land.get("generation_method", "")),
+		})
+	assets.sort(key=lambda item: item["semantic"])
+	return assets
+
+
 def _asset(semantic: str, path: Path, size: int | tuple[int, int]) -> dict:
 	width, height = (size, size) if isinstance(size, int) else size
 	return {"semantic": semantic, "path": "res://%s" % path.relative_to(ROOT).as_posix(), "size": [width, height], "alpha": True}
@@ -412,6 +435,7 @@ def _update_combat_manifest(vfx_assets: list[dict]) -> None:
 
 def main() -> None:
 	terrain_assets = build_terrain_assets()
+	coastal_land_assets = build_coastal_land_assets()
 	zone_assets = build_environment_zone_assets()
 	facility_assets = build_facility_assets()
 	terrain_ui_assets, facility_ui_assets = build_ui_assets()
@@ -419,7 +443,7 @@ def main() -> None:
 	dependency_path = ROOT / "assets/environment/facilities/facility_dependency_node.png"
 	_save(_icon("current"), dependency_path, 96)
 	facility_assets.append(_asset("facility.dependency.node", dependency_path, 96))
-	_write_manifest(ROOT / "assets/environment/terrain/terrain_asset_manifest.json", "terrain and nearshore", terrain_assets + terrain_ui_assets + vfx_assets)
+	_write_manifest(ROOT / "assets/environment/terrain/terrain_asset_manifest.json", "terrain and nearshore", terrain_assets + coastal_land_assets + terrain_ui_assets + vfx_assets)
 	_write_manifest(ROOT / "assets/environment/facilities/facility_asset_manifest.json", "shore facilities", facility_assets + facility_ui_assets)
 	_write_manifest(ROOT / "assets/environment/weather/zones/environment_zone_asset_manifest.json", "local environment zones", zone_assets)
 	_update_combat_manifest(vfx_assets)

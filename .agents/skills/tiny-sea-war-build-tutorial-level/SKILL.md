@@ -14,7 +14,8 @@ Turn one teaching concept into a truthful runtime lesson: the player performs ob
    - `docs/00_project_status.md`
    - the target T-row and sections 2, 3, 4.2, and 5 of `docs/15_battle_level_design.md`
    - `docs/technical/t02_level_objective_reinforcement_progress_solution.md`
-   - the level/objective and simulation sections of `docs/20_data_schema_design.md`
+   - the level/objective contract in `docs/23_level_progress_data_schema.md`
+   - the simulation contract in `docs/26_simulation_data_schema.md`
    - `docs/11_game_operation_design.md` for any taught input or toggle
    - `docs/34_implementation_map.md`
    - `docs/36_balance_testing_design.md`
@@ -62,10 +63,18 @@ Use positions, reviewed routes, contact state, weapon windows, and explicit tuto
 - Let an enemy sail to a reviewed training or patrol position through the normal navigation pipeline.
 - Advance a stage on meaningful facts: required action, reviewed waypoint arrival, first contact, legal weapon window, hit, or ordered objective completion.
 - Lock only abilities that would bypass the lesson. Show every lock and the current next action in the HUD.
+- Write a per-stage command/ability lock matrix before implementation. Never lock a
+  command required to produce that stage's next objective fact. Reject a
+  configuration with no legal next action, and add a runtime test that issues the
+  required move as `Player` before relying on any simulation.
 - Restore the intended assist/automatic capability at the authored stage transition.
 - Keep enemy movement, detection, collision, weapons, damage, and sinking on public runtime rules.
 
 Do not use a frozen target, invulnerability, HP locking, hidden damage/accuracy changes, arbitrary timers, teleports, direct sink injection, or simulation-only permissions to make the lesson pass. Do not change shared ship or weapon definitions for a tutorial.
+Attribute contact evidence to the actual observing unit, not merely to faction-wide
+visibility. If the taught action must reliably end a stage, make that legal action
+causally sufficient through declared level/objective data instead of leaving success
+to unrelated post-action combat randomness.
 
 ## Implement Through the Runtime Layers
 
@@ -81,13 +90,20 @@ Do not use a frozen target, invulnerability, HP locking, hidden damage/accuracy 
    - completion or cancellation feedback.
 6. Register the level in `scripts/presentation/menu/main_menu.gd`, `scripts/presentation/ui_text.gd`, and any data-driven selection path. A multi-unit teaching command must be expressible through normal player input as well as through the deterministic policy.
 7. Register the reward in `scripts/application/game_flow.gd`; verify `progress_save_store.gd` remains idempotent and never stores an in-battle snapshot.
-8. Update `docs/20_data_schema_design.md` whenever the runtime data contract changes.
+8. Update `docs/23_level_progress_data_schema.md` when the level/objective contract
+   changes and `docs/26_simulation_data_schema.md` when the experiment contract
+   changes. Update `docs/20_data_schema_design.md` only for a new data category or
+   a changed public convention.
 
 Treat a formal level's ordinary `time_limit` as a technical guard unless the tutorial explicitly teaches a time limit. A technical guard result is an invalid sample, not a winner chosen by remaining HP.
 
 ## Build the Deterministic Correct Solution
 
 Add a tutorial-specific simulation policy and register it in both the experiment loader allowlist and `SimulationRunner`. It must perform only the required legal actions in their intended order. For an event-fact lesson, it must wait for the same public contact, range, reload and fire-arc conditions as a player; it must not inject the fact directly. After the lesson enables normal assist or automatic combat, let those runtime capabilities finish the battle. Do not add privileged damage, direct state mutation, or bypasses unavailable to a real player.
+
+Apply the same tutorial locks and movement authority to `SimulationPolicy` as to
+`Player`. A policy that bypasses a player lock, or whose move order is later
+overwritten because it lacks player authority, invalidates the experiment.
 
 Create a `LevelWinRateEvaluation` manifest modeled on `level_t01_win_rate_20.json`:
 
@@ -99,6 +115,33 @@ Create a `LevelWinRateEvaluation` manifest modeled on `level_t01_win_rate_20.jso
 - an output directory under `artifacts/simulations/`.
 
 Require P10 completion time of at least 10 seconds. If a sample hits a guard/technical limit, fix the lesson or runtime behavior; do not count it as a win.
+
+## Prove the Authored Route Three Times
+
+After implementation is functionally complete, design a route-conformance simulation
+experiment for the tutorial. The experiment contract must name the ordered spatial
+stages and required public actions that constitute the authored solution; a final win
+without that route evidence does not prove the lesson was implemented as designed.
+
+Execute the route-conformance experiment three independent times. Use three disjoint
+seed sets and separately versioned experiment IDs, manifests, and output directories
+so every execution is auditable and cannot overwrite another run. Each execution
+must still use the formal 20-sample `LevelWinRateEvaluation` contract. Each of the
+three executions must individually report:
+
+- 100% valid samples, 100% player completion, and 100% required route/action evidence;
+- zero technical/guard limits, path-stuck or route-unavailable events;
+- zero deterministic-policy command rejections and zero hidden/direct state changes;
+- zero pre-engagement damage where the authored stage forbids combat;
+- the required source, target, category, and action order for every lesson fact.
+
+Any anomaly in any execution fails the tutorial acceptance. Fix the data, runtime, or
+legal deterministic policy and restart all three executions; do not average away an
+anomaly and do not count a manifest-only or dry-run validation as one execution.
+Preserve all three manifests (or immutable resolved manifests), reports, run records,
+and damage artifacts as the acceptance evidence. The canonical formal 20-seed batch
+may be the first of these three; route acceptance still requires three batches total,
+not one formal batch plus three more.
 
 ## Validate in Increasing Scope
 
@@ -117,9 +160,16 @@ godot --headless --path . --script tools/simulation/run_experiment.gd -- \
   data/simulations/experiments/<t-level-win-rate-manifest>.json
 ```
 
+Then run the authored route-conformance experiment three times with its three
+independent manifests/output directories. Review each aggregate and its per-run
+objective evidence before accepting the level.
+
 Require all of the following:
 
 - 20/20 valid battles and 100% report win rate;
+- no `TechnicalLimit`/guard result and meaningful run activity; a report with zero
+  commands, zero detection, and zero shots is failure evidence even if the report
+  file exists;
 - battle statistics plus `unit_damage.md` and `unit_damage.csv`;
 - no enemy damage while the authored lesson says it cannot attack;
 - no command rejection caused by the deterministic policy;
@@ -130,6 +180,9 @@ Require all of the following:
 - manual play confirms instruction timing, marker readability, control locks, automatic abilities, and victory explanation.
 
 Run broader tests proportional to changed systems. Record unrelated pre-existing failures separately instead of hiding them.
+Generate acceptance artifacts only after the final route, lock, objective, policy,
+and navigation implementation is fixed. Changing any of them invalidates the three
+existing executions and requires all three to be rerun.
 
 ## Report Completion Truthfully
 
@@ -140,6 +193,7 @@ Update `docs/15_battle_level_design.md`, `docs/00_project_status.md`, `docs/23_l
 - menu, HUD, markers, and reward;
 - automated functional checks;
 - 20-seed battle and damage reports;
+- all three route-conformance manifests/reports and their individual zero-anomaly result;
 - manual play/readability review.
 
 Do not call the tutorial complete when only JSON exists, when the deterministic policy uses privileged behavior, or while manual readability remains unreviewed.

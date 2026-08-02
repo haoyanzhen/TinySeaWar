@@ -45,22 +45,31 @@ def _manifest_paths() -> tuple[set[str], list[str]]:
 				continue
 			paths.add(path)
 			source_masters = asset.get("source_masters", [])
-			if source_masters and str(asset.get("generation_method", "")) != "weather_master_alpha_composite":
-				errors.append("asset with source masters has an unsupported generation method: %s" % semantic)
+			is_coastal_land = semantic.startswith("land_") and semantic.endswith("_16x9_runtime")
+			generation_method = str(asset.get("generation_method", ""))
+			if source_masters and is_coastal_land and generation_method not in {
+				"gpt-image-2 edit reference + reviewed alpha mask",
+				"reviewed source edit + deterministic irregular alpha mask; built-in gpt-image-2 candidate rejected for composition drift",
+			}:
+				errors.append("coastal land asset has an unsupported generation method: %s" % semantic)
+			elif source_masters and not is_coastal_land and generation_method != "weather_master_alpha_composite":
+				errors.append("weather asset with source masters has an unsupported generation method: %s" % semantic)
 			for source in source_masters:
 				source_path = str(source).removeprefix("res://")
-				if not source_path.startswith("assets/environment/weather/") or "/zones/" in source_path:
-					errors.append("weather source master is outside the source directory: %s" % source)
+				expected_root = "assets/environment/land/source/" if is_coastal_land else "assets/environment/weather/"
+				expected_size = (3840, 2160) if is_coastal_land else (1024, 1024)
+				if not source_path.startswith(expected_root) or (not is_coastal_land and "/zones/" in source_path):
+					errors.append("%s source master is outside the source directory: %s" % ("coastal land" if is_coastal_land else "weather", source))
 					continue
 				if not (ROOT / source_path).is_file():
-					errors.append("weather source master is missing: %s" % source_path)
+					errors.append("%s source master is missing: %s" % ("coastal land" if is_coastal_land else "weather", source_path))
 					continue
 				try:
 					with Image.open(ROOT / source_path) as source_image:
-						if source_image.size != (1024, 1024):
-							errors.append("weather source master has wrong size: %s" % source_path)
+						if source_image.size != expected_size:
+							errors.append("%s source master has wrong size: %s" % ("coastal land" if is_coastal_land else "weather", source_path))
 				except OSError as error:
-					errors.append("weather source master cannot be decoded: %s (%s)" % (source_path, error))
+					errors.append("%s source master cannot be decoded: %s (%s)" % ("coastal land" if is_coastal_land else "weather", source_path, error))
 			if semantic in {"rain_squall_mask", "rain_squall_edge_mask"}:
 				expected_sources = {
 					"res://assets/environment/weather/ocean_weather_storm_shadow_master.png",
@@ -119,7 +128,7 @@ def _deterministic_bake() -> list[str]:
 		first = Path(temporary) / "first.json"
 		second = Path(temporary) / "second.json"
 		for output in (first, second):
-			result = subprocess.run(["python3", "tools/terrain/bake_terrain_definition.py", "--out", str(output)], cwd=ROOT, capture_output=True, text=True)
+			result = subprocess.run([sys.executable, "tools/terrain/bake_terrain_definition.py", "--out", str(output)], cwd=ROOT, capture_output=True, text=True)
 			if result.returncode != 0:
 				errors.append("deterministic terrain bake failed: %s" % result.stderr.strip())
 				return errors
@@ -136,7 +145,7 @@ def _deterministic_qa_outputs() -> list[str]:
 		root = Path(temporary)
 		navigation_outputs = [root / "navigation_a.json", root / "navigation_b.json"]
 		for output in navigation_outputs:
-			result = subprocess.run(["python3", "tools/terrain/bake_navigation_graph.py", "--out", str(output)], cwd=ROOT, capture_output=True, text=True)
+			result = subprocess.run([sys.executable, "tools/terrain/bake_navigation_graph.py", "--out", str(output)], cwd=ROOT, capture_output=True, text=True)
 			if result.returncode != 0:
 				return ["deterministic navigation bake failed: %s" % result.stderr.strip()]
 		if navigation_outputs[0].read_bytes() != navigation_outputs[1].read_bytes():
@@ -146,7 +155,7 @@ def _deterministic_qa_outputs() -> list[str]:
 		minimap_dir = root / "minimap"
 		minimap_snapshots = []
 		for _ in range(2):
-			result = subprocess.run(["python3", "tools/terrain/build_minimap_masks.py", "--out-dir", str(minimap_dir)], cwd=ROOT, capture_output=True, text=True)
+			result = subprocess.run([sys.executable, "tools/terrain/build_minimap_masks.py", "--out-dir", str(minimap_dir)], cwd=ROOT, capture_output=True, text=True)
 			if result.returncode != 0:
 				return ["deterministic minimap build failed: %s" % result.stderr.strip()]
 			minimap_snapshots.append({path.relative_to(minimap_dir).as_posix(): path.read_bytes() for path in minimap_dir.rglob("*") if path.is_file()})
@@ -158,7 +167,7 @@ def _deterministic_qa_outputs() -> list[str]:
 			errors.append("committed terrain minimap is stale; run build_minimap_masks.py")
 		contact_outputs = [root / "contact_a.png", root / "contact_b.png"]
 		for output in contact_outputs:
-			result = subprocess.run(["python3", "tools/terrain/build_scene_combat_contact_sheet.py", "--out", str(output)], cwd=ROOT, capture_output=True, text=True)
+			result = subprocess.run([sys.executable, "tools/terrain/build_scene_combat_contact_sheet.py", "--out", str(output)], cwd=ROOT, capture_output=True, text=True)
 			if result.returncode != 0:
 				return ["deterministic contact sheet build failed: %s" % result.stderr.strip()]
 		if contact_outputs[0].read_bytes() != contact_outputs[1].read_bytes():
@@ -225,8 +234,8 @@ def _check_authoring_roundtrip() -> list[str]:
 		template_snapshot = root / "template_snapshot.json"
 		map_snapshot = root / "map_snapshot.json"
 		commands = [
-			["python3", "tools/terrain/build_authoring_snapshot.py", "--mode", "Template", "--template-id", "terrain.template.harbor_mouth", "--out", str(template_snapshot)],
-			["python3", "tools/terrain/build_authoring_snapshot.py", "--mode", "Map", "--map-id", "terrain.map.harbor_mouth", "--out", str(map_snapshot)],
+			[sys.executable, "tools/terrain/build_authoring_snapshot.py", "--mode", "Template", "--template-id", "terrain.template.harbor_mouth", "--out", str(template_snapshot)],
+			[sys.executable, "tools/terrain/build_authoring_snapshot.py", "--mode", "Map", "--map-id", "terrain.map.harbor_mouth", "--out", str(map_snapshot)],
 		]
 		for command in commands:
 			result = subprocess.run(command, cwd=ROOT, capture_output=True, text=True)
@@ -244,8 +253,8 @@ def _check_authoring_roundtrip() -> list[str]:
 			copies[name] = root / (name + ".json")
 			shutil.copy2(ROOT / relative, copies[name])
 		commands = [
-			["python3", "tools/terrain/apply_authoring_snapshot.py", "--snapshot", str(template_snapshot), "--templates", str(copies["templates"])],
-			["python3", "tools/terrain/apply_authoring_snapshot.py", "--snapshot", str(map_snapshot), "--maps", str(copies["maps"]), "--environment", str(copies["environment"]), "--facilities", str(copies["facilities"]), "--minefields", str(copies["minefields"])],
+			[sys.executable, "tools/terrain/apply_authoring_snapshot.py", "--snapshot", str(template_snapshot), "--templates", str(copies["templates"])],
+			[sys.executable, "tools/terrain/apply_authoring_snapshot.py", "--snapshot", str(map_snapshot), "--maps", str(copies["maps"]), "--environment", str(copies["environment"]), "--facilities", str(copies["facilities"]), "--minefields", str(copies["minefields"])],
 		]
 		for command in commands:
 			result = subprocess.run(command, cwd=ROOT, capture_output=True, text=True)
@@ -262,7 +271,7 @@ def _check_authoring_roundtrip() -> list[str]:
 		invalid_snapshot.write_text(json.dumps(invalid_payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 		before = {name: _hash(path) for name, path in copies.items()}
 		result = subprocess.run([
-			"python3", "tools/terrain/apply_authoring_snapshot.py", "--snapshot", str(invalid_snapshot),
+			sys.executable, "tools/terrain/apply_authoring_snapshot.py", "--snapshot", str(invalid_snapshot),
 			"--maps", str(copies["maps"]), "--environment", str(copies["environment"]),
 			"--facilities", str(copies["facilities"]), "--minefields", str(copies["minefields"]),
 		], cwd=ROOT, capture_output=True, text=True)
@@ -287,7 +296,7 @@ def main() -> int:
 	errors += _check_authoring_roundtrip()
 	if not args.skip_regenerate:
 		before = {path: _hash(ROOT / path) for path in referenced if (ROOT / path).is_file()}
-		result = subprocess.run(["python3", "tools/terrain/build_scene_combat_assets.py"], cwd=ROOT, capture_output=True, text=True)
+		result = subprocess.run([sys.executable, "tools/terrain/build_scene_combat_assets.py"], cwd=ROOT, capture_output=True, text=True)
 		if result.returncode != 0:
 			errors.append("asset regeneration failed: %s" % result.stderr.strip())
 		else:

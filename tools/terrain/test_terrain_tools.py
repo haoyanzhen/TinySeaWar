@@ -7,6 +7,7 @@ import argparse
 import copy
 import json
 import subprocess
+import sys
 import tempfile
 from pathlib import Path
 
@@ -96,7 +97,7 @@ def main() -> int:
 		navigation_out.write_bytes((ROOT / "data/terrain/navigation_definitions.json").read_bytes())
 		before = (terrain_out.read_bytes(), navigation_out.read_bytes())
 		result = subprocess.run([
-			"python3", "tools/terrain/build_scene_combat_pipeline.py", "--maps", str(invalid_maps_path),
+			sys.executable, "tools/terrain/build_scene_combat_pipeline.py", "--maps", str(invalid_maps_path),
 			"--terrain-out", str(terrain_out), "--navigation-out", str(navigation_out), "--skip-qa",
 		], cwd=ROOT, capture_output=True, text=True)
 		if result.returncode == 0 or before != (terrain_out.read_bytes(), navigation_out.read_bytes()):

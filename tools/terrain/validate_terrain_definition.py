@@ -7,11 +7,14 @@ import argparse
 import collections
 import math
 import sys
+from pathlib import Path
 
 from terrain_geometry import circle_clear, point_in_polygon, polygon_area, polygon_self_intersections, read_json, segments_intersect, signed_area
 
 BLOCK_MASKS = {"ShipMovement", "TorpedoTravel", "ShellTravel", "SurfaceOpticalLineOfSight"}
 REGION_TYPES = {"DeepWater", "CoastalWater", "ShallowWater", "ReefOrSandbar", "NavigationChannel"}
+ROOT = Path(__file__).resolve().parents[2]
+DEFAULT_LEVEL_PATHS = sorted(str(path) for path in (ROOT / "data/levels").glob("*.json"))
 
 
 def _definitions(path: str) -> dict[str, dict]:
@@ -263,11 +266,20 @@ def validate(args: argparse.Namespace) -> list[str]:
 		zone_set_id = str(terrain.get("environment_zone_set_id", ""))
 		if zone_set_id:
 			zone_set_map_sizes[zone_set_id].append(terrain.get("map_size", []))
+	for level_path in getattr(args, "levels", DEFAULT_LEVEL_PATHS):
+		for level in read_json(level_path).get("definitions", []):
+			level_map = level.get("map", {})
+			zone_set_id = str(level_map.get("environment_zone_set_id", ""))
+			if zone_set_id:
+				zone_set_map_sizes[zone_set_id].append([
+					float(level_map.get("width", 0.0)),
+					float(level_map.get("height", 0.0)),
+				])
 	for definition_id, definition in environment.items():
 		if definition.get("definition_type") != "EnvironmentZoneSet":
 			continue
 		if definition_id not in zone_set_map_sizes:
-			errors.append("%s is not referenced by a terrain map" % definition_id)
+			errors.append("%s is not referenced by a terrain or level map" % definition_id)
 		zone_ids = [str(zone.get("id", "")) for zone in definition.get("zones", [])]
 		if len(zone_ids) != len(set(zone_ids)):
 			errors.append("%s contains duplicate zone ids" % definition_id)
@@ -353,6 +365,7 @@ def main() -> int:
 	parser.add_argument("--facilities", default="data/facilities/facility_definitions.json")
 	parser.add_argument("--minefields", default="data/facilities/minefield_definitions.json")
 	parser.add_argument("--environment", default="data/environments/environment_zone_definitions.json")
+	parser.add_argument("--levels", nargs="*", default=DEFAULT_LEVEL_PATHS)
 	parser.add_argument("--skip-navigation", action="store_true")
 	args = parser.parse_args()
 	try:

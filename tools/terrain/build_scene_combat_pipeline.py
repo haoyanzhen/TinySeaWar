@@ -41,16 +41,16 @@ def main() -> int:
 			terrain_candidate = temporary_root / "terrain_definitions.json"
 			navigation_candidate = temporary_root / "navigation_definitions.json"
 			commands = [
-				["python3", "tools/terrain/bake_terrain_definition.py", "--templates", str(_path(args.templates)), "--maps", str(_path(args.maps)), "--out", str(terrain_candidate)],
+				[sys.executable, "tools/terrain/bake_terrain_definition.py", "--templates", str(_path(args.templates)), "--maps", str(_path(args.maps)), "--out", str(terrain_candidate)],
 				[
-					"python3", "tools/terrain/validate_terrain_definition.py", "--templates", str(_path(args.templates)),
+					sys.executable, "tools/terrain/validate_terrain_definition.py", "--templates", str(_path(args.templates)),
 					"--terrain", str(terrain_candidate), "--navigation", str(_path(args.navigation_out)),
 					"--facilities", str(_path(args.facilities)), "--minefields", str(_path(args.minefields)),
 					"--environment", str(_path(args.environment)), "--skip-navigation",
 				],
-				["python3", "tools/terrain/bake_navigation_graph.py", "--terrain", str(terrain_candidate), "--out", str(navigation_candidate)],
+				[sys.executable, "tools/terrain/bake_navigation_graph.py", "--terrain", str(terrain_candidate), "--out", str(navigation_candidate)],
 				[
-					"python3", "tools/terrain/validate_terrain_definition.py", "--templates", str(_path(args.templates)),
+					sys.executable, "tools/terrain/validate_terrain_definition.py", "--templates", str(_path(args.templates)),
 					"--terrain", str(terrain_candidate), "--navigation", str(navigation_candidate),
 					"--facilities", str(_path(args.facilities)), "--minefields", str(_path(args.minefields)),
 					"--environment", str(_path(args.environment)),
@@ -69,8 +69,8 @@ def main() -> int:
 			os.replace(navigation_candidate, navigation_out)
 		if not args.skip_qa:
 			for command in [
-				["python3", "tools/terrain/build_minimap_masks.py", "--terrain", str(_path(args.terrain_out))],
-				["python3", "tools/terrain/build_scene_combat_contact_sheet.py"],
+				[sys.executable, "tools/terrain/build_minimap_masks.py", "--terrain", str(_path(args.terrain_out))],
+				[sys.executable, "tools/terrain/build_scene_combat_contact_sheet.py"],
 			]:
 				ok, output = _run(command)
 				if not ok:

@@ -7,6 +7,7 @@ import argparse
 import json
 import math
 import subprocess
+import sys
 from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
@@ -119,9 +120,9 @@ def main() -> int:
 	qa_dir = ROOT / "assets/environment/qa"
 	qa_dir.mkdir(parents=True, exist_ok=True)
 	commands = [
-		["python3", "tools/terrain/render_terrain_qa.py", "--mode", "templates", "--out", "assets/environment/qa/terrain_template_review.png"],
-		["python3", "tools/terrain/render_terrain_qa.py", "--mode", "map", "--out", "assets/environment/qa/harbor_map_review.png"],
-		["python3", "tools/terrain/build_minimap_masks.py"],
+		[sys.executable, "tools/terrain/render_terrain_qa.py", "--mode", "templates", "--out", "assets/environment/qa/terrain_template_review.png"],
+		[sys.executable, "tools/terrain/render_terrain_qa.py", "--mode", "map", "--out", "assets/environment/qa/harbor_map_review.png"],
+		[sys.executable, "tools/terrain/build_minimap_masks.py"],
 	]
 	for command in commands:
 		result = subprocess.run(command, cwd=ROOT, check=False)

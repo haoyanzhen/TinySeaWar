@@ -4,34 +4,313 @@
     {
       "id": "terrain.map.harbor_mouth",
       "display_name": "港湾入口近岸战场",
-      "map_size": [4096.0,2304.0],
+      "map_size": [
+        4096.0,
+        2304.0
+      ],
       "geometry_epsilon": 0.001,
       "instances": [
-        {"id": "harbor_land","template_id": "terrain.template.harbor_mouth","position": [2048.0,1160.0],"scale": [1.62,1.62],"rotation_degrees": 0.0}
+        {
+          "id": "harbor_land",
+          "template_id": "terrain.template.harbor_mouth",
+          "position": [
+            2048.0,
+            1160.0
+          ],
+          "scale": [
+            1.62,
+            1.62
+          ],
+          "rotation_degrees": 0.0
+        }
       ],
       "spawn_points": [
-        {"id": "player_1","faction_id": "player","position": [2048.0,1870.0],"heading": -90.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_2","faction_id": "player","position": [1800.0,1810.0],"heading": -90.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_3","faction_id": "player","position": [2296.0,1810.0],"heading": -90.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_4","faction_id": "player","position": [1984.0,2112.0],"heading": -90.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_5","faction_id": "player","position": [2112.0,2240.0],"heading": -90.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_6","faction_id": "player","position": [1984.0,1472.0],"heading": -90.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_7","faction_id": "player","position": [1856.0,1984.0],"heading": -90.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_8","faction_id": "player","position": [2240.0,1984.0],"heading": -90.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_9","faction_id": "player","position": [2112.0,1344.0],"heading": -90.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_10","faction_id": "player","position": [1856.0,2240.0],"heading": -90.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_11","faction_id": "player","position": [1728.0,2112.0],"heading": -90.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_1","faction_id": "enemy","position": [2048.0,250.0],"heading": 90.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_2","faction_id": "enemy","position": [1740.0,300.0],"heading": 90.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_3","faction_id": "enemy","position": [2356.0,300.0],"heading": 90.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_4","faction_id": "enemy","position": [1984.0,64.0],"heading": 90.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_5","faction_id": "enemy","position": [1984.0,448.0],"heading": 90.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_6","faction_id": "enemy","position": [2112.0,576.0],"heading": 90.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_7","faction_id": "enemy","position": [1984.0,704.0],"heading": 90.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_8","faction_id": "enemy","position": [2240.0,64.0],"heading": 90.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_9","faction_id": "enemy","position": [2240.0,448.0],"heading": 90.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_10","faction_id": "enemy","position": [2112.0,832.0],"heading": 90.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_11","faction_id": "enemy","position": [1856.0,576.0],"heading": 90.0,"radius": 46.0,"movement_tags": ["Surface"]}
+        {
+          "id": "player_1",
+          "faction_id": "player",
+          "position": [
+            2048.0,
+            1870.0
+          ],
+          "heading": -90.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_2",
+          "faction_id": "player",
+          "position": [
+            1800.0,
+            1810.0
+          ],
+          "heading": -90.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_3",
+          "faction_id": "player",
+          "position": [
+            2296.0,
+            1810.0
+          ],
+          "heading": -90.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_4",
+          "faction_id": "player",
+          "position": [
+            1984.0,
+            2112.0
+          ],
+          "heading": -90.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_5",
+          "faction_id": "player",
+          "position": [
+            2112.0,
+            2240.0
+          ],
+          "heading": -90.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_6",
+          "faction_id": "player",
+          "position": [
+            1984.0,
+            1472.0
+          ],
+          "heading": -90.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_7",
+          "faction_id": "player",
+          "position": [
+            1856.0,
+            1984.0
+          ],
+          "heading": -90.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_8",
+          "faction_id": "player",
+          "position": [
+            2240.0,
+            1984.0
+          ],
+          "heading": -90.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_9",
+          "faction_id": "player",
+          "position": [
+            2112.0,
+            1344.0
+          ],
+          "heading": -90.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_10",
+          "faction_id": "player",
+          "position": [
+            1856.0,
+            2240.0
+          ],
+          "heading": -90.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_11",
+          "faction_id": "player",
+          "position": [
+            1728.0,
+            2112.0
+          ],
+          "heading": -90.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_1",
+          "faction_id": "enemy",
+          "position": [
+            2048.0,
+            250.0
+          ],
+          "heading": 90.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_2",
+          "faction_id": "enemy",
+          "position": [
+            1740.0,
+            300.0
+          ],
+          "heading": 90.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_3",
+          "faction_id": "enemy",
+          "position": [
+            2356.0,
+            300.0
+          ],
+          "heading": 90.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_4",
+          "faction_id": "enemy",
+          "position": [
+            1984.0,
+            64.0
+          ],
+          "heading": 90.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_5",
+          "faction_id": "enemy",
+          "position": [
+            1984.0,
+            448.0
+          ],
+          "heading": 90.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_6",
+          "faction_id": "enemy",
+          "position": [
+            2112.0,
+            576.0
+          ],
+          "heading": 90.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_7",
+          "faction_id": "enemy",
+          "position": [
+            1984.0,
+            704.0
+          ],
+          "heading": 90.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_8",
+          "faction_id": "enemy",
+          "position": [
+            2240.0,
+            64.0
+          ],
+          "heading": 90.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_9",
+          "faction_id": "enemy",
+          "position": [
+            2240.0,
+            448.0
+          ],
+          "heading": 90.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_10",
+          "faction_id": "enemy",
+          "position": [
+            2112.0,
+            832.0
+          ],
+          "heading": 90.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_11",
+          "faction_id": "enemy",
+          "position": [
+            1856.0,
+            576.0
+          ],
+          "heading": 90.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        }
       ],
       "facility_layout_id": "facility.layout.harbor_mouth",
       "environment_zone_set_id": "environment.zone_set.harbor_mouth",
@@ -40,308 +319,5951 @@
     {
       "id": "terrain.map.broken_atoll",
       "display_name": "破碎环礁近岸战场",
-      "map_size": [4096.0,2304.0],
+      "map_size": [
+        4096.0,
+        2304.0
+      ],
       "geometry_epsilon": 0.001,
       "instances": [
-        {"id": "broken_atoll_land","template_id": "terrain.template.broken_atoll","position": [2048.0,1152.0],"scale": [1.62,1.62],"rotation_degrees": 0.0}
+        {
+          "id": "broken_atoll_land",
+          "template_id": "terrain.template.broken_atoll",
+          "position": [
+            2048.0,
+            1152.0
+          ],
+          "scale": [
+            1.62,
+            1.62
+          ],
+          "rotation_degrees": 0.0
+        }
       ],
       "spawn_points": [
-        {"id": "player_1","faction_id": "player","position": [520.0,1152.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_2","faction_id": "player","position": [600.0,900.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_3","faction_id": "player","position": [600.0,1404.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_4","faction_id": "player","position": [704.0,1088.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_5","faction_id": "player","position": [320.0,1088.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_6","faction_id": "player","position": [832.0,1216.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_7","faction_id": "player","position": [192.0,1216.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_8","faction_id": "player","position": [960.0,1088.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_9","faction_id": "player","position": [64.0,1088.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_10","faction_id": "player","position": [320.0,1344.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_11","faction_id": "player","position": [1088.0,1216.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_1","faction_id": "enemy","position": [3576.0,1152.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_2","faction_id": "enemy","position": [3496.0,900.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_3","faction_id": "enemy","position": [3496.0,1404.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_4","faction_id": "enemy","position": [3392.0,1088.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_5","faction_id": "enemy","position": [3776.0,1088.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_6","faction_id": "enemy","position": [3264.0,1216.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_7","faction_id": "enemy","position": [3904.0,1216.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_8","faction_id": "enemy","position": [3136.0,1088.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_9","faction_id": "enemy","position": [4032.0,1088.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_10","faction_id": "enemy","position": [3776.0,1344.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_11","faction_id": "enemy","position": [3008.0,1216.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]}
+        {
+          "id": "player_1",
+          "faction_id": "player",
+          "position": [
+            520.0,
+            1152.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_2",
+          "faction_id": "player",
+          "position": [
+            600.0,
+            900.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_3",
+          "faction_id": "player",
+          "position": [
+            600.0,
+            1404.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_4",
+          "faction_id": "player",
+          "position": [
+            704.0,
+            1088.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_5",
+          "faction_id": "player",
+          "position": [
+            320.0,
+            1088.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_6",
+          "faction_id": "player",
+          "position": [
+            832.0,
+            1216.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_7",
+          "faction_id": "player",
+          "position": [
+            192.0,
+            1216.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_8",
+          "faction_id": "player",
+          "position": [
+            960.0,
+            1088.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_9",
+          "faction_id": "player",
+          "position": [
+            64.0,
+            1088.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_10",
+          "faction_id": "player",
+          "position": [
+            320.0,
+            1344.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_11",
+          "faction_id": "player",
+          "position": [
+            1088.0,
+            1216.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_1",
+          "faction_id": "enemy",
+          "position": [
+            3576.0,
+            1152.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_2",
+          "faction_id": "enemy",
+          "position": [
+            3496.0,
+            900.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_3",
+          "faction_id": "enemy",
+          "position": [
+            3496.0,
+            1404.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_4",
+          "faction_id": "enemy",
+          "position": [
+            3392.0,
+            1088.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_5",
+          "faction_id": "enemy",
+          "position": [
+            3776.0,
+            1088.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_6",
+          "faction_id": "enemy",
+          "position": [
+            3264.0,
+            1216.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_7",
+          "faction_id": "enemy",
+          "position": [
+            3904.0,
+            1216.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_8",
+          "faction_id": "enemy",
+          "position": [
+            3136.0,
+            1088.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_9",
+          "faction_id": "enemy",
+          "position": [
+            4032.0,
+            1088.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_10",
+          "faction_id": "enemy",
+          "position": [
+            3776.0,
+            1344.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_11",
+          "faction_id": "enemy",
+          "position": [
+            3008.0,
+            1216.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        }
       ],
       "navigation_definition_id": "navigation.broken_atoll"
     },
     {
       "id": "terrain.map.central_sandbar",
       "display_name": "中央沙洲近岸战场",
-      "map_size": [4096.0,2304.0],
+      "map_size": [
+        4096.0,
+        2304.0
+      ],
       "geometry_epsilon": 0.001,
       "instances": [
-        {"id": "central_sandbar_land","template_id": "terrain.template.central_sandbar","position": [2048.0,1152.0],"scale": [1.62,1.62],"rotation_degrees": 0.0}
+        {
+          "id": "central_sandbar_land",
+          "template_id": "terrain.template.central_sandbar",
+          "position": [
+            2048.0,
+            1152.0
+          ],
+          "scale": [
+            1.62,
+            1.62
+          ],
+          "rotation_degrees": 0.0
+        }
       ],
       "spawn_points": [
-        {"id": "player_1","faction_id": "player","position": [520.0,1152.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_2","faction_id": "player","position": [600.0,900.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_3","faction_id": "player","position": [600.0,1404.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_4","faction_id": "player","position": [704.0,1088.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_5","faction_id": "player","position": [320.0,1088.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_6","faction_id": "player","position": [832.0,1216.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_7","faction_id": "player","position": [192.0,1216.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_8","faction_id": "player","position": [960.0,1088.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_9","faction_id": "player","position": [64.0,1088.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_10","faction_id": "player","position": [320.0,1344.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_11","faction_id": "player","position": [1088.0,1216.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_1","faction_id": "enemy","position": [3576.0,1152.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_2","faction_id": "enemy","position": [3496.0,900.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_3","faction_id": "enemy","position": [3496.0,1404.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_4","faction_id": "enemy","position": [3392.0,1088.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_5","faction_id": "enemy","position": [3776.0,1088.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_6","faction_id": "enemy","position": [3264.0,1216.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_7","faction_id": "enemy","position": [3904.0,1216.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_8","faction_id": "enemy","position": [3136.0,1088.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_9","faction_id": "enemy","position": [4032.0,1088.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_10","faction_id": "enemy","position": [3776.0,1344.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_11","faction_id": "enemy","position": [3008.0,1216.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]}
+        {
+          "id": "player_1",
+          "faction_id": "player",
+          "position": [
+            520.0,
+            1152.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_2",
+          "faction_id": "player",
+          "position": [
+            600.0,
+            900.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_3",
+          "faction_id": "player",
+          "position": [
+            600.0,
+            1404.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_4",
+          "faction_id": "player",
+          "position": [
+            704.0,
+            1088.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_5",
+          "faction_id": "player",
+          "position": [
+            320.0,
+            1088.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_6",
+          "faction_id": "player",
+          "position": [
+            832.0,
+            1216.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_7",
+          "faction_id": "player",
+          "position": [
+            192.0,
+            1216.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_8",
+          "faction_id": "player",
+          "position": [
+            960.0,
+            1088.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_9",
+          "faction_id": "player",
+          "position": [
+            64.0,
+            1088.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_10",
+          "faction_id": "player",
+          "position": [
+            320.0,
+            1344.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_11",
+          "faction_id": "player",
+          "position": [
+            1088.0,
+            1216.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_1",
+          "faction_id": "enemy",
+          "position": [
+            3576.0,
+            1152.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_2",
+          "faction_id": "enemy",
+          "position": [
+            3496.0,
+            900.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_3",
+          "faction_id": "enemy",
+          "position": [
+            3496.0,
+            1404.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_4",
+          "faction_id": "enemy",
+          "position": [
+            3392.0,
+            1088.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_5",
+          "faction_id": "enemy",
+          "position": [
+            3776.0,
+            1088.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_6",
+          "faction_id": "enemy",
+          "position": [
+            3264.0,
+            1216.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_7",
+          "faction_id": "enemy",
+          "position": [
+            3904.0,
+            1216.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_8",
+          "faction_id": "enemy",
+          "position": [
+            3136.0,
+            1088.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_9",
+          "faction_id": "enemy",
+          "position": [
+            4032.0,
+            1088.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_10",
+          "faction_id": "enemy",
+          "position": [
+            3776.0,
+            1344.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_11",
+          "faction_id": "enemy",
+          "position": [
+            3008.0,
+            1216.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        }
       ],
       "navigation_definition_id": "navigation.central_sandbar"
     },
     {
       "id": "terrain.map.crescent_bay",
       "display_name": "新月岛近岸战场",
-      "map_size": [4096.0,2304.0],
+      "map_size": [
+        4096.0,
+        2304.0
+      ],
       "geometry_epsilon": 0.001,
       "instances": [
-        {"id": "crescent_bay_land","template_id": "terrain.template.crescent_bay","position": [2048.0,1152.0],"scale": [1.62,1.62],"rotation_degrees": 0.0}
+        {
+          "id": "crescent_bay_land",
+          "template_id": "terrain.template.crescent_bay",
+          "position": [
+            2048.0,
+            1152.0
+          ],
+          "scale": [
+            1.62,
+            1.62
+          ],
+          "rotation_degrees": 0.0
+        }
       ],
       "spawn_points": [
-        {"id": "player_1","faction_id": "player","position": [520.0,1152.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_2","faction_id": "player","position": [600.0,900.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_3","faction_id": "player","position": [600.0,1404.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_4","faction_id": "player","position": [704.0,1088.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_5","faction_id": "player","position": [320.0,1088.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_6","faction_id": "player","position": [832.0,1216.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_7","faction_id": "player","position": [192.0,1216.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_8","faction_id": "player","position": [960.0,1088.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_9","faction_id": "player","position": [64.0,1088.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_10","faction_id": "player","position": [320.0,1344.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_11","faction_id": "player","position": [1088.0,1216.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_1","faction_id": "enemy","position": [3576.0,1152.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_2","faction_id": "enemy","position": [3496.0,900.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_3","faction_id": "enemy","position": [3496.0,1404.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_4","faction_id": "enemy","position": [3392.0,1088.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_5","faction_id": "enemy","position": [3776.0,1088.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_6","faction_id": "enemy","position": [3264.0,1216.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_7","faction_id": "enemy","position": [3904.0,1216.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_8","faction_id": "enemy","position": [3136.0,1088.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_9","faction_id": "enemy","position": [4032.0,1088.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_10","faction_id": "enemy","position": [3776.0,1344.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_11","faction_id": "enemy","position": [3008.0,1216.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]}
+        {
+          "id": "player_1",
+          "faction_id": "player",
+          "position": [
+            520.0,
+            1152.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_2",
+          "faction_id": "player",
+          "position": [
+            600.0,
+            900.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_3",
+          "faction_id": "player",
+          "position": [
+            600.0,
+            1404.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_4",
+          "faction_id": "player",
+          "position": [
+            704.0,
+            1088.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_5",
+          "faction_id": "player",
+          "position": [
+            320.0,
+            1088.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_6",
+          "faction_id": "player",
+          "position": [
+            832.0,
+            1216.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_7",
+          "faction_id": "player",
+          "position": [
+            192.0,
+            1216.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_8",
+          "faction_id": "player",
+          "position": [
+            960.0,
+            1088.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_9",
+          "faction_id": "player",
+          "position": [
+            64.0,
+            1088.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_10",
+          "faction_id": "player",
+          "position": [
+            320.0,
+            1344.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_11",
+          "faction_id": "player",
+          "position": [
+            1088.0,
+            1216.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_1",
+          "faction_id": "enemy",
+          "position": [
+            3576.0,
+            1152.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_2",
+          "faction_id": "enemy",
+          "position": [
+            3496.0,
+            900.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_3",
+          "faction_id": "enemy",
+          "position": [
+            3496.0,
+            1404.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_4",
+          "faction_id": "enemy",
+          "position": [
+            3392.0,
+            1088.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_5",
+          "faction_id": "enemy",
+          "position": [
+            3776.0,
+            1088.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_6",
+          "faction_id": "enemy",
+          "position": [
+            3264.0,
+            1216.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_7",
+          "faction_id": "enemy",
+          "position": [
+            3904.0,
+            1216.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_8",
+          "faction_id": "enemy",
+          "position": [
+            3136.0,
+            1088.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_9",
+          "faction_id": "enemy",
+          "position": [
+            4032.0,
+            1088.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_10",
+          "faction_id": "enemy",
+          "position": [
+            3776.0,
+            1344.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_11",
+          "faction_id": "enemy",
+          "position": [
+            3008.0,
+            1216.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        }
       ],
       "navigation_definition_id": "navigation.crescent_bay"
     },
     {
       "id": "terrain.map.double_island_long_channel",
       "display_name": "双岛长海峡近岸战场",
-      "map_size": [4096.0,2304.0],
+      "map_size": [
+        4096.0,
+        2304.0
+      ],
       "geometry_epsilon": 0.001,
       "instances": [
-        {"id": "double_island_land","template_id": "terrain.template.double_island_long_channel","position": [2048.0,1152.0],"scale": [1.62,1.62],"rotation_degrees": 0.0}
+        {
+          "id": "double_island_land",
+          "template_id": "terrain.template.double_island_long_channel",
+          "position": [
+            2048.0,
+            1152.0
+          ],
+          "scale": [
+            1.62,
+            1.62
+          ],
+          "rotation_degrees": 0.0
+        }
       ],
       "spawn_points": [
-        {"id": "player_1","faction_id": "player","position": [1050.0,2160.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_2","faction_id": "player","position": [900.0,2070.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_3","faction_id": "player","position": [900.0,2250.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_4","faction_id": "player","position": [1216.0,2240.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_5","faction_id": "player","position": [1344.0,2112.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_6","faction_id": "player","position": [1088.0,1984.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_7","faction_id": "player","position": [704.0,2112.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_8","faction_id": "player","position": [1472.0,2240.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_9","faction_id": "player","position": [576.0,2240.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_10","faction_id": "player","position": [1600.0,2112.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_11","faction_id": "player","position": [448.0,2112.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_1","faction_id": "enemy","position": [3046.0,2160.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_2","faction_id": "enemy","position": [3196.0,2070.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_3","faction_id": "enemy","position": [3196.0,2250.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_4","faction_id": "enemy","position": [2880.0,2240.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_5","faction_id": "enemy","position": [2752.0,2112.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_6","faction_id": "enemy","position": [3008.0,1984.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_7","faction_id": "enemy","position": [3392.0,2112.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_8","faction_id": "enemy","position": [2624.0,2240.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_9","faction_id": "enemy","position": [3520.0,2240.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_10","faction_id": "enemy","position": [2496.0,2112.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_11","faction_id": "enemy","position": [3648.0,2112.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]}
+        {
+          "id": "player_1",
+          "faction_id": "player",
+          "position": [
+            1050.0,
+            2160.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_2",
+          "faction_id": "player",
+          "position": [
+            900.0,
+            2070.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_3",
+          "faction_id": "player",
+          "position": [
+            900.0,
+            2250.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_4",
+          "faction_id": "player",
+          "position": [
+            1216.0,
+            2240.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_5",
+          "faction_id": "player",
+          "position": [
+            1344.0,
+            2112.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_6",
+          "faction_id": "player",
+          "position": [
+            1088.0,
+            1984.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_7",
+          "faction_id": "player",
+          "position": [
+            704.0,
+            2112.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_8",
+          "faction_id": "player",
+          "position": [
+            1472.0,
+            2240.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_9",
+          "faction_id": "player",
+          "position": [
+            576.0,
+            2240.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_10",
+          "faction_id": "player",
+          "position": [
+            1600.0,
+            2112.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_11",
+          "faction_id": "player",
+          "position": [
+            448.0,
+            2112.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_1",
+          "faction_id": "enemy",
+          "position": [
+            3046.0,
+            2160.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_2",
+          "faction_id": "enemy",
+          "position": [
+            3196.0,
+            2070.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_3",
+          "faction_id": "enemy",
+          "position": [
+            3196.0,
+            2250.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_4",
+          "faction_id": "enemy",
+          "position": [
+            2880.0,
+            2240.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_5",
+          "faction_id": "enemy",
+          "position": [
+            2752.0,
+            2112.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_6",
+          "faction_id": "enemy",
+          "position": [
+            3008.0,
+            1984.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_7",
+          "faction_id": "enemy",
+          "position": [
+            3392.0,
+            2112.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_8",
+          "faction_id": "enemy",
+          "position": [
+            2624.0,
+            2240.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_9",
+          "faction_id": "enemy",
+          "position": [
+            3520.0,
+            2240.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_10",
+          "faction_id": "enemy",
+          "position": [
+            2496.0,
+            2112.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_11",
+          "faction_id": "enemy",
+          "position": [
+            3648.0,
+            2112.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        }
       ],
       "navigation_definition_id": "navigation.double_island_long_channel"
     },
     {
       "id": "terrain.map.dual_channel_reef_line",
       "display_name": "双航道礁线近岸战场",
-      "map_size": [4096.0,2304.0],
+      "map_size": [
+        4096.0,
+        2304.0
+      ],
       "geometry_epsilon": 0.001,
       "instances": [
-        {"id": "dual_channel_land","template_id": "terrain.template.dual_channel_reef_line","position": [2048.0,1152.0],"scale": [1.62,1.62],"rotation_degrees": 0.0}
+        {
+          "id": "dual_channel_land",
+          "template_id": "terrain.template.dual_channel_reef_line",
+          "position": [
+            2048.0,
+            1152.0
+          ],
+          "scale": [
+            1.62,
+            1.62
+          ],
+          "rotation_degrees": 0.0
+        }
       ],
       "spawn_points": [
-        {"id": "player_1","faction_id": "player","position": [520.0,1152.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_2","faction_id": "player","position": [600.0,900.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_3","faction_id": "player","position": [600.0,1404.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_4","faction_id": "player","position": [704.0,1088.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_5","faction_id": "player","position": [320.0,1088.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_6","faction_id": "player","position": [832.0,1216.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_7","faction_id": "player","position": [192.0,1216.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_8","faction_id": "player","position": [960.0,1088.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_9","faction_id": "player","position": [64.0,1088.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_10","faction_id": "player","position": [320.0,1344.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_11","faction_id": "player","position": [1088.0,1216.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_1","faction_id": "enemy","position": [3576.0,1152.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_2","faction_id": "enemy","position": [3496.0,900.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_3","faction_id": "enemy","position": [3496.0,1404.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_4","faction_id": "enemy","position": [3392.0,1088.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_5","faction_id": "enemy","position": [3776.0,1088.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_6","faction_id": "enemy","position": [3264.0,1216.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_7","faction_id": "enemy","position": [3904.0,1216.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_8","faction_id": "enemy","position": [3136.0,1088.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_9","faction_id": "enemy","position": [4032.0,1088.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_10","faction_id": "enemy","position": [3776.0,1344.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_11","faction_id": "enemy","position": [3008.0,1216.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]}
+        {
+          "id": "player_1",
+          "faction_id": "player",
+          "position": [
+            520.0,
+            1152.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_2",
+          "faction_id": "player",
+          "position": [
+            600.0,
+            900.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_3",
+          "faction_id": "player",
+          "position": [
+            600.0,
+            1404.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_4",
+          "faction_id": "player",
+          "position": [
+            704.0,
+            1088.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_5",
+          "faction_id": "player",
+          "position": [
+            320.0,
+            1088.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_6",
+          "faction_id": "player",
+          "position": [
+            832.0,
+            1216.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_7",
+          "faction_id": "player",
+          "position": [
+            192.0,
+            1216.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_8",
+          "faction_id": "player",
+          "position": [
+            960.0,
+            1088.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_9",
+          "faction_id": "player",
+          "position": [
+            64.0,
+            1088.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_10",
+          "faction_id": "player",
+          "position": [
+            320.0,
+            1344.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_11",
+          "faction_id": "player",
+          "position": [
+            1088.0,
+            1216.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_1",
+          "faction_id": "enemy",
+          "position": [
+            3576.0,
+            1152.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_2",
+          "faction_id": "enemy",
+          "position": [
+            3496.0,
+            900.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_3",
+          "faction_id": "enemy",
+          "position": [
+            3496.0,
+            1404.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_4",
+          "faction_id": "enemy",
+          "position": [
+            3392.0,
+            1088.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_5",
+          "faction_id": "enemy",
+          "position": [
+            3776.0,
+            1088.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_6",
+          "faction_id": "enemy",
+          "position": [
+            3264.0,
+            1216.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_7",
+          "faction_id": "enemy",
+          "position": [
+            3904.0,
+            1216.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_8",
+          "faction_id": "enemy",
+          "position": [
+            3136.0,
+            1088.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_9",
+          "faction_id": "enemy",
+          "position": [
+            4032.0,
+            1088.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_10",
+          "faction_id": "enemy",
+          "position": [
+            3776.0,
+            1344.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_11",
+          "faction_id": "enemy",
+          "position": [
+            3008.0,
+            1216.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        }
       ],
       "navigation_definition_id": "navigation.dual_channel_reef_line"
     },
     {
       "id": "terrain.map.long_archipelago",
       "display_name": "细长群岛近岸战场",
-      "map_size": [4096.0,2304.0],
+      "map_size": [
+        4096.0,
+        2304.0
+      ],
       "geometry_epsilon": 0.001,
       "instances": [
-        {"id": "long_archipelago_land","template_id": "terrain.template.long_archipelago","position": [2048.0,1152.0],"scale": [1.62,1.62],"rotation_degrees": 0.0}
+        {
+          "id": "long_archipelago_land",
+          "template_id": "terrain.template.long_archipelago",
+          "position": [
+            2048.0,
+            1152.0
+          ],
+          "scale": [
+            1.62,
+            1.62
+          ],
+          "rotation_degrees": 0.0
+        }
       ],
       "spawn_points": [
-        {"id": "player_1","faction_id": "player","position": [520.0,1152.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_2","faction_id": "player","position": [600.0,900.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_3","faction_id": "player","position": [600.0,1404.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_4","faction_id": "player","position": [704.0,1088.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_5","faction_id": "player","position": [320.0,1088.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_6","faction_id": "player","position": [832.0,1216.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_7","faction_id": "player","position": [192.0,1216.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_8","faction_id": "player","position": [960.0,1088.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_9","faction_id": "player","position": [64.0,1088.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_10","faction_id": "player","position": [320.0,1344.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_11","faction_id": "player","position": [1088.0,1216.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_1","faction_id": "enemy","position": [3576.0,1152.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_2","faction_id": "enemy","position": [3496.0,900.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_3","faction_id": "enemy","position": [3496.0,1404.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_4","faction_id": "enemy","position": [3392.0,1088.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_5","faction_id": "enemy","position": [3776.0,1088.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_6","faction_id": "enemy","position": [3264.0,1216.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_7","faction_id": "enemy","position": [3904.0,1216.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_8","faction_id": "enemy","position": [3136.0,1088.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_9","faction_id": "enemy","position": [4032.0,1088.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_10","faction_id": "enemy","position": [3776.0,1344.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_11","faction_id": "enemy","position": [3008.0,1216.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]}
+        {
+          "id": "player_1",
+          "faction_id": "player",
+          "position": [
+            520.0,
+            1152.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_2",
+          "faction_id": "player",
+          "position": [
+            600.0,
+            900.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_3",
+          "faction_id": "player",
+          "position": [
+            600.0,
+            1404.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_4",
+          "faction_id": "player",
+          "position": [
+            704.0,
+            1088.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_5",
+          "faction_id": "player",
+          "position": [
+            320.0,
+            1088.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_6",
+          "faction_id": "player",
+          "position": [
+            832.0,
+            1216.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_7",
+          "faction_id": "player",
+          "position": [
+            192.0,
+            1216.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_8",
+          "faction_id": "player",
+          "position": [
+            960.0,
+            1088.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_9",
+          "faction_id": "player",
+          "position": [
+            64.0,
+            1088.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_10",
+          "faction_id": "player",
+          "position": [
+            320.0,
+            1344.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_11",
+          "faction_id": "player",
+          "position": [
+            1088.0,
+            1216.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_1",
+          "faction_id": "enemy",
+          "position": [
+            3576.0,
+            1152.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_2",
+          "faction_id": "enemy",
+          "position": [
+            3496.0,
+            900.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_3",
+          "faction_id": "enemy",
+          "position": [
+            3496.0,
+            1404.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_4",
+          "faction_id": "enemy",
+          "position": [
+            3392.0,
+            1088.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_5",
+          "faction_id": "enemy",
+          "position": [
+            3776.0,
+            1088.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_6",
+          "faction_id": "enemy",
+          "position": [
+            3264.0,
+            1216.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_7",
+          "faction_id": "enemy",
+          "position": [
+            3904.0,
+            1216.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_8",
+          "faction_id": "enemy",
+          "position": [
+            3136.0,
+            1088.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_9",
+          "faction_id": "enemy",
+          "position": [
+            4032.0,
+            1088.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_10",
+          "faction_id": "enemy",
+          "position": [
+            3776.0,
+            1344.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_11",
+          "faction_id": "enemy",
+          "position": [
+            3008.0,
+            1216.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        }
       ],
       "navigation_definition_id": "navigation.long_archipelago"
     },
     {
       "id": "terrain.map.offset_large_island",
       "display_name": "大岛偏置近岸战场",
-      "map_size": [4096.0,2304.0],
+      "map_size": [
+        4096.0,
+        2304.0
+      ],
       "geometry_epsilon": 0.001,
       "instances": [
-        {"id": "offset_island_land","template_id": "terrain.template.offset_large_island","position": [2048.0,1152.0],"scale": [1.62,1.62],"rotation_degrees": 0.0}
+        {
+          "id": "offset_island_land",
+          "template_id": "terrain.template.offset_large_island",
+          "position": [
+            2048.0,
+            1152.0
+          ],
+          "scale": [
+            1.62,
+            1.62
+          ],
+          "rotation_degrees": 0.0
+        }
       ],
       "spawn_points": [
-        {"id": "player_1","faction_id": "player","position": [520.0,1152.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_2","faction_id": "player","position": [600.0,900.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_3","faction_id": "player","position": [600.0,1404.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_4","faction_id": "player","position": [704.0,1088.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_5","faction_id": "player","position": [320.0,1088.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_6","faction_id": "player","position": [832.0,1216.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_7","faction_id": "player","position": [192.0,1216.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_8","faction_id": "player","position": [960.0,1088.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_9","faction_id": "player","position": [64.0,1088.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_10","faction_id": "player","position": [320.0,1344.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_11","faction_id": "player","position": [1088.0,1216.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_1","faction_id": "enemy","position": [3576.0,1152.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_2","faction_id": "enemy","position": [3496.0,900.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_3","faction_id": "enemy","position": [3496.0,1404.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_4","faction_id": "enemy","position": [3392.0,1088.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_5","faction_id": "enemy","position": [3776.0,1088.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_6","faction_id": "enemy","position": [3264.0,1216.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_7","faction_id": "enemy","position": [3904.0,1216.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_8","faction_id": "enemy","position": [3136.0,1088.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_9","faction_id": "enemy","position": [4032.0,1088.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_10","faction_id": "enemy","position": [3776.0,1344.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_11","faction_id": "enemy","position": [3008.0,1216.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]}
+        {
+          "id": "player_1",
+          "faction_id": "player",
+          "position": [
+            520.0,
+            1152.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_2",
+          "faction_id": "player",
+          "position": [
+            600.0,
+            900.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_3",
+          "faction_id": "player",
+          "position": [
+            600.0,
+            1404.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_4",
+          "faction_id": "player",
+          "position": [
+            704.0,
+            1088.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_5",
+          "faction_id": "player",
+          "position": [
+            320.0,
+            1088.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_6",
+          "faction_id": "player",
+          "position": [
+            832.0,
+            1216.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_7",
+          "faction_id": "player",
+          "position": [
+            192.0,
+            1216.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_8",
+          "faction_id": "player",
+          "position": [
+            960.0,
+            1088.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_9",
+          "faction_id": "player",
+          "position": [
+            64.0,
+            1088.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_10",
+          "faction_id": "player",
+          "position": [
+            320.0,
+            1344.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_11",
+          "faction_id": "player",
+          "position": [
+            1088.0,
+            1216.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_1",
+          "faction_id": "enemy",
+          "position": [
+            3576.0,
+            1152.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_2",
+          "faction_id": "enemy",
+          "position": [
+            3496.0,
+            900.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_3",
+          "faction_id": "enemy",
+          "position": [
+            3496.0,
+            1404.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_4",
+          "faction_id": "enemy",
+          "position": [
+            3392.0,
+            1088.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_5",
+          "faction_id": "enemy",
+          "position": [
+            3776.0,
+            1088.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_6",
+          "faction_id": "enemy",
+          "position": [
+            3264.0,
+            1216.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_7",
+          "faction_id": "enemy",
+          "position": [
+            3904.0,
+            1216.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_8",
+          "faction_id": "enemy",
+          "position": [
+            3136.0,
+            1088.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_9",
+          "faction_id": "enemy",
+          "position": [
+            4032.0,
+            1088.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_10",
+          "faction_id": "enemy",
+          "position": [
+            3776.0,
+            1344.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_11",
+          "faction_id": "enemy",
+          "position": [
+            3008.0,
+            1216.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        }
       ],
       "navigation_definition_id": "navigation.offset_large_island"
     },
     {
       "id": "terrain.map.ring_lagoon",
       "display_name": "环岛泻湖近岸战场",
-      "map_size": [4096.0,2304.0],
+      "map_size": [
+        4096.0,
+        2304.0
+      ],
       "geometry_epsilon": 0.001,
       "instances": [
-        {"id": "ring_lagoon_land","template_id": "terrain.template.ring_lagoon","position": [2048.0,1152.0],"scale": [1.62,1.62],"rotation_degrees": 0.0}
+        {
+          "id": "ring_lagoon_land",
+          "template_id": "terrain.template.ring_lagoon",
+          "position": [
+            2048.0,
+            1152.0
+          ],
+          "scale": [
+            1.62,
+            1.62
+          ],
+          "rotation_degrees": 0.0
+        }
       ],
       "spawn_points": [
-        {"id": "player_1","faction_id": "player","position": [1050.0,2160.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_2","faction_id": "player","position": [900.0,2070.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_3","faction_id": "player","position": [900.0,2250.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_4","faction_id": "player","position": [1216.0,2240.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_5","faction_id": "player","position": [1344.0,2112.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_6","faction_id": "player","position": [1088.0,1984.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_7","faction_id": "player","position": [704.0,2112.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_8","faction_id": "player","position": [1472.0,2240.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_9","faction_id": "player","position": [576.0,2240.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_10","faction_id": "player","position": [1600.0,2112.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_11","faction_id": "player","position": [448.0,2112.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_1","faction_id": "enemy","position": [3046.0,2160.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_2","faction_id": "enemy","position": [3196.0,2070.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_3","faction_id": "enemy","position": [3196.0,2250.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_4","faction_id": "enemy","position": [2880.0,2240.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_5","faction_id": "enemy","position": [2752.0,2112.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_6","faction_id": "enemy","position": [3008.0,1984.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_7","faction_id": "enemy","position": [3392.0,2112.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_8","faction_id": "enemy","position": [2624.0,2240.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_9","faction_id": "enemy","position": [3520.0,2240.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_10","faction_id": "enemy","position": [2496.0,2112.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_11","faction_id": "enemy","position": [3648.0,2112.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]}
+        {
+          "id": "player_1",
+          "faction_id": "player",
+          "position": [
+            1050.0,
+            2160.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_2",
+          "faction_id": "player",
+          "position": [
+            900.0,
+            2070.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_3",
+          "faction_id": "player",
+          "position": [
+            900.0,
+            2250.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_4",
+          "faction_id": "player",
+          "position": [
+            1216.0,
+            2240.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_5",
+          "faction_id": "player",
+          "position": [
+            1344.0,
+            2112.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_6",
+          "faction_id": "player",
+          "position": [
+            1088.0,
+            1984.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_7",
+          "faction_id": "player",
+          "position": [
+            704.0,
+            2112.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_8",
+          "faction_id": "player",
+          "position": [
+            1472.0,
+            2240.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_9",
+          "faction_id": "player",
+          "position": [
+            576.0,
+            2240.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_10",
+          "faction_id": "player",
+          "position": [
+            1600.0,
+            2112.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_11",
+          "faction_id": "player",
+          "position": [
+            448.0,
+            2112.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_1",
+          "faction_id": "enemy",
+          "position": [
+            3046.0,
+            2160.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_2",
+          "faction_id": "enemy",
+          "position": [
+            3196.0,
+            2070.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_3",
+          "faction_id": "enemy",
+          "position": [
+            3196.0,
+            2250.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_4",
+          "faction_id": "enemy",
+          "position": [
+            2880.0,
+            2240.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_5",
+          "faction_id": "enemy",
+          "position": [
+            2752.0,
+            2112.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_6",
+          "faction_id": "enemy",
+          "position": [
+            3008.0,
+            1984.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_7",
+          "faction_id": "enemy",
+          "position": [
+            3392.0,
+            2112.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_8",
+          "faction_id": "enemy",
+          "position": [
+            2624.0,
+            2240.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_9",
+          "faction_id": "enemy",
+          "position": [
+            3520.0,
+            2240.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_10",
+          "faction_id": "enemy",
+          "position": [
+            2496.0,
+            2112.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_11",
+          "faction_id": "enemy",
+          "position": [
+            3648.0,
+            2112.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        }
       ],
       "navigation_definition_id": "navigation.ring_lagoon"
     },
     {
       "id": "terrain.map.scattered_islands",
       "display_name": "散岛群近岸战场",
-      "map_size": [4096.0,2304.0],
+      "map_size": [
+        4096.0,
+        2304.0
+      ],
       "geometry_epsilon": 0.001,
       "instances": [
-        {"id": "scattered_islands_land","template_id": "terrain.template.scattered_islands","position": [2048.0,1152.0],"scale": [1.62,1.62],"rotation_degrees": 0.0}
+        {
+          "id": "scattered_islands_land",
+          "template_id": "terrain.template.scattered_islands",
+          "position": [
+            2048.0,
+            1152.0
+          ],
+          "scale": [
+            1.62,
+            1.62
+          ],
+          "rotation_degrees": 0.0
+        }
       ],
       "spawn_points": [
-        {"id": "player_1","faction_id": "player","position": [520.0,1152.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_2","faction_id": "player","position": [600.0,900.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_3","faction_id": "player","position": [600.0,1404.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_4","faction_id": "player","position": [704.0,1088.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_5","faction_id": "player","position": [320.0,1088.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_6","faction_id": "player","position": [832.0,1216.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_7","faction_id": "player","position": [192.0,1216.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_8","faction_id": "player","position": [960.0,1088.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_9","faction_id": "player","position": [64.0,1088.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_10","faction_id": "player","position": [320.0,1344.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "player_11","faction_id": "player","position": [1088.0,1216.0],"heading": 0.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_1","faction_id": "enemy","position": [3576.0,1152.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_2","faction_id": "enemy","position": [3496.0,900.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_3","faction_id": "enemy","position": [3496.0,1404.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_4","faction_id": "enemy","position": [3392.0,1088.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_5","faction_id": "enemy","position": [3776.0,1088.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_6","faction_id": "enemy","position": [3264.0,1216.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_7","faction_id": "enemy","position": [3904.0,1216.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_8","faction_id": "enemy","position": [3136.0,1088.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_9","faction_id": "enemy","position": [4032.0,1088.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_10","faction_id": "enemy","position": [3776.0,1344.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]},
-        {"id": "enemy_11","faction_id": "enemy","position": [3008.0,1216.0],"heading": 180.0,"radius": 46.0,"movement_tags": ["Surface"]}
+        {
+          "id": "player_1",
+          "faction_id": "player",
+          "position": [
+            520.0,
+            1152.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_2",
+          "faction_id": "player",
+          "position": [
+            600.0,
+            900.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_3",
+          "faction_id": "player",
+          "position": [
+            600.0,
+            1404.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_4",
+          "faction_id": "player",
+          "position": [
+            704.0,
+            1088.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_5",
+          "faction_id": "player",
+          "position": [
+            320.0,
+            1088.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_6",
+          "faction_id": "player",
+          "position": [
+            832.0,
+            1216.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_7",
+          "faction_id": "player",
+          "position": [
+            192.0,
+            1216.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_8",
+          "faction_id": "player",
+          "position": [
+            960.0,
+            1088.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_9",
+          "faction_id": "player",
+          "position": [
+            64.0,
+            1088.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_10",
+          "faction_id": "player",
+          "position": [
+            320.0,
+            1344.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_11",
+          "faction_id": "player",
+          "position": [
+            1088.0,
+            1216.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_1",
+          "faction_id": "enemy",
+          "position": [
+            3576.0,
+            1152.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_2",
+          "faction_id": "enemy",
+          "position": [
+            3496.0,
+            900.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_3",
+          "faction_id": "enemy",
+          "position": [
+            3496.0,
+            1404.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_4",
+          "faction_id": "enemy",
+          "position": [
+            3392.0,
+            1088.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_5",
+          "faction_id": "enemy",
+          "position": [
+            3776.0,
+            1088.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_6",
+          "faction_id": "enemy",
+          "position": [
+            3264.0,
+            1216.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_7",
+          "faction_id": "enemy",
+          "position": [
+            3904.0,
+            1216.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_8",
+          "faction_id": "enemy",
+          "position": [
+            3136.0,
+            1088.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_9",
+          "faction_id": "enemy",
+          "position": [
+            4032.0,
+            1088.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_10",
+          "faction_id": "enemy",
+          "position": [
+            3776.0,
+            1344.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_11",
+          "faction_id": "enemy",
+          "position": [
+            3008.0,
+            1216.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        }
       ],
       "navigation_definition_id": "navigation.scattered_islands"
+    },
+    {
+      "id": "terrain.map.harbor_mouth_16x9",
+      "display_name": "港湾入口近岸战场（16:9 大型海岸）",
+      "map_size": [
+        6144.0,
+        3456.0
+      ],
+      "geometry_epsilon": 0.001,
+      "instances": [
+        {
+          "id": "harbor_land",
+          "template_id": "terrain.template.harbor_mouth_16x9",
+          "position": [
+            3072.0,
+            1728.0
+          ],
+          "scale": [
+            2.6,
+            3.2
+          ],
+          "rotation_degrees": 0.0
+        }
+      ],
+      "spawn_points": [
+        {
+          "id": "player_1",
+          "faction_id": "player",
+          "position": [
+            832.0,
+            1728.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_2",
+          "faction_id": "player",
+          "position": [
+            704.0,
+            1600.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_3",
+          "faction_id": "player",
+          "position": [
+            704.0,
+            1856.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_4",
+          "faction_id": "player",
+          "position": [
+            576.0,
+            1728.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_5",
+          "faction_id": "player",
+          "position": [
+            960.0,
+            1600.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_6",
+          "faction_id": "player",
+          "position": [
+            960.0,
+            1856.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_7",
+          "faction_id": "player",
+          "position": [
+            832.0,
+            1472.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_8",
+          "faction_id": "player",
+          "position": [
+            832.0,
+            1984.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_9",
+          "faction_id": "player",
+          "position": [
+            576.0,
+            1472.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_10",
+          "faction_id": "player",
+          "position": [
+            576.0,
+            1984.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_11",
+          "faction_id": "player",
+          "position": [
+            448.0,
+            1600.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_1",
+          "faction_id": "enemy",
+          "position": [
+            5312.0,
+            1728.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_2",
+          "faction_id": "enemy",
+          "position": [
+            5440.0,
+            1600.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_3",
+          "faction_id": "enemy",
+          "position": [
+            5440.0,
+            1856.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_4",
+          "faction_id": "enemy",
+          "position": [
+            5568.0,
+            1728.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_5",
+          "faction_id": "enemy",
+          "position": [
+            5184.0,
+            1600.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_6",
+          "faction_id": "enemy",
+          "position": [
+            5184.0,
+            1856.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_7",
+          "faction_id": "enemy",
+          "position": [
+            5312.0,
+            1472.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_8",
+          "faction_id": "enemy",
+          "position": [
+            5312.0,
+            1984.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_9",
+          "faction_id": "enemy",
+          "position": [
+            5568.0,
+            1472.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_10",
+          "faction_id": "enemy",
+          "position": [
+            5568.0,
+            1984.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_11",
+          "faction_id": "enemy",
+          "position": [
+            5696.0,
+            1600.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        }
+      ],
+      "facility_layout_id": "facility.layout.harbor_mouth_16x9",
+      "environment_zone_set_id": "environment.zone_set.harbor_mouth_16x9",
+      "navigation_definition_id": "navigation.harbor_mouth_16x9"
+    },
+    {
+      "id": "terrain.map.broken_atoll_16x9",
+      "display_name": "破碎环礁近岸战场（16:9 大型海岸）",
+      "map_size": [
+        6144.0,
+        3456.0
+      ],
+      "geometry_epsilon": 0.001,
+      "instances": [
+        {
+          "id": "broken_atoll_land",
+          "template_id": "terrain.template.broken_atoll_16x9",
+          "position": [
+            3072.0,
+            1728.0
+          ],
+          "scale": [
+            2.6,
+            3.2
+          ],
+          "rotation_degrees": 0.0
+        }
+      ],
+      "spawn_points": [
+        {
+          "id": "player_1",
+          "faction_id": "player",
+          "position": [
+            832.0,
+            1728.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_2",
+          "faction_id": "player",
+          "position": [
+            704.0,
+            1600.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_3",
+          "faction_id": "player",
+          "position": [
+            704.0,
+            1856.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_4",
+          "faction_id": "player",
+          "position": [
+            576.0,
+            1728.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_5",
+          "faction_id": "player",
+          "position": [
+            960.0,
+            1600.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_6",
+          "faction_id": "player",
+          "position": [
+            960.0,
+            1856.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_7",
+          "faction_id": "player",
+          "position": [
+            832.0,
+            1472.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_8",
+          "faction_id": "player",
+          "position": [
+            832.0,
+            1984.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_9",
+          "faction_id": "player",
+          "position": [
+            1088.0,
+            1728.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_10",
+          "faction_id": "player",
+          "position": [
+            576.0,
+            1472.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_11",
+          "faction_id": "player",
+          "position": [
+            576.0,
+            1984.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_1",
+          "faction_id": "enemy",
+          "position": [
+            5312.0,
+            1728.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_2",
+          "faction_id": "enemy",
+          "position": [
+            5440.0,
+            1600.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_3",
+          "faction_id": "enemy",
+          "position": [
+            5440.0,
+            1856.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_4",
+          "faction_id": "enemy",
+          "position": [
+            5568.0,
+            1728.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_5",
+          "faction_id": "enemy",
+          "position": [
+            5184.0,
+            1600.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_6",
+          "faction_id": "enemy",
+          "position": [
+            5184.0,
+            1856.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_7",
+          "faction_id": "enemy",
+          "position": [
+            5312.0,
+            1472.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_8",
+          "faction_id": "enemy",
+          "position": [
+            5312.0,
+            1984.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_9",
+          "faction_id": "enemy",
+          "position": [
+            5056.0,
+            1728.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_10",
+          "faction_id": "enemy",
+          "position": [
+            5568.0,
+            1472.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_11",
+          "faction_id": "enemy",
+          "position": [
+            5568.0,
+            1984.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        }
+      ],
+      "navigation_definition_id": "navigation.broken_atoll_16x9"
+    },
+    {
+      "id": "terrain.map.central_sandbar_16x9",
+      "display_name": "中央沙洲近岸战场（16:9 大型海岸）",
+      "map_size": [
+        6144.0,
+        3456.0
+      ],
+      "geometry_epsilon": 0.001,
+      "instances": [
+        {
+          "id": "central_sandbar_land",
+          "template_id": "terrain.template.central_sandbar_16x9",
+          "position": [
+            3072.0,
+            1728.0
+          ],
+          "scale": [
+            2.6,
+            3.2
+          ],
+          "rotation_degrees": 0.0
+        }
+      ],
+      "spawn_points": [
+        {
+          "id": "player_1",
+          "faction_id": "player",
+          "position": [
+            832.0,
+            1728.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_2",
+          "faction_id": "player",
+          "position": [
+            704.0,
+            1600.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_3",
+          "faction_id": "player",
+          "position": [
+            704.0,
+            1856.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_4",
+          "faction_id": "player",
+          "position": [
+            576.0,
+            1728.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_5",
+          "faction_id": "player",
+          "position": [
+            960.0,
+            1600.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_6",
+          "faction_id": "player",
+          "position": [
+            960.0,
+            1856.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_7",
+          "faction_id": "player",
+          "position": [
+            832.0,
+            1472.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_8",
+          "faction_id": "player",
+          "position": [
+            832.0,
+            1984.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_9",
+          "faction_id": "player",
+          "position": [
+            1088.0,
+            1728.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_10",
+          "faction_id": "player",
+          "position": [
+            576.0,
+            1472.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_11",
+          "faction_id": "player",
+          "position": [
+            576.0,
+            1984.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_1",
+          "faction_id": "enemy",
+          "position": [
+            5312.0,
+            1728.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_2",
+          "faction_id": "enemy",
+          "position": [
+            5440.0,
+            1600.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_3",
+          "faction_id": "enemy",
+          "position": [
+            5440.0,
+            1856.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_4",
+          "faction_id": "enemy",
+          "position": [
+            5568.0,
+            1728.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_5",
+          "faction_id": "enemy",
+          "position": [
+            5184.0,
+            1600.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_6",
+          "faction_id": "enemy",
+          "position": [
+            5184.0,
+            1856.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_7",
+          "faction_id": "enemy",
+          "position": [
+            5312.0,
+            1472.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_8",
+          "faction_id": "enemy",
+          "position": [
+            5312.0,
+            1984.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_9",
+          "faction_id": "enemy",
+          "position": [
+            5056.0,
+            1728.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_10",
+          "faction_id": "enemy",
+          "position": [
+            5568.0,
+            1472.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_11",
+          "faction_id": "enemy",
+          "position": [
+            5568.0,
+            1984.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        }
+      ],
+      "navigation_definition_id": "navigation.central_sandbar_16x9"
+    },
+    {
+      "id": "terrain.map.crescent_bay_16x9",
+      "display_name": "新月岛近岸战场（16:9 大型海岸）",
+      "map_size": [
+        6144.0,
+        3456.0
+      ],
+      "geometry_epsilon": 0.001,
+      "instances": [
+        {
+          "id": "crescent_bay_land",
+          "template_id": "terrain.template.crescent_bay_16x9",
+          "position": [
+            3072.0,
+            1728.0
+          ],
+          "scale": [
+            2.6,
+            3.2
+          ],
+          "rotation_degrees": 0.0
+        }
+      ],
+      "spawn_points": [
+        {
+          "id": "player_1",
+          "faction_id": "player",
+          "position": [
+            832.0,
+            1728.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_2",
+          "faction_id": "player",
+          "position": [
+            704.0,
+            1600.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_3",
+          "faction_id": "player",
+          "position": [
+            704.0,
+            1856.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_4",
+          "faction_id": "player",
+          "position": [
+            576.0,
+            1728.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_5",
+          "faction_id": "player",
+          "position": [
+            960.0,
+            1600.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_6",
+          "faction_id": "player",
+          "position": [
+            960.0,
+            1856.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_7",
+          "faction_id": "player",
+          "position": [
+            832.0,
+            1472.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_8",
+          "faction_id": "player",
+          "position": [
+            832.0,
+            1984.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_9",
+          "faction_id": "player",
+          "position": [
+            1088.0,
+            1728.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_10",
+          "faction_id": "player",
+          "position": [
+            576.0,
+            1472.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_11",
+          "faction_id": "player",
+          "position": [
+            576.0,
+            1984.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_1",
+          "faction_id": "enemy",
+          "position": [
+            5312.0,
+            1728.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_2",
+          "faction_id": "enemy",
+          "position": [
+            5440.0,
+            1600.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_3",
+          "faction_id": "enemy",
+          "position": [
+            5440.0,
+            1856.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_4",
+          "faction_id": "enemy",
+          "position": [
+            5568.0,
+            1728.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_5",
+          "faction_id": "enemy",
+          "position": [
+            5184.0,
+            1600.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_6",
+          "faction_id": "enemy",
+          "position": [
+            5184.0,
+            1856.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_7",
+          "faction_id": "enemy",
+          "position": [
+            5312.0,
+            1472.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_8",
+          "faction_id": "enemy",
+          "position": [
+            5312.0,
+            1984.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_9",
+          "faction_id": "enemy",
+          "position": [
+            5056.0,
+            1728.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_10",
+          "faction_id": "enemy",
+          "position": [
+            5568.0,
+            1472.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_11",
+          "faction_id": "enemy",
+          "position": [
+            5568.0,
+            1984.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        }
+      ],
+      "navigation_definition_id": "navigation.crescent_bay_16x9"
+    },
+    {
+      "id": "terrain.map.double_island_long_channel_16x9",
+      "display_name": "双岛长海峡近岸战场（16:9 大型海岸）",
+      "map_size": [
+        6144.0,
+        3456.0
+      ],
+      "geometry_epsilon": 0.001,
+      "instances": [
+        {
+          "id": "double_island_land",
+          "template_id": "terrain.template.double_island_long_channel_16x9",
+          "position": [
+            3072.0,
+            1728.0
+          ],
+          "scale": [
+            2.6,
+            3.2
+          ],
+          "rotation_degrees": 0.0
+        }
+      ],
+      "spawn_points": [
+        {
+          "id": "player_1",
+          "faction_id": "player",
+          "position": [
+            832.0,
+            1728.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_2",
+          "faction_id": "player",
+          "position": [
+            704.0,
+            1600.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_3",
+          "faction_id": "player",
+          "position": [
+            704.0,
+            1856.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_4",
+          "faction_id": "player",
+          "position": [
+            576.0,
+            1728.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_5",
+          "faction_id": "player",
+          "position": [
+            960.0,
+            1600.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_6",
+          "faction_id": "player",
+          "position": [
+            960.0,
+            1856.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_7",
+          "faction_id": "player",
+          "position": [
+            832.0,
+            1472.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_8",
+          "faction_id": "player",
+          "position": [
+            832.0,
+            1984.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_9",
+          "faction_id": "player",
+          "position": [
+            1088.0,
+            1728.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_10",
+          "faction_id": "player",
+          "position": [
+            576.0,
+            1472.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_11",
+          "faction_id": "player",
+          "position": [
+            576.0,
+            1984.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_1",
+          "faction_id": "enemy",
+          "position": [
+            5312.0,
+            1728.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_2",
+          "faction_id": "enemy",
+          "position": [
+            5440.0,
+            1600.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_3",
+          "faction_id": "enemy",
+          "position": [
+            5440.0,
+            1856.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_4",
+          "faction_id": "enemy",
+          "position": [
+            5568.0,
+            1728.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_5",
+          "faction_id": "enemy",
+          "position": [
+            5184.0,
+            1600.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_6",
+          "faction_id": "enemy",
+          "position": [
+            5184.0,
+            1856.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_7",
+          "faction_id": "enemy",
+          "position": [
+            5312.0,
+            1472.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_8",
+          "faction_id": "enemy",
+          "position": [
+            5312.0,
+            1984.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_9",
+          "faction_id": "enemy",
+          "position": [
+            5056.0,
+            1728.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_10",
+          "faction_id": "enemy",
+          "position": [
+            5568.0,
+            1472.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_11",
+          "faction_id": "enemy",
+          "position": [
+            5568.0,
+            1984.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        }
+      ],
+      "navigation_definition_id": "navigation.double_island_long_channel_16x9"
+    },
+    {
+      "id": "terrain.map.dual_channel_reef_line_16x9",
+      "display_name": "双航道礁线近岸战场（16:9 大型海岸）",
+      "map_size": [
+        6144.0,
+        3456.0
+      ],
+      "geometry_epsilon": 0.001,
+      "instances": [
+        {
+          "id": "dual_channel_land",
+          "template_id": "terrain.template.dual_channel_reef_line_16x9",
+          "position": [
+            3072.0,
+            1728.0
+          ],
+          "scale": [
+            2.6,
+            3.2
+          ],
+          "rotation_degrees": 0.0
+        }
+      ],
+      "spawn_points": [
+        {
+          "id": "player_1",
+          "faction_id": "player",
+          "position": [
+            832.0,
+            1728.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_2",
+          "faction_id": "player",
+          "position": [
+            704.0,
+            1600.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_3",
+          "faction_id": "player",
+          "position": [
+            704.0,
+            1856.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_4",
+          "faction_id": "player",
+          "position": [
+            576.0,
+            1728.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_5",
+          "faction_id": "player",
+          "position": [
+            960.0,
+            1600.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_6",
+          "faction_id": "player",
+          "position": [
+            960.0,
+            1856.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_7",
+          "faction_id": "player",
+          "position": [
+            832.0,
+            1472.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_8",
+          "faction_id": "player",
+          "position": [
+            832.0,
+            1984.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_9",
+          "faction_id": "player",
+          "position": [
+            1088.0,
+            1728.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_10",
+          "faction_id": "player",
+          "position": [
+            576.0,
+            1472.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_11",
+          "faction_id": "player",
+          "position": [
+            576.0,
+            1984.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_1",
+          "faction_id": "enemy",
+          "position": [
+            5312.0,
+            1728.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_2",
+          "faction_id": "enemy",
+          "position": [
+            5440.0,
+            1600.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_3",
+          "faction_id": "enemy",
+          "position": [
+            5440.0,
+            1856.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_4",
+          "faction_id": "enemy",
+          "position": [
+            5568.0,
+            1728.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_5",
+          "faction_id": "enemy",
+          "position": [
+            5184.0,
+            1600.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_6",
+          "faction_id": "enemy",
+          "position": [
+            5184.0,
+            1856.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_7",
+          "faction_id": "enemy",
+          "position": [
+            5312.0,
+            1472.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_8",
+          "faction_id": "enemy",
+          "position": [
+            5312.0,
+            1984.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_9",
+          "faction_id": "enemy",
+          "position": [
+            5056.0,
+            1728.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_10",
+          "faction_id": "enemy",
+          "position": [
+            5568.0,
+            1472.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_11",
+          "faction_id": "enemy",
+          "position": [
+            5568.0,
+            1984.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        }
+      ],
+      "navigation_definition_id": "navigation.dual_channel_reef_line_16x9"
+    },
+    {
+      "id": "terrain.map.long_archipelago_16x9",
+      "display_name": "细长群岛近岸战场（16:9 大型海岸）",
+      "map_size": [
+        6144.0,
+        3456.0
+      ],
+      "geometry_epsilon": 0.001,
+      "instances": [
+        {
+          "id": "long_archipelago_land",
+          "template_id": "terrain.template.long_archipelago_16x9",
+          "position": [
+            3072.0,
+            1728.0
+          ],
+          "scale": [
+            2.6,
+            3.2
+          ],
+          "rotation_degrees": 0.0
+        }
+      ],
+      "spawn_points": [
+        {
+          "id": "player_1",
+          "faction_id": "player",
+          "position": [
+            832.0,
+            1728.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_2",
+          "faction_id": "player",
+          "position": [
+            704.0,
+            1600.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_3",
+          "faction_id": "player",
+          "position": [
+            704.0,
+            1856.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_4",
+          "faction_id": "player",
+          "position": [
+            576.0,
+            1728.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_5",
+          "faction_id": "player",
+          "position": [
+            960.0,
+            1600.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_6",
+          "faction_id": "player",
+          "position": [
+            960.0,
+            1856.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_7",
+          "faction_id": "player",
+          "position": [
+            832.0,
+            1472.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_8",
+          "faction_id": "player",
+          "position": [
+            832.0,
+            1984.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_9",
+          "faction_id": "player",
+          "position": [
+            1088.0,
+            1728.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_10",
+          "faction_id": "player",
+          "position": [
+            576.0,
+            1472.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_11",
+          "faction_id": "player",
+          "position": [
+            576.0,
+            1984.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_1",
+          "faction_id": "enemy",
+          "position": [
+            5312.0,
+            1728.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_2",
+          "faction_id": "enemy",
+          "position": [
+            5440.0,
+            1600.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_3",
+          "faction_id": "enemy",
+          "position": [
+            5440.0,
+            1856.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_4",
+          "faction_id": "enemy",
+          "position": [
+            5568.0,
+            1728.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_5",
+          "faction_id": "enemy",
+          "position": [
+            5184.0,
+            1600.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_6",
+          "faction_id": "enemy",
+          "position": [
+            5184.0,
+            1856.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_7",
+          "faction_id": "enemy",
+          "position": [
+            5312.0,
+            1472.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_8",
+          "faction_id": "enemy",
+          "position": [
+            5312.0,
+            1984.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_9",
+          "faction_id": "enemy",
+          "position": [
+            5056.0,
+            1728.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_10",
+          "faction_id": "enemy",
+          "position": [
+            5568.0,
+            1472.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_11",
+          "faction_id": "enemy",
+          "position": [
+            5568.0,
+            1984.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        }
+      ],
+      "navigation_definition_id": "navigation.long_archipelago_16x9"
+    },
+    {
+      "id": "terrain.map.offset_large_island_16x9",
+      "display_name": "大岛偏置近岸战场（16:9 大型海岸）",
+      "map_size": [
+        6144.0,
+        3456.0
+      ],
+      "geometry_epsilon": 0.001,
+      "instances": [
+        {
+          "id": "offset_island_land",
+          "template_id": "terrain.template.offset_large_island_16x9",
+          "position": [
+            3072.0,
+            1728.0
+          ],
+          "scale": [
+            2.6,
+            3.2
+          ],
+          "rotation_degrees": 0.0
+        }
+      ],
+      "spawn_points": [
+        {
+          "id": "player_1",
+          "faction_id": "player",
+          "position": [
+            832.0,
+            1728.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_2",
+          "faction_id": "player",
+          "position": [
+            704.0,
+            1600.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_3",
+          "faction_id": "player",
+          "position": [
+            704.0,
+            1856.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_4",
+          "faction_id": "player",
+          "position": [
+            576.0,
+            1728.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_5",
+          "faction_id": "player",
+          "position": [
+            960.0,
+            1600.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_6",
+          "faction_id": "player",
+          "position": [
+            960.0,
+            1856.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_7",
+          "faction_id": "player",
+          "position": [
+            832.0,
+            1472.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_8",
+          "faction_id": "player",
+          "position": [
+            832.0,
+            1984.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_9",
+          "faction_id": "player",
+          "position": [
+            1088.0,
+            1728.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_10",
+          "faction_id": "player",
+          "position": [
+            576.0,
+            1472.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_11",
+          "faction_id": "player",
+          "position": [
+            576.0,
+            1984.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_1",
+          "faction_id": "enemy",
+          "position": [
+            5312.0,
+            1728.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_2",
+          "faction_id": "enemy",
+          "position": [
+            5440.0,
+            1600.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_3",
+          "faction_id": "enemy",
+          "position": [
+            5440.0,
+            1856.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_4",
+          "faction_id": "enemy",
+          "position": [
+            5568.0,
+            1728.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_5",
+          "faction_id": "enemy",
+          "position": [
+            5184.0,
+            1600.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_6",
+          "faction_id": "enemy",
+          "position": [
+            5184.0,
+            1856.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_7",
+          "faction_id": "enemy",
+          "position": [
+            5312.0,
+            1472.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_8",
+          "faction_id": "enemy",
+          "position": [
+            5312.0,
+            1984.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_9",
+          "faction_id": "enemy",
+          "position": [
+            5056.0,
+            1728.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_10",
+          "faction_id": "enemy",
+          "position": [
+            5568.0,
+            1472.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_11",
+          "faction_id": "enemy",
+          "position": [
+            5568.0,
+            1984.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        }
+      ],
+      "navigation_definition_id": "navigation.offset_large_island_16x9"
+    },
+    {
+      "id": "terrain.map.ring_lagoon_16x9",
+      "display_name": "环岛泻湖近岸战场（16:9 大型海岸）",
+      "map_size": [
+        6144.0,
+        3456.0
+      ],
+      "geometry_epsilon": 0.001,
+      "instances": [
+        {
+          "id": "ring_lagoon_land",
+          "template_id": "terrain.template.ring_lagoon_16x9",
+          "position": [
+            3072.0,
+            1728.0
+          ],
+          "scale": [
+            2.6,
+            3.2
+          ],
+          "rotation_degrees": 0.0
+        }
+      ],
+      "spawn_points": [
+        {
+          "id": "player_1",
+          "faction_id": "player",
+          "position": [
+            832.0,
+            1728.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_2",
+          "faction_id": "player",
+          "position": [
+            704.0,
+            1600.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_3",
+          "faction_id": "player",
+          "position": [
+            704.0,
+            1856.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_4",
+          "faction_id": "player",
+          "position": [
+            576.0,
+            1728.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_5",
+          "faction_id": "player",
+          "position": [
+            960.0,
+            1600.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_6",
+          "faction_id": "player",
+          "position": [
+            960.0,
+            1856.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_7",
+          "faction_id": "player",
+          "position": [
+            832.0,
+            1472.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_8",
+          "faction_id": "player",
+          "position": [
+            832.0,
+            1984.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_9",
+          "faction_id": "player",
+          "position": [
+            1088.0,
+            1728.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_10",
+          "faction_id": "player",
+          "position": [
+            576.0,
+            1472.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_11",
+          "faction_id": "player",
+          "position": [
+            576.0,
+            1984.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_1",
+          "faction_id": "enemy",
+          "position": [
+            5312.0,
+            1728.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_2",
+          "faction_id": "enemy",
+          "position": [
+            5440.0,
+            1600.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_3",
+          "faction_id": "enemy",
+          "position": [
+            5440.0,
+            1856.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_4",
+          "faction_id": "enemy",
+          "position": [
+            5568.0,
+            1728.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_5",
+          "faction_id": "enemy",
+          "position": [
+            5184.0,
+            1600.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_6",
+          "faction_id": "enemy",
+          "position": [
+            5184.0,
+            1856.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_7",
+          "faction_id": "enemy",
+          "position": [
+            5312.0,
+            1472.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_8",
+          "faction_id": "enemy",
+          "position": [
+            5312.0,
+            1984.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_9",
+          "faction_id": "enemy",
+          "position": [
+            5056.0,
+            1728.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_10",
+          "faction_id": "enemy",
+          "position": [
+            5568.0,
+            1472.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_11",
+          "faction_id": "enemy",
+          "position": [
+            5568.0,
+            1984.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        }
+      ],
+      "navigation_definition_id": "navigation.ring_lagoon_16x9"
+    },
+    {
+      "id": "terrain.map.scattered_islands_16x9",
+      "display_name": "散岛群近岸战场（16:9 大型海岸）",
+      "map_size": [
+        6144.0,
+        3456.0
+      ],
+      "geometry_epsilon": 0.001,
+      "instances": [
+        {
+          "id": "scattered_islands_land",
+          "template_id": "terrain.template.scattered_islands_16x9",
+          "position": [
+            3072.0,
+            1728.0
+          ],
+          "scale": [
+            2.6,
+            3.2
+          ],
+          "rotation_degrees": 0.0
+        }
+      ],
+      "spawn_points": [
+        {
+          "id": "player_1",
+          "faction_id": "player",
+          "position": [
+            832.0,
+            1728.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_2",
+          "faction_id": "player",
+          "position": [
+            704.0,
+            1600.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_3",
+          "faction_id": "player",
+          "position": [
+            704.0,
+            1856.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_4",
+          "faction_id": "player",
+          "position": [
+            576.0,
+            1728.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_5",
+          "faction_id": "player",
+          "position": [
+            960.0,
+            1600.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_6",
+          "faction_id": "player",
+          "position": [
+            960.0,
+            1856.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_7",
+          "faction_id": "player",
+          "position": [
+            832.0,
+            1472.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_8",
+          "faction_id": "player",
+          "position": [
+            832.0,
+            1984.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_9",
+          "faction_id": "player",
+          "position": [
+            1088.0,
+            1728.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_10",
+          "faction_id": "player",
+          "position": [
+            576.0,
+            1472.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "player_11",
+          "faction_id": "player",
+          "position": [
+            576.0,
+            1984.0
+          ],
+          "heading": 0.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_1",
+          "faction_id": "enemy",
+          "position": [
+            5312.0,
+            1728.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_2",
+          "faction_id": "enemy",
+          "position": [
+            5440.0,
+            1600.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_3",
+          "faction_id": "enemy",
+          "position": [
+            5440.0,
+            1856.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_4",
+          "faction_id": "enemy",
+          "position": [
+            5568.0,
+            1728.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_5",
+          "faction_id": "enemy",
+          "position": [
+            5184.0,
+            1600.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_6",
+          "faction_id": "enemy",
+          "position": [
+            5184.0,
+            1856.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_7",
+          "faction_id": "enemy",
+          "position": [
+            5312.0,
+            1472.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_8",
+          "faction_id": "enemy",
+          "position": [
+            5312.0,
+            1984.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_9",
+          "faction_id": "enemy",
+          "position": [
+            5056.0,
+            1728.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_10",
+          "faction_id": "enemy",
+          "position": [
+            5568.0,
+            1472.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        },
+        {
+          "id": "enemy_11",
+          "faction_id": "enemy",
+          "position": [
+            5568.0,
+            1984.0
+          ],
+          "heading": 180.0,
+          "radius": 46.0,
+          "movement_tags": [
+            "Surface"
+          ]
+        }
+      ],
+      "navigation_definition_id": "navigation.scattered_islands_16x9"
     }
   ]
 }

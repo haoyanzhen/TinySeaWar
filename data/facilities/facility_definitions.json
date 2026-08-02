@@ -1,30 +1,590 @@
 {
   "schema_version": 1,
   "definitions": [
-    {"id": "facility.coastal_observation_post", "definition_type": "FacilityDefinition", "display_name": "海岸观察站", "asset_semantic": "coastal_observation_post", "capabilities": ["Detectable", "Damageable", "Suppressible", "Interactable", "Ownable", "ObservationSource"], "operation_modes": ["AreaControl", "AutomaticOperation", "CombatDisposition"], "area_control": {"duration": 5.0, "enabled": true, "capturable": true}, "automatic_operation": {"capability_ids": ["ObservationSource"]}, "observation_rules": {"contact_type": "Optical", "weather_affected": true, "time_affected": true, "local_visibility_affected": true, "line_of_sight_required": true}, "combat_disposition": {"suppressible": true, "destroyable": true, "silentable": false, "damage_floor_ratio": 0.0}, "max_hp": 900.0, "armor": 12.0, "armor_thickness": "Light", "suppression_damage_threshold": 90.0, "suppression_duration": 10.0, "observation_range": 1150.0, "target_radius": 28.0},
-    {"id": "facility.coastal_battery", "definition_type": "FacilityDefinition", "display_name": "岸防炮", "asset_semantic": "coastal_battery", "capabilities": ["Detectable", "Damageable", "Suppressible", "Interactable", "Ownable", "WeaponPlatform"], "operation_modes": ["AreaControl", "AutomaticOperation", "CombatDisposition"], "initial_state_profiles": {"enemy_active": {"faction_id": "enemy", "operation_state": "Active", "control_policy": "LockedWhileActive"}, "player_dormant": {"faction_id": "player", "operation_state": "Dormant", "control_policy": "ActivateOwnerOnly"}}, "area_control": {"duration": 6.0, "enabled": true, "capturable": true}, "automatic_operation": {"capability_ids": ["WeaponPlatform"]}, "combat_disposition": {"suppressible": true, "destroyable": false, "silentable": true, "damage_floor_ratio": 0.1}, "durability_reference_id": "ship.warspite", "weapon_mount_reference": {"weapon_ids": ["weapon.warspite_381_ap", "weapon.warspite_381_he"], "mount_count": 1, "shots_per_mount": 2, "default_ammo_type": "HE"}, "suppression_damage_threshold": 120.0, "suppression_duration": 12.0, "reload_during_suppression": false, "target_radius": 34.0},
-    {"id": "facility.forward_supply_point", "definition_type": "FacilityDefinition", "display_name": "前沿补给点", "asset_semantic": "forward_supply_point", "capabilities": ["Detectable", "Damageable", "Suppressible", "Interactable", "Ownable", "ServiceProvider"], "operation_modes": ["AreaControl", "BerthingService", "CombatDisposition"], "area_control": {"duration": 5.0, "enabled": true, "capturable": true}, "berthing_service": {"service_type": "Supply", "duration": 7.0, "berth_count": 1, "max_entry_speed": 18.0, "heading_tolerance_degrees": 180.0, "berth_state": "Moored", "interrupt_on_leave": true, "interrupt_on_facility_damage": true, "progress_on_interrupt": "Reset", "weapon_reload_recovery_ratio": 1.0, "skill_cooldown_recovery": 12.0}, "combat_disposition": {"suppressible": true, "destroyable": true, "silentable": false, "damage_floor_ratio": 0.0}, "max_hp": 1200.0, "armor": 10.0, "armor_thickness": "Light", "suppression_damage_threshold": 80.0, "suppression_duration": 10.0, "target_radius": 32.0},
-    {"id": "facility.coastal_airfield", "definition_type": "FacilityDefinition", "display_name": "近岸机场", "asset_semantic": "coastal_airfield", "capabilities": ["Detectable", "Damageable", "Suppressible", "SupportMissionProvider"], "operation_modes": ["RemoteCommand", "AutomaticOperation", "CombatDisposition"], "remote_command": {"command_type": "SupportMission", "mission_ids": ["support_mission.air_recon", "support_mission.fighter_patrol", "support_mission.airstrike"]}, "automatic_operation": {"capability_ids": ["SupportMissionProvider"]}, "combat_disposition": {"suppressible": true, "destroyable": false, "silentable": true, "damage_floor_ratio": 0.1}, "max_hp": 2600.0, "armor": 16.0, "armor_thickness": "Light", "suppression_damage_threshold": 140.0, "suppression_duration": 15.0, "aviation_power": 68.0, "target_radius": 48.0, "support_mission_ids": ["support_mission.air_recon", "support_mission.fighter_patrol", "support_mission.airstrike"]},
-    {"id": "facility.radar_station", "definition_type": "FacilityDefinition", "display_name": "雷达站", "asset_semantic": "radar_station", "capabilities": ["Detectable", "Damageable", "Suppressible", "SensorSource"], "operation_modes": ["AutomaticOperation", "CombatDisposition"], "activation_rules": {"type": "ScenarioEvent", "event_id": "facility.radar.activate"}, "automatic_operation": {"capability_ids": ["SensorSource"]}, "radar_rules": {"contact_type": "Radar", "detection_range": 1400.0, "weather_affected": false, "time_affected": false, "local_visibility_affected": false, "line_of_sight_required": false, "contact_accuracy": "ExactPosition", "stealth_break_policy": "ExplicitStateOnly"}, "combat_disposition": {"suppressible": true, "destroyable": true, "silentable": false, "damage_floor_ratio": 0.0}, "max_hp": 1000.0, "armor": 8.0, "armor_thickness": "Light", "suppression_damage_threshold": 75.0, "suppression_duration": 12.0, "target_radius": 28.0},
-    {"id": "facility.communication_station", "definition_type": "FacilityDefinition", "display_name": "通信站", "asset_semantic": "communication_station", "capabilities": ["Detectable", "Damageable", "Suppressible", "Interactable", "Ownable", "CommandRelay"], "operation_modes": ["AreaControl", "AutomaticOperation", "CombatDisposition"], "area_control": {"duration": 6.0, "enabled": true, "capturable": true}, "automatic_operation": {"capability_ids": ["CommandRelay"]}, "combat_disposition": {"suppressible": true, "destroyable": true, "silentable": false, "damage_floor_ratio": 0.0}, "max_hp": 950.0, "armor": 8.0, "armor_thickness": "Light", "suppression_damage_threshold": 75.0, "suppression_duration": 12.0, "target_radius": 28.0},
-    {"id": "facility.mine_control_station", "definition_type": "FacilityDefinition", "display_name": "水雷控制站", "asset_semantic": "mine_control_station", "capabilities": ["Detectable", "Damageable", "Suppressible", "Interactable", "Ownable", "HazardController"], "operation_modes": ["AreaControl", "RemoteCommand", "CombatDisposition"], "area_control": {"duration": 6.0, "enabled": true, "capturable": true}, "remote_command": {"command_type": "MineDeployment", "control_radius": 1200.0, "area_side_length": 360.0, "duration": 10.0, "mine_count": 12, "cooldown": 35.0, "charges": 2, "random_seed_policy": "BattleTickFacility", "mine_trigger_radius": 18.0, "detection_reference": {"ship_id": "ship.warspite", "full_length_multiplier": 0.5}, "damage_reference": {"ship_id": "ship.shimakaze", "weapon_id": "weapon.shimakaze_610_torpedo"}, "in_progress_facility_policy": {"Suppressed": "Cancel", "Destroyed": "Cancel", "Disabled": "Cancel", "Silent": "Cancel"}, "deployed_mine_controller_policy": "Independent"}, "combat_disposition": {"suppressible": true, "destroyable": true, "silentable": false, "damage_floor_ratio": 0.0}, "max_hp": 1050.0, "armor": 10.0, "armor_thickness": "Light", "suppression_damage_threshold": 80.0, "suppression_duration": 12.0, "target_radius": 30.0, "minefield_ids": ["minefield.harbor_outer"]},
-    {"id": "facility.repair_berth", "definition_type": "FacilityDefinition", "display_name": "港口维修泊位", "asset_semantic": "repair_berth", "capabilities": ["Detectable", "Damageable", "Suppressible", "Interactable", "Ownable", "ServiceProvider"], "operation_modes": ["AreaControl", "BerthingService", "CombatDisposition"], "area_control": {"duration": 6.0, "enabled": true, "capturable": true}, "berthing_service": {"service_type": "Repair", "duration": 9.0, "berth_count": 1, "max_entry_speed": 10.0, "heading_tolerance_degrees": 25.0, "berth_state": "Docked", "dock_position_policy": "EntryPosition", "hold_while_docked": true, "interrupt_on_leave": true, "interrupt_on_move_order": true, "interrupt_on_heavy_damage_ratio": 0.12, "interrupt_on_facility_damage": true, "interrupt_on_facility_unavailable": true, "interrupt_on_sink": true, "interrupt_on_undock": true, "progress_on_interrupt": "Reset", "hp_restore_ratio": 0.28, "repair_cap_ratio": 0.80}, "combat_disposition": {"suppressible": true, "destroyable": true, "silentable": false, "damage_floor_ratio": 0.0}, "max_hp": 1500.0, "armor": 18.0, "armor_thickness": "Medium", "suppression_damage_threshold": 100.0, "suppression_duration": 12.0, "target_radius": 38.0},
+    {
+      "id": "facility.coastal_observation_post",
+      "definition_type": "FacilityDefinition",
+      "display_name": "海岸观察站",
+      "asset_semantic": "coastal_observation_post",
+      "capabilities": [
+        "Detectable",
+        "Damageable",
+        "Suppressible",
+        "Interactable",
+        "Ownable",
+        "ObservationSource"
+      ],
+      "operation_modes": [
+        "AreaControl",
+        "AutomaticOperation",
+        "CombatDisposition"
+      ],
+      "area_control": {
+        "duration": 5.0,
+        "enabled": true,
+        "capturable": true
+      },
+      "automatic_operation": {
+        "capability_ids": [
+          "ObservationSource"
+        ]
+      },
+      "observation_rules": {
+        "contact_type": "Optical",
+        "weather_affected": true,
+        "time_affected": true,
+        "local_visibility_affected": true,
+        "line_of_sight_required": true
+      },
+      "combat_disposition": {
+        "suppressible": true,
+        "destroyable": true,
+        "silentable": false,
+        "damage_floor_ratio": 0.0
+      },
+      "max_hp": 900.0,
+      "armor": 12.0,
+      "armor_thickness": "Light",
+      "suppression_damage_threshold": 90.0,
+      "suppression_duration": 10.0,
+      "observation_range": 1150.0,
+      "target_radius": 28.0
+    },
+    {
+      "id": "facility.coastal_battery",
+      "definition_type": "FacilityDefinition",
+      "display_name": "岸防炮",
+      "asset_semantic": "coastal_battery",
+      "capabilities": [
+        "Detectable",
+        "Damageable",
+        "Suppressible",
+        "Interactable",
+        "Ownable",
+        "WeaponPlatform"
+      ],
+      "operation_modes": [
+        "AreaControl",
+        "AutomaticOperation",
+        "CombatDisposition"
+      ],
+      "initial_state_profiles": {
+        "enemy_active": {
+          "faction_id": "enemy",
+          "operation_state": "Active",
+          "control_policy": "LockedWhileActive"
+        },
+        "player_dormant": {
+          "faction_id": "player",
+          "operation_state": "Dormant",
+          "control_policy": "ActivateOwnerOnly"
+        }
+      },
+      "area_control": {
+        "duration": 6.0,
+        "enabled": true,
+        "capturable": true
+      },
+      "automatic_operation": {
+        "capability_ids": [
+          "WeaponPlatform"
+        ]
+      },
+      "combat_disposition": {
+        "suppressible": true,
+        "destroyable": false,
+        "silentable": true,
+        "damage_floor_ratio": 0.1
+      },
+      "durability_reference_id": "ship.warspite",
+      "weapon_mount_reference": {
+        "weapon_ids": [
+          "weapon.warspite_381_ap",
+          "weapon.warspite_381_he"
+        ],
+        "mount_count": 1,
+        "shots_per_mount": 2,
+        "default_ammo_type": "HE"
+      },
+      "suppression_damage_threshold": 120.0,
+      "suppression_duration": 12.0,
+      "reload_during_suppression": false,
+      "target_radius": 34.0
+    },
+    {
+      "id": "facility.forward_supply_point",
+      "definition_type": "FacilityDefinition",
+      "display_name": "前沿补给点",
+      "asset_semantic": "forward_supply_point",
+      "capabilities": [
+        "Detectable",
+        "Damageable",
+        "Suppressible",
+        "Interactable",
+        "Ownable",
+        "ServiceProvider"
+      ],
+      "operation_modes": [
+        "AreaControl",
+        "BerthingService",
+        "CombatDisposition"
+      ],
+      "area_control": {
+        "duration": 5.0,
+        "enabled": true,
+        "capturable": true
+      },
+      "berthing_service": {
+        "service_type": "Supply",
+        "duration": 7.0,
+        "berth_count": 1,
+        "max_entry_speed": 18.0,
+        "heading_tolerance_degrees": 180.0,
+        "berth_state": "Moored",
+        "interrupt_on_leave": true,
+        "interrupt_on_facility_damage": true,
+        "progress_on_interrupt": "Reset",
+        "weapon_reload_recovery_ratio": 1.0,
+        "skill_cooldown_recovery": 12.0
+      },
+      "combat_disposition": {
+        "suppressible": true,
+        "destroyable": true,
+        "silentable": false,
+        "damage_floor_ratio": 0.0
+      },
+      "max_hp": 1200.0,
+      "armor": 10.0,
+      "armor_thickness": "Light",
+      "suppression_damage_threshold": 80.0,
+      "suppression_duration": 10.0,
+      "target_radius": 32.0
+    },
+    {
+      "id": "facility.coastal_airfield",
+      "definition_type": "FacilityDefinition",
+      "display_name": "近岸机场",
+      "asset_semantic": "coastal_airfield",
+      "capabilities": [
+        "Detectable",
+        "Damageable",
+        "Suppressible",
+        "SupportMissionProvider"
+      ],
+      "operation_modes": [
+        "RemoteCommand",
+        "AutomaticOperation",
+        "CombatDisposition"
+      ],
+      "remote_command": {
+        "command_type": "SupportMission",
+        "mission_ids": [
+          "support_mission.air_recon",
+          "support_mission.fighter_patrol",
+          "support_mission.airstrike"
+        ]
+      },
+      "automatic_operation": {
+        "capability_ids": [
+          "SupportMissionProvider"
+        ]
+      },
+      "combat_disposition": {
+        "suppressible": true,
+        "destroyable": false,
+        "silentable": true,
+        "damage_floor_ratio": 0.1
+      },
+      "max_hp": 2600.0,
+      "armor": 16.0,
+      "armor_thickness": "Light",
+      "suppression_damage_threshold": 140.0,
+      "suppression_duration": 15.0,
+      "aviation_power": 68.0,
+      "target_radius": 48.0,
+      "support_mission_ids": [
+        "support_mission.air_recon",
+        "support_mission.fighter_patrol",
+        "support_mission.airstrike"
+      ]
+    },
+    {
+      "id": "facility.radar_station",
+      "definition_type": "FacilityDefinition",
+      "display_name": "雷达站",
+      "asset_semantic": "radar_station",
+      "capabilities": [
+        "Detectable",
+        "Damageable",
+        "Suppressible",
+        "SensorSource"
+      ],
+      "operation_modes": [
+        "AutomaticOperation",
+        "CombatDisposition"
+      ],
+      "activation_rules": {
+        "type": "ScenarioEvent",
+        "event_id": "facility.radar.activate"
+      },
+      "automatic_operation": {
+        "capability_ids": [
+          "SensorSource"
+        ]
+      },
+      "radar_rules": {
+        "contact_type": "Radar",
+        "detection_range": 1400.0,
+        "weather_affected": false,
+        "time_affected": false,
+        "local_visibility_affected": false,
+        "line_of_sight_required": false,
+        "contact_accuracy": "ExactPosition",
+        "stealth_break_policy": "ExplicitStateOnly"
+      },
+      "combat_disposition": {
+        "suppressible": true,
+        "destroyable": true,
+        "silentable": false,
+        "damage_floor_ratio": 0.0
+      },
+      "max_hp": 1000.0,
+      "armor": 8.0,
+      "armor_thickness": "Light",
+      "suppression_damage_threshold": 75.0,
+      "suppression_duration": 12.0,
+      "target_radius": 28.0
+    },
+    {
+      "id": "facility.communication_station",
+      "definition_type": "FacilityDefinition",
+      "display_name": "通信站",
+      "asset_semantic": "communication_station",
+      "capabilities": [
+        "Detectable",
+        "Damageable",
+        "Suppressible",
+        "Interactable",
+        "Ownable",
+        "CommandRelay"
+      ],
+      "operation_modes": [
+        "AreaControl",
+        "AutomaticOperation",
+        "CombatDisposition"
+      ],
+      "area_control": {
+        "duration": 6.0,
+        "enabled": true,
+        "capturable": true
+      },
+      "automatic_operation": {
+        "capability_ids": [
+          "CommandRelay"
+        ]
+      },
+      "combat_disposition": {
+        "suppressible": true,
+        "destroyable": true,
+        "silentable": false,
+        "damage_floor_ratio": 0.0
+      },
+      "max_hp": 950.0,
+      "armor": 8.0,
+      "armor_thickness": "Light",
+      "suppression_damage_threshold": 75.0,
+      "suppression_duration": 12.0,
+      "target_radius": 28.0
+    },
+    {
+      "id": "facility.mine_control_station",
+      "definition_type": "FacilityDefinition",
+      "display_name": "水雷控制站",
+      "asset_semantic": "mine_control_station",
+      "capabilities": [
+        "Detectable",
+        "Damageable",
+        "Suppressible",
+        "Interactable",
+        "Ownable",
+        "HazardController"
+      ],
+      "operation_modes": [
+        "AreaControl",
+        "RemoteCommand",
+        "CombatDisposition"
+      ],
+      "area_control": {
+        "duration": 6.0,
+        "enabled": true,
+        "capturable": true
+      },
+      "remote_command": {
+        "command_type": "MineDeployment",
+        "control_radius": 1200.0,
+        "area_side_length": 360.0,
+        "duration": 10.0,
+        "mine_count": 12,
+        "cooldown": 35.0,
+        "charges": 2,
+        "random_seed_policy": "BattleTickFacility",
+        "mine_trigger_radius": 18.0,
+        "detection_reference": {
+          "ship_id": "ship.warspite",
+          "full_length_multiplier": 0.5
+        },
+        "damage_reference": {
+          "ship_id": "ship.shimakaze",
+          "weapon_id": "weapon.shimakaze_610_torpedo"
+        },
+        "in_progress_facility_policy": {
+          "Suppressed": "Cancel",
+          "Destroyed": "Cancel",
+          "Disabled": "Cancel",
+          "Silent": "Cancel"
+        },
+        "deployed_mine_controller_policy": "Independent"
+      },
+      "combat_disposition": {
+        "suppressible": true,
+        "destroyable": true,
+        "silentable": false,
+        "damage_floor_ratio": 0.0
+      },
+      "max_hp": 1050.0,
+      "armor": 10.0,
+      "armor_thickness": "Light",
+      "suppression_damage_threshold": 80.0,
+      "suppression_duration": 12.0,
+      "target_radius": 30.0,
+      "minefield_ids": [
+        "minefield.harbor_outer"
+      ]
+    },
+    {
+      "id": "facility.repair_berth",
+      "definition_type": "FacilityDefinition",
+      "display_name": "港口维修泊位",
+      "asset_semantic": "repair_berth",
+      "capabilities": [
+        "Detectable",
+        "Damageable",
+        "Suppressible",
+        "Interactable",
+        "Ownable",
+        "ServiceProvider"
+      ],
+      "operation_modes": [
+        "AreaControl",
+        "BerthingService",
+        "CombatDisposition"
+      ],
+      "area_control": {
+        "duration": 6.0,
+        "enabled": true,
+        "capturable": true
+      },
+      "berthing_service": {
+        "service_type": "Repair",
+        "duration": 9.0,
+        "berth_count": 1,
+        "max_entry_speed": 10.0,
+        "heading_tolerance_degrees": 25.0,
+        "berth_state": "Docked",
+        "dock_position_policy": "EntryPosition",
+        "hold_while_docked": true,
+        "interrupt_on_leave": true,
+        "interrupt_on_move_order": true,
+        "interrupt_on_heavy_damage_ratio": 0.12,
+        "interrupt_on_facility_damage": true,
+        "interrupt_on_facility_unavailable": true,
+        "interrupt_on_sink": true,
+        "interrupt_on_undock": true,
+        "progress_on_interrupt": "Reset",
+        "hp_restore_ratio": 0.28,
+        "repair_cap_ratio": 0.8
+      },
+      "combat_disposition": {
+        "suppressible": true,
+        "destroyable": true,
+        "silentable": false,
+        "damage_floor_ratio": 0.0
+      },
+      "max_hp": 1500.0,
+      "armor": 18.0,
+      "armor_thickness": "Medium",
+      "suppression_damage_threshold": 100.0,
+      "suppression_duration": 12.0,
+      "target_radius": 38.0
+    },
     {
       "id": "facility.layout.harbor_mouth",
       "definition_type": "FacilityLayout",
       "terrain_definition_id": "terrain.map.harbor_mouth",
       "placements": [
-        {"id": "facility.harbor.observation_west", "definition_id": "facility.coastal_observation_post", "anchor_id": "harbor_land.observation_west", "faction_id": "neutral", "operation_state": "Dormant"},
-        {"id": "facility.harbor.battery_west", "definition_id": "facility.coastal_battery", "anchor_id": "harbor_land.battery_west", "initial_state_profile": "enemy_active", "requires_any_active": ["facility.harbor.communication_east"], "dependency_rules": {"requires_matching_faction": true}},
-        {"id": "facility.harbor.mine_control_west", "definition_id": "facility.mine_control_station", "anchor_id": "harbor_land.mine_control_west", "faction_id": "neutral", "operation_state": "Dormant"},
-        {"id": "facility.harbor.supply_west", "definition_id": "facility.forward_supply_point", "anchor_id": "harbor_land.supply_west", "faction_id": "neutral", "operation_state": "Dormant"},
-        {"id": "facility.harbor.radar_east", "definition_id": "facility.radar_station", "anchor_id": "harbor_land.radar_east", "faction_id": "enemy", "operation_state": "Dormant"},
-        {"id": "facility.harbor.communication_east", "definition_id": "facility.communication_station", "anchor_id": "harbor_land.communication_east", "faction_id": "enemy", "operation_state": "Active"},
-        {"id": "facility.harbor.airfield_east", "definition_id": "facility.coastal_airfield", "anchor_id": "harbor_land.airfield_east", "faction_id": "enemy", "operation_state": "Active", "requires_any_active": ["facility.harbor.communication_east"], "dependency_rules": {"requires_matching_faction": true}},
-        {"id": "facility.harbor.repair_berth_east", "definition_id": "facility.repair_berth", "anchor_id": "harbor_land.repair_berth_east", "faction_id": "neutral", "operation_state": "Dormant"}
+        {
+          "id": "facility.harbor.observation_west",
+          "definition_id": "facility.coastal_observation_post",
+          "anchor_id": "harbor_land.observation_west",
+          "faction_id": "neutral",
+          "operation_state": "Dormant"
+        },
+        {
+          "id": "facility.harbor.battery_west",
+          "definition_id": "facility.coastal_battery",
+          "anchor_id": "harbor_land.battery_west",
+          "initial_state_profile": "enemy_active",
+          "requires_any_active": [
+            "facility.harbor.communication_east"
+          ],
+          "dependency_rules": {
+            "requires_matching_faction": true
+          }
+        },
+        {
+          "id": "facility.harbor.mine_control_west",
+          "definition_id": "facility.mine_control_station",
+          "anchor_id": "harbor_land.mine_control_west",
+          "faction_id": "neutral",
+          "operation_state": "Dormant"
+        },
+        {
+          "id": "facility.harbor.supply_west",
+          "definition_id": "facility.forward_supply_point",
+          "anchor_id": "harbor_land.supply_west",
+          "faction_id": "neutral",
+          "operation_state": "Dormant"
+        },
+        {
+          "id": "facility.harbor.radar_east",
+          "definition_id": "facility.radar_station",
+          "anchor_id": "harbor_land.radar_east",
+          "faction_id": "enemy",
+          "operation_state": "Dormant"
+        },
+        {
+          "id": "facility.harbor.communication_east",
+          "definition_id": "facility.communication_station",
+          "anchor_id": "harbor_land.communication_east",
+          "faction_id": "enemy",
+          "operation_state": "Active"
+        },
+        {
+          "id": "facility.harbor.airfield_east",
+          "definition_id": "facility.coastal_airfield",
+          "anchor_id": "harbor_land.airfield_east",
+          "faction_id": "enemy",
+          "operation_state": "Active",
+          "requires_any_active": [
+            "facility.harbor.communication_east"
+          ],
+          "dependency_rules": {
+            "requires_matching_faction": true
+          }
+        },
+        {
+          "id": "facility.harbor.repair_berth_east",
+          "definition_id": "facility.repair_berth",
+          "anchor_id": "harbor_land.repair_berth_east",
+          "faction_id": "neutral",
+          "operation_state": "Dormant"
+        }
       ],
       "system_handover_rules": [
-        {"event_id": "harbor.defense_system_handover", "control_facility_id": "facility.harbor.communication_east", "facility_ids": ["facility.harbor.battery_west", "facility.harbor.airfield_east", "facility.harbor.radar_east"]}
+        {
+          "event_id": "harbor.defense_system_handover",
+          "control_facility_id": "facility.harbor.communication_east",
+          "facility_ids": [
+            "facility.harbor.battery_west",
+            "facility.harbor.airfield_east",
+            "facility.harbor.radar_east"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "facility.layout.harbor_mouth_16x9",
+      "definition_type": "FacilityLayout",
+      "terrain_definition_id": "terrain.map.harbor_mouth_16x9",
+      "placements": [
+        {
+          "id": "facility.harbor.observation_west",
+          "definition_id": "facility.coastal_observation_post",
+          "anchor_id": "harbor_land.observation_west",
+          "faction_id": "neutral",
+          "operation_state": "Dormant"
+        },
+        {
+          "id": "facility.harbor.battery_west",
+          "definition_id": "facility.coastal_battery",
+          "anchor_id": "harbor_land.battery_west",
+          "initial_state_profile": "enemy_active",
+          "requires_any_active": [
+            "facility.harbor.communication_east"
+          ],
+          "dependency_rules": {
+            "requires_matching_faction": true
+          }
+        },
+        {
+          "id": "facility.harbor.mine_control_west",
+          "definition_id": "facility.mine_control_station",
+          "anchor_id": "harbor_land.mine_control_west",
+          "faction_id": "neutral",
+          "operation_state": "Dormant"
+        },
+        {
+          "id": "facility.harbor.supply_west",
+          "definition_id": "facility.forward_supply_point",
+          "anchor_id": "harbor_land.supply_west",
+          "faction_id": "neutral",
+          "operation_state": "Dormant"
+        },
+        {
+          "id": "facility.harbor.radar_east",
+          "definition_id": "facility.radar_station",
+          "anchor_id": "harbor_land.radar_east",
+          "faction_id": "enemy",
+          "operation_state": "Dormant"
+        },
+        {
+          "id": "facility.harbor.communication_east",
+          "definition_id": "facility.communication_station",
+          "anchor_id": "harbor_land.communication_east",
+          "faction_id": "enemy",
+          "operation_state": "Active"
+        },
+        {
+          "id": "facility.harbor.airfield_east",
+          "definition_id": "facility.coastal_airfield",
+          "anchor_id": "harbor_land.airfield_east",
+          "faction_id": "enemy",
+          "operation_state": "Active",
+          "requires_any_active": [
+            "facility.harbor.communication_east"
+          ],
+          "dependency_rules": {
+            "requires_matching_faction": true
+          }
+        },
+        {
+          "id": "facility.harbor.repair_berth_east",
+          "definition_id": "facility.repair_berth",
+          "anchor_id": "harbor_land.repair_berth_east",
+          "faction_id": "neutral",
+          "operation_state": "Dormant"
+        }
+      ],
+      "system_handover_rules": [
+        {
+          "event_id": "harbor.defense_system_handover",
+          "control_facility_id": "facility.harbor.communication_east",
+          "facility_ids": [
+            "facility.harbor.battery_west",
+            "facility.harbor.airfield_east",
+            "facility.harbor.radar_east"
+          ]
+        }
       ]
     }
   ]

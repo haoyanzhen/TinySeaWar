@@ -1,19 +1,119 @@
 {
   "schema_version": 1,
   "definitions": [
-    {"id": "environment.effect.sea_fog", "definition_type": "EnvironmentEffect", "zone_type": "SeaFog", "priority": 60, "stack_rule": "Highest", "context": {"optical_visibility_multiplier": 0.62}},
-    {"id": "environment.effect.rain_squall", "definition_type": "EnvironmentEffect", "zone_type": "RainSquall", "priority": 70, "stack_rule": "Highest", "context": {"optical_visibility_multiplier": 0.72, "wind_speed_add": 6.0, "aviation_condition": "Restricted"}},
-    {"id": "environment.effect.high_sea", "definition_type": "EnvironmentEffect", "zone_type": "HighSea", "priority": 50, "stack_rule": "Highest", "context": {"sea_state": 4}},
-    {"id": "environment.effect.lee_water", "definition_type": "EnvironmentEffect", "zone_type": "LeeWater", "priority": 80, "stack_rule": "Override", "context": {"sea_state_delta": -2}},
-    {"id": "environment.effect.moonlit_lane", "definition_type": "EnvironmentEffect", "zone_type": "MoonlitLane", "priority": 55, "stack_rule": "Highest", "context": {"optical_visibility_multiplier": 1.18}},
-    {"id": "environment.effect.strong_current", "definition_type": "EnvironmentEffect", "zone_type": "StrongCurrent", "priority": 45, "stack_rule": "VectorAdd", "context": {"current_strength": 9.0}},
-    {"id": "environment.effect.tidal_water", "definition_type": "EnvironmentEffect", "zone_type": "TidalWater", "priority": 65, "stack_rule": "Override", "context": {"tide_controls_access": true}},
+    {
+      "id": "environment.effect.sea_fog",
+      "definition_type": "EnvironmentEffect",
+      "zone_type": "SeaFog",
+      "priority": 60,
+      "stack_rule": "Highest",
+      "context": {
+        "optical_visibility_multiplier": 0.62
+      }
+    },
+    {
+      "id": "environment.effect.rain_squall",
+      "definition_type": "EnvironmentEffect",
+      "zone_type": "RainSquall",
+      "priority": 70,
+      "stack_rule": "Highest",
+      "context": {
+        "optical_visibility_multiplier": 0.72,
+        "wind_speed_add": 6.0,
+        "aviation_condition": "Restricted"
+      }
+    },
+    {
+      "id": "environment.effect.high_sea",
+      "definition_type": "EnvironmentEffect",
+      "zone_type": "HighSea",
+      "priority": 50,
+      "stack_rule": "Highest",
+      "context": {
+        "sea_state": 4
+      }
+    },
+    {
+      "id": "environment.effect.lee_water",
+      "definition_type": "EnvironmentEffect",
+      "zone_type": "LeeWater",
+      "priority": 80,
+      "stack_rule": "Override",
+      "context": {
+        "sea_state_delta": -2
+      }
+    },
+    {
+      "id": "environment.effect.moonlit_lane",
+      "definition_type": "EnvironmentEffect",
+      "zone_type": "MoonlitLane",
+      "priority": 55,
+      "stack_rule": "Highest",
+      "context": {
+        "optical_visibility_multiplier": 1.18
+      }
+    },
+    {
+      "id": "environment.effect.strong_current",
+      "definition_type": "EnvironmentEffect",
+      "zone_type": "StrongCurrent",
+      "priority": 45,
+      "stack_rule": "VectorAdd",
+      "context": {
+        "current_strength": 9.0
+      }
+    },
+    {
+      "id": "environment.effect.tidal_water",
+      "definition_type": "EnvironmentEffect",
+      "zone_type": "TidalWater",
+      "priority": 65,
+      "stack_rule": "Override",
+      "context": {
+        "tide_controls_access": true
+      }
+    },
     {
       "id": "environment.zone_set.t04_moonlit_lane",
       "definition_type": "EnvironmentZoneSet",
-      "global_environment": {"wind_heading": 0.0, "wind_speed": 2.0, "seed_offset": 404},
+      "global_environment": {
+        "wind_heading": 0.0,
+        "wind_speed": 2.0,
+        "seed_offset": 404
+      },
       "zones": [
-        {"id": "zone.t04.moonlit_lane", "effect_id": "environment.effect.moonlit_lane", "polygon": [[1550, 560], [2400, 560], [2400, 1744], [1550, 1744]], "position": [0, 0], "heading": 0.0, "drift_speed": 0.0, "intensity": 0.75, "phase": "Stable", "duration": 0.0, "public_trend": "Stable"}
+        {
+          "id": "zone.t04.moonlit_lane",
+          "effect_id": "environment.effect.moonlit_lane",
+          "polygon": [
+            [
+              1550,
+              560
+            ],
+            [
+              1550,
+              1744
+            ],
+            [
+              2400,
+              1744
+            ],
+            [
+              2400,
+              560
+            ]
+          ],
+          "position": [
+            0,
+            0
+          ],
+          "heading": 0.0,
+          "drift_speed": 0.0,
+          "intensity": 0.75,
+          "phase": "Stable",
+          "duration": 0.0,
+          "public_trend": "Stable"
+        }
       ]
     },
     {
@@ -23,19 +123,656 @@
         "wind_heading": 18.0,
         "wind_speed": 5.0,
         "seed_offset": 4107,
-        "tide": {"initial_phase": "Flood", "phases": ["Flood", "High", "Ebb", "Low"], "phase_duration": 45.0, "open_phases": ["Flood", "High"]}
+        "tide": {
+          "initial_phase": "Flood",
+          "phases": [
+            "Flood",
+            "High",
+            "Ebb",
+            "Low"
+          ],
+          "phase_duration": 45.0,
+          "open_phases": [
+            "Flood",
+            "High"
+          ]
+        }
       },
       "zones": [
-	        {"id": "zone.harbor.fog_bank", "effect_id": "environment.effect.sea_fog", "polygon": [[760, 870], [1430, 740], [1280, 300], [650, 410]], "position": [0, 0], "heading": 8.0, "drift_speed": 2.2, "drift_path": [[0, 0], [420, 60]], "intensity": 0.72, "phase": "Developing", "duration": 210.0, "public_trend": "DriftingEast"},
-	        {"id": "zone.harbor.squall", "effect_id": "environment.effect.rain_squall", "polygon": [[2580, 660], [3380, 800], [3520, 360], [2680, 230]], "position": [0, 0], "heading": 168.0, "drift_speed": 3.4, "drift_path": [[0, 0], [-520, 130]], "intensity": 0.58, "phase": "Approaching", "duration": 160.0, "public_trend": "CrossingMouth"},
-	        {"id": "zone.harbor.high_sea", "effect_id": "environment.effect.high_sea", "polygon": [[0, 720], [4096, 720], [4096, 0], [0, 0]], "position": [0, 0], "heading": 0.0, "drift_speed": 0.0, "intensity": 0.55, "phase": "Stable", "duration": 0.0, "public_trend": "Stable"},
-	        {"id": "zone.harbor.lee_water", "effect_id": "environment.effect.lee_water", "polygon": [[1520, 2210], [2570, 2210], [2730, 1370], [1360, 1370]], "position": [0, 0], "heading": 0.0, "drift_speed": 0.0, "intensity": 0.8, "phase": "Stable", "duration": 0.0, "public_trend": "Stable"},
-	        {"id": "zone.harbor.moonlit_lane", "effect_id": "environment.effect.moonlit_lane", "polygon": [[1740, 1200], [2370, 1200], [2250, 0], [1830, 0]], "position": [0, 0], "heading": 0.0, "drift_speed": 0.0, "intensity": 0.35, "phase": "DormantAtDawn", "duration": 0.0, "active": false, "public_trend": "NightOnly"},
-	        {"id": "zone.harbor.inbound_current", "effect_id": "environment.effect.strong_current", "polygon": [[1840, 1230], [2240, 1230], [2310, 0], [1780, 0]], "position": [0, 0], "heading": 90.0, "drift_speed": 0.0, "intensity": 0.65, "phase": "Flood", "duration": 120.0, "public_trend": "Weakening"},
-	        {"id": "zone.harbor.tidal_flats", "effect_id": "environment.effect.tidal_water", "polygon": [[1510, 2050], [1810, 1990], [1790, 1430], [1450, 1510]], "position": [0, 0], "heading": 0.0, "drift_speed": 0.0, "intensity": 0.45, "phase": "Flood", "duration": 120.0, "public_trend": "Opening"}
+        {
+          "id": "zone.harbor.fog_bank",
+          "effect_id": "environment.effect.sea_fog",
+          "polygon": [
+            [
+              760,
+              870
+            ],
+            [
+              1430,
+              740
+            ],
+            [
+              1280,
+              300
+            ],
+            [
+              650,
+              410
+            ]
+          ],
+          "position": [
+            0,
+            0
+          ],
+          "heading": 8.0,
+          "drift_speed": 2.2,
+          "drift_path": [
+            [
+              0,
+              0
+            ],
+            [
+              420,
+              60
+            ]
+          ],
+          "intensity": 0.72,
+          "phase": "Developing",
+          "duration": 210.0,
+          "public_trend": "DriftingEast"
+        },
+        {
+          "id": "zone.harbor.squall",
+          "effect_id": "environment.effect.rain_squall",
+          "polygon": [
+            [
+              2580,
+              660
+            ],
+            [
+              3380,
+              800
+            ],
+            [
+              3520,
+              360
+            ],
+            [
+              2680,
+              230
+            ]
+          ],
+          "position": [
+            0,
+            0
+          ],
+          "heading": 168.0,
+          "drift_speed": 3.4,
+          "drift_path": [
+            [
+              0,
+              0
+            ],
+            [
+              -520,
+              130
+            ]
+          ],
+          "intensity": 0.58,
+          "phase": "Approaching",
+          "duration": 160.0,
+          "public_trend": "CrossingMouth"
+        },
+        {
+          "id": "zone.harbor.high_sea",
+          "effect_id": "environment.effect.high_sea",
+          "polygon": [
+            [
+              0,
+              720
+            ],
+            [
+              4096,
+              720
+            ],
+            [
+              4096,
+              0
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "position": [
+            0,
+            0
+          ],
+          "heading": 0.0,
+          "drift_speed": 0.0,
+          "intensity": 0.55,
+          "phase": "Stable",
+          "duration": 0.0,
+          "public_trend": "Stable"
+        },
+        {
+          "id": "zone.harbor.lee_water",
+          "effect_id": "environment.effect.lee_water",
+          "polygon": [
+            [
+              1520,
+              2210
+            ],
+            [
+              2570,
+              2210
+            ],
+            [
+              2730,
+              1370
+            ],
+            [
+              1360,
+              1370
+            ]
+          ],
+          "position": [
+            0,
+            0
+          ],
+          "heading": 0.0,
+          "drift_speed": 0.0,
+          "intensity": 0.8,
+          "phase": "Stable",
+          "duration": 0.0,
+          "public_trend": "Stable"
+        },
+        {
+          "id": "zone.harbor.moonlit_lane",
+          "effect_id": "environment.effect.moonlit_lane",
+          "polygon": [
+            [
+              1740,
+              1200
+            ],
+            [
+              2370,
+              1200
+            ],
+            [
+              2250,
+              0
+            ],
+            [
+              1830,
+              0
+            ]
+          ],
+          "position": [
+            0,
+            0
+          ],
+          "heading": 0.0,
+          "drift_speed": 0.0,
+          "intensity": 0.35,
+          "phase": "DormantAtDawn",
+          "duration": 0.0,
+          "active": false,
+          "public_trend": "NightOnly"
+        },
+        {
+          "id": "zone.harbor.inbound_current",
+          "effect_id": "environment.effect.strong_current",
+          "polygon": [
+            [
+              1840,
+              1230
+            ],
+            [
+              2240,
+              1230
+            ],
+            [
+              2310,
+              0
+            ],
+            [
+              1780,
+              0
+            ]
+          ],
+          "position": [
+            0,
+            0
+          ],
+          "heading": 90.0,
+          "drift_speed": 0.0,
+          "intensity": 0.65,
+          "phase": "Flood",
+          "duration": 120.0,
+          "public_trend": "Weakening"
+        },
+        {
+          "id": "zone.harbor.tidal_flats",
+          "effect_id": "environment.effect.tidal_water",
+          "polygon": [
+            [
+              1510,
+              2050
+            ],
+            [
+              1810,
+              1990
+            ],
+            [
+              1790,
+              1430
+            ],
+            [
+              1450,
+              1510
+            ]
+          ],
+          "position": [
+            0,
+            0
+          ],
+          "heading": 0.0,
+          "drift_speed": 0.0,
+          "intensity": 0.45,
+          "phase": "Flood",
+          "duration": 120.0,
+          "public_trend": "Opening"
+        }
       ]
     },
-    {"id":"environment.zone_set.t06_bay_fog","definition_type":"EnvironmentZoneSet","global_environment":{"wind_heading":0.0,"wind_speed":3.0,"seed_offset":606},"zones":[{"id":"zone.t06.bay_fog","effect_id":"environment.effect.sea_fog","polygon":[[1650,650],[2450,650],[2450,1650],[1650,1650]],"position":[0,0],"heading":0.0,"drift_speed":0.0,"intensity":0.65,"phase":"Stable","duration":0.0,"public_trend":"Stable"}]},
-    {"id":"environment.zone_set.t08_command","definition_type":"EnvironmentZoneSet","global_environment":{"wind_heading":0.0,"wind_speed":3.0,"seed_offset":808},"zones":[{"id":"zone.t08.moonlit","effect_id":"environment.effect.moonlit_lane","polygon":[[1650,600],[2450,600],[2450,1700],[1650,1700]],"position":[0,0],"heading":0.0,"drift_speed":0.0,"intensity":0.6,"phase":"Stable","duration":0.0,"public_trend":"Stable"},{"id":"zone.t08.west_fog","effect_id":"environment.effect.sea_fog","polygon":[[700,400],[1350,400],[1350,1000],[700,1000]],"position":[0,0],"heading":0.0,"drift_speed":0.0,"intensity":0.55,"phase":"Stable","duration":0.0,"public_trend":"Stable"}]}
+    {
+      "id": "environment.zone_set.t06_bay_fog",
+      "definition_type": "EnvironmentZoneSet",
+      "global_environment": {
+        "wind_heading": 0.0,
+        "wind_speed": 3.0,
+        "seed_offset": 606
+      },
+      "zones": [
+        {
+          "id": "zone.t06.bay_fog",
+          "effect_id": "environment.effect.sea_fog",
+          "polygon": [
+            [
+              1650,
+              650
+            ],
+            [
+              1650,
+              1650
+            ],
+            [
+              2450,
+              1650
+            ],
+            [
+              2450,
+              650
+            ]
+          ],
+          "position": [
+            0,
+            0
+          ],
+          "heading": 0.0,
+          "drift_speed": 0.0,
+          "intensity": 0.65,
+          "phase": "Stable",
+          "duration": 0.0,
+          "public_trend": "Stable"
+        }
+      ]
+    },
+    {
+      "id": "environment.zone_set.t08_command",
+      "definition_type": "EnvironmentZoneSet",
+      "global_environment": {
+        "wind_heading": 0.0,
+        "wind_speed": 3.0,
+        "seed_offset": 808
+      },
+      "zones": [
+        {
+          "id": "zone.t08.moonlit",
+          "effect_id": "environment.effect.moonlit_lane",
+          "polygon": [
+            [
+              1650,
+              600
+            ],
+            [
+              1650,
+              1700
+            ],
+            [
+              2450,
+              1700
+            ],
+            [
+              2450,
+              600
+            ]
+          ],
+          "position": [
+            0,
+            0
+          ],
+          "heading": 0.0,
+          "drift_speed": 0.0,
+          "intensity": 0.6,
+          "phase": "Stable",
+          "duration": 0.0,
+          "public_trend": "Stable"
+        },
+        {
+          "id": "zone.t08.west_fog",
+          "effect_id": "environment.effect.sea_fog",
+          "polygon": [
+            [
+              700,
+              400
+            ],
+            [
+              700,
+              1000
+            ],
+            [
+              1350,
+              1000
+            ],
+            [
+              1350,
+              400
+            ]
+          ],
+          "position": [
+            0,
+            0
+          ],
+          "heading": 0.0,
+          "drift_speed": 0.0,
+          "intensity": 0.55,
+          "phase": "Stable",
+          "duration": 0.0,
+          "public_trend": "Stable"
+        }
+      ]
+    },
+    {
+      "id": "environment.zone_set.harbor_mouth_16x9",
+      "definition_type": "EnvironmentZoneSet",
+      "global_environment": {
+        "wind_heading": 18.0,
+        "wind_speed": 5.0,
+        "seed_offset": 4107,
+        "tide": {
+          "initial_phase": "Flood",
+          "phases": [
+            "Flood",
+            "High",
+            "Ebb",
+            "Low"
+          ],
+          "phase_duration": 45.0,
+          "open_phases": [
+            "Flood",
+            "High"
+          ]
+        }
+      },
+      "zones": [
+        {
+          "id": "zone.harbor_16x9.fog_bank",
+          "effect_id": "environment.effect.sea_fog",
+          "polygon": [
+            [
+              1140.0,
+              1305.0
+            ],
+            [
+              2145.0,
+              1110.0
+            ],
+            [
+              1920.0,
+              450.0
+            ],
+            [
+              975.0,
+              615.0
+            ]
+          ],
+          "position": [
+            0.0,
+            0.0
+          ],
+          "heading": 8.0,
+          "drift_speed": 2.2,
+          "drift_path": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              630.0,
+              90.0
+            ]
+          ],
+          "intensity": 0.72,
+          "phase": "Developing",
+          "duration": 210.0,
+          "public_trend": "DriftingEast"
+        },
+        {
+          "id": "zone.harbor_16x9.squall",
+          "effect_id": "environment.effect.rain_squall",
+          "polygon": [
+            [
+              3870.0,
+              990.0
+            ],
+            [
+              5070.0,
+              1200.0
+            ],
+            [
+              5280.0,
+              540.0
+            ],
+            [
+              4020.0,
+              345.0
+            ]
+          ],
+          "position": [
+            0.0,
+            0.0
+          ],
+          "heading": 168.0,
+          "drift_speed": 3.4,
+          "drift_path": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              -780.0,
+              195.0
+            ]
+          ],
+          "intensity": 0.58,
+          "phase": "Approaching",
+          "duration": 160.0,
+          "public_trend": "CrossingMouth"
+        },
+        {
+          "id": "zone.harbor_16x9.high_sea",
+          "effect_id": "environment.effect.high_sea",
+          "polygon": [
+            [
+              0.0,
+              1080.0
+            ],
+            [
+              6144.0,
+              1080.0
+            ],
+            [
+              6144.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ],
+          "position": [
+            0.0,
+            0.0
+          ],
+          "heading": 0.0,
+          "drift_speed": 0.0,
+          "intensity": 0.55,
+          "phase": "Stable",
+          "duration": 0.0,
+          "public_trend": "Stable"
+        },
+        {
+          "id": "zone.harbor_16x9.lee_water",
+          "effect_id": "environment.effect.lee_water",
+          "polygon": [
+            [
+              2280.0,
+              3315.0
+            ],
+            [
+              3855.0,
+              3315.0
+            ],
+            [
+              4095.0,
+              2055.0
+            ],
+            [
+              2040.0,
+              2055.0
+            ]
+          ],
+          "position": [
+            0.0,
+            0.0
+          ],
+          "heading": 0.0,
+          "drift_speed": 0.0,
+          "intensity": 0.8,
+          "phase": "Stable",
+          "duration": 0.0,
+          "public_trend": "Stable"
+        },
+        {
+          "id": "zone.harbor_16x9.moonlit_lane",
+          "effect_id": "environment.effect.moonlit_lane",
+          "polygon": [
+            [
+              2610.0,
+              1800.0
+            ],
+            [
+              3555.0,
+              1800.0
+            ],
+            [
+              3375.0,
+              0.0
+            ],
+            [
+              2745.0,
+              0.0
+            ]
+          ],
+          "position": [
+            0.0,
+            0.0
+          ],
+          "heading": 0.0,
+          "drift_speed": 0.0,
+          "intensity": 0.35,
+          "phase": "DormantAtDawn",
+          "duration": 0.0,
+          "active": false,
+          "public_trend": "NightOnly"
+        },
+        {
+          "id": "zone.harbor_16x9.inbound_current",
+          "effect_id": "environment.effect.strong_current",
+          "polygon": [
+            [
+              2760.0,
+              1845.0
+            ],
+            [
+              3360.0,
+              1845.0
+            ],
+            [
+              3465.0,
+              0.0
+            ],
+            [
+              2670.0,
+              0.0
+            ]
+          ],
+          "position": [
+            0.0,
+            0.0
+          ],
+          "heading": 90.0,
+          "drift_speed": 0.0,
+          "intensity": 0.65,
+          "phase": "Flood",
+          "duration": 120.0,
+          "public_trend": "Weakening"
+        },
+        {
+          "id": "zone.harbor_16x9.tidal_flats",
+          "effect_id": "environment.effect.tidal_water",
+          "polygon": [
+            [
+              2265.0,
+              3075.0
+            ],
+            [
+              2715.0,
+              2985.0
+            ],
+            [
+              2685.0,
+              2145.0
+            ],
+            [
+              2175.0,
+              2265.0
+            ]
+          ],
+          "position": [
+            0.0,
+            0.0
+          ],
+          "heading": 0.0,
+          "drift_speed": 0.0,
+          "intensity": 0.45,
+          "phase": "Flood",
+          "duration": 120.0,
+          "public_trend": "Opening"
+        }
+      ]
+    }
   ]
 }

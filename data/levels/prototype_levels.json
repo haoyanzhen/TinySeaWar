@@ -4,84 +4,460 @@
       "id": "level.prototype_1v1",
       "display_name": "1v1 单舰对决",
       "battle_mode": "OpenSeaEqualBattle",
-      "map": {"width": 4096.0, "height": 2304.0, "ocean_palette": "day_clear"},
+      "map": {
+        "width": 4096.0,
+        "height": 2304.0,
+        "ocean_palette": "day_clear"
+      },
       "time_limit": 240.0,
       "player_fleet": [
-        {"entity_id": "unit.player.warspite", "ship_id": "ship.warspite", "position": [2048.0, 1700.0], "heading": -90.0, "is_flagship": true}
+        {
+          "entity_id": "unit.player.warspite",
+          "ship_id": "ship.warspite",
+          "position": [
+            2048.0,
+            1700.0
+          ],
+          "heading": -90.0,
+          "is_flagship": true
+        }
       ],
       "enemy_fleet": [
-        {"entity_id": "unit.enemy.bismarck", "ship_id": "ship.bismarck", "position": [2048.0, 604.0], "heading": 90.0, "is_flagship": true}
+        {
+          "entity_id": "unit.enemy.bismarck",
+          "ship_id": "ship.bismarck",
+          "position": [
+            2048.0,
+            604.0
+          ],
+          "heading": 90.0,
+          "is_flagship": true
+        }
       ]
     },
     {
       "id": "level.prototype_3v3",
       "display_name": "3v3 小队演习",
       "battle_mode": "OpenSeaEqualBattle",
-      "map": {"width": 4096.0, "height": 2304.0, "ocean_palette": "cloudy"},
+      "map": {
+        "width": 4096.0,
+        "height": 2304.0,
+        "ocean_palette": "cloudy"
+      },
       "time_limit": 360.0,
       "player_fleet": [
-        {"entity_id": "unit.player.warspite", "ship_id": "ship.warspite", "position": [2048.0, 1680.0], "heading": -90.0, "is_flagship": true},
-        {"entity_id": "unit.player.aurora", "ship_id": "ship.aurora", "position": [1948.0, 1740.0], "heading": -90.0, "is_flagship": false},
-        {"entity_id": "unit.player.shimakaze", "ship_id": "ship.shimakaze", "position": [2148.0, 1740.0], "heading": -90.0, "is_flagship": false}
+        {
+          "entity_id": "unit.player.warspite",
+          "ship_id": "ship.warspite",
+          "position": [
+            2048.0,
+            1680.0
+          ],
+          "heading": -90.0,
+          "is_flagship": true
+        },
+        {
+          "entity_id": "unit.player.aurora",
+          "ship_id": "ship.aurora",
+          "position": [
+            1948.0,
+            1740.0
+          ],
+          "heading": -90.0,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.player.shimakaze",
+          "ship_id": "ship.shimakaze",
+          "position": [
+            2148.0,
+            1740.0
+          ],
+          "heading": -90.0,
+          "is_flagship": false
+        }
       ],
       "enemy_fleet": [
-        {"entity_id": "unit.enemy.bismarck", "ship_id": "ship.bismarck", "position": [2048.0, 624.0], "heading": 90.0, "is_flagship": true},
-        {"entity_id": "unit.enemy.hindenburg", "ship_id": "ship.hindenburg", "position": [1948.0, 564.0], "heading": 90.0, "is_flagship": false},
-        {"entity_id": "unit.enemy.hai_shih", "ship_id": "ship.hai_shih", "position": [2148.0, 564.0], "heading": 90.0, "is_flagship": false}
+        {
+          "entity_id": "unit.enemy.bismarck",
+          "ship_id": "ship.bismarck",
+          "position": [
+            2048.0,
+            624.0
+          ],
+          "heading": 90.0,
+          "is_flagship": true
+        },
+        {
+          "entity_id": "unit.enemy.hindenburg",
+          "ship_id": "ship.hindenburg",
+          "position": [
+            1948.0,
+            564.0
+          ],
+          "heading": 90.0,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.enemy.hai_shih",
+          "ship_id": "ship.hai_shih",
+          "position": [
+            2148.0,
+            564.0
+          ],
+          "heading": 90.0,
+          "is_flagship": false
+        }
       ]
     },
     {
       "id": "level.prototype_5v5",
       "display_name": "5v5 舰队战",
       "battle_mode": "OpenSeaEqualBattle",
-      "map": {"width": 5120.0, "height": 2880.0, "ocean_palette": "cloudy"},
+      "map": {
+        "width": 5120.0,
+        "height": 2880.0,
+        "ocean_palette": "cloudy"
+      },
       "time_limit": 420.0,
       "player_fleet": [
-        {"entity_id": "unit.player.warspite", "ship_id": "ship.warspite", "position": [2560.0, 2260.0], "heading": -90.0, "is_flagship": true},
-        {"entity_id": "unit.player.hindenburg", "ship_id": "ship.hindenburg", "position": [2380.0, 2340.0], "heading": -90.0, "is_flagship": false},
-        {"entity_id": "unit.player.aurora", "ship_id": "ship.aurora", "position": [2740.0, 2340.0], "heading": -90.0, "is_flagship": false},
-        {"entity_id": "unit.player.shimakaze", "ship_id": "ship.shimakaze", "position": [2200.0, 2420.0], "heading": -90.0, "is_flagship": false},
-        {"entity_id": "unit.player.hai_shih", "ship_id": "ship.hai_shih", "position": [2920.0, 2420.0], "heading": -90.0, "is_flagship": false}
+        {
+          "entity_id": "unit.player.warspite",
+          "ship_id": "ship.warspite",
+          "position": [
+            2560.0,
+            2260.0
+          ],
+          "heading": -90.0,
+          "is_flagship": true
+        },
+        {
+          "entity_id": "unit.player.hindenburg",
+          "ship_id": "ship.hindenburg",
+          "position": [
+            2380.0,
+            2340.0
+          ],
+          "heading": -90.0,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.player.aurora",
+          "ship_id": "ship.aurora",
+          "position": [
+            2740.0,
+            2340.0
+          ],
+          "heading": -90.0,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.player.shimakaze",
+          "ship_id": "ship.shimakaze",
+          "position": [
+            2200.0,
+            2420.0
+          ],
+          "heading": -90.0,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.player.hai_shih",
+          "ship_id": "ship.hai_shih",
+          "position": [
+            2920.0,
+            2420.0
+          ],
+          "heading": -90.0,
+          "is_flagship": false
+        }
       ],
       "enemy_fleet": [
-        {"entity_id": "unit.enemy.bismarck", "ship_id": "ship.bismarck", "position": [2560.0, 620.0], "heading": 90.0, "is_flagship": true},
-        {"entity_id": "unit.enemy.hindenburg", "ship_id": "ship.hindenburg", "position": [2380.0, 540.0], "heading": 90.0, "is_flagship": false},
-        {"entity_id": "unit.enemy.aurora", "ship_id": "ship.aurora", "position": [2740.0, 540.0], "heading": 90.0, "is_flagship": false},
-        {"entity_id": "unit.enemy.shimakaze", "ship_id": "ship.shimakaze", "position": [2200.0, 460.0], "heading": 90.0, "is_flagship": false},
-        {"entity_id": "unit.enemy.hai_shih", "ship_id": "ship.hai_shih", "position": [2920.0, 460.0], "heading": 90.0, "is_flagship": false}
+        {
+          "entity_id": "unit.enemy.bismarck",
+          "ship_id": "ship.bismarck",
+          "position": [
+            2560.0,
+            620.0
+          ],
+          "heading": 90.0,
+          "is_flagship": true
+        },
+        {
+          "entity_id": "unit.enemy.hindenburg",
+          "ship_id": "ship.hindenburg",
+          "position": [
+            2380.0,
+            540.0
+          ],
+          "heading": 90.0,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.enemy.aurora",
+          "ship_id": "ship.aurora",
+          "position": [
+            2740.0,
+            540.0
+          ],
+          "heading": 90.0,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.enemy.shimakaze",
+          "ship_id": "ship.shimakaze",
+          "position": [
+            2200.0,
+            460.0
+          ],
+          "heading": 90.0,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.enemy.hai_shih",
+          "ship_id": "ship.hai_shih",
+          "position": [
+            2920.0,
+            460.0
+          ],
+          "heading": 90.0,
+          "is_flagship": false
+        }
       ]
     },
     {
       "id": "level.prototype_11v11",
       "display_name": "11v11 大规模会战",
       "battle_mode": "OpenSeaEqualBattle",
-      "map": {"width": 6144.0, "height": 3456.0, "ocean_palette": "dusk"},
+      "map": {
+        "width": 6144.0,
+        "height": 3456.0,
+        "ocean_palette": "dusk"
+      },
       "time_limit": 600.0,
       "player_fleet": [
-        {"entity_id": "unit.player.iowa", "ship_id": "ship.iowa", "position": [3072.0, 2720.0], "heading": -90.0, "is_flagship": true},
-        {"entity_id": "unit.player.enterprise_cv6", "ship_id": "ship.enterprise_cv6", "position": [2772.0, 2800.0], "heading": -90.0, "is_flagship": false},
-        {"entity_id": "unit.player.san_diego", "ship_id": "ship.san_diego", "position": [3372.0, 2800.0], "heading": -90.0, "is_flagship": false},
-        {"entity_id": "unit.player.ward", "ship_id": "ship.ward", "position": [2472.0, 2880.0], "heading": -90.0, "is_flagship": false},
-        {"entity_id": "unit.player.hood", "ship_id": "ship.hood", "position": [3672.0, 2880.0], "heading": -90.0, "is_flagship": false},
-        {"entity_id": "unit.player.sirius", "ship_id": "ship.sirius", "position": [3072.0, 2960.0], "heading": -90.0, "is_flagship": false},
-        {"entity_id": "unit.player.argus", "ship_id": "ship.argus", "position": [2672.0, 3040.0], "heading": -90.0, "is_flagship": false},
-        {"entity_id": "unit.player.aurora", "ship_id": "ship.aurora", "position": [3472.0, 3040.0], "heading": -90.0, "is_flagship": false},
-        {"entity_id": "unit.player.kirov", "ship_id": "ship.kirov", "position": [2872.0, 3120.0], "heading": -90.0, "is_flagship": false},
-        {"entity_id": "unit.player.pobeda", "ship_id": "ship.pobeda", "position": [3272.0, 3120.0], "heading": -90.0, "is_flagship": false},
-        {"entity_id": "unit.player.gnevny", "ship_id": "ship.gnevny", "position": [3072.0, 3200.0], "heading": -90.0, "is_flagship": false}
+        {
+          "entity_id": "unit.player.iowa",
+          "ship_id": "ship.iowa",
+          "position": [
+            3072.0,
+            2720.0
+          ],
+          "heading": -90.0,
+          "is_flagship": true
+        },
+        {
+          "entity_id": "unit.player.enterprise_cv6",
+          "ship_id": "ship.enterprise_cv6",
+          "position": [
+            2772.0,
+            2800.0
+          ],
+          "heading": -90.0,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.player.san_diego",
+          "ship_id": "ship.san_diego",
+          "position": [
+            3372.0,
+            2800.0
+          ],
+          "heading": -90.0,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.player.ward",
+          "ship_id": "ship.ward",
+          "position": [
+            2472.0,
+            2880.0
+          ],
+          "heading": -90.0,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.player.hood",
+          "ship_id": "ship.hood",
+          "position": [
+            3672.0,
+            2880.0
+          ],
+          "heading": -90.0,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.player.sirius",
+          "ship_id": "ship.sirius",
+          "position": [
+            3072.0,
+            2960.0
+          ],
+          "heading": -90.0,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.player.argus",
+          "ship_id": "ship.argus",
+          "position": [
+            2672.0,
+            3040.0
+          ],
+          "heading": -90.0,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.player.aurora",
+          "ship_id": "ship.aurora",
+          "position": [
+            3472.0,
+            3040.0
+          ],
+          "heading": -90.0,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.player.kirov",
+          "ship_id": "ship.kirov",
+          "position": [
+            2872.0,
+            3120.0
+          ],
+          "heading": -90.0,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.player.pobeda",
+          "ship_id": "ship.pobeda",
+          "position": [
+            3272.0,
+            3120.0
+          ],
+          "heading": -90.0,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.player.gnevny",
+          "ship_id": "ship.gnevny",
+          "position": [
+            3072.0,
+            3200.0
+          ],
+          "heading": -90.0,
+          "is_flagship": false
+        }
       ],
       "enemy_fleet": [
-        {"entity_id": "unit.enemy.yamato", "ship_id": "ship.yamato", "position": [3072.0, 736.0], "heading": 90.0, "is_flagship": true},
-        {"entity_id": "unit.enemy.prinz_eugen", "ship_id": "ship.prinz_eugen", "position": [2772.0, 656.0], "heading": 90.0, "is_flagship": false},
-        {"entity_id": "unit.enemy.hindenburg", "ship_id": "ship.hindenburg", "position": [3372.0, 656.0], "heading": 90.0, "is_flagship": false},
-        {"entity_id": "unit.enemy.u_47", "ship_id": "ship.u_47", "position": [2472.0, 576.0], "heading": 90.0, "is_flagship": false},
-        {"entity_id": "unit.enemy.yukikaze", "ship_id": "ship.yukikaze", "position": [3672.0, 576.0], "heading": 90.0, "is_flagship": false},
-        {"entity_id": "unit.enemy.shimakaze", "ship_id": "ship.shimakaze", "position": [3072.0, 496.0], "heading": 90.0, "is_flagship": false},
-        {"entity_id": "unit.enemy.hosho", "ship_id": "ship.hosho", "position": [2672.0, 416.0], "heading": 90.0, "is_flagship": false},
-        {"entity_id": "unit.enemy.ning_hai", "ship_id": "ship.ning_hai", "position": [3472.0, 416.0], "heading": 90.0, "is_flagship": false},
-        {"entity_id": "unit.enemy.anshan", "ship_id": "ship.anshan", "position": [2872.0, 336.0], "heading": 90.0, "is_flagship": false},
-        {"entity_id": "unit.enemy.chongqing", "ship_id": "ship.chongqing", "position": [3272.0, 336.0], "heading": 90.0, "is_flagship": false},
-        {"entity_id": "unit.enemy.hai_shih", "ship_id": "ship.hai_shih", "position": [3072.0, 256.0], "heading": 90.0, "is_flagship": false}
+        {
+          "entity_id": "unit.enemy.yamato",
+          "ship_id": "ship.yamato",
+          "position": [
+            3072.0,
+            736.0
+          ],
+          "heading": 90.0,
+          "is_flagship": true
+        },
+        {
+          "entity_id": "unit.enemy.prinz_eugen",
+          "ship_id": "ship.prinz_eugen",
+          "position": [
+            2772.0,
+            656.0
+          ],
+          "heading": 90.0,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.enemy.hindenburg",
+          "ship_id": "ship.hindenburg",
+          "position": [
+            3372.0,
+            656.0
+          ],
+          "heading": 90.0,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.enemy.u_47",
+          "ship_id": "ship.u_47",
+          "position": [
+            2472.0,
+            576.0
+          ],
+          "heading": 90.0,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.enemy.yukikaze",
+          "ship_id": "ship.yukikaze",
+          "position": [
+            3672.0,
+            576.0
+          ],
+          "heading": 90.0,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.enemy.shimakaze",
+          "ship_id": "ship.shimakaze",
+          "position": [
+            3072.0,
+            496.0
+          ],
+          "heading": 90.0,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.enemy.hosho",
+          "ship_id": "ship.hosho",
+          "position": [
+            2672.0,
+            416.0
+          ],
+          "heading": 90.0,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.enemy.ning_hai",
+          "ship_id": "ship.ning_hai",
+          "position": [
+            3472.0,
+            416.0
+          ],
+          "heading": 90.0,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.enemy.anshan",
+          "ship_id": "ship.anshan",
+          "position": [
+            2872.0,
+            336.0
+          ],
+          "heading": 90.0,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.enemy.chongqing",
+          "ship_id": "ship.chongqing",
+          "position": [
+            3272.0,
+            336.0
+          ],
+          "heading": 90.0,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.enemy.hai_shih",
+          "ship_id": "ship.hai_shih",
+          "position": [
+            3072.0,
+            256.0
+          ],
+          "heading": 90.0,
+          "is_flagship": false
+        }
       ]
     },
     {
@@ -89,143 +465,782 @@
       "display_name": "3v3 港湾入口",
       "battle_mode": "CoastalEqualBattle",
       "map": {
-        "width": 4096.0,
-        "height": 2304.0,
+        "width": 6144.0,
+        "height": 3456.0,
         "ocean_palette": "cloudy_dawn",
-        "terrain_definition_id": "terrain.map.harbor_mouth",
-        "navigation_definition_id": "navigation.harbor_mouth",
-        "environment_zone_set_id": "environment.zone_set.harbor_mouth",
-        "facility_layout_id": "facility.layout.harbor_mouth"
+        "terrain_definition_id": "terrain.map.harbor_mouth_16x9",
+        "navigation_definition_id": "navigation.harbor_mouth_16x9",
+        "environment_zone_set_id": "environment.zone_set.harbor_mouth_16x9",
+        "facility_layout_id": "facility.layout.harbor_mouth_16x9"
       },
       "time_limit": 420.0,
       "require_equal_fleet_cost": true,
       "player_fleet": [
-        {"entity_id": "unit.player.shimakaze", "ship_id": "ship.shimakaze", "position": [2048.0, 1870.0], "heading": -90.0, "is_flagship": true},
-        {"entity_id": "unit.player.yukikaze", "ship_id": "ship.yukikaze", "position": [1800.0, 1810.0], "heading": -90.0, "is_flagship": false},
-        {"entity_id": "unit.player.aurora", "ship_id": "ship.aurora", "position": [2296.0, 1810.0], "heading": -90.0, "is_flagship": false}
+        {
+          "entity_id": "unit.player.shimakaze",
+          "ship_id": "ship.shimakaze",
+          "position": [
+            832.0,
+            1728.0
+          ],
+          "heading": 0.0,
+          "is_flagship": true
+        },
+        {
+          "entity_id": "unit.player.yukikaze",
+          "ship_id": "ship.yukikaze",
+          "position": [
+            704.0,
+            1600.0
+          ],
+          "heading": 0.0,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.player.aurora",
+          "ship_id": "ship.aurora",
+          "position": [
+            704.0,
+            1856.0
+          ],
+          "heading": 0.0,
+          "is_flagship": false
+        }
       ],
       "enemy_fleet": [
-        {"entity_id": "unit.enemy.kirov", "ship_id": "ship.kirov", "position": [2048.0, 250.0], "heading": 90.0, "is_flagship": true},
-        {"entity_id": "unit.enemy.anshan", "ship_id": "ship.anshan", "position": [1740.0, 300.0], "heading": 90.0, "is_flagship": false},
-        {"entity_id": "unit.enemy.ning_hai", "ship_id": "ship.ning_hai", "position": [2356.0, 300.0], "heading": 90.0, "is_flagship": false}
+        {
+          "entity_id": "unit.enemy.kirov",
+          "ship_id": "ship.kirov",
+          "position": [
+            5312.0,
+            1728.0
+          ],
+          "heading": 180.0,
+          "is_flagship": true
+        },
+        {
+          "entity_id": "unit.enemy.anshan",
+          "ship_id": "ship.anshan",
+          "position": [
+            5440.0,
+            1600.0
+          ],
+          "heading": 180.0,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.enemy.ning_hai",
+          "ship_id": "ship.ning_hai",
+          "position": [
+            5440.0,
+            1856.0
+          ],
+          "heading": 180.0,
+          "is_flagship": false
+        }
       ]
     },
     {
-      "id": "level.prototype_broken_atoll_3v3", "display_name": "3v3 破碎环礁", "battle_mode": "CoastalEqualBattle",
-      "map": {"width": 4096.0, "height": 2304.0, "ocean_palette": "overcast_dusk", "terrain_definition_id": "terrain.map.broken_atoll", "navigation_definition_id": "navigation.broken_atoll"},
-      "time_limit": 420.0, "require_equal_fleet_cost": true,
+      "id": "level.prototype_broken_atoll_3v3",
+      "display_name": "3v3 破碎环礁",
+      "battle_mode": "CoastalEqualBattle",
+      "map": {
+        "width": 6144.0,
+        "height": 3456.0,
+        "ocean_palette": "overcast_dusk",
+        "terrain_definition_id": "terrain.map.broken_atoll_16x9",
+        "navigation_definition_id": "navigation.broken_atoll_16x9"
+      },
+      "time_limit": 420.0,
+      "require_equal_fleet_cost": true,
       "player_fleet": [
-        {"entity_id": "unit.player.shimakaze", "ship_id": "ship.shimakaze", "position": [520.0, 1152.0], "heading": 0.0, "is_flagship": true},
-        {"entity_id": "unit.player.yukikaze", "ship_id": "ship.yukikaze", "position": [600.0, 900.0], "heading": 0.0, "is_flagship": false},
-        {"entity_id": "unit.player.aurora", "ship_id": "ship.aurora", "position": [600.0, 1404.0], "heading": 0.0, "is_flagship": false}],
+        {
+          "entity_id": "unit.player.shimakaze",
+          "ship_id": "ship.shimakaze",
+          "position": [
+            832.0,
+            1728.0
+          ],
+          "heading": 0.0,
+          "is_flagship": true
+        },
+        {
+          "entity_id": "unit.player.yukikaze",
+          "ship_id": "ship.yukikaze",
+          "position": [
+            704.0,
+            1600.0
+          ],
+          "heading": 0.0,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.player.aurora",
+          "ship_id": "ship.aurora",
+          "position": [
+            704.0,
+            1856.0
+          ],
+          "heading": 0.0,
+          "is_flagship": false
+        }
+      ],
       "enemy_fleet": [
-        {"entity_id": "unit.enemy.kirov", "ship_id": "ship.kirov", "position": [3576.0, 1152.0], "heading": 180.0, "is_flagship": true},
-        {"entity_id": "unit.enemy.anshan", "ship_id": "ship.anshan", "position": [3496.0, 900.0], "heading": 180.0, "is_flagship": false},
-        {"entity_id": "unit.enemy.ning_hai", "ship_id": "ship.ning_hai", "position": [3496.0, 1404.0], "heading": 180.0, "is_flagship": false}]
+        {
+          "entity_id": "unit.enemy.kirov",
+          "ship_id": "ship.kirov",
+          "position": [
+            5312.0,
+            1728.0
+          ],
+          "heading": 180.0,
+          "is_flagship": true
+        },
+        {
+          "entity_id": "unit.enemy.anshan",
+          "ship_id": "ship.anshan",
+          "position": [
+            5440.0,
+            1600.0
+          ],
+          "heading": 180.0,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.enemy.ning_hai",
+          "ship_id": "ship.ning_hai",
+          "position": [
+            5440.0,
+            1856.0
+          ],
+          "heading": 180.0,
+          "is_flagship": false
+        }
+      ]
     },
     {
-      "id": "level.prototype_central_sandbar_3v3", "display_name": "3v3 中央沙洲", "battle_mode": "CoastalEqualBattle",
-      "map": {"width": 4096.0, "height": 2304.0, "ocean_palette": "cloudy_day", "terrain_definition_id": "terrain.map.central_sandbar", "navigation_definition_id": "navigation.central_sandbar"},
-      "time_limit": 420.0, "require_equal_fleet_cost": true,
+      "id": "level.prototype_central_sandbar_3v3",
+      "display_name": "3v3 中央沙洲",
+      "battle_mode": "CoastalEqualBattle",
+      "map": {
+        "width": 6144.0,
+        "height": 3456.0,
+        "ocean_palette": "cloudy_day",
+        "terrain_definition_id": "terrain.map.central_sandbar_16x9",
+        "navigation_definition_id": "navigation.central_sandbar_16x9"
+      },
+      "time_limit": 420.0,
+      "require_equal_fleet_cost": true,
       "player_fleet": [
-        {"entity_id": "unit.player.shimakaze", "ship_id": "ship.shimakaze", "position": [520.0, 1152.0], "heading": 0.0, "is_flagship": true},
-        {"entity_id": "unit.player.yukikaze", "ship_id": "ship.yukikaze", "position": [600.0, 900.0], "heading": 0.0, "is_flagship": false},
-        {"entity_id": "unit.player.aurora", "ship_id": "ship.aurora", "position": [600.0, 1404.0], "heading": 0.0, "is_flagship": false}],
+        {
+          "entity_id": "unit.player.shimakaze",
+          "ship_id": "ship.shimakaze",
+          "position": [
+            832.0,
+            1728.0
+          ],
+          "heading": 0.0,
+          "is_flagship": true
+        },
+        {
+          "entity_id": "unit.player.yukikaze",
+          "ship_id": "ship.yukikaze",
+          "position": [
+            704.0,
+            1600.0
+          ],
+          "heading": 0.0,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.player.aurora",
+          "ship_id": "ship.aurora",
+          "position": [
+            704.0,
+            1856.0
+          ],
+          "heading": 0.0,
+          "is_flagship": false
+        }
+      ],
       "enemy_fleet": [
-        {"entity_id": "unit.enemy.kirov", "ship_id": "ship.kirov", "position": [3576.0, 1152.0], "heading": 180.0, "is_flagship": true},
-        {"entity_id": "unit.enemy.anshan", "ship_id": "ship.anshan", "position": [3496.0, 900.0], "heading": 180.0, "is_flagship": false},
-        {"entity_id": "unit.enemy.ning_hai", "ship_id": "ship.ning_hai", "position": [3496.0, 1404.0], "heading": 180.0, "is_flagship": false}]
+        {
+          "entity_id": "unit.enemy.kirov",
+          "ship_id": "ship.kirov",
+          "position": [
+            5312.0,
+            1728.0
+          ],
+          "heading": 180.0,
+          "is_flagship": true
+        },
+        {
+          "entity_id": "unit.enemy.anshan",
+          "ship_id": "ship.anshan",
+          "position": [
+            5440.0,
+            1600.0
+          ],
+          "heading": 180.0,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.enemy.ning_hai",
+          "ship_id": "ship.ning_hai",
+          "position": [
+            5440.0,
+            1856.0
+          ],
+          "heading": 180.0,
+          "is_flagship": false
+        }
+      ]
     },
     {
-      "id": "level.prototype_crescent_bay_3v3", "display_name": "3v3 新月岛", "battle_mode": "CoastalEqualBattle",
-      "map": {"width": 4096.0, "height": 2304.0, "ocean_palette": "cloudy_dawn", "terrain_definition_id": "terrain.map.crescent_bay", "navigation_definition_id": "navigation.crescent_bay"},
-      "time_limit": 420.0, "require_equal_fleet_cost": true,
+      "id": "level.prototype_crescent_bay_3v3",
+      "display_name": "3v3 新月岛",
+      "battle_mode": "CoastalEqualBattle",
+      "map": {
+        "width": 6144.0,
+        "height": 3456.0,
+        "ocean_palette": "cloudy_dawn",
+        "terrain_definition_id": "terrain.map.crescent_bay_16x9",
+        "navigation_definition_id": "navigation.crescent_bay_16x9"
+      },
+      "time_limit": 420.0,
+      "require_equal_fleet_cost": true,
       "player_fleet": [
-        {"entity_id": "unit.player.shimakaze", "ship_id": "ship.shimakaze", "position": [520.0, 1152.0], "heading": 0.0, "is_flagship": true},
-        {"entity_id": "unit.player.yukikaze", "ship_id": "ship.yukikaze", "position": [600.0, 900.0], "heading": 0.0, "is_flagship": false},
-        {"entity_id": "unit.player.aurora", "ship_id": "ship.aurora", "position": [600.0, 1404.0], "heading": 0.0, "is_flagship": false}],
+        {
+          "entity_id": "unit.player.shimakaze",
+          "ship_id": "ship.shimakaze",
+          "position": [
+            832.0,
+            1728.0
+          ],
+          "heading": 0.0,
+          "is_flagship": true
+        },
+        {
+          "entity_id": "unit.player.yukikaze",
+          "ship_id": "ship.yukikaze",
+          "position": [
+            704.0,
+            1600.0
+          ],
+          "heading": 0.0,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.player.aurora",
+          "ship_id": "ship.aurora",
+          "position": [
+            704.0,
+            1856.0
+          ],
+          "heading": 0.0,
+          "is_flagship": false
+        }
+      ],
       "enemy_fleet": [
-        {"entity_id": "unit.enemy.kirov", "ship_id": "ship.kirov", "position": [3576.0, 1152.0], "heading": 180.0, "is_flagship": true},
-        {"entity_id": "unit.enemy.anshan", "ship_id": "ship.anshan", "position": [3496.0, 900.0], "heading": 180.0, "is_flagship": false},
-        {"entity_id": "unit.enemy.ning_hai", "ship_id": "ship.ning_hai", "position": [3496.0, 1404.0], "heading": 180.0, "is_flagship": false}]
+        {
+          "entity_id": "unit.enemy.kirov",
+          "ship_id": "ship.kirov",
+          "position": [
+            5312.0,
+            1728.0
+          ],
+          "heading": 180.0,
+          "is_flagship": true
+        },
+        {
+          "entity_id": "unit.enemy.anshan",
+          "ship_id": "ship.anshan",
+          "position": [
+            5440.0,
+            1600.0
+          ],
+          "heading": 180.0,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.enemy.ning_hai",
+          "ship_id": "ship.ning_hai",
+          "position": [
+            5440.0,
+            1856.0
+          ],
+          "heading": 180.0,
+          "is_flagship": false
+        }
+      ]
     },
     {
-      "id": "level.prototype_double_island_long_channel_3v3", "display_name": "3v3 双岛长海峡", "battle_mode": "CoastalEqualBattle",
-      "map": {"width": 4096.0, "height": 2304.0, "ocean_palette": "cloudy_dusk", "terrain_definition_id": "terrain.map.double_island_long_channel", "navigation_definition_id": "navigation.double_island_long_channel"},
-      "time_limit": 420.0, "require_equal_fleet_cost": true,
+      "id": "level.prototype_double_island_long_channel_3v3",
+      "display_name": "3v3 双岛长海峡",
+      "battle_mode": "CoastalEqualBattle",
+      "map": {
+        "width": 6144.0,
+        "height": 3456.0,
+        "ocean_palette": "cloudy_dusk",
+        "terrain_definition_id": "terrain.map.double_island_long_channel_16x9",
+        "navigation_definition_id": "navigation.double_island_long_channel_16x9"
+      },
+      "time_limit": 420.0,
+      "require_equal_fleet_cost": true,
       "player_fleet": [
-        {"entity_id": "unit.player.shimakaze", "ship_id": "ship.shimakaze", "position": [1050.0, 2160.0], "heading": 0.0, "is_flagship": true},
-        {"entity_id": "unit.player.yukikaze", "ship_id": "ship.yukikaze", "position": [900.0, 2070.0], "heading": 0.0, "is_flagship": false},
-        {"entity_id": "unit.player.aurora", "ship_id": "ship.aurora", "position": [900.0, 2250.0], "heading": 0.0, "is_flagship": false}],
+        {
+          "entity_id": "unit.player.shimakaze",
+          "ship_id": "ship.shimakaze",
+          "position": [
+            832.0,
+            1728.0
+          ],
+          "heading": 0.0,
+          "is_flagship": true
+        },
+        {
+          "entity_id": "unit.player.yukikaze",
+          "ship_id": "ship.yukikaze",
+          "position": [
+            704.0,
+            1600.0
+          ],
+          "heading": 0.0,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.player.aurora",
+          "ship_id": "ship.aurora",
+          "position": [
+            704.0,
+            1856.0
+          ],
+          "heading": 0.0,
+          "is_flagship": false
+        }
+      ],
       "enemy_fleet": [
-        {"entity_id": "unit.enemy.kirov", "ship_id": "ship.kirov", "position": [3046.0, 2160.0], "heading": 180.0, "is_flagship": true},
-        {"entity_id": "unit.enemy.anshan", "ship_id": "ship.anshan", "position": [3196.0, 2070.0], "heading": 180.0, "is_flagship": false},
-        {"entity_id": "unit.enemy.ning_hai", "ship_id": "ship.ning_hai", "position": [3196.0, 2250.0], "heading": 180.0, "is_flagship": false}]
+        {
+          "entity_id": "unit.enemy.kirov",
+          "ship_id": "ship.kirov",
+          "position": [
+            5312.0,
+            1728.0
+          ],
+          "heading": 180.0,
+          "is_flagship": true
+        },
+        {
+          "entity_id": "unit.enemy.anshan",
+          "ship_id": "ship.anshan",
+          "position": [
+            5440.0,
+            1600.0
+          ],
+          "heading": 180.0,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.enemy.ning_hai",
+          "ship_id": "ship.ning_hai",
+          "position": [
+            5440.0,
+            1856.0
+          ],
+          "heading": 180.0,
+          "is_flagship": false
+        }
+      ]
     },
     {
-      "id": "level.prototype_dual_channel_reef_line_3v3", "display_name": "3v3 双航道礁线", "battle_mode": "CoastalEqualBattle",
-      "map": {"width": 4096.0, "height": 2304.0, "ocean_palette": "rain_day", "terrain_definition_id": "terrain.map.dual_channel_reef_line", "navigation_definition_id": "navigation.dual_channel_reef_line"},
-      "time_limit": 420.0, "require_equal_fleet_cost": true,
+      "id": "level.prototype_dual_channel_reef_line_3v3",
+      "display_name": "3v3 双航道礁线",
+      "battle_mode": "CoastalEqualBattle",
+      "map": {
+        "width": 6144.0,
+        "height": 3456.0,
+        "ocean_palette": "rain_day",
+        "terrain_definition_id": "terrain.map.dual_channel_reef_line_16x9",
+        "navigation_definition_id": "navigation.dual_channel_reef_line_16x9"
+      },
+      "time_limit": 420.0,
+      "require_equal_fleet_cost": true,
       "player_fleet": [
-        {"entity_id": "unit.player.shimakaze", "ship_id": "ship.shimakaze", "position": [520.0, 1152.0], "heading": 0.0, "is_flagship": true},
-        {"entity_id": "unit.player.yukikaze", "ship_id": "ship.yukikaze", "position": [600.0, 900.0], "heading": 0.0, "is_flagship": false},
-        {"entity_id": "unit.player.aurora", "ship_id": "ship.aurora", "position": [600.0, 1404.0], "heading": 0.0, "is_flagship": false}],
+        {
+          "entity_id": "unit.player.shimakaze",
+          "ship_id": "ship.shimakaze",
+          "position": [
+            832.0,
+            1728.0
+          ],
+          "heading": 0.0,
+          "is_flagship": true
+        },
+        {
+          "entity_id": "unit.player.yukikaze",
+          "ship_id": "ship.yukikaze",
+          "position": [
+            704.0,
+            1600.0
+          ],
+          "heading": 0.0,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.player.aurora",
+          "ship_id": "ship.aurora",
+          "position": [
+            704.0,
+            1856.0
+          ],
+          "heading": 0.0,
+          "is_flagship": false
+        }
+      ],
       "enemy_fleet": [
-        {"entity_id": "unit.enemy.kirov", "ship_id": "ship.kirov", "position": [3576.0, 1152.0], "heading": 180.0, "is_flagship": true},
-        {"entity_id": "unit.enemy.anshan", "ship_id": "ship.anshan", "position": [3496.0, 900.0], "heading": 180.0, "is_flagship": false},
-        {"entity_id": "unit.enemy.ning_hai", "ship_id": "ship.ning_hai", "position": [3496.0, 1404.0], "heading": 180.0, "is_flagship": false}]
+        {
+          "entity_id": "unit.enemy.kirov",
+          "ship_id": "ship.kirov",
+          "position": [
+            5312.0,
+            1728.0
+          ],
+          "heading": 180.0,
+          "is_flagship": true
+        },
+        {
+          "entity_id": "unit.enemy.anshan",
+          "ship_id": "ship.anshan",
+          "position": [
+            5440.0,
+            1600.0
+          ],
+          "heading": 180.0,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.enemy.ning_hai",
+          "ship_id": "ship.ning_hai",
+          "position": [
+            5440.0,
+            1856.0
+          ],
+          "heading": 180.0,
+          "is_flagship": false
+        }
+      ]
     },
     {
-      "id": "level.prototype_long_archipelago_3v3", "display_name": "3v3 细长群岛", "battle_mode": "CoastalEqualBattle",
-      "map": {"width": 4096.0, "height": 2304.0, "ocean_palette": "rain_night", "terrain_definition_id": "terrain.map.long_archipelago", "navigation_definition_id": "navigation.long_archipelago"},
-      "time_limit": 420.0, "require_equal_fleet_cost": true,
+      "id": "level.prototype_long_archipelago_3v3",
+      "display_name": "3v3 细长群岛",
+      "battle_mode": "CoastalEqualBattle",
+      "map": {
+        "width": 6144.0,
+        "height": 3456.0,
+        "ocean_palette": "rain_night",
+        "terrain_definition_id": "terrain.map.long_archipelago_16x9",
+        "navigation_definition_id": "navigation.long_archipelago_16x9"
+      },
+      "time_limit": 420.0,
+      "require_equal_fleet_cost": true,
       "player_fleet": [
-        {"entity_id": "unit.player.shimakaze", "ship_id": "ship.shimakaze", "position": [520.0, 1152.0], "heading": 0.0, "is_flagship": true},
-        {"entity_id": "unit.player.yukikaze", "ship_id": "ship.yukikaze", "position": [600.0, 900.0], "heading": 0.0, "is_flagship": false},
-        {"entity_id": "unit.player.aurora", "ship_id": "ship.aurora", "position": [600.0, 1404.0], "heading": 0.0, "is_flagship": false}],
+        {
+          "entity_id": "unit.player.shimakaze",
+          "ship_id": "ship.shimakaze",
+          "position": [
+            832.0,
+            1728.0
+          ],
+          "heading": 0.0,
+          "is_flagship": true
+        },
+        {
+          "entity_id": "unit.player.yukikaze",
+          "ship_id": "ship.yukikaze",
+          "position": [
+            704.0,
+            1600.0
+          ],
+          "heading": 0.0,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.player.aurora",
+          "ship_id": "ship.aurora",
+          "position": [
+            704.0,
+            1856.0
+          ],
+          "heading": 0.0,
+          "is_flagship": false
+        }
+      ],
       "enemy_fleet": [
-        {"entity_id": "unit.enemy.kirov", "ship_id": "ship.kirov", "position": [3576.0, 1152.0], "heading": 180.0, "is_flagship": true},
-        {"entity_id": "unit.enemy.anshan", "ship_id": "ship.anshan", "position": [3496.0, 900.0], "heading": 180.0, "is_flagship": false},
-        {"entity_id": "unit.enemy.ning_hai", "ship_id": "ship.ning_hai", "position": [3496.0, 1404.0], "heading": 180.0, "is_flagship": false}]
+        {
+          "entity_id": "unit.enemy.kirov",
+          "ship_id": "ship.kirov",
+          "position": [
+            5312.0,
+            1728.0
+          ],
+          "heading": 180.0,
+          "is_flagship": true
+        },
+        {
+          "entity_id": "unit.enemy.anshan",
+          "ship_id": "ship.anshan",
+          "position": [
+            5440.0,
+            1600.0
+          ],
+          "heading": 180.0,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.enemy.ning_hai",
+          "ship_id": "ship.ning_hai",
+          "position": [
+            5440.0,
+            1856.0
+          ],
+          "heading": 180.0,
+          "is_flagship": false
+        }
+      ]
     },
     {
-      "id": "level.prototype_offset_large_island_3v3", "display_name": "3v3 大岛偏置", "battle_mode": "CoastalEqualBattle",
-      "map": {"width": 4096.0, "height": 2304.0, "ocean_palette": "overcast_dawn", "terrain_definition_id": "terrain.map.offset_large_island", "navigation_definition_id": "navigation.offset_large_island"},
-      "time_limit": 420.0, "require_equal_fleet_cost": true,
+      "id": "level.prototype_offset_large_island_3v3",
+      "display_name": "3v3 大岛偏置",
+      "battle_mode": "CoastalEqualBattle",
+      "map": {
+        "width": 6144.0,
+        "height": 3456.0,
+        "ocean_palette": "overcast_dawn",
+        "terrain_definition_id": "terrain.map.offset_large_island_16x9",
+        "navigation_definition_id": "navigation.offset_large_island_16x9"
+      },
+      "time_limit": 420.0,
+      "require_equal_fleet_cost": true,
       "player_fleet": [
-        {"entity_id": "unit.player.shimakaze", "ship_id": "ship.shimakaze", "position": [520.0, 1152.0], "heading": 0.0, "is_flagship": true},
-        {"entity_id": "unit.player.yukikaze", "ship_id": "ship.yukikaze", "position": [600.0, 900.0], "heading": 0.0, "is_flagship": false},
-        {"entity_id": "unit.player.aurora", "ship_id": "ship.aurora", "position": [600.0, 1404.0], "heading": 0.0, "is_flagship": false}],
+        {
+          "entity_id": "unit.player.shimakaze",
+          "ship_id": "ship.shimakaze",
+          "position": [
+            832.0,
+            1728.0
+          ],
+          "heading": 0.0,
+          "is_flagship": true
+        },
+        {
+          "entity_id": "unit.player.yukikaze",
+          "ship_id": "ship.yukikaze",
+          "position": [
+            704.0,
+            1600.0
+          ],
+          "heading": 0.0,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.player.aurora",
+          "ship_id": "ship.aurora",
+          "position": [
+            704.0,
+            1856.0
+          ],
+          "heading": 0.0,
+          "is_flagship": false
+        }
+      ],
       "enemy_fleet": [
-        {"entity_id": "unit.enemy.kirov", "ship_id": "ship.kirov", "position": [3576.0, 1152.0], "heading": 180.0, "is_flagship": true},
-        {"entity_id": "unit.enemy.anshan", "ship_id": "ship.anshan", "position": [3496.0, 900.0], "heading": 180.0, "is_flagship": false},
-        {"entity_id": "unit.enemy.ning_hai", "ship_id": "ship.ning_hai", "position": [3496.0, 1404.0], "heading": 180.0, "is_flagship": false}]
+        {
+          "entity_id": "unit.enemy.kirov",
+          "ship_id": "ship.kirov",
+          "position": [
+            5312.0,
+            1728.0
+          ],
+          "heading": 180.0,
+          "is_flagship": true
+        },
+        {
+          "entity_id": "unit.enemy.anshan",
+          "ship_id": "ship.anshan",
+          "position": [
+            5440.0,
+            1600.0
+          ],
+          "heading": 180.0,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.enemy.ning_hai",
+          "ship_id": "ship.ning_hai",
+          "position": [
+            5440.0,
+            1856.0
+          ],
+          "heading": 180.0,
+          "is_flagship": false
+        }
+      ]
     },
     {
-      "id": "level.prototype_ring_lagoon_3v3", "display_name": "3v3 环岛泻湖", "battle_mode": "CoastalEqualBattle",
-      "map": {"width": 4096.0, "height": 2304.0, "ocean_palette": "rain_dusk", "terrain_definition_id": "terrain.map.ring_lagoon", "navigation_definition_id": "navigation.ring_lagoon"},
-      "time_limit": 420.0, "require_equal_fleet_cost": true,
+      "id": "level.prototype_ring_lagoon_3v3",
+      "display_name": "3v3 环岛泻湖",
+      "battle_mode": "CoastalEqualBattle",
+      "map": {
+        "width": 6144.0,
+        "height": 3456.0,
+        "ocean_palette": "rain_dusk",
+        "terrain_definition_id": "terrain.map.ring_lagoon_16x9",
+        "navigation_definition_id": "navigation.ring_lagoon_16x9"
+      },
+      "time_limit": 420.0,
+      "require_equal_fleet_cost": true,
       "player_fleet": [
-        {"entity_id": "unit.player.shimakaze", "ship_id": "ship.shimakaze", "position": [1050.0, 2160.0], "heading": 0.0, "is_flagship": true},
-        {"entity_id": "unit.player.yukikaze", "ship_id": "ship.yukikaze", "position": [900.0, 2070.0], "heading": 0.0, "is_flagship": false},
-        {"entity_id": "unit.player.aurora", "ship_id": "ship.aurora", "position": [900.0, 2250.0], "heading": 0.0, "is_flagship": false}],
+        {
+          "entity_id": "unit.player.shimakaze",
+          "ship_id": "ship.shimakaze",
+          "position": [
+            832.0,
+            1728.0
+          ],
+          "heading": 0.0,
+          "is_flagship": true
+        },
+        {
+          "entity_id": "unit.player.yukikaze",
+          "ship_id": "ship.yukikaze",
+          "position": [
+            704.0,
+            1600.0
+          ],
+          "heading": 0.0,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.player.aurora",
+          "ship_id": "ship.aurora",
+          "position": [
+            704.0,
+            1856.0
+          ],
+          "heading": 0.0,
+          "is_flagship": false
+        }
+      ],
       "enemy_fleet": [
-        {"entity_id": "unit.enemy.kirov", "ship_id": "ship.kirov", "position": [3046.0, 2160.0], "heading": 180.0, "is_flagship": true},
-        {"entity_id": "unit.enemy.anshan", "ship_id": "ship.anshan", "position": [3196.0, 2070.0], "heading": 180.0, "is_flagship": false},
-        {"entity_id": "unit.enemy.ning_hai", "ship_id": "ship.ning_hai", "position": [3196.0, 2250.0], "heading": 180.0, "is_flagship": false}]
+        {
+          "entity_id": "unit.enemy.kirov",
+          "ship_id": "ship.kirov",
+          "position": [
+            5312.0,
+            1728.0
+          ],
+          "heading": 180.0,
+          "is_flagship": true
+        },
+        {
+          "entity_id": "unit.enemy.anshan",
+          "ship_id": "ship.anshan",
+          "position": [
+            5440.0,
+            1600.0
+          ],
+          "heading": 180.0,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.enemy.ning_hai",
+          "ship_id": "ship.ning_hai",
+          "position": [
+            5440.0,
+            1856.0
+          ],
+          "heading": 180.0,
+          "is_flagship": false
+        }
+      ]
     },
     {
-      "id": "level.prototype_scattered_islands_3v3", "display_name": "3v3 散岛群", "battle_mode": "CoastalEqualBattle",
-      "map": {"width": 4096.0, "height": 2304.0, "ocean_palette": "thunderstorm_day", "terrain_definition_id": "terrain.map.scattered_islands", "navigation_definition_id": "navigation.scattered_islands"},
-      "time_limit": 420.0, "require_equal_fleet_cost": true,
+      "id": "level.prototype_scattered_islands_3v3",
+      "display_name": "3v3 散岛群",
+      "battle_mode": "CoastalEqualBattle",
+      "map": {
+        "width": 6144.0,
+        "height": 3456.0,
+        "ocean_palette": "thunderstorm_day",
+        "terrain_definition_id": "terrain.map.scattered_islands_16x9",
+        "navigation_definition_id": "navigation.scattered_islands_16x9"
+      },
+      "time_limit": 420.0,
+      "require_equal_fleet_cost": true,
       "player_fleet": [
-        {"entity_id": "unit.player.shimakaze", "ship_id": "ship.shimakaze", "position": [520.0, 1152.0], "heading": 0.0, "is_flagship": true},
-        {"entity_id": "unit.player.yukikaze", "ship_id": "ship.yukikaze", "position": [600.0, 900.0], "heading": 0.0, "is_flagship": false},
-        {"entity_id": "unit.player.aurora", "ship_id": "ship.aurora", "position": [600.0, 1404.0], "heading": 0.0, "is_flagship": false}],
+        {
+          "entity_id": "unit.player.shimakaze",
+          "ship_id": "ship.shimakaze",
+          "position": [
+            832.0,
+            1728.0
+          ],
+          "heading": 0.0,
+          "is_flagship": true
+        },
+        {
+          "entity_id": "unit.player.yukikaze",
+          "ship_id": "ship.yukikaze",
+          "position": [
+            704.0,
+            1600.0
+          ],
+          "heading": 0.0,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.player.aurora",
+          "ship_id": "ship.aurora",
+          "position": [
+            704.0,
+            1856.0
+          ],
+          "heading": 0.0,
+          "is_flagship": false
+        }
+      ],
       "enemy_fleet": [
-        {"entity_id": "unit.enemy.kirov", "ship_id": "ship.kirov", "position": [3576.0, 1152.0], "heading": 180.0, "is_flagship": true},
-        {"entity_id": "unit.enemy.anshan", "ship_id": "ship.anshan", "position": [3496.0, 900.0], "heading": 180.0, "is_flagship": false},
-        {"entity_id": "unit.enemy.ning_hai", "ship_id": "ship.ning_hai", "position": [3496.0, 1404.0], "heading": 180.0, "is_flagship": false}]
+        {
+          "entity_id": "unit.enemy.kirov",
+          "ship_id": "ship.kirov",
+          "position": [
+            5312.0,
+            1728.0
+          ],
+          "heading": 180.0,
+          "is_flagship": true
+        },
+        {
+          "entity_id": "unit.enemy.anshan",
+          "ship_id": "ship.anshan",
+          "position": [
+            5440.0,
+            1600.0
+          ],
+          "heading": 180.0,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.enemy.ning_hai",
+          "ship_id": "ship.ning_hai",
+          "position": [
+            5440.0,
+            1856.0
+          ],
+          "heading": 180.0,
+          "is_flagship": false
+        }
+      ]
     }
   ]
 }

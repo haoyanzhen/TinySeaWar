@@ -127,7 +127,7 @@ static func reason_name(reason_code: String) -> String:
 		"SKILL_NOT_FOUND": return "未找到技能"
 		"SKILL_ON_COOLDOWN": return "技能冷却中"
 		"TARGET_POSITION_ON_LAND": return "目标位置在陆地或岸线上"
-		"NO_NAVIGATION_PATH": return "当前舰体无法到达目标"
+		"NO_NAVIGATION_PATH", "NO_START_ATTACHMENT", "NO_GOAL_ATTACHMENT", "ASTAR_DISCONNECTED", "NO_CORRIDOR_GATES": return "当前舰体无法到达目标"
 		"TERRAIN_BLOCKS_MOVEMENT": return "航路被地形阻挡"
 		"TERRAIN_BLOCKS_SHELL_PATH": return "炮弹路径被岛岸阻挡"
 		"TERRAIN_BLOCKS_LINE_OF_SIGHT": return "视线被岛岸阻挡"

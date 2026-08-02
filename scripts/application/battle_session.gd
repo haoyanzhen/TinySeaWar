@@ -31,9 +31,12 @@ const AI_TARGET_SWITCH_MARGIN := 12.0
 const AI_TARGET_SWITCH_COOLDOWN := 1.5
 const AI_ENGAGEMENT_PRESSURE_TRIGGER := 0.25
 const AI_LONG_IDLE_SECONDS := 20.0
+const AI_PATH_RECOVERY_SECONDS := 4.0
+const AI_PATH_STUCK_SECONDS := 20.0
 const NAVIGATION_NORMAL_INTERVAL_TICKS := 10
 const NAVIGATION_EMERGENCY_EXIT_TICKS := 4
 const NAVIGATION_STRATEGIC_INTERVAL := 3.0
+const NAVIGATION_FAILURE_RETRY_MAX := 12.0
 
 var registry
 var random_source
@@ -768,7 +771,7 @@ func _build_unit(member: Dictionary, ship: Dictionary, fleet_id: String, faction
 		"operation_slot": operation_slot,
 		"is_flagship": bool(member.get("is_flagship", false)),
 		"life_state": "Alive",
-		"current_hp": float(ship["max_hp"]),
+		"current_hp": float(ship["max_hp"]) * clampf(float(member.get("initial_hp_ratio", 1.0)), 0.0, 1.0),
 		"max_hp": float(ship["max_hp"]),
 		"stats": ship.duplicate(true),
 		"position": spawn_position,
@@ -787,6 +790,12 @@ func _build_unit(member: Dictionary, ship: Dictionary, fleet_id: String, faction
 			"intent_revision": 0,
 			"pending_route_requests": 0,
 			"route_waiting": false,
+			"strategic_intent_target": spawn_position,
+			"pending_intent_target": spawn_position,
+			"failed_intent_target": spawn_position,
+			"failed_intent_origin": spawn_position,
+			"route_failure_count": 0,
+			"route_retry_at": 0.0,
 		},
 		"targeting_state": {"mode": "Automatic", "focused_target_id": "", "current_target_id": ""},
 		"weapon_states": weapon_states,
@@ -837,6 +846,7 @@ func _build_unit(member: Dictionary, ship: Dictionary, fleet_id: String, faction
 			"formation_id": "",
 			"formation_slot_index": -1,
 			"last_progress_position": spawn_position,
+			"last_progress_heading": deg_to_rad(float(member.get("heading", 0.0))),
 			"last_progress_at": 0.0,
 			"path_stuck": false,
 			"path_recovery_count": 0,
@@ -902,7 +912,7 @@ func _apply_command(command: Dictionary) -> Dictionary:
 	if state["phase"] != "Running": return _rejection(command.get("command_id", ""), "BATTLE_NOT_RUNNING")
 	if command.get("command_type", "") == "RecordTutorialAction":
 		return _record_tutorial_action(str(command.get("action_id", "")), str(command.get("unit_id", "")))
-	if str(command.get("issuer_id", PLAYER_FACTION)) == PLAYER_FACTION and str(command.get("issuer_type", "Player")) == "Player" and str(command.get("command_type", "")) in level_objective_service.locked_player_commands():
+	if str(command.get("issuer_id", PLAYER_FACTION)) == PLAYER_FACTION and str(command.get("issuer_type", "Player")) in ["Player", "SimulationPolicy"] and str(command.get("command_type", "")) in level_objective_service.locked_player_commands():
 		return _rejection(command.get("command_id", ""), "TUTORIAL_ACTION_LOCKED")
 	if command.get("command_type", "") == "SetUnitControlState":
 		return _set_unit_control_state(command)
@@ -924,12 +934,17 @@ func _apply_command(command: Dictionary) -> Dictionary:
 			if typeof(target_position) != TYPE_VECTOR2: return _rejection(command.get("command_id", ""), "INVALID_TARGET_TYPE")
 			if not _inside_map(target_position): return _rejection(command.get("command_id", ""), "TARGET_POSITION_ON_LAND")
 			_undock_for_move_order(unit)
-			var player_order: bool = str(command.get("issuer_type", "Player")) == "Player" and str(unit["faction_id"]) == PLAYER_FACTION
+			# SimulationPolicy represents the authored player's actions in headless
+			# tutorial experiments, so its move orders must have the same navigation
+			# authority as interactive player orders. Otherwise the assist AI can
+			# overwrite the route being validated.
+			var player_order: bool = str(command.get("issuer_type", "Player")) in ["Player", "SimulationPolicy"] and str(unit["faction_id"]) == PLAYER_FACTION
 			var movement_mode := "PlayerMoveOrder" if player_order else str(command.get("movement_mode", "AssistNavigate" if command.get("issuer_type", "") == "PlayerAssistAI" else "AutoNavigate"))
 			if player_order:
 				_begin_navigation_intent(unit)
 				unit["player_route_waypoints"] = [target_position]
-			_submit_navigation_request(unit, unit["position"], target_position, "Replace", movement_mode, str(command.get("command_id", "")), 0 if player_order else 10)
+			var strategic_target_position: Vector2 = command.get("strategic_target_position", target_position)
+			_submit_navigation_request(unit, unit["position"], target_position, "Replace", movement_mode, str(command.get("command_id", "")), 0 if player_order else 10, strategic_target_position)
 			_emit("MoveOrderQueued", {"unit_id": unit_id, "target_position": target_position})
 			return {"accepted": true}
 		"AppendMoveWaypoint":
@@ -1117,15 +1132,18 @@ func _is_player_tutorial_command(command: Dictionary) -> bool:
 	return str(command.get("issuer_type", "Player")) in ["Player", "SimulationPolicy"]
 
 
-func _submit_navigation_request(unit: Dictionary, start: Vector2, target: Vector2, apply_mode: String, movement_mode: String, command_id: String, priority: int) -> void:
+func _submit_navigation_request(unit: Dictionary, start: Vector2, target: Vector2, apply_mode: String, movement_mode: String, command_id: String, priority: int, intent_target = null) -> void:
 	var navigation: Dictionary = unit.get("navigation_state", {})
+	var semantic_target: Vector2 = target if intent_target == null or typeof(intent_target) != TYPE_VECTOR2 else intent_target
 	navigation["pending_route_requests"] = int(navigation.get("pending_route_requests", 0)) + 1
 	navigation["route_waiting"] = true
+	navigation["pending_intent_target"] = semantic_target
 	if unit.get("movement_state", {}).get("corridor_points", []).is_empty():
 		navigation["state"] = "StrategicRouteWaiting"
 		navigation["current_control"] = {"thrust_ratio":0.0, "turn_ratio":0.0}
 	navigation_request_broker.submit({
 		"unit_id":unit["entity_id"], "start":start, "target":target,
+		"intent_target":semantic_target, "target_preprojected":not semantic_target.is_equal_approx(target),
 		"radius":float(unit.get("stats", {}).get("collision_radius", 20.0)),
 		"movement_tags":_movement_tags(unit), "apply_mode":apply_mode,
 		"movement_mode":movement_mode, "command_id":command_id, "priority":priority,
@@ -1146,8 +1164,22 @@ func _update_navigation_requests() -> void:
 			_emit("NavigationRequestDiscarded", {"unit_id":unit["entity_id"], "command_id":request.get("command_id", ""), "reason_code":"STALE_INTENT_REVISION"})
 			continue
 		var result: Dictionary = completed.get("result", {})
+		var intent_target: Vector2 = request.get("intent_target", request.get("target", unit.get("position", Vector2.ZERO)))
+		var route_profile: Dictionary = completed.get("route_profile", {}).duplicate(true)
+		var target_preprojected := bool(request.get("target_preprojected", false))
+		if target_preprojected:
+			route_profile["target_projected"] = true
+			route_profile["projection_progress"] = (request.get("start", unit.get("position", Vector2.ZERO)) as Vector2).distance_to(intent_target) - (request.get("target", intent_target) as Vector2).distance_to(intent_target)
 		if not bool(result.get("ok", false)):
-			_emit("NavigationRequestFailed", {"unit_id":unit["entity_id"], "command_id":request.get("command_id", ""), "start":request.get("start", Vector2.ZERO), "target":request.get("target", Vector2.ZERO), "reason_code":result.get("reason_code", "NO_NAVIGATION_PATH"), "elapsed_usec":completed.get("elapsed_usec", 0), "route_profile":completed.get("route_profile", {})})
+			var failed_target: Vector2 = intent_target
+			var previous_failed_target: Vector2 = navigation.get("failed_intent_target", failed_target)
+			var repeated_failure := previous_failed_target.distance_to(failed_target) < 8.0
+			navigation["route_failure_count"] = int(navigation.get("route_failure_count", 0)) + 1 if repeated_failure else 1
+			navigation["failed_intent_target"] = failed_target
+			navigation["failed_intent_origin"] = unit.get("position", Vector2.ZERO)
+			var retry_delay := minf(NAVIGATION_FAILURE_RETRY_MAX, NAVIGATION_STRATEGIC_INTERVAL * pow(2.0, float(maxi(0, int(navigation["route_failure_count"]) - 1))))
+			navigation["route_retry_at"] = float(state.get("elapsed_time", 0.0)) + retry_delay
+			_emit("NavigationRequestFailed", {"unit_id":unit["entity_id"], "command_id":request.get("command_id", ""), "start":request.get("start", Vector2.ZERO), "target":intent_target, "route_target":request.get("target", intent_target), "reason_code":result.get("reason_code", "NO_NAVIGATION_PATH"), "elapsed_usec":completed.get("elapsed_usec", 0), "route_profile":route_profile})
 			if not bool(navigation["route_waiting"]): navigation["state"] = "SafetyHold"
 			continue
 		var points: Array = result.get("waypoints", [request.get("target", unit["position"])]).duplicate()
@@ -1166,11 +1198,15 @@ func _update_navigation_requests() -> void:
 		else:
 			unit["movement_state"] = _new_movement_state(str(request.get("movement_mode", "AutoNavigate")), resolved_target, points)
 			unit["movement_state"]["corridor_gates"] = gates
+		navigation["strategic_intent_target"] = intent_target
+		navigation["pending_intent_target"] = intent_target
+		navigation["route_failure_count"] = 0
+		navigation["route_retry_at"] = 0.0
 		navigation["state"] = "NormalNavigation"
 		_mark_navigation_dirty(unit)
-		_emit("NavigationRequestCompleted", {"unit_id":unit["entity_id"], "command_id":request.get("command_id", ""), "start":request.get("start", Vector2.ZERO), "target":request.get("target", Vector2.ZERO), "waypoint_count":points.size(), "elapsed_usec":completed.get("elapsed_usec", 0), "route_profile":completed.get("route_profile", {})})
+		_emit("NavigationRequestCompleted", {"unit_id":unit["entity_id"], "command_id":request.get("command_id", ""), "start":request.get("start", Vector2.ZERO), "target":intent_target, "route_target":request.get("target", intent_target), "resolved_target":resolved_target, "target_projected":target_preprojected or bool(result.get("target_projected", false)), "waypoint_count":points.size(), "elapsed_usec":completed.get("elapsed_usec", 0), "route_profile":route_profile})
 		if str(request.get("apply_mode", "Replace")) == "Replace":
-			_emit("MoveOrderAccepted", {"unit_id":unit["entity_id"], "target_position":request.get("target", unit["position"])})
+			_emit("MoveOrderAccepted", {"unit_id":unit["entity_id"], "target_position":intent_target})
 
 
 func _build_navigation_corridor(unit: Dictionary, start: Vector2, target: Vector2) -> Dictionary:
@@ -1400,8 +1436,20 @@ func _advance_corridor_progress(unit: Dictionary) -> void:
 	while index < points.size():
 		var gate_radius := float(gates[index].get("radius", 0.0)) if index < gates.size() else 0.0
 		var is_final_point := index == points.size() - 1
-		var point_reach_distance := arrival_distance if is_final_point else maxf(transit_reach_distance, gate_radius)
-		if (unit.get("position", Vector2.ZERO) as Vector2).distance_to(points[index]) > point_reach_distance: break
+		# Corridor gates are not precision waypoints. Allow a modest margin for
+		# inertial hulls so a ship that safely enters the authored gate does not
+		# stop just outside the mathematical radius.
+		var point_reach_distance := arrival_distance if is_final_point else maxf(transit_reach_distance, gate_radius * 1.5)
+		var current_position: Vector2 = unit.get("position", Vector2.ZERO)
+		var reached_gate := current_position.distance_to(points[index]) <= point_reach_distance
+		if not reached_gate and not is_final_point:
+			var next_direction: Vector2 = points[index + 1] - points[index]
+			if next_direction.length_squared() > 0.001:
+				var offset: Vector2 = current_position - points[index]
+				var passed_gate_plane := offset.dot(next_direction) > 0.0
+				var lateral_distance := absf(offset.cross(next_direction.normalized()))
+				reached_gate = passed_gate_plane and lateral_distance <= maxf(point_reach_distance * 1.5, arrival_distance * 2.0)
+		if not reached_gate: break
 		index += 1
 		movement["corridor_index"] = index
 		unit.get("navigation_state", {})["trajectory_dirty"] = true
@@ -1474,19 +1522,46 @@ func _is_committed_high_threat_attack(unit: Dictionary, attack: Dictionary) -> b
 
 func _update_ai_path_progress(unit: Dictionary, movement: Dictionary) -> void:
 	if not _uses_full_ai(unit): return
+	# Player-authored routes have their own tutorial route and command evidence.
+	# Reporting them as AIPathStuck both misclassifies the owner and makes a
+	# route-conformance experiment fail for an AI subsystem that did not issue
+	# the order.
+	if str(movement.get("mode", "")) in ["PlayerMoveOrder", "PlayerWaypointRoute"]:
+		var player_route_ai_state: Dictionary = unit.get("ai_state", {})
+		player_route_ai_state["path_stuck"] = false
+		return
 	var ai_state: Dictionary = unit.get("ai_state", {})
 	if not terrain_query.is_configured():
 		ai_state["path_stuck"] = false
 		return
 	var position: Vector2 = unit.get("position", Vector2.ZERO)
 	var last_position: Vector2 = ai_state.get("last_progress_position", position)
+	var heading := float(unit.get("heading", 0.0))
+	var last_heading := float(ai_state.get("last_progress_heading", heading))
 	var moving := str(movement.get("mode", "HoldPosition")) not in ["HoldPosition", ""] and not _movement_finished(movement)
-	if not moving or position.distance_to(last_position) >= 18.0:
+	var target_position: Vector2 = movement.get("target_position", position)
+	var near_target := position.distance_to(target_position) <= maxf(36.0, float(unit.get("stats", {}).get("collision_radius", 20.0)))
+	# A large ship that is turning toward a new corridor is making real
+	# navigational progress even before its center moves 18 units.
+	if not moving or near_target or position.distance_to(last_position) >= 18.0 or absf(angle_difference(heading, last_heading)) >= deg_to_rad(8.0):
 		ai_state["last_progress_position"] = position
+		ai_state["last_progress_heading"] = heading
 		ai_state["last_progress_at"] = float(state.get("elapsed_time", 0.0))
+		ai_state["path_recovery_count"] = 0
 		if not moving: ai_state["path_stuck"] = false
 		return
-	if not bool(ai_state.get("path_stuck", false)) and float(state.get("elapsed_time", 0.0)) - float(ai_state.get("last_progress_at", 0.0)) >= 4.0:
+	var stalled_seconds := float(state.get("elapsed_time", 0.0)) - float(ai_state.get("last_progress_at", 0.0))
+	if stalled_seconds >= AI_PATH_RECOVERY_SECONDS and int(ai_state.get("path_recovery_count", 0)) == 0:
+		var navigation: Dictionary = unit.get("navigation_state", {})
+		var recovery_turn := -1.0 if absi(str(unit.get("entity_id", "")).hash()) % 2 == 0 else 1.0
+		navigation["state"] = "PathRecovery"
+		navigation["current_control"] = {"thrust_ratio":-0.25, "turn_ratio":recovery_turn}
+		navigation["trajectory_dirty"] = true
+		navigation["next_normal_plan_tick"] = int(state.get("tick_index", 0)) + NAVIGATION_NORMAL_INTERVAL_TICKS * 2
+		ai_state["path_recovery_count"] = 1
+		_emit("AIPathRecoveryStarted", {"unit_id":unit.get("entity_id", ""), "position":position, "target_position":target_position})
+		return
+	if not bool(ai_state.get("path_stuck", false)) and stalled_seconds >= AI_PATH_STUCK_SECONDS:
 		ai_state["path_stuck"] = true
 		_emit("AIPathStuck", {"unit_id": unit.get("entity_id", ""), "position": position, "target_position": movement.get("target_position", position)})
 
@@ -1662,7 +1737,11 @@ func _update_detection(delta: float = 0.1) -> void:
 			var primary_type := _primary_contact_type(contact_types)
 			var previous_contact: Dictionary = state["contacts_by_faction"][observer_faction].get(target_id, {})
 			state["contacts_by_faction"][observer_faction][target_id] = {"unit_id": target_id, "visible": true, "last_known_position": target["position"], "ghost_remaining": 0.0, "contact_types":contact_types.duplicate(), "primary_contact_type":primary_type, "contact_accuracy":"ExactPosition"}
-			if not previous_visible.has(target_id): _emit("ContactAcquired", {"observer_faction": observer_faction, "target_unit_id": target_id, "position": target["position"], "contact_types":contact_types.duplicate(), "primary_contact_type":primary_type, "contact_accuracy":"ExactPosition"})
+			if not previous_visible.has(target_id):
+				_emit("ContactAcquired", {"observer_faction": observer_faction, "target_unit_id": target_id, "position": target["position"], "contact_types":contact_types.duplicate(), "primary_contact_type":primary_type, "contact_accuracy":"ExactPosition"})
+				if observer_faction == PLAYER_FACTION:
+					for observer_id in _optical_detector_unit_ids(observer_faction, target):
+						_record_tutorial_action("EstablishSharedContact", observer_id, {"target_unit_id": target_id})
 			elif previous_contact.get("contact_types", []) != contact_types: _emit("ContactTypeChanged", {"observer_faction":observer_faction, "target_unit_id":target_id, "position":target["position"], "old_contact_types":previous_contact.get("contact_types", []).duplicate(), "contact_types":contact_types.duplicate(), "primary_contact_type":primary_type})
 		for target_id in previous_visible:
 			if next_visible.has(target_id): continue
@@ -1787,6 +1866,24 @@ func _fleet_detection_types(observer_faction: String, target: Dictionary) -> Arr
 			if "Optical" not in result: result.append("Optical")
 			break
 	result.sort()
+	return result
+
+
+func _optical_detector_unit_ids(observer_faction: String, target: Dictionary) -> Array[String]:
+	var result: Array[String] = []
+	var concealment := ModifierService.calculate(float(target["stats"]["concealment_distance"]), _active_status_effects(target), "ConcealmentDistance")
+	if float(target["firing_reveal_remaining"]) > 0.0:
+		concealment *= float(target["stats"]["fire_concealment_multiplier"])
+	for observer_id in _sorted_unit_ids():
+		var observer: Dictionary = state["units_by_id"][observer_id]
+		if observer["faction_id"] != observer_faction or observer["life_state"] != "Alive": continue
+		var detection_range := ModifierService.calculate(float(observer["stats"]["detection_range"]), _active_status_effects(observer), "DetectionRange")
+		var observer_context := terrain_context_service.context_at(observer["position"])
+		var target_context := terrain_context_service.context_at(target["position"])
+		detection_range *= minf(float(observer_context.get("optical_visibility_multiplier", 1.0)), float(target_context.get("optical_visibility_multiplier", 1.0)))
+		var distance := (observer["position"] as Vector2).distance_to(target["position"] as Vector2)
+		if distance <= detection_range and distance <= concealment and terrain_query.has_surface_line_of_sight(observer["position"], target["position"]):
+			result.append(observer_id)
 	return result
 
 
@@ -2028,8 +2125,16 @@ func _queue_ai_move(unit: Dictionary, target_position: Vector2, issuer_type: Str
 	if str(unit.get("faction_id", "")) == PLAYER_FACTION and movement_mode != "ImmediateAvoidance" and str(unit.get("movement_state", {}).get("mode", "")) in ["PlayerMoveOrder", "PlayerWaypointRoute"]:
 		return
 	target_position = minefield_service.avoidance_waypoint(str(unit.get("faction_id", "")), unit["position"], target_position)
-	var current_target: Vector2 = unit.get("movement_state", {}).get("target_position", unit.get("position", Vector2.ZERO))
+	var navigation: Dictionary = unit.get("navigation_state", {})
+	var current_target: Vector2 = navigation.get("strategic_intent_target", unit.get("movement_state", {}).get("target_position", unit.get("position", Vector2.ZERO)))
 	if issuer_type == "AI" and movement_mode != "ImmediateAvoidance":
+		if int(navigation.get("pending_route_requests", 0)) > 0:
+			var pending_target: Vector2 = navigation.get("pending_intent_target", current_target)
+			if pending_target.distance_to(target_position) < 120.0: return
+		var failed_target: Vector2 = navigation.get("failed_intent_target", current_target)
+		var failed_origin: Vector2 = navigation.get("failed_intent_origin", unit.get("position", Vector2.ZERO))
+		if failed_target.distance_to(target_position) < 120.0 and failed_origin.distance_to(unit.get("position", Vector2.ZERO)) <= 80.0 and float(state.get("elapsed_time", 0.0)) < float(navigation.get("route_retry_at", 0.0)):
+			return
 		var target_shift := current_target.distance_to(target_position)
 		var since_route := float(state.get("elapsed_time", 0.0)) - float(unit.get("ai_state", {}).get("last_route_command_at", -1000.0))
 		if since_route < NAVIGATION_STRATEGIC_INTERVAL or target_shift < 120.0: return
@@ -2111,7 +2216,13 @@ func _update_enemy_ai_intent(unit: Dictionary) -> void:
 			return
 		var map_center := _map_center()
 		var search_x := float(state["map"].get("width", 1200.0)) * (0.25 if float(unit["position"].x) >= map_center.x else 0.75)
-		var lane_offset := float(abs(str(unit["entity_id"]).hash()) % 180) - 90.0
+		var faction_units: Array = _sorted_unit_ids().filter(func(unit_id):
+			var candidate: Dictionary = state["units_by_id"].get(unit_id, {})
+			return candidate.get("life_state", "") == "Alive" and candidate.get("faction_id", "") == unit.get("faction_id", "")
+		)
+		var lane_index := maxi(0, faction_units.find(str(unit.get("entity_id", ""))))
+		var lane_spacing := minf(96.0, float(state["map"].get("height", 800.0)) * 0.5 / maxf(1.0, float(faction_units.size() - 1)))
+		var lane_offset := (float(lane_index) - float(faction_units.size() - 1) * 0.5) * lane_spacing
 		_queue_ai_move(unit, Vector2(search_x, map_center.y + lane_offset))
 		return
 	var tactic_scores := AIQuantitativeModel.detected_tactic_scores(_detected_tactic_values(unit, target, false))
@@ -2469,6 +2580,8 @@ func _update_ai_primary_weapons() -> void:
 
 
 func _uses_full_ai(unit: Dictionary) -> bool:
+	if str(unit.get("faction_id", "")) == PLAYER_FACTION and not str(state.get("level_objective", {}).get("objective_set_id", "")).is_empty():
+		return bool(unit.get("movement_assist_enabled", false))
 	return bool(_full_ai_factions.get(str(unit.get("faction_id", "")), false))
 
 
@@ -3439,9 +3552,9 @@ func _resolve_attack(attack: Dictionary, forced_hit: bool) -> void:
 	if bool(result.get("hit", false)) and str(source.get("faction_id", "")) == PLAYER_FACTION:
 		var mount_type := str(weapon.get("mount_type", ""))
 		if mount_type == "Torpedo":
-			_record_tutorial_action("TorpedoHit", str(source.get("entity_id", "")), {"target_unit_id": str(target.get("entity_id", ""))})
+			_record_tutorial_action("TorpedoHit", str(source.get("entity_id", "")), {"target_unit_id": str(target.get("entity_id", "")), "attack_category": mount_type, "weapon_group_id": str(weapon.get("weapon_group_id", ""))})
 		elif mount_type == "Gun":
-			_record_tutorial_action("SharedTargetGunHit", str(source.get("entity_id", "")), {"target_unit_id": str(target.get("entity_id", ""))})
+			_record_tutorial_action("SharedTargetGunHit", str(source.get("entity_id", "")), {"target_unit_id": str(target.get("entity_id", "")), "attack_category": mount_type, "weapon_group_id": str(weapon.get("weapon_group_id", ""))})
 	if bool(result["caused_sinking"]): _sink_unit(target, source["entity_id"])
 
 

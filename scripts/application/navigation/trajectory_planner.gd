@@ -77,9 +77,11 @@ func _select_plan(templates: Array, initial_state: Dictionary, goal: Vector2, ho
 		var continuity := 1.0 - absf(float(control.get("turn_ratio", 0.0))) * 0.15
 		var contact_cost := 0.4 if bool(simulation.get("controlled_contact", false)) else 0.0
 		var stall_cost := 0.0
-		if final_approach:
-			if origin.distance_to(goal) > arrival_tolerance(radius) and origin.distance_to(terminal) < 0.5:
-				stall_cost = 1000.0
+		if not emergency and origin.distance_to(goal) > arrival_tolerance(radius) and origin.distance_to(terminal) < 0.5:
+			# Holding still is not progress toward an intermediate corridor gate
+			# either. Without this penalty a zero-thrust candidate can beat every
+			# safe recovery turn and strand an inertial ship indefinitely.
+			stall_cost = 1000.0
 		var score := threat_score * 10000.0 + progress * 10.0 + continuity - contact_cost - stall_cost
 		candidates.append({"control": control, "simulation": simulation, "score": score, "index": index, "threat_safety": threat_score})
 	if candidates.is_empty():

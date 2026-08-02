@@ -88,6 +88,8 @@ func _run_battle(registry, manifest: Dictionary, scenario: Dictionary, seed_valu
 	var ticks_executed := 0
 	var enemy_damage_before_engagement := 0.0
 	var policy_command_rejections := 0
+	var policy_command_rejections_by_reason := {}
+	var policy_command_rejection_details: Array = []
 	while session.state.get("phase", "") == "Running" and ticks_executed < maximum_ticks:
 		var engagement_before_tick := bool(session.state.get("level_objective", {}).get("engagement_unlocked", true))
 		_queue_policy_commands(
@@ -100,6 +102,14 @@ func _run_battle(registry, manifest: Dictionary, scenario: Dictionary, seed_valu
 		for event in tick_events:
 			if str(event.get("event_type", "")) == "CommandRejected" and str(event.get("issuer_type", "")) == "SimulationPolicy":
 				policy_command_rejections += 1
+				var rejection_reason := str(event.get("reason_code", "UNKNOWN"))
+				policy_command_rejections_by_reason[rejection_reason] = int(policy_command_rejections_by_reason.get(rejection_reason, 0)) + 1
+				policy_command_rejection_details.append({
+					"tick_index":int(session.state.get("tick_index", 0)),
+					"command_type":str(event.get("command_type", "")),
+					"unit_id":str(event.get("unit_id", "")),
+					"reason_code":rejection_reason,
+				})
 		if not engagement_before_tick:
 			for event in tick_events:
 				if str(event.get("event_type", "")) != "AttackResolved": continue
@@ -138,6 +148,8 @@ func _run_battle(registry, manifest: Dictionary, scenario: Dictionary, seed_valu
 		"skill_casts": int(stats.get("skill_casts", 0)),
 		"enemy_damage_before_engagement": enemy_damage_before_engagement,
 		"policy_command_rejections": policy_command_rejections,
+		"policy_command_rejections_by_reason": policy_command_rejections_by_reason,
+		"policy_command_rejection_details": policy_command_rejection_details,
 		"ai_behavior": stats.get("ai_behavior", {}).duplicate(true),
 		"fleet_health": fleet_health,
 		"unit_end_states": _unit_end_states(session.state),
@@ -158,14 +170,35 @@ func _unit_end_states(battle_state: Dictionary) -> Dictionary:
 			"faction_id": unit.get("faction_id", ""),
 			"life_state": unit.get("life_state", ""),
 			"position": unit.get("position", Vector2.ZERO),
+			"heading": unit.get("heading", 0.0),
 			"movement_mode": unit.get("movement_state", {}).get("mode", ""),
 			"movement_target": unit.get("movement_state", {}).get("target_position", unit.get("position", Vector2.ZERO)),
+			"corridor_index": unit.get("movement_state", {}).get("corridor_index", 0),
+			"corridor_point_count": unit.get("movement_state", {}).get("corridor_points", []).size(),
+			"corridor_current_point": _end_state_corridor_point(unit),
+			"corridor_current_gate": _end_state_corridor_gate(unit),
+			"pending_route_requests": unit.get("navigation_state", {}).get("pending_route_requests", 0),
+			"route_waiting": unit.get("navigation_state", {}).get("route_waiting", false),
+			"current_control": unit.get("navigation_state", {}).get("current_control", {}),
+			"navigation_state": unit.get("navigation_state", {}).get("state", ""),
 			"ai_mode": unit.get("ai_state", {}).get("mode_id", ""),
 			"ai_tactic": unit.get("ai_state", {}).get("tactic_id", ""),
 			"level_task": unit.get("ai_state", {}).get("level_task", ""),
 			"active_interrupt": "TorpedoEvasion" if str(unit.get("navigation_state", {}).get("state", "NormalNavigation")) == "EmergencyEvasion" else "",
 		}
 	return result
+
+
+func _end_state_corridor_point(unit: Dictionary) -> Vector2:
+	var points: Array = unit.get("movement_state", {}).get("corridor_points", [])
+	var index := int(unit.get("movement_state", {}).get("corridor_index", 0))
+	return points[index] if index >= 0 and index < points.size() else unit.get("position", Vector2.ZERO)
+
+
+func _end_state_corridor_gate(unit: Dictionary) -> Dictionary:
+	var gates: Array = unit.get("movement_state", {}).get("corridor_gates", [])
+	var index := int(unit.get("movement_state", {}).get("corridor_index", 0))
+	return gates[index] if index >= 0 and index < gates.size() else {}
 
 
 func _registry_for_side_variant(registry, level_id: String, side_variant: String):
@@ -220,8 +253,8 @@ func _queue_policy_commands(session, registry, player_policy_id: String, enemy_p
 		"TutorialT03Deterministic": _queue_t03_tutorial_commands(session, registry)
 		"TutorialT04Deterministic": pass
 		"TutorialT05Deterministic": _queue_t05_tutorial_commands(session)
-		"TutorialT06Deterministic": pass
-		"TutorialT07Deterministic": pass
+		"TutorialT06Deterministic": _queue_t06_tutorial_commands(session)
+		"TutorialT07Deterministic": _queue_t07_tutorial_commands(session)
 		"TutorialT08Deterministic": _queue_t08_tutorial_commands(session)
 	var unit_ids: Array = session.state.get("units_by_id", {}).keys()
 	unit_ids.sort()
@@ -324,25 +357,185 @@ func _queue_t03_tutorial_commands(session, registry) -> void:
 
 func _queue_t05_tutorial_commands(session) -> void:
 	var objective: Dictionary = session.state.get("level_objective", {})
-	if objective.get("objective_set_id", "") != "objective.t05_torpedo" or int(objective.get("action_counts", {}).get("TorpedoHit", 0)) > 0: return
-	var unit_id := "unit.player.t05.shimakaze"
-	var unit: Dictionary = session.state.get("units_by_id", {}).get(unit_id, {})
-	var target := _first_visible_target(session, unit)
+	if objective.get("objective_set_id", "") != "objective.t05_torpedo" or objective.get("status", "") != "Active": return
+	_queue_tutorial_manual_control(session, ["unit.player.t05.yukikaze", "unit.player.t05.anshan"])
+	if _queue_tutorial_route_move(session, objective): return
+	var target: Dictionary = session.state.get("units_by_id", {}).get("unit.enemy.t05.warspite", {})
 	if target.is_empty(): return
-	var aim_status: Dictionary = session.get_primary_aim_status(unit_id, target.get("position", Vector2.ZERO))
+	if not session.state.get("visible_by_faction", {}).get("player", {}).has("unit.enemy.t05.warspite"):
+		var contact: Dictionary = session.state.get("contacts_by_faction", {}).get("player", {}).get("unit.enemy.t05.warspite", {})
+		var search_position: Vector2 = contact.get("last_known_position", Vector2(2200.0, 700.0))
+		_queue_tutorial_move(session, "unit.player.t05.yukikaze", search_position, "simulation.t05.search")
+		var escort_search := search_position + Vector2(0.0, 220.0)
+		escort_search.y = clampf(escort_search.y, 80.0, float(session.state.get("map", {}).get("height", 2304.0)) - 80.0)
+		_queue_tutorial_move(session, "unit.player.t05.anshan", escort_search, "simulation.t05.escort_search")
+		return
+	var attack_plans: Array = [
+		{"unit_id":"unit.player.t05.yukikaze", "weapon_id":"weapon.yukikaze_torpedo", "cover":Vector2(1472.0, 1728.0)},
+	]
+	if int(objective.get("action_counts", {}).get("TorpedoHit", 0)) > 0:
+		attack_plans.append({"unit_id":"unit.player.t05.anshan", "weapon_id":"weapon.anshan_torpedo", "cover":Vector2(1320.0, 1950.0)})
+	for attack_plan in attack_plans:
+		var unit_id := str(attack_plan["unit_id"])
+		var unit: Dictionary = session.state.get("units_by_id", {}).get(unit_id, {})
+		if unit.is_empty() or unit.get("life_state", "") != "Alive": continue
+		var torpedo_states: Array = unit.get("weapon_states", []).filter(func(weapon_state):
+			return str(weapon_state.get("definition_id", "")) == str(attack_plan["weapon_id"])
+		)
+		var all_mounts_reloading := not torpedo_states.is_empty() and torpedo_states.all(func(weapon_state):
+			return float(weapon_state.get("reload_remaining", 0.0)) > 1.0
+		)
+		if all_mounts_reloading:
+			_queue_tutorial_move(session, unit_id, attack_plan["cover"], "simulation.t05.disengage")
+			continue
+		_queue_ready_skill(session, session.registry, unit, target)
+		_queue_manual_torpedo_solution(session, unit_id, str(attack_plan["weapon_id"]), target)
+
+
+func _queue_manual_torpedo_solution(session, unit_id: String, weapon_id: String, target: Dictionary) -> void:
+	var unit: Dictionary = session.state.get("units_by_id", {}).get(unit_id, {})
+	if unit.is_empty() or unit.get("life_state", "") != "Alive": return
+	var weapon: Dictionary = session.registry.get_definition("weapons", weapon_id)
+	var aim_solution: Dictionary = session._automatic_aim_solution(unit, target, weapon)
+	var aim_position: Vector2 = aim_solution.get("position", target.get("position", Vector2.ZERO))
+	var aim_status: Dictionary = session.get_primary_aim_status(unit_id, aim_position)
+	if not bool(aim_status.get("legal", false)):
+		var direct_position: Vector2 = target.get("position", Vector2.ZERO)
+		var direct_status: Dictionary = session.get_primary_aim_status(unit_id, direct_position)
+		if bool(direct_status.get("legal", false)):
+			aim_position = direct_position
+			aim_status = direct_status
+	if not bool(aim_status.get("legal", false)):
+		var tick := int(session.state.get("tick_index", 0))
+		if tick % 50 != 0:
+			return
+		var aim_direction := (target.get("position", aim_position) as Vector2) - (unit.get("position", Vector2.ZERO) as Vector2)
+		var broadside_destination := (unit.get("position", Vector2.ZERO) as Vector2) + Vector2.RIGHT.rotated(aim_direction.angle() + PI * 0.5) * 600.0
+		broadside_destination.x = clampf(broadside_destination.x, 80.0, float(session.state.get("map", {}).get("width", 4096.0)) - 80.0)
+		broadside_destination.y = clampf(broadside_destination.y, 80.0, float(session.state.get("map", {}).get("height", 2304.0)) - 80.0)
+		_queue_tutorial_move(session, unit_id, broadside_destination, "simulation.t05.broadside")
+		return
+	session.queue_command({"command_id": "simulation.t05.torpedo.%s.%d" % [unit_id, int(session.state.get("tick_index", 0))], "command_type": "FirePrimaryWeapon", "issued_at_tick": int(session.state.get("tick_index", 0)), "issuer_type": "SimulationPolicy", "issuer_id": "player", "unit_id": unit_id, "target_position": aim_position})
+
+
+func _queue_t06_tutorial_commands(session) -> void:
+	var objective: Dictionary = session.state.get("level_objective", {})
+	if objective.get("objective_set_id", "") != "objective.t06_carrier_hunt" or objective.get("status", "") != "Active": return
+	if _queue_tutorial_route_move(session, objective): return
+	if not bool(objective.get("engagement_unlocked", false)): return
+	_queue_tutorial_focus(session, ["unit.player.t06.shimakaze", "unit.player.t06.gnevny", "unit.player.t06.ward"], "unit.enemy.t06.argus")
+
+
+func _queue_t07_tutorial_commands(session) -> void:
+	var objective: Dictionary = session.state.get("level_objective", {})
+	if objective.get("objective_set_id", "") != "objective.t07_shared_contact" or objective.get("status", "") != "Active": return
+	if _queue_tutorial_route_move(session, objective): return
+	if not bool(objective.get("engagement_unlocked", false)): return
+	_queue_tutorial_focus(session, ["unit.player.t07.iowa"], "unit.enemy.t07.hindenburg")
+	var iowa: Dictionary = session.state.get("units_by_id", {}).get("unit.player.t07.iowa", {})
+	var hindenburg: Dictionary = session.state.get("units_by_id", {}).get("unit.enemy.t07.hindenburg", {})
+	if iowa.is_empty() or hindenburg.is_empty() or hindenburg.get("life_state", "") != "Alive": return
+	var aim_position: Vector2 = hindenburg.get("position", Vector2.ZERO)
+	var aim_status: Dictionary = session.get_primary_aim_status("unit.player.t07.iowa", aim_position)
 	if not bool(aim_status.get("legal", false)): return
-	session.queue_command({"command_id": "simulation.t05.torpedo.%d" % int(session.state.get("tick_index", 0)), "command_type": "FirePrimaryWeapon", "issued_at_tick": int(session.state.get("tick_index", 0)), "issuer_type": "SimulationPolicy", "issuer_id": "player", "unit_id": unit_id, "target_position": target.get("position", Vector2.ZERO)})
+	session.queue_command({
+		"command_id":"simulation.t07.manual_primary.%d" % int(session.state.get("tick_index", 0)),
+		"command_type":"FirePrimaryWeapon",
+		"issued_at_tick":int(session.state.get("tick_index", 0)),
+		"issuer_type":"SimulationPolicy",
+		"issuer_id":"player",
+		"unit_id":"unit.player.t07.iowa",
+		"target_position":aim_position,
+	})
 
 
 func _queue_t08_tutorial_commands(session) -> void:
 	var objective: Dictionary = session.state.get("level_objective", {})
 	if objective.get("objective_set_id", "") != "objective.t08_command" or bool(objective.get("engagement_unlocked", false)): return
-	var target: Dictionary = session.state.get("units_by_id", {}).get("unit.enemy.t08.hindenburg", {})
-	if target.is_empty(): return
-	for unit_id in ["unit.player.t08.warspite", "unit.player.t08.san_diego"]:
-		var unit: Dictionary = session.state.get("units_by_id", {}).get(unit_id, {})
-		if unit.is_empty() or not session.state.get("visible_by_faction", {}).get("player", {}).has(target.get("entity_id", "")): continue
-		session.queue_command({"command_id": "simulation.t08.focus.%s.%d" % [unit_id, int(session.state.get("tick_index", 0))], "command_type": "FocusTarget", "issued_at_tick": int(session.state.get("tick_index", 0)), "issuer_type": "SimulationPolicy", "issuer_id": "player", "unit_id": unit_id, "target_unit_id": target.get("entity_id", "")})
+	if _queue_tutorial_route_move(session, objective): return
+	_queue_tutorial_focus(session, ["unit.player.t08.warspite", "unit.player.t08.san_diego"], "unit.enemy.t08.hindenburg")
+
+
+func _queue_tutorial_route_move(session, objective: Dictionary) -> bool:
+	var zones: Array = objective.get("route_waypoint_zones", [])
+	var step := int(objective.get("route_step", 0))
+	if step >= zones.size():
+		var route_unit_id := str(session.registry.get_definition("objectives", str(objective.get("objective_set_id", ""))).get("route_player_unit_id", ""))
+		var route_unit: Dictionary = session.state.get("units_by_id", {}).get(route_unit_id, {})
+		if str(route_unit.get("movement_state", {}).get("mode", "")) in ["PlayerMoveOrder", "PlayerWaypointRoute"]:
+			var clear_tick := int(session.state.get("tick_index", 0))
+			if clear_tick % 20 == 0:
+				session.queue_command({
+					"command_id":"simulation.route.clear.%s.%d" % [route_unit_id, clear_tick],
+					"command_type":"ClearMoveRoute",
+					"issued_at_tick":clear_tick,
+					"issuer_type":"SimulationPolicy",
+					"issuer_id":"player",
+					"unit_id":route_unit_id,
+				})
+			return true
+		return false
+	var tick := int(session.state.get("tick_index", 0))
+	if tick < 20: return true
+	var pair: Array = zones[step].get("position", [])
+	if pair.size() != 2: return true
+	var unit_id := str(session.registry.get_definition("objectives", str(objective.get("objective_set_id", ""))).get("route_player_unit_id", ""))
+	if unit_id.is_empty(): return true
+	_queue_tutorial_move(session, unit_id, Vector2(float(pair[0]), float(pair[1])), "simulation.route.%d" % step)
+	return true
+
+
+func _queue_tutorial_manual_control(session, unit_ids: Array) -> void:
+	if not bool(session.state.get("level_objective", {}).get("engagement_unlocked", false)): return
+	var tick := int(session.state.get("tick_index", 0))
+	if tick % 20 != 0: return
+	session.queue_command({
+		"command_id":"simulation.manual_control.%d" % tick,
+		"command_type":"SetUnitControlState",
+		"issued_at_tick":tick,
+		"issuer_type":"SimulationPolicy",
+		"issuer_id":"player",
+		"unit_ids":unit_ids,
+		"movement_assist_enabled":false,
+		"secondary_auto_fire_enabled":false,
+		"primary_auto_fire_enabled":false,
+	})
+
+
+func _queue_tutorial_move(session, unit_id: String, target_position: Vector2, command_prefix: String) -> void:
+	var tick := int(session.state.get("tick_index", 0))
+	if tick % 20 != 0: return
+	var unit: Dictionary = session.state.get("units_by_id", {}).get(unit_id, {})
+	if unit.is_empty() or unit.get("life_state", "") != "Alive": return
+	var movement: Dictionary = unit.get("movement_state", {})
+	if str(movement.get("mode", "")) in ["PlayerMoveOrder", "PlayerWaypointRoute"] and (movement.get("target_position", unit.get("position", Vector2.ZERO)) as Vector2).distance_to(target_position) <= 1.0:
+		return
+	session.queue_command({
+		"command_id":"%s.%s.%d" % [command_prefix, unit_id, tick],
+		"command_type":"MoveUnits",
+		"issued_at_tick":tick,
+		"issuer_type":"SimulationPolicy",
+		"issuer_id":"player",
+		"unit_id":unit_id,
+		"movement_mode":"PlayerMoveOrder",
+		"target_position":target_position,
+	})
+
+
+func _queue_tutorial_focus(session, unit_ids: Array, target_id: String) -> void:
+	if not session.state.get("visible_by_faction", {}).get("player", {}).has(target_id): return
+	for unit_id in unit_ids:
+		var unit: Dictionary = session.state.get("units_by_id", {}).get(str(unit_id), {})
+		if unit.is_empty() or unit.get("life_state", "") != "Alive" or str(unit.get("targeting_state", {}).get("focused_target_id", "")) == target_id: continue
+		session.queue_command({
+			"command_id": "simulation.focus.%s.%d" % [unit_id, int(session.state.get("tick_index", 0))],
+			"command_type": "FocusTarget",
+			"issued_at_tick": int(session.state.get("tick_index", 0)),
+			"issuer_type": "SimulationPolicy",
+			"issuer_id": "player",
+			"unit_id": str(unit_id),
+			"target_unit_id": target_id,
+		})
 
 
 func _first_visible_target(session, unit: Dictionary) -> Dictionary:
@@ -401,7 +594,10 @@ func _win_rate_evaluation(manifest: Dictionary, aggregate: Dictionary, runs: Arr
 	var observed_p10_duration := float(aggregate.get("duration", {}).get("p10", 0.0))
 	var duration_passed := observed_p10_duration + 0.000001 >= minimum_p10_duration
 	var required_action_ids: Array = contract.get("required_objective_action_ids", [])
+	var required_action_sequence: Array = contract.get("required_objective_action_sequence", [])
 	var objective_evidence_passed := true
+	if (bool(contract.get("require_engagement_unlocked", false)) or not required_action_ids.is_empty() or not required_action_sequence.is_empty()) and runs.size() != planned:
+		objective_evidence_passed = false
 	for run in runs:
 		var objective: Dictionary = run.get("level_objective", {})
 		if bool(contract.get("require_engagement_unlocked", false)) and not bool(objective.get("engagement_unlocked", false)):
@@ -409,12 +605,21 @@ func _win_rate_evaluation(manifest: Dictionary, aggregate: Dictionary, runs: Arr
 		for action_id in required_action_ids:
 			if int(objective.get("action_counts", {}).get(str(action_id), 0)) <= 0:
 				objective_evidence_passed = false
+		var evidence_index := 0
+		for evidence in objective.get("action_evidence", []):
+			if evidence_index < required_action_sequence.size() and str(evidence.get("action_id", "")) == str(required_action_sequence[evidence_index]):
+				evidence_index += 1
+		if evidence_index != required_action_sequence.size():
+			objective_evidence_passed = false
 	var maximum_early_damage := float(contract.get("maximum_enemy_damage_before_engagement", INF))
 	var observed_early_damage := float(aggregate.get("enemy_damage_before_engagement", 0.0))
 	var early_damage_passed := observed_early_damage <= maximum_early_damage + 0.000001
 	var maximum_policy_rejections := int(contract.get("maximum_policy_command_rejections", 0))
 	var observed_policy_rejections := int(aggregate.get("policy_command_rejections", 0))
 	var policy_rejections_passed := observed_policy_rejections <= maximum_policy_rejections
+	var maximum_behavior_anomalies := int(contract.get("maximum_behavior_anomalies", 0))
+	var observed_behavior_anomalies := int(aggregate.get("behavior_anomaly_count", 0))
+	var behavior_anomalies_passed := observed_behavior_anomalies <= maximum_behavior_anomalies
 	return {
 		"settlement_source": "BattleStatisticsReport",
 		"required_battles": 20,
@@ -428,6 +633,7 @@ func _win_rate_evaluation(manifest: Dictionary, aggregate: Dictionary, runs: Arr
 		"observed_p10_duration": observed_p10_duration,
 		"duration_passed": duration_passed,
 		"required_objective_action_ids": required_action_ids.duplicate(),
+		"required_objective_action_sequence": required_action_sequence.duplicate(),
 		"objective_evidence_passed": objective_evidence_passed,
 		"maximum_enemy_damage_before_engagement": maximum_early_damage,
 		"observed_enemy_damage_before_engagement": observed_early_damage,
@@ -435,7 +641,10 @@ func _win_rate_evaluation(manifest: Dictionary, aggregate: Dictionary, runs: Arr
 		"maximum_policy_command_rejections": maximum_policy_rejections,
 		"observed_policy_command_rejections": observed_policy_rejections,
 		"policy_rejections_passed": policy_rejections_passed,
-		"passed": sample_complete and within_target and duration_passed and objective_evidence_passed and early_damage_passed and policy_rejections_passed,
+		"maximum_behavior_anomalies": maximum_behavior_anomalies,
+		"observed_behavior_anomalies": observed_behavior_anomalies,
+		"behavior_anomalies_passed": behavior_anomalies_passed,
+		"passed": sample_complete and within_target and duration_passed and objective_evidence_passed and early_damage_passed and policy_rejections_passed and behavior_anomalies_passed,
 	}
 
 

@@ -3,6 +3,8 @@ extends RefCounted
 const NODE_CELL_SIZE := 256.0
 const DEFAULT_GATE_SPACING := 180.0
 const DEFAULT_ATTACHMENT_LIMIT := 4
+const DEFAULT_ATTACHMENT_DISTANCE := 420.0
+const RECOVERY_ATTACHMENT_DISTANCE := 840.0
 
 var _profiles: Array = []
 var _last_profile := {}
@@ -54,8 +56,7 @@ func plan_path(terrain_query, navigation_definition: Dictionary, start: Vector2,
 	var target_occupiable: bool = bool(terrain_query.can_occupy_circle(target, radius, movement_tags))
 	_last_profile["target_validation_usec"] = Time.get_ticks_usec() - stage_started
 	stage_started = Time.get_ticks_usec()
-	var direct_topology_clear: bool = bool(terrain_query.is_segment_clear(start, target, "ShipMovement"))
-	if navigation_definition.is_empty(): direct_topology_clear = terrain_query.is_movement_segment_clear(start, target, radius, movement_tags)
+	var direct_topology_clear: bool = bool(terrain_query.is_navigation_segment_clear(start, target, radius, movement_tags))
 	if target_occupiable and direct_topology_clear and _environment_segment_allowed(terrain_context, start, target):
 		_last_profile["direct_clear_usec"] = Time.get_ticks_usec() - stage_started
 		_last_profile["total_usec"] = Time.get_ticks_usec() - total_started
@@ -70,37 +71,46 @@ func plan_path(terrain_query, navigation_definition: Dictionary, start: Vector2,
 	var by_id: Dictionary = profile.get("by_id", {})
 	stage_started = Time.get_ticks_usec()
 	var starts := _nearest_visible_nodes(profile, start, radius, movement_tags, terrain_query, terrain_context)
+	if starts.is_empty():
+		starts = _nearest_visible_nodes(profile, start, radius, movement_tags, terrain_query, terrain_context, true, RECOVERY_ATTACHMENT_DISTANCE)
+		_last_profile["start_attachment_recovered"] = not starts.is_empty()
 	_last_profile["start_attachment_usec"] = Time.get_ticks_usec() - stage_started
+	if starts.is_empty():
+		_last_profile["total_usec"] = Time.get_ticks_usec() - total_started
+		return {"ok": false, "reason_code": "NO_START_ATTACHMENT", "waypoints": []}
 	stage_started = Time.get_ticks_usec()
 	var goals := _nearest_visible_nodes(profile, target, radius, movement_tags, terrain_query, terrain_context, target_occupiable)
 	_last_profile["goal_attachment_usec"] = Time.get_ticks_usec() - stage_started
-	if starts.is_empty() or goals.is_empty():
-		_last_profile["total_usec"] = Time.get_ticks_usec() - total_started
-		return {"ok": false, "reason_code": "NO_NAVIGATION_PATH", "waypoints": []}
+	var target_projected := goals.is_empty()
 	stage_started = Time.get_ticks_usec()
 	_profile_astar_expansions = 0
 	_profile_astar_environment_usec = 0
 	_profile_astar_neighbor_checks = 0
-	var result := _a_star(by_id, starts, goals, target, terrain_context)
+	var result := _best_progress_path(by_id, starts, target, terrain_context) if target_projected else _a_star(by_id, starts, goals, target, terrain_context)
 	_last_profile["astar_usec"] = Time.get_ticks_usec() - stage_started
 	_last_profile["astar_expansions"] = _profile_astar_expansions
 	_last_profile["astar_environment_usec"] = _profile_astar_environment_usec
 	_last_profile["astar_neighbor_checks"] = _profile_astar_neighbor_checks
 	if result.is_empty():
 		_last_profile["total_usec"] = Time.get_ticks_usec() - total_started
-		return {"ok": false, "reason_code": "NO_NAVIGATION_PATH", "waypoints": []}
+		return {"ok": false, "reason_code": "NO_GOAL_ATTACHMENT" if target_projected else "ASTAR_DISCONNECTED", "waypoints": []}
 	var raw_points: Array = []
 	for node_id in result:
 		raw_points.append(_vector2(by_id[node_id]["position"]))
-	if target_occupiable: raw_points.append(target)
+	if target_occupiable and not target_projected: raw_points.append(target)
 	stage_started = Time.get_ticks_usec()
-	var gates := _coarse_gates(raw_points, start, radius, terrain_query, terrain_context)
+	var gates := _coarse_gates(raw_points, start, radius, movement_tags, terrain_query, terrain_context)
 	_last_profile["smooth_usec"] = Time.get_ticks_usec() - stage_started
 	_last_profile["raw_waypoint_count"] = raw_points.size()
 	_last_profile["smoothed_waypoint_count"] = gates.size()
 	_last_profile["total_usec"] = Time.get_ticks_usec() - total_started
-	var resolved_target: Vector2 = target if target_occupiable else (gates[-1]["center"] if not gates.is_empty() else target)
-	return {"ok": true, "waypoints": gates.map(func(gate): return gate["center"]), "gates":gates, "resolved_target":resolved_target, "target_projected":not target_occupiable}
+	if gates.is_empty():
+		return {"ok": false, "reason_code": "NO_CORRIDOR_GATES", "waypoints": []}
+	var resolved_target: Vector2 = target if target_occupiable and not target_projected else gates[-1]["center"]
+	var was_projected := not target_occupiable or target_projected
+	_last_profile["target_projected"] = was_projected
+	_last_profile["projection_progress"] = start.distance_to(target) - resolved_target.distance_to(target) if was_projected else 0.0
+	return {"ok": true, "waypoints": gates.map(func(gate): return gate["center"]), "gates":gates, "resolved_target":resolved_target, "target_projected":was_projected, "requested_target":target}
 
 
 func _select_profile(profiles: Array, radius: float, movement_tags: Array) -> Dictionary:
@@ -118,14 +128,15 @@ func _select_profile(profiles: Array, radius: float, movement_tags: Array) -> Di
 	return {} if candidates.is_empty() else candidates[0]
 
 
-func _nearest_visible_nodes(profile: Dictionary, position: Vector2, radius: float, movement_tags: Array, terrain_query, terrain_context, require_visibility: bool = true) -> Array:
+func _nearest_visible_nodes(profile: Dictionary, position: Vector2, radius: float, movement_tags: Array, terrain_query, terrain_context, require_visibility: bool = true, maximum_distance: float = DEFAULT_ATTACHMENT_DISTANCE) -> Array:
 	var candidates: Array = []
 	var nodes: Array = profile.get("nodes", [])
 	var node_cells: Dictionary = profile.get("node_cells", {})
 	var center := _node_cell(position)
 	var node_indices := {}
-	for cell_y in range(center.y - 2, center.y + 3):
-		for cell_x in range(center.x - 2, center.x + 3):
+	var cell_radius := ceili(maximum_distance / NODE_CELL_SIZE)
+	for cell_y in range(center.y - cell_radius, center.y + cell_radius + 1):
+		for cell_x in range(center.x - cell_radius, center.x + cell_radius + 1):
 			for node_index in node_cells.get(Vector2i(cell_x, cell_y), []): node_indices[int(node_index)] = true
 	var sorted_indices: Array = node_indices.keys()
 	sorted_indices.sort()
@@ -133,14 +144,66 @@ func _nearest_visible_nodes(profile: Dictionary, position: Vector2, radius: floa
 		var node: Dictionary = nodes[int(node_index)]
 		var node_position := _vector2(node.get("position", []))
 		var distance := position.distance_to(node_position)
-		if distance <= 420.0: candidates.append({"id": str(node.get("id", "")), "distance": distance, "position":node_position})
+		if distance <= maximum_distance: candidates.append({"id": str(node.get("id", "")), "distance": distance, "position":node_position})
 	candidates.sort_custom(func(a, b): return float(a["distance"]) < float(b["distance"]) if not is_equal_approx(float(a["distance"]), float(b["distance"])) else str(a["id"]) < str(b["id"]))
 	var result: Array = []
 	for candidate in candidates:
-		if require_visibility and (not terrain_query.is_segment_clear(position, candidate["position"], "ShipMovement") or not _environment_segment_allowed(terrain_context, position, candidate["position"])): continue
+		if require_visibility and (not terrain_query.is_navigation_segment_clear(position, candidate["position"], radius, movement_tags) or not _environment_segment_allowed(terrain_context, position, candidate["position"])): continue
 		result.append(candidate["id"])
 		if result.size() >= attachment_limit: break
 	return result
+
+
+func _best_progress_path(by_id: Dictionary, start_ids: Array, target: Vector2, terrain_context) -> Array:
+	var open: Array = []
+	var closed := {}
+	var came_from := {}
+	var cost := {}
+	var best_id := ""
+	var best_distance := INF
+	var best_cost := INF
+	var start_distance := INF
+	for start_id_value in start_ids:
+		var start_id := str(start_id_value)
+		if not by_id.has(start_id): continue
+		var distance := _vector2(by_id[start_id]["position"]).distance_to(target)
+		start_distance = minf(start_distance, distance)
+		cost[start_id] = 0.0
+		_heap_push(open, {"id":start_id, "score":0.0})
+	while not open.is_empty():
+		var current_id: String = str(_heap_pop(open)["id"])
+		if closed.has(current_id): continue
+		closed[current_id] = true
+		_profile_astar_expansions += 1
+		var current_position := _vector2(by_id[current_id]["position"])
+		var distance_to_target := current_position.distance_to(target)
+		var current_cost := float(cost.get(current_id, INF))
+		if distance_to_target < best_distance - 0.001 or (is_equal_approx(distance_to_target, best_distance) and (current_cost < best_cost - 0.001 or (is_equal_approx(current_cost, best_cost) and current_id < best_id))):
+			best_id = current_id
+			best_distance = distance_to_target
+			best_cost = current_cost
+		for neighbor_id_value in by_id[current_id].get("neighbors", []):
+			_profile_astar_neighbor_checks += 1
+			var neighbor_id := str(neighbor_id_value)
+			if not by_id.has(neighbor_id) or closed.has(neighbor_id): continue
+			var neighbor_position := _vector2(by_id[neighbor_id]["position"])
+			var environment_started := Time.get_ticks_usec()
+			var environment_allowed := _environment_segment_allowed(terrain_context, current_position, neighbor_position)
+			_profile_astar_environment_usec += Time.get_ticks_usec() - environment_started
+			if not environment_allowed: continue
+			var candidate_cost := current_cost + current_position.distance_to(neighbor_position)
+			if cost.has(neighbor_id) and candidate_cost >= float(cost[neighbor_id]) - 0.001: continue
+			cost[neighbor_id] = candidate_cost
+			came_from[neighbor_id] = current_id
+			_heap_push(open, {"id":neighbor_id, "score":candidate_cost})
+	if best_id.is_empty() or best_distance >= start_distance - 0.001:
+		return []
+	var path: Array = [best_id]
+	var path_id := best_id
+	while came_from.has(path_id):
+		path_id = str(came_from[path_id])
+		path.push_front(path_id)
+	return path
 
 
 func _node_cell(position: Vector2) -> Vector2i:
@@ -227,15 +290,26 @@ func _heap_less(a: Dictionary, b: Dictionary) -> bool:
 	return score_a < score_b if not is_equal_approx(score_a, score_b) else str(a["id"]) < str(b["id"])
 
 
-func _coarse_gates(points: Array, start: Vector2, radius: float, terrain_query, terrain_context) -> Array:
+func _coarse_gates(points: Array, start: Vector2, radius: float, movement_tags: Array, terrain_query, terrain_context) -> Array:
 	var result: Array = []
 	var anchor := start
 	var index := 0
 	while index < points.size():
 		var furthest := index
 		for candidate in range(index, points.size()):
-			if anchor.distance_to(points[candidate]) > gate_spacing and candidate > index: break
-			if terrain_query.is_segment_clear(anchor, points[candidate], "ShipMovement") and _environment_segment_allowed(terrain_context, anchor, points[candidate]): furthest = candidate
+			if not terrain_query.is_segment_clear(anchor, points[candidate], "ShipMovement") or not _environment_segment_allowed(terrain_context, anchor, points[candidate]):
+				break
+			furthest = candidate
+			# gate_spacing is the coarse progress interval, not a maximum
+			# distance. Select the first safely visible node at or beyond it;
+			# the previous implementation stopped before that node and emitted
+			# 128-unit micro-gates for a configured spacing of 180.
+			if anchor.distance_to(points[candidate]) >= gate_spacing:
+				break
+		while furthest > index and not terrain_query.is_navigation_segment_clear(anchor, points[furthest], radius, movement_tags):
+			furthest -= 1
+		if not terrain_query.is_navigation_segment_clear(anchor, points[furthest], radius, movement_tags):
+			return []
 		var center: Vector2 = points[furthest]
 		result.append({"center":center, "radius":maxf(radius * 2.0, gate_spacing * 0.35)})
 		anchor = center

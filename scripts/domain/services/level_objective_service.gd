@@ -16,12 +16,15 @@ func setup(objective_definition: Dictionary) -> void:
 		"status": "Active",
 		"stage": "Instruction" if tutorial else "Mission",
 		"current_step": 0,
+		"route_step": 0,
 		"action_counts": {},
+		"action_evidence": [],
 		"engagement_unlocked": not tutorial,
 		"summary": _initial_summary(),
 		"instruction": _next_instruction({}),
 		"ability_limit_text": str(definition.get("ability_limit_text", "")),
 		"waypoint_zones": definition.get("waypoint_zones", []).duplicate(true),
+		"route_waypoint_zones": definition.get("route_waypoint_zones", []).duplicate(true),
 		"world_markers": definition.get("world_markers", []).duplicate(true),
 		"enemy_staging_position": definition.get("enemy_staging_position", []).duplicate(true),
 		"enemy_staging_positions": definition.get("enemy_staging_positions", {}).duplicate(true),
@@ -64,15 +67,22 @@ func engagement_enemy_mode_locks() -> Dictionary:
 
 
 func primary_locked_for(unit: Dictionary) -> bool:
-	return _enemy_combat_locked(unit) and bool(definition.get("lock_enemy_primary_and_skill", false))
+	return (_enemy_combat_locked(unit) and bool(definition.get("lock_enemy_primary_and_skill", false))) or _player_weapon_locked_until_action(unit)
 
 
 func skill_locked_for(unit: Dictionary) -> bool:
-	return _enemy_combat_locked(unit) and bool(definition.get("lock_enemy_primary_and_skill", false))
+	return (_enemy_combat_locked(unit) and bool(definition.get("lock_enemy_primary_and_skill", false))) or _player_weapon_locked_until_action(unit)
 
 
 func automatic_weapons_locked_for(unit: Dictionary) -> bool:
-	return _enemy_combat_locked(unit) and bool(definition.get("lock_enemy_automatic_weapons", false))
+	return (_enemy_combat_locked(unit) and bool(definition.get("lock_enemy_automatic_weapons", false))) or _player_weapon_locked_until_action(unit)
+
+
+func _player_weapon_locked_until_action(unit: Dictionary) -> bool:
+	if not is_active() or unit.get("faction_id", "") != "player": return false
+	var action_id := str(definition.get("player_weapon_unlock_action_id", ""))
+	if action_id.is_empty() or int(runtime_state.get("action_counts", {}).get(action_id, 0)) > 0: return false
+	return str(unit.get("entity_id", "")) in definition.get("player_weapon_locked_unit_ids_until_action", [])
 
 
 func uses_authored_staging_movement(unit: Dictionary) -> bool:
@@ -103,7 +113,7 @@ func record_action(action_id: String, unit_id: String, tick_index: int, facts: D
 		required_unit_id = str(definition.get("player_unit_id", ""))
 	if not required_unit_id.is_empty() and unit_id != required_unit_id:
 		return {"accepted": false, "reason_code": "TUTORIAL_WRONG_UNIT", "events": []}
-	for fact_key in ["skill_id", "weapon_group_id", "ammo_group_id"]:
+	for fact_key in ["skill_id", "weapon_group_id", "ammo_group_id", "target_unit_id", "attack_category", "route_zone_id"]:
 		if requirement.has(fact_key) and str(requirement.get(fact_key, "")) != str(facts.get(fact_key, "")):
 			return {"accepted": false, "reason_code": "TUTORIAL_ACTION_MISMATCH", "events": []}
 	var counts: Dictionary = runtime_state.get("action_counts", {})
@@ -115,7 +125,7 @@ func record_action(action_id: String, unit_id: String, tick_index: int, facts: D
 	runtime_state["instruction"] = _next_instruction(counts)
 	var events: Array = []
 	if int(counts[action_id]) > previous:
-		events.append({
+		var evidence := {
 			"event_type": "TutorialActionRecorded",
 			"action_id": action_id,
 			"unit_id": unit_id,
@@ -123,7 +133,9 @@ func record_action(action_id: String, unit_id: String, tick_index: int, facts: D
 			"count": int(counts[action_id]),
 			"required_count": required,
 			"tick_index": tick_index,
-		})
+		}
+		runtime_state.get("action_evidence", []).append(evidence.duplicate(true))
+		events.append(evidence)
 	return {"accepted": true, "reason_code": "OK", "events": events}
 
 
@@ -131,11 +143,21 @@ func advance(battle_state: Dictionary) -> Dictionary:
 	if not is_active():
 		return {"events": [], "terminal": {}}
 	var events: Array = []
+	_advance_route_waypoints(battle_state, events)
 	match str(definition.get("objective_kind", "")):
 		"TutorialNavigation": _advance_tutorial_navigation(battle_state, events)
 		"TutorialGunnery", "TutorialSkill": _advance_required_action_tutorial(events)
 		"TutorialArmor": _advance_first_contact_tutorial(battle_state, events)
-		"TutorialTorpedo", "TutorialCarrierHunt": _advance_first_contact_tutorial(battle_state, events)
+		"TutorialTorpedo":
+			if str(definition.get("engagement_trigger", "")) == "RequiredActionsComplete":
+				_advance_required_action_tutorial(events)
+			else:
+				_advance_first_contact_tutorial(battle_state, events)
+		"TutorialCarrierHunt":
+			if str(definition.get("engagement_trigger", "")) == "RequiredActionsComplete":
+				_advance_required_action_tutorial(events)
+			else:
+				_advance_first_contact_tutorial(battle_state, events)
 		"TutorialSharedContact": _advance_shared_contact_tutorial(battle_state, events)
 		"TutorialCommand": _advance_command_tutorial(battle_state, events)
 		"FlagshipMission", "ChallengeMission": pass
@@ -147,6 +169,40 @@ func advance(battle_state: Dictionary) -> Dictionary:
 		runtime_state["summary"] = str(definition.get("completion_text" if completed else "failure_text", ""))
 		events.append({"event_type": "LevelObjectiveCompleted" if completed else "LevelObjectiveFailed", "objective_set_id": definition.get("id", ""), "summary": runtime_state["summary"]})
 	return {"events": events, "terminal": terminal}
+
+
+func _advance_route_waypoints(battle_state: Dictionary, events: Array) -> void:
+	var zones: Array = definition.get("route_waypoint_zones", [])
+	if zones.is_empty(): return
+	var step := int(runtime_state.get("route_step", 0))
+	if step >= zones.size(): return
+	var unit_id := str(definition.get("route_player_unit_id", ""))
+	var unit: Dictionary = battle_state.get("units_by_id", {}).get(unit_id, {})
+	if unit.is_empty() or unit.get("life_state", "") != "Alive": return
+	var zone: Dictionary = zones[step]
+	var pair: Array = zone.get("position", [])
+	if pair.size() != 2: return
+	var center := Vector2(float(pair[0]), float(pair[1]))
+	if (unit.get("position", Vector2.ZERO) as Vector2).distance_to(center) > float(zone.get("radius", 80.0)):
+		return
+	var action_result := record_action(
+		"ReachTutorialRouteZone",
+		unit_id,
+		int(battle_state.get("tick_index", 0)),
+		{"route_zone_id": str(zone.get("id", ""))}
+	)
+	if not bool(action_result.get("accepted", false)): return
+	step += 1
+	runtime_state["route_step"] = step
+	events.append_array(action_result.get("events", []))
+	events.append({
+		"event_type": "LevelObjectiveAdvanced",
+		"objective_set_id": definition.get("id", ""),
+		"step": step,
+		"step_count": zones.size(),
+		"label": zone.get("label", ""),
+		"route_zone_id": zone.get("id", ""),
+	})
 
 
 func _advance_tutorial_navigation(battle_state: Dictionary, events: Array) -> void:
@@ -195,12 +251,12 @@ func _advance_first_contact_tutorial(battle_state: Dictionary, events: Array) ->
 func _advance_shared_contact_tutorial(battle_state: Dictionary, events: Array) -> void:
 	if bool(runtime_state.get("engagement_unlocked", false)): return
 	var scout_id := str(definition.get("scout_player_unit_id", ""))
-	var target_id := str(definition.get("shared_contact_target_unit_id", ""))
 	var scout: Dictionary = battle_state.get("units_by_id", {}).get(scout_id, {})
-	var target: Dictionary = battle_state.get("units_by_id", {}).get(target_id, {})
-	if scout.is_empty() or target.is_empty() or scout.get("life_state", "") != "Alive": return
-	if battle_state.get("visible_by_faction", {}).get("player", {}).has(target_id):
-		record_action("EstablishSharedContact", scout_id, int(battle_state.get("tick_index", 0)), {"target_unit_id": target_id})
+	if scout.is_empty() or scout.get("life_state", "") != "Alive": return
+	var action_counts: Dictionary = runtime_state.get("action_counts", {})
+	var route_requirement := _requirement("ReachTutorialRouteZone")
+	var route_complete := route_requirement.is_empty() or int(action_counts.get("ReachTutorialRouteZone", 0)) >= int(route_requirement.get("required_count", 1))
+	if route_complete and int(action_counts.get("EstablishSharedContact", 0)) > 0:
 		runtime_state["current_step"] = 1
 		_unlock_engagement(str(definition.get("engagement_instruction", "共享接触建立")), events)
 
@@ -348,7 +404,12 @@ func _next_instruction(counts: Dictionary) -> String:
 
 
 func _enemy_combat_locked(unit: Dictionary) -> bool:
-	return is_active() and is_tutorial() and not bool(runtime_state.get("engagement_unlocked", false)) and unit.get("faction_id", "") == "enemy"
+	if not is_active() or not is_tutorial() or unit.get("faction_id", "") != "enemy":
+		return false
+	if not bool(runtime_state.get("engagement_unlocked", false)):
+		return true
+	var unlock_action_id := str(definition.get("enemy_weapon_unlock_action_id", ""))
+	return not unlock_action_id.is_empty() and int(runtime_state.get("action_counts", {}).get(unlock_action_id, 0)) <= 0
 
 
 func _is_tutorial_kind(kind: String) -> bool:

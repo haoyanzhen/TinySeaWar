@@ -31,6 +31,7 @@ func _run() -> void:
 		quit(1)
 		return
 	var event_types := {}
+	var diagnostic_counts := {}
 	var diagnostic_events: Array = []
 	var ticks := 0
 	while session.state.get("phase", "") == "Running" and ticks < maximum_ticks:
@@ -38,10 +39,12 @@ func _run() -> void:
 			var event_type := str(event.get("event_type", ""))
 			event_types[event_type] = true
 			if event_type in ["FacilityControlDeclared", "FacilityControlCompleted", "FacilityServiceStarted", "FacilityServiceCompleted", "FacilityActionInterrupted", "CommandRejected"]:
-				diagnostic_events.append(event.duplicate(true))
+				diagnostic_counts[event_type] = int(diagnostic_counts.get(event_type, 0)) + 1
+				if diagnostic_events.size() < 20:
+					diagnostic_events.append(event.duplicate(true))
 		ticks += 1
 	var passed: bool = session.state.get("phase", "") == "Finished" and event_types.has("WeaponFired") and event_types.has("AttackResolved") and event_types.has("BattleFinished")
 	print("SINGLE_SMOKE level=%s phase=%s ticks=%d duration=%.1f result=%s" % [level_id, session.state.get("phase", ""), ticks, float(session.state.get("elapsed_time", 0.0)), session.state.get("result", {})])
-	print("SINGLE_SMOKE_DIAGNOSTICS=%s" % JSON.stringify(diagnostic_events))
+	print("SINGLE_SMOKE_DIAGNOSTICS counts=%s samples=%s" % [JSON.stringify(diagnostic_counts), JSON.stringify(diagnostic_events)])
 	if not passed: push_error("Single battle smoke did not reach the complete combat chain")
 	quit(0 if passed else 1)

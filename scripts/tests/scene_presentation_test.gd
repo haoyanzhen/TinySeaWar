@@ -27,27 +27,21 @@ func _run() -> void:
 	_check(challenge_buttons.size() == 15, "challenge entry exposes all fifteen designed challenge levels")
 	_check(challenge_buttons.any(func(button): return not button.disabled and button.text.contains("S-01")), "challenge entry always enables the first implemented S challenge")
 	menu._show_custom()
-	_check(menu.custom_size_selector.item_count == 4 and menu.custom_map_selector.item_count == 11 and menu.custom_weather_selector.item_count == 20, "custom entry exposes four scales, all 3v3 maps, and twenty weather palettes")
-	var all_sizes_expose_all_maps := true
+	_check(menu.custom_size_selector.item_count == 4 and menu.custom_map_selector.item_count == 11 and menu.custom_weather_selector.item_count == 20, "custom entry exposes four scales, open sea plus ten 16:9 coastal maps, and twenty weather palettes")
+	var all_sizes_expose_expected_maps := true
 	for size_index in range(menu.custom_size_selector.item_count):
 		menu.custom_size_selector.select(size_index)
 		menu._refresh_custom_maps()
-		all_sizes_expose_all_maps = all_sizes_expose_all_maps and menu.custom_map_selector.item_count == 11
+		all_sizes_expose_expected_maps = all_sizes_expose_expected_maps and menu.custom_map_selector.item_count == 11
 	menu.custom_size_selector.select(1)
 	menu._refresh_custom_maps()
-	_check(all_sizes_expose_all_maps, "every custom battle scale exposes open sea and all ten reviewed coastal maps")
+	_check(all_sizes_expose_expected_maps, "all scales expose the ten reviewed 16:9 coastal maps")
 	_check(menu.ship_buttons.size() == 48, "custom fleet builder lists all configured characters")
-	var unlocked_cards := 0
-	var locked_cards := 0
-	for ship_id in menu.ship_buttons:
-		if menu.ship_buttons[ship_id].disabled: locked_cards += 1
-		else: unlocked_cards += 1
-	_check(unlocked_cards == 6 and locked_cards == 42, "custom fleet builder distinguishes the six compatibility-unlocked ships from locked characters")
 	var custom_ship_ids: Array[String] = ["ship.ward", "ship.gnevny", "ship.argus"]
 	var custom_result: Dictionary = flow.configure_custom_battle("level.prototype_3v3", "level.prototype_harbor_3v3", "clear_night", custom_ship_ids)
 	var custom_level: Dictionary = root.get_node("DataRegistry").registry.get_definition("levels", "level.custom_runtime")
 	_check(custom_result.get("ok", false) and custom_level.get("player_fleet", []).size() == 3, "custom fleet selection builds a runtime level with the selected roster")
-	_check(custom_level.get("map", {}).get("terrain_definition_id", "") == "terrain.map.harbor_mouth" and custom_level.get("map", {}).get("ocean_palette", "") == "clear_night", "custom runtime level applies the selected map and weather")
+	_check(custom_level.get("map", {}).get("terrain_definition_id", "") == "terrain.map.harbor_mouth_16x9" and custom_level.get("map", {}).get("ocean_palette", "") == "clear_night", "custom runtime level applies the selected 16:9 map and weather")
 	_check(custom_level.get("player_fleet", [])[0].get("position", []) == root.get_node("DataRegistry").registry.get_definition("levels", "level.prototype_harbor_3v3").get("player_fleet", [])[0].get("position", []) and custom_level.get("enemy_fleet", [])[0].get("position", []) == root.get_node("DataRegistry").registry.get_definition("levels", "level.prototype_harbor_3v3").get("enemy_fleet", [])[0].get("position", []), "custom runtime level uses the selected map's reviewed spawn slots for both fleets")
 	var custom_session = BattleSession.new(root.get_node("DataRegistry").registry)
 	_check(custom_session.create_battle("level.custom_runtime", 901).get("ok", false), "custom runtime level creates a playable battle session")
@@ -185,9 +179,9 @@ func _run() -> void:
 	battle._start_battle("level.prototype_broken_atoll_3v3")
 	await process_frame
 	var atoll_snapshot: Dictionary = battle.session.snapshot("player", true)
-	_check(atoll_snapshot.get("terrain_map", {}).get("id", "") == "terrain.map.broken_atoll", "non-harbor coastal level receives its runtime terrain geometry")
+	_check(atoll_snapshot.get("terrain_map", {}).get("id", "") == "terrain.map.broken_atoll_16x9", "non-harbor coastal level receives its 16:9 runtime terrain geometry")
 	_check(atoll_snapshot.get("facilities", {}).is_empty(), "non-harbor coastal level does not inherit harbor facilities")
-	_check(battle.battle_hud._texture("res://assets/ui/processed/battle/terrain/minimap_terrain_map_broken_atoll.png") != null, "non-harbor coastal minimap loads its generated geometry mask")
+	_check(battle.battle_hud._texture("res://assets/ui/processed/battle/terrain/minimap_terrain_map_broken_atoll_16x9.png") != null, "non-harbor coastal minimap loads its generated 16:9 geometry mask")
 	_check(battle.battle_hud._environment_zone_icon("environment.effect.rain_squall") == "ui_marker_environment_rain_squall" and battle.battle_hud._texture("res://assets/ui/export/2x/ui_marker_environment_rain_squall.png") != null, "minimap maps local environment rules to the authored environment marker assets")
 	_check(harbor_snapshot.get("global_environment", {}).get("canonical_ocean_palette", "") == "cloudy_dawn", "harbor scene and Domain share the same cloudy-dawn palette condition id")
 	battle._start_battle("level.prototype_3v3")

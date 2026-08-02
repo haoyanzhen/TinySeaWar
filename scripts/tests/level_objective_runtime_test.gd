@@ -49,6 +49,7 @@ func _run() -> void:
 	_test_t02_gunnery(registry)
 	_test_t03_skill(registry)
 	_test_t04_armor(registry)
+	_test_t05_to_t08_routes_and_locks(registry)
 	_test_tutorial_definition_validation(registry)
 
 	var challenge = BattleSession.new(registry)
@@ -199,6 +200,83 @@ func _test_t04_armor(registry) -> void:
 	_check(session.state.get("result", {}).get("winner_faction", "") == "player" and warspite.get("life_state", "") == "Alive", "T-04 requires both cruisers sunk while Warspite remains alive")
 
 
+func _test_t05_to_t08_routes_and_locks(registry) -> void:
+	var cases := [
+		{"level_id":"level.tutorial.t05","objective_id":"objective.t05_torpedo","unit_id":"unit.player.t05.yukikaze"},
+		{"level_id":"level.tutorial.t06","objective_id":"objective.t06_carrier_hunt","unit_id":"unit.player.t06.shimakaze"},
+		{"level_id":"level.tutorial.t07","objective_id":"objective.t07_shared_contact","unit_id":"unit.player.t07.ward"},
+		{"level_id":"level.tutorial.t08","objective_id":"objective.t08_command","unit_id":"unit.player.t08.warspite"},
+	]
+	for case in cases:
+		var session = BattleSession.new(registry)
+		_check(session.create_battle(case["level_id"], 9001).get("ok", false), "%s creates from formal runtime data" % case["level_id"])
+		var objective: Dictionary = registry.get_definition("objectives", case["objective_id"])
+		var first_zone: Dictionary = objective.get("route_waypoint_zones", [])[0]
+		var target := _pair(first_zone.get("position", []))
+		var move_result: Dictionary = session._apply_command({
+			"command_id":"test.route.move.%s" % case["level_id"],
+			"command_type":"MoveUnits",
+			"issued_at_tick":session.state.get("tick_index", 0),
+			"issuer_type":"Player",
+			"issuer_id":"player",
+			"unit_id":case["unit_id"],
+			"target_position":target,
+		})
+		_check(bool(move_result.get("accepted", false)), "%s leaves normal player movement unlocked before engagement" % case["level_id"])
+		var unit: Dictionary = session.state["units_by_id"][case["unit_id"]]
+		unit["position"] = target
+		session.advance_tick(0.1)
+		_check(int(session.state["level_objective"].get("route_step", 0)) == 1 and int(session.state["level_objective"].get("action_counts", {}).get("ReachTutorialRouteZone", 0)) == 1, "%s records physical arrival at its first authored route zone" % case["level_id"])
+
+	var t05 = BattleSession.new(registry)
+	t05.create_battle("level.tutorial.t05", 9002)
+	t05._record_tutorial_action("TorpedoHit", "unit.player.t05.yukikaze", {"target_unit_id":"unit.enemy.t05.warspite","attack_category":"Gun","weapon_group_id":"yukikaze_torpedo"})
+	_check(int(t05.state["level_objective"].get("action_counts", {}).get("TorpedoHit", 0)) == 0, "T-05 rejects a non-torpedo hit even when source and target ids match")
+	t05._record_tutorial_action("TorpedoHit", "unit.player.t05.yukikaze", {"target_unit_id":"unit.enemy.t05.warspite","attack_category":"Torpedo","weapon_group_id":"yukikaze_torpedo"})
+	_check(int(t05.state["level_objective"].get("action_counts", {}).get("TorpedoHit", 0)) == 1, "T-05 accepts only Yukikaze torpedo evidence against Warspite")
+
+	var t07 = BattleSession.new(registry)
+	t07.create_battle("level.tutorial.t07", 9003)
+	var hindenburg: Dictionary = t07.state["units_by_id"]["unit.enemy.t07.hindenburg"]
+	_check(is_equal_approx(float(hindenburg.get("current_hp", 0.0)), float(hindenburg.get("max_hp", 0.0)) * 0.01), "T-07 loads Hindenburg at the authored one-percent initial HP")
+	t07._record_tutorial_action("EstablishSharedContact", "unit.player.t07.iowa", {"target_unit_id":"unit.enemy.t07.hindenburg"})
+	_check(int(t07.state["level_objective"].get("action_counts", {}).get("EstablishSharedContact", 0)) == 0, "T-07 rejects shared-contact evidence from a ship other than Ward")
+	var locked_fire: Dictionary = t07._apply_command({"command_id":"test.t07.locked.fire","command_type":"FirePrimaryWeapon","issued_at_tick":0,"issuer_type":"SimulationPolicy","issuer_id":"player","unit_id":"unit.player.t07.iowa","target_position":Vector2(1850.0,1700.0)})
+	_check(not bool(locked_fire.get("accepted", false)) and locked_fire.get("reason_code", "") == "TUTORIAL_ACTION_LOCKED", "tutorial simulation policy cannot bypass a player command lock")
+	var ward: Dictionary = t07.state["units_by_id"]["unit.player.t07.ward"]
+	var iowa: Dictionary = t07.state["units_by_id"]["unit.player.t07.iowa"]
+	var enemy_hindenburg: Dictionary = t07.state["units_by_id"]["unit.enemy.t07.hindenburg"]
+	var scout_move: Dictionary = t07._apply_command({"command_id":"test.t07.forward.scout","command_type":"MoveUnits","issued_at_tick":0,"issuer_type":"Player","issuer_id":"player","unit_id":"unit.player.t07.ward","target_position":Vector2(1600.0,1856.0)})
+	_check(bool(scout_move.get("accepted", false)), "T-07 accepts Ward's normal player move into the forward scout area")
+	for tick in range(400):
+		t07.advance_tick(0.1)
+		if bool(t07.state["level_objective"].get("engagement_unlocked", false)): break
+	_check(int(t07.state["level_objective"].get("route_step", 0)) == 1, "T-07 requires only the forward scout area and no south-entrance waypoint")
+	_check(int(t07.state["level_objective"].get("action_counts", {}).get("EstablishSharedContact", 0)) == 1 and bool(t07.state["level_objective"].get("engagement_unlocked", false)), "T-07 forward scout area exposes Hindenburg through Ward's real optical contact")
+	for player_unit_id in t07.state["fleets_by_id"]["fleet.player"]["unit_ids"]:
+		var player_unit: Dictionary = t07.state["units_by_id"][player_unit_id]
+		_check(not bool(player_unit.get("movement_assist_enabled", true)) and not bool(player_unit.get("primary_auto_fire_enabled", true)) and bool(player_unit.get("secondary_auto_fire_enabled", false)), "T-07 keeps %s on manual navigation/manual primary with secondary automation only" % player_unit_id)
+	var forbidden_auto_toggle: Dictionary = t07._apply_command({"command_id":"test.t07.forbidden.auto","command_type":"SetUnitControlState","issued_at_tick":t07.state.get("tick_index", 0),"issuer_type":"Player","issuer_id":"player","unit_ids":t07.state["fleets_by_id"]["fleet.player"]["unit_ids"],"movement_assist_enabled":true,"primary_auto_fire_enabled":true})
+	_check(not bool(forbidden_auto_toggle.get("accepted", false)) and forbidden_auto_toggle.get("reason_code", "") == "TUTORIAL_ACTION_LOCKED", "T-07 prevents every player ship from enabling automatic navigation or automatic primary weapons")
+	var manual_fire: Dictionary = t07._apply_command({"command_id":"test.t07.manual.fire","command_type":"FirePrimaryWeapon","issued_at_tick":t07.state.get("tick_index", 0),"issuer_type":"Player","issuer_id":"player","unit_id":"unit.player.t07.iowa","target_position":enemy_hindenburg["position"]})
+	_check(manual_fire.get("reason_code", "") != "TUTORIAL_ACTION_LOCKED", "T-07 removes the tutorial lock from Iowa's manual main gun as soon as shared contact is established")
+	_check(t07.level_objective_service.primary_locked_for(ward) and not t07.level_objective_service.primary_locked_for(iowa), "T-07 keeps the scout's weapons locked but allows Iowa's required main-gun action after shared contact")
+	_check(t07.level_objective_service.primary_locked_for(enemy_hindenburg), "T-07 keeps enemy weapons locked after contact until Iowa lands the required shared-target hit")
+	t07.level_objective_service.runtime_state["action_counts"]["SharedTargetGunHit"] = 1
+	_check(not t07.level_objective_service.primary_locked_for(ward) and not t07.level_objective_service.primary_locked_for(enemy_hindenburg), "T-07 unlocks scout and enemy weapons only after the required Iowa main-gun hit")
+
+	for level_id in ["level.tutorial.t06", "level.tutorial.t08"]:
+		var survival = BattleSession.new(registry)
+		survival.create_battle(level_id, 9004)
+		var player_ids: Array = survival.state.get("fleets_by_id", {}).get("fleet.player", {}).get("unit_ids", [])
+		for index in range(1, player_ids.size()):
+			var sunk: Dictionary = survival.state["units_by_id"][player_ids[index]]
+			sunk["life_state"] = "Sunk"
+			sunk["current_hp"] = 0.0
+		survival.advance_tick(0.1)
+		_check(survival.state.get("result", {}).get("winner_faction", "") == "enemy", "%s cancels once fewer than two player ships remain" % level_id)
+
+
 func _test_tutorial_definition_validation(registry) -> void:
 	var invalid_trigger: Dictionary = registry.get_definition("objectives", "objective.t04_armor").duplicate(true)
 	invalid_trigger["engagement_trigger"] = "Timer"
@@ -215,6 +293,9 @@ func _test_tutorial_definition_validation(registry) -> void:
 	var invalid_control: Dictionary = registry.get_definition("objectives", "objective.t02_gunnery").duplicate(true)
 	invalid_control["initial_player_control_state"]["damage_multiplier"] = 2.0
 	_check(_validation_errors(registry, invalid_control).any(func(error): return str(error).contains("control state field")), "tutorial validation rejects hidden stat changes in stage control data")
+	var invalid_enemy_weapon_unlock: Dictionary = registry.get_definition("objectives", "objective.t07_shared_contact").duplicate(true)
+	invalid_enemy_weapon_unlock["enemy_weapon_unlock_action_id"] = "MissingTutorialAction"
+	_check(_validation_errors(registry, invalid_enemy_weapon_unlock).any(func(error): return str(error).contains("enemy weapon action lock")), "tutorial validation rejects an enemy weapon unlock that does not reference a required action")
 
 
 func _validation_errors(registry, objective: Dictionary) -> Array[String]:

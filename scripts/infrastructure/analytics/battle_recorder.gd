@@ -27,7 +27,7 @@ func reset(battle_id: String, seed_value: int) -> void:
 			"fire_commitments": 0, "skill_commitments": 0,
 			"skill_score_total": 0.0, "coordination_score_total": 0.0,
 			"task_assignments": 0, "task_clears": 0,
-			"route_selections": 0, "route_fallbacks": 0, "route_unavailable": 0, "route_unavailable_by_reason": {}, "route_unavailable_by_unit": {}, "cover_selections": 0, "path_stuck_events": 0,
+			"route_selections": 0, "route_fallbacks": 0, "route_unavailable": 0, "route_unavailable_by_reason": {}, "route_unavailable_by_unit": {}, "cover_selections": 0, "path_stuck_events": 0, "path_stuck_by_unit": {}, "path_stuck_details": [],
 			"damage_reservations": 0, "effect_reservations": 0, "skill_holds": 0, "skill_holds_by_reason": {},
 			"ai_command_rejections": 0, "rejections_by_reason": {},
 			"facility_interactions_started": 0, "facility_interactions_completed": 0, "facility_interactions_interrupted": 0,
@@ -86,7 +86,16 @@ func consume(events: Array, elapsed_time: float) -> void:
 				var route_unit_id := str(event.get("unit_id", "UNKNOWN"))
 				summary["ai_behavior"]["route_unavailable_by_unit"][route_unit_id] = int(summary["ai_behavior"]["route_unavailable_by_unit"].get(route_unit_id, 0)) + 1
 			"AICoverSelected": summary["ai_behavior"]["cover_selections"] += 1
-			"AIPathStuck": summary["ai_behavior"]["path_stuck_events"] += 1
+			"AIPathStuck":
+				summary["ai_behavior"]["path_stuck_events"] += 1
+				var stuck_unit_id := str(event.get("unit_id", "UNKNOWN"))
+				summary["ai_behavior"]["path_stuck_by_unit"][stuck_unit_id] = int(summary["ai_behavior"]["path_stuck_by_unit"].get(stuck_unit_id, 0)) + 1
+				summary["ai_behavior"]["path_stuck_details"].append({
+					"unit_id":stuck_unit_id,
+					"elapsed_time":elapsed_time,
+					"position":event.get("position", Vector2.ZERO),
+					"target_position":event.get("target_position", Vector2.ZERO),
+				})
 			"AIDamageReserved": summary["ai_behavior"]["damage_reservations"] += 1
 			"AIEffectReserved": summary["ai_behavior"]["effect_reservations"] += 1
 			"AISkillHeld": _record_counted_type("skill_holds", "skill_holds_by_reason", str(event.get("reason", "UNKNOWN")))

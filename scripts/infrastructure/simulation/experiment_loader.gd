@@ -82,12 +82,17 @@ func validate_manifest(manifest: Dictionary) -> Array[String]:
 			errors.append("LevelWinRateEvaluation maximum enemy pre-engagement damage must be non-negative")
 		if int(evaluation.get("maximum_policy_command_rejections", 0)) < 0:
 			errors.append("LevelWinRateEvaluation maximum_policy_command_rejections must be non-negative")
+		if int(evaluation.get("maximum_behavior_anomalies", 0)) < 0:
+			errors.append("LevelWinRateEvaluation maximum_behavior_anomalies must be non-negative")
 		var action_ids := {}
 		for action_id_value in evaluation.get("required_objective_action_ids", []):
 			var action_id := str(action_id_value)
 			if action_id.is_empty() or action_ids.has(action_id):
 				errors.append("LevelWinRateEvaluation required objective action ids must be unique and non-empty")
 			action_ids[action_id] = true
+		for action_id_value in evaluation.get("required_objective_action_sequence", []):
+			if str(action_id_value).is_empty():
+				errors.append("LevelWinRateEvaluation required objective action sequence entries must be non-empty")
 	return errors
 
 

@@ -65,8 +65,34 @@ func is_movement_segment_clear(start: Vector2, end: Vector2, radius: float, move
 	return not bool(first_segment_hit(start, end, "ShipMovement", radius).get("hit", false)) and _first_illegal_movement_fraction(start, end, radius, movement_tags) < 0.0
 
 
+func is_navigation_segment_clear(start: Vector2, end: Vector2, radius: float, movement_tags: Array = []) -> bool:
+	if not _circle_inside_map(start, radius) or not _circle_inside_map(end, radius):
+		return false
+	if bool(first_segment_hit(start, end, "ShipMovement", radius).get("hit", false)):
+		return false
+	var fractions: Array[float] = [0.0, 1.0]
+	for region in _regions_in_bounds(start, end):
+		var polygon: PackedVector2Array = region.get("_polygon", PackedVector2Array())
+		for index in range(polygon.size()):
+			var fraction := _segment_intersection_fraction(start, end, polygon[index], polygon[(index + 1) % polygon.size()])
+			if fraction >= 0.0:
+				fractions.append(fraction)
+	fractions.sort()
+	var samples: Array[float] = []
+	for fraction in fractions:
+		if samples.is_empty() or absf(float(samples[-1]) - fraction) > EPSILON:
+			samples.append(fraction)
+	if not _movement_allowed_at(start, movement_tags) or not _movement_allowed_at(end, movement_tags):
+		return false
+	for sample_index in range(samples.size() - 1):
+		var midpoint := (samples[sample_index] + samples[sample_index + 1]) * 0.5
+		if not _movement_allowed_at(start.lerp(end, midpoint), movement_tags):
+			return false
+	return true
+
+
 func can_occupy_circle(center: Vector2, radius: float, movement_tags: Array = []) -> bool:
-	if center.x - radius < 0.0 or center.y - radius < 0.0 or center.x + radius > map_size.x or center.y + radius > map_size.y:
+	if not _circle_inside_map(center, radius):
 		return false
 	for obstacle in _obstacles_in_bounds(center, center, maxf(0.0, radius)):
 		if "ShipMovement" not in obstacle.get("block_mask", []):
@@ -196,6 +222,24 @@ func _obstacles_in_bounds(start: Vector2, end: Vector2, padding: float) -> Array
 	return result
 
 
+func _regions_in_bounds(start: Vector2, end: Vector2) -> Array:
+	if region_cells.is_empty(): return regions
+	var minimum := Vector2(minf(start.x, end.x), minf(start.y, end.y))
+	var maximum := Vector2(maxf(start.x, end.x), maxf(start.y, end.y))
+	var min_cell := _cell_for(minimum)
+	var max_cell := _cell_for(maximum)
+	var indices := {}
+	for cell_y in range(min_cell.y, max_cell.y + 1):
+		for cell_x in range(min_cell.x, max_cell.x + 1):
+			for region_index in region_cells.get(Vector2i(cell_x, cell_y), []):
+				indices[int(region_index)] = true
+	var sorted_indices: Array = indices.keys()
+	sorted_indices.sort()
+	var result: Array = []
+	for region_index in sorted_indices: result.append(regions[int(region_index)])
+	return result
+
+
 func _polygon_bounds(polygon: PackedVector2Array) -> Rect2:
 	var minimum := polygon[0]
 	var maximum := polygon[0]
@@ -209,6 +253,25 @@ func _polygon_bounds(polygon: PackedVector2Array) -> Rect2:
 
 func _cell_for(point: Vector2) -> Vector2i:
 	return Vector2i(floori(point.x / SPATIAL_CELL_SIZE), floori(point.y / SPATIAL_CELL_SIZE))
+
+
+func _circle_inside_map(center: Vector2, radius: float) -> bool:
+	return (
+		center.x - radius >= 0.0
+		and center.y - radius >= 0.0
+		and center.x + radius <= map_size.x
+		and center.y + radius <= map_size.y
+	)
+
+
+func _movement_allowed_at(position: Vector2, movement_tags: Array) -> bool:
+	var top_region := top_region_at(position)
+	if top_region.is_empty():
+		return true
+	match str(top_region.get("region_type", "DeepWater")):
+		"ShallowWater": return "ShallowDraft" in movement_tags
+		"ReefOrSandbar": return "ReefCapable" in movement_tags
+		_: return true
 
 
 func _first_illegal_movement_fraction(start: Vector2, end: Vector2, radius: float, movement_tags: Array) -> float:
@@ -256,6 +319,7 @@ func _moving_point_segment_fraction(start: Vector2, displacement: Vector2, a: Ve
 	var best := INF
 	var edge := b - a
 	var length := edge.length()
+	var fraction_epsilon := EPSILON / maxf(displacement.length(), EPSILON)
 	if length > EPSILON:
 		var tangent := edge / length
 		var normal := Vector2(-tangent.y, tangent.x)
@@ -264,7 +328,7 @@ func _moving_point_segment_fraction(start: Vector2, displacement: Vector2, a: Ve
 			for raw_side in [-radius, radius]:
 				var side := float(raw_side)
 				var fraction: float = (side - (start - a).dot(normal)) / normal_velocity
-				if fraction < -EPSILON or fraction > 1.0 + EPSILON:
+				if fraction < -fraction_epsilon or fraction > 1.0 + fraction_epsilon:
 					continue
 				var along: float = (start + displacement * fraction - a).dot(tangent)
 				if along >= -EPSILON and along <= length + EPSILON:
@@ -287,8 +351,9 @@ func _ray_circle_fraction(start: Vector2, displacement: Vector2, center: Vector2
 	if discriminant < 0.0:
 		return -1.0
 	var root := sqrt(discriminant)
+	var fraction_epsilon := EPSILON / maxf(displacement.length(), EPSILON)
 	for fraction in [(-b - root) / (2.0 * a), (-b + root) / (2.0 * a)]:
-		if fraction >= -EPSILON and fraction <= 1.0 + EPSILON:
+		if fraction >= -fraction_epsilon and fraction <= 1.0 + fraction_epsilon:
 			return clampf(fraction, 0.0, 1.0)
 	return -1.0
 
@@ -301,7 +366,9 @@ func _segment_intersection_fraction(a: Vector2, b: Vector2, c: Vector2, d: Vecto
 		return -1.0
 	var t := (c - a).cross(s) / denominator
 	var u := (c - a).cross(r) / denominator
-	return clampf(t, 0.0, 1.0) if t >= -EPSILON and t <= 1.0 + EPSILON and u >= -EPSILON and u <= 1.0 + EPSILON else -1.0
+	var t_epsilon := EPSILON / maxf(r.length(), EPSILON)
+	var u_epsilon := EPSILON / maxf(s.length(), EPSILON)
+	return clampf(t, 0.0, 1.0) if t >= -t_epsilon and t <= 1.0 + t_epsilon and u >= -u_epsilon and u <= 1.0 + u_epsilon else -1.0
 
 
 func _polygon_normal_at(point: Vector2, polygon: PackedVector2Array) -> Vector2:

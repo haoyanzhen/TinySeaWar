@@ -22,7 +22,7 @@ const DISTANCE_BASELINE_MULTIPLIER := 1.5
 const MOTION_BASELINE_MULTIPLIER := 0.5
 const ATTACK_SPEED_BASELINE_MULTIPLIER := 0.5
 const GUN_IMPACT_RADIUS_MULTIPLIER := 0.5
-const DAMAGE_BASELINE_MULTIPLIER := 0.25
+const DAMAGE_BASELINE_MULTIPLIER := 0.5
 
 var definitions := {}
 var errors: Array[String] = []
@@ -378,6 +378,10 @@ func _validate_level(level: Dictionary) -> void:
 				var initial_skill_cooldown := float(member.get("initial_skill_cooldown", -1.0))
 				if initial_skill_cooldown < 0.0 or initial_skill_cooldown > float(skill.get("cooldown", 0.0)):
 					errors.append("Invalid initial skill cooldown in %s/%s" % [level_id, fleet_name])
+			if member.has("initial_hp_ratio"):
+				var initial_hp_ratio := float(member.get("initial_hp_ratio", 0.0))
+				if initial_hp_ratio <= 0.0 or initial_hp_ratio > 1.0:
+					errors.append("Invalid initial_hp_ratio in %s/%s" % [level_id, fleet_name])
 			if member.has("initial_ammo_type"):
 				var initial_ammo_type := str(member.get("initial_ammo_type", ""))
 				var ammo_group_id := str(ship.get("ammo_selection_group_id", ""))
@@ -495,10 +499,14 @@ func _validate_objective(objective: Dictionary) -> void:
 	if kind != "TutorialNavigation":
 		if objective.get("protected_player_unit_ids", []).is_empty() or objective.get("required_enemy_unit_ids", []).is_empty():
 			errors.append("Tutorial objective %s requires protected player and enemy unit lists" % objective_id)
-	if kind in ["TutorialArmor", "TutorialTorpedo", "TutorialCarrierHunt"] and (str(objective.get("engagement_trigger", "")) != "FirstContact" or objective.get("contact_target_unit_ids", []).is_empty()):
+	if kind == "TutorialArmor" and (str(objective.get("engagement_trigger", "")) != "FirstContact" or objective.get("contact_target_unit_ids", []).is_empty()):
 		errors.append("Tutorial armor objective %s requires a first-contact target" % objective_id)
+	if kind == "TutorialCarrierHunt" and (str(objective.get("engagement_trigger", "")) not in ["FirstContact", "RequiredActionsComplete"] or objective.get("contact_target_unit_ids", []).is_empty()):
+		errors.append("Tutorial carrier hunt objective %s requires a supported engagement trigger and contact target" % objective_id)
+	if kind == "TutorialTorpedo" and (str(objective.get("engagement_trigger", "")) not in ["FirstContact", "RequiredActionsComplete"] or objective.get("contact_target_unit_ids", []).is_empty()):
+		errors.append("Tutorial torpedo objective %s requires a supported engagement trigger and contact target" % objective_id)
 	var action_ids := {}
-	var allowed_actions := ["SelectTutorialUnit", "EnableCameraFollow", "AppendMoveWaypoint", "SwitchAmmo", "ManualPrimaryFire", "CastSkill", "TorpedoHit", "EstablishSharedContact", "SharedTargetGunHit", "GroupFocusTarget"]
+	var allowed_actions := ["SelectTutorialUnit", "EnableCameraFollow", "AppendMoveWaypoint", "SwitchAmmo", "ManualPrimaryFire", "CastSkill", "ReachTutorialRouteZone", "TorpedoHit", "EstablishSharedContact", "SharedTargetGunHit", "GroupFocusTarget"]
 	for requirement in objective.get("required_actions", []):
 		var action_id := str(requirement.get("action_id", ""))
 		if action_id not in allowed_actions or action_ids.has(action_id) or int(requirement.get("required_count", 0)) <= 0 or str(requirement.get("instruction", "")).is_empty():
@@ -514,6 +522,42 @@ func _validate_objective(objective: Dictionary) -> void:
 			errors.append("Tutorial action %s references an invalid primary weapon group in %s" % [action_id, objective_id])
 		if requirement.has("ammo_group_id") and str(ship.get("ammo_selection_group_id", "")) != str(requirement.get("ammo_group_id", "")):
 			errors.append("Tutorial action %s references an invalid ammo group in %s" % [action_id, objective_id])
+		if requirement.has("target_unit_id"):
+			var target_unit_id := str(requirement.get("target_unit_id", ""))
+			if not objective_units.has(target_unit_id) or str(objective_units.get(target_unit_id, {}).get("faction_id", "")) != "enemy":
+				errors.append("Tutorial action %s references an invalid enemy target in %s" % [action_id, objective_id])
+		if requirement.has("attack_category") and str(requirement.get("attack_category", "")) not in ["Gun", "Torpedo", "Aviation", "AntiAir", "AntiSubmarine", "Skill"]:
+			errors.append("Tutorial action %s has an invalid attack category in %s" % [action_id, objective_id])
+	var player_weapon_unlock_action_id := str(objective.get("player_weapon_unlock_action_id", ""))
+	var player_weapon_locked_ids: Array = objective.get("player_weapon_locked_unit_ids_until_action", [])
+	if player_weapon_unlock_action_id.is_empty() != player_weapon_locked_ids.is_empty():
+		errors.append("Tutorial player weapon action lock must define both unit ids and unlock action in %s" % objective_id)
+	if not player_weapon_unlock_action_id.is_empty() and not action_ids.has(player_weapon_unlock_action_id):
+		errors.append("Tutorial player weapon action lock references an unknown action in %s" % objective_id)
+	var seen_player_weapon_locked_ids := {}
+	for unit_id_value in player_weapon_locked_ids:
+		var locked_unit_id := str(unit_id_value)
+		if locked_unit_id.is_empty() or seen_player_weapon_locked_ids.has(locked_unit_id) or not objective_units.has(locked_unit_id) or str(objective_units.get(locked_unit_id, {}).get("faction_id", "")) != "player":
+			errors.append("Tutorial player weapon action lock references an invalid player unit in %s" % objective_id)
+		seen_player_weapon_locked_ids[locked_unit_id] = true
+	var enemy_weapon_unlock_action_id := str(objective.get("enemy_weapon_unlock_action_id", ""))
+	if not enemy_weapon_unlock_action_id.is_empty() and not action_ids.has(enemy_weapon_unlock_action_id):
+		errors.append("Tutorial enemy weapon action lock references an unknown action in %s" % objective_id)
+	var route_zones: Array = objective.get("route_waypoint_zones", [])
+	if not route_zones.is_empty():
+		var route_unit_id := str(objective.get("route_player_unit_id", ""))
+		if not objective_units.has(route_unit_id) or str(objective_units.get(route_unit_id, {}).get("faction_id", "")) != "player":
+			errors.append("Tutorial route references an invalid player unit in %s" % objective_id)
+		if not action_ids.has("ReachTutorialRouteZone"):
+			errors.append("Tutorial route requires ReachTutorialRouteZone evidence in %s" % objective_id)
+		elif int(objective.get("required_actions", []).filter(func(requirement): return str(requirement.get("action_id", "")) == "ReachTutorialRouteZone")[0].get("required_count", 0)) != route_zones.size():
+			errors.append("Tutorial route action count must match route waypoint count in %s" % objective_id)
+		var route_zone_ids := {}
+		for zone in route_zones:
+			var route_zone_id := str(zone.get("id", ""))
+			if route_zone_id.is_empty() or route_zone_ids.has(route_zone_id) or not _valid_positive_pair(zone.get("position", [])) or float(zone.get("radius", 0.0)) <= 0.0 or str(zone.get("label", "")).is_empty():
+				errors.append("Invalid or duplicate tutorial route waypoint in %s" % objective_id)
+			route_zone_ids[route_zone_id] = true
 	if kind == "TutorialGunnery" and (not action_ids.has("SwitchAmmo") or not action_ids.has("ManualPrimaryFire")):
 		errors.append("Tutorial gunnery objective %s requires switch-ammo and manual-fire actions" % objective_id)
 	if kind == "TutorialSkill" and not action_ids.has("CastSkill"):

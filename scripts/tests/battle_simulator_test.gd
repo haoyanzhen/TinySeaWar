@@ -36,6 +36,14 @@ func _run() -> void:
 	win_rate_manifest["seed_plan"] = {"type":"SequentialRange", "start":9001, "count":20}
 	win_rate_manifest["win_rate_evaluation"] = {"settlement_source":"BattleStatisticsReport", "target_player_win_rate":0.6, "tolerance":0.05}
 	_check(loader.validate_manifest(win_rate_manifest).is_empty(), "win-rate manifest accepts exactly 20 distinct battle seeds and report settlement")
+	var route_gate_manifest: Dictionary = win_rate_manifest.duplicate(true)
+	route_gate_manifest["win_rate_evaluation"]["required_objective_action_ids"] = ["ReachTutorialRouteZone", "ManualPrimaryFire"]
+	route_gate_manifest["win_rate_evaluation"]["required_objective_action_sequence"] = ["ReachTutorialRouteZone", "ReachTutorialRouteZone", "ManualPrimaryFire"]
+	route_gate_manifest["win_rate_evaluation"]["maximum_behavior_anomalies"] = 0
+	_check(loader.validate_manifest(route_gate_manifest).is_empty(), "win-rate manifest accepts ordered route evidence and a zero-anomaly gate")
+	var invalid_route_gate_manifest: Dictionary = route_gate_manifest.duplicate(true)
+	invalid_route_gate_manifest["win_rate_evaluation"]["required_objective_action_sequence"] = ["ReachTutorialRouteZone", ""]
+	_check(loader.validate_manifest(invalid_route_gate_manifest).any(func(error): return str(error).contains("sequence entries")), "win-rate manifest rejects an empty ordered route action")
 	var short_win_rate_manifest: Dictionary = win_rate_manifest.duplicate(true)
 	short_win_rate_manifest["seed_plan"] = {"type":"SequentialRange", "start":9001, "count":19}
 	_check(loader.validate_manifest(short_win_rate_manifest).any(func(error): return str(error).contains("exactly 20")), "win-rate manifest rejects a sample other than 20 battles")
@@ -50,6 +58,36 @@ func _run() -> void:
 	var registry = ConfigRegistry.new()
 	_check(registry.load_all(), "configuration registry loads")
 	var runner = SimulationRunner.new()
+	var route_gate_aggregate := {
+		"planned_runs":20, "finished_runs":20, "player_win_rate":1.0,
+		"duration":{"p10":20.0}, "enemy_damage_before_engagement":0.0,
+		"policy_command_rejections":0, "behavior_anomaly_count":0,
+	}
+	var route_gate_runs: Array = []
+	for _index in range(20):
+		route_gate_runs.append({"level_objective":{
+			"engagement_unlocked":true,
+			"action_counts":{"ReachTutorialRouteZone":2, "ManualPrimaryFire":1},
+			"action_evidence":[
+				{"action_id":"ReachTutorialRouteZone"},
+				{"action_id":"ReachTutorialRouteZone"},
+				{"action_id":"ManualPrimaryFire"},
+			],
+		}})
+	var route_gate_contract := {"win_rate_evaluation":{
+		"target_player_win_rate":1.0, "tolerance":0.0,
+		"require_engagement_unlocked":true,
+		"required_objective_action_ids":["ReachTutorialRouteZone", "ManualPrimaryFire"],
+		"required_objective_action_sequence":["ReachTutorialRouteZone", "ReachTutorialRouteZone", "ManualPrimaryFire"],
+		"maximum_enemy_damage_before_engagement":0.0,
+		"maximum_policy_command_rejections":0,
+		"maximum_behavior_anomalies":0,
+	}}
+	_check(bool(runner._win_rate_evaluation(route_gate_contract, route_gate_aggregate, route_gate_runs).get("passed", false)), "route gate accepts 20 runs with complete ordered evidence and zero anomalies")
+	var broken_route_runs: Array = route_gate_runs.duplicate(true)
+	broken_route_runs[19]["level_objective"]["action_evidence"] = [{"action_id":"ReachTutorialRouteZone"}, {"action_id":"ManualPrimaryFire"}, {"action_id":"ReachTutorialRouteZone"}]
+	_check(not bool(runner._win_rate_evaluation(route_gate_contract, route_gate_aggregate, broken_route_runs).get("objective_evidence_passed", true)), "route gate rejects the batch when one run violates the required action order")
+	_check(not bool(runner._win_rate_evaluation(route_gate_contract, route_gate_aggregate, []).get("objective_evidence_passed", true)), "route gate rejects aggregate-only evidence without all per-run records")
 	var first := runner.run_experiment(registry, manifest)
 	var second := runner.run_experiment(registry, manifest)
 	_check(bool(first.get("ok", false)) and bool(second.get("ok", false)), "experiment runs twice")

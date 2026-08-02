@@ -36,7 +36,7 @@ func _run() -> void:
 	jsonl.close()
 	var metadata := {
 		"experiment_id": "sim.balance.damage_ttk_20",
-		"description": "人工指定的大版本平衡验证：0.25 伤害倍率与舰炮散布的几何相交、命中、伤害和 TTK",
+		"description": "人工指定的大版本平衡验证：0.5 伤害倍率与舰炮散布的几何相交、命中、伤害和 TTK",
 		"level_definition_id": LEVEL_ID,
 		"ai_profile_id": PROFILE_ID,
 		"tick_seconds": TICK_SECONDS,

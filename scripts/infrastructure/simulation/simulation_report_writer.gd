@@ -168,6 +168,7 @@ func _markdown(result: Dictionary) -> String:
 			"| 必做动作证据 | %s |" % ("通过" if bool(evaluation.get("objective_evidence_passed", false)) else "未通过"),
 			"| 解锁前敌方伤害 | %.2f / %.2f |" % [float(evaluation.get("observed_enemy_damage_before_engagement", 0.0)), float(evaluation.get("maximum_enemy_damage_before_engagement", 0.0))],
 			"| 教学策略命令拒绝 | %d / %d |" % [int(evaluation.get("observed_policy_command_rejections", 0)), int(evaluation.get("maximum_policy_command_rejections", 0))],
+			"| 行为异常 | %d / %d |" % [int(evaluation.get("observed_behavior_anomalies", 0)), int(evaluation.get("maximum_behavior_anomalies", 0))],
 			"| 结算 | %s |" % ("通过" if bool(evaluation.get("passed", false)) else "未通过"),
 			"",
 		])

@@ -88,10 +88,10 @@ func _test_chinese_display_text() -> void:
 
 
 func _test_terrain_configuration_and_rules() -> void:
-	_check(registry.all("terrain").size() == 20, "ten island terrain templates and ten runtime maps load")
-	_check(registry.all("navigation").size() == 10, "all ten coastal navigation graphs load")
-	_check(registry.all("environment_zones").size() == 20, "seven local effects, two authored zone sets, and eleven ocean condition definitions load")
-	_check(registry.all("facilities").size() == 13, "facility, support mission, minefield, and harbor layout definitions load")
+	_check(registry.all("terrain").size() == 40, "ten legacy and ten 16:9 terrain templates plus their twenty runtime maps load")
+	_check(registry.all("navigation").size() == 20, "legacy and 16:9 navigation graphs load for all ten coastal layouts")
+	_check(registry.all("environment_zones").size() == 23, "seven local effects, five authored zone sets, and eleven ocean condition definitions load")
+	_check(registry.all("facilities").size() == 15, "facility, support mission, legacy and 16:9 minefield/layout definitions load")
 	var harbor_level: Dictionary = registry.get_definition("levels", "level.prototype_harbor_3v3")
 	var harbor_costs := {"player":0, "enemy":0}
 	for member in harbor_level.get("player_fleet", []): harbor_costs["player"] += int(registry.get_definition("ships", str(member.get("ship_id", ""))).get("cost", 0))
@@ -112,7 +112,7 @@ func _test_terrain_configuration_and_rules() -> void:
 	invalid_weapon_state_registry._validate_level(invalid_weapon_state_level)
 	_check(not invalid_weapon_state_registry.errors.filter(func(error): return str(error).contains("Unknown weapon group")).is_empty(), "level validation rejects weapon groups not mounted by the configured ship")
 	_check(not invalid_weapon_state_registry.errors.filter(func(error): return str(error).contains("Invalid weapon group state")).is_empty(), "level validation rejects unsupported initial weapon group states")
-	var terrain_definition: Dictionary = registry.get_definition("terrain", "terrain.map.harbor_mouth")
+	var terrain_definition: Dictionary = registry.get_definition("terrain", "terrain.map.harbor_mouth_16x9")
 	var query = TerrainQueryService.new()
 	query.configure(terrain_definition)
 	_check(terrain_definition.get("visual_regions", []).size() == 6 and query.obstacles.size() == 2, "harbor sediment, breaker, and wet-rock regions remain visual-only outside Domain obstacles")
@@ -129,8 +129,8 @@ func _test_terrain_configuration_and_rules() -> void:
 		land_center += Vector2(float(point[0]), float(point[1]))
 	land_center /= float(first_polygon.size())
 	_check(not query.can_occupy_circle(land_center, 20.0, ["Surface", "ShallowDraft"]), "ship occupancy rejects reviewed hard land")
-	_check(query.can_occupy_circle(Vector2(2048.0, 1160.0), 20.0, ["Surface", "ShallowDraft"]), "reviewed harbor navigation channel remains passable")
-	_check(not query.can_occupy_circle(Vector2(1850.0, 900.0), 20.0, ["Surface"]) and query.can_occupy_circle(Vector2(1850.0, 900.0), 20.0, ["Surface", "ShallowDraft"]), "shallow-water access honors unit draft tags")
+	_check(query.can_occupy_circle(Vector2(3072.0, 1743.0), 20.0, ["Surface", "ShallowDraft"]), "reviewed harbor navigation channel remains passable")
+	_check(not query.can_occupy_circle(Vector2(2583.0, 1250.0), 20.0, ["Surface"]) and query.can_occupy_circle(Vector2(2583.0, 1250.0), 20.0, ["Surface", "ShallowDraft"]), "shallow-water access honors unit draft tags")
 	var shallow_crossing_query = TerrainQueryService.new()
 	shallow_crossing_query.configure({"id":"terrain.test.shallow_crossing", "map_size":[100,100], "obstacles":[], "regions":[{"id":"region.shallow_strip", "region_type":"ShallowWater", "priority":50, "polygon":[[40,0],[40,100],[60,100],[60,0]]}]})
 	_check(not shallow_crossing_query.is_movement_segment_clear(Vector2(10,50), Vector2(90,50), 2.0, ["Surface"]), "deep-draft movement cannot cross shallow water between legal endpoints")
@@ -163,8 +163,14 @@ func _test_terrain_configuration_and_rules() -> void:
 	var light_result: Dictionary = light_context.context_at(Vector2(50.0, 50.0))
 	_check(is_equal_approx(float(light_result["optical_visibility_multiplier"]), 1.18) and bool(light_result["tide_controls_access"]), "moonlit visibility gain and tidal access fact survive TerrainContext composition")
 	var planner = RoutePlanner.new()
-	var route: Dictionary = planner.plan_path(query, registry.get_definition("navigation", "navigation.harbor_mouth"), Vector2(2048.0, 1870.0), Vector2(2048.0, 250.0), 20.0, ["Surface", "ShallowDraft"])
+	var route: Dictionary = planner.plan_path(query, registry.get_definition("navigation", "navigation.harbor_mouth_16x9"), Vector2(832.0, 1728.0), Vector2(5312.0, 1728.0), 20.0, ["Surface", "ShallowDraft"])
 	_check(bool(route.get("ok", false)) and not route.get("waypoints", []).is_empty(), "player and AI shared route graph finds a harbor path")
+	var blocked_search_target := Vector2(4608.0, 1678.0)
+	var projected_route: Dictionary = planner.plan_path(query, registry.get_definition("navigation", "navigation.harbor_mouth_16x9"), Vector2(832.0, 1984.0), blocked_search_target, 20.0, ["Surface", "ShallowDraft"])
+	var projected_target: Vector2 = projected_route.get("resolved_target", Vector2.ZERO)
+	_check(bool(projected_route.get("ok", false)) and bool(projected_route.get("target_projected", false)) and projected_target.distance_to(blocked_search_target) < Vector2(832.0, 1984.0).distance_to(blocked_search_target), "unattachable harbor search intent resolves to a reachable stage target with positive strategic progress")
+	var invalid_start_route: Dictionary = planner.plan_path(query, registry.get_definition("navigation", "navigation.harbor_mouth_16x9"), land_center, Vector2(832.0, 1728.0), 20.0, ["Surface", "ShallowDraft"])
+	_check(not bool(invalid_start_route.get("ok", true)) and str(invalid_start_route.get("reason_code", "")) == "NO_START_ATTACHMENT", "route failure distinguishes a start that cannot safely attach to the reviewed graph")
 	var open_session = BattleSession.new(registry)
 	open_session.create_battle("level.prototype_1v1", 31)
 	_check(open_session.state.get("terrain_map", {}).is_empty(), "open-sea levels retain the no-terrain regression path")
@@ -175,7 +181,7 @@ func _test_terrain_configuration_and_rules() -> void:
 	_check(harbor_session.state.get("minefields_by_id", {}).size() == 1, "harbor battle loads the fixed minefield and faction visibility contract")
 	_check(harbor_session.snapshot("player", false).get("minefields", {}).is_empty(), "enemy minefield remains hidden from a faction without discovery knowledge")
 	_check(harbor_session.snapshot("enemy", false).get("minefields", {}).size() == 1 and harbor_session.snapshot("player", true).get("minefields", {}).size() == 1, "minefield visibility reveals owner knowledge and omniscient debug state")
-	var support_request: Dictionary = harbor_session.facility_service.request_support("facility.harbor.airfield_east", "support_mission.air_recon", "enemy", Vector2(2048.0, 900.0), 0.0)
+	var support_request: Dictionary = harbor_session.facility_service.request_support("facility.harbor.airfield_east", "support_mission.air_recon", "enemy", Vector2(3072.0, 1350.0), 0.0)
 	_check(bool(support_request.get("accepted", false)), "active airfield with live dependencies accepts an authored support mission")
 	var airfield_snapshot: Dictionary = harbor_session.facility_service.snapshot()["facility.harbor.airfield_east"]
 	_check(airfield_snapshot.get("service_queue", []).size() == 1 and int(airfield_snapshot.get("mission_charges_remaining", {}).get("support_mission.air_recon", -1)) == 2, "facility debug snapshot exposes the active service queue and remaining mission charges")
@@ -208,7 +214,7 @@ func _test_coastal_runtime_levels() -> void:
 		var session = BattleSession.new(registry)
 		var creation: Dictionary = session.create_battle(level_id, 20260710)
 		_check(creation.get("ok", false), "%s creates a battle session" % level_id)
-		_check(session.state.get("terrain_map", {}).get("id", "") == "terrain.map.%s" % coastal_id, "%s loads its authored terrain map" % level_id)
+		_check(session.state.get("terrain_map", {}).get("id", "") == "terrain.map.%s_16x9" % coastal_id, "%s loads its authored 16:9 terrain map" % level_id)
 		_check(not session.navigation_definition.is_empty(), "%s loads its shared navigation graph" % level_id)
 		var level: Dictionary = registry.get_definition("levels", level_id)
 		var terrain_spawns: Array = session.state.get("terrain_map", {}).get("spawn_points", [])
@@ -245,7 +251,7 @@ func _terrain_replay_signature(seed_value: int) -> Dictionary:
 
 
 func _test_scene_combat_tactical_effects() -> void:
-	var terrain_definition: Dictionary = registry.get_definition("terrain", "terrain.map.harbor_mouth")
+	var terrain_definition: Dictionary = registry.get_definition("terrain", "terrain.map.harbor_mouth_16x9")
 	var query = TerrainQueryService.new()
 	query.configure(terrain_definition)
 	for weather in ["clear", "cloudy", "overcast", "rain", "thunderstorm"]:
@@ -308,7 +314,8 @@ func _test_scene_combat_tactical_effects() -> void:
 	battery_session.create_battle("level.prototype_harbor_3v3", 1202)
 	var battery: Dictionary = battery_session.facility_service.facilities_by_id["facility.harbor.battery_west"]
 	var battery_target: Dictionary = battery_session.state["units_by_id"]["unit.player.shimakaze"]
-	battery_target["position"] = Vector2(2200.0, 995.0)
+	var battery_muzzle: Vector2 = battery.get("muzzle_position", battery.get("position", Vector2.ZERO))
+	battery_target["position"] = battery_muzzle + Vector2.RIGHT.rotated(deg_to_rad(float(battery.get("heading", 0.0)))) * 420.0
 	battery_session.state["visible_by_faction"]["enemy"] = {battery_target["entity_id"]:true}
 	battery_session._event_buffer = []
 	battery_session._update_facility_weapons()
@@ -369,8 +376,7 @@ func _test_scene_combat_tactical_effects() -> void:
 
 	var support_session = BattleSession.new(registry)
 	support_session.create_battle("level.prototype_harbor_3v3", 1205)
-	var support_target: Dictionary = support_session.state["units_by_id"]["unit.player.shimakaze"]
-	var support_position: Vector2 = support_target["position"]
+	var support_position := Vector2(3072.0, 1728.0)
 	var recon_request: Dictionary = support_session.facility_service.request_support("facility.harbor.airfield_east", "support_mission.air_recon", "enemy", support_position, 0.0, support_session.terrain_context_service.context_at(support_position))
 	_check(recon_request["accepted"], "airfield validates state, dependency, range, weather, cooldown, and charges before accepting recon")
 	for event in support_session.facility_service.advance(20.0, 20.0, support_session.state["units_by_id"]): support_session._handle_facility_event(event)
@@ -391,19 +397,19 @@ func _test_scene_combat_tactical_effects() -> void:
 	var mine_session = BattleSession.new(registry)
 	mine_session.create_battle("level.prototype_harbor_3v3", 1206)
 	var mined_unit: Dictionary = mine_session.state["units_by_id"]["unit.player.shimakaze"]
-	var mine_trigger: Dictionary = mine_session.minefield_service.resolve_unit_motion(mined_unit, Vector2(1400,700), Vector2(1650,700))
+	var mine_trigger: Dictionary = mine_session.minefield_service.resolve_unit_motion(mined_unit, Vector2(2100,1050), Vector2(2475,1050))
 	_check(mine_trigger["triggered"], "continuous minefield query finds entry outside the authored safe channel")
 	mine_session.facility_service.suppress("facility.harbor.mine_control_west", 10.0, "test")
 	var mine_state_events: Array = mine_session.minefield_service.sync_controllers(mine_session.facility_service.snapshot())
-	_check(_has_event(mine_state_events, "MineFieldStateChanged") and mine_session.minefield_service.snapshot()["minefield.harbor_outer"]["operation_state"] == "Dormant", "suppressing the bound controller disables only its authored minefield")
+	_check(_has_event(mine_state_events, "MineFieldStateChanged") and mine_session.minefield_service.snapshot()["minefield.harbor_outer_16x9"]["operation_state"] == "Dormant", "suppressing the bound controller disables only its authored minefield")
 
 	var ai_session = BattleSession.new(registry)
 	ai_session.create_battle("level.prototype_harbor_3v3", 1207)
 	var ai_unit: Dictionary = ai_session.state["units_by_id"]["unit.enemy.kirov"]
 	var facility_plan := ai_session._ai_facility_plan(ai_unit, true)
 	_check(not facility_plan.is_empty(), "AI creates a facility capture or activation objective from its legal faction view")
-	var safe_waypoint: Vector2 = ai_session.minefield_service.avoidance_waypoint("enemy", Vector2(1400,700), Vector2(1650,700))
-	_check(safe_waypoint != Vector2(1650,700), "AI redirects a route crossing a known active minefield through the authored safe channel")
+	var safe_waypoint: Vector2 = ai_session.minefield_service.avoidance_waypoint("enemy", Vector2(2100,1050), Vector2(2475,1050))
+	_check(safe_waypoint != Vector2(2475,1050), "AI redirects a route crossing a known active minefield through the authored safe channel")
 	var rough_unit: Dictionary = ai_session.state["units_by_id"]["unit.enemy.anshan"]
 	rough_unit["position"] = Vector2(3000,500); rough_unit["movement_state"] = {"mode":"AutoNavigate","target_position":Vector2(3400,500)}; rough_unit["current_speed"] = 0.0
 	ai_session._update_movement(0.1)
@@ -453,9 +459,9 @@ func _test_runtime_baseline_scales() -> void:
 		var base_speed := float(projectile.get("base_speed", 0.0))
 		_check(base_speed >= 0.0 and is_equal_approx(float(projectile.get("speed", 0.0)), base_speed * 0.5), "%s uses the 0.5x runtime projectile and aircraft speed baseline" % projectile.get("id", "?"))
 	for formula in registry.all("formulas"):
-		_check(is_equal_approx(float(formula.get("base_damage", 0.0)), float(formula.get("design_base_damage", 0.0)) * 0.25), "%s uses the 0.25x runtime base damage" % formula.get("id", "?"))
-		_check(is_equal_approx(float(formula.get("power_coefficient", 0.0)), float(formula.get("design_power_coefficient", 0.0)) * 0.25), "%s uses the 0.25x runtime power coefficient" % formula.get("id", "?"))
-		_check(is_equal_approx(float(formula.get("armor_coefficient", 0.0)), float(formula.get("design_armor_coefficient", 0.0)) * 0.25), "%s keeps armor reduction in the same 0.25x damage unit")
+		_check(is_equal_approx(float(formula.get("base_damage", 0.0)), float(formula.get("design_base_damage", 0.0)) * 0.5), "%s uses the 0.5x runtime base damage" % formula.get("id", "?"))
+		_check(is_equal_approx(float(formula.get("power_coefficient", 0.0)), float(formula.get("design_power_coefficient", 0.0)) * 0.5), "%s uses the 0.5x runtime power coefficient" % formula.get("id", "?"))
+		_check(is_equal_approx(float(formula.get("armor_coefficient", 0.0)), float(formula.get("design_armor_coefficient", 0.0)) * 0.5), "%s keeps armor reduction in the same 0.5x damage unit")
 	for skill in registry.all("skills"):
 		var base_cast_range := float(skill.get("base_cast_range", 0.0))
 		var expected_cast_range := base_cast_range * 1.5 if base_cast_range > 0.0 else 0.0
@@ -476,7 +482,7 @@ func _test_runtime_baseline_scales() -> void:
 	var runtime_damage: Dictionary = DamageService.resolve({}, runtime_source, runtime_target, runtime_weapon, large_ap, SeededRandomSource.new(7), true)
 	var design_damage: Dictionary = DamageService.resolve({}, runtime_source, runtime_target, runtime_weapon, design_formula, SeededRandomSource.new(7), true)
 	var estimated_damage: Dictionary = DamageService.estimate_attack({}, runtime_source, runtime_target, runtime_weapon, large_ap)
-	_check(is_equal_approx(float(runtime_damage["final_damage"]), float(design_damage["final_damage"]) * 0.25), "runtime damage result is exactly one quarter of the design-scale result")
+	_check(is_equal_approx(float(runtime_damage["final_damage"]), float(design_damage["final_damage"]) * 0.5), "runtime damage result is exactly one half of the design-scale result")
 	_check(is_equal_approx(float(estimated_damage["damage_on_hit"]), float(runtime_damage["final_damage"])) and is_equal_approx(float(estimated_damage["expected_damage"]), float(estimated_damage["damage_on_hit"]) * float(estimated_damage["hit_rate"])), "AI expected-damage input reuses the authoritative hit and damage formula without consuming randomness")
 	_check(is_equal_approx(float(registry.get_definition("weapons", "weapon.shimakaze_610_torpedo").get("range", 0.0)), 765.0), "torpedo UI and rules expose the 1.5x effective range")
 	_check(is_equal_approx(float(registry.get_definition("weapons", "weapon.enterprise_airstrike").get("range", 0.0)), 1140.0), "aviation UI and rules expose the 1.5x effective range")
@@ -1162,19 +1168,21 @@ func _test_sinking_action_boundary() -> void:
 func _test_battle_smoke(level_id: String, maximum_ticks: int) -> void:
 	var started := Time.get_ticks_msec()
 	print("SMOKE_START %s" % level_id)
-	var simulation := _simulate(level_id, 20260614, maximum_ticks)
+	var simulation := _simulate(level_id, 20260614, maximum_ticks, true)
 	print("SMOKE_END %s phase=%s duration=%.1f wall_ms=%d" % [level_id, simulation["phase"], float(simulation.get("stats", {}).get("duration", 0.0)), Time.get_ticks_msec() - started])
 	_check(simulation["phase"] == "Finished", "%s headless battle reaches Finished" % level_id)
 	_check(not simulation["result"].is_empty(), "%s records a battle result" % level_id)
 	_check(simulation["events"].has("WeaponFired") and simulation["events"].has("AttackResolved") and simulation["events"].has("BattleFinished"), "%s emits complete combat event chain" % level_id)
 
 
-func _simulate(level_id: String, seed_value: int, maximum_ticks: int) -> Dictionary:
+func _simulate(level_id: String, seed_value: int, maximum_ticks: int, full_ai := false) -> Dictionary:
 	var session = BattleSession.new(registry)
 	var creation: Dictionary = session.create_battle(level_id, seed_value)
 	var event_types: Array[String] = []
 	for event in session.drain_events(): event_types.append(str(event["event_type"]))
 	if not creation.get("ok", false): return {"phase":"Failed","result":{},"events":event_types,"stats":{}}
+	if full_ai:
+		session.configure_full_ai_factions(["player", "enemy"])
 	for index in range(maximum_ticks):
 		var events: Array = session.advance_tick(0.1)
 		for event in events: event_types.append(str(event["event_type"]))

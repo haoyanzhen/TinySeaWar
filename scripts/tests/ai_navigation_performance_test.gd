@@ -15,8 +15,15 @@ func _run() -> void:
 		push_error("Unable to load configuration registry")
 		quit(1)
 		return
+	var effective_level_id := str(options["level"])
+	if not str(options["map_level"]).is_empty():
+		effective_level_id = _install_map_variant(registry, effective_level_id, str(options["map_level"]))
+		if effective_level_id.is_empty():
+			push_error("Unable to configure mapped performance battle")
+			quit(1)
+			return
 	var session = BattleSession.new(registry)
-	var creation := session.create_battle(str(options["level"]), int(options["seed"]))
+	var creation := session.create_battle(effective_level_id, int(options["seed"]))
 	if not bool(creation.get("ok", false)):
 		push_error("Unable to create battle: %s" % creation.get("errors", []))
 		quit(1)
@@ -28,7 +35,8 @@ func _run() -> void:
 	var executed_ticks := 0
 	var route_samples: Array = []
 	var route_failure_samples: Array = []
-	var event_counts := {"terrain_collisions":0, "route_failures":0, "trajectory_failures":0}
+	var route_projection_samples: Array = []
+	var event_counts := {"terrain_collisions":0, "route_failures":0, "projected_routes":0, "trajectory_failures":0}
 	var route_waypoint_total := 0
 	var route_completions := 0
 	var astar_usec_samples: Array = []
@@ -42,6 +50,9 @@ func _run() -> void:
 				route_waypoint_total += int(event.get("waypoint_count", 0))
 				astar_usec_samples.append(int(event.get("route_profile", {}).get("astar_usec", 0)))
 				astar_expansion_samples.append(int(event.get("route_profile", {}).get("astar_expansions", 0)))
+				if bool(event.get("target_projected", false)):
+					event_counts["projected_routes"] += 1
+					route_projection_samples.append({"unit_id":event.get("unit_id", ""), "target":str(event.get("target", Vector2.ZERO)), "resolved_target":str(event.get("resolved_target", Vector2.ZERO)), "route_profile":event.get("route_profile", {})})
 			elif str(event.get("event_type", "")) == "NavigationRequestFailed":
 				event_counts["route_failures"] += 1
 				route_failure_samples.append({"unit_id":event.get("unit_id", ""), "reason_code":event.get("reason_code", ""), "start":str(event.get("start", Vector2.ZERO)), "target":str(event.get("target", Vector2.ZERO)), "route_profile":event.get("route_profile", {})})
@@ -52,7 +63,9 @@ func _run() -> void:
 	if route_samples.size() > 8: route_samples.resize(8)
 	var profile := session.get_performance_profile()
 	var result := {
-		"level": options["level"],
+		"level": effective_level_id,
+		"source_level": options["level"],
+		"map_level": options["map_level"],
 		"seed": options["seed"],
 		"requested_ticks": requested_ticks,
 		"executed_ticks": executed_ticks,
@@ -77,20 +90,50 @@ func _run() -> void:
 		"trajectory_failures": _count_summary(profile.get("trajectory_failures_per_tick", [])),
 		"slowest_routes": route_samples,
 		"route_failure_samples": route_failure_samples,
+		"route_projection_samples": route_projection_samples,
 	}
 	print("AI_NAV_PERF_JSON=" + JSON.stringify(result))
 	quit(0)
 
 
 func _parse_options(arguments: Array[String]) -> Dictionary:
-	var result := {"level":"level.prototype_3v3", "seed":20260711, "ticks":400, "gate_spacing":180.0, "attachment_limit":4}
+	var result := {"level":"level.prototype_3v3", "map_level":"", "seed":20260711, "ticks":400, "gate_spacing":180.0, "attachment_limit":4}
 	for argument in arguments:
 		if argument.begins_with("--level="): result["level"] = argument.trim_prefix("--level=")
+		elif argument.begins_with("--map-level="): result["map_level"] = argument.trim_prefix("--map-level=")
 		elif argument.begins_with("--seed="): result["seed"] = int(argument.trim_prefix("--seed="))
 		elif argument.begins_with("--ticks="): result["ticks"] = int(argument.trim_prefix("--ticks="))
 		elif argument.begins_with("--gate-spacing="): result["gate_spacing"] = float(argument.trim_prefix("--gate-spacing="))
 		elif argument.begins_with("--attachment-limit="): result["attachment_limit"] = int(argument.trim_prefix("--attachment-limit="))
 	return result
+
+
+func _install_map_variant(registry, base_level_id: String, map_level_id: String) -> String:
+	var base_level: Dictionary = registry.get_definition("levels", base_level_id)
+	var map_level: Dictionary = registry.get_definition("levels", map_level_id)
+	if base_level.is_empty() or map_level.is_empty():
+		return ""
+	var terrain_id := str(map_level.get("map", {}).get("terrain_definition_id", ""))
+	var terrain: Dictionary = registry.get_definition("terrain", terrain_id)
+	if terrain.is_empty():
+		return ""
+	var runtime_level := base_level.duplicate(true)
+	var runtime_level_id := "level.performance_runtime"
+	runtime_level["id"] = runtime_level_id
+	runtime_level["display_name"] = "Mapped navigation performance fixture"
+	runtime_level["map"] = map_level.get("map", {}).duplicate(true)
+	runtime_level.erase("require_equal_fleet_cost")
+	for faction_id in ["player", "enemy"]:
+		var slots: Array = terrain.get("spawn_points", []).filter(func(spawn): return str(spawn.get("faction_id", "")) == faction_id)
+		slots.sort_custom(func(a, b): return int(str(a.get("id", "")).trim_prefix("%s_" % faction_id)) < int(str(b.get("id", "")).trim_prefix("%s_" % faction_id)))
+		var fleet: Array = runtime_level.get("%s_fleet" % faction_id, [])
+		if slots.size() < fleet.size():
+			return ""
+		for index in range(fleet.size()):
+			fleet[index]["position"] = slots[index].get("position", []).duplicate()
+			fleet[index]["heading"] = float(slots[index].get("heading", 0.0))
+	registry.definitions.get("levels", {})[runtime_level_id] = runtime_level
+	return runtime_level_id
 
 
 func _timing_summary(values: Array) -> Dictionary:

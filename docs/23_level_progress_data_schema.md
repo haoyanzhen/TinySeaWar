@@ -34,11 +34,13 @@ reinforcement_waves[]?
 ```text
 entity_id, ship_id, position, heading, is_flagship
 weapon_group_states?
+initial_hp_ratio?
 ```
 
 - `entity_id` 在关卡双方初始舰队中唯一。
 - `ship_id` 必须存在；`position/heading` 通过地图、地形和出生合法性校验。
 - `weapon_group_states={group_id: Enabled | Disabled}`；组 ID 必须属于引用舰船实际挂载。
+- `initial_hp_ratio` 默认 `1.0`，合法范围为 `(0, 1]`；仅用于关卡明确设计的战损初始状态，不改变舰船 Definition 的最大耐久。
 
 ## 4. ObjectiveSetDefinition
 
@@ -60,6 +62,9 @@ locked_player_commands[]?
 locked_player_commands_until_engagement[]?
 initial_player_control_state?
 engagement_player_control_state?
+player_weapon_locked_unit_ids_until_action[]?
+player_weapon_unlock_action_id?
+enemy_weapon_unlock_action_id?
 engagement_trigger?
 enemy_staging_position?, enemy_staging_positions?
 engagement_enemy_mode_locks?
@@ -74,7 +79,9 @@ waypoint_zones[]?
 - `objective_kind` 当前只允许 `TutorialNavigation | TutorialGunnery | TutorialSkill | TutorialArmor | TutorialTorpedo | TutorialCarrierHunt | TutorialSharedContact | TutorialCommand | FlagshipMission | ChallengeMission`。
 - `ChallengeMission` 只使用白名单任务事实：指定目标沉没、指定敌方沉没数量、按列出的敌方 ID 顺序沉没、指定保护舰存活、指定集合的最少存活数和单舰 HP 比例下限。顺序破坏、保护舰沉没、集合存活不足或 HP 触及下限均立即取消。
 - 教学动作、命令锁、世界标识、控制状态和单位引用必须属于加载器白名单并能在引用关卡中解析。
-- 教学能力限制必须显式列出；不得通过修改 HP、伤害、命中、装填或无敌状态模拟教学。
+- 教学能力限制必须显式列出；除 `FleetMemberDefinition.initial_hp_ratio` 所声明的开局战损外，不得在运行中修改 HP、伤害、命中、装填或无敌状态模拟教学。
+- `player_weapon_locked_unit_ids_until_action` 与 `player_weapon_unlock_action_id` 必须成对出现；前者只能引用己方单位，后者必须引用本目标的必做动作。指定单位的主武器、技能和自动武器在该动作首次获得合法证据前保持锁定。
+- `enemy_weapon_unlock_action_id` 必须引用本目标的必做动作；教学进入交战阶段后，敌方主武器、技能和自动武器仍保持锁定，直至该动作首次取得合法证据。该字段不锁敌方移动、侦查、受击或碰撞。
 - 通用条件树和教学分阶段计划仍只存在于 t02 技术方案；当前接替增援已成为关卡 Definition 字段，加载器校验波、成员与目标引用。
 
 教学类型的专属约束：
@@ -85,8 +92,8 @@ waypoint_zones[]?
 | `TutorialGunnery` | `engagement_trigger=RequiredActionsComplete`；`required_actions` 同时包含 `SwitchAmmo` 与 `ManualPrimaryFire`。 |
 | `TutorialSkill` | `engagement_trigger=RequiredActionsComplete`；`required_actions` 包含 `CastSkill`，且技能属于动作单位。 |
 | `TutorialArmor` | `engagement_trigger=FirstContact`；提供非空 `contact_target_unit_ids`。 |
-| `TutorialTorpedo` | `engagement_trigger=FirstContact`；提供非空 `contact_target_unit_ids`，以白名单动作 `TorpedoHit` 记录必做命中。 |
-| `TutorialCarrierHunt` | `engagement_trigger=FirstContact`；提供非空 `contact_target_unit_ids`，由 `required_enemy_unit_ids` 表达必须击沉的航母目标。 |
+| `TutorialTorpedo` | `engagement_trigger=FirstContact | RequiredActionsComplete`；提供非空 `contact_target_unit_ids`，以白名单动作 `TorpedoHit` 记录必做命中。 |
+| `TutorialCarrierHunt` | `engagement_trigger=FirstContact | RequiredActionsComplete`；提供非空 `contact_target_unit_ids`，由 `required_enemy_unit_ids` 表达必须击沉的航母目标。 |
 | `TutorialSharedContact` | `engagement_trigger=RequiredActionsComplete`；提供 `scout_player_unit_id`、`shared_contact_target_unit_id`，并以 `EstablishSharedContact`、`SharedTargetGunHit` 记录共享接触与后续命中。 |
 | `TutorialCommand` | `engagement_trigger=RequiredActionsComplete`；提供 `command_target_unit_id`、`command_player_unit_ids` 和正数 `minimum_group_focus_count`，并以 `GroupFocusTarget` 记录集火。 |
 

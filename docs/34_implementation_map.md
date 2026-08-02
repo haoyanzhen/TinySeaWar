@@ -44,6 +44,7 @@
 | T-02 至 T-04 正式关卡 | `data/levels/formal_tutorial_levels_02_04.json` |
 | T-05 至 T-08 正式关卡 | `data/levels/formal_tutorial_levels_05_08.json` |
 | 声明式目标定义 | `data/objectives/level_objectives.json` |
+| T-05 至 T-08 三轮设计路线实验 | `data/simulations/experiments/level_t05_win_rate_20.json` 至 `level_t08_route_round3_20.json` |
 | 目标运行时服务 | `scripts/domain/services/level_objective_service.gd` |
 | 进度存档 | `scripts/infrastructure/persistence/progress_save_store.gd` |
 | 目标运行时测试 | `scripts/tests/level_objective_runtime_test.gd` |
@@ -72,14 +73,14 @@
 |---|---|
 | 阵营合法观察 | `scripts/application/ai/ai_observation.gd` |
 | 量化决策模型 | `scripts/application/ai/ai_quantitative_model.gd` |
-| 战略路线规划 | `scripts/application/navigation/route_planner.gd` |
+| 战略路线规划、不可接入目标的正向阶段投影与分类失败 | `scripts/application/navigation/route_planner.gd` |
 | 路线请求预算 | `scripts/application/navigation/navigation_request_broker.gd` |
 | 常规/紧急航迹候选 | `scripts/application/navigation/trajectory_planner.gd` |
 | AI 观察测试 | `scripts/tests/ai_observation_test.gd` |
 | AI 行为与难度测试 | `scripts/tests/ai_behavior_quantitative_test.gd`、`ai_difficulty_profile_test.gd` |
 | 编组与协同测试 | `scripts/tests/ai_group_formation_test.gd`、`ai_coordination_test.gd` |
 | 航迹与恢复测试 | `scripts/tests/trajectory_navigation_test.gd`、`ai_route_recovery_test.gd` |
-| 导航性能测试 | `scripts/tests/ai_navigation_performance_test.gd` |
+| 导航性能、投影路线、失败/等待与大编队碰撞测试 | `scripts/tests/ai_navigation_performance_test.gd` |
 
 ## 7. 硬地形与场景空间
 
@@ -93,8 +94,12 @@
 | 地形场景视图 | `scripts/presentation/battle/terrain_view.gd` |
 | 地形调试叠层 | `scripts/presentation/battle/terrain_debug_overlay.gd` |
 | 构建与校验工具 | `tools/terrain/` |
+| 16:9 海岸母版、透明化与接触表 | `tools/art_pipeline/process_coastal_map_art.py` |
+| 16:9 海岸模板、地图与运行时绑定 | `tools/terrain/build_coastal_maps_16x9.py` |
+| 16:9 海岸导航增量烘焙 | `tools/terrain/bake_coastal16_navigation.py` |
 | 海岸运行时测试 | `scripts/tests/coastal_runtime_test.gd` |
 | 作者数据测试 | `scripts/tests/terrain_authoring_test.gd` |
+| 海岸 5v5/11v11 映射负载 | `scripts/tests/ai_navigation_performance_test.gd --map-level=...` |
 
 地形、环境、设施三类规则已分别由 `docs/35_scene_combat_domain_design.md`、`37_environment_runtime_domain_design.md`、`38_facility_combat_domain_design.md` 定义。
 
@@ -140,7 +145,9 @@
 | 战斗 HUD | `scripts/presentation/battle/battle_hud.gd` |
 | UI 文本 | `scripts/presentation/ui_text.gd` |
 | 场景表现测试 | `scripts/tests/scene_presentation_test.gd` |
-| 场景 QA 渲染 | `scripts/tests/render_scene_qa.gd` |
+| 场景 QA 渲染 | `scripts/tests/render_scene_qa.gd`；支持分辨率/镜头、F9、地图映射、多舰规模与固定 Tick |
+| 运行时全地图比例视图 | `tools/scene_review/render_runtime_full_map_view.gd` |
+| 16:9 海岸正式画面 QA | `assets/environment/qa/coastal_camera_resolution_matrix.png`、`coastal_f9_runtime_alignment.png`、`coastal_fleet_traffic_review.png`、`coastal_11v11_failure_review.png` |
 
 表现配置位于 `data/visuals/`，包括武器、投射物、VFX 播放 Profile 和第二期映射。角色运行时资产位于 `assets/characters/{character_id}/processed/`；公共 VFX、环境和 UI 资产分别位于 `assets/vfx/`、`assets/environment|environments/` 与 `assets/ui/`。
 

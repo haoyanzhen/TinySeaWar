@@ -225,8 +225,8 @@ MVP 采用“同类加算、异类乘算、特殊效果独立乘算”的统一�
 
 说明：
 
-- `design_base_damage`、`design_power_coefficient`、`design_armor_coefficient` 保留纸面设计量纲；局内实际读取的 `base_damage`、`power_coefficient`、`armor_coefficient` 均为对应设计字段的 `0.25` 倍。
-- 三个伤害量纲字段同步缩放后，局内最终伤害严格等于设计量纲完整结算结果的 25%；状态增伤、减伤和装甲厚度补正等无量纲倍率不重复缩放。
+- `design_base_damage`、`design_power_coefficient`、`design_armor_coefficient` 保留纸面设计量纲；局内实际读取的 `base_damage`、`power_coefficient`、`armor_coefficient` 均为对应设计字段的 `0.5` 倍。
+- 三个伤害量纲字段同步缩放后，局内最终伤害严格等于设计量纲完整结算结果的 50%；状态增伤、减伤和装甲厚度补正等无量纲倍率不重复缩放。
 - 攻击方对应作战能力包括 `gunnery_power`、`torpedo_power`、`anti_air_power`、`aviation_power`。
 - `armor_damage_modifier` 来自武器底座对目标 `armor_thickness` 的补正。
 - `armor` 是目标的装甲值，表示固定减伤能力。

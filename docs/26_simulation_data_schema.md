@@ -80,14 +80,18 @@ tolerance
 minimum_p10_duration?
 require_engagement_unlocked?
 required_objective_action_ids[]?
+required_objective_action_sequence[]?
 maximum_enemy_damage_before_engagement?
 maximum_policy_command_rejections?
+maximum_behavior_anomalies?
 ```
 
 - 仅 `simulation_kind=LevelWinRateEvaluation` 可声明。
 - 按 `docs/36_balance_testing_design.md` 使用恰好 20 个互不重复种子，并要求 `side_swap=false`。
 - `target_player_win_rate` 与 `tolerance` 位于 `[0,1]`；20 场都必须形成有效战斗统计后才能判定门禁。
-- 教学验收可额外声明最短 P10 时长、交战解锁、必需目标动作、交战前敌方伤害和策略命令拒绝上限；这些字段只检查报告事实，不修改战斗规则。
+- 教学验收可额外声明最短 P10 时长、交战解锁、必需目标动作、完整动作顺序、交战前敌方伤害、策略命令拒绝上限和行为异常上限；这些字段只检查每局报告事实并形成聚合门禁，不修改战斗规则。
+- 教学关制作完成后必须为设计路线建立三份独立 `LevelWinRateEvaluation` 清单。三份清单各使用 20 个种子，彼此种子集合不相交，并使用不同 `experiment_id` 与 `output_directory`。每份都要求 `target_player_win_rate=1.0`、`tolerance=0.0`、`maximum_policy_command_rejections=0`、`maximum_behavior_anomalies=0`，并声明关卡要求的 `required_objective_action_ids` 与 `required_objective_action_sequence`。
+- 三份实验必须各自达到 20/20 有效、100% 完成、动作与路线证据 100% 符合、零技术上限、零寻路卡死/路线不可用、零策略拒绝和零禁止阶段伤害。任一份或任一单局异常都会使三份证据整体失效；修复后必须用三份新实验重新验收，不能对三轮取平均。
 - 侧别公平性另建非胜率结算实验，不复用本实验种子制造配对局。
 
 ## 8. 输出与未来扩展

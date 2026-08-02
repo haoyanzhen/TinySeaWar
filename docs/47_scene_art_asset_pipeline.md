@@ -40,6 +40,8 @@
 
 - 岛屿采用正俯视透明母版，陆地底色、岸线泡沫、浅水过渡、礁石/沙洲细节和阴影应能独立调整。
 - 十类岛屿保持独立构图和语义，不合并为一张固定战场背景。
+- 当前大型海岸批次使用 `3840 × 2160` 透明源母版，中心为 `(1920, 1080)`；发布为 `1920 × 1080` 运行时透明图，在 `6144 × 3456` 海面中心 `(3072, 1728)` 以 `2.6 × 3.2` 非等比显示。视觉实例与同源作者几何共用该变换，不能只缩放 PNG。
+- 由旧 `1024 × 1024` 审核构图制作母版时，源母版局部坐标换算为 `3.0375 × 1.8984375`；运行时模板局部坐标换算为 `1.51875 × 0.94921875`。最终 `2.6 × 3.2` 实例变换对应旧审核坐标约 `3.94875 × 3.0375` 的世界范围；这些换算用于说明资产与规则几何的对齐关系，不得从 PNG alpha 反推规则边界。
 - 浅水、礁滩、航道、湿岩、碎浪和泥沙覆盖层分别输出；视觉覆盖层不得承载碰撞或通行规则。
 - 透明图 alpha 可以生成作者候选边缘，但不得直接发布为正式 `blocking_polygon`、`ShallowWater` 或导航数据。
 - 正式规则多边形必须经过 `22/35` 的作者数据与校验流程；美术资产只按审核结果裁切或铺设。
@@ -87,7 +89,7 @@ assets/environment/weather/zones/environment_zone_asset_manifest.json
 7. 在运行时场景验证缩放、层级、混合模式、边缘、Shader 采样和性能降级。
 8. 记录自动检查与人工 QA 结论；失败资产不得进入正式 manifest。
 
-陆地透明化和 manifest 生成优先复用 `tools/art_pipeline/process_land_art.py`。新增工具或路径时更新 `docs/34_implementation_map.md`，不要在多个设计文档复制命令清单。
+普通陆地透明化和 manifest 生成优先复用 `tools/art_pipeline/process_land_art.py`。十张 16:9 大型海岸母版、运行时贴图、遮罩一致性与接触表由 `tools/art_pipeline/process_coastal_map_art.py` 处理；生成来源与逐图路径记录在 `assets/environment/land/source/coastal_16x9_generation_manifest.json`。新增工具或路径时更新 `docs/34_implementation_map.md`，不要在多个设计文档复制命令清单。
 
 ## 5. 自动检查
 

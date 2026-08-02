@@ -1,0 +1,114 @@
+{
+  "schema_version": 1,
+  "asset_family": "TinySeaWar 16:9 large-coast environment art",
+  "generated_by": "OpenAI built-in image generation (gpt-image-2) with reviewed composition references",
+  "production_contract": {
+    "source_master_size": [3840, 2160],
+    "runtime_texture_size": [1920, 1080],
+    "battle_map_size": [6144, 3456],
+    "battle_map_center": [3072, 1728],
+    "art_preparation_legacy_equivalent_scale": [4.86, 3.0375],
+    "runtime_display_scale": [2.6, 3.2],
+    "effective_legacy_world_scale": [3.94875, 3.0375],
+    "source_master_transform_from_1024_template": [3.0375, 1.8984375],
+    "runtime_local_transform_from_1024_template": [1.51875, 0.94921875],
+    "alpha_policy": "Generated repaint is retained inside the reviewed high-confidence subject matte; the reviewed transformed mask remains authoritative for antialiased visual edges only. Residual magenta spill is converted into the cool-blue shoreline palette before alpha is applied.",
+    "geometry_policy": "Artwork alpha is not collision, shallow-water, line-of-sight, or navigation truth."
+  },
+  "common_prompt": "Create a TinySeaWar 2D battle environment source master from the supplied exact 16:9 composition reference. Preserve the reference island silhouettes, gaps, counts, channel widths, and placement. Use strict orthographic top-down Japanese anime strategy-game environment art with polished cel shading and soft gradients: dark wet rock, pale sand, muted olive vegetation, low-saturation turquoise shallows, and sparse cool-white foam. No perspective, horizon, ocean background, ships, buildings, UI, text, border, or watermark. Place the isolated land artwork on uniform #ff00ff chroma-key background.",
+  "postprocess": {
+    "chroma_key_tool": "${CODEX_HOME}/skills/.system/imagegen/scripts/remove_chroma_key.py",
+    "chroma_key_arguments": "--auto-key border --soft-matte --transparent-threshold 12 --opaque-threshold 220 --despill",
+    "finalize_tool": "tools/art_pipeline/process_coastal_map_art.py",
+    "runtime_builder": "tools/terrain/build_coastal_maps_16x9.py",
+    "navigation_baker": "tools/terrain/bake_coastal16_navigation.py",
+    "contact_sheet": "res://assets/environment/qa/coastal_maps_16x9_contact_sheet.png"
+  },
+  "assets": [
+    {
+      "id": "broken_atoll",
+      "composition_focus": "Broken atoll fragments forming multiple navigable cuts.",
+      "reference": "res://assets/environment/land/source/reference_16x9/land_broken_atoll_reference.png",
+      "mask": "res://assets/environment/land/source/reference_16x9/land_broken_atoll_mask.png"
+    },
+    {
+      "id": "central_sandbar",
+      "composition_focus": "Central elongated sandbar with open flanks.",
+      "reference": "res://assets/environment/land/source/reference_16x9/land_central_sandbar_reference.png",
+      "mask": "res://assets/environment/land/source/reference_16x9/land_central_sandbar_mask.png"
+    },
+    {
+      "id": "crescent_bay",
+      "composition_focus": "Crescent-shaped coast enclosing a readable bay.",
+      "reference": "res://assets/environment/land/source/reference_16x9/land_crescent_bay_reference.png",
+      "mask": "res://assets/environment/land/source/reference_16x9/land_crescent_bay_mask.png"
+    },
+    {
+      "id": "double_island_long_channel",
+      "composition_focus": "Two long islands defining a broad longitudinal channel.",
+      "reference": "res://assets/environment/land/source/reference_16x9/land_double_island_long_channel_reference.png",
+      "mask": "res://assets/environment/land/source/reference_16x9/land_double_island_long_channel_mask.png"
+    },
+    {
+      "id": "dual_channel_reef_line",
+      "composition_focus": "Reef line dividing traffic into two clear channels.",
+      "reference": "res://assets/environment/land/source/reference_16x9/land_dual_channel_reef_line_reference.png",
+      "mask": "res://assets/environment/land/source/reference_16x9/land_dual_channel_reef_line_mask.png"
+    },
+    {
+      "id": "harbor_mouth",
+      "composition_focus": "Harbor entrance with a broad operational mouth and protected interior.",
+      "reference": "res://assets/environment/land/source/reference_16x9/land_harbor_mouth_reference.png",
+      "mask": "res://assets/environment/land/source/reference_16x9/land_harbor_mouth_mask.png"
+    },
+    {
+      "id": "long_archipelago",
+      "composition_focus": "Long dispersed archipelago producing several lateral choices.",
+      "reference": "res://assets/environment/land/source/reference_16x9/land_long_archipelago_reference.png",
+      "mask": "res://assets/environment/land/source/reference_16x9/land_long_archipelago_mask.png"
+    },
+    {
+      "id": "offset_large_island",
+      "composition_focus": "One large offset island with asymmetric open-water routes.",
+      "reference": "res://assets/environment/land/source/reference_16x9/land_offset_large_island_reference.png",
+      "mask": "res://assets/environment/land/source/reference_16x9/land_offset_large_island_mask.png"
+    },
+    {
+      "id": "ring_lagoon",
+      "composition_focus": "Ring lagoon with six preserved entrances and central water.",
+      "reference": "res://assets/environment/land/source/reference_16x9/land_ring_lagoon_reference.png",
+      "mask": "res://assets/environment/land/source/reference_16x9/land_ring_lagoon_mask.png",
+      "revision": {
+        "date": "2026-07-28",
+        "reason": "Increase the reviewed ring-lagoon entrance count from four to six while preserving the existing north, south, east, and west openings.",
+        "entrance_count": 6,
+        "new_entrances": ["northwest_passage", "northeast_passage"],
+        "primary_source_master_gap": [560, 560],
+        "primary_runtime_local_gap": [280, 280],
+        "primary_art_preparation_world_gap": [896, 896],
+        "primary_world_gap": [728, 728],
+        "secondary_source_master_gap": [400, 400],
+        "secondary_runtime_local_gap": [200, 200],
+        "secondary_art_preparation_world_gap": [640, 640],
+        "secondary_world_gap": [520, 520],
+        "primary_navigation_channel_world_width": 624,
+        "secondary_navigation_channel_world_width": 416,
+        "finalization": "Reviewed v2 source RGB with deterministic irregular alpha-mask carving. The built-in gpt-image-2 edit candidate was rejected because it changed the global island composition; a second built-in attempt failed with a network error.",
+        "prompt_override": "Keep the input image composition exactly fixed. Edit only the four straight diagonal cut edges belonging to the two new upper-left and upper-right entrances. Preserve the full 16:9 composition, all six openings, central lagoon, island placement, scale, and flat #ff00ff background; keep both new corridors completely empty and at least their reference width."
+      }
+    },
+    {
+      "id": "scattered_islands",
+      "composition_focus": "Scattered islands preserving multiple wide manual-control lanes.",
+      "reference": "res://assets/environment/land/source/reference_16x9/land_scattered_islands_reference.png",
+      "mask": "res://assets/environment/land/source/reference_16x9/land_scattered_islands_mask.png"
+    }
+  ],
+  "path_pattern": {
+    "raw": "res://assets/environment/land/generated/raw/land_{id}_generated.png",
+    "keyed": "res://assets/environment/land/generated/keyed/land_{id}_generated.png",
+    "source_master": "res://assets/environment/land/source/land_{id}_source.png",
+    "runtime": "res://assets/environment/land/land_{id}_16x9_runtime.png",
+    "runtime_semantic": "land_{id}_16x9_runtime"
+  }
+}

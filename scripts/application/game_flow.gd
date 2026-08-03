@@ -14,6 +14,7 @@ var selected_level_id := DEFAULT_LEVEL_ID
 var current_window_size := Vector2i(1920, 1080)
 var unlocked_ship_ids: Array[String] = []
 var completed_challenge_level_ids: Array[String] = []
+var _custom_level_definition: Dictionary = {}
 var _progress_document: Dictionary = {}
 var _progress_store = ProgressSaveStore.new()
 
@@ -40,6 +41,12 @@ func select_level(level_id: String) -> void:
 
 func is_ship_unlocked(ship_id: String) -> bool:
 	return ship_id in unlocked_ship_ids
+
+
+func runtime_level_definition(level_id: String) -> Dictionary:
+	if level_id != CUSTOM_LEVEL_ID or _custom_level_definition.is_empty():
+		return {}
+	return _custom_level_definition.duplicate(true)
 
 
 func _load_unlocked_ships() -> void:
@@ -135,7 +142,7 @@ func configure_custom_battle(base_level_id: String, map_level_id: String, ocean_
 		member["heading"] = float(slot.get("heading", 0.0))
 		custom_enemy_fleet.append(member)
 	custom_level["enemy_fleet"] = custom_enemy_fleet
-	DataRegistry.registry.definitions.get("levels", {})[CUSTOM_LEVEL_ID] = custom_level
+	_custom_level_definition = custom_level.duplicate(true)
 	select_level(CUSTOM_LEVEL_ID)
 	return {"ok": true, "level_id": CUSTOM_LEVEL_ID}
 

@@ -1086,7 +1086,9 @@ func _push_message(message: String) -> void:
 
 func _start_battle(new_level_id: String) -> void:
 	session = BattleSession.new(DataRegistry.registry)
-	var result: Dictionary = session.create_battle(new_level_id, 20260614)
+	var flow := get_node_or_null("/root/GameFlow")
+	var runtime_level: Dictionary = flow.runtime_level_definition(new_level_id) if flow != null else {}
+	var result: Dictionary = session.create_battle_from_definition(runtime_level, 20260614) if not runtime_level.is_empty() else session.create_battle(new_level_id, 20260614)
 	if not result.get("ok", false):
 		push_error("Battle creation failed: %s" % result.get("errors", []))
 		return

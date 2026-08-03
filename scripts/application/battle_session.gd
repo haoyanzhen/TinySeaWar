@@ -114,6 +114,18 @@ func create_battle(level_id: String, seed_value: int = 1) -> Dictionary:
 	var level: Dictionary = registry.get_definition("levels", level_id)
 	if level.is_empty():
 		return {"ok": false, "errors": ["LEVEL_NOT_FOUND"]}
+	return create_battle_from_definition(level, seed_value)
+
+
+func create_battle_from_definition(level_definition: Dictionary, seed_value: int = 1) -> Dictionary:
+	if registry == null:
+		return {"ok": false, "errors": ["MISSING_REGISTRY"]}
+	if level_definition.is_empty():
+		return {"ok": false, "errors": ["LEVEL_NOT_FOUND"]}
+	var level: Dictionary = level_definition.duplicate(true)
+	var level_id := str(level.get("id", ""))
+	if level_id.is_empty():
+		return {"ok": false, "errors": ["MISSING_LEVEL_ID"]}
 	_ai_profile = registry.get_definition("ai_profiles", str(level.get("enemy_ai_profile_id", "ai.profile.standard"))).duplicate(true)
 	level_objective_service = LevelObjectiveService.new()
 	var objective_definition: Dictionary = registry.get_definition("objectives", str(level.get("objective_set_id", "")))

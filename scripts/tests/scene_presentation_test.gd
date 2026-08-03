@@ -39,12 +39,13 @@ func _run() -> void:
 	_check(menu.ship_buttons.size() == 48, "custom fleet builder lists all configured characters")
 	var custom_ship_ids: Array[String] = ["ship.ward", "ship.gnevny", "ship.argus"]
 	var custom_result: Dictionary = flow.configure_custom_battle("level.prototype_3v3", "level.prototype_harbor_3v3", "clear_night", custom_ship_ids)
-	var custom_level: Dictionary = root.get_node("DataRegistry").registry.get_definition("levels", "level.custom_runtime")
+	var custom_level: Dictionary = flow.runtime_level_definition("level.custom_runtime")
 	_check(custom_result.get("ok", false) and custom_level.get("player_fleet", []).size() == 3, "custom fleet selection builds a runtime level with the selected roster")
 	_check(custom_level.get("map", {}).get("terrain_definition_id", "") == "terrain.map.harbor_mouth_16x9" and custom_level.get("map", {}).get("ocean_palette", "") == "clear_night", "custom runtime level applies the selected 16:9 map and weather")
 	_check(custom_level.get("player_fleet", [])[0].get("position", []) == root.get_node("DataRegistry").registry.get_definition("levels", "level.prototype_harbor_3v3").get("player_fleet", [])[0].get("position", []) and custom_level.get("enemy_fleet", [])[0].get("position", []) == root.get_node("DataRegistry").registry.get_definition("levels", "level.prototype_harbor_3v3").get("enemy_fleet", [])[0].get("position", []), "custom runtime level uses the selected map's reviewed spawn slots for both fleets")
+	_check(root.get_node("DataRegistry").registry.get_definition("levels", "level.custom_runtime").is_empty(), "custom runtime level does not modify the formal definition registry")
 	var custom_session = BattleSession.new(root.get_node("DataRegistry").registry)
-	_check(custom_session.create_battle("level.custom_runtime", 901).get("ok", false), "custom runtime level creates a playable battle session")
+	_check(custom_session.create_battle_from_definition(custom_level, 901).get("ok", false), "custom runtime level creates a playable battle session")
 	_test_custom_map_spawns(flow, root.get_node("DataRegistry").registry)
 	_test_custom_open_sea_spawns(flow, root.get_node("DataRegistry").registry)
 	flow.select_level("level.prototype_3v3")
@@ -350,7 +351,7 @@ func _test_custom_map_spawns(flow, registry) -> void:
 		for member in base_level.get("player_fleet", []): selected_ship_ids.append(str(member.get("ship_id", "")))
 		for map_level_id in coastal_level_ids:
 			var configured: Dictionary = flow.configure_custom_battle(base_level_id, map_level_id, "clear_day", selected_ship_ids)
-			var custom_level: Dictionary = registry.get_definition("levels", "level.custom_runtime")
+			var custom_level: Dictionary = flow.runtime_level_definition("level.custom_runtime")
 			var terrain: Dictionary = registry.get_definition("terrain", str(custom_level.get("map", {}).get("terrain_definition_id", "")))
 			var slots_match := bool(configured.get("ok", false))
 			for faction_id in ["player", "enemy"]:
@@ -363,7 +364,7 @@ func _test_custom_map_spawns(flow, registry) -> void:
 					slots_match = slots_match and actual[index].get("position", []) == expected[index].get("position", []) and is_equal_approx(float(actual[index].get("heading", 0.0)), float(expected[index].get("heading", 0.0)))
 			_check(slots_match, "%s on %s maps both fleets onto its reviewed spawn slots" % [base_level_id, map_level_id])
 			var session = BattleSession.new(registry)
-			var created: Dictionary = session.create_battle("level.custom_runtime", 902)
+			var created: Dictionary = session.create_battle_from_definition(custom_level, 902)
 			var all_spawns_clear := bool(created.get("ok", false))
 			var units: Array = session.state.get("units_by_id", {}).values()
 			for unit in units:
@@ -384,7 +385,7 @@ func _test_custom_open_sea_spawns(flow, registry) -> void:
 		for _index in range(base_level.get("player_fleet", []).size()):
 			selected_ship_ids.append("ship.ward")
 		var configured: Dictionary = flow.configure_custom_battle(level_id, level_id, "clear_day", selected_ship_ids)
-		var custom_level: Dictionary = registry.get_definition("levels", "level.custom_runtime")
+		var custom_level: Dictionary = flow.runtime_level_definition("level.custom_runtime")
 		var slots_match := bool(configured.get("ok", false))
 		for fleet_name in ["player_fleet", "enemy_fleet"]:
 			var expected: Array = base_level.get(fleet_name, [])

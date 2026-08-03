@@ -8,6 +8,7 @@ import json
 import math
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
@@ -117,19 +118,21 @@ def main() -> int:
 	parser = argparse.ArgumentParser()
 	parser.add_argument("--out", default="assets/environment/qa/scene_combat_contact_sheet.png")
 	args = parser.parse_args()
-	qa_dir = ROOT / "assets/environment/qa"
-	qa_dir.mkdir(parents=True, exist_ok=True)
-	commands = [
-		[sys.executable, "tools/terrain/render_terrain_qa.py", "--mode", "templates", "--out", "assets/environment/qa/terrain_template_review.png"],
-		[sys.executable, "tools/terrain/render_terrain_qa.py", "--mode", "map", "--out", "assets/environment/qa/harbor_map_review.png"],
-		[sys.executable, "tools/terrain/build_minimap_masks.py"],
-	]
-	for command in commands:
-		result = subprocess.run(command, cwd=ROOT, check=False)
-		if result.returncode != 0:
-			return result.returncode
-	templates = Image.open(qa_dir / "terrain_template_review.png").convert("RGBA")
-	harbor = Image.open(qa_dir / "harbor_map_review.png").convert("RGBA")
+	with tempfile.TemporaryDirectory(prefix="tiny_sea_war_terrain_qa_") as temporary_directory:
+		temporary_root = Path(temporary_directory)
+		templates_path = temporary_root / "terrain_template_review.png"
+		harbor_path = temporary_root / "harbor_map_review.png"
+		commands = [
+			[sys.executable, "tools/terrain/render_terrain_qa.py", "--mode", "templates", "--out", str(templates_path)],
+			[sys.executable, "tools/terrain/render_terrain_qa.py", "--mode", "map", "--out", str(harbor_path)],
+			[sys.executable, "tools/terrain/build_minimap_masks.py"],
+		]
+		for command in commands:
+			result = subprocess.run(command, cwd=ROOT, check=False)
+			if result.returncode != 0:
+				return result.returncode
+		templates = Image.open(templates_path).convert("RGBA")
+		harbor = Image.open(harbor_path).convert("RGBA")
 	assets = _asset_grid()
 	navigation = _navigation_panel()
 	timeline = _timeline_panel()

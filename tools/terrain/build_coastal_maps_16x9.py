@@ -468,7 +468,7 @@ def _update_land_manifest(document: dict) -> None:
 	document.pop("runtime_uniform_scale_16x9", None)
 	document.update({
 		"generated_by": "imagegen built-in tool + chroma-key postprocess + reviewed alpha-mask finalization",
-		"background_policy": "runtime textures are transparent PNG; generation and keyed intermediates are retained under generated/",
+		"background_policy": "runtime textures are transparent PNG; reviewed source masters and reference masks are retained, while raw and keyed intermediates are discarded",
 		"source_master_size_16x9": [3840, 2160],
 		"runtime_target_size_16x9": RUNTIME_SIZE,
 		"map_size_16x9": [6144, 3456],
@@ -482,9 +482,9 @@ def _update_land_manifest(document: dict) -> None:
 		if land_id not in LAND_IDS:
 			continue
 		asset.pop("runtime_uniform_scale", None)
+		asset.pop("source_chromakey", None)
+		asset.pop("source_keyed", None)
 		asset.update({
-			"source_chromakey": "res://assets/environment/land/generated/raw/land_%s_generated.png" % land_id,
-			"source_keyed": "res://assets/environment/land/generated/keyed/land_%s_generated.png" % land_id,
 			"source_master": "res://assets/environment/land/source/land_%s_source.png" % land_id,
 			"runtime_texture_16x9": "res://assets/environment/land/land_%s_16x9_runtime.png" % land_id,
 			"runtime_semantic_16x9": "land_%s_16x9_runtime" % land_id,

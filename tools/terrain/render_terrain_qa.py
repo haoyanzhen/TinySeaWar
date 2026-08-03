@@ -172,7 +172,7 @@ def render_map(path: Path, terrain_id: str, spawn_count: int, view_size: tuple[f
 def main() -> None:
 	parser = argparse.ArgumentParser()
 	parser.add_argument("--mode", choices=["templates", "map"], default="templates")
-	parser.add_argument("--out", default="assets/environment/qa/terrain_template_review.png")
+	parser.add_argument("--out", default="reports/terrain_template_review.png")
 	parser.add_argument("--terrain-id", default="terrain.map.harbor_mouth")
 	parser.add_argument("--spawn-count", type=int, default=3)
 	parser.add_argument("--view-size", default="")

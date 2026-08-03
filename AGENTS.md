@@ -62,6 +62,7 @@ MVP 的核心约束：
 - `docs/technical/t00_coastal_ai_performance_solution.md`：有岸地图 AI、稀疏拓扑走廊、统一路线请求和地形查询的性能治理方案。优化港湾/岛屿 AI 调度、寻路、空间索引或性能预算时先读；当前战略请求明确不合并、不缓存。
 - `docs/technical/t01_inertial_navigation_and_emergency_avoidance.md`：战略走廊、`1s` 常规动力学航迹、`0.1s` 高威胁紧急避险、等待/停车/倒车与状态切换的正式方案。改舰船航行、避岸、鱼雷规避或导航状态机时先读。
 - `docs/technical/t02_level_objective_reinforcement_progress_solution.md`：23 个教学/挑战关的声明式目标、接替增援、结算与进度存档技术方案。改关卡目标运行时、增援编排或闯关进度时先读；当前 T-01 至 T-08、S-01 至 S-05 的目标/菜单/进度子集已接入，S-04/S-05 接替增援已实施，其余 10 个挑战关待实施。
+- `workorder/20260802-navigation-collision-field-trajectory-validation.md`：惯性航迹连续碰撞验证与碰撞场加速的待实施工单。处理全速转弯擦岸、船体扫掠体、同 Tick 连续检测、掩码/距离场查询或航迹候选安全门禁时先读；在关闭条件通过前不得将现有离散采样描述为近岸防碰撞完成。
 
 ### 美术与资产
 
@@ -117,7 +118,7 @@ MVP 的核心约束：
 
 ## 代码、数据与资产路引
 
-- `autoload/data_registry.gd`：运行时数据与资产总入口。
+- `scripts/infrastructure/bootstrap/data_registry.gd`：以 Autoload 注册的运行时数据与资产总入口；源码按 Infrastructure 职责归档，Autoload 名称仍为 `DataRegistry`。
 - `data/ships|weapons|skills/`：第一期与第二期角色规则配置；`data/levels/` 目前只有第一期角色关卡。
 - `data/visuals/`：投射物表现、武器表现和 VFX 播放参数。
 - `scripts/application/battle_session.gd`：战斗流程和当前大部分规则协调。
@@ -126,8 +127,12 @@ MVP 的核心约束：
 - `scripts/presentation/battle/battle_effect_director.gd`：消费战斗事件并协调角色、投射物、炮弹轨迹、VFX 和伤害跳字。
 - `scripts/presentation/battle/projectile_view.gd`、`shell_flight_view.gd`、`battle_vfx.gd`：公共战斗表现节点。
 - `assets/characters/{character_id}/processed/`：已完成角色运行时资产；只有 `postprocess_plan.json` 不代表资产完成。
-- `assets/vfx/`：公共战斗与角色模板特效；`assets/environment/`、`assets/environments/`：陆地、天气和海面资源。
-- `tools/data/`：角色批次配置生成；`tools/art_pipeline/`：角色、UI、场景和陆地资产处理与验收。
+- `assets/vfx/`：公共战斗与角色模板特效；`assets/environment/`、`assets/environments/`：陆地、天气和海面运行时资源。
+- `assets/environment/land/source/`：已审核的海岸透明母版、构图参考和权威参考遮罩；`assets/environment/land/land_*_16x9_runtime.png` 与 manifest 是运行时入口。`assets/environment/land/generated/` 只允许作为被 Git 忽略的临时工作区，不保留 raw/chroma-key 中间图。
+- `assets/environment/qa/`：只保留被文档或 manifest 引用的最终 QA 证据；临时审查面板写入系统临时目录或被忽略的 `reports/`。
+- `addons/terrain_authoring/`：仅编辑器使用的地形作者插件，操作、依赖和发布边界见目录内 `README.md`。
+- `tools/data/`：角色批次配置生成；`tools/art_pipeline/`：角色、UI、场景和陆地资产处理与验收；`tools/scene_review/`：正式战斗场景全图与镜头 QA。
+- `artifacts/simulations/`：被 Git 忽略的可再生模拟结果，不是运行时资源或配置真源；`artifacts/.gdignore` 阻止 Godot 导入其中的 CSV/报告。
 - 当前不存在正式 `assets/audio/`；新增音频前必须先补音频设计、语义事件和总线约定。
 
 ## Codex 工作指引
@@ -164,6 +169,8 @@ MVP 的核心约束：
 - UI 运行时语义清单参考 `assets/ui/qa/ui_asset_manifest.json`，导出倍率目录位于 `assets/ui/export/`。
 - 改角色后处理或资产验收时，优先复用 `tools/art_pipeline/` 中现有脚本。
 - 改场景环境资产时先按 `47` 区分视觉图层与规则几何；贴图 alpha 和 `visual_regions` 不得直接成为碰撞、浅水或通行真相。
+- 生图 raw、抠色结果、单次审查面板、缓存和临时导出不得留在正式资源目录；通过审核后只保留可复现所需的源母版/参考遮罩、运行时资产和被路引引用的最终 QA 证据。
+- 模拟报告可留在被忽略的 `artifacts/simulations/` 供本地复核，但不得保留 Godot 为 CSV/文本生成的 `.import`、`.translation` 等导入副产物。
 - 不为每个角色重复制作公共炮弹、鱼雷、命中、水柱、范围圈等资产；优先使用公共类别资产加角色覆盖层。
 
 ### 验证

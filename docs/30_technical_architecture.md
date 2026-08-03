@@ -94,6 +94,8 @@ Presentation 负责：
 
 注册表提供只读定义。单局战斗不得修改共享配置对象，也不得用表现资源是否存在推断规则是否可用。
 
+自定义战斗等运行时组装定义由 Application 持有，并以完整定义输入传给 `BattleSession`；不得为了复用按 ID 创建入口而注入 `ConfigRegistry` 的正式定义集合。Autoload 只表达进程级生命周期，不改变源码所属层级：`DataRegistry` 归 Infrastructure，`GameFlow` 归 Application。
+
 ### 4.2 游戏流与战斗会话
 
 游戏流负责菜单、关卡选择、战斗创建、结算和返回。`BattleSession` 是单局应用协调器：

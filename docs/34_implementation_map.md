@@ -6,9 +6,10 @@
 
 | 入口 | 当前文件 |
 |---|---|
-| 数据与资产总入口 | `autoload/data_registry.gd` |
+| 数据与资产总入口 | `scripts/infrastructure/bootstrap/data_registry.gd`（Autoload：`DataRegistry`） |
 | 游戏流、菜单到战斗 | `scripts/application/game_flow.gd` |
 | 单局战斗协调 | `scripts/application/battle_session.gd` |
+| 自定义关卡运行定义 | `scripts/application/game_flow.gd` 持有，调用 `BattleSession.create_battle_from_definition()` |
 | 主菜单场景与脚本 | `scenes/menu/main_menu.tscn`、`scripts/presentation/menu/main_menu.gd` |
 | 战斗场景与协调脚本 | `scenes/battle/prototype_battle.tscn`、`scripts/presentation/battle/prototype_battle.gd` |
 
@@ -94,6 +95,7 @@
 | 地形场景视图 | `scripts/presentation/battle/terrain_view.gd` |
 | 地形调试叠层 | `scripts/presentation/battle/terrain_debug_overlay.gd` |
 | 构建与校验工具 | `tools/terrain/` |
+| Godot 地形作者插件 | `addons/terrain_authoring/`（仅编辑器；使用与发布边界见目录内 `README.md`） |
 | 16:9 海岸母版、透明化与接触表 | `tools/art_pipeline/process_coastal_map_art.py` |
 | 16:9 海岸模板、地图与运行时绑定 | `tools/terrain/build_coastal_maps_16x9.py` |
 | 16:9 海岸导航增量烘焙 | `tools/terrain/bake_coastal16_navigation.py` |

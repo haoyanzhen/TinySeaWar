@@ -14,6 +14,7 @@ const CATEGORY_PATHS := {
 	"ai_profiles": "res://data/ai",
 }
 const CATEGORY_FILES := {
+	"collision_fields": ["res://data/terrain/collision_field_manifest.json"],
 	"terrain": ["res://data/terrain/terrain_templates.json", "res://data/terrain/terrain_definitions.json"],
 	"navigation": ["res://data/terrain/navigation_definitions.json"],
 	"environment_zones": ["res://data/environments/environment_zone_definitions.json", "res://data/environments/ocean_battle_condition_definitions.json"],
@@ -119,6 +120,8 @@ func _validate_references() -> void:
 		_validate_visual(visual)
 	for terrain in all("terrain"):
 		_validate_terrain(terrain)
+	for collision_field in all("collision_fields"):
+		_validate_collision_field(collision_field)
 	for navigation in all("navigation"):
 		_validate_navigation(navigation)
 	for environment_definition in all("environment_zones"):
@@ -754,6 +757,9 @@ func _validate_terrain(definition: Dictionary) -> void:
 		var map_size: Array = definition.get("map_size", [])
 		if not _valid_positive_pair(map_size):
 			errors.append("Invalid terrain map size in %s" % definition_id)
+		var collision_field_id := str(definition.get("collision_field_id", ""))
+		if collision_field_id.is_empty() or get_definition("collision_fields", collision_field_id).is_empty():
+			errors.append("Terrain map %s references a missing collision field" % definition_id)
 		var spawn_ids := {}
 		for faction_id in ["player", "enemy"]:
 			var faction_spawns: Array = definition.get("spawn_points", []).filter(func(spawn): return str(spawn.get("faction_id", "")) == faction_id)
@@ -765,6 +771,33 @@ func _validate_terrain(definition: Dictionary) -> void:
 				spawn_ids[spawn_id] = true
 				if not _valid_positive_pair(spawn.get("position", [])) or float(spawn.get("radius", 0.0)) < 46.0 or not spawn.has("heading") or spawn.get("movement_tags", []) != ["Surface"]:
 					errors.append("Terrain map has invalid large-fleet spawn contract in %s" % definition_id)
+
+
+func _validate_collision_field(definition: Dictionary) -> void:
+	var definition_id := str(definition.get("id", "?"))
+	if str(definition.get("definition_type", "")) != "TerrainCollisionField":
+		errors.append("Unsupported collision field definition type in %s" % definition_id)
+		return
+	var terrain: Dictionary = get_definition("terrain", str(definition.get("terrain_definition_id", "")))
+	if terrain.is_empty():
+		errors.append("Collision field references missing terrain in %s" % definition_id)
+		return
+	if str(terrain.get("collision_field_id", "")) != definition_id:
+		errors.append("Collision field reverse reference mismatch in %s" % definition_id)
+	if int(definition.get("schema_version", 0)) != 1 or int(definition.get("algorithm_version", 0)) != 1:
+		errors.append("Unsupported collision field version in %s" % definition_id)
+	if int(definition.get("navigation_revision", -1)) != int(terrain.get("navigation_revision", 0)):
+		errors.append("Collision field revision mismatch in %s" % definition_id)
+	if definition.get("map_size", []) != terrain.get("map_size", []):
+		errors.append("Collision field map size mismatch in %s" % definition_id)
+	if float(definition.get("cell_size", 0.0)) <= 0.0 or not _valid_positive_pair(definition.get("grid_size", [])):
+		errors.append("Invalid collision field grid in %s" % definition_id)
+	for checksum_name in ["source_checksum", "payload_checksum", "file_checksum"]:
+		if str(definition.get(checksum_name, "")).length() != 64:
+			errors.append("Invalid %s in %s" % [checksum_name, definition_id])
+	var path := str(definition.get("path", ""))
+	if path.is_empty() or not FileAccess.file_exists(path):
+		errors.append("Missing collision field payload in %s" % definition_id)
 
 
 func _validate_navigation(definition: Dictionary) -> void:

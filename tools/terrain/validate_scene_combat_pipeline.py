@@ -289,6 +289,9 @@ def main() -> int:
 	referenced, errors = _manifest_paths()
 	errors += _unreferenced_assets(referenced)
 	errors += _deterministic_bake()
+	collision_validation = subprocess.run([sys.executable, "tools/terrain/validate_collision_fields.py"], cwd=ROOT, capture_output=True, text=True)
+	if collision_validation.returncode != 0:
+		errors.append("collision-field validation failed: %s" % (collision_validation.stderr.strip() or collision_validation.stdout.strip()))
 	errors += _deterministic_qa_outputs()
 	errors += _check_navigation_profiles()
 	errors += _check_environment_replay()

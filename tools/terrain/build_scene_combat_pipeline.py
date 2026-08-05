@@ -30,6 +30,8 @@ def main() -> int:
 	parser.add_argument("--maps", default="data/terrain/authoring/terrain_maps.json")
 	parser.add_argument("--terrain-out", default="data/terrain/terrain_definitions.json")
 	parser.add_argument("--navigation-out", default="data/terrain/navigation_definitions.json")
+	parser.add_argument("--collision-fields-out", default="data/terrain/collision_fields")
+	parser.add_argument("--collision-manifest-out", default="data/terrain/collision_field_manifest.json")
 	parser.add_argument("--facilities", default="data/facilities/facility_definitions.json")
 	parser.add_argument("--minefields", default="data/facilities/minefield_definitions.json")
 	parser.add_argument("--environment", default="data/environments/environment_zone_definitions.json")
@@ -40,6 +42,8 @@ def main() -> int:
 			temporary_root = Path(temporary)
 			terrain_candidate = temporary_root / "terrain_definitions.json"
 			navigation_candidate = temporary_root / "navigation_definitions.json"
+			collision_fields_candidate = temporary_root / "collision_fields"
+			collision_manifest_candidate = temporary_root / "collision_field_manifest.json"
 			commands = [
 				[sys.executable, "tools/terrain/bake_terrain_definition.py", "--templates", str(_path(args.templates)), "--maps", str(_path(args.maps)), "--out", str(terrain_candidate)],
 				[
@@ -55,6 +59,15 @@ def main() -> int:
 					"--facilities", str(_path(args.facilities)), "--minefields", str(_path(args.minefields)),
 					"--environment", str(_path(args.environment)),
 				],
+				[
+					sys.executable, "tools/terrain/bake_collision_fields.py", "--terrain", str(terrain_candidate),
+					"--out-dir", str(collision_fields_candidate), "--manifest", str(collision_manifest_candidate),
+				],
+				[
+					sys.executable, "tools/terrain/validate_collision_fields.py", "--terrain", str(terrain_candidate),
+					"--manifest", str(collision_manifest_candidate), "--fields-dir", str(collision_fields_candidate),
+					"--skip-determinism",
+				],
 			]
 			for command in commands:
 				ok, output = _run(command)
@@ -63,10 +76,17 @@ def main() -> int:
 					return 1
 			terrain_out = _path(args.terrain_out)
 			navigation_out = _path(args.navigation_out)
+			collision_fields_out = _path(args.collision_fields_out)
+			collision_manifest_out = _path(args.collision_manifest_out)
 			terrain_out.parent.mkdir(parents=True, exist_ok=True)
 			navigation_out.parent.mkdir(parents=True, exist_ok=True)
+			collision_fields_out.mkdir(parents=True, exist_ok=True)
+			collision_manifest_out.parent.mkdir(parents=True, exist_ok=True)
 			os.replace(terrain_candidate, terrain_out)
 			os.replace(navigation_candidate, navigation_out)
+			for collision_field in sorted(collision_fields_candidate.glob("*.tscf")):
+				os.replace(collision_field, collision_fields_out / collision_field.name)
+			os.replace(collision_manifest_candidate, collision_manifest_out)
 		if not args.skip_qa:
 			for command in [
 				[sys.executable, "tools/terrain/build_minimap_masks.py", "--terrain", str(_path(args.terrain_out))],

@@ -76,6 +76,7 @@ def bake_map(map_source: dict, templates: dict) -> dict:
 		"map_size": map_source["map_size"],
 		"geometry_epsilon": map_source.get("geometry_epsilon", 0.001),
 		"navigation_revision": 1,
+		"collision_field_id": "collision_field.%s" % map_source["id"],
 		"source_document": "res://data/terrain/authoring/terrain_maps.json",
 		"obstacles": sorted(obstacles, key=lambda item: item["id"]),
 		"regions": sorted(regions, key=lambda item: (-int(item.get("priority", 0)), item["id"])),

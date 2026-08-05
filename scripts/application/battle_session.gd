@@ -117,6 +117,10 @@ func configure_performance_profiling(enabled: bool = true) -> void:
 		"trajectory_failures_per_tick": [],
 		"trajectory_segments_simulated_per_tick": [],
 		"trajectory_candidates_rejected_by_terrain_per_tick": [],
+		"detection_unit_pairs_per_tick": [],
+		"detection_range_passes_per_tick": [],
+		"detection_los_queries_per_tick": [],
+		"detection_context_samples_per_tick": [],
 		"collision_field_usec": [],
 		"collision_field_queries_per_tick": [],
 		"collision_field_cells_visited_per_tick": [],
@@ -365,7 +369,7 @@ func advance_tick(delta: float = 0.1) -> Array:
 		var tick_elapsed_usec := Time.get_ticks_usec() - tick_started_usec
 		_performance_profile["tick_total_usec"].append(tick_elapsed_usec)
 		_performance_profile["tick_unclassified_usec"].append(maxi(0, tick_elapsed_usec - _performance_tick_stage_total_usec))
-		for key in ["normal_plans_per_tick", "emergency_scans_per_tick", "emergency_plans_per_tick", "strategic_corridors_per_tick", "trajectory_candidates_per_tick", "trajectory_failures_per_tick", "trajectory_segments_simulated_per_tick", "trajectory_candidates_rejected_by_terrain_per_tick"]:
+		for key in ["normal_plans_per_tick", "emergency_scans_per_tick", "emergency_plans_per_tick", "strategic_corridors_per_tick", "trajectory_candidates_per_tick", "trajectory_failures_per_tick", "trajectory_segments_simulated_per_tick", "trajectory_candidates_rejected_by_terrain_per_tick", "detection_unit_pairs_per_tick", "detection_range_passes_per_tick", "detection_los_queries_per_tick", "detection_context_samples_per_tick"]:
 			_performance_profile[key].append(int(_performance_tick_counts.get(key, 0)))
 		var field_profile := terrain_query.collision_field_diagnostics()
 		_performance_profile["collision_field_usec"].append(int(field_profile.get("collision_field_usec", 0)))
@@ -1925,15 +1929,17 @@ func _resolve_unit_overlap() -> void:
 
 
 func _update_detection(delta: float = 0.1) -> void:
+	var detection_cache := _build_detection_tick_cache()
+	var sorted_unit_ids: Array = detection_cache.get("sorted_unit_ids", [])
 	for observer_faction in [PLAYER_FACTION, ENEMY_FACTION]:
 		var previous_visible: Dictionary = state["visible_by_faction"][observer_faction]
 		var next_visible := {}
 		var next_contact_types := {}
 		var newly_lost := {}
-		for target_id in _sorted_unit_ids():
+		for target_id in sorted_unit_ids:
 			var target: Dictionary = state["units_by_id"][target_id]
 			if target["life_state"] != "Alive" or target["faction_id"] == observer_faction: continue
-			var contact_types := _fleet_detection_types(observer_faction, target)
+			var contact_types := _fleet_detection_types_cached(observer_faction, target, detection_cache)
 			if not contact_types.is_empty():
 				next_visible[target_id] = true
 				next_contact_types[target_id] = contact_types
@@ -1948,7 +1954,7 @@ func _update_detection(delta: float = 0.1) -> void:
 			if not previous_visible.has(target_id):
 				_emit("ContactAcquired", {"observer_faction": observer_faction, "target_unit_id": target_id, "position": target["position"], "contact_types":contact_types.duplicate(), "primary_contact_type":primary_type, "contact_accuracy":"ExactPosition"})
 				if observer_faction == PLAYER_FACTION:
-					for observer_id in _optical_detector_unit_ids(observer_faction, target):
+					for observer_id in _optical_detector_unit_ids_cached(observer_faction, target, detection_cache):
 						_record_tutorial_action("EstablishSharedContact", observer_id, {"target_unit_id": target_id})
 			elif previous_contact.get("contact_types", []) != contact_types: _emit("ContactTypeChanged", {"observer_faction":observer_faction, "target_unit_id":target_id, "position":target["position"], "old_contact_types":previous_contact.get("contact_types", []).duplicate(), "contact_types":contact_types.duplicate(), "primary_contact_type":primary_type})
 		for target_id in previous_visible:
@@ -2029,69 +2035,188 @@ func _fleet_detects(observer_faction: String, target: Dictionary) -> bool:
 
 
 func _fleet_detection_types(observer_faction: String, target: Dictionary) -> Array[String]:
+	return _fleet_detection_types_cached(observer_faction, target, _build_detection_tick_cache())
+
+
+func _build_detection_tick_cache() -> Dictionary:
+	var sorted_unit_ids := _sorted_unit_ids()
+	var unit_facts := {}
+	var alive_unit_ids_by_faction := {PLAYER_FACTION: [], ENEMY_FACTION: []}
+	for unit_id in sorted_unit_ids:
+		var unit: Dictionary = state["units_by_id"][unit_id]
+		if str(unit.get("life_state", "")) != "Alive": continue
+		unit_facts[unit_id] = _detection_unit_fact(unit)
+		var faction_id := str(unit.get("faction_id", ""))
+		if not alive_unit_ids_by_faction.has(faction_id): alive_unit_ids_by_faction[faction_id] = []
+		alive_unit_ids_by_faction[faction_id].append(unit_id)
+	var observation_sources_by_faction := {}
+	var radar_sources_by_faction := {}
+	for faction_id in [PLAYER_FACTION, ENEMY_FACTION]:
+		var observation_sources: Array = []
+		for source in facility_service.observation_sources(faction_id):
+			var source_position: Vector2 = source.get("position", Vector2.ZERO)
+			var visibility_affected := bool(source.get("weather_affected", true)) or bool(source.get("time_affected", true)) or bool(source.get("local_visibility_affected", true))
+			var optical_visibility_multiplier := 1.0
+			if visibility_affected:
+				optical_visibility_multiplier = float(terrain_context_service.context_at(source_position).get("optical_visibility_multiplier", 1.0))
+				_profile_increment("detection_context_samples_per_tick")
+			observation_sources.append({
+				"position": source_position,
+				"detection_range": float(source.get("detection_range", 0.0)),
+				"visibility_affected": visibility_affected,
+				"optical_visibility_multiplier": optical_visibility_multiplier,
+				"line_of_sight_required": bool(source.get("line_of_sight_required", true)),
+			})
+		observation_sources_by_faction[faction_id] = observation_sources
+		var radar_sources: Array = []
+		for source in facility_service.radar_sources(faction_id):
+			radar_sources.append({
+				"position": source.get("position", Vector2.ZERO),
+				"detection_range": float(source.get("detection_range", 0.0)),
+				"line_of_sight_required": bool(source.get("line_of_sight_required", false)),
+			})
+		radar_sources_by_faction[faction_id] = radar_sources
+	return {
+		"sorted_unit_ids": sorted_unit_ids,
+		"unit_facts": unit_facts,
+		"alive_unit_ids_by_faction": alive_unit_ids_by_faction,
+		"observation_sources_by_faction": observation_sources_by_faction,
+		"radar_sources_by_faction": radar_sources_by_faction,
+		"support_reconnaissance_by_faction": _reconnaissance_effects_by_faction(state.get("support_effects_by_id", {})),
+		"skill_reconnaissance_by_faction": _reconnaissance_effects_by_faction(state.get("skill_effects_by_id", {})),
+	}
+
+
+func _detection_unit_fact(unit: Dictionary) -> Dictionary:
+	var position: Vector2 = unit.get("position", Vector2.ZERO)
+	var status_effects := _active_status_effects(unit)
+	var concealment := ModifierService.calculate(float(unit["stats"]["concealment_distance"]), status_effects, "ConcealmentDistance")
+	if float(unit.get("firing_reveal_remaining", 0.0)) > 0.0:
+		concealment *= float(unit["stats"]["fire_concealment_multiplier"])
+	var context := terrain_context_service.context_at(position)
+	_profile_increment("detection_context_samples_per_tick")
+	return {
+		"position": position,
+		"detection_range": ModifierService.calculate(float(unit["stats"]["detection_range"]), status_effects, "DetectionRange"),
+		"concealment": concealment,
+		"optical_visibility_multiplier": float(context.get("optical_visibility_multiplier", 1.0)),
+	}
+
+
+func _reconnaissance_effects_by_faction(effects_by_id: Dictionary) -> Dictionary:
+	var result := {PLAYER_FACTION: [], ENEMY_FACTION: []}
+	for effect in effects_by_id.values():
+		if str(effect.get("effect_type", "")) != "Reconnaissance": continue
+		var faction_id := str(effect.get("faction_id", ""))
+		if not result.has(faction_id): result[faction_id] = []
+		result[faction_id].append({"position":effect.get("position", Vector2.ZERO), "radius":float(effect.get("radius", 0.0))})
+	return result
+
+
+func _detection_fact_for_target(target: Dictionary, detection_cache: Dictionary) -> Dictionary:
+	var target_id := str(target.get("entity_id", ""))
+	var unit_facts: Dictionary = detection_cache.get("unit_facts", {})
+	if not target_id.is_empty() and unit_facts.has(target_id): return unit_facts[target_id]
+	var fact := _detection_unit_fact(target)
+	if not target_id.is_empty(): unit_facts[target_id] = fact
+	return fact
+
+
+func _within_detection_radius(first: Vector2, second: Vector2, radius: float) -> bool:
+	return radius >= 0.0 and first.distance_squared_to(second) <= radius * radius
+
+
+func _fleet_detection_types_cached(observer_faction: String, target: Dictionary, detection_cache: Dictionary) -> Array[String]:
 	var result: Array[String] = []
-	var concealment := ModifierService.calculate(float(target["stats"]["concealment_distance"]), _active_status_effects(target), "ConcealmentDistance")
-	if float(target["firing_reveal_remaining"]) > 0.0: concealment *= float(target["stats"]["fire_concealment_multiplier"])
-	for observer_id in _sorted_unit_ids():
-		var observer: Dictionary = state["units_by_id"][observer_id]
-		if observer["faction_id"] != observer_faction or observer["life_state"] != "Alive": continue
-		var detection_range := ModifierService.calculate(float(observer["stats"]["detection_range"]), _active_status_effects(observer), "DetectionRange")
-		var observer_context := terrain_context_service.context_at(observer["position"])
-		var target_context := terrain_context_service.context_at(target["position"])
-		detection_range *= minf(float(observer_context.get("optical_visibility_multiplier", 1.0)), float(target_context.get("optical_visibility_multiplier", 1.0)))
-		var distance := (observer["position"] as Vector2).distance_to(target["position"] as Vector2)
-		if distance <= detection_range and distance <= concealment and terrain_query.has_surface_line_of_sight(observer["position"], target["position"]):
+	var unit_pair_count := 0
+	var range_pass_count := 0
+	var los_query_count := 0
+	var target_fact := _detection_fact_for_target(target, detection_cache)
+	var target_position: Vector2 = target_fact.get("position", Vector2.ZERO)
+	var concealment := float(target_fact.get("concealment", 0.0))
+	var unit_facts: Dictionary = detection_cache.get("unit_facts", {})
+	var alive_unit_ids_by_faction: Dictionary = detection_cache.get("alive_unit_ids_by_faction", {})
+	for observer_id in alive_unit_ids_by_faction.get(observer_faction, []):
+		unit_pair_count += 1
+		var observer_fact: Dictionary = unit_facts[observer_id]
+		var observer_position: Vector2 = observer_fact.get("position", Vector2.ZERO)
+		var detection_range := float(observer_fact.get("detection_range", 0.0)) * minf(float(observer_fact.get("optical_visibility_multiplier", 1.0)), float(target_fact.get("optical_visibility_multiplier", 1.0)))
+		if not _within_detection_radius(observer_position, target_position, minf(detection_range, concealment)): continue
+		range_pass_count += 1
+		los_query_count += 1
+		if terrain_query.has_surface_line_of_sight(observer_position, target_position):
 			result.append("Optical")
 			break
-	for source in facility_service.observation_sources(observer_faction):
+	var observation_sources_by_faction: Dictionary = detection_cache.get("observation_sources_by_faction", {})
+	for source in observation_sources_by_faction.get(observer_faction, []):
 		var source_position: Vector2 = source.get("position", Vector2.ZERO)
-		var source_context := terrain_context_service.context_at(source_position)
-		var target_context := terrain_context_service.context_at(target["position"])
 		var detection_range := float(source.get("detection_range", 0.0))
-		if bool(source.get("weather_affected", true)) or bool(source.get("time_affected", true)) or bool(source.get("local_visibility_affected", true)):
-			detection_range *= minf(float(source_context.get("optical_visibility_multiplier", 1.0)), float(target_context.get("optical_visibility_multiplier", 1.0)))
-		var distance := source_position.distance_to(target["position"])
-		var line_of_sight_ok := not bool(source.get("line_of_sight_required", true)) or terrain_query.has_surface_line_of_sight(source_position, target["position"])
-		if distance <= detection_range and distance <= concealment and line_of_sight_ok:
+		if bool(source.get("visibility_affected", true)):
+			detection_range *= minf(float(source.get("optical_visibility_multiplier", 1.0)), float(target_fact.get("optical_visibility_multiplier", 1.0)))
+		if not _within_detection_radius(source_position, target_position, minf(detection_range, concealment)): continue
+		var line_of_sight_ok := true
+		if bool(source.get("line_of_sight_required", true)):
+			los_query_count += 1
+			line_of_sight_ok = terrain_query.has_surface_line_of_sight(source_position, target_position)
+		if line_of_sight_ok:
 			if "Optical" not in result: result.append("Optical")
 			break
 	if str(target.get("radar_stealth_state", "Exposed")) != "Stealthed":
-		for source in facility_service.radar_sources(observer_faction):
+		var radar_sources_by_faction: Dictionary = detection_cache.get("radar_sources_by_faction", {})
+		for source in radar_sources_by_faction.get(observer_faction, []):
 			var source_position: Vector2 = source.get("position", Vector2.ZERO)
-			var distance := source_position.distance_to(target["position"])
-			var line_of_sight_ok := not bool(source.get("line_of_sight_required", false)) or terrain_query.has_surface_line_of_sight(source_position, target["position"])
-			if distance <= float(source.get("detection_range", 0.0)) and line_of_sight_ok:
+			if not _within_detection_radius(source_position, target_position, float(source.get("detection_range", 0.0))): continue
+			var line_of_sight_ok := true
+			if bool(source.get("line_of_sight_required", false)):
+				los_query_count += 1
+				line_of_sight_ok = terrain_query.has_surface_line_of_sight(source_position, target_position)
+			if line_of_sight_ok:
 				result.append("Radar")
 				break
-	for effect in state.get("support_effects_by_id", {}).values():
-		if str(effect.get("effect_type", "")) != "Reconnaissance" or str(effect.get("faction_id", "")) != observer_faction: continue
-		if (effect.get("position", Vector2.ZERO) as Vector2).distance_to(target["position"]) <= float(effect.get("radius", 0.0)):
+	var support_reconnaissance_by_faction: Dictionary = detection_cache.get("support_reconnaissance_by_faction", {})
+	for effect in support_reconnaissance_by_faction.get(observer_faction, []):
+		if _within_detection_radius(effect.get("position", Vector2.ZERO), target_position, float(effect.get("radius", 0.0))):
 			if "Optical" not in result: result.append("Optical")
 			break
-	for effect in state.get("skill_effects_by_id", {}).values():
-		if str(effect.get("effect_type", "")) != "Reconnaissance" or str(effect.get("faction_id", "")) != observer_faction: continue
-		if (effect.get("position", Vector2.ZERO) as Vector2).distance_to(target["position"]) <= float(effect.get("radius", 0.0)):
+	var skill_reconnaissance_by_faction: Dictionary = detection_cache.get("skill_reconnaissance_by_faction", {})
+	for effect in skill_reconnaissance_by_faction.get(observer_faction, []):
+		if _within_detection_radius(effect.get("position", Vector2.ZERO), target_position, float(effect.get("radius", 0.0))):
 			if "Optical" not in result: result.append("Optical")
 			break
+	_profile_increment("detection_unit_pairs_per_tick", unit_pair_count)
+	_profile_increment("detection_range_passes_per_tick", range_pass_count)
+	_profile_increment("detection_los_queries_per_tick", los_query_count)
 	result.sort()
 	return result
 
 
 func _optical_detector_unit_ids(observer_faction: String, target: Dictionary) -> Array[String]:
+	return _optical_detector_unit_ids_cached(observer_faction, target, _build_detection_tick_cache())
+
+
+func _optical_detector_unit_ids_cached(observer_faction: String, target: Dictionary, detection_cache: Dictionary) -> Array[String]:
 	var result: Array[String] = []
-	var concealment := ModifierService.calculate(float(target["stats"]["concealment_distance"]), _active_status_effects(target), "ConcealmentDistance")
-	if float(target["firing_reveal_remaining"]) > 0.0:
-		concealment *= float(target["stats"]["fire_concealment_multiplier"])
-	for observer_id in _sorted_unit_ids():
-		var observer: Dictionary = state["units_by_id"][observer_id]
-		if observer["faction_id"] != observer_faction or observer["life_state"] != "Alive": continue
-		var detection_range := ModifierService.calculate(float(observer["stats"]["detection_range"]), _active_status_effects(observer), "DetectionRange")
-		var observer_context := terrain_context_service.context_at(observer["position"])
-		var target_context := terrain_context_service.context_at(target["position"])
-		detection_range *= minf(float(observer_context.get("optical_visibility_multiplier", 1.0)), float(target_context.get("optical_visibility_multiplier", 1.0)))
-		var distance := (observer["position"] as Vector2).distance_to(target["position"] as Vector2)
-		if distance <= detection_range and distance <= concealment and terrain_query.has_surface_line_of_sight(observer["position"], target["position"]):
+	var unit_pair_count := 0
+	var range_pass_count := 0
+	var los_query_count := 0
+	var target_fact := _detection_fact_for_target(target, detection_cache)
+	var target_position: Vector2 = target_fact.get("position", Vector2.ZERO)
+	var concealment := float(target_fact.get("concealment", 0.0))
+	var unit_facts: Dictionary = detection_cache.get("unit_facts", {})
+	var alive_unit_ids_by_faction: Dictionary = detection_cache.get("alive_unit_ids_by_faction", {})
+	for observer_id in alive_unit_ids_by_faction.get(observer_faction, []):
+		unit_pair_count += 1
+		var observer_fact: Dictionary = unit_facts[observer_id]
+		var observer_position: Vector2 = observer_fact.get("position", Vector2.ZERO)
+		var detection_range := float(observer_fact.get("detection_range", 0.0)) * minf(float(observer_fact.get("optical_visibility_multiplier", 1.0)), float(target_fact.get("optical_visibility_multiplier", 1.0)))
+		if not _within_detection_radius(observer_position, target_position, minf(detection_range, concealment)): continue
+		range_pass_count += 1
+		los_query_count += 1
+		if terrain_query.has_surface_line_of_sight(observer_position, target_position):
 			result.append(observer_id)
+	_profile_increment("detection_unit_pairs_per_tick", unit_pair_count)
+	_profile_increment("detection_range_passes_per_tick", range_pass_count)
+	_profile_increment("detection_los_queries_per_tick", los_query_count)
 	return result
 
 

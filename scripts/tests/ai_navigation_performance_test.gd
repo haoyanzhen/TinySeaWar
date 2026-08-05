@@ -37,7 +37,15 @@ func _run() -> void:
 	var route_failure_samples: Array = []
 	var route_projection_samples: Array = []
 	var trajectory_failure_samples: Array = []
-	var event_counts := {"terrain_collisions":0, "route_failures":0, "projected_routes":0, "trajectory_failures":0}
+	var event_counts := {
+		"terrain_collisions":0,
+		"route_failures":0,
+		"projected_routes":0,
+		"trajectory_failures":0,
+		"contacts_acquired":0,
+		"contacts_lost":0,
+		"contact_types_changed":0,
+	}
 	var route_waypoint_total := 0
 	var route_completions := 0
 	var astar_usec_samples: Array = []
@@ -93,6 +101,9 @@ func _run() -> void:
 						prediction_same_candidate += 1
 					if bool(event.get("prediction_suffix_reusable", false)):
 						prediction_reusable_suffixes += 1
+			elif str(event.get("event_type", "")) == "ContactAcquired": event_counts["contacts_acquired"] += 1
+			elif str(event.get("event_type", "")) == "ContactLost": event_counts["contacts_lost"] += 1
+			elif str(event.get("event_type", "")) == "ContactTypeChanged": event_counts["contact_types_changed"] += 1
 		executed_ticks += 1
 	route_samples.sort_custom(func(a, b): return int(a.get("elapsed_usec", 0)) > int(b.get("elapsed_usec", 0)))
 	if route_samples.size() > 8: route_samples.resize(8)
@@ -152,6 +163,10 @@ func _run() -> void:
 		"trajectory_failures": _count_summary(profile.get("trajectory_failures_per_tick", [])),
 		"trajectory_segments_simulated": _count_summary(profile.get("trajectory_segments_simulated_per_tick", [])),
 		"trajectory_candidates_rejected_by_terrain": _count_summary(profile.get("trajectory_candidates_rejected_by_terrain_per_tick", [])),
+		"detection_unit_pairs": _count_summary(profile.get("detection_unit_pairs_per_tick", [])),
+		"detection_range_passes": _count_summary(profile.get("detection_range_passes_per_tick", [])),
+		"detection_los_queries": _count_summary(profile.get("detection_los_queries_per_tick", [])),
+		"detection_context_samples": _count_summary(profile.get("detection_context_samples_per_tick", [])),
 		"trajectory_motion_expansion_ms":_timing_summary(profile.get("trajectory_motion_expansion_usec", [])),
 		"trajectory_terrain_validation_ms":_timing_summary(profile.get("trajectory_terrain_validation_usec", [])),
 		"trajectory_environment_access_ms":_timing_summary(profile.get("trajectory_environment_access_usec", [])),
@@ -190,6 +205,8 @@ func _run() -> void:
 			"collision_field_region_definitely_clear":result["collision_field_region_definitely_clear"], "collision_field_region_exact_fallbacks":result["collision_field_region_exact_fallbacks"],
 			"trajectory_candidates":result["trajectory_candidates"], "trajectory_segments_simulated":result["trajectory_segments_simulated"],
 			"trajectory_candidates_rejected_by_terrain":result["trajectory_candidates_rejected_by_terrain"],
+			"detection_unit_pairs":result["detection_unit_pairs"], "detection_range_passes":result["detection_range_passes"],
+			"detection_los_queries":result["detection_los_queries"], "detection_context_samples":result["detection_context_samples"],
 			"trajectory_candidate_count_distribution":result["trajectory_candidate_count_distribution"], "trajectory_candidate_rank_distribution":result["trajectory_candidate_rank_distribution"],
 			"trajectory_motion_expansion_ms":result["trajectory_motion_expansion_ms"], "trajectory_terrain_validation_ms":result["trajectory_terrain_validation_ms"], "trajectory_dynamic_validation_ms":result["trajectory_dynamic_validation_ms"], "trajectory_candidate_scoring_ms":result["trajectory_candidate_scoring_ms"],
 			"trajectory_selected_candidate_ids":trajectory_candidate_ids, "normal_single_candidate_plans":normal_single_candidate_plans, "prediction_utilization":result["prediction_utilization"], "prediction_reuse":result["prediction_reuse"],

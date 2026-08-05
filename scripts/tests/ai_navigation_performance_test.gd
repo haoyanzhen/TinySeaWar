@@ -42,6 +42,17 @@ func _run() -> void:
 	var route_completions := 0
 	var astar_usec_samples: Array = []
 	var astar_expansion_samples: Array = []
+	var trajectory_candidate_count_samples: Array = []
+	var trajectory_candidate_rank_samples: Array = []
+	var trajectory_valid_candidate_count_samples: Array = []
+	var trajectory_candidate_ids := {}
+	var selected_prediction_segments := 0
+	var committed_prediction_segments := 0
+	var normal_single_candidate_plans := 0
+	var prediction_reuse_comparisons := 0
+	var prediction_same_candidate := 0
+	var prediction_reusable_suffixes := 0
+	var prediction_position_errors: Array = []
 	while executed_ticks < requested_ticks and session.state.get("phase", "") == "Running":
 		for event in session.advance_tick(0.1):
 			if str(event.get("event_type", "")) in ["NavigationRequestCompleted", "NavigationRequestFailed"]:
@@ -64,10 +75,29 @@ func _run() -> void:
 					var failed_unit: Dictionary = session.state.get("units_by_id", {}).get(str(event.get("unit_id", "")), {})
 					var movement: Dictionary = failed_unit.get("movement_state", {})
 					trajectory_failure_samples.append({"tick":session.state.get("tick_index", 0), "unit_id":event.get("unit_id", ""), "mode":event.get("mode", ""), "reason_code":event.get("reason_code", ""), "position":str(failed_unit.get("position", Vector2.ZERO)), "heading":failed_unit.get("heading", 0.0), "speed":failed_unit.get("current_speed", 0.0), "movement_mode":movement.get("mode", ""), "target":str(movement.get("target", Vector2.ZERO))})
+			elif str(event.get("event_type", "")) == "TrajectoryPlanned":
+				var candidate_count := int(event.get("candidate_count", 0))
+				trajectory_candidate_count_samples.append(candidate_count)
+				trajectory_candidate_rank_samples.append(int(event.get("candidate_rank", 0)))
+				trajectory_valid_candidate_count_samples.append(int(event.get("valid_candidate_count", 0)))
+				var candidate_key := "%s:%s" % [event.get("mode", ""), event.get("candidate_id", "")]
+				trajectory_candidate_ids[candidate_key] = int(trajectory_candidate_ids.get(candidate_key, 0)) + 1
+				selected_prediction_segments += int(event.get("predicted_segment_count", 0))
+				committed_prediction_segments += mini(int(event.get("predicted_segment_count", 0)), int(event.get("committed_segment_count", 0)))
+				if str(event.get("mode", "")) == "NormalNavigation" and candidate_count == 1:
+					normal_single_candidate_plans += 1
+				if str(event.get("mode", "")) == "NormalNavigation" and not str(event.get("previous_candidate_id", "")).is_empty():
+					prediction_reuse_comparisons += 1
+					prediction_position_errors.append(float(event.get("prediction_position_error", 0.0)))
+					if str(event.get("previous_candidate_id", "")) == str(event.get("candidate_id", "")):
+						prediction_same_candidate += 1
+					if bool(event.get("prediction_suffix_reusable", false)):
+						prediction_reusable_suffixes += 1
 		executed_ticks += 1
 	route_samples.sort_custom(func(a, b): return int(a.get("elapsed_usec", 0)) > int(b.get("elapsed_usec", 0)))
 	if route_samples.size() > 8: route_samples.resize(8)
 	var profile := session.get_performance_profile()
+	var total_segments_simulated: int = int(_count_summary(profile.get("trajectory_segments_simulated_per_tick", [])).get("total", 0))
 	var result := {
 		"level": effective_level_id,
 		"source_level": options["level"],
@@ -85,6 +115,32 @@ func _run() -> void:
 		"waiting_units": session.state.get("units_by_id", {}).values().filter(func(unit): return bool(unit.get("navigation_state", {}).get("route_waiting", false))).size(),
 		"phase": session.state.get("phase", ""),
 		"tick_ms": _timing_summary(profile.get("tick_total_usec", [])),
+		"tick_breakdown_ms": {
+			"setup_environment":_timing_summary(profile.get("tick_setup_environment_usec", [])),
+			"command_processing":_timing_summary(profile.get("command_processing_usec", [])),
+			"strategic_navigation":_timing_summary(profile.get("strategic_navigation_usec", [])),
+			"status_updates":_timing_summary(profile.get("status_updates_usec", [])),
+			"local_navigation":_timing_summary(profile.get("navigation_usec", [])),
+			"movement":_timing_summary(profile.get("movement_usec", [])),
+			"unit_overlap":_timing_summary(profile.get("unit_overlap_usec", [])),
+			"projectile_update":_timing_summary(profile.get("projectile_update_usec", [])),
+			"observation_detection":_timing_summary(profile.get("observation_detection_usec", [])),
+			"ai_memory":_timing_summary(profile.get("ai_memory_usec", [])),
+			"ai_decision":_timing_summary(profile.get("ai_decision_usec", [])),
+			"combat_actions":_timing_summary(profile.get("combat_actions_usec", [])),
+			"facility_mine":_timing_summary(profile.get("facility_mine_usec", [])),
+			"settlement_recording":_timing_summary(profile.get("settlement_recording_usec", [])),
+			"unclassified":_timing_summary(profile.get("tick_unclassified_usec", [])),
+		},
+		"tick_detail_ms": {
+			"projectile_observation":_timing_summary(profile.get("projectile_observation_usec", [])),
+			"mine_observation":_timing_summary(profile.get("mine_observation_usec", [])),
+			"unit_detection":_timing_summary(profile.get("unit_detection_usec", [])),
+			"ai_group_formation":_timing_summary(profile.get("ai_group_formation_usec", [])),
+			"ai_support_planning":_timing_summary(profile.get("ai_support_planning_usec", [])),
+			"ai_unit_intents":_timing_summary(profile.get("ai_unit_intents_usec", [])),
+			"ai_primary_weapons":_timing_summary(profile.get("ai_primary_weapons_usec", [])),
+		},
 		"navigation_ms": _timing_summary(profile.get("navigation_usec", [])),
 		"movement_ms": _timing_summary(profile.get("movement_usec", [])),
 		"ai_decision_ms": _timing_summary(profile.get("ai_decision_usec", [])),
@@ -96,12 +152,28 @@ func _run() -> void:
 		"trajectory_failures": _count_summary(profile.get("trajectory_failures_per_tick", [])),
 		"trajectory_segments_simulated": _count_summary(profile.get("trajectory_segments_simulated_per_tick", [])),
 		"trajectory_candidates_rejected_by_terrain": _count_summary(profile.get("trajectory_candidates_rejected_by_terrain_per_tick", [])),
+		"trajectory_motion_expansion_ms":_timing_summary(profile.get("trajectory_motion_expansion_usec", [])),
+		"trajectory_terrain_validation_ms":_timing_summary(profile.get("trajectory_terrain_validation_usec", [])),
+		"trajectory_environment_access_ms":_timing_summary(profile.get("trajectory_environment_access_usec", [])),
+		"trajectory_dynamic_validation_ms":_timing_summary(profile.get("trajectory_dynamic_validation_usec", [])),
+		"trajectory_candidate_scoring_ms":_timing_summary(profile.get("trajectory_candidate_scoring_usec", [])),
+		"trajectory_candidate_count_distribution":_count_distribution(trajectory_candidate_count_samples),
+		"trajectory_candidate_rank_distribution":_count_distribution(trajectory_candidate_rank_samples),
+		"trajectory_valid_candidate_count_distribution":_count_distribution(trajectory_valid_candidate_count_samples),
+		"trajectory_selected_candidate_ids":trajectory_candidate_ids,
+		"normal_single_candidate_plans":normal_single_candidate_plans,
+		"selected_prediction_segments":selected_prediction_segments,
+		"committed_prediction_segments":committed_prediction_segments,
+		"prediction_utilization":{"selected_over_simulated":snappedf(float(selected_prediction_segments) / maxf(1.0, float(total_segments_simulated)), 0.0001), "committed_over_simulated":snappedf(float(committed_prediction_segments) / maxf(1.0, float(total_segments_simulated)), 0.0001)},
+		"prediction_reuse":{"comparisons":prediction_reuse_comparisons, "same_candidate":prediction_same_candidate, "reusable_suffixes":prediction_reusable_suffixes, "position_error":_value_summary(prediction_position_errors)},
 		"collision_field_ms": _timing_summary(profile.get("collision_field_usec", [])),
 		"collision_field_queries": _count_summary(profile.get("collision_field_queries_per_tick", [])),
 		"collision_field_cells_visited": _count_summary(profile.get("collision_field_cells_visited_per_tick", [])),
 		"collision_field_definitely_clear": _count_summary(profile.get("collision_field_definitely_clear_per_tick", [])),
 		"collision_field_exact_fallbacks": _count_summary(profile.get("collision_field_exact_fallbacks_per_tick", [])),
 		"collision_field_unavailable_fallbacks": _count_summary(profile.get("collision_field_unavailable_fallbacks_per_tick", [])),
+		"collision_field_region_definitely_clear": _count_summary(profile.get("collision_field_region_definitely_clear_per_tick", [])),
+		"collision_field_region_exact_fallbacks": _count_summary(profile.get("collision_field_region_exact_fallbacks_per_tick", [])),
 		"slowest_routes": route_samples,
 		"route_failure_samples": route_failure_samples,
 		"route_projection_samples": route_projection_samples,
@@ -109,12 +181,18 @@ func _run() -> void:
 	}
 	if bool(options.get("compact", false)):
 		var compact := {
-			"map_level":result["map_level"], "executed_ticks":executed_ticks, "event_counts":event_counts,
+			"map_level":result["map_level"], "executed_ticks":executed_ticks, "phase":result["phase"], "event_counts":event_counts,
 			"waiting_units":result["waiting_units"], "tick_ms":result["tick_ms"], "navigation_ms":result["navigation_ms"],
+			"tick_breakdown_ms":result["tick_breakdown_ms"],
+			"tick_detail_ms":result["tick_detail_ms"],
 			"collision_field_ms":result["collision_field_ms"], "collision_field_queries":result["collision_field_queries"],
 			"collision_field_exact_fallbacks":result["collision_field_exact_fallbacks"], "normal_plans":result["normal_plans"],
+			"collision_field_region_definitely_clear":result["collision_field_region_definitely_clear"], "collision_field_region_exact_fallbacks":result["collision_field_region_exact_fallbacks"],
 			"trajectory_candidates":result["trajectory_candidates"], "trajectory_segments_simulated":result["trajectory_segments_simulated"],
 			"trajectory_candidates_rejected_by_terrain":result["trajectory_candidates_rejected_by_terrain"],
+			"trajectory_candidate_count_distribution":result["trajectory_candidate_count_distribution"], "trajectory_candidate_rank_distribution":result["trajectory_candidate_rank_distribution"],
+			"trajectory_motion_expansion_ms":result["trajectory_motion_expansion_ms"], "trajectory_terrain_validation_ms":result["trajectory_terrain_validation_ms"], "trajectory_dynamic_validation_ms":result["trajectory_dynamic_validation_ms"], "trajectory_candidate_scoring_ms":result["trajectory_candidate_scoring_ms"],
+			"trajectory_selected_candidate_ids":trajectory_candidate_ids, "normal_single_candidate_plans":normal_single_candidate_plans, "prediction_utilization":result["prediction_utilization"], "prediction_reuse":result["prediction_reuse"],
 			"trajectory_failure_samples":trajectory_failure_samples,
 		}
 		print("AI_NAV_PERF_COMPACT_JSON=" + JSON.stringify(compact))
@@ -195,6 +273,15 @@ func _count_distribution(values: Array) -> Dictionary:
 	var total := 0.0
 	for value in values: total += float(value)
 	return {"mean":snappedf(total / values.size(), 0.01), "p95":int(sorted[_percentile_index(sorted.size(), 0.95)]), "p99":int(sorted[_percentile_index(sorted.size(), 0.99)]), "max":int(sorted[-1])}
+
+
+func _value_summary(values: Array) -> Dictionary:
+	if values.is_empty(): return {"mean":0.0, "p95":0.0, "p99":0.0, "max":0.0}
+	var sorted := values.duplicate()
+	sorted.sort()
+	var total := 0.0
+	for value in values: total += float(value)
+	return {"mean":snappedf(total / values.size(), 0.0001), "p95":snappedf(float(sorted[_percentile_index(sorted.size(), 0.95)]), 0.0001), "p99":snappedf(float(sorted[_percentile_index(sorted.size(), 0.99)]), 0.0001), "max":snappedf(float(sorted[-1]), 0.0001)}
 
 
 func _percentile_index(size: int, percentile: float) -> int:

@@ -4,6 +4,7 @@ const ConfigRegistry = preload("res://scripts/infrastructure/data/config_registr
 const BattleSession = preload("res://scripts/application/battle_session.gd")
 const TerrainQueryService = preload("res://scripts/domain/services/terrain_query_service.gd")
 const TerrainCollisionFieldLoader = preload("res://scripts/infrastructure/data/terrain_collision_field_loader.gd")
+const TerrainCollisionField = preload("res://scripts/domain/services/terrain_collision_field.gd")
 const TrajectoryPlanner = preload("res://scripts/application/navigation/trajectory_planner.gd")
 const ShipMotionService = preload("res://scripts/domain/services/ship_motion_service.gd")
 
@@ -23,6 +24,7 @@ func _run() -> void:
 	_test_player_fast_turn_then_straight()
 	_test_motion_context_equivalence(registry)
 	_test_continuous_nearshore_fixtures()
+	_test_region_restriction_masks()
 	_test_corrupt_field_fallback(registry)
 	_test_collision_immediately_invalidates_plan(registry)
 	if failures.is_empty():
@@ -130,6 +132,31 @@ func _test_continuous_nearshore_fixtures() -> void:
 	_check(str(margin_entry.get("status", "")) == "Collides", "the soft navigation margin still rejects a short segment that moves toward land")
 
 
+func _test_region_restriction_masks() -> void:
+	var field = TerrainCollisionField.new()
+	var distances := PackedByteArray()
+	distances.resize(8)
+	distances.fill(255)
+	_check(field.configure({"terrain_definition_id":"terrain.fixture.region_mask", "navigation_revision":1, "map_size":Vector2(200.0, 200.0), "cell_size":100.0, "grid_size":Vector2i(2, 2)}, PackedByteArray([0]), distances, PackedByteArray([0, 1, 0, 0])), "restriction-field fixture configures")
+	var terrain = TerrainQueryService.new()
+	terrain.configure({
+		"id":"terrain.fixture.region_mask", "map_size":[200.0, 200.0], "obstacles":[], "regions":[
+			{"id":"fixture.shallow", "region_type":"ShallowWater", "priority":10, "polygon":[[100.0, 0.0], [200.0, 0.0], [200.0, 100.0], [100.0, 100.0]]},
+		],
+	}, field)
+	var crossing_samples := [{"position":Vector2(50.0, 50.0)}, {"position":Vector2(150.0, 50.0)}]
+	var deep_draft := terrain.validate_movement_trajectory(crossing_samples, 20.0, ["Surface"])
+	var shallow_draft := terrain.validate_movement_trajectory(crossing_samples, 20.0, ["Surface", "ShallowDraft"])
+	var open_water := terrain.validate_movement_trajectory([{"position":Vector2(20.0, 150.0)}, {"position":Vector2(80.0, 150.0)}], 20.0, ["Surface"])
+	var diagnostics := terrain.collision_field_diagnostics()
+	_check(str(deep_draft.get("status", "")) == "Collides" and str(deep_draft.get("hit", {}).get("obstacle_id", "")) == "water_access", "collision-field restriction mask keeps shallow water illegal for deep-draft movement")
+	_check(str(shallow_draft.get("status", "")) == "DefinitelyClear", "movement tags can prove a shallow-water segment legal without polygon sampling")
+	_check(str(open_water.get("status", "")) == "DefinitelyClear" and int(diagnostics.get("collision_field_region_definitely_clear", 0)) >= 2, "open-water restriction masks skip exact region sampling")
+	var exact_fallback = TerrainQueryService.new()
+	exact_fallback.configure(terrain.terrain_definition)
+	_check(str(exact_fallback.validate_movement_trajectory(crossing_samples, 20.0, ["Surface"]).get("status", "")) == "Collides", "missing fields preserve authoritative shallow-water fallback")
+
+
 func _test_corrupt_field_fallback(registry) -> void:
 	var collision_id := "collision_field.terrain.map.harbor_mouth_16x9"
 	var original: Dictionary = registry.get_definition("collision_fields", collision_id).duplicate(true)
@@ -188,6 +215,11 @@ func _test_corrupt_field_fallback(registry) -> void:
 	var visual_only_change := terrain.duplicate(true)
 	visual_only_change["visual_regions"].append({"id":"validation.visual_only", "polygon":[[0.0, 0.0], [1.0, 0.0], [0.0, 1.0]]})
 	_check(loader.source_geometry_checksum(visual_only_change) == loader.source_geometry_checksum(terrain), "visual-only data does not change the collision-field rule checksum")
+	var restricted_region_change := terrain.duplicate(true)
+	var restricted_region_index: int = restricted_region_change.get("regions", []).find_custom(func(region): return str(region.get("region_type", "")) in ["ShallowWater", "ReefOrSandbar"])
+	if restricted_region_index >= 0:
+		restricted_region_change["regions"][restricted_region_index]["polygon"][0][0] = float(restricted_region_change["regions"][restricted_region_index]["polygon"][0][0]) + 1.0
+		_check(loader.source_geometry_checksum(restricted_region_change) != loader.source_geometry_checksum(terrain), "restricted-water geometry changes invalidate the collision field")
 	_write_bytes(corrupted_path, bad_magic_bytes)
 	corrupted["file_checksum"] = _sha256(FileAccess.get_file_as_bytes(corrupted_path))
 	registry.definitions["collision_fields"][collision_id] = corrupted

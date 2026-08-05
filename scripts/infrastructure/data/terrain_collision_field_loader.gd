@@ -3,9 +3,9 @@ extends RefCounted
 const TerrainCollisionField = preload("res://scripts/domain/services/terrain_collision_field.gd")
 
 const MAGIC := "TSCF"
-const SCHEMA_VERSION := 1
-const ALGORITHM_VERSION := 1
-const HEADER_SIZE := 106
+const SCHEMA_VERSION := 2
+const ALGORITHM_VERSION := 2
+const HEADER_SIZE := 110
 
 
 func load_field(definition: Dictionary, terrain_definition: Dictionary) -> Dictionary:
@@ -41,19 +41,22 @@ func load_field(definition: Dictionary, terrain_definition: Dictionary) -> Dicti
 	var payload_checksum := file.get_buffer(32).hex_encode()
 	var occupancy_length := int(file.get_32())
 	var distance_length := int(file.get_32())
-	if terrain_id_length <= 0 or terrain_id_length > 4096 or occupancy_length < 0 or distance_length < 0:
+	var restriction_length := int(file.get_32())
+	if terrain_id_length <= 0 or terrain_id_length > 4096 or occupancy_length < 0 or distance_length < 0 or restriction_length < 0:
 		return _failure("COLLISION_FIELD_INVALID_LENGTH")
-	if grid_width <= 0 or grid_height <= 0 or occupancy_length != int(ceili(float(grid_width * grid_height) / 8.0)) or distance_length != grid_width * grid_height * 2:
+	if grid_width <= 0 or grid_height <= 0 or occupancy_length != int(ceili(float(grid_width * grid_height) / 8.0)) or distance_length != grid_width * grid_height * 2 or restriction_length != grid_width * grid_height:
 		return _failure("COLLISION_FIELD_PAYLOAD_SIZE_MISMATCH")
-	if HEADER_SIZE + terrain_id_length + occupancy_length + distance_length != raw_file.size():
+	if HEADER_SIZE + terrain_id_length + occupancy_length + distance_length + restriction_length != raw_file.size():
 		return _failure("COLLISION_FIELD_TRAILING_OR_TRUNCATED_DATA")
 	var terrain_id := file.get_buffer(terrain_id_length).get_string_from_utf8()
 	var occupancy := file.get_buffer(occupancy_length)
 	var distances := file.get_buffer(distance_length)
+	var restrictions := file.get_buffer(restriction_length)
 	if file.get_position() != file.get_length():
 		return _failure("COLLISION_FIELD_TRAILING_OR_TRUNCATED_DATA")
 	var payload := occupancy.duplicate()
 	payload.append_array(distances)
+	payload.append_array(restrictions)
 	if _sha256(payload) != payload_checksum or payload_checksum != str(definition.get("payload_checksum", "")):
 		return _failure("COLLISION_FIELD_PAYLOAD_CHECKSUM_MISMATCH")
 	var expected_terrain_id := str(terrain_definition.get("id", ""))
@@ -80,7 +83,7 @@ func load_field(definition: Dictionary, terrain_definition: Dictionary) -> Dicti
 		"map_size":map_size,
 		"cell_size":cell_size,
 		"grid_size":grid_size,
-	}, occupancy, distances):
+	}, occupancy, distances, restrictions):
 		return _failure("COLLISION_FIELD_CONFIGURATION_FAILED")
 	return {"ok":true, "field":field, "reason_code":"OK"}
 
@@ -107,6 +110,18 @@ func source_geometry_checksum(terrain_definition: Dictionary) -> String:
 		parts.append(",".join(mask_strings))
 		var points: Array[String] = []
 		for raw_point in obstacle.get("polygon", []):
+			var point := _vector2(raw_point)
+			points.append("%.3f,%.3f" % [point.x, point.y])
+		parts.append(";".join(points))
+	var restricted_regions: Array = terrain_definition.get("regions", []).filter(func(region): return str(region.get("region_type", "")) in ["ShallowWater", "ReefOrSandbar"])
+	restricted_regions.sort_custom(func(a, b): return str(a.get("id", "")) < str(b.get("id", "")))
+	for raw_region in restricted_regions:
+		var region: Dictionary = raw_region
+		parts.append(str(region.get("id", "")))
+		parts.append(str(region.get("region_type", "")))
+		parts.append(str(int(region.get("priority", 0))))
+		var points: Array[String] = []
+		for raw_point in region.get("polygon", []):
 			var point := _vector2(raw_point)
 			points.append("%.3f,%.3f" % [point.x, point.y])
 		parts.append(";".join(points))

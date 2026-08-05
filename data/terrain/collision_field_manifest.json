@@ -1,12 +1,12 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "generated_by": "tools/terrain/bake_collision_fields.py",
   "definitions": [
     {
       "id": "collision_field.terrain.map.broken_atoll",
       "definition_type": "TerrainCollisionField",
-      "schema_version": 1,
-      "algorithm_version": 1,
+      "schema_version": 2,
+      "algorithm_version": 2,
       "terrain_definition_id": "terrain.map.broken_atoll",
       "navigation_revision": 1,
       "map_size": [
@@ -19,17 +19,18 @@
         288
       ],
       "path": "res://data/terrain/collision_fields/terrain_map_broken_atoll.tscf",
-      "source_checksum": "87fa32dd186e0f14d52b24acd950d57e78fb4850ca5056aa8d44d25844a37616",
-      "payload_checksum": "2042c8fca85981d66bc75ee8a1ba6b6bdeadf35e6b45e26c8603cfe41d8f9838",
-      "file_checksum": "ca7e935c01eddc1d7d48c3d990652b0ebd45962d6f5bd7516090c263011107ee",
+      "source_checksum": "f8347f17ff9f408be4c21b28656a73abd5caf239903d570bd3710e160ee451db",
+      "payload_checksum": "3af9e98a48c253adf2465fd006d49b02f7f655e843e082425d1a7285783b3b5f",
+      "file_checksum": "168dfd03c8292f8e2c0daafbd337b443791b23c654f1f778d2a861d8245222ae",
       "occupancy_bytes": 18432,
-      "distance_bytes": 294912
+      "distance_bytes": 294912,
+      "restriction_bytes": 147456
     },
     {
       "id": "collision_field.terrain.map.broken_atoll_16x9",
       "definition_type": "TerrainCollisionField",
-      "schema_version": 1,
-      "algorithm_version": 1,
+      "schema_version": 2,
+      "algorithm_version": 2,
       "terrain_definition_id": "terrain.map.broken_atoll_16x9",
       "navigation_revision": 1,
       "map_size": [
@@ -42,17 +43,18 @@
         432
       ],
       "path": "res://data/terrain/collision_fields/terrain_map_broken_atoll_16x9.tscf",
-      "source_checksum": "71142f5e1d4e012161036ebeb3c7220edaeb6beee21169eaceb6673b7e36fb1f",
-      "payload_checksum": "dee0048d40a79c2e7f86a4fc3701deea79c082c83e6245b24a5bb29bd8ec68aa",
-      "file_checksum": "697b8c25135f0bacdd63d75da712c9396ee8de30ce290b6d80bdd57f9bb70146",
+      "source_checksum": "ab54331d13bbc88826fbd51bcdfa42c4ea87315973eda6e3957cfc07ca8a3aa6",
+      "payload_checksum": "78f0485d391b75e117e612c74f9e93403d52a08a894a3e9352edfc5649b08a14",
+      "file_checksum": "c456c30ca0aa0251ce2e41fa1a81e75233f12a981a4b7304c3aa768912c3427a",
       "occupancy_bytes": 41472,
-      "distance_bytes": 663552
+      "distance_bytes": 663552,
+      "restriction_bytes": 331776
     },
     {
       "id": "collision_field.terrain.map.central_sandbar",
       "definition_type": "TerrainCollisionField",
-      "schema_version": 1,
-      "algorithm_version": 1,
+      "schema_version": 2,
+      "algorithm_version": 2,
       "terrain_definition_id": "terrain.map.central_sandbar",
       "navigation_revision": 1,
       "map_size": [
@@ -65,17 +67,18 @@
         288
       ],
       "path": "res://data/terrain/collision_fields/terrain_map_central_sandbar.tscf",
-      "source_checksum": "3c75d005863e0f6882a8ba3c7912d90703995d80b1b0df0c8246330e955e442d",
-      "payload_checksum": "ee275a1ffa30685b28aafb2dd36895870edd446027f5ca00e4f9e1360595d3dc",
-      "file_checksum": "f894619ee947858588be59eab26e29acd2b8adab25f9169d7b087d893c3969be",
+      "source_checksum": "3015498bb465bb7349b3b1a9f3c77157ec2108350a6327a9931b01dd9a4166f3",
+      "payload_checksum": "b53c4a5d75e707ec22e0c8e15bf5aa9776e058af3c3c1046d6675adada0988ae",
+      "file_checksum": "73f5e6d53425196b8287d383ae4c0342c43bbf5b2de1823b3549e541dd26ab83",
       "occupancy_bytes": 18432,
-      "distance_bytes": 294912
+      "distance_bytes": 294912,
+      "restriction_bytes": 147456
     },
     {
       "id": "collision_field.terrain.map.central_sandbar_16x9",
       "definition_type": "TerrainCollisionField",
-      "schema_version": 1,
-      "algorithm_version": 1,
+      "schema_version": 2,
+      "algorithm_version": 2,
       "terrain_definition_id": "terrain.map.central_sandbar_16x9",
       "navigation_revision": 1,
       "map_size": [
@@ -88,17 +91,18 @@
         432
       ],
       "path": "res://data/terrain/collision_fields/terrain_map_central_sandbar_16x9.tscf",
-      "source_checksum": "b078314d808a33854b636544ac54fb6ca78df4ddc61e8f56433dcdd2cc79271b",
-      "payload_checksum": "61ac36413900e71d4668b5983adeff5d698b334a03bbe9dc1657bb4b5dec31b2",
-      "file_checksum": "66bef94388accf89130b059dbf887f8d09a27432936295f22e3083ed02e692e0",
+      "source_checksum": "c4cc8165ecc2870939a16b930b22f17ae1aff72a22bf4c90f4c7de0bac0e4cf3",
+      "payload_checksum": "0719dc48e232079ac8bb6bdd306dde5611da1e095422b39ef62e66a2fa70a507",
+      "file_checksum": "a6dd5f37106ada6c4fdb39bdb7797d40dcba978401f31c27566fac89fffa013b",
       "occupancy_bytes": 41472,
-      "distance_bytes": 663552
+      "distance_bytes": 663552,
+      "restriction_bytes": 331776
     },
     {
       "id": "collision_field.terrain.map.crescent_bay",
       "definition_type": "TerrainCollisionField",
-      "schema_version": 1,
-      "algorithm_version": 1,
+      "schema_version": 2,
+      "algorithm_version": 2,
       "terrain_definition_id": "terrain.map.crescent_bay",
       "navigation_revision": 1,
       "map_size": [
@@ -111,17 +115,18 @@
         288
       ],
       "path": "res://data/terrain/collision_fields/terrain_map_crescent_bay.tscf",
-      "source_checksum": "65fdeb7a959cb9de5fc6d568271ce9a5fc0a73ca8692b7227c2e1abe7f89f637",
-      "payload_checksum": "cefe405815851e1996cb0779d6ae63c5ca87dc9da771051fc3bfb8515e3b9122",
-      "file_checksum": "40b22e677d288bd8b05accd41b7c64994587a2a5fb5f6e0c83f261d752897bb7",
+      "source_checksum": "4d23fd23e5acd2d1521968dc083b24e0fbe2b4ec4958d0eae73a9ec73db9ab3e",
+      "payload_checksum": "861da2bab9c9d7c856a6826c4ba57bd262bc997ddfe86f201f17310228c46fb2",
+      "file_checksum": "b90db107a7f12da0021ae3f420c27a5e177c3108c14dbcf9a5008b1280d23f29",
       "occupancy_bytes": 18432,
-      "distance_bytes": 294912
+      "distance_bytes": 294912,
+      "restriction_bytes": 147456
     },
     {
       "id": "collision_field.terrain.map.crescent_bay_16x9",
       "definition_type": "TerrainCollisionField",
-      "schema_version": 1,
-      "algorithm_version": 1,
+      "schema_version": 2,
+      "algorithm_version": 2,
       "terrain_definition_id": "terrain.map.crescent_bay_16x9",
       "navigation_revision": 1,
       "map_size": [
@@ -134,17 +139,18 @@
         432
       ],
       "path": "res://data/terrain/collision_fields/terrain_map_crescent_bay_16x9.tscf",
-      "source_checksum": "bf150d0b99c457c8e68850ff845d646eca8f2baff5634c9a7a8261261c8ce826",
-      "payload_checksum": "97d9f675973c87fcf6b36cbaf5c22d8cbab1dc4ccc38a1ed569a3b71551f8a67",
-      "file_checksum": "a434f865750f57da1a541d87b0b85ab229a38880687d345c85829acfb8fd7f08",
+      "source_checksum": "cd593e50c8c015c6c18581bf63e73b6a3a616435e48b3ec6baf9af0302d87ca3",
+      "payload_checksum": "ca3c2be0cb405297e5a2782e04fa6180d3c20e4a0ed7c1e3e941a9e4298fdc99",
+      "file_checksum": "60951370fe5f45f486beff45f2971baad16fd92cd45972d1bf5f2a1680fab0ab",
       "occupancy_bytes": 41472,
-      "distance_bytes": 663552
+      "distance_bytes": 663552,
+      "restriction_bytes": 331776
     },
     {
       "id": "collision_field.terrain.map.double_island_long_channel",
       "definition_type": "TerrainCollisionField",
-      "schema_version": 1,
-      "algorithm_version": 1,
+      "schema_version": 2,
+      "algorithm_version": 2,
       "terrain_definition_id": "terrain.map.double_island_long_channel",
       "navigation_revision": 1,
       "map_size": [
@@ -157,17 +163,18 @@
         288
       ],
       "path": "res://data/terrain/collision_fields/terrain_map_double_island_long_channel.tscf",
-      "source_checksum": "36540a0f7945008e76fecbdbc307ee06f7ce2019c2c4cef10faa2fb51bcbb5a7",
-      "payload_checksum": "aa60853d9933bfab9fda6f7b8dd32b1cee1039a7326b82b3daf1ab04f3ef765a",
-      "file_checksum": "d1a6027de91a715d6651065d08a798ee27f992607c3fb81c50832fc881742594",
+      "source_checksum": "9d93223c677a7a8a75b0d8ccd10cec379eef4df2b7ef79e3e981b05fd9e19e92",
+      "payload_checksum": "90c549a55cadf3781168c92269720b48c2261996af6ff4356dee4e88fd8a6f45",
+      "file_checksum": "b79e75be56a05be2fcafab3ca43619332d750ad160ee96035731e308ed676131",
       "occupancy_bytes": 18432,
-      "distance_bytes": 294912
+      "distance_bytes": 294912,
+      "restriction_bytes": 147456
     },
     {
       "id": "collision_field.terrain.map.double_island_long_channel_16x9",
       "definition_type": "TerrainCollisionField",
-      "schema_version": 1,
-      "algorithm_version": 1,
+      "schema_version": 2,
+      "algorithm_version": 2,
       "terrain_definition_id": "terrain.map.double_island_long_channel_16x9",
       "navigation_revision": 1,
       "map_size": [
@@ -180,17 +187,18 @@
         432
       ],
       "path": "res://data/terrain/collision_fields/terrain_map_double_island_long_channel_16x9.tscf",
-      "source_checksum": "dc7473784a0d03622ddc0a941152cacd2e3ecffb1ce19aac8f5b99f9978b927c",
-      "payload_checksum": "7b28a1a99b47016aa4330a66073ae998c6993015364444a71e26468776276424",
-      "file_checksum": "6dac37539a0b9282a3d322e73d97b09ad39c9c5342f6e5944c2688687d6e9173",
+      "source_checksum": "988084527d232d37e6809f34eb14bb31339713bf57e0476acc227673e6d8c39f",
+      "payload_checksum": "d5688dd69fda312a0f3094de0194b006c8f90b826c21b4c01fefe9ee03d9d1b7",
+      "file_checksum": "999f9f31419fdee5fa7852d64aac6a6be800dc8791d1c999c16ba1e8fa43d077",
       "occupancy_bytes": 41472,
-      "distance_bytes": 663552
+      "distance_bytes": 663552,
+      "restriction_bytes": 331776
     },
     {
       "id": "collision_field.terrain.map.dual_channel_reef_line",
       "definition_type": "TerrainCollisionField",
-      "schema_version": 1,
-      "algorithm_version": 1,
+      "schema_version": 2,
+      "algorithm_version": 2,
       "terrain_definition_id": "terrain.map.dual_channel_reef_line",
       "navigation_revision": 1,
       "map_size": [
@@ -203,17 +211,18 @@
         288
       ],
       "path": "res://data/terrain/collision_fields/terrain_map_dual_channel_reef_line.tscf",
-      "source_checksum": "972865b56774490bae693b2fef351a94af47dce74584848382cf169b3542f989",
-      "payload_checksum": "be4b47e46dd9325f0dfe869ac2740f860ec690d8e0e3a864e83e6faf356bdc47",
-      "file_checksum": "93f77e980de1d8ddab4bdac76e2bc1bc4af5e05ec1869371833dbd00360450c3",
+      "source_checksum": "2a26ae17ab0ba2bd1693646a6c678c395a6a367479c6a30cd2e87f7419b68d20",
+      "payload_checksum": "9285cae1af89a94d1fac934e70a97b79d7a09990e262f1a2c1047e6e97c7971a",
+      "file_checksum": "856745fbcad936774591a54e66ba45a969c99abccae2572a7497520248544c02",
       "occupancy_bytes": 18432,
-      "distance_bytes": 294912
+      "distance_bytes": 294912,
+      "restriction_bytes": 147456
     },
     {
       "id": "collision_field.terrain.map.dual_channel_reef_line_16x9",
       "definition_type": "TerrainCollisionField",
-      "schema_version": 1,
-      "algorithm_version": 1,
+      "schema_version": 2,
+      "algorithm_version": 2,
       "terrain_definition_id": "terrain.map.dual_channel_reef_line_16x9",
       "navigation_revision": 1,
       "map_size": [
@@ -226,17 +235,18 @@
         432
       ],
       "path": "res://data/terrain/collision_fields/terrain_map_dual_channel_reef_line_16x9.tscf",
-      "source_checksum": "242ca802122be9fe2821b7161020d6a30ba4619cfdbfaa1d1a1b14d08e780297",
-      "payload_checksum": "023f7ad8e1522775a703b4868b90466a43f7bb5ea77742861e76a05298eb544b",
-      "file_checksum": "3a376429ee15718ad6afa8cf75a614b66d4c00d8a88c982cf395b5d4b3e7c735",
+      "source_checksum": "4de4887968b0a9455d6abeb79d5b51666342c3333bac99d3c919be214c4ea758",
+      "payload_checksum": "44af8dcf2da1c6a771353f79772b719502c33b7610e3edc10135aa8fef6ca238",
+      "file_checksum": "f2f76fefd8416908e974a55023fdf830a035259eb23303a6dc6f6acca66c83d7",
       "occupancy_bytes": 41472,
-      "distance_bytes": 663552
+      "distance_bytes": 663552,
+      "restriction_bytes": 331776
     },
     {
       "id": "collision_field.terrain.map.harbor_mouth",
       "definition_type": "TerrainCollisionField",
-      "schema_version": 1,
-      "algorithm_version": 1,
+      "schema_version": 2,
+      "algorithm_version": 2,
       "terrain_definition_id": "terrain.map.harbor_mouth",
       "navigation_revision": 1,
       "map_size": [
@@ -249,17 +259,18 @@
         288
       ],
       "path": "res://data/terrain/collision_fields/terrain_map_harbor_mouth.tscf",
-      "source_checksum": "5d3209f14ad0b50842257c1ad7c23fe85b62a4605160e8a4ed221b6cb97253ef",
-      "payload_checksum": "23b7624533cfef9e9b252b57a2d0bca9c3a0efef8184be98062ddc906754269a",
-      "file_checksum": "d5294741c7ed97e52011daf3f06b59db74201d3b0f8c52466333bd1b6c7d1af5",
+      "source_checksum": "2d21be6f385374e8d463edff36d5d72513e8f9648964d92c286815051fb80254",
+      "payload_checksum": "385bd39b70d5cde2bac41c5f98cdefbecd3c22b8b44a04ee1f8221d7fb8cb3e8",
+      "file_checksum": "193e591987f80f69dc6c41e0e6587d6bc6b3a6c020a82ee0111906bc5729abf9",
       "occupancy_bytes": 18432,
-      "distance_bytes": 294912
+      "distance_bytes": 294912,
+      "restriction_bytes": 147456
     },
     {
       "id": "collision_field.terrain.map.harbor_mouth_16x9",
       "definition_type": "TerrainCollisionField",
-      "schema_version": 1,
-      "algorithm_version": 1,
+      "schema_version": 2,
+      "algorithm_version": 2,
       "terrain_definition_id": "terrain.map.harbor_mouth_16x9",
       "navigation_revision": 1,
       "map_size": [
@@ -272,17 +283,18 @@
         432
       ],
       "path": "res://data/terrain/collision_fields/terrain_map_harbor_mouth_16x9.tscf",
-      "source_checksum": "580697fefc7660b8c2689fd1c96b6e44df909ed64e0831d0fca36be445af0748",
-      "payload_checksum": "e989886c8840ccffa97a32cbd4ecfdd9ce11663ae0c9be986f56d6dff5c9a99e",
-      "file_checksum": "1333a33d47fe1da30a98a0c4a9f94e145f95090960705ec8e5a4347fe4f124c3",
+      "source_checksum": "887de3ecd2e8cb327a863bdee531103de620661897a9cfa093dd169d393313ed",
+      "payload_checksum": "5496ea1249546b1f122c58ef94624ee204de4804cab21c165b6cfb2f770b9ecc",
+      "file_checksum": "e5f94ba05be5494d788b15ac0b7634b2ce33bb9b98db6212545b468899114c24",
       "occupancy_bytes": 41472,
-      "distance_bytes": 663552
+      "distance_bytes": 663552,
+      "restriction_bytes": 331776
     },
     {
       "id": "collision_field.terrain.map.long_archipelago",
       "definition_type": "TerrainCollisionField",
-      "schema_version": 1,
-      "algorithm_version": 1,
+      "schema_version": 2,
+      "algorithm_version": 2,
       "terrain_definition_id": "terrain.map.long_archipelago",
       "navigation_revision": 1,
       "map_size": [
@@ -295,17 +307,18 @@
         288
       ],
       "path": "res://data/terrain/collision_fields/terrain_map_long_archipelago.tscf",
-      "source_checksum": "32b2c53381820dbee9c5d71c9b9537db770641e2fcb8d1260329172f38bcc931",
-      "payload_checksum": "42daaa9373a74612c5a106d0dfd181c2304631302e10fdb0b35a57a102d891b3",
-      "file_checksum": "227c7bb04b2a5dcd28dcadca7de171aa03ed5da0b8bd8b07e57a167cb3e27e31",
+      "source_checksum": "d898038436470f701784a6a32342a60bf4281b6c1e0f9c6cf3b78f2f508aea0c",
+      "payload_checksum": "88cb3ba2c05933b8780cafe76ddd7e8208c0a93ab09da77813ad6053fc9d1d69",
+      "file_checksum": "ea4d682c2359dc1cd5288c4c7342766f621f74bde59850b7d1780dbb8c646ecc",
       "occupancy_bytes": 18432,
-      "distance_bytes": 294912
+      "distance_bytes": 294912,
+      "restriction_bytes": 147456
     },
     {
       "id": "collision_field.terrain.map.long_archipelago_16x9",
       "definition_type": "TerrainCollisionField",
-      "schema_version": 1,
-      "algorithm_version": 1,
+      "schema_version": 2,
+      "algorithm_version": 2,
       "terrain_definition_id": "terrain.map.long_archipelago_16x9",
       "navigation_revision": 1,
       "map_size": [
@@ -318,17 +331,18 @@
         432
       ],
       "path": "res://data/terrain/collision_fields/terrain_map_long_archipelago_16x9.tscf",
-      "source_checksum": "8b97d60e29b9edcfafe54602a465a65bdbcc08ad90b916f1540f8f05e76e8a26",
-      "payload_checksum": "b58a7976a130e8f8a18ae824f9d59f33dd3288c7b07042ece8d57751cd41ed8c",
-      "file_checksum": "db05f12bc37e27b240125d6efe95760a3c3f1674a64e2f257ac7d59c4794cdfe",
+      "source_checksum": "e62afe0ddcf0772515b44e5726aaba5086b51d2055461a36618ba4b8046feb36",
+      "payload_checksum": "43ba493e4b585ed1edeff11d8033e9096e27e8a19cca7fcc9e927696c23322af",
+      "file_checksum": "f8fb16a3503765ea5940482960b7c76989863d7957eb5343c9d4b22ae297f55f",
       "occupancy_bytes": 41472,
-      "distance_bytes": 663552
+      "distance_bytes": 663552,
+      "restriction_bytes": 331776
     },
     {
       "id": "collision_field.terrain.map.offset_large_island",
       "definition_type": "TerrainCollisionField",
-      "schema_version": 1,
-      "algorithm_version": 1,
+      "schema_version": 2,
+      "algorithm_version": 2,
       "terrain_definition_id": "terrain.map.offset_large_island",
       "navigation_revision": 1,
       "map_size": [
@@ -341,17 +355,18 @@
         288
       ],
       "path": "res://data/terrain/collision_fields/terrain_map_offset_large_island.tscf",
-      "source_checksum": "025acfa2389d47a7e94deb6a9aff6bdc3863168b52fc057ee45247ec9dda1348",
-      "payload_checksum": "a243d82ffe2bf68db63818b8fabf333b6a98e5f7be0d0a27498427546b0255a2",
-      "file_checksum": "a5207da27263e03a502a4631f3aa78fcd63804255286897d65142ec474fe70f6",
+      "source_checksum": "c446da0eee4e99fd0627e7f8dea6b6d5d347cf1bb9ce065b0efc8f0709a6624e",
+      "payload_checksum": "bf236430dafa953393c7bc9922c3f668f238090fc76888deabbda7c5792f1a3a",
+      "file_checksum": "ecc0e6c11dd2847fde1e47cae6134cb8ae0aef8fa9fabdda42b6851ad6ff685b",
       "occupancy_bytes": 18432,
-      "distance_bytes": 294912
+      "distance_bytes": 294912,
+      "restriction_bytes": 147456
     },
     {
       "id": "collision_field.terrain.map.offset_large_island_16x9",
       "definition_type": "TerrainCollisionField",
-      "schema_version": 1,
-      "algorithm_version": 1,
+      "schema_version": 2,
+      "algorithm_version": 2,
       "terrain_definition_id": "terrain.map.offset_large_island_16x9",
       "navigation_revision": 1,
       "map_size": [
@@ -364,17 +379,18 @@
         432
       ],
       "path": "res://data/terrain/collision_fields/terrain_map_offset_large_island_16x9.tscf",
-      "source_checksum": "035b14afe0cf9b2a19359292c715fb9eadee40253f09ea4e12a54473691e424f",
-      "payload_checksum": "16deabf9734dbeb0d715bd576178d66f1fb8a22dfdd3e60d57c88dd035752223",
-      "file_checksum": "347014ac1d907018b422e5c533f799bcba701d740b29dc965ab2c524811e16ce",
+      "source_checksum": "e20d4a23e3f76b4dafdda09d6b01a9fffc797264f3cc8f3d9f387702aadcae97",
+      "payload_checksum": "7ad5509c88210d7c15821615757fbd3a5e009cc1fc29beb37484bfabf96cf49d",
+      "file_checksum": "c179ddb05af344cc4816199bcc8860f24b8f7a38a9f54ec9bf11f9e9744ebc0f",
       "occupancy_bytes": 41472,
-      "distance_bytes": 663552
+      "distance_bytes": 663552,
+      "restriction_bytes": 331776
     },
     {
       "id": "collision_field.terrain.map.ring_lagoon",
       "definition_type": "TerrainCollisionField",
-      "schema_version": 1,
-      "algorithm_version": 1,
+      "schema_version": 2,
+      "algorithm_version": 2,
       "terrain_definition_id": "terrain.map.ring_lagoon",
       "navigation_revision": 1,
       "map_size": [
@@ -387,17 +403,18 @@
         288
       ],
       "path": "res://data/terrain/collision_fields/terrain_map_ring_lagoon.tscf",
-      "source_checksum": "ef63dd85aa82e7fe86b43d50f0fe51dc06f84aa9b6d7287cdc57aa8fe78dd3d3",
-      "payload_checksum": "4e851eb04f8a072e6439011d8d51a7802c907d1491c238a596ec22d09428b4c6",
-      "file_checksum": "2f4a6308ed3bf26ef4bc58587c863585e784110e0f39deb1351dbe29fa8bcba0",
+      "source_checksum": "dc5b04fcd043c94231954df207ee31ca7e0e189b5b06c1a7f4de0a4bd4d22f44",
+      "payload_checksum": "49bd8c805e2fcd7f6d9e56298ff966405b43781fb0bc3a49d96d2172636612c9",
+      "file_checksum": "94fef5ff9d5fe4f5817d3f0ee42ad258597ca0bc7537b96e464e1347af210eae",
       "occupancy_bytes": 18432,
-      "distance_bytes": 294912
+      "distance_bytes": 294912,
+      "restriction_bytes": 147456
     },
     {
       "id": "collision_field.terrain.map.ring_lagoon_16x9",
       "definition_type": "TerrainCollisionField",
-      "schema_version": 1,
-      "algorithm_version": 1,
+      "schema_version": 2,
+      "algorithm_version": 2,
       "terrain_definition_id": "terrain.map.ring_lagoon_16x9",
       "navigation_revision": 1,
       "map_size": [
@@ -410,17 +427,18 @@
         432
       ],
       "path": "res://data/terrain/collision_fields/terrain_map_ring_lagoon_16x9.tscf",
-      "source_checksum": "6cb39a6e88b339432f23c3b6043c480407b4d9767633d8be453e650af5817883",
-      "payload_checksum": "2acfbc620a649aba567fde626d27e4aefce36ef8d16aa5820e5d65ed3e1db2b1",
-      "file_checksum": "57942edfae5a4b258322fe4931d1459824d91c77f9336312804510acdcadbc4a",
+      "source_checksum": "74773c997c4061fa2b80f452db00def80ec14734860d8358d05bcc350f8c169f",
+      "payload_checksum": "c6718cd8f16c67ff1fba44dd80935717df01122b78bb471edc1523169cc332f4",
+      "file_checksum": "66fc37ca4b7e8f6f8fbd900767c1c3a3fbaf2296b1a8895aaeb10cecbe6d0ace",
       "occupancy_bytes": 41472,
-      "distance_bytes": 663552
+      "distance_bytes": 663552,
+      "restriction_bytes": 331776
     },
     {
       "id": "collision_field.terrain.map.scattered_islands",
       "definition_type": "TerrainCollisionField",
-      "schema_version": 1,
-      "algorithm_version": 1,
+      "schema_version": 2,
+      "algorithm_version": 2,
       "terrain_definition_id": "terrain.map.scattered_islands",
       "navigation_revision": 1,
       "map_size": [
@@ -433,17 +451,18 @@
         288
       ],
       "path": "res://data/terrain/collision_fields/terrain_map_scattered_islands.tscf",
-      "source_checksum": "e27673aa937d53b774710fae46fc8a31ac0bf96c0ad649862f5c89e8ed7fdac4",
-      "payload_checksum": "5f11fad54ace389919d6b83f1f8795a30ba952424f3cba21a39f2ecce379fe6d",
-      "file_checksum": "92535e205dffc78100dd66a704d9223257688bab8697d574695e24a64bf39566",
+      "source_checksum": "eaa0116ea03195ca97f249a384dca1c183d7c13451daae5d9ddf6a2975695346",
+      "payload_checksum": "12fadb9eba300b1206761e7415c4995230839c505a0906e3dabdec609b0dfed7",
+      "file_checksum": "352147e65119f1ce08620568c2caa188bf7e7381f10090a540f85b045fd3f57b",
       "occupancy_bytes": 18432,
-      "distance_bytes": 294912
+      "distance_bytes": 294912,
+      "restriction_bytes": 147456
     },
     {
       "id": "collision_field.terrain.map.scattered_islands_16x9",
       "definition_type": "TerrainCollisionField",
-      "schema_version": 1,
-      "algorithm_version": 1,
+      "schema_version": 2,
+      "algorithm_version": 2,
       "terrain_definition_id": "terrain.map.scattered_islands_16x9",
       "navigation_revision": 1,
       "map_size": [
@@ -456,11 +475,12 @@
         432
       ],
       "path": "res://data/terrain/collision_fields/terrain_map_scattered_islands_16x9.tscf",
-      "source_checksum": "2e5076b1bc48803b5fb54cd97810acc1e94955406535bd5e34a9badd7477fcdf",
-      "payload_checksum": "6aae560f30dc03f92388b6e46ed3fce3cd150fbb0371d8837425c0c4bfa2c7bb",
-      "file_checksum": "297125f9df13ca8946de9d06ae940c9463f5461a139c9422ac538d81a429b7c9",
+      "source_checksum": "1cb43c3a23535da6ef73084b7b32157247ec3ba0ee8bbe0819b41aafafbeca05",
+      "payload_checksum": "2a900dd5a1453e0bf9401a484ea8986bce763696f0b3c4fa2d8b329648604b78",
+      "file_checksum": "799f5782334f24e6060624b32808d647e9a99ae57134e7e2a944efdfa24b8449",
       "occupancy_bytes": 41472,
-      "distance_bytes": 663552
+      "distance_bytes": 663552,
+      "restriction_bytes": 331776
     }
   ]
 }

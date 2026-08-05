@@ -23,12 +23,13 @@ from terrain_geometry import read_json, write_json
 
 ROOT = Path(__file__).resolve().parents[2]
 MAGIC = b"TSCF"
-SCHEMA_VERSION = 1
-ALGORITHM_VERSION = 1
+SCHEMA_VERSION = 2
+ALGORITHM_VERSION = 2
 DEFAULT_CELL_SIZE = 8.0
 QUANTIZATION_GUARD = 1.0
-HEADER = struct.Struct("<4sHHIIfffIH32s32sII")
+HEADER = struct.Struct("<4sHHIIfffIH32s32sIII")
 INFINITY = 1.0e30
+RESTRICTION_MASKS = {"ShallowWater": 1, "ReefOrSandbar": 2}
 
 
 def _path(value: str | Path) -> Path:
@@ -56,6 +57,12 @@ def source_geometry_text(terrain: dict) -> str:
 		parts.append(str(obstacle.get("id", "")))
 		parts.append(",".join(sorted(str(value) for value in obstacle.get("block_mask", []))))
 		parts.append(";".join("%.3f,%.3f" % (float(point[0]), float(point[1])) for point in obstacle.get("polygon", [])))
+	restricted_regions = [item for item in terrain.get("regions", []) if item.get("region_type") in RESTRICTION_MASKS]
+	for region in sorted(restricted_regions, key=lambda item: str(item.get("id", ""))):
+		parts.append(str(region.get("id", "")))
+		parts.append(str(region.get("region_type", "")))
+		parts.append(str(int(region.get("priority", 0))))
+		parts.append(";".join("%.3f,%.3f" % (float(point[0]), float(point[1])) for point in region.get("polygon", [])))
 	return "|".join(parts)
 
 
@@ -85,10 +92,14 @@ def _supercover_cells(start: tuple[float, float], end: tuple[float, float], widt
 			yield cell_x, cell_y
 		if cell_x == end_x and cell_y == end_y:
 			break
-		if t_max_x < t_max_y:
+		# Once one coordinate reaches an endpoint cell, do not let floating-point
+		# ordering at t=1 step it past the target while the other axis catches up.
+		effective_t_max_x = t_max_x if cell_x != end_x else INFINITY
+		effective_t_max_y = t_max_y if cell_y != end_y else INFINITY
+		if effective_t_max_x < effective_t_max_y:
 			cell_x += step_x
 			t_max_x += t_delta_x
-		elif t_max_y < t_max_x:
+		elif effective_t_max_y < effective_t_max_x:
 			cell_y += step_y
 			t_max_y += t_delta_y
 		else:
@@ -102,12 +113,11 @@ def _supercover_cells(start: tuple[float, float], end: tuple[float, float], widt
 			t_max_y += t_delta_y
 
 
-def _occupancy(terrain: dict, cell_size: float, width: int, height: int) -> bytearray:
+def _rasterized_coverage(items: list[dict], cell_size: float, width: int, height: int) -> bytearray:
 	image = Image.new("1", (width, height), 0)
 	draw = ImageDraw.Draw(image)
-	ship_obstacles = [item for item in terrain.get("obstacles", []) if "ShipMovement" in item.get("block_mask", [])]
-	for obstacle in sorted(ship_obstacles, key=lambda item: str(item.get("id", ""))):
-		polygon = [(float(point[0]) / cell_size, float(point[1]) / cell_size) for point in obstacle.get("polygon", [])]
+	for item in sorted(items, key=lambda value: str(value.get("id", ""))):
+		polygon = [(float(point[0]) / cell_size, float(point[1]) / cell_size) for point in item.get("polygon", [])]
 		if len(polygon) < 3:
 			continue
 		# Pillow fills the interior cheaply. Exact supercover edges below make the
@@ -119,6 +129,22 @@ def _occupancy(terrain: dict, cell_size: float, width: int, height: int) -> byte
 				image.putpixel((cell_x, cell_y), 1)
 	pixels = image.get_flattened_data() if hasattr(image, "get_flattened_data") else image.getdata()
 	return bytearray(1 if value else 0 for value in pixels)
+
+
+def _occupancy(terrain: dict, cell_size: float, width: int, height: int) -> bytearray:
+	ship_obstacles = [item for item in terrain.get("obstacles", []) if "ShipMovement" in item.get("block_mask", [])]
+	return _rasterized_coverage(ship_obstacles, cell_size, width, height)
+
+
+def _restriction_masks(terrain: dict, cell_size: float, width: int, height: int) -> bytes:
+	result = bytearray(width * height)
+	for region_type, mask in RESTRICTION_MASKS.items():
+		regions = [item for item in terrain.get("regions", []) if item.get("region_type") == region_type]
+		coverage = _rasterized_coverage(regions, cell_size, width, height)
+		for index, covered in enumerate(coverage):
+			if covered:
+				result[index] |= mask
+	return bytes(result)
 
 
 def _edt_1d(values: list[float]) -> list[float]:
@@ -190,7 +216,8 @@ def bake_field(terrain: dict, output: Path, cell_size: float, resource_path: str
 	occupancy_cells = _occupancy(terrain, cell_size, width, height)
 	occupancy = _pack_occupancy(occupancy_cells)
 	distances = _distance_lower_bounds(occupancy_cells, map_size, cell_size, width, height).tobytes()
-	payload = occupancy + distances
+	restrictions = _restriction_masks(terrain, cell_size, width, height)
+	payload = occupancy + distances + restrictions
 	source_checksum = source_geometry_checksum(terrain)
 	payload_checksum = hashlib.sha256(payload).hexdigest()
 	terrain_id_bytes = terrain_id.encode("utf-8")
@@ -198,7 +225,7 @@ def bake_field(terrain: dict, output: Path, cell_size: float, resource_path: str
 		MAGIC, SCHEMA_VERSION, ALGORITHM_VERSION, width, height, cell_size,
 		map_size[0], map_size[1], int(terrain.get("navigation_revision", 0)),
 		len(terrain_id_bytes), bytes.fromhex(source_checksum), bytes.fromhex(payload_checksum),
-		len(occupancy), len(distances),
+		len(occupancy), len(distances), len(restrictions),
 	)
 	data = header + terrain_id_bytes + payload
 	output.parent.mkdir(parents=True, exist_ok=True)
@@ -219,6 +246,7 @@ def bake_field(terrain: dict, output: Path, cell_size: float, resource_path: str
 		"file_checksum": hashlib.sha256(data).hexdigest(),
 		"occupancy_bytes": len(occupancy),
 		"distance_bytes": len(distances),
+		"restriction_bytes": len(restrictions),
 	}
 
 

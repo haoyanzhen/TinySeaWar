@@ -35,6 +35,8 @@ const AI_LONG_IDLE_SECONDS := 20.0
 const AI_PATH_RECOVERY_SECONDS := 4.0
 const AI_PATH_STUCK_SECONDS := 20.0
 const NAVIGATION_NORMAL_INTERVAL_TICKS := 10
+const NAVIGATION_FIXED_TICK_DELTA := 0.1
+const NAVIGATION_PREDICTION_HORIZON := 6.0
 const NAVIGATION_EMERGENCY_EXIT_TICKS := 4
 const NAVIGATION_STRATEGIC_INTERVAL := 3.0
 const NAVIGATION_FAILURE_RETRY_MAX := 12.0
@@ -73,6 +75,7 @@ var _ai_objective_plan_cache := {}
 var _performance_profile_enabled := false
 var _performance_profile := {}
 var _performance_tick_counts := {}
+var _performance_tick_stage_total_usec := 0
 
 
 func _init(definition_registry = null) -> void:
@@ -81,11 +84,31 @@ func _init(definition_registry = null) -> void:
 
 func configure_performance_profiling(enabled: bool = true) -> void:
 	_performance_profile_enabled = enabled
+	trajectory_planner.configure_diagnostics(enabled)
 	_performance_profile = {
 		"tick_total_usec": [],
+		"tick_setup_environment_usec": [],
+		"command_processing_usec": [],
+		"strategic_navigation_usec": [],
+		"status_updates_usec": [],
 		"navigation_usec": [],
 		"movement_usec": [],
+		"unit_overlap_usec": [],
+		"projectile_update_usec": [],
+		"observation_detection_usec": [],
+		"projectile_observation_usec": [],
+		"mine_observation_usec": [],
+		"unit_detection_usec": [],
+		"ai_memory_usec": [],
 		"ai_decision_usec": [],
+		"ai_group_formation_usec": [],
+		"ai_support_planning_usec": [],
+		"ai_unit_intents_usec": [],
+		"ai_primary_weapons_usec": [],
+		"combat_actions_usec": [],
+		"facility_mine_usec": [],
+		"settlement_recording_usec": [],
+		"tick_unclassified_usec": [],
 		"normal_plans_per_tick": [],
 		"emergency_scans_per_tick": [],
 		"emergency_plans_per_tick": [],
@@ -100,8 +123,16 @@ func configure_performance_profiling(enabled: bool = true) -> void:
 		"collision_field_definitely_clear_per_tick": [],
 		"collision_field_exact_fallbacks_per_tick": [],
 		"collision_field_unavailable_fallbacks_per_tick": [],
+		"collision_field_region_definitely_clear_per_tick": [],
+		"collision_field_region_exact_fallbacks_per_tick": [],
+		"trajectory_motion_expansion_usec": [],
+		"trajectory_terrain_validation_usec": [],
+		"trajectory_environment_access_usec": [],
+		"trajectory_dynamic_validation_usec": [],
+		"trajectory_candidate_scoring_usec": [],
 	}
 	_performance_tick_counts = {}
+	_performance_tick_stage_total_usec = 0
 
 
 func get_performance_profile() -> Dictionary:
@@ -114,6 +145,12 @@ func _profile_increment(key: String, amount: int = 1) -> void:
 
 
 func _profile_stage(key: String, elapsed_usec: int) -> void:
+	if _performance_profile_enabled:
+		_performance_profile[key].append(elapsed_usec)
+		_performance_tick_stage_total_usec += elapsed_usec
+
+
+func _profile_detail(key: String, elapsed_usec: int) -> void:
 	if _performance_profile_enabled:
 		_performance_profile[key].append(elapsed_usec)
 
@@ -244,7 +281,10 @@ func advance_tick(delta: float = 0.1) -> Array:
 		return _event_buffer
 	var tick_started_usec := Time.get_ticks_usec() if _performance_profile_enabled else 0
 	_performance_tick_counts = {}
+	_performance_tick_stage_total_usec = 0
+	var stage_started_usec := tick_started_usec
 	terrain_query.reset_collision_field_diagnostics()
+	trajectory_planner.reset_diagnostics()
 	state["tick_index"] += 1
 	state["elapsed_time"] += delta
 	_update_reinforcements()
@@ -259,49 +299,81 @@ func advance_tick(delta: float = 0.1) -> Array:
 	state["environment_zones"] = terrain_context_service.snapshot()
 	state["global_environment"] = terrain_context_service.global_snapshot()
 	_update_support_effects(delta)
+	if _performance_profile_enabled: _profile_stage("tick_setup_environment_usec", Time.get_ticks_usec() - stage_started_usec)
+	stage_started_usec = Time.get_ticks_usec() if _performance_profile_enabled else 0
 	_process_commands()
+	if _performance_profile_enabled: _profile_stage("command_processing_usec", Time.get_ticks_usec() - stage_started_usec)
+	stage_started_usec = Time.get_ticks_usec() if _performance_profile_enabled else 0
 	_update_navigation_requests()
+	if _performance_profile_enabled: _profile_stage("strategic_navigation_usec", Time.get_ticks_usec() - stage_started_usec)
+	stage_started_usec = Time.get_ticks_usec() if _performance_profile_enabled else 0
 	_update_cooldowns_and_statuses(delta)
 	_update_submarine_resources(delta)
-	var stage_started_usec := Time.get_ticks_usec() if _performance_profile_enabled else 0
+	if _performance_profile_enabled: _profile_stage("status_updates_usec", Time.get_ticks_usec() - stage_started_usec)
+	stage_started_usec = Time.get_ticks_usec() if _performance_profile_enabled else 0
 	_update_navigation_plans()
 	if _performance_profile_enabled: _profile_stage("navigation_usec", Time.get_ticks_usec() - stage_started_usec)
 	stage_started_usec = Time.get_ticks_usec() if _performance_profile_enabled else 0
 	_update_movement(delta)
 	if _performance_profile_enabled: _profile_stage("movement_usec", Time.get_ticks_usec() - stage_started_usec)
+	stage_started_usec = Time.get_ticks_usec() if _performance_profile_enabled else 0
 	_resolve_unit_overlap()
+	if _performance_profile_enabled: _profile_stage("unit_overlap_usec", Time.get_ticks_usec() - stage_started_usec)
+	stage_started_usec = Time.get_ticks_usec() if _performance_profile_enabled else 0
 	_update_projectiles(delta)
+	if _performance_profile_enabled: _profile_stage("projectile_update_usec", Time.get_ticks_usec() - stage_started_usec)
+	stage_started_usec = Time.get_ticks_usec() if _performance_profile_enabled else 0
+	var detail_started_usec := stage_started_usec
 	_update_projectile_observation()
+	if _performance_profile_enabled: _profile_detail("projectile_observation_usec", Time.get_ticks_usec() - detail_started_usec)
+	detail_started_usec = Time.get_ticks_usec() if _performance_profile_enabled else 0
 	_update_mine_observation()
+	if _performance_profile_enabled: _profile_detail("mine_observation_usec", Time.get_ticks_usec() - detail_started_usec)
+	detail_started_usec = Time.get_ticks_usec() if _performance_profile_enabled else 0
 	_update_detection(delta)
+	if _performance_profile_enabled: _profile_detail("unit_detection_usec", Time.get_ticks_usec() - detail_started_usec)
+	if _performance_profile_enabled: _profile_stage("observation_detection_usec", Time.get_ticks_usec() - stage_started_usec)
+	stage_started_usec = Time.get_ticks_usec() if _performance_profile_enabled else 0
 	_update_ai_engagement_memory(delta)
+	if _performance_profile_enabled: _profile_stage("ai_memory_usec", Time.get_ticks_usec() - stage_started_usec)
 	stage_started_usec = Time.get_ticks_usec() if _performance_profile_enabled else 0
 	_update_ai_intents()
 	if _performance_profile_enabled: _profile_stage("ai_decision_usec", Time.get_ticks_usec() - stage_started_usec)
+	stage_started_usec = Time.get_ticks_usec() if _performance_profile_enabled else 0
 	_update_auto_skills()
 	_update_weapons()
 	_update_facility_weapons()
 	_resolve_delayed_attacks()
+	if _performance_profile_enabled: _profile_stage("combat_actions_usec", Time.get_ticks_usec() - stage_started_usec)
+	stage_started_usec = Time.get_ticks_usec() if _performance_profile_enabled else 0
 	for facility_event in facility_service.advance(delta, float(state["elapsed_time"]), state["units_by_id"]):
 		_handle_facility_event(facility_event)
 	state["facilities_by_id"] = facility_service.snapshot()
 	for minefield_event in minefield_service.sync_controllers(state["facilities_by_id"]):
 		_emit(str(minefield_event.get("event_type", "MineFieldStateChanged")), minefield_event)
 	state["minefields_by_id"] = minefield_service.snapshot()
+	if _performance_profile_enabled: _profile_stage("facility_mine_usec", Time.get_ticks_usec() - stage_started_usec)
+	stage_started_usec = Time.get_ticks_usec() if _performance_profile_enabled else 0
 	_clear_invalid_targets()
 	_update_level_objective()
 	_check_victory()
 	_check_timeout()
 	_assert_invariants()
 	recorder.consume(_event_buffer, float(state["elapsed_time"]))
+	if _performance_profile_enabled: _profile_stage("settlement_recording_usec", Time.get_ticks_usec() - stage_started_usec)
 	if _performance_profile_enabled:
-		_performance_profile["tick_total_usec"].append(Time.get_ticks_usec() - tick_started_usec)
+		var tick_elapsed_usec := Time.get_ticks_usec() - tick_started_usec
+		_performance_profile["tick_total_usec"].append(tick_elapsed_usec)
+		_performance_profile["tick_unclassified_usec"].append(maxi(0, tick_elapsed_usec - _performance_tick_stage_total_usec))
 		for key in ["normal_plans_per_tick", "emergency_scans_per_tick", "emergency_plans_per_tick", "strategic_corridors_per_tick", "trajectory_candidates_per_tick", "trajectory_failures_per_tick", "trajectory_segments_simulated_per_tick", "trajectory_candidates_rejected_by_terrain_per_tick"]:
 			_performance_profile[key].append(int(_performance_tick_counts.get(key, 0)))
 		var field_profile := terrain_query.collision_field_diagnostics()
 		_performance_profile["collision_field_usec"].append(int(field_profile.get("collision_field_usec", 0)))
-		for field_key in ["collision_field_queries", "collision_field_cells_visited", "collision_field_definitely_clear", "collision_field_exact_fallbacks", "collision_field_unavailable_fallbacks"]:
+		for field_key in ["collision_field_queries", "collision_field_cells_visited", "collision_field_definitely_clear", "collision_field_exact_fallbacks", "collision_field_unavailable_fallbacks", "collision_field_region_definitely_clear", "collision_field_region_exact_fallbacks"]:
 			_performance_profile["%s_per_tick" % field_key].append(int(field_profile.get(field_key, 0)))
+		var trajectory_profile := trajectory_planner.diagnostics()
+		for trajectory_key in ["motion_expansion_usec", "terrain_validation_usec", "environment_access_usec", "dynamic_validation_usec", "candidate_scoring_usec"]:
+			_performance_profile["trajectory_%s" % trajectory_key].append(int(trajectory_profile.get(trajectory_key, 0)))
 	return _event_buffer.duplicate(true)
 
 
@@ -1384,6 +1456,7 @@ func _plan_normal_trajectory(unit: Dictionary) -> void:
 	var movement_mode := str(movement.get("mode", ""))
 	var prioritize_direct_player_motion := movement_mode in ["PlayerMoveOrder", "PlayerWaypointRoute"]
 	var result := trajectory_planner.plan_normal(motion_state, goal, float(unit["stats"].get("collision_radius", 20.0)), _movement_tags(unit), terrain_query, terrain_context_service, _nearby_navigation_units(unit), _current_corridor_goal_is_final(unit), _current_corridor_lookahead(unit, 2), prioritize_direct_player_motion)
+	var prediction_reuse := _prediction_reuse_diagnostic(unit, navigation.get("trajectory_plan", {}), result) if _performance_profile_enabled else {}
 	_profile_increment("trajectory_segments_simulated_per_tick", int(result.get("segments_simulated", 0)))
 	_profile_increment("trajectory_candidates_rejected_by_terrain_per_tick", int(result.get("candidates_rejected_by_terrain", 0)))
 	if not bool(result.get("ok", false)):
@@ -1401,9 +1474,48 @@ func _plan_normal_trajectory(unit: Dictionary) -> void:
 		navigation["current_control"] = result.get("controls", [{"thrust_ratio": 0.0, "turn_ratio": 0.0}])[0]
 		if navigation.has("last_collision") and float(result.get("minimum_clearance", 0.0)) > float(unit["stats"].get("collision_radius", 20.0)) + 40.0:
 			navigation.erase("last_collision")
-		_emit("TrajectoryPlanned", {"unit_id": unit["entity_id"], "mode": "NormalNavigation", "candidate_count": result.get("candidate_count", 0), "candidate_id":result.get("candidate_id", ""), "goal": goal, "minimum_clearance":result.get("minimum_clearance", 0.0)})
+		_emit("TrajectoryPlanned", {"unit_id": unit["entity_id"], "mode": "NormalNavigation", "candidate_count": result.get("candidate_count", 0), "valid_candidate_count":result.get("valid_candidate_count", 0), "candidate_id":result.get("candidate_id", ""), "candidate_rank":result.get("candidate_rank", 0), "predicted_segment_count":maxi(0, result.get("predicted_samples", []).size() - 1), "committed_segment_count":NAVIGATION_NORMAL_INTERVAL_TICKS, "previous_candidate_id":prediction_reuse.get("previous_candidate_id", ""), "prediction_position_error":prediction_reuse.get("position_error", -1.0), "prediction_heading_error":prediction_reuse.get("heading_error", -1.0), "prediction_speed_error":prediction_reuse.get("speed_error", -1.0), "prediction_suffix_reusable":prediction_reuse.get("suffix_reusable", false), "goal": goal, "minimum_clearance":result.get("minimum_clearance", 0.0)})
 	navigation["trajectory_dirty"] = false
 	navigation["next_normal_plan_tick"] = int(state.get("tick_index", 0)) + NAVIGATION_NORMAL_INTERVAL_TICKS
+
+
+func _prediction_reuse_diagnostic(unit: Dictionary, previous_plan: Dictionary, next_plan: Dictionary) -> Dictionary:
+	if previous_plan.is_empty() or not bool(previous_plan.get("ok", false)) or not bool(next_plan.get("ok", false)):
+		return {}
+	var elapsed_ticks := int(state.get("tick_index", 0)) - int(previous_plan.get("planned_at_tick", -1))
+	var previous_samples: Array = previous_plan.get("predicted_samples", [])
+	if elapsed_ticks <= 0 or elapsed_ticks >= previous_samples.size():
+		return {}
+	var predicted_state: Dictionary = previous_samples[elapsed_ticks]
+	var position_error := (predicted_state.get("position", Vector2.ZERO) as Vector2).distance_to(unit.get("position", Vector2.ZERO))
+	var heading_error := absf(angle_difference(float(predicted_state.get("heading", 0.0)), float(unit.get("heading", 0.0))))
+	var speed_error := absf(float(predicted_state.get("speed", 0.0)) - float(unit.get("current_speed", 0.0)))
+	var state_matches := position_error <= 0.001 and heading_error <= 0.0001 and speed_error <= 0.001
+	var old_controls: Array = previous_plan.get("prediction_controls", [])
+	var new_controls: Array = next_plan.get("prediction_controls", [])
+	var controls_match := state_matches and _prediction_control_suffix_matches(old_controls, new_controls, float(elapsed_ticks) * NAVIGATION_FIXED_TICK_DELTA, NAVIGATION_PREDICTION_HORIZON - float(elapsed_ticks) * NAVIGATION_FIXED_TICK_DELTA)
+	return {"previous_candidate_id":previous_plan.get("candidate_id", ""), "position_error":position_error, "heading_error":heading_error, "speed_error":speed_error, "suffix_reusable":controls_match}
+
+
+func _prediction_control_suffix_matches(old_controls: Array, new_controls: Array, old_offset: float, duration: float) -> bool:
+	if old_controls.is_empty() or new_controls.is_empty() or duration <= 0.0:
+		return false
+	var sample_count := floori(duration / NAVIGATION_FIXED_TICK_DELTA + 0.000001)
+	for sample_index in range(sample_count):
+		var old_control := _prediction_control_at(old_controls, old_offset + float(sample_index) * NAVIGATION_FIXED_TICK_DELTA)
+		var new_control := _prediction_control_at(new_controls, float(sample_index) * NAVIGATION_FIXED_TICK_DELTA)
+		if absf(float(old_control.get("thrust_ratio", 0.0)) - float(new_control.get("thrust_ratio", 0.0))) > 0.0001 or absf(float(old_control.get("turn_ratio", 0.0)) - float(new_control.get("turn_ratio", 0.0))) > 0.0001:
+			return false
+	return true
+
+
+func _prediction_control_at(controls: Array, elapsed: float) -> Dictionary:
+	var boundary := 0.0
+	for index in range(controls.size()):
+		boundary += float(controls[index].get("duration", 0.0))
+		if elapsed < boundary - 0.000001 or index == controls.size() - 1:
+			return controls[index]
+	return controls[-1] if not controls.is_empty() else {}
 
 
 func _plan_emergency_trajectory(unit: Dictionary, threats: Array) -> void:
@@ -1430,7 +1542,7 @@ func _plan_emergency_trajectory(unit: Dictionary, threats: Array) -> void:
 	navigation["trajectory_plan"] = result
 	navigation["current_control"] = result.get("controls", [{"thrust_ratio": 0.0, "turn_ratio": 0.0}])[0]
 	navigation["tracked_threat_ids"] = threats.map(func(threat): return str(threat.get("id", "")))
-	_emit("TrajectoryPlanned", {"unit_id": unit["entity_id"], "mode": "EmergencyEvasion", "candidate_count": result.get("candidate_count", 0), "threat_ids": navigation["tracked_threat_ids"], "controlled_contact": result.get("controlled_contact", false)})
+	_emit("TrajectoryPlanned", {"unit_id": unit["entity_id"], "mode": "EmergencyEvasion", "candidate_count": result.get("candidate_count", 0), "valid_candidate_count":result.get("valid_candidate_count", 0), "candidate_id":result.get("candidate_id", ""), "candidate_rank":result.get("candidate_rank", 0), "predicted_segment_count":maxi(0, result.get("predicted_samples", []).size() - 1), "committed_segment_count":1, "threat_ids": navigation["tracked_threat_ids"], "controlled_contact": result.get("controlled_contact", false)})
 
 
 func _update_movement(delta: float) -> void:
@@ -1989,16 +2101,21 @@ func _primary_contact_type(contact_types: Array) -> String:
 
 func _update_ai_intents() -> void:
 	# Formation work runs on a deterministic 1 s time wheel.
+	var detail_started_usec := Time.get_ticks_usec() if _performance_profile_enabled else 0
 	if int(state.get("tick_index", 0)) % 10 == 1:
 		var group_factions: Array = _full_ai_factions.keys()
 		group_factions.sort()
 		for faction_id in group_factions:
 			if bool(_full_ai_factions.get(faction_id, false)): _rebuild_ai_groups(str(faction_id))
+	if _performance_profile_enabled: _profile_detail("ai_group_formation_usec", Time.get_ticks_usec() - detail_started_usec)
+	detail_started_usec = Time.get_ticks_usec() if _performance_profile_enabled else 0
 	if int(state.get("tick_index", 0)) % 10 == 0:
 		var support_factions: Array = _full_ai_factions.keys()
 		support_factions.sort()
 		for faction_id in support_factions:
 			if bool(_full_ai_factions.get(faction_id, false)): _update_ai_support_intents(str(faction_id))
+	if _performance_profile_enabled: _profile_detail("ai_support_planning_usec", Time.get_ticks_usec() - detail_started_usec)
+	detail_started_usec = Time.get_ticks_usec() if _performance_profile_enabled else 0
 	for unit_id in _sorted_unit_ids():
 		var unit: Dictionary = state["units_by_id"][unit_id]
 		if unit["life_state"] != "Alive": continue
@@ -2009,7 +2126,10 @@ func _update_ai_intents() -> void:
 			_update_enemy_ai_intent(unit)
 		else:
 			_update_player_assist_intent(unit)
+	if _performance_profile_enabled: _profile_detail("ai_unit_intents_usec", Time.get_ticks_usec() - detail_started_usec)
+	detail_started_usec = Time.get_ticks_usec() if _performance_profile_enabled else 0
 	_update_ai_primary_weapons()
+	if _performance_profile_enabled: _profile_detail("ai_primary_weapons_usec", Time.get_ticks_usec() - detail_started_usec)
 
 
 func _update_auto_skills() -> void:

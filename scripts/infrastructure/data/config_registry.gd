@@ -784,7 +784,7 @@ func _validate_collision_field(definition: Dictionary) -> void:
 		return
 	if str(terrain.get("collision_field_id", "")) != definition_id:
 		errors.append("Collision field reverse reference mismatch in %s" % definition_id)
-	if int(definition.get("schema_version", 0)) != 1 or int(definition.get("algorithm_version", 0)) != 1:
+	if int(definition.get("schema_version", 0)) != 2 or int(definition.get("algorithm_version", 0)) != 2:
 		errors.append("Unsupported collision field version in %s" % definition_id)
 	if int(definition.get("navigation_revision", -1)) != int(terrain.get("navigation_revision", 0)):
 		errors.append("Collision field revision mismatch in %s" % definition_id)

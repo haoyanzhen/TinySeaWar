@@ -69,7 +69,7 @@ def _parse_field(path: Path) -> dict:
 	(
 		magic, schema_version, algorithm_version, width, height, cell_size,
 		map_width, map_height, navigation_revision, terrain_id_length,
-		source_checksum, payload_checksum, occupancy_length, distance_length,
+		source_checksum, payload_checksum, occupancy_length, distance_length, restriction_length,
 	) = HEADER.unpack_from(data)
 	if magic != MAGIC or schema_version != SCHEMA_VERSION or algorithm_version != ALGORITHM_VERSION:
 		raise ValueError("invalid header")
@@ -77,15 +77,17 @@ def _parse_field(path: Path) -> dict:
 	end_id = offset + terrain_id_length
 	end_occupancy = end_id + occupancy_length
 	end_distance = end_occupancy + distance_length
-	if end_distance != len(data):
+	end_restriction = end_distance + restriction_length
+	if end_restriction != len(data):
 		raise ValueError("invalid payload lengths")
 	terrain_id = data[offset:end_id].decode("utf-8")
 	occupancy = data[end_id:end_occupancy]
 	distances = data[end_occupancy:end_distance]
-	payload = occupancy + distances
+	restrictions = data[end_distance:end_restriction]
+	payload = occupancy + distances + restrictions
 	if hashlib.sha256(payload).digest() != payload_checksum:
 		raise ValueError("payload checksum mismatch")
-	if occupancy_length != math.ceil(width * height / 8) or distance_length != width * height * 2:
+	if occupancy_length != math.ceil(width * height / 8) or distance_length != width * height * 2 or restriction_length != width * height:
 		raise ValueError("payload size mismatch")
 	return {
 		"data":data,
@@ -99,6 +101,7 @@ def _parse_field(path: Path) -> dict:
 		"navigation_revision":navigation_revision,
 		"occupancy":occupancy,
 		"distances":distances,
+		"restrictions":restrictions,
 	}
 
 
@@ -120,6 +123,32 @@ def _definitely_clear(field: dict, start: list[float], end: list[float], radius:
 		if _distance(field, cell_x, cell_y) <= radius:
 			return False
 	return True
+
+
+def _field_restriction_mask(field: dict, start: list[float], end: list[float]) -> int:
+	cell_size = float(field["cell_size"])
+	start_grid = (start[0] / cell_size, start[1] / cell_size)
+	end_grid = (end[0] / cell_size, end[1] / cell_size)
+	result = 0
+	for cell_x, cell_y in _supercover_cells(start_grid, end_grid, field["width"], field["height"]):
+		result |= field["restrictions"][cell_y * field["width"] + cell_x]
+	return result
+
+
+def _segment_intersects_polygon(start: list[float], end: list[float], polygon: list[list[float]]) -> bool:
+	if point_in_polygon(start, polygon) or point_in_polygon(end, polygon):
+		return True
+	return any(segments_intersect(start, end, edge_start, polygon[(index + 1) % len(polygon)]) for index, edge_start in enumerate(polygon))
+
+
+def _exact_restriction_mask(terrain: dict, start: list[float], end: list[float]) -> int:
+	result = 0
+	for region in terrain.get("regions", []):
+		region_mask = {"ShallowWater": 1, "ReefOrSandbar": 2}.get(region.get("region_type"), 0)
+		polygon = region.get("polygon", [])
+		if region_mask and len(polygon) >= 3 and _segment_intersects_polygon(start, end, polygon):
+			result |= region_mask
+	return result
 
 
 def _structured_queries(terrain: dict, radius: float, sample_count: int, random_source: random.Random) -> list[tuple[list[float], list[float]]]:
@@ -176,24 +205,33 @@ def _structured_queries(terrain: dict, radius: float, sample_count: int, random_
 	return queries
 
 
-def _differential_errors(terrain: dict, field: dict, sample_count: int) -> tuple[list[str], int, int]:
+def _differential_errors(terrain: dict, field: dict, sample_count: int) -> tuple[list[str], int, int, int]:
 	errors: list[str] = []
 	seed = int(hashlib.sha256(str(terrain["id"]).encode("utf-8")).hexdigest()[:16], 16)
 	random_source = random.Random(seed)
 	definitely_clear = 0
 	exact_checks_avoided = 0
+	region_checks_avoided = 0
 	for radius in (19.0, 20.0, 21.0, 31.0, 32.0, 33.0, 45.0, 46.0, 47.0):
 		for start, end in _structured_queries(terrain, radius, sample_count, random_source):
+			field_restrictions = _field_restriction_mask(field, start, end)
+			exact_restrictions = _exact_restriction_mask(terrain, start, end)
+			if exact_restrictions & ~field_restrictions:
+				errors.append("false region clear: %s field=%d exact=%d start=%s end=%s" % (terrain["id"], field_restrictions, exact_restrictions, start, end))
+				if len(errors) >= 10:
+					return errors, definitely_clear, exact_checks_avoided, region_checks_avoided
+			if field_restrictions == 0:
+				region_checks_avoided += 1
 			if not _definitely_clear(field, start, end, radius):
 				continue
 			definitely_clear += 1
 			if not _exact_clear(terrain, start, end, radius):
 				errors.append("false DefinitelyClear: %s radius=%s start=%s end=%s" % (terrain["id"], radius, start, end))
 				if len(errors) >= 10:
-					return errors, definitely_clear, exact_checks_avoided
+					return errors, definitely_clear, exact_checks_avoided, region_checks_avoided
 			else:
 				exact_checks_avoided += 1
-	return errors, definitely_clear, exact_checks_avoided
+	return errors, definitely_clear, exact_checks_avoided, region_checks_avoided
 
 
 def _determinism_errors(terrain_path: Path, canonical_manifest: Path, canonical_dir: Path) -> list[str]:
@@ -242,6 +280,7 @@ def main() -> int:
 	errors: list[str] = []
 	total_definitely_clear = 0
 	total_exact_avoided = 0
+	total_region_avoided = 0
 	for terrain_id, terrain in sorted(terrains.items()):
 		definition = definitions.get(terrain_id)
 		if definition is None:
@@ -263,10 +302,11 @@ def main() -> int:
 		visual_only_change.setdefault("visual_regions", []).append({"id":"validation.visual_only", "polygon":[[0.0, 0.0], [1.0, 0.0], [0.0, 1.0]]})
 		if source_geometry_checksum(visual_only_change) != source_geometry_checksum(terrain):
 			errors.append("visual-only data changed collision source checksum: %s" % terrain_id)
-		field_errors, definitely_clear, exact_avoided = _differential_errors(terrain, field, max(1, args.samples))
+		field_errors, definitely_clear, exact_avoided, region_avoided = _differential_errors(terrain, field, max(1, args.samples))
 		errors.extend(field_errors)
 		total_definitely_clear += definitely_clear
 		total_exact_avoided += exact_avoided
+		total_region_avoided += region_avoided
 	if set(definitions) != set(terrains):
 		errors.append("collision field manifest terrain set differs from TerrainMap set")
 	if not args.skip_determinism:
@@ -276,7 +316,7 @@ def main() -> int:
 			print("collision-field validation failed: %s" % error, file=sys.stderr)
 		return 1
 	avoidance_ratio = float(total_exact_avoided) / max(1, total_definitely_clear)
-	print("collision fields valid: maps=%d definitely_clear=%d exact_avoided=%d ratio=%.3f" % (len(terrains), total_definitely_clear, total_exact_avoided, avoidance_ratio))
+	print("collision fields valid: maps=%d definitely_clear=%d exact_avoided=%d ratio=%.3f region_exact_avoided=%d" % (len(terrains), total_definitely_clear, total_exact_avoided, avoidance_ratio, total_region_avoided))
 	return 0
 
 

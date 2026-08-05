@@ -37,17 +37,35 @@ func configure(query, zone_set: Dictionary, effects: Array, ocean_palette_id: St
 		zone["active"] = bool(zone.get("active", true))
 		zone["base_polygon"] = zone.get("polygon", []).duplicate(true)
 		zone["base_polygon_packed"] = _packed_polygon(zone["base_polygon"])
+		zone["local_bounds"] = _polygon_bounds(zone["base_polygon_packed"])
 		zones.append(zone)
 	zones.sort_custom(func(a, b): return str(a.get("id", "")) < str(b.get("id", "")))
-	motion_zone_indices.clear()
+	var motion_indices: Array[int] = []
 	tide_zone_indices.clear()
+	var motion_effect_counts := {}
 	for zone_index in range(zones.size()):
 		var effect: Dictionary = effects_by_id.get(str(zones[zone_index].get("effect_id", "")), {})
 		var values: Dictionary = effect.get("context", {})
 		if values.has("current_strength") or values.has("movement_speed_multiplier") or values.has("sea_state") or values.has("sea_state_delta"):
-			motion_zone_indices.append(zone_index)
+			zones[zone_index]["motion_effect_id"] = str(effect.get("id", ""))
+			zones[zone_index]["motion_priority"] = int(effect.get("priority", 0))
+			zones[zone_index]["motion_stack_rule"] = str(effect.get("stack_rule", "Highest"))
+			zones[zone_index]["motion_values"] = values
+			zones[zone_index]["motion_current_vector"] = Vector2.RIGHT.rotated(deg_to_rad(float(zones[zone_index].get("heading", 0.0)))) * float(values.get("current_strength", 0.0)) * float(zones[zone_index].get("intensity", 1.0))
+			motion_indices.append(zone_index)
+			var effect_id := str(effect.get("id", ""))
+			if str(effect.get("stack_rule", "Highest")) != "VectorAdd":
+				motion_effect_counts[effect_id] = int(motion_effect_counts.get(effect_id, 0)) + 1
 		if bool(values.get("tide_controls_access", false)):
 			tide_zone_indices.append(zone_index)
+	motion_indices.sort_custom(func(a, b):
+		var priority_a := int(zones[a].get("motion_priority", 0))
+		var priority_b := int(zones[b].get("motion_priority", 0))
+		return priority_a < priority_b if priority_a != priority_b else str(zones[a].get("id", "")) < str(zones[b].get("id", "")))
+	motion_zone_indices = PackedInt32Array(motion_indices)
+	for zone_index in motion_zone_indices:
+		var effect_id := str(zones[int(zone_index)].get("motion_effect_id", ""))
+		zones[int(zone_index)]["motion_requires_selection"] = int(motion_effect_counts.get(effect_id, 0)) > 1
 
 
 func advance(delta: float) -> Array:
@@ -175,31 +193,24 @@ func motion_context_at(position: Vector2) -> Dictionary:
 		"sea_state":int(global_environment.get("base_sea_state", 0)),
 	}
 	var selected_by_effect := {}
-	var vector_zones: Array = []
+	var matched_indices: Array[int] = []
 	for zone_index in motion_zone_indices:
 		var zone: Dictionary = zones[int(zone_index)]
 		if not bool(zone.get("active", false)) or not _zone_contains(zone, position): continue
-		var effect: Dictionary = effects_by_id.get(str(zone.get("effect_id", "")), {})
-		var effect_id := str(effect.get("id", ""))
-		if effect_id.is_empty(): continue
-		if str(effect.get("stack_rule", "Highest")) == "VectorAdd":
-			vector_zones.append({"zone":zone, "effect":effect})
+		matched_indices.append(int(zone_index))
+		if bool(zone.get("motion_requires_selection", false)):
+			var effect_id := str(zone.get("motion_effect_id", ""))
+			var previous_index := int(selected_by_effect.get(effect_id, -1))
+			if previous_index < 0 or float(zone.get("intensity", 1.0)) > float(zones[previous_index].get("intensity", 1.0)):
+				selected_by_effect[effect_id] = int(zone_index)
+	for zone_index in matched_indices:
+		var zone: Dictionary = zones[zone_index]
+		if bool(zone.get("motion_requires_selection", false)) and int(selected_by_effect.get(str(zone.get("motion_effect_id", "")), -1)) != zone_index:
 			continue
-		var previous: Dictionary = selected_by_effect.get(effect_id, {})
-		if previous.is_empty() or float(zone.get("intensity", 1.0)) > float(previous["zone"].get("intensity", 1.0)):
-			selected_by_effect[effect_id] = {"zone":zone, "effect":effect}
-	var applications: Array = selected_by_effect.values()
-	applications.append_array(vector_zones)
-	applications.sort_custom(func(a, b):
-		var priority_a := int(a["effect"].get("priority", 0))
-		var priority_b := int(b["effect"].get("priority", 0))
-		return priority_a < priority_b if priority_a != priority_b else str(a["zone"].get("id", "")) < str(b["zone"].get("id", "")))
-	for application in applications:
-		var zone: Dictionary = application["zone"]
-		var values: Dictionary = application["effect"].get("context", {})
+		var values: Dictionary = zone.get("motion_values", {})
 		var intensity := float(zone.get("intensity", 1.0))
 		if values.has("current_strength"):
-			context["current_vector"] = (context["current_vector"] as Vector2) + Vector2.RIGHT.rotated(deg_to_rad(float(zone.get("heading", 0.0)))) * float(values["current_strength"]) * intensity
+			context["current_vector"] = (context["current_vector"] as Vector2) + (zone.get("motion_current_vector", Vector2.ZERO) as Vector2)
 		if values.has("movement_speed_multiplier"):
 			context["movement_speed_multiplier"] = float(context["movement_speed_multiplier"]) * lerpf(1.0, float(values["movement_speed_multiplier"]), intensity)
 		if values.has("sea_state"):
@@ -214,6 +225,54 @@ func motion_context_at(position: Vector2) -> Dictionary:
 	if not selected_sea_rule.is_empty():
 		context["movement_speed_multiplier"] = float(context["movement_speed_multiplier"]) * float(selected_sea_rule.get("movement_speed_multiplier", 1.0))
 	return context
+
+
+func motion_context_varies_spatially() -> bool:
+	# The initial motion state already contains the current global movement
+	# context. Only active local movement zones require resampling along every
+	# predicted fixed-Tick position.
+	for zone_index in motion_zone_indices:
+		if bool(zones[int(zone_index)].get("active", false)):
+			return true
+	return false
+
+
+func prediction_motion_context_varies(position: Vector2, base_maximum_speed: float, horizon: float, initial_speed: float = 0.0) -> bool:
+	if horizon <= 0.0:
+		return false
+	var maximum_speed_multiplier := maxf(0.0, float(global_environment.get("movement_speed_multiplier", 1.0)))
+	var maximum_current_speed := 0.0
+	for zone_index in motion_zone_indices:
+		var zone: Dictionary = zones[int(zone_index)]
+		if not bool(zone.get("active", false)): continue
+		var values: Dictionary = zone.get("motion_values", {})
+		if values.has("movement_speed_multiplier"):
+			maximum_speed_multiplier *= maxf(1.0, lerpf(1.0, float(values["movement_speed_multiplier"]), float(zone.get("intensity", 1.0))))
+		maximum_current_speed += (zone.get("motion_current_vector", Vector2.ZERO) as Vector2).length()
+	var maximum_sea_multiplier := 1.0
+	for rule in global_environment.get("sea_state_rules", []):
+		maximum_sea_multiplier = maxf(maximum_sea_multiplier, float(rule.get("movement_speed_multiplier", 1.0)))
+	# Include existing momentum: a unit can enter prediction above its current
+	# context's speed cap and only decelerate toward the requested speed.
+	var reachable_speed := maxf(maxf(0.0, base_maximum_speed) * maximum_speed_multiplier * maximum_sea_multiplier, maxf(0.0, initial_speed))
+	var reachable_radius := (reachable_speed + maximum_current_speed) * horizon
+	for zone_index in motion_zone_indices:
+		var zone: Dictionary = zones[int(zone_index)]
+		if not bool(zone.get("active", false)): continue
+		if _distance_to_zone_boundary(zone, position) <= reachable_radius + 0.001:
+			return true
+	return false
+
+
+func _distance_to_zone_boundary(zone: Dictionary, position: Vector2) -> float:
+	var local_position := position - (zone.get("position", Vector2.ZERO) as Vector2)
+	var polygon: PackedVector2Array = zone.get("base_polygon_packed", PackedVector2Array())
+	if polygon.size() < 2: return INF
+	var result := INF
+	for index in range(polygon.size()):
+		var closest := Geometry2D.get_closest_point_to_segment(local_position, polygon[index], polygon[(index + 1) % polygon.size()])
+		result = minf(result, local_position.distance_to(closest))
+	return result
 
 
 func movement_segment_access(start: Vector2, end: Vector2) -> Dictionary:
@@ -310,7 +369,23 @@ func snapshot() -> Array:
 
 
 func _zone_contains(zone: Dictionary, position: Vector2) -> bool:
-	return Geometry2D.is_point_in_polygon(position - (zone.get("position", Vector2.ZERO) as Vector2), zone.get("base_polygon_packed", PackedVector2Array()))
+	var local_position := position - (zone.get("position", Vector2.ZERO) as Vector2)
+	var bounds: Rect2 = zone.get("local_bounds", Rect2())
+	if local_position.x < bounds.position.x or local_position.y < bounds.position.y or local_position.x > bounds.end.x or local_position.y > bounds.end.y:
+		return false
+	return Geometry2D.is_point_in_polygon(local_position, zone.get("base_polygon_packed", PackedVector2Array()))
+
+
+func _polygon_bounds(polygon: PackedVector2Array) -> Rect2:
+	if polygon.is_empty(): return Rect2()
+	var minimum := polygon[0]
+	var maximum := polygon[0]
+	for point in polygon:
+		minimum.x = minf(minimum.x, point.x)
+		minimum.y = minf(minimum.y, point.y)
+		maximum.x = maxf(maximum.x, point.x)
+		maximum.y = maxf(maximum.y, point.y)
+	return Rect2(minimum, maximum - minimum)
 
 
 func _world_polygon(zone: Dictionary) -> PackedVector2Array:

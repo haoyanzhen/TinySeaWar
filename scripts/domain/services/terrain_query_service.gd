@@ -2,6 +2,8 @@ extends RefCounted
 
 const EPSILON := 0.001
 const SPATIAL_CELL_SIZE := 256.0
+const REGION_RESTRICTION_SHALLOW := 1
+const REGION_RESTRICTION_REEF := 2
 
 var terrain_definition: Dictionary = {}
 var map_size := Vector2.ZERO
@@ -9,6 +11,7 @@ var obstacles: Array = []
 var regions: Array = []
 var obstacle_cells: Dictionary = {}
 var region_cells: Dictionary = {}
+var region_restriction_masks: Dictionary = {}
 var collision_field = null
 var _collision_field_diagnostics := {}
 
@@ -21,6 +24,8 @@ func configure(definition: Dictionary, configured_collision_field = null) -> voi
 	for obstacle in obstacles:
 		obstacle["_polygon"] = _polygon(obstacle.get("polygon", []))
 	obstacles.sort_custom(func(a, b): return str(a.get("id", "")) < str(b.get("id", "")))
+	for obstacle_index in range(obstacles.size()):
+		obstacles[obstacle_index]["_runtime_index"] = obstacle_index
 	regions = definition.get("regions", []).duplicate(true)
 	for region in regions:
 		region["_polygon"] = _polygon(region.get("polygon", []))
@@ -43,7 +48,8 @@ func first_segment_hit(start: Vector2, end: Vector2, block_mask: String, sweep_r
 		if block_mask not in obstacle.get("block_mask", []):
 			continue
 		var polygon: PackedVector2Array = obstacle.get("_polygon", PackedVector2Array())
-		var fraction := _sweep_polygon_fraction(start, displacement, maxf(0.0, sweep_radius), polygon)
+		var edge_indices := _obstacle_edge_indices_in_bounds(obstacle, start, end, maxf(0.0, sweep_radius))
+		var fraction := _sweep_polygon_fraction(start, displacement, maxf(0.0, sweep_radius), polygon, edge_indices)
 		if fraction < 0.0 or fraction > float(best["fraction"]) + EPSILON:
 			continue
 		if is_equal_approx(fraction, float(best["fraction"])) and str(obstacle.get("id", "")) > str(best.get("obstacle_id", "")):
@@ -80,7 +86,12 @@ func validate_movement_segment(start: Vector2, end: Vector2, radius: float, move
 	else:
 		_collision_field_diagnostics["collision_field_unavailable_fallbacks"] = int(_collision_field_diagnostics.get("collision_field_unavailable_fallbacks", 0)) + 1
 	_collision_field_diagnostics["collision_field_cells_visited"] = int(_collision_field_diagnostics.get("collision_field_cells_visited", 0)) + int(field_result.get("field_cells_visited", 0))
-	var region_fraction := _first_illegal_region_fraction(start, end, movement_tags)
+	var blocked_region_mask := _blocked_region_mask(movement_tags)
+	var needs_region_exact := blocked_region_mask != 0 and (not collision_field_available() or (int(field_result.get("restriction_mask", 0)) & blocked_region_mask) != 0)
+	if blocked_region_mask != 0:
+		var region_diagnostic := "collision_field_region_exact_fallbacks" if needs_region_exact else "collision_field_region_definitely_clear"
+		_collision_field_diagnostics[region_diagnostic] = int(_collision_field_diagnostics.get(region_diagnostic, 0)) + 1
+	var region_fraction := _first_illegal_region_fraction(start, end, movement_tags, blocked_region_mask) if needs_region_exact else -1.0
 	if region_fraction >= 0.0:
 		var region_hit_position := start.lerp(end, region_fraction)
 		return {
@@ -137,6 +148,8 @@ func validate_movement_trajectory(samples: Array, radius: float, movement_tags: 
 	minimum_by_segment.resize(segment_count)
 	var cells_by_segment := PackedInt32Array()
 	cells_by_segment.resize(segment_count)
+	var restriction_by_segment := PackedByteArray()
+	restriction_by_segment.resize(segment_count)
 	var field_available: bool = collision_field != null and collision_field.is_configured()
 	_collision_field_diagnostics["collision_field_queries"] = int(_collision_field_diagnostics.get("collision_field_queries", 0)) + segment_count
 	if field_available:
@@ -145,26 +158,34 @@ func validate_movement_trajectory(samples: Array, radius: float, movement_tags: 
 		definitely_clear = batch_result.get("definitely_clear", definitely_clear)
 		minimum_by_segment = batch_result.get("minimum_by_segment", minimum_by_segment)
 		cells_by_segment = batch_result.get("cells_by_segment", cells_by_segment)
+		restriction_by_segment = batch_result.get("restriction_by_segment", restriction_by_segment)
 		_collision_field_diagnostics["collision_field_usec"] = int(_collision_field_diagnostics.get("collision_field_usec", 0)) + Time.get_ticks_usec() - field_started_usec
 	else:
 		_collision_field_diagnostics["collision_field_unavailable_fallbacks"] = int(_collision_field_diagnostics.get("collision_field_unavailable_fallbacks", 0)) + segment_count
 	var minimum_clearance := INF
 	var total_cells := 0
 	var exact_checks := 0
+	var definitely_clear_count := 0
+	var blocked_region_mask := _blocked_region_mask(movement_tags)
+	var region_definitely_clear_count := 0
+	var region_exact_checks := 0
 	for index in range(segment_count):
 		var start: Vector2 = samples[index].get("position", Vector2.ZERO)
 		var finish: Vector2 = samples[index + 1].get("position", start)
 		minimum_clearance = minf(minimum_clearance, float(minimum_by_segment[index]))
 		total_cells += int(cells_by_segment[index])
-		_collision_field_diagnostics["collision_field_cells_visited"] = int(_collision_field_diagnostics.get("collision_field_cells_visited", 0)) + int(cells_by_segment[index])
-		var region_fraction := _first_illegal_region_fraction(start, finish, movement_tags)
+		var needs_region_exact := blocked_region_mask != 0 and (not field_available or (int(restriction_by_segment[index]) & blocked_region_mask) != 0)
+		if blocked_region_mask != 0:
+			if needs_region_exact: region_exact_checks += 1
+			else: region_definitely_clear_count += 1
+		var region_fraction := _first_illegal_region_fraction(start, finish, movement_tags, blocked_region_mask) if needs_region_exact else -1.0
 		if region_fraction >= 0.0:
 			var region_position := start.lerp(finish, region_fraction)
+			_record_trajectory_field_diagnostics(total_cells, definitely_clear_count, exact_checks, region_definitely_clear_count, region_exact_checks)
 			return {"status":"Collides", "first_hit_segment":index, "first_hit_fraction":region_fraction, "minimum_clearance":0.0 if is_inf(minimum_clearance) else minimum_clearance, "field_cells_visited":total_cells, "exact_segment_checks":exact_checks, "segments_validated":index + 1, "hit":{"hit":true, "obstacle_id":"water_access", "position":region_position, "normal":Vector2.ZERO, "fraction":region_fraction}}
 		if bool(definitely_clear[index]):
-			_collision_field_diagnostics["collision_field_definitely_clear"] = int(_collision_field_diagnostics.get("collision_field_definitely_clear", 0)) + 1
+			definitely_clear_count += 1
 			continue
-		_collision_field_diagnostics["collision_field_exact_fallbacks"] = int(_collision_field_diagnostics.get("collision_field_exact_fallbacks", 0)) + 1
 		exact_checks += 1
 		var exact_clearance := radius if start.is_equal_approx(finish) else required_clearance
 		var hit := first_segment_hit(start, finish, "ShipMovement", exact_clearance)
@@ -183,8 +204,18 @@ func validate_movement_trajectory(samples: Array, radius: float, movement_tags: 
 				var departure_hit := first_segment_hit(start, finish, "ShipMovement", radius) if soft_margin_departure else first_segment_hit(start.lerp(finish, departure_fraction), finish, "ShipMovement", required_clearance)
 				if not bool(departure_hit.get("hit", false)): hit = departure_hit
 		if bool(hit.get("hit", false)):
+			_record_trajectory_field_diagnostics(total_cells, definitely_clear_count, exact_checks, region_definitely_clear_count, region_exact_checks)
 			return {"status":"Collides", "first_hit_segment":index, "first_hit_fraction":hit.get("fraction", 1.0), "minimum_clearance":0.0 if is_inf(minimum_clearance) else minimum_clearance, "field_cells_visited":total_cells, "exact_segment_checks":exact_checks, "segments_validated":index + 1, "hit":hit}
-	return {"status":"DefinitelyClear" if exact_checks == 0 else "ExactClear", "minimum_clearance":0.0 if is_inf(minimum_clearance) else minimum_clearance, "field_cells_visited":total_cells, "exact_segment_checks":exact_checks, "segments_validated":segment_count}
+	_record_trajectory_field_diagnostics(total_cells, definitely_clear_count, exact_checks, region_definitely_clear_count, region_exact_checks)
+	return {"status":"DefinitelyClear" if exact_checks == 0 and region_exact_checks == 0 else "ExactClear", "minimum_clearance":0.0 if is_inf(minimum_clearance) else minimum_clearance, "field_cells_visited":total_cells, "exact_segment_checks":exact_checks, "region_exact_checks":region_exact_checks, "segments_validated":segment_count}
+
+
+func _record_trajectory_field_diagnostics(cells_visited: int, definitely_clear_count: int, exact_checks: int, region_definitely_clear_count: int, region_exact_checks: int) -> void:
+	_collision_field_diagnostics["collision_field_cells_visited"] = int(_collision_field_diagnostics.get("collision_field_cells_visited", 0)) + cells_visited
+	_collision_field_diagnostics["collision_field_definitely_clear"] = int(_collision_field_diagnostics.get("collision_field_definitely_clear", 0)) + definitely_clear_count
+	_collision_field_diagnostics["collision_field_exact_fallbacks"] = int(_collision_field_diagnostics.get("collision_field_exact_fallbacks", 0)) + exact_checks
+	_collision_field_diagnostics["collision_field_region_definitely_clear"] = int(_collision_field_diagnostics.get("collision_field_region_definitely_clear", 0)) + region_definitely_clear_count
+	_collision_field_diagnostics["collision_field_region_exact_fallbacks"] = int(_collision_field_diagnostics.get("collision_field_region_exact_fallbacks", 0)) + region_exact_checks
 
 
 func collision_field_available() -> bool:
@@ -199,6 +230,8 @@ func reset_collision_field_diagnostics() -> void:
 		"collision_field_definitely_clear":0,
 		"collision_field_exact_fallbacks":0,
 		"collision_field_unavailable_fallbacks":0,
+		"collision_field_region_definitely_clear":0,
+		"collision_field_region_exact_fallbacks":0,
 	}
 
 
@@ -288,7 +321,7 @@ func regions_at(position: Vector2) -> Array:
 	var result: Array = []
 	for region_index in region_cells.get(_cell_for(position), []):
 		var region: Dictionary = regions[int(region_index)]
-		if _point_in_polygon(position, region.get("_polygon", PackedVector2Array())):
+		if Geometry2D.is_point_in_polygon(position, region.get("_polygon", PackedVector2Array())):
 			var copy := region.duplicate(false)
 			copy.erase("_polygon")
 			result.append(copy)
@@ -324,9 +357,24 @@ func debug_spatial_cells() -> Dictionary:
 func _build_spatial_index() -> void:
 	obstacle_cells.clear()
 	region_cells.clear()
+	region_restriction_masks.clear()
 	for obstacle_index in range(obstacles.size()):
 		var polygon: PackedVector2Array = obstacles[obstacle_index].get("_polygon", PackedVector2Array())
 		if polygon.is_empty(): continue
+		var edge_cells := {}
+		for edge_index in range(polygon.size()):
+			var edge_start := polygon[edge_index]
+			var edge_finish := polygon[(edge_index + 1) % polygon.size()]
+			var edge_minimum := Vector2(minf(edge_start.x, edge_finish.x), minf(edge_start.y, edge_finish.y))
+			var edge_maximum := Vector2(maxf(edge_start.x, edge_finish.x), maxf(edge_start.y, edge_finish.y))
+			var edge_min_cell := _cell_for(edge_minimum)
+			var edge_max_cell := _cell_for(edge_maximum)
+			for edge_cell_y in range(edge_min_cell.y, edge_max_cell.y + 1):
+				for edge_cell_x in range(edge_min_cell.x, edge_max_cell.x + 1):
+					var edge_cell := Vector2i(edge_cell_x, edge_cell_y)
+					if not edge_cells.has(edge_cell): edge_cells[edge_cell] = []
+					edge_cells[edge_cell].append(edge_index)
+		obstacles[obstacle_index]["_edge_cells"] = edge_cells
 		var bounds := _polygon_bounds(polygon)
 		var min_cell := _cell_for(bounds.position)
 		var max_cell := _cell_for(bounds.position + bounds.size)
@@ -339,6 +387,7 @@ func _build_spatial_index() -> void:
 	for region_index in range(regions.size()):
 		var polygon: PackedVector2Array = regions[region_index].get("_polygon", PackedVector2Array())
 		if polygon.is_empty(): continue
+		var restriction_mask := _region_restriction_mask(str(regions[region_index].get("region_type", "DeepWater")))
 		var bounds := _polygon_bounds(polygon)
 		var min_cell := _cell_for(bounds.position)
 		var max_cell := _cell_for(bounds.position + bounds.size)
@@ -348,6 +397,8 @@ func _build_spatial_index() -> void:
 				if not _polygon_intersects_cell(polygon, cell): continue
 				if not region_cells.has(cell): region_cells[cell] = []
 				region_cells[cell].append(region_index)
+				if restriction_mask != 0:
+					region_restriction_masks[cell] = int(region_restriction_masks.get(cell, 0)) | restriction_mask
 
 
 func _polygon_intersects_cell(polygon: PackedVector2Array, cell: Vector2i) -> bool:
@@ -383,6 +434,25 @@ func _obstacles_in_bounds(start: Vector2, end: Vector2, padding: float) -> Array
 	sorted_indices.sort()
 	var result: Array = []
 	for obstacle_index in sorted_indices: result.append(obstacles[int(obstacle_index)])
+	return result
+
+
+func _obstacle_edge_indices_in_bounds(obstacle: Dictionary, start: Vector2, end: Vector2, padding: float) -> Array:
+	var edge_cells: Dictionary = obstacle.get("_edge_cells", {})
+	var polygon: PackedVector2Array = obstacle.get("_polygon", PackedVector2Array())
+	if edge_cells.is_empty():
+		return range(polygon.size())
+	var minimum := Vector2(minf(start.x, end.x), minf(start.y, end.y)) - Vector2.ONE * padding
+	var maximum := Vector2(maxf(start.x, end.x), maxf(start.y, end.y)) + Vector2.ONE * padding
+	var min_cell := _cell_for(minimum)
+	var max_cell := _cell_for(maximum)
+	var indices := {}
+	for cell_y in range(min_cell.y, max_cell.y + 1):
+		for cell_x in range(min_cell.x, max_cell.x + 1):
+			for edge_index in edge_cells.get(Vector2i(cell_x, cell_y), []):
+				indices[int(edge_index)] = true
+	var result: Array = indices.keys()
+	result.sort()
 	return result
 
 
@@ -441,7 +511,7 @@ func _movement_allowed_at(position: Vector2, movement_tags: Array) -> bool:
 func _top_region_internal(position: Vector2) -> Dictionary:
 	for region_index in region_cells.get(_cell_for(position), []):
 		var region: Dictionary = regions[int(region_index)]
-		if _point_in_polygon(position, region.get("_polygon", PackedVector2Array())):
+		if Geometry2D.is_point_in_polygon(position, region.get("_polygon", PackedVector2Array())):
 			return region
 	return {}
 
@@ -468,8 +538,9 @@ func _first_illegal_movement_fraction(start: Vector2, end: Vector2, radius: floa
 	return -1.0
 
 
-func _first_illegal_region_fraction(start: Vector2, end: Vector2, movement_tags: Array) -> float:
-	if not _segment_may_enter_illegal_region(start, end, movement_tags):
+func _first_illegal_region_fraction(start: Vector2, end: Vector2, movement_tags: Array, blocked_region_mask: int = -1) -> float:
+	var effective_blocked_mask := _blocked_region_mask(movement_tags) if blocked_region_mask < 0 else blocked_region_mask
+	if not _segment_may_enter_illegal_region(start, end, effective_blocked_mask):
 		return -1.0
 	if not _movement_allowed_at(start, movement_tags):
 		return 0.0
@@ -493,18 +564,32 @@ func _first_illegal_region_fraction(start: Vector2, end: Vector2, movement_tags:
 	return -1.0
 
 
-func _segment_may_enter_illegal_region(start: Vector2, end: Vector2, movement_tags: Array) -> bool:
-	var permits_shallow := "ShallowDraft" in movement_tags
-	var permits_reef := "ReefCapable" in movement_tags
+func _segment_may_enter_illegal_region(start: Vector2, end: Vector2, blocked_region_mask: int) -> bool:
+	if blocked_region_mask == 0:
+		return false
 	var min_cell := _cell_for(Vector2(minf(start.x, end.x), minf(start.y, end.y)))
 	var max_cell := _cell_for(Vector2(maxf(start.x, end.x), maxf(start.y, end.y)))
 	for cell_y in range(min_cell.y, max_cell.y + 1):
 		for cell_x in range(min_cell.x, max_cell.x + 1):
-			for region_index in region_cells.get(Vector2i(cell_x, cell_y), []):
-				var region_type := str(regions[int(region_index)].get("region_type", "DeepWater"))
-				if (region_type == "ShallowWater" and not permits_shallow) or (region_type == "ReefOrSandbar" and not permits_reef):
-					return true
+			if int(region_restriction_masks.get(Vector2i(cell_x, cell_y), 0)) & blocked_region_mask:
+				return true
 	return false
+
+
+func _blocked_region_mask(movement_tags: Array) -> int:
+	var result := 0
+	if "ShallowDraft" not in movement_tags:
+		result |= REGION_RESTRICTION_SHALLOW
+	if "ReefCapable" not in movement_tags:
+		result |= REGION_RESTRICTION_REEF
+	return result
+
+
+func _region_restriction_mask(region_type: String) -> int:
+	match region_type:
+		"ShallowWater": return REGION_RESTRICTION_SHALLOW
+		"ReefOrSandbar": return REGION_RESTRICTION_REEF
+		_: return 0
 
 
 func _first_map_boundary_hit(start: Vector2, end: Vector2, radius: float) -> Dictionary:
@@ -554,13 +639,13 @@ func _first_map_boundary_hit(start: Vector2, end: Vector2, radius: float) -> Dic
 	return _miss(end, "ShipMovement", distance)
 
 
-func _sweep_polygon_fraction(start: Vector2, displacement: Vector2, radius: float, polygon: PackedVector2Array) -> float:
+func _sweep_polygon_fraction(start: Vector2, displacement: Vector2, radius: float, polygon: PackedVector2Array, edge_indices: Array = []) -> float:
 	if polygon.size() < 3:
 		return -1.0
-	if _point_in_polygon(start, polygon):
+	if Geometry2D.is_point_in_polygon(start, polygon):
 		return 0.0
 	var best := INF
-	for index in range(polygon.size()):
+	for index in edge_indices:
 		var a := polygon[index]
 		var b := polygon[(index + 1) % polygon.size()]
 		var fraction := _moving_point_segment_fraction(start, displacement, a, b, radius)

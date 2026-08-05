@@ -13,6 +13,27 @@ const FIXED_TICK_DELTA := 0.1
 const NAVIGATION_MARGIN := 4.0
 const CLEARANCE_COMFORT_BAND := 96.0
 
+var diagnostics_enabled := false
+var _diagnostics := {}
+
+
+func configure_diagnostics(enabled: bool) -> void:
+	diagnostics_enabled = enabled
+	reset_diagnostics()
+
+
+func reset_diagnostics() -> void:
+	_diagnostics = {"motion_expansion_usec":0, "terrain_validation_usec":0, "environment_access_usec":0, "dynamic_validation_usec":0, "candidate_scoring_usec":0}
+
+
+func diagnostics() -> Dictionary:
+	return _diagnostics.duplicate(true)
+
+
+func _record_diagnostic(key: String, started_usec: int) -> void:
+	if diagnostics_enabled:
+		_diagnostics[key] = int(_diagnostics.get(key, 0)) + Time.get_ticks_usec() - started_usec
+
 
 func arrival_tolerance(radius: float) -> float:
 	return maxf(12.0, radius * 0.5)
@@ -95,15 +116,28 @@ func _select_plan(templates: Array, initial_state: Dictionary, goal: Vector2, ho
 	var rejected_by_terrain := 0
 	var segments_simulated := 0
 	var evaluated_candidates := 0
+	var context_sampler := Callable()
+	if terrain_context != null:
+		var context_varies: bool = not terrain_context.has_method("motion_context_varies_spatially") or bool(terrain_context.motion_context_varies_spatially())
+		if context_varies and terrain_context.has_method("prediction_motion_context_varies"):
+			context_varies = terrain_context.prediction_motion_context_varies(
+				initial_state.get("position", Vector2.ZERO),
+				float(initial_state.get("base_maximum_speed", initial_state.get("maximum_speed", 0.0))),
+				horizon,
+				absf(float(initial_state.get("speed", 0.0))),
+			)
+		if context_varies:
+			context_sampler = Callable(terrain_context, "motion_context_at")
 	for index in range(templates.size()):
 		var template: Dictionary = templates[index]
 		evaluated_candidates += 1
 		var controls: Array = template.get("controls", [])
-		var simulation := _simulate(initial_state, controls, horizon, radius, movement_tags, terrain_query, terrain_context, nearby_units, bool(template.get("allow_controlled_contact", false)))
+		var simulation := _simulate(initial_state, controls, horizon, radius, movement_tags, terrain_query, terrain_context, context_sampler, nearby_units, bool(template.get("allow_controlled_contact", false)))
 		segments_simulated += int(simulation.get("segments_simulated", 0))
 		if not bool(simulation.get("valid", false)):
 			if str(simulation.get("reason_code", "")) == "TERRAIN_COLLISION": rejected_by_terrain += 1
 			continue
+		var scoring_started_usec := Time.get_ticks_usec() if diagnostics_enabled else 0
 		var terminal_state: Dictionary = simulation.get("terminal_state", initial_state)
 		var terminal: Vector2 = terminal_state.get("position", initial_state.get("position", Vector2.ZERO))
 		var threat_score := _threat_safety(simulation.get("samples", []), terminal, threats, initial_state)
@@ -132,6 +166,7 @@ func _select_plan(templates: Array, initial_state: Dictionary, goal: Vector2, ho
 		var recovery_bonus := 3000.0 if recovery_tag == "collision_reverse_departure" else (1800.0 if recovery_tag == "collision_forward_departure" else 0.0)
 		var score := threat_score * 10000.0 + progress * 10.0 + clearance_score * 30.0 + next_gate_alignment * 80.0 + continuity + direct_bonus + recovery_bonus - near_shore_speed_cost * 600.0 - contact_cost - stall_cost
 		candidates.append({"template":template, "simulation":simulation, "score":score, "index":index, "threat_safety":threat_score})
+		_record_diagnostic("candidate_scoring_usec", scoring_started_usec)
 		# Templates are ordered from the fastest intent-preserving control toward
 		# slower/wider fallbacks. Once one has generous whole-trajectory clearance,
 		# evaluating lower-priority controls adds CPU cost without adding safety.
@@ -147,23 +182,26 @@ func _select_plan(templates: Array, initial_state: Dictionary, goal: Vector2, ho
 	return {
 		"ok":true,
 		"controls":_controls_for_commit(best_template.get("controls", []), commit_duration),
+		"prediction_controls":best_template.get("controls", []).duplicate(true),
 		"predicted_samples":best_simulation.get("samples", []),
 		"controlled_contact":best_simulation.get("controlled_contact", false),
 		"threat_safety":best["threat_safety"],
 		"candidate_count":evaluated_candidates,
 		"candidate_id":str(best_template.get("tag", best["index"])),
+		"candidate_rank":int(best["index"]) + 1,
+		"valid_candidate_count":candidates.size(),
 		"minimum_clearance":best_simulation.get("minimum_clearance", 0.0),
 		"segments_simulated":segments_simulated,
 		"candidates_rejected_by_terrain":rejected_by_terrain,
 	}
 
 
-func _simulate(initial_state: Dictionary, controls: Array, horizon: float, radius: float, movement_tags: Array, terrain_query, terrain_context, nearby_units: Array, allow_controlled_contact: bool) -> Dictionary:
-	var context_sampler := Callable(terrain_context, "motion_context_at") if terrain_context != null else Callable()
+func _simulate(initial_state: Dictionary, controls: Array, horizon: float, radius: float, movement_tags: Array, terrain_query, terrain_context, context_sampler: Callable, nearby_units: Array, allow_controlled_contact: bool) -> Dictionary:
+	var motion_started_usec := Time.get_ticks_usec() if diagnostics_enabled else 0
 	var samples := ShipMotionService.simulate_control_sequence(initial_state, controls, FIXED_TICK_DELTA, horizon, context_sampler)
+	_record_diagnostic("motion_expansion_usec", motion_started_usec)
 	if samples.is_empty():
 		return {"valid":false, "reason_code":"EMPTY_SIMULATION", "segments_simulated":0}
-	var accepted_samples: Array = [samples[0]]
 	var controlled_contact := false
 	var minimum_clearance := INF
 	var exact_segment_checks := 0
@@ -173,7 +211,9 @@ func _simulate(initial_state: Dictionary, controls: Array, horizon: float, radiu
 	var navigation_margin := 0.0 if recovery_normal.length_squared() > 0.001 else NAVIGATION_MARGIN
 	var sample_limit := samples.size()
 	if terrain_query != null and terrain_query.is_configured():
+		var terrain_started_usec := Time.get_ticks_usec() if diagnostics_enabled else 0
 		var trajectory_terrain: Dictionary = terrain_query.validate_movement_trajectory(samples, radius, movement_tags, navigation_margin, recovery_normal)
+		_record_diagnostic("terrain_validation_usec", terrain_started_usec)
 		minimum_clearance = float(trajectory_terrain.get("minimum_clearance", 0.0))
 		exact_segment_checks = int(trajectory_terrain.get("exact_segment_checks", 0))
 		field_cells_visited = int(trajectory_terrain.get("field_cells_visited", 0))
@@ -184,13 +224,16 @@ func _simulate(initial_state: Dictionary, controls: Array, horizon: float, radiu
 			else:
 				return {"valid":false, "reason_code":"TERRAIN_COLLISION", "segments_simulated":int(trajectory_terrain.get("segments_validated", 0)), "exact_segment_checks":exact_segment_checks, "field_cells_visited":field_cells_visited}
 	if terrain_context != null:
+		var environment_started_usec := Time.get_ticks_usec() if diagnostics_enabled else 0
 		var trajectory_access: Dictionary = terrain_context.movement_trajectory_access(samples, sample_limit)
+		_record_diagnostic("environment_access_usec", environment_started_usec)
 		if not bool(trajectory_access.get("allowed", true)):
 			if allow_controlled_contact:
 				controlled_contact = true
 				sample_limit = clampi(int(trajectory_access.get("first_hit_segment", 0)) + 1, 1, sample_limit)
 			else:
 				return {"valid":false, "reason_code":"TERRAIN_COLLISION", "segments_simulated":int(trajectory_access.get("segments_validated", 0)), "exact_segment_checks":exact_segment_checks, "field_cells_visited":field_cells_visited}
+	var dynamic_started_usec := Time.get_ticks_usec() if diagnostics_enabled else 0
 	for index in range(1, sample_limit):
 		var previous: Vector2 = samples[index - 1].get("position", Vector2.ZERO)
 		var next_position: Vector2 = samples[index].get("position", previous)
@@ -199,11 +242,14 @@ func _simulate(initial_state: Dictionary, controls: Array, horizon: float, radiu
 		if (terrain_query == null or not terrain_query.is_configured()) and map_width > 0.0 and map_height > 0.0 and (next_position.x < radius + navigation_margin or next_position.y < radius + navigation_margin or next_position.x > map_width - radius - navigation_margin or next_position.y > map_height - radius - navigation_margin):
 			if allow_controlled_contact:
 				controlled_contact = true
+				sample_limit = index
 				break
 			return {"valid":false, "reason_code":"TERRAIN_COLLISION", "segments_simulated":index}
-		if _dynamic_collision(next_position, radius, nearby_units):
+		if not nearby_units.is_empty() and _dynamic_collision(next_position, radius, nearby_units):
+			_record_diagnostic("dynamic_validation_usec", dynamic_started_usec)
 			return {"valid":false, "reason_code":"DYNAMIC_COLLISION", "segments_simulated":index}
-		accepted_samples.append(samples[index])
+	_record_diagnostic("dynamic_validation_usec", dynamic_started_usec)
+	var accepted_samples: Array = samples if sample_limit == samples.size() else samples.slice(0, sample_limit)
 	var terminal_state: Dictionary = accepted_samples[-1]
 	if is_inf(minimum_clearance): minimum_clearance = radius + NAVIGATION_MARGIN + CLEARANCE_COMFORT_BAND
 	return {
@@ -274,7 +320,8 @@ func _next_gate_alignment(terminal_state: Dictionary, next_goals: Array) -> floa
 
 func _dynamic_collision(position: Vector2, radius: float, nearby_units: Array) -> bool:
 	for other in nearby_units:
-		if (other.get("position", Vector2.INF) as Vector2).distance_to(position) < radius + float(other.get("radius", 0.0)):
+		var combined_radius := radius + float(other.get("radius", 0.0))
+		if (other.get("position", Vector2.INF) as Vector2).distance_squared_to(position) < combined_radius * combined_radius:
 			return true
 	return false
 

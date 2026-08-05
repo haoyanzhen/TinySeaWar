@@ -8,6 +8,7 @@ const GunDispersionService = preload("res://scripts/domain/services/gun_dispersi
 const BattleRecorder = preload("res://scripts/infrastructure/analytics/battle_recorder.gd")
 const DamageStatistics = preload("res://scripts/infrastructure/analytics/damage_statistics.gd")
 const TerrainQueryService = preload("res://scripts/domain/services/terrain_query_service.gd")
+const TerrainCollisionFieldLoader = preload("res://scripts/infrastructure/data/terrain_collision_field_loader.gd")
 const TerrainContextService = preload("res://scripts/domain/services/terrain_context_service.gd")
 const FacilityService = preload("res://scripts/domain/services/facility_service.gd")
 const MinefieldService = preload("res://scripts/domain/services/minefield_service.gd")
@@ -45,6 +46,7 @@ var state := {}
 var command_queue: Array = []
 var delayed_attacks: Array = []
 var terrain_query = TerrainQueryService.new()
+var terrain_collision_field_loader = TerrainCollisionFieldLoader.new()
 var terrain_context_service = TerrainContextService.new()
 var facility_service = FacilityService.new()
 var minefield_service = MinefieldService.new()
@@ -90,6 +92,14 @@ func configure_performance_profiling(enabled: bool = true) -> void:
 		"strategic_corridors_per_tick": [],
 		"trajectory_candidates_per_tick": [],
 		"trajectory_failures_per_tick": [],
+		"trajectory_segments_simulated_per_tick": [],
+		"trajectory_candidates_rejected_by_terrain_per_tick": [],
+		"collision_field_usec": [],
+		"collision_field_queries_per_tick": [],
+		"collision_field_cells_visited_per_tick": [],
+		"collision_field_definitely_clear_per_tick": [],
+		"collision_field_exact_fallbacks_per_tick": [],
+		"collision_field_unavailable_fallbacks_per_tick": [],
 	}
 	_performance_tick_counts = {}
 
@@ -234,6 +244,7 @@ func advance_tick(delta: float = 0.1) -> Array:
 		return _event_buffer
 	var tick_started_usec := Time.get_ticks_usec() if _performance_profile_enabled else 0
 	_performance_tick_counts = {}
+	terrain_query.reset_collision_field_diagnostics()
 	state["tick_index"] += 1
 	state["elapsed_time"] += delta
 	_update_reinforcements()
@@ -285,8 +296,12 @@ func advance_tick(delta: float = 0.1) -> Array:
 	recorder.consume(_event_buffer, float(state["elapsed_time"]))
 	if _performance_profile_enabled:
 		_performance_profile["tick_total_usec"].append(Time.get_ticks_usec() - tick_started_usec)
-		for key in ["normal_plans_per_tick", "emergency_scans_per_tick", "emergency_plans_per_tick", "strategic_corridors_per_tick", "trajectory_candidates_per_tick", "trajectory_failures_per_tick"]:
+		for key in ["normal_plans_per_tick", "emergency_scans_per_tick", "emergency_plans_per_tick", "strategic_corridors_per_tick", "trajectory_candidates_per_tick", "trajectory_failures_per_tick", "trajectory_segments_simulated_per_tick", "trajectory_candidates_rejected_by_terrain_per_tick"]:
 			_performance_profile[key].append(int(_performance_tick_counts.get(key, 0)))
+		var field_profile := terrain_query.collision_field_diagnostics()
+		_performance_profile["collision_field_usec"].append(int(field_profile.get("collision_field_usec", 0)))
+		for field_key in ["collision_field_queries", "collision_field_cells_visited", "collision_field_definitely_clear", "collision_field_exact_fallbacks", "collision_field_unavailable_fallbacks"]:
+			_performance_profile["%s_per_tick" % field_key].append(int(field_profile.get(field_key, 0)))
 	return _event_buffer.duplicate(true)
 
 
@@ -638,7 +653,15 @@ func _configure_scene_combat(level: Dictionary) -> void:
 	var terrain_id := str(map.get("terrain_definition_id", ""))
 	var terrain_definition: Dictionary = registry.get_definition("terrain", terrain_id) if not terrain_id.is_empty() else {}
 	if not terrain_definition.is_empty():
-		terrain_query.configure(terrain_definition)
+		var collision_field = null
+		var collision_field_id := str(terrain_definition.get("collision_field_id", ""))
+		var collision_field_definition: Dictionary = registry.get_definition("collision_fields", collision_field_id) if not collision_field_id.is_empty() else {}
+		var collision_field_result := terrain_collision_field_loader.load_field(collision_field_definition, terrain_definition)
+		if bool(collision_field_result.get("ok", false)):
+			collision_field = collision_field_result.get("field")
+		else:
+			_emit("TerrainCollisionFieldUnavailable", {"terrain_definition_id":terrain_id, "collision_field_id":collision_field_id, "reason_code":collision_field_result.get("reason_code", "COLLISION_FIELD_UNAVAILABLE")})
+		terrain_query.configure(terrain_definition, collision_field)
 		state["terrain_map"] = terrain_definition.duplicate(true)
 	var navigation_id := str(map.get("navigation_definition_id", terrain_definition.get("navigation_definition_id", "")))
 	if not navigation_id.is_empty():
@@ -774,6 +797,10 @@ func _build_unit(member: Dictionary, ship: Dictionary, fleet_id: String, faction
 	var skill: Dictionary = registry.get_definition("skills", str(ship.get("skill_id", "")))
 	var player_controlled := faction_id == PLAYER_FACTION
 	var initial_movement_mode := "HoldPosition" if player_controlled else "AutoNavigate"
+	# Spread the two fleets across opposite halves of the one-second planning
+	# wheel. This gives 11v11 a 2-3 unit baseline per fixed Tick; immediate
+	# invalidations may add replans instead of waiting for a later slot.
+	var normal_plan_slot := posmod(operation_slot + (0 if player_controlled else int(NAVIGATION_NORMAL_INTERVAL_TICKS / 2)), NAVIGATION_NORMAL_INTERVAL_TICKS)
 	return {
 		"entity_id": str(member["entity_id"]),
 		"definition_id": str(ship["id"]),
@@ -794,7 +821,8 @@ func _build_unit(member: Dictionary, ship: Dictionary, fleet_id: String, faction
 			"state": "NormalNavigation",
 			"trajectory_plan": {},
 			"current_control": {"thrust_ratio": 0.0, "turn_ratio": 0.0},
-			"next_normal_plan_tick": absi(str(member["entity_id"]).hash()) % NAVIGATION_NORMAL_INTERVAL_TICKS,
+			"normal_plan_slot": normal_plan_slot,
+			"next_normal_plan_tick": normal_plan_slot,
 			"emergency_clear_ticks": 0,
 			"tracked_threat_ids": [],
 			"trajectory_dirty": true,
@@ -1239,9 +1267,15 @@ func _mark_navigation_dirty(unit: Dictionary) -> void:
 	var navigation: Dictionary = unit.get("navigation_state", {})
 	navigation["trajectory_dirty"] = true
 	var tick := int(state.get("tick_index", 0))
-	var slot := absi(str(unit.get("entity_id", "")).hash()) % NAVIGATION_NORMAL_INTERVAL_TICKS
+	var slot := int(navigation.get("normal_plan_slot", absi(str(unit.get("entity_id", "")).hash()) % NAVIGATION_NORMAL_INTERVAL_TICKS))
 	var delay := posmod(slot - posmod(tick, NAVIGATION_NORMAL_INTERVAL_TICKS), NAVIGATION_NORMAL_INTERVAL_TICKS)
 	navigation["next_normal_plan_tick"] = tick + delay
+
+
+func _mark_navigation_dirty_immediate(unit: Dictionary) -> void:
+	var navigation: Dictionary = unit.get("navigation_state", {})
+	navigation["trajectory_dirty"] = true
+	navigation["next_normal_plan_tick"] = int(state.get("tick_index", 0)) + 1
 
 
 func _update_cooldowns_and_statuses(delta: float) -> void:
@@ -1344,7 +1378,14 @@ func _plan_normal_trajectory(unit: Dictionary) -> void:
 	var motion_state := ShipMotionService.state_for_unit(unit, terrain_context_service.context_at(unit["position"]), _active_status_effects(unit), ModifierService)
 	motion_state["map_width"] = float(state.get("map", {}).get("width", 0.0))
 	motion_state["map_height"] = float(state.get("map", {}).get("height", 0.0))
-	var result := trajectory_planner.plan_normal(motion_state, goal, float(unit["stats"].get("collision_radius", 20.0)), _movement_tags(unit), terrain_query, terrain_context_service, _nearby_navigation_units(unit), _current_corridor_goal_is_final(unit))
+	motion_state["previous_control"] = navigation.get("current_control", {"thrust_ratio":0.0, "turn_ratio":0.0})
+	if navigation.has("last_collision"):
+		motion_state["collision_recovery"] = navigation.get("last_collision", {}).duplicate(true)
+	var movement_mode := str(movement.get("mode", ""))
+	var prioritize_direct_player_motion := movement_mode in ["PlayerMoveOrder", "PlayerWaypointRoute"]
+	var result := trajectory_planner.plan_normal(motion_state, goal, float(unit["stats"].get("collision_radius", 20.0)), _movement_tags(unit), terrain_query, terrain_context_service, _nearby_navigation_units(unit), _current_corridor_goal_is_final(unit), _current_corridor_lookahead(unit, 2), prioritize_direct_player_motion)
+	_profile_increment("trajectory_segments_simulated_per_tick", int(result.get("segments_simulated", 0)))
+	_profile_increment("trajectory_candidates_rejected_by_terrain_per_tick", int(result.get("candidates_rejected_by_terrain", 0)))
 	if not bool(result.get("ok", false)):
 		_profile_increment("trajectory_failures_per_tick")
 		navigation["state"] = "SafetyHold"
@@ -1353,9 +1394,14 @@ func _plan_normal_trajectory(unit: Dictionary) -> void:
 	else:
 		_profile_increment("trajectory_candidates_per_tick", int(result.get("candidate_count", 0)))
 		navigation["state"] = "NormalNavigation"
+		result["planned_at_tick"] = int(state.get("tick_index", 0))
+		result["valid_until_tick"] = int(state.get("tick_index", 0)) + NAVIGATION_NORMAL_INTERVAL_TICKS
+		result["terrain_revision"] = int(state.get("terrain_map", {}).get("navigation_revision", 0))
 		navigation["trajectory_plan"] = result
 		navigation["current_control"] = result.get("controls", [{"thrust_ratio": 0.0, "turn_ratio": 0.0}])[0]
-		_emit("TrajectoryPlanned", {"unit_id": unit["entity_id"], "mode": "NormalNavigation", "candidate_count": result.get("candidate_count", 0), "goal": goal})
+		if navigation.has("last_collision") and float(result.get("minimum_clearance", 0.0)) > float(unit["stats"].get("collision_radius", 20.0)) + 40.0:
+			navigation.erase("last_collision")
+		_emit("TrajectoryPlanned", {"unit_id": unit["entity_id"], "mode": "NormalNavigation", "candidate_count": result.get("candidate_count", 0), "candidate_id":result.get("candidate_id", ""), "goal": goal, "minimum_clearance":result.get("minimum_clearance", 0.0)})
 	navigation["trajectory_dirty"] = false
 	navigation["next_normal_plan_tick"] = int(state.get("tick_index", 0)) + NAVIGATION_NORMAL_INTERVAL_TICKS
 
@@ -1376,6 +1422,11 @@ func _plan_emergency_trajectory(unit: Dictionary, threats: Array) -> void:
 		_emit("TrajectoryPlanFailed", {"unit_id": unit["entity_id"], "mode": "EmergencyEvasion", "reason_code": result.get("reason_code", "NO_SAFE_TRAJECTORY")})
 		return
 	_profile_increment("trajectory_candidates_per_tick", int(result.get("candidate_count", 0)))
+	_profile_increment("trajectory_segments_simulated_per_tick", int(result.get("segments_simulated", 0)))
+	_profile_increment("trajectory_candidates_rejected_by_terrain_per_tick", int(result.get("candidates_rejected_by_terrain", 0)))
+	result["planned_at_tick"] = int(state.get("tick_index", 0))
+	result["valid_until_tick"] = int(state.get("tick_index", 0)) + 1
+	result["terrain_revision"] = int(state.get("terrain_map", {}).get("navigation_revision", 0))
 	navigation["trajectory_plan"] = result
 	navigation["current_control"] = result.get("controls", [{"thrust_ratio": 0.0, "turn_ratio": 0.0}])[0]
 	navigation["tracked_threat_ids"] = threats.map(func(threat): return str(threat.get("id", "")))
@@ -1393,7 +1444,8 @@ func _update_movement(delta: float) -> void:
 			continue
 		_advance_corridor_progress(unit)
 		var navigation: Dictionary = unit.get("navigation_state", {})
-		var control: Dictionary = navigation.get("current_control", {"thrust_ratio": 0.0, "turn_ratio": 0.0})
+		var control: Dictionary = _active_trajectory_control(navigation)
+		navigation["current_control"] = control
 		var context := terrain_context_service.context_at(unit["position"])
 		var motion_state := ShipMotionService.state_for_unit(unit, context, _active_status_effects(unit), ModifierService)
 		var next_state := ShipMotionService.step(motion_state, control, delta)
@@ -1412,9 +1464,16 @@ func _update_movement(delta: float) -> void:
 			var motion_result := terrain_query.resolve_circle_motion(unit["position"], desired_motion, float(unit["stats"].get("collision_radius", 20.0)), _movement_tags(unit))
 			unit["position"] = motion_result["position"]
 			if bool(motion_result.get("collided", false)):
+				var collision_entry_speed := float(unit.get("current_speed", 0.0))
 				unit["current_speed"] = 0.0
-				navigation["trajectory_dirty"] = true
 				var hit: Dictionary = motion_result.get("hit", {})
+				var active_plan: Dictionary = navigation.get("trajectory_plan", {})
+				if bool(active_plan.get("ok", false)) and int(active_plan.get("terrain_revision", -1)) == int(state.get("terrain_map", {}).get("navigation_revision", 0)):
+					_emit("NavigationCollisionContractViolated", {"unit_id":unit_id, "plan_tick":active_plan.get("planned_at_tick", -1), "collision_tick":state.get("tick_index", 0), "field_revision":active_plan.get("terrain_revision", -1), "terrain_revision":state.get("terrain_map", {}).get("navigation_revision", 0), "candidate_id":active_plan.get("candidate_id", ""), "obstacle_id":hit.get("obstacle_id", "")})
+				navigation["trajectory_plan"] = {}
+				navigation["current_control"] = {"thrust_ratio":0.0, "turn_ratio":0.0}
+				navigation["last_collision"] = {"normal":hit.get("normal", Vector2.ZERO), "obstacle_id":hit.get("obstacle_id", ""), "position":hit.get("position", unit["position"]), "entry_speed":collision_entry_speed, "tick":state.get("tick_index", 0)}
+				_mark_navigation_dirty_immediate(unit)
 				_emit("UnitTerrainCollision", {"unit_id": unit_id, "obstacle_id": hit.get("obstacle_id", ""), "position": hit.get("position", unit["position"]), "normal": hit.get("normal", Vector2.ZERO)})
 		else:
 			unit["position"] = _clamp_to_map(desired_position)
@@ -1436,6 +1495,31 @@ func _current_corridor_goal_is_final(unit: Dictionary) -> bool:
 	var points: Array = movement.get("corridor_points", [])
 	var index := int(movement.get("corridor_index", 0))
 	return points.is_empty() or index >= points.size() - 1
+
+
+func _current_corridor_lookahead(unit: Dictionary, count: int) -> Array:
+	var movement: Dictionary = unit.get("movement_state", {})
+	var points: Array = movement.get("corridor_points", [])
+	var index := int(movement.get("corridor_index", 0))
+	var result: Array = []
+	for point_index in range(index + 1, mini(points.size(), index + 1 + maxi(0, count))):
+		result.append(points[point_index])
+	return result
+
+
+func _active_trajectory_control(navigation: Dictionary) -> Dictionary:
+	var plan: Dictionary = navigation.get("trajectory_plan", {})
+	var controls: Array = plan.get("controls", [])
+	if controls.is_empty():
+		return navigation.get("current_control", {"thrust_ratio":0.0, "turn_ratio":0.0})
+	var elapsed := maxf(0.0, float(int(state.get("tick_index", 0)) - int(plan.get("planned_at_tick", state.get("tick_index", 0)))) * 0.1)
+	for raw_control in controls:
+		var control: Dictionary = raw_control
+		var duration := maxf(0.0, float(control.get("duration", 0.0)))
+		if elapsed < duration - 0.0001:
+			return control
+		elapsed -= duration
+	return controls[-1]
 
 
 func _advance_corridor_progress(unit: Dictionary) -> void:

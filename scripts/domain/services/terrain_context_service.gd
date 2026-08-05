@@ -3,6 +3,8 @@ extends RefCounted
 var terrain_query
 var global_environment: Dictionary = {}
 var zones: Array = []
+var motion_zone_indices: PackedInt32Array = PackedInt32Array()
+var tide_zone_indices: PackedInt32Array = PackedInt32Array()
 var effects_by_id: Dictionary = {}
 var definitions_by_id: Dictionary = {}
 var global_elapsed := 0.0
@@ -37,6 +39,15 @@ func configure(query, zone_set: Dictionary, effects: Array, ocean_palette_id: St
 		zone["base_polygon_packed"] = _packed_polygon(zone["base_polygon"])
 		zones.append(zone)
 	zones.sort_custom(func(a, b): return str(a.get("id", "")) < str(b.get("id", "")))
+	motion_zone_indices.clear()
+	tide_zone_indices.clear()
+	for zone_index in range(zones.size()):
+		var effect: Dictionary = effects_by_id.get(str(zones[zone_index].get("effect_id", "")), {})
+		var values: Dictionary = effect.get("context", {})
+		if values.has("current_strength") or values.has("movement_speed_multiplier") or values.has("sea_state") or values.has("sea_state_delta"):
+			motion_zone_indices.append(zone_index)
+		if bool(values.get("tide_controls_access", false)):
+			tide_zone_indices.append(zone_index)
 
 
 func advance(delta: float) -> Array:
@@ -154,19 +165,98 @@ func context_at(position: Vector2) -> Dictionary:
 	return context
 
 
+func motion_context_at(position: Vector2) -> Dictionary:
+	# Trajectory prediction needs only the movement inputs. Avoid constructing
+	# optical/aviation/source payloads and querying visual water-region facts for
+	# every fixed-tick candidate sample.
+	var context := {
+		"current_vector":Vector2.ZERO,
+		"movement_speed_multiplier":float(global_environment.get("movement_speed_multiplier", 1.0)),
+		"sea_state":int(global_environment.get("base_sea_state", 0)),
+	}
+	var selected_by_effect := {}
+	var vector_zones: Array = []
+	for zone_index in motion_zone_indices:
+		var zone: Dictionary = zones[int(zone_index)]
+		if not bool(zone.get("active", false)) or not _zone_contains(zone, position): continue
+		var effect: Dictionary = effects_by_id.get(str(zone.get("effect_id", "")), {})
+		var effect_id := str(effect.get("id", ""))
+		if effect_id.is_empty(): continue
+		if str(effect.get("stack_rule", "Highest")) == "VectorAdd":
+			vector_zones.append({"zone":zone, "effect":effect})
+			continue
+		var previous: Dictionary = selected_by_effect.get(effect_id, {})
+		if previous.is_empty() or float(zone.get("intensity", 1.0)) > float(previous["zone"].get("intensity", 1.0)):
+			selected_by_effect[effect_id] = {"zone":zone, "effect":effect}
+	var applications: Array = selected_by_effect.values()
+	applications.append_array(vector_zones)
+	applications.sort_custom(func(a, b):
+		var priority_a := int(a["effect"].get("priority", 0))
+		var priority_b := int(b["effect"].get("priority", 0))
+		return priority_a < priority_b if priority_a != priority_b else str(a["zone"].get("id", "")) < str(b["zone"].get("id", "")))
+	for application in applications:
+		var zone: Dictionary = application["zone"]
+		var values: Dictionary = application["effect"].get("context", {})
+		var intensity := float(zone.get("intensity", 1.0))
+		if values.has("current_strength"):
+			context["current_vector"] = (context["current_vector"] as Vector2) + Vector2.RIGHT.rotated(deg_to_rad(float(zone.get("heading", 0.0)))) * float(values["current_strength"]) * intensity
+		if values.has("movement_speed_multiplier"):
+			context["movement_speed_multiplier"] = float(context["movement_speed_multiplier"]) * lerpf(1.0, float(values["movement_speed_multiplier"]), intensity)
+		if values.has("sea_state"):
+			context["sea_state"] = maxi(int(context["sea_state"]), roundi(lerpf(float(global_environment.get("base_sea_state", 0)), float(values["sea_state"]), intensity)))
+		if values.has("sea_state_delta"):
+			context["sea_state"] = maxi(0, int(context["sea_state"]) + roundi(float(values["sea_state_delta"]) * intensity))
+	var selected_sea_rule: Dictionary = {}
+	for rule in global_environment.get("sea_state_rules", []):
+		if int(context["sea_state"]) < int(rule.get("minimum_sea_state", 0)): continue
+		if selected_sea_rule.is_empty() or int(rule.get("minimum_sea_state", 0)) > int(selected_sea_rule.get("minimum_sea_state", 0)):
+			selected_sea_rule = rule
+	if not selected_sea_rule.is_empty():
+		context["movement_speed_multiplier"] = float(context["movement_speed_multiplier"]) * float(selected_sea_rule.get("movement_speed_multiplier", 1.0))
+	return context
+
+
 func movement_segment_access(start: Vector2, end: Vector2) -> Dictionary:
-	for zone in zones:
+	if not _tide_access_restricted():
+		return {"allowed": true, "reason_code": "OK", "fraction": 1.0}
+	for zone_index in tide_zone_indices:
+		var zone: Dictionary = zones[int(zone_index)]
 		if not _is_restricted_tide_zone(zone): continue
-		var polygon := _world_polygon(zone)
-		var starts_inside := Geometry2D.is_point_in_polygon(start, polygon)
-		var ends_inside := Geometry2D.is_point_in_polygon(end, polygon)
+		var polygon: PackedVector2Array = zone.get("base_polygon_packed", PackedVector2Array())
+		var offset: Vector2 = zone.get("position", Vector2.ZERO)
+		var local_start := start - offset
+		var local_end := end - offset
+		var starts_inside := Geometry2D.is_point_in_polygon(local_start, polygon)
+		var ends_inside := Geometry2D.is_point_in_polygon(local_end, polygon)
 		if not starts_inside and ends_inside:
-			return {"allowed": false, "reason_code": "TIDE_ACCESS_RESTRICTED", "zone_id": zone.get("id", ""), "fraction": _first_polygon_intersection_fraction(start, end, polygon)}
+			return {"allowed": false, "reason_code": "TIDE_ACCESS_RESTRICTED", "zone_id": zone.get("id", ""), "fraction": _first_polygon_intersection_fraction(local_start, local_end, polygon)}
 		if starts_inside: continue
-		var entry_fraction := _first_polygon_intersection_fraction(start, end, polygon)
+		var entry_fraction := _first_polygon_intersection_fraction(local_start, local_end, polygon)
 		if entry_fraction >= 0.0:
 			return {"allowed": false, "reason_code": "TIDE_ACCESS_RESTRICTED", "zone_id": zone.get("id", ""), "fraction": entry_fraction}
 	return {"allowed": true, "reason_code": "OK", "fraction": 1.0}
+
+
+func movement_trajectory_access(samples: Array, sample_limit: int = -1) -> Dictionary:
+	var limit := samples.size() if sample_limit < 0 else mini(sample_limit, samples.size())
+	if limit <= 1 or not _tide_access_restricted():
+		return {"allowed":true, "reason_code":"OK", "fraction":1.0, "segments_validated":maxi(0, limit - 1)}
+	for segment_index in range(limit - 1):
+		var start: Vector2 = samples[segment_index].get("position", Vector2.ZERO)
+		var finish: Vector2 = samples[segment_index + 1].get("position", start)
+		var access := movement_segment_access(start, finish)
+		if not bool(access.get("allowed", true)):
+			access["first_hit_segment"] = segment_index
+			access["segments_validated"] = segment_index + 1
+			return access
+	return {"allowed":true, "reason_code":"OK", "fraction":1.0, "segments_validated":limit - 1}
+
+
+func _tide_access_restricted() -> bool:
+	if tide_zone_indices.is_empty():
+		return false
+	var tide: Dictionary = global_environment.get("tide", {})
+	return str(_tide_phase()) not in tide.get("open_phases", ["Flood", "High"])
 
 
 func _is_restricted_tide_zone(zone: Dictionary) -> bool:
@@ -220,7 +310,7 @@ func snapshot() -> Array:
 
 
 func _zone_contains(zone: Dictionary, position: Vector2) -> bool:
-	return Geometry2D.is_point_in_polygon(position, _world_polygon(zone))
+	return Geometry2D.is_point_in_polygon(position - (zone.get("position", Vector2.ZERO) as Vector2), zone.get("base_polygon_packed", PackedVector2Array()))
 
 
 func _world_polygon(zone: Dictionary) -> PackedVector2Array:

@@ -88,7 +88,7 @@
 | 职责 | 当前文件/目录 |
 |---|---|
 | 地形运行定义 | `data/terrain/terrain_definitions.json` |
-| 碰撞场 manifest 与二进制派生物 | `data/terrain/collision_field_manifest.json`、`data/terrain/collision_fields/` |
+| 岸线距离/限制水域碰撞场 manifest 与二进制派生物 | `data/terrain/collision_field_manifest.json`、`data/terrain/collision_fields/` |
 | 导航图定义 | `data/terrain/navigation_definitions.json` |
 | 地形模板与作者输入 | `data/terrain/terrain_templates.json`、`data/terrain/authoring/terrain_maps.json` |
 | 地形与射线查询 | `scripts/domain/services/terrain_query_service.gd` |

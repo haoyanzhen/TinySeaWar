@@ -111,14 +111,14 @@ terrain_definition_id, navigation_revision
 map_size, cell_size, grid_size
 path
 source_checksum, payload_checksum, file_checksum
-occupancy_bytes, distance_bytes
+occupancy_bytes, distance_bytes, restriction_bytes
 ```
 
-- 当前 Schema/算法版本均为 `1`，当前格长为 `8 × 8` 世界单位；版本、尺寸或 payload 布局未知时必须拒绝加载。
-- `source_checksum` 只覆盖 TerrainMap 中声明 `ShipMovement` 的权威障碍多边形、地图边界、地图尺寸和 navigation revision；视觉 PNG、alpha、参考 Mask、`visual_regions` 和小地图不得进入规则摘要。
-- `occupancy_bytes` 是保守占用 BitMask；`distance_bytes` 是到占用或地图外部的 `uint16` 世界距离下界。距离下界只能证明 `DefinitelyClear`，重叠或不确定片段必须进入权威多边形窄相。
+- 当前 Schema/算法版本均为 `2`，当前格长为 `8 × 8` 世界单位；版本、尺寸或 payload 布局未知时必须拒绝加载。
+- `source_checksum` 覆盖 TerrainMap 中声明 `ShipMovement` 的权威障碍多边形、`ShallowWater | ReefOrSandbar` 限制区域、地图边界、地图尺寸和 navigation revision；视觉 PNG、alpha、参考 Mask、`visual_regions` 和小地图不得进入规则摘要。
+- `occupancy_bytes` 是保守占用 BitMask；`distance_bytes` 是到占用或地图外部的 `uint16` 世界距离下界；`restriction_bytes` 为每格一字节的保守限制水域位掩码，当前位语义为浅水与礁区。距离下界或限制位缺失只能证明“不确定”，重叠片段必须进入对应的权威岸线扫掠或区域多边形判定。
 - manifest、二进制头、payload 和整文件 checksum 必须同时匹配。缺失、损坏、过期或引用不一致时，整场确定性回退到精确多边形查询，并记录一次稳定原因码。
-- 碰撞场只加速静态岸线与边界查询；浅水、潮汐、环境区、动态舰船、鱼雷和雷区继续使用各自规则状态。
+- 碰撞场只加速静态岸线、边界以及静态浅水/礁区的“确定不相交”判断；吃水标签和精确区域边界仍由 TerrainQueryService 解释，潮汐、环境区、动态舰船、鱼雷和雷区继续使用各自规则状态。
 
 ## 7. NavigationDefinition
 

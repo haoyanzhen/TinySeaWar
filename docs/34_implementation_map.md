@@ -80,7 +80,7 @@
 | AI 观察测试 | `scripts/tests/ai_observation_test.gd` |
 | AI 行为与难度测试 | `scripts/tests/ai_behavior_quantitative_test.gd`、`ai_difficulty_profile_test.gd` |
 | 编组与协同测试 | `scripts/tests/ai_group_formation_test.gd`、`ai_coordination_test.gd` |
-| 航迹与恢复测试 | `scripts/tests/trajectory_navigation_test.gd`、`ai_route_recovery_test.gd` |
+| 航迹、碰撞场与恢复测试 | `scripts/tests/trajectory_navigation_test.gd`、`navigation_collision_field_test.gd`、`ai_route_recovery_test.gd` |
 | 导航性能、投影路线、失败/等待与大编队碰撞测试 | `scripts/tests/ai_navigation_performance_test.gd` |
 
 ## 7. 硬地形与场景空间
@@ -88,18 +88,22 @@
 | 职责 | 当前文件/目录 |
 |---|---|
 | 地形运行定义 | `data/terrain/terrain_definitions.json` |
+| 碰撞场 manifest 与二进制派生物 | `data/terrain/collision_field_manifest.json`、`data/terrain/collision_fields/` |
 | 导航图定义 | `data/terrain/navigation_definitions.json` |
 | 地形模板与作者输入 | `data/terrain/terrain_templates.json`、`data/terrain/authoring/terrain_maps.json` |
 | 地形与射线查询 | `scripts/domain/services/terrain_query_service.gd` |
+| 静态碰撞场查询与加载 | `scripts/domain/services/terrain_collision_field.gd`、`scripts/infrastructure/data/terrain_collision_field_loader.gd` |
 | 地形上下文组合 | `scripts/domain/services/terrain_context_service.gd` |
 | 地形场景视图 | `scripts/presentation/battle/terrain_view.gd` |
 | 地形调试叠层 | `scripts/presentation/battle/terrain_debug_overlay.gd` |
 | 构建与校验工具 | `tools/terrain/` |
+| 碰撞场确定性烘焙与差分校验 | `tools/terrain/bake_collision_fields.py`、`tools/terrain/validate_collision_fields.py` |
 | Godot 地形作者插件 | `addons/terrain_authoring/`（仅编辑器；使用与发布边界见目录内 `README.md`） |
 | 16:9 海岸母版、透明化与接触表 | `tools/art_pipeline/process_coastal_map_art.py` |
 | 16:9 海岸模板、地图与运行时绑定 | `tools/terrain/build_coastal_maps_16x9.py` |
 | 16:9 海岸导航增量烘焙 | `tools/terrain/bake_coastal16_navigation.py` |
 | 海岸运行时测试 | `scripts/tests/coastal_runtime_test.gd` |
+| 碰撞场、同 Tick 展开与失效回退测试 | `scripts/tests/navigation_collision_field_test.gd` |
 | 作者数据测试 | `scripts/tests/terrain_authoring_test.gd` |
 | 海岸 5v5/11v11 映射负载 | `scripts/tests/ai_navigation_performance_test.gd --map-level=...` |
 

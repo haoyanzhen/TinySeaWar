@@ -11,7 +11,7 @@
 | 文档 | 唯一职责 | 主要数据 |
 |---|---|---|
 | `docs/21_combat_data_schema.md` | 战斗单位与结算输入 | 舰船、武器、公式、投射物、航空、技能、Buff、公共战斗设置 |
-| `docs/22_scene_environment_data_schema.md` | 战场空间与场景战术内容 | 地图、地形、导航、天气、环境区、设施、支援任务、水雷 |
+| `docs/22_scene_environment_data_schema.md` | 战场空间与场景战术内容 | 地图、地形、静态碰撞场、导航、天气、环境区、设施、支援任务、水雷 |
 | `docs/23_level_progress_data_schema.md` | 可玩内容与长期进度 | 当前关卡、舰队成员、目标、进度存档；未实施的阶段与增援只见 t02 |
 | `docs/24_ai_data_schema.md` | AI 配置输入 | 难度 Profile、技能 AI 标签、运行时记忆边界 |
 | `docs/25_presentation_data_schema.md` | 纯表现配置 | 窗口、镜头、投射物表现、武器表现与 VFX 播放参数 |

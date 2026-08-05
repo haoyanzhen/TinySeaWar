@@ -2,7 +2,7 @@
 
 ## 1. 文档功能与边界
 
-本文是地图、地形、导航引用、天气时段、局部环境、设施、支援任务和水雷的数据形状真源。玩法效果见 `docs/18_facility_weather_effect_design.md`；硬地形、环境运行时和设施 Domain 分别见 `docs/35_scene_combat_domain_design.md`、`docs/37_environment_runtime_domain_design.md`、`docs/38_facility_combat_domain_design.md`；导航技术预算见 `docs/technical/t00_coastal_ai_performance_solution.md`、`docs/technical/t01_inertial_navigation_and_emergency_avoidance.md`。
+本文是地图、地形、静态碰撞场、导航引用、天气时段、局部环境、设施、支援任务和水雷的数据形状真源。玩法效果见 `docs/18_facility_weather_effect_design.md`；硬地形、环境运行时和设施 Domain 分别见 `docs/35_scene_combat_domain_design.md`、`docs/37_environment_runtime_domain_design.md`、`docs/38_facility_combat_domain_design.md`；导航技术预算见 `docs/technical/t00_coastal_ai_performance_solution.md`、`docs/technical/t01_inertial_navigation_and_emergency_avoidance.md`。
 
 本文不定义 Shader、贴图路径、资产生产或当前地图完成度；对应真源见 `docs/43_scene_art_design.md`、`docs/45_art_asset_interface_design.md`、`docs/00_project_status.md`。
 
@@ -85,7 +85,7 @@ id, definition_type # TerrainMap
 display_name, map_size
 obstacles[], regions[], visual_regions[], visual_instances[]
 facility_anchors[], spawn_points[]
-navigation_definition_id, navigation_revision
+navigation_definition_id, navigation_revision, collision_field_id
 environment_zone_set_id?, facility_layout_id?
 geometry_epsilon, source_document
 ```
@@ -99,9 +99,28 @@ id, faction_id, position, heading, radius, movement_tags[]
 - 近岸地图保存 `player_1..player_11` 与 `enemy_1..enemy_11` 的确定性槽位。
 - 槽位必须位于边界内，不与硬地形或非法水域相交，同阵营不重叠，并能通过相应导航 Profile 接入接敌区域。
 - 1v1、3v3、5v5、11v11 使用每侧编号前 `1/3/5/11` 个槽；具体尺寸基线属于 13、35。
+- `collision_field_id` 必须引用与本 TerrainMap、`navigation_revision`、`map_size` 和规则源摘要完全一致的当前碰撞场。
 - 烘焙元数据只用于可追溯性，不得改变运行时几何。
 
-## 6. NavigationDefinition
+## 6. TerrainCollisionField
+
+```text
+id, definition_type # TerrainCollisionField
+schema_version, algorithm_version
+terrain_definition_id, navigation_revision
+map_size, cell_size, grid_size
+path
+source_checksum, payload_checksum, file_checksum
+occupancy_bytes, distance_bytes
+```
+
+- 当前 Schema/算法版本均为 `1`，当前格长为 `8 × 8` 世界单位；版本、尺寸或 payload 布局未知时必须拒绝加载。
+- `source_checksum` 只覆盖 TerrainMap 中声明 `ShipMovement` 的权威障碍多边形、地图边界、地图尺寸和 navigation revision；视觉 PNG、alpha、参考 Mask、`visual_regions` 和小地图不得进入规则摘要。
+- `occupancy_bytes` 是保守占用 BitMask；`distance_bytes` 是到占用或地图外部的 `uint16` 世界距离下界。距离下界只能证明 `DefinitelyClear`，重叠或不确定片段必须进入权威多边形窄相。
+- manifest、二进制头、payload 和整文件 checksum 必须同时匹配。缺失、损坏、过期或引用不一致时，整场确定性回退到精确多边形查询，并记录一次稳定原因码。
+- 碰撞场只加速静态岸线与边界查询；浅水、潮汐、环境区、动态舰船、鱼雷和雷区继续使用各自规则状态。
+
+## 7. NavigationDefinition
 
 ```text
 id, definition_type # NavigationDefinition
@@ -116,7 +135,7 @@ profiles[]
 - 玩家与 AI 读取同一 Profile；难度配置不得提供私有候选数、隐藏节点或绕过统一 Broker 的路线入口。
 - 门间距、接入候选、常规/紧急航迹候选与请求预算不在本 Schema 配置，统一由 t00/t01 的共享技术设置拥有。
 
-## 7. EnvironmentEffect 与 EnvironmentZoneSet
+## 8. EnvironmentEffect 与 EnvironmentZoneSet
 
 `EnvironmentEffect`：
 
@@ -144,7 +163,7 @@ zones[]
 - `drift_path` 有值时按折线推进；无路径才使用 `heading`。
 - 环境区保存规则空间和公开趋势，不保存 Shader 参数或未来精确位置。
 
-## 8. FacilityDefinition
+## 9. FacilityDefinition
 
 ```text
 id, display_name, asset_semantic
@@ -173,13 +192,13 @@ AreaControl | BerthingService | RemoteCommand | AutomaticOperation | CombatDispo
 
 声明某模式时必须同时提供对应对象。
 
-### 8.1 area_control
+### 9.1 area_control
 
 ```text
 enabled, capturable, duration
 ```
 
-### 8.2 berthing_service
+### 9.2 berthing_service
 
 ```text
 service_type # Supply | Repair
@@ -197,7 +216,7 @@ hp_restore_ratio?, repair_cap_ratio?
 - `Repair` 必须使用 `berth_state=Docked`、`dock_position_policy=EntryPosition`、`hold_while_docked=true`，并显式声明移动、重击、设施失效、沉没和离泊中断。
 - 单泊位由单场 `service_state` 独占；Definition 不保存占用舰或进度。
 
-### 8.3 remote_command
+### 9.3 remote_command
 
 ```text
 command_type, mission_ids[]?
@@ -215,12 +234,12 @@ deployed_mine_controller_policy?
 - 引用舰船与武器必须存在，且武器实际挂载于引用舰船。
 - `in_progress_facility_policy` 的合法结果为 `Cancel | Continue`；已布设水雷使用 `Independent` 时不随控制站失效清除。
 
-### 8.4 observation_rules 与 radar_rules
+### 9.4 observation_rules 与 radar_rules
 
 - 光学观察必须声明天气、时段、局部能见度和视线是否影响。
 - 雷达必须使用独立 `radar_rules`，声明接触类型、范围、精度与隐身破除策略，不能继承光学默认值。
 
-### 8.5 combat_disposition
+### 9.5 combat_disposition
 
 ```text
 suppressible, destroyable, silentable, damage_floor_ratio
@@ -228,7 +247,7 @@ suppressible, destroyable, silentable, damage_floor_ratio
 
 可摧毁设施 `damage_floor_ratio=0`；不可摧毁设施使用 `(0,1)`。武器设施通过 `durability_reference_id`、`weapon_mount_reference` 复用合法舰船与武器 Definition。
 
-## 9. FacilityLayout
+## 10. FacilityLayout
 
 ```text
 id, terrain_definition_id
@@ -244,7 +263,7 @@ system_handover_rules[]?
 - 放置 ID、锚点和设施引用唯一且存在。
 - 依赖与整套易手必须显式列出，不允许通过通信站占领隐式转移全部设施。
 
-## 10. SupportMissionDefinition
+## 11. SupportMissionDefinition
 
 ```text
 id, definition_type # SupportMissionDefinition
@@ -262,7 +281,7 @@ facility_state_policy
 
 `launch_time` 必须早于 `arrival_time`；攻击任务引用合法 WeaponDefinition。阶段策略只决定任务取消或继续，不绕过公共航空、侦查和伤害规则。
 
-## 11. MinefieldDefinition
+## 12. MinefieldDefinition
 
 ```text
 id, definition_type # MinefieldDefinition

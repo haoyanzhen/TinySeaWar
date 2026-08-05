@@ -81,7 +81,7 @@
 | AI 行为与难度测试 | `scripts/tests/ai_behavior_quantitative_test.gd`、`ai_difficulty_profile_test.gd` |
 | 编组与协同测试 | `scripts/tests/ai_group_formation_test.gd`、`ai_coordination_test.gd` |
 | 航迹、碰撞场与恢复测试 | `scripts/tests/trajectory_navigation_test.gd`、`navigation_collision_field_test.gd`、`ai_route_recovery_test.gd` |
-| 导航性能、投影路线、失败/等待与大编队碰撞测试 | `scripts/tests/ai_navigation_performance_test.gd` |
+| Tick 分阶段、导航/侦查性能、投影路线、失败/等待与大编队碰撞测试 | `scripts/tests/ai_navigation_performance_test.gd` |
 
 ## 7. 硬地形与场景空间
 
@@ -184,7 +184,7 @@
 | 角色/武器/技能 | `13`、`14`、`21` | `data/ships|weapons|skills/`、`config_registry.gd` |
 | 关卡目标/进度 | `15`、`23`、`technical/t02` | `data/levels|objectives/`、`level_objective_service.gd`、`progress_save_store.gd` |
 | AI 决策 | `16`、`24` | `scripts/application/ai/`、`data/ai/` |
-| 导航性能 | `technical/t00`、`technical/t01` | `scripts/application/navigation/`、`ship_motion_service.gd` |
+| 导航与战斗 Tick 性能 | `technical/t00`、`technical/t01` | `battle_session.gd`、`scripts/application/navigation/`、`ship_motion_service.gd`、`ai_navigation_performance_test.gd` |
 | 硬地形 | `35`、`22` | `data/terrain/`、`terrain_query_service.gd`、`tools/terrain/` |
 | 天气/局部环境 | `18`、`37`、`22` | `data/environments/`、`terrain_context_service.gd` |
 | 设施/水雷 | `18`、`38`、`22` | `data/facilities/`、`facility_service.gd`、`minefield_service.gd` |

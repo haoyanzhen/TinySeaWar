@@ -58,9 +58,9 @@ Use lowercase English file names with underscores:
 ### Technical Solutions
 
 - [technical/README.md](technical/README.md)
-- [technical/t00_coastal_ai_performance_solution.md](technical/t00_coastal_ai_performance_solution.md)
-- [technical/t01_inertial_navigation_and_emergency_avoidance.md](technical/t01_inertial_navigation_and_emergency_avoidance.md)
-- [technical/t02_level_objective_reinforcement_progress_solution.md](technical/t02_level_objective_reinforcement_progress_solution.md)
+- [technical/t00_coastal_ai_performance_solution.md](technical/t00_coastal_ai_performance_solution.md)：有岸与大编队战斗的 AI、导航、空间查询、Tick 拆分和单位侦查性能治理。
+- [technical/t01_inertial_navigation_and_emergency_avoidance.md](technical/t01_inertial_navigation_and_emergency_avoidance.md)：战略走廊、常规动力学航迹与高威胁紧急避险。
+- [technical/t02_level_objective_reinforcement_progress_solution.md](technical/t02_level_objective_reinforcement_progress_solution.md)：声明式关卡目标、接替增援、结算与进度实现。
 
 ### Art
 

@@ -1091,6 +1091,7 @@ func _start_battle(new_level_id: String) -> void:
 	var result: Dictionary = session.create_battle_from_definition(runtime_level, 20260614) if not runtime_level.is_empty() else session.create_battle(new_level_id, 20260614)
 	if not result.get("ok", false):
 		push_error("Battle creation failed: %s" % result.get("errors", []))
+		session = null
 		return
 	accumulator = 0.0
 	selected_unit_id = ""

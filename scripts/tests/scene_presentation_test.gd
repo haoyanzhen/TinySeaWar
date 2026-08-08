@@ -26,6 +26,7 @@ func _run() -> void:
 	var challenge_buttons := _descendants_of_type(menu.content, "Button")
 	_check(challenge_buttons.size() == 15, "challenge entry exposes all fifteen designed challenge levels")
 	_check(challenge_buttons.any(func(button): return not button.disabled and button.text.contains("S-01")), "challenge entry always enables the first implemented S challenge")
+	_check(menu._challenge_level_id("S-01") == "level.challenge.s01" and menu._challenge_level_id("M-01") == "level.challenge.m01" and menu._challenge_level_id("L-01") == "level.challenge.l01", "challenge menu codes resolve to formal level ids without display hyphens")
 	menu._show_custom()
 	_check(menu.custom_size_selector.item_count == 4 and menu.custom_map_selector.item_count == 11 and menu.custom_weather_selector.item_count == 20, "custom entry exposes four scales, open sea plus ten 16:9 coastal maps, and twenty weather palettes")
 	var all_sizes_expose_expected_maps := true

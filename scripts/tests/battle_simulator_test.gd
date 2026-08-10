@@ -1,6 +1,7 @@
 extends SceneTree
 
 const ConfigRegistry = preload("res://scripts/infrastructure/data/config_registry.gd")
+const BattleSession = preload("res://scripts/application/battle_session.gd")
 const ExperimentLoader = preload("res://scripts/infrastructure/simulation/experiment_loader.gd")
 const SimulationRunner = preload("res://scripts/application/simulation/simulation_runner.gd")
 const Aggregator = preload("res://scripts/infrastructure/simulation/simulation_aggregator.gd")
@@ -58,6 +59,38 @@ func _run() -> void:
 	var registry = ConfigRegistry.new()
 	_check(registry.load_all(), "configuration registry loads")
 	var runner = SimulationRunner.new()
+	var interactive_challenge = BattleSession.new(registry)
+	_check(interactive_challenge.create_battle("level.challenge.s01", 7401).get("ok", false), "formal challenge creates for AI authority checks")
+	var interactive_player_ids: Array = interactive_challenge.state.get("fleets_by_id", {}).get("fleet.player", {}).get("unit_ids", [])
+	interactive_challenge._apply_command({
+		"command_id":"test.challenge.assist", "command_type":"SetUnitControlState",
+		"issued_at_tick":0, "issuer_type":"Player", "issuer_id":"player",
+		"unit_ids":interactive_player_ids, "movement_assist_enabled":true,
+	})
+	_check(interactive_player_ids.all(func(unit_id): return not interactive_challenge._uses_full_ai(interactive_challenge.state["units_by_id"][unit_id])), "interactive challenge movement assist remains on the restricted player AI path")
+	var simulated_challenge = BattleSession.new(registry)
+	simulated_challenge.create_battle("level.challenge.s01", 7401)
+	simulated_challenge.configure_full_ai_factions(["player", "enemy"])
+	var simulated_player_ids: Array = simulated_challenge.state.get("fleets_by_id", {}).get("fleet.player", {}).get("unit_ids", [])
+	_check(simulated_player_ids.all(func(unit_id): return simulated_challenge._uses_full_ai(simulated_challenge.state["units_by_id"][unit_id])), "simulation authority enables full runtime AI for formal challenge player units")
+	_check(simulated_player_ids.all(func(unit_id):
+		var unit: Dictionary = simulated_challenge.state["units_by_id"][unit_id]
+		return unit.get("control_authority", "") == "SimulationAI" and unit.get("movement_state", {}).get("mode", "") == "AutoNavigate" and bool(unit.get("primary_auto_fire_enabled", false)) and bool(unit.get("skill_auto_cast_enabled", false)) and not str(unit.get("ai_state", {}).get("mode_id", "")).is_empty()
+	), "simulation authority initializes movement, weapons, skills, and strategic mode before the first challenge tick")
+	var challenge_runtime_manifest: Dictionary = manifest.duplicate(true)
+	challenge_runtime_manifest["experiment_id"] = "sim.test.challenge_runtime_ai_initialization"
+	challenge_runtime_manifest["player_policy_id"] = "LatestRuntimeAI"
+	challenge_runtime_manifest["enemy_policy_id"] = "LatestRuntimeAI"
+	challenge_runtime_manifest["maximum_ticks"] = 1
+	challenge_runtime_manifest["seed_plan"] = {"type":"ExplicitList", "values":[7401]}
+	challenge_runtime_manifest["scenarios"] = [{"scenario_id":"challenge_s01", "level_definition_id":"level.challenge.s01"}]
+	var challenge_runtime_result := runner.run_experiment(registry, challenge_runtime_manifest)
+	var challenge_runtime_run: Dictionary = challenge_runtime_result.get("runs", [])[0]
+	var challenge_runtime_player_states: Array = challenge_runtime_run.get("unit_end_states", {}).values().filter(func(unit): return unit.get("faction_id", "") == "player")
+	_check(challenge_runtime_player_states.size() == 3 and challenge_runtime_player_states.all(func(unit): return unit.get("movement_mode", "") != "HoldPosition" and not str(unit.get("ai_mode", "")).is_empty()), "simulation runner applies LatestRuntimeAI to every formal challenge player unit")
+	var range_unit := {"position": Vector2.ZERO}
+	_check(simulated_challenge._skill_ai_target_in_range(range_unit, {"cast_range":100.0}, Vector2(100.0, 0.0)), "runtime AI accepts a skill target exactly on its legal cast boundary")
+	_check(not simulated_challenge._skill_ai_target_in_range(range_unit, {"cast_range":100.0}, Vector2(100.1, 0.0)), "runtime AI does not submit a skill command beyond its legal cast range")
 	var route_gate_aggregate := {
 		"planned_runs":20, "finished_runs":20, "player_win_rate":1.0,
 		"duration":{"p10":20.0}, "enemy_damage_before_engagement":0.0,

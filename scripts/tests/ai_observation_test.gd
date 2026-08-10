@@ -58,6 +58,21 @@ func _run() -> void:
 	var selected_after: Dictionary = session._select_target(observer)
 	_check(str(selected_before.get("entity_id", "")) == visible["entity_id"], "AI selects the sole observed enemy")
 	_check(str(selected_after.get("entity_id", "")) == visible["entity_id"], "hidden truth changes cannot alter target selection")
+	session.state["visible_by_faction"]["enemy"] = {}
+	session.state["contacts_by_faction"]["enemy"] = {
+		hidden["entity_id"]: {"unit_id": hidden["entity_id"], "visible": false, "last_known_position": Vector2(111.0, 222.0), "ghost_remaining": 4.0},
+		visible["entity_id"]: {"unit_id": visible["entity_id"], "visible": false, "last_known_position": Vector2(333.0, 444.0), "ghost_remaining": 3.0},
+	}
+	session._ai_observations_by_faction.clear()
+	_check(session._select_target(observer).is_empty(), "contact ghosts cannot become legal attack targets")
+	_check(session._contact_search_position(observer, visible["entity_id"]) == Vector2(333.0, 444.0), "full AI searches the previous target's legal contact ghost")
+	_check(session._contact_search_position(observer) == Vector2(111.0, 222.0), "full AI falls back to the freshest legal contact ghost")
+	hidden["position"] = observer["position"]
+	session._ai_observations_by_faction.clear()
+	session.state["visible_by_faction"]["enemy"] = {}
+	_check(not session._ai_observation_for("enemy").visible_enemies.has(hidden["entity_id"]), "pre-detection observation fixture starts stale")
+	session._update_detection(0.1)
+	_check(session._ai_observation_for("enemy").visible_enemies.has(hidden["entity_id"]), "authoritative detection invalidates earlier AI observation caches")
 	if failures.is_empty():
 		print("PASS: %d AI observation checks" % checks)
 		quit(0)

@@ -76,12 +76,23 @@ func _run() -> void:
 	_check(str(warspite_snapshot.get("display_name", "")) == "厌战号", "battle snapshot exposes the Chinese character name")
 	_check(str(warspite_snapshot.get("asset_root", "")).contains("assets/characters/warspite/processed"), "unit snapshot exposes character art root")
 	_check((warspite_snapshot.get("collision_half_extents", Vector2.ZERO) as Vector2).is_equal_approx(Vector2(75.0, 31.5)), "unit snapshot exposes the heading-aligned elliptical collision hull")
+	var data_registry = root.get_node("DataRegistry")
 	var warspite_view = battle.effect_director.unit_views.get("unit.player.warspite", null)
 	_check(warspite_view != null, "battle scene creates a runtime character view")
 	_check(warspite_view.body_texture != null and warspite_view.rig_texture != null, "runtime character view loads body and rig art")
 	_check(is_equal_approx(float(warspite_view.rig_texture.get_width()) * warspite_view.rig_art_scale, 150.0), "rendered rig width matches the collision ellipse longitudinal diameter")
+	_check(is_equal_approx(warspite_view.rig_heading_offset, deg_to_rad(-10.9)), "runtime character view aligns the authored rig angle with the collision ellipse heading")
+	var warspite_rig_points: Dictionary = data_registry.assets.bind_points("warspite", "warspite_battle_rig_base.png")
+	var authored_rig_axis := Vector2(
+		float(warspite_rig_points["turret_mount_01"]["x"] - warspite_rig_points["turret_mount_02"]["x"]),
+		float(warspite_rig_points["turret_mount_01"]["y"] - warspite_rig_points["turret_mount_02"]["y"]),
+	).rotated(warspite_view.rig_heading_offset)
+	_check(absf(authored_rig_axis.angle()) <= deg_to_rad(2.0), "Warspite rig longitudinal landmarks align to the domain zero-heading axis after correction")
+	var turret_mount: Dictionary = warspite_rig_points["turret_mount_01"].duplicate(true)
+	turret_mount["asset_name"] = "warspite_battle_rig_base.png"
+	var expected_turret_world: Vector2 = warspite_view.position + warspite_view._bind_point_to_local(turret_mount).rotated(float(warspite_snapshot["heading"]) + warspite_view.rig_heading_offset)
+	_check(warspite_view.bind_point_world("turret_mount_01").is_equal_approx(expected_turret_world), "rig bind points share the same authored heading correction as the rendered rig")
 	_check(warspite_view._texture(warspite_view.animation.current_frame_path()) != null, "runtime character view loads animation frames")
-	var data_registry = root.get_node("DataRegistry")
 	var warspite_main: Dictionary = data_registry.registry.get_definition("weapons", "weapon.warspite_381_ap")
 	var warspite_main_visual: Dictionary = data_registry.assets.weapon_visual("warspite", "warspite_main")
 	var warspite_secondary: Dictionary = data_registry.registry.get_definition("weapons", "weapon.warspite_152_he")

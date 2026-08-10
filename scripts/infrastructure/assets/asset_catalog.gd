@@ -114,6 +114,12 @@ func bind_point(character_id: String, point_name: String, preferred_asset_name :
 	return {}
 
 
+func heading_offset_degrees(character_id: String, asset_name: String) -> float:
+	var data: Dictionary = characters.get(character_id, {})
+	var bindings: Dictionary = data.get("configs", {}).get("bind_points", {})
+	return float(bindings.get("heading_offsets_degrees", {}).get(asset_name, 0.0))
+
+
 func battle_asset_paths(character_id: String) -> Dictionary:
 	var data: Dictionary = characters.get(character_id, {})
 	return data.get("battle_assets", {}).duplicate(true)

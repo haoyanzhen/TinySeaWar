@@ -75,7 +75,8 @@ func skill_locked_for(unit: Dictionary) -> bool:
 
 
 func automatic_weapons_locked_for(unit: Dictionary) -> bool:
-	return (_enemy_combat_locked(unit) and bool(definition.get("lock_enemy_automatic_weapons", false))) or _player_weapon_locked_until_action(unit)
+	var player_tutorial_staging_lock: bool = is_active() and is_tutorial() and not bool(runtime_state.get("engagement_unlocked", false)) and unit.get("faction_id", "") == "player"
+	return player_tutorial_staging_lock or (_enemy_combat_locked(unit) and bool(definition.get("lock_enemy_automatic_weapons", false))) or _player_weapon_locked_until_action(unit)
 
 
 func _player_weapon_locked_until_action(unit: Dictionary) -> bool:

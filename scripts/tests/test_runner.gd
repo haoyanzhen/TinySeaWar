@@ -656,6 +656,8 @@ func _test_asset_catalog() -> void:
 	)
 	var bind: Dictionary = assets.bind_points("bismarck", "bismarck_battle_rig_base.png")
 	_check(bind.has("turret_mount_01"), "character bind points resolve per battle asset")
+	_check(is_equal_approx(assets.heading_offset_degrees("bismarck", "bismarck_battle_rig_base.png"), -11.1), "character rig heading correction resolves from processed metadata")
+	_check(is_zero_approx(assets.heading_offset_degrees("bismarck", "bismarck_battle_body_r.png")), "character assets without a heading correction retain the authored zero angle")
 	_check(assets.battle_asset_path("bismarck", "rig_base").ends_with("bismarck_battle_rig_base.png"), "battle asset resolves by semantic suffix")
 	_check(assets.ui_asset_path("ui.icon.torpedo", "2x").ends_with("/2x/ui_icon_torpedo.png"), "UI asset resolves by semantic key and export scale")
 	_check(not assets.projectile_visual("projectile.surface_torpedo").is_empty(), "projectile visual resolves by projectile id")

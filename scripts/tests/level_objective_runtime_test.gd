@@ -113,6 +113,7 @@ func _test_s_challenges(registry) -> void:
 	s04_wave.state["elapsed_time"] = 120.0
 	s04_wave.advance_tick(0.1)
 	_check(s04_wave.state.get("reinforcement_waves", [])[0].get("status", "") == "Spawned" and s04_wave.state["units_by_id"].has("unit.enemy.s04.ward"), "S-04 deterministically spawns Ward after the authored replacement time")
+	_check(s04_wave.get_unit_damage_statistics("unit.enemy.s04.ward").get("definition_id", "") == "ship.ward", "S-04 replacement registers ship metadata for battle reports")
 	var s05 = BattleSession.new(registry)
 	s05.create_battle("level.challenge.s05", 8501)
 	for unit_id in ["unit.enemy.s05.bismarck", "unit.enemy.s05.hindenburg", "unit.enemy.s05.u47"]:

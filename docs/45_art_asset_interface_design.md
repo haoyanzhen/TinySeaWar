@@ -35,6 +35,7 @@ var water_column := DataRegistry.assets.combat_vfx_asset_path("impact.water.larg
 - `animation_state(character_id, state_name)` 返回四帧动画、FPS 和循环标记。
 - `vfx_role(character_id, role_name)` 返回角色 VFX 语义资源。
 - `bind_points(character_id, asset_name)` 返回指定战斗部件的绑定点。
+- `heading_offset_degrees(character_id, asset_name)` 返回该战斗部件相对“舰艏向右”零角度的纯表现校正；缺省为 `0`，只允许校正贴图母版方向，不得改变 Domain 航向或碰撞椭圆。
 - `battle_asset_path(character_id, semantic_name)` 返回战斗部件路径，例如 `rig_base`。
 
 通用战斗表现接口：
@@ -75,6 +76,7 @@ assets/environment/weather/zones/environment_zone_asset_manifest.json
 - 航母使用 `aircraft_launch_01`、`aircraft_launch_02`、`aircraft_recovery`。
 - 侦查、技能和扫描使用 `scan_origin`、`skill_origin`。
 - 舰装挂点使用 `rig_mount`。
+- processed 绑定点配置可在根级 `heading_offsets_degrees` 中按完整资产文件名记录角度；`ShipUnitView` 对舰装绘制与该资产绑定点使用同一偏移，避免图像转正后炮口或特效挂点留在旧角度。
 
 UI 接口：
 

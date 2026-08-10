@@ -23,6 +23,7 @@ var rig_texture: Texture2D
 var move_memory := 0.0
 var body_art_scale := DEFAULT_UNIT_SCALE
 var rig_art_scale := DEFAULT_UNIT_SCALE
+var rig_heading_offset := 0.0
 
 
 func configure(snapshot: Dictionary) -> void:
@@ -66,7 +67,8 @@ func bind_point_world(point_name: String) -> Vector2:
 	if point.is_empty():
 		return position
 	var local := _bind_point_to_local(point)
-	return position + local.rotated(float(unit.get("heading", 0.0)))
+	var asset_offset := deg_to_rad(DataRegistry.assets.heading_offset_degrees(character_id, str(point.get("asset_name", ""))))
+	return position + local.rotated(float(unit.get("heading", 0.0)) + asset_offset)
 
 
 func _process(delta: float) -> void:
@@ -108,7 +110,7 @@ func _draw_unit_art(fallback_color: Color) -> void:
 	if str(unit.get("life_state", "Alive")) == "Sunk":
 		tint = Color(0.5, 0.58, 0.62, 0.65)
 	if rig_texture != null:
-		_draw_texture_centered(rig_texture, heading, rig_art_scale, tint)
+		_draw_texture_centered(rig_texture, heading + rig_heading_offset, rig_art_scale, tint)
 	var frame_texture := _texture(animation.current_frame_path())
 	if frame_texture != null:
 		_draw_texture_centered(frame_texture, heading, body_art_scale, tint)
@@ -159,7 +161,9 @@ func _bind_point_to_local(point: Dictionary) -> Vector2:
 
 func _load_static_textures() -> void:
 	body_texture = _texture(DataRegistry.assets.battle_asset_path(character_id, "body_r"))
-	rig_texture = _texture(DataRegistry.assets.battle_asset_path(character_id, "rig_base"))
+	var rig_path := DataRegistry.assets.battle_asset_path(character_id, "rig_base")
+	rig_texture = _texture(rig_path)
+	rig_heading_offset = deg_to_rad(DataRegistry.assets.heading_offset_degrees(character_id, rig_path.get_file()))
 
 
 func _unit_art_scales() -> Dictionary:

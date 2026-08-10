@@ -61,6 +61,7 @@ var _event_buffer: Array = []
 var _event_sequence := 0
 var _entity_sequence := 0
 var _full_ai_factions := {ENEMY_FACTION: true}
+var _simulation_ai_factions := {}
 var _ai_mode_locks_by_definition := {}
 var _ai_battlefield_context_cache := {}
 var _ai_local_power_cache := {}
@@ -474,24 +475,31 @@ func get_statistics() -> Dictionary:
 
 func configure_full_ai_factions(faction_ids: Array) -> void:
 	_full_ai_factions.clear()
+	_simulation_ai_factions.clear()
 	for faction_id in faction_ids:
-		_full_ai_factions[str(faction_id)] = true
+		var configured_faction_id := str(faction_id)
+		_full_ai_factions[configured_faction_id] = true
+		_simulation_ai_factions[configured_faction_id] = true
 	for unit_id in state.get("units_by_id", {}):
 		var unit: Dictionary = state["units_by_id"][unit_id]
-		if not _uses_full_ai(unit): continue
-		unit["control_authority"] = "SimulationAI"
-		unit["movement_assist_enabled"] = true
-		unit["secondary_auto_fire_enabled"] = true
-		unit["primary_auto_fire_enabled"] = true
-		unit["primary_auto_fire_suspended"] = false
-		unit["skill_auto_cast_enabled"] = true
-		var tutorial_staging_position := level_objective_service.staging_position_for(unit)
-		unit["movement_state"] = _new_movement_state("AutoNavigate", tutorial_staging_position if not tutorial_staging_position.is_equal_approx(Vector2.INF) else unit["position"], [])
-		_mark_navigation_dirty(unit)
-		unit["ai_state"]["mode_id"] = _default_ai_mode(unit.get("stats", {}))
-		unit["ai_state"]["mode_entered_at"] = float(state.get("elapsed_time", 0.0))
+		if not _is_full_ai_faction(unit): continue
+		_configure_simulation_ai_unit(unit)
 	for faction_id in faction_ids:
 		_rebuild_ai_groups(str(faction_id))
+
+
+func _configure_simulation_ai_unit(unit: Dictionary) -> void:
+	unit["control_authority"] = "SimulationAI"
+	unit["movement_assist_enabled"] = true
+	unit["secondary_auto_fire_enabled"] = true
+	unit["primary_auto_fire_enabled"] = true
+	unit["primary_auto_fire_suspended"] = false
+	unit["skill_auto_cast_enabled"] = true
+	var tutorial_staging_position := level_objective_service.staging_position_for(unit)
+	unit["movement_state"] = _new_movement_state("AutoNavigate", tutorial_staging_position if not tutorial_staging_position.is_equal_approx(Vector2.INF) else unit["position"], [])
+	_mark_navigation_dirty(unit)
+	unit["ai_state"]["mode_id"] = _default_ai_mode(unit.get("stats", {}))
+	unit["ai_state"]["mode_entered_at"] = float(state.get("elapsed_time", 0.0))
 
 
 func configure_ai_profile(profile_id: String) -> Dictionary:
@@ -837,6 +845,9 @@ func _update_reinforcements() -> void:
 			var unit := _build_unit(member, ship, fleet_id, faction_id, fleet["unit_ids"].size() + 1)
 			state["units_by_id"][unit["entity_id"]] = unit
 			fleet["unit_ids"].append(unit["entity_id"])
+			if bool(_simulation_ai_factions.get(faction_id, false)):
+				_configure_simulation_ai_unit(unit)
+			recorder.register_units({unit["entity_id"]: unit})
 			_emit("UnitSpawned", {"unit_id": unit["entity_id"], "faction_id": faction_id, "position": unit["position"], "is_flagship": false, "reinforcement_wave_id": wave.get("wave_id", "")})
 		wave["status"] = "Spawned"
 		wave["spawned_at_tick"] = int(state.get("tick_index", 0))
@@ -1970,6 +1981,9 @@ func _update_detection(delta: float = 0.1) -> void:
 			if bool(contact.get("visible", false)) or newly_lost.has(target_id): continue
 			contact["ghost_remaining"] = float(contact.get("ghost_remaining", 0.0)) - delta
 			if float(contact["ghost_remaining"]) <= 0.0: state["contacts_by_faction"][observer_faction].erase(target_id)
+	# Navigation and threat evaluation can request an observation before movement.
+	# AI decisions after authoritative detection must never reuse that stale view.
+	_ai_observations_by_faction.clear()
 
 
 func _update_projectile_observation() -> void:
@@ -2280,6 +2294,9 @@ func _update_auto_skills() -> void:
 				target_ref = {"type": "Position", "position": area_position}
 			_: target_ref = {"type": "Self"}
 		var action_position: Vector2 = target_ref.get("position", target.get("position", unit.get("position", Vector2.ZERO)))
+		if not _skill_ai_target_in_range(unit, skill, action_position):
+			_emit("AISkillHeld", {"unit_id": unit_id, "skill_id": skill.get("id", ""), "reason": "TARGET_OUT_OF_RANGE"})
+			continue
 		if not _skill_action_rejection(unit, skill, action_position).is_empty(): continue
 		if bool(_ai_profile.get("effect_reservations", true)) and _skill_effect_reservation_conflict(unit, skill, action_position):
 			_emit("AISkillHeld", {"unit_id": unit_id, "skill_id": skill.get("id", ""), "reason": "EFFECT_RESERVED"})
@@ -2304,6 +2321,11 @@ func _update_auto_skills() -> void:
 		unit["ai_state"]["last_skill_command_tick"] = int(state.get("tick_index", 0))
 		if bool(_ai_profile.get("effect_reservations", true)): _reserve_ai_skill_effect(unit, skill, action_position)
 		_emit("AISkillCommitted", {"unit_id": unit_id, "skill_id": skill.get("id", ""), "score": skill_score, "coordination_score": coordination_score})
+
+
+func _skill_ai_target_in_range(unit: Dictionary, skill: Dictionary, target_position: Vector2) -> bool:
+	var cast_range := float(skill.get("cast_range", 0.0))
+	return cast_range <= 0.0 or (unit.get("position", Vector2.ZERO) as Vector2).distance_to(target_position) <= cast_range
 
 
 func _skill_ai_area_position(unit: Dictionary, skill: Dictionary, target: Dictionary) -> Vector2:
@@ -2533,6 +2555,7 @@ func _update_enemy_ai_intent(unit: Dictionary) -> void:
 	if float(unit["ai_state"].get("decision_cooldown", 0.0)) > 0.0:
 		return
 	unit["ai_state"]["decision_cooldown"] = float(_ai_profile.get("decision_interval", AI_DECISION_INTERVAL))
+	var previous_target_id := str(unit.get("targeting_state", {}).get("current_target_id", ""))
 	var target := _select_target_with_hysteresis(unit)
 	var ai_state: Dictionary = unit["ai_state"]
 	if not str(ai_state.get("level_task", "")).is_empty() and float(state.get("elapsed_time", 0.0)) - float(ai_state.get("task_started_at", 0.0)) >= 12.0:
@@ -2550,6 +2573,10 @@ func _update_enemy_ai_intent(unit: Dictionary) -> void:
 		return
 	_update_enemy_mode(unit, target)
 	if target.is_empty():
+		var contact_search_position := _contact_search_position(unit, previous_target_id)
+		if not contact_search_position.is_equal_approx(Vector2.INF):
+			_queue_ai_move(unit, contact_search_position)
+			return
 		var context := terrain_context_service.context_at(unit["position"])
 		var lee_center := terrain_context_service.zone_center_for_effect("environment.effect.lee_water")
 		if int(context.get("sea_state", 0)) >= 4 and lee_center != Vector2.ZERO:
@@ -2570,6 +2597,28 @@ func _update_enemy_ai_intent(unit: Dictionary) -> void:
 	var tactic_id := _update_ai_tactic(unit, tactic_scores)
 	var destination := _tactical_destination(unit, target, tactic_id, str(unit["ai_state"].get("mode_id", "VanguardLine")))
 	_queue_ai_move(unit, destination)
+
+
+func _contact_search_position(unit: Dictionary, preferred_contact_id: String = "") -> Vector2:
+	var contacts: Dictionary = _ai_observation_for(str(unit.get("faction_id", ""))).contact_ghosts
+	if not preferred_contact_id.is_empty() and contacts.has(preferred_contact_id):
+		var preferred_position: Vector2 = contacts[preferred_contact_id].get("last_known_position", Vector2.INF)
+		if not preferred_position.is_equal_approx(Vector2.INF):
+			return preferred_position
+	var contact_ids: Array = contacts.keys()
+	contact_ids.sort()
+	var selected_position := Vector2.INF
+	var selected_remaining := -INF
+	for contact_id in contact_ids:
+		var contact: Dictionary = contacts[contact_id]
+		var position: Vector2 = contact.get("last_known_position", Vector2.INF)
+		if position.is_equal_approx(Vector2.INF):
+			continue
+		var remaining := float(contact.get("ghost_remaining", 0.0))
+		if selected_position.is_equal_approx(Vector2.INF) or remaining > selected_remaining:
+			selected_position = position
+			selected_remaining = remaining
+	return selected_position
 
 
 func _scheduled_ai_facility_plan(unit: Dictionary, allow_capture: bool) -> Dictionary:
@@ -2921,8 +2970,14 @@ func _update_ai_primary_weapons() -> void:
 
 
 func _uses_full_ai(unit: Dictionary) -> bool:
+	if not _is_full_ai_faction(unit):
+		return false
 	if str(unit.get("faction_id", "")) == PLAYER_FACTION and not str(state.get("level_objective", {}).get("objective_set_id", "")).is_empty():
 		return bool(unit.get("movement_assist_enabled", false))
+	return true
+
+
+func _is_full_ai_faction(unit: Dictionary) -> bool:
 	return bool(_full_ai_factions.get(str(unit.get("faction_id", "")), false))
 
 

@@ -37,7 +37,7 @@ func _write_text(path: String, content: String, errors: Array[String]) -> void:
 
 
 func _csv(result: Dictionary) -> String:
-	var lines := ["run_id,scenario_id,level_definition_id,seed,side_variant,end_state,winner_faction,winner_lineup,finish_reason,duration,ticks_executed,enemy_damage_before_engagement,policy_command_rejections"]
+	var lines := ["run_id,scenario_id,level_definition_id,seed,side_variant,end_state,winner_faction,winner_lineup,finish_reason,finish_reason_summary,duration,ticks_executed,enemy_damage_before_engagement,policy_command_rejections"]
 	for run in result.get("runs", []):
 		lines.append(",".join([
 			_csv_cell(run.get("run_id", "")),
@@ -49,6 +49,7 @@ func _csv(result: Dictionary) -> String:
 			_csv_cell(run.get("winner_faction", "")),
 			_csv_cell(run.get("winner_lineup", "")),
 			_csv_cell(run.get("finish_reason", "")),
+			_csv_cell(run.get("finish_reason_summary", "")),
 			"%.3f" % float(run.get("duration", 0.0)),
 			str(int(run.get("ticks_executed", 0))),
 			"%.3f" % float(run.get("enemy_damage_before_engagement", 0.0)),
@@ -219,13 +220,13 @@ func _markdown(result: Dictionary) -> String:
 		"",
 		"## 单局结果",
 		"",
-		"| 种子 | 场景 | 侧别 | 状态 | 胜方阵营 | 胜方原始阵容 | 原因 | 时长 |",
-		"| ---: | --- | --- | --- | --- | --- | --- | ---: |",
+		"| 种子 | 场景 | 侧别 | 状态 | 胜方阵营 | 胜方原始阵容 | 原因码 | 原因说明 | 时长 |",
+		"| ---: | --- | --- | --- | --- | --- | --- | --- | ---: |",
 	])
 	for run in result.get("runs", []):
-		lines.append("| %d | `%s` | %s | %s | %s | %s | %s | %.2fs |" % [
+		lines.append("| %d | `%s` | %s | %s | %s | %s | %s | %s | %.2fs |" % [
 			int(run.get("seed", 0)), str(run.get("scenario_id", "")), str(run.get("side_variant", "")), str(run.get("end_state", "")),
-			str(run.get("winner_faction", "-")), str(run.get("winner_lineup", "-")), str(run.get("finish_reason", "")), float(run.get("duration", 0.0)),
+			str(run.get("winner_faction", "-")), str(run.get("winner_lineup", "-")), str(run.get("finish_reason", "")), str(run.get("finish_reason_summary", "")), float(run.get("duration", 0.0)),
 		])
 	lines.append_array(["", "## 单位平均伤害", "", "| 单位 | 平均伤害 |", "| --- | ---: |"])
 	var damage: Dictionary = aggregate.get("average_damage_by_unit", {})

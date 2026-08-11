@@ -12,6 +12,7 @@
 - 单舰被发现后的进攻、防守、拉扯动作。
 - 目标选择、预判攻击、技能预期收益和开火纪律。
 - 战术编组、阵列、目标预留、攻击和技能协同。
+- 潜艇搜索、接近、深度任务、首尾雷击解、脱离补氧与重新下潜循环。
 - 鱼雷、近岸、设施、天气、雷区和复杂战况下的量化响应。
 - 可执行量化模型、测试入口、场景矩阵和运行时验收标准。
 - 玩家舰船的辅助航行、武器自动开火开关，以及与敌方完整 AI 的严格能力边界。
@@ -74,7 +75,7 @@ AI 的目标不是获得不可反制的最优解，而是形成稳定、可读�
 | 领域硬约束 | 使用 | 使用 |
 | 即时生存 | 使用 | 始终使用，即使 `X` 关闭也只做最小必要规避 |
 | 玩家路径执行 | 不适用 | 使用，且优先于普通辅助航行 |
-| 局部目标与开火执行 | 使用 | 仅在 `C/V` 对应开关开启时使用 |
+| 局部目标与开火执行 | 使用 | 仅在水面舰 `C` / 全舰 `V` 对应开关开启时使用 |
 | 被发现 `Attack/Defend/Kite` | 使用 | 仅 `X` 开启时产生普通移动；`X` 关闭时只能影响允许的开火判断 |
 | 关卡任务、设施价值 | 使用 | 禁止 |
 | 战术编组、阵型、目标预留 | 使用 | 禁止 |
@@ -90,7 +91,7 @@ AI 的目标不是获得不可反制的最优解，而是形成稳定、可读�
     -> 玩家路径执行
       -> 局部执行控制
         -> 被发现动作（仅 X 开启时产生普通移动）
-          -> 根据 C/V 开关决定是否提交攻击
+          -> 根据适用的 C/V 开关决定是否提交攻击
 ```
 
 它不得创建 `level_task`、`group_id`、`group_role`、`mode_id`、`skill_reserve_reason`、伤害预留或效果预留。实现上应使用独立能力白名单，不能先运行完整 AI 再丢弃部分结果。
@@ -104,6 +105,7 @@ AI 的目标不是获得不可反制的最优解，而是形成稳定、可读�
 | 敌方舰队方案 | `2-4s` | 旗舰受重创、关键设施易手、编组瓦解 |
 | 关卡任务与编组 | `1.0s` | 占领中断、保护对象受击、关键接触出现 |
 | 单舰模式、目标、技能 | `0.5s` | 当前目标非法、被发现、技能窗口出现 |
+| 潜艇鱼雷机会哨兵 | 每 Tick 轻量检查 | 计划发射器从非法变为合法、深度转换完成、目标或装填失效 |
 | 高威胁扫描/紧急航迹 | `0.1s` | 已发现鱼雷或白名单伤害攻击进入反应窗 |
 | 常规动力学航迹 | `1.0s` | 岸线、边界、普通避碰、水流和战略走廊进展 |
 | 武器/技能/移动合法性 | 每 Tick | 始终由战斗系统权威校验 |
@@ -323,11 +325,123 @@ defense_score = 100 * (
 
 舰种限制合理模式集合，但不锁死唯一模式。岛风可配置 `ReconAvoid`、`TorpedoFlank`、`FlagshipRaid`、`VanguardLine` 和 `DisengageRegroup`。
 
-`AntiAirEscort` 与 `SubmarineAmbush` 只有在对应航空、防空、潜航、氧气和反潜闭环通过运行时与动态验收后才能启用；当前启用状态以 `docs/00_project_status.md` 为准。
+首轮潜艇作战不新增与现有模式平行的 `SubmarineAmbush` 战略模式，也不参与本节的公共模式评分与模式迟滞。`ReconAvoid`、`TorpedoFlank`、`DisengageRegroup` 只是下一节阶段策略对公共移动、攻击与协同能力的固定投影；后续若引入独立潜艇 doctrine，也不得再实现第二套观察、目标、武器、导航或伤害规则。
+
+#### 5.6.1 潜艇战斗循环与深度任务
+
+潜艇完整 AI 的目标不是始终保持下潜，也不是看见目标后立即上浮冲锋，而是在合法情报下完成“搜索、接近、形成射角、发射、脱离、补氧、重新下潜”的可解释循环。玩家受限辅助不运行本节；玩家单按 `C` 的直接命令不属于辅助 AI 决策。
+
+##### 战斗阶段
+
+`submarine_combat_phase` 是潜艇唯一持久战斗状态，不替代关卡任务或编组职责。潜艇的 `mode_id` 与开火纪律由当前阶段直接投影，不独立评分、确认或迟滞：
+
+| 阶段 | 固定模式 / 纪律 | 深度意图 | 进入条件 | 退出条件 |
+|---|---|---|---|---|
+| `Search` | `ReconAvoid / Silent` | 优先稳定下潜 | 没有合法攻击目标或上轮循环结束 | 获得当前可见目标，并通过目标硬门槛 |
+| `Approach` | `TorpedoFlank / Silent` | 普通潜艇保持下潜接近；特殊潜射艇按风险选择 | 目标、鱼雷准备时机、氧气和出口均可接受 | 到达上浮提前点、直接形成特殊潜射窗口，或接近解失效 |
+| `SurfaceForAttack` | `TorpedoFlank / HoldUntilWindow` | 请求并等待稳定 `Surface` | 普通潜艇的预计发射窗已进入上浮提前量 | 稳定上浮后进入 `AttackRun`；目标/出口失效则中止 |
+| `AttackRun` | `TorpedoFlank / HoldUntilWindow` | 保持当前合法发射深度 | 已选择同一发射器、瞄准点和出口组成的雷击解 | 实际 `WeaponFired` 后进入 `BreakContact`；未发射不得伪装成任务完成 |
+| `BreakContact` | `DisengageRegroup / Silent` | 执行已规划安全出口 | 计划鱼雷实际发射；或即时生存/高暴露以 `attack_completed=false` 中止任务 | 脱离危险区后进入 `RecoverOxygen` |
+| `RecoverOxygen` | `DisengageRegroup / SelfDefense` | 上浮补氧；安全后请求重新下潜 | 氧气不足以安全完成任务、被强制上浮或脱离完成 | 稳定下潜后进入 `Search`；请求被拒绝或再次强制上浮时保持本阶段 |
+
+阶段切换必须记录原因。残影只允许为 `Search` 生成搜索移动，不能触发 `Approach` 或普通鱼雷攻击。目标失去当前可见性，或氧气、深度、路线、出口任一硬条件失效时，立即退出当前雷击阶段，不等待公共模式驻留。
+
+潜艇继续复用公共合法观察、`target_score`、`attack_window`、恒速拦截瞄准、编组协同、伤害预留、技能决策、统一导航/紧急避险和 Domain 命令校验。阶段策略只扩展深度、氧气、生命周期、雷击航向和发射器选择；不得建立独立潜艇观察、目标评分、战略模式、战术状态或导航控制器。
+
+##### 目标门槛与稳定排序
+
+潜艇目标先通过以下硬门槛，任一失败即不是合法攻击目标：
+
+- 目标在本 Tick 对潜艇阵营当前可见；残影不通过。
+- 接近路线可达，所需深度合法。
+- 预计氧气足以完成接近、转换并保留安全余量。
+- 至少存在一个不穿越硬地形、已知雷区或不可通行水域的安全出口。
+
+通过门槛后采用分层稳定排序，不再计算潜艇专属加权总分：第 6.1 节公共 `target_score` 降序、航向可预测性降序、合法观察中的反潜威胁升序、稳定实体 ID 升序。出口、追击成本和武器适配已分别进入硬门槛或公共目标评分，不在潜艇层重复加减分。航向预测和反潜威胁只能读取当前合法观察。
+
+从 `Search` 进入 `Approach` 还要求至少一座鱼雷能在预计接近时间内完成装填。否则保持搜索、换目标或进入补氧，不靠提高分数绕过缺失条件。
+
+##### 氧气预测与深度请求
+
+AI 使用配置中的实时氧气消耗、恢复和转换时长计算资源，不复制固定秒数：
+
+```text
+required_submerged_time
+= route_eta_to_surface_point
+ + pending_turn_alignment_time
+ + depth_transition_duration
+ + oxygen_safety_time
+
+projected_oxygen_margin
+= (current_oxygen - oxygen_consumption_rate * required_submerged_time)
+ / max(max_oxygen, 1)
+```
+
+`oxygen_safety_time` 首轮取 `5s`。`projected_oxygen_margin <= 0` 时不得开始或继续普通接近；AI应提前转入 `RecoverOxygen`，不把零氧强制上浮当作正常战术。Domain 的零氧强制上浮仍拥有最高权威。
+
+完整 AI 只能通过公共 `SetSubmarineDepth` 请求改变深度：
+
+- 普通潜艇在“预计到达最终发射窗的时间”小于等于 `depth_transition_duration + decision_interval + turn_alignment_time` 时进入 `SurfaceForAttack`，给主动上浮和最终对齐预留时间；稳定上浮前不得提交鱼雷命令。
+- 显式具备水下鱼雷发射能力的特殊潜艇可以从 `Approach` 直接进入下潜 `AttackRun`；只有氧气恢复、生存或关卡硬任务需要时才主动上浮。
+- 氧气为零时无条件接受 Domain 强制上浮。主动重新下潜除 Domain 的 `redive_oxygen_ratio` 合法门槛外，AI 使用 `75%` 氧气任务门槛，并要求不在转换/保持期、没有进入反应窗的已知高威胁、没有仍然有效的上浮雷击窗口。该请求属于 `RecoverOxygen` 内部深度转换子状态：请求提交后仍保持本阶段，只有稳定进入 `Submerged` 才回到 `Search`；拒绝或再次强制上浮则记录原因并继续补氧。
+- 每次请求保存目标深度、阶段、原因、提交 Tick 与保持截止 Tick；转换完成、请求被拒绝或发生强制上浮后立即重评。相同目标和原因不得逐 Tick 重提。
+
+##### 首尾鱼雷解与发射器一致性
+
+规划层可以观察“接近就绪”的鱼雷，但提交开火时先淘汰未启用、未装填、管组间隔未完成、射程/射界/深度非法、路径受阻或没有安全出口的候选。每个合法候选至少包含：
+
+```text
+weapon_state_instance_id
+weapon_definition_id
+mount_index
+aim_position
+predicted_target_position
+attack_position
+exit_position
+arc_margin
+intercept_quality
+terrain_clearance
+window_score
+```
+
+合法候选采用分层稳定排序，不再计算潜艇专属雷击解加权总分：第 6.3 节公共 `attack_window` 降序、真实射界余量与恒速拦截质量降序、出口质量降序、稳定 `weapon_state_instance_id` 升序。暴露、友军风险、武器适配、协同和伤害预留只在公共窗口及公共服务中计算一次，不在潜艇层重复扣分。`weapon_state_instance_id`、`weapon_definition_id` 分别引用现有 WeaponState 的 `instance_id`、`definition_id`，不创建第二份武器状态。
+
+- 首管通常更适合接近射击，尾管通常更适合横越或脱离射击，但二者没有固定优先级；实际分数和航迹安全决定选择。
+- 当前艇首/艇尾方向、发射器真实射界与目标拦截点共同产生 `arc_margin`；AI必须转动舰体形成射角，不能把射界放宽成全向。
+- `attack_position` 与 `exit_position` 必须一起成立。只能开火但会把潜艇送入岸线、边界、友军雷道或无出口水域的候选直接淘汰。
+- 全部分层键相同时按 `weapon_state_instance_id` 稳定选择。不得原地重排权威 `weapon_states` 后把数组首项当作通用瞄准武器。
+- 选中的同一个 `weapon_state_instance_id` 必须贯穿预判、窗口评分、友军风险、伤害预留、命令提示和实际发射。该值引用 WeaponState 的现有 `instance_id`；Domain 对提示重新校验，提示失效时拒绝或重新选择，不能静默发射另一座武器。
+
+##### 短窗口、开火纪律与脱离
+
+`ReconAvoid / Silent` 只由 `Search` 投影，不能在已有有效雷击任务时长期吞掉开火。`Approach`、`SurfaceForAttack` 与 `AttackRun` 固定投影 `TorpedoFlank`；其中前者保持 `Silent`，后两者使用公共 `HoldUntilWindow=68`，不修改水面侦查舰或其他模式的纪律阈值。
+
+为避免合法射界只持续一个普通 Tick而错过 `0.5s` 决策节拍，潜艇保留一个受限机会哨兵：
+
+- 每 Tick 只对当前计划目标与计划发射器做便宜的装填、深度、射程和射界边界检查，不重跑目标、模式、路线或全武器评分。
+- 计划候选从非法变为合法时，记录最长 `1.0s` 的 `torpedo_opportunity_expires_at`，并请求下一命令阶段立即执行一次完整武器重评；同一目标/发射器在普通决策冷却内最多触发一次。
+- 机会记录不是攻击授权。目标失去可见性、深度/装填改变、友军进入雷道或最新 Domain 校验失败时立即清除；提交前仍需重算完整候选。
+
+只有实际产生计划发射器的 `WeaponFired`，才能把 `AttackRun` 标记为完成，并以 `attack_completed=true` 进入发射后 `BreakContact`。即时生存或高暴露允许以 `attack_completed=false` 中止并脱离，但不能进入装填循环、计为完成雷击或重置零开火诊断；命令拒绝、纪律保留或窗口过期只会重评接近/攻击。发射后脱离中若尾管自然形成高于阈值且不延迟安全出口的合法解，可以作为同一循环的追加候选；AI不得为使用尾管强制回头或重新进入危险区。
+
+`RecoverOxygen` 稳定上浮期间可以按公共 `SelfDefense` 窗口使用当前合法鱼雷解自卫，但实际发射后仍保持补氧阶段，不伪造 `AttackRun` 完成，也不跳过重新下潜条件。
+
+##### 瞬时战术信号、生存、协同与技能
+
+- 已知鱼雷或白名单高伤害攻击仍按第 5.3 节优先打断；深度切换本身不是紧急航行，也不能绕过统一轨迹安全。
+- 第 5.7 节的 `Attack/Defend/Kite` 对潜艇只产生瞬时建议，不持久化为平行状态：`Defend` 延迟主动上浮，`Kite` 中止攻击或修正出口，即时生存直接进入 `BreakContact`。这些建议不得改变阶段固定模式与纪律。
+- 被发现且可见反潜压力高时，潜艇中止攻击或改善出口。氧气不足以重新下潜时保持 `RecoverOxygen / SelfDefense`，不提交必然被 Domain 拒绝的下潜命令。
+- 潜艇优先承担 `Scout`、`Flanker` 或 `Reserve`；只有关卡明确允许时才成为 `ObjectiveRunner`。编组可由 `Fixer` 稳定目标航向，但不能把隐藏敌情直接共享给潜艇。
+- 多艇协同需预留接近扇区、发射时间和友军雷道，避免同一路径叠位或交叉误伤；预留失效、目标变向或潜艇被迫脱离时立即释放。
+- `Ambush`、`Mobility`、`Torpedo` 和 `Resource` 技能的收益必须计入预计氧气、深度、射角和脱离窗口。技能就绪不能覆盖低氧、非法深度或无出口，也不能由玩家受限辅助自动释放。
+
+潜艇阶段、深度请求和雷击解至少输出以下原因码：`SUB_SEARCH_NO_CONTACT`、`SUB_APPROACH_NO_REACHABLE_SOLUTION`、`SUB_APPROACH_OXYGEN_INSUFFICIENT`、`SUB_SURFACE_FOR_ATTACK`、`SUB_ATTACK_HELD_DEPTH`、`SUB_ATTACK_HELD_RELOAD`、`SUB_ATTACK_HELD_ARC`、`SUB_ATTACK_HELD_DISCIPLINE`、`SUB_ATTACK_COMMITTED`、`SUB_BREAK_CONTACT`、`SUB_RECOVER_OXYGEN`、`SUB_REDIVE_HELD_THREAT`、`SUB_REDIVE_COMMITTED`。后两项表示 `RecoverOxygen` 内的下潜请求状态，不是独立阶段。这些事实只进入授权调试与聚合报告，不能向玩家表现层泄漏隐藏敌情。
 
 ### 5.7 被发现后的战术动作
 
 “被发现”不自动等于冲锋或撤退。AI 在当前任务和模式范围内比较三种短期动作：
+
+本节的动作驻留、确认与切换只适用于水面完整 AI。潜艇可以复用相同战场输入形成一次性建议，但不得写入持久 `current_tactic`，具体作用只见 5.6.1。
 
 ```text
 Attack：推进、抢射角、完成爆发
@@ -444,7 +558,7 @@ assist_target_score = 100 * (
 )
 ```
 
-该分数不包含旗舰、Cost、关卡目标、设施、编组集火、追击价值或天气修正。`X` 关闭时目标不能驱动追击，只能供已开启的 `C/V` 选择射界内合法攻击。
+该分数不包含旗舰、Cost、关卡目标、设施、编组集火、追击价值或天气修正。`X` 关闭时目标不能驱动追击，只能供已开启的适用武器开关选择射界内合法攻击。
 
 ### 6.2 预判性攻击
 
@@ -515,7 +629,7 @@ assist_primary_window = 100 * (
 
 开火后必须记录破隐成本。`ReconAvoid` 和 `TorpedoFlank` 不应为了低价值自动火力破坏主要任务；必要时由模式禁用特定自动武器组，而不是绕过领域武器规则。
 
-玩家舰船不从战略模式继承开火纪律：`C` 开启时副武器采用领域自动武器的合法即开火规则；`V` 开启时主要武器采用上述 `assist_primary_window`。两者均不能触发技能。
+玩家舰船不从战略模式继承开火纪律：水面舰 `C` 开启时副武器采用领域自动武器的合法即开火规则；潜艇 `C` 只提交玩家指定的深度命令；`V` 开启时主要武器采用上述 `assist_primary_window`。这些入口均不能触发技能。
 
 ### 6.5 技能预期收益参与进攻
 
@@ -767,9 +881,26 @@ no_effective_movement_seconds
 no_engagement_seconds
 no_effective_attack_seconds
 engagement_pressure
+submarine_combat_phase
+submarine_phase_entered_at
+submarine_phase_reason
+submarine_attack_completed
+submarine_target_id
+planned_torpedo_weapon_state_instance_id
+planned_torpedo_aim_position
+planned_attack_position
+planned_exit_position
+torpedo_opportunity_expires_at
+requested_depth_state
+depth_request_reason
+last_depth_request_tick
+depth_hold_until_tick
+projected_oxygen_margin
+surface_attack_deadline
+last_submarine_fire_tick
 ```
 
-这些状态属于 Application/策略层，不进入 Presentation，也不把关卡行为脚本堆入 `UnitState`。
+这些状态属于 Application/策略层，不进入 Presentation，也不把关卡行为脚本堆入 `UnitState`。其中计划发射器、瞄准点、攻击点和出口构成同一原子雷击解；任一成员失效时整体清除，不能保留旧发射器却重算新瞄准点。
 
 ### 10.3 长时间消极行为的接敌压力
 
@@ -847,6 +978,12 @@ AI Profile 应组合而不是复制规则：
 | 侦查舰被发现且敌强 | `Kite -> 断开视线/外扩 -> 回到侦查边缘` |
 | 前锋被发现且己方占优 | `Attack -> 抢射角 -> FreeFire` |
 | 岛风侧翼、目标被牵制 | `TorpedoFlank -> 技能增益 -> 预判雷击 -> 发射后脱离` |
+| 普通潜艇下潜接近、鱼雷将就绪 | `Approach -> 计算上浮提前量 -> SurfaceForAttack -> 稳定上浮后 AttackRun` |
+| 特殊潜射艇形成水下雷击解 | `Approach -> 保持下潜 -> AttackRun -> BreakContact` |
+| 潜艇只有尾管形成安全窗口 | 选择尾管同源雷击解；保持脱离方向，不为艇首管强制回头 |
+| 潜艇合法窗口短于普通决策周期 | 机会哨兵触发一次即时完整重评；最新合法性失败则继续等待或脱离 |
+| 潜艇氧气不足以完成接近 | 中止雷击任务 -> RecoverOxygen；不等待零氧强制上浮 |
+| 潜艇上浮补氧且反潜压力高 | 保持 `RecoverOxygen / SelfDefense`；`Kite` 只修正局部航行，满足 75% 与安全条件后在本阶段请求下潜，稳定下潜再回到 `Search` |
 | 可见鱼雷进入碰撞窗 | 立即 `TorpedoEvasion`，完成后重新评估原任务 |
 | 鱼雷从远处安全掠过 | 保持当前任务，不无意义大转向 |
 | 高价值中立观察站安全 | 分配一艘合适任务舰占领，其余保持警戒 |
@@ -857,11 +994,11 @@ AI Profile 应组合而不是复制规则：
 | 多舰准备同一爆发 | 先侦查/压制，后主炮与鱼雷错峰，过量伤害舰转移目标 |
 | 技能冷却完成但收益低 | 保留技能，不因冷却完成立即释放 |
 | 旗舰遭侧翼威胁 | `EscortScreen` 和关卡保护优先于普通模式追击 |
-| 玩家舰船默认状态 | 保持原地；副武器自动；主要武器与技能不自动 |
+| 玩家舰船默认状态 | 保持原地；副武器自动；主要武器与技能不自动；潜艇深度只响应玩家 `C` |
 | 玩家开启 `X` | 只在局部接敌时选择进攻、防守或拉扯，不接管关卡任务 |
 | 玩家关闭 `X`、开启 `V` | 舰船不追击，只对当前射界内合法目标自动使用主要武器 |
 | 玩家布置多航点 | 按顺序执行；即时规避后回到下一合法途径点 |
-| 玩家按 `Cmd/Alt + C` | 混合状态统一开启；全部开启时统一关闭 |
+| 玩家按 `Cmd/Alt + C` | 非潜艇混合状态统一开启；全部开启时统一关闭；潜艇深度不变 |
 | 玩家控制舰技能就绪 | 始终等待玩家 `F`，任何辅助开关都不自动释放 |
 
 ---
@@ -883,7 +1020,7 @@ AI Profile 应组合而不是复制规则：
 1. **控制器集成测试**：用构造的 `AIObservation` 验证命令、记忆、驻留、目标预留和打断恢复。
 2. **整局动态测试**：在 1v1、3v3、5v5、11v11 和港湾关卡用固定种子运行多局模拟。
 
-玩家辅助控制集成测试必须覆盖默认开关、`Z` 多航点、`X/C/V` 状态、舰队范围命令、`G` 镜头入口、自动主武器窗口、技能恒不自动、即时边界规避与恢复驻留；同时验证真实鱼雷打断后的路径恢复、混合开关组合、输入级 `Cmd/Alt`，以及编组、任务、设施或天气收益输入不越过局部决策边界。当前覆盖状态只见 `docs/00_project_status.md` 与正式测试输出。
+玩家辅助控制集成测试必须覆盖默认开关、`Z` 多航点、`X/C/V` 状态、潜艇单舰 `C` 深度命令、舰队级 `C` 忽略潜艇、舰队范围命令、`G` 镜头入口、自动主武器窗口、技能恒不自动、即时边界规避与恢复驻留；同时验证真实鱼雷打断后的路径恢复、混合开关组合、输入级 `Cmd/Alt`，以及编组、任务、设施或天气收益输入不越过局部决策边界。当前覆盖状态只见 `docs/00_project_status.md` 与正式测试输出。
 
 ### 14.4 整局动态指标
 
@@ -900,6 +1037,22 @@ AI Profile 应组合而不是复制规则：
 - 胜率、旗舰击沉率和平均战斗时长；这些只用于平衡，不反向给予 AI 属性加成。
 
 样本量、侧别交换和大版本统计授权只由 `docs/36_balance_testing_design.md` 定义。行为验收优先于胜率：即使胜率接近 50%，若 AI 高频撞岸、乱放技能或全队争抢同一设施，也不能通过。
+
+### 14.5 潜艇战斗 AI 专项验证
+
+潜艇设计必须分别通过纯计算、控制器集成和整局动态验证，至少覆盖：
+
+1. `Search -> Approach -> SurfaceForAttack -> AttackRun -> BreakContact -> RecoverOxygen -> Search` 的普通潜艇六阶段全循环，以及特殊潜射艇跳过 `SurfaceForAttack` 的合法分支；重新下潜只作为 `RecoverOxygen` 内的深度请求。
+2. 前管合法、后管合法、两者均合法、一座装填、一座禁用和权威数组预先乱序；评分、预留、事件和实际发射必须保持同一 `weapon_state_instance_id`。
+3. 无可见目标、只有合法残影、目标在射程外、射界外、深度不合法、友军进入雷道和出口失效时均不得提交鱼雷。
+4. 合法窗口落在两个普通决策点之间时，机会哨兵只触发一次完整重评；目标或候选失效后机会记录立即清除。
+5. 低氧提前中止、零氧强制上浮、上浮补氧、`75%` AI 门槛、已知高威胁延迟重新下潜和相同深度请求去重。
+6. 六阶段固定投影模式与纪律；潜艇跳过公共模式/战术状态切换，水面舰的模式评分、`Attack/Defend/Kite` 迟滞和 `ReconAvoid/Silent` 签名不变。
+7. 实际发射前任务中止不会进入“发射后脱离”；实际 `WeaponFired` 后必须存在可达出口，且不新增岸线碰撞、路线失败、航迹失败或高频首尾摆头。
+8. 玩家受限辅助、玩家 `C` 直接命令和完整 AI 深度任务严格隔离；正常玩家辅助不能创建潜艇战斗阶段、自动深度请求或自动技能。
+9. 固定种子报告能够区分无目标、无就绪武器、无合法射程/射界、深度阻止、纪律保留、机会过期、命令拒绝和实际发射，并记录阶段/深度驻留与首个发射器。
+
+若一局已经在至少 `5` 个主要武器决策点形成合法候选，却没有 `AIFireCommitted` 和同候选的 `WeaponFired`，必须分类为 `SUBMARINE_ELIGIBLE_WINDOW_NO_FIRE`；最终胜负、命中与伤害不能豁免该正确性失败。正式固定种子与大样本授权仍由执行工单和 `docs/36_balance_testing_design.md` 管理，本文不记录样本结果。
 
 ---
 
@@ -930,6 +1083,11 @@ AISkillHeld
 AISkillCommitted
 AIFireHeld
 AIFireCommitted
+AISubmarinePhaseChanged
+AITorpedoSolutionSelected
+AITorpedoOpportunityObserved
+AIDepthRequestHeld
+AIDepthRequestCommitted
 AIDamageReserved
 AIEffectReserved
 ```
@@ -947,6 +1105,7 @@ AIEffectReserved
 - 能在近岸绕行、利用有出口的掩体、拒绝死胡同，并对关键设施执行占领和分层防守。
 - 合法移动意图能够形成持续正向进展；不可直接接入的目标会转为可达阶段目标，而不是以少请求、少失败或 `SafetyHold` 掩盖原地不动。
 - 高价值攻击使用预判、开火纪律、技能收益和编组预留，不因冷却结束立即浪费。
+- 潜艇能在合法情报与公共规则下完成搜索、接近、普通上浮/特殊潜射、同源发射器雷击、脱离、补氧和重新下潜；无合法解时能说明卡在哪一层，而不是长期零开火。
 - 固定种子可复现；评分变化不会造成高频目标和模式抖动。
 - 量化模型测试、控制器集成测试、整局动态测试和人工可读性复核全部通过。
 - 玩家舰船默认静止、副武器自动、主要武器与技能不自动；受限 AI 永远不能进入编组、战略、天气收益、关卡任务或技能决策。

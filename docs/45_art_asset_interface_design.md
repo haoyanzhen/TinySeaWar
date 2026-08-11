@@ -76,7 +76,7 @@ assets/environment/weather/zones/environment_zone_asset_manifest.json
 - 航母使用 `aircraft_launch_01`、`aircraft_launch_02`、`aircraft_recovery`。
 - 侦查、技能和扫描使用 `scan_origin`、`skill_origin`。
 - 舰装挂点使用 `rig_mount`。
-- processed 绑定点配置可在根级 `heading_offsets_degrees` 中按完整资产文件名记录角度；`ShipUnitView` 对舰装绘制与该资产绑定点使用同一偏移，避免图像转正后炮口或特效挂点留在旧角度。
+- processed 绑定点配置可在根级 `heading_offsets_degrees` 中按完整资产文件名记录角度；字段形状、范围与加载拒绝规则只见 `docs/25_presentation_data_schema.md`。`ShipUnitView` 对舰装绘制与该资产绑定点使用同一偏移，避免图像转正后炮口或特效挂点留在旧角度。
 
 UI 接口：
 

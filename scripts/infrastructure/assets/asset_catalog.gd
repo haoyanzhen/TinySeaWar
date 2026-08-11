@@ -211,15 +211,44 @@ func _load_character(character_id: String) -> void:
 			errors.append("Missing or invalid %s config for %s" % [config_name, character_id])
 		else:
 			configs[config_name] = _normalize_paths(parsed)
+	var battle_assets := _scan_named_assets("%s/battle" % root, "%s_battle_" % character_id)
+	if configs.has("bind_points"):
+		_validate_heading_offsets(character_id, configs["bind_points"], battle_assets)
 	characters[character_id] = {
 		"id": character_id,
 		"root": root,
 		"configs": configs,
-		"battle_assets": _scan_named_assets("%s/battle" % root, "%s_battle_" % character_id),
+		"battle_assets": battle_assets,
 		"ui_assets": _scan_named_assets("%s/ui" % root, "%s_" % character_id),
 		"anim_assets": _scan_named_assets("%s/anim" % root, "%s_anim_" % character_id),
 		"vfx_assets": _scan_named_assets("%s/vfx" % root, "%s_vfx_" % character_id),
 	}
+
+
+func _validate_heading_offsets(character_id: String, bind_point_config: Dictionary, battle_assets: Dictionary) -> void:
+	if not bind_point_config.has("heading_offsets_degrees"):
+		return
+	var raw_offsets: Variant = bind_point_config["heading_offsets_degrees"]
+	if typeof(raw_offsets) != TYPE_DICTIONARY:
+		errors.append("Invalid heading_offsets_degrees for %s: expected Dictionary" % character_id)
+		return
+	var known_asset_names := {}
+	for asset_path in battle_assets.values():
+		known_asset_names[str(asset_path).get_file()] = true
+	for asset_name_value in raw_offsets:
+		if typeof(asset_name_value) != TYPE_STRING or str(asset_name_value).is_empty():
+			errors.append("Invalid heading offset asset name for %s: expected non-empty String" % character_id)
+			continue
+		var asset_name := str(asset_name_value)
+		if not known_asset_names.has(asset_name):
+			errors.append("Unknown heading offset asset for %s: %s" % [character_id, asset_name])
+		var raw_degrees: Variant = raw_offsets[asset_name_value]
+		if typeof(raw_degrees) != TYPE_INT and typeof(raw_degrees) != TYPE_FLOAT:
+			errors.append("Invalid heading offset for %s:%s: expected finite number in [-180, 180]" % [character_id, asset_name])
+			continue
+		var degrees := float(raw_degrees)
+		if not is_finite(degrees) or degrees < -180.0 or degrees > 180.0:
+			errors.append("Invalid heading offset for %s:%s: expected finite number in [-180, 180]" % [character_id, asset_name])
 
 
 func _scan_named_assets(directory_path: String, prefix: String) -> Dictionary:

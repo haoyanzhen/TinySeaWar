@@ -139,7 +139,7 @@ func _draw_operation_dock(rect: Rect2) -> void:
 		{"key": "G", "icon": "ui_icon_camera_follow", "text": "开始跟随" if camera_mode != "Follow" else "正在跟随", "ready": true},
 		{"key": "Z", "icon": "ui_marker_path_endpoint", "text": "结束路径" if operation_mode == "PLACING_ROUTE" else "连续路径", "ready": true},
 		{"key": "X", "icon": "ui_icon_auto_move", "text": "自动航行 开" if bool(operation_status.get("movement_assist_enabled", false)) else "自动航行 关", "ready": bool(operation_status.get("movement_assist_enabled", false))},
-		{"key": "C", "icon": "ui_icon_auto_weapon", "text": "副武器 开" if bool(operation_status.get("secondary_auto_fire_enabled", true)) else "副武器 关", "ready": bool(operation_status.get("secondary_auto_fire_enabled", true))},
+		{"key": "C", "icon": "ui_icon_auto_weapon", "text": _c_action_text(), "ready": _c_action_ready()},
 		{"key": "V", "icon": "ui_icon_gunfire", "text": "主武器 开" if bool(operation_status.get("primary_auto_fire_enabled", false)) else "主武器 关", "ready": bool(operation_status.get("primary_auto_fire_enabled", false))},
 	]
 	for index in range(cards.size()):
@@ -147,6 +147,23 @@ func _draw_operation_dock(rect: Rect2) -> void:
 		var row := int(index / 4)
 		var card_rect := Rect2(rect.position + Vector2(22.0 + column * 214.0, 38.0 + row * 42.0), Vector2(198.0, 36.0))
 		_draw_action_card(card_rect, cards[index])
+
+
+func _c_action_text() -> String:
+	if str(operation_status.get("ship_class", "")) != "Submarine":
+		return "副武器 开" if bool(operation_status.get("secondary_auto_fire_enabled", true)) else "副武器 关"
+	var transition: Dictionary = operation_status.get("depth_transition", {})
+	if bool(transition.get("active", false)):
+		return "%s中 %.1fs" % ["上浮" if transition.get("target_depth_state", "") == "Surface" else "下潜", float(transition.get("remaining", 0.0))]
+	var oxygen: Dictionary = operation_status.get("oxygen_state", {})
+	var target_label := "上浮" if operation_status.get("depth_change_target", "Surface") == "Surface" else "下潜"
+	return "%s  氧 %.0f/%.0f" % [target_label, float(oxygen.get("current", 0.0)), float(oxygen.get("maximum", 0.0))]
+
+
+func _c_action_ready() -> bool:
+	if str(operation_status.get("ship_class", "")) != "Submarine":
+		return bool(operation_status.get("secondary_auto_fire_enabled", true))
+	return bool(operation_status.get("depth_change_available", false))
 
 
 func _draw_action_card(rect: Rect2, card: Dictionary) -> void:
@@ -285,11 +302,13 @@ func _draw_selected_panel(rect: Rect2) -> void:
 	var primary := _primary_text()
 	var ammo := _ammo_text()
 	var skill := _skill_text()
-	var control_summary := "航行 %s  |  副武器 %s  |  主武器 %s" % [
-		"开" if bool(operation_status.get("movement_assist_enabled", false)) else "关",
-		"开" if bool(operation_status.get("secondary_auto_fire_enabled", true)) else "关",
-		"开" if bool(operation_status.get("primary_auto_fire_enabled", false)) else "关",
-	]
+	var control_summary := "航行 %s  |  副武器 %s  |  主武器 %s" % ["开" if bool(operation_status.get("movement_assist_enabled", false)) else "关", "开" if bool(operation_status.get("secondary_auto_fire_enabled", true)) else "关", "开" if bool(operation_status.get("primary_auto_fire_enabled", false)) else "关"]
+	if str(operation_status.get("ship_class", "")) == "Submarine":
+		var oxygen: Dictionary = operation_status.get("oxygen_state", {})
+		var depth_label := "下潜" if operation_status.get("depth_state", "Surface") == "Submerged" else "上浮"
+		var transition: Dictionary = operation_status.get("depth_transition", {})
+		if bool(transition.get("active", false)): depth_label = "%s中" % ("上浮" if transition.get("target_depth_state", "") == "Surface" else "下潜")
+		control_summary = "航行 %s  |  深度 %s  |  氧气 %.0f/%.0f  |  主武器 %s" % ["开" if bool(operation_status.get("movement_assist_enabled", false)) else "关", depth_label, float(oxygen.get("current", 0.0)), float(oxygen.get("maximum", 0.0)), "开" if bool(operation_status.get("primary_auto_fire_enabled", false)) else "关"]
 	draw_string(ThemeDB.fallback_font, rect.position + Vector2(18.0, 134.0), control_summary, HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 36.0, 13, TEXT_SOFT)
 	draw_string(ThemeDB.fallback_font, rect.position + Vector2(18.0, 154.0), "E  %s" % primary, HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 36.0, 15, TEXT_DARK)
 	draw_string(ThemeDB.fallback_font, rect.position + Vector2(18.0, 178.0), "Q  %s" % ammo, HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 36.0, 15, TEXT_DARK)
@@ -350,6 +369,8 @@ func _draw_result_panel(viewport_size: Vector2) -> void:
 	elif str(result.get("reason", "")) == "LEVEL_TECHNICAL_LIMIT":
 		title = "本局无效"
 		subtitle = "达到技术保护上限；本局不判定任务胜负，也不写入进度。"
+	var reason_summary := str(result.get("reason_summary", ""))
+	if not reason_summary.is_empty(): subtitle = reason_summary
 	_draw_result_character(Rect2(rect.position + Vector2(34.0, 28.0), Vector2(400.0, 548.0)))
 	draw_string(ThemeDB.fallback_font, rect.position + Vector2(470.0, 92.0), title, HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 520.0, 54, TEXT_DARK)
 	draw_rect(Rect2(rect.position + Vector2(472.0, 112.0), Vector2(132.0, 5.0)), Color("#70db84") if player_won else Color("#ff9a8c"), true)
@@ -358,9 +379,10 @@ func _draw_result_panel(viewport_size: Vector2) -> void:
 	var rows := [
 		"战斗模式：%s" % UiText.mode_name(level_id),
 		"战斗时长：%s" % duration,
-		"结算原因：%s" % UiText.result_reason_name(str(result.get("reason", ""))),
+		"结算类型：%s" % UiText.result_reason_name(str(result.get("reason", ""))),
 		"胜利阵营：%s" % UiText.faction_name(str(result.get("winner_faction", ""))),
 	]
+	if not reason_summary.is_empty(): rows.insert(3, "具体原因：%s" % reason_summary)
 	var y := rect.position.y + 228.0
 	for row in rows:
 		draw_string(ThemeDB.fallback_font, Vector2(rect.position.x + 474.0, y), row, HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 540.0, 22, TEXT_DARK)

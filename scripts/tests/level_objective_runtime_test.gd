@@ -67,7 +67,9 @@ func _run() -> void:
 	player_flagship["life_state"] = "Sunk"
 	player_flagship["current_hp"] = 0.0
 	failed_challenge.advance_tick(0.1)
-	_check(failed_challenge.state.get("result", {}).get("winner_faction", "") == "enemy" and failed_challenge.state.get("result", {}).get("reason", "") == "LEVEL_OBJECTIVE_CANCELLED", "S-01 cancels when the protected player flagship sinks")
+	var s01_failure: Dictionary = failed_challenge.state.get("result", {})
+	_check(s01_failure.get("winner_faction", "") == "enemy" and s01_failure.get("reason", "") == "LEVEL_OBJECTIVE_CANCELLED", "S-01 cancels when the protected player flagship sinks")
+	_check(s01_failure.get("reason_code", "") == "LEVEL_OBJECTIVE_CANCELLED_PLAYER_FLAGSHIP_SUNK" and str(s01_failure.get("reason_summary", "")).contains("厌战号沉没"), "S-01 records the actual sunk flagship instead of only a generic cancellation")
 
 	var technical_limit = BattleSession.new(registry)
 	technical_limit.create_battle("level.challenge.s01", 104)
@@ -93,19 +95,33 @@ func _test_s_challenges(registry) -> void:
 		var unit: Dictionary = s02.state["units_by_id"][unit_id]
 		unit["life_state"] = "Sunk"; unit["current_hp"] = 0.0
 	s02.advance_tick(0.1)
-	_check(s02.state.get("result", {}).get("winner_faction", "") == "enemy", "S-02 cancels when both named flank ships sink")
+	var s02_survivor_failure: Dictionary = s02.state.get("result", {})
+	_check(s02_survivor_failure.get("winner_faction", "") == "enemy", "S-02 cancels when both named flank ships sink")
+	_check(s02_survivor_failure.get("reason_code", "") == "LEVEL_OBJECTIVE_CANCELLED_REQUIRED_ANY_PLAYER_SURVIVORS_LOST" and str(s02_survivor_failure.get("reason_summary", "")).contains("重庆号、雪风号"), "S-02 records its actual escort-survivor cancellation")
+	var s02_flagship = BattleSession.new(registry)
+	s02_flagship.create_battle("level.challenge.s02", 8202)
+	var s02_hood: Dictionary = s02_flagship.state["units_by_id"]["unit.player.s02.hood"]
+	s02_hood["life_state"] = "Sunk"; s02_hood["current_hp"] = 0.0
+	var s02_flagship_events := s02_flagship.advance_tick(0.1)
+	var s02_flagship_failure: Dictionary = s02_flagship.state.get("result", {})
+	_check(s02_flagship_failure.get("reason_code", "") == "LEVEL_OBJECTIVE_CANCELLED_PLAYER_FLAGSHIP_SUNK" and str(s02_flagship_failure.get("reason_summary", "")).contains("胡德号沉没") and not str(s02_flagship_failure.get("reason_summary", "")).contains("重庆与雪风均沉没"), "S-02 flagship loss is no longer misreported as both escorts sinking")
+	_check(s02_flagship_events.any(func(event): return event.get("event_type", "") == "LevelObjectiveFailed" and event.get("reason_code", "") == "LEVEL_OBJECTIVE_CANCELLED_PLAYER_FLAGSHIP_SUNK"), "objective failure events expose the condition-level reason code")
 	var s03 = BattleSession.new(registry)
 	s03.create_battle("level.challenge.s03", 8301)
 	var early_flagship: Dictionary = s03.state["units_by_id"]["unit.enemy.s03.bismarck"]
 	early_flagship["life_state"] = "Sunk"; early_flagship["current_hp"] = 0.0
 	s03.advance_tick(0.1)
-	_check(s03.state.get("result", {}).get("winner_faction", "") == "enemy", "S-03 rejects a flagship kill before the carrier")
+	var s03_failure: Dictionary = s03.state.get("result", {})
+	_check(s03_failure.get("winner_faction", "") == "enemy", "S-03 rejects a flagship kill before the carrier")
+	_check(s03_failure.get("reason_code", "") == "LEVEL_OBJECTIVE_CANCELLED_ORDERED_TARGET_SUNK_EARLY" and str(s03_failure.get("reason_summary", "")).contains("俾斯麦号在百眼巨人号之前沉没"), "S-03 records the actual target-order violation")
 	var s04 = BattleSession.new(registry)
 	s04.create_battle("level.challenge.s04", 8401)
 	var hood: Dictionary = s04.state["units_by_id"]["unit.player.s04.hood"]
 	hood["current_hp"] = hood["max_hp"] * 0.3
 	s04.advance_tick(0.1)
-	_check(s04.state.get("result", {}).get("winner_faction", "") == "enemy", "S-04 cancels at Hood's 30 percent protection threshold")
+	var s04_failure: Dictionary = s04.state.get("result", {})
+	_check(s04_failure.get("winner_faction", "") == "enemy", "S-04 cancels at Hood's 30 percent protection threshold")
+	_check(s04_failure.get("reason_code", "") == "LEVEL_OBJECTIVE_CANCELLED_PLAYER_UNIT_HP_RATIO_BREACHED" and str(s04_failure.get("reason_summary", "")).contains("胡德号耐久降至30.0%") and is_equal_approx(float(s04_failure.get("reason_context", {}).get("minimum_hp_ratio", 0.0)), 0.3), "S-04 records the actual Hood HP-threshold breach and structured threshold")
 	var s04_wave = BattleSession.new(registry)
 	s04_wave.create_battle("level.challenge.s04", 8402)
 	var replaced_unit: Dictionary = s04_wave.state["units_by_id"]["unit.enemy.s04.san_diego"]
@@ -235,6 +251,13 @@ func _test_t05_to_t08_routes_and_locks(registry) -> void:
 	_check(int(t05.state["level_objective"].get("action_counts", {}).get("TorpedoHit", 0)) == 0, "T-05 rejects a non-torpedo hit even when source and target ids match")
 	t05._record_tutorial_action("TorpedoHit", "unit.player.t05.yukikaze", {"target_unit_id":"unit.enemy.t05.warspite","attack_category":"Torpedo","weapon_group_id":"yukikaze_torpedo"})
 	_check(int(t05.state["level_objective"].get("action_counts", {}).get("TorpedoHit", 0)) == 1, "T-05 accepts only Yukikaze torpedo evidence against Warspite")
+	var t05_protection = BattleSession.new(registry)
+	t05_protection.create_battle("level.tutorial.t05", 9005)
+	var anshan: Dictionary = t05_protection.state["units_by_id"]["unit.player.t05.anshan"]
+	anshan["life_state"] = "Sunk"; anshan["current_hp"] = 0.0
+	t05_protection.advance_tick(0.1)
+	var t05_failure: Dictionary = t05_protection.state.get("result", {})
+	_check(t05_failure.get("reason_code", "") == "LEVEL_OBJECTIVE_CANCELLED_PROTECTED_PLAYER_UNIT_SUNK" and str(t05_failure.get("reason_summary", "")).contains("鞍山号沉没"), "protected non-flagship loss records the actual unit instead of the objective's static failure text")
 
 	var t07 = BattleSession.new(registry)
 	t07.create_battle("level.tutorial.t07", 9003)
@@ -275,7 +298,8 @@ func _test_t05_to_t08_routes_and_locks(registry) -> void:
 			sunk["life_state"] = "Sunk"
 			sunk["current_hp"] = 0.0
 		survival.advance_tick(0.1)
-		_check(survival.state.get("result", {}).get("winner_faction", "") == "enemy", "%s cancels once fewer than two player ships remain" % level_id)
+		var survival_failure: Dictionary = survival.state.get("result", {})
+		_check(survival_failure.get("winner_faction", "") == "enemy" and survival_failure.get("reason_code", "") == "LEVEL_OBJECTIVE_CANCELLED_MINIMUM_PLAYER_SURVIVORS_LOST" and str(survival_failure.get("reason_summary", "")).contains("低于任务要求2艘"), "%s records the actual minimum-survivor cancellation" % level_id)
 
 
 func _test_tutorial_definition_validation(registry) -> void:

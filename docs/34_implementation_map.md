@@ -74,7 +74,7 @@
 |---|---|
 | 阵营合法观察 | `scripts/application/ai/ai_observation.gd` |
 | 量化决策模型 | `scripts/application/ai/ai_quantitative_model.gd` |
-| 完整 AI 阵营授权、初始/增援初始化、残影搜索、技能提交与同 Tick 观察刷新 | `scripts/application/battle_session.gd` |
+| 完整 AI 阵营授权、初始/增援初始化、残影搜索、技能提交、潜艇六阶段策略/深度请求/原子雷击解与同 Tick 观察刷新 | `scripts/application/battle_session.gd` |
 | 战略路线规划、不可接入目标的正向阶段投影与分类失败 | `scripts/application/navigation/route_planner.gd` |
 | 路线请求预算 | `scripts/application/navigation/navigation_request_broker.gd` |
 | 常规/紧急航迹候选 | `scripts/application/navigation/trajectory_planner.gd` |
@@ -82,6 +82,7 @@
 | AI 行为与难度测试 | `scripts/tests/ai_behavior_quantitative_test.gd`、`ai_difficulty_profile_test.gd` |
 | 编组与协同测试 | `scripts/tests/ai_group_formation_test.gd`、`ai_coordination_test.gd` |
 | 模拟完整 AI 初始化与技能射程测试 | `scripts/tests/battle_simulator_test.gd` |
+| 潜艇六阶段、首选发射器与 S-04/S-05 `1 -> 3` 固定种子门禁 | `scripts/tests/test_runner.gd`、`scripts/tests/submarine_ai_fixed_seed_test.gd` |
 | 航迹、碰撞场与恢复测试 | `scripts/tests/trajectory_navigation_test.gd`、`navigation_collision_field_test.gd`、`ai_route_recovery_test.gd` |
 | Tick 分阶段、导航/侦查性能、投影路线、失败/等待与大编队碰撞测试 | `scripts/tests/ai_navigation_performance_test.gd` |
 

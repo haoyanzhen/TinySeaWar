@@ -177,6 +177,17 @@ func _validate_ship(ship: Dictionary) -> void:
 		_validate_scaled_field(ship, field, "base_%s" % field, MOTION_BASELINE_MULTIPLIER, ship_id)
 	for field in ["detection_range", "concealment_distance"]:
 		_validate_scaled_field(ship, field, "base_%s" % field, DISTANCE_BASELINE_MULTIPLIER, ship_id)
+	if str(ship.get("ship_class", "")) == "Submarine":
+		for field in ["max_oxygen", "oxygen_consumption_rate", "oxygen_recovery_rate", "depth_transition_duration", "depth_state_minimum_hold"]:
+			if float(ship.get(field, 0.0)) <= 0.0:
+				errors.append("%s must be positive for submarine %s" % [field, ship_id])
+		var redive_ratio := float(ship.get("redive_oxygen_ratio", -1.0))
+		if redive_ratio < 0.0 or redive_ratio > 1.0:
+			errors.append("redive_oxygen_ratio must be within [0, 1] for submarine %s" % ship_id)
+		if not is_equal_approx(float(ship.get("base_detection_range", 0.0)), float(ship.get("base_concealment_distance", 0.0)) * 1.5):
+			errors.append("Submarine base_detection_range must equal 1.5x base_concealment_distance in %s" % ship_id)
+		if not ship.has("can_launch_torpedoes_submerged") or typeof(ship.get("can_launch_torpedoes_submerged")) != TYPE_BOOL:
+			errors.append("can_launch_torpedoes_submerged must be boolean for submarine %s" % ship_id)
 	var collision_half_extents = ship.get("collision_half_extents", [])
 	if not _valid_positive_pair(collision_half_extents):
 		errors.append("collision_half_extents must be a positive pair in %s" % ship_id)

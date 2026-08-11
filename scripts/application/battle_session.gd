@@ -34,6 +34,11 @@ const AI_ENGAGEMENT_PRESSURE_TRIGGER := 0.25
 const AI_LONG_IDLE_SECONDS := 20.0
 const AI_PATH_RECOVERY_SECONDS := 4.0
 const AI_PATH_STUCK_SECONDS := 20.0
+const AI_SUBMARINE_OXYGEN_SAFETY_SECONDS := 5.0
+const AI_SUBMARINE_REDIVE_RATIO := 0.75
+const AI_SUBMARINE_BREAK_CONTACT_SECONDS := 3.0
+const AI_SUBMARINE_ATTACK_RUN_TIMEOUT := 12.0
+const AI_SUBMARINE_TORPEDO_OPPORTUNITY_SECONDS := 1.0
 const NAVIGATION_NORMAL_INTERVAL_TICKS := 10
 const NAVIGATION_FIXED_TICK_DELTA := 0.1
 const NAVIGATION_PREDICTION_HORIZON := 6.0
@@ -412,6 +417,7 @@ func snapshot(viewer_faction: String = PLAYER_FACTION, omniscient: bool = false)
 			"life_state": unit["life_state"],
 			"is_flagship": unit["is_flagship"],
 			"depth_state": unit.get("depth_state", "Surface"),
+			"depth_transition": unit.get("depth_transition", {}).duplicate(true),
 			"oxygen_state": unit.get("oxygen_state", {}).duplicate(true),
 			"skill_cooldown": unit["skill_state"].get("cooldown_remaining", 0.0),
 			"skill_cooldown_max": unit["skill_state"].get("cooldown_max", 0.0),
@@ -500,6 +506,11 @@ func _configure_simulation_ai_unit(unit: Dictionary) -> void:
 	_mark_navigation_dirty(unit)
 	unit["ai_state"]["mode_id"] = _default_ai_mode(unit.get("stats", {}))
 	unit["ai_state"]["mode_entered_at"] = float(state.get("elapsed_time", 0.0))
+	if str(unit.get("stats", {}).get("ship_class", "")) == "Submarine":
+		unit["ai_state"]["submarine_combat_phase"] = "Search"
+		unit["ai_state"]["submarine_phase_entered_at"] = float(state.get("elapsed_time", 0.0))
+		unit["ai_state"]["submarine_phase_reason"] = "SUB_SEARCH_NO_CONTACT"
+		_project_submarine_phase(unit)
 
 
 func configure_ai_profile(profile_id: String) -> Dictionary:
@@ -618,6 +629,11 @@ func get_operation_status(unit_id: String) -> Dictionary:
 	var ammo_group_id := str(ship.get("ammo_selection_group_id", ""))
 	var ammo_options := _ammo_options_for_ship(ship, ammo_group_id)
 	var skill_cooldown := float(unit["skill_state"].get("cooldown_remaining", 0.0))
+	var primary_reason := _primary_unavailable_reason(unit, primary_states)
+	var is_submarine := str(ship.get("ship_class", "")) == "Submarine"
+	var depth_state := str(unit.get("depth_state", "Surface"))
+	var depth_target := "Surface" if depth_state == "Submerged" else "Submerged"
+	var depth_change_reason := _submarine_depth_change_rejection(unit, depth_target) if is_submarine else "NOT_SUBMARINE"
 	return {
 		"available": true,
 		"slot": int(unit.get("operation_slot", 0)),
@@ -633,8 +649,8 @@ func get_operation_status(unit_id: String) -> Dictionary:
 		"primary_reload_max": primary_reload_max,
 		"primary_mount_launch_remaining": group_launch_remaining,
 		"primary_range": primary_range,
-		"primary_ready": primary_ready and unit.get("life_state", "") == "Alive" and state.get("phase", "") == "Running",
-		"primary_reason": _primary_unavailable_reason(unit, primary_states),
+		"primary_ready": primary_ready and primary_reason == "OK" and unit.get("life_state", "") == "Alive" and state.get("phase", "") == "Running",
+		"primary_reason": primary_reason,
 		"ammo_group_id": ammo_group_id,
 		"ammo_options": ammo_options,
 		"selected_ammo": selected_ammo,
@@ -646,6 +662,14 @@ func get_operation_status(unit_id: String) -> Dictionary:
 		"secondary_auto_fire_enabled": bool(unit.get("secondary_auto_fire_enabled", true)),
 		"primary_auto_fire_enabled": bool(unit.get("primary_auto_fire_enabled", false)),
 		"skill_auto_cast_enabled": false,
+		"ship_class": str(ship.get("ship_class", "")),
+		"depth_state": depth_state,
+		"depth_transition": unit.get("depth_transition", {}).duplicate(true),
+		"depth_hold_remaining": float(unit.get("depth_hold_remaining", 0.0)),
+		"oxygen_state": unit.get("oxygen_state", {}).duplicate(true),
+		"depth_change_target": depth_target,
+		"depth_change_available": is_submarine and depth_change_reason in ["OK", "SUBMARINE_DEPTH_UNCHANGED"] and unit.get("life_state", "") == "Alive" and state.get("phase", "") == "Running",
+		"depth_change_reason": depth_change_reason,
 		"player_route_waypoints": unit.get("player_route_waypoints", []).duplicate(true),
 		"player_route_remaining": _remaining_player_route(unit),
 		"movement_mode": str(unit.get("movement_state", {}).get("mode", "HoldPosition")),
@@ -931,6 +955,8 @@ func _build_unit(member: Dictionary, ship: Dictionary, fleet_id: String, faction
 		"ammo_state": _build_ammo_state(ship, str(member.get("initial_ammo_type", ""))),
 		"status_effects": [],
 		"depth_state": "Submerged" if ship.get("ship_class", "") == "Submarine" else "Surface",
+		"depth_transition": {"active": false, "from_depth_state": "", "target_depth_state": "", "remaining": 0.0, "duration": float(ship.get("depth_transition_duration", 0.0))},
+		"depth_hold_remaining": 0.0,
 		"radar_stealth_state": "Stealthed" if bool(ship.get("radar_stealth", false)) else "Exposed",
 		"oxygen_state": {"current": float(ship.get("max_oxygen", 0.0)), "maximum": float(ship.get("max_oxygen", 0.0))},
 		"firing_reveal_remaining": 0.0,
@@ -991,6 +1017,24 @@ func _build_unit(member: Dictionary, ship: Dictionary, fleet_id: String, faction
 			"engagement_pressure_triggered": false,
 			"passive_report_accumulator": 0.0,
 			"long_idle_reported": false,
+			"submarine_combat_phase": "Search" if ship.get("ship_class", "") == "Submarine" else "",
+			"submarine_phase_entered_at": 0.0,
+			"submarine_phase_reason": "SUB_SEARCH_NO_CONTACT" if ship.get("ship_class", "") == "Submarine" else "",
+			"submarine_attack_completed": false,
+			"submarine_target_id": "",
+			"planned_torpedo_weapon_state_instance_id": "",
+			"planned_torpedo_aim_position": Vector2.INF,
+			"planned_attack_position": Vector2.INF,
+			"planned_exit_position": Vector2.INF,
+			"requested_depth_state": "",
+			"depth_request_reason": "",
+			"last_depth_request_tick": -1,
+			"projected_oxygen_margin": 1.0,
+			"surface_attack_deadline": 0.0,
+			"last_submarine_fire_tick": -1,
+			"torpedo_opportunity_expires_at": 0.0,
+			"torpedo_opportunity_previous_legal": false,
+			"torpedo_force_fire_recheck": false,
 		},
 	}
 
@@ -1024,8 +1068,8 @@ func _process_commands() -> void:
 		var tick_a := int(a.get("issued_at_tick", 0))
 		var tick_b := int(b.get("issued_at_tick", 0))
 		if tick_a != tick_b: return tick_a < tick_b
-		var priority_a := 0 if str(a.get("command_type", "")) == "SetUnitControlState" else 1
-		var priority_b := 0 if str(b.get("command_type", "")) == "SetUnitControlState" else 1
+		var priority_a := 0 if str(a.get("command_type", "")) in ["SetUnitControlState", "SetSubmarineDepth"] else 1
+		var priority_b := 0 if str(b.get("command_type", "")) in ["SetUnitControlState", "SetSubmarineDepth"] else 1
 		return priority_a < priority_b if priority_a != priority_b else str(a.get("command_id", "")) < str(b.get("command_id", "")))
 	var pending := command_queue
 	command_queue = []
@@ -1050,6 +1094,8 @@ func _apply_command(command: Dictionary) -> Dictionary:
 	var issuer_faction := str(command.get("issuer_id", PLAYER_FACTION))
 	if unit["faction_id"] != issuer_faction: return _rejection(command.get("command_id", ""), "UNIT_NOT_CONTROLLABLE")
 	match command.get("command_type", ""):
+		"SetSubmarineDepth":
+			return _set_submarine_depth(unit, command)
 		"MoveUnits":
 			var issuer_type := str(command.get("issuer_type", "Player"))
 			var requested_mode := str(command.get("movement_mode", "AssistNavigate" if issuer_type == "PlayerAssistAI" else "AutoNavigate"))
@@ -1116,7 +1162,7 @@ func _apply_command(command: Dictionary) -> Dictionary:
 				return _rejection(command.get("command_id", ""), "AUTO_FIRE_DISABLED")
 			var target_position = command.get("target_position")
 			if typeof(target_position) != TYPE_VECTOR2: return _rejection(command.get("command_id", ""), "INVALID_TARGET_TYPE")
-			var fire_result := _fire_primary_weapon(unit, target_position, command.get("command_id", ""))
+			var fire_result := _fire_primary_weapon(unit, target_position, command.get("command_id", ""), str(command.get("weapon_state_instance_id", "")))
 			if bool(fire_result.get("accepted", false)) and _is_player_tutorial_command(command):
 				_record_tutorial_action("ManualPrimaryFire", unit_id, {"weapon_group_id": str(unit.get("stats", {}).get("primary_weapon_group_id", ""))})
 			return fire_result
@@ -1219,6 +1265,52 @@ func _set_unit_control_state(command: Dictionary) -> Dictionary:
 			"primary_auto_fire_enabled": bool(unit.get("primary_auto_fire_enabled", false)),
 		})
 	return {"accepted": not changed.is_empty(), "changed_unit_ids": changed, "reason_code": "OK" if not changed.is_empty() else "UNIT_NOT_CONTROLLABLE"}
+
+
+func _submarine_depth_change_rejection(unit: Dictionary, target_depth_state: String) -> String:
+	if str(unit.get("stats", {}).get("ship_class", "")) != "Submarine":
+		return "NOT_SUBMARINE"
+	if target_depth_state not in ["Surface", "Submerged"]:
+		return "INVALID_SUBMARINE_DEPTH"
+	if bool(unit.get("depth_transition", {}).get("active", false)):
+		return "SUBMARINE_DEPTH_TRANSITION_ACTIVE"
+	if str(unit.get("depth_state", "Surface")) == target_depth_state:
+		return "SUBMARINE_DEPTH_UNCHANGED"
+	if float(unit.get("depth_hold_remaining", 0.0)) > 0.0:
+		return "SUBMARINE_DEPTH_HOLD_ACTIVE"
+	if target_depth_state == "Submerged":
+		var oxygen: Dictionary = unit.get("oxygen_state", {})
+		var maximum := maxf(0.0, float(oxygen.get("maximum", unit.get("stats", {}).get("max_oxygen", 0.0))))
+		var oxygen_ratio := float(oxygen.get("current", 0.0)) / maximum if maximum > 0.0 else 0.0
+		if oxygen_ratio + 0.000001 < float(unit.get("stats", {}).get("redive_oxygen_ratio", 0.5)):
+			return "SUBMARINE_OXYGEN_TOO_LOW"
+	return "OK"
+
+
+func _set_submarine_depth(unit: Dictionary, command: Dictionary) -> Dictionary:
+	var target_depth_state := str(command.get("target_depth_state", ""))
+	var rejection_reason := _submarine_depth_change_rejection(unit, target_depth_state)
+	if rejection_reason == "SUBMARINE_DEPTH_UNCHANGED":
+		return {"accepted": true, "reason_code": rejection_reason}
+	if rejection_reason != "OK":
+		return _rejection(command.get("command_id", ""), rejection_reason)
+	var from_depth_state := str(unit.get("depth_state", "Surface"))
+	var duration := maxf(0.001, float(unit.get("stats", {}).get("depth_transition_duration", 2.0)))
+	unit["depth_transition"] = {
+		"active": true,
+		"from_depth_state": from_depth_state,
+		"target_depth_state": target_depth_state,
+		"remaining": duration,
+		"duration": duration,
+	}
+	_emit("SubmarineDepthTransitionStarted", {
+		"unit_id": str(unit.get("entity_id", "")),
+		"from_depth_state": from_depth_state,
+		"target_depth_state": target_depth_state,
+		"duration": duration,
+		"issuer_type": str(command.get("issuer_type", "Player")),
+	})
+	return {"accepted": true, "reason_code": "OK"}
 
 
 func _append_player_waypoint(unit: Dictionary, target_position: Vector2, command_id: String) -> Dictionary:
@@ -1402,24 +1494,46 @@ func _update_submarine_resources(delta: float) -> void:
 		var unit: Dictionary = state["units_by_id"][unit_id]
 		if unit.get("life_state", "") != "Alive" or str(unit.get("stats", {}).get("ship_class", "")) != "Submarine":
 			continue
+		unit["depth_hold_remaining"] = maxf(0.0, float(unit.get("depth_hold_remaining", 0.0)) - delta)
 		var oxygen: Dictionary = unit.get("oxygen_state", {})
 		var maximum := maxf(0.0, float(oxygen.get("maximum", unit.get("stats", {}).get("max_oxygen", 0.0))))
 		if maximum <= 0.0: continue
 		var current := clampf(float(oxygen.get("current", maximum)), 0.0, maximum)
-		if str(unit.get("depth_state", "Submerged")) == "Submerged":
-			var consumption_rate := float(unit.get("stats", {}).get("oxygen_consumption_rate", maximum / 90.0))
+		var transition: Dictionary = unit.get("depth_transition", {})
+		var resource_depth_state := str(transition.get("from_depth_state", unit.get("depth_state", "Submerged"))) if bool(transition.get("active", false)) else str(unit.get("depth_state", "Submerged"))
+		if resource_depth_state == "Submerged":
+			var consumption_rate := float(unit.get("stats", {}).get("oxygen_consumption_rate", 1.0))
 			consumption_rate = ModifierService.calculate(consumption_rate, _active_status_effects(unit), "OxygenConsumptionRate")
 			current = maxf(0.0, current - consumption_rate * delta)
 			if is_zero_approx(current):
 				unit["depth_state"] = "Surface"
-				_emit("SubmarineForcedSurface", {"unit_id": unit_id, "reason": "OXYGEN_DEPLETED"})
+				unit["depth_transition"] = {"active": false, "from_depth_state": "", "target_depth_state": "", "remaining": 0.0, "duration": float(unit.get("stats", {}).get("depth_transition_duration", 2.0))}
+				unit["depth_hold_remaining"] = float(unit.get("stats", {}).get("depth_state_minimum_hold", 3.0))
+				unit["ai_state"]["requested_depth_state"] = ""
+				_emit("SubmarineForcedSurface", {"unit_id": unit_id, "from_depth_state": resource_depth_state, "target_depth_state": "Surface", "reason": "OXYGEN_DEPLETED"})
+				if _uses_full_ai(unit):
+					_set_submarine_phase(unit, "RecoverOxygen", "SUB_RECOVER_OXYGEN_FORCED_SURFACE")
 		else:
-			var recovery_rate := float(unit.get("stats", {}).get("oxygen_recovery_rate", maximum / 45.0))
+			var recovery_rate := float(unit.get("stats", {}).get("oxygen_recovery_rate", 2.0))
 			recovery_rate = ModifierService.calculate(recovery_rate, _active_status_effects(unit), "OxygenRecoveryRate")
 			current = minf(maximum, current + recovery_rate * delta)
 		oxygen["current"] = current
 		oxygen["maximum"] = maximum
 		unit["oxygen_state"] = oxygen
+		transition = unit.get("depth_transition", {})
+		if bool(transition.get("active", false)):
+			transition["remaining"] = maxf(0.0, float(transition.get("remaining", 0.0)) - delta)
+			if is_zero_approx(float(transition["remaining"])):
+				var from_depth_state := str(transition.get("from_depth_state", unit.get("depth_state", "Surface")))
+				var target_depth_state := str(transition.get("target_depth_state", unit.get("depth_state", "Surface")))
+				unit["depth_state"] = target_depth_state
+				unit["depth_hold_remaining"] = float(unit.get("stats", {}).get("depth_state_minimum_hold", 3.0))
+				transition["active"] = false
+				transition["from_depth_state"] = ""
+				transition["target_depth_state"] = ""
+				unit["ai_state"]["requested_depth_state"] = ""
+				_emit("SubmarineDepthChanged", {"unit_id": unit_id, "from_depth_state": from_depth_state, "target_depth_state": target_depth_state, "reason": "ACTIVE_COMMAND"})
+			unit["depth_transition"] = transition
 
 
 func _update_navigation_plans() -> void:
@@ -1843,7 +1957,8 @@ func _update_ai_engagement_memory(delta: float) -> void:
 			if float(ai_state["passive_report_accumulator"]) >= 1.0:
 				_emit("AIEngagementPressureSample", {"unit_id": unit_id, "duration": ai_state["passive_report_accumulator"], "pressure": pressure})
 				ai_state["passive_report_accumulator"] = 0.0
-		if bool(ai_state.get("engagement_pressure_triggered", false)) and _ai_has_engagement_window(unit, observation):
+		var submarine_requires_actual_fire := str(unit.get("stats", {}).get("ship_class", "")) == "Submarine"
+		if bool(ai_state.get("engagement_pressure_triggered", false)) and not submarine_requires_actual_fire and _ai_has_engagement_window(unit, observation):
 			var response_time := maxf(0.0, float(state.get("elapsed_time", 0.0)) - float(ai_state.get("engagement_pressure_started_at", state.get("elapsed_time", 0.0))))
 			_emit("AIEngagementPressureResolved", {"unit_id": unit_id, "response_time": response_time, "reason": "ENGAGEMENT_WINDOW"})
 			_reset_ai_passive_memory(unit)
@@ -2104,14 +2219,22 @@ func _build_detection_tick_cache() -> Dictionary:
 func _detection_unit_fact(unit: Dictionary) -> Dictionary:
 	var position: Vector2 = unit.get("position", Vector2.ZERO)
 	var status_effects := _active_status_effects(unit)
-	var concealment := ModifierService.calculate(float(unit["stats"]["concealment_distance"]), status_effects, "ConcealmentDistance")
+	var surface_concealment := ModifierService.calculate(float(unit["stats"]["concealment_distance"]), status_effects, "ConcealmentDistance")
+	var concealment := surface_concealment
+	var detection_base := float(unit["stats"]["detection_range"])
+	if str(unit.get("stats", {}).get("ship_class", "")) == "Submarine":
+		if str(unit.get("depth_state", "Surface")) == "Submerged":
+			concealment = surface_concealment * 0.25
+			detection_base = surface_concealment * 0.5
+		else:
+			detection_base = surface_concealment * 1.5
 	if float(unit.get("firing_reveal_remaining", 0.0)) > 0.0:
 		concealment *= float(unit["stats"]["fire_concealment_multiplier"])
 	var context := terrain_context_service.context_at(position)
 	_profile_increment("detection_context_samples_per_tick")
 	return {
 		"position": position,
-		"detection_range": ModifierService.calculate(float(unit["stats"]["detection_range"]), status_effects, "DetectionRange"),
+		"detection_range": ModifierService.calculate(detection_base, status_effects, "DetectionRange"),
 		"concealment": concealment,
 		"optical_visibility_multiplier": float(context.get("optical_visibility_multiplier", 1.0)),
 	}
@@ -2516,6 +2639,8 @@ func _queue_ai_move(unit: Dictionary, target_position: Vector2, issuer_type: Str
 
 
 func _cheap_ai_segment_clear(unit: Dictionary, start: Vector2, finish: Vector2) -> bool:
+	if not terrain_query.is_configured():
+		return true
 	var radius := float(unit.get("stats", {}).get("collision_radius", 20.0))
 	if not terrain_query.can_occupy_circle(finish, radius, _movement_tags(unit)): return false
 	return not bool(terrain_query.first_segment_hit(start, finish, "ShipMovement", radius).get("hit", false))
@@ -2552,6 +2677,9 @@ func _update_player_assist_intent(unit: Dictionary) -> void:
 
 
 func _update_enemy_ai_intent(unit: Dictionary) -> void:
+	if str(unit.get("stats", {}).get("ship_class", "")) == "Submarine":
+		_update_submarine_ai_intent(unit)
+		return
 	if float(unit["ai_state"].get("decision_cooldown", 0.0)) > 0.0:
 		return
 	unit["ai_state"]["decision_cooldown"] = float(_ai_profile.get("decision_interval", AI_DECISION_INTERVAL))
@@ -2573,30 +2701,473 @@ func _update_enemy_ai_intent(unit: Dictionary) -> void:
 		return
 	_update_enemy_mode(unit, target)
 	if target.is_empty():
-		var contact_search_position := _contact_search_position(unit, previous_target_id)
-		if not contact_search_position.is_equal_approx(Vector2.INF):
-			_queue_ai_move(unit, contact_search_position)
-			return
-		var context := terrain_context_service.context_at(unit["position"])
-		var lee_center := terrain_context_service.zone_center_for_effect("environment.effect.lee_water")
-		if int(context.get("sea_state", 0)) >= 4 and lee_center != Vector2.ZERO:
-			_queue_ai_move(unit, lee_center)
-			return
-		var map_center := _map_center()
-		var search_x := float(state["map"].get("width", 1200.0)) * (0.25 if float(unit["position"].x) >= map_center.x else 0.75)
-		var faction_units: Array = _sorted_unit_ids().filter(func(unit_id):
-			var candidate: Dictionary = state["units_by_id"].get(unit_id, {})
-			return candidate.get("life_state", "") == "Alive" and candidate.get("faction_id", "") == unit.get("faction_id", "")
-		)
-		var lane_index := maxi(0, faction_units.find(str(unit.get("entity_id", ""))))
-		var lane_spacing := minf(96.0, float(state["map"].get("height", 800.0)) * 0.5 / maxf(1.0, float(faction_units.size() - 1)))
-		var lane_offset := (float(lane_index) - float(faction_units.size() - 1) * 0.5) * lane_spacing
-		_queue_ai_move(unit, Vector2(search_x, map_center.y + lane_offset))
+		_queue_enemy_search_intent(unit, previous_target_id)
 		return
 	var tactic_scores := AIQuantitativeModel.detected_tactic_scores(_detected_tactic_values(unit, target, false))
 	var tactic_id := _update_ai_tactic(unit, tactic_scores)
 	var destination := _tactical_destination(unit, target, tactic_id, str(unit["ai_state"].get("mode_id", "VanguardLine")))
 	_queue_ai_move(unit, destination)
+
+
+func _queue_enemy_search_intent(unit: Dictionary, previous_target_id: String = "") -> void:
+	var contact_search_position := _contact_search_position(unit, previous_target_id)
+	if not contact_search_position.is_equal_approx(Vector2.INF):
+		_queue_ai_move(unit, contact_search_position)
+		return
+	var context := terrain_context_service.context_at(unit["position"])
+	var lee_center := terrain_context_service.zone_center_for_effect("environment.effect.lee_water")
+	if int(context.get("sea_state", 0)) >= 4 and lee_center != Vector2.ZERO:
+		_queue_ai_move(unit, lee_center)
+		return
+	var map_center := _map_center()
+	var search_x := float(state["map"].get("width", 1200.0)) * (0.25 if float(unit["position"].x) >= map_center.x else 0.75)
+	var faction_units: Array = _sorted_unit_ids().filter(func(unit_id):
+		var candidate: Dictionary = state["units_by_id"].get(unit_id, {})
+		return candidate.get("life_state", "") == "Alive" and candidate.get("faction_id", "") == unit.get("faction_id", "")
+	)
+	var lane_index := maxi(0, faction_units.find(str(unit.get("entity_id", ""))))
+	var lane_spacing := minf(96.0, float(state["map"].get("height", 800.0)) * 0.5 / maxf(1.0, float(faction_units.size() - 1)))
+	var lane_offset := (float(lane_index) - float(faction_units.size() - 1) * 0.5) * lane_spacing
+	_queue_ai_move(unit, Vector2(search_x, map_center.y + lane_offset))
+
+
+func _update_submarine_ai_intent(unit: Dictionary) -> void:
+	var ai_state: Dictionary = unit["ai_state"]
+	if float(ai_state.get("decision_cooldown", 0.0)) > 0.0:
+		return
+	ai_state["decision_cooldown"] = float(_ai_profile.get("decision_interval", AI_DECISION_INTERVAL))
+	var phase := str(ai_state.get("submarine_combat_phase", "Search"))
+	if phase not in ["Search", "Approach", "SurfaceForAttack", "AttackRun", "BreakContact", "RecoverOxygen"]:
+		_set_submarine_phase(unit, "Search", "SUB_INVALID_PHASE_RECOVERED")
+		phase = "Search"
+	_project_submarine_phase(unit)
+
+	if phase == "RecoverOxygen":
+		_update_submarine_recovery_intent(unit)
+		return
+
+	var previous_target_id := str(ai_state.get("submarine_target_id", unit.get("targeting_state", {}).get("current_target_id", "")))
+	var target := _select_submarine_target_with_hysteresis(unit)
+	if phase == "BreakContact":
+		_update_submarine_break_contact_intent(unit, target)
+		return
+
+	if target.is_empty():
+		ai_state["submarine_target_id"] = ""
+		_clear_submarine_torpedo_solution(unit)
+		if str(unit.get("depth_state", "Surface")) == "Surface" or bool(unit.get("depth_transition", {}).get("active", false)):
+			_set_submarine_phase(unit, "RecoverOxygen", "SUB_RECOVER_OXYGEN")
+			_update_submarine_recovery_intent(unit)
+		else:
+			_set_submarine_phase(unit, "Search", "SUB_SEARCH_NO_CONTACT")
+			_queue_enemy_search_intent(unit, previous_target_id)
+		return
+
+	ai_state["submarine_target_id"] = str(target.get("entity_id", ""))
+	if phase == "Search":
+		_set_submarine_phase(unit, "Approach", "SUB_APPROACH_TARGET_SELECTED")
+		phase = "Approach"
+
+	var oxygen_margin := _submarine_projected_oxygen_margin(unit, target)
+	ai_state["projected_oxygen_margin"] = oxygen_margin
+	if oxygen_margin <= 0.0:
+		_set_submarine_phase(unit, "RecoverOxygen", "SUB_APPROACH_OXYGEN_INSUFFICIENT")
+		_update_submarine_recovery_intent(unit)
+		return
+
+	var planning_solution := _submarine_planning_solution(unit, target)
+	if planning_solution.is_empty():
+		_set_submarine_phase(unit, "Search", "SUB_APPROACH_NO_REACHABLE_SOLUTION")
+		_clear_submarine_torpedo_solution(unit)
+		_queue_enemy_search_intent(unit, previous_target_id)
+		return
+	_store_submarine_torpedo_solution(unit, planning_solution)
+	var advisory_tactic := _submarine_transient_tactic(unit, target)
+	var local_pressure := float(_local_power_context(unit).get("pressure", 0.0))
+	if advisory_tactic == "Kite" and local_pressure >= 0.65:
+		_set_submarine_phase(unit, "BreakContact", "SUB_BREAK_CONTACT")
+		_update_submarine_break_contact_intent(unit, target)
+		return
+
+	match phase:
+		"Approach":
+			var can_launch_submerged := bool(unit.get("stats", {}).get("can_launch_torpedoes_submerged", false))
+			if can_launch_submerged and not _select_submarine_torpedo_solution(unit, target).is_empty():
+				_set_submarine_phase(unit, "AttackRun", "SUB_ATTACK_WINDOW_READY")
+				_queue_ai_move(unit, planning_solution.get("attack_position", unit["position"]))
+				return
+			if not can_launch_submerged:
+				if str(unit.get("depth_state", "Submerged")) == "Surface" and not bool(unit.get("depth_transition", {}).get("active", false)):
+					_set_submarine_phase(unit, "AttackRun", "SUB_ATTACK_DEPTH_READY")
+					_queue_ai_move(unit, planning_solution.get("attack_position", unit["position"]))
+					return
+				if _submarine_surface_lead_reached(unit, target, planning_solution) and not (advisory_tactic == "Defend" and local_pressure >= 0.45):
+					_set_submarine_phase(unit, "SurfaceForAttack", "SUB_SURFACE_FOR_ATTACK")
+					_queue_ai_submarine_depth_request(unit, "Surface", "SUB_SURFACE_FOR_ATTACK")
+					_queue_ai_move(unit, planning_solution.get("attack_position", unit["position"]))
+					return
+			_queue_ai_move(unit, planning_solution.get("attack_position", target.get("position", unit["position"])))
+		"SurfaceForAttack":
+			if advisory_tactic == "Defend" and local_pressure >= 0.45 and not bool(unit.get("depth_transition", {}).get("active", false)):
+				_queue_ai_move(unit, planning_solution.get("exit_position", unit["position"]))
+				return
+			if str(unit.get("depth_state", "Submerged")) == "Surface" and not bool(unit.get("depth_transition", {}).get("active", false)):
+				_set_submarine_phase(unit, "AttackRun", "SUB_ATTACK_DEPTH_READY")
+			else:
+				_queue_ai_submarine_depth_request(unit, "Surface", "SUB_SURFACE_FOR_ATTACK")
+			_queue_ai_move(unit, planning_solution.get("attack_position", unit["position"]))
+		"AttackRun":
+			if not bool(unit.get("stats", {}).get("can_launch_torpedoes_submerged", false)) and (str(unit.get("depth_state", "Submerged")) != "Surface" or bool(unit.get("depth_transition", {}).get("active", false))):
+				_set_submarine_phase(unit, "SurfaceForAttack", "SUB_ATTACK_HELD_DEPTH")
+				_queue_ai_submarine_depth_request(unit, "Surface", "SUB_SURFACE_FOR_ATTACK")
+				return
+			if float(state.get("elapsed_time", 0.0)) - float(ai_state.get("submarine_phase_entered_at", 0.0)) >= AI_SUBMARINE_ATTACK_RUN_TIMEOUT:
+				_set_submarine_phase(unit, "BreakContact", "SUB_ATTACK_WINDOW_TIMEOUT")
+				_update_submarine_break_contact_intent(unit, target)
+				return
+			var legal_solution := _select_submarine_torpedo_solution(unit, target)
+			if not legal_solution.is_empty():
+				_store_submarine_torpedo_solution(unit, legal_solution)
+				_queue_ai_move(unit, legal_solution.get("attack_position", unit["position"]))
+			else:
+				_queue_ai_move(unit, planning_solution.get("attack_position", unit["position"]))
+
+
+func _set_submarine_phase(unit: Dictionary, new_phase: String, reason: String) -> void:
+	var ai_state: Dictionary = unit["ai_state"]
+	var old_phase := str(ai_state.get("submarine_combat_phase", "Search"))
+	ai_state["submarine_combat_phase"] = new_phase
+	ai_state["submarine_phase_reason"] = reason
+	if old_phase != new_phase:
+		ai_state["submarine_phase_entered_at"] = float(state.get("elapsed_time", 0.0))
+		ai_state["submarine_attack_completed"] = false if new_phase in ["Search", "Approach", "SurfaceForAttack", "AttackRun"] else bool(ai_state.get("submarine_attack_completed", false))
+		_emit("AISubmarinePhaseChanged", {"unit_id": unit.get("entity_id", ""), "old_phase": old_phase, "new_phase": new_phase, "reason": reason})
+	_project_submarine_phase(unit)
+
+
+func _project_submarine_phase(unit: Dictionary) -> void:
+	var ai_state: Dictionary = unit["ai_state"]
+	var phase := str(ai_state.get("submarine_combat_phase", "Search"))
+	var mode_id := "ReconAvoid"
+	match phase:
+		"Approach", "SurfaceForAttack", "AttackRun": mode_id = "TorpedoFlank"
+		"BreakContact", "RecoverOxygen": mode_id = "DisengageRegroup"
+		_: mode_id = "ReconAvoid"
+	if str(ai_state.get("mode_id", "")) != mode_id:
+		var old_mode := str(ai_state.get("mode_id", ""))
+		ai_state["mode_id"] = mode_id
+		ai_state["mode_entered_at"] = float(state.get("elapsed_time", 0.0))
+		_emit("AIModeChanged", {"unit_id": unit.get("entity_id", ""), "old_mode_id": old_mode, "new_mode_id": mode_id, "score": 0.0, "reason": "SUBMARINE_PHASE_PROJECTION"})
+	ai_state["mode_candidate_id"] = ""
+	ai_state["mode_candidate_confirmations"] = 0
+	ai_state["tactic_id"] = ""
+	ai_state["tactic_candidate_id"] = ""
+	ai_state["tactic_candidate_confirmations"] = 0
+
+
+func _submarine_fire_discipline(unit: Dictionary) -> String:
+	match str(unit.get("ai_state", {}).get("submarine_combat_phase", "Search")):
+		"SurfaceForAttack", "AttackRun": return "HoldUntilWindow"
+		"RecoverOxygen": return "SelfDefense"
+		_: return "Silent"
+
+
+func _select_submarine_target_with_hysteresis(unit: Dictionary) -> Dictionary:
+	var observation = _ai_observation_for(str(unit.get("faction_id", "")))
+	var candidates: Array = []
+	for target_id in observation.visible_enemies:
+		var candidate: Dictionary = observation.visible_enemies[target_id]
+		if _submarine_target_is_eligible(unit, candidate):
+			candidates.append(candidate)
+	candidates.sort_custom(func(a, b): return _submarine_target_better(unit, a, b))
+	var best: Dictionary = {} if candidates.is_empty() else candidates[0]
+	var current_id := str(unit.get("targeting_state", {}).get("current_target_id", ""))
+	var current: Dictionary = observation.visible_enemies.get(current_id, {})
+	if current.is_empty() or not _submarine_target_is_eligible(unit, current):
+		_commit_ai_target(unit, best, "SUB_TARGET_INVALID_OR_EMPTY")
+		return best
+	if best.is_empty() or str(best.get("entity_id", "")) == current_id:
+		unit["ai_state"]["target_candidate_id"] = ""
+		unit["ai_state"]["target_candidate_confirmations"] = 0
+		return current
+	var ai_state: Dictionary = unit["ai_state"]
+	var now := float(state.get("elapsed_time", 0.0))
+	if now - float(ai_state.get("target_acquired_at", 0.0)) < AI_TARGET_MINIMUM_HOLD or now < float(ai_state.get("target_switch_ready_at", 0.0)):
+		return current
+	var public_improvement := _target_score(unit, best, false) - _target_score(unit, current, false)
+	if public_improvement + 0.0001 < AI_TARGET_SWITCH_MARGIN and not (is_zero_approx(public_improvement) and _submarine_target_better(unit, best, current)):
+		ai_state["target_candidate_id"] = ""
+		ai_state["target_candidate_confirmations"] = 0
+		return current
+	var best_id := str(best.get("entity_id", ""))
+	if str(ai_state.get("target_candidate_id", "")) != best_id:
+		ai_state["target_candidate_id"] = best_id
+		ai_state["target_candidate_confirmations"] = 0
+	ai_state["target_candidate_confirmations"] = int(ai_state.get("target_candidate_confirmations", 0)) + 1
+	if int(ai_state["target_candidate_confirmations"]) < int(_ai_profile.get("target_confirmations", 2)):
+		return current
+	_commit_ai_target(unit, best, "SUB_BETTER_TARGET_CONFIRMED")
+	return best
+
+
+func _submarine_target_better(unit: Dictionary, first: Dictionary, second: Dictionary) -> bool:
+	var first_score := _target_score(unit, first, false)
+	var second_score := _target_score(unit, second, false)
+	if not is_equal_approx(first_score, second_score): return first_score > second_score
+	var first_predictability := _submarine_course_predictability(first)
+	var second_predictability := _submarine_course_predictability(second)
+	if not is_equal_approx(first_predictability, second_predictability): return first_predictability > second_predictability
+	var first_asw := _submarine_anti_submarine_threat(unit, first)
+	var second_asw := _submarine_anti_submarine_threat(unit, second)
+	if not is_equal_approx(first_asw, second_asw): return first_asw < second_asw
+	return str(first.get("entity_id", "")) < str(second.get("entity_id", ""))
+
+
+func _submarine_target_is_eligible(unit: Dictionary, target: Dictionary) -> bool:
+	if target.is_empty() or target.get("life_state", "") != "Alive": return false
+	if not _is_visible_to(str(unit.get("faction_id", "")), str(target.get("entity_id", ""))): return false
+	if not bool(unit.get("stats", {}).get("can_launch_torpedoes_submerged", false)) and float(unit.get("stats", {}).get("depth_transition_duration", 0.0)) <= 0.0:
+		return false
+	var planning_solution := _submarine_planning_solution(unit, target)
+	if planning_solution.is_empty(): return false
+	if float(planning_solution.get("attack_route_quality", 0.0)) <= 0.0 or float(planning_solution.get("exit_quality", 0.0)) <= 0.0:
+		return false
+	return _submarine_projected_oxygen_margin(unit, target) > 0.0
+
+
+func _submarine_course_predictability(target: Dictionary) -> float:
+	var maximum_speed := maxf(1.0, float(target.get("stats", {}).get("speed", 1.0)))
+	return clampf(absf(float(target.get("current_speed", 0.0))) / maximum_speed, 0.0, 1.0)
+
+
+func _submarine_anti_submarine_threat(unit: Dictionary, target: Dictionary) -> float:
+	var distance := (unit.get("position", Vector2.ZERO) as Vector2).distance_to(target.get("position", Vector2.ZERO))
+	var best := 0.0
+	for weapon_state in target.get("weapon_states", []):
+		if not bool(weapon_state.get("enabled", true)): continue
+		var weapon := _weapon_for_state(weapon_state)
+		if weapon.is_empty() or "Submerged" not in weapon.get("target_types", []): continue
+		var weapon_range := maxf(1.0, float(weapon.get("range", 1.0)))
+		var range_pressure := clampf(1.0 - maxf(0.0, distance - weapon_range) / weapon_range, 0.0, 1.0)
+		best = maxf(best, range_pressure)
+	return best
+
+
+func _submarine_projected_oxygen_margin(unit: Dictionary, target: Dictionary) -> float:
+	var oxygen: Dictionary = unit.get("oxygen_state", {})
+	var maximum := maxf(1.0, float(oxygen.get("maximum", unit.get("stats", {}).get("max_oxygen", 1.0))))
+	if str(unit.get("depth_state", "Submerged")) == "Surface" and not bool(unit.get("depth_transition", {}).get("active", false)):
+		return float(oxygen.get("current", maximum)) / maximum
+	var planning_solution := _submarine_planning_solution(unit, target, false)
+	if planning_solution.is_empty(): return -1.0
+	var destination: Vector2 = planning_solution.get("attack_position", target.get("position", unit.get("position", Vector2.ZERO)))
+	var distance := (unit.get("position", Vector2.ZERO) as Vector2).distance_to(destination)
+	var speed := maxf(1.0, float(unit.get("stats", {}).get("speed", 1.0)))
+	var required_time := distance / speed + float(unit.get("stats", {}).get("depth_transition_duration", 2.0)) + AI_SUBMARINE_OXYGEN_SAFETY_SECONDS
+	var consumption_rate := maxf(0.0, float(unit.get("stats", {}).get("oxygen_consumption_rate", 1.0)))
+	return (float(oxygen.get("current", maximum)) - consumption_rate * required_time) / maximum
+
+
+func _submarine_planning_solution(unit: Dictionary, target: Dictionary, require_reachable: bool = true) -> Dictionary:
+	var candidates: Array = []
+	for weapon_state in _weapon_states_for_group(unit, str(unit.get("stats", {}).get("primary_weapon_group_id", "")), true):
+		if not bool(weapon_state.get("enabled", true)): continue
+		var weapon := _weapon_for_state(weapon_state)
+		if weapon.is_empty() or str(weapon.get("mount_type", "")) != "Torpedo": continue
+		var aim_solution := _automatic_aim_solution(unit, target, weapon)
+		if aim_solution.is_empty(): continue
+		var positions := _submarine_attack_and_exit_positions(unit, target, weapon, aim_solution.get("position", target.get("position", Vector2.ZERO)))
+		var attack_position: Vector2 = positions.get("attack_position", Vector2.INF)
+		var exit_position: Vector2 = positions.get("exit_position", Vector2.INF)
+		if attack_position.is_equal_approx(Vector2.INF) or exit_position.is_equal_approx(Vector2.INF): continue
+		var attack_route_quality := _route_quality_between(unit, attack_position)
+		var exit_quality := _route_quality_between(unit, exit_position)
+		if require_reachable and (attack_route_quality <= 0.0 or exit_quality <= 0.0): continue
+		candidates.append({
+			"weapon_state": weapon_state,
+			"weapon": weapon,
+			"weapon_state_instance_id": str(weapon_state.get("instance_id", "")),
+			"aim_position": aim_solution.get("position", target.get("position", Vector2.ZERO)),
+			"attack_position": attack_position,
+			"exit_position": exit_position,
+			"attack_route_quality": attack_route_quality,
+			"exit_quality": exit_quality,
+			"ready_ratio": 1.0 - clampf(float(weapon_state.get("reload_remaining", 0.0)) / maxf(0.1, float(weapon.get("reload_time", 0.1))), 0.0, 1.0),
+			"arc_quality": _fire_arc_quality(unit, aim_solution.get("position", target.get("position", Vector2.ZERO)), weapon),
+			"intercept_quality": _submarine_course_predictability(target),
+		})
+	candidates.sort_custom(func(a, b):
+		if not is_equal_approx(float(a["ready_ratio"]), float(b["ready_ratio"])): return float(a["ready_ratio"]) > float(b["ready_ratio"])
+		if not is_equal_approx(float(a["arc_quality"]), float(b["arc_quality"])): return float(a["arc_quality"]) > float(b["arc_quality"])
+		if not is_equal_approx(float(a["intercept_quality"]), float(b["intercept_quality"])): return float(a["intercept_quality"]) > float(b["intercept_quality"])
+		if not is_equal_approx(float(a["exit_quality"]), float(b["exit_quality"])): return float(a["exit_quality"]) > float(b["exit_quality"])
+		return str(a["weapon_state_instance_id"]) < str(b["weapon_state_instance_id"])
+	)
+	return {} if candidates.is_empty() else candidates[0]
+
+
+func _submarine_attack_and_exit_positions(unit: Dictionary, target: Dictionary, weapon: Dictionary, aim_position: Vector2) -> Dictionary:
+	var unit_position: Vector2 = unit.get("position", Vector2.ZERO)
+	var target_position: Vector2 = target.get("position", aim_position)
+	var target_direction := (aim_position - unit_position).normalized()
+	if target_direction == Vector2.ZERO: target_direction = Vector2.RIGHT.rotated(float(unit.get("heading", 0.0)))
+	var arcs := _weapon_fire_arcs(weapon)
+	var arc_center := deg_to_rad(float(arcs[0].get("center", 0.0))) if not arcs.is_empty() else 0.0
+	var desired_heading := target_direction.angle() - arc_center
+	var distance_to_target := unit_position.distance_to(target_position)
+	var desired_range := maxf(float(weapon.get("minimum_range", 0.0)) + 40.0, _effective_weapon_range(unit, weapon) * 0.72)
+	var alignment_distance := maxf(160.0, distance_to_target - desired_range + 160.0)
+	var attack_position := _clamp_to_map(unit_position + Vector2.RIGHT.rotated(desired_heading) * alignment_distance)
+	var away := (unit_position - target_position).normalized()
+	if away == Vector2.ZERO: away = -target_direction
+	var exit_position := _clamp_to_map(unit_position + away * maxf(220.0, _effective_weapon_range(unit, weapon) * 0.45))
+	return {"attack_position": attack_position, "exit_position": exit_position}
+
+
+func _submarine_surface_lead_reached(unit: Dictionary, target: Dictionary, solution: Dictionary) -> bool:
+	var weapon: Dictionary = solution.get("weapon", {})
+	if weapon.is_empty(): return false
+	var distance := (unit.get("position", Vector2.ZERO) as Vector2).distance_to(target.get("position", Vector2.ZERO))
+	var attack_range := _effective_weapon_range(unit, weapon) * 0.82
+	var speed := maxf(1.0, float(unit.get("stats", {}).get("speed", 1.0)))
+	var eta_to_window := maxf(0.0, distance - attack_range) / speed
+	var aim_position: Vector2 = solution.get("aim_position", target.get("position", Vector2.ZERO))
+	var desired_heading := (aim_position - (unit.get("position", Vector2.ZERO) as Vector2)).angle()
+	var arcs := _weapon_fire_arcs(weapon)
+	if not arcs.is_empty(): desired_heading -= deg_to_rad(float(arcs[0].get("center", 0.0)))
+	var turn_speed := deg_to_rad(maxf(1.0, float(unit.get("stats", {}).get("turn_speed", 1.0))))
+	var turn_time := absf(angle_difference(float(unit.get("heading", 0.0)), desired_heading)) / turn_speed
+	var lead_time := float(unit.get("stats", {}).get("depth_transition_duration", 2.0)) + float(_ai_profile.get("decision_interval", AI_DECISION_INTERVAL)) + turn_time
+	unit["ai_state"]["surface_attack_deadline"] = float(state.get("elapsed_time", 0.0)) + eta_to_window
+	return eta_to_window <= lead_time
+
+
+func _submarine_transient_tactic(unit: Dictionary, target: Dictionary) -> String:
+	var scores := AIQuantitativeModel.detected_tactic_scores(_detected_tactic_values(unit, target, false))
+	return str(AIQuantitativeModel.choose_highest(scores).get("id", "Attack"))
+
+
+func _update_submarine_break_contact_intent(unit: Dictionary, target: Dictionary) -> void:
+	var ai_state: Dictionary = unit["ai_state"]
+	_project_submarine_phase(unit)
+	var exit_position: Vector2 = ai_state.get("planned_exit_position", Vector2.INF)
+	if exit_position.is_equal_approx(Vector2.INF):
+		exit_position = _submarine_exit_destination(unit, target)
+		ai_state["planned_exit_position"] = exit_position
+	_queue_ai_move(unit, exit_position)
+	if float(state.get("elapsed_time", 0.0)) - float(ai_state.get("submarine_phase_entered_at", 0.0)) < AI_SUBMARINE_BREAK_CONTACT_SECONDS:
+		return
+	_set_submarine_phase(unit, "RecoverOxygen", "SUB_RECOVER_OXYGEN")
+
+
+func _update_submarine_recovery_intent(unit: Dictionary) -> void:
+	_project_submarine_phase(unit)
+	var ai_state: Dictionary = unit["ai_state"]
+	var transition: Dictionary = unit.get("depth_transition", {})
+	if bool(transition.get("active", false)):
+		ai_state["requested_depth_state"] = str(transition.get("target_depth_state", ""))
+		_queue_ai_move(unit, _submarine_exit_destination(unit, _submarine_current_visible_target(unit)))
+		return
+	if str(unit.get("depth_state", "Surface")) == "Submerged":
+		if _submarine_oxygen_ratio(unit) >= AI_SUBMARINE_REDIVE_RATIO:
+			ai_state["requested_depth_state"] = ""
+			_set_submarine_phase(unit, "Search", "SUB_REDIVE_COMPLETE")
+			_clear_submarine_torpedo_solution(unit)
+		else:
+			_queue_ai_submarine_depth_request(unit, "Surface", "SUB_RECOVER_OXYGEN")
+		return
+	_queue_ai_move(unit, _submarine_exit_destination(unit, _submarine_current_visible_target(unit)))
+	var recovery_target := _select_submarine_target_with_hysteresis(unit)
+	if not recovery_target.is_empty():
+		var recovery_solution := _select_submarine_torpedo_solution(unit, recovery_target)
+		if not recovery_solution.is_empty():
+			var recovery_fire := AIQuantitativeModel.should_fire(recovery_solution.get("window_values", {}), "SelfDefense", _is_unit_under_threat(unit, recovery_target), _is_unit_in_fire_emergency(unit, recovery_target))
+			if bool(recovery_fire.get("fire", false)):
+				ai_state["submarine_target_id"] = str(recovery_target.get("entity_id", ""))
+				_store_submarine_torpedo_solution(unit, recovery_solution)
+				ai_state["submarine_phase_reason"] = "SUB_RECOVERY_SELF_DEFENSE_WINDOW"
+				return
+	if _submarine_oxygen_ratio(unit) + 0.000001 < AI_SUBMARINE_REDIVE_RATIO:
+		ai_state["submarine_phase_reason"] = "SUB_RECOVER_OXYGEN"
+		return
+	if float(unit.get("depth_hold_remaining", 0.0)) > 0.0:
+		ai_state["submarine_phase_reason"] = "SUB_REDIVE_HELD_DEPTH_HOLD"
+		return
+	if _submarine_known_high_threat(unit):
+		ai_state["submarine_phase_reason"] = "SUB_REDIVE_HELD_THREAT"
+		return
+	_queue_ai_submarine_depth_request(unit, "Submerged", "SUB_REDIVE_COMMITTED")
+
+
+func _queue_ai_submarine_depth_request(unit: Dictionary, target_depth_state: String, reason: String) -> void:
+	var ai_state: Dictionary = unit["ai_state"]
+	if bool(unit.get("depth_transition", {}).get("active", false)):
+		return
+	var rejection := _submarine_depth_change_rejection(unit, target_depth_state)
+	if rejection == "SUBMARINE_DEPTH_UNCHANGED":
+		ai_state["requested_depth_state"] = ""
+		return
+	if rejection != "OK":
+		ai_state["depth_request_reason"] = rejection
+		_emit("AIDepthRequestHeld", {"unit_id": unit.get("entity_id", ""), "target_depth_state": target_depth_state, "reason": rejection})
+		return
+	if str(ai_state.get("requested_depth_state", "")) == target_depth_state and int(ai_state.get("last_depth_request_tick", -1)) >= int(state.get("tick_index", 0)) - 1:
+		return
+	ai_state["requested_depth_state"] = target_depth_state
+	ai_state["depth_request_reason"] = reason
+	ai_state["last_depth_request_tick"] = int(state.get("tick_index", 0))
+	command_queue.append({
+		"command_id": "ai.depth.%s.%s" % [state["tick_index"] + 1, unit["entity_id"]],
+		"command_type": "SetSubmarineDepth",
+		"issued_at_tick": state["tick_index"] + 1,
+		"issuer_type": "AI",
+		"issuer_id": unit["faction_id"],
+		"unit_id": unit["entity_id"],
+		"target_depth_state": target_depth_state,
+	})
+	_emit("AIDepthRequestCommitted", {"unit_id": unit.get("entity_id", ""), "target_depth_state": target_depth_state, "reason": reason})
+
+
+func _submarine_exit_destination(unit: Dictionary, target: Dictionary) -> Vector2:
+	var unit_position: Vector2 = unit.get("position", Vector2.ZERO)
+	var target_position: Vector2 = target.get("position", _map_center()) if not target.is_empty() else _map_center()
+	var away := (unit_position - target_position).normalized()
+	if away == Vector2.ZERO: away = Vector2.RIGHT.rotated(float(unit.get("heading", 0.0)) + PI)
+	return _clamp_to_map(unit_position + away * maxf(220.0, _preferred_range(unit) * 0.45))
+
+
+func _submarine_current_visible_target(unit: Dictionary) -> Dictionary:
+	var target_id := str(unit.get("ai_state", {}).get("submarine_target_id", ""))
+	return _ai_observation_for(str(unit.get("faction_id", ""))).visible_enemies.get(target_id, {})
+
+
+func _submarine_oxygen_ratio(unit: Dictionary) -> float:
+	var oxygen: Dictionary = unit.get("oxygen_state", {})
+	var maximum := maxf(1.0, float(oxygen.get("maximum", unit.get("stats", {}).get("max_oxygen", 1.0))))
+	return clampf(float(oxygen.get("current", maximum)) / maximum, 0.0, 1.0)
+
+
+func _submarine_known_high_threat(unit: Dictionary) -> bool:
+	return float(_highest_projectile_threat(unit).get("score", 0.0)) >= AI_IMMEDIATE_THRESHOLD
+
+
+func _store_submarine_torpedo_solution(unit: Dictionary, solution: Dictionary) -> void:
+	var ai_state: Dictionary = unit["ai_state"]
+	ai_state["planned_torpedo_weapon_state_instance_id"] = str(solution.get("weapon_state_instance_id", ""))
+	ai_state["planned_torpedo_aim_position"] = solution.get("aim_position", Vector2.INF)
+	ai_state["planned_attack_position"] = solution.get("attack_position", Vector2.INF)
+	ai_state["planned_exit_position"] = solution.get("exit_position", Vector2.INF)
+
+
+func _clear_submarine_torpedo_solution(unit: Dictionary) -> void:
+	var ai_state: Dictionary = unit["ai_state"]
+	ai_state["planned_torpedo_weapon_state_instance_id"] = ""
+	ai_state["planned_torpedo_aim_position"] = Vector2.INF
+	ai_state["planned_attack_position"] = Vector2.INF
+	ai_state["planned_exit_position"] = Vector2.INF
+	ai_state["torpedo_opportunity_expires_at"] = 0.0
+	ai_state["torpedo_opportunity_previous_legal"] = false
+	ai_state["torpedo_force_fire_recheck"] = false
 
 
 func _contact_search_position(unit: Dictionary, preferred_contact_id: String = "") -> Vector2:
@@ -2911,17 +3482,174 @@ func _best_ai_cover_position(unit: Dictionary, target: Dictionary) -> Dictionary
 	return best
 
 
+func _attack_skill_synergy(unit: Dictionary, weapon: Dictionary) -> float:
+	if float(unit.get("skill_state", {}).get("cooldown_remaining", 0.0)) <= 0.0:
+		return 1.0
+	var skill_id := str(unit.get("skill_state", {}).get("definition_id", ""))
+	var weapon_category := str(weapon.get("mount_type", ""))
+	var weapon_group_id := str(unit.get("stats", {}).get("primary_weapon_group_id", ""))
+	for effect in _active_status_effects(unit):
+		if str(effect.get("status_id", "")) != skill_id:
+			continue
+		var category := str(effect.get("category", "All"))
+		var category_matches := category in ["All", weapon_category]
+		var consume_group := str(effect.get("consume_weapon_group_id", ""))
+		if category_matches and (bool(effect.get("consume_on_fire", false)) or consume_group == weapon_group_id):
+			return 1.0
+	return 0.0
+
+
+func _ai_attack_window_values(unit: Dictionary, target: Dictionary, weapon: Dictionary, aim_position: Vector2, player_assist: bool) -> Dictionary:
+	return {
+		"target_value": _normalized_target_value(unit, target, player_assist),
+		"hit_quality": _weapon_hit_quality(unit, target, weapon),
+		"weapon_ready": 1.0,
+		"expected_damage": _expected_weapon_damage_ratio(unit, target, weapon),
+		"kill_opportunity": 1.0 - float(target.get("current_hp", 0.0)) / maxf(1.0, float(target.get("max_hp", 1.0))),
+		"position_safety": 1.0 - _boundary_risk(unit),
+		"exposure_risk": float(_local_power_context(unit).get("pressure", 0.0)),
+		"friendly_risk": _friendly_fire_risk(unit, target, weapon, aim_position),
+		"skill_synergy": _attack_skill_synergy(unit, weapon),
+		"group_sync": _attack_window_group_sync(unit),
+		"objective_relevance": _protectee_threat(unit, target),
+		"overkill": clampf(_reserved_damage_for_target(str(target.get("entity_id", "")), str(unit.get("entity_id", ""))) / maxf(1.0, float(target.get("current_hp", 1.0))), 0.0, 1.0),
+		"engagement_pressure": 0.0 if player_assist else float(unit.get("ai_state", {}).get("engagement_pressure", 0.0)),
+		"visible": _is_visible_to(str(unit.get("faction_id", "")), str(target.get("entity_id", ""))),
+		"weapon_legal": true,
+		"path_clear": true,
+	}
+
+
+func _select_submarine_torpedo_solution(unit: Dictionary, target: Dictionary) -> Dictionary:
+	if target.is_empty() or not _is_visible_to(str(unit.get("faction_id", "")), str(target.get("entity_id", ""))): return {}
+	var candidates: Array = []
+	var primary_group_id := str(unit.get("stats", {}).get("primary_weapon_group_id", ""))
+	if float(unit.get("weapon_group_launch_remaining", {}).get(primary_group_id, 0.0)) > 0.0: return {}
+	for weapon_state in _weapon_states_for_group(unit, primary_group_id, true):
+		if not bool(weapon_state.get("enabled", true)) or float(weapon_state.get("reload_remaining", 0.0)) > 0.0: continue
+		var weapon := _weapon_for_state(weapon_state)
+		if weapon.is_empty() or str(weapon.get("mount_type", "")) != "Torpedo": continue
+		if not _can_fire(unit, target, weapon): continue
+		var aim_solution := _automatic_aim_solution(unit, target, weapon)
+		if aim_solution.is_empty(): continue
+		var aim_position: Vector2 = aim_solution.get("position", target.get("position", Vector2.ZERO))
+		var validation := _validate_primary_fire(unit, [weapon_state], aim_position)
+		if not bool(validation.get("legal", false)): continue
+		if terrain_query.is_configured() and not terrain_query.is_segment_clear(unit.get("position", Vector2.ZERO), aim_position, "TorpedoTravel"): continue
+		var positions := _submarine_attack_and_exit_positions(unit, target, weapon, aim_position)
+		var exit_position: Vector2 = positions.get("exit_position", Vector2.INF)
+		var attack_position: Vector2 = positions.get("attack_position", Vector2.INF)
+		if exit_position.is_equal_approx(Vector2.INF) or attack_position.is_equal_approx(Vector2.INF): continue
+		var exit_quality := _route_quality_between(unit, exit_position)
+		if exit_quality <= 0.0 or _route_quality_between(unit, attack_position) <= 0.0: continue
+		var window_values := _ai_attack_window_values(unit, target, weapon, aim_position, false)
+		var window_score := AIQuantitativeModel.attack_window_score(window_values)
+		candidates.append({
+			"weapon_state": weapon_state,
+			"weapon": weapon,
+			"weapon_state_instance_id": str(weapon_state.get("instance_id", "")),
+			"aim_position": aim_position,
+			"attack_position": attack_position,
+			"exit_position": exit_position,
+			"window_values": window_values,
+			"window_score": window_score,
+			"arc_quality": _fire_arc_quality(unit, aim_position, weapon),
+			"intercept_quality": _submarine_course_predictability(target),
+			"exit_quality": exit_quality,
+		})
+	candidates.sort_custom(func(a, b):
+		if not is_equal_approx(float(a["window_score"]), float(b["window_score"])): return float(a["window_score"]) > float(b["window_score"])
+		if not is_equal_approx(float(a["arc_quality"]), float(b["arc_quality"])): return float(a["arc_quality"]) > float(b["arc_quality"])
+		if not is_equal_approx(float(a["intercept_quality"]), float(b["intercept_quality"])): return float(a["intercept_quality"]) > float(b["intercept_quality"])
+		if not is_equal_approx(float(a["exit_quality"]), float(b["exit_quality"])): return float(a["exit_quality"]) > float(b["exit_quality"])
+		return str(a["weapon_state_instance_id"]) < str(b["weapon_state_instance_id"])
+	)
+	return {} if candidates.is_empty() else candidates[0]
+
+
+func _refresh_submarine_torpedo_opportunity(unit: Dictionary) -> bool:
+	var ai_state: Dictionary = unit["ai_state"]
+	if str(ai_state.get("submarine_combat_phase", "Search")) not in ["AttackRun", "RecoverOxygen"]:
+		ai_state["torpedo_opportunity_previous_legal"] = false
+		ai_state["torpedo_force_fire_recheck"] = false
+		return false
+	var target := _submarine_current_visible_target(unit)
+	var planned_instance_id := str(ai_state.get("planned_torpedo_weapon_state_instance_id", ""))
+	var planned_state := _weapon_state_by_instance_id(unit, planned_instance_id)
+	var legal := false
+	if not target.is_empty() and not planned_state.is_empty() and bool(planned_state.get("enabled", true)) and float(planned_state.get("reload_remaining", 0.0)) <= 0.0:
+		var weapon := _weapon_for_state(planned_state)
+		var aim_solution := _automatic_aim_solution(unit, target, weapon)
+		if not aim_solution.is_empty():
+			var aim_position: Vector2 = aim_solution.get("position", target.get("position", Vector2.ZERO))
+			legal = _can_fire(unit, target, weapon) and bool(_validate_primary_fire(unit, [planned_state], aim_position).get("legal", false))
+	var previous_legal := bool(ai_state.get("torpedo_opportunity_previous_legal", false))
+	ai_state["torpedo_opportunity_previous_legal"] = legal
+	if legal and not previous_legal:
+		ai_state["torpedo_opportunity_expires_at"] = float(state.get("elapsed_time", 0.0)) + AI_SUBMARINE_TORPEDO_OPPORTUNITY_SECONDS
+		ai_state["torpedo_force_fire_recheck"] = true
+		_emit("AITorpedoOpportunityObserved", {"unit_id": unit.get("entity_id", ""), "weapon_state_instance_id": planned_instance_id, "expires_at": ai_state["torpedo_opportunity_expires_at"]})
+	return bool(ai_state.get("torpedo_force_fire_recheck", false))
+
+
+func _update_submarine_ai_primary_weapon(unit: Dictionary) -> void:
+	var ai_state: Dictionary = unit["ai_state"]
+	var phase := str(ai_state.get("submarine_combat_phase", "Search"))
+	if phase not in ["AttackRun", "RecoverOxygen"]: return
+	var target := _submarine_current_visible_target(unit)
+	if target.is_empty(): return
+	var solution := _select_submarine_torpedo_solution(unit, target)
+	if solution.is_empty():
+		_emit("AIFireHeld", {"unit_id": unit.get("entity_id", ""), "target_unit_id": target.get("entity_id", ""), "reason": "SUB_ATTACK_NO_LEGAL_SOLUTION"})
+		return
+	_store_submarine_torpedo_solution(unit, solution)
+	_emit("AITorpedoSolutionSelected", {
+		"unit_id": unit.get("entity_id", ""),
+		"target_unit_id": target.get("entity_id", ""),
+		"weapon_state_instance_id": solution.get("weapon_state_instance_id", ""),
+		"window_score": solution.get("window_score", 0.0),
+		"arc_quality": solution.get("arc_quality", 0.0),
+		"intercept_quality": solution.get("intercept_quality", 0.0),
+		"exit_quality": solution.get("exit_quality", 0.0),
+		"window_values": solution.get("window_values", {}).duplicate(true),
+	})
+	var fire := AIQuantitativeModel.should_fire(solution.get("window_values", {}), _submarine_fire_discipline(unit), _is_unit_under_threat(unit, target), _is_unit_in_fire_emergency(unit, target))
+	if not bool(fire.get("fire", false)):
+		_emit("AIFireHeld", {"unit_id": unit.get("entity_id", ""), "target_unit_id": target.get("entity_id", ""), "weapon_state_instance_id": solution.get("weapon_state_instance_id", ""), "score": fire.get("score", 0.0), "threshold": fire.get("threshold", 0.0), "reason": "SUB_ATTACK_HELD_DISCIPLINE"})
+		return
+	var aim_position: Vector2 = solution.get("aim_position", target.get("position", Vector2.ZERO))
+	command_queue.append({
+		"command_id": "ai.primary.%s.%s" % [state["tick_index"] + 1, unit["entity_id"]],
+		"command_type": "FirePrimaryWeapon",
+		"issued_at_tick": state["tick_index"] + 1,
+		"issuer_type": "AI",
+		"issuer_id": unit["faction_id"],
+		"unit_id": unit["entity_id"],
+		"target_position": aim_position,
+		"weapon_state_instance_id": solution.get("weapon_state_instance_id", ""),
+	})
+	ai_state["last_primary_command_tick"] = int(state.get("tick_index", 0))
+	_reserve_ai_damage(unit, target, solution.get("weapon", {}))
+	_emit("AIFireCommitted", {"unit_id": unit.get("entity_id", ""), "target_unit_id": target.get("entity_id", ""), "weapon_state_instance_id": solution.get("weapon_state_instance_id", ""), "score": fire.get("score", 0.0)})
+
+
 func _update_ai_primary_weapons() -> void:
 	for unit_id in _sorted_unit_ids():
 		var unit: Dictionary = state["units_by_id"][unit_id]
 		if unit.get("life_state", "") != "Alive": continue
 		if level_objective_service.primary_locked_for(unit): continue
-		if float(unit["ai_state"].get("fire_decision_cooldown", 0.0)) > 0.0: continue
+		var full_ai_submarine := _uses_full_ai(unit) and str(unit.get("stats", {}).get("ship_class", "")) == "Submarine"
+		var forced_submarine_recheck := _refresh_submarine_torpedo_opportunity(unit) if full_ai_submarine else false
+		if float(unit["ai_state"].get("fire_decision_cooldown", 0.0)) > 0.0 and not forced_submarine_recheck: continue
+		unit["ai_state"]["torpedo_force_fire_recheck"] = false
 		unit["ai_state"]["fire_decision_cooldown"] = 0.5
 		var player_assist := not _uses_full_ai(unit)
 		if player_assist and (not bool(unit.get("primary_auto_fire_enabled", false)) or bool(unit.get("primary_auto_fire_suspended", false))): continue
 		if int(unit["ai_state"].get("last_primary_command_tick", -1)) == int(state.get("tick_index", 0)): continue
 		if _primary_ready_ratio(unit) <= 0.0: continue
+		if full_ai_submarine:
+			_update_submarine_ai_primary_weapon(unit)
+			continue
 		var target := _current_or_select_target(unit, player_assist)
 		if target.is_empty(): continue
 		unit["targeting_state"]["current_target_id"] = str(target["entity_id"])
@@ -2935,25 +3663,9 @@ func _update_ai_primary_weapons() -> void:
 		var aim_position: Vector2 = aim_solution.get("position", target["position"])
 		var validation := _validate_primary_fire(unit, primary_states, aim_position)
 		if not bool(validation.get("legal", false)): continue
-		var window_values := {
-			"target_value": _normalized_target_value(unit, target, player_assist),
-			"hit_quality": _weapon_hit_quality(unit, target, aim_weapon),
-			"weapon_ready": _primary_ready_ratio(unit),
-			"expected_damage": _expected_weapon_damage_ratio(unit, target, aim_weapon),
-			"kill_opportunity": 1.0 - float(target.get("current_hp", 0.0)) / maxf(1.0, float(target.get("max_hp", 1.0))),
-			"position_safety": 1.0 - _boundary_risk(unit),
-			"exposure_risk": float(_local_power_context(unit).get("pressure", 0.0)),
-			"friendly_risk": _friendly_fire_risk(unit, target, aim_weapon, aim_position),
-			"skill_synergy": 1.0 if float(unit["skill_state"].get("cooldown_remaining", 0.0)) <= 0.0 else 0.0,
-			"group_sync": _attack_window_group_sync(unit),
-			"objective_relevance": _protectee_threat(unit, target),
-			"overkill": clampf(_reserved_damage_for_target(str(target.get("entity_id", "")), str(unit.get("entity_id", ""))) / maxf(1.0, float(target.get("current_hp", 1.0))), 0.0, 1.0),
-			"engagement_pressure": 0.0 if player_assist else float(unit.get("ai_state", {}).get("engagement_pressure", 0.0)),
-			"visible": true,
-			"weapon_legal": true,
-			"path_clear": true,
-		}
-		var fire := AIQuantitativeModel.player_assist_execution(unit, window_values) if player_assist else AIQuantitativeModel.should_fire(window_values, _fire_discipline_for_mode(str(unit["ai_state"].get("mode_id", "VanguardLine"))), _is_unit_under_threat(unit, target), _is_unit_in_fire_emergency(unit, target))
+		var window_values := _ai_attack_window_values(unit, target, aim_weapon, aim_position, player_assist)
+		window_values["weapon_ready"] = _primary_ready_ratio(unit)
+		var fire := AIQuantitativeModel.player_assist_execution(unit, window_values) if player_assist else AIQuantitativeModel.should_fire(window_values, _fire_discipline_for_unit(unit), _is_unit_under_threat(unit, target), _is_unit_in_fire_emergency(unit, target))
 		if not bool(fire.get("primary_auto_fire", fire.get("fire", false))): continue
 		command_queue.append({
 			"command_id": "ai.primary.%s.%s" % [state["tick_index"] + 1, unit_id],
@@ -3359,6 +4071,8 @@ func _skill_action_rejection(source: Dictionary, skill: Dictionary, target_posit
 	for attack_spec in skill.get("triggered_attacks", []):
 		var weapon: Dictionary = registry.get_definition("weapons", str(attack_spec.get("weapon_id", "")))
 		if weapon.is_empty(): return "SKILL_ATTACK_WEAPON_NOT_FOUND"
+		var submarine_torpedo_rejection := _submarine_torpedo_fire_rejection(source, weapon)
+		if not submarine_torpedo_rejection.is_empty(): return submarine_torpedo_rejection
 		if str(weapon.get("mount_type", "")) == "Aviation":
 			var source_condition := str(terrain_context_service.context_at(source["position"]).get("aviation_condition", "Normal"))
 			var target_condition := str(terrain_context_service.context_at(target_position).get("aviation_condition", "Normal"))
@@ -3379,7 +4093,7 @@ func _switch_ammo(unit: Dictionary, command_id: String) -> Dictionary:
 	return {"accepted": true}
 
 
-func _fire_primary_weapon(unit: Dictionary, target_position: Vector2, command_id: String) -> Dictionary:
+func _fire_primary_weapon(unit: Dictionary, target_position: Vector2, command_id: String, preferred_weapon_state_instance_id: String = "") -> Dictionary:
 	var primary_group_id := str(unit.get("stats", {}).get("primary_weapon_group_id", ""))
 	var weapon_states := _weapon_states_for_group(unit, primary_group_id, true)
 	var validation := _validate_primary_fire(unit, weapon_states, target_position)
@@ -3387,9 +4101,17 @@ func _fire_primary_weapon(unit: Dictionary, target_position: Vector2, command_id
 		return _rejection(command_id, str(validation.get("reason_code", "PRIMARY_WEAPON_UNAVAILABLE")))
 	var legal_states: Array = validation.get("legal_weapon_states", [])
 	var weapon_state: Dictionary = legal_states[0]
-	var weapon: Dictionary = registry.get_definition("weapons", str(weapon_state["definition_id"]))
+	if not preferred_weapon_state_instance_id.is_empty():
+		weapon_state = {}
+		for candidate_state in legal_states:
+			if str(candidate_state.get("instance_id", "")) == preferred_weapon_state_instance_id:
+				weapon_state = candidate_state
+				break
+		if weapon_state.is_empty():
+			return _rejection(command_id, "PREFERRED_WEAPON_STATE_INVALID")
+	var weapon := _weapon_for_state(weapon_state)
 	_fire_weapon_at_position(unit, target_position, weapon_state, weapon, true)
-	return {"accepted": true}
+	return {"accepted": true, "weapon_state_instance_id": str(weapon_state.get("instance_id", ""))}
 
 
 func _skill_recipients(source: Dictionary, skill: Dictionary, target_position: Vector2) -> Dictionary:
@@ -3507,7 +4229,7 @@ func _update_weapons() -> void:
 		if target.is_empty(): continue
 		unit["targeting_state"]["current_target_id"] = target["entity_id"]
 		var fired_groups := {}
-		var weapon_states: Array = unit["weapon_states"]
+		var weapon_states: Array = unit["weapon_states"].duplicate()
 		weapon_states.sort_custom(func(a, b): return str(a["definition_id"]) < str(b["definition_id"]))
 		for weapon_state in weapon_states:
 			if not bool(weapon_state["enabled"]) or float(weapon_state["reload_remaining"]) > 0.0: continue
@@ -3584,6 +4306,7 @@ func _fire_facility_weapon(facility: Dictionary, target: Dictionary, weapon: Dic
 
 
 func _can_fire(unit: Dictionary, target: Dictionary, weapon: Dictionary) -> bool:
+	if not _submarine_torpedo_fire_rejection(unit, weapon).is_empty(): return false
 	if target["life_state"] != "Alive" or not _is_visible_to(unit["faction_id"], target["entity_id"]): return false
 	if not _target_type(target) in weapon.get("target_types", []): return false
 	var distance := (unit["position"] as Vector2).distance_to(target["position"] as Vector2)
@@ -3593,6 +4316,9 @@ func _can_fire(unit: Dictionary, target: Dictionary, weapon: Dictionary) -> bool
 
 
 func _can_fire_at_position(unit: Dictionary, target_position: Vector2, weapon: Dictionary) -> Dictionary:
+	var submarine_torpedo_rejection := _submarine_torpedo_fire_rejection(unit, weapon)
+	if not submarine_torpedo_rejection.is_empty():
+		return {"legal": false, "reason_code": submarine_torpedo_rejection}
 	var distance := (unit["position"] as Vector2).distance_to(target_position)
 	if distance < float(weapon.get("minimum_range", 0.0)):
 		return {"legal": false, "reason_code": "TARGET_TOO_CLOSE"}
@@ -3615,12 +4341,27 @@ func _can_fire_at_position(unit: Dictionary, target_position: Vector2, weapon: D
 
 
 func _can_fire_in_direction(unit: Dictionary, direction_point: Vector2, weapon: Dictionary) -> Dictionary:
+	var submarine_torpedo_rejection := _submarine_torpedo_fire_rejection(unit, weapon)
+	if not submarine_torpedo_rejection.is_empty():
+		return {"legal": false, "reason_code": submarine_torpedo_rejection}
 	var direction: Vector2 = direction_point - (unit["position"] as Vector2)
 	if direction.length_squared() <= 0.0001:
 		return {"legal": false, "reason_code": "INVALID_TARGET_TYPE"}
 	if not _angle_in_weapon_fire_arcs(float(unit["heading"]), direction.angle(), weapon):
 		return {"legal": false, "reason_code": "FIRE_ARC_INVALID"}
 	return {"legal": true, "reason_code": "OK"}
+
+
+func _submarine_torpedo_fire_rejection(unit: Dictionary, weapon: Dictionary) -> String:
+	if str(weapon.get("mount_type", "")) != "Torpedo" or str(unit.get("stats", {}).get("ship_class", "")) != "Submarine":
+		return ""
+	if bool(unit.get("depth_transition", {}).get("active", false)):
+		return "SUBMARINE_DEPTH_INVALID_FOR_TORPEDO"
+	if str(unit.get("depth_state", "Surface")) == "Surface":
+		return ""
+	if bool(unit.get("stats", {}).get("can_launch_torpedoes_submerged", false)):
+		return ""
+	return "SUBMARINE_DEPTH_INVALID_FOR_TORPEDO"
 
 
 func _automatic_aim_solution(unit: Dictionary, target: Dictionary, weapon: Dictionary) -> Dictionary:
@@ -3734,8 +4475,21 @@ func _fire_weapon_at_position(unit: Dictionary, target_position: Vector2, weapon
 			_apply_dispersion_metadata(delayed_attack, dispersion_sample)
 			delayed_attacks.append(delayed_attack)
 	_mark_ai_effective_attack(unit)
-	_emit("WeaponFired", {"unit_id": unit["entity_id"], "weapon_id": weapon["id"], "mount_id": weapon_state.get("mount_id", ""), "target_position": target_position, "impact_positions": impact_positions, "dispersion_samples": dispersion_samples, "shot_count": shot_count, "manual": manual})
+	_emit("WeaponFired", {"unit_id": unit["entity_id"], "weapon_id": weapon["id"], "weapon_state_instance_id": weapon_state.get("instance_id", ""), "mount_id": weapon_state.get("mount_id", ""), "target_position": target_position, "impact_positions": impact_positions, "dispersion_samples": dispersion_samples, "shot_count": shot_count, "manual": manual})
+	_handle_submarine_weapon_fired(unit, weapon_state, weapon)
 	_consume_on_fire_effects(unit, weapon)
+
+
+func _handle_submarine_weapon_fired(unit: Dictionary, weapon_state: Dictionary, weapon: Dictionary) -> void:
+	if str(unit.get("stats", {}).get("ship_class", "")) != "Submarine" or str(weapon.get("mount_type", "")) != "Torpedo" or not _uses_full_ai(unit):
+		return
+	var ai_state: Dictionary = unit["ai_state"]
+	if str(ai_state.get("planned_torpedo_weapon_state_instance_id", "")) != str(weapon_state.get("instance_id", "")):
+		return
+	ai_state["last_submarine_fire_tick"] = int(state.get("tick_index", 0))
+	if str(ai_state.get("submarine_combat_phase", "")) == "AttackRun":
+		ai_state["submarine_attack_completed"] = true
+		_set_submarine_phase(unit, "BreakContact", "SUB_ATTACK_COMMITTED")
 
 
 func _salvo_impact_position(origin: Vector2, target_position: Vector2, spread_offset: float, weapon: Dictionary) -> Vector2:
@@ -4421,7 +5175,13 @@ func _update_level_objective() -> void:
 			enemy_unit["ai_state"]["mode_candidate_confirmations"] = 0
 	var terminal: Dictionary = update.get("terminal", {})
 	if not terminal.is_empty() and state.get("phase", "") == "Running":
-		_finish_battle(str(terminal.get("winner_faction", "")), str(terminal.get("reason", "LEVEL_OBJECTIVE_COMPLETED")))
+		_finish_battle(
+			str(terminal.get("winner_faction", "")),
+			str(terminal.get("reason", "LEVEL_OBJECTIVE_COMPLETED")),
+			str(terminal.get("reason_code", terminal.get("reason", "LEVEL_OBJECTIVE_COMPLETED"))),
+			str(terminal.get("summary", "")),
+			terminal.get("context", {})
+		)
 
 
 func _apply_tutorial_control_state(unit: Dictionary, control_state: Dictionary) -> void:
@@ -4430,9 +5190,17 @@ func _apply_tutorial_control_state(unit: Dictionary, control_state: Dictionary) 
 	unit["skill_auto_cast_enabled"] = false
 
 
-func _finish_battle(winner: String, reason: String) -> void:
+func _finish_battle(winner: String, reason: String, reason_code: String = "", reason_summary: String = "", reason_context: Dictionary = {}) -> void:
 	state["phase"] = "Finished"
-	state["result"] = {"winner_faction": winner, "reason": reason, "elapsed_time": state["elapsed_time"], "level_objective": state.get("level_objective", {}).duplicate(true)}
+	state["result"] = {
+		"winner_faction": winner,
+		"reason": reason,
+		"reason_code": reason if reason_code.is_empty() else reason_code,
+		"reason_summary": reason_summary,
+		"reason_context": reason_context.duplicate(true),
+		"elapsed_time": state["elapsed_time"],
+		"level_objective": state.get("level_objective", {}).duplicate(true),
+	}
 	_emit("BattleFinished", {"result": state["result"].duplicate(true)})
 
 
@@ -4770,6 +5538,12 @@ func _fire_discipline_for_mode(mode_id: String) -> String:
 		_: return "FreeFire"
 
 
+func _fire_discipline_for_unit(unit: Dictionary) -> String:
+	if _uses_full_ai(unit) and str(unit.get("stats", {}).get("ship_class", "")) == "Submarine":
+		return _submarine_fire_discipline(unit)
+	return _fire_discipline_for_mode(str(unit.get("ai_state", {}).get("mode_id", "VanguardLine")))
+
+
 func _is_unit_under_threat(unit: Dictionary, target: Dictionary = {}) -> bool:
 	if float(_local_power_context(unit).get("pressure", 0.0)) > 0.0:
 		return true
@@ -4788,8 +5562,7 @@ func _is_unit_in_fire_emergency(unit: Dictionary, target: Dictionary = {}) -> bo
 
 
 func _automatic_weapon_allowed_by_ai_discipline(unit: Dictionary, target: Dictionary, weapon: Dictionary) -> bool:
-	var mode_id := str(unit.get("ai_state", {}).get("mode_id", "VanguardLine"))
-	var discipline := _fire_discipline_for_mode(mode_id)
+	var discipline := _fire_discipline_for_unit(unit)
 	var aim_solution := _automatic_aim_solution(unit, target, weapon)
 	var aim_position: Vector2 = aim_solution.get("position", target.get("position", Vector2.ZERO))
 	var fire_validation := _can_fire_at_position(unit, aim_position, weapon)
@@ -4798,7 +5571,7 @@ func _automatic_weapon_allowed_by_ai_discipline(unit: Dictionary, target: Dictio
 		"hit_quality": _weapon_hit_quality(unit, target, weapon),
 		"weapon_ready": 1.0,
 		"expected_damage": _expected_weapon_damage_ratio(unit, target, weapon),
-		"skill_synergy": 1.0 if float(unit.get("skill_state", {}).get("cooldown_remaining", 0.0)) <= 0.0 else 0.0,
+		"skill_synergy": _attack_skill_synergy(unit, weapon),
 		"group_sync": _attack_window_group_sync(unit),
 		"kill_opportunity": 1.0 - float(target.get("current_hp", 0.0)) / maxf(1.0, float(target.get("max_hp", 1.0))),
 		"objective_relevance": _protectee_threat(unit, target),
@@ -4895,7 +5668,7 @@ func _route_quality_between(unit: Dictionary, destination: Vector2) -> float:
 	if not cached.is_empty() and float(cached.get("expires_at", 0.0)) > now:
 		return float(cached.get("quality", 0.0))
 	var radius := float(unit.get("stats", {}).get("collision_radius", 20.0))
-	if not terrain_query.can_occupy_circle(destination, radius, _movement_tags(unit)):
+	if terrain_query.is_configured() and not terrain_query.can_occupy_circle(destination, radius, _movement_tags(unit)):
 		_ai_route_quality_cache[cache_key] = {"quality": 0.0, "expires_at": now + 1.0}
 		return 0.0
 	# Tactical scoring needs a stable reach estimate, not an authoritative route.
@@ -5117,6 +5890,14 @@ func _weapon_states_for_group(unit: Dictionary, group_id: String, match_selected
 	return result
 
 
+func _weapon_state_by_instance_id(unit: Dictionary, instance_id: String) -> Dictionary:
+	if instance_id.is_empty(): return {}
+	for weapon_state in unit.get("weapon_states", []):
+		if str(weapon_state.get("instance_id", "")) == instance_id:
+			return weapon_state
+	return {}
+
+
 func _weapon_matches_selected_ammo(unit: Dictionary, weapon: Dictionary) -> bool:
 	var ammo_type := str(weapon.get("ammo_type", ""))
 	if ammo_type.is_empty(): return true
@@ -5150,9 +5931,16 @@ func _primary_unavailable_reason(unit: Dictionary, primary_states: Array) -> Str
 	var primary_group_id := str(unit.get("stats", {}).get("primary_weapon_group_id", ""))
 	if float(unit.get("weapon_group_launch_remaining", {}).get(primary_group_id, 0.0)) > 0.0:
 		return "TORPEDO_MOUNT_INTERVAL"
+	var ready_depth_rejection := ""
 	for weapon_state in primary_states:
-		if float(weapon_state.get("reload_remaining", 0.0)) <= 0.0:
+		if not bool(weapon_state.get("enabled", true)) or float(weapon_state.get("reload_remaining", 0.0)) > 0.0:
+			continue
+		var depth_rejection := _submarine_torpedo_fire_rejection(unit, _weapon_for_state(weapon_state))
+		if depth_rejection.is_empty():
 			return "OK"
+		ready_depth_rejection = depth_rejection
+	if not ready_depth_rejection.is_empty():
+		return ready_depth_rejection
 	return "WEAPON_RELOADING"
 
 

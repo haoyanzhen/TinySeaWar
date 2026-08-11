@@ -600,7 +600,11 @@ func _unhandled_input(event: InputEvent) -> void:
 			KEY_F: _begin_or_cast_skill()
 			KEY_Z: _toggle_route_placement()
 			KEY_X: _toggle_control_state("movement_assist_enabled", "自动航行", event.alt_pressed or event.meta_pressed)
-			KEY_C: _toggle_control_state("secondary_auto_fire_enabled", "副武器自动开火", event.alt_pressed or event.meta_pressed)
+			KEY_C:
+				if event.alt_pressed or event.meta_pressed:
+					_toggle_control_state("secondary_auto_fire_enabled", "副武器自动开火", true, true)
+				else:
+					_handle_selected_c_action()
 			KEY_V: _toggle_control_state("primary_auto_fire_enabled", "主武器自动开火", event.alt_pressed or event.meta_pressed)
 			KEY_G: _toggle_follow_selected()
 			KEY_H: _queue_facility_control()
@@ -984,17 +988,42 @@ func _report_tutorial_action(action_id: String, unit_id: String) -> void:
 	})
 
 
-func _toggle_control_state(control_field: String, display_name: String, fleet_scope: bool) -> void:
+func _handle_selected_c_action() -> void:
 	if selected_unit_id.is_empty(): return
+	var selected: Dictionary = session.state.get("units_by_id", {}).get(selected_unit_id, {})
+	if str(selected.get("stats", {}).get("ship_class", "")) != "Submarine":
+		_toggle_control_state("secondary_auto_fire_enabled", "副武器自动开火", false)
+		return
+	var status: Dictionary = session.get_operation_status(selected_unit_id)
+	var target_depth_state := str(status.get("depth_change_target", "Surface"))
+	session.queue_command({
+		"command_id": "ui.submarine_depth.%s.%s" % [session.state["tick_index"], selected_unit_id],
+		"command_type": "SetSubmarineDepth",
+		"issued_at_tick": session.state["tick_index"],
+		"issuer_type": "Player",
+		"issuer_id": "player",
+		"unit_id": selected_unit_id,
+		"target_depth_state": target_depth_state,
+	})
+	_push_message("潜艇深度请求：%s" % ("上浮" if target_depth_state == "Surface" else "下潜"))
+
+
+func _toggle_control_state(control_field: String, display_name: String, fleet_scope: bool, exclude_submarines: bool = false) -> void:
+	if selected_unit_id.is_empty() and not fleet_scope: return
 	var unit_ids: Array = []
 	if fleet_scope:
 		for slot_data in session.get_player_slots():
 			var fleet_unit_id := str(slot_data["unit_id"])
 			var fleet_unit: Dictionary = session.state.get("units_by_id", {}).get(fleet_unit_id, {})
+			if exclude_submarines and str(fleet_unit.get("stats", {}).get("ship_class", "")) == "Submarine":
+				continue
 			if fleet_unit.get("life_state", "") == "Alive":
 				unit_ids.append(fleet_unit_id)
 	else:
 		unit_ids = [selected_unit_id]
+	if unit_ids.is_empty():
+		_push_message("没有适用的水面舰副武器")
+		return
 	unit_ids.sort()
 	var enable := false
 	for unit_id in unit_ids:
@@ -1061,6 +1090,11 @@ func _consume_events(events: Array) -> void:
 				if event.get("primary_contact_type", "") == "Radar" and event.get("observer_faction", "") == "player": _push_message("雷达发现新的水面接触")
 			"UnitServiced": _push_message("%s 完成%s" % [_unit_display_name(str(event.get("unit_id", ""))), "维修" if event.get("service_type", "") == "Repair" else "补给"])
 			"SupportMissionResolved": _push_message("岸基航空支援已抵达")
+			"SubmarineDepthTransitionStarted": _push_message("%s 开始%s" % [_unit_display_name(str(event.get("unit_id", ""))), "上浮" if event.get("target_depth_state", "") == "Surface" else "下潜"])
+			"SubmarineDepthChanged": _push_message("%s 已%s" % [_unit_display_name(str(event.get("unit_id", ""))), "上浮" if event.get("target_depth_state", "") == "Surface" else "下潜"])
+			"SubmarineForcedSurface": _push_message("%s 氧气耗尽，强制上浮" % _unit_display_name(str(event.get("unit_id", ""))))
+			"CommandRejected":
+				if event.get("command_type", "") == "SetSubmarineDepth": _push_message("C 不可用：%s" % UiText.reason_name(str(event.get("reason_code", "INVALID_SUBMARINE_DEPTH"))))
 			"BattleFinished":
 				result_character_id = _random_player_character_id()
 				if str(event.get("result", {}).get("winner_faction", "")) == "player":

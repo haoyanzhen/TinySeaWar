@@ -100,4 +100,5 @@ maximum_behavior_anomalies?
 
 - `output_directory` 必须指向允许写入的实验产物目录，不得覆盖正式数据。
 - 结果至少能关联实验 ID、场景、策略、AI Profile、种子、侧别、配置指纹和代码版本。
+- 每局 `finish_reason` 保存具体终局原因码，`finish_reason_summary` 保存由实际触发条件生成的人类可读说明，`finish_reason_context` 保存触发单位、阈值或计数等结构化事实；挑战取消不得以整关静态失败文案代替本局事实。
 - Definition 覆盖、临时舰队、Acceptance Profile 和并行恢复字段只有在隔离校验实现后才能加入正式契约；当前完成度只见 `docs/00_project_status.md`。

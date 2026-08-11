@@ -333,18 +333,20 @@ def build_ships(mounts: dict[str, list[str]], skill_ids: dict[str, str], weapons
             continue
         cid = character_id(row[0])
         ship_class = SHIP_CLASSES[row[2]]
+        base_concealment = number(row[11])
+        base_detection = base_concealment * 1.5 if ship_class == "Submarine" else number(row[10])
         primary_group = f"{cid}_{PRIMARY_KIND[cid]}"
         primary_weapons = [weapon_by_id[item] for item in mounts[cid] if weapon_by_id[item]["weapon_group_id"] == primary_group]
         ammo_types = {item["ammo_type"] for item in primary_weapons}
         ammo_group = primary_group if {"HE", "AP"}.issubset(ammo_types) else ""
-        definitions.append({
+        definition = {
             "id": f"ship.{cid}", "display_name": display_name(row[0]), "faction": FACTIONS[row[1]],
             "ship_class": ship_class, "level": int(row[3]), "cost": int(row[4]), "max_hp": number(row[5]),
             "armor": number(row[6]), "armor_thickness": row[7],
             "base_speed": number(row[8]), "speed": number(row[8]) * MOTION_BASELINE_MULTIPLIER,
             "base_turn_speed": number(row[9]), "turn_speed": number(row[9]) * MOTION_BASELINE_MULTIPLIER,
-            "base_detection_range": number(row[10]), "detection_range": number(row[10]) * DISTANCE_BASELINE_MULTIPLIER,
-            "base_concealment_distance": number(row[11]), "concealment_distance": number(row[11]) * DISTANCE_BASELINE_MULTIPLIER,
+            "base_detection_range": base_detection, "detection_range": base_detection * DISTANCE_BASELINE_MULTIPLIER,
+            "base_concealment_distance": base_concealment, "concealment_distance": base_concealment * DISTANCE_BASELINE_MULTIPLIER,
             "fire_concealment_multiplier": number(row[12]), "evasion": number(row[13]),
             "gunnery_power": number(row[14]), "torpedo_power": number(row[15]), "anti_air_power": number(row[16]),
             "aviation_power": number(row[17]), "max_oxygen": number(row[18]), "collision_radius": COLLISION_RADIUS[ship_class],
@@ -355,7 +357,17 @@ def build_ships(mounts: dict[str, list[str]], skill_ids: dict[str, str], weapons
             "ammo_selection_group_id": ammo_group, "initial_ammo_type": "AP" if ammo_group else "HE",
             "skill_id": skill_ids[cid], "is_flagship_candidate": ship_class in {"LightCruiser", "HeavyCruiser", "Battleship", "Carrier"},
             "asset_root": f"res://assets/characters/{cid}/processed",
-        })
+        }
+        if ship_class == "Submarine":
+            definition.update({
+                "oxygen_consumption_rate": 1.0,
+                "oxygen_recovery_rate": 2.0,
+                "redive_oxygen_ratio": 0.5,
+                "depth_transition_duration": 2.0,
+                "depth_state_minimum_hold": 3.0,
+                "can_launch_torpedoes_submerged": False,
+            })
+        definitions.append(definition)
     return definitions
 
 

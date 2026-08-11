@@ -125,7 +125,8 @@ func _run_battle(registry, manifest: Dictionary, scenario: Dictionary, seed_valu
 	var non_ship_damage_statistics: Dictionary = session.get_all_non_ship_damage_statistics()
 	_annotate_lineups(unit_damage_statistics, side_variant)
 	var winner_faction := str(result.get("winner_faction", ""))
-	var finish_reason := str(result.get("reason", "GUARD_LIMIT" if not finished else "UNKNOWN"))
+	var finish_reason := str(result.get("reason_code", result.get("reason", "GUARD_LIMIT" if not finished else "UNKNOWN")))
+	var finish_reason_summary := str(result.get("reason_summary", ""))
 	var end_state := "Finished" if finished else "GuardLimit"
 	if finish_reason == "LEVEL_TECHNICAL_LIMIT": end_state = "TechnicalLimit"
 	return {
@@ -140,6 +141,8 @@ func _run_battle(registry, manifest: Dictionary, scenario: Dictionary, seed_valu
 		"winner_faction": winner_faction,
 		"winner_lineup": _lineup_for_faction(winner_faction, side_variant),
 		"finish_reason": finish_reason,
+		"finish_reason_summary": finish_reason_summary,
+		"finish_reason_context": result.get("reason_context", {}).duplicate(true),
 		"first_detection_time": float(stats.get("first_detection_time", -1.0)),
 		"first_fire_time": float(stats.get("first_fire_time", -1.0)),
 		"first_hit_time": float(stats.get("first_hit_time", -1.0)),

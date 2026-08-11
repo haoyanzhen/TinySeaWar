@@ -54,6 +54,8 @@ func _run() -> void:
 	_test_automatic_lead_and_fixed_impacts()
 	_test_torpedo_fire_arc_rules()
 	_test_detection_and_contact_ghost()
+	_test_submarine_depth_oxygen_and_detection()
+	_test_submarine_combat_ai_policy()
 	_test_torpedo_observation_rules()
 	_test_damage_zero_floor()
 	_test_simultaneous_flagship_victory()
@@ -655,6 +657,7 @@ func _test_asset_catalog() -> void:
 		"shared class-template VFX resolves to one public runtime asset",
 	)
 	var bind: Dictionary = assets.bind_points("bismarck", "bismarck_battle_rig_base.png")
+	_test_heading_offset_validation()
 	_check(bind.has("turret_mount_01"), "character bind points resolve per battle asset")
 	_check(is_equal_approx(assets.heading_offset_degrees("bismarck", "bismarck_battle_rig_base.png"), -11.1), "character rig heading correction resolves from processed metadata")
 	_check(is_zero_approx(assets.heading_offset_degrees("bismarck", "bismarck_battle_body_r.png")), "character assets without a heading correction retain the authored zero angle")
@@ -671,6 +674,28 @@ func _test_asset_catalog() -> void:
 	_check(assets.weapon_visual("shimakaze", "shimakaze_torpedo").get("fire_animation_state", "") == "firepower", "weapon visual resolves by character and weapon group")
 	_check(float(assets.vfx_playback_profile("vfx.profile.shell_impact").get("duration", 0.0)) > 0.0, "VFX playback profile resolves by semantic id")
 	_check(assets.combat_vfx_asset_path("impact.water.large").ends_with("vfx_impact_water_large_01.png"), "public large-caliber water-column art resolves by combat VFX semantic")
+
+
+func _test_heading_offset_validation() -> void:
+	var known_assets := {"rig_base":"res://assets/characters/test/processed/battle/test_battle_rig_base.png"}
+	var valid_catalog = AssetCatalog.new()
+	valid_catalog._validate_heading_offsets("test", {"heading_offsets_degrees":{"test_battle_rig_base.png":-12.5}}, known_assets)
+	_check(valid_catalog.errors.is_empty(), "heading offset validation accepts a finite angle for a known battle asset")
+	var invalid_container_catalog = AssetCatalog.new()
+	invalid_container_catalog._validate_heading_offsets("test", {"heading_offsets_degrees":[]}, known_assets)
+	_check(invalid_container_catalog.errors.size() == 1, "heading offset validation rejects a non-object field")
+	var unknown_asset_catalog = AssetCatalog.new()
+	unknown_asset_catalog._validate_heading_offsets("test", {"heading_offsets_degrees":{"misspelled.png":0.0}}, known_assets)
+	_check(unknown_asset_catalog.errors.any(func(error): return str(error).contains("Unknown heading offset asset")), "heading offset validation rejects unknown battle asset filenames")
+	var non_numeric_catalog = AssetCatalog.new()
+	non_numeric_catalog._validate_heading_offsets("test", {"heading_offsets_degrees":{"test_battle_rig_base.png":"-12.5"}}, known_assets)
+	_check(non_numeric_catalog.errors.size() == 1, "heading offset validation rejects numeric strings")
+	var non_finite_catalog = AssetCatalog.new()
+	non_finite_catalog._validate_heading_offsets("test", {"heading_offsets_degrees":{"test_battle_rig_base.png":NAN}}, known_assets)
+	_check(non_finite_catalog.errors.size() == 1, "heading offset validation rejects non-finite values")
+	var out_of_range_catalog = AssetCatalog.new()
+	out_of_range_catalog._validate_heading_offsets("test", {"heading_offsets_degrees":{"test_battle_rig_base.png":180.1}}, known_assets)
+	_check(out_of_range_catalog.errors.size() == 1, "heading offset validation rejects values outside [-180, 180]")
 
 
 func _test_command_and_skill_rules() -> void:
@@ -945,6 +970,9 @@ func _test_torpedo_fire_arc_rules() -> void:
 	var submarine: Dictionary = session.state["units_by_id"]["unit.player.hai_shih"]
 	submarine["position"] = Vector2(2000.0, 1200.0)
 	submarine["heading"] = 0.0
+	var submerged_status: Dictionary = session.get_primary_aim_status(submarine["entity_id"], submarine["position"] + Vector2(300.0, 0.0))
+	_check(not bool(submerged_status.get("legal", true)) and submerged_status.get("reason_code", "") == "SUBMARINE_DEPTH_INVALID_FOR_TORPEDO", "ordinary submarine torpedoes reject submerged launch")
+	submarine["depth_state"] = "Surface"
 	var fore_status: Dictionary = session.get_primary_aim_status(submarine["entity_id"], submarine["position"] + Vector2(300.0, 0.0))
 	var aft_status: Dictionary = session.get_primary_aim_status(submarine["entity_id"], submarine["position"] + Vector2(-300.0, 0.0))
 	var beam_status: Dictionary = session.get_primary_aim_status(submarine["entity_id"], submarine["position"] + Vector2(0.0, 300.0))
@@ -1055,6 +1083,171 @@ func _test_detection_and_contact_ghost() -> void:
 	session._update_detection(0.1)
 	contact = session.state["contacts_by_faction"]["player"].get(enemy["entity_id"], {})
 	_check(not contact.is_empty() and bool(contact.get("visible", false)) and is_equal_approx(float(contact.get("ghost_remaining", -1.0)), 0.0), "rediscovered target replaces the contact ghost immediately")
+
+
+func _test_submarine_depth_oxygen_and_detection() -> void:
+	var session = BattleSession.new(registry)
+	_check(session.create_battle("level.prototype_5v5", 111).get("ok", false), "submarine depth test battle can be created")
+	var submarine: Dictionary = session.state["units_by_id"]["unit.player.hai_shih"]
+	var stats: Dictionary = submarine["stats"]
+	_check(is_equal_approx(float(stats["base_detection_range"]), float(stats["base_concealment_distance"]) * 1.5), "submarine configuration derives surface detection from detectability")
+	_check(is_equal_approx(float(stats["oxygen_consumption_rate"]), 1.0) and is_equal_approx(float(stats["oxygen_recovery_rate"]), 2.0), "submarine loads explicit oxygen consumption and recovery rates")
+	var submerged_fact: Dictionary = session._detection_unit_fact(submarine)
+	_check(is_equal_approx(float(submerged_fact["detection_range"]), float(stats["concealment_distance"]) * 0.5), "submerged submarine detection is half its surface detectability")
+	_check(is_equal_approx(float(submerged_fact["concealment"]), float(stats["concealment_distance"]) * 0.25), "submerged submarine detectability is one quarter of its surface value")
+	var fore_target := (submarine["position"] as Vector2) + Vector2.RIGHT.rotated(float(submarine["heading"])) * 300.0
+	_check(session.get_primary_aim_status(submarine["entity_id"], fore_target).get("reason_code", "") == "SUBMARINE_DEPTH_INVALID_FOR_TORPEDO", "submerged ordinary submarine exposes a stable torpedo depth rejection")
+	var surface_command := {"command_id":"depth.surface", "command_type":"SetSubmarineDepth", "issued_at_tick":0, "issuer_type":"Player", "issuer_id":"player", "unit_id":submarine["entity_id"], "target_depth_state":"Surface"}
+	_check(session._apply_command(surface_command).get("accepted", false), "player C-style command starts an active submarine surface transition")
+	_check(bool(submarine["depth_transition"].get("active", false)) and submarine["depth_transition"].get("target_depth_state", "") == "Surface", "submarine transition records its explicit target depth")
+	_check(session.get_primary_aim_status(submarine["entity_id"], fore_target).get("reason_code", "") == "SUBMARINE_DEPTH_INVALID_FOR_TORPEDO", "submarine cannot launch torpedoes during depth transition")
+	var oxygen_before_surface := float(submarine["oxygen_state"]["current"])
+	session._update_submarine_resources(float(stats["depth_transition_duration"]))
+	_check(submarine.get("depth_state", "") == "Surface" and not bool(submarine["depth_transition"].get("active", true)), "active surface transition completes deterministically")
+	_check(is_equal_approx(oxygen_before_surface - float(submarine["oxygen_state"]["current"]), float(stats["oxygen_consumption_rate"]) * float(stats["depth_transition_duration"])), "surfacing transition consumes oxygen under its submerged origin rules")
+	var surface_fact: Dictionary = session._detection_unit_fact(submarine)
+	_check(is_equal_approx(float(surface_fact["detection_range"]), float(stats["concealment_distance"]) * 1.5), "surface submarine detection is one and a half times its detectability")
+	_check(is_equal_approx(float(surface_fact["concealment"]), float(stats["concealment_distance"])), "surface submarine keeps its configured detectability")
+	_check(bool(session.get_primary_aim_status(submarine["entity_id"], fore_target).get("legal", false)), "ordinary submarine can launch torpedoes after reaching stable surface state")
+	var dive_command := surface_command.duplicate(true)
+	dive_command["command_id"] = "depth.submerged"
+	dive_command["target_depth_state"] = "Submerged"
+	_check(session._apply_command(dive_command).get("reason_code", "") == "SUBMARINE_DEPTH_HOLD_ACTIVE", "minimum depth hold rejects immediate reversal")
+	submarine["depth_hold_remaining"] = 0.0
+	var maximum := float(submarine["oxygen_state"]["maximum"])
+	submarine["oxygen_state"]["current"] = maximum * float(stats["redive_oxygen_ratio"]) - 0.01
+	_check(session._apply_command(dive_command).get("reason_code", "") == "SUBMARINE_OXYGEN_TOO_LOW", "redive threshold rejects low oxygen")
+	submarine["oxygen_state"]["current"] = maximum * float(stats["redive_oxygen_ratio"])
+	_check(session._apply_command(dive_command).get("accepted", false), "redive threshold accepts oxygen exactly at the configured ratio")
+	session._update_submarine_resources(float(stats["depth_transition_duration"]))
+	_check(submarine.get("depth_state", "") == "Submerged", "active dive transition completes back to submerged state")
+	submarine["oxygen_state"]["current"] = 0.5
+	session.drain_events()
+	session._update_submarine_resources(1.0)
+	var forced_events := session.drain_events()
+	_check(submarine.get("depth_state", "") == "Surface" and is_zero_approx(float(submarine["oxygen_state"]["current"])), "zero oxygen immediately forces stable surface state")
+	_check(_has_event(forced_events, "SubmarineForcedSurface"), "oxygen depletion emits an observable forced-surface fact")
+	var special_stats: Dictionary = submarine["stats"].duplicate(true)
+	special_stats["can_launch_torpedoes_submerged"] = true
+	submarine["stats"] = special_stats
+	submarine["depth_state"] = "Submerged"
+	submarine["depth_transition"]["active"] = false
+	_check(bool(session.get_primary_aim_status(submarine["entity_id"], fore_target).get("legal", false)), "explicit special capability permits stable submerged torpedo launch")
+
+
+func _test_submarine_combat_ai_policy() -> void:
+	var session = BattleSession.new(registry)
+	_check(session.create_battle("level.prototype_5v5", 112).get("ok", false), "submarine combat AI test battle can be created")
+	session.configure_full_ai_factions(["player", "enemy"])
+	var submarine: Dictionary = session.state["units_by_id"]["unit.player.hai_shih"]
+	var target: Dictionary = session.state["units_by_id"]["unit.enemy.hindenburg"]
+	submarine["position"] = Vector2(2000.0, 1100.0)
+	submarine["heading"] = 0.0
+	submarine["current_speed"] = 0.0
+	target["position"] = Vector2(2260.0, 1100.0)
+	target["heading"] = 0.0
+	target["current_speed"] = 12.0
+	for unit_id in session._sorted_unit_ids():
+		var other: Dictionary = session.state["units_by_id"][unit_id]
+		if other.get("entity_id", "") in [submarine["entity_id"], target["entity_id"]]: continue
+		other["position"] = Vector2(400.0, 300.0 + 80.0 * float(other.get("operation_slot", 0))) if other.get("faction_id", "") == "player" else Vector2(3700.0, 300.0 + 80.0 * float(other.get("operation_slot", 0)))
+	session.state["visible_by_faction"]["player"] = {target["entity_id"]: ["Optical"]}
+	session._ai_observations_by_faction.clear()
+
+	var phase_expectations := {
+		"Search": ["ReconAvoid", "Silent"],
+		"Approach": ["TorpedoFlank", "Silent"],
+		"SurfaceForAttack": ["TorpedoFlank", "HoldUntilWindow"],
+		"AttackRun": ["TorpedoFlank", "HoldUntilWindow"],
+		"BreakContact": ["DisengageRegroup", "Silent"],
+		"RecoverOxygen": ["DisengageRegroup", "SelfDefense"],
+	}
+	for phase in phase_expectations:
+		session._set_submarine_phase(submarine, phase, "TEST_PHASE")
+		var expected: Array = phase_expectations[phase]
+		_check(submarine["ai_state"].get("mode_id", "") == expected[0] and session._submarine_fire_discipline(submarine) == expected[1], "submarine %s phase projects one fixed mode and discipline" % phase)
+		_check(str(submarine["ai_state"].get("tactic_id", "")).is_empty(), "submarine %s phase does not persist Attack/Defend/Kite state" % phase)
+
+	submarine["depth_state"] = "Submerged"
+	submarine["depth_transition"]["active"] = false
+	submarine["oxygen_state"]["current"] = submarine["oxygen_state"]["maximum"]
+	var selected_target: Dictionary = session._select_submarine_target_with_hysteresis(submarine)
+	_check(selected_target.get("entity_id", "") == target["entity_id"], "submarine target selection reuses a visible public target after route, oxygen, depth, and exit gates")
+	session.state["visible_by_faction"]["player"] = {}
+	session.state["contacts_by_faction"]["player"][target["entity_id"]] = {"target_unit_id":target["entity_id"], "visible":false, "last_known_position":target["position"], "ghost_remaining":30.0}
+	session._ai_observations_by_faction.clear()
+	_check(session._select_submarine_target_with_hysteresis(submarine).is_empty(), "submarine contact ghosts remain search hints and cannot become attack candidates")
+	session.state["visible_by_faction"]["player"] = {target["entity_id"]: ["Optical"]}
+	session._ai_observations_by_faction.clear()
+	submarine["targeting_state"]["current_target_id"] = target["entity_id"]
+	submarine["ai_state"]["submarine_target_id"] = target["entity_id"]
+	submarine["depth_state"] = "Surface"
+	submarine["depth_transition"]["active"] = false
+	submarine["depth_hold_remaining"] = 0.0
+	for weapon_state in submarine["weapon_states"]:
+		weapon_state["reload_remaining"] = 0.0
+	submarine["weapon_group_launch_remaining"].clear()
+	session._set_submarine_phase(submarine, "AttackRun", "TEST_ATTACK_RUN")
+	var first_solution := session._select_submarine_torpedo_solution(submarine, target)
+	_check(not first_solution.is_empty(), "ordinary submarine forms a legal torpedo solution only after reaching stable surface depth")
+	var selected_instance_id := str(first_solution.get("weapon_state_instance_id", ""))
+	submarine["weapon_states"].reverse()
+	var reordered_solution := session._select_submarine_torpedo_solution(submarine, target)
+	_check(str(reordered_solution.get("weapon_state_instance_id", "")) == selected_instance_id, "submarine torpedo solution is independent of authoritative weapon state array order")
+	var invalid_hint := session._fire_primary_weapon(submarine, first_solution.get("aim_position", target["position"]), "submarine.preferred.invalid", "missing.weapon.state")
+	_check(invalid_hint.get("reason_code", "") == "PREFERRED_WEAPON_STATE_INVALID", "Domain rejects an invalid preferred launcher hint instead of silently firing another mount")
+	session._store_submarine_torpedo_solution(submarine, first_solution)
+	session.drain_events()
+	var fire_result := session._fire_primary_weapon(submarine, first_solution.get("aim_position", target["position"]), "submarine.preferred.valid", selected_instance_id)
+	var fired_instance_id := ""
+	for event in session.drain_events():
+		if event.get("event_type", "") == "WeaponFired": fired_instance_id = str(event.get("weapon_state_instance_id", ""))
+	_check(bool(fire_result.get("accepted", false)) and fired_instance_id == selected_instance_id, "planned submarine launcher instance remains identical through Domain validation and WeaponFired")
+	_check(submarine["ai_state"].get("submarine_combat_phase", "") == "BreakContact" and bool(submarine["ai_state"].get("submarine_attack_completed", false)), "only an actual planned WeaponFired completes AttackRun and enters BreakContact")
+	submarine["ai_state"]["submarine_phase_entered_at"] = float(session.state.get("elapsed_time", 0.0)) - 3.1
+	session._update_submarine_break_contact_intent(submarine, target)
+	_check(submarine["ai_state"].get("submarine_combat_phase", "") == "RecoverOxygen", "BreakContact always enters RecoverOxygen before the next Search cycle")
+
+	for weapon_state in submarine["weapon_states"]: weapon_state["reload_remaining"] = 0.0
+	submarine["weapon_group_launch_remaining"].clear()
+	var special_stats: Dictionary = submarine["stats"].duplicate(true)
+	special_stats["can_launch_torpedoes_submerged"] = true
+	submarine["stats"] = special_stats
+	submarine["depth_state"] = "Submerged"
+	submarine["depth_transition"]["active"] = false
+	_check(not session._select_submarine_torpedo_solution(submarine, target).is_empty(), "special submerged-launch capability can form a legal AttackRun solution without SurfaceForAttack")
+
+	special_stats["can_launch_torpedoes_submerged"] = false
+	submarine["stats"] = special_stats
+	session.state["visible_by_faction"]["player"] = {}
+	session._ai_observations_by_faction.clear()
+	submarine["targeting_state"]["current_target_id"] = ""
+	submarine["ai_state"]["submarine_target_id"] = ""
+	submarine["depth_state"] = "Surface"
+	submarine["depth_transition"]["active"] = false
+	submarine["depth_hold_remaining"] = 0.0
+	submarine["oxygen_state"]["current"] = float(submarine["oxygen_state"]["maximum"]) * 0.49
+	session.command_queue.clear()
+	session.drain_events()
+	session._set_submarine_phase(submarine, "RecoverOxygen", "TEST_RECOVER_DOMAIN_REJECTION")
+	session._queue_ai_submarine_depth_request(submarine, "Submerged", "TEST_REDIVE_REJECTED")
+	var rejected_depth_events := session.drain_events()
+	_check(session.command_queue.is_empty() and submarine["ai_state"].get("submarine_combat_phase", "") == "RecoverOxygen" and _has_event(rejected_depth_events, "AIDepthRequestHeld"), "rejected recovery redive remains in RecoverOxygen and records the Domain reason")
+	submarine["oxygen_state"]["current"] = float(submarine["oxygen_state"]["maximum"]) * 0.74
+	session.command_queue.clear()
+	session._set_submarine_phase(submarine, "RecoverOxygen", "TEST_RECOVER_LOW")
+	session._update_submarine_recovery_intent(submarine)
+	_check(session.command_queue.all(func(command): return command.get("command_type", "") != "SetSubmarineDepth") and submarine["ai_state"].get("submarine_phase_reason", "") == "SUB_RECOVER_OXYGEN", "RecoverOxygen holds surface depth below the 75 percent AI redive threshold")
+	submarine["oxygen_state"]["current"] = float(submarine["oxygen_state"]["maximum"]) * 0.75
+	session.command_queue.clear()
+	session._update_submarine_recovery_intent(submarine)
+	var redive_commands: Array = session.command_queue.filter(func(command): return command.get("command_type", "") == "SetSubmarineDepth" and command.get("target_depth_state", "") == "Submerged")
+	_check(redive_commands.size() == 1 and submarine["ai_state"].get("submarine_combat_phase", "") == "RecoverOxygen", "Redive is a requested depth transition inside RecoverOxygen rather than a seventh combat phase")
+	session._process_commands()
+	session._update_submarine_resources(float(submarine["stats"]["depth_transition_duration"]))
+	submarine["ai_state"]["decision_cooldown"] = 0.0
+	session._update_submarine_recovery_intent(submarine)
+	_check(submarine.get("depth_state", "") == "Submerged" and submarine["ai_state"].get("submarine_combat_phase", "") == "Search", "completed recovery redive returns directly to Search")
 
 
 func _test_torpedo_observation_rules() -> void:

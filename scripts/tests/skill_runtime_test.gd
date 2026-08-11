@@ -116,7 +116,7 @@ func _test_torpedo_reload_and_oxygen_costs() -> void:
 	var before := float(submarine["oxygen_state"]["current"])
 	oxygen_session._cast_skill(submarine, {"type":"Self"}, "hai_shih.skill")
 	oxygen_session._update_submarine_resources(1.0)
-	var base_rate := float(submarine["stats"].get("oxygen_consumption_rate", float(submarine["oxygen_state"]["maximum"]) / 90.0))
+	var base_rate := float(submarine["stats"]["oxygen_consumption_rate"])
 	_check(is_equal_approx(before - float(submarine["oxygen_state"]["current"]), base_rate * 1.2), "Hai Shih ambush applies its declared 20 percent oxygen cost")
 
 

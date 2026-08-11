@@ -60,7 +60,7 @@
 - `detection_range` 是侦查方能力。
 - `concealment_distance` 是目标能被发现的最大距离，数值越小越隐蔽。
 - `fire_concealment_multiplier` 是开火破隐比例，通常让开火后的当前隐蔽距离接近目标主要攻击射程的 `0.9-1.1` 倍。火炮舰优先参考最大主炮射程；航母和潜艇在当前统一破隐字段下分别参考主要航空攻击和主要鱼雷射程。
-- 潜艇下潜时通过状态修正降低当前隐蔽距离。
+- 潜艇先结算当前上浮被侦察范围，再按深度派生自身侦查与被侦察范围：`Surface detection_range = surface_concealment_distance * 1.5`，`Submerged detection_range = surface_concealment_distance * 0.5`，`Submerged concealment_distance = surface_concealment_distance * 0.25`。侦查专项修正作用于派生后的侦查范围；开火破隐作用于派生后的被侦察范围。
 - 目标脱离侦查后保留最后已知位置残影，最长 1 分钟；目标再次被发现或时间达到上限后残影消失。残影不允许普通攻击锁定。
 
 ## 3. 命中率
@@ -323,6 +323,7 @@ HE 与 AP 是同一物理火炮组的不同结算模式，必须共享冷却；�
 结算规则：
 
 - 发射时按射角、散布和投射物速度生成鱼雷。
+- 普通潜艇的鱼雷发射请求只在稳定 `Surface` 状态合法；`can_launch_torpedoes_submerged=true` 的特殊潜艇也允许稳定 `Submerged` 发射。任何潜艇在深度转换期间都以 `SUBMARINE_DEPTH_INVALID_FOR_TORPEDO` 拒绝鱼雷请求，拒绝时不消耗装填。
 - 玩家准心只确定鱼雷发射角度，不生成终点；鱼雷沿确认方向直线航行，累计航程达到武器 `range` 后自然失效。公共投射物 `lifetime` 不得提前截断鱼雷的武器最大航程。
 - 射角判定遍历武器的全部 `fire_arcs`：目标方向落入任一扇区即满足角度条件。水面舰通常使用左右舷扇区，潜艇使用首尾扇区。
 - 鱼雷命中由连续路径扫掠判定；鱼雷圆形半径沿整段位移扫过目标舰装椭圆，不能只检查 Tick 末端中心点。
@@ -450,7 +451,7 @@ actual_heading[i]
 
 ## 11. 氧气
 
-潜艇下潜时消耗氧气，上浮时恢复氧气。
+潜艇在稳定下潜及从下潜开始的上浮转换中消耗氧气；在稳定上浮及从上浮开始的下潜转换中恢复氧气。
 
 ```text
 当前氧气 = clamp(当前氧气 + 氧气变化量 * delta_time, 0, max_oxygen)
@@ -458,10 +459,11 @@ actual_heading[i]
 
 规则：
 
-- 下潜状态氧气减少。
-- 上浮状态氧气恢复。
-- 氧气耗尽时自动上浮。
-- 氧气数值和恢复速度放在平衡配置中。
+- 下潜侧按 `oxygen_consumption_rate` 减少，上浮侧按 `oxygen_recovery_rate` 恢复；状态效果继续通过公共修正顺序作用于对应速率。
+- 氧气耗尽时立即进入稳定 `Surface`，取消当前深度转换并产生强制上浮事实。
+- 主动深度转换以 `depth_transition_duration` 计时，转换完成前沿用起始深度规则；完成后设置 `depth_state_minimum_hold`，保持结束前拒绝下一次主动转换。
+- 主动下潜要求 `current_oxygen / max_oxygen >= redive_oxygen_ratio`；主动上浮不检查该比例。强制上浮优先于主动转换和最短保持。
+- 氧气上限、消耗/恢复速度、重新下潜门槛、转换时间和最短保持放在舰船战斗配置中，并由加载器校验。
 
 ## 12. 胜负与超时
 

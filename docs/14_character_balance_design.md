@@ -27,6 +27,7 @@
 - `隐蔽` 为基础隐蔽距离。
 - `破隐` 为开火破隐比例。
 - `氧气` 仅潜艇使用，非潜艇为 0。
+- 潜艇表内 `侦查` 保存上浮侦查设计值，固定等于该角色上浮 `隐蔽`（被侦察范围）的 `1.5` 倍；下潜派生倍率不在角色表重复配置。
 - 火炮、鱼雷、防空、航空为分项作战能力，不直接等于最终伤害。
 
 | 角色 | 阵营 | 舰种 | 等级 | Cost | HP | 装甲 | 厚度 | 航速 | 转向 | 侦查 | 隐蔽 | 破隐 | 闪避 | 火炮 | 鱼雷 | 防空 | 航空 | 氧气 | 变体标签 |
@@ -46,7 +47,7 @@
 | 俾斯麦号 Bismarck | 德系 | 战列 | 3 | 12 | 8800 | 104 | Heavy | 84 | 40 | 400 | 620 | 1.18 | 8 | 168 | 0 | 48 | 0 | 0 | HeavyArmor, DecisiveBattle |
 | 欧根亲王号 Prinz Eugen | 德系 | 重巡 | 2 | 5 | 3150 | 38 | Medium | 98 | 84 | 420 | 440 | 1.20 | 18 | 82 | 18 | 36 | 0 | 0 | CruiserSurvivor, PrecisionFire |
 | 兴登堡号 Hindenburg | 德系 | 重巡 | 3 | 7 | 4400 | 50 | Medium | 90 | 76 | 450 | 460 | 1.22 | 15 | 126 | 16 | 46 | 0 | 0 | PaperShip, CharacterizedCruiser, FireControl |
-| U-47 | 德系 | 潜艇 | 1 | 5 | 950 | 8 | Submerged | 66 | 76 | 330 | 255 | 1.66 | 20 | 4 | 72 | 0 | 0 | 46 | AmbushSubmarine, StealthTorpedo |
+| U-47 | 德系 | 潜艇 | 1 | 5 | 950 | 8 | Submerged | 66 | 76 | 382.5 | 255 | 1.66 | 20 | 4 | 72 | 0 | 0 | 46 | AmbushSubmarine, StealthTorpedo |
 | 大和号 Yamato | 日系 | 战列 | 3 | 12 | 9200 | 112 | Heavy | 56 | 34 | 380 | 650 | 1.30 | 5 | 184 | 0 | 42 | 0 | 0 | SuperHeavyGunnery, Fortress |
 | 雪风号 Yukikaze | 日系 | 驱逐 | 2 | 4 | 1500 | 14 | Light | 132 | 145 | 550 | 310 | 1.60 | 48 | 36 | 72 | 20 | 0 | 0 | LuckyEvasion, TorpedoScout |
 | 岛风号 Shimakaze | 日系 | 驱逐 | 2 | 4 | 1420 | 12 | Light | 142 | 138 | 540 | 310 | 1.62 | 42 | 30 | 86 | 16 | 0 | 0 | ExtremeSpeed, TorpedoBurst |
@@ -54,7 +55,7 @@
 | 宁海号 Ning Hai | 中系 | 轻巡 | 2 | 4 | 2050 | 19 | Light | 96 | 100 | 460 | 330 | 1.21 | 23 | 50 | 14 | 58 | 0 | 0 | CoastalDefense, EscortSupport |
 | 鞍山号 Anshan | 中系 | 驱逐 | 2 | 3 | 1580 | 15 | Light | 118 | 124 | 560 | 305 | 1.43 | 32 | 42 | 48 | 30 | 0 | 0 | EarlyPRCDestroyer, GrowthDestroyer |
 | 重庆号 ROCS Chongqing | 中系 | 轻巡 | 2 | 4 | 2300 | 22 | Light | 98 | 98 | 480 | 350 | 1.20 | 22 | 56 | 10 | 64 | 0 | 0 | CoastalSupport, CommandCruiser |
-| 海狮号 ROCS Hai Shih | 中系 | 潜艇 | 1 | 4 | 880 | 7 | Submerged | 58 | 70 | 310 | 240 | 1.65 | 18 | 2 | 58 | 0 | 0 | 42 | TrainingSubmarine, BasicAmbush |
+| 海狮号 ROCS Hai Shih | 中系 | 潜艇 | 1 | 4 | 880 | 7 | Submerged | 58 | 70 | 360 | 240 | 1.65 | 18 | 2 | 58 | 0 | 0 | 42 | TrainingSubmarine, BasicAmbush |
 
 个体偏离说明：
 
@@ -359,15 +360,15 @@
 | 弗莱彻号 USS Fletcher DD-445 | 美系 | 驱逐 | 1 | 2 | 1120 | 10 | Light | 124 | 134 | 535 | 285 | 1.52 | 36 | 30 | 46 | 24 | 0 | 0 | FleetDestroyer, ASWEscort |
 | 克利夫兰号 USS Cleveland CL-55 | 美系 | 轻巡 | 2 | 4 | 2380 | 24 | Light | 100 | 104 | 500 | 360 | 1.22 | 24 | 64 | 0 | 82 | 0 | 0 | GunCruiser, AAEscort |
 | 巴尔的摩号 USS Baltimore CA-68 | 美系 | 重巡 | 3 | 7 | 3950 | 56 | Medium | 96 | 78 | 460 | 475 | 1.21 | 16 | 125 | 0 | 68 | 0 | 0 | APGunCruiser, RadarFireControl |
-| 刺尾鱼号 USS Wahoo SS-238 | 美系 | 潜艇 | 2 | 7 | 1450 | 12 | Submerged | 70 | 78 | 350 | 270 | 1.64 | 22 | 3 | 92 | 0 | 0 | 62 | AggressiveSubmarine, ReloadAmbush |
+| 刺尾鱼号 USS Wahoo SS-238 | 美系 | 潜艇 | 2 | 7 | 1450 | 12 | Submerged | 70 | 78 | 405 | 270 | 1.64 | 22 | 3 | 92 | 0 | 0 | 62 | AggressiveSubmarine, ReloadAmbush |
 | 杰维斯号 HMS Jervis | 英系 | 驱逐 | 1 | 2 | 1100 | 10 | Light | 122 | 132 | 525 | 285 | 1.56 | 37 | 28 | 48 | 18 | 0 | 0 | FlotillaLeader, TorpedoEscort |
 | 贝尔法斯特号 HMS Belfast | 英系 | 轻巡 | 2 | 4 | 2450 | 26 | Light | 98 | 102 | 510 | 360 | 1.22 | 24 | 68 | 18 | 76 | 0 | 0 | RadarCruiser, ControlSupport |
 | 光辉号 HMS Illustrious | 英系 | 航母 | 3 | 12 | 6000 | 52 | Medium | 76 | 50 | 680 | 640 | 1.10 | 8 | 12 | 0 | 70 | 150 | 0 | ArmoredCarrier, DurableAirWing |
-| 拥护者号 HMS Upholder P37 | 英系 | 潜艇 | 2 | 7 | 1380 | 11 | Submerged | 68 | 82 | 340 | 260 | 1.63 | 23 | 3 | 88 | 0 | 0 | 64 | CoastalSubmarine, CloseAmbush |
+| 拥护者号 HMS Upholder P37 | 英系 | 潜艇 | 2 | 7 | 1380 | 11 | Submerged | 68 | 82 | 390 | 260 | 1.63 | 23 | 3 | 88 | 0 | 0 | 64 | CoastalSubmarine, CloseAmbush |
 | 塔什干号 Tashkent | 苏系 | 驱逐 | 3 | 4 | 1850 | 18 | Light | 142 | 128 | 565 | 330 | 1.45 | 39 | 58 | 72 | 22 | 0 | 0 | DestroyerLeader, ExtremeSpeed |
 | 恰巴耶夫号 Chapayev | 苏系 | 轻巡 | 2 | 4 | 2500 | 27 | Light | 96 | 96 | 510 | 375 | 1.21 | 21 | 72 | 14 | 70 | 0 | 0 | LongRangeLightCruiser, FireControl |
 | 甘古特号 Gangut | 苏系 | 战列 | 1 | 6 | 4600 | 62 | Heavy | 54 | 40 | 360 | 500 | 1.20 | 5 | 105 | 0 | 20 | 0 | 0 | OldBattleship, SustainedBroadside |
-| K-21 | 苏系 | 潜艇 | 2 | 7 | 1500 | 13 | Submerged | 65 | 76 | 360 | 265 | 1.64 | 21 | 5 | 86 | 0 | 0 | 65 | OceanSubmarine, ScoutAmbush |
+| K-21 | 苏系 | 潜艇 | 2 | 7 | 1500 | 13 | Submerged | 65 | 76 | 397.5 | 265 | 1.64 | 21 | 5 | 86 | 0 | 0 | 65 | OceanSubmarine, ScoutAmbush |
 | Z23 | 德系 | 驱逐 | 2 | 3 | 1560 | 15 | Light | 122 | 125 | 530 | 310 | 1.47 | 34 | 42 | 56 | 24 | 0 | 0 | HeavyGunDestroyer, HybridRaider |
 | 纽伦堡号 Nürnberg | 德系 | 轻巡 | 1 | 2 | 1600 | 19 | Light | 98 | 102 | 485 | 340 | 1.20 | 24 | 50 | 16 | 48 | 0 | 0 | EvasiveCruiser, RearTurretBias |
 | 沙恩霍斯特号 Scharnhorst | 德系 | 战列 | 3 | 10 | 7800 | 92 | Heavy | 100 | 46 | 410 | 590 | 1.18 | 9 | 154 | 0 | 52 | 0 | 0 | FastBattleship, CruiserHunter |
@@ -375,11 +376,11 @@
 | 秋月号 Akizuki | 日系 | 驱逐 | 1 | 2 | 1150 | 12 | Light | 110 | 122 | 550 | 300 | 1.52 | 31 | 38 | 32 | 48 | 0 | 0 | AADestroyer, GunEscort |
 | 高雄号 Takao | 日系 | 重巡 | 2 | 6 | 3300 | 42 | Medium | 102 | 82 | 440 | 455 | 1.20 | 17 | 96 | 36 | 36 | 0 | 0 | HeavyCruiser, NightTorpedo |
 | 翔鹤号 Shokaku | 日系 | 航母 | 3 | 12 | 5900 | 38 | Medium | 98 | 54 | 690 | 660 | 1.10 | 10 | 10 | 0 | 58 | 155 | 0 | FleetCarrier, CoordinatedStrike |
-| 伊-19 I-19 | 日系 | 潜艇 | 2 | 7 | 1480 | 12 | Submerged | 69 | 76 | 370 | 275 | 1.64 | 21 | 4 | 90 | 0 | 16 | 64 | ScoutSubmarine, LongRangeAmbush |
+| 伊-19 I-19 | 日系 | 潜艇 | 2 | 7 | 1480 | 12 | Submerged | 69 | 76 | 412.5 | 275 | 1.64 | 21 | 4 | 90 | 0 | 16 | 64 | ScoutSubmarine, LongRangeAmbush |
 | 逸仙号 ROCS Yat Sen | 中系 | 轻巡 | 1 | 2 | 1250 | 14 | Light | 90 | 100 | 480 | 315 | 1.21 | 24 | 36 | 0 | 28 | 0 | 0 | SmallCruiser, MobileCommand |
 | 长春号 PLAN Chang Chun | 中系 | 驱逐 | 2 | 3 | 1600 | 15 | Light | 118 | 124 | 560 | 310 | 1.44 | 32 | 44 | 46 | 34 | 0 | 0 | EarlyPRCDestroyer, GunEscort |
 | 定远号 Dingyuan | 中系 | 战列 | 3 | 10 | 7200 | 92 | Heavy | 50 | 34 | 400 | 520 | 1.13 | 4 | 150 | 0 | 10 | 0 | 0 | PreDreadnoughtMapping, ArmoredAnchor |
-| 海龙号 ROCS Hai Lung SS-793 | 中系 | 潜艇 | 2 | 6 | 1520 | 13 | Submerged | 66 | 74 | 350 | 260 | 1.63 | 20 | 4 | 82 | 0 | 0 | 66 | TrainingSubmarine, LongEndurance |
+| 海龙号 ROCS Hai Lung SS-793 | 中系 | 潜艇 | 2 | 6 | 1520 | 13 | Submerged | 66 | 74 | 390 | 260 | 1.63 | 20 | 4 | 82 | 0 | 0 | 66 | TrainingSubmarine, LongEndurance |
 
 第二期个体偏离说明：
 

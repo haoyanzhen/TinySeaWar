@@ -30,6 +30,9 @@ func setup(objective_definition: Dictionary) -> void:
 		"enemy_staging_positions": definition.get("enemy_staging_positions", {}).duplicate(true),
 		"completed_at_tick": -1,
 		"failed_at_tick": -1,
+		"terminal_reason_code": "",
+		"terminal_reason_summary": "",
+		"terminal_reason_context": {},
 	}
 
 
@@ -167,8 +170,17 @@ func advance(battle_state: Dictionary) -> Dictionary:
 		var completed: bool = str(terminal.get("winner_faction", "")) == "player"
 		runtime_state["status"] = "Completed" if completed else "Failed"
 		runtime_state["completed_at_tick" if completed else "failed_at_tick"] = int(battle_state.get("tick_index", 0))
-		runtime_state["summary"] = str(definition.get("completion_text" if completed else "failure_text", ""))
-		events.append({"event_type": "LevelObjectiveCompleted" if completed else "LevelObjectiveFailed", "objective_set_id": definition.get("id", ""), "summary": runtime_state["summary"]})
+		runtime_state["terminal_reason_code"] = str(terminal.get("reason_code", terminal.get("reason", "")))
+		runtime_state["terminal_reason_summary"] = str(terminal.get("summary", definition.get("completion_text" if completed else "failure_text", "")))
+		runtime_state["terminal_reason_context"] = terminal.get("context", {}).duplicate(true)
+		runtime_state["summary"] = runtime_state["terminal_reason_summary"]
+		events.append({
+			"event_type": "LevelObjectiveCompleted" if completed else "LevelObjectiveFailed",
+			"objective_set_id": definition.get("id", ""),
+			"reason_code": runtime_state["terminal_reason_code"],
+			"summary": runtime_state["summary"],
+			"context": runtime_state["terminal_reason_context"].duplicate(true),
+		})
 	return {"events": events, "terminal": terminal}
 
 
@@ -289,35 +301,60 @@ func _unlock_engagement(summary: String, events: Array) -> void:
 func _terminal_result(battle_state: Dictionary) -> Dictionary:
 	var player_flagship := _flagship(battle_state, "fleet.player")
 	if player_flagship.get("life_state", "") == "Sunk":
-		return {"winner_faction": "enemy", "reason": "LEVEL_OBJECTIVE_CANCELLED"}
+		return _cancelled_result(
+			"PLAYER_FLAGSHIP_SUNK",
+			"己方旗舰%s沉没，任务取消" % _unit_label(player_flagship),
+			{"unit_id": str(player_flagship.get("entity_id", ""))}
+		)
 	for protected_id in definition.get("protected_player_unit_ids", []):
 		var protected: Dictionary = battle_state.get("units_by_id", {}).get(str(protected_id), {})
 		if protected.is_empty() or protected.get("life_state", "") == "Sunk":
-			return {"winner_faction": "enemy", "reason": "LEVEL_OBJECTIVE_CANCELLED"}
+			return _cancelled_result(
+				"PROTECTED_PLAYER_UNIT_SUNK",
+				"保护目标%s沉没，任务取消" % _unit_label(protected, str(protected_id)),
+				{"unit_id": str(protected_id)}
+			)
 	var required_any: Array = definition.get("required_any_player_unit_ids", [])
 	if not required_any.is_empty():
 		var survivors := 0
 		for unit_id in required_any:
 			if battle_state.get("units_by_id", {}).get(str(unit_id), {}).get("life_state", "") == "Alive": survivors += 1
-		if survivors < int(definition.get("minimum_required_any_player_alive", 1)):
-			return {"winner_faction": "enemy", "reason": "LEVEL_OBJECTIVE_CANCELLED"}
+		var required_survivors := int(definition.get("minimum_required_any_player_alive", 1))
+		if survivors < required_survivors:
+			var labels: Array[String] = []
+			for unit_id in required_any:
+				labels.append(_unit_label(battle_state.get("units_by_id", {}).get(str(unit_id), {}), str(unit_id)))
+			return _cancelled_result(
+				"REQUIRED_ANY_PLAYER_SURVIVORS_LOST",
+				"%s的存活数量为%d，低于任务要求%d，任务取消" % ["、".join(labels), survivors, required_survivors],
+				{"unit_ids": required_any.duplicate(), "survivors": survivors, "minimum_survivors": required_survivors}
+			)
 	var hp_unit_id := str(definition.get("minimum_player_hp_ratio_unit_id", ""))
 	if not hp_unit_id.is_empty():
 		var hp_unit: Dictionary = battle_state.get("units_by_id", {}).get(hp_unit_id, {})
 		var hp_ratio := float(hp_unit.get("current_hp", 0.0)) / maxf(1.0, float(hp_unit.get("max_hp", 1.0)))
-		if hp_unit.is_empty() or hp_ratio <= float(definition.get("minimum_player_hp_ratio", 0.0)):
-			return {"winner_faction": "enemy", "reason": "LEVEL_OBJECTIVE_CANCELLED"}
+		var minimum_ratio := float(definition.get("minimum_player_hp_ratio", 0.0))
+		if hp_unit.is_empty() or hp_ratio <= minimum_ratio:
+			return _cancelled_result(
+				"PLAYER_UNIT_HP_RATIO_BREACHED",
+				"%s耐久降至%.1f%%，不高于任务要求的%.1f%%，任务取消" % [_unit_label(hp_unit, hp_unit_id), hp_ratio * 100.0, minimum_ratio * 100.0],
+				{"unit_id": hp_unit_id, "hp_ratio": hp_ratio, "minimum_hp_ratio": minimum_ratio}
+			)
 	var minimum_alive := int(definition.get("minimum_player_alive", 0))
 	if minimum_alive > 0:
 		var alive_count := 0
 		for unit_id in battle_state.get("fleets_by_id", {}).get("fleet.player", {}).get("unit_ids", []):
 			if battle_state.get("units_by_id", {}).get(str(unit_id), {}).get("life_state", "") == "Alive": alive_count += 1
 		if alive_count < minimum_alive:
-			return {"winner_faction": "enemy", "reason": "LEVEL_OBJECTIVE_CANCELLED"}
+			return _cancelled_result(
+				"MINIMUM_PLAYER_SURVIVORS_LOST",
+				"己方存活舰艇仅%d艘，低于任务要求%d艘，任务取消" % [alive_count, minimum_alive],
+				{"survivors": alive_count, "minimum_survivors": minimum_alive}
+			)
 	if str(definition.get("objective_kind", "")) == "FlagshipMission":
 		var enemy_flagship := _flagship(battle_state, "fleet.enemy")
 		if enemy_flagship.get("life_state", "") == "Sunk":
-			return {"winner_faction": "player", "reason": "LEVEL_OBJECTIVE_COMPLETED"}
+			return _completed_result()
 		return {}
 	if str(definition.get("objective_kind", "")) == "ChallengeMission":
 		var ordered_targets: Array = definition.get("ordered_enemy_unit_ids", [])
@@ -327,9 +364,18 @@ func _terminal_result(battle_state: Dictionary) -> Dictionary:
 				if target.get("life_state", "") != "Sunk": continue
 				for prior_index in range(index):
 					if battle_state.get("units_by_id", {}).get(str(ordered_targets[prior_index]), {}).get("life_state", "") != "Sunk":
-						return {"winner_faction": "enemy", "reason": "LEVEL_OBJECTIVE_CANCELLED"}
+						var prior_id := str(ordered_targets[prior_index])
+						var target_id := str(ordered_targets[index])
+						return _cancelled_result(
+							"ORDERED_TARGET_SUNK_EARLY",
+							"%s在%s之前沉没，任务顺序被破坏" % [
+								_unit_label(target, target_id),
+								_unit_label(battle_state.get("units_by_id", {}).get(prior_id, {}), prior_id),
+							],
+							{"sunk_unit_id": target_id, "required_prior_unit_id": prior_id, "ordered_index": index}
+						)
 			if ordered_targets.all(func(unit_id): return battle_state.get("units_by_id", {}).get(str(unit_id), {}).get("life_state", "") == "Sunk"):
-				return {"winner_faction": "player", "reason": "LEVEL_OBJECTIVE_COMPLETED"}
+				return _completed_result()
 			return {}
 		var required_enemy_ids: Array = definition.get("required_enemy_unit_ids", [])
 		for enemy_id in required_enemy_ids:
@@ -340,7 +386,7 @@ func _terminal_result(battle_state: Dictionary) -> Dictionary:
 			for unit_id in battle_state.get("fleets_by_id", {}).get("fleet.enemy", {}).get("unit_ids", []):
 				if battle_state.get("units_by_id", {}).get(str(unit_id), {}).get("life_state", "") == "Sunk": sunk_count += 1
 			if sunk_count < minimum_enemy_sunk: return {}
-		return {"winner_faction": "player", "reason": "LEVEL_OBJECTIVE_COMPLETED"}
+		return _completed_result()
 	if not is_tutorial(): return {}
 	var required_enemy_ids: Array = definition.get("required_enemy_unit_ids", [])
 	if required_enemy_ids.is_empty():
@@ -353,8 +399,41 @@ func _terminal_result(battle_state: Dictionary) -> Dictionary:
 			break
 	if not all_required_enemies_sunk: return {}
 	if not bool(runtime_state.get("engagement_unlocked", false)) or not _required_actions_complete():
-		return {"winner_faction": "enemy", "reason": "TUTORIAL_SEQUENCE_BROKEN"}
-	return {"winner_faction": "player", "reason": "LEVEL_OBJECTIVE_COMPLETED"}
+		return {
+			"winner_faction": "enemy",
+			"reason": "TUTORIAL_SEQUENCE_BROKEN",
+			"reason_code": "TUTORIAL_SEQUENCE_BROKEN",
+			"summary": str(definition.get("failure_text", "教学必做操作或顺序未完成")),
+			"context": {},
+		}
+	return _completed_result()
+
+
+func _completed_result() -> Dictionary:
+	return {
+		"winner_faction": "player",
+		"reason": "LEVEL_OBJECTIVE_COMPLETED",
+		"reason_code": "LEVEL_OBJECTIVE_COMPLETED",
+		"summary": str(definition.get("completion_text", "关卡任务完成")),
+		"context": {},
+	}
+
+
+func _cancelled_result(condition_code: String, summary: String, context: Dictionary) -> Dictionary:
+	return {
+		"winner_faction": "enemy",
+		"reason": "LEVEL_OBJECTIVE_CANCELLED",
+		"reason_code": "LEVEL_OBJECTIVE_CANCELLED_%s" % condition_code,
+		"summary": summary,
+		"context": context.duplicate(true),
+	}
+
+
+func _unit_label(unit: Dictionary, fallback: String = "指定单位") -> String:
+	var label := str(unit.get("display_name", ""))
+	if not label.is_empty(): return label
+	var unit_id := str(unit.get("entity_id", fallback))
+	return unit_id if not unit_id.is_empty() else fallback
 
 
 func _flagship(battle_state: Dictionary, fleet_id: String) -> Dictionary:

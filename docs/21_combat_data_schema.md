@@ -16,7 +16,10 @@ base_detection_range, detection_range
 base_concealment_distance, concealment_distance
 fire_concealment_multiplier
 evasion, gunnery_power, torpedo_power, anti_air_power, aviation_power
-max_oxygen, collision_radius, collision_half_extents
+max_oxygen, oxygen_consumption_rate?, oxygen_recovery_rate?
+redive_oxygen_ratio?, depth_transition_duration?, depth_state_minimum_hold?
+can_launch_torpedoes_submerged?
+collision_radius, collision_half_extents
 variant_tags[], asset_root
 weapon_mounts[], primary_weapon_group_id?
 primary_weapon_control_type?, ammo_selection_group_id?
@@ -32,6 +35,8 @@ initial_ammo_type?, skill_id?, is_flagship_candidate
 - `collision_radius` 只用于旧数据与导航兼容；舰船、炮弹和鱼雷几何接触以随航向旋转的 `collision_half_extents=[纵向, 横向]` 为准。
 - `weapon_mounts` 引用 WeaponDefinition；主要武器组至多一个，弹药选择组必须属于本舰实际挂载组。
 - `primary_weapon_control_type`：`Torpedo | BattleshipMainGun | AviationSquadron | OtherMainWeapon`。
+- `Submarine` 必须配置正数 `max_oxygen`、`oxygen_consumption_rate`、`oxygen_recovery_rate`、`depth_transition_duration`、`depth_state_minimum_hold`，并配置 `[0,1]` 内的 `redive_oxygen_ratio`。`can_launch_torpedoes_submerged` 默认为 `false`，只有特殊潜射角色才可显式设为 `true`。
+- 潜艇 `base_detection_range = base_concealment_distance * 1.5`；运行值继续遵守公共距离倍率。稳定深度下的侦查与被侦察派生值不重复写入 Definition。
 
 旧字段 `detectability`、`main_weapon`、`torpedo_weapon`、`anti_air_weapon`、`air_wing`、`scout_wing` 不得进入新配置。
 
@@ -86,6 +91,10 @@ skill_auto_cast_enabled
 player_route_waypoints[]
 movement_state.waypoint_index
 radar_stealth_state # Exposed | Stealthed
+depth_state # Surface | Submerged
+depth_transition # target_depth_state, remaining, duration
+depth_hold_remaining
+oxygen_state # current, maximum
 ```
 
 - 玩家默认 `movement=false`、`secondary=true`、`primary=false`、`skill_auto_cast=false`；技能自动释放权限不通过玩家配置开放。

@@ -156,6 +156,8 @@ func _run() -> void:
 	_check(FileAccess.file_exists(output_directory.path_join("report.md")), "Markdown report exists")
 	var report_text := FileAccess.get_file_as_string(output_directory.path_join("report.md"))
 	_check(report_text.contains("累计消极时长") and report_text.contains("接敌压力触发次数") and report_text.contains("触发后平均接敌时间") and report_text.contains("长期原地不动次数"), "Markdown report exposes all passive-engagement metrics")
+	var summary_csv := FileAccess.get_file_as_string(output_directory.path_join("summary.csv"))
+	_check(report_text.contains("原因码") and report_text.contains("原因说明") and summary_csv.begins_with("run_id,scenario_id,level_definition_id,seed,side_variant,end_state,winner_faction,winner_lineup,finish_reason,finish_reason_summary,"), "battle reports expose condition-level finish codes and factual summaries")
 	_check(FileAccess.file_exists(output_directory.path_join("aggregate.json")), "aggregate JSON exists")
 	_check(FileAccess.file_exists(output_directory.path_join("unit_damage.csv")), "per-battle unit damage CSV exists")
 	var swapped_manifest: Dictionary = manifest.duplicate(true)

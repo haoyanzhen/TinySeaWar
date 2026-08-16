@@ -25,12 +25,20 @@ func _run() -> void:
 		return
 	var failures: Array[String] = []
 	var summaries: Array = []
+	var full_cycles_by_level := {}
 	for case_definition in CASES:
 		for seed_offset in range(first_seed_offset, first_seed_offset + seed_count):
 			var result := _run_case(registry, case_definition, int(case_definition["first_seed"]) + seed_offset)
 			summaries.append(result)
+			var level_id := str(result.get("level_id", ""))
+			var long_term: Dictionary = result.get("long_term_diagnostic", {})
+			full_cycles_by_level[level_id] = int(full_cycles_by_level.get(level_id, 0)) + int(long_term.get("normal_full_cycles", 0)) + int(long_term.get("submerged_launch_cycles", 0))
 			for failure in result.get("failures", []):
 				failures.append(str(failure))
+	for case_definition in CASES:
+		var level_id := str(case_definition["level_id"])
+		if int(full_cycles_by_level.get(level_id, 0)) <= 0:
+			failures.append("%s fixed-seed batch produced no complete six-phase attack-cycle evidence" % level_id)
 	print("SUBMARINE_AI_FIXED_SEED=%s" % JSON.stringify(summaries))
 	for failure in failures:
 		push_error(failure)
@@ -122,6 +130,7 @@ func _run_case(registry, case_definition: Dictionary, seed: int) -> Dictionary:
 
 	var failures: Array[String] = []
 	var prefix := "%s seed %d" % [level_id, seed]
+	var long_term_diagnostic: Dictionary = session.get_statistics().get("submarine_ai", {}).get(submarine_id, {})
 	for requirement in [
 		["solutions", "%s produced no legal torpedo solution" % prefix],
 		["commits", "%s produced no AI fire commit" % prefix],
@@ -135,6 +144,10 @@ func _run_case(registry, case_definition: Dictionary, seed: int) -> Dictionary:
 	for zero_requirement in ["primary_rejections", "illegal_depth_fires", "friendly_commits", "launcher_mismatches", "navigation_failures"]:
 		if int(counts[zero_requirement]) > 0:
 			failures.append("%s has %d %s" % [prefix, int(counts[zero_requirement]), zero_requirement])
+	if str(long_term_diagnostic.get("zero_fire_classification", "")) != "FIRED":
+		failures.append("%s long-term diagnostic did not classify the submarine as FIRED" % prefix)
+	if str(long_term_diagnostic.get("first_fire_weapon_state_instance_id", "")).is_empty():
+		failures.append("%s long-term diagnostic lost the concrete first-fire launcher instance" % prefix)
 	return {
 		"level_id":level_id,
 		"seed":seed,
@@ -143,5 +156,6 @@ func _run_case(registry, case_definition: Dictionary, seed: int) -> Dictionary:
 		"result":session.state.get("result", {}).get("winner_faction", ""),
 		"counts":counts,
 		"diagnostics":diagnostics,
+		"long_term_diagnostic":long_term_diagnostic,
 		"failures":failures,
 	}

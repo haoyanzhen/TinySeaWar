@@ -101,4 +101,35 @@ maximum_behavior_anomalies?
 - `output_directory` 必须指向允许写入的实验产物目录，不得覆盖正式数据。
 - 结果至少能关联实验 ID、场景、策略、AI Profile、种子、侧别、配置指纹和代码版本。
 - 每局 `finish_reason` 保存具体终局原因码，`finish_reason_summary` 保存由实际触发条件生成的人类可读说明，`finish_reason_context` 保存触发单位、阈值或计数等结构化事实；挑战取消不得以整关静态失败文案代替本局事实。
+- 每局 `submarine_ai{unit_id}` 为潜艇长期诊断对象，至少包含：
+
+```text
+definition_id, display_name, faction_id, lineup_id?
+decision_samples, visible_target_samples
+ready_weapon_samples, legal_solution_samples
+scored_window_samples, window_score_total, window_score_max
+window_threshold_total, outcomes_by_reason{}, rejections_by_reason{}
+friendly_risk_ignored_samples, friendly_risk_observed_samples
+friendly_risk_observed_max
+fire_commitments, weapon_fires, fires_by_phase{}
+first_fire_tick, first_fire_time
+first_fire_weapon_state_instance_id, first_fire_phase
+selected_weapon_instances{}
+opportunities_observed, opportunities_expired
+opportunity_expiry_reasons{}, opportunity_forced_samples
+attack_run_timeouts
+phase_transitions{}, phase_reasons{}, phase_dwell_seconds{}
+depth_dwell_seconds{}, depth_changes, depth_changes_by_target{}
+forced_surfaces, depth_requests, depth_requests_by_target{}
+depth_request_holds_by_reason{}
+oxygen_dwell_seconds{}, oxygen_min_ratio, oxygen_max_ratio
+normal_full_cycles, submerged_launch_cycles
+incomplete_attack_cycles, recovery_self_defense_fires
+cycle_examples[]
+zero_fire_classification
+```
+
+  - `zero_fire_classification` 至少区分 `FIRED | SUBMARINE_NO_FIRE_DECISIONS | SUBMARINE_NO_VISIBLE_TARGET | SUBMARINE_NO_READY_WEAPON | SUBMARINE_NO_LEGAL_SOLUTION | SUBMARINE_ELIGIBLE_WINDOW_NO_FIRE | SUBMARINE_COMMITTED_WITHOUT_FIRE | SUBMARINE_DISCIPLINE_HELD | SUBMARINE_ZERO_FIRE_UNCLASSIFIED`。
+  - 潜艇窗口暂不使用友军风险评分：`friendly_risk_ignored_samples` 记录显式归零的评分样本，`friendly_risk_observed_samples/max` 只保留同一发射器雷道的实际观察事实，不能反向参与本轮开火判定。
+  - 聚合结果的 `submarine_ai` 按总体和 `lineup_id|definition_id` 汇总上述计数、原因、阶段/深度/氧气驻留、完整循环、超时和开火样本率；CSV/Markdown 派生产物固定为 `submarine_ai.csv` 与 `submarine_ai.md`。
 - Definition 覆盖、临时舰队、Acceptance Profile 和并行恢复字段只有在隔离校验实现后才能加入正式契约；当前完成度只见 `docs/00_project_status.md`。

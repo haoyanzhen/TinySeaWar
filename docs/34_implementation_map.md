@@ -82,7 +82,7 @@
 | AI 行为与难度测试 | `scripts/tests/ai_behavior_quantitative_test.gd`、`ai_difficulty_profile_test.gd` |
 | 编组与协同测试 | `scripts/tests/ai_group_formation_test.gd`、`ai_coordination_test.gd` |
 | 模拟完整 AI 初始化与技能射程测试 | `scripts/tests/battle_simulator_test.gd` |
-| 潜艇六阶段、首选发射器与 S-04/S-05 `1 -> 3` 固定种子门禁 | `scripts/tests/test_runner.gd`、`scripts/tests/submarine_ai_fixed_seed_test.gd` |
+| 潜艇六阶段、装填 ETA 发射器规划、AttackRun 超时重规划、长期诊断与 S-04/S-05 `1 -> 3` 固定种子门禁 | `scripts/tests/test_runner.gd`、`scripts/tests/submarine_ai_fixed_seed_test.gd`、`scripts/tests/battle_simulator_test.gd` |
 | 航迹、碰撞场与恢复测试 | `scripts/tests/trajectory_navigation_test.gd`、`navigation_collision_field_test.gd`、`ai_route_recovery_test.gd` |
 | Tick 分阶段、导航/侦查性能、投影路线、失败/等待与大编队碰撞测试 | `scripts/tests/ai_navigation_performance_test.gd` |
 
@@ -167,9 +167,9 @@
 | 实验清单 | `data/simulations/experiments/` |
 | 实验加载 | `scripts/infrastructure/simulation/experiment_loader.gd` |
 | 单次/批次运行协调 | `scripts/application/simulation/simulation_runner.gd` |
-| 聚合统计 | `scripts/infrastructure/simulation/simulation_aggregator.gd` |
-| 报告写出 | `scripts/infrastructure/simulation/simulation_report_writer.gd` |
-| 战斗事实记录 | `scripts/infrastructure/analytics/battle_recorder.gd` |
+| 聚合统计（含潜艇零开火、窗口、阶段/深度/氧气与循环） | `scripts/infrastructure/simulation/simulation_aggregator.gd` |
+| 报告写出（含 `submarine_ai.csv/.md`） | `scripts/infrastructure/simulation/simulation_report_writer.gd` |
+| 战斗事实记录（含潜艇逐 Tick 驻留与决策样本） | `scripts/infrastructure/analytics/battle_recorder.gd` |
 | 伤害统计 | `scripts/infrastructure/analytics/damage_statistics.gd` |
 | 命令行实验入口 | `tools/simulation/run_experiment.gd` |
 | 平衡分析工具 | `tools/simulation/analyze_damage_ttk_balance.py`、`run_damage_ttk_balance.gd` |

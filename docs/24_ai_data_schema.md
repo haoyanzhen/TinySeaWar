@@ -51,6 +51,7 @@ planned_torpedo_weapon_state_instance_id
 planned_torpedo_aim_position
 planned_attack_position, planned_exit_position
 torpedo_opportunity_expires_at
+torpedo_opportunity_key, torpedo_opportunity_last_trigger_tick
 requested_depth_state, depth_request_reason
 last_depth_request_tick, depth_hold_until_tick
 projected_oxygen_margin, surface_attack_deadline
@@ -67,7 +68,7 @@ Search | Approach | SurfaceForAttack | AttackRun | BreakContact | RecoverOxygen
 
 不定义 `Redive` 阶段。重新下潜由 `RecoverOxygen` 中的 `requested_depth_state=Submerged`、`depth_request_reason`、`last_depth_request_tick` 和实际 `UnitState.depth_state` 表达；只有稳定进入 `Submerged` 才切回 `Search`，拒绝或再次强制上浮时仍保持 `RecoverOxygen`。
 
-潜艇深度状态仍由战斗 `UnitState` 权威持有；AIState 只保存战斗阶段、原子雷击解、机会有效期、资源预测、最近请求与迟滞记忆。计划发射器、瞄准点、攻击点和出口必须同时建立与清除，不能把旧候选与新航行解拼接。潜艇的 `current_mode_id` 和开火纪律是阶段投影，不独立评分或迟滞；`current_tactic` 不用于持久化潜艇 `Attack/Defend/Kite`。目标和雷击解分别复用公共 `target_score`、`attack_window` 后按稳定分层键排序，不增加 `submarine_target_score`、`torpedo_solution_score` 或对应权重字段。AI 的 `75%` 主动重新下潜门槛属于 `docs/16_enemy_ai_behavior_design.md` 的决策规则，不覆盖 ShipDefinition 的 Domain 合法门槛，也不由难度 Profile 修改。
+潜艇深度状态仍由战斗 `UnitState` 权威持有；AIState 只保存战斗阶段、原子雷击解、机会有效期/稳定键/最近触发 Tick、资源预测、最近请求与迟滞记忆。计划发射器、瞄准点、攻击点和出口必须同时建立与清除，不能把旧候选与新航行解拼接。潜艇的 `current_mode_id` 和开火纪律是阶段投影，不独立评分或迟滞；`current_tactic` 不用于持久化潜艇 `Attack/Defend/Kite`。目标和雷击解分别复用公共 `target_score`、`attack_window` 后按稳定分层键排序，不增加 `submarine_target_score`、`torpedo_solution_score` 或对应权重字段。AI 的 `75%` 主动重新下潜门槛属于 `docs/16_enemy_ai_behavior_design.md` 的决策规则，不覆盖 ShipDefinition 的 Domain 合法门槛，也不由难度 Profile 修改。
 
 上述潜艇字段是完整 AI 接入必须遵守的正式 State 形状；字段写入消费者和当前运行时覆盖只见 `docs/00_project_status.md`。
 

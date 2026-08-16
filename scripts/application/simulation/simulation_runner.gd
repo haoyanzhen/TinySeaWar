@@ -123,7 +123,9 @@ func _run_battle(registry, manifest: Dictionary, scenario: Dictionary, seed_valu
 	var fleet_health := _fleet_health(session.state)
 	var unit_damage_statistics: Dictionary = session.get_all_unit_damage_statistics()
 	var non_ship_damage_statistics: Dictionary = session.get_all_non_ship_damage_statistics()
+	var submarine_ai_statistics: Dictionary = stats.get("submarine_ai", {}).duplicate(true)
 	_annotate_lineups(unit_damage_statistics, side_variant)
+	_annotate_lineups(submarine_ai_statistics, side_variant)
 	var winner_faction := str(result.get("winner_faction", ""))
 	var finish_reason := str(result.get("reason_code", result.get("reason", "GUARD_LIMIT" if not finished else "UNKNOWN")))
 	var finish_reason_summary := str(result.get("reason_summary", ""))
@@ -154,6 +156,7 @@ func _run_battle(registry, manifest: Dictionary, scenario: Dictionary, seed_valu
 		"policy_command_rejections_by_reason": policy_command_rejections_by_reason,
 		"policy_command_rejection_details": policy_command_rejection_details,
 		"ai_behavior": stats.get("ai_behavior", {}).duplicate(true),
+		"submarine_ai": submarine_ai_statistics,
 		"fleet_health": fleet_health,
 		"unit_end_states": _unit_end_states(session.state),
 		"units": unit_damage_statistics,
@@ -186,6 +189,9 @@ func _unit_end_states(battle_state: Dictionary) -> Dictionary:
 			"navigation_state": unit.get("navigation_state", {}).get("state", ""),
 			"ai_mode": unit.get("ai_state", {}).get("mode_id", ""),
 			"ai_tactic": unit.get("ai_state", {}).get("tactic_id", ""),
+			"submarine_combat_phase": unit.get("ai_state", {}).get("submarine_combat_phase", ""),
+			"depth_state": unit.get("depth_state", ""),
+			"oxygen_ratio": float(unit.get("oxygen_state", {}).get("current", 0.0)) / maxf(1.0, float(unit.get("oxygen_state", {}).get("maximum", 1.0))),
 			"level_task": unit.get("ai_state", {}).get("level_task", ""),
 			"active_interrupt": "TorpedoEvasion" if str(unit.get("navigation_state", {}).get("state", "NormalNavigation")) == "EmergencyEvasion" else "",
 		}

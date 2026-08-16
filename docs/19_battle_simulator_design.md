@@ -547,7 +547,11 @@ artifacts/simulations/{experiment_id}/
   metadata.json
   runs.jsonl
   aggregate.json
-  comparison.csv
+  summary.csv
+  unit_damage.csv
+  unit_damage.md
+  submarine_ai.csv
+  submarine_ai.md
   report.md
   failures/
     {run_id}.json
@@ -567,10 +571,11 @@ CSV 面向表格分析，至少提供：
 - 一行一单位一局。
 - 一行一武器一局。
 - 一行一候选聚合比较。
+- 潜艇实验额外提供一行一潜艇一局，保留零开火分类、窗口评分/阈值、首发实例、阶段/深度/氧气驻留、AttackRun 超时与完整/未完整循环。
 
 ### 10.3 Markdown
 
-Markdown 是面向设计复核的派生产物，必须能追溯到机器可读结果，并列出值得人工复盘的异常或代表种子。报告叙事结构、必备结论和“不能下的结论”只由 `docs/36_balance_testing_design.md` 规定。
+Markdown 是面向设计复核的派生产物，必须能追溯到机器可读结果，并列出值得人工复盘的异常或代表种子。潜艇长期诊断使用独立 `submarine_ai.md`，主报告只保留聚合摘要与链接。报告叙事结构、必备结论和“不能下的结论”只由 `docs/36_balance_testing_design.md` 规定。
 
 ---
 

@@ -15,6 +15,8 @@ func write_all(output_directory: String, result: Dictionary) -> Dictionary:
 	_write_text(output_directory.path_join("summary.csv"), _csv(result), errors)
 	_write_text(output_directory.path_join("unit_damage.csv"), _unit_damage_csv(result), errors)
 	_write_text(output_directory.path_join("unit_damage.md"), _unit_damage_markdown(result), errors)
+	_write_text(output_directory.path_join("submarine_ai.csv"), _submarine_ai_csv(result), errors)
+	_write_text(output_directory.path_join("submarine_ai.md"), _submarine_ai_markdown(result), errors)
 	_write_text(output_directory.path_join("report.md"), _markdown(result), errors)
 	return {"ok": errors.is_empty(), "errors": errors, "output_directory": output_directory}
 
@@ -109,6 +111,73 @@ func _unit_damage_markdown(result: Dictionary) -> String:
 	return "\n".join(lines)
 
 
+func _submarine_ai_csv(result: Dictionary) -> String:
+	var header := [
+		"run_id", "scenario_id", "level_definition_id", "seed", "side_variant", "lineup_id", "faction_id", "unit_id", "definition_id", "display_name",
+		"zero_fire_classification", "decision_samples", "visible_target_samples", "ready_weapon_samples", "legal_solution_samples", "window_score_average", "window_score_max", "window_threshold_average", "friendly_risk_ignored_samples", "friendly_risk_observed_samples", "friendly_risk_observed_max", "fire_commitments", "weapon_fires",
+		"first_fire_tick", "first_fire_time", "first_fire_weapon_state_instance_id", "first_fire_phase", "opportunities_observed", "opportunities_expired", "opportunity_forced_samples",
+		"attack_run_timeouts", "normal_full_cycles", "submerged_launch_cycles", "incomplete_attack_cycles", "recovery_self_defense_fires", "forced_surfaces", "depth_requests", "depth_changes",
+		"oxygen_min_ratio", "oxygen_max_ratio", "outcomes_by_reason", "rejections_by_reason", "command_rejections_by_reason", "phase_transitions", "phase_reasons", "opportunity_expiry_reasons",
+		"phase_dwell_seconds", "depth_dwell_seconds", "depth_requests_by_target", "depth_changes_by_target", "depth_request_holds_by_reason", "oxygen_dwell_seconds", "cycle_examples",
+	]
+	var lines := [",".join(header)]
+	for run in result.get("runs", []):
+		var unit_ids: Array = run.get("submarine_ai", {}).keys()
+		unit_ids.sort()
+		for unit_id in unit_ids:
+			var entry: Dictionary = run["submarine_ai"][unit_id]
+			lines.append(",".join([
+				_csv_cell(run.get("run_id", "")), _csv_cell(run.get("scenario_id", "")), _csv_cell(run.get("level_definition_id", "")), str(run.get("seed", 0)), _csv_cell(run.get("side_variant", "")),
+				_csv_cell(entry.get("lineup_id", "")), _csv_cell(entry.get("faction_id", "")), _csv_cell(unit_id), _csv_cell(entry.get("definition_id", "")), _csv_cell(entry.get("display_name", "")),
+				_csv_cell(entry.get("zero_fire_classification", "")), str(entry.get("decision_samples", 0)), str(entry.get("visible_target_samples", 0)), str(entry.get("ready_weapon_samples", 0)), str(entry.get("legal_solution_samples", 0)),
+				"%.3f" % (float(entry.get("window_score_total", 0.0)) / maxf(1.0, float(entry.get("scored_window_samples", 0)))), "%.3f" % float(entry.get("window_score_max", 0.0)), "%.3f" % (float(entry.get("window_threshold_total", 0.0)) / maxf(1.0, float(entry.get("scored_window_samples", 0)))), str(entry.get("friendly_risk_ignored_samples", 0)), str(entry.get("friendly_risk_observed_samples", 0)), "%.3f" % float(entry.get("friendly_risk_observed_max", 0.0)), str(entry.get("fire_commitments", 0)), str(entry.get("weapon_fires", 0)),
+				str(entry.get("first_fire_tick", -1)), "%.3f" % float(entry.get("first_fire_time", -1.0)), _csv_cell(entry.get("first_fire_weapon_state_instance_id", "")), _csv_cell(entry.get("first_fire_phase", "")), str(entry.get("opportunities_observed", 0)), str(entry.get("opportunities_expired", 0)), str(entry.get("opportunity_forced_samples", 0)),
+				str(entry.get("attack_run_timeouts", 0)), str(entry.get("normal_full_cycles", 0)), str(entry.get("submerged_launch_cycles", 0)), str(entry.get("incomplete_attack_cycles", 0)), str(entry.get("recovery_self_defense_fires", 0)), str(entry.get("forced_surfaces", 0)), str(entry.get("depth_requests", 0)), str(entry.get("depth_changes", 0)),
+				"%.4f" % float(entry.get("oxygen_min_ratio", 0.0)), "%.4f" % float(entry.get("oxygen_max_ratio", 0.0)),
+				_csv_cell(JSON.stringify(entry.get("outcomes_by_reason", {}))), _csv_cell(JSON.stringify(entry.get("rejections_by_reason", {}))), _csv_cell(JSON.stringify(entry.get("command_rejections_by_reason", {}))), _csv_cell(JSON.stringify(entry.get("phase_transitions", {}))), _csv_cell(JSON.stringify(entry.get("phase_reasons", {}))), _csv_cell(JSON.stringify(entry.get("opportunity_expiry_reasons", {}))),
+				_csv_cell(JSON.stringify(entry.get("phase_dwell_seconds", {}))), _csv_cell(JSON.stringify(entry.get("depth_dwell_seconds", {}))), _csv_cell(JSON.stringify(entry.get("depth_requests_by_target", {}))), _csv_cell(JSON.stringify(entry.get("depth_changes_by_target", {}))), _csv_cell(JSON.stringify(entry.get("depth_request_holds_by_reason", {}))), _csv_cell(JSON.stringify(entry.get("oxygen_dwell_seconds", {}))), _csv_cell(JSON.stringify(entry.get("cycle_examples", []))),
+			]))
+	return "\n".join(lines) + "\n"
+
+
+func _submarine_ai_markdown(result: Dictionary) -> String:
+	var aggregate: Dictionary = result.get("aggregate", {}).get("submarine_ai", {})
+	var lines: Array[String] = [
+		"# 潜艇 AI 长期诊断",
+		"",
+		"本报告按逐局逐艇记录六阶段、发射器实例、窗口判定、AttackRun 超时、深度与氧气；零开火必须归入明确原因码。潜艇窗口暂不考虑友军雷道：评分输入固定为 0，实际观察值只作为诊断事实保留。",
+		"",
+		"## 聚合摘要",
+		"",
+		"| 潜艇样本 | 已开火样本 | 零开火样本 | 正常完整循环 | 潜射完整循环 | 未完整循环 | AttackRun 超时 |",
+		"| ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
+		"| %d | %d | %d | %d | %d | %d | %d |" % [int(aggregate.get("submarine_samples", 0)), int(aggregate.get("fired_samples", 0)), int(aggregate.get("zero_fire_samples", 0)), int(aggregate.get("normal_full_cycles", 0)), int(aggregate.get("submerged_launch_cycles", 0)), int(aggregate.get("incomplete_attack_cycles", 0)), int(aggregate.get("attack_run_timeouts", 0))],
+		"",
+		"零开火分类：`%s`" % JSON.stringify(aggregate.get("zero_fire_classifications", {})),
+		"",
+	]
+	for run in result.get("runs", []):
+		if run.get("submarine_ai", {}).is_empty(): continue
+		lines.append("## %s / seed %s / %s" % [run.get("scenario_id", ""), run.get("seed", 0), run.get("side_variant", "")])
+		lines.append("")
+		lines.append("| 潜艇 | 阵营 | 分类 | 决策/可见/就绪/合法 | 承诺/实射 | 首发 Tick / 发射器 / 阶段 | 完整循环(常规/潜射) | 超时 | 氧气范围 |")
+		lines.append("| --- | --- | --- | ---: | ---: | --- | ---: | ---: | --- |")
+		var unit_ids: Array = run.get("submarine_ai", {}).keys()
+		unit_ids.sort()
+		for unit_id in unit_ids:
+			var entry: Dictionary = run["submarine_ai"][unit_id]
+			lines.append("| %s | %s | `%s` | %d/%d/%d/%d | %d/%d | %d / `%s` / %s | %d/%d | %d | %.0f%%–%.0f%% |" % [
+				entry.get("display_name", unit_id), entry.get("faction_id", ""), entry.get("zero_fire_classification", ""), int(entry.get("decision_samples", 0)), int(entry.get("visible_target_samples", 0)), int(entry.get("ready_weapon_samples", 0)), int(entry.get("legal_solution_samples", 0)),
+				int(entry.get("fire_commitments", 0)), int(entry.get("weapon_fires", 0)), int(entry.get("first_fire_tick", -1)), entry.get("first_fire_weapon_state_instance_id", ""), entry.get("first_fire_phase", ""),
+				int(entry.get("normal_full_cycles", 0)), int(entry.get("submerged_launch_cycles", 0)), int(entry.get("attack_run_timeouts", 0)), float(entry.get("oxygen_min_ratio", 0.0)) * 100.0, float(entry.get("oxygen_max_ratio", 0.0)) * 100.0,
+			])
+			lines.append("")
+			var scored_samples := maxf(1.0, float(entry.get("scored_window_samples", 0)))
+			lines.append("- `%s` 窗口评分 avg/max/阈值 avg：`%.2f / %.2f / %.2f`；友军风险忽略/观察阳性/最高 `%d / %d / %.2f`；窗口结果 `%s`；拒绝原因 `%s`；机会过期 `%s`；深度请求/完成/强制上浮 `%s / %s / %d`；阶段转换 `%s`；循环样例 `%s`。" % [unit_id, float(entry.get("window_score_total", 0.0)) / scored_samples, float(entry.get("window_score_max", 0.0)), float(entry.get("window_threshold_total", 0.0)) / scored_samples, int(entry.get("friendly_risk_ignored_samples", 0)), int(entry.get("friendly_risk_observed_samples", 0)), float(entry.get("friendly_risk_observed_max", 0.0)), JSON.stringify(entry.get("outcomes_by_reason", {})), JSON.stringify(entry.get("rejections_by_reason", {})), JSON.stringify(entry.get("opportunity_expiry_reasons", {})), JSON.stringify(entry.get("depth_requests_by_target", {})), JSON.stringify(entry.get("depth_changes_by_target", {})), int(entry.get("forced_surfaces", 0)), JSON.stringify(entry.get("phase_transitions", {})), JSON.stringify(entry.get("cycle_examples", []))])
+		lines.append("")
+	return "\n".join(lines)
+
+
 func _markdown(result: Dictionary) -> String:
 	var metadata: Dictionary = result.get("metadata", {})
 	var aggregate: Dictionary = result.get("aggregate", {})
@@ -173,6 +242,28 @@ func _markdown(result: Dictionary) -> String:
 			"| 结算 | %s |" % ("通过" if bool(evaluation.get("passed", false)) else "未通过"),
 			"",
 		])
+	var submarine_ai: Dictionary = aggregate.get("submarine_ai", {})
+	lines.append_array([
+		"## 潜艇 AI 长期诊断摘要",
+		"",
+		"| 指标 | 结果 |",
+		"| --- | ---: |",
+		"| 潜艇逐局样本 | %d |" % int(submarine_ai.get("submarine_samples", 0)),
+		"| 已开火样本 | %d |" % int(submarine_ai.get("fired_samples", 0)),
+		"| 零开火样本 | %d |" % int(submarine_ai.get("zero_fire_samples", 0)),
+		"| 正常六阶段完整循环 | %d |" % int(submarine_ai.get("normal_full_cycles", 0)),
+		"| 特殊潜射完整循环 | %d |" % int(submarine_ai.get("submerged_launch_cycles", 0)),
+		"| AttackRun 超时 | %d |" % int(submarine_ai.get("attack_run_timeouts", 0)),
+		"| RecoverOxygen 自卫开火 | %d |" % int(submarine_ai.get("recovery_self_defense_fires", 0)),
+		"| 主动深度请求 / 完成 / 强制上浮 | %d / %d / %d |" % [int(submarine_ai.get("depth_requests", 0)), int(submarine_ai.get("depth_changes", 0)), int(submarine_ai.get("forced_surfaces", 0))],
+		"| 窗口评分 平均 / 最高 / 平均阈值 | %.2f / %.2f / %.2f |" % [float(submarine_ai.get("window_score_average", 0.0)), float(submarine_ai.get("window_score_max", 0.0)), float(submarine_ai.get("window_threshold_average", 0.0))],
+		"| 友军风险忽略样本 / 观察阳性 / 最高观察值 | %d / %d / %.2f |" % [int(submarine_ai.get("friendly_risk_ignored_samples", 0)), int(submarine_ai.get("friendly_risk_observed_samples", 0)), float(submarine_ai.get("friendly_risk_observed_max", 0.0))],
+		"",
+		"零开火分类：`%s`" % JSON.stringify(submarine_ai.get("zero_fire_classifications", {})),
+		"",
+		"逐局证据、阶段驻留、深度/氧气分布、发射器实例和窗口原因详见 `submarine_ai.md` 与 `submarine_ai.csv`。",
+		"",
+	])
 	lines.append_array([
 		"## AI 行为指标",
 		"",

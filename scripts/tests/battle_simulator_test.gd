@@ -135,6 +135,12 @@ func _run() -> void:
 		"non_ship_damage":{"facility.test":{"source_id":"facility.test", "source_kind":"Facility", "display_name":"测试炮台", "damage_dealt":20.0, "damage_taken":0.0, "overkill_damage":0.0, "shots":1, "hits":1, "damage_by_category":{"main_gun":20.0}}},
 	}])
 	_check(not non_ship_aggregate.get("average_damage_by_ship", {}).has("|") and non_ship_aggregate.get("average_damage_by_non_ship", {}).has("facility.test"), "non-ship damage aggregates separately without creating a blank ship grouping key")
+	var submarine_aggregate: Dictionary = Aggregator.new().aggregate([{
+		"end_state":"Finished", "winner_faction":"player", "winner_lineup":"original_player", "finish_reason":"FLAGSHIP_SUNK", "duration":1.0,
+		"units":{}, "non_ship_damage":{}, "ai_behavior":{},
+		"submarine_ai":{"unit.player.test_sub":{"lineup_id":"original_player", "definition_id":"ship.test_sub", "display_name":"测试潜艇", "zero_fire_classification":"SUBMARINE_NO_LEGAL_SOLUTION", "decision_samples":4, "visible_target_samples":4, "ready_weapon_samples":4, "legal_solution_samples":0, "fire_commitments":0, "weapon_fires":0, "opportunities_observed":0, "opportunities_expired":0, "attack_run_timeouts":1, "normal_full_cycles":0, "submerged_launch_cycles":0, "incomplete_attack_cycles":1, "recovery_self_defense_fires":0, "outcomes_by_reason":{"SUB_ATTACK_HELD_ARC":4}, "rejections_by_reason":{"FIRE_ARC_INVALID":4}, "phase_transitions":{"AttackRun->Approach":1}, "phase_dwell_seconds":{"AttackRun":12.0}, "depth_dwell_seconds":{"Surface":12.0}, "oxygen_dwell_seconds":{"75_100":12.0}}},
+	}]).get("submarine_ai", {})
+	_check(int(submarine_aggregate.get("submarine_samples", 0)) == 1 and int(submarine_aggregate.get("zero_fire_samples", 0)) == 1 and int(submarine_aggregate.get("attack_run_timeouts", 0)) == 1 and int(submarine_aggregate.get("zero_fire_classifications", {}).get("SUBMARINE_NO_LEGAL_SOLUTION", 0)) == 1, "simulator aggregates submarine zero-fire cause and AttackRun timeout evidence")
 	var player_health: Dictionary = first_run.get("fleet_health", {}).get("fleet.player", {})
 	var player_damage_taken := 0.0
 	for unit_id in first_run.get("units", {}):
@@ -160,6 +166,8 @@ func _run() -> void:
 	_check(report_text.contains("原因码") and report_text.contains("原因说明") and summary_csv.begins_with("run_id,scenario_id,level_definition_id,seed,side_variant,end_state,winner_faction,winner_lineup,finish_reason,finish_reason_summary,"), "battle reports expose condition-level finish codes and factual summaries")
 	_check(FileAccess.file_exists(output_directory.path_join("aggregate.json")), "aggregate JSON exists")
 	_check(FileAccess.file_exists(output_directory.path_join("unit_damage.csv")), "per-battle unit damage CSV exists")
+	_check(FileAccess.file_exists(output_directory.path_join("submarine_ai.csv")) and FileAccess.file_exists(output_directory.path_join("submarine_ai.md")), "long-term submarine AI CSV and Markdown reports exist")
+	_check(report_text.contains("潜艇 AI 长期诊断摘要") and FileAccess.get_file_as_string(output_directory.path_join("submarine_ai.md")).contains("零开火分类"), "main and detailed reports expose submarine diagnostic evidence")
 	var swapped_manifest: Dictionary = manifest.duplicate(true)
 	swapped_manifest["experiment_id"] = "sim.test.side_swap"
 	swapped_manifest["side_swap"] = true

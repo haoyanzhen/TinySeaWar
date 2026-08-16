@@ -13,6 +13,7 @@ const RoutePlanner = preload("res://scripts/application/navigation/route_planner
 const CollisionGeometryService = preload("res://scripts/domain/services/collision_geometry_service.gd")
 const GunDispersionService = preload("res://scripts/domain/services/gun_dispersion_service.gd")
 const MinefieldService = preload("res://scripts/domain/services/minefield_service.gd")
+const BattleRecorder = preload("res://scripts/infrastructure/analytics/battle_recorder.gd")
 
 var failures: Array[String] = []
 var checks := 0
@@ -56,6 +57,7 @@ func _run() -> void:
 	_test_detection_and_contact_ghost()
 	_test_submarine_depth_oxygen_and_detection()
 	_test_submarine_combat_ai_policy()
+	_test_submarine_long_diagnostic_recorder()
 	_test_torpedo_observation_rules()
 	_test_damage_zero_floor()
 	_test_simultaneous_flagship_victory()
@@ -1185,15 +1187,41 @@ func _test_submarine_combat_ai_policy() -> void:
 	submarine["depth_transition"]["active"] = false
 	submarine["depth_hold_remaining"] = 0.0
 	for weapon_state in submarine["weapon_states"]:
+		weapon_state["reload_remaining"] = 999.0
+	_check(session._submarine_planning_solution(submarine, target).is_empty(), "submarine planning rejects launchers that cannot reload before the approach ETA")
+	var eta_ready_state: Dictionary = submarine["weapon_states"][0]
+	eta_ready_state["reload_remaining"] = 0.1
+	var eta_solution := session._submarine_planning_solution(submarine, target)
+	_check(not eta_solution.is_empty() and eta_solution.get("weapon_state_instance_id", "") == eta_ready_state.get("instance_id", ""), "submarine planning selects a concrete launcher that becomes ready inside the approach horizon")
+	for weapon_state in submarine["weapon_states"]:
 		weapon_state["reload_remaining"] = 0.0
 	submarine["weapon_group_launch_remaining"].clear()
 	session._set_submarine_phase(submarine, "AttackRun", "TEST_ATTACK_RUN")
+	var lane_ally: Dictionary = {}
+	for unit_id in session._sorted_unit_ids():
+		var candidate_ally: Dictionary = session.state["units_by_id"][unit_id]
+		if candidate_ally.get("faction_id", "") == submarine.get("faction_id", "") and candidate_ally.get("entity_id", "") != submarine.get("entity_id", ""):
+			lane_ally = candidate_ally
+			break
+	lane_ally["position"] = submarine["position"].lerp(target["position"], 0.5)
+	lane_ally["current_speed"] = 0.0
 	var first_solution := session._select_submarine_torpedo_solution(submarine, target)
 	_check(not first_solution.is_empty(), "ordinary submarine forms a legal torpedo solution only after reaching stable surface depth")
+	var first_window_values: Dictionary = first_solution.get("window_values", {})
+	_check(float(first_window_values.get("observed_friendly_risk", 0.0)) > 0.0 and is_zero_approx(float(first_window_values.get("friendly_risk", -1.0))) and bool(first_window_values.get("friendly_risk_ignored", false)), "submarine attack-window scoring ignores friendly-lane risk while retaining the observed risk as diagnostics")
 	var selected_instance_id := str(first_solution.get("weapon_state_instance_id", ""))
 	submarine["weapon_states"].reverse()
 	var reordered_solution := session._select_submarine_torpedo_solution(submarine, target)
 	_check(str(reordered_solution.get("weapon_state_instance_id", "")) == selected_instance_id, "submarine torpedo solution is independent of authoritative weapon state array order")
+	session._set_submarine_phase(submarine, "AttackRun", "TEST_ATTACK_TIMEOUT")
+	submarine["ai_state"]["submarine_phase_entered_at"] = float(session.state.get("elapsed_time", 0.0)) - BattleSession.AI_SUBMARINE_ATTACK_RUN_TIMEOUT - 0.1
+	submarine["ai_state"]["decision_cooldown"] = 0.0
+	session.drain_events()
+	session._update_submarine_ai_intent(submarine)
+	var timeout_events := session.drain_events()
+	_check(_has_event(timeout_events, "AISubmarineAttackRunTimedOut"), "AttackRun timeout emits a dedicated diagnostic fact")
+	_check(submarine["ai_state"].get("submarine_combat_phase", "") == "Approach" and submarine["ai_state"].get("submarine_phase_reason", "") == "SUB_ATTACK_WINDOW_TIMEOUT_REPLAN" and str(submarine["ai_state"].get("planned_torpedo_weapon_state_instance_id", "")).is_empty(), "AttackRun timeout clears the stale launcher and returns to Approach instead of falsely completing the attack cycle")
+	session._set_submarine_phase(submarine, "AttackRun", "TEST_ATTACK_RUN_RESTORED")
 	var invalid_hint := session._fire_primary_weapon(submarine, first_solution.get("aim_position", target["position"]), "submarine.preferred.invalid", "missing.weapon.state")
 	_check(invalid_hint.get("reason_code", "") == "PREFERRED_WEAPON_STATE_INVALID", "Domain rejects an invalid preferred launcher hint instead of silently firing another mount")
 	session._store_submarine_torpedo_solution(submarine, first_solution)
@@ -1248,6 +1276,40 @@ func _test_submarine_combat_ai_policy() -> void:
 	submarine["ai_state"]["decision_cooldown"] = 0.0
 	session._update_submarine_recovery_intent(submarine)
 	_check(submarine.get("depth_state", "") == "Submerged" and submarine["ai_state"].get("submarine_combat_phase", "") == "Search", "completed recovery redive returns directly to Search")
+
+
+func _test_submarine_long_diagnostic_recorder() -> void:
+	var session = BattleSession.new(registry)
+	_check(session.create_battle("level.prototype_5v5", 113).get("ok", false), "submarine diagnostic recorder test battle can be created")
+	var submarine: Dictionary = session.state["units_by_id"]["unit.player.hai_shih"]
+	var unit_id := str(submarine["entity_id"])
+	var recorder = BattleRecorder.new()
+	recorder.reset("test.submarine.diagnostic", 113)
+	recorder.register_units(session.state["units_by_id"])
+	recorder.sample_submarines(session.state["units_by_id"], 0.1)
+	var events: Array = [
+		{"event_type":"AISubmarinePhaseChanged", "unit_id":unit_id, "old_phase":"Search", "new_phase":"Approach", "reason":"SUB_APPROACH_TARGET_SELECTED"},
+		{"event_type":"AISubmarinePhaseChanged", "unit_id":unit_id, "old_phase":"Approach", "new_phase":"SurfaceForAttack", "reason":"SUB_SURFACE_FOR_ATTACK"},
+		{"event_type":"AISubmarinePhaseChanged", "unit_id":unit_id, "old_phase":"SurfaceForAttack", "new_phase":"AttackRun", "reason":"SUB_ATTACK_DEPTH_READY"},
+		{"event_type":"AISubmarineFireDecisionSample", "unit_id":unit_id, "target_unit_id":"unit.enemy.test", "submarine_phase":"AttackRun", "fire_discipline":"HoldUntilWindow", "visible_target":true, "enabled_weapon_count":2, "ready_weapon_count":1, "legal_candidate_count":1, "selected_weapon_state_instance_id":"launcher.fore", "outcome_reason":"SUB_ATTACK_COMMITTED", "rejections_by_reason":{"WEAPON_RELOADING":1}},
+		{"event_type":"AIFireCommitted", "unit_id":unit_id, "weapon_state_instance_id":"launcher.fore", "submarine_phase":"AttackRun"},
+		{"event_type":"WeaponFired", "unit_id":unit_id, "weapon_state_instance_id":"launcher.fore", "submarine_phase":"AttackRun", "tick_index":42},
+		{"event_type":"AISubmarinePhaseChanged", "unit_id":unit_id, "old_phase":"AttackRun", "new_phase":"BreakContact", "reason":"SUB_ATTACK_COMMITTED"},
+		{"event_type":"AISubmarinePhaseChanged", "unit_id":unit_id, "old_phase":"BreakContact", "new_phase":"RecoverOxygen", "reason":"SUB_RECOVER_OXYGEN"},
+		{"event_type":"AISubmarineAttackRunTimedOut", "unit_id":unit_id},
+		{"event_type":"AISubmarinePhaseChanged", "unit_id":unit_id, "old_phase":"RecoverOxygen", "new_phase":"Search", "reason":"SUB_RECOVERY_COMPLETE"},
+	]
+	recorder.consume(events, 4.2)
+	var entry: Dictionary = recorder.summary["submarine_ai"][unit_id]
+	_check(entry.get("zero_fire_classification", "") == "FIRED" and int(entry.get("first_fire_tick", -1)) == 42 and entry.get("first_fire_weapon_state_instance_id", "") == "launcher.fore", "submarine diagnostics retain first-fire tick, concrete launcher instance, and fired classification")
+	_check(int(entry.get("normal_full_cycles", 0)) == 1 and int(entry.get("submerged_launch_cycles", 0)) == 0 and int(entry.get("attack_run_timeouts", 0)) == 1, "submarine diagnostics recognize the ordered six-phase normal cycle and count AttackRun timeouts")
+	_check(float(entry.get("phase_dwell_seconds", {}).get("Search", 0.0)) > 0.0 and float(entry.get("oxygen_dwell_seconds", {}).get("75_100", 0.0)) > 0.0, "submarine diagnostics sample phase dwell and oxygen distribution")
+
+	var no_fire_recorder = BattleRecorder.new()
+	no_fire_recorder.reset("test.submarine.zero_fire", 114)
+	no_fire_recorder.register_units(session.state["units_by_id"])
+	no_fire_recorder.consume([{"event_type":"AISubmarineFireDecisionSample", "unit_id":unit_id, "submarine_phase":"Search", "visible_target":false, "outcome_reason":"SUB_FIRE_NO_VISIBLE_TARGET", "rejections_by_reason":{}}], 0.5)
+	_check(no_fire_recorder.summary["submarine_ai"][unit_id].get("zero_fire_classification", "") == "SUBMARINE_NO_VISIBLE_TARGET", "zero-fire submarine samples are classified by an explicit diagnostic cause")
 
 
 func _test_torpedo_observation_rules() -> void:

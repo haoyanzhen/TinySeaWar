@@ -359,7 +359,7 @@ defense_score = 100 * (
 
 通过门槛后采用分层稳定排序，不再计算潜艇专属加权总分：第 6.1 节公共 `target_score` 降序、航向可预测性降序、合法观察中的反潜威胁升序、稳定实体 ID 升序。出口、追击成本和武器适配已分别进入硬门槛或公共目标评分，不在潜艇层重复加减分。航向预测和反潜威胁只能读取当前合法观察。
 
-从 `Search` 进入 `Approach` 还要求至少一座鱼雷能在预计接近时间内完成装填。否则保持搜索、换目标或进入补氧，不靠提高分数绕过缺失条件。
+从 `Search` 进入 `Approach` 还要求至少一座鱼雷能在预计接近时间内完成装填。规划候选必须满足 `reload_remaining <= route_eta_to_attack_position + decision_interval`，不能只把任意启用发射器加入候选后用装填比例软排序；否则保持搜索、换目标或进入补氧，不靠提高分数绕过缺失条件。
 
 ##### 氧气预测与深度请求
 
@@ -404,13 +404,13 @@ terrain_clearance
 window_score
 ```
 
-合法候选采用分层稳定排序，不再计算潜艇专属雷击解加权总分：第 6.3 节公共 `attack_window` 降序、真实射界余量与恒速拦截质量降序、出口质量降序、稳定 `weapon_state_instance_id` 升序。暴露、友军风险、武器适配、协同和伤害预留只在公共窗口及公共服务中计算一次，不在潜艇层重复扣分。`weapon_state_instance_id`、`weapon_definition_id` 分别引用现有 WeaponState 的 `instance_id`、`definition_id`，不创建第二份武器状态。
+合法候选采用分层稳定排序，不再计算潜艇专属雷击解加权总分：第 6.3 节公共 `attack_window` 降序、真实射界余量与恒速拦截质量降序、出口质量降序、稳定 `weapon_state_instance_id` 升序。暴露、武器适配、协同和伤害预留只在公共窗口及公共服务中计算一次，不在潜艇层重复扣分。当前阶段暂不让友军雷道影响潜艇发射窗口：送入公共公式的 `friendly_risk` 固定为 `0`，实际观测值另存为 `observed_friendly_risk` 诊断事实；其他舰种仍使用公共公式的正常友军风险输入。`weapon_state_instance_id`、`weapon_definition_id` 分别引用现有 WeaponState 的 `instance_id`、`definition_id`，不创建第二份武器状态。
 
 - 首管通常更适合接近射击，尾管通常更适合横越或脱离射击，但二者没有固定优先级；实际分数和航迹安全决定选择。
 - 当前艇首/艇尾方向、发射器真实射界与目标拦截点共同产生 `arc_margin`；AI必须转动舰体形成射角，不能把射界放宽成全向。
-- `attack_position` 与 `exit_position` 必须一起成立。只能开火但会把潜艇送入岸线、边界、友军雷道或无出口水域的候选直接淘汰。
+- `attack_position` 与 `exit_position` 必须一起成立。只能开火但会把潜艇送入岸线、边界或无出口水域的候选直接淘汰。首轮运行时既不把友军雷道设为潜艇发射硬门槛，也不让它降低窗口分；只记录 `observed_friendly_risk` 供后续复盘，不得借此绕过其他 Domain 合法性。
 - 全部分层键相同时按 `weapon_state_instance_id` 稳定选择。不得原地重排权威 `weapon_states` 后把数组首项当作通用瞄准武器。
-- 选中的同一个 `weapon_state_instance_id` 必须贯穿预判、窗口评分、友军风险、伤害预留、命令提示和实际发射。该值引用 WeaponState 的现有 `instance_id`；Domain 对提示重新校验，提示失效时拒绝或重新选择，不能静默发射另一座武器。
+- 选中的同一个 `weapon_state_instance_id` 必须贯穿预判、窗口评分、友军风险诊断、伤害预留、命令提示和实际发射。该值引用 WeaponState 的现有 `instance_id`；Domain 对提示重新校验，提示失效时拒绝或重新选择，不能静默发射另一座武器。
 
 ##### 短窗口、开火纪律与脱离
 
@@ -420,9 +420,9 @@ window_score
 
 - 每 Tick 只对当前计划目标与计划发射器做便宜的装填、深度、射程和射界边界检查，不重跑目标、模式、路线或全武器评分。
 - 计划候选从非法变为合法时，记录最长 `1.0s` 的 `torpedo_opportunity_expires_at`，并请求下一命令阶段立即执行一次完整武器重评；同一目标/发射器在普通决策冷却内最多触发一次。
-- 机会记录不是攻击授权。目标失去可见性、深度/装填改变、友军进入雷道或最新 Domain 校验失败时立即清除；提交前仍需重算完整候选。
+- 机会记录不是攻击授权。目标失去可见性、深度/装填改变或最新 Domain 校验失败时立即清除；提交前仍需重算完整候选。友军雷道按本阶段边界只记录诊断，不参与窗口评分，也不使机会哨兵成为额外硬拒绝器。
 
-只有实际产生计划发射器的 `WeaponFired`，才能把 `AttackRun` 标记为完成，并以 `attack_completed=true` 进入发射后 `BreakContact`。即时生存或高暴露允许以 `attack_completed=false` 中止并脱离，但不能进入装填循环、计为完成雷击或重置零开火诊断；命令拒绝、纪律保留或窗口过期只会重评接近/攻击。发射后脱离中若尾管自然形成高于阈值且不延迟安全出口的合法解，可以作为同一循环的追加候选；AI不得为使用尾管强制回头或重新进入危险区。
+只有实际产生计划发射器的 `WeaponFired`，才能把 `AttackRun` 标记为完成，并以 `attack_completed=true` 进入发射后 `BreakContact`。即时生存或高暴露允许以 `attack_completed=false` 中止并脱离，但不能进入装填循环、计为完成雷击或重置零开火诊断；命令拒绝、纪律保留或窗口过期只会重评接近/攻击。`AttackRun` 连续 `12s` 未发射时必须输出 `SUB_ATTACK_WINDOW_TIMEOUT_REPLAN` 与独立超时事实，清除旧原子雷击解并回到 `Approach` 重算；不得以超时伪造 `BreakContact`。发射后脱离中若尾管自然形成高于阈值且不延迟安全出口的合法解，可以作为同一循环的追加候选；AI不得为使用尾管强制回头或重新进入危险区。
 
 `RecoverOxygen` 稳定上浮期间可以按公共 `SelfDefense` 窗口使用当前合法鱼雷解自卫，但实际发射后仍保持补氧阶段，不伪造 `AttackRun` 完成，也不跳过重新下潜条件。
 
@@ -435,7 +435,7 @@ window_score
 - 多艇协同需预留接近扇区、发射时间和友军雷道，避免同一路径叠位或交叉误伤；预留失效、目标变向或潜艇被迫脱离时立即释放。
 - `Ambush`、`Mobility`、`Torpedo` 和 `Resource` 技能的收益必须计入预计氧气、深度、射角和脱离窗口。技能就绪不能覆盖低氧、非法深度或无出口，也不能由玩家受限辅助自动释放。
 
-潜艇阶段、深度请求和雷击解至少输出以下原因码：`SUB_SEARCH_NO_CONTACT`、`SUB_APPROACH_NO_REACHABLE_SOLUTION`、`SUB_APPROACH_OXYGEN_INSUFFICIENT`、`SUB_SURFACE_FOR_ATTACK`、`SUB_ATTACK_HELD_DEPTH`、`SUB_ATTACK_HELD_RELOAD`、`SUB_ATTACK_HELD_ARC`、`SUB_ATTACK_HELD_DISCIPLINE`、`SUB_ATTACK_COMMITTED`、`SUB_BREAK_CONTACT`、`SUB_RECOVER_OXYGEN`、`SUB_REDIVE_HELD_THREAT`、`SUB_REDIVE_COMMITTED`。后两项表示 `RecoverOxygen` 内的下潜请求状态，不是独立阶段。这些事实只进入授权调试与聚合报告，不能向玩家表现层泄漏隐藏敌情。
+潜艇阶段、深度请求和雷击解至少输出以下原因码：`SUB_SEARCH_NO_CONTACT`、`SUB_APPROACH_NO_REACHABLE_SOLUTION`、`SUB_APPROACH_OXYGEN_INSUFFICIENT`、`SUB_SURFACE_FOR_ATTACK`、`SUB_ATTACK_HELD_DEPTH`、`SUB_ATTACK_HELD_RELOAD`、`SUB_ATTACK_HELD_ARC`、`SUB_ATTACK_HELD_DISCIPLINE`、`SUB_ATTACK_COMMITTED`、`SUB_ATTACK_WINDOW_TIMEOUT_REPLAN`、`SUB_BREAK_CONTACT`、`SUB_RECOVER_OXYGEN`、`SUB_REDIVE_HELD_THREAT`、`SUB_REDIVE_COMMITTED`。后两项表示 `RecoverOxygen` 内的下潜请求状态，不是独立阶段。这些事实只进入授权调试与聚合报告，不能向玩家表现层泄漏隐藏敌情。
 
 ### 5.7 被发现后的战术动作
 
@@ -891,6 +891,8 @@ planned_torpedo_aim_position
 planned_attack_position
 planned_exit_position
 torpedo_opportunity_expires_at
+torpedo_opportunity_key
+torpedo_opportunity_last_trigger_tick
 requested_depth_state
 depth_request_reason
 last_depth_request_tick
@@ -1044,13 +1046,13 @@ AI Profile 应组合而不是复制规则：
 
 1. `Search -> Approach -> SurfaceForAttack -> AttackRun -> BreakContact -> RecoverOxygen -> Search` 的普通潜艇六阶段全循环，以及特殊潜射艇跳过 `SurfaceForAttack` 的合法分支；重新下潜只作为 `RecoverOxygen` 内的深度请求。
 2. 前管合法、后管合法、两者均合法、一座装填、一座禁用和权威数组预先乱序；评分、预留、事件和实际发射必须保持同一 `weapon_state_instance_id`。
-3. 无可见目标、只有合法残影、目标在射程外、射界外、深度不合法、友军进入雷道和出口失效时均不得提交鱼雷。
+3. 无可见目标、只有合法残影、目标在射程外、射界外、深度不合法和出口失效时均不得提交鱼雷；首轮潜艇窗口的 `friendly_risk` 必须固定为 `0`，同时保留大于 `0` 的 `observed_friendly_risk` 诊断证据，证明友军雷道既未降分也未成为硬门禁。
 4. 合法窗口落在两个普通决策点之间时，机会哨兵只触发一次完整重评；目标或候选失效后机会记录立即清除。
 5. 低氧提前中止、零氧强制上浮、上浮补氧、`75%` AI 门槛、已知高威胁延迟重新下潜和相同深度请求去重。
 6. 六阶段固定投影模式与纪律；潜艇跳过公共模式/战术状态切换，水面舰的模式评分、`Attack/Defend/Kite` 迟滞和 `ReconAvoid/Silent` 签名不变。
 7. 实际发射前任务中止不会进入“发射后脱离”；实际 `WeaponFired` 后必须存在可达出口，且不新增岸线碰撞、路线失败、航迹失败或高频首尾摆头。
 8. 玩家受限辅助、玩家 `C` 直接命令和完整 AI 深度任务严格隔离；正常玩家辅助不能创建潜艇战斗阶段、自动深度请求或自动技能。
-9. 固定种子报告能够区分无目标、无就绪武器、无合法射程/射界、深度阻止、纪律保留、机会过期、命令拒绝和实际发射，并记录阶段/深度驻留与首个发射器。
+9. 固定种子报告能够区分无目标、无就绪武器、无合法射程/射界、深度阻止、纪律保留、机会过期、命令拒绝和实际发射，并记录窗口评分/阈值、阶段/深度/氧气驻留、AttackRun 超时、首个发射器与完整/未完整循环。允许单局只发生 `RecoverOxygen / SelfDefense` 合法分支或在战斗结束时留下未完整循环，但关卡固定种子批次必须至少提供一例普通六阶段完整循环证据。
 
 若一局已经在至少 `5` 个主要武器决策点形成合法候选，却没有 `AIFireCommitted` 和同候选的 `WeaponFired`，必须分类为 `SUBMARINE_ELIGIBLE_WINDOW_NO_FIRE`；最终胜负、命中与伤害不能豁免该正确性失败。正式固定种子与大样本授权仍由执行工单和 `docs/36_balance_testing_design.md` 管理，本文不记录样本结果。
 

@@ -123,6 +123,7 @@ func _aggregate_core(runs: Array) -> Dictionary:
 		"average_damage_by_ship": _average_damage_by_ship(runs),
 		"average_damage_by_non_ship": _average_damage_by_non_ship(runs),
 		"ai_behavior": _finalize_ai_behavior(ai_behavior_totals, durations, finished_runs, total_effective_damage, total_overkill),
+		"submarine_ai": _aggregate_submarine_ai(runs),
 	}
 
 
@@ -156,6 +157,133 @@ func _finalize_ai_behavior(totals: Dictionary, durations: Array[float], finished
 	result["overkill_ratio"] = overkill_damage / maxf(1.0, effective_damage + overkill_damage)
 	result["sample_runs"] = finished_runs
 	return result
+
+
+func _aggregate_submarine_ai(runs: Array) -> Dictionary:
+	var result := {
+		"submarine_samples": 0,
+		"fired_samples": 0,
+		"zero_fire_samples": 0,
+		"zero_fire_classifications": {},
+		"decision_samples": 0,
+		"visible_target_samples": 0,
+		"ready_weapon_samples": 0,
+		"legal_solution_samples": 0,
+		"scored_window_samples": 0,
+		"window_score_total": 0.0,
+		"window_score_max": 0.0,
+		"window_threshold_total": 0.0,
+		"friendly_risk_ignored_samples": 0,
+		"friendly_risk_observed_samples": 0,
+		"friendly_risk_observed_max": 0.0,
+		"fire_commitments": 0,
+		"weapon_fires": 0,
+		"opportunities_observed": 0,
+		"opportunities_expired": 0,
+		"opportunity_forced_samples": 0,
+		"attack_run_timeouts": 0,
+		"depth_changes": 0,
+		"forced_surfaces": 0,
+		"depth_requests": 0,
+		"normal_full_cycles": 0,
+		"submerged_launch_cycles": 0,
+		"incomplete_attack_cycles": 0,
+		"recovery_self_defense_fires": 0,
+		"outcomes_by_reason": {},
+		"rejections_by_reason": {},
+		"phase_transitions": {},
+		"phase_reasons": {},
+		"opportunity_expiry_reasons": {},
+		"command_rejections_by_reason": {},
+		"depth_requests_by_target": {},
+		"depth_changes_by_target": {},
+		"depth_request_holds_by_reason": {},
+		"phase_dwell_seconds": {},
+		"depth_dwell_seconds": {},
+		"oxygen_dwell_seconds": {},
+		"by_ship": {},
+	}
+	var numeric_keys := [
+		"decision_samples", "visible_target_samples", "ready_weapon_samples", "legal_solution_samples", "scored_window_samples", "friendly_risk_ignored_samples", "friendly_risk_observed_samples",
+		"fire_commitments", "weapon_fires", "opportunities_observed", "opportunities_expired", "opportunity_forced_samples",
+		"attack_run_timeouts", "normal_full_cycles", "submerged_launch_cycles",
+		"incomplete_attack_cycles", "recovery_self_defense_fires", "depth_changes", "forced_surfaces", "depth_requests",
+	]
+	for run in runs:
+		for unit_id in run.get("submarine_ai", {}):
+			var source: Dictionary = run["submarine_ai"][unit_id]
+			result["submarine_samples"] += 1
+			var classification := str(source.get("zero_fire_classification", "SUBMARINE_ZERO_FIRE_UNCLASSIFIED"))
+			_increment_aggregate_map(result["zero_fire_classifications"], classification)
+			if int(source.get("weapon_fires", 0)) > 0: result["fired_samples"] += 1
+			else: result["zero_fire_samples"] += 1
+			for key in numeric_keys: result[key] += int(source.get(key, 0))
+			result["window_score_total"] += float(source.get("window_score_total", 0.0))
+			result["window_threshold_total"] += float(source.get("window_threshold_total", 0.0))
+			result["window_score_max"] = maxf(float(result["window_score_max"]), float(source.get("window_score_max", 0.0)))
+			result["friendly_risk_observed_max"] = maxf(float(result["friendly_risk_observed_max"]), float(source.get("friendly_risk_observed_max", 0.0)))
+			for map_key in ["outcomes_by_reason", "rejections_by_reason", "phase_transitions", "phase_reasons", "opportunity_expiry_reasons", "command_rejections_by_reason", "depth_requests_by_target", "depth_changes_by_target", "depth_request_holds_by_reason"]:
+				_merge_aggregate_map(result[map_key], source.get(map_key, {}))
+			for map_key in ["phase_dwell_seconds", "depth_dwell_seconds", "oxygen_dwell_seconds"]:
+				_merge_aggregate_float_map(result[map_key], source.get(map_key, {}))
+			var ship_key := "%s|%s" % [source.get("lineup_id", ""), source.get("definition_id", unit_id)]
+			if not result["by_ship"].has(ship_key):
+				result["by_ship"][ship_key] = {
+					"lineup_id": source.get("lineup_id", ""),
+					"definition_id": source.get("definition_id", ""),
+					"display_name": source.get("display_name", unit_id),
+					"samples": 0,
+					"zero_fire_classifications": {},
+					"outcomes_by_reason": {},
+					"rejections_by_reason": {},
+					"phase_transitions": {},
+					"phase_reasons": {},
+					"opportunity_expiry_reasons": {},
+					"command_rejections_by_reason": {},
+					"depth_requests_by_target": {},
+					"depth_changes_by_target": {},
+					"depth_request_holds_by_reason": {},
+					"phase_dwell_seconds": {},
+					"depth_dwell_seconds": {},
+					"oxygen_dwell_seconds": {},
+				}
+				for key in numeric_keys: result["by_ship"][ship_key][key] = 0
+				result["by_ship"][ship_key]["window_score_total"] = 0.0
+				result["by_ship"][ship_key]["window_threshold_total"] = 0.0
+				result["by_ship"][ship_key]["window_score_max"] = 0.0
+				result["by_ship"][ship_key]["friendly_risk_observed_max"] = 0.0
+			var ship_entry: Dictionary = result["by_ship"][ship_key]
+			ship_entry["samples"] += 1
+			_increment_aggregate_map(ship_entry["zero_fire_classifications"], classification)
+			for key in numeric_keys: ship_entry[key] += int(source.get(key, 0))
+			ship_entry["window_score_total"] += float(source.get("window_score_total", 0.0))
+			ship_entry["window_threshold_total"] += float(source.get("window_threshold_total", 0.0))
+			ship_entry["window_score_max"] = maxf(float(ship_entry["window_score_max"]), float(source.get("window_score_max", 0.0)))
+			ship_entry["friendly_risk_observed_max"] = maxf(float(ship_entry["friendly_risk_observed_max"]), float(source.get("friendly_risk_observed_max", 0.0)))
+			for map_key in ["outcomes_by_reason", "rejections_by_reason", "phase_transitions", "phase_reasons", "opportunity_expiry_reasons", "command_rejections_by_reason", "depth_requests_by_target", "depth_changes_by_target", "depth_request_holds_by_reason"]:
+				_merge_aggregate_map(ship_entry[map_key], source.get(map_key, {}))
+			for map_key in ["phase_dwell_seconds", "depth_dwell_seconds", "oxygen_dwell_seconds"]:
+				_merge_aggregate_float_map(ship_entry[map_key], source.get(map_key, {}))
+	result["fire_sample_rate"] = float(result["fired_samples"]) / maxf(1.0, float(result["submarine_samples"]))
+	result["full_cycle_count"] = int(result["normal_full_cycles"]) + int(result["submerged_launch_cycles"])
+	result["window_score_average"] = float(result["window_score_total"]) / maxf(1.0, float(result["scored_window_samples"]))
+	result["window_threshold_average"] = float(result["window_threshold_total"]) / maxf(1.0, float(result["scored_window_samples"]))
+	for ship_entry in result["by_ship"].values():
+		ship_entry["window_score_average"] = float(ship_entry["window_score_total"]) / maxf(1.0, float(ship_entry["scored_window_samples"]))
+		ship_entry["window_threshold_average"] = float(ship_entry["window_threshold_total"]) / maxf(1.0, float(ship_entry["scored_window_samples"]))
+	return result
+
+
+func _increment_aggregate_map(target: Dictionary, key: String, amount: int = 1) -> void:
+	target[key] = int(target.get(key, 0)) + amount
+
+
+func _merge_aggregate_map(target: Dictionary, source: Dictionary) -> void:
+	for key in source: target[key] = int(target.get(key, 0)) + int(source[key])
+
+
+func _merge_aggregate_float_map(target: Dictionary, source: Dictionary) -> void:
+	for key in source: target[key] = float(target.get(key, 0.0)) + float(source[key])
 
 
 func _average_damage_by_ship(runs: Array) -> Dictionary:
@@ -230,13 +358,14 @@ func _average_damage_by_non_ship(runs: Array) -> Dictionary:
 func deterministic_signature(result: Dictionary) -> String:
 	var signatures: Array[String] = []
 	for run in result.get("runs", []):
-		signatures.append("%s|%s|%s|%.3f|%s|%s" % [
+		signatures.append("%s|%s|%s|%.3f|%s|%s|%s" % [
 			str(run.get("run_id", "")),
 			str(run.get("end_state", "")),
 			str(run.get("winner_faction", "")),
 			float(run.get("duration", 0.0)),
 			JSON.stringify(run.get("units", {})),
 			JSON.stringify(run.get("non_ship_damage", {})),
+			JSON.stringify(run.get("submarine_ai", {})),
 		])
 	return "\n".join(signatures)
 

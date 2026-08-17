@@ -122,7 +122,7 @@
     {
       "id":"objective.s02_escort","objective_kind":"ChallengeMission","title":"侧翼雷线","protected_player_unit_ids":[],"required_any_player_unit_ids":["unit.player.s02.chongqing","unit.player.s02.yukikaze"],"minimum_required_any_player_alive":1,"required_enemy_unit_ids":["unit.enemy.s02.warspite"],"completion_text":"击沉厌战，且重庆或雪风至少一艘存活","failure_text":"重庆与雪风均沉没"},
     {"id":"objective.s03_carrier_first","objective_kind":"ChallengeMission","title":"航空诱饵","protected_player_unit_ids":[],"ordered_enemy_unit_ids":["unit.enemy.s03.argus","unit.enemy.s03.bismarck"],"completion_text":"先击沉百眼巨人，再击沉俾斯麦","failure_text":"先击沉俾斯麦导致任务取消"},
-    {"id":"objective.s04_ambush","objective_kind":"ChallengeMission","title":"双向伏击","protected_player_unit_ids":["unit.player.s04.hood"],"minimum_player_hp_ratio_unit_id":"unit.player.s04.hood","minimum_player_hp_ratio":0.3,"required_enemy_unit_ids":["unit.enemy.s04.iowa"],"completion_text":"击沉衣阿华并让胡德保持30%以上耐久","failure_text":"胡德沉没或耐久降至30%及以下"},
+    {"id":"objective.s04_ambush","objective_kind":"ChallengeMission","title":"双向伏击","protected_player_unit_ids":[],"required_enemy_unit_ids":["unit.enemy.s04.iowa"],"completion_text":"击沉衣阿华","failure_text":"己方旗舰胡德沉没"},
     {"id":"objective.s05_wolfpack","objective_kind":"ChallengeMission","title":"狼群门槛","protected_player_unit_ids":[],"required_enemy_unit_ids":["unit.enemy.s05.bismarck"],"minimum_enemy_sunk":3,"completion_text":"累计击沉至少三艘敌舰并击沉俾斯麦","failure_text":"己方旗舰厌战沉没"},
     {
       "id": "objective.s01_flagship",

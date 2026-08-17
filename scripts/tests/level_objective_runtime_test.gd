@@ -118,10 +118,22 @@ func _test_s_challenges(registry) -> void:
 	s04.create_battle("level.challenge.s04", 8401)
 	var hood: Dictionary = s04.state["units_by_id"]["unit.player.s04.hood"]
 	hood["current_hp"] = hood["max_hp"] * 0.3
+	for unit_id in ["unit.player.s04.chongqing", "unit.player.s04.hai_shih"]:
+		var flank_unit: Dictionary = s04.state["units_by_id"][unit_id]
+		flank_unit["life_state"] = "Sunk"; flank_unit["current_hp"] = 0.0
 	s04.advance_tick(0.1)
-	var s04_failure: Dictionary = s04.state.get("result", {})
-	_check(s04_failure.get("winner_faction", "") == "enemy", "S-04 cancels at Hood's 30 percent protection threshold")
-	_check(s04_failure.get("reason_code", "") == "LEVEL_OBJECTIVE_CANCELLED_PLAYER_UNIT_HP_RATIO_BREACHED" and str(s04_failure.get("reason_summary", "")).contains("胡德号耐久降至30.0%") and is_equal_approx(float(s04_failure.get("reason_context", {}).get("minimum_hp_ratio", 0.0)), 0.3), "S-04 records the actual Hood HP-threshold breach and structured threshold")
+	_check(s04.state.get("phase", "") != "Finished" and s04.state.get("level_objective", {}).get("status", "") == "Active", "S-04 remains active when both small ships sink and Hood reaches 30 percent HP")
+	var s04_iowa: Dictionary = s04.state["units_by_id"]["unit.enemy.s04.iowa"]
+	s04_iowa["life_state"] = "Sunk"; s04_iowa["current_hp"] = 0.0
+	s04.advance_tick(0.1)
+	_check(s04.state.get("result", {}).get("winner_faction", "") == "player" and s04.state.get("result", {}).get("reason", "") == "LEVEL_OBJECTIVE_COMPLETED", "S-04 completes after Iowa sinks even when both small ships are lost and Hood is at 30 percent HP")
+	var s04_flagship = BattleSession.new(registry)
+	s04_flagship.create_battle("level.challenge.s04", 8401)
+	var sunk_hood: Dictionary = s04_flagship.state["units_by_id"]["unit.player.s04.hood"]
+	sunk_hood["life_state"] = "Sunk"; sunk_hood["current_hp"] = 0.0
+	s04_flagship.advance_tick(0.1)
+	var s04_failure: Dictionary = s04_flagship.state.get("result", {})
+	_check(s04_failure.get("winner_faction", "") == "enemy" and s04_failure.get("reason_code", "") == "LEVEL_OBJECTIVE_CANCELLED_PLAYER_FLAGSHIP_SUNK" and str(s04_failure.get("reason_summary", "")).contains("胡德号沉没"), "S-04 cancels only when player flagship Hood sinks")
 	var s04_wave = BattleSession.new(registry)
 	s04_wave.create_battle("level.challenge.s04", 8402)
 	var replaced_unit: Dictionary = s04_wave.state["units_by_id"]["unit.enemy.s04.san_diego"]

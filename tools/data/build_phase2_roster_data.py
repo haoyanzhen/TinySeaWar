@@ -361,7 +361,7 @@ def build_ships(mounts: dict[str, list[str]], skill_ids: dict[str, str], weapons
         if ship_class == "Submarine":
             definition.update({
                 "oxygen_consumption_rate": 1.0,
-                "oxygen_recovery_rate": 2.0,
+                "oxygen_recovery_rate": 3.0,
                 "redive_oxygen_ratio": 0.5,
                 "depth_transition_duration": 2.0,
                 "depth_state_minimum_hold": 3.0,

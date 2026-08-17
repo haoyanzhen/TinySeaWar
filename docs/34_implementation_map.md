@@ -165,6 +165,7 @@
 | 职责 | 当前文件/目录 |
 |---|---|
 | 实验清单 | `data/simulations/experiments/` |
+| 潜艇正式复验清单 | `level_s04_win_rate_20.json`、`level_s05_win_rate_20.json`、`open_sea_5v5_submarine_runtime_20.json` |
 | 实验加载 | `scripts/infrastructure/simulation/experiment_loader.gd` |
 | 单次/批次运行协调 | `scripts/application/simulation/simulation_runner.gd` |
 | 聚合统计（含潜艇零开火、窗口、阶段/深度/氧气与循环） | `scripts/infrastructure/simulation/simulation_aggregator.gd` |

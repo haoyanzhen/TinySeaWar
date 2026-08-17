@@ -1093,7 +1093,9 @@ func _test_submarine_depth_oxygen_and_detection() -> void:
 	var submarine: Dictionary = session.state["units_by_id"]["unit.player.hai_shih"]
 	var stats: Dictionary = submarine["stats"]
 	_check(is_equal_approx(float(stats["base_detection_range"]), float(stats["base_concealment_distance"]) * 1.5), "submarine configuration derives surface detection from detectability")
-	_check(is_equal_approx(float(stats["oxygen_consumption_rate"]), 1.0) and is_equal_approx(float(stats["oxygen_recovery_rate"]), 2.0), "submarine loads explicit oxygen consumption and recovery rates")
+	_check(is_equal_approx(float(stats["oxygen_consumption_rate"]), 1.0) and is_equal_approx(float(stats["oxygen_recovery_rate"]), 3.0), "submarine loads explicit oxygen consumption and recovery rates")
+	var configured_submarines: Array = registry.all("ships").filter(func(ship): return str(ship.get("ship_class", "")) == "Submarine")
+	_check(configured_submarines.size() == 7 and configured_submarines.all(func(ship): return is_equal_approx(float(ship.get("oxygen_consumption_rate", 0.0)), 1.0) and is_equal_approx(float(ship.get("oxygen_recovery_rate", 0.0)), 3.0)), "all seven configured submarines share the one-per-second consumption and three-per-second recovery baseline")
 	var submerged_fact: Dictionary = session._detection_unit_fact(submarine)
 	_check(is_equal_approx(float(submerged_fact["detection_range"]), float(stats["concealment_distance"]) * 0.5), "submerged submarine detection is half its surface detectability")
 	_check(is_equal_approx(float(submerged_fact["concealment"]), float(stats["concealment_distance"]) * 0.25), "submerged submarine detectability is one quarter of its surface value")
@@ -1115,6 +1117,10 @@ func _test_submarine_depth_oxygen_and_detection() -> void:
 	dive_command["command_id"] = "depth.submerged"
 	dive_command["target_depth_state"] = "Submerged"
 	_check(session._apply_command(dive_command).get("reason_code", "") == "SUBMARINE_DEPTH_HOLD_ACTIVE", "minimum depth hold rejects immediate reversal")
+	submarine["oxygen_state"]["current"] = float(submarine["oxygen_state"]["maximum"]) - 10.0
+	var oxygen_before_recovery := float(submarine["oxygen_state"]["current"])
+	session._update_submarine_resources(1.0)
+	_check(is_equal_approx(float(submarine["oxygen_state"]["current"]) - oxygen_before_recovery, 3.0), "stable surface submarine recovers three oxygen points per second")
 	submarine["depth_hold_remaining"] = 0.0
 	var maximum := float(submarine["oxygen_state"]["maximum"])
 	submarine["oxygen_state"]["current"] = maximum * float(stats["redive_oxygen_ratio"]) - 0.01

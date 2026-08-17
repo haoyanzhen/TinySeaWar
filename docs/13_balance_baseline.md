@@ -309,11 +309,11 @@ MVP 使用“固定值先加、同类百分比加算、异类状态乘算、特�
 
 | 等级 | 氧气 | 下潜消耗 | 上浮恢复 |
 |---|---:|---:|---:|
-| 1级 | 40-50 | 1/s | 1.5-2.5/s |
-| 2级 | 55-65 | 1/s | 1.5-2.5/s |
-| 3级 | 70-85 | 1/s | 1.5-2.5/s |
+| 1级 | 40-50 | 1/s | 1.5-3.0/s |
+| 2级 | 55-65 | 1/s | 1.5-3.0/s |
+| 3级 | 70-85 | 1/s | 1.5-3.0/s |
 
-首轮运行基线使用 `oxygen_consumption_rate=1/s`、`oxygen_recovery_rate=2/s`、`redive_oxygen_ratio=0.50`、`depth_transition_duration=2s`、`depth_state_minimum_hold=3s`。零氧强制上浮不等待转换时间；主动转换期间沿用起始深度资源与受击规则，并禁止鱼雷发射。
+当前运行基线使用 `oxygen_consumption_rate=1/s`、`oxygen_recovery_rate=3/s`、`redive_oxygen_ratio=0.50`、`depth_transition_duration=2s`、`depth_state_minimum_hold=3s`。零氧强制上浮不等待转换时间；主动转换期间沿用起始深度资源与受击规则，并禁止鱼雷发射。
 
 ## 13. 调参验收指标
 

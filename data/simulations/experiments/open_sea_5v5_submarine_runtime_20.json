@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "experiment_id": "sim.open_sea.5v5_submarine_runtime_20",
+  "description": "开放海域5v5双方各含一艘普通潜艇的20种子运行时正式复验；不含特殊潜射和友军雷道硬淘汰",
+  "authorization": "用户于2026-08-17明确授权开放海域5v5双方各一艘潜艇执行20种子正式复验",
+  "simulation_kind": "FullBattleSimulation",
+  "player_policy_id": "LatestRuntimeAI",
+  "enemy_policy_id": "LatestRuntimeAI",
+  "ai_profile_id": "ai.profile.standard",
+  "side_swap": false,
+  "tick_seconds": 0.1,
+  "maximum_ticks": 4300,
+  "seed_plan": {
+    "type": "SequentialRange",
+    "start": 8601,
+    "count": 20
+  },
+  "scenarios": [
+    {
+      "scenario_id": "open_sea_5v5_submarine_runtime",
+      "level_definition_id": "level.prototype_5v5"
+    }
+  ],
+  "output_directory": "res://artifacts/simulations/sim.open_sea.5v5_submarine_runtime_20"
+}

@@ -1517,7 +1517,7 @@ func _update_submarine_resources(delta: float) -> void:
 				if _uses_full_ai(unit):
 					_set_submarine_phase(unit, "RecoverOxygen", "SUB_RECOVER_OXYGEN_FORCED_SURFACE")
 		else:
-			var recovery_rate := float(unit.get("stats", {}).get("oxygen_recovery_rate", 2.0))
+			var recovery_rate := float(unit.get("stats", {}).get("oxygen_recovery_rate", 3.0))
 			recovery_rate = ModifierService.calculate(recovery_rate, _active_status_effects(unit), "OxygenRecoveryRate")
 			current = minf(maximum, current + recovery_rate * delta)
 		oxygen["current"] = current

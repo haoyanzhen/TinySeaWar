@@ -318,7 +318,13 @@ def center_alpha_with_padding(img: Image.Image, pad: int) -> Image.Image:
 def crop_with_padding(img: Image.Image, pad: int = OUTPUT_PADDING) -> tuple[Image.Image, dict[str, Any]]:
     bbox = alpha_bbox(img)
     if bbox is None:
-        return img, {"content_bbox": None, "padding": None}
+        return img, {
+            "original_crop_hint": [0, 0, img.width, img.height],
+            "auto_crop_method": "full_alpha_bbox",
+            "selected_component_samples": [],
+            "content_bbox": None,
+            "padding": None,
+        }
     left, top, right, bottom = bbox
     left = max(0, left - pad)
     top = max(0, top - pad)
@@ -327,6 +333,12 @@ def crop_with_padding(img: Image.Image, pad: int = OUTPUT_PADDING) -> tuple[Imag
     cropped = center_alpha_with_padding(img.crop((left, top, right, bottom)), pad)
     margins = alpha_margins(cropped)
     return cropped, {
+        "original_crop_hint": [0, 0, img.width, img.height],
+        "auto_crop_method": "full_alpha_bbox",
+        "selected_component_samples": [{
+            "bbox": list(bbox),
+            "alpha_pixel_count": alpha_pixel_count(img),
+        }],
         "content_bbox": list(bbox),
         "final_crop_box": [left, top, right, bottom],
         "output_edge_margins": margins,
@@ -393,13 +405,61 @@ def alpha_margins(img: Image.Image) -> dict[str, int] | None:
     }
 
 
+def alpha_pixel_count(img: Image.Image) -> int:
+    histogram = img.getchannel("A").histogram()
+    return sum(histogram[ALPHA_THRESHOLD:])
+
+
+def alpha_layout_metadata(img: Image.Image) -> dict[str, Any]:
+    bbox = alpha_bbox(img)
+    margins = alpha_margins(img)
+    if bbox is None:
+        return {
+            "mode": img.mode,
+            "alpha_bbox": None,
+            "alpha_pixel_count": 0,
+            "edge_margins": None,
+            "output_padding": None,
+            "alpha_centroid": None,
+            "centroid_offset_normalized": None,
+        }
+    alpha = img.getchannel("A")
+    pixels = alpha.load()
+    left, top, right, bottom = bbox
+    weighted_x = 0
+    weighted_y = 0
+    weight = 0
+    for y in range(top, bottom):
+        for x in range(left, right):
+            value = pixels[x, y]
+            if value < ALPHA_THRESHOLD:
+                continue
+            weighted_x += x * value
+            weighted_y += y * value
+            weight += value
+    centroid_x = weighted_x / weight if weight else (left + right - 1) / 2
+    centroid_y = weighted_y / weight if weight else (top + bottom - 1) / 2
+    return {
+        "mode": img.mode,
+        "alpha_bbox": list(bbox),
+        "alpha_pixel_count": alpha_pixel_count(img),
+        "edge_margins": margins,
+        "output_padding": margins,
+        "alpha_centroid": [round(centroid_x, 3), round(centroid_y, 3)],
+        "centroid_offset_normalized": {
+            "x": round((centroid_x - (img.width - 1) / 2) / img.width, 6),
+            "y": round((centroid_y - (img.height - 1) / 2) / img.height, 6),
+        },
+    }
+
+
 def save_image(img: Image.Image, path: Path) -> dict[str, Any]:
     path.parent.mkdir(parents=True, exist_ok=True)
     img.save(path)
     return {
         "path": str(path.relative_to(ROOT)),
         "size": list(img.size),
-        "edge_margins": alpha_margins(img),
+        **alpha_layout_metadata(img),
     }
 
 
@@ -460,11 +520,71 @@ def crop_component(img: Image.Image, component: dict[str, Any], pad: int = OUTPU
     bottom = min(img.height, bottom + pad)
     cropped = center_alpha_with_padding(img.crop((left, top, right, bottom)), pad)
     return cropped, {
+        "original_crop_hint": [0, 0, img.width, img.height],
+        "auto_crop_method": "largest_component_within_grid_cell",
+        "selected_component_samples": [{
+            "bbox": list(component["bbox"]),
+            "area": component["area"],
+        }],
         "component_bbox": list(component["bbox"]),
         "final_crop_box": [left, top, right, bottom],
         "component_area": component["area"],
         "output_edge_margins": alpha_margins(cropped),
     }
+
+
+def crop_vfx_cell(img: Image.Image, pad: int = OUTPUT_PADDING) -> tuple[Image.Image, dict[str, Any]]:
+    """Crop a VFX cell without discarding disconnected visual components.
+
+    Rings, reticles, smoke, sparks, and splashes are intentionally allowed to
+    contain several alpha islands.  Treating the largest island as the subject
+    can silently turn a complete effect into a fragment, so VFX always uses the
+    full cell alpha bounds and records representative components for QA.
+    """
+    cropped, crop_meta = crop_with_padding(img, pad=pad)
+    components = connected_components(img, min_area=1)
+    crop_meta.update({
+        "original_crop_hint": [0, 0, img.width, img.height],
+        "auto_crop_method": "full_cell_alpha_bbox",
+        "source_alpha_pixel_count": alpha_pixel_count(img),
+        "selected_component_count": len(components),
+        "selected_component_samples": [
+            {"bbox": list(component["bbox"]), "area": component["area"]}
+            for component in components[:16]
+        ],
+    })
+    return cropped, crop_meta
+
+
+def record_largest_component_selection(img: Image.Image, crop_meta: dict[str, Any]) -> None:
+    components = connected_components(img, min_area=1)
+    crop_meta["auto_crop_method"] = "largest_component_within_grid_cell"
+    crop_meta["selected_component_samples"] = [
+        {"bbox": list(component["bbox"]), "area": component["area"]}
+        for component in components[:1]
+    ]
+
+
+def component_tags_for_role(role: str) -> list[str]:
+    if role.startswith("source_alpha:"):
+        return ["source_alpha", role.split(":", 1)[1]]
+    if role.startswith("vfx:"):
+        return ["vfx", role.split(":", 1)[1]]
+    if role.startswith("anim_"):
+        return ["animation", role]
+    if role.startswith("battle_"):
+        return ["battle", role.split(":", 1)[0]]
+    if role.startswith("ui_") or role.startswith("expr_") or role in {"full_body", "half_body", "skill_cutin", "class_icon"}:
+        return ["ui", role]
+    return [role]
+
+
+def finalize_manifest_outputs(manifest: dict[str, Any]) -> None:
+    for output in manifest.get("outputs", []):
+        role = str(output.get("role", ""))
+        output["component_tags"] = component_tags_for_role(role)
+        if role.startswith("source_alpha:"):
+            output["source_edge_margins"] = output.get("edge_margins")
 
 
 def battle_roles_for_components(components: list[dict[str, Any]], ship_class: str) -> list[tuple[str, dict[str, Any]]]:
@@ -550,6 +670,28 @@ def point_near_fraction(img: Image.Image, fraction_x: float, fraction_y: float =
     return {"x": best[1], "y": best[2]} if best else point_near_center(img)
 
 
+def point_near_canvas_fraction(img: Image.Image, fraction_x: float, fraction_y: float) -> dict[str, int]:
+    target_x = round((img.width - 1) * max(0.0, min(1.0, fraction_x)))
+    target_y = round((img.height - 1) * max(0.0, min(1.0, fraction_y)))
+    alpha = img.getchannel("A")
+    pixels = alpha.load()
+    if pixels[target_x, target_y] >= ALPHA_THRESHOLD:
+        return {"x": target_x, "y": target_y}
+    bbox = alpha_bbox(img)
+    if bbox is None:
+        return {"x": target_x, "y": target_y}
+    left, top, right, bottom = bbox
+    best: tuple[int, int, int] | None = None
+    for y in range(top, bottom):
+        for x in range(left, right):
+            if pixels[x, y] < ALPHA_THRESHOLD:
+                continue
+            distance = (x - target_x) ** 2 + (y - target_y) ** 2
+            if best is None or distance < best[0]:
+                best = (distance, x, y)
+    return {"x": best[1], "y": best[2]} if best else {"x": target_x, "y": target_y}
+
+
 def add_planned_bindings(
     role: str,
     img: Image.Image,
@@ -557,7 +699,16 @@ def add_planned_bindings(
     plan: dict[str, Any],
 ) -> None:
     bindings = list(plan.get("bindings", {}).get(role, []))
+    positions = plan.get("binding_positions", {}).get(role, {})
     for index, point_name in enumerate(bindings):
+        configured = positions.get(str(point_name))
+        if isinstance(configured, dict) and isinstance(configured.get("x"), (int, float)) and isinstance(configured.get("y"), (int, float)):
+            points[str(point_name)] = point_near_canvas_fraction(
+                img,
+                float(configured["x"]),
+                float(configured["y"]),
+            )
+            continue
         fraction = (index + 1) / (len(bindings) + 1)
         points[str(point_name)] = point_near_fraction(img, fraction, 0.58)
 
@@ -713,6 +864,7 @@ def process_character(character_id: str) -> None:
     dirs = ensure_dirs(character_id)
     paths = source_paths(character_id)
     manifest: dict[str, Any] = {
+        "schema_version": int(plan.get("manifest_schema_version", 1)),
         "character_id": character_id,
         "source": "tools/art_pipeline/postprocess_generated_character.py",
         "method": "generated_background_auto_grid_and_component_split",
@@ -745,6 +897,7 @@ def process_character(character_id: str) -> None:
     ui_cells = split_grid(alpha_sources["ui_sheet"], rows=2, cols=4)
     for slot_name, cell in zip(UI_SLOT_NAMES, ui_cells[:7]):
         cropped, crop_meta = crop_with_padding(cell, pad=18)
+        record_largest_component_selection(cell, crop_meta)
         cropped = keep_largest_alpha_component(cropped)
         cropped = center_alpha_with_padding(cropped, 18)
         skill_role = str(plan.get("skill_role", SKILL_ROLE_BY_CLASS[entry.ship_class]))
@@ -753,6 +906,7 @@ def process_character(character_id: str) -> None:
         manifest["outputs"].append({"role": slot_name, "crop": crop_meta, **save_image(cropped, dirs["ui"] / out_name)})
     class_cell = ui_cells[7]
     class_img, class_meta = crop_with_padding(class_cell, pad=18)
+    record_largest_component_selection(class_cell, class_meta)
     class_img = keep_largest_alpha_component(class_img)
     class_img = center_alpha_with_padding(class_img, 18)
     class_name = f"{character_id}_ui_class_{entry.ship_class}.png"
@@ -785,26 +939,26 @@ def process_character(character_id: str) -> None:
     for state_index, (state, playback) in enumerate(ANIMATION_STATES.items()):
         cells = split_grid(master_rows[state_index], rows=1, cols=4) if master_rows else split_grid(alpha_sources[f"anim_{state}"], rows=2, cols=2)
         frames: list[str] = []
-        normalized: list[Image.Image] = []
+        normalized: list[tuple[Image.Image, dict[str, Any]]] = []
         for cell in cells:
             if master_rows:
                 # A generated master can place hair, flashes, or radar fragments just over a
                 # mathematical row boundary. Animation frames are single-subject assets; precise
                 # weapon effects remain on independent runtime nodes.
                 cell = keep_largest_alpha_component(cell)
-            cropped, _crop_meta = crop_with_padding(cell, pad=16)
-            normalized.append(cropped)
-        max_width = max(img.width for img in normalized)
-        max_height = max(img.height for img in normalized)
-        for index, frame in enumerate(normalized, start=1):
+            cropped, crop_meta = crop_with_padding(cell, pad=16)
+            normalized.append((cropped, crop_meta))
+        max_width = max(img.width for img, _crop_meta in normalized)
+        max_height = max(img.height for img, _crop_meta in normalized)
+        for index, (frame, crop_meta) in enumerate(normalized, start=1):
             canvas = Image.new("RGBA", (max_width, max_height), (0, 0, 0, 0))
             canvas.alpha_composite(frame, ((max_width - frame.width) // 2, (max_height - frame.height) // 2))
             out_path = dirs["anim"] / f"{character_id}_anim_{state}_frame_{index:02d}.png"
-            manifest["outputs"].append({"role": f"anim_{state}_frame_{index:02d}", **save_image(canvas, out_path)})
+            manifest["outputs"].append({"role": f"anim_{state}_frame_{index:02d}", "crop": crop_meta, **save_image(canvas, out_path)})
             frames.append(str(out_path.relative_to(ROOT)))
             if index == 1:
                 keyframe_path = dirs["anim"] / f"{character_id}_anim_{state}_keyframe.png"
-                manifest["outputs"].append({"role": f"anim_{state}_keyframe", **save_image(canvas, keyframe_path)})
+                manifest["outputs"].append({"role": f"anim_{state}_keyframe", "crop": crop_meta, **save_image(canvas, keyframe_path)})
                 if state == "idle" and master_rows:
                     idle_body = canvas.copy()
         anim_states[state] = {"frames": frames, "fps": playback["fps"], "loop": playback["loop"]}
@@ -829,10 +983,9 @@ def process_character(character_id: str) -> None:
     planned_vfx_roles = tuple(plan.get("vfx_roles", VFX_ROLES_BY_CLASS[entry.ship_class]))
     public_vfx_profiles = plan.get("public_vfx_profiles", {})
     for role_name, cell in zip(planned_vfx_roles, vfx_cells):
-        components = connected_components(cell, min_area=120)
-        if not components:
+        if alpha_bbox(cell) is None:
             continue
-        cropped, crop_meta = crop_component(cell, components[0], pad=18)
+        cropped, crop_meta = crop_vfx_cell(cell, pad=18)
         out_name = f"{character_id}_vfx_{role_name}.png"
         out_path = dirs["vfx"] / out_name
         source_kind = "character_specific"
@@ -853,6 +1006,19 @@ def process_character(character_id: str) -> None:
             "public_semantic": str(public_vfx_profiles.get(role_name, "")),
         }
 
+    for role_name, configured in plan.get("additional_public_vfx_roles", {}).items():
+        if not isinstance(configured, dict):
+            continue
+        file_value = str(configured.get("file", ""))
+        semantic = str(configured.get("semantic", ""))
+        if not file_value or not semantic:
+            continue
+        vfx_roles[str(role_name)] = {
+            "file": file_value,
+            "source": "public_combat_vfx",
+            "public_semantic": semantic,
+        }
+
     (dirs["config"] / f"{character_id}_meta_bind_points.json").write_text(
         json.dumps({"character_id": character_id, "assets": bind_assets}, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
@@ -865,6 +1031,7 @@ def process_character(character_id: str) -> None:
         json.dumps({"character_id": character_id, "ship_class": entry.ship_class, "roles": vfx_roles}, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
+    finalize_manifest_outputs(manifest)
     (dirs["config"] / f"{character_id}_postprocess_manifest.json").write_text(
         json.dumps(manifest, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",

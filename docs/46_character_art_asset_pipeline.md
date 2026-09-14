@@ -71,7 +71,9 @@ assets/characters/{id}/postprocess_plan.json
 - VFX 用途。
 - padding 和 edge-fix 策略。
 
-第二期角色将该文件作为强制生产契约，另外记录 `phase`、`ship_class`、`skill_role`、`battle_grid_roles`、`mount_instances`、`bindings`、`vfx_roles`、`public_vfx_profiles` 和 `acceptance_rules`。后处理优先读取角色级计划，第一期无该文件时继续使用现有舰种默认模板。
+第二期角色将该文件作为强制生产契约，另外记录 `phase`、`ship_class`、`level`、`skill_role`、`battle_grid_roles`、`mount_instances`、`object_inventory`、`bindings`、`binding_positions`、`weapon_binding_rules`、`vfx_roles`、`public_vfx_profiles`、`additional_public_vfx_roles` 和 `acceptance_rules`。后处理优先读取角色级计划，第一期无该文件时继续使用现有舰种默认模板。`level` 必须与 `docs/41_character_art_design.md` 的角色行一致；`object_inventory` 的实例数必须与 `mount_instances` 一致，炮管/鱼雷管等子件数按角色审查需要显式记录。
+
+使用 manifest schema v2 的正式角色还必须提供 `meta/{id}_source_provenance.json`，如实记录请求模型、实际模型、工具/接口、质量、尺寸与背景控制、输出格式、提示词修订、参考输入、每张源图的 SHA-256 与人工 `pass/polish/blocker` 结论。工具未暴露的字段应明确写作 `tool-managed/unknown` 或 `not exposed`，不得猜测；缺失生成 ID、未保留原候选或不可重放的合成步骤必须记录为可复现性限制。
 
 ## 4. 程序化步骤
 
@@ -88,7 +90,7 @@ assets/characters/{id}/postprocess_plan.json
 - trim alpha。
 - 根据 alpha 包围盒和 alpha 加权重心添加平衡透明 padding，使内容尽量位于子图中心。
 - 输出 RGBA PNG。
-- 生成 `postprocess_manifest.json`。
+- 生成 `postprocess_manifest.json`；schema v2 对每张来源/运行时图记录 RGBA 模式、alpha 包围盒与面积、来源边距、原始裁切提示、自动裁切方法、选中组件样本、最终裁切框、输出 padding、alpha 加权重心/归一化偏移和组件标签。VFX 还必须核对裁切前后 alpha 面积一致，防止断开的环、火花、烟与水花被静默丢弃。
 - 生成 `meta_bind_points.json`。
 - 生成 `anim_config.json`。
 - 生成 `vfx_config.json`。
@@ -98,6 +100,8 @@ assets/characters/{id}/postprocess_plan.json
 - 自动检查运行时 PNG 的大面积不透明近白底和保留绿幕色；命中阈值时阻塞交付，避免仅凭 RGBA 模式误判为透明资产。
 - 按单角色资产契约检查完整性；必需项缺失时将角色包标记为 `incomplete`，即使已有 PNG 都可读也不得通过交付。
 - 检查动画和 VFX 配置的引用文件是否存在、舰种数据是否一致，以及绑定点是否在子图边界内并且靠近非透明画面。
+- 自动推断仅用于没有明确机械节点的试产资产；正式角色可在 `postprocess_plan.json` 的 `binding_positions` 中使用画布归一化坐标覆盖挂点，炮塔、鱼雷与反潜挂点必须叠加到可辨认的底座/投放位置。`weapon_binding_rules` 同时锁定武器表现配置的挂点与发射/命中语义，避免反潜武器误从炮口发射。
+- 角色可以在 `additional_public_vfx_roles` 中将公共战斗 VFX 映射为角色可查询的语义角色，只记录引用，不复制公共贴图。
 - MVP 动画源图默认使用五张 Q 版战场单位 `2x2` 母版，每张一个状态、四格连续四帧；过渡角色也可读取一张 `5x4` 兼容母版。拆分后在 `anim_config.json` 中记录有序帧、FPS 和循环标记。待机/移动使用小幅循环；攻击/受击/火力使用预备、峰值、反馈/后坐和复位。攻击帧最多允许贴近炮口的开火火光或小型局部烟火，不允许出现已发射的炮弹、鱼雷、飞机、深弹或长尾迹等独立子物体。
 - 同一状态的四张透明帧需要归一到相同画布尺寸并保持稳定视觉中心，避免 Godot `AnimatedSprite2D` 播放时产生画布跳动。
 - 四帧画面驱动角色姿态；精确炮塔旋转、炮口、投射物、后坐位移和 VFX 仍使用 Godot 独立节点与补间。
@@ -170,10 +174,14 @@ assets/characters/qa/character_roster_processed_contact.png
 当前正式入口：
 
 ```bash
+python3 -m pip install -r tools/art_pipeline/requirements.txt
 python3 tools/art_pipeline/postprocess_generated_character.py enterprise_cv6
 python3 tools/art_pipeline/batch_character_art.py enterprise_cv6 --process --preview
 python3 tools/art_pipeline/check_character_asset_contract.py
+python3 -m unittest discover -s tools/art_pipeline/tests -p 'test_*.py' -v
 ```
+
+后处理和审计依赖 Pillow。执行生产命令前应先用选定的 Python 环境完成依赖安装/预检；系统中存在多个 Python 时必须在安装、后处理、审计和单测中使用同一个解释器，避免因裸 `python3` 指向变化产生假失败。
 
 工具的当前路径只作生产入口；代码位置总路引仍以 `docs/34_implementation_map.md` 为准。
 

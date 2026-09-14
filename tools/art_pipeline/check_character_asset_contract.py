@@ -1,8 +1,10 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import itertools
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -52,6 +54,31 @@ MAX_REGISTERED_ALPHA_IOU_BY_STATE = {
     "attack": 0.78,
     "hit": 0.82,
     "firepower": 0.86,
+}
+
+
+def load_visual_definitions() -> list[dict[str, object]]:
+    definitions: list[dict[str, object]] = []
+    for path in sorted((ROOT / "data" / "visuals").glob("*.json")):
+        document = json.loads(path.read_text(encoding="utf-8"))
+        for item in document.get("definitions", []):
+            if isinstance(item, dict):
+                definitions.append(item)
+    return definitions
+
+
+VISUAL_DEFINITIONS = load_visual_definitions()
+WEAPON_VISUALS = {
+    (str(item.get("character_id", "")), str(item.get("weapon_group_id", ""))): item
+    for item in VISUAL_DEFINITIONS
+    if str(item.get("id", "")).startswith("weapon_visual.")
+}
+VFX_PROFILE_KEYS = {
+    key
+    for item in VISUAL_DEFINITIONS
+    if str(item.get("id", "")).startswith("vfx.profile.")
+    for key in [str(item.get("id", "")), *(str(alias) for alias in item.get("aliases", []))]
+    if key
 }
 
 
@@ -187,6 +214,139 @@ def validate_animation_pose_variation(character_id: str, states: dict[str, objec
     return issues
 
 
+def sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as source:
+        for chunk in iter(lambda: source.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def validate_source_provenance(source_provenance: object) -> list[str]:
+    issues: list[str] = []
+    if not isinstance(source_provenance, dict):
+        return ["manifest schema v2 source_provenance missing"]
+    generation = source_provenance.get("generation")
+    if not isinstance(generation, dict):
+        issues.append("source provenance generation metadata missing")
+    else:
+        required_generation = {
+            "requested_model", "actual_model", "generation_tool", "endpoint", "quality",
+            "size_control", "background_control", "output_format", "prompt_revision", "reference_inputs",
+        }
+        missing = sorted(key for key in required_generation if generation.get(key) in (None, "", []))
+        if missing:
+            issues.append(f"source provenance generation fields missing: {', '.join(missing)}")
+        prompt_revision = generation.get("prompt_revision")
+        if isinstance(prompt_revision, dict):
+            prompt_path = ROOT / str(prompt_revision.get("path", ""))
+            prompt_hash = str(prompt_revision.get("sha256", ""))
+            if not prompt_path.exists():
+                issues.append(f"source provenance prompt revision missing: {prompt_path}")
+            elif not prompt_hash or sha256(prompt_path) != prompt_hash:
+                issues.append("source provenance prompt revision hash mismatch")
+    source_images = source_provenance.get("source_images")
+    if not isinstance(source_images, list) or not source_images:
+        issues.append("source provenance image inventory missing")
+        return issues
+    for item in source_images:
+        if not isinstance(item, dict):
+            issues.append("source provenance image entry is not an object")
+            continue
+        role = str(item.get("role", "?"))
+        source_path = ROOT / str(item.get("path", ""))
+        if not source_path.exists():
+            issues.append(f"source provenance file missing: {role}:{source_path}")
+            continue
+        expected_hash = str(item.get("sha256", ""))
+        if not expected_hash or sha256(source_path) != expected_hash:
+            issues.append(f"source provenance hash mismatch: {role}")
+        if item.get("qa_verdict") not in {"pass", "polish", "blocker"}:
+            issues.append(f"source provenance QA verdict invalid: {role}")
+        if not str(item.get("qa_observation", "")):
+            issues.append(f"source provenance QA observation missing: {role}")
+    return issues
+
+
+def validate_manifest_v2(manifest_data: dict[str, object]) -> list[str]:
+    issues = validate_source_provenance(manifest_data.get("source_provenance"))
+    outputs = manifest_data.get("outputs")
+    if not isinstance(outputs, list) or not outputs:
+        return issues + ["manifest schema v2 outputs missing"]
+    for output in outputs:
+        if not isinstance(output, dict):
+            issues.append("manifest output entry is not an object")
+            continue
+        role = str(output.get("role", "?"))
+        for field in (
+            "mode", "alpha_bbox", "alpha_pixel_count", "edge_margins", "output_padding",
+            "alpha_centroid", "centroid_offset_normalized", "component_tags",
+        ):
+            if output.get(field) in (None, "", []):
+                issues.append(f"manifest output metadata missing: {role}:{field}")
+        if role.startswith("source_alpha:"):
+            if output.get("source_edge_margins") in (None, ""):
+                issues.append(f"manifest source edge margins missing: {role}")
+            continue
+        if role.endswith(":idle_master_override"):
+            continue
+        crop = output.get("crop")
+        if not isinstance(crop, dict):
+            issues.append(f"manifest crop metadata missing: {role}")
+            continue
+        for field in (
+            "original_crop_hint", "final_crop_box", "auto_crop_method",
+            "selected_component_samples", "output_edge_margins",
+        ):
+            if crop.get(field) in (None, "", []):
+                issues.append(f"manifest crop metadata missing: {role}:{field}")
+        if role.startswith("vfx:"):
+            if crop.get("auto_crop_method") != "full_cell_alpha_bbox":
+                issues.append(f"VFX crop must preserve all components: {role}")
+            if crop.get("source_alpha_pixel_count") != output.get("alpha_pixel_count"):
+                issues.append(f"VFX crop changed alpha component area: {role}")
+    return issues
+
+
+def validate_weapon_binding_rules(
+    character_id: str,
+    plan: dict[str, object],
+    bind_data: dict[str, object],
+    vfx_data: dict[str, object],
+) -> list[str]:
+    issues: list[str] = []
+    rules = plan.get("weapon_binding_rules", {})
+    if not isinstance(rules, dict):
+        return ["postprocess plan weapon_binding_rules must be an object"]
+    assets = bind_data.get("assets", {}) if isinstance(bind_data, dict) else {}
+    vfx_roles = vfx_data.get("roles", {}) if isinstance(vfx_data, dict) else {}
+    for weapon_group_id, expected in rules.items():
+        if not isinstance(expected, dict):
+            issues.append(f"weapon binding rule invalid: {weapon_group_id}")
+            continue
+        visual = WEAPON_VISUALS.get((character_id, str(weapon_group_id)))
+        if visual is None:
+            issues.append(f"weapon visual missing for binding rule: {weapon_group_id}")
+            continue
+        for field in ("launch_bind", "muzzle_vfx_role", "impact_vfx_role", "launch_profile", "impact_profile"):
+            if field in expected and visual.get(field) != expected[field]:
+                issues.append(f"weapon visual rule mismatch: {weapon_group_id}:{field}")
+        launch_bind = str(expected.get("launch_bind", ""))
+        asset_role = str(expected.get("asset_role", ""))
+        expected_asset = f"{character_id}_{asset_role}.png" if asset_role else ""
+        if expected_asset and launch_bind not in assets.get(expected_asset, {}):
+            issues.append(f"weapon launch bind missing on expected asset: {weapon_group_id}:{expected_asset}:{launch_bind}")
+        for role_field in ("muzzle_vfx_role", "impact_vfx_role"):
+            role_name = str(expected.get(role_field, ""))
+            if role_name and role_name not in vfx_roles:
+                issues.append(f"weapon VFX role missing: {weapon_group_id}:{role_name}")
+        for profile_field in ("launch_profile", "impact_profile"):
+            profile_name = str(expected.get(profile_field, ""))
+            if profile_name and profile_name not in VFX_PROFILE_KEYS:
+                issues.append(f"weapon VFX profile missing: {weapon_group_id}:{profile_name}")
+    return issues
+
+
 def validate_character_data(character_id: str) -> list[str]:
     root = CHAR_ROOT / character_id / "processed"
     issues: list[str] = []
@@ -201,6 +361,10 @@ def validate_character_data(character_id: str) -> list[str]:
                 issues.append("postprocess plan character_id mismatch")
             if plan.get("ship_class") != SHIP_CLASSES[character_id]:
                 issues.append("postprocess plan ship_class mismatch")
+            expected_level_match = re.search(r"\d+", ROSTER[character_id].level)
+            expected_level = int(expected_level_match.group()) if expected_level_match else None
+            if expected_level is not None and plan.get("level") != expected_level:
+                issues.append(f"postprocess plan level mismatch: expected {expected_level}")
             battle_roles = plan.get("battle_grid_roles", [])
             vfx_roles = plan.get("vfx_roles", [])
             if not isinstance(battle_roles, list) or len(battle_roles) != 8:
@@ -211,6 +375,27 @@ def validate_character_data(character_id: str) -> list[str]:
                 issues.append("postprocess plan battle roles must be unique")
             if len(set(vfx_roles)) != len(vfx_roles):
                 issues.append("postprocess plan VFX roles must be unique")
+            if int(plan.get("manifest_schema_version", 1)) >= 2:
+                mount_instances = plan.get("mount_instances", {})
+                object_inventory = plan.get("object_inventory", {})
+                if not isinstance(mount_instances, dict) or not isinstance(object_inventory, dict):
+                    issues.append("postprocess plan object inventory missing")
+                else:
+                    for mount_name, count in mount_instances.items():
+                        inventory = object_inventory.get(mount_name, {})
+                        if not isinstance(inventory, dict) or inventory.get("instances") != count:
+                            issues.append(f"postprocess plan object inventory mismatch: {mount_name}")
+            binding_positions = plan.get("binding_positions", {})
+            if binding_positions and not isinstance(binding_positions, dict):
+                issues.append("postprocess plan binding_positions must be an object")
+            elif isinstance(binding_positions, dict):
+                for role, positions in binding_positions.items():
+                    if not isinstance(positions, dict):
+                        issues.append(f"postprocess plan binding positions invalid: {role}")
+                        continue
+                    for point_name, point in positions.items():
+                        if not isinstance(point, dict) or not all(isinstance(point.get(axis), (int, float)) and 0.0 <= float(point[axis]) <= 1.0 for axis in ("x", "y")):
+                            issues.append(f"postprocess plan normalized bind invalid: {role}:{point_name}")
 
     manifest_path = root / "config" / f"{character_id}_postprocess_manifest.json"
     if manifest_path.exists():
@@ -220,6 +405,8 @@ def validate_character_data(character_id: str) -> list[str]:
             source = source_provenance.get("source", "unknown")
             kind = source_provenance.get("kind", "placeholder")
             issues.append(f"non-production source provenance: {kind} from {source}")
+        if int(manifest_data.get("schema_version", 1)) >= 2:
+            issues.extend(validate_manifest_v2(manifest_data))
 
     bind_path = root / "config" / f"{character_id}_meta_bind_points.json"
     if bind_path.exists():
@@ -282,6 +469,7 @@ def validate_character_data(character_id: str) -> list[str]:
             issues.extend(validate_animation_pose_variation(character_id, states))
 
     vfx_path = root / "config" / f"{character_id}_vfx_config.json"
+    vfx_data: dict[str, object] = {}
     if vfx_path.exists():
         vfx_data = json.loads(vfx_path.read_text(encoding="utf-8"))
         if vfx_data.get("ship_class") != SHIP_CLASSES[character_id]:
@@ -308,6 +496,8 @@ def validate_character_data(character_id: str) -> list[str]:
         skill_role = str(plan.get("skill_role", ""))
         if not skill_role or not (root / "ui" / f"{character_id}_ui_skill_{skill_role}.png").exists():
             issues.append(f"planned skill icon missing: {skill_role or '?'}")
+        if bind_path.exists() and vfx_path.exists():
+            issues.extend(validate_weapon_binding_rules(character_id, plan, bind_data, vfx_data))
 
     return issues
 

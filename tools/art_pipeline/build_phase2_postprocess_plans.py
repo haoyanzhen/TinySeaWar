@@ -54,7 +54,7 @@ BATTLE_ROLES = {
 MOUNT_COUNTS = {
     "fletcher": {"turret_main": 5, "torpedo": 2}, "cleveland": {"turret_main": 4},
     "baltimore": {"turret_main": 3}, "wahoo": {"torpedo_fore": 6, "torpedo_aft": 4},
-    "jervis": {"turret_main": 3, "torpedo": 2}, "belfast": {"turret_main": 4, "torpedo": 2},
+    "jervis": {"turret_main": 3, "torpedo": 2, "depth_charge_rack": 2}, "belfast": {"turret_main": 4, "torpedo": 2},
     "illustrious": {"aircraft_launch": 2, "aircraft_recovery": 1}, "upholder": {"torpedo_fore": 6},
     "tashkent": {"turret_main": 3, "torpedo": 3}, "chapayev": {"turret_main": 4, "torpedo": 2},
     "gangut": {"turret_main": 4}, "k_21": {"torpedo_fore": 6, "torpedo_aft": 4},
@@ -100,6 +100,43 @@ SPECIAL_RULES = {
     "graf_zeppelin": ["Clearly unfinished experimental carrier structure; UI plan marker only, no readable text."],
 }
 
+JERVIS_BINDING_POSITIONS = {
+    "battle_rig_base": {
+        "rig_mount": {"x": 0.49, "y": 0.50},
+        "wake_origin": {"x": 0.27, "y": 0.50},
+        "skill_origin": {"x": 0.49, "y": 0.50},
+        "turret_mount_01": {"x": 0.14, "y": 0.30},
+        "turret_mount_02": {"x": 0.50, "y": 0.13},
+        "turret_mount_03": {"x": 0.86, "y": 0.34},
+        "torpedo_mount_01": {"x": 0.18, "y": 0.80},
+        "torpedo_mount_02": {"x": 0.82, "y": 0.87},
+        "asw_launch_01": {"x": 0.27, "y": 0.43},
+        "asw_launch_02": {"x": 0.27, "y": 0.58},
+    },
+}
+
+JERVIS_WEAPON_BINDING_RULES = {
+    "jervis_asw": {
+        "asset_role": "battle_rig_base",
+        "launch_bind": "asw_launch_01",
+        "muzzle_vfx_role": "water_splash",
+        "launch_profile": "vfx.profile.asw_depth_charge_launch",
+        "impact_vfx_role": "asw_underwater_blast",
+        "impact_profile": "vfx.profile.asw_underwater_blast",
+    },
+    "jervis_main": {
+        "asset_role": "battle_turret_main_01",
+        "launch_bind": "muzzle_01",
+        "muzzle_vfx_role": "muzzle_flash_small",
+    },
+    "jervis_torpedo": {
+        "asset_role": "battle_torpedo_tube_01",
+        "launch_bind": "torpedo_port_01",
+        "muzzle_vfx_role": "torpedo_launch_flash",
+        "launch_profile": "vfx.profile.torpedo_launch",
+    },
+}
+
 
 def public_semantic(role: str, ship_class: str) -> str:
     if "wake" in role:
@@ -108,6 +145,8 @@ def public_semantic(role: str, ship_class: str) -> str:
         return "muzzle_flash.large" if ship_class in {"heavy_cruiser", "battleship"} else "muzzle_flash.small" if ship_class == "destroyer" else "muzzle_flash.medium"
     if "torpedo_warning" in role or "sector" in role:
         return "torpedo.warning.fan"
+    if "torpedo_launch" in role:
+        return "torpedo.launch.submerged" if ship_class == "submarine" else "torpedo.launch.surface"
     if "torpedo" in role:
         return "torpedo.trail.submerged" if ship_class == "submarine" else "torpedo.trail.surface"
     if "aircraft" in role or "flight" in role or "airstrike" in role:
@@ -132,7 +171,7 @@ def rig_bindings(character_id: str) -> list[str]:
             "turret_main": "turret_mount", "turret_secondary": "secondary_mount",
             "torpedo": "torpedo_mount", "torpedo_fore": "torpedo_fore_mount",
             "torpedo_aft": "torpedo_aft_mount", "aircraft_launch": "aircraft_launch",
-            "aircraft_recovery": "aircraft_recovery",
+            "aircraft_recovery": "aircraft_recovery", "depth_charge_rack": "asw_launch",
         }[kind]
         names.extend(f"{stem}_{index:02d}" for index in range(1, count + 1))
     return names
@@ -144,7 +183,14 @@ def build_plan(entry: character_roster.CharacterRosterEntry) -> dict[str, object
     base_vfx[:2] = SPECIAL_VFX[character_id]
     if character_id == "baltimore":
         base_vfx[-1] = "aa_interception"
-    return {
+    object_inventory = {
+        mount_name: {"instances": count}
+        for mount_name, count in MOUNT_COUNTS[character_id].items()
+    }
+    if character_id == "jervis":
+        object_inventory["turret_main"]["barrels_per_instance"] = 2
+        object_inventory["torpedo"]["tubes_per_instance"] = 5
+    plan: dict[str, object] = {
         "character_id": character_id,
         "phase": "phase2",
         "ship_class": entry.ship_class,
@@ -152,6 +198,7 @@ def build_plan(entry: character_roster.CharacterRosterEntry) -> dict[str, object
         "skill_role": SKILL_ROLES[character_id],
         "battle_grid_roles": list(BATTLE_ROLES[character_id]),
         "mount_instances": MOUNT_COUNTS[character_id],
+        "object_inventory": object_inventory,
         "bindings": {"battle_rig_base": rig_bindings(character_id)},
         "vfx_roles": base_vfx,
         "public_vfx_profiles": {role: public_semantic(role, entry.ship_class) for role in base_vfx},
@@ -162,6 +209,19 @@ def build_plan(entry: character_roster.CharacterRosterEntry) -> dict[str, object
             *SPECIAL_RULES.get(character_id, []),
         ],
     }
+    if character_id == "jervis":
+        plan.update({
+            "manifest_schema_version": 2,
+            "binding_positions": JERVIS_BINDING_POSITIONS,
+            "additional_public_vfx_roles": {
+                "asw_underwater_blast": {
+                    "semantic": "asw.underwater_blast",
+                    "file": "assets/vfx/combat/antisubmarine/vfx_asw_underwater_blast_01.png",
+                },
+            },
+            "weapon_binding_rules": JERVIS_WEAPON_BINDING_RULES,
+        })
+    return plan
 
 
 def main() -> int:

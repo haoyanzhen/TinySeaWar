@@ -72,6 +72,7 @@ assets/environment/weather/zones/environment_zone_asset_manifest.json
 
 - 炮口使用 `muzzle_01`、`muzzle_02`、`muzzle_group`。
 - 鱼雷口使用 `torpedo_port_01`、`torpedo_port_02`；旧配置中的单点 `torpedo_port` 读取时应能映射为 `torpedo_port_01`。
+- 舰尾/侧投反潜投放点使用 `asw_launch_01`、`asw_launch_02`；不得复用主炮 `muzzle_*` 作为深水炸弹来源。
 - 航迹使用 `wake_origin`。
 - 航母使用 `aircraft_launch_01`、`aircraft_launch_02`、`aircraft_recovery`。
 - 侦查、技能和扫描使用 `scan_origin`、`skill_origin`。

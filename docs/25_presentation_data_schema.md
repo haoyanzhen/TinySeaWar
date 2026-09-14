@@ -17,10 +17,24 @@ camera.default_zoom
 camera.zoom_step
 camera.min_visible_size
 camera.max_map_visible_fraction
+submarine_depth_visual.transition_easing
+submarine_depth_visual.surface.body_tint
+submarine_depth_visual.surface.rig_tint
+submarine_depth_visual.surface.underlay_color
+submarine_depth_visual.surface.outline_color
+submarine_depth_visual.surface.heading_color
+submarine_depth_visual.submerged.body_tint
+submarine_depth_visual.submerged.rig_tint
+submarine_depth_visual.submerged.underlay_color
+submarine_depth_visual.submerged.outline_color
+submarine_depth_visual.submerged.heading_color
 ```
 
 - 所有尺寸为正；默认窗口必须包含在候选列表中。
 - `camera.zoom_step>1`；可见范围和地图比例必须保持合法。
+- `submarine_depth_visual` 只控制可见潜艇的角色本体、舰装、脚下阴影、碰撞轮廓和航向线表现，不改变侦查、碰撞、攻击合法性或接触残影。
+- `surface/submerged` 的颜色字段均为 `[r,g,b,a]`，四个分量必须在 `[0,1]`；角色本体与舰装分层调制，血条、名称、选中、锁定和旗舰标记不受其透明度影响。
+- `transition_easing` 取 `Linear` 或 `SmoothStep`；转换进度读取快照的 `depth_transition.duration/remaining`，不得在表现配置中另存规则时长。稳定状态直接取对应端点，沉没表现优先于深度色调。
 - 用户选择写入用户偏好，不写回项目 Definition；镜头状态不进入 BattleState。
 
 ## 3. OceanPalette

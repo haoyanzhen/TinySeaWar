@@ -660,6 +660,36 @@ func _validate_settings(settings: Dictionary) -> void:
 		errors.append("Camera zoom_step must be greater than 1 in %s" % settings_id)
 	if float(camera.get("default_zoom", 0.0)) <= 0.0:
 		errors.append("Camera default_zoom must be positive in %s" % settings_id)
+	_validate_submarine_depth_visual(settings.get("submarine_depth_visual", {}), settings_id)
+
+
+func _validate_submarine_depth_visual(visual: Variant, settings_id: String) -> void:
+	if not visual is Dictionary:
+		errors.append("Submarine depth visual must be an object in %s" % settings_id)
+		return
+	var easing := str(visual.get("transition_easing", ""))
+	if easing not in ["Linear", "SmoothStep"]:
+		errors.append("Invalid submarine depth transition easing in %s" % settings_id)
+	for state_name in ["surface", "submerged"]:
+		var state_visual: Variant = visual.get(state_name, {})
+		if not state_visual is Dictionary:
+			errors.append("Submarine depth visual state %s must be an object in %s" % [state_name, settings_id])
+			continue
+		for color_name in ["body_tint", "rig_tint", "underlay_color", "outline_color", "heading_color"]:
+			if not _valid_normalized_rgba(state_visual.get(color_name, [])):
+				errors.append("Invalid submarine depth %s.%s RGBA in %s" % [state_name, color_name, settings_id])
+
+
+func _valid_normalized_rgba(value: Variant) -> bool:
+	if not value is Array or value.size() != 4:
+		return false
+	for component in value:
+		if typeof(component) not in [TYPE_INT, TYPE_FLOAT]:
+			return false
+		var normalized := float(component)
+		if normalized < 0.0 or normalized > 1.0:
+			return false
+	return true
 
 
 func _validate_combat_settings(settings: Dictionary) -> void:

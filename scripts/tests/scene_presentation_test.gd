@@ -82,6 +82,27 @@ func _run() -> void:
 	_check(warspite_view.body_texture != null and warspite_view.rig_texture != null, "runtime character view loads body and rig art")
 	_check(is_equal_approx(float(warspite_view.rig_texture.get_width()) * warspite_view.rig_art_scale, 150.0), "rendered rig width matches the collision ellipse longitudinal diameter")
 	_check(is_equal_approx(warspite_view.rig_heading_offset, deg_to_rad(-10.9)), "runtime character view aligns the authored rig angle with the collision ellipse heading")
+	var omniscient_snapshot: Dictionary = battle.session.snapshot("player", true)
+	battle.effect_director.sync_snapshot(omniscient_snapshot, "", "")
+	var hai_shih_snapshot: Dictionary = omniscient_snapshot["units"]["unit.enemy.hai_shih"]
+	var hai_shih_view = battle.effect_director.unit_views.get("unit.enemy.hai_shih", null)
+	_check(hai_shih_view != null and is_equal_approx(hai_shih_view._submarine_depth_blend(), 1.0), "a submarine that spawns submerged immediately uses the submerged visual endpoint")
+	var submerged_style: Dictionary = hai_shih_view._unit_visual_style()
+	_check((submerged_style["body_tint"] as Color).is_equal_approx(Color(0.72, 0.85, 0.91, 0.64)) and (submerged_style["rig_tint"] as Color).is_equal_approx(Color(0.56, 0.72, 0.78, 0.52)), "submerged character body stays more legible than the lower-opacity rig")
+	var transition_snapshot: Dictionary = hai_shih_snapshot.duplicate(true)
+	transition_snapshot["depth_state"] = "Surface"
+	transition_snapshot["depth_transition"] = {"active": true, "from_depth_state": "Surface", "target_depth_state": "Submerged", "remaining": 1.0, "duration": 2.0}
+	hai_shih_view.update_unit(transition_snapshot, false, false)
+	_check(is_equal_approx(hai_shih_view._submarine_depth_blend(), 0.5), "submarine depth art follows the authoritative transition midpoint")
+	var transition_style: Dictionary = hai_shih_view._unit_visual_style()
+	_check((transition_style["body_tint"] as Color).is_equal_approx(Color.WHITE.lerp(Color(0.72, 0.85, 0.91, 0.64), 0.5)), "submarine body tint and opacity interpolate smoothly during a dive")
+	transition_snapshot["depth_transition"] = {"active": true, "from_depth_state": "Submerged", "target_depth_state": "Surface", "remaining": 1.0, "duration": 2.0}
+	hai_shih_view.update_unit(transition_snapshot, false, false)
+	_check(is_equal_approx(hai_shih_view._submarine_depth_blend(), 0.5), "submarine surfacing reverses the same visual transition")
+	transition_snapshot["life_state"] = "Sunk"
+	hai_shih_view.update_unit(transition_snapshot, false, false)
+	_check(is_equal_approx(hai_shih_view._submarine_depth_blend(), 0.0), "sinking presentation takes priority over submarine depth tint")
+	hai_shih_view.update_unit(hai_shih_snapshot, false, false)
 	var warspite_rig_points: Dictionary = data_registry.assets.bind_points("warspite", "warspite_battle_rig_base.png")
 	var authored_rig_axis := Vector2(
 		float(warspite_rig_points["turret_mount_01"]["x"] - warspite_rig_points["turret_mount_02"]["x"]),

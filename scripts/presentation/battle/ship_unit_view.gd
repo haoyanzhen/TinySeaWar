@@ -24,12 +24,16 @@ var move_memory := 0.0
 var body_art_scale := DEFAULT_UNIT_SCALE
 var rig_art_scale := DEFAULT_UNIT_SCALE
 var rig_heading_offset := 0.0
+var depth_transition_easing := "SmoothStep"
+var surface_depth_style := {}
+var submerged_depth_style := {}
 
 
 func configure(snapshot: Dictionary) -> void:
 	unit_id = str(snapshot.get("entity_id", ""))
 	character_id = str(snapshot.get("definition_id", "")).trim_prefix("ship.")
 	animation.setup(character_id)
+	_load_depth_visual_settings()
 	_load_static_textures()
 	update_unit(snapshot, false, false)
 
@@ -88,11 +92,12 @@ func _draw() -> void:
 	var fallback_color := Color("#63c7ff") if friendly else Color("#ff6b6b")
 	if str(unit.get("life_state", "Alive")) == "Sunk":
 		fallback_color = Color("#6c7780")
-	draw_colored_polygon(_ellipse_points(collision_half_extents + Vector2(12.0, 12.0), heading), Color(0.02, 0.08, 0.12, 0.28))
-	_draw_unit_art(fallback_color)
-	draw_polyline(_ellipse_points(collision_half_extents, heading, true), Color(0.86, 0.97, 1.0, 0.58), 1.5, true)
+	var visual_style := _unit_visual_style()
+	draw_colored_polygon(_ellipse_points(collision_half_extents + Vector2(12.0, 12.0), heading), visual_style["underlay_color"])
+	_draw_unit_art(fallback_color, visual_style["body_tint"], visual_style["rig_tint"])
+	draw_polyline(_ellipse_points(collision_half_extents, heading, true), visual_style["outline_color"], 1.5, true)
 	var heading_vector := Vector2.RIGHT.rotated(heading)
-	draw_line(Vector2.ZERO, heading_vector * (collision_half_extents.x + 34.0), Color(1.0, 1.0, 1.0, 0.75), 2.5)
+	draw_line(Vector2.ZERO, heading_vector * (collision_half_extents.x + 34.0), visual_style["heading_color"], 2.5)
 	if selected:
 		_draw_ui_icon("ui_marker_selected", Vector2.ZERO, 0.85)
 		draw_polyline(_ellipse_points(collision_half_extents + Vector2(19.0, 19.0), heading, true), Color("#f8ef9a"), 3.0, true)
@@ -104,20 +109,98 @@ func _draw() -> void:
 	_draw_health_bar(radius, friendly)
 
 
-func _draw_unit_art(fallback_color: Color) -> void:
+func _draw_unit_art(fallback_color: Color, body_tint: Color, rig_tint: Color) -> void:
 	var heading := float(unit.get("heading", 0.0))
-	var tint := Color.WHITE
 	if str(unit.get("life_state", "Alive")) == "Sunk":
-		tint = Color(0.5, 0.58, 0.62, 0.65)
+		body_tint = Color(0.5, 0.58, 0.62, 0.65)
+		rig_tint = body_tint
 	if rig_texture != null:
-		_draw_texture_centered(rig_texture, heading + rig_heading_offset, rig_art_scale, tint)
+		_draw_texture_centered(rig_texture, heading + rig_heading_offset, rig_art_scale, rig_tint)
 	var frame_texture := _texture(animation.current_frame_path())
 	if frame_texture != null:
-		_draw_texture_centered(frame_texture, heading, body_art_scale, tint)
+		_draw_texture_centered(frame_texture, heading, body_art_scale, body_tint)
 	elif body_texture != null:
-		_draw_texture_centered(body_texture, heading, body_art_scale, tint)
+		_draw_texture_centered(body_texture, heading, body_art_scale, body_tint)
 	elif rig_texture == null:
-		draw_colored_polygon(_ellipse_points(CollisionGeometryService.half_extents(unit), heading), fallback_color)
+		var fallback_art_color := fallback_color if str(unit.get("life_state", "Alive")) == "Sunk" else _multiply_colors(fallback_color, body_tint)
+		draw_colored_polygon(_ellipse_points(CollisionGeometryService.half_extents(unit), heading), fallback_art_color)
+
+
+func _unit_visual_style() -> Dictionary:
+	var surface_style := surface_depth_style if not surface_depth_style.is_empty() else _default_surface_depth_style()
+	if str(unit.get("stats", {}).get("ship_class", unit.get("ship_class", ""))) != "Submarine" or str(unit.get("life_state", "Alive")) == "Sunk":
+		return surface_style
+	var submerged_style := submerged_depth_style if not submerged_depth_style.is_empty() else _default_submerged_depth_style()
+	var blend := _submarine_depth_blend()
+	return {
+		"body_tint": (surface_style["body_tint"] as Color).lerp(submerged_style["body_tint"], blend),
+		"rig_tint": (surface_style["rig_tint"] as Color).lerp(submerged_style["rig_tint"], blend),
+		"underlay_color": (surface_style["underlay_color"] as Color).lerp(submerged_style["underlay_color"], blend),
+		"outline_color": (surface_style["outline_color"] as Color).lerp(submerged_style["outline_color"], blend),
+		"heading_color": (surface_style["heading_color"] as Color).lerp(submerged_style["heading_color"], blend),
+	}
+
+
+func _submarine_depth_blend() -> float:
+	if str(unit.get("stats", {}).get("ship_class", unit.get("ship_class", ""))) != "Submarine" or str(unit.get("life_state", "Alive")) == "Sunk":
+		return 0.0
+	var transition: Dictionary = unit.get("depth_transition", {})
+	if bool(transition.get("active", false)):
+		var duration := maxf(0.001, float(transition.get("duration", 0.0)))
+		var remaining := clampf(float(transition.get("remaining", duration)), 0.0, duration)
+		var progress := clampf(1.0 - remaining / duration, 0.0, 1.0)
+		var eased_progress := progress if depth_transition_easing == "Linear" else smoothstep(0.0, 1.0, progress)
+		match str(transition.get("target_depth_state", "")):
+			"Submerged": return eased_progress
+			"Surface": return 1.0 - eased_progress
+	return 1.0 if str(unit.get("depth_state", "Surface")) == "Submerged" else 0.0
+
+
+func _load_depth_visual_settings() -> void:
+	var presentation_settings: Dictionary = DataRegistry.registry.get_definition("settings", "settings.presentation")
+	var visual: Dictionary = presentation_settings.get("submarine_depth_visual", {})
+	depth_transition_easing = str(visual.get("transition_easing", "SmoothStep"))
+	surface_depth_style = _depth_style_from_config(visual.get("surface", {}), _default_surface_depth_style())
+	submerged_depth_style = _depth_style_from_config(visual.get("submerged", {}), _default_submerged_depth_style())
+
+
+func _depth_style_from_config(config: Variant, fallback: Dictionary) -> Dictionary:
+	if not config is Dictionary:
+		return fallback
+	var result := {}
+	for color_name in fallback:
+		result[color_name] = _color_from_rgba(config.get(color_name, []), fallback[color_name])
+	return result
+
+
+func _color_from_rgba(value: Variant, fallback: Color) -> Color:
+	if not value is Array or value.size() != 4:
+		return fallback
+	return Color(float(value[0]), float(value[1]), float(value[2]), float(value[3]))
+
+
+func _default_surface_depth_style() -> Dictionary:
+	return {
+		"body_tint": Color.WHITE,
+		"rig_tint": Color.WHITE,
+		"underlay_color": Color(0.02, 0.08, 0.12, 0.28),
+		"outline_color": Color(0.86, 0.97, 1.0, 0.58),
+		"heading_color": Color(1.0, 1.0, 1.0, 0.75),
+	}
+
+
+func _default_submerged_depth_style() -> Dictionary:
+	return {
+		"body_tint": Color(0.72, 0.85, 0.91, 0.64),
+		"rig_tint": Color(0.56, 0.72, 0.78, 0.52),
+		"underlay_color": Color(0.03, 0.19, 0.26, 0.42),
+		"outline_color": Color(0.56, 0.85, 0.93, 0.70),
+		"heading_color": Color(0.78, 0.95, 1.0, 0.55),
+	}
+
+
+func _multiply_colors(first: Color, second: Color) -> Color:
+	return Color(first.r * second.r, first.g * second.g, first.b * second.b, first.a * second.a)
 
 
 func _draw_health_bar(radius: float, friendly: bool) -> void:

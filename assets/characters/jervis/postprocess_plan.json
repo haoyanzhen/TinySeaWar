@@ -1,8 +1,9 @@
 {
   "character_id": "jervis",
+  "manifest_schema_version": 2,
   "phase": "phase2",
   "ship_class": "destroyer",
-  "level": 2,
+  "level": 1,
   "skill_role": "flotilla_leader",
   "battle_grid_roles": [
     "battle_body_r",
@@ -16,7 +17,21 @@
   ],
   "mount_instances": {
     "turret_main": 3,
-    "torpedo": 2
+    "torpedo": 2,
+    "depth_charge_rack": 2
+  },
+  "object_inventory": {
+    "turret_main": {
+      "instances": 3,
+      "barrels_per_instance": 2
+    },
+    "torpedo": {
+      "instances": 2,
+      "tubes_per_instance": 5
+    },
+    "depth_charge_rack": {
+      "instances": 2
+    }
   },
   "bindings": {
     "battle_rig_base": [
@@ -27,8 +42,24 @@
       "turret_mount_02",
       "turret_mount_03",
       "torpedo_mount_01",
-      "torpedo_mount_02"
+      "torpedo_mount_02",
+      "asw_launch_01",
+      "asw_launch_02"
     ]
+  },
+  "binding_positions": {
+    "battle_rig_base": {
+      "rig_mount": {"x": 0.49, "y": 0.50},
+      "wake_origin": {"x": 0.27, "y": 0.50},
+      "skill_origin": {"x": 0.49, "y": 0.50},
+      "turret_mount_01": {"x": 0.14, "y": 0.30},
+      "turret_mount_02": {"x": 0.50, "y": 0.13},
+      "turret_mount_03": {"x": 0.86, "y": 0.34},
+      "torpedo_mount_01": {"x": 0.18, "y": 0.80},
+      "torpedo_mount_02": {"x": 0.82, "y": 0.87},
+      "asw_launch_01": {"x": 0.27, "y": 0.43},
+      "asw_launch_02": {"x": 0.27, "y": 0.58}
+    }
   },
   "vfx_roles": [
     "formation_signal",
@@ -43,12 +74,39 @@
   "public_vfx_profiles": {
     "formation_signal": "skill.area",
     "flotilla_aura": "skill.area",
-    "torpedo_launch_flash": "torpedo.trail.surface",
+    "torpedo_launch_flash": "torpedo.launch.surface",
     "muzzle_flash_small": "muzzle_flash.small",
     "water_splash": "impact.water.medium",
     "aa_circle": "aa.burst.small",
     "skill_aura": "skill.area",
     "range_reticle": "skill.area"
+  },
+  "additional_public_vfx_roles": {
+    "asw_underwater_blast": {
+      "semantic": "asw.underwater_blast",
+      "file": "assets/vfx/combat/antisubmarine/vfx_asw_underwater_blast_01.png"
+    }
+  },
+  "weapon_binding_rules": {
+    "jervis_asw": {
+      "asset_role": "battle_rig_base",
+      "launch_bind": "asw_launch_01",
+      "muzzle_vfx_role": "water_splash",
+      "launch_profile": "vfx.profile.asw_depth_charge_launch",
+      "impact_vfx_role": "asw_underwater_blast",
+      "impact_profile": "vfx.profile.asw_underwater_blast"
+    },
+    "jervis_main": {
+      "asset_role": "battle_turret_main_01",
+      "launch_bind": "muzzle_01",
+      "muzzle_vfx_role": "muzzle_flash_small"
+    },
+    "jervis_torpedo": {
+      "asset_role": "battle_torpedo_tube_01",
+      "launch_bind": "torpedo_port_01",
+      "muzzle_vfx_role": "torpedo_launch_flash",
+      "launch_profile": "vfx.profile.torpedo_launch"
+    }
   },
   "acceptance_rules": [
     "Original TinySeaWar design; no real flags, political symbols, readable insignia, or extremist symbols.",

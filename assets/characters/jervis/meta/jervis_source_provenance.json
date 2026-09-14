@@ -1,0 +1,128 @@
+{
+  "schema_version": 1,
+  "character_id": "jervis",
+  "kind": "tool_managed_generated_art",
+  "source": "built_in_image_generation_tool",
+  "batch_ready_allowed": true,
+  "generation": {
+    "requested_model": "gpt-image-2.5 pipeline target; no model selector was exposed by the tool",
+    "actual_model": "tool-managed/unknown",
+    "generation_tool": "image_gen.imagegen",
+    "endpoint": "tool-managed/not exposed",
+    "quality": "tool-managed/not exposed",
+    "size_control": "tool-managed; accepted pixel dimensions are recorded per source image",
+    "background_control": "native transparency was requested first; accepted production sources use reserved #00FF00 chroma key for deterministic project-side alpha recovery",
+    "output_format": "PNG",
+    "prompt_revision": {
+      "path": "assets/characters/jervis/meta/jervis_generation_brief.md",
+      "sha256": "dc14ab37fcf6e1b9be17113be22899c11c585873b2d758f4c8a4aff62250749c"
+    },
+    "reference_inputs": [
+      {
+        "path": "assets/characters/jervis/concept/jervis_concept_full.png",
+        "role": "accepted_style_anchor"
+      }
+    ],
+    "generation_ids": "not exposed by the tool"
+  },
+  "reproducibility": {
+    "generation_replayable": false,
+    "generation_limit": "The tool did not expose backend model/version, endpoint request payloads, or generation IDs.",
+    "postprocess_replayable": true,
+    "postprocess_entry": "tools/art_pipeline/postprocess_generated_character.py jervis",
+    "attack_source_note": "The accepted attack sheet is a deterministic composite of two generated candidates. The final composite is retained, but its two raw candidate files and generation IDs were not retained, so pre-composite reconstruction is unavailable."
+  },
+  "source_images": [
+    {
+      "role": "concept_full",
+      "path": "assets/characters/jervis/concept/jervis_concept_full.png",
+      "sha256": "57f223c187cd59569aefcc4e923fb903d7f5a0d1db9f3d69cbf9e5641a521376",
+      "size": [1024, 1536],
+      "source_mode": "RGB",
+      "background": "reserved_green_#00FF00",
+      "qa_verdict": "pass",
+      "qa_observation": "Identity, anatomy, three twin turrets, two quintuple torpedo launchers, and two stern depth-charge racks are readable without extra or fused objects."
+    },
+    {
+      "role": "ui_sheet",
+      "path": "assets/characters/jervis/ui/jervis_ui_sheet.png",
+      "sha256": "0b1d082483a3db9dca4a3dda2d6d88008de6bf4548a4b01383455b726265a129",
+      "size": [1774, 887],
+      "source_mode": "RGB",
+      "background": "reserved_green_#00FF00",
+      "qa_verdict": "pass",
+      "qa_observation": "All eight UI cells have distinct assigned roles; portraits, expressions, skill icon, and destroyer icon are readable and separated."
+    },
+    {
+      "role": "battle_grid",
+      "path": "assets/characters/jervis/battle/jervis_battle_asset_grid.png",
+      "sha256": "009c42923d3647391b20680b1c5de96ef3a0eeb9e0df797300442ac56fd37e96",
+      "size": [1774, 887],
+      "source_mode": "RGB",
+      "background": "reserved_green_#00FF00",
+      "qa_verdict": "pass",
+      "qa_observation": "All eight battle cells are separated. The reusable turret has two barrels, the reusable torpedo launcher has five tubes, and the depth-charge rack is recognizable. Instance counts remain in the plan/runtime data."
+    },
+    {
+      "role": "anim_idle",
+      "path": "assets/characters/jervis/battle/jervis_anim_idle_4f_sheet.png",
+      "sha256": "583d1928bf0aee429033632902f3427e8936665f2cb672418162264dd9364443",
+      "size": [1254, 1254],
+      "source_mode": "RGB",
+      "background": "reserved_green_#00FF00",
+      "qa_verdict": "pass",
+      "qa_observation": "Four ordered chibi frames preserve identity, camera, and equipment while providing sufficient loop pose variation."
+    },
+    {
+      "role": "anim_move",
+      "path": "assets/characters/jervis/battle/jervis_anim_move_4f_sheet.png",
+      "sha256": "b36816a194527235ac5ff8fe08f7a67372840b24b98d39a0b72051b5f1b1007b",
+      "size": [1254, 1254],
+      "source_mode": "RGB",
+      "background": "reserved_green_#00FF00",
+      "qa_verdict": "pass",
+      "qa_observation": "Four ordered chibi frames preserve the full equipment silhouette and contain distinct movement poses without detached projectiles."
+    },
+    {
+      "role": "anim_attack",
+      "path": "assets/characters/jervis/battle/jervis_anim_attack_4f_sheet.png",
+      "sha256": "6009bc601dbcf9d84b1e652702cd3e659bcb9c666f33d682c2e054574bcd0e42",
+      "size": [1254, 1254],
+      "source_mode": "RGB",
+      "background": "reserved_green_#00FF00",
+      "production_method": "deterministic_composite_of_two_generated_candidates",
+      "qa_verdict": "pass",
+      "qa_observation": "Four frames retain the exact equipment inventory and distinct attack poses; detached projectile objects are absent. Raw pre-composite candidates are unavailable as recorded above."
+    },
+    {
+      "role": "anim_hit",
+      "path": "assets/characters/jervis/battle/jervis_anim_hit_4f_sheet.png",
+      "sha256": "ba7c3d148586b976102bc4f5d028f8f90bff8c3388f8ad7b5072db291967a7b7",
+      "size": [1254, 1254],
+      "source_mode": "RGB",
+      "background": "reserved_green_#00FF00",
+      "qa_verdict": "pass",
+      "qa_observation": "Four ordered hit poses preserve identity and machinery while showing readable feedback and recovery."
+    },
+    {
+      "role": "anim_firepower",
+      "path": "assets/characters/jervis/battle/jervis_anim_firepower_4f_sheet.png",
+      "sha256": "a8564b6bccfe327360f62552911df59d6dbecc44d647bdb891306c924cfce20c",
+      "size": [1254, 1254],
+      "source_mode": "RGB",
+      "background": "reserved_green_#00FF00",
+      "qa_verdict": "pass",
+      "qa_observation": "Four firepower poses keep the same equipment and only include local muzzle light/smoke appropriate for pose reference frames."
+    },
+    {
+      "role": "vfx_sheet",
+      "path": "assets/characters/jervis/vfx/jervis_vfx_reference_sheet.png",
+      "sha256": "f48af8032747398da87b2ddfb58ea172e3ae2dcf613a77aab25aba6f19a151ff",
+      "size": [1774, 887],
+      "source_mode": "RGB",
+      "background": "reserved_green_#00FF00",
+      "qa_verdict": "pass",
+      "qa_observation": "All eight VFX cells match their assigned roles. Multi-component AA and range circles are intentionally disconnected and must be preserved by full-cell alpha cropping."
+    }
+  ]
+}

@@ -231,6 +231,39 @@
       "fade_out": true
     },
     {
+      "id": "vfx.profile.asw_depth_charge_launch",
+      "aliases": [
+        "asw.launch.depth_charge"
+      ],
+      "duration": 0.42,
+      "fps": 10,
+      "loop": false,
+      "anchor": "asw_launch",
+      "z_layer": "EffectAboveUnit",
+      "rotation_mode": "None",
+      "scale": 0.44,
+      "follow_owner": false,
+      "blend_mode": "Alpha",
+      "fade_out": true
+    },
+    {
+      "id": "vfx.profile.asw_underwater_blast",
+      "aliases": [
+        "asw.underwater_blast"
+      ],
+      "sprite": "assets/vfx/combat/antisubmarine/vfx_asw_underwater_blast_01.png",
+      "duration": 0.62,
+      "fps": 10,
+      "loop": false,
+      "anchor": "impact",
+      "z_layer": "EffectAboveUnit",
+      "rotation_mode": "None",
+      "scale": 0.48,
+      "follow_owner": false,
+      "blend_mode": "Alpha",
+      "fade_out": true
+    },
+    {
       "id": "vfx.profile.torpedo_trail.surface",
       "aliases": [
         "torpedo.trail.surface"

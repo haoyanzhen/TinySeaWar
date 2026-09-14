@@ -842,19 +842,21 @@
       "weapon_group_id": "jervis_asw",
       "projectile_visual_id": "visual.projectile.shell.small",
       "fire_animation_state": "firepower",
-      "launch_bind": "muzzle_01",
-      "muzzle_vfx_role": "muzzle_flash_small",
-      "launch_profile": "vfx.profile.muzzle_flash.medium",
-      "impact_profile": "vfx.profile.shell_impact.medium",
+      "launch_bind": "asw_launch_01",
+      "muzzle_vfx_role": "water_splash",
+      "impact_vfx_role": "asw_underwater_blast",
+      "launch_profile": "vfx.profile.asw_depth_charge_launch",
+      "impact_profile": "vfx.profile.asw_underwater_blast",
       "vfx_role_mappings": {
         "formation_signal": "skill.area",
         "flotilla_aura": "skill.area",
-        "torpedo_launch_flash": "torpedo.trail.surface",
+        "torpedo_launch_flash": "torpedo.launch.surface",
         "muzzle_flash_small": "muzzle_flash.small",
         "water_splash": "impact.water.medium",
         "aa_circle": "aa.burst.small",
         "skill_aura": "skill.area",
-        "range_reticle": "skill.area"
+        "range_reticle": "skill.area",
+        "asw_underwater_blast": "asw.underwater_blast"
       }
     },
     {
@@ -874,7 +876,7 @@
       "vfx_role_mappings": {
         "formation_signal": "skill.area",
         "flotilla_aura": "skill.area",
-        "torpedo_launch_flash": "torpedo.trail.surface",
+        "torpedo_launch_flash": "torpedo.launch.surface",
         "muzzle_flash_small": "muzzle_flash.small",
         "water_splash": "impact.water.medium",
         "aa_circle": "aa.burst.small",
@@ -899,7 +901,7 @@
       "vfx_role_mappings": {
         "formation_signal": "skill.area",
         "flotilla_aura": "skill.area",
-        "torpedo_launch_flash": "torpedo.trail.surface",
+        "torpedo_launch_flash": "torpedo.launch.surface",
         "muzzle_flash_small": "muzzle_flash.small",
         "water_splash": "impact.water.medium",
         "aa_circle": "aa.burst.small",

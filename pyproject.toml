@@ -1,0 +1,12 @@
+[project]
+name = "tiny-sea-war-tools"
+version = "0.1.0"
+description = "Python tooling for the Tiny Sea War Godot project"
+requires-python = "==3.12.*"
+dependencies = [
+    "openai>=2,<3",
+    "Pillow>=9.0.0,<13",
+]
+
+[tool.uv]
+package = false

@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import hashlib
+
 from collections import deque
 import argparse
 import json
@@ -9,6 +11,11 @@ from typing import Any
 from PIL import Image, ImageDraw
 
 import character_roster
+import postprocess_trial_sheets as legacy_pipeline
+from generation_contract import (
+    is_frozen_legacy_package,
+    legacy_fallback_authorized,
+)
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -117,7 +124,7 @@ def load_postprocess_plan(character_id: str) -> dict[str, Any]:
     return plan
 
 
-def can_process(character_id: str) -> bool:
+def has_source_package(character_id: str) -> bool:
     paths = source_paths(character_id)
     required = ("concept_full", "ui_sheet", "vfx_sheet")
     if not all(paths[key].exists() for key in required):
@@ -127,10 +134,108 @@ def can_process(character_id: str) -> bool:
     return paths["anim_master"].exists() or all(paths[f"anim_{state}"].exists() for state in ANIMATION_STATES)
 
 
+def required_crop_roles(ship_class: str, plan: dict[str, Any]) -> tuple[str, ...]:
+    return (
+        *UI_SLOT_NAMES, "class_icon",
+        *plan.get("battle_grid_roles", BATTLE_GRID_ROLES[ship_class]),
+        *(f"anim_{state}_frame_{index:02d}" for state in ANIMATION_STATES for index in range(1, 5)),
+        *(f"vfx:{role}" for role in plan.get("vfx_roles", VFX_ROLES_BY_CLASS[ship_class])),
+    )
+
+
+def load_crop_specs(character_id: str, ship_class: str, plan: dict[str, Any]) -> dict[str, Any]:
+    """Authored hints replace mathematical grid cells, just like legacy CropSpec."""
+    path = CHAR_ROOT / character_id / "meta" / f"{character_id}_crop_specs.json"
+    if not path.exists():
+        raise ValueError(f"Missing legacy crop specs: {path}; author source-space hints, not grid cuts")
+    document = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(document, dict) or document.get("character_id") != character_id:
+        raise ValueError(f"crop specs character_id mismatch: {path}")
+    specs = document.get("crops")
+    if not isinstance(specs, dict):
+        raise ValueError(f"crop specs must contain a crops object: {path}")
+    paths = source_paths(character_id)
+    source_hashes = document.get("source_sha256")
+    if source_hashes is not None:
+        if not isinstance(source_hashes, dict):
+            raise ValueError("crop source_sha256 must be an object")
+        used_sources = {spec.get("source") for spec in specs.values() if isinstance(spec, dict)}
+        if set(source_hashes) != used_sources:
+            raise ValueError("crop source_sha256 must cover exactly the referenced sources")
+        for source, checksum in source_hashes.items():
+            if source not in paths or not paths[source].is_file():
+                raise ValueError(f"Unknown or missing crop source: {source}")
+            if checksum != hashlib.sha256(paths[source].read_bytes()).hexdigest():
+                raise ValueError(f"Stale crop source: {source}; review hints against the changed image")
+    sizes: dict[str, tuple[int, int]] = {}
+    for role in required_crop_roles(ship_class, plan):
+        spec = specs.get(role)
+        if not isinstance(spec, dict):
+            raise ValueError(f"Missing crop spec: {role}")
+        source = spec.get("source")
+        if not isinstance(source, str) or source not in paths or not paths[source].exists():
+            raise ValueError(f"Unknown or missing crop source: {role}:{source}")
+        if source not in sizes:
+            with Image.open(paths[source]) as image:
+                sizes[source] = image.size
+        box = spec.get("box")
+        if not isinstance(box, list) or len(box) != 4 or any(type(value) is not int for value in box):
+            raise ValueError(f"Invalid source-space crop box: {role}")
+        width, height = sizes[source]
+        if not (0 <= box[0] < box[2] <= width and 0 <= box[1] < box[3] <= height):
+            raise ValueError(f"Crop hint outside source: {role}")
+        tags = spec.get("tags", [])
+        if not isinstance(tags, list) or any(tag not in ("keep_largest_component", "remove_small_islands") for tag in tags):
+            raise ValueError(f"Invalid crop cleanup tags: {role}")
+        if role.startswith("vfx:") and tags:
+            raise ValueError(f"VFX must retain disconnected components: {role}")
+    return specs
+
+
+def can_process(character_id: str) -> bool:
+    if not has_source_package(character_id):
+        return False
+    try:
+        entry = character_roster.roster_by_id("all")[character_id]
+        load_crop_specs(character_id, entry.ship_class, load_postprocess_plan(character_id))
+    except (ValueError, KeyError, OSError):
+        return False
+    return True
+
+
+def crop_from_source(
+    source: Image.Image, box: tuple[int, int, int, int], tags: tuple[str, ...] = (),
+) -> tuple[Image.Image, dict[str, Any]]:
+    cropped, legacy_meta = legacy_pipeline.prepare_crop(source, box, tags)
+    qa = legacy_meta["source_crop_qa"]
+    if not cropped.getchannel("A").getbbox():
+        raise ValueError(f"Empty source crop: {box}")
+    return cropped, {
+        **qa,
+        "original_crop_hint": qa["original_box"],
+        "final_crop_box": qa["final_box"],
+        "source_crop_rectangle_alpha_pixel_count": alpha_pixel_count(source.crop(tuple(qa["final_box"]))),
+        "source_alpha_pixel_count": qa["selected_source_alpha_pixel_count"],
+        "output_edge_margins": legacy_pipeline.edge_margins_from_alpha(cropped),
+        "output_layout": legacy_meta["output_layout"],
+        "cleanup_tags": list(tags),
+    }
+
+
+def crop_planned_asset(
+    sources: dict[str, Image.Image], specs: dict[str, Any], role: str,
+) -> tuple[Image.Image, dict[str, Any]]:
+    spec = specs[role]
+    cropped, metadata = crop_from_source(sources[spec["source"]], tuple(spec["box"]), tuple(spec.get("tags", [])))
+    metadata["source_key"] = spec["source"]
+    return cropped, metadata
+
+
 def load_source_provenance(character_id: str) -> dict[str, Any]:
     root = CHAR_ROOT / character_id
     for path in (
         root / "placeholder_source_provenance.json",
+        root / "meta" / f"{character_id}_source_provenance_v2.json",
         root / "meta" / f"{character_id}_source_provenance.json",
     ):
         if path.exists():
@@ -264,17 +369,67 @@ def clear_high_confidence_green(img: Image.Image) -> Image.Image:
     return img
 
 
-def remove_generated_background(path: Path) -> Image.Image:
-    img = Image.open(path).convert("RGBA")
+def recover_legacy_vfx_green_alpha(img: Image.Image) -> Image.Image:
+    """Recover colored glow mixed with the reserved historical green matte.
+
+    A binary key erases cyan reticles and faint water, not just the backdrop.
+    Native alpha bypasses it. Old VFX use this before a binary key; other
+    historical sheets use it after the key to remove remaining green spill.
+    """
+    out = img.copy()
+    pixels = out.load()
+    for y in range(out.height):
+        for x in range(out.width):
+            r, g, b, alpha = pixels[x, y]
+            if not (alpha and g >= 105 and g > r + 30 and g > b + 30):
+                continue
+            foreground = max(r, b)
+            opacity = max(0.0, min(1.0, (foreground - 25) / max(1, g - 25)))
+            if opacity < 0.12:
+                pixels[x, y] = (r, g, b, 0)
+            else:
+                pixels[x, y] = (
+                    min(255, round(r / opacity)),
+                    min(255, round(foreground / opacity)),
+                    min(255, round(b / opacity)),
+                    round(alpha * opacity),
+                )
+    return out
+
+
+def remove_generated_background(path: Path, allow_legacy_background: bool = True) -> Image.Image:
+    with Image.open(path) as source:
+        has_alpha_channel = "A" in source.getbands()
+        img = source.convert("RGBA")
+    alpha_min, alpha_max = img.getchannel("A").getextrema()
+    if has_alpha_channel and alpha_min == 0 and alpha_max > 0:
+        # Native-alpha sources are already the generation truth. Running chroma
+        # cleanup here could erase intentional green details from the artwork.
+        return img
+    if not allow_legacy_background:
+        raise ValueError(
+            f"source is not native-alpha and legacy background cleanup is not authorized: {path}"
+        )
     if has_white_backdrop(img):
         # Some transitional packages place green-backed UI cells on a white
         # outer sheet, so both cleanup passes may be required.
         return clear_high_confidence_green(remove_white_background(img))
-    return remove_green_background(path)
+    if path.parent.name == "vfx":
+        return recover_legacy_vfx_green_alpha(img)
+    out = recover_legacy_vfx_green_alpha(remove_green_background(path))
+    # Dark chroma spill survives the bright-matte threshold on hair and metal
+    # outlines. Neutralize only green-dominant historical pixels; keep coverage.
+    pixels = out.load()
+    for y in range(out.height):
+        for x in range(out.width):
+            r, g, b, alpha = pixels[x, y]
+            if alpha and g > 40 and g > max(r, b) + 12:
+                pixels[x, y] = (r, max(r, b), b, alpha)
+    return out
 
 
 def vfx_grid_rows(img: Image.Image) -> int:
-    # The standard green-screen package is a wide 2x4 grid. Earlier square
+    # The standard generated package is a wide 2x4 grid. Earlier square
     # white-matte packages contain three rows; only the first two rows map to
     # the eight runtime roles, but they must be split as 3x4 to avoid overlap.
     return 3 if img.height / img.width >= 0.80 else 2
@@ -285,7 +440,11 @@ def alpha_bbox(img: Image.Image) -> tuple[int, int, int, int] | None:
 
 
 def center_alpha_with_padding(img: Image.Image, pad: int) -> Image.Image:
-    bbox = alpha_bbox(img)
+    # Layout metadata deliberately ignores sub-threshold antialiasing, but the
+    # saved PNG must still keep every non-zero source pixel away from the edge.
+    # Centering from the thresholded bbox can otherwise clip a faint glow or
+    # leave a one-alpha fringe touching the runtime canvas boundary.
+    bbox = img.getchannel("A").getbbox()
     if bbox is None:
         return img
     alpha = img.getchannel("A")
@@ -297,7 +456,7 @@ def center_alpha_with_padding(img: Image.Image, pad: int) -> Image.Image:
     for y in range(top, bottom):
         for x in range(left, right):
             value = pixels[x, y]
-            if value < ALPHA_THRESHOLD:
+            if value <= 0:
                 continue
             weighted_x += x * value
             weighted_y += y * value
@@ -464,6 +623,7 @@ def save_image(img: Image.Image, path: Path) -> dict[str, Any]:
 
 
 def split_grid(img: Image.Image, rows: int, cols: int) -> list[Image.Image]:
+    """Placeholder-tool utility only; production extraction must use source hints."""
     width, height = img.size
     cell_width = width // cols
     cell_height = height // rows
@@ -853,80 +1013,106 @@ def build_roster_contact_sheet(phase: str = "phase1") -> Path:
 
 
 def process_character(character_id: str) -> None:
+    """Compatibility CLI: all production processing enters the legacy pipeline."""
+    legacy_pipeline.process_character(character_id)
+
+
+def process_generated_sources(character_id: str) -> None:
     roster = character_roster.roster_by_id("all")
     if character_id not in roster:
         raise SystemExit(f"Unknown character id: {character_id}")
-    if not can_process(character_id):
+    if not has_source_package(character_id):
         raise SystemExit(f"Source package is incomplete for {character_id}")
 
     entry = roster[character_id]
     plan = load_postprocess_plan(character_id)
+    # Resolve every authored hint before creating or replacing any output.
+    crop_specs = load_crop_specs(character_id, entry.ship_class, plan)
     dirs = ensure_dirs(character_id)
     paths = source_paths(character_id)
     manifest: dict[str, Any] = {
         "schema_version": int(plan.get("manifest_schema_version", 1)),
         "character_id": character_id,
         "source": "tools/art_pipeline/postprocess_generated_character.py",
-        "method": "generated_background_auto_grid_and_component_split",
+        "method": "legacy_source_hint_component_split",
+        "crop_specs": str((CHAR_ROOT / character_id / "meta" / f"{character_id}_crop_specs.json").relative_to(ROOT)),
         "postprocess_plan": str((CHAR_ROOT / character_id / "postprocess_plan.json").relative_to(ROOT)) if plan else "",
         "outputs": [],
     }
     source_provenance = load_source_provenance(character_id)
     if source_provenance:
         manifest["source_provenance"] = source_provenance
+    legacy_manifest_path = dirs["config"] / f"{character_id}_postprocess_manifest.json"
+    legacy_exempt = is_frozen_legacy_package(character_id, legacy_manifest_path)
+    versioned_provenance_path = (
+        CHAR_ROOT / character_id / "meta" / f"{character_id}_source_provenance_v2.json"
+    )
+    if legacy_exempt and not versioned_provenance_path.exists():
+        # Recropping frozen input does not turn historical generation into v2.
+        # Preserve its identity so a second rebuild follows the same route.
+        previous_manifest = json.loads(legacy_manifest_path.read_text(encoding="utf-8"))
+        manifest["schema_version"] = int(previous_manifest.get("schema_version", 1))
+    if (
+        int(plan.get("manifest_schema_version", 1)) >= 2
+        and not source_provenance
+        and not legacy_exempt
+    ):
+        raise ValueError("schema-v2 postprocess requires source provenance")
+    if (
+        int(plan.get("manifest_schema_version", 1)) >= 2
+        and source_provenance
+        and int(source_provenance.get("schema_version", 1)) < 2
+        and (not legacy_exempt or versioned_provenance_path.exists())
+    ):
+        raise ValueError("schema-v2 postprocess rejects non-frozen schema-v1 provenance")
+    if int(source_provenance.get("schema_version", 1)) >= 2:
+        import check_character_asset_contract as asset_contract
+
+        provenance_issues = asset_contract.validate_source_provenance(source_provenance)
+        if provenance_issues:
+            raise ValueError(
+                "schema-v2 source provenance gate failed: " + "; ".join(provenance_issues)
+            )
+    allow_legacy_background = (
+        int(plan.get("manifest_schema_version", 1)) < 2
+        or legacy_exempt
+        or legacy_fallback_authorized(source_provenance)
+    )
 
     alpha_sources: dict[str, Image.Image] = {}
     for key, path in paths.items():
         if not path.exists():
             continue
-        alpha = remove_generated_background(path)
+        alpha = remove_generated_background(path, allow_legacy_background=allow_legacy_background)
         alpha_sources[key] = alpha
         out = dirs["source_alpha"] / f"{path.stem}_alpha_source.png"
         manifest["outputs"].append({"role": f"source_alpha:{key}", **save_image(alpha, out)})
 
-    full, full_meta = crop_with_padding(alpha_sources["concept_full"], pad=12)
+    full_source = alpha_sources["concept_full"]
+    full, full_meta = crop_from_source(full_source, (0, 0, full_source.width, full_source.height))
     manifest["outputs"].append({"role": "full_body", "crop": full_meta, **save_image(full, dirs["ui"] / f"{character_id}_illust_full_alpha.png")})
     derived_half, derived_cutin = derive_half_and_cutin(full)
     half_source = alpha_sources.get("half_body", derived_half)
     cutin_source = alpha_sources.get("skill_cutin", derived_cutin)
-    half, half_meta = crop_with_padding(half_source, pad=16)
+    half, half_meta = crop_from_source(half_source, (0, 0, half_source.width, half_source.height))
     manifest["outputs"].append({"role": "half_body", "crop": half_meta, **save_image(half, dirs["ui"] / f"{character_id}_illust_half_alpha.png")})
-    cutin, cutin_meta = crop_with_padding(cutin_source, pad=16)
+    cutin, cutin_meta = crop_from_source(cutin_source, (0, 0, cutin_source.width, cutin_source.height))
     manifest["outputs"].append({"role": "skill_cutin", "crop": cutin_meta, **save_image(cutin, dirs["ui"] / f"{character_id}_illust_skill_cutin_alpha.png")})
 
-    ui_cells = split_grid(alpha_sources["ui_sheet"], rows=2, cols=4)
-    for slot_name, cell in zip(UI_SLOT_NAMES, ui_cells[:7]):
-        cropped, crop_meta = crop_with_padding(cell, pad=18)
-        record_largest_component_selection(cell, crop_meta)
-        cropped = keep_largest_alpha_component(cropped)
-        cropped = center_alpha_with_padding(cropped, 18)
+    for slot_name in UI_SLOT_NAMES:
+        cropped, crop_meta = crop_planned_asset(alpha_sources, crop_specs, slot_name)
         skill_role = str(plan.get("skill_role", SKILL_ROLE_BY_CLASS[entry.ship_class]))
         resolved_slot = f"ui_skill_{skill_role}" if slot_name == "ui_skill" else slot_name
         out_name = f"{character_id}_{resolved_slot}.png"
         manifest["outputs"].append({"role": slot_name, "crop": crop_meta, **save_image(cropped, dirs["ui"] / out_name)})
-    class_cell = ui_cells[7]
-    class_img, class_meta = crop_with_padding(class_cell, pad=18)
-    record_largest_component_selection(class_cell, class_meta)
-    class_img = keep_largest_alpha_component(class_img)
-    class_img = center_alpha_with_padding(class_img, 18)
+    class_img, class_meta = crop_planned_asset(alpha_sources, crop_specs, "class_icon")
     class_name = f"{character_id}_ui_class_{entry.ship_class}.png"
     manifest["outputs"].append({"role": "class_icon", "crop": class_meta, **save_image(class_img, dirs["ui"] / class_name)})
 
-    battle_source_key = "battle_grid" if "battle_grid" in alpha_sources else "battle_sheet"
-    if battle_source_key == "battle_grid":
-        battle_roles = []
-        planned_roles = tuple(plan.get("battle_grid_roles", BATTLE_GRID_ROLES[entry.ship_class]))
-        for role, cell in zip(planned_roles, split_grid(alpha_sources[battle_source_key], rows=2, cols=4)):
-            components = connected_components(cell, min_area=300)
-            if components:
-                battle_roles.append((role, cell, components[0]))
-    else:
-        components = connected_components(alpha_sources[battle_source_key], min_area=2_000)
-        battle_roles = [(role, alpha_sources[battle_source_key], component) for role, component in battle_roles_for_components(components, entry.ship_class)]
+    planned_roles = tuple(plan.get("battle_grid_roles", BATTLE_GRID_ROLES[entry.ship_class]))
     bind_assets: dict[str, dict[str, dict[str, int]]] = {}
-    for role, source, component in battle_roles:
-        cropped, crop_meta = crop_component(source, component, pad=18)
-        cropped = keep_largest_alpha_component(cropped)
+    for role in planned_roles:
+        cropped, crop_meta = crop_planned_asset(alpha_sources, crop_specs, role)
         out_name = f"{character_id}_{role}.png"
         out_path = dirs["battle"] / out_name
         manifest["outputs"].append({"role": role, "crop": crop_meta, **save_image(cropped, out_path)})
@@ -934,19 +1120,11 @@ def process_character(character_id: str) -> None:
         add_planned_bindings(role, cropped, bind_assets[out_name], plan)
 
     anim_states: dict[str, Any] = {}
-    master_rows = split_grid(alpha_sources["anim_master"], rows=5, cols=1) if "anim_master" in alpha_sources else None
-    idle_body: Image.Image | None = None
-    for state_index, (state, playback) in enumerate(ANIMATION_STATES.items()):
-        cells = split_grid(master_rows[state_index], rows=1, cols=4) if master_rows else split_grid(alpha_sources[f"anim_{state}"], rows=2, cols=2)
+    for state, playback in ANIMATION_STATES.items():
         frames: list[str] = []
         normalized: list[tuple[Image.Image, dict[str, Any]]] = []
-        for cell in cells:
-            if master_rows:
-                # A generated master can place hair, flashes, or radar fragments just over a
-                # mathematical row boundary. Animation frames are single-subject assets; precise
-                # weapon effects remain on independent runtime nodes.
-                cell = keep_largest_alpha_component(cell)
-            cropped, crop_meta = crop_with_padding(cell, pad=16)
+        for index in range(1, 5):
+            cropped, crop_meta = crop_planned_asset(alpha_sources, crop_specs, f"anim_{state}_frame_{index:02d}")
             normalized.append((cropped, crop_meta))
         max_width = max(img.width for img, _crop_meta in normalized)
         max_height = max(img.height for img, _crop_meta in normalized)
@@ -959,22 +1137,8 @@ def process_character(character_id: str) -> None:
             if index == 1:
                 keyframe_path = dirs["anim"] / f"{character_id}_anim_{state}_keyframe.png"
                 manifest["outputs"].append({"role": f"anim_{state}_keyframe", "crop": crop_meta, **save_image(canvas, keyframe_path)})
-                if state == "idle" and master_rows:
-                    idle_body = canvas.copy()
         anim_states[state] = {"frames": frames, "fps": playback["fps"], "loop": playback["loop"]}
 
-    if idle_body is not None:
-        body_name = f"{character_id}_battle_body_r.png"
-        body_path = dirs["battle"] / body_name
-        manifest["outputs"].append({"role": "battle_body_r:idle_master_override", **save_image(idle_body, body_path)})
-        bind_assets[body_name] = {"pivot": point_near_center(idle_body)}
-        add_planned_bindings("battle_body_r", idle_body, bind_assets[body_name], plan)
-
-    vfx_cells = split_grid(
-        alpha_sources["vfx_sheet"],
-        rows=vfx_grid_rows(alpha_sources["vfx_sheet"]),
-        cols=4,
-    )
     vfx_roles: dict[str, Any] = {}
     use_shared_vfx = character_id in SHARED_VFX_TEMPLATE_CHARACTERS
     if use_shared_vfx:
@@ -982,10 +1146,8 @@ def process_character(character_id: str) -> None:
             old_path.unlink()
     planned_vfx_roles = tuple(plan.get("vfx_roles", VFX_ROLES_BY_CLASS[entry.ship_class]))
     public_vfx_profiles = plan.get("public_vfx_profiles", {})
-    for role_name, cell in zip(planned_vfx_roles, vfx_cells):
-        if alpha_bbox(cell) is None:
-            continue
-        cropped, crop_meta = crop_vfx_cell(cell, pad=18)
+    for role_name in planned_vfx_roles:
+        cropped, crop_meta = crop_planned_asset(alpha_sources, crop_specs, f"vfx:{role_name}")
         out_name = f"{character_id}_vfx_{role_name}.png"
         out_path = dirs["vfx"] / out_name
         source_kind = "character_specific"
@@ -1037,10 +1199,15 @@ def process_character(character_id: str) -> None:
         encoding="utf-8",
     )
     build_contact_sheet(character_id, dirs["root"])
+    from delivery_review import write_review
+
+    write_review(ROOT, character_id, manifest)
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Postprocess generated green-screen TinySeaWar character sheets.")
+    parser = argparse.ArgumentParser(
+        description="Postprocess native-alpha TinySeaWar character sheets with explicit legacy fallback support."
+    )
     parser.add_argument("character_ids", nargs="*")
     parser.add_argument("--roster-contact", action="store_true", help="Build a compact 24-character visual QA sheet.")
     parser.add_argument("--phase", choices=("phase1", "phase2", "all"), default="phase1")

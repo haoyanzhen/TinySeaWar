@@ -10,6 +10,7 @@ from pathlib import Path
 
 from PIL import Image
 import character_roster
+from generation_contract import strict_source_policy_issues
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -263,8 +264,11 @@ def validate_source_provenance(source_provenance: object) -> list[str]:
             issues.append(f"source provenance hash mismatch: {role}")
         if item.get("qa_verdict") not in {"pass", "polish", "blocker"}:
             issues.append(f"source provenance QA verdict invalid: {role}")
+        elif item.get("qa_verdict") == "blocker":
+            issues.append(f"source provenance semantic QA is blocking: {role}")
         if not str(item.get("qa_observation", "")):
             issues.append(f"source provenance QA observation missing: {role}")
+    issues.extend(strict_source_policy_issues(source_provenance, ROOT))
     return issues
 
 
@@ -301,7 +305,8 @@ def validate_manifest_v2(manifest_data: dict[str, object]) -> list[str]:
             if crop.get(field) in (None, "", []):
                 issues.append(f"manifest crop metadata missing: {role}:{field}")
         if role.startswith("vfx:"):
-            if crop.get("auto_crop_method") != "full_cell_alpha_bbox":
+            allowed_methods = {"full_cell_alpha_bbox", "connected_components_intersecting_initial_box"}
+            if crop.get("auto_crop_method") not in allowed_methods or crop.get("cleanup_tags"):
                 issues.append(f"VFX crop must preserve all components: {role}")
             if crop.get("source_alpha_pixel_count") != output.get("alpha_pixel_count"):
                 issues.append(f"VFX crop changed alpha component area: {role}")

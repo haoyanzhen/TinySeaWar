@@ -10,7 +10,7 @@ from typing import Any
 
 from collections import deque
 
-from PIL import Image
+from PIL import Image, ImageFilter
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -44,6 +44,11 @@ def is_sheet_background_pixel(r: int, g: int, b: int) -> bool:
 
 def rgba_with_alpha_from_light_bg(img: Image.Image) -> Image.Image:
     rgba = img.convert("RGBA")
+    alpha_min, alpha_max = rgba.getchannel("A").getextrema()
+    if "A" in img.getbands() and alpha_min == 0 and alpha_max > 0:
+        # New native-alpha inputs may include legitimate white/green details.
+        # Keep source ingestion independent from the legacy crop engine.
+        return rgba
     pixels = rgba.load()
     w, h = rgba.size
     seen: set[tuple[int, int]] = set()
@@ -210,7 +215,7 @@ def keep_largest_alpha_component(img: Image.Image) -> Image.Image:
     components: list[list[tuple[int, int]]] = []
     for y in range(alpha.height):
         for x in range(alpha.width):
-            if (x, y) in seen or pixels[x, y] == 0:
+            if (x, y) in seen or pixels[x, y] <= SOURCE_COMPONENT_ALPHA_THRESHOLD:
                 continue
             q: deque[tuple[int, int]] = deque([(x, y)])
             seen.add((x, y))
@@ -221,7 +226,7 @@ def keep_largest_alpha_component(img: Image.Image) -> Image.Image:
                 for nx, ny in ((cx - 1, cy), (cx + 1, cy), (cx, cy - 1), (cx, cy + 1)):
                     if nx < 0 or nx >= alpha.width or ny < 0 or ny >= alpha.height:
                         continue
-                    if (nx, ny) in seen or pixels[nx, ny] == 0:
+                    if (nx, ny) in seen or pixels[nx, ny] <= SOURCE_COMPONENT_ALPHA_THRESHOLD:
                         continue
                     seen.add((nx, ny))
                     q.append((nx, ny))
@@ -230,12 +235,21 @@ def keep_largest_alpha_component(img: Image.Image) -> Image.Image:
         return img
     largest = max(components, key=len)
     keep = set(largest)
+    # Preserve the selected subject's original soft edge, without allowing a
+    # near-transparent bridge to attach a neighboring sheet object.
+    edge_mask = Image.new("L", img.size, 0)
+    mask_pixels = edge_mask.load()
+    for x, y in largest:
+        mask_pixels[x, y] = 255
+    edge_pixels = edge_mask.filter(ImageFilter.MaxFilter(17)).load()
     cleaned = img.copy()
     cleaned_alpha = cleaned.getchannel("A")
     cleaned_pixels = cleaned_alpha.load()
     for y in range(alpha.height):
         for x in range(alpha.width):
-            if pixels[x, y] and (x, y) not in keep:
+            if pixels[x, y] and (x, y) not in keep and not (
+                pixels[x, y] <= SOURCE_COMPONENT_ALPHA_THRESHOLD and edge_pixels[x, y]
+            ):
                 cleaned_pixels[x, y] = 0
     cleaned.putalpha(cleaned_alpha)
     return cleaned
@@ -361,30 +375,98 @@ def determine_source_box(
     return current, info
 
 
-def save_crop(
+def exclude_unselected_neighbors(
+    crop: Image.Image, hint: tuple[int, int, int, int],
+) -> tuple[Image.Image, int]:
+    """Keep every hinted island, excluding neighbors caught by the safety margin.
+
+    Selection uses alpha cores, but retained objects keep their original soft
+    pixels. This is not a largest-component filter: disconnected VFX islands
+    intersecting the authored hint are all retained.
+    """
+    pixels = crop.getchannel("A").load()
+    seen: set[tuple[int, int]] = set()
+    keep = Image.new("L", crop.size)
+    reject = Image.new("L", crop.size)
+    kp, rp = keep.load(), reject.load()
+    rejected = 0
+    for y in range(crop.height):
+        for x in range(crop.width):
+            if (x, y) in seen or pixels[x, y] <= SOURCE_COMPONENT_ALPHA_THRESHOLD:
+                continue
+            queue = deque([(x, y)])
+            seen.add((x, y))
+            component = []
+            selected = False
+            while queue:
+                cx, cy = queue.popleft()
+                component.append((cx, cy))
+                selected |= hint[0] <= cx < hint[2] and hint[1] <= cy < hint[3]
+                for nx, ny in ((cx - 1, cy), (cx + 1, cy), (cx, cy - 1), (cx, cy + 1)):
+                    if (0 <= nx < crop.width and 0 <= ny < crop.height
+                            and (nx, ny) not in seen
+                            and pixels[nx, ny] > SOURCE_COMPONENT_ALPHA_THRESHOLD):
+                        seen.add((nx, ny))
+                        queue.append((nx, ny))
+            target = kp if selected else rp
+            for cx, cy in component:
+                target[cx, cy] = 255
+            if not selected:
+                rejected += 1
+    if not rejected:
+        return crop, 0
+    keep_soft = keep.filter(ImageFilter.MaxFilter(17)).load()
+    reject_soft = reject.filter(ImageFilter.MaxFilter(17)).load()
+    out = crop.copy()
+    alpha = out.getchannel("A")
+    ap = alpha.load()
+    for y in range(crop.height):
+        for x in range(crop.width):
+            if rp[x, y] or (pixels[x, y] <= SOURCE_COMPONENT_ALPHA_THRESHOLD
+                            and reject_soft[x, y] and not keep_soft[x, y]):
+                ap[x, y] = 0
+    out.putalpha(alpha)
+    return out, rejected
+
+
+def prepare_crop(
     src_alpha: Image.Image,
     box: tuple[int, int, int, int],
-    out: Path,
     tags: tuple[str, ...] = (),
-) -> dict[str, Any]:
+) -> tuple[Image.Image, dict[str, Any]]:
+    """Shared legacy extraction; callers must pass the uncut source sheet."""
     final_box, source_crop_qa = determine_source_box(src_alpha, box)
     crop = src_alpha.crop(final_box)
+    local_hint = (box[0] - final_box[0], box[1] - final_box[1],
+                  box[2] - final_box[0], box[3] - final_box[1])
+    crop, excluded = exclude_unselected_neighbors(crop, local_hint)
+    source_crop_qa["excluded_neighbor_components"] = excluded
+    source_crop_qa["selected_source_alpha_pixel_count"] = sum(crop.getchannel("A").histogram()[12:])
     if "keep_largest_component" in tags:
         crop = keep_largest_alpha_component(crop)
     if "remove_small_islands" in tags:
         crop = remove_small_alpha_islands(crop)
     crop = trim_alpha(crop, pad=0)
     crop, output_layout = add_balanced_padding(crop)
-    out.parent.mkdir(parents=True, exist_ok=True)
-    crop.save(out)
-    return {
-        "file": rel(out),
+    return crop, {
         "size": list(crop.size),
         "mode": crop.mode,
         "source_box": list(final_box),
         "source_crop_qa": source_crop_qa,
         "output_layout": output_layout,
     }
+
+
+def save_crop(
+    src_alpha: Image.Image,
+    box: tuple[int, int, int, int],
+    out: Path,
+    tags: tuple[str, ...] = (),
+) -> dict[str, Any]:
+    crop, metadata = prepare_crop(src_alpha, box, tags)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    crop.save(out)
+    return {"file": rel(out), **metadata}
 
 
 def rel(path: Path) -> str:
@@ -1321,7 +1403,12 @@ def write_source_alpha(character_id: str) -> list[dict[str, Any]]:
 
 def process_character(character_id: str) -> None:
     if character_id not in SPECS:
-        raise SystemExit(f"Missing crop specs for character: {character_id}")
+        # Native-alpha generation changes source ingestion, not the splitter.
+        # The adapter below also calls prepare_crop, using authored source hints.
+        from postprocess_generated_character import process_generated_sources
+
+        process_generated_sources(character_id)
+        return
     if character_id not in CONFIGS:
         raise SystemExit(f"Missing config for character: {character_id}")
     root = CHAR_ROOT / character_id
@@ -1407,6 +1494,9 @@ def process_character(character_id: str) -> None:
     }
     manifest_path = config_dir / f"{character_id}_postprocess_manifest.json"
     manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n")
+    from delivery_review import write_review
+
+    write_review(ROOT, character_id, manifest)
 
 
 def edge_qa_preview_name(character_ids: tuple[str, ...]) -> str:

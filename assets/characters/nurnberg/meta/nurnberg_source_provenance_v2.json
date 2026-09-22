@@ -1,0 +1,327 @@
+{
+  "schema_version": 2,
+  "character_id": "nurnberg",
+  "kind": "codex_builtin_generated_art",
+  "source": "Codex built-in ImageGen",
+  "batch_ready_allowed": true,
+  "generation_policy": {
+    "primary_route": "codex_builtin_imagegen_native_alpha",
+    "legacy_fallback": {
+      "authorized": false,
+      "activation": "--allow-legacy-chroma-fallback",
+      "reason": "",
+      "native_failures": []
+    }
+  },
+  "generation": {
+    "requested_model": "codex-account-managed-imagegen",
+    "actual_model": "codex-account-managed-imagegen",
+    "generation_tool": "Codex built-in ImageGen",
+    "endpoint": "Codex account-managed image generation",
+    "quality": "Codex account-managed",
+    "size_control": "per-asset Codex account-managed output",
+    "background_control": "transparent requested and pixel-verified",
+    "output_format": "PNG",
+    "prompt_revision": {
+      "path": "assets/characters/nurnberg/meta/nurnberg_generation_brief_v2.md",
+      "sha256": "c8083085c60ba2b20099e4c725d982ea2b00bea213fee730e2d949a2f07c3eb6"
+    },
+    "reference_inputs": [
+      {
+        "path": "assets/characters/nurnberg/concept/nurnberg_concept_full.png",
+        "role": "accepted_style_anchor_for_derivative_sheets"
+      }
+    ],
+    "reproducibility_note": "The Codex account manages the underlying image model and request IDs; those implementation details are not exposed. Accepted PNG outputs are preserved byte-for-byte and tracked by SHA-256."
+  },
+  "source_images": [
+    {
+      "role": "concept_full",
+      "path": "assets/characters/nurnberg/concept/nurnberg_concept_full.png",
+      "sha256": "142421282c8e9440320a5d856ad637c6b8beed778e4fcb502e364eb673d733c9",
+      "size": [
+        1024,
+        1536
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "142421282c8e9440320a5d856ad637c6b8beed778e4fcb502e364eb673d733c9",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.5837205251057943,
+        "transparent_border_ratio": 0.9982408131352619
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "Revised anchor: three triple turrets (two aft left, one forward right), four distinct triple hollow-tube launchers; original candidate rejected for closed torpedo-like noses and unclear groups."
+    },
+    {
+      "role": "ui_sheet",
+      "path": "assets/characters/nurnberg/ui/nurnberg_ui_sheet.png",
+      "sha256": "77be036d0220b416d02be490a2e7c776313fa9f98591cf9709e19c47ee5d89bb",
+      "size": [
+        1774,
+        887
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "77be036d0220b416d02be490a2e7c776313fa9f98591cf9709e19c47ee5d89bb",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.43526498883407966,
+        "transparent_border_ratio": 0.9887175629936066
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "银紫马尾青瞳、灰短外套；3 三联主炮，2 后 1 前，4 三联鱼雷架。逐件查看 2 排共 8 件：大/小头像、Q版头、默认/认真/受击表情、技能图标和舰种图标均可分离。表情与源概念一致；半身图下缘为有意肖像取景，非完整战斗对象截断。 本轮源图已完成对象级视觉检查；最终裁切与装配不由源图结论代替。"
+    },
+    {
+      "role": "battle_grid",
+      "path": "assets/characters/nurnberg/battle/nurnberg_battle_asset_grid.png",
+      "sha256": "07644b7b5f1b9a3ed48aacc89d19bbb25a3c7c639ffea4bfd9ed11879927bdc2",
+      "size": [
+        1774,
+        887
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "07644b7b5f1b9a3ed48aacc89d19bbb25a3c7c639ffea4bfd9ed11879927bdc2",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.6304048583510535,
+        "transparent_border_ratio": 0.9990597969161339
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "银紫马尾青瞳、灰短外套；3 三联主炮，2 后 1 前，4 三联鱼雷架。8 个独立对象均已查看，角色本体不含舰装，基座与武器分离；完整炮口/机翼/发射管可读。基座可见结构垫不作为精确物理武器数量依据，装配数量由清单及绑定配置决定。 本轮源图已完成对象级视觉检查；最终裁切与装配不由源图结论代替。"
+    },
+    {
+      "role": "vfx_sheet",
+      "path": "assets/characters/nurnberg/vfx/nurnberg_vfx_reference_sheet.png",
+      "sha256": "17d69094f772885e4d7373cd35fa583def3f305cca953f7153d65fa38ce53400",
+      "size": [
+        1024,
+        1536
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "17d69094f772885e4d7373cd35fa583def3f305cca953f7153d65fa38ce53400",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.5880521138509115,
+        "transparent_border_ratio": 0.9399921813917123
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "银紫马尾青瞳、灰短外套；3 三联主炮，2 后 1 前，4 三联鱼雷架。8 个完整效果逐件查看，水滴、火花、环线允许断开；透明画布无烘焙底色、文字或边框。保留独立组件，实际语义按计划角色映射。 本轮源图已完成对象级视觉检查；最终裁切与装配不由源图结论代替。"
+    },
+    {
+      "role": "anim_idle",
+      "path": "assets/characters/nurnberg/battle/nurnberg_anim_idle_4f_sheet.png",
+      "sha256": "85fd930eeef514f790fb4f21290d3eb63c4b1ef1139cc3f9c0a1e3039243d9fa",
+      "size": [
+        1254,
+        1254
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "85fd930eeef514f790fb4f21290d3eb63c4b1ef1139cc3f9c0a1e3039243d9fa",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.6281341493504676,
+        "transparent_border_ratio": 0.9998004788507582
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "银紫马尾青瞳、灰短外套；3 三联主炮，2 后 1 前，4 三联鱼雷架。四帧为待机呼吸/眨眼/轻微重心变化；头发、桅杆、炮管与鞋未被源边缘截断。 本轮源图已完成对象级视觉检查；最终裁切与装配不由源图结论代替。"
+    },
+    {
+      "role": "anim_move",
+      "path": "assets/characters/nurnberg/battle/nurnberg_anim_move_4f_sheet.png",
+      "sha256": "266b1064852519e383c031afb6d1dcff9694ebadb981cbca07808a772cfaa1f3",
+      "size": [
+        1254,
+        1254
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "266b1064852519e383c031afb6d1dcff9694ebadb981cbca07808a772cfaa1f3",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.5610651974288338,
+        "transparent_border_ratio": 0.9928172386272945
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "银紫马尾青瞳、灰短外套；3 三联主炮，2 后 1 前，4 三联鱼雷架。四帧为前进步态/重心交替及局部脚下水迹；完整舰装轮廓，动作幅度和水迹细节可后续润色。 本轮源图已完成对象级视觉检查；最终裁切与装配不由源图结论代替。"
+    },
+    {
+      "role": "anim_attack",
+      "path": "assets/characters/nurnberg/battle/nurnberg_anim_attack_4f_sheet.png",
+      "sha256": "6e8dcec51fc30ee8d25a0b63a92a7e010ed5a14c4bfa85ac335f4346fb345610",
+      "size": [
+        1254,
+        1254
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "6e8dcec51fc30ee8d25a0b63a92a7e010ed5a14c4bfa85ac335f4346fb345610",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.6663391660243838,
+        "transparent_border_ratio": 0.9998004788507582
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "银紫马尾青瞳、灰短外套；3 三联主炮，2 后 1 前，4 三联鱼雷架。四帧为准备、开火、后坐/烟、恢复；炮口闪光与炮管同向，完整装备及特效均在画布内。 本轮源图已完成对象级视觉检查；最终裁切与装配不由源图结论代替。"
+    },
+    {
+      "role": "anim_hit",
+      "path": "assets/characters/nurnberg/battle/nurnberg_anim_hit_4f_sheet.png",
+      "sha256": "b93ac6d186138104969db90ad76d8bb47a15843e7dc8e9e0640fa03fc6ee65ea",
+      "size": [
+        1254,
+        1254
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "b93ac6d186138104969db90ad76d8bb47a15843e7dc8e9e0640fa03fc6ee65ea",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.5287869884948706,
+        "transparent_border_ratio": 0.99780526735834
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "银紫马尾青瞳、灰短外套；3 三联主炮，2 后 1 前，4 三联鱼雷架。四帧为受击、缩身/蹲伏、恢复/准备，脸部受击表情可读；完整轮廓，非击沉动作。 本轮源图已完成对象级视觉检查；最终裁切与装配不由源图结论代替。"
+    },
+    {
+      "role": "anim_firepower",
+      "path": "assets/characters/nurnberg/battle/nurnberg_anim_firepower_4f_sheet.png",
+      "sha256": "1e50fecf82e5e7dca40886730a627de04459a97bc2669b909282e7be46a7d8aa",
+      "size": [
+        1254,
+        1254
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "1e50fecf82e5e7dca40886730a627de04459a97bc2669b909282e7be46a7d8aa",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.6477752849573549,
+        "transparent_border_ratio": 0.9992019154030327
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "银紫马尾青瞳、灰短外套；3 三联主炮，2 后 1 前，4 三联鱼雷架。四帧为准备、指令、技能强调、恢复；保持原舰装数量，角色专属光效轻量，公共战斗特效另行播放。 本轮源图已完成对象级视觉检查；最终裁切与装配不由源图结论代替。"
+    }
+  ]
+}

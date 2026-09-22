@@ -1,0 +1,1123 @@
+{
+  "mode": "process",
+  "required_gate": "delivery_ready",
+  "gate_passed": true,
+  "summary": {
+    "characters": 9,
+    "batch_ready": 9,
+    "complete": 9,
+    "delivery_ready": 9,
+    "blocked": 0,
+    "failed": 0
+  },
+  "results": [
+    {
+      "character_id": "fletcher",
+      "status": "complete",
+      "elapsed_seconds": 34.26,
+      "preview": null,
+      "inspection": {
+        "character_id": "fletcher",
+        "sources": {
+          "complete": true,
+          "missing": [],
+          "source_quality_issues": [],
+          "base_complete": true,
+          "four_frame_complete": true,
+          "production_route": "generated_state_sheets"
+        },
+        "configuration": {
+          "crop_specs": false,
+          "runtime_config": false,
+          "postprocess_plan": true,
+          "generic_postprocess": true,
+          "contract_ship_class": true
+        },
+        "contract": {
+          "character_id": "fletcher",
+          "ship_class": "destroyer",
+          "status": "complete",
+          "missing_roles": [],
+          "invalid_files": [],
+          "data_issues": [],
+          "found_roles": {
+            "full_body": [
+              "assets/characters/fletcher/processed/ui/fletcher_illust_full_alpha.png"
+            ],
+            "half_body": [
+              "assets/characters/fletcher/processed/ui/fletcher_illust_half_alpha.png"
+            ],
+            "skill_cutin": [
+              "assets/characters/fletcher/processed/ui/fletcher_illust_skill_cutin_alpha.png"
+            ],
+            "expression_default": [
+              "assets/characters/fletcher/processed/ui/fletcher_expr_default.png"
+            ],
+            "expression_serious": [
+              "assets/characters/fletcher/processed/ui/fletcher_expr_serious.png"
+            ],
+            "expression_hit": [
+              "assets/characters/fletcher/processed/ui/fletcher_expr_hit.png"
+            ],
+            "portrait": [
+              "assets/characters/fletcher/processed/ui/fletcher_ui_portrait.png"
+            ],
+            "portrait_small": [
+              "assets/characters/fletcher/processed/ui/fletcher_ui_portrait_small.png"
+            ],
+            "chibi_head": [
+              "assets/characters/fletcher/processed/ui/fletcher_ui_chibi_head.png"
+            ],
+            "skill_icon": [
+              "assets/characters/fletcher/processed/ui/fletcher_ui_skill_fleet_hunter_screen.png"
+            ],
+            "class_icon": [
+              "assets/characters/fletcher/processed/ui/fletcher_ui_class_destroyer.png"
+            ],
+            "battle_body": [
+              "assets/characters/fletcher/processed/battle/fletcher_battle_body_r.png"
+            ],
+            "rig_base": [
+              "assets/characters/fletcher/processed/battle/fletcher_battle_rig_base.png"
+            ],
+            "main_weapon": [
+              "assets/characters/fletcher/processed/battle/fletcher_battle_torpedo_tube_01.png",
+              "assets/characters/fletcher/processed/battle/fletcher_battle_turret_main_01.png"
+            ],
+            "anim_idle": [
+              "assets/characters/fletcher/processed/anim/fletcher_anim_idle_keyframe.png"
+            ],
+            "anim_move": [
+              "assets/characters/fletcher/processed/anim/fletcher_anim_move_keyframe.png"
+            ],
+            "anim_attack": [
+              "assets/characters/fletcher/processed/anim/fletcher_anim_attack_keyframe.png"
+            ],
+            "anim_hit": [
+              "assets/characters/fletcher/processed/anim/fletcher_anim_hit_keyframe.png"
+            ],
+            "anim_firepower": [
+              "assets/characters/fletcher/processed/anim/fletcher_anim_firepower_keyframe.png"
+            ],
+            "vfx": [
+              "assets/characters/fletcher/processed/vfx/fletcher_vfx_aa_circle.png",
+              "assets/characters/fletcher/processed/vfx/fletcher_vfx_depth_charge_drop.png",
+              "assets/characters/fletcher/processed/vfx/fletcher_vfx_escort_warning_fan.png",
+              "assets/characters/fletcher/processed/vfx/fletcher_vfx_muzzle_flash_small.png",
+              "assets/characters/fletcher/processed/vfx/fletcher_vfx_range_reticle.png",
+              "assets/characters/fletcher/processed/vfx/fletcher_vfx_skill_aura.png",
+              "assets/characters/fletcher/processed/vfx/fletcher_vfx_torpedo_launch_flash.png",
+              "assets/characters/fletcher/processed/vfx/fletcher_vfx_water_splash.png"
+            ],
+            "bind_points": [
+              "assets/characters/fletcher/processed/config/fletcher_meta_bind_points.json"
+            ],
+            "anim_config": [
+              "assets/characters/fletcher/processed/config/fletcher_anim_config.json"
+            ],
+            "vfx_config": [
+              "assets/characters/fletcher/processed/config/fletcher_vfx_config.json"
+            ],
+            "manifest": [
+              "assets/characters/fletcher/processed/config/fletcher_postprocess_manifest.json"
+            ]
+          }
+        },
+        "batch_ready": true,
+        "technical_ready": true,
+        "visual_review": {
+          "status": "polish",
+          "accepted": true,
+          "issues": []
+        },
+        "delivery_ready": true,
+        "postprocess_ready": true
+      }
+    },
+    {
+      "character_id": "cleveland",
+      "status": "complete",
+      "elapsed_seconds": 31.07,
+      "preview": null,
+      "inspection": {
+        "character_id": "cleveland",
+        "sources": {
+          "complete": true,
+          "missing": [],
+          "source_quality_issues": [],
+          "base_complete": true,
+          "four_frame_complete": true,
+          "production_route": "generated_state_sheets"
+        },
+        "configuration": {
+          "crop_specs": false,
+          "runtime_config": false,
+          "postprocess_plan": true,
+          "generic_postprocess": true,
+          "contract_ship_class": true
+        },
+        "contract": {
+          "character_id": "cleveland",
+          "ship_class": "light_cruiser",
+          "status": "complete",
+          "missing_roles": [],
+          "invalid_files": [],
+          "data_issues": [],
+          "found_roles": {
+            "full_body": [
+              "assets/characters/cleveland/processed/ui/cleveland_illust_full_alpha.png"
+            ],
+            "half_body": [
+              "assets/characters/cleveland/processed/ui/cleveland_illust_half_alpha.png"
+            ],
+            "skill_cutin": [
+              "assets/characters/cleveland/processed/ui/cleveland_illust_skill_cutin_alpha.png"
+            ],
+            "expression_default": [
+              "assets/characters/cleveland/processed/ui/cleveland_expr_default.png"
+            ],
+            "expression_serious": [
+              "assets/characters/cleveland/processed/ui/cleveland_expr_serious.png"
+            ],
+            "expression_hit": [
+              "assets/characters/cleveland/processed/ui/cleveland_expr_hit.png"
+            ],
+            "portrait": [
+              "assets/characters/cleveland/processed/ui/cleveland_ui_portrait.png"
+            ],
+            "portrait_small": [
+              "assets/characters/cleveland/processed/ui/cleveland_ui_portrait_small.png"
+            ],
+            "chibi_head": [
+              "assets/characters/cleveland/processed/ui/cleveland_ui_chibi_head.png"
+            ],
+            "skill_icon": [
+              "assets/characters/cleveland/processed/ui/cleveland_ui_skill_layered_aa_net.png"
+            ],
+            "class_icon": [
+              "assets/characters/cleveland/processed/ui/cleveland_ui_class_light_cruiser.png"
+            ],
+            "battle_body": [
+              "assets/characters/cleveland/processed/battle/cleveland_battle_body_r.png"
+            ],
+            "rig_base": [
+              "assets/characters/cleveland/processed/battle/cleveland_battle_rig_base.png"
+            ],
+            "main_weapon": [
+              "assets/characters/cleveland/processed/battle/cleveland_battle_turret_main_01.png",
+              "assets/characters/cleveland/processed/battle/cleveland_battle_turret_main_02.png"
+            ],
+            "anim_idle": [
+              "assets/characters/cleveland/processed/anim/cleveland_anim_idle_keyframe.png"
+            ],
+            "anim_move": [
+              "assets/characters/cleveland/processed/anim/cleveland_anim_move_keyframe.png"
+            ],
+            "anim_attack": [
+              "assets/characters/cleveland/processed/anim/cleveland_anim_attack_keyframe.png"
+            ],
+            "anim_hit": [
+              "assets/characters/cleveland/processed/anim/cleveland_anim_hit_keyframe.png"
+            ],
+            "anim_firepower": [
+              "assets/characters/cleveland/processed/anim/cleveland_anim_firepower_keyframe.png"
+            ],
+            "vfx": [
+              "assets/characters/cleveland/processed/vfx/cleveland_vfx_aa_burst.png",
+              "assets/characters/cleveland/processed/vfx/cleveland_vfx_aa_circle.png",
+              "assets/characters/cleveland/processed/vfx/cleveland_vfx_layered_aa_net.png",
+              "assets/characters/cleveland/processed/vfx/cleveland_vfx_radar_calibration.png",
+              "assets/characters/cleveland/processed/vfx/cleveland_vfx_radar_scan.png",
+              "assets/characters/cleveland/processed/vfx/cleveland_vfx_shell_trail.png",
+              "assets/characters/cleveland/processed/vfx/cleveland_vfx_skill_aura.png",
+              "assets/characters/cleveland/processed/vfx/cleveland_vfx_water_splash.png"
+            ],
+            "bind_points": [
+              "assets/characters/cleveland/processed/config/cleveland_meta_bind_points.json"
+            ],
+            "anim_config": [
+              "assets/characters/cleveland/processed/config/cleveland_anim_config.json"
+            ],
+            "vfx_config": [
+              "assets/characters/cleveland/processed/config/cleveland_vfx_config.json"
+            ],
+            "manifest": [
+              "assets/characters/cleveland/processed/config/cleveland_postprocess_manifest.json"
+            ]
+          }
+        },
+        "batch_ready": true,
+        "technical_ready": true,
+        "visual_review": {
+          "status": "polish",
+          "accepted": true,
+          "issues": []
+        },
+        "delivery_ready": true,
+        "postprocess_ready": true
+      }
+    },
+    {
+      "character_id": "baltimore",
+      "status": "complete",
+      "elapsed_seconds": 29.83,
+      "preview": null,
+      "inspection": {
+        "character_id": "baltimore",
+        "sources": {
+          "complete": true,
+          "missing": [],
+          "source_quality_issues": [],
+          "base_complete": true,
+          "four_frame_complete": true,
+          "production_route": "generated_state_sheets"
+        },
+        "configuration": {
+          "crop_specs": false,
+          "runtime_config": false,
+          "postprocess_plan": true,
+          "generic_postprocess": true,
+          "contract_ship_class": true
+        },
+        "contract": {
+          "character_id": "baltimore",
+          "ship_class": "heavy_cruiser",
+          "status": "complete",
+          "missing_roles": [],
+          "invalid_files": [],
+          "data_issues": [],
+          "found_roles": {
+            "full_body": [
+              "assets/characters/baltimore/processed/ui/baltimore_illust_full_alpha.png"
+            ],
+            "half_body": [
+              "assets/characters/baltimore/processed/ui/baltimore_illust_half_alpha.png"
+            ],
+            "skill_cutin": [
+              "assets/characters/baltimore/processed/ui/baltimore_illust_skill_cutin_alpha.png"
+            ],
+            "expression_default": [
+              "assets/characters/baltimore/processed/ui/baltimore_expr_default.png"
+            ],
+            "expression_serious": [
+              "assets/characters/baltimore/processed/ui/baltimore_expr_serious.png"
+            ],
+            "expression_hit": [
+              "assets/characters/baltimore/processed/ui/baltimore_expr_hit.png"
+            ],
+            "portrait": [
+              "assets/characters/baltimore/processed/ui/baltimore_ui_portrait.png"
+            ],
+            "portrait_small": [
+              "assets/characters/baltimore/processed/ui/baltimore_ui_portrait_small.png"
+            ],
+            "chibi_head": [
+              "assets/characters/baltimore/processed/ui/baltimore_ui_chibi_head.png"
+            ],
+            "skill_icon": [
+              "assets/characters/baltimore/processed/ui/baltimore_ui_skill_radar_ap_calibration.png"
+            ],
+            "class_icon": [
+              "assets/characters/baltimore/processed/ui/baltimore_ui_class_heavy_cruiser.png"
+            ],
+            "battle_body": [
+              "assets/characters/baltimore/processed/battle/baltimore_battle_body_r.png"
+            ],
+            "rig_base": [
+              "assets/characters/baltimore/processed/battle/baltimore_battle_rig_base.png"
+            ],
+            "main_weapon": [
+              "assets/characters/baltimore/processed/battle/baltimore_battle_turret_main_01.png",
+              "assets/characters/baltimore/processed/battle/baltimore_battle_turret_main_02.png",
+              "assets/characters/baltimore/processed/battle/baltimore_battle_turret_main_03.png"
+            ],
+            "anim_idle": [
+              "assets/characters/baltimore/processed/anim/baltimore_anim_idle_keyframe.png"
+            ],
+            "anim_move": [
+              "assets/characters/baltimore/processed/anim/baltimore_anim_move_keyframe.png"
+            ],
+            "anim_attack": [
+              "assets/characters/baltimore/processed/anim/baltimore_anim_attack_keyframe.png"
+            ],
+            "anim_hit": [
+              "assets/characters/baltimore/processed/anim/baltimore_anim_hit_keyframe.png"
+            ],
+            "anim_firepower": [
+              "assets/characters/baltimore/processed/anim/baltimore_anim_firepower_keyframe.png"
+            ],
+            "vfx": [
+              "assets/characters/baltimore/processed/vfx/baltimore_vfx_aa_interception.png",
+              "assets/characters/baltimore/processed/vfx/baltimore_vfx_ap_calibration_frame.png",
+              "assets/characters/baltimore/processed/vfx/baltimore_vfx_armor_sparks.png",
+              "assets/characters/baltimore/processed/vfx/baltimore_vfx_fire_control_lock.png",
+              "assets/characters/baltimore/processed/vfx/baltimore_vfx_radar_lock_line.png",
+              "assets/characters/baltimore/processed/vfx/baltimore_vfx_shell_trail_heavy.png",
+              "assets/characters/baltimore/processed/vfx/baltimore_vfx_skill_aura.png",
+              "assets/characters/baltimore/processed/vfx/baltimore_vfx_water_splash_large.png"
+            ],
+            "bind_points": [
+              "assets/characters/baltimore/processed/config/baltimore_meta_bind_points.json"
+            ],
+            "anim_config": [
+              "assets/characters/baltimore/processed/config/baltimore_anim_config.json"
+            ],
+            "vfx_config": [
+              "assets/characters/baltimore/processed/config/baltimore_vfx_config.json"
+            ],
+            "manifest": [
+              "assets/characters/baltimore/processed/config/baltimore_postprocess_manifest.json"
+            ]
+          }
+        },
+        "batch_ready": true,
+        "technical_ready": true,
+        "visual_review": {
+          "status": "polish",
+          "accepted": true,
+          "issues": []
+        },
+        "delivery_ready": true,
+        "postprocess_ready": true
+      }
+    },
+    {
+      "character_id": "wahoo",
+      "status": "complete",
+      "elapsed_seconds": 34.04,
+      "preview": null,
+      "inspection": {
+        "character_id": "wahoo",
+        "sources": {
+          "complete": true,
+          "missing": [],
+          "source_quality_issues": [],
+          "base_complete": true,
+          "four_frame_complete": true,
+          "production_route": "generated_state_sheets"
+        },
+        "configuration": {
+          "crop_specs": false,
+          "runtime_config": false,
+          "postprocess_plan": true,
+          "generic_postprocess": true,
+          "contract_ship_class": true
+        },
+        "contract": {
+          "character_id": "wahoo",
+          "ship_class": "submarine",
+          "status": "complete",
+          "missing_roles": [],
+          "invalid_files": [],
+          "data_issues": [],
+          "found_roles": {
+            "full_body": [
+              "assets/characters/wahoo/processed/ui/wahoo_illust_full_alpha.png"
+            ],
+            "half_body": [
+              "assets/characters/wahoo/processed/ui/wahoo_illust_half_alpha.png"
+            ],
+            "skill_cutin": [
+              "assets/characters/wahoo/processed/ui/wahoo_illust_skill_cutin_alpha.png"
+            ],
+            "expression_default": [
+              "assets/characters/wahoo/processed/ui/wahoo_expr_default.png"
+            ],
+            "expression_serious": [
+              "assets/characters/wahoo/processed/ui/wahoo_expr_serious.png"
+            ],
+            "expression_hit": [
+              "assets/characters/wahoo/processed/ui/wahoo_expr_hit.png"
+            ],
+            "portrait": [
+              "assets/characters/wahoo/processed/ui/wahoo_ui_portrait.png"
+            ],
+            "portrait_small": [
+              "assets/characters/wahoo/processed/ui/wahoo_ui_portrait_small.png"
+            ],
+            "chibi_head": [
+              "assets/characters/wahoo/processed/ui/wahoo_ui_chibi_head.png"
+            ],
+            "skill_icon": [
+              "assets/characters/wahoo/processed/ui/wahoo_ui_skill_continuous_hunt.png"
+            ],
+            "class_icon": [
+              "assets/characters/wahoo/processed/ui/wahoo_ui_class_submarine.png"
+            ],
+            "battle_body": [
+              "assets/characters/wahoo/processed/battle/wahoo_battle_body_r.png"
+            ],
+            "rig_base": [
+              "assets/characters/wahoo/processed/battle/wahoo_battle_rig_base.png"
+            ],
+            "main_weapon": [
+              "assets/characters/wahoo/processed/battle/wahoo_battle_torpedo_tube_aft.png",
+              "assets/characters/wahoo/processed/battle/wahoo_battle_torpedo_tube_fore.png"
+            ],
+            "anim_idle": [
+              "assets/characters/wahoo/processed/anim/wahoo_anim_idle_keyframe.png"
+            ],
+            "anim_move": [
+              "assets/characters/wahoo/processed/anim/wahoo_anim_move_keyframe.png"
+            ],
+            "anim_attack": [
+              "assets/characters/wahoo/processed/anim/wahoo_anim_attack_keyframe.png"
+            ],
+            "anim_hit": [
+              "assets/characters/wahoo/processed/anim/wahoo_anim_hit_keyframe.png"
+            ],
+            "anim_firepower": [
+              "assets/characters/wahoo/processed/anim/wahoo_anim_firepower_keyframe.png"
+            ],
+            "vfx": [
+              "assets/characters/wahoo/processed/vfx/wahoo_vfx_dive_ripple.png",
+              "assets/characters/wahoo/processed/vfx/wahoo_vfx_reload_pulse.png",
+              "assets/characters/wahoo/processed/vfx/wahoo_vfx_shark_shadow.png",
+              "assets/characters/wahoo/processed/vfx/wahoo_vfx_skill_aura.png",
+              "assets/characters/wahoo/processed/vfx/wahoo_vfx_sonar_pulse.png",
+              "assets/characters/wahoo/processed/vfx/wahoo_vfx_torpedo_launch_flash.png",
+              "assets/characters/wahoo/processed/vfx/wahoo_vfx_torpedo_trail.png",
+              "assets/characters/wahoo/processed/vfx/wahoo_vfx_underwater_shadow.png"
+            ],
+            "bind_points": [
+              "assets/characters/wahoo/processed/config/wahoo_meta_bind_points.json"
+            ],
+            "anim_config": [
+              "assets/characters/wahoo/processed/config/wahoo_anim_config.json"
+            ],
+            "vfx_config": [
+              "assets/characters/wahoo/processed/config/wahoo_vfx_config.json"
+            ],
+            "manifest": [
+              "assets/characters/wahoo/processed/config/wahoo_postprocess_manifest.json"
+            ]
+          }
+        },
+        "batch_ready": true,
+        "technical_ready": true,
+        "visual_review": {
+          "status": "polish",
+          "accepted": true,
+          "issues": []
+        },
+        "delivery_ready": true,
+        "postprocess_ready": true
+      }
+    },
+    {
+      "character_id": "jervis",
+      "status": "complete",
+      "elapsed_seconds": 34.49,
+      "preview": null,
+      "inspection": {
+        "character_id": "jervis",
+        "sources": {
+          "complete": true,
+          "missing": [],
+          "source_quality_issues": [],
+          "base_complete": true,
+          "four_frame_complete": true,
+          "production_route": "generated_state_sheets"
+        },
+        "configuration": {
+          "crop_specs": false,
+          "runtime_config": false,
+          "postprocess_plan": true,
+          "generic_postprocess": true,
+          "contract_ship_class": true
+        },
+        "contract": {
+          "character_id": "jervis",
+          "ship_class": "destroyer",
+          "status": "complete",
+          "missing_roles": [],
+          "invalid_files": [],
+          "data_issues": [],
+          "found_roles": {
+            "full_body": [
+              "assets/characters/jervis/processed/ui/jervis_illust_full_alpha.png"
+            ],
+            "half_body": [
+              "assets/characters/jervis/processed/ui/jervis_illust_half_alpha.png"
+            ],
+            "skill_cutin": [
+              "assets/characters/jervis/processed/ui/jervis_illust_skill_cutin_alpha.png"
+            ],
+            "expression_default": [
+              "assets/characters/jervis/processed/ui/jervis_expr_default.png"
+            ],
+            "expression_serious": [
+              "assets/characters/jervis/processed/ui/jervis_expr_serious.png"
+            ],
+            "expression_hit": [
+              "assets/characters/jervis/processed/ui/jervis_expr_hit.png"
+            ],
+            "portrait": [
+              "assets/characters/jervis/processed/ui/jervis_ui_portrait.png"
+            ],
+            "portrait_small": [
+              "assets/characters/jervis/processed/ui/jervis_ui_portrait_small.png"
+            ],
+            "chibi_head": [
+              "assets/characters/jervis/processed/ui/jervis_ui_chibi_head.png"
+            ],
+            "skill_icon": [
+              "assets/characters/jervis/processed/ui/jervis_ui_skill_flotilla_leader.png"
+            ],
+            "class_icon": [
+              "assets/characters/jervis/processed/ui/jervis_ui_class_destroyer.png"
+            ],
+            "battle_body": [
+              "assets/characters/jervis/processed/battle/jervis_battle_body_r.png"
+            ],
+            "rig_base": [
+              "assets/characters/jervis/processed/battle/jervis_battle_rig_base.png"
+            ],
+            "main_weapon": [
+              "assets/characters/jervis/processed/battle/jervis_battle_torpedo_tube_01.png",
+              "assets/characters/jervis/processed/battle/jervis_battle_turret_main_01.png"
+            ],
+            "anim_idle": [
+              "assets/characters/jervis/processed/anim/jervis_anim_idle_keyframe.png"
+            ],
+            "anim_move": [
+              "assets/characters/jervis/processed/anim/jervis_anim_move_keyframe.png"
+            ],
+            "anim_attack": [
+              "assets/characters/jervis/processed/anim/jervis_anim_attack_keyframe.png"
+            ],
+            "anim_hit": [
+              "assets/characters/jervis/processed/anim/jervis_anim_hit_keyframe.png"
+            ],
+            "anim_firepower": [
+              "assets/characters/jervis/processed/anim/jervis_anim_firepower_keyframe.png"
+            ],
+            "vfx": [
+              "assets/characters/jervis/processed/vfx/jervis_vfx_aa_circle.png",
+              "assets/characters/jervis/processed/vfx/jervis_vfx_flotilla_aura.png",
+              "assets/characters/jervis/processed/vfx/jervis_vfx_formation_signal.png",
+              "assets/characters/jervis/processed/vfx/jervis_vfx_muzzle_flash_small.png",
+              "assets/characters/jervis/processed/vfx/jervis_vfx_range_reticle.png",
+              "assets/characters/jervis/processed/vfx/jervis_vfx_skill_aura.png",
+              "assets/characters/jervis/processed/vfx/jervis_vfx_torpedo_launch_flash.png",
+              "assets/characters/jervis/processed/vfx/jervis_vfx_water_splash.png"
+            ],
+            "bind_points": [
+              "assets/characters/jervis/processed/config/jervis_meta_bind_points.json"
+            ],
+            "anim_config": [
+              "assets/characters/jervis/processed/config/jervis_anim_config.json"
+            ],
+            "vfx_config": [
+              "assets/characters/jervis/processed/config/jervis_vfx_config.json"
+            ],
+            "manifest": [
+              "assets/characters/jervis/processed/config/jervis_postprocess_manifest.json"
+            ]
+          }
+        },
+        "batch_ready": true,
+        "technical_ready": true,
+        "visual_review": {
+          "status": "polish",
+          "accepted": true,
+          "issues": []
+        },
+        "delivery_ready": true,
+        "postprocess_ready": true
+      }
+    },
+    {
+      "character_id": "tashkent",
+      "status": "complete",
+      "elapsed_seconds": 39.67,
+      "preview": null,
+      "inspection": {
+        "character_id": "tashkent",
+        "sources": {
+          "complete": true,
+          "missing": [],
+          "source_quality_issues": [],
+          "base_complete": true,
+          "four_frame_complete": true,
+          "production_route": "generated_state_sheets"
+        },
+        "configuration": {
+          "crop_specs": false,
+          "runtime_config": false,
+          "postprocess_plan": true,
+          "generic_postprocess": true,
+          "contract_ship_class": true
+        },
+        "contract": {
+          "character_id": "tashkent",
+          "ship_class": "destroyer",
+          "status": "complete",
+          "missing_roles": [],
+          "invalid_files": [],
+          "data_issues": [],
+          "found_roles": {
+            "full_body": [
+              "assets/characters/tashkent/processed/ui/tashkent_illust_full_alpha.png"
+            ],
+            "half_body": [
+              "assets/characters/tashkent/processed/ui/tashkent_illust_half_alpha.png"
+            ],
+            "skill_cutin": [
+              "assets/characters/tashkent/processed/ui/tashkent_illust_skill_cutin_alpha.png"
+            ],
+            "expression_default": [
+              "assets/characters/tashkent/processed/ui/tashkent_expr_default.png"
+            ],
+            "expression_serious": [
+              "assets/characters/tashkent/processed/ui/tashkent_expr_serious.png"
+            ],
+            "expression_hit": [
+              "assets/characters/tashkent/processed/ui/tashkent_expr_hit.png"
+            ],
+            "portrait": [
+              "assets/characters/tashkent/processed/ui/tashkent_ui_portrait.png"
+            ],
+            "portrait_small": [
+              "assets/characters/tashkent/processed/ui/tashkent_ui_portrait_small.png"
+            ],
+            "chibi_head": [
+              "assets/characters/tashkent/processed/ui/tashkent_ui_chibi_head.png"
+            ],
+            "skill_icon": [
+              "assets/characters/tashkent/processed/ui/tashkent_ui_skill_blue_cruiser.png"
+            ],
+            "class_icon": [
+              "assets/characters/tashkent/processed/ui/tashkent_ui_class_destroyer.png"
+            ],
+            "battle_body": [
+              "assets/characters/tashkent/processed/battle/tashkent_battle_body_r.png"
+            ],
+            "rig_base": [
+              "assets/characters/tashkent/processed/battle/tashkent_battle_rig_base.png"
+            ],
+            "main_weapon": [
+              "assets/characters/tashkent/processed/battle/tashkent_battle_torpedo_tube_01.png",
+              "assets/characters/tashkent/processed/battle/tashkent_battle_turret_main_01.png"
+            ],
+            "anim_idle": [
+              "assets/characters/tashkent/processed/anim/tashkent_anim_idle_keyframe.png"
+            ],
+            "anim_move": [
+              "assets/characters/tashkent/processed/anim/tashkent_anim_move_keyframe.png"
+            ],
+            "anim_attack": [
+              "assets/characters/tashkent/processed/anim/tashkent_anim_attack_keyframe.png"
+            ],
+            "anim_hit": [
+              "assets/characters/tashkent/processed/anim/tashkent_anim_hit_keyframe.png"
+            ],
+            "anim_firepower": [
+              "assets/characters/tashkent/processed/anim/tashkent_anim_firepower_keyframe.png"
+            ],
+            "vfx": [
+              "assets/characters/tashkent/processed/vfx/tashkent_vfx_aa_circle.png",
+              "assets/characters/tashkent/processed/vfx/tashkent_vfx_blade_wake.png",
+              "assets/characters/tashkent/processed/vfx/tashkent_vfx_blue_speed_wake.png",
+              "assets/characters/tashkent/processed/vfx/tashkent_vfx_muzzle_flash_small.png",
+              "assets/characters/tashkent/processed/vfx/tashkent_vfx_range_reticle.png",
+              "assets/characters/tashkent/processed/vfx/tashkent_vfx_skill_aura.png",
+              "assets/characters/tashkent/processed/vfx/tashkent_vfx_torpedo_launch_flash.png",
+              "assets/characters/tashkent/processed/vfx/tashkent_vfx_water_splash.png"
+            ],
+            "bind_points": [
+              "assets/characters/tashkent/processed/config/tashkent_meta_bind_points.json"
+            ],
+            "anim_config": [
+              "assets/characters/tashkent/processed/config/tashkent_anim_config.json"
+            ],
+            "vfx_config": [
+              "assets/characters/tashkent/processed/config/tashkent_vfx_config.json"
+            ],
+            "manifest": [
+              "assets/characters/tashkent/processed/config/tashkent_postprocess_manifest.json"
+            ]
+          }
+        },
+        "batch_ready": true,
+        "technical_ready": true,
+        "visual_review": {
+          "status": "polish",
+          "accepted": true,
+          "issues": []
+        },
+        "delivery_ready": true,
+        "postprocess_ready": true
+      }
+    },
+    {
+      "character_id": "chapayev",
+      "status": "complete",
+      "elapsed_seconds": 40.78,
+      "preview": null,
+      "inspection": {
+        "character_id": "chapayev",
+        "sources": {
+          "complete": true,
+          "missing": [],
+          "source_quality_issues": [],
+          "base_complete": true,
+          "four_frame_complete": true,
+          "production_route": "generated_state_sheets"
+        },
+        "configuration": {
+          "crop_specs": false,
+          "runtime_config": false,
+          "postprocess_plan": true,
+          "generic_postprocess": true,
+          "contract_ship_class": true
+        },
+        "contract": {
+          "character_id": "chapayev",
+          "ship_class": "light_cruiser",
+          "status": "complete",
+          "missing_roles": [],
+          "invalid_files": [],
+          "data_issues": [],
+          "found_roles": {
+            "full_body": [
+              "assets/characters/chapayev/processed/ui/chapayev_illust_full_alpha.png"
+            ],
+            "half_body": [
+              "assets/characters/chapayev/processed/ui/chapayev_illust_half_alpha.png"
+            ],
+            "skill_cutin": [
+              "assets/characters/chapayev/processed/ui/chapayev_illust_skill_cutin_alpha.png"
+            ],
+            "expression_default": [
+              "assets/characters/chapayev/processed/ui/chapayev_expr_default.png"
+            ],
+            "expression_serious": [
+              "assets/characters/chapayev/processed/ui/chapayev_expr_serious.png"
+            ],
+            "expression_hit": [
+              "assets/characters/chapayev/processed/ui/chapayev_expr_hit.png"
+            ],
+            "portrait": [
+              "assets/characters/chapayev/processed/ui/chapayev_ui_portrait.png"
+            ],
+            "portrait_small": [
+              "assets/characters/chapayev/processed/ui/chapayev_ui_portrait_small.png"
+            ],
+            "chibi_head": [
+              "assets/characters/chapayev/processed/ui/chapayev_ui_chibi_head.png"
+            ],
+            "skill_icon": [
+              "assets/characters/chapayev/processed/ui/chapayev_ui_skill_long_range_fire_control.png"
+            ],
+            "class_icon": [
+              "assets/characters/chapayev/processed/ui/chapayev_ui_class_light_cruiser.png"
+            ],
+            "battle_body": [
+              "assets/characters/chapayev/processed/battle/chapayev_battle_body_r.png"
+            ],
+            "rig_base": [
+              "assets/characters/chapayev/processed/battle/chapayev_battle_rig_base.png"
+            ],
+            "main_weapon": [
+              "assets/characters/chapayev/processed/battle/chapayev_battle_torpedo_tube_01.png",
+              "assets/characters/chapayev/processed/battle/chapayev_battle_turret_main_01.png"
+            ],
+            "anim_idle": [
+              "assets/characters/chapayev/processed/anim/chapayev_anim_idle_keyframe.png"
+            ],
+            "anim_move": [
+              "assets/characters/chapayev/processed/anim/chapayev_anim_move_keyframe.png"
+            ],
+            "anim_attack": [
+              "assets/characters/chapayev/processed/anim/chapayev_anim_attack_keyframe.png"
+            ],
+            "anim_hit": [
+              "assets/characters/chapayev/processed/anim/chapayev_anim_hit_keyframe.png"
+            ],
+            "anim_firepower": [
+              "assets/characters/chapayev/processed/anim/chapayev_anim_firepower_keyframe.png"
+            ],
+            "vfx": [
+              "assets/characters/chapayev/processed/vfx/chapayev_vfx_aa_burst.png",
+              "assets/characters/chapayev/processed/vfx/chapayev_vfx_aa_circle.png",
+              "assets/characters/chapayev/processed/vfx/chapayev_vfx_ice_impact_marker.png",
+              "assets/characters/chapayev/processed/vfx/chapayev_vfx_radar_scan.png",
+              "assets/characters/chapayev/processed/vfx/chapayev_vfx_rectangular_fire_grid.png",
+              "assets/characters/chapayev/processed/vfx/chapayev_vfx_shell_trail.png",
+              "assets/characters/chapayev/processed/vfx/chapayev_vfx_skill_aura.png",
+              "assets/characters/chapayev/processed/vfx/chapayev_vfx_water_splash.png"
+            ],
+            "bind_points": [
+              "assets/characters/chapayev/processed/config/chapayev_meta_bind_points.json"
+            ],
+            "anim_config": [
+              "assets/characters/chapayev/processed/config/chapayev_anim_config.json"
+            ],
+            "vfx_config": [
+              "assets/characters/chapayev/processed/config/chapayev_vfx_config.json"
+            ],
+            "manifest": [
+              "assets/characters/chapayev/processed/config/chapayev_postprocess_manifest.json"
+            ]
+          }
+        },
+        "batch_ready": true,
+        "technical_ready": true,
+        "visual_review": {
+          "status": "polish",
+          "accepted": true,
+          "issues": []
+        },
+        "delivery_ready": true,
+        "postprocess_ready": true
+      }
+    },
+    {
+      "character_id": "gangut",
+      "status": "complete",
+      "elapsed_seconds": 42.48,
+      "preview": null,
+      "inspection": {
+        "character_id": "gangut",
+        "sources": {
+          "complete": true,
+          "missing": [],
+          "source_quality_issues": [],
+          "base_complete": true,
+          "four_frame_complete": true,
+          "production_route": "generated_state_sheets"
+        },
+        "configuration": {
+          "crop_specs": false,
+          "runtime_config": false,
+          "postprocess_plan": true,
+          "generic_postprocess": true,
+          "contract_ship_class": true
+        },
+        "contract": {
+          "character_id": "gangut",
+          "ship_class": "battleship",
+          "status": "complete",
+          "missing_roles": [],
+          "invalid_files": [],
+          "data_issues": [],
+          "found_roles": {
+            "full_body": [
+              "assets/characters/gangut/processed/ui/gangut_illust_full_alpha.png"
+            ],
+            "half_body": [
+              "assets/characters/gangut/processed/ui/gangut_illust_half_alpha.png"
+            ],
+            "skill_cutin": [
+              "assets/characters/gangut/processed/ui/gangut_illust_skill_cutin_alpha.png"
+            ],
+            "expression_default": [
+              "assets/characters/gangut/processed/ui/gangut_expr_default.png"
+            ],
+            "expression_serious": [
+              "assets/characters/gangut/processed/ui/gangut_expr_serious.png"
+            ],
+            "expression_hit": [
+              "assets/characters/gangut/processed/ui/gangut_expr_hit.png"
+            ],
+            "portrait": [
+              "assets/characters/gangut/processed/ui/gangut_ui_portrait.png"
+            ],
+            "portrait_small": [
+              "assets/characters/gangut/processed/ui/gangut_ui_portrait_small.png"
+            ],
+            "chibi_head": [
+              "assets/characters/gangut/processed/ui/gangut_ui_chibi_head.png"
+            ],
+            "skill_icon": [
+              "assets/characters/gangut/processed/ui/gangut_ui_skill_steel_line.png"
+            ],
+            "class_icon": [
+              "assets/characters/gangut/processed/ui/gangut_ui_class_battleship.png"
+            ],
+            "battle_body": [
+              "assets/characters/gangut/processed/battle/gangut_battle_body_r.png"
+            ],
+            "rig_base": [
+              "assets/characters/gangut/processed/battle/gangut_battle_rig_base.png"
+            ],
+            "main_weapon": [
+              "assets/characters/gangut/processed/battle/gangut_battle_turret_main_01.png",
+              "assets/characters/gangut/processed/battle/gangut_battle_turret_secondary_01.png"
+            ],
+            "anim_idle": [
+              "assets/characters/gangut/processed/anim/gangut_anim_idle_keyframe.png"
+            ],
+            "anim_move": [
+              "assets/characters/gangut/processed/anim/gangut_anim_move_keyframe.png"
+            ],
+            "anim_attack": [
+              "assets/characters/gangut/processed/anim/gangut_anim_attack_keyframe.png"
+            ],
+            "anim_hit": [
+              "assets/characters/gangut/processed/anim/gangut_anim_hit_keyframe.png"
+            ],
+            "anim_firepower": [
+              "assets/characters/gangut/processed/anim/gangut_anim_firepower_keyframe.png"
+            ],
+            "vfx": [
+              "assets/characters/gangut/processed/vfx/gangut_vfx_armor_sparks.png",
+              "assets/characters/gangut/processed/vfx/gangut_vfx_broadside_smoke.png",
+              "assets/characters/gangut/processed/vfx/gangut_vfx_coal_smoke_wake.png",
+              "assets/characters/gangut/processed/vfx/gangut_vfx_command_aura.png",
+              "assets/characters/gangut/processed/vfx/gangut_vfx_fire_control_lock.png",
+              "assets/characters/gangut/processed/vfx/gangut_vfx_shell_trail_heavy.png",
+              "assets/characters/gangut/processed/vfx/gangut_vfx_steel_line_aura.png",
+              "assets/characters/gangut/processed/vfx/gangut_vfx_water_splash_large.png"
+            ],
+            "bind_points": [
+              "assets/characters/gangut/processed/config/gangut_meta_bind_points.json"
+            ],
+            "anim_config": [
+              "assets/characters/gangut/processed/config/gangut_anim_config.json"
+            ],
+            "vfx_config": [
+              "assets/characters/gangut/processed/config/gangut_vfx_config.json"
+            ],
+            "manifest": [
+              "assets/characters/gangut/processed/config/gangut_postprocess_manifest.json"
+            ]
+          }
+        },
+        "batch_ready": true,
+        "technical_ready": true,
+        "visual_review": {
+          "status": "polish",
+          "accepted": true,
+          "issues": []
+        },
+        "delivery_ready": true,
+        "postprocess_ready": true
+      }
+    },
+    {
+      "character_id": "k_21",
+      "status": "complete",
+      "elapsed_seconds": 40.83,
+      "preview": null,
+      "inspection": {
+        "character_id": "k_21",
+        "sources": {
+          "complete": true,
+          "missing": [],
+          "source_quality_issues": [],
+          "base_complete": true,
+          "four_frame_complete": true,
+          "production_route": "generated_state_sheets"
+        },
+        "configuration": {
+          "crop_specs": false,
+          "runtime_config": false,
+          "postprocess_plan": true,
+          "generic_postprocess": true,
+          "contract_ship_class": true
+        },
+        "contract": {
+          "character_id": "k_21",
+          "ship_class": "submarine",
+          "status": "complete",
+          "missing_roles": [],
+          "invalid_files": [],
+          "data_issues": [],
+          "found_roles": {
+            "full_body": [
+              "assets/characters/k_21/processed/ui/k_21_illust_full_alpha.png"
+            ],
+            "half_body": [
+              "assets/characters/k_21/processed/ui/k_21_illust_half_alpha.png"
+            ],
+            "skill_cutin": [
+              "assets/characters/k_21/processed/ui/k_21_illust_skill_cutin_alpha.png"
+            ],
+            "expression_default": [
+              "assets/characters/k_21/processed/ui/k_21_expr_default.png"
+            ],
+            "expression_serious": [
+              "assets/characters/k_21/processed/ui/k_21_expr_serious.png"
+            ],
+            "expression_hit": [
+              "assets/characters/k_21/processed/ui/k_21_expr_hit.png"
+            ],
+            "portrait": [
+              "assets/characters/k_21/processed/ui/k_21_ui_portrait.png"
+            ],
+            "portrait_small": [
+              "assets/characters/k_21/processed/ui/k_21_ui_portrait_small.png"
+            ],
+            "chibi_head": [
+              "assets/characters/k_21/processed/ui/k_21_ui_chibi_head.png"
+            ],
+            "skill_icon": [
+              "assets/characters/k_21/processed/ui/k_21_ui_skill_polar_tracking.png"
+            ],
+            "class_icon": [
+              "assets/characters/k_21/processed/ui/k_21_ui_class_submarine.png"
+            ],
+            "battle_body": [
+              "assets/characters/k_21/processed/battle/k_21_battle_body_r.png"
+            ],
+            "rig_base": [
+              "assets/characters/k_21/processed/battle/k_21_battle_rig_base.png"
+            ],
+            "main_weapon": [
+              "assets/characters/k_21/processed/battle/k_21_battle_torpedo_tube_aft.png",
+              "assets/characters/k_21/processed/battle/k_21_battle_torpedo_tube_fore.png"
+            ],
+            "anim_idle": [
+              "assets/characters/k_21/processed/anim/k_21_anim_idle_keyframe.png"
+            ],
+            "anim_move": [
+              "assets/characters/k_21/processed/anim/k_21_anim_move_keyframe.png"
+            ],
+            "anim_attack": [
+              "assets/characters/k_21/processed/anim/k_21_anim_attack_keyframe.png"
+            ],
+            "anim_hit": [
+              "assets/characters/k_21/processed/anim/k_21_anim_hit_keyframe.png"
+            ],
+            "anim_firepower": [
+              "assets/characters/k_21/processed/anim/k_21_anim_firepower_keyframe.png"
+            ],
+            "vfx": [
+              "assets/characters/k_21/processed/vfx/k_21_vfx_dive_ripple.png",
+              "assets/characters/k_21/processed/vfx/k_21_vfx_ice_torpedo_trail.png",
+              "assets/characters/k_21/processed/vfx/k_21_vfx_polar_tracking_ring.png",
+              "assets/characters/k_21/processed/vfx/k_21_vfx_skill_aura.png",
+              "assets/characters/k_21/processed/vfx/k_21_vfx_sonar_pulse.png",
+              "assets/characters/k_21/processed/vfx/k_21_vfx_torpedo_launch_flash.png",
+              "assets/characters/k_21/processed/vfx/k_21_vfx_torpedo_trail.png",
+              "assets/characters/k_21/processed/vfx/k_21_vfx_underwater_shadow.png"
+            ],
+            "bind_points": [
+              "assets/characters/k_21/processed/config/k_21_meta_bind_points.json"
+            ],
+            "anim_config": [
+              "assets/characters/k_21/processed/config/k_21_anim_config.json"
+            ],
+            "vfx_config": [
+              "assets/characters/k_21/processed/config/k_21_vfx_config.json"
+            ],
+            "manifest": [
+              "assets/characters/k_21/processed/config/k_21_postprocess_manifest.json"
+            ]
+          }
+        },
+        "batch_ready": true,
+        "technical_ready": true,
+        "visual_review": {
+          "status": "polish",
+          "accepted": true,
+          "issues": []
+        },
+        "delivery_ready": true,
+        "postprocess_ready": true
+      }
+    }
+  ]
+}

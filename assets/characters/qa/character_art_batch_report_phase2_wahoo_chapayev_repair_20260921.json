@@ -1,0 +1,367 @@
+{
+  "mode": "process",
+  "required_gate": "technical_ready",
+  "gate_passed": true,
+  "summary": {
+    "characters": 2,
+    "batch_ready": 2,
+    "complete": 2,
+    "delivery_ready": 0,
+    "blocked": 0,
+    "failed": 0
+  },
+  "results": [
+    {
+      "character_id": "wahoo",
+      "status": "complete",
+      "elapsed_seconds": 37.45,
+      "preview": "assets/characters/qa/edge_qa_wahoo.html",
+      "inspection": {
+        "character_id": "wahoo",
+        "sources": {
+          "complete": true,
+          "missing": [],
+          "source_quality_issues": [],
+          "base_complete": true,
+          "four_frame_complete": true,
+          "production_route": "generated_state_sheets"
+        },
+        "configuration": {
+          "crop_specs": false,
+          "runtime_config": false,
+          "postprocess_plan": true,
+          "generic_postprocess": true,
+          "contract_ship_class": true
+        },
+        "contract": {
+          "character_id": "wahoo",
+          "ship_class": "submarine",
+          "status": "complete",
+          "missing_roles": [],
+          "invalid_files": [],
+          "data_issues": [],
+          "found_roles": {
+            "full_body": [
+              "assets/characters/wahoo/processed/ui/wahoo_illust_full_alpha.png"
+            ],
+            "half_body": [
+              "assets/characters/wahoo/processed/ui/wahoo_illust_half_alpha.png"
+            ],
+            "skill_cutin": [
+              "assets/characters/wahoo/processed/ui/wahoo_illust_skill_cutin_alpha.png"
+            ],
+            "expression_default": [
+              "assets/characters/wahoo/processed/ui/wahoo_expr_default.png"
+            ],
+            "expression_serious": [
+              "assets/characters/wahoo/processed/ui/wahoo_expr_serious.png"
+            ],
+            "expression_hit": [
+              "assets/characters/wahoo/processed/ui/wahoo_expr_hit.png"
+            ],
+            "portrait": [
+              "assets/characters/wahoo/processed/ui/wahoo_ui_portrait.png"
+            ],
+            "portrait_small": [
+              "assets/characters/wahoo/processed/ui/wahoo_ui_portrait_small.png"
+            ],
+            "chibi_head": [
+              "assets/characters/wahoo/processed/ui/wahoo_ui_chibi_head.png"
+            ],
+            "skill_icon": [
+              "assets/characters/wahoo/processed/ui/wahoo_ui_skill_continuous_hunt.png"
+            ],
+            "class_icon": [
+              "assets/characters/wahoo/processed/ui/wahoo_ui_class_submarine.png"
+            ],
+            "battle_body": [
+              "assets/characters/wahoo/processed/battle/wahoo_battle_body_r.png"
+            ],
+            "rig_base": [
+              "assets/characters/wahoo/processed/battle/wahoo_battle_rig_base.png"
+            ],
+            "main_weapon": [
+              "assets/characters/wahoo/processed/battle/wahoo_battle_torpedo_tube_aft.png",
+              "assets/characters/wahoo/processed/battle/wahoo_battle_torpedo_tube_fore.png"
+            ],
+            "anim_idle": [
+              "assets/characters/wahoo/processed/anim/wahoo_anim_idle_keyframe.png"
+            ],
+            "anim_move": [
+              "assets/characters/wahoo/processed/anim/wahoo_anim_move_keyframe.png"
+            ],
+            "anim_attack": [
+              "assets/characters/wahoo/processed/anim/wahoo_anim_attack_keyframe.png"
+            ],
+            "anim_hit": [
+              "assets/characters/wahoo/processed/anim/wahoo_anim_hit_keyframe.png"
+            ],
+            "anim_firepower": [
+              "assets/characters/wahoo/processed/anim/wahoo_anim_firepower_keyframe.png"
+            ],
+            "vfx": [
+              "assets/characters/wahoo/processed/vfx/wahoo_vfx_dive_ripple.png",
+              "assets/characters/wahoo/processed/vfx/wahoo_vfx_reload_pulse.png",
+              "assets/characters/wahoo/processed/vfx/wahoo_vfx_shark_shadow.png",
+              "assets/characters/wahoo/processed/vfx/wahoo_vfx_skill_aura.png",
+              "assets/characters/wahoo/processed/vfx/wahoo_vfx_sonar_pulse.png",
+              "assets/characters/wahoo/processed/vfx/wahoo_vfx_torpedo_launch_flash.png",
+              "assets/characters/wahoo/processed/vfx/wahoo_vfx_torpedo_trail.png",
+              "assets/characters/wahoo/processed/vfx/wahoo_vfx_underwater_shadow.png"
+            ],
+            "bind_points": [
+              "assets/characters/wahoo/processed/config/wahoo_meta_bind_points.json"
+            ],
+            "anim_config": [
+              "assets/characters/wahoo/processed/config/wahoo_anim_config.json"
+            ],
+            "vfx_config": [
+              "assets/characters/wahoo/processed/config/wahoo_vfx_config.json"
+            ],
+            "manifest": [
+              "assets/characters/wahoo/processed/config/wahoo_postprocess_manifest.json"
+            ]
+          }
+        },
+        "batch_ready": true,
+        "technical_ready": true,
+        "visual_review": {
+          "status": "pending",
+          "accepted": false,
+          "issues": [
+            "visual review pending/blocking: assets/characters/wahoo/processed/anim/wahoo_anim_attack_frame_01.png",
+            "visual review pending/blocking: assets/characters/wahoo/processed/anim/wahoo_anim_attack_frame_02.png",
+            "visual review pending/blocking: assets/characters/wahoo/processed/anim/wahoo_anim_attack_frame_03.png",
+            "visual review pending/blocking: assets/characters/wahoo/processed/anim/wahoo_anim_attack_frame_04.png",
+            "visual review pending/blocking: assets/characters/wahoo/processed/anim/wahoo_anim_attack_keyframe.png",
+            "visual review pending/blocking: assets/characters/wahoo/processed/anim/wahoo_anim_firepower_frame_01.png",
+            "visual review pending/blocking: assets/characters/wahoo/processed/anim/wahoo_anim_firepower_frame_02.png",
+            "visual review pending/blocking: assets/characters/wahoo/processed/anim/wahoo_anim_firepower_frame_03.png",
+            "visual review pending/blocking: assets/characters/wahoo/processed/anim/wahoo_anim_firepower_frame_04.png",
+            "visual review pending/blocking: assets/characters/wahoo/processed/anim/wahoo_anim_firepower_keyframe.png",
+            "visual review pending/blocking: assets/characters/wahoo/processed/anim/wahoo_anim_hit_frame_01.png",
+            "visual review pending/blocking: assets/characters/wahoo/processed/anim/wahoo_anim_hit_frame_02.png",
+            "visual review pending/blocking: assets/characters/wahoo/processed/anim/wahoo_anim_hit_frame_03.png",
+            "visual review pending/blocking: assets/characters/wahoo/processed/anim/wahoo_anim_hit_frame_04.png",
+            "visual review pending/blocking: assets/characters/wahoo/processed/anim/wahoo_anim_hit_keyframe.png",
+            "visual review pending/blocking: assets/characters/wahoo/processed/anim/wahoo_anim_idle_frame_01.png",
+            "visual review pending/blocking: assets/characters/wahoo/processed/anim/wahoo_anim_idle_frame_02.png",
+            "visual review pending/blocking: assets/characters/wahoo/processed/anim/wahoo_anim_idle_frame_03.png",
+            "visual review pending/blocking: assets/characters/wahoo/processed/anim/wahoo_anim_idle_frame_04.png",
+            "visual review pending/blocking: assets/characters/wahoo/processed/anim/wahoo_anim_idle_keyframe.png",
+            "visual review pending/blocking: assets/characters/wahoo/processed/anim/wahoo_anim_move_frame_01.png",
+            "visual review pending/blocking: assets/characters/wahoo/processed/anim/wahoo_anim_move_frame_02.png",
+            "visual review pending/blocking: assets/characters/wahoo/processed/anim/wahoo_anim_move_frame_03.png",
+            "visual review pending/blocking: assets/characters/wahoo/processed/anim/wahoo_anim_move_frame_04.png",
+            "visual review pending/blocking: assets/characters/wahoo/processed/anim/wahoo_anim_move_keyframe.png",
+            "visual review pending/blocking: assets/characters/wahoo/processed/battle/wahoo_battle_body_r.png",
+            "visual review pending/blocking: assets/characters/wahoo/processed/battle/wahoo_battle_oxygen_indicator.png",
+            "visual review pending/blocking: assets/characters/wahoo/processed/battle/wahoo_battle_periscope_node.png",
+            "visual review pending/blocking: assets/characters/wahoo/processed/battle/wahoo_battle_rig_base.png",
+            "visual review pending/blocking: assets/characters/wahoo/processed/battle/wahoo_battle_sonar_node.png",
+            "visual review pending/blocking: assets/characters/wahoo/processed/battle/wahoo_battle_submerged_shadow.png",
+            "visual review pending/blocking: assets/characters/wahoo/processed/battle/wahoo_battle_torpedo_tube_aft.png",
+            "visual review pending/blocking: assets/characters/wahoo/processed/battle/wahoo_battle_torpedo_tube_fore.png",
+            "visual review pending/blocking: assets/characters/wahoo/processed/ui/wahoo_expr_default.png",
+            "visual review pending/blocking: assets/characters/wahoo/processed/ui/wahoo_expr_hit.png",
+            "visual review pending/blocking: assets/characters/wahoo/processed/ui/wahoo_expr_serious.png",
+            "visual review pending/blocking: assets/characters/wahoo/processed/ui/wahoo_illust_full_alpha.png",
+            "visual review pending/blocking: assets/characters/wahoo/processed/ui/wahoo_illust_half_alpha.png",
+            "visual review pending/blocking: assets/characters/wahoo/processed/ui/wahoo_illust_skill_cutin_alpha.png",
+            "visual review pending/blocking: assets/characters/wahoo/processed/ui/wahoo_ui_chibi_head.png",
+            "visual review pending/blocking: assets/characters/wahoo/processed/ui/wahoo_ui_class_submarine.png",
+            "visual review pending/blocking: assets/characters/wahoo/processed/ui/wahoo_ui_portrait.png",
+            "visual review pending/blocking: assets/characters/wahoo/processed/ui/wahoo_ui_portrait_small.png",
+            "visual review pending/blocking: assets/characters/wahoo/processed/ui/wahoo_ui_skill_continuous_hunt.png",
+            "visual review pending/blocking: assets/characters/wahoo/processed/vfx/wahoo_vfx_dive_ripple.png",
+            "visual review pending/blocking: assets/characters/wahoo/processed/vfx/wahoo_vfx_reload_pulse.png",
+            "visual review pending/blocking: assets/characters/wahoo/processed/vfx/wahoo_vfx_shark_shadow.png",
+            "visual review pending/blocking: assets/characters/wahoo/processed/vfx/wahoo_vfx_skill_aura.png",
+            "visual review pending/blocking: assets/characters/wahoo/processed/vfx/wahoo_vfx_sonar_pulse.png",
+            "visual review pending/blocking: assets/characters/wahoo/processed/vfx/wahoo_vfx_torpedo_launch_flash.png",
+            "visual review pending/blocking: assets/characters/wahoo/processed/vfx/wahoo_vfx_torpedo_trail.png",
+            "visual review pending/blocking: assets/characters/wahoo/processed/vfx/wahoo_vfx_underwater_shadow.png"
+          ]
+        },
+        "delivery_ready": false,
+        "postprocess_ready": true
+      }
+    },
+    {
+      "character_id": "chapayev",
+      "status": "complete",
+      "elapsed_seconds": 42.72,
+      "preview": "assets/characters/qa/edge_qa_chapayev.html",
+      "inspection": {
+        "character_id": "chapayev",
+        "sources": {
+          "complete": true,
+          "missing": [],
+          "source_quality_issues": [],
+          "base_complete": true,
+          "four_frame_complete": true,
+          "production_route": "generated_state_sheets"
+        },
+        "configuration": {
+          "crop_specs": false,
+          "runtime_config": false,
+          "postprocess_plan": true,
+          "generic_postprocess": true,
+          "contract_ship_class": true
+        },
+        "contract": {
+          "character_id": "chapayev",
+          "ship_class": "light_cruiser",
+          "status": "complete",
+          "missing_roles": [],
+          "invalid_files": [],
+          "data_issues": [],
+          "found_roles": {
+            "full_body": [
+              "assets/characters/chapayev/processed/ui/chapayev_illust_full_alpha.png"
+            ],
+            "half_body": [
+              "assets/characters/chapayev/processed/ui/chapayev_illust_half_alpha.png"
+            ],
+            "skill_cutin": [
+              "assets/characters/chapayev/processed/ui/chapayev_illust_skill_cutin_alpha.png"
+            ],
+            "expression_default": [
+              "assets/characters/chapayev/processed/ui/chapayev_expr_default.png"
+            ],
+            "expression_serious": [
+              "assets/characters/chapayev/processed/ui/chapayev_expr_serious.png"
+            ],
+            "expression_hit": [
+              "assets/characters/chapayev/processed/ui/chapayev_expr_hit.png"
+            ],
+            "portrait": [
+              "assets/characters/chapayev/processed/ui/chapayev_ui_portrait.png"
+            ],
+            "portrait_small": [
+              "assets/characters/chapayev/processed/ui/chapayev_ui_portrait_small.png"
+            ],
+            "chibi_head": [
+              "assets/characters/chapayev/processed/ui/chapayev_ui_chibi_head.png"
+            ],
+            "skill_icon": [
+              "assets/characters/chapayev/processed/ui/chapayev_ui_skill_long_range_fire_control.png"
+            ],
+            "class_icon": [
+              "assets/characters/chapayev/processed/ui/chapayev_ui_class_light_cruiser.png"
+            ],
+            "battle_body": [
+              "assets/characters/chapayev/processed/battle/chapayev_battle_body_r.png"
+            ],
+            "rig_base": [
+              "assets/characters/chapayev/processed/battle/chapayev_battle_rig_base.png"
+            ],
+            "main_weapon": [
+              "assets/characters/chapayev/processed/battle/chapayev_battle_torpedo_tube_01.png",
+              "assets/characters/chapayev/processed/battle/chapayev_battle_turret_main_01.png"
+            ],
+            "anim_idle": [
+              "assets/characters/chapayev/processed/anim/chapayev_anim_idle_keyframe.png"
+            ],
+            "anim_move": [
+              "assets/characters/chapayev/processed/anim/chapayev_anim_move_keyframe.png"
+            ],
+            "anim_attack": [
+              "assets/characters/chapayev/processed/anim/chapayev_anim_attack_keyframe.png"
+            ],
+            "anim_hit": [
+              "assets/characters/chapayev/processed/anim/chapayev_anim_hit_keyframe.png"
+            ],
+            "anim_firepower": [
+              "assets/characters/chapayev/processed/anim/chapayev_anim_firepower_keyframe.png"
+            ],
+            "vfx": [
+              "assets/characters/chapayev/processed/vfx/chapayev_vfx_aa_burst.png",
+              "assets/characters/chapayev/processed/vfx/chapayev_vfx_aa_circle.png",
+              "assets/characters/chapayev/processed/vfx/chapayev_vfx_ice_impact_marker.png",
+              "assets/characters/chapayev/processed/vfx/chapayev_vfx_radar_scan.png",
+              "assets/characters/chapayev/processed/vfx/chapayev_vfx_rectangular_fire_grid.png",
+              "assets/characters/chapayev/processed/vfx/chapayev_vfx_shell_trail.png",
+              "assets/characters/chapayev/processed/vfx/chapayev_vfx_skill_aura.png",
+              "assets/characters/chapayev/processed/vfx/chapayev_vfx_water_splash.png"
+            ],
+            "bind_points": [
+              "assets/characters/chapayev/processed/config/chapayev_meta_bind_points.json"
+            ],
+            "anim_config": [
+              "assets/characters/chapayev/processed/config/chapayev_anim_config.json"
+            ],
+            "vfx_config": [
+              "assets/characters/chapayev/processed/config/chapayev_vfx_config.json"
+            ],
+            "manifest": [
+              "assets/characters/chapayev/processed/config/chapayev_postprocess_manifest.json"
+            ]
+          }
+        },
+        "batch_ready": true,
+        "technical_ready": true,
+        "visual_review": {
+          "status": "pending",
+          "accepted": false,
+          "issues": [
+            "visual review pending/blocking: assets/characters/chapayev/processed/anim/chapayev_anim_attack_frame_01.png",
+            "visual review pending/blocking: assets/characters/chapayev/processed/anim/chapayev_anim_attack_frame_02.png",
+            "visual review pending/blocking: assets/characters/chapayev/processed/anim/chapayev_anim_attack_frame_03.png",
+            "visual review pending/blocking: assets/characters/chapayev/processed/anim/chapayev_anim_attack_frame_04.png",
+            "visual review pending/blocking: assets/characters/chapayev/processed/anim/chapayev_anim_attack_keyframe.png",
+            "visual review pending/blocking: assets/characters/chapayev/processed/anim/chapayev_anim_firepower_frame_01.png",
+            "visual review pending/blocking: assets/characters/chapayev/processed/anim/chapayev_anim_firepower_frame_02.png",
+            "visual review pending/blocking: assets/characters/chapayev/processed/anim/chapayev_anim_firepower_frame_03.png",
+            "visual review pending/blocking: assets/characters/chapayev/processed/anim/chapayev_anim_firepower_frame_04.png",
+            "visual review pending/blocking: assets/characters/chapayev/processed/anim/chapayev_anim_firepower_keyframe.png",
+            "visual review pending/blocking: assets/characters/chapayev/processed/anim/chapayev_anim_hit_frame_01.png",
+            "visual review pending/blocking: assets/characters/chapayev/processed/anim/chapayev_anim_hit_frame_02.png",
+            "visual review pending/blocking: assets/characters/chapayev/processed/anim/chapayev_anim_hit_frame_03.png",
+            "visual review pending/blocking: assets/characters/chapayev/processed/anim/chapayev_anim_hit_frame_04.png",
+            "visual review pending/blocking: assets/characters/chapayev/processed/anim/chapayev_anim_hit_keyframe.png",
+            "visual review pending/blocking: assets/characters/chapayev/processed/anim/chapayev_anim_idle_frame_01.png",
+            "visual review pending/blocking: assets/characters/chapayev/processed/anim/chapayev_anim_idle_frame_02.png",
+            "visual review pending/blocking: assets/characters/chapayev/processed/anim/chapayev_anim_idle_frame_03.png",
+            "visual review pending/blocking: assets/characters/chapayev/processed/anim/chapayev_anim_idle_frame_04.png",
+            "visual review pending/blocking: assets/characters/chapayev/processed/anim/chapayev_anim_idle_keyframe.png",
+            "visual review pending/blocking: assets/characters/chapayev/processed/anim/chapayev_anim_move_frame_01.png",
+            "visual review pending/blocking: assets/characters/chapayev/processed/anim/chapayev_anim_move_frame_02.png",
+            "visual review pending/blocking: assets/characters/chapayev/processed/anim/chapayev_anim_move_frame_03.png",
+            "visual review pending/blocking: assets/characters/chapayev/processed/anim/chapayev_anim_move_frame_04.png",
+            "visual review pending/blocking: assets/characters/chapayev/processed/anim/chapayev_anim_move_keyframe.png",
+            "visual review pending/blocking: assets/characters/chapayev/processed/battle/chapayev_battle_aa_center.png",
+            "visual review pending/blocking: assets/characters/chapayev/processed/battle/chapayev_battle_body_r.png",
+            "visual review pending/blocking: assets/characters/chapayev/processed/battle/chapayev_battle_fire_control_node.png",
+            "visual review pending/blocking: assets/characters/chapayev/processed/battle/chapayev_battle_rangefinder_node.png",
+            "visual review pending/blocking: assets/characters/chapayev/processed/battle/chapayev_battle_rig_base.png",
+            "visual review pending/blocking: assets/characters/chapayev/processed/battle/chapayev_battle_torpedo_tube_01.png",
+            "visual review pending/blocking: assets/characters/chapayev/processed/battle/chapayev_battle_turret_main_01.png",
+            "visual review pending/blocking: assets/characters/chapayev/processed/battle/chapayev_battle_wake_origin_marker.png",
+            "visual review pending/blocking: assets/characters/chapayev/processed/ui/chapayev_expr_default.png",
+            "visual review pending/blocking: assets/characters/chapayev/processed/ui/chapayev_expr_hit.png",
+            "visual review pending/blocking: assets/characters/chapayev/processed/ui/chapayev_expr_serious.png",
+            "visual review pending/blocking: assets/characters/chapayev/processed/ui/chapayev_illust_full_alpha.png",
+            "visual review pending/blocking: assets/characters/chapayev/processed/ui/chapayev_illust_half_alpha.png",
+            "visual review pending/blocking: assets/characters/chapayev/processed/ui/chapayev_illust_skill_cutin_alpha.png",
+            "visual review pending/blocking: assets/characters/chapayev/processed/ui/chapayev_ui_chibi_head.png",
+            "visual review pending/blocking: assets/characters/chapayev/processed/ui/chapayev_ui_class_light_cruiser.png",
+            "visual review pending/blocking: assets/characters/chapayev/processed/ui/chapayev_ui_portrait.png",
+            "visual review pending/blocking: assets/characters/chapayev/processed/ui/chapayev_ui_portrait_small.png",
+            "visual review pending/blocking: assets/characters/chapayev/processed/ui/chapayev_ui_skill_long_range_fire_control.png",
+            "visual review pending/blocking: assets/characters/chapayev/processed/vfx/chapayev_vfx_aa_burst.png",
+            "visual review pending/blocking: assets/characters/chapayev/processed/vfx/chapayev_vfx_aa_circle.png",
+            "visual review pending/blocking: assets/characters/chapayev/processed/vfx/chapayev_vfx_ice_impact_marker.png",
+            "visual review pending/blocking: assets/characters/chapayev/processed/vfx/chapayev_vfx_radar_scan.png",
+            "visual review pending/blocking: assets/characters/chapayev/processed/vfx/chapayev_vfx_rectangular_fire_grid.png",
+            "visual review pending/blocking: assets/characters/chapayev/processed/vfx/chapayev_vfx_shell_trail.png",
+            "visual review pending/blocking: assets/characters/chapayev/processed/vfx/chapayev_vfx_skill_aura.png",
+            "visual review pending/blocking: assets/characters/chapayev/processed/vfx/chapayev_vfx_water_splash.png"
+          ]
+        },
+        "delivery_ready": false,
+        "postprocess_ready": true
+      }
+    }
+  ]
+}

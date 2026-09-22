@@ -1,0 +1,327 @@
+{
+  "schema_version": 2,
+  "character_id": "jervis",
+  "kind": "codex_builtin_generated_art",
+  "source": "Codex built-in ImageGen",
+  "batch_ready_allowed": true,
+  "generation_policy": {
+    "primary_route": "codex_builtin_imagegen_native_alpha",
+    "legacy_fallback": {
+      "authorized": false,
+      "activation": "--allow-legacy-chroma-fallback",
+      "reason": "",
+      "native_failures": []
+    }
+  },
+  "generation": {
+    "requested_model": "codex-account-managed-imagegen",
+    "actual_model": "codex-account-managed-imagegen",
+    "generation_tool": "Codex built-in ImageGen",
+    "endpoint": "Codex account-managed image generation",
+    "quality": "Codex account-managed",
+    "size_control": "per-asset Codex account-managed output",
+    "background_control": "transparent requested and pixel-verified",
+    "output_format": "PNG",
+    "prompt_revision": {
+      "path": "assets/characters/jervis/meta/jervis_generation_brief_v2.md",
+      "sha256": "7766a2454edd0129141208fd566cf60b4d7476fb577dee61d3cc45e42fd6ac35"
+    },
+    "reference_inputs": [
+      {
+        "path": "assets/characters/jervis/concept/jervis_concept_full.png",
+        "role": "accepted_style_anchor_for_derivative_sheets"
+      }
+    ],
+    "reproducibility_note": "The Codex account manages the underlying image model and request IDs; those implementation details are not exposed. Accepted PNG outputs are preserved byte-for-byte and tracked by SHA-256."
+  },
+  "source_images": [
+    {
+      "role": "concept_full",
+      "path": "assets/characters/jervis/concept/jervis_concept_full.png",
+      "sha256": "3ed2ebe081d311437b99dd8d7e69ac4b2fb78a056ecbb76f061a9d09871a51e8",
+      "size": [
+        1024,
+        1536
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "3ed2ebe081d311437b99dd8d7e69ac4b2fb78a056ecbb76f061a9d09871a51e8",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.5502764383951823,
+        "transparent_border_ratio": 0.9663799843627834
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "三座双联炮、两架各五孔鱼雷管和两处深弹架完整可辨，皇家蓝披肩、罗盘发饰与棕短发一致；炮台恢复后未破坏双五联管。"
+    },
+    {
+      "role": "ui_sheet",
+      "path": "assets/characters/jervis/ui/jervis_ui_sheet.png",
+      "sha256": "3e55c9b59eae1023216b99099fe2c3669d8db2edddf0bb76f7930d159180a85a",
+      "size": [
+        1774,
+        887
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "3e55c9b59eae1023216b99099fe2c3669d8db2edddf0bb76f7930d159180a85a",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.6485836376369684,
+        "transparent_border_ratio": 1.0
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "八件UI头像、表情与编队/驱逐舰图标分离；头发完整留白，金色罗盘与蓝白服饰一致。"
+    },
+    {
+      "role": "battle_grid",
+      "path": "assets/characters/jervis/battle/jervis_battle_asset_grid.png",
+      "sha256": "66204af5260f6b918896e5b22cbda82fd3578dc55759ca316336234277ed157a",
+      "size": [
+        1774,
+        887
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "66204af5260f6b918896e5b22cbda82fd3578dc55759ca316336234277ed157a",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.775255507016672,
+        "transparent_border_ratio": 1.0
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "八件完整拆件留白充分；独立Q版本体、三空炮座及两空雷架支座、双联炮、五孔雷架、深弹、罗盘、防空和尾流逐件可辨。无网格线、截边及底座重复武器。"
+    },
+    {
+      "role": "vfx_sheet",
+      "path": "assets/characters/jervis/vfx/jervis_vfx_reference_sheet.png",
+      "sha256": "c5ef08a7c0170344f29614e8e5967c8d9c6bf353a31ceb29d5ef670bc189b603",
+      "size": [
+        1774,
+        887
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "c5ef08a7c0170344f29614e8e5967c8d9c6bf353a31ceb29d5ef670bc189b603",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.5898700889333464,
+        "transparent_border_ratio": 0.9546822113576533
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "八件编队指挥、气泡、炮口、水花、防空与准心叠层独立，未混入武器实物；透明柔光保留。"
+    },
+    {
+      "role": "anim_idle",
+      "path": "assets/characters/jervis/battle/jervis_anim_idle_4f_sheet.png",
+      "sha256": "7d1706d21a1fc13c16df6b3beba332767b17e4da629010df2f6ca6f8dace8d4b",
+      "size": [
+        1312,
+        1199
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "7d1706d21a1fc13c16df6b3beba332767b17e4da629010df2f6ca6f8dace8d4b",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.5225263939461746,
+        "transparent_border_ratio": 0.9884416102032683
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "逐帧检查三座双联炮、双侧五联鱼雷架及蓝披肩白制服；四帧肢体动作有变化，角色与完整装备未越出画布，保留原生Alpha。"
+    },
+    {
+      "role": "anim_move",
+      "path": "assets/characters/jervis/battle/jervis_anim_move_4f_sheet.png",
+      "sha256": "42cff9edddbf6d94f865eb6688b11f62c0157c28e0df1b39aca638cce012297c",
+      "size": [
+        1309,
+        1201
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "42cff9edddbf6d94f865eb6688b11f62c0157c28e0df1b39aca638cce012297c",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.5452020184351085,
+        "transparent_border_ratio": 0.9916267942583732
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "逐帧检查三座双联炮、双侧五联鱼雷架及蓝披肩白制服；四帧肢体动作有变化，角色与完整装备未越出画布，保留原生Alpha。"
+    },
+    {
+      "role": "anim_attack",
+      "path": "assets/characters/jervis/battle/jervis_anim_attack_4f_sheet.png",
+      "sha256": "69cd82c70def80808afc322830afde8bd499687d85b2e4e42b665954a77e26de",
+      "size": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "69cd82c70def80808afc322830afde8bd499687d85b2e4e42b665954a77e26de",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.6162605285644531,
+        "transparent_border_ratio": 0.9978498827208757
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "逐帧检查三座双联炮、双侧五联鱼雷架及蓝披肩白制服；四帧肢体动作有变化，角色与完整装备未越出画布，保留原生Alpha。"
+    },
+    {
+      "role": "anim_hit",
+      "path": "assets/characters/jervis/battle/jervis_anim_hit_4f_sheet.png",
+      "sha256": "6f6fc7e74c39f797e5aea9b4f40ac6d463a12f42d82319c182a93b16a3eab38c",
+      "size": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "6f6fc7e74c39f797e5aea9b4f40ac6d463a12f42d82319c182a93b16a3eab38c",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.5835673014322916,
+        "transparent_border_ratio": 0.9777169663799844
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "逐帧检查三座双联炮、双侧五联鱼雷架及蓝披肩白制服；四帧肢体动作有变化，角色与完整装备未越出画布，保留原生Alpha。"
+    },
+    {
+      "role": "anim_firepower",
+      "path": "assets/characters/jervis/battle/jervis_anim_firepower_4f_sheet.png",
+      "sha256": "1bf093285359d6e9e5b2801078ca9235de7bd5d8b547d273ba2fc56b45dba5a2",
+      "size": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "1bf093285359d6e9e5b2801078ca9235de7bd5d8b547d273ba2fc56b45dba5a2",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.5456218719482422,
+        "transparent_border_ratio": 0.9878811571540266
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "返修四帧均为三座双联炮及左右各五孔雷架；起势、举手、展开蓝色指挥环和复位可辨；角色全身完整，原生Alpha技术检查通过。"
+    }
+  ]
+}

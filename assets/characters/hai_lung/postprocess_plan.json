@@ -18,11 +18,19 @@
     "torpedo_fore": 6,
     "torpedo_aft": 4
   },
+  "object_inventory": {
+    "torpedo_fore": {
+      "instances": 6
+    },
+    "torpedo_aft": {
+      "instances": 4
+    }
+  },
   "bindings": {
     "battle_rig_base": [
       "rig_mount",
-      "wake_origin",
       "skill_origin",
+      "wake_origin",
       "torpedo_fore_mount_01",
       "torpedo_fore_mount_02",
       "torpedo_fore_mount_03",
@@ -33,6 +41,22 @@
       "torpedo_aft_mount_02",
       "torpedo_aft_mount_03",
       "torpedo_aft_mount_04"
+    ],
+    "battle_torpedo_tube_fore": [
+      "pivot",
+      "torpedo_port_01",
+      "torpedo_port_02",
+      "torpedo_port_03",
+      "torpedo_port_04",
+      "torpedo_port_05",
+      "torpedo_port_06"
+    ],
+    "battle_torpedo_tube_aft": [
+      "pivot",
+      "torpedo_port_01",
+      "torpedo_port_02",
+      "torpedo_port_03",
+      "torpedo_port_04"
     ]
   },
   "vfx_roles": [
@@ -49,7 +73,7 @@
     "training_sonar_ring": "submarine.sonar_pulse",
     "endurance_shadow": "skill.area",
     "sonar_pulse": "submarine.sonar_pulse",
-    "torpedo_launch_flash": "torpedo.trail.submerged",
+    "torpedo_launch_flash": "torpedo.launch.submerged",
     "torpedo_trail": "torpedo.trail.submerged",
     "underwater_shadow": "skill.area",
     "dive_ripple": "skill.area",
@@ -59,5 +83,121 @@
     "Original TinySeaWar design; no real flags, political symbols, readable insignia, or extremist symbols.",
     "Character body, rig base, weapon nodes, and VFX must remain visually separable.",
     "Submarine character must wear fitted waterproof or tactical boots; no swim fins on feet."
-  ]
+  ],
+  "manifest_schema_version": 2,
+  "weapon_binding_rules": {
+    "hai_lung_torpedo": {
+      "asset_role": "battle_torpedo_tube_fore",
+      "launch_bind": "torpedo_port_01",
+      "muzzle_vfx_role": "torpedo_launch_flash"
+    }
+  },
+  "binding_positions": {
+    "battle_rig_base": {
+      "rig_mount": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "skill_origin": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "wake_origin": {
+        "x": 0.91,
+        "y": 0.5
+      },
+      "torpedo_fore_mount_01": {
+        "x": 0.13,
+        "y": 0.36
+      },
+      "torpedo_fore_mount_02": {
+        "x": 0.18,
+        "y": 0.36
+      },
+      "torpedo_fore_mount_03": {
+        "x": 0.13,
+        "y": 0.45999999999999996
+      },
+      "torpedo_fore_mount_04": {
+        "x": 0.18,
+        "y": 0.45999999999999996
+      },
+      "torpedo_fore_mount_05": {
+        "x": 0.13,
+        "y": 0.56
+      },
+      "torpedo_fore_mount_06": {
+        "x": 0.18,
+        "y": 0.56
+      },
+      "torpedo_aft_mount_01": {
+        "x": 0.81,
+        "y": 0.43
+      },
+      "torpedo_aft_mount_02": {
+        "x": 0.8500000000000001,
+        "y": 0.43
+      },
+      "torpedo_aft_mount_03": {
+        "x": 0.81,
+        "y": 0.58
+      },
+      "torpedo_aft_mount_04": {
+        "x": 0.8500000000000001,
+        "y": 0.58
+      }
+    },
+    "battle_torpedo_tube_fore": {
+      "pivot": {
+        "x": 0.55,
+        "y": 0.55
+      },
+      "torpedo_port_01": {
+        "x": 0.27,
+        "y": 0.34
+      },
+      "torpedo_port_02": {
+        "x": 0.47000000000000003,
+        "y": 0.34
+      },
+      "torpedo_port_03": {
+        "x": 0.27,
+        "y": 0.51
+      },
+      "torpedo_port_04": {
+        "x": 0.47000000000000003,
+        "y": 0.51
+      },
+      "torpedo_port_05": {
+        "x": 0.27,
+        "y": 0.68
+      },
+      "torpedo_port_06": {
+        "x": 0.47000000000000003,
+        "y": 0.68
+      }
+    },
+    "battle_torpedo_tube_aft": {
+      "pivot": {
+        "x": 0.48,
+        "y": 0.54
+      },
+      "torpedo_port_01": {
+        "x": 0.26,
+        "y": 0.43
+      },
+      "torpedo_port_02": {
+        "x": 0.44,
+        "y": 0.43
+      },
+      "torpedo_port_03": {
+        "x": 0.26,
+        "y": 0.59
+      },
+      "torpedo_port_04": {
+        "x": 0.44,
+        "y": 0.59
+      }
+    }
+  }
 }

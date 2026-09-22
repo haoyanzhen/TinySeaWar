@@ -18,13 +18,33 @@
     "turret_main": 1,
     "turret_secondary": 1
   },
+  "object_inventory": {
+    "turret_main": {
+      "instances": 1
+    },
+    "turret_secondary": {
+      "instances": 1
+    }
+  },
   "bindings": {
     "battle_rig_base": [
       "rig_mount",
-      "wake_origin",
       "skill_origin",
+      "wake_origin",
       "turret_mount_01",
       "secondary_mount_01"
+    ],
+    "battle_turret_main_01": [
+      "pivot",
+      "muzzle_01"
+    ],
+    "battle_turret_secondary_01": [
+      "pivot",
+      "muzzle_01"
+    ],
+    "battle_aa_center": [
+      "pivot",
+      "muzzle_01"
     ]
   },
   "vfx_roles": [
@@ -50,5 +70,83 @@
   "acceptance_rules": [
     "Original TinySeaWar design; no real flags, political symbols, readable insignia, or extremist symbols.",
     "Character body, rig base, weapon nodes, and VFX must remain visually separable."
-  ]
+  ],
+  "manifest_schema_version": 2,
+  "additional_public_vfx_roles": {
+    "muzzle_flash_medium": {
+      "file": "assets/vfx/combat/muzzle/vfx_muzzle_gun_medium_01.png",
+      "semantic": "muzzle_flash.medium"
+    }
+  },
+  "weapon_binding_rules": {
+    "yat_sen_main": {
+      "asset_role": "battle_turret_main_01",
+      "launch_bind": "muzzle_01",
+      "muzzle_vfx_role": "muzzle_flash_medium"
+    },
+    "yat_sen_secondary": {
+      "asset_role": "battle_turret_secondary_01",
+      "launch_bind": "muzzle_01",
+      "muzzle_vfx_role": "muzzle_flash_medium"
+    },
+    "yat_sen_aa_03": {
+      "asset_role": "battle_aa_center",
+      "launch_bind": "muzzle_01",
+      "muzzle_vfx_role": "aa_burst"
+    }
+  },
+  "binding_positions": {
+    "battle_rig_base": {
+      "rig_mount": {
+        "x": 0.5,
+        "y": 0.65
+      },
+      "skill_origin": {
+        "x": 0.5,
+        "y": 0.55
+      },
+      "wake_origin": {
+        "x": 0.5,
+        "y": 0.8
+      },
+      "turret_mount_01": {
+        "x": 0.28,
+        "y": 0.44
+      },
+      "secondary_mount_01": {
+        "x": 0.76,
+        "y": 0.42
+      }
+    },
+    "battle_turret_main_01": {
+      "pivot": {
+        "x": 0.48,
+        "y": 0.77
+      },
+      "muzzle_01": {
+        "x": 0.93,
+        "y": 0.2
+      }
+    },
+    "battle_turret_secondary_01": {
+      "pivot": {
+        "x": 0.5,
+        "y": 0.77
+      },
+      "muzzle_01": {
+        "x": 0.94,
+        "y": 0.22
+      }
+    },
+    "battle_aa_center": {
+      "pivot": {
+        "x": 0.5,
+        "y": 0.8
+      },
+      "muzzle_01": {
+        "x": 0.87,
+        "y": 0.28
+      }
+    }
+  }
 }

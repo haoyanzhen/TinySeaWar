@@ -18,6 +18,21 @@
     "turret_main": 4,
     "torpedo": 2
   },
+  "object_inventory": {
+    "turret_main": {
+      "instances": 4,
+      "barrels_by_instance": [
+        2,
+        1,
+        1,
+        1
+      ]
+    },
+    "torpedo": {
+      "instances": 2,
+      "tubes_per_instance": 4
+    }
+  },
   "bindings": {
     "battle_rig_base": [
       "rig_mount",
@@ -29,6 +44,22 @@
       "turret_mount_04",
       "torpedo_mount_01",
       "torpedo_mount_02"
+    ],
+    "battle_turret_main_01": [
+      "pivot",
+      "muzzle_01",
+      "muzzle_02"
+    ],
+    "battle_turret_main_02": [
+      "pivot",
+      "muzzle_01"
+    ],
+    "battle_torpedo_tube_01": [
+      "pivot",
+      "torpedo_port_01",
+      "torpedo_port_02",
+      "torpedo_port_03",
+      "torpedo_port_04"
     ]
   },
   "vfx_roles": [
@@ -44,7 +75,7 @@
   "public_vfx_profiles": {
     "mode_switch_indicator": "skill.area",
     "heavy_destroyer_muzzle": "muzzle_flash.small",
-    "torpedo_launch_flash": "torpedo.trail.surface",
+    "torpedo_launch_flash": "torpedo.launch.surface",
     "muzzle_flash_small": "muzzle_flash.small",
     "water_splash": "impact.water.medium",
     "aa_circle": "aa.burst.small",
@@ -54,5 +85,109 @@
   "acceptance_rules": [
     "Original TinySeaWar design; no real flags, political symbols, readable insignia, or extremist symbols.",
     "Character body, rig base, weapon nodes, and VFX must remain visually separable."
-  ]
+  ],
+  "manifest_schema_version": 2,
+  "binding_positions": {
+    "battle_rig_base": {
+      "rig_mount": {
+        "x": 0.39,
+        "y": 0.71
+      },
+      "wake_origin": {
+        "x": 0.1,
+        "y": 0.46
+      },
+      "skill_origin": {
+        "x": 0.5,
+        "y": 0.36
+      },
+      "turret_mount_01": {
+        "x": 0.8,
+        "y": 0.5
+      },
+      "turret_mount_02": {
+        "x": 0.58,
+        "y": 0.37
+      },
+      "turret_mount_03": {
+        "x": 0.34,
+        "y": 0.43
+      },
+      "turret_mount_04": {
+        "x": 0.34,
+        "y": 0.23
+      },
+      "torpedo_mount_01": {
+        "x": 0.39,
+        "y": 0.71
+      },
+      "torpedo_mount_02": {
+        "x": 0.48,
+        "y": 0.33
+      }
+    },
+    "battle_turret_main_01": {
+      "pivot": {
+        "x": 0.44,
+        "y": 0.82
+      },
+      "muzzle_01": {
+        "x": 0.903,
+        "y": 0.25
+      },
+      "muzzle_02": {
+        "x": 0.925,
+        "y": 0.36
+      }
+    },
+    "battle_turret_main_02": {
+      "pivot": {
+        "x": 0.45,
+        "y": 0.82
+      },
+      "muzzle_01": {
+        "x": 0.9,
+        "y": 0.15
+      }
+    },
+    "battle_torpedo_tube_01": {
+      "pivot": {
+        "x": 0.43,
+        "y": 0.8
+      },
+      "torpedo_port_01": {
+        "x": 0.6,
+        "y": 0.62
+      },
+      "torpedo_port_02": {
+        "x": 0.7,
+        "y": 0.57
+      },
+      "torpedo_port_03": {
+        "x": 0.8,
+        "y": 0.53
+      },
+      "torpedo_port_04": {
+        "x": 0.9,
+        "y": 0.48
+      }
+    }
+  },
+  "weapon_binding_rules": {
+    "z23_main": {
+      "asset_role": "battle_turret_main_01",
+      "launch_bind": "muzzle_01",
+      "muzzle_vfx_role": "heavy_destroyer_muzzle",
+      "launch_profile": "vfx.profile.muzzle_flash.small",
+      "impact_profile": "vfx.profile.shell_impact.small"
+    },
+    "z23_torpedo": {
+      "asset_role": "battle_torpedo_tube_01",
+      "launch_bind": "torpedo_port_01",
+      "muzzle_vfx_role": "torpedo_launch_flash",
+      "launch_profile": "vfx.profile.torpedo_launch",
+      "impact_profile": "vfx.profile.torpedo_impact"
+    }
+  },
+  "additional_public_vfx_roles": {}
 }

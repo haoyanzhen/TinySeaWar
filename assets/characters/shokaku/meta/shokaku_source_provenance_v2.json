@@ -1,0 +1,327 @@
+{
+  "schema_version": 2,
+  "character_id": "shokaku",
+  "kind": "codex_builtin_generated_art",
+  "source": "Codex built-in ImageGen",
+  "batch_ready_allowed": true,
+  "generation_policy": {
+    "primary_route": "codex_builtin_imagegen_native_alpha",
+    "legacy_fallback": {
+      "authorized": false,
+      "activation": "--allow-legacy-chroma-fallback",
+      "reason": "",
+      "native_failures": []
+    }
+  },
+  "generation": {
+    "requested_model": "codex-account-managed-imagegen",
+    "actual_model": "codex-account-managed-imagegen",
+    "generation_tool": "Codex built-in ImageGen",
+    "endpoint": "Codex account-managed image generation",
+    "quality": "Codex account-managed",
+    "size_control": "per-asset Codex account-managed output",
+    "background_control": "transparent requested and pixel-verified",
+    "output_format": "PNG",
+    "prompt_revision": {
+      "path": "assets/characters/shokaku/meta/shokaku_generation_brief_v2.md",
+      "sha256": "78da95e5e8996d96c43c0398c7ee5a4d30ed0ed702561db25d946580acaf4dff"
+    },
+    "reference_inputs": [
+      {
+        "path": "assets/characters/shokaku/concept/shokaku_concept_full.png",
+        "role": "accepted_style_anchor_for_derivative_sheets"
+      }
+    ],
+    "reproducibility_note": "The Codex account manages the underlying image model and request IDs; those implementation details are not exposed. Accepted PNG outputs are preserved byte-for-byte and tracked by SHA-256."
+  },
+  "source_images": [
+    {
+      "role": "concept_full",
+      "path": "assets/characters/shokaku/concept/shokaku_concept_full.png",
+      "sha256": "f6740c88c7c1dd6b3518e195c66e1236d41e85d896989ddf14bb227b4dd7cd7d",
+      "size": [
+        1224,
+        1285
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "f6740c88c7c1dd6b3518e195c66e1236d41e85d896989ddf14bb227b4dd7cd7d",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.677978688232751,
+        "transparent_border_ratio": 0.9998005584363782
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "concept_full: White hair, crane ornaments and white/navy dress consistent; twin wing decks, bomber versus torpedo bomber separately readable; no launched aircraft baked in frames. Native transparency measured separately; current displayed source examined. Fine line/scale polish remains; runtime assembly not accepted."
+    },
+    {
+      "role": "ui_sheet",
+      "path": "assets/characters/shokaku/ui/shokaku_ui_sheet.png",
+      "sha256": "6ad88ce83cbe4d83323a3feca844eda32b71c8c11dddb99c25f2553de37a8cc4",
+      "size": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "6ad88ce83cbe4d83323a3feca844eda32b71c8c11dddb99c25f2553de37a8cc4",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.5950883229573568,
+        "transparent_border_ratio": 1.0
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "ui_sheet: White hair, crane ornaments and white/navy dress consistent; twin wing decks, bomber versus torpedo bomber separately readable; no launched aircraft baked in frames. Native transparency measured separately; current displayed source examined. Fine line/scale polish remains; runtime assembly not accepted."
+    },
+    {
+      "role": "battle_grid",
+      "path": "assets/characters/shokaku/battle/shokaku_battle_asset_grid.png",
+      "sha256": "81b026e3e41d71a76a853435b61bc250722f32d635a20a918e3b407d8d943bf5",
+      "size": [
+        1774,
+        887
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "81b026e3e41d71a76a853435b61bc250722f32d635a20a918e3b407d8d943bf5",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.7451227742831759,
+        "transparent_border_ratio": 0.9971793907484017
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "battle_grid: White hair, crane ornaments and white/navy dress consistent; twin wing decks, bomber versus torpedo bomber separately readable; no launched aircraft baked in frames. Native transparency measured separately; current displayed source examined. Fine line/scale polish remains; runtime assembly not accepted."
+    },
+    {
+      "role": "vfx_sheet",
+      "path": "assets/characters/shokaku/vfx/shokaku_vfx_reference_sheet.png",
+      "sha256": "b566b09995b41717937c67b14c187b378a8a4eaab8ae10d66a16908d3e42d72f",
+      "size": [
+        1230,
+        1278
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "b566b09995b41717937c67b14c187b378a8a4eaab8ae10d66a16908d3e42d72f",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.8364142397292518,
+        "transparent_border_ratio": 0.9926177174780527
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "vfx_sheet: White hair, crane ornaments and white/navy dress consistent; twin wing decks, bomber versus torpedo bomber separately readable; no launched aircraft baked in frames. Native transparency measured separately; current displayed source examined. Fine line/scale polish remains; runtime assembly not accepted."
+    },
+    {
+      "role": "anim_idle",
+      "path": "assets/characters/shokaku/battle/shokaku_anim_idle_4f_sheet.png",
+      "sha256": "11b4f65d230a12ed7d68ed091ea83ae66f83a4c2728abd9db889757f770def00",
+      "size": [
+        1254,
+        1254
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "11b4f65d230a12ed7d68ed091ea83ae66f83a4c2728abd9db889757f770def00",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.51005713137418,
+        "transparent_border_ratio": 0.9774541101356744
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "anim_idle: White hair, crane ornaments and white/navy dress consistent; twin wing decks, bomber versus torpedo bomber separately readable; no launched aircraft baked in frames. Native transparency measured separately; current displayed source examined. Fine line/scale polish remains; runtime assembly not accepted."
+    },
+    {
+      "role": "anim_move",
+      "path": "assets/characters/shokaku/battle/shokaku_anim_move_4f_sheet.png",
+      "sha256": "5d481b6304c38d73443ff81a31dc598095f6e76a8039eda58b6271f5024ba349",
+      "size": [
+        1224,
+        1285
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "5d481b6304c38d73443ff81a31dc598095f6e76a8039eda58b6271f5024ba349",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.5332951857785916,
+        "transparent_border_ratio": 0.9902273633825289
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "anim_move: White hair, crane ornaments and white/navy dress consistent; twin wing decks, bomber versus torpedo bomber separately readable; no launched aircraft baked in frames. Native transparency measured separately; current displayed source examined. Fine line/scale polish remains; runtime assembly not accepted."
+    },
+    {
+      "role": "anim_attack",
+      "path": "assets/characters/shokaku/battle/shokaku_anim_attack_4f_sheet.png",
+      "sha256": "c66b93af8ac8f6696aeb38162d37ccfe9d240329d3f7393a1ff5a4818f802bff",
+      "size": [
+        1254,
+        1254
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "c66b93af8ac8f6696aeb38162d37ccfe9d240329d3f7393a1ff5a4818f802bff",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.551651620714829,
+        "transparent_border_ratio": 0.987829209896249
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "anim_attack: White hair, crane ornaments and white/navy dress consistent; twin wing decks, bomber versus torpedo bomber separately readable; no launched aircraft baked in frames. Native transparency measured separately; current displayed source examined. Fine line/scale polish remains; runtime assembly not accepted."
+    },
+    {
+      "role": "anim_hit",
+      "path": "assets/characters/shokaku/battle/shokaku_anim_hit_4f_sheet.png",
+      "sha256": "734dcb9d8bb91e0ef71c281e436d0caa1aca05f2f1a4eefc6cc56ecd8a6c3268",
+      "size": [
+        1344,
+        1170
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "734dcb9d8bb91e0ef71c281e436d0caa1aca05f2f1a4eefc6cc56ecd8a6c3268",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.5511993793243793,
+        "transparent_border_ratio": 0.9972133757961783
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "anim_hit: White hair, crane ornaments and white/navy dress consistent; twin wing decks, bomber versus torpedo bomber separately readable; no launched aircraft baked in frames. Native transparency measured separately; current displayed source examined. Fine line/scale polish remains; runtime assembly not accepted."
+    },
+    {
+      "role": "anim_firepower",
+      "path": "assets/characters/shokaku/battle/shokaku_anim_firepower_4f_sheet.png",
+      "sha256": "aaae033b7418ca3d10ce9b7e38226d38f47402813c1f56263dfcaa3e42a15be5",
+      "size": [
+        1254,
+        1254
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "aaae033b7418ca3d10ce9b7e38226d38f47402813c1f56263dfcaa3e42a15be5",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.5401166029471243,
+        "transparent_border_ratio": 0.982242617717478
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "anim_firepower: White hair, crane ornaments and white/navy dress consistent; twin wing decks, bomber versus torpedo bomber separately readable; no launched aircraft baked in frames. Native transparency measured separately; current displayed source examined. Fine line/scale polish remains; runtime assembly not accepted."
+    }
+  ]
+}

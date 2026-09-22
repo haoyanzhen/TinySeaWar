@@ -1,0 +1,327 @@
+{
+  "schema_version": 2,
+  "character_id": "takao",
+  "kind": "codex_builtin_generated_art",
+  "source": "Codex built-in ImageGen",
+  "batch_ready_allowed": true,
+  "generation_policy": {
+    "primary_route": "codex_builtin_imagegen_native_alpha",
+    "legacy_fallback": {
+      "authorized": false,
+      "activation": "--allow-legacy-chroma-fallback",
+      "reason": "",
+      "native_failures": []
+    }
+  },
+  "generation": {
+    "requested_model": "codex-account-managed-imagegen",
+    "actual_model": "codex-account-managed-imagegen",
+    "generation_tool": "Codex built-in ImageGen",
+    "endpoint": "Codex account-managed image generation",
+    "quality": "Codex account-managed",
+    "size_control": "per-asset Codex account-managed output",
+    "background_control": "transparent requested and pixel-verified",
+    "output_format": "PNG",
+    "prompt_revision": {
+      "path": "assets/characters/takao/meta/takao_generation_brief_v2.md",
+      "sha256": "305284b63d0910d7ac4de5a928af1dcc4c979e92bfee80ed2cc901b6ae41bbb7"
+    },
+    "reference_inputs": [
+      {
+        "path": "assets/characters/takao/concept/takao_concept_full.png",
+        "role": "accepted_style_anchor_for_derivative_sheets"
+      }
+    ],
+    "reproducibility_note": "The Codex account manages the underlying image model and request IDs; those implementation details are not exposed. Accepted PNG outputs are preserved byte-for-byte and tracked by SHA-256."
+  },
+  "source_images": [
+    {
+      "role": "concept_full",
+      "path": "assets/characters/takao/concept/takao_concept_full.png",
+      "sha256": "67fbaeec1c3c4adecebf77215b156ab81ae21448f99136684924e19bf84ed022",
+      "size": [
+        1086,
+        1448
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "67fbaeec1c3c4adecebf77215b156ab81ae21448f99136684924e19bf84ed022",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.6130078446933854,
+        "transparent_border_ratio": 0.9980252764612955
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "concept_full: Indigo hair, violet eyes, bridge and crimson lining preserved; five twin turrets and four quadruple racks in full rig. Final hit uses four distinct recoil poses with full equipment; separate empty five-gun/four-rack base inspected. Native transparency measured separately; current displayed source examined. Fine line/scale polish remains; runtime assembly not accepted."
+    },
+    {
+      "role": "ui_sheet",
+      "path": "assets/characters/takao/ui/takao_ui_sheet.png",
+      "sha256": "3a7d79f78df6593e2797108a94744e3581d6b4ce750271d403f6f48e672eb378",
+      "size": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "3a7d79f78df6593e2797108a94744e3581d6b4ce750271d403f6f48e672eb378",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.5787843068440756,
+        "transparent_border_ratio": 0.996677091477717
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "ui_sheet: Indigo hair, violet eyes, bridge and crimson lining preserved; five twin turrets and four quadruple racks in full rig. Final hit uses four distinct recoil poses with full equipment; separate empty five-gun/four-rack base inspected. Native transparency measured separately; current displayed source examined. Fine line/scale polish remains; runtime assembly not accepted."
+    },
+    {
+      "role": "battle_grid",
+      "path": "assets/characters/takao/battle/takao_battle_asset_grid.png",
+      "sha256": "46323968198b2cafa4ef505f8a3118c17e7d8dd9bb46b0ee4b24a3ee25342ed6",
+      "size": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "46323968198b2cafa4ef505f8a3118c17e7d8dd9bb46b0ee4b24a3ee25342ed6",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.6359761555989584,
+        "transparent_border_ratio": 0.972243940578577
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "battle_grid: Indigo hair, violet eyes, bridge and crimson lining preserved; five twin turrets and four quadruple racks in full rig. Final hit uses four distinct recoil poses with full equipment; separate empty five-gun/four-rack base inspected. Native transparency measured separately; current displayed source examined. Fine line/scale polish remains; runtime assembly not accepted."
+    },
+    {
+      "role": "vfx_sheet",
+      "path": "assets/characters/takao/vfx/takao_vfx_reference_sheet.png",
+      "sha256": "9b15221313613709896d1a6ec0fbc6843895bc0162411a486f33ebb883016047",
+      "size": [
+        1024,
+        1536
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "9b15221313613709896d1a6ec0fbc6843895bc0162411a486f33ebb883016047",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.7711353302001953,
+        "transparent_border_ratio": 0.9845582486317436
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "vfx_sheet: Indigo hair, violet eyes, bridge and crimson lining preserved; five twin turrets and four quadruple racks in full rig. Final hit uses four distinct recoil poses with full equipment; separate empty five-gun/four-rack base inspected. Native transparency measured separately; current displayed source examined. Fine line/scale polish remains; runtime assembly not accepted."
+    },
+    {
+      "role": "anim_idle",
+      "path": "assets/characters/takao/battle/takao_anim_idle_4f_sheet.png",
+      "sha256": "17ac3fd2cd4799dfa34714db53d69618731ee65f3fd90f60949e336673158a49",
+      "size": [
+        1247,
+        1261
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "17ac3fd2cd4799dfa34714db53d69618731ee65f3fd90f60949e336673158a49",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.5598069784612332,
+        "transparent_border_ratio": 0.9996009577015164
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "anim_idle: Indigo hair, violet eyes, bridge and crimson lining preserved; five twin turrets and four quadruple racks in full rig. Final hit uses four distinct recoil poses with full equipment; separate empty five-gun/four-rack base inspected. Native transparency measured separately; current displayed source examined. Fine line/scale polish remains; runtime assembly not accepted."
+    },
+    {
+      "role": "anim_move",
+      "path": "assets/characters/takao/battle/takao_anim_move_4f_sheet.png",
+      "sha256": "04fdc9e9f6511dd2526ab30f166776fb59304c48478b7070716044c0d0ec59f6",
+      "size": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "04fdc9e9f6511dd2526ab30f166776fb59304c48478b7070716044c0d0ec59f6",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.6414445241292318,
+        "transparent_border_ratio": 0.9683346364347146
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "anim_move: Indigo hair, violet eyes, bridge and crimson lining preserved; five twin turrets and four quadruple racks in full rig. Final hit uses four distinct recoil poses with full equipment; separate empty five-gun/four-rack base inspected. Native transparency measured separately; current displayed source examined. Fine line/scale polish remains; runtime assembly not accepted."
+    },
+    {
+      "role": "anim_attack",
+      "path": "assets/characters/takao/battle/takao_anim_attack_4f_sheet.png",
+      "sha256": "5f474ab5e60b331a46d08bb69be73849799dd7499c13aa9384693a003db5d5aa",
+      "size": [
+        1448,
+        1086
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "5f474ab5e60b331a46d08bb69be73849799dd7499c13aa9384693a003db5d5aa",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.6929797116490135,
+        "transparent_border_ratio": 0.9968404423380727
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "anim_attack: Indigo hair, violet eyes, bridge and crimson lining preserved; five twin turrets and four quadruple racks in full rig. Final hit uses four distinct recoil poses with full equipment; separate empty five-gun/four-rack base inspected. Native transparency measured separately; current displayed source examined. Fine line/scale polish remains; runtime assembly not accepted."
+    },
+    {
+      "role": "anim_hit",
+      "path": "assets/characters/takao/battle/takao_anim_hit_4f_sheet.png",
+      "sha256": "d036bda95238808e11590f5d1ede3febfe9d0653e6c1e3d7240ef03f34c5b0c3",
+      "size": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "d036bda95238808e11590f5d1ede3febfe9d0653e6c1e3d7240ef03f34c5b0c3",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.6692288716634115,
+        "transparent_border_ratio": 1.0
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "anim_hit: Indigo hair, violet eyes, bridge and crimson lining preserved; five twin turrets and four quadruple racks in full rig. Final hit uses four distinct recoil poses with full equipment; separate empty five-gun/four-rack base inspected. Native transparency measured separately; current displayed source examined. Fine line/scale polish remains; runtime assembly not accepted."
+    },
+    {
+      "role": "anim_firepower",
+      "path": "assets/characters/takao/battle/takao_anim_firepower_4f_sheet.png",
+      "sha256": "de3724e4031c31d5fcbb93a3b6a16086ec05ec189d7d5c4eef987ced6268f573",
+      "size": [
+        1448,
+        1086
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "de3724e4031c31d5fcbb93a3b6a16086ec05ec189d7d5c4eef987ced6268f573",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.6653058005962375,
+        "transparent_border_ratio": 0.9994075829383886
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "anim_firepower: Indigo hair, violet eyes, bridge and crimson lining preserved; five twin turrets and four quadruple racks in full rig. Final hit uses four distinct recoil poses with full equipment; separate empty five-gun/four-rack base inspected. Native transparency measured separately; current displayed source examined. Fine line/scale polish remains; runtime assembly not accepted."
+    }
+  ]
+}

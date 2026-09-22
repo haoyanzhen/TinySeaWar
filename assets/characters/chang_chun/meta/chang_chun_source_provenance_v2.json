@@ -1,0 +1,327 @@
+{
+  "schema_version": 2,
+  "character_id": "chang_chun",
+  "kind": "codex_builtin_generated_art",
+  "source": "Codex built-in ImageGen",
+  "batch_ready_allowed": true,
+  "generation_policy": {
+    "primary_route": "codex_builtin_imagegen_native_alpha",
+    "legacy_fallback": {
+      "authorized": false,
+      "activation": "--allow-legacy-chroma-fallback",
+      "reason": "",
+      "native_failures": []
+    }
+  },
+  "generation": {
+    "requested_model": "codex-account-managed-imagegen",
+    "actual_model": "codex-account-managed-imagegen",
+    "generation_tool": "Codex built-in ImageGen",
+    "endpoint": "Codex account-managed image generation",
+    "quality": "Codex account-managed",
+    "size_control": "per-asset Codex account-managed output",
+    "background_control": "transparent requested and pixel-verified",
+    "output_format": "PNG",
+    "prompt_revision": {
+      "path": "assets/characters/chang_chun/meta/chang_chun_generation_brief_v2.md",
+      "sha256": "36d13e0fe95802efca5fda30a7e277b38d834d862a518997dadf3b70ef158a1a"
+    },
+    "reference_inputs": [
+      {
+        "path": "assets/characters/chang_chun/concept/chang_chun_concept_full.png",
+        "role": "accepted_style_anchor_for_derivative_sheets"
+      }
+    ],
+    "reproducibility_note": "The Codex account manages the underlying image model and request IDs; those implementation details are not exposed. Accepted PNG outputs are preserved byte-for-byte and tracked by SHA-256."
+  },
+  "source_images": [
+    {
+      "role": "concept_full",
+      "path": "assets/characters/chang_chun/concept/chang_chun_concept_full.png",
+      "sha256": "5ea733f1d95473fc666f447df55304658471313843c8a450069a04659ebf8d07",
+      "size": [
+        1024,
+        1536
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "5ea733f1d95473fc666f447df55304658471313843c8a450069a04659ebf8d07",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.5971247355143229,
+        "transparent_border_ratio": 0.9947224394057858
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "Full body and outfit intact; original teal/jade naval identity; equipment count matches character inventory. Native alpha retained; fine edge polish may remain. Four single guns and two triple torpedo racks, no missile launcher."
+    },
+    {
+      "role": "ui_sheet",
+      "path": "assets/characters/chang_chun/ui/chang_chun_ui_sheet.png",
+      "sha256": "dcadb4d09ddb8b4ad93bb5cd5f953387da317d42b9d07511779ad9d1759f8b12",
+      "size": [
+        1774,
+        887
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "dcadb4d09ddb8b4ad93bb5cd5f953387da317d42b9d07511779ad9d1759f8b12",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.4369700636400265,
+        "transparent_border_ratio": 0.9998119593832268
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "Eight distinct portrait, small portrait, chibi, default/serious/hit expression and skill/class icon roles. Hair and accessories intact; intentional bust bases; some fine edge texture reserved for polish. Four single guns and two triple torpedo racks, no missile launcher."
+    },
+    {
+      "role": "battle_grid",
+      "path": "assets/characters/chang_chun/battle/chang_chun_battle_asset_grid.png",
+      "sha256": "dd82055d334a108e72e5cc2677c01cd543b4d668452d45cc6d290dd8b0efe2ae",
+      "size": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "dd82055d334a108e72e5cc2677c01cd543b4d668452d45cc6d290dd8b0efe2ae",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.6450392405192057,
+        "transparent_border_ratio": 0.9958952306489445
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "Eight separable body/base/weapon/instrument roles; independent full body and complete weapon silhouettes. Mount geometry and small-scale integration require runtime review. Four single guns and two triple torpedo racks, no missile launcher."
+    },
+    {
+      "role": "vfx_sheet",
+      "path": "assets/characters/chang_chun/vfx/chang_chun_vfx_reference_sheet.png",
+      "sha256": "4ae4abc45c15b5645aef45dc672f19ce4f68664fb57ff25e1260097e8f662550",
+      "size": [
+        1024,
+        1536
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "4ae4abc45c15b5645aef45dc672f19ce4f68664fb57ff25e1260097e8f662550",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 253,
+        "transparent_canvas_ratio": 0.44783910115559894,
+        "transparent_border_ratio": 0.8119624706802189
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "Eight role-ordered effects, including disconnected droplets/sparks and complete rings. Soft native-alpha glow preserved; final contrast remains a runtime polish item. Four single guns and two triple torpedo racks, no missile launcher."
+    },
+    {
+      "role": "anim_idle",
+      "path": "assets/characters/chang_chun/battle/chang_chun_anim_idle_4f_sheet.png",
+      "sha256": "e61f16c73f7ca7b6f5d29e732f085508d65ba7dffb9fb095f01b8a8875a56b81",
+      "size": [
+        1254,
+        1254
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "e61f16c73f7ca7b6f5d29e732f085508d65ba7dffb9fb095f01b8a8875a56b81",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.5814503636211015,
+        "transparent_border_ratio": 0.9972067039106145
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "Four ordered distinct idle body poses, consistent identity/equipment, complete hair/feet and separated frames. Cross-state scale and animation playback remain runtime polish. Four single guns and two triple torpedo racks, no missile launcher."
+    },
+    {
+      "role": "anim_move",
+      "path": "assets/characters/chang_chun/battle/chang_chun_anim_move_4f_sheet.png",
+      "sha256": "f0b6f497b4886c090253726b3e2f877a12280203e4376d98adb840fd87bc1389",
+      "size": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "f0b6f497b4886c090253726b3e2f877a12280203e4376d98adb840fd87bc1389",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.5777581532796224,
+        "transparent_border_ratio": 0.9955043002345583
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "Four ordered distinct move body poses, consistent identity/equipment, complete hair/feet and separated frames. Cross-state scale and animation playback remain runtime polish. Four single guns and two triple torpedo racks, no missile launcher."
+    },
+    {
+      "role": "anim_attack",
+      "path": "assets/characters/chang_chun/battle/chang_chun_anim_attack_4f_sheet.png",
+      "sha256": "4f2eb7e1af26fdb5b22410a5266c68afb19a6fa93a763ebf4a3f11a9175288cb",
+      "size": [
+        1193,
+        1318
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "4f2eb7e1af26fdb5b22410a5266c68afb19a6fa93a763ebf4a3f11a9175288cb",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.5224679370175289,
+        "transparent_border_ratio": 0.9998007174172977
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "Four ordered distinct attack body poses, consistent identity/equipment, complete hair/feet and separated frames. Cross-state scale and animation playback remain runtime polish. Four single guns and two triple torpedo racks, no missile launcher."
+    },
+    {
+      "role": "anim_hit",
+      "path": "assets/characters/chang_chun/battle/chang_chun_anim_hit_4f_sheet.png",
+      "sha256": "1f008f5513ac0c692134c6dc68236096d8957152cabf4a5fc7b4bb0fff4cf9bf",
+      "size": [
+        1254,
+        1254
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "1f008f5513ac0c692134c6dc68236096d8957152cabf4a5fc7b4bb0fff4cf9bf",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.5120157759921043,
+        "transparent_border_ratio": 0.9982043096568236
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "Four ordered distinct hit body poses, consistent identity/equipment, complete hair/feet and separated frames. Cross-state scale and animation playback remain runtime polish. Four single guns and two triple torpedo racks, no missile launcher."
+    },
+    {
+      "role": "anim_firepower",
+      "path": "assets/characters/chang_chun/battle/chang_chun_anim_firepower_4f_sheet.png",
+      "sha256": "89675753bf8a5d4fcba2cbab962afbf5cb75a69e09b1fb65825b6ac5e3c0549a",
+      "size": [
+        1254,
+        1254
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "89675753bf8a5d4fcba2cbab962afbf5cb75a69e09b1fb65825b6ac5e3c0549a",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.6506343973606628,
+        "transparent_border_ratio": 0.9964086193136472
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "Four ordered distinct firepower body poses, consistent identity/equipment, complete hair/feet and separated frames. Cross-state scale and animation playback remain runtime polish. Four single guns and two triple torpedo racks, no missile launcher."
+    }
+  ]
+}

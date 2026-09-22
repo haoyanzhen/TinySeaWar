@@ -1,0 +1,327 @@
+{
+  "schema_version": 2,
+  "character_id": "yat_sen",
+  "kind": "codex_builtin_generated_art",
+  "source": "Codex built-in ImageGen",
+  "batch_ready_allowed": true,
+  "generation_policy": {
+    "primary_route": "codex_builtin_imagegen_native_alpha",
+    "legacy_fallback": {
+      "authorized": false,
+      "activation": "--allow-legacy-chroma-fallback",
+      "reason": "",
+      "native_failures": []
+    }
+  },
+  "generation": {
+    "requested_model": "codex-account-managed-imagegen",
+    "actual_model": "codex-account-managed-imagegen",
+    "generation_tool": "Codex built-in ImageGen",
+    "endpoint": "Codex account-managed image generation",
+    "quality": "Codex account-managed",
+    "size_control": "per-asset Codex account-managed output",
+    "background_control": "transparent requested and pixel-verified",
+    "output_format": "PNG",
+    "prompt_revision": {
+      "path": "assets/characters/yat_sen/meta/yat_sen_generation_brief_v2.md",
+      "sha256": "b6384c47b4746f9287c496aaadaa233bc3c5300c9a56d84d3057cd36f415e0e1"
+    },
+    "reference_inputs": [
+      {
+        "path": "assets/characters/yat_sen/concept/yat_sen_concept_full.png",
+        "role": "accepted_style_anchor_for_derivative_sheets"
+      }
+    ],
+    "reproducibility_note": "The Codex account manages the underlying image model and request IDs; those implementation details are not exposed. Accepted PNG outputs are preserved byte-for-byte and tracked by SHA-256."
+  },
+  "source_images": [
+    {
+      "role": "concept_full",
+      "path": "assets/characters/yat_sen/concept/yat_sen_concept_full.png",
+      "sha256": "e08d32cfc748870c73e22b5fe513799f6da4d792c5b442129eb6736c61191fb5",
+      "size": [
+        1024,
+        1536
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "e08d32cfc748870c73e22b5fe513799f6da4d792c5b442129eb6736c61191fb5",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.7108389536539713,
+        "transparent_border_ratio": 1.0
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "Full body and outfit intact; original teal/jade naval identity; equipment count matches character inventory. Native alpha retained; fine edge polish may remain. One larger single main gun and one smaller single secondary gun."
+    },
+    {
+      "role": "ui_sheet",
+      "path": "assets/characters/yat_sen/ui/yat_sen_ui_sheet.png",
+      "sha256": "a231ca1279d212a2bf9c0cc73635c8f1e2d41af4c2b2e9a61f28c05f52ca3c48",
+      "size": [
+        1774,
+        887
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "a231ca1279d212a2bf9c0cc73635c8f1e2d41af4c2b2e9a61f28c05f52ca3c48",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.5487468367462368,
+        "transparent_border_ratio": 0.9868371568258744
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "Regenerated to separate neighboring assets. Current source has clear gaps, intact silhouettes and matching jade/teal identity; move uses approved chibi idle as proportion reference. Two single guns retained. Fine edges/playback remain polish."
+    },
+    {
+      "role": "battle_grid",
+      "path": "assets/characters/yat_sen/battle/yat_sen_battle_asset_grid.png",
+      "sha256": "5eabf19e9973f0c8b83cd74018180063f8f53a5113e3ccc1624c565be3774f6f",
+      "size": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "5eabf19e9973f0c8b83cd74018180063f8f53a5113e3ccc1624c565be3774f6f",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.7338167826334635,
+        "transparent_border_ratio": 1.0
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "Eight separable body/base/weapon/instrument roles; independent full body and complete weapon silhouettes. Mount geometry and small-scale integration require runtime review. One larger single main gun and one smaller single secondary gun."
+    },
+    {
+      "role": "vfx_sheet",
+      "path": "assets/characters/yat_sen/vfx/yat_sen_vfx_reference_sheet.png",
+      "sha256": "f2c5f681706b0ec65f30f796359fe2afad71b07dabe0cdc5a6527ab7c2eee659",
+      "size": [
+        1024,
+        1536
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "f2c5f681706b0ec65f30f796359fe2afad71b07dabe0cdc5a6527ab7c2eee659",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 252,
+        "transparent_canvas_ratio": 0.2786407470703125,
+        "transparent_border_ratio": 0.5641125879593433
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "Eight role-ordered effects, including disconnected droplets/sparks and complete rings. Soft native-alpha glow preserved; final contrast remains a runtime polish item. One larger single main gun and one smaller single secondary gun."
+    },
+    {
+      "role": "anim_idle",
+      "path": "assets/characters/yat_sen/battle/yat_sen_anim_idle_4f_sheet.png",
+      "sha256": "8668a3feaa8b537f5db334f8626966c932fc41cfc59ce9ace0e0f8f407a398f6",
+      "size": [
+        1254,
+        1254
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "8668a3feaa8b537f5db334f8626966c932fc41cfc59ce9ace0e0f8f407a398f6",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.6452220517947035,
+        "transparent_border_ratio": 0.9958100558659218
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "Four ordered distinct idle body poses, consistent identity/equipment, complete hair/feet and separated frames. Cross-state scale and animation playback remain runtime polish. One larger single main gun and one smaller single secondary gun."
+    },
+    {
+      "role": "anim_move",
+      "path": "assets/characters/yat_sen/battle/yat_sen_anim_move_4f_sheet.png",
+      "sha256": "6ef870aa321d2fa82274d017a2b1803f9049398c362bf9918e2605b4807714b3",
+      "size": [
+        1254,
+        1254
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "6ef870aa321d2fa82274d017a2b1803f9049398c362bf9918e2605b4807714b3",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.6226499444202793,
+        "transparent_border_ratio": 0.9938148443735035
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "Regenerated to separate neighboring assets. Current source has clear gaps, intact silhouettes and matching jade/teal identity; move uses approved chibi idle as proportion reference. Two single guns retained. Fine edges/playback remain polish."
+    },
+    {
+      "role": "anim_attack",
+      "path": "assets/characters/yat_sen/battle/yat_sen_anim_attack_4f_sheet.png",
+      "sha256": "579ac44de3b2db41e738ca46b417f3e99200f101d70453f1105df068ae67695e",
+      "size": [
+        1244,
+        1265
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "579ac44de3b2db41e738ca46b417f3e99200f101d70453f1105df068ae67695e",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.5823176543853184,
+        "transparent_border_ratio": 0.9970083765456721
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "Four ordered distinct attack body poses, consistent identity/equipment, complete hair/feet and separated frames. Cross-state scale and animation playback remain runtime polish. One larger single main gun and one smaller single secondary gun."
+    },
+    {
+      "role": "anim_hit",
+      "path": "assets/characters/yat_sen/battle/yat_sen_anim_hit_4f_sheet.png",
+      "sha256": "f062f86c275282288644bde941500a705b0971887addf408fe7d61c435515b78",
+      "size": [
+        1223,
+        1286
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "f062f86c275282288644bde941500a705b0971887addf408fe7d61c435515b78",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.5616278966262245,
+        "transparent_border_ratio": 0.9774631033107299
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "Four ordered distinct hit body poses, consistent identity/equipment, complete hair/feet and separated frames. Cross-state scale and animation playback remain runtime polish. One larger single main gun and one smaller single secondary gun."
+    },
+    {
+      "role": "anim_firepower",
+      "path": "assets/characters/yat_sen/battle/yat_sen_anim_firepower_4f_sheet.png",
+      "sha256": "35098ea855e3c5ba52c9a2f43804e00a31a40e3e614242d751033a28a83774ff",
+      "size": [
+        1222,
+        1287
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "35098ea855e3c5ba52c9a2f43804e00a31a40e3e614242d751033a28a83774ff",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.5107788192894576,
+        "transparent_border_ratio": 0.9764658954926206
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "Four ordered distinct firepower body poses, consistent identity/equipment, complete hair/feet and separated frames. Cross-state scale and animation playback remain runtime polish. One larger single main gun and one smaller single secondary gun."
+    }
+  ]
+}

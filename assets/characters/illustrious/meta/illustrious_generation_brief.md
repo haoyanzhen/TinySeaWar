@@ -1,5 +1,12 @@
 # 光辉号 HMS Illustrious Phase 2 Generation Brief
 
+## Generation API contract
+
+- Primary route: OpenAI Images API with `gpt-image-2.5-sunburst` or `gpt-image-2.5-flare`.
+- Every isolated source request must set API-level `background: "transparent"` and `output_format: "png"`.
+- Prompt prose is not a substitute for those API controls. An RGB checkerboard, white/black matte, or opaque RGBA file fails the source gate.
+- The legacy chroma-key route is disabled by default. It may run only after native-alpha attempts fail and an operator explicitly supplies `--allow-legacy-chroma-fallback` with a recorded reason.
+
 ## Shared prompt core
 
 2D anime shipgirl tactical naval game asset for TinySeaWar. Original design; do not imitate any existing shipgirl franchise.
@@ -8,6 +15,7 @@ Faction: 英系. MVP ship class: 航母. Level: 3 级.
 Personality: 威严旗舰（沉稳守护）. Combat role: 装甲航母与耐久航空.
 Core visual direction: 低饱和皇家蓝重礼装、厚肩甲和稳定直立姿态；装甲飞行甲板短而厚，机库与防空阵列外露；起飞灯节奏平稳，受击反馈以甲板火花而非大幅摇摆表现.
 Required MVP asset focus: 全身/半身立绘、高规格技能 cut-in、装甲甲板/机库、舰载机小图、双起飞点与回收点、防空中心、装甲甲板受击层、稳定出击和耐久航空动画.
+Expected object inventory from the authoritative postprocess plan: {"aircraft_launch": {"instances": 2}, "aircraft_recovery": {"instances": 1}}.
 No real flags, no political symbols, no readable insignia text, no historical extremist symbols.
 Clean readable silhouette, clear ship-class identity, high-quality anime linework, restrained cel shading, consistent face and hair. Character body, rig base, weapons and effect origins must remain visually separable.
 
@@ -19,25 +27,26 @@ Faction: 英系. MVP ship class: 航母. Level: 3 级.
 Personality: 威严旗舰（沉稳守护）. Combat role: 装甲航母与耐久航空.
 Core visual direction: 低饱和皇家蓝重礼装、厚肩甲和稳定直立姿态；装甲飞行甲板短而厚，机库与防空阵列外露；起飞灯节奏平稳，受击反馈以甲板火花而非大幅摇摆表现.
 Required MVP asset focus: 全身/半身立绘、高规格技能 cut-in、装甲甲板/机库、舰载机小图、双起飞点与回收点、防空中心、装甲甲板受击层、稳定出击和耐久航空动画.
+Expected object inventory from the authoritative postprocess plan: {"aircraft_launch": {"instances": 2}, "aircraft_recovery": {"instances": 1}}.
 No real flags, no political symbols, no readable insignia text, no historical extremist symbols.
 Clean readable silhouette, clear ship-class identity, high-quality anime linework, restrained cel shading, consistent face and hair. Character body, rig base, weapons and effect origins must remain visually separable.
 Create the definitive full-body style anchor concept on a transparent background. Front three-quarter standing pose, complete outfit and ship rigging visible, generous empty transparent margin, no environment, no ocean, no UI, no text. Show the body, rig base, weapon identity and core accessory clearly; the accepted anchor will be the sole identity reference for all derivative sheets.
 
 ## UI 4x2 sheet
 
-Use the accepted style anchor as the only identity reference. Create exactly eight separated cells in a 4x2 grid: portrait, small portrait, chibi head, default expression, serious expression, hit expression, skill icon for `armored_flight_deck`, and abstract `carrier` class icon. Flat reserved green background, no text, no overlapping cells.
+Use the accepted style anchor as the only identity reference. Create exactly eight separated cells in a 4x2 grid: portrait, small portrait, chibi head, default expression, serious expression, hit expression, skill icon for `armored_flight_deck`, and abstract `carrier` class icon. True transparent background, no checkerboard, no matte, no text, no overlapping cells.
 
 ## Battle 4x2 sheet
 
-Use the accepted style anchor as the only identity reference. Create exactly eight isolated orthographic game assets in a 4x2 grid, in this order: battle_body_r, battle_rig_base, battle_flight_deck, battle_hangar, battle_aircraft_group_01, battle_aircraft_launch_marker, battle_aircraft_recovery_marker, battle_aa_center. Flat reserved green background. Keep every component separated with clear empty margins and readable pivots.
+Use the accepted style anchor as the only identity reference. Create exactly eight isolated orthographic game assets in a 4x2 grid, in this order: battle_body_r, battle_rig_base, battle_flight_deck, battle_hangar, battle_aircraft_group_01, battle_aircraft_launch_marker, battle_aircraft_recovery_marker, battle_aa_center. True transparent background, no checkerboard or matte. Keep every component separated with clear empty transparent margins and readable pivots.
 
 ## Animation 2x2 state sheets
 
-Use the accepted style anchor as the only identity reference. Create five separate chibi / SD battlefield-unit animation sheets, not full-body illustrations, portraits, half-body art, or skill cut-ins. Required files/states: idle, move, attack, hit, firepower. Each state is one 2-row by 2-column sheet ordered top-left, top-right, bottom-left, bottom-right as anticipation/start, action, feedback/recoil, recovery. Use an invisible logical grid: wide empty gutters, no visible borders, no labels, no text. Every cell must contain the complete compact Q-version battle sprite matching the `battle_body_r` style: large readable head, small body, attached rigging and weapon nodes, clear small-scale silhouette, and at least 12% empty reserved-green margin on all sides. Identical face, hair, outfit, rigging, camera, scale, Q-version proportions, and equipment count in all four cells of each sheet. Animate only the chibi character body, attached rigging, weapon recoil, local muzzle flash/fire light, tiny local smoke/spark, local wake, local scan/aura cues, and pose changes. The four cells must be hand-drawn/generated as distinct key poses; do not duplicate the same character image with only translation, scale, tint, tiny rotation, aura, or external flash changes. Do not draw separate launched projectiles or detached attack objects: no flying shells, no bullets, no tracer streams, no torpedoes, no missiles, no aircraft, no detached depth charges, no large water impacts, no long projectile trails. Flat reserved green background, no connected effects between cells.
+Use the accepted style anchor as the only identity reference. Create five separate chibi / SD battlefield-unit animation sheets, not full-body illustrations, portraits, half-body art, or skill cut-ins. Required files/states: idle, move, attack, hit, firepower. Each state is one 2-row by 2-column sheet ordered top-left, top-right, bottom-left, bottom-right as anticipation/start, action, feedback/recoil, recovery. Use an invisible logical grid: wide empty transparent gutters, no visible borders, no labels, no text. Every cell must contain the complete compact Q-version battle sprite matching the `battle_body_r` style: large readable head, small body, attached rigging and weapon nodes, clear small-scale silhouette, and at least 12% empty transparent margin on all sides. Identical face, hair, outfit, rigging, camera, scale, Q-version proportions, and equipment count in all four cells of each sheet. Animate only the chibi character body, attached rigging, weapon recoil, local muzzle flash/fire light, tiny local smoke/spark, local wake, local scan/aura cues, and pose changes. The four cells must be hand-drawn/generated as distinct key poses; do not duplicate the same character image with only translation, scale, tint, tiny rotation, aura, or external flash changes. Do not draw separate launched projectiles or detached attack objects: no flying shells, no bullets, no tracer streams, no torpedoes, no missiles, no aircraft, no detached depth charges, no large water impacts, no long projectile trails. True transparent background, no checkerboard or matte, no connected effects between cells.
 
 ## VFX 2x4 sheet
 
-Create exactly eight isolated character-specific VFX overlays in a 2x4 grid, in this order: armored_deck_sparks, steady_launch_lane, aircraft_launch_flash, aircraft_formation, airstrike_area, aircraft_recovery, aa_burst, skill_aura. Reusable projectile bodies and impacts are not duplicated. Flat reserved green background, no text, crisp small-scale game VFX shapes.
+Create exactly eight isolated character-specific VFX overlays in a 2x4 grid, in this order: armored_deck_sparks, steady_launch_lane, aircraft_launch_flash, aircraft_formation, airstrike_area, aircraft_recovery, aa_burst, skill_aura. Reusable projectile bodies and impacts are not duplicated. True transparent background, no checkerboard or matte, no text, crisp small-scale game VFX shapes.
 
 ## Acceptance rules
 

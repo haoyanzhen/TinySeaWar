@@ -1,0 +1,332 @@
+{
+  "mode": "dry-run",
+  "required_gate": "delivery_ready",
+  "gate_passed": false,
+  "summary": {
+    "characters": 4,
+    "batch_ready": 0,
+    "complete": 0,
+    "delivery_ready": 0,
+    "blocked": 0,
+    "failed": 0
+  },
+  "results": [
+    {
+      "character_id": "z23",
+      "sources": {
+        "complete": false,
+        "missing": [],
+        "source_quality_issues": [
+          "schema-v2 source provenance missing"
+        ],
+        "base_complete": true,
+        "four_frame_complete": true,
+        "production_route": "generated_state_sheets"
+      },
+      "configuration": {
+        "crop_specs": false,
+        "runtime_config": false,
+        "postprocess_plan": true,
+        "generic_postprocess": false,
+        "contract_ship_class": true
+      },
+      "contract": {
+        "character_id": "z23",
+        "ship_class": "destroyer",
+        "status": "incomplete",
+        "missing_roles": [
+          "full_body",
+          "half_body",
+          "skill_cutin",
+          "expression_default",
+          "expression_serious",
+          "expression_hit",
+          "portrait",
+          "portrait_small",
+          "chibi_head",
+          "skill_icon",
+          "class_icon",
+          "battle_body",
+          "rig_base",
+          "main_weapon",
+          "anim_idle",
+          "anim_move",
+          "anim_attack",
+          "anim_hit",
+          "anim_firepower",
+          "vfx",
+          "bind_points",
+          "anim_config",
+          "vfx_config",
+          "manifest"
+        ],
+        "invalid_files": [],
+        "data_issues": [
+          "planned battle role missing: battle_body_r",
+          "planned battle role missing: battle_rig_base",
+          "planned battle role missing: battle_turret_main_01",
+          "planned battle role missing: battle_turret_main_02",
+          "planned battle role missing: battle_torpedo_tube_01",
+          "planned battle role missing: battle_fire_control_node",
+          "planned battle role missing: battle_mode_indicator",
+          "planned battle role missing: battle_wake_origin_marker",
+          "planned skill icon missing: gun_torpedo_conversion"
+        ],
+        "found_roles": {}
+      },
+      "batch_ready": false,
+      "technical_ready": false,
+      "visual_review": {
+        "status": "pending",
+        "accepted": false,
+        "issues": [
+          "delivery visual review missing"
+        ]
+      },
+      "delivery_ready": false,
+      "postprocess_ready": false
+    },
+    {
+      "character_id": "nurnberg",
+      "sources": {
+        "complete": false,
+        "missing": [
+          "vfx/nurnberg_vfx_reference_sheet.png"
+        ],
+        "source_quality_issues": [
+          "schema-v2 source provenance missing"
+        ],
+        "base_complete": false,
+        "four_frame_complete": true,
+        "production_route": "incomplete"
+      },
+      "configuration": {
+        "crop_specs": false,
+        "runtime_config": false,
+        "postprocess_plan": true,
+        "generic_postprocess": false,
+        "contract_ship_class": true
+      },
+      "contract": {
+        "character_id": "nurnberg",
+        "ship_class": "light_cruiser",
+        "status": "incomplete",
+        "missing_roles": [
+          "full_body",
+          "half_body",
+          "skill_cutin",
+          "expression_default",
+          "expression_serious",
+          "expression_hit",
+          "portrait",
+          "portrait_small",
+          "chibi_head",
+          "skill_icon",
+          "class_icon",
+          "battle_body",
+          "rig_base",
+          "main_weapon",
+          "anim_idle",
+          "anim_move",
+          "anim_attack",
+          "anim_hit",
+          "anim_firepower",
+          "vfx",
+          "bind_points",
+          "anim_config",
+          "vfx_config",
+          "manifest"
+        ],
+        "invalid_files": [],
+        "data_issues": [
+          "planned battle role missing: battle_body_r",
+          "planned battle role missing: battle_rig_base",
+          "planned battle role missing: battle_turret_main_01",
+          "planned battle role missing: battle_turret_main_02",
+          "planned battle role missing: battle_torpedo_tube_01",
+          "planned battle role missing: battle_aa_center",
+          "planned battle role missing: battle_turn_indicator",
+          "planned battle role missing: battle_wake_origin_marker",
+          "planned skill icon missing: stern_evasion_fire"
+        ],
+        "found_roles": {}
+      },
+      "batch_ready": false,
+      "technical_ready": false,
+      "visual_review": {
+        "status": "pending",
+        "accepted": false,
+        "issues": [
+          "delivery visual review missing"
+        ]
+      },
+      "delivery_ready": false,
+      "postprocess_ready": false
+    },
+    {
+      "character_id": "scharnhorst",
+      "sources": {
+        "complete": false,
+        "missing": [
+          "vfx/scharnhorst_vfx_reference_sheet.png",
+          "battle/scharnhorst_anim_idle_4f_sheet.png",
+          "battle/scharnhorst_anim_move_4f_sheet.png",
+          "battle/scharnhorst_anim_attack_4f_sheet.png",
+          "battle/scharnhorst_anim_hit_4f_sheet.png",
+          "battle/scharnhorst_anim_firepower_4f_sheet.png",
+          "battle/scharnhorst_anim_5x4_master.png"
+        ],
+        "source_quality_issues": [
+          "schema-v2 source provenance missing"
+        ],
+        "base_complete": false,
+        "four_frame_complete": false,
+        "production_route": "incomplete"
+      },
+      "configuration": {
+        "crop_specs": false,
+        "runtime_config": false,
+        "postprocess_plan": true,
+        "generic_postprocess": false,
+        "contract_ship_class": true
+      },
+      "contract": {
+        "character_id": "scharnhorst",
+        "ship_class": "battleship",
+        "status": "incomplete",
+        "missing_roles": [
+          "full_body",
+          "half_body",
+          "skill_cutin",
+          "expression_default",
+          "expression_serious",
+          "expression_hit",
+          "portrait",
+          "portrait_small",
+          "chibi_head",
+          "skill_icon",
+          "class_icon",
+          "battle_body",
+          "rig_base",
+          "main_weapon",
+          "anim_idle",
+          "anim_move",
+          "anim_attack",
+          "anim_hit",
+          "anim_firepower",
+          "vfx",
+          "bind_points",
+          "anim_config",
+          "vfx_config",
+          "manifest"
+        ],
+        "invalid_files": [],
+        "data_issues": [
+          "planned battle role missing: battle_body_r",
+          "planned battle role missing: battle_rig_base",
+          "planned battle role missing: battle_turret_main_01",
+          "planned battle role missing: battle_turret_secondary_01",
+          "planned battle role missing: battle_fire_control_node",
+          "planned battle role missing: battle_propulsion_node",
+          "planned battle role missing: battle_flagship_marker",
+          "planned battle role missing: battle_wake_origin_marker",
+          "planned skill icon missing: high_speed_interception"
+        ],
+        "found_roles": {}
+      },
+      "batch_ready": false,
+      "technical_ready": false,
+      "visual_review": {
+        "status": "pending",
+        "accepted": false,
+        "issues": [
+          "delivery visual review missing"
+        ]
+      },
+      "delivery_ready": false,
+      "postprocess_ready": false
+    },
+    {
+      "character_id": "graf_zeppelin",
+      "sources": {
+        "complete": false,
+        "missing": [
+          "vfx/graf_zeppelin_vfx_reference_sheet.png",
+          "battle/graf_zeppelin_anim_move_4f_sheet.png",
+          "battle/graf_zeppelin_anim_attack_4f_sheet.png",
+          "battle/graf_zeppelin_anim_hit_4f_sheet.png",
+          "battle/graf_zeppelin_anim_firepower_4f_sheet.png",
+          "battle/graf_zeppelin_anim_5x4_master.png"
+        ],
+        "source_quality_issues": [
+          "schema-v2 source provenance missing"
+        ],
+        "base_complete": false,
+        "four_frame_complete": false,
+        "production_route": "incomplete"
+      },
+      "configuration": {
+        "crop_specs": false,
+        "runtime_config": false,
+        "postprocess_plan": true,
+        "generic_postprocess": false,
+        "contract_ship_class": true
+      },
+      "contract": {
+        "character_id": "graf_zeppelin",
+        "ship_class": "carrier",
+        "status": "incomplete",
+        "missing_roles": [
+          "full_body",
+          "half_body",
+          "skill_cutin",
+          "expression_default",
+          "expression_serious",
+          "expression_hit",
+          "portrait",
+          "portrait_small",
+          "chibi_head",
+          "skill_icon",
+          "class_icon",
+          "battle_body",
+          "rig_base",
+          "main_weapon",
+          "anim_idle",
+          "anim_move",
+          "anim_attack",
+          "anim_hit",
+          "anim_firepower",
+          "vfx",
+          "bind_points",
+          "anim_config",
+          "vfx_config",
+          "manifest"
+        ],
+        "invalid_files": [],
+        "data_issues": [
+          "planned battle role missing: battle_body_r",
+          "planned battle role missing: battle_rig_base",
+          "planned battle role missing: battle_flight_deck",
+          "planned battle role missing: battle_aircraft_group_01",
+          "planned battle role missing: battle_turret_secondary_01",
+          "planned battle role missing: battle_aircraft_launch_marker",
+          "planned battle role missing: battle_aircraft_recovery_marker",
+          "planned battle role missing: battle_aa_center",
+          "planned skill icon missing: experimental_air_wing"
+        ],
+        "found_roles": {}
+      },
+      "batch_ready": false,
+      "technical_ready": false,
+      "visual_review": {
+        "status": "pending",
+        "accepted": false,
+        "issues": [
+          "delivery visual review missing"
+        ]
+      },
+      "delivery_ready": false,
+      "postprocess_ready": false
+    }
+  ]
+}

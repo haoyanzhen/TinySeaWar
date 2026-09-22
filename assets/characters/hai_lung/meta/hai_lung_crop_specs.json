@@ -1,0 +1,472 @@
+{
+  "character_id": "hai_lung",
+  "method": "visually_authored_source_object_hints",
+  "crops": {
+    "ui_portrait": {
+      "source": "ui_sheet",
+      "box": [
+        15,
+        12,
+        486,
+        465
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "ui_portrait_small": {
+      "source": "ui_sheet",
+      "box": [
+        520,
+        95,
+        875,
+        447
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "ui_chibi_head": {
+      "source": "ui_sheet",
+      "box": [
+        930,
+        105,
+        1300,
+        447
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "expr_default": {
+      "source": "ui_sheet",
+      "box": [
+        1320,
+        20,
+        1760,
+        490
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "expr_serious": {
+      "source": "ui_sheet",
+      "box": [
+        18,
+        485,
+        453,
+        880
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "expr_hit": {
+      "source": "ui_sheet",
+      "box": [
+        470,
+        485,
+        900,
+        880
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "ui_skill": {
+      "source": "ui_sheet",
+      "box": [
+        928,
+        480,
+        1279,
+        840
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "class_icon": {
+      "source": "ui_sheet",
+      "box": [
+        1300,
+        553,
+        1760,
+        812
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "battle_body_r": {
+      "source": "battle_grid",
+      "box": [
+        32,
+        64,
+        312,
+        634
+      ],
+      "tags": []
+    },
+    "battle_rig_base": {
+      "source": "battle_grid",
+      "box": [
+        317,
+        323,
+        955,
+        544
+      ],
+      "tags": []
+    },
+    "battle_torpedo_tube_fore": {
+      "source": "battle_grid",
+      "box": [
+        984,
+        221,
+        1216,
+        558
+      ],
+      "tags": []
+    },
+    "battle_torpedo_tube_aft": {
+      "source": "battle_grid",
+      "box": [
+        1240,
+        227,
+        1523,
+        563
+      ],
+      "tags": []
+    },
+    "battle_sonar_node": {
+      "source": "battle_grid",
+      "box": [
+        62,
+        725,
+        365,
+        973
+      ],
+      "tags": []
+    },
+    "battle_periscope_node": {
+      "source": "battle_grid",
+      "box": [
+        510,
+        651,
+        642,
+        974
+      ],
+      "tags": []
+    },
+    "battle_oxygen_indicator": {
+      "source": "battle_grid",
+      "box": [
+        852,
+        734,
+        1049,
+        968
+      ],
+      "tags": []
+    },
+    "battle_submerged_shadow": {
+      "source": "battle_grid",
+      "box": [
+        1110,
+        809,
+        1517,
+        944
+      ],
+      "tags": []
+    },
+    "anim_idle_frame_01": {
+      "source": "anim_idle",
+      "box": [
+        30,
+        32,
+        618,
+        638
+      ],
+      "tags": []
+    },
+    "anim_idle_frame_02": {
+      "source": "anim_idle",
+      "box": [
+        656,
+        31,
+        1247,
+        639
+      ],
+      "tags": []
+    },
+    "anim_idle_frame_03": {
+      "source": "anim_idle",
+      "box": [
+        29,
+        665,
+        621,
+        1243
+      ],
+      "tags": []
+    },
+    "anim_idle_frame_04": {
+      "source": "anim_idle",
+      "box": [
+        655,
+        663,
+        1247,
+        1243
+      ],
+      "tags": []
+    },
+    "anim_move_frame_01": {
+      "source": "anim_move",
+      "box": [
+        158,
+        15,
+        735,
+        500
+      ],
+      "tags": []
+    },
+    "anim_move_frame_02": {
+      "source": "anim_move",
+      "box": [
+        876,
+        15,
+        1467,
+        500
+      ],
+      "tags": []
+    },
+    "anim_move_frame_03": {
+      "source": "anim_move",
+      "box": [
+        158,
+        531,
+        760,
+        1006
+      ],
+      "tags": []
+    },
+    "anim_move_frame_04": {
+      "source": "anim_move",
+      "box": [
+        875,
+        520,
+        1467,
+        1008
+      ],
+      "tags": []
+    },
+    "anim_attack_frame_01": {
+      "source": "anim_attack",
+      "box": [
+        40,
+        121,
+        620,
+        592
+      ],
+      "tags": []
+    },
+    "anim_attack_frame_02": {
+      "source": "anim_attack",
+      "box": [
+        671,
+        105,
+        1236,
+        595
+      ],
+      "tags": []
+    },
+    "anim_attack_frame_03": {
+      "source": "anim_attack",
+      "box": [
+        43,
+        689,
+        620,
+        1198
+      ],
+      "tags": []
+    },
+    "anim_attack_frame_04": {
+      "source": "anim_attack",
+      "box": [
+        653,
+        680,
+        1236,
+        1210
+      ],
+      "tags": []
+    },
+    "anim_hit_frame_01": {
+      "source": "anim_hit",
+      "box": [
+        52,
+        40,
+        690,
+        564
+      ],
+      "tags": []
+    },
+    "anim_hit_frame_02": {
+      "source": "anim_hit",
+      "box": [
+        750,
+        72,
+        1388,
+        563
+      ],
+      "tags": []
+    },
+    "anim_hit_frame_03": {
+      "source": "anim_hit",
+      "box": [
+        52,
+        665,
+        690,
+        1102
+      ],
+      "tags": []
+    },
+    "anim_hit_frame_04": {
+      "source": "anim_hit",
+      "box": [
+        750,
+        582,
+        1388,
+        1105
+      ],
+      "tags": []
+    },
+    "anim_firepower_frame_01": {
+      "source": "anim_firepower",
+      "box": [
+        40,
+        40,
+        620,
+        580
+      ],
+      "tags": []
+    },
+    "anim_firepower_frame_02": {
+      "source": "anim_firepower",
+      "box": [
+        675,
+        18,
+        1299,
+        614
+      ],
+      "tags": []
+    },
+    "anim_firepower_frame_03": {
+      "source": "anim_firepower",
+      "box": [
+        18,
+        621,
+        650,
+        1190
+      ],
+      "tags": []
+    },
+    "anim_firepower_frame_04": {
+      "source": "anim_firepower",
+      "box": [
+        678,
+        620,
+        1299,
+        1190
+      ],
+      "tags": []
+    },
+    "vfx:training_sonar_ring": {
+      "source": "vfx_sheet",
+      "box": [
+        35,
+        120,
+        499,
+        350
+      ],
+      "tags": []
+    },
+    "vfx:endurance_shadow": {
+      "source": "vfx_sheet",
+      "box": [
+        550,
+        91,
+        996,
+        355
+      ],
+      "tags": []
+    },
+    "vfx:sonar_pulse": {
+      "source": "vfx_sheet",
+      "box": [
+        41,
+        476,
+        510,
+        738
+      ],
+      "tags": []
+    },
+    "vfx:torpedo_launch_flash": {
+      "source": "vfx_sheet",
+      "box": [
+        588,
+        437,
+        928,
+        769
+      ],
+      "tags": []
+    },
+    "vfx:torpedo_trail": {
+      "source": "vfx_sheet",
+      "box": [
+        61,
+        856,
+        453,
+        1100
+      ],
+      "tags": []
+    },
+    "vfx:underwater_shadow": {
+      "source": "vfx_sheet",
+      "box": [
+        534,
+        844,
+        999,
+        1081
+      ],
+      "tags": []
+    },
+    "vfx:dive_ripple": {
+      "source": "vfx_sheet",
+      "box": [
+        40,
+        1200,
+        506,
+        1448
+      ],
+      "tags": []
+    },
+    "vfx:skill_aura": {
+      "source": "vfx_sheet",
+      "box": [
+        553,
+        1260,
+        999,
+        1424
+      ],
+      "tags": []
+    }
+  },
+  "source_sha256": {
+    "anim_attack": "819253cf1fd75cc2c09f8543529ff22d0f9eac9ca3eeab2ff1d00aa4c810c670",
+    "anim_firepower": "32ca0b0e98161d663f35db88d8322409194de1006d9cc2db03616f0acbb836aa",
+    "anim_hit": "828308986f3ca83896f5689f1b9a620d2dfc924e0969c1a0b067347d0ae40887",
+    "anim_idle": "620fbb4ec10611e85552b4b1ea592e5dc330074471dce618283aca864f5e7b17",
+    "anim_move": "0d63c997007c1ecb799dc648b56bd7b634611bb348b60ad82737903bd2e495fa",
+    "battle_grid": "1bef1dd21177ed2e56da77febae670a899d00e6d754ba56eaa1bb08036c9e33b",
+    "ui_sheet": "bc0af8d32921037ed236d6d2762ac972261ea2f490a23b987a7a73c526c43d88",
+    "vfx_sheet": "4b9b9863adc79143dd53a616abbfe95664b571b6087af8eae515f34cfd81c186"
+  }
+}

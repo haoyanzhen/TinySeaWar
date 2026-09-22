@@ -18,14 +18,29 @@
     "aircraft_launch": 2,
     "aircraft_recovery": 1
   },
+  "object_inventory": {
+    "aircraft_launch": {
+      "instances": 2
+    },
+    "aircraft_recovery": {
+      "instances": 1
+    }
+  },
   "bindings": {
     "battle_rig_base": [
       "rig_mount",
-      "wake_origin",
       "skill_origin",
+      "wake_origin",
       "aircraft_launch_01",
       "aircraft_launch_02",
       "aircraft_recovery_01"
+    ],
+    "battle_aa_center": [
+      "pivot",
+      "muzzle_01",
+      "muzzle_02",
+      "muzzle_03",
+      "muzzle_04"
     ]
   },
   "vfx_roles": [
@@ -51,5 +66,79 @@
   "acceptance_rules": [
     "Original TinySeaWar design; no real flags, political symbols, readable insignia, or extremist symbols.",
     "Character body, rig base, weapon nodes, and VFX must remain visually separable."
-  ]
+  ],
+  "manifest_schema_version": 2,
+  "weapon_binding_rules": {
+    "illustrious_aa_03": {
+      "asset_role": "battle_aa_center",
+      "launch_bind": "muzzle_01",
+      "muzzle_vfx_role": "aa_burst",
+      "launch_profile": "vfx.profile.muzzle_flash.medium",
+      "impact_profile": "vfx.profile.shell_impact.medium"
+    },
+    "illustrious_airstrike": {
+      "asset_role": "battle_rig_base",
+      "launch_bind": "aircraft_launch_01",
+      "muzzle_vfx_role": "aircraft_launch_flash",
+      "launch_profile": "vfx.profile.aircraft.launch_trail",
+      "impact_profile": "vfx.profile.airstrike_impact"
+    },
+    "illustrious_scout": {
+      "asset_role": "battle_rig_base",
+      "launch_bind": "aircraft_launch_01",
+      "muzzle_vfx_role": "aircraft_launch_flash",
+      "launch_profile": "vfx.profile.aircraft.launch_trail",
+      "impact_profile": "vfx.profile.airstrike_impact"
+    }
+  },
+  "binding_positions": {
+    "battle_rig_base": {
+      "rig_mount": {
+        "x": 0.51136,
+        "y": 0.45143
+      },
+      "skill_origin": {
+        "x": 0.51136,
+        "y": 0.45143
+      },
+      "wake_origin": {
+        "x": 0.07955,
+        "y": 0.32
+      },
+      "aircraft_launch_01": {
+        "x": 0.44318,
+        "y": 0.40571
+      },
+      "aircraft_launch_02": {
+        "x": 0.61742,
+        "y": 0.50571
+      },
+      "aircraft_recovery_01": {
+        "x": 0.19318,
+        "y": 0.34286
+      }
+    },
+    "battle_aa_center": {
+      "pivot": {
+        "x": 0.46648,
+        "y": 0.71714
+      },
+      "muzzle_01": {
+        "x": 0.68994,
+        "y": 0.01143
+      },
+      "muzzle_02": {
+        "x": 0.74581,
+        "y": 0.04
+      },
+      "muzzle_03": {
+        "x": 0.85754,
+        "y": 0.16857
+      },
+      "muzzle_04": {
+        "x": 0.91061,
+        "y": 0.2
+      }
+    }
+  }
 }

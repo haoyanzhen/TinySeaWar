@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "character_id": "k_21",
+  "kind": "tool_managed_generated_art",
+  "source": "built_in_image_generation_tool",
+  "batch_ready_allowed": true,
+  "generation": {
+    "requested_model": "gpt-image-2.5 pipeline target; no model selector was exposed by the tool",
+    "actual_model": "tool-managed/unknown",
+    "generation_tool": "image_gen.imagegen",
+    "endpoint": "tool-managed/not exposed",
+    "quality": "tool-managed/not exposed",
+    "size_control": "tool-managed; accepted pixel dimensions are recorded per source image",
+    "background_control": "accepted production sources use reserved near-#00FF00 chroma key except the move sheet, which retains native RGBA transparency",
+    "output_format": "PNG",
+    "prompt_revision": {
+      "path": "assets/characters/k_21/meta/k_21_generation_brief.md",
+      "sha256": "538945b07aea4324e01ed935364b4a6c8d3c805e6d08970c6ef2da2da8b5279a"
+    },
+    "reference_inputs": [
+      {"path": "assets/characters/k_21/concept/k_21_concept_full.png", "role": "accepted_style_anchor"}
+    ],
+    "generation_ids": "not exposed by the tool"
+  },
+  "reproducibility": {
+    "generation_replayable": false,
+    "generation_limit": "The tool did not expose backend model/version, endpoint payloads, seeds, or generation IDs.",
+    "postprocess_replayable": true,
+    "postprocess_entry": "tools/art_pipeline/postprocess_generated_character.py k_21"
+  },
+  "source_images": [
+    {"role": "concept_full", "path": "assets/characters/k_21/concept/k_21_concept_full.png", "sha256": "ecf2c66f1878b88422ae7f86bd8bba0c989414dedb17b60f084c65f0edcf6cab", "size": [1024, 1536], "source_mode": "RGB", "background": "reserved_green_near_#00FF00", "qa_verdict": "pass", "qa_observation": "Identity, tactical boots, long low rig, sonar, periscope, antenna, six bow openings, and four stern openings are readable."},
+    {"role": "ui_sheet", "path": "assets/characters/k_21/ui/k_21_ui_sheet.png", "sha256": "8746dceef2166c5391f3d33aeefad72fbefef0f57120a1f08537ff926f8dfe4e", "size": [1774, 887], "source_mode": "RGB", "background": "reserved_green_near_#00FF00", "qa_verdict": "pass", "qa_observation": "Eight row-major UI roles are distinct and preserve the submarine identity without swim fins."},
+    {"role": "battle_grid", "path": "assets/characters/k_21/battle/k_21_battle_asset_grid.png", "sha256": "801a496aacc937defdaf9fb8d63d92f4d815d24757b07304cae80da28a4f25f4", "size": [1774, 887], "source_mode": "RGB", "background": "reserved_green_near_#00FF00", "qa_verdict": "pass", "qa_observation": "Eight battle roles are separated; bow and stern banks contain six and four openings, and the antenna and submerged shadow no longer cross their cell boundary."},
+    {"role": "anim_idle", "path": "assets/characters/k_21/battle/k_21_anim_idle_4f_sheet.png", "sha256": "c196fdc70a4c965cc9c79c54d3a8b0bb4cc2a67736921a458e5776ba264767e5", "size": [1247, 1261], "source_mode": "RGB", "background": "reserved_green_near_#00FF00", "qa_verdict": "pass", "qa_observation": "Four ordered idle poses preserve identity, boots, tube banks, and submarine sensors."},
+    {"role": "anim_move", "path": "assets/characters/k_21/battle/k_21_anim_move_4f_sheet.png", "sha256": "55f4b73d383ae818b1de1c833861395c87c4d116f181a1b028cbef118389557a", "size": [1244, 1265], "source_mode": "RGBA", "background": "native_alpha", "qa_verdict": "pass", "qa_observation": "Four distinct underwater movement poses preserve the full rig with only local bubbles."},
+    {"role": "anim_attack", "path": "assets/characters/k_21/battle/k_21_anim_attack_4f_sheet.png", "sha256": "7f2320a191b3f332118ec779db8de3eea22217ea240c822afeda12aba9ef41be", "size": [1243, 1266], "source_mode": "RGB", "background": "reserved_green_near_#00FF00", "qa_verdict": "pass", "qa_observation": "Four torpedo-attack poses preserve both tube banks; the firing frame contains no detached torpedo."},
+    {"role": "anim_hit", "path": "assets/characters/k_21/battle/k_21_anim_hit_4f_sheet.png", "sha256": "8d94f173b96fb5a4d640b3c0ae83110fe27142450f0d2d0979d611769466778a", "size": [1243, 1265], "source_mode": "RGB", "background": "reserved_green_near_#00FF00", "qa_verdict": "pass", "qa_observation": "Four non-graphic hit poses retain intact rigging and practical tactical boots."},
+    {"role": "anim_firepower", "path": "assets/characters/k_21/battle/k_21_anim_firepower_4f_sheet.png", "sha256": "4fcdf4f0061c530dd207380d7d1e8b8587541f6a02393bdfe186d6059b975679", "size": [1246, 1262], "source_mode": "RGB", "background": "reserved_green_near_#00FF00", "qa_verdict": "pass", "qa_observation": "The accepted replacement has no baked checkerboard; four polar-tracking skill poses keep tube glows and rings local."},
+    {"role": "vfx_sheet", "path": "assets/characters/k_21/vfx/k_21_vfx_reference_sheet.png", "sha256": "613b057fd87f6e01e3ce0471c12d6135de3880f3b0e595226ae8f951343fb57c", "size": [1774, 887], "source_mode": "RGB", "background": "reserved_green_near_#00FF00", "qa_verdict": "pass", "qa_observation": "Eight VFX roles match the required row-major order, including polar tracking, ice torpedo trail, sonar, dive ripple, and shadow."}
+  ]
+}

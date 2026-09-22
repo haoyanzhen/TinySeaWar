@@ -1,0 +1,327 @@
+{
+  "schema_version": 2,
+  "character_id": "hai_lung",
+  "kind": "codex_builtin_generated_art",
+  "source": "Codex built-in ImageGen",
+  "batch_ready_allowed": true,
+  "generation_policy": {
+    "primary_route": "codex_builtin_imagegen_native_alpha",
+    "legacy_fallback": {
+      "authorized": false,
+      "activation": "--allow-legacy-chroma-fallback",
+      "reason": "",
+      "native_failures": []
+    }
+  },
+  "generation": {
+    "requested_model": "codex-account-managed-imagegen",
+    "actual_model": "codex-account-managed-imagegen",
+    "generation_tool": "Codex built-in ImageGen",
+    "endpoint": "Codex account-managed image generation",
+    "quality": "Codex account-managed",
+    "size_control": "per-asset Codex account-managed output",
+    "background_control": "transparent requested and pixel-verified",
+    "output_format": "PNG",
+    "prompt_revision": {
+      "path": "assets/characters/hai_lung/meta/hai_lung_generation_brief_v2.md",
+      "sha256": "ef993d8924feb5e1d6e892b607058d0b8fe7782e2ced7c2e85f3163a0ee41c7c"
+    },
+    "reference_inputs": [
+      {
+        "path": "assets/characters/hai_lung/concept/hai_lung_concept_full.png",
+        "role": "accepted_style_anchor_for_derivative_sheets"
+      }
+    ],
+    "reproducibility_note": "The Codex account manages the underlying image model and request IDs; those implementation details are not exposed. Accepted PNG outputs are preserved byte-for-byte and tracked by SHA-256."
+  },
+  "source_images": [
+    {
+      "role": "concept_full",
+      "path": "assets/characters/hai_lung/concept/hai_lung_concept_full.png",
+      "sha256": "3c42663d319fcffa4d317e174a7605a2e146ef7f5b51fec6ea6c5aa7d21955f9",
+      "size": [
+        1222,
+        1287
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "3c42663d319fcffa4d317e174a7605a2e146ef7f5b51fec6ea6c5aa7d21955f9",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.602145717530333,
+        "transparent_border_ratio": 0.988631830873554
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "Full body and outfit intact; original teal/jade naval identity; equipment count matches character inventory. Native alpha retained; fine edge polish may remain. Six bow and four aft ports, headset/gauge and fitted boots without flippers."
+    },
+    {
+      "role": "ui_sheet",
+      "path": "assets/characters/hai_lung/ui/hai_lung_ui_sheet.png",
+      "sha256": "bc0af8d32921037ed236d6d2762ac972261ea2f490a23b987a7a73c526c43d88",
+      "size": [
+        1774,
+        887
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "bc0af8d32921037ed236d6d2762ac972261ea2f490a23b987a7a73c526c43d88",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.4460686681859606,
+        "transparent_border_ratio": 0.9913501316284318
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "Eight distinct portrait, small portrait, chibi, default/serious/hit expression and skill/class icon roles. Hair and accessories intact; intentional bust bases; some fine edge texture reserved for polish. Six bow and four aft ports, headset/gauge and fitted boots without flippers."
+    },
+    {
+      "role": "battle_grid",
+      "path": "assets/characters/hai_lung/battle/hai_lung_battle_asset_grid.png",
+      "sha256": "1bef1dd21177ed2e56da77febae670a899d00e6d754ba56eaa1bb08036c9e33b",
+      "size": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "1bef1dd21177ed2e56da77febae670a899d00e6d754ba56eaa1bb08036c9e33b",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.6787459055582682,
+        "transparent_border_ratio": 0.9964816262705238
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "Eight separable body/base/weapon/instrument roles; independent full body and complete weapon silhouettes. Mount geometry and small-scale integration require runtime review. Six bow and four aft ports, headset/gauge and fitted boots without flippers."
+    },
+    {
+      "role": "vfx_sheet",
+      "path": "assets/characters/hai_lung/vfx/hai_lung_vfx_reference_sheet.png",
+      "sha256": "4b9b9863adc79143dd53a616abbfe95664b571b6087af8eae515f34cfd81c186",
+      "size": [
+        1024,
+        1536
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "4b9b9863adc79143dd53a616abbfe95664b571b6087af8eae515f34cfd81c186",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 253,
+        "transparent_canvas_ratio": 0.5127550760904948,
+        "transparent_border_ratio": 0.8045347928068803
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "Eight role-ordered effects, including disconnected droplets/sparks and complete rings. Soft native-alpha glow preserved; final contrast remains a runtime polish item. Six bow and four aft ports, headset/gauge and fitted boots without flippers."
+    },
+    {
+      "role": "anim_idle",
+      "path": "assets/characters/hai_lung/battle/hai_lung_anim_idle_4f_sheet.png",
+      "sha256": "620fbb4ec10611e85552b4b1ea592e5dc330074471dce618283aca864f5e7b17",
+      "size": [
+        1254,
+        1254
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "620fbb4ec10611e85552b4b1ea592e5dc330074471dce618283aca864f5e7b17",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.5152144715856627,
+        "transparent_border_ratio": 0.9764565043894653
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "Four ordered distinct idle body poses, consistent identity/equipment, complete hair/feet and separated frames. Cross-state scale and animation playback remain runtime polish. Six bow and four aft ports, headset/gauge and fitted boots without flippers."
+    },
+    {
+      "role": "anim_move",
+      "path": "assets/characters/hai_lung/battle/hai_lung_anim_move_4f_sheet.png",
+      "sha256": "0d63c997007c1ecb799dc648b56bd7b634611bb348b60ad82737903bd2e495fa",
+      "size": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "0d63c997007c1ecb799dc648b56bd7b634611bb348b60ad82737903bd2e495fa",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.5819040934244791,
+        "transparent_border_ratio": 0.9882720875684128
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "Four ordered distinct move body poses, consistent identity/equipment, complete hair/feet and separated frames. Cross-state scale and animation playback remain runtime polish. Six bow and four aft ports, headset/gauge and fitted boots without flippers."
+    },
+    {
+      "role": "anim_attack",
+      "path": "assets/characters/hai_lung/battle/hai_lung_anim_attack_4f_sheet.png",
+      "sha256": "819253cf1fd75cc2c09f8543529ff22d0f9eac9ca3eeab2ff1d00aa4c810c670",
+      "size": [
+        1254,
+        1254
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "819253cf1fd75cc2c09f8543529ff22d0f9eac9ca3eeab2ff1d00aa4c810c670",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.5699783022875443,
+        "transparent_border_ratio": 0.9910215482841181
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "Four ordered distinct attack body poses, consistent identity/equipment, complete hair/feet and separated frames. Cross-state scale and animation playback remain runtime polish. Six bow and four aft ports, headset/gauge and fitted boots without flippers."
+    },
+    {
+      "role": "anim_hit",
+      "path": "assets/characters/hai_lung/battle/hai_lung_anim_hit_4f_sheet.png",
+      "sha256": "828308986f3ca83896f5689f1b9a620d2dfc924e0969c1a0b067347d0ae40887",
+      "size": [
+        1402,
+        1122
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "828308986f3ca83896f5689f1b9a620d2dfc924e0969c1a0b067347d0ae40887",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.567730463992107,
+        "transparent_border_ratio": 0.9908802537668517
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "Four ordered distinct hit body poses, consistent identity/equipment, complete hair/feet and separated frames. Cross-state scale and animation playback remain runtime polish. Six bow and four aft ports, headset/gauge and fitted boots without flippers."
+    },
+    {
+      "role": "anim_firepower",
+      "path": "assets/characters/hai_lung/battle/hai_lung_anim_firepower_4f_sheet.png",
+      "sha256": "32ca0b0e98161d663f35db88d8322409194de1006d9cc2db03616f0acbb836aa",
+      "size": [
+        1312,
+        1199
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "32ca0b0e98161d663f35db88d8322409194de1006d9cc2db03616f0acbb836aa",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.4785701753493765,
+        "transparent_border_ratio": 0.997807891590275
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "Four ordered distinct firepower body poses, consistent identity/equipment, complete hair/feet and separated frames. Cross-state scale and animation playback remain runtime polish. Six bow and four aft ports, headset/gauge and fitted boots without flippers."
+    }
+  ]
+}

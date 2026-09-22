@@ -1,0 +1,327 @@
+{
+  "schema_version": 2,
+  "character_id": "dingyuan",
+  "kind": "codex_builtin_generated_art",
+  "source": "Codex built-in ImageGen",
+  "batch_ready_allowed": true,
+  "generation_policy": {
+    "primary_route": "codex_builtin_imagegen_native_alpha",
+    "legacy_fallback": {
+      "authorized": false,
+      "activation": "--allow-legacy-chroma-fallback",
+      "reason": "",
+      "native_failures": []
+    }
+  },
+  "generation": {
+    "requested_model": "codex-account-managed-imagegen",
+    "actual_model": "codex-account-managed-imagegen",
+    "generation_tool": "Codex built-in ImageGen",
+    "endpoint": "Codex account-managed image generation",
+    "quality": "Codex account-managed",
+    "size_control": "per-asset Codex account-managed output",
+    "background_control": "transparent requested and pixel-verified",
+    "output_format": "PNG",
+    "prompt_revision": {
+      "path": "assets/characters/dingyuan/meta/dingyuan_generation_brief_v2.md",
+      "sha256": "9181ddc01849c8567a81df7375ea09c0b2968819679f3e1ff8829e54beb3e6af"
+    },
+    "reference_inputs": [
+      {
+        "path": "assets/characters/dingyuan/concept/dingyuan_concept_full.png",
+        "role": "accepted_style_anchor_for_derivative_sheets"
+      }
+    ],
+    "reproducibility_note": "The Codex account manages the underlying image model and request IDs; those implementation details are not exposed. Accepted PNG outputs are preserved byte-for-byte and tracked by SHA-256."
+  },
+  "source_images": [
+    {
+      "role": "concept_full",
+      "path": "assets/characters/dingyuan/concept/dingyuan_concept_full.png",
+      "sha256": "bceafea8d139ad84fdbffc54febb2e0908354c442c6b90d40277774b8d715ebb",
+      "size": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "bceafea8d139ad84fdbffc54febb2e0908354c442c6b90d40277774b8d715ebb",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.5702177683512369,
+        "transparent_border_ratio": 0.9937451133698202
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex source visual review 2026-09-20",
+      "qa_observation": "黑发髻、金簪、黛青象牙白礼装一致；双联露炮台可见炮尾，低烟囱，无雷达或现代防空。 完整人体与舰装可辨认，Alpha门禁通过；半身与cut-in按契约由锚点派生。"
+    },
+    {
+      "role": "ui_sheet",
+      "path": "assets/characters/dingyuan/ui/dingyuan_ui_sheet.png",
+      "sha256": "be44b6e467cc31ef60422e557544c3eae3e75b5ce014ed5f7a9e1b97b2e2a69f",
+      "size": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "be44b6e467cc31ef60422e557544c3eae3e75b5ce014ed5f7a9e1b97b2e2a69f",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.4637591044108073,
+        "transparent_border_ratio": 0.9812353401094606
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex source visual review 2026-09-20",
+      "qa_observation": "黑发髻、金簪、黛青象牙白礼装一致；双联露炮台可见炮尾，低烟囱，无雷达或现代防空。 八项顺序为大小头像、Q版头像、默认/严肃/受击、技能/舰种图标；表情有区别，主体可分离。"
+    },
+    {
+      "role": "battle_grid",
+      "path": "assets/characters/dingyuan/battle/dingyuan_battle_asset_grid.png",
+      "sha256": "04f153afa88cff063c6a704e6f526c214f2a8e0f6abef98879b8a7ebf9d80ccf",
+      "size": [
+        1774,
+        887
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "04f153afa88cff063c6a704e6f526c214f2a8e0f6abef98879b8a7ebf9d80ccf",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.6182583452067888,
+        "transparent_border_ratio": 0.9894697254606996
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex source visual review 2026-09-20",
+      "qa_observation": "黑发髻、金簪、黛青象牙白礼装一致；双联露炮台可见炮尾，低烟囱，无雷达或现代防空。 八个语义拆件独立；武器为单模板，实例数量归挂点配置；最终挂点仍需成品复核。"
+    },
+    {
+      "role": "vfx_sheet",
+      "path": "assets/characters/dingyuan/vfx/dingyuan_vfx_reference_sheet.png",
+      "sha256": "ac82698ca1927a7a80c085a473f3426c2602ee687febe7e4cad642a715a36633",
+      "size": [
+        1199,
+        1312
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "ac82698ca1927a7a80c085a473f3426c2602ee687febe7e4cad642a715a36633",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.5941454006387437,
+        "transparent_border_ratio": 0.9840573933838183
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex source visual review 2026-09-20",
+      "qa_observation": "黑发髻、金簪、黛青象牙白礼装一致；双联露炮台可见炮尾，低烟囱，无雷达或现代防空。 八项特效按计划顺序可辨认；光环/烟火/水花多连通块全部保留；裁切后需复核边缘。"
+    },
+    {
+      "role": "anim_idle",
+      "path": "assets/characters/dingyuan/battle/dingyuan_anim_idle_4f_sheet.png",
+      "sha256": "b0196494fe480232ad473bcd0e4880e6d2bb63f1a7447296beaf8f1d1d51f1e0",
+      "size": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "b0196494fe480232ad473bcd0e4880e6d2bb63f1a7447296beaf8f1d1d51f1e0",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.7502969106038412,
+        "transparent_border_ratio": 0.9976544175136826
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex source visual review 2026-09-20",
+      "qa_observation": "黑发髻、金簪、黛青象牙白礼装一致；双联露炮台可见炮尾，低烟囱，无雷达或现代防空。 四帧按左上右上左下右下有姿态变化；仅本体动画层，无飞出弹体、飞机或跨格效果；武器独立资产需运行时绑定。 动画差异门禁返工：强化手臂、重心、腿部和披风轮廓变化。"
+    },
+    {
+      "role": "anim_move",
+      "path": "assets/characters/dingyuan/battle/dingyuan_anim_move_4f_sheet.png",
+      "sha256": "c56f7b9c8fb3f5a54b2ef2c5a0859ebdb4734f09dff7072a23d690cab751bc91",
+      "size": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "c56f7b9c8fb3f5a54b2ef2c5a0859ebdb4734f09dff7072a23d690cab751bc91",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.7436777750651041,
+        "transparent_border_ratio": 0.9777169663799844
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex source visual review 2026-09-20",
+      "qa_observation": "黑发髻、金簪、黛青象牙白礼装一致；双联露炮台可见炮尾，低烟囱，无雷达或现代防空。 四帧按左上右上左下右下有姿态变化；仅本体动画层，无飞出弹体、飞机或跨格效果；武器独立资产需运行时绑定。"
+    },
+    {
+      "role": "anim_attack",
+      "path": "assets/characters/dingyuan/battle/dingyuan_anim_attack_4f_sheet.png",
+      "sha256": "7a7ef595fac2dc9c132eecba013fe0f5f6b7ccd5861e0d62df1f5b69f38aca4c",
+      "size": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "7a7ef595fac2dc9c132eecba013fe0f5f6b7ccd5861e0d62df1f5b69f38aca4c",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.6947517395019531,
+        "transparent_border_ratio": 0.982017200938233
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex source visual review 2026-09-20",
+      "qa_observation": "黑发髻、金簪、黛青象牙白礼装一致；双联露炮台可见炮尾，低烟囱，无雷达或现代防空。 四帧按左上右上左下右下有姿态变化；仅本体动画层，无飞出弹体、飞机或跨格效果；武器独立资产需运行时绑定。"
+    },
+    {
+      "role": "anim_hit",
+      "path": "assets/characters/dingyuan/battle/dingyuan_anim_hit_4f_sheet.png",
+      "sha256": "b5acdd46660a1ffb58e28d7db358f17fb06f77eb2c85d8cd132dd708becf0304",
+      "size": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "b5acdd46660a1ffb58e28d7db358f17fb06f77eb2c85d8cd132dd708becf0304",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.7438017527262369,
+        "transparent_border_ratio": 0.9978498827208757
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex source visual review 2026-09-20",
+      "qa_observation": "黑发髻、金簪、黛青象牙白礼装一致；双联露炮台可见炮尾，低烟囱，无雷达或现代防空。 四帧按左上右上左下右下有姿态变化；仅本体动画层，无飞出弹体、飞机或跨格效果；武器独立资产需运行时绑定。"
+    },
+    {
+      "role": "anim_firepower",
+      "path": "assets/characters/dingyuan/battle/dingyuan_anim_firepower_4f_sheet.png",
+      "sha256": "3566e9a0bacc004d54fd9a12e63740c42887f62fb2fa245227b06e83d74afd50",
+      "size": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "3566e9a0bacc004d54fd9a12e63740c42887f62fb2fa245227b06e83d74afd50",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.7337532043457031,
+        "transparent_border_ratio": 0.990226739640344
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex source visual review 2026-09-20",
+      "qa_observation": "黑发髻、金簪、黛青象牙白礼装一致；双联露炮台可见炮尾，低烟囱，无雷达或现代防空。 四帧按左上右上左下右下有姿态变化；仅本体动画层，无飞出弹体、飞机或跨格效果；武器独立资产需运行时绑定。"
+    }
+  ]
+}

@@ -18,15 +18,34 @@
     "turret_main": 2,
     "turret_secondary": 2
   },
+  "object_inventory": {
+    "turret_main": {
+      "instances": 2,
+      "barrels_per_instance": 2
+    },
+    "turret_secondary": {
+      "instances": 2,
+      "barrels_per_instance": 1
+    }
+  },
   "bindings": {
     "battle_rig_base": [
       "rig_mount",
-      "wake_origin",
       "skill_origin",
+      "wake_origin",
       "turret_mount_01",
       "turret_mount_02",
       "secondary_mount_01",
       "secondary_mount_02"
+    ],
+    "battle_turret_main_01": [
+      "pivot",
+      "muzzle_01",
+      "muzzle_02"
+    ],
+    "battle_turret_secondary_01": [
+      "pivot",
+      "muzzle_01"
     ]
   },
   "vfx_roles": [
@@ -53,5 +72,88 @@
     "Original TinySeaWar design; no real flags, political symbols, readable insignia, or extremist symbols.",
     "Character body, rig base, weapon nodes, and VFX must remain visually separable.",
     "Pre-dreadnought ironclad silhouette; no radar or modern anti-aircraft equipment."
-  ]
+  ],
+  "manifest_schema_version": 2,
+  "additional_public_vfx_roles": {
+    "muzzle_flash_medium": {
+      "file": "assets/vfx/combat/muzzle/vfx_muzzle_gun_medium_01.png",
+      "semantic": "muzzle_flash.medium"
+    },
+    "muzzle_flash_large": {
+      "file": "assets/vfx/combat/muzzle/vfx_muzzle_gun_large_01.png",
+      "semantic": "muzzle_flash.large"
+    }
+  },
+  "weapon_binding_rules": {
+    "dingyuan_main": {
+      "asset_role": "battle_turret_main_01",
+      "launch_bind": "muzzle_01",
+      "muzzle_vfx_role": "muzzle_flash_large",
+      "launch_profile": "vfx.profile.muzzle_flash.large",
+      "impact_profile": "vfx.profile.shell_impact.large"
+    },
+    "dingyuan_secondary": {
+      "asset_role": "battle_turret_secondary_01",
+      "launch_bind": "muzzle_01",
+      "muzzle_vfx_role": "muzzle_flash_medium",
+      "launch_profile": "vfx.profile.muzzle_flash.medium",
+      "impact_profile": "vfx.profile.shell_impact.medium"
+    }
+  },
+  "binding_positions": {
+    "battle_rig_base": {
+      "rig_mount": {
+        "x": 0.47368,
+        "y": 0.44361
+      },
+      "skill_origin": {
+        "x": 0.47368,
+        "y": 0.36842
+      },
+      "wake_origin": {
+        "x": 0.09211,
+        "y": 0.3985
+      },
+      "turret_mount_01": {
+        "x": 0.28947,
+        "y": 0.21805
+      },
+      "turret_mount_02": {
+        "x": 0.63684,
+        "y": 0.32331
+      },
+      "secondary_mount_01": {
+        "x": 0.43421,
+        "y": 0.3797
+      },
+      "secondary_mount_02": {
+        "x": 0.78158,
+        "y": 0.43609
+      }
+    },
+    "battle_turret_main_01": {
+      "pivot": {
+        "x": 0.44737,
+        "y": 0.66197
+      },
+      "muzzle_01": {
+        "x": 0.91053,
+        "y": 0.26291
+      },
+      "muzzle_02": {
+        "x": 0.73947,
+        "y": 0.37559
+      }
+    },
+    "battle_turret_secondary_01": {
+      "pivot": {
+        "x": 0.46842,
+        "y": 0.6886
+      },
+      "muzzle_01": {
+        "x": 0.89211,
+        "y": 0.34211
+      }
+    }
+  }
 }

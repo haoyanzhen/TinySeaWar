@@ -1,0 +1,59 @@
+{
+  "character_id": "chapayev",
+  "sources": {
+    "anim_idle": {
+      "sha256": "419b47940c65d8e5a373ecc46f9725914d6e4790e5060a19c6ba2deef57fcdb5",
+      "verdict": "pass",
+      "reviewer": "Codex visual inspection 2026-09-21",
+      "observation": "四帧均为银发红帽/红灰衣 Q 版；四座三联炮、两组三联雷管、测距仪保持一致；闭眼/发丝/呼吸变化可辨，完整手脚，无飞出弹体。"
+    },
+    "battle_grid": {
+      "sha256": "d2d881aeb1114f9e77705a984cb40159fd9302a709ae881645ee7875861f1d6a",
+      "verdict": "pass",
+      "reviewer": "Codex visual inspection 2026-09-21",
+      "observation": "独立角色本体、四炮座两雷座空底架、三联炮及三联雷管、AA、长测距仪、火控盒及尾迹八角色分别可辨；炮管数三、雷管数三，无邻件接触。"
+    },
+    "concept_full": {
+      "sha256": "a7a1803638cd5cb7ce254385159656f5a26a5a4dcf11b44b8d543035fe899f19",
+      "verdict": "pass",
+      "reviewer": "Codex visual inspection 2026-09-21",
+      "observation": "全身与四座三联炮、两座三联鱼雷及测距仪完整，身份配色正确。"
+    },
+    "ui_sheet": {
+      "sha256": "3ab06720356a913aeb979090bf5f237a8afbae133b6c01e0c4e690d54650021f",
+      "verdict": "pass",
+      "reviewer": "Codex visual inspection 2026-09-21",
+      "observation": "八个UI对象保持原身份和语义顺序，头像之间有清晰透明间隔；第一头像手臂与第二头像头发不再接触，发帽完整。"
+    },
+    "vfx_sheet": {
+      "sha256": "3f10a60465c84de9e15fd3bfb8fedeb70756c96f012b82024261b6be01f70cd9",
+      "verdict": "polish",
+      "reviewer": "Codex visual inspection 2026-09-21",
+      "observation": "八项特效逐件可分，圆环、水花和断开粒子完整；发射/尾迹参考中含弹体，仅作为现有参考表达，不写入角色动画。原生Alpha。"
+    },
+    "anim_move": {
+      "sha256": "695e52e193b1780e7b53bc623afb573779bbfd3b2b15f420d897fa16e099e46b",
+      "verdict": "pass",
+      "reviewer": "Codex visual inspection 2026-09-21",
+      "observation": "Q版动作四帧姿态变化可见；四座三联主炮、两组三联鱼雷与测距仪完整，无串格和边界截断。"
+    },
+    "anim_hit": {
+      "sha256": "983da0f6adcc119ab09eae1fb2bafe58c350e59fa75e44608860de3047bda014",
+      "verdict": "pass",
+      "reviewer": "Codex visual inspection 2026-09-21",
+      "observation": "Q版动作四帧姿态变化可见；四座三联主炮、两组三联鱼雷与测距仪完整，无串格和边界截断。"
+    },
+    "anim_attack": {
+      "sha256": "22d423bd7e6713c1f72ba060d6b2227bd0954bd460f4d200188c2d70a00db2b4",
+      "verdict": "pass",
+      "reviewer": "Codex visual inspection 2026-09-21",
+      "observation": "2026-09-21逐图目检：角色身份与服装一致，Q版帧有实际姿态变化，装备和四帧均完整留边；无飞出投射物。"
+    },
+    "anim_firepower": {
+      "sha256": "3a733a733c8990dec8ba90243165ea113d18a894ceb14850b2c45a5c2981e47a",
+      "verdict": "pass",
+      "reviewer": "Codex visual inspection 2026-09-21",
+      "observation": "2026-09-21逐图目检：角色身份与服装一致，Q版帧有实际姿态变化，装备和四帧均完整留边；无飞出投射物。"
+    }
+  }
+}

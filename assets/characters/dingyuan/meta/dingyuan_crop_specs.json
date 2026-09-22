@@ -1,0 +1,515 @@
+{
+  "character_id": "dingyuan",
+  "reviewer": "Codex visual review 2026-09-20",
+  "method": "Inspected full-source semantic objects; explicit source-space hints, connected-component expansion. No grid cuts.",
+  "crops": {
+    "battle_body_r": {
+      "source": "battle_grid",
+      "box": [
+        45,
+        22,
+        279,
+        529
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "battle_rig_base": {
+      "source": "battle_grid",
+      "box": [
+        335,
+        120,
+        917,
+        506
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "battle_turret_main_01": {
+      "source": "battle_grid",
+      "box": [
+        973,
+        236,
+        1414,
+        471
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "battle_turret_secondary_01": {
+      "source": "battle_grid",
+      "box": [
+        1490,
+        294,
+        1735,
+        435
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "battle_armor_plate": {
+      "source": "battle_grid",
+      "box": [
+        90,
+        626,
+        390,
+        839
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "battle_smokestack_node": {
+      "source": "battle_grid",
+      "box": [
+        555,
+        586,
+        822,
+        844
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "battle_flagship_marker": {
+      "source": "battle_grid",
+      "box": [
+        971,
+        605,
+        1303,
+        811
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "battle_wake_origin_marker": {
+      "source": "battle_grid",
+      "box": [
+        1410,
+        635,
+        1725,
+        853
+      ],
+      "tags": []
+    },
+    "vfx:ironclad_guard_aura": {
+      "source": "vfx_sheet",
+      "box": [
+        45,
+        35,
+        577,
+        342
+      ],
+      "tags": []
+    },
+    "vfx:coal_smoke_wake": {
+      "source": "vfx_sheet",
+      "box": [
+        655,
+        80,
+        1175,
+        318
+      ],
+      "tags": []
+    },
+    "vfx:broadside_smoke": {
+      "source": "vfx_sheet",
+      "box": [
+        74,
+        362,
+        553,
+        653
+      ],
+      "tags": []
+    },
+    "vfx:shell_trail_heavy": {
+      "source": "vfx_sheet",
+      "box": [
+        650,
+        417,
+        1165,
+        623
+      ],
+      "tags": []
+    },
+    "vfx:armor_sparks": {
+      "source": "vfx_sheet",
+      "box": [
+        78,
+        655,
+        553,
+        955
+      ],
+      "tags": []
+    },
+    "vfx:command_aura": {
+      "source": "vfx_sheet",
+      "box": [
+        620,
+        645,
+        1135,
+        956
+      ],
+      "tags": []
+    },
+    "vfx:water_splash_large": {
+      "source": "vfx_sheet",
+      "box": [
+        78,
+        961,
+        560,
+        1280
+      ],
+      "tags": []
+    },
+    "vfx:fire_control_lock": {
+      "source": "vfx_sheet",
+      "box": [
+        729,
+        970,
+        1043,
+        1247
+      ],
+      "tags": []
+    },
+    "ui_portrait": {
+      "source": "ui_sheet",
+      "box": [
+        24,
+        32,
+        396,
+        485
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "ui_portrait_small": {
+      "source": "ui_sheet",
+      "box": [
+        462,
+        126,
+        711,
+        411
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "ui_chibi_head": {
+      "source": "ui_sheet",
+      "box": [
+        796,
+        175,
+        1083,
+        395
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "expr_default": {
+      "source": "ui_sheet",
+      "box": [
+        1141,
+        46,
+        1512,
+        485
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "expr_serious": {
+      "source": "ui_sheet",
+      "box": [
+        23,
+        543,
+        381,
+        969
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "expr_hit": {
+      "source": "ui_sheet",
+      "box": [
+        407,
+        553,
+        745,
+        969
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "ui_skill": {
+      "source": "ui_sheet",
+      "box": [
+        770,
+        586,
+        1141,
+        923
+      ],
+      "tags": []
+    },
+    "class_icon": {
+      "source": "ui_sheet",
+      "box": [
+        1165,
+        607,
+        1506,
+        913
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "anim_idle_frame_01": {
+      "source": "anim_idle",
+      "box": [
+        351,
+        20,
+        576,
+        496
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "anim_idle_frame_02": {
+      "source": "anim_idle",
+      "box": [
+        913,
+        21,
+        1241,
+        497
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "anim_idle_frame_03": {
+      "source": "anim_idle",
+      "box": [
+        364,
+        531,
+        589,
+        998
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "anim_idle_frame_04": {
+      "source": "anim_idle",
+      "box": [
+        957,
+        528,
+        1184,
+        998
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "anim_move_frame_01": {
+      "source": "anim_move",
+      "box": [
+        323,
+        21,
+        579,
+        492
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "anim_move_frame_02": {
+      "source": "anim_move",
+      "box": [
+        926,
+        23,
+        1204,
+        494
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "anim_move_frame_03": {
+      "source": "anim_move",
+      "box": [
+        314,
+        525,
+        615,
+        1000
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "anim_move_frame_04": {
+      "source": "anim_move",
+      "box": [
+        937,
+        524,
+        1162,
+        1007
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "anim_attack_frame_01": {
+      "source": "anim_attack",
+      "box": [
+        260,
+        19,
+        608,
+        494
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "anim_attack_frame_02": {
+      "source": "anim_attack",
+      "box": [
+        920,
+        22,
+        1367,
+        494
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "anim_attack_frame_03": {
+      "source": "anim_attack",
+      "box": [
+        237,
+        542,
+        643,
+        1000
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "anim_attack_frame_04": {
+      "source": "anim_attack",
+      "box": [
+        983,
+        525,
+        1235,
+        1001
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "anim_hit_frame_01": {
+      "source": "anim_hit",
+      "box": [
+        344,
+        29,
+        612,
+        498
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "anim_hit_frame_02": {
+      "source": "anim_hit",
+      "box": [
+        954,
+        40,
+        1229,
+        497
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "anim_hit_frame_03": {
+      "source": "anim_hit",
+      "box": [
+        316,
+        547,
+        604,
+        999
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "anim_hit_frame_04": {
+      "source": "anim_hit",
+      "box": [
+        940,
+        533,
+        1201,
+        999
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "anim_firepower_frame_01": {
+      "source": "anim_firepower",
+      "box": [
+        352,
+        22,
+        575,
+        496
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "anim_firepower_frame_02": {
+      "source": "anim_firepower",
+      "box": [
+        954,
+        21,
+        1274,
+        496
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "anim_firepower_frame_03": {
+      "source": "anim_firepower",
+      "box": [
+        284,
+        529,
+        654,
+        996
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "anim_firepower_frame_04": {
+      "source": "anim_firepower",
+      "box": [
+        978,
+        527,
+        1198,
+        1003
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    }
+  }
+}

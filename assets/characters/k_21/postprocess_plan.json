@@ -18,11 +18,24 @@
     "torpedo_fore": 6,
     "torpedo_aft": 4
   },
+  "object_inventory": {
+    "torpedo_fore": {
+      "instances": 6,
+      "tubes_per_instance": 1,
+      "bank": "six_bow_openings"
+    },
+    "torpedo_aft": {
+      "instances": 4,
+      "tubes_per_instance": 1,
+      "bank": "four_stern_openings"
+    }
+  },
   "bindings": {
     "battle_rig_base": [
+      "pivot",
       "rig_mount",
-      "wake_origin",
       "skill_origin",
+      "wake_origin",
       "torpedo_fore_mount_01",
       "torpedo_fore_mount_02",
       "torpedo_fore_mount_03",
@@ -33,6 +46,22 @@
       "torpedo_aft_mount_02",
       "torpedo_aft_mount_03",
       "torpedo_aft_mount_04"
+    ],
+    "battle_torpedo_tube_fore": [
+      "pivot",
+      "torpedo_port_01",
+      "torpedo_port_02",
+      "torpedo_port_03",
+      "torpedo_port_04",
+      "torpedo_port_05",
+      "torpedo_port_06"
+    ],
+    "battle_torpedo_tube_aft": [
+      "pivot",
+      "torpedo_port_01",
+      "torpedo_port_02",
+      "torpedo_port_03",
+      "torpedo_port_04"
     ]
   },
   "vfx_roles": [
@@ -49,7 +78,7 @@
     "polar_tracking_ring": "submarine.sonar_pulse",
     "ice_torpedo_trail": "torpedo.trail.submerged",
     "sonar_pulse": "submarine.sonar_pulse",
-    "torpedo_launch_flash": "torpedo.trail.submerged",
+    "torpedo_launch_flash": "torpedo.launch.submerged",
     "torpedo_trail": "torpedo.trail.submerged",
     "underwater_shadow": "skill.area",
     "dive_ripple": "skill.area",
@@ -59,5 +88,127 @@
     "Original TinySeaWar design; no real flags, political symbols, readable insignia, or extremist symbols.",
     "Character body, rig base, weapon nodes, and VFX must remain visually separable.",
     "Submarine character must wear fitted waterproof or tactical boots; no swim fins on feet."
-  ]
+  ],
+  "manifest_schema_version": 2,
+  "binding_positions": {
+    "battle_rig_base": {
+      "pivot": {
+        "x": 0.554557,
+        "y": 0.576705
+      },
+      "rig_mount": {
+        "x": 0.471117,
+        "y": 0.46733
+      },
+      "skill_origin": {
+        "x": 0.554557,
+        "y": 0.576705
+      },
+      "wake_origin": {
+        "x": 0.934531,
+        "y": 0.572443
+      },
+      "torpedo_fore_mount_01": {
+        "x": 0.258023,
+        "y": 0.542614
+      },
+      "torpedo_fore_mount_02": {
+        "x": 0.279846,
+        "y": 0.545455
+      },
+      "torpedo_fore_mount_03": {
+        "x": 0.299101,
+        "y": 0.553977
+      },
+      "torpedo_fore_mount_04": {
+        "x": 0.258023,
+        "y": 0.637784
+      },
+      "torpedo_fore_mount_05": {
+        "x": 0.279846,
+        "y": 0.646307
+      },
+      "torpedo_fore_mount_06": {
+        "x": 0.299101,
+        "y": 0.65767
+      },
+      "torpedo_aft_mount_01": {
+        "x": 0.905006,
+        "y": 0.522727
+      },
+      "torpedo_aft_mount_02": {
+        "x": 0.934531,
+        "y": 0.521307
+      },
+      "torpedo_aft_mount_03": {
+        "x": 0.905006,
+        "y": 0.62358
+      },
+      "torpedo_aft_mount_04": {
+        "x": 0.934531,
+        "y": 0.620739
+      }
+    },
+    "battle_torpedo_tube_fore": {
+      "pivot": {
+        "x": 0.820988,
+        "y": 0.540323
+      },
+      "torpedo_port_01": {
+        "x": 0.179012,
+        "y": 0.427419
+      },
+      "torpedo_port_02": {
+        "x": 0.302469,
+        "y": 0.443548
+      },
+      "torpedo_port_03": {
+        "x": 0.438272,
+        "y": 0.46371
+      },
+      "torpedo_port_04": {
+        "x": 0.179012,
+        "y": 0.649194
+      },
+      "torpedo_port_05": {
+        "x": 0.302469,
+        "y": 0.673387
+      },
+      "torpedo_port_06": {
+        "x": 0.438272,
+        "y": 0.701613
+      }
+    },
+    "battle_torpedo_tube_aft": {
+      "pivot": {
+        "x": 0.757576,
+        "y": 0.51073
+      },
+      "torpedo_port_01": {
+        "x": 0.25974,
+        "y": 0.420601
+      },
+      "torpedo_port_02": {
+        "x": 0.454545,
+        "y": 0.433476
+      },
+      "torpedo_port_03": {
+        "x": 0.25974,
+        "y": 0.643777
+      },
+      "torpedo_port_04": {
+        "x": 0.454545,
+        "y": 0.669528
+      }
+    }
+  },
+  "weapon_binding_rules": {
+    "k_21_torpedo": {
+      "asset_role": "battle_torpedo_tube_fore",
+      "launch_bind": "torpedo_port_01",
+      "muzzle_vfx_role": "torpedo_launch_flash",
+      "launch_profile": "vfx.profile.torpedo_launch",
+      "impact_profile": "vfx.profile.torpedo_impact"
+    }
+  }
 }

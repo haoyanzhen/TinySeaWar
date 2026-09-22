@@ -1,6 +1,5 @@
 {
   "character_id": "jervis",
-  "manifest_schema_version": 2,
   "phase": "phase2",
   "ship_class": "destroyer",
   "level": 1,
@@ -35,31 +34,33 @@
   },
   "bindings": {
     "battle_rig_base": [
+      "pivot",
       "rig_mount",
-      "wake_origin",
       "skill_origin",
+      "wake_origin",
       "turret_mount_01",
       "turret_mount_02",
       "turret_mount_03",
       "torpedo_mount_01",
       "torpedo_mount_02",
+      "depth_charge_mount_01",
+      "depth_charge_mount_02",
       "asw_launch_01",
       "asw_launch_02"
+    ],
+    "battle_turret_main_01": [
+      "pivot",
+      "muzzle_01",
+      "muzzle_02"
+    ],
+    "battle_torpedo_tube_01": [
+      "pivot",
+      "torpedo_port_01",
+      "torpedo_port_02",
+      "torpedo_port_03",
+      "torpedo_port_04",
+      "torpedo_port_05"
     ]
-  },
-  "binding_positions": {
-    "battle_rig_base": {
-      "rig_mount": {"x": 0.49, "y": 0.50},
-      "wake_origin": {"x": 0.27, "y": 0.50},
-      "skill_origin": {"x": 0.49, "y": 0.50},
-      "turret_mount_01": {"x": 0.14, "y": 0.30},
-      "turret_mount_02": {"x": 0.50, "y": 0.13},
-      "turret_mount_03": {"x": 0.86, "y": 0.34},
-      "torpedo_mount_01": {"x": 0.18, "y": 0.80},
-      "torpedo_mount_02": {"x": 0.82, "y": 0.87},
-      "asw_launch_01": {"x": 0.27, "y": 0.43},
-      "asw_launch_02": {"x": 0.27, "y": 0.58}
-    }
   },
   "vfx_roles": [
     "formation_signal",
@@ -80,6 +81,107 @@
     "aa_circle": "aa.burst.small",
     "skill_aura": "skill.area",
     "range_reticle": "skill.area"
+  },
+  "acceptance_rules": [
+    "Original TinySeaWar design; no real flags, political symbols, readable insignia, or extremist symbols.",
+    "Character body, rig base, weapon nodes, and VFX must remain visually separable."
+  ],
+  "manifest_schema_version": 2,
+  "binding_positions": {
+    "battle_rig_base": {
+      "pivot": {
+        "x": 0.477922,
+        "y": 0.517572
+      },
+      "rig_mount": {
+        "x": 0.477922,
+        "y": 0.517572
+      },
+      "skill_origin": {
+        "x": 0.477922,
+        "y": 0.517572
+      },
+      "wake_origin": {
+        "x": 0.477922,
+        "y": 0.776358
+      },
+      "turret_mount_01": {
+        "x": 0.21039,
+        "y": 0.127796
+      },
+      "turret_mount_02": {
+        "x": 0.761039,
+        "y": 0.127796
+      },
+      "turret_mount_03": {
+        "x": 0.748052,
+        "y": 0.472843
+      },
+      "torpedo_mount_01": {
+        "x": 0.176623,
+        "y": 0.811502
+      },
+      "torpedo_mount_02": {
+        "x": 0.774026,
+        "y": 0.811502
+      },
+      "depth_charge_mount_01": {
+        "x": 0.174026,
+        "y": 0.875399
+      },
+      "depth_charge_mount_02": {
+        "x": 0.774026,
+        "y": 0.878594
+      },
+      "asw_launch_01": {
+        "x": 0.174026,
+        "y": 0.875399
+      },
+      "asw_launch_02": {
+        "x": 0.774026,
+        "y": 0.878594
+      }
+    },
+    "battle_turret_main_01": {
+      "pivot": {
+        "x": 0.484594,
+        "y": 0.769231
+      },
+      "muzzle_01": {
+        "x": 0.114846,
+        "y": 0.157191
+      },
+      "muzzle_02": {
+        "x": 0.277311,
+        "y": 0.130435
+      }
+    },
+    "battle_torpedo_tube_01": {
+      "pivot": {
+        "x": 0.685484,
+        "y": 0.625984
+      },
+      "torpedo_port_01": {
+        "x": 0.120968,
+        "y": 0.590551
+      },
+      "torpedo_port_02": {
+        "x": 0.22043,
+        "y": 0.641732
+      },
+      "torpedo_port_03": {
+        "x": 0.327957,
+        "y": 0.688976
+      },
+      "torpedo_port_04": {
+        "x": 0.438172,
+        "y": 0.73622
+      },
+      "torpedo_port_05": {
+        "x": 0.545699,
+        "y": 0.783465
+      }
+    }
   },
   "additional_public_vfx_roles": {
     "asw_underwater_blast": {
@@ -107,9 +209,5 @@
       "muzzle_vfx_role": "torpedo_launch_flash",
       "launch_profile": "vfx.profile.torpedo_launch"
     }
-  },
-  "acceptance_rules": [
-    "Original TinySeaWar design; no real flags, political symbols, readable insignia, or extremist symbols.",
-    "Character body, rig base, weapon nodes, and VFX must remain visually separable."
-  ]
+  }
 }

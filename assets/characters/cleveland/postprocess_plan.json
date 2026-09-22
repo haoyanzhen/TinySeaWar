@@ -17,15 +17,33 @@
   "mount_instances": {
     "turret_main": 4
   },
+  "object_inventory": {
+    "turret_main": {
+      "instances": 4
+    }
+  },
   "bindings": {
     "battle_rig_base": [
+      "pivot",
       "rig_mount",
-      "wake_origin",
       "skill_origin",
+      "wake_origin",
       "turret_mount_01",
       "turret_mount_02",
       "turret_mount_03",
       "turret_mount_04"
+    ],
+    "battle_turret_main_01": [
+      "pivot",
+      "muzzle_01",
+      "muzzle_02",
+      "muzzle_03"
+    ],
+    "battle_turret_main_02": [
+      "pivot",
+      "muzzle_01",
+      "muzzle_02",
+      "muzzle_03"
     ]
   },
   "vfx_roles": [
@@ -52,5 +70,78 @@
     "Original TinySeaWar design; no real flags, political symbols, readable insignia, or extremist symbols.",
     "Character body, rig base, weapon nodes, and VFX must remain visually separable.",
     "No torpedo tube or torpedo VFX may appear."
-  ]
+  ],
+  "manifest_schema_version": 2,
+  "binding_positions": {
+    "battle_rig_base": {
+      "pivot": {
+        "x": 0.5,
+        "y": 0.509018
+      },
+      "rig_mount": {
+        "x": 0.5,
+        "y": 0.509018
+      },
+      "skill_origin": {
+        "x": 0.5,
+        "y": 0.509018
+      },
+      "wake_origin": {
+        "x": 0.505025,
+        "y": 0.817635
+      },
+      "turret_mount_01": {
+        "x": 0.19598,
+        "y": 0.334669
+      },
+      "turret_mount_02": {
+        "x": 0.796482,
+        "y": 0.334669
+      },
+      "turret_mount_03": {
+        "x": 0.19598,
+        "y": 0.539078
+      },
+      "turret_mount_04": {
+        "x": 0.798995,
+        "y": 0.541082
+      }
+    },
+    "battle_turret_main_01": {
+      "pivot": {
+        "x": 0.484337,
+        "y": 0.800752
+      },
+      "muzzle_01": {
+        "x": 0.086747,
+        "y": 0.24812
+      },
+      "muzzle_02": {
+        "x": 0.175904,
+        "y": 0.169173
+      },
+      "muzzle_03": {
+        "x": 0.272289,
+        "y": 0.146617
+      }
+    },
+    "battle_turret_main_02": {
+      "pivot": {
+        "x": 0.465721,
+        "y": 0.80303
+      },
+      "muzzle_01": {
+        "x": 0.094563,
+        "y": 0.246212
+      },
+      "muzzle_02": {
+        "x": 0.182033,
+        "y": 0.166667
+      },
+      "muzzle_03": {
+        "x": 0.27896,
+        "y": 0.143939
+      }
+    }
+  }
 }

@@ -1,0 +1,327 @@
+{
+  "schema_version": 2,
+  "character_id": "i_19",
+  "kind": "codex_builtin_generated_art",
+  "source": "Codex built-in ImageGen",
+  "batch_ready_allowed": true,
+  "generation_policy": {
+    "primary_route": "codex_builtin_imagegen_native_alpha",
+    "legacy_fallback": {
+      "authorized": false,
+      "activation": "--allow-legacy-chroma-fallback",
+      "reason": "",
+      "native_failures": []
+    }
+  },
+  "generation": {
+    "requested_model": "codex-account-managed-imagegen",
+    "actual_model": "codex-account-managed-imagegen",
+    "generation_tool": "Codex built-in ImageGen",
+    "endpoint": "Codex account-managed image generation",
+    "quality": "Codex account-managed",
+    "size_control": "per-asset Codex account-managed output",
+    "background_control": "transparent requested and pixel-verified",
+    "output_format": "PNG",
+    "prompt_revision": {
+      "path": "assets/characters/i_19/meta/i_19_generation_brief_v2.md",
+      "sha256": "2b6292f86fcd4c34fae76026b8bfdf12664df2233fabe8b196be2252900f3474"
+    },
+    "reference_inputs": [
+      {
+        "path": "assets/characters/i_19/concept/i_19_concept_full.png",
+        "role": "accepted_style_anchor_for_derivative_sheets"
+      }
+    ],
+    "reproducibility_note": "The Codex account manages the underlying image model and request IDs; those implementation details are not exposed. Accepted PNG outputs are preserved byte-for-byte and tracked by SHA-256."
+  },
+  "source_images": [
+    {
+      "role": "concept_full",
+      "path": "assets/characters/i_19/concept/i_19_concept_full.png",
+      "sha256": "6af5d40bf92de937c119115bc7eaa30f92b338d6055eaf1bcb826bf0cf9b87d1",
+      "size": [
+        1024,
+        1536
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "6af5d40bf92de937c119115bc7eaa30f92b338d6055eaf1bcb826bf0cf9b87d1",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.6520074208577474,
+        "transparent_border_ratio": 1.0
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "concept_full: Teal hair, monocle and fitted boots consistent; six bow openings in two rows of three, no aft ports, one docked unmarked floatplane; periscope and sonar separable. Native transparency measured separately; current displayed source examined. Fine line/scale polish remains; runtime assembly not accepted."
+    },
+    {
+      "role": "ui_sheet",
+      "path": "assets/characters/i_19/ui/i_19_ui_sheet.png",
+      "sha256": "cf7b25e97ca6f4ffbf13f312bcad3ee8c7c1daac5a968640758a6943a15a3fb7",
+      "size": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "cf7b25e97ca6f4ffbf13f312bcad3ee8c7c1daac5a968640758a6943a15a3fb7",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.5820388793945312,
+        "transparent_border_ratio": 0.9970680218921032
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "ui_sheet: Teal hair, monocle and fitted boots consistent; six bow openings in two rows of three, no aft ports, one docked unmarked floatplane; periscope and sonar separable. Native transparency measured separately; current displayed source examined. Fine line/scale polish remains; runtime assembly not accepted."
+    },
+    {
+      "role": "battle_grid",
+      "path": "assets/characters/i_19/battle/i_19_battle_asset_grid.png",
+      "sha256": "ee6784bef5b6460ca5e394a150ab32ac31fa025765a1ae398f74fda6d638fc97",
+      "size": [
+        1774,
+        887
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "ee6784bef5b6460ca5e394a150ab32ac31fa025765a1ae398f74fda6d638fc97",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.7149411072373213,
+        "transparent_border_ratio": 0.9971793907484017
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "battle_grid: Teal hair, monocle and fitted boots consistent; six bow openings in two rows of three, no aft ports, one docked unmarked floatplane; periscope and sonar separable. Native transparency measured separately; current displayed source examined. Fine line/scale polish remains; runtime assembly not accepted."
+    },
+    {
+      "role": "vfx_sheet",
+      "path": "assets/characters/i_19/vfx/i_19_vfx_reference_sheet.png",
+      "sha256": "99f0eee545b2cb8bfc185531e9c6c2f2b5b1fa5719a809f8bd8f0f28445d9e38",
+      "size": [
+        1024,
+        1536
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "99f0eee545b2cb8bfc185531e9c6c2f2b5b1fa5719a809f8bd8f0f28445d9e38",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 253,
+        "transparent_canvas_ratio": 0.46009190877278644,
+        "transparent_border_ratio": 0.9022673964034402
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "vfx_sheet: Teal hair, monocle and fitted boots consistent; six bow openings in two rows of three, no aft ports, one docked unmarked floatplane; periscope and sonar separable. Native transparency measured separately; current displayed source examined. Fine line/scale polish remains; runtime assembly not accepted."
+    },
+    {
+      "role": "anim_idle",
+      "path": "assets/characters/i_19/battle/i_19_anim_idle_4f_sheet.png",
+      "sha256": "8af0c38d36735b462076d3eae1e4485c90c2566230c519e59136c8d3c7ac333d",
+      "size": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "8af0c38d36735b462076d3eae1e4485c90c2566230c519e59136c8d3c7ac333d",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.5019474029541016,
+        "transparent_border_ratio": 0.9974589523064894
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "anim_idle: Teal hair, monocle and fitted boots consistent; six bow openings in two rows of three, no aft ports, one docked unmarked floatplane; periscope and sonar separable. Native transparency measured separately; current displayed source examined. Fine line/scale polish remains; runtime assembly not accepted."
+    },
+    {
+      "role": "anim_move",
+      "path": "assets/characters/i_19/battle/i_19_anim_move_4f_sheet.png",
+      "sha256": "20d248d7e1a9c06addf07c3a5dd0bb47f3a3d2c9c97dea86bee1b8da553a4376",
+      "size": [
+        1230,
+        1278
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "20d248d7e1a9c06addf07c3a5dd0bb47f3a3d2c9c97dea86bee1b8da553a4376",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.5020446073005331,
+        "transparent_border_ratio": 0.9864325618515563
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "anim_move: Teal hair, monocle and fitted boots consistent; six bow openings in two rows of three, no aft ports, one docked unmarked floatplane; periscope and sonar separable. Native transparency measured separately; current displayed source examined. Fine line/scale polish remains; runtime assembly not accepted."
+    },
+    {
+      "role": "anim_attack",
+      "path": "assets/characters/i_19/battle/i_19_anim_attack_4f_sheet.png",
+      "sha256": "6046a102bed96642e0f9cc646022cf81bc7a323102d3865758b84ec7a0853f0c",
+      "size": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "6046a102bed96642e0f9cc646022cf81bc7a323102d3865758b84ec7a0853f0c",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.7008628845214844,
+        "transparent_border_ratio": 1.0
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "anim_attack: Teal hair, monocle and fitted boots consistent; six bow openings in two rows of three, no aft ports, one docked unmarked floatplane; periscope and sonar separable. Native transparency measured separately; current displayed source examined. Fine line/scale polish remains; runtime assembly not accepted."
+    },
+    {
+      "role": "anim_hit",
+      "path": "assets/characters/i_19/battle/i_19_anim_hit_4f_sheet.png",
+      "sha256": "aaac918901331a393b5c45d8dfada611886e804717a763249cd70f021dd1019e",
+      "size": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "aaac918901331a393b5c45d8dfada611886e804717a763249cd70f021dd1019e",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.47404925028483075,
+        "transparent_border_ratio": 0.9992181391712275
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "anim_hit: Teal hair, monocle and fitted boots consistent; six bow openings in two rows of three, no aft ports, one docked unmarked floatplane; periscope and sonar separable. Native transparency measured separately; current displayed source examined. Fine line/scale polish remains; runtime assembly not accepted."
+    },
+    {
+      "role": "anim_firepower",
+      "path": "assets/characters/i_19/battle/i_19_anim_firepower_4f_sheet.png",
+      "sha256": "b9a8d00c9d30728ed9c13263304cec18e6a1ce333d9a3f451e458f4975513398",
+      "size": [
+        1278,
+        1230
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "b9a8d00c9d30728ed9c13263304cec18e6a1ce333d9a3f451e458f4975513398",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.4798007557540364,
+        "transparent_border_ratio": 0.9870311252992817
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "anim_firepower: Teal hair, monocle and fitted boots consistent; six bow openings in two rows of three, no aft ports, one docked unmarked floatplane; periscope and sonar separable. Native transparency measured separately; current displayed source examined. Fine line/scale polish remains; runtime assembly not accepted."
+    }
+  ]
+}

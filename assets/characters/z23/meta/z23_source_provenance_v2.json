@@ -1,0 +1,327 @@
+{
+  "schema_version": 2,
+  "character_id": "z23",
+  "kind": "codex_builtin_generated_art",
+  "source": "Codex built-in ImageGen",
+  "batch_ready_allowed": true,
+  "generation_policy": {
+    "primary_route": "codex_builtin_imagegen_native_alpha",
+    "legacy_fallback": {
+      "authorized": false,
+      "activation": "--allow-legacy-chroma-fallback",
+      "reason": "",
+      "native_failures": []
+    }
+  },
+  "generation": {
+    "requested_model": "codex-account-managed-imagegen",
+    "actual_model": "codex-account-managed-imagegen",
+    "generation_tool": "Codex built-in ImageGen",
+    "endpoint": "Codex account-managed image generation",
+    "quality": "Codex account-managed",
+    "size_control": "per-asset Codex account-managed output",
+    "background_control": "transparent requested and pixel-verified",
+    "output_format": "PNG",
+    "prompt_revision": {
+      "path": "assets/characters/z23/meta/z23_generation_brief_v2.md",
+      "sha256": "d520bf088ea3f1890709661d48e896028b7867f1ec4d9e8494c84b15426a31fe"
+    },
+    "reference_inputs": [
+      {
+        "path": "assets/characters/z23/concept/z23_concept_full.png",
+        "role": "accepted_style_anchor_for_derivative_sheets"
+      }
+    ],
+    "reproducibility_note": "The Codex account manages the underlying image model and request IDs; those implementation details are not exposed. Accepted PNG outputs are preserved byte-for-byte and tracked by SHA-256."
+  },
+  "source_images": [
+    {
+      "role": "concept_full",
+      "path": "assets/characters/z23/concept/z23_concept_full.png",
+      "sha256": "0a2816f9a2b2d2d24ba89b46173abd8ea9097f7e7719d7012914d3a679d4e4fa",
+      "size": [
+        1024,
+        1536
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "0a2816f9a2b2d2d24ba89b46173abd8ea9097f7e7719d7012914d3a679d4e4fa",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.5948753356933594,
+        "transparent_border_ratio": 0.9984362783424551
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "Observed one twin plus three single main mounts and two four-tube launchers; complete adult figure, no cut limbs."
+    },
+    {
+      "role": "ui_sheet",
+      "path": "assets/characters/z23/ui/z23_ui_sheet.png",
+      "sha256": "f387ccb64a67356c57d17e0288632565a5e94c4c9c7f216a5b665e93892dad89",
+      "size": [
+        1774,
+        887
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "f387ccb64a67356c57d17e0288632565a5e94c4c9c7f216a5b665e93892dad89",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.48045360201024695,
+        "transparent_border_ratio": 0.9979315532154945
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "灰短发红瞳、单肩甲黑灰短外套；1 双联加 3 单装主炮、2 四联鱼雷架。逐件查看 2 排共 8 件：大/小头像、Q版头、默认/认真/受击表情、技能图标和舰种图标均可分离。表情与源概念一致；半身图下缘为有意肖像取景，非完整战斗对象截断。 本轮源图已完成对象级视觉检查；最终裁切与装配不由源图结论代替。"
+    },
+    {
+      "role": "battle_grid",
+      "path": "assets/characters/z23/battle/z23_battle_asset_grid.png",
+      "sha256": "871fe3991ebba1f5dd917809744f7b8972e08b2de98735341d7384415ae01e31",
+      "size": [
+        1774,
+        887
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "871fe3991ebba1f5dd917809744f7b8972e08b2de98735341d7384415ae01e31",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.6829831882039074,
+        "transparent_border_ratio": 0.9986837156825874
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "灰短发红瞳、单肩甲黑灰短外套；1 双联加 3 单装主炮、2 四联鱼雷架。8 个独立对象均已查看，角色本体不含舰装，基座与武器分离；完整炮口/机翼/发射管可读。基座可见结构垫不作为精确物理武器数量依据，装配数量由清单及绑定配置决定。 本轮源图已完成对象级视觉检查；最终裁切与装配不由源图结论代替。"
+    },
+    {
+      "role": "vfx_sheet",
+      "path": "assets/characters/z23/vfx/z23_vfx_reference_sheet.png",
+      "sha256": "954991016ca6857c949073867b32e877ccc65c01922ffca075408a6369a91ee0",
+      "size": [
+        1024,
+        1536
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "954991016ca6857c949073867b32e877ccc65c01922ffca075408a6369a91ee0",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.6686331431070963,
+        "transparent_border_ratio": 0.9867083659108679
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "灰短发红瞳、单肩甲黑灰短外套；1 双联加 3 单装主炮、2 四联鱼雷架。8 个完整效果逐件查看，水滴、火花、环线允许断开；透明画布无烘焙底色、文字或边框。保留独立组件，实际语义按计划角色映射。 本轮源图已完成对象级视觉检查；最终裁切与装配不由源图结论代替。"
+    },
+    {
+      "role": "anim_idle",
+      "path": "assets/characters/z23/battle/z23_anim_idle_4f_sheet.png",
+      "sha256": "b3224a28c3156a42cbdf165b6a5a1d10038bb23f52bc6c9061883a439013d2f3",
+      "size": [
+        1254,
+        1254
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "b3224a28c3156a42cbdf165b6a5a1d10038bb23f52bc6c9061883a439013d2f3",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.5033595842586022,
+        "transparent_border_ratio": 0.9970071827613727
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "四帧为站立、伸手侧倾、蹲身思考、起身抬头；1 双联加 3 单装主炮及 2 四联鱼雷架完整。动作可辨；待机幅度较大，循环衔接和实机节奏留待 polish。"
+    },
+    {
+      "role": "anim_move",
+      "path": "assets/characters/z23/battle/z23_anim_move_4f_sheet.png",
+      "sha256": "ee2cdb2dfe144965fe31fa43306cbd8e49acae0b2beb077b5b8e424e6ec4586d",
+      "size": [
+        1254,
+        1254
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "ee2cdb2dfe144965fe31fa43306cbd8e49acae0b2beb077b5b8e424e6ec4586d",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.5058613076114965,
+        "transparent_border_ratio": 0.9920191540303273
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "灰短发红瞳、单肩甲黑灰短外套；1 双联加 3 单装主炮、2 四联鱼雷架。四帧为前进步态/重心交替及局部脚下水迹；完整舰装轮廓，动作幅度和水迹细节可后续润色。 本轮源图已完成对象级视觉检查；最终裁切与装配不由源图结论代替。"
+    },
+    {
+      "role": "anim_attack",
+      "path": "assets/characters/z23/battle/z23_anim_attack_4f_sheet.png",
+      "sha256": "db54411253d2345b74c57921d674c3e5e9215c4aac84f560d2530e08689b466a",
+      "size": [
+        1254,
+        1254
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "db54411253d2345b74c57921d674c3e5e9215c4aac84f560d2530e08689b466a",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.754809490014728,
+        "transparent_border_ratio": 1.0
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "灰短发红瞳、单肩甲黑灰短外套；1 双联加 3 单装主炮、2 四联鱼雷架。四帧为准备、开火、后坐/烟、恢复；炮口闪光与炮管同向，完整装备及特效均在画布内。 本轮源图已完成对象级视觉检查；最终裁切与装配不由源图结论代替。"
+    },
+    {
+      "role": "anim_hit",
+      "path": "assets/characters/z23/battle/z23_anim_hit_4f_sheet.png",
+      "sha256": "26e3564c09fb02bab818cb236b287e5ac80d556f3ec639d9fbe495d79f02a7a7",
+      "size": [
+        1254,
+        1254
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "26e3564c09fb02bab818cb236b287e5ac80d556f3ec639d9fbe495d79f02a7a7",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.4964470949739144,
+        "transparent_border_ratio": 0.9976057462090981
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "灰短发红瞳、单肩甲黑灰短外套；1 双联加 3 单装主炮、2 四联鱼雷架。四帧为受击、缩身/蹲伏、恢复/准备，脸部受击表情可读；完整轮廓，非击沉动作。 本轮源图已完成对象级视觉检查；最终裁切与装配不由源图结论代替。"
+    },
+    {
+      "role": "anim_firepower",
+      "path": "assets/characters/z23/battle/z23_anim_firepower_4f_sheet.png",
+      "sha256": "bccf3983e4597807e3861f75a41ab04d8ec4f7920336730f3abc2418239cc322",
+      "size": [
+        1254,
+        1254
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "bccf3983e4597807e3861f75a41ab04d8ec4f7920336730f3abc2418239cc322",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.5376924622706541,
+        "transparent_border_ratio": 0.9986033519553073
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "灰短发红瞳、单肩甲黑灰短外套；1 双联加 3 单装主炮、2 四联鱼雷架。四帧为准备、指令、技能强调、恢复；保持原舰装数量，角色专属光效轻量，公共战斗特效另行播放。 本轮源图已完成对象级视觉检查；最终裁切与装配不由源图结论代替。"
+    }
+  ]
+}

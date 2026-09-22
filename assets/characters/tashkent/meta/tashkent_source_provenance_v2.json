@@ -1,0 +1,327 @@
+{
+  "schema_version": 2,
+  "character_id": "tashkent",
+  "kind": "codex_builtin_generated_art",
+  "source": "Codex built-in ImageGen",
+  "batch_ready_allowed": true,
+  "generation_policy": {
+    "primary_route": "codex_builtin_imagegen_native_alpha",
+    "legacy_fallback": {
+      "authorized": false,
+      "activation": "--allow-legacy-chroma-fallback",
+      "reason": "",
+      "native_failures": []
+    }
+  },
+  "generation": {
+    "requested_model": "codex-account-managed-imagegen",
+    "actual_model": "codex-account-managed-imagegen",
+    "generation_tool": "Codex built-in ImageGen",
+    "endpoint": "Codex account-managed image generation",
+    "quality": "Codex account-managed",
+    "size_control": "per-asset Codex account-managed output",
+    "background_control": "transparent requested and pixel-verified",
+    "output_format": "PNG",
+    "prompt_revision": {
+      "path": "assets/characters/tashkent/meta/tashkent_generation_brief_v2.md",
+      "sha256": "e5d54f5cdf9c2bf9fbc9f0d8a468c09cbd6ba8596de3327abcfc4ed5b1aaf3ce"
+    },
+    "reference_inputs": [
+      {
+        "path": "assets/characters/tashkent/concept/tashkent_concept_full.png",
+        "role": "accepted_style_anchor_for_derivative_sheets"
+      }
+    ],
+    "reproducibility_note": "The Codex account manages the underlying image model and request IDs; those implementation details are not exposed. Accepted PNG outputs are preserved byte-for-byte and tracked by SHA-256."
+  },
+  "source_images": [
+    {
+      "role": "concept_full",
+      "path": "assets/characters/tashkent/concept/tashkent_concept_full.png",
+      "sha256": "1d72b3beff0677a2238ec7ee034eda10f22a669254121901b3e138283492311e",
+      "size": [
+        1227,
+        1282
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "1d72b3beff0677a2238ec7ee034eda10f22a669254121901b3e138283492311e",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.5696389224762145,
+        "transparent_border_ratio": 0.9976067012365377
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "全身及舰装完整，身份配色沿用角色方案，装备数量和末端已目检；原生Alpha。"
+    },
+    {
+      "role": "ui_sheet",
+      "path": "assets/characters/tashkent/ui/tashkent_ui_sheet.png",
+      "sha256": "dffb2210fec7019d61be13329cc27890f46109ac84f175107203a47683ef802b",
+      "size": [
+        1774,
+        887
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "dffb2210fec7019d61be13329cc27890f46109ac84f175107203a47683ef802b",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.4173645631691132,
+        "transparent_border_ratio": 0.9774351259872133
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "八项UI身份一致，六个人像与技能/舰种图标分离，头饰与头发完整，原生Alpha。"
+    },
+    {
+      "role": "battle_grid",
+      "path": "assets/characters/tashkent/battle/tashkent_battle_asset_grid.png",
+      "sha256": "16013bf15c517dc5fe52dbd7a8d7c5f1731411e12f8d3954222067d8a0098490",
+      "size": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "16013bf15c517dc5fe52dbd7a8d7c5f1731411e12f8d3954222067d8a0098490",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.6115703582763672,
+        "transparent_border_ratio": 0.9900312744331509
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "独立本体与三炮座三雷架底座、双联炮、三联雷管、推进、指挥桅、AA、尾迹八角色齐；炮管2雷管3，完整末端。"
+    },
+    {
+      "role": "vfx_sheet",
+      "path": "assets/characters/tashkent/vfx/tashkent_vfx_reference_sheet.png",
+      "sha256": "07272d277ced8aa41093eca1df641e4b04380929633033cb2b7ec29d4bb837c5",
+      "size": [
+        1774,
+        887
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "07272d277ced8aa41093eca1df641e4b04380929633033cb2b7ec29d4bb837c5",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.49270688092693027,
+        "transparent_border_ratio": 0.9172621286197818
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "八项特效逐件可分，圆环、水花和断开粒子完整；发射/尾迹参考中含弹体，仅作为现有参考表达，不写入角色动画。原生Alpha。"
+    },
+    {
+      "role": "anim_idle",
+      "path": "assets/characters/tashkent/battle/tashkent_anim_idle_4f_sheet.png",
+      "sha256": "562228037ba22860d15a0135ffd10e94ebef61c1c23d42bea151933b9bffd5f8",
+      "size": [
+        1254,
+        1254
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "562228037ba22860d15a0135ffd10e94ebef61c1c23d42bea151933b9bffd5f8",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.4814392985508574,
+        "transparent_border_ratio": 0.9998004788507582
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "四帧逐件核对三座双联炮（左二右一）和三组三联鱼雷（左二右一），白帽围巾蓝制服和靴子完整，有手臂及站姿变化。"
+    },
+    {
+      "role": "anim_move",
+      "path": "assets/characters/tashkent/battle/tashkent_anim_move_4f_sheet.png",
+      "sha256": "7d94c686858a57de6ba1a5fa6b5ce2054570701ec5d98f34c158e481cc7f1e87",
+      "size": [
+        1254,
+        1254
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "7d94c686858a57de6ba1a5fa6b5ce2054570701ec5d98f34c158e481cc7f1e87",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.47782152931989247,
+        "transparent_border_ratio": 0.981245011971269
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "四帧Q版同一身份，三座双联炮与三组三联鱼雷完整；姿态变化清晰，衣摆、脚部和舰装不截断。"
+    },
+    {
+      "role": "anim_attack",
+      "path": "assets/characters/tashkent/battle/tashkent_anim_attack_4f_sheet.png",
+      "sha256": "9b50440dc58e28083183dd7e4f9a2b36e337a067ca6198b55b317c53699a1975",
+      "size": [
+        1254,
+        1254
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "9b50440dc58e28083183dd7e4f9a2b36e337a067ca6198b55b317c53699a1975",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.5221148783223827,
+        "transparent_border_ratio": 0.9974062250598563
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "四帧Q版同一身份，三座双联炮与三组三联鱼雷完整；姿态变化清晰，衣摆、脚部和舰装不截断。"
+    },
+    {
+      "role": "anim_hit",
+      "path": "assets/characters/tashkent/battle/tashkent_anim_hit_4f_sheet.png",
+      "sha256": "fc6882c61e79cc66215d84a97e922552821f04439ed2f77eec1c51c5883f700b",
+      "size": [
+        1254,
+        1254
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "fc6882c61e79cc66215d84a97e922552821f04439ed2f77eec1c51c5883f700b",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.531788547779482,
+        "transparent_border_ratio": 0.9992019154030327
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "四帧Q版同一身份，三座双联炮与三组三联鱼雷完整；姿态变化清晰，衣摆、脚部和舰装不截断。"
+    },
+    {
+      "role": "anim_firepower",
+      "path": "assets/characters/tashkent/battle/tashkent_anim_firepower_4f_sheet.png",
+      "sha256": "55b7f7002fd378f3c5df08d9fb1f918ecfca6b7684b8c4821883c4372b480e91",
+      "size": [
+        1254,
+        1254
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "55b7f7002fd378f3c5df08d9fb1f918ecfca6b7684b8c4821883c4372b480e91",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.44413411373874734,
+        "transparent_border_ratio": 0.9990023942537909
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "四帧Q版同一身份，三座双联炮与三组三联鱼雷完整；姿态变化清晰，衣摆、脚部和舰装不截断。"
+    }
+  ]
+}

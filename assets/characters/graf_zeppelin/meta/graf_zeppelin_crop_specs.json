@@ -1,0 +1,459 @@
+{
+  "character_id": "graf_zeppelin",
+  "reviewer": "Codex visual review 2026-09-20",
+  "method": "Individually inspected source-space object hints; legacy connected-component expansion, trim and balanced padding. No grid cuts. VFX retain disconnected components.",
+  "crops": {
+    "ui_portrait": {
+      "source": "ui_sheet",
+      "box": [
+        65,
+        60,
+        420,
+        425
+      ],
+      "tags": []
+    },
+    "ui_portrait_small": {
+      "source": "ui_sheet",
+      "box": [
+        540,
+        145,
+        820,
+        410
+      ],
+      "tags": []
+    },
+    "ui_chibi_head": {
+      "source": "ui_sheet",
+      "box": [
+        990,
+        215,
+        1225,
+        410
+      ],
+      "tags": []
+    },
+    "expr_default": {
+      "source": "ui_sheet",
+      "box": [
+        1410,
+        55,
+        1700,
+        430
+      ],
+      "tags": []
+    },
+    "expr_serious": {
+      "source": "ui_sheet",
+      "box": [
+        70,
+        515,
+        380,
+        850
+      ],
+      "tags": []
+    },
+    "expr_hit": {
+      "source": "ui_sheet",
+      "box": [
+        510,
+        520,
+        855,
+        850
+      ],
+      "tags": []
+    },
+    "ui_skill": {
+      "source": "ui_sheet",
+      "box": [
+        940,
+        535,
+        1280,
+        835
+      ],
+      "tags": []
+    },
+    "class_icon": {
+      "source": "ui_sheet",
+      "box": [
+        1380,
+        550,
+        1720,
+        835
+      ],
+      "tags": []
+    },
+    "battle_body_r": {
+      "source": "battle_grid",
+      "box": [
+        65,
+        215,
+        275,
+        565
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "battle_rig_base": {
+      "source": "battle_grid",
+      "box": [
+        390,
+        240,
+        710,
+        560
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "battle_flight_deck": {
+      "source": "battle_grid",
+      "box": [
+        820,
+        275,
+        1100,
+        520
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "battle_aircraft_group_01": {
+      "source": "battle_grid",
+      "box": [
+        1185,
+        250,
+        1470,
+        495
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "battle_turret_secondary_01": {
+      "source": "battle_grid",
+      "box": [
+        100,
+        760,
+        305,
+        870
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "battle_aircraft_launch_marker": {
+      "source": "battle_grid",
+      "box": [
+        480,
+        755,
+        650,
+        875
+      ],
+      "tags": []
+    },
+    "battle_aircraft_recovery_marker": {
+      "source": "battle_grid",
+      "box": [
+        825,
+        755,
+        1070,
+        870
+      ],
+      "tags": []
+    },
+    "battle_aa_center": {
+      "source": "battle_grid",
+      "box": [
+        1250,
+        720,
+        1410,
+        865
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "anim_idle_frame_01": {
+      "source": "anim_idle",
+      "box": [
+        110,
+        130,
+        540,
+        545
+      ],
+      "tags": []
+    },
+    "anim_idle_frame_02": {
+      "source": "anim_idle",
+      "box": [
+        735,
+        130,
+        1175,
+        545
+      ],
+      "tags": []
+    },
+    "anim_idle_frame_03": {
+      "source": "anim_idle",
+      "box": [
+        110,
+        745,
+        540,
+        1160
+      ],
+      "tags": []
+    },
+    "anim_idle_frame_04": {
+      "source": "anim_idle",
+      "box": [
+        735,
+        745,
+        1175,
+        1160
+      ],
+      "tags": []
+    },
+    "anim_move_frame_01": {
+      "source": "anim_move",
+      "box": [
+        110,
+        130,
+        540,
+        545
+      ],
+      "tags": []
+    },
+    "anim_move_frame_02": {
+      "source": "anim_move",
+      "box": [
+        735,
+        130,
+        1175,
+        545
+      ],
+      "tags": []
+    },
+    "anim_move_frame_03": {
+      "source": "anim_move",
+      "box": [
+        110,
+        745,
+        540,
+        1160
+      ],
+      "tags": []
+    },
+    "anim_move_frame_04": {
+      "source": "anim_move",
+      "box": [
+        735,
+        745,
+        1175,
+        1160
+      ],
+      "tags": []
+    },
+    "anim_attack_frame_01": {
+      "source": "anim_attack",
+      "box": [
+        110,
+        130,
+        540,
+        545
+      ],
+      "tags": []
+    },
+    "anim_attack_frame_02": {
+      "source": "anim_attack",
+      "box": [
+        735,
+        130,
+        1175,
+        545
+      ],
+      "tags": []
+    },
+    "anim_attack_frame_03": {
+      "source": "anim_attack",
+      "box": [
+        110,
+        745,
+        540,
+        1160
+      ],
+      "tags": []
+    },
+    "anim_attack_frame_04": {
+      "source": "anim_attack",
+      "box": [
+        735,
+        745,
+        1175,
+        1160
+      ],
+      "tags": []
+    },
+    "anim_hit_frame_01": {
+      "source": "anim_hit",
+      "box": [
+        110,
+        130,
+        540,
+        545
+      ],
+      "tags": []
+    },
+    "anim_hit_frame_02": {
+      "source": "anim_hit",
+      "box": [
+        735,
+        130,
+        1175,
+        545
+      ],
+      "tags": []
+    },
+    "anim_hit_frame_03": {
+      "source": "anim_hit",
+      "box": [
+        110,
+        745,
+        540,
+        1160
+      ],
+      "tags": []
+    },
+    "anim_hit_frame_04": {
+      "source": "anim_hit",
+      "box": [
+        735,
+        745,
+        1175,
+        1160
+      ],
+      "tags": []
+    },
+    "anim_firepower_frame_01": {
+      "source": "anim_firepower",
+      "box": [
+        110,
+        80,
+        645,
+        455
+      ],
+      "tags": []
+    },
+    "anim_firepower_frame_02": {
+      "source": "anim_firepower",
+      "box": [
+        880,
+        80,
+        1410,
+        455
+      ],
+      "tags": []
+    },
+    "anim_firepower_frame_03": {
+      "source": "anim_firepower",
+      "box": [
+        110,
+        605,
+        645,
+        960
+      ],
+      "tags": []
+    },
+    "anim_firepower_frame_04": {
+      "source": "anim_firepower",
+      "box": [
+        880,
+        605,
+        1410,
+        960
+      ],
+      "tags": []
+    },
+    "vfx:unfinished_plan_overlay": {
+      "source": "vfx_sheet",
+      "box": [
+        70,
+        55,
+        470,
+        365
+      ],
+      "tags": []
+    },
+    "vfx:experimental_flight_lane": {
+      "source": "vfx_sheet",
+      "box": [
+        550,
+        160,
+        965,
+        280
+      ],
+      "tags": []
+    },
+    "vfx:aircraft_launch_flash": {
+      "source": "vfx_sheet",
+      "box": [
+        65,
+        440,
+        475,
+        640
+      ],
+      "tags": []
+    },
+    "vfx:aircraft_formation": {
+      "source": "vfx_sheet",
+      "box": [
+        590,
+        495,
+        970,
+        620
+      ],
+      "tags": []
+    },
+    "vfx:airstrike_area": {
+      "source": "vfx_sheet",
+      "box": [
+        55,
+        750,
+        510,
+        995
+      ],
+      "tags": []
+    },
+    "vfx:aircraft_recovery": {
+      "source": "vfx_sheet",
+      "box": [
+        660,
+        720,
+        930,
+        1040
+      ],
+      "tags": []
+    },
+    "vfx:aa_burst": {
+      "source": "vfx_sheet",
+      "box": [
+        95,
+        1090,
+        475,
+        1470
+      ],
+      "tags": []
+    },
+    "vfx:skill_aura": {
+      "source": "vfx_sheet",
+      "box": [
+        550,
+        1090,
+        995,
+        1460
+      ],
+      "tags": []
+    }
+  }
+}

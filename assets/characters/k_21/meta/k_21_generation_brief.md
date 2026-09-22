@@ -8,6 +8,7 @@ Faction: 苏系. MVP ship class: 潜艇. Level: 2 级.
 Personality: 神秘潜行（冷峻巡猎）. Combat role: 远洋侦查伏击.
 Core visual direction: 极地灰潜航服、毛领与低亮冰蓝镜片；长航艇身、六艏四艉鱼雷口、远洋天线和较大声呐件形成耐寒远洋轮廓.
 Required MVP asset focus: 全身/半身立绘、技能 cut-in、长航潜艇底座、艏/艉鱼雷口、远洋天线、声呐/扫描点、冰白追踪圈、慢速长程鱼雷和极地侦查动画.
+Expected object inventory: one long low ocean-submarine rig base; exactly six bow torpedo openings and exactly four stern torpedo openings; one large sonar node; one low periscope; one long-range antenna; one submerged shadow. The character wears fitted tactical boots with ordinary soles and never swim fins.
 No real flags, no political symbols, no readable insignia text, no historical extremist symbols.
 Clean readable silhouette, clear ship-class identity, high-quality anime linework, restrained cel shading, consistent face and hair. Character body, rig base, weapons and effect origins must remain visually separable.
 
@@ -19,6 +20,7 @@ Faction: 苏系. MVP ship class: 潜艇. Level: 2 级.
 Personality: 神秘潜行（冷峻巡猎）. Combat role: 远洋侦查伏击.
 Core visual direction: 极地灰潜航服、毛领与低亮冰蓝镜片；长航艇身、六艏四艉鱼雷口、远洋天线和较大声呐件形成耐寒远洋轮廓.
 Required MVP asset focus: 全身/半身立绘、技能 cut-in、长航潜艇底座、艏/艉鱼雷口、远洋天线、声呐/扫描点、冰白追踪圈、慢速长程鱼雷和极地侦查动画.
+Expected object inventory: one long low ocean-submarine rig base; exactly six bow torpedo openings and exactly four stern torpedo openings; one large sonar node; one low periscope; one long-range antenna; one submerged shadow. The character wears fitted tactical boots with ordinary soles and never swim fins.
 No real flags, no political symbols, no readable insignia text, no historical extremist symbols.
 Clean readable silhouette, clear ship-class identity, high-quality anime linework, restrained cel shading, consistent face and hair. Character body, rig base, weapons and effect origins must remain visually separable.
 Create the definitive full-body style anchor concept on a transparent background. Front three-quarter standing pose, complete outfit and ship rigging visible, generous empty transparent margin, no environment, no ocean, no UI, no text. Show the body, rig base, weapon identity and core accessory clearly; the accepted anchor will be the sole identity reference for all derivative sheets.
@@ -43,4 +45,12 @@ Create exactly eight isolated character-specific VFX overlays in a 2x4 grid, in 
 
 - Original TinySeaWar design; no real flags, political symbols, readable insignia, or extremist symbols.
 - Character body, rig base, weapon nodes, and VFX must remain visually separable.
+- Submarine character must wear fitted waterproof or tactical boots; no swim fins on feet.
+
+## 2026-09-14 production acceptance
+
+- Batch: `phase2_soviet_quartet_20260914`, together with Tashkent, Chapayev, and Gangut.
+- Accepted identity: platinum bob, cold blue monocular lens, dark navy submarine suit, practical tactical boots, and one long low submarine rig.
+- Source route: built-in image generation with the accepted concept as identity anchor; animation sources may retain native alpha, while green-screen derivatives are converted by the deterministic project postprocessor.
+- Hard inventory gate: six bow tube openings and four stern tube openings, plus sonar, periscope, and antenna; swim-fin or checkerboard variants do not enter the repository.
 - Submarine character must wear fitted waterproof or tactical boots; no swim fins on feet.

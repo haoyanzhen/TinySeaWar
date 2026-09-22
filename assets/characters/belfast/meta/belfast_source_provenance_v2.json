@@ -1,0 +1,327 @@
+{
+  "schema_version": 2,
+  "character_id": "belfast",
+  "kind": "codex_builtin_generated_art",
+  "source": "Codex built-in ImageGen",
+  "batch_ready_allowed": true,
+  "generation_policy": {
+    "primary_route": "codex_builtin_imagegen_native_alpha",
+    "legacy_fallback": {
+      "authorized": false,
+      "activation": "--allow-legacy-chroma-fallback",
+      "reason": "",
+      "native_failures": []
+    }
+  },
+  "generation": {
+    "requested_model": "codex-account-managed-imagegen",
+    "actual_model": "codex-account-managed-imagegen",
+    "generation_tool": "Codex built-in ImageGen",
+    "endpoint": "Codex account-managed image generation",
+    "quality": "Codex account-managed",
+    "size_control": "per-asset Codex account-managed output",
+    "background_control": "transparent requested and pixel-verified",
+    "output_format": "PNG",
+    "prompt_revision": {
+      "path": "assets/characters/belfast/meta/belfast_generation_brief_v2.md",
+      "sha256": "55525e8eacedc03196af89e95f361520887a1c69afca61391e3a2d7c62552059"
+    },
+    "reference_inputs": [
+      {
+        "path": "assets/characters/belfast/concept/belfast_concept_full.png",
+        "role": "accepted_style_anchor_for_derivative_sheets"
+      }
+    ],
+    "reproducibility_note": "The Codex account manages the underlying image model and request IDs; those implementation details are not exposed. Accepted PNG outputs are preserved byte-for-byte and tracked by SHA-256."
+  },
+  "source_images": [
+    {
+      "role": "concept_full",
+      "path": "assets/characters/belfast/concept/belfast_concept_full.png",
+      "sha256": "329dbe1f593ba0f0cfd07c2cf0edc113543d4f134936debe9221932cee0907c0",
+      "size": [
+        1024,
+        1536
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "329dbe1f593ba0f0cfd07c2cf0edc113543d4f134936debe9221932cee0907c0",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.5572160085042318,
+        "transparent_border_ratio": 0.9878811571540266
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex source visual review 2026-09-20",
+      "qa_observation": "银灰短发、青眼、灰蓝象牙白制服一致；概念四座三联炮与双三联鱼雷，返工底座可见四个主炮座。 完整人体与舰装可辨认，Alpha门禁通过；半身与cut-in按契约由锚点派生。"
+    },
+    {
+      "role": "ui_sheet",
+      "path": "assets/characters/belfast/ui/belfast_ui_sheet.png",
+      "sha256": "d7e57e841c4e9e46a40d62fdfd01be9df8313b2a453c9aec2fd3182489ca9965",
+      "size": [
+        1774,
+        887
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "d7e57e841c4e9e46a40d62fdfd01be9df8313b2a453c9aec2fd3182489ca9965",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.458316863018243,
+        "transparent_border_ratio": 0.9962391876645356
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex source visual review 2026-09-20",
+      "qa_observation": "银灰短发、青眼、灰蓝象牙白制服一致；概念四座三联炮与双三联鱼雷，返工底座可见四个主炮座。 八项顺序为大小头像、Q版头像、默认/严肃/受击、技能/舰种图标；表情有区别，主体可分离。"
+    },
+    {
+      "role": "battle_grid",
+      "path": "assets/characters/belfast/battle/belfast_battle_asset_grid.png",
+      "sha256": "1128d020f8a58cd85f84a3ea992b240776315ba60bb7cc1795dd2616d198cf7b",
+      "size": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "1128d020f8a58cd85f84a3ea992b240776315ba60bb7cc1795dd2616d198cf7b",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.6803016662597656,
+        "transparent_border_ratio": 0.9964816262705238
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex source visual review 2026-09-20",
+      "qa_observation": "银灰短发、青眼、灰蓝象牙白制服一致；概念四座三联炮与双三联鱼雷，返工底座可见四个主炮座。 八个语义拆件独立；武器为单模板，实例数量归挂点配置；最终挂点仍需成品复核。"
+    },
+    {
+      "role": "vfx_sheet",
+      "path": "assets/characters/belfast/vfx/belfast_vfx_reference_sheet.png",
+      "sha256": "1f1217e001fef1f2207cf9166cb1a0aa18f9f3780c9d58e269f4bd083fa9bbe5",
+      "size": [
+        1024,
+        1536
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "1f1217e001fef1f2207cf9166cb1a0aa18f9f3780c9d58e269f4bd083fa9bbe5",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 253,
+        "transparent_canvas_ratio": 0.4231344858805339,
+        "transparent_border_ratio": 0.5772087568412823
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex source visual review 2026-09-20",
+      "qa_observation": "银灰短发、青眼、灰蓝象牙白制服一致；概念四座三联炮与双三联鱼雷，返工底座可见四个主炮座。 八项特效按计划顺序可辨认；光环/烟火/水花多连通块全部保留；裁切后需复核边缘。"
+    },
+    {
+      "role": "anim_idle",
+      "path": "assets/characters/belfast/battle/belfast_anim_idle_4f_sheet.png",
+      "sha256": "1af46e48b0746ab9a98aa205dc4428f9a6173c423a619db465860474d0531774",
+      "size": [
+        1222,
+        1287
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "1af46e48b0746ab9a98aa205dc4428f9a6173c423a619db465860474d0531774",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.6282019489875463,
+        "transparent_border_ratio": 0.9982050259274032
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex source visual review 2026-09-20",
+      "qa_observation": "银灰短发、青眼、灰蓝象牙白制服一致；概念四座三联炮与双三联鱼雷，返工底座可见四个主炮座。 四帧按左上右上左下右下有姿态变化；仅本体动画层，无飞出弹体、飞机或跨格效果；武器独立资产需运行时绑定。 动画差异门禁返工：强化手臂、重心、腿部和披风轮廓变化。 动画差异门禁返工：强化手臂、重心、腿部和披风轮廓变化。"
+    },
+    {
+      "role": "anim_move",
+      "path": "assets/characters/belfast/battle/belfast_anim_move_4f_sheet.png",
+      "sha256": "717bda929da2c201e5c0056628ce567f442cda89acd8671be4892ff36043cebe",
+      "size": [
+        1266,
+        1243
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "717bda929da2c201e5c0056628ce567f442cda89acd8671be4892ff36043cebe",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.6357567623557642,
+        "transparent_border_ratio": 0.9998005584363782
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex source visual review 2026-09-20",
+      "qa_observation": "银灰短发、青眼、灰蓝象牙白制服一致；概念四座三联炮与双三联鱼雷，返工底座可见四个主炮座。 四帧按左上右上左下右下有姿态变化；仅本体动画层，无飞出弹体、飞机或跨格效果；武器独立资产需运行时绑定。"
+    },
+    {
+      "role": "anim_attack",
+      "path": "assets/characters/belfast/battle/belfast_anim_attack_4f_sheet.png",
+      "sha256": "becd8cafea255f24545af2dedd08e800448e4240fbfb5afa7c93dcf89d5ff187",
+      "size": [
+        1222,
+        1287
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "becd8cafea255f24545af2dedd08e800448e4240fbfb5afa7c93dcf89d5ff187",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.6063829787234043,
+        "transparent_border_ratio": 0.9982050259274032
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex source visual review 2026-09-20",
+      "qa_observation": "银灰短发、青眼、灰蓝象牙白制服一致；概念四座三联炮与双三联鱼雷，返工底座可见四个主炮座。 四帧按左上右上左下右下有姿态变化；仅本体动画层，无飞出弹体、飞机或跨格效果；武器独立资产需运行时绑定。"
+    },
+    {
+      "role": "anim_hit",
+      "path": "assets/characters/belfast/battle/belfast_anim_hit_4f_sheet.png",
+      "sha256": "a0ff540fa0cfa6228c641db8de0647026d70593f3cc063fdcef2e6ce48dc9dc5",
+      "size": [
+        1222,
+        1287
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "a0ff540fa0cfa6228c641db8de0647026d70593f3cc063fdcef2e6ce48dc9dc5",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.6459985731671493,
+        "transparent_border_ratio": 0.9994016753091344
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex source visual review 2026-09-20",
+      "qa_observation": "银灰短发、青眼、灰蓝象牙白制服一致；概念四座三联炮与双三联鱼雷，返工底座可见四个主炮座。 四帧按左上右上左下右下有姿态变化；仅本体动画层，无飞出弹体、飞机或跨格效果；武器独立资产需运行时绑定。"
+    },
+    {
+      "role": "anim_firepower",
+      "path": "assets/characters/belfast/battle/belfast_anim_firepower_4f_sheet.png",
+      "sha256": "56f5c6ca37b3a467d6fdabd142d81e019c6cf47c9bc38f1239eec9b527c8603e",
+      "size": [
+        1222,
+        1287
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "56f5c6ca37b3a467d6fdabd142d81e019c6cf47c9bc38f1239eec9b527c8603e",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.600054428205001,
+        "transparent_border_ratio": 0.9994016753091344
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex source visual review 2026-09-20",
+      "qa_observation": "银灰短发、青眼、灰蓝象牙白制服一致；概念四座三联炮与双三联鱼雷，返工底座可见四个主炮座。 四帧按左上右上左下右下有姿态变化；仅本体动画层，无飞出弹体、飞机或跨格效果；武器独立资产需运行时绑定。"
+    }
+  ]
+}

@@ -1,0 +1,327 @@
+{
+  "schema_version": 2,
+  "character_id": "akizuki",
+  "kind": "codex_builtin_generated_art",
+  "source": "Codex built-in ImageGen",
+  "batch_ready_allowed": true,
+  "generation_policy": {
+    "primary_route": "codex_builtin_imagegen_native_alpha",
+    "legacy_fallback": {
+      "authorized": false,
+      "activation": "--allow-legacy-chroma-fallback",
+      "reason": "",
+      "native_failures": []
+    }
+  },
+  "generation": {
+    "requested_model": "codex-account-managed-imagegen",
+    "actual_model": "codex-account-managed-imagegen",
+    "generation_tool": "Codex built-in ImageGen",
+    "endpoint": "Codex account-managed image generation",
+    "quality": "Codex account-managed",
+    "size_control": "per-asset Codex account-managed output",
+    "background_control": "transparent requested and pixel-verified",
+    "output_format": "PNG",
+    "prompt_revision": {
+      "path": "assets/characters/akizuki/meta/akizuki_generation_brief_v2.md",
+      "sha256": "33d0f708d02562a6dfad7bc06e7bd17efb1cfb8bfa9cc5ddf3431a1792286a7b"
+    },
+    "reference_inputs": [
+      {
+        "path": "assets/characters/akizuki/concept/akizuki_concept_full.png",
+        "role": "accepted_style_anchor_for_derivative_sheets"
+      }
+    ],
+    "reproducibility_note": "The Codex account manages the underlying image model and request IDs; those implementation details are not exposed. Accepted PNG outputs are preserved byte-for-byte and tracked by SHA-256."
+  },
+  "source_images": [
+    {
+      "role": "concept_full",
+      "path": "assets/characters/akizuki/concept/akizuki_concept_full.png",
+      "sha256": "a0257df5166e12825f66b28e27fe48d5d8a93bf578553d809dd79eea87ce7391",
+      "size": [
+        1024,
+        1536
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "a0257df5166e12825f66b28e27fe48d5d8a93bf578553d809dd79eea87ce7391",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.6589501698811849,
+        "transparent_border_ratio": 0.9998045347928068
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "concept_full: Navy bob, crescent and headset preserved; four twin guns and one four-tube rack in full rig, detached twin turret and quadruple rack clear; local effects and full silhouettes inspected. Native transparency measured separately; current displayed source examined. Fine line/scale polish remains; runtime assembly not accepted."
+    },
+    {
+      "role": "ui_sheet",
+      "path": "assets/characters/akizuki/ui/akizuki_ui_sheet.png",
+      "sha256": "3f1c7aa8190b6e6a8cbf6cb1feaefdd0d8419aab72e393bc93941420d53f4b75",
+      "size": [
+        1774,
+        887
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "3f1c7aa8190b6e6a8cbf6cb1feaefdd0d8419aab72e393bc93941420d53f4b75",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.4033642657501757,
+        "transparent_border_ratio": 0.9988717562993606
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "ui_sheet: Navy bob, crescent and headset preserved; four twin guns and one four-tube rack in full rig, detached twin turret and quadruple rack clear; local effects and full silhouettes inspected. Native transparency measured separately; current displayed source examined. Fine line/scale polish remains; runtime assembly not accepted."
+    },
+    {
+      "role": "battle_grid",
+      "path": "assets/characters/akizuki/battle/akizuki_battle_asset_grid.png",
+      "sha256": "1af1803d7f3f4cf04ebda27b7dcf57eb6c2e4aca40c15b75affa28f71236c087",
+      "size": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "1af1803d7f3f4cf04ebda27b7dcf57eb6c2e4aca40c15b75affa28f71236c087",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.7034587860107422,
+        "transparent_border_ratio": 1.0
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "battle_grid: Navy bob, crescent and headset preserved; four twin guns and one four-tube rack in full rig, detached twin turret and quadruple rack clear; local effects and full silhouettes inspected. Native transparency measured separately; current displayed source examined. Fine line/scale polish remains; runtime assembly not accepted."
+    },
+    {
+      "role": "vfx_sheet",
+      "path": "assets/characters/akizuki/vfx/akizuki_vfx_reference_sheet.png",
+      "sha256": "2599e8b3f763b6dab0bb8598c225b9d5103a3e3b99051fb24027600328755e0e",
+      "size": [
+        1024,
+        1536
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "2599e8b3f763b6dab0bb8598c225b9d5103a3e3b99051fb24027600328755e0e",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.6428197224934896,
+        "transparent_border_ratio": 0.9448788115715403
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "vfx_sheet: Navy bob, crescent and headset preserved; four twin guns and one four-tube rack in full rig, detached twin turret and quadruple rack clear; local effects and full silhouettes inspected. Native transparency measured separately; current displayed source examined. Fine line/scale polish remains; runtime assembly not accepted."
+    },
+    {
+      "role": "anim_idle",
+      "path": "assets/characters/akizuki/battle/akizuki_anim_idle_4f_sheet.png",
+      "sha256": "80711549d5ff61cb9e88a57ff84cf138e81820116ab6808cacb40e19f485bdde",
+      "size": [
+        1254,
+        1254
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "80711549d5ff61cb9e88a57ff84cf138e81820116ab6808cacb40e19f485bdde",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.591057897026167,
+        "transparent_border_ratio": 0.9860335195530726
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "anim_idle: Navy bob, crescent and headset preserved; four twin guns and one four-tube rack in full rig, detached twin turret and quadruple rack clear; local effects and full silhouettes inspected. Native transparency measured separately; current displayed source examined. Fine line/scale polish remains; runtime assembly not accepted."
+    },
+    {
+      "role": "anim_move",
+      "path": "assets/characters/akizuki/battle/akizuki_anim_move_4f_sheet.png",
+      "sha256": "53cd7bcd2f837c29c0fa5faf113424b005e3e839aa832c2453dfbad4d35184a1",
+      "size": [
+        1247,
+        1261
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "53cd7bcd2f837c29c0fa5faf113424b005e3e839aa832c2453dfbad4d35184a1",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.6437432391267989,
+        "transparent_border_ratio": 0.9974062250598563
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "anim_move: Navy bob, crescent and headset preserved; four twin guns and one four-tube rack in full rig, detached twin turret and quadruple rack clear; local effects and full silhouettes inspected. Native transparency measured separately; current displayed source examined. Fine line/scale polish remains; runtime assembly not accepted."
+    },
+    {
+      "role": "anim_attack",
+      "path": "assets/characters/akizuki/battle/akizuki_anim_attack_4f_sheet.png",
+      "sha256": "03f52673655d863c52a637fc6e7ffe799ead87e43a71507ac15c451a96dbbfc6",
+      "size": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "03f52673655d863c52a637fc6e7ffe799ead87e43a71507ac15c451a96dbbfc6",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.5455462137858073,
+        "transparent_border_ratio": 0.955824863174355
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "anim_attack: Navy bob, crescent and headset preserved; four twin guns and one four-tube rack in full rig, detached twin turret and quadruple rack clear; local effects and full silhouettes inspected. Native transparency measured separately; current displayed source examined. Fine line/scale polish remains; runtime assembly not accepted."
+    },
+    {
+      "role": "anim_hit",
+      "path": "assets/characters/akizuki/battle/akizuki_anim_hit_4f_sheet.png",
+      "sha256": "6b49ce179b3868cf993febbd21e70f95af612906b2d36f5a0906f8473a11863c",
+      "size": [
+        1223,
+        1286
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "6b49ce179b3868cf993febbd21e70f95af612906b2d36f5a0906f8473a11863c",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.5406268398973028,
+        "transparent_border_ratio": 0.9910251296370164
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "anim_hit: Navy bob, crescent and headset preserved; four twin guns and one four-tube rack in full rig, detached twin turret and quadruple rack clear; local effects and full silhouettes inspected. Native transparency measured separately; current displayed source examined. Fine line/scale polish remains; runtime assembly not accepted."
+    },
+    {
+      "role": "anim_firepower",
+      "path": "assets/characters/akizuki/battle/akizuki_anim_firepower_4f_sheet.png",
+      "sha256": "ada7711b4767e1516c64b30ccfecb1b305107120b3afc9d0435d98e0157f6bd1",
+      "size": [
+        1254,
+        1254
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "ada7711b4767e1516c64b30ccfecb1b305107120b3afc9d0435d98e0157f6bd1",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.5778351380844455,
+        "transparent_border_ratio": 0.9996009577015164
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "anim_firepower: Navy bob, crescent and headset preserved; four twin guns and one four-tube rack in full rig, detached twin turret and quadruple rack clear; local effects and full silhouettes inspected. Native transparency measured separately; current displayed source examined. Fine line/scale polish remains; runtime assembly not accepted."
+    }
+  ]
+}

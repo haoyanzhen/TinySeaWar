@@ -17,14 +17,38 @@
   "mount_instances": {
     "turret_main": 3
   },
+  "object_inventory": {
+    "turret_main": {
+      "instances": 3
+    }
+  },
   "bindings": {
     "battle_rig_base": [
+      "pivot",
       "rig_mount",
-      "wake_origin",
       "skill_origin",
+      "wake_origin",
       "turret_mount_01",
       "turret_mount_02",
       "turret_mount_03"
+    ],
+    "battle_turret_main_01": [
+      "pivot",
+      "muzzle_01",
+      "muzzle_02",
+      "muzzle_03"
+    ],
+    "battle_turret_main_02": [
+      "pivot",
+      "muzzle_01",
+      "muzzle_02",
+      "muzzle_03"
+    ],
+    "battle_turret_main_03": [
+      "pivot",
+      "muzzle_01",
+      "muzzle_02",
+      "muzzle_03"
     ]
   },
   "vfx_roles": [
@@ -51,5 +75,92 @@
     "Original TinySeaWar design; no real flags, political symbols, readable insignia, or extremist symbols.",
     "Character body, rig base, weapon nodes, and VFX must remain visually separable.",
     "No torpedo tube may appear; preserve the clean radar heavy-cruiser silhouette."
-  ]
+  ],
+  "manifest_schema_version": 2,
+  "binding_positions": {
+    "battle_rig_base": {
+      "pivot": {
+        "x": 0.527205,
+        "y": 0.59408
+      },
+      "rig_mount": {
+        "x": 0.527205,
+        "y": 0.59408
+      },
+      "skill_origin": {
+        "x": 0.527205,
+        "y": 0.59408
+      },
+      "wake_origin": {
+        "x": 0.527205,
+        "y": 0.758985
+      },
+      "turret_mount_01": {
+        "x": 0.27955,
+        "y": 0.342495
+      },
+      "turret_mount_02": {
+        "x": 0.238274,
+        "y": 0.501057
+      },
+      "turret_mount_03": {
+        "x": 0.825516,
+        "y": 0.501057
+      }
+    },
+    "battle_turret_main_01": {
+      "pivot": {
+        "x": 0.465374,
+        "y": 0.79771
+      },
+      "muzzle_01": {
+        "x": 0.105263,
+        "y": 0.60687
+      },
+      "muzzle_02": {
+        "x": 0.152355,
+        "y": 0.69084
+      },
+      "muzzle_03": {
+        "x": 0.229917,
+        "y": 0.755725
+      }
+    },
+    "battle_turret_main_02": {
+      "pivot": {
+        "x": 0.454294,
+        "y": 0.78626
+      },
+      "muzzle_01": {
+        "x": 0.102493,
+        "y": 0.614504
+      },
+      "muzzle_02": {
+        "x": 0.157895,
+        "y": 0.694656
+      },
+      "muzzle_03": {
+        "x": 0.227147,
+        "y": 0.755725
+      }
+    },
+    "battle_turret_main_03": {
+      "pivot": {
+        "x": 0.483607,
+        "y": 0.803846
+      },
+      "muzzle_01": {
+        "x": 0.10929,
+        "y": 0.607692
+      },
+      "muzzle_02": {
+        "x": 0.163934,
+        "y": 0.692308
+      },
+      "muzzle_03": {
+        "x": 0.229508,
+        "y": 0.757692
+      }
+    }
+  }
 }

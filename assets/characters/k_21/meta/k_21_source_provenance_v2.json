@@ -1,0 +1,327 @@
+{
+  "schema_version": 2,
+  "character_id": "k_21",
+  "kind": "codex_builtin_generated_art",
+  "source": "Codex built-in ImageGen",
+  "batch_ready_allowed": true,
+  "generation_policy": {
+    "primary_route": "codex_builtin_imagegen_native_alpha",
+    "legacy_fallback": {
+      "authorized": false,
+      "activation": "--allow-legacy-chroma-fallback",
+      "reason": "",
+      "native_failures": []
+    }
+  },
+  "generation": {
+    "requested_model": "codex-account-managed-imagegen",
+    "actual_model": "codex-account-managed-imagegen",
+    "generation_tool": "Codex built-in ImageGen",
+    "endpoint": "Codex account-managed image generation",
+    "quality": "Codex account-managed",
+    "size_control": "per-asset Codex account-managed output",
+    "background_control": "transparent requested and pixel-verified",
+    "output_format": "PNG",
+    "prompt_revision": {
+      "path": "assets/characters/k_21/meta/k_21_generation_brief_v2.md",
+      "sha256": "06dca8aa98b10427d952885bb21ae3b0a698483793b754402af8edf1ecfc8c1f"
+    },
+    "reference_inputs": [
+      {
+        "path": "assets/characters/k_21/concept/k_21_concept_full.png",
+        "role": "accepted_style_anchor_for_derivative_sheets"
+      }
+    ],
+    "reproducibility_note": "The Codex account manages the underlying image model and request IDs; those implementation details are not exposed. Accepted PNG outputs are preserved byte-for-byte and tracked by SHA-256."
+  },
+  "source_images": [
+    {
+      "role": "concept_full",
+      "path": "assets/characters/k_21/concept/k_21_concept_full.png",
+      "sha256": "0df2ad616628ed7cdd2d73aef2a1b45d082fdd0406b5087ea06a6c523bad6b3d",
+      "size": [
+        1226,
+        1283
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "0df2ad616628ed7cdd2d73aef2a1b45d082fdd0406b5087ea06a6c523bad6b3d",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.5889178223449069,
+        "transparent_border_ratio": 0.9966094934184284
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "全身及舰装完整，身份配色沿用角色方案，装备数量和末端已目检；原生Alpha。"
+    },
+    {
+      "role": "ui_sheet",
+      "path": "assets/characters/k_21/ui/k_21_ui_sheet.png",
+      "sha256": "51422c78be64e8e073f557cf4c271654d7fdb4678cb5863f005fc50349652022",
+      "size": [
+        1774,
+        887
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "51422c78be64e8e073f557cf4c271654d7fdb4678cb5863f005fc50349652022",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.429919709597099,
+        "transparent_border_ratio": 0.9984956750658143
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "六个头像与两枚图标完整分离，银灰发、蓝色护目镜和毛领一致；头像间透明间隔清晰，未见串格。"
+    },
+    {
+      "role": "battle_grid",
+      "path": "assets/characters/k_21/battle/k_21_battle_asset_grid.png",
+      "sha256": "5c0d27756870c511ae24a04ac22c8f236895492f7e0081132e39fb17e6a17f5d",
+      "size": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "5c0d27756870c511ae24a04ac22c8f236895492f7e0081132e39fb17e6a17f5d",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.6174354553222656,
+        "transparent_border_ratio": 0.9388193901485535
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "本体穿短靴，独立潜艇底座、六孔前模块、四孔后模块、声呐、潜望镜、天线和软水下影共八件；6/4孔布局清晰，物件分离。"
+    },
+    {
+      "role": "vfx_sheet",
+      "path": "assets/characters/k_21/vfx/k_21_vfx_reference_sheet.png",
+      "sha256": "b7cdd4726255f9dc81d36797e3a6d8f36145628447a718b67524427e63d6c639",
+      "size": [
+        1774,
+        887
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "b7cdd4726255f9dc81d36797e3a6d8f36145628447a718b67524427e63d6c639",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.3727898531843527,
+        "transparent_border_ratio": 0.7965400526513727
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "八项特效逐件可分，圆环、水花和断开粒子完整；发射/尾迹参考中含弹体，仅作为现有参考表达，不写入角色动画。原生Alpha。"
+    },
+    {
+      "role": "anim_idle",
+      "path": "assets/characters/k_21/battle/k_21_anim_idle_4f_sheet.png",
+      "sha256": "7b2d47a6190afb9e83625d6f73583c11251af34a1a63c03ad3ab7a93c6e76ec4",
+      "size": [
+        1312,
+        1199
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "7b2d47a6190afb9e83625d6f73583c11251af34a1a63c03ad3ab7a93c6e76ec4",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.461138855550357,
+        "transparent_border_ratio": 0.9992028696691909
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "2026-09-21逐图目检：角色身份与服装一致，Q版帧有实际姿态变化，装备和四帧均完整留边；无飞出投射物。"
+    },
+    {
+      "role": "anim_move",
+      "path": "assets/characters/k_21/battle/k_21_anim_move_4f_sheet.png",
+      "sha256": "3b41f4c65a7105caec56951db45e74e1f58aa424eb4feec1278c410049b3fa1f",
+      "size": [
+        1226,
+        1283
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "3b41f4c65a7105caec56951db45e74e1f58aa424eb4feec1278c410049b3fa1f",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.6232226162427732,
+        "transparent_border_ratio": 0.9948145193458316
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "四帧移动姿势，六艏四艉圆孔、声呐及潜望镜完整，靴子和局部水花无截断。"
+    },
+    {
+      "role": "anim_attack",
+      "path": "assets/characters/k_21/battle/k_21_anim_attack_4f_sheet.png",
+      "sha256": "9697f31d55752091f1acfe5b20d1dcc96b46474bf60df3d1185bf7cf66ff71a8",
+      "size": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "9697f31d55752091f1acfe5b20d1dcc96b46474bf60df3d1185bf7cf66ff71a8",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.5234419504801432,
+        "transparent_border_ratio": 1.0
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "灰毛领、冰蓝目镜Q版身份统一；四帧蹲伏、指挥发射、后坐与恢复动作清晰，六艏四艉孔、声呐和潜望镜完整；只有局部气泡，无飞出鱼雷。"
+    },
+    {
+      "role": "anim_hit",
+      "path": "assets/characters/k_21/battle/k_21_anim_hit_4f_sheet.png",
+      "sha256": "6289561f805ee0960472b15949b191dd35d41cb790bc1ac09809b3d201995351",
+      "size": [
+        1226,
+        1283
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "6289561f805ee0960472b15949b191dd35d41cb790bc1ac09809b3d201995351",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.439746007204261,
+        "transparent_border_ratio": 0.9972078181092939
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "受击四帧由戒备、闭眼吃痛、后仰到恢复，六艏四艉圆孔和声呐完整，没有炮口火焰。"
+    },
+    {
+      "role": "anim_firepower",
+      "path": "assets/characters/k_21/battle/k_21_anim_firepower_4f_sheet.png",
+      "sha256": "7e3efde697957802903a772b42ec7989f6732867fdac260c47cb8e65b6b369ff",
+      "size": [
+        1226,
+        1283
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "7e3efde697957802903a772b42ec7989f6732867fdac260c47cb8e65b6b369ff",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.46515227997187464,
+        "transparent_border_ratio": 0.9946150777822098
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "技能四帧蹲伏、举臂、展开、回收动作明确；六艏四艉发射管、声呐球与潜望镜完整。"
+    }
+  ]
+}

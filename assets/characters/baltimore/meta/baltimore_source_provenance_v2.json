@@ -1,0 +1,327 @@
+{
+  "schema_version": 2,
+  "character_id": "baltimore",
+  "kind": "codex_builtin_generated_art",
+  "source": "Codex built-in ImageGen",
+  "batch_ready_allowed": true,
+  "generation_policy": {
+    "primary_route": "codex_builtin_imagegen_native_alpha",
+    "legacy_fallback": {
+      "authorized": false,
+      "activation": "--allow-legacy-chroma-fallback",
+      "reason": "",
+      "native_failures": []
+    }
+  },
+  "generation": {
+    "requested_model": "codex-account-managed-imagegen",
+    "actual_model": "codex-account-managed-imagegen",
+    "generation_tool": "Codex built-in ImageGen",
+    "endpoint": "Codex account-managed image generation",
+    "quality": "Codex account-managed",
+    "size_control": "per-asset Codex account-managed output",
+    "background_control": "transparent requested and pixel-verified",
+    "output_format": "PNG",
+    "prompt_revision": {
+      "path": "assets/characters/baltimore/meta/baltimore_generation_brief_v2.md",
+      "sha256": "edc12ecd8e23725a5f9571515064e43ef6ce99da2b44ee93a1d0e0ce91d38032"
+    },
+    "reference_inputs": [
+      {
+        "path": "assets/characters/baltimore/concept/baltimore_concept_full.png",
+        "role": "accepted_style_anchor_for_derivative_sheets"
+      }
+    ],
+    "reproducibility_note": "The Codex account manages the underlying image model and request IDs; those implementation details are not exposed. Accepted PNG outputs are preserved byte-for-byte and tracked by SHA-256."
+  },
+  "source_images": [
+    {
+      "role": "concept_full",
+      "path": "assets/characters/baltimore/concept/baltimore_concept_full.png",
+      "sha256": "65619611e22193b43156d118d0aeb3fa034c12bd4c2f2008c9df4744ef5d222b",
+      "size": [
+        1024,
+        1536
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "65619611e22193b43156d118d0aeb3fa034c12bd4c2f2008c9df4744ef5d222b",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.5940742492675781,
+        "transparent_border_ratio": 0.9998045347928068
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "短黑发、蓝长外套与白裤一致，三座三联重炮九管完整，无鱼雷，雷达与全身未截断。"
+    },
+    {
+      "role": "ui_sheet",
+      "path": "assets/characters/baltimore/ui/baltimore_ui_sheet.png",
+      "sha256": "5b1c7f89ee21bfaec2bc23652591d4ae7d6538fe009c56fdaec29b05035c5e83",
+      "size": [
+        1774,
+        887
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "5b1c7f89ee21bfaec2bc23652591d4ae7d6538fe009c56fdaec29b05035c5e83",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.4874168911078093,
+        "transparent_border_ratio": 0.9890936442271531
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "六个头像与两枚图标完整；黑短发蓝白制服一致，雷达穿甲和重巡语义可辨。"
+    },
+    {
+      "role": "battle_grid",
+      "path": "assets/characters/baltimore/battle/baltimore_battle_asset_grid.png",
+      "sha256": "e49ced8b635d99eebf4adc2de6a2b8a5cf9bc4a258c2e31ce117822c46c2399b",
+      "size": [
+        1774,
+        887
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "e49ced8b635d99eebf4adc2de6a2b8a5cf9bc4a258c2e31ce117822c46c2399b",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.7648337695054076,
+        "transparent_border_ratio": 1.0
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "八件完整分离，人物蓝长衣白裤Q版；三处向上炮台取代前向管孔，三座独立三联炮完整，AA和雷达语义清晰。"
+    },
+    {
+      "role": "vfx_sheet",
+      "path": "assets/characters/baltimore/vfx/baltimore_vfx_reference_sheet.png",
+      "sha256": "1c169c053d0e2e734828e6589be412650223e58ed7cf67fbafa1cbf9f99ff330",
+      "size": [
+        1774,
+        887
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "1c169c053d0e2e734828e6589be412650223e58ed7cf67fbafa1cbf9f99ff330",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.6442628014067662,
+        "transparent_border_ratio": 0.9984956750658143
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "八种校准/锁线/短重弹迹/装甲碎片/拦截/火控/光环/水花完整分离，弹迹无炮弹实体。"
+    },
+    {
+      "role": "anim_idle",
+      "path": "assets/characters/baltimore/battle/baltimore_anim_idle_4f_sheet.png",
+      "sha256": "8728b163032cda2ee2e5ebf1572f68e85c9b4077f49c62403c058f80ce553ba5",
+      "size": [
+        1254,
+        1254
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "8728b163032cda2ee2e5ebf1572f68e85c9b4077f49c62403c058f80ce553ba5",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.6242753650837257,
+        "transparent_border_ratio": 0.9972067039106145
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "四帧三座三联重炮和白裤蓝长外套一致，眨眼、抬腿和手部姿态不同，完整轮廓分离。"
+    },
+    {
+      "role": "anim_move",
+      "path": "assets/characters/baltimore/battle/baltimore_anim_move_4f_sheet.png",
+      "sha256": "33ef6f4a9d7325145b7715436ba7f27023e53981e188ccd65b172d38e66d8452",
+      "size": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "33ef6f4a9d7325145b7715436ba7f27023e53981e188ccd65b172d38e66d8452",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.6034520467122396,
+        "transparent_border_ratio": 0.9859265050820953
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "四帧保持三座三联炮，交替腿部滑行姿态与局部水花，未见独立投射物。"
+    },
+    {
+      "role": "anim_attack",
+      "path": "assets/characters/baltimore/battle/baltimore_anim_attack_4f_sheet.png",
+      "sha256": "2e8a9bfa2191a1e73b7766f5340fb5dc220e2b610da52b6576aee7b6d97cee20",
+      "size": [
+        1254,
+        1254
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "2e8a9bfa2191a1e73b7766f5340fb5dc220e2b610da52b6576aee7b6d97cee20",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.6435750097296308,
+        "transparent_border_ratio": 0.9998004788507582
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "三座三联主炮、蓝长外套白裤与黑短发四帧保持一致；蹲伏准备、指挥开火、后坐、复位姿态清晰，完整边界与透明间隔，无飞离的投射物。"
+    },
+    {
+      "role": "anim_hit",
+      "path": "assets/characters/baltimore/battle/baltimore_anim_hit_4f_sheet.png",
+      "sha256": "a0125a0af010c79c1244485f1bb5cbbc03889bd4d6ae214aa4332d3a052cc301",
+      "size": [
+        1254,
+        1254
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "a0125a0af010c79c1244485f1bb5cbbc03889bd4d6ae214aa4332d3a052cc301",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.6531583780387609,
+        "transparent_border_ratio": 0.9994014365522745
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "三座三联主炮、蓝长外套白裤与黑短发四帧保持一致；准备、抬手遮挡、蹲伏受击、恢复姿态清晰，完整边界与透明间隔，无飞离的投射物。"
+    },
+    {
+      "role": "anim_firepower",
+      "path": "assets/characters/baltimore/battle/baltimore_anim_firepower_4f_sheet.png",
+      "sha256": "0963a8e97459c7fa7615cb80e5c19f60cf7421ce91fa602c05cb751387d40529",
+      "size": [
+        1254,
+        1254
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "0963a8e97459c7fa7615cb80e5c19f60cf7421ce91fa602c05cb751387d40529",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.6537332529525932,
+        "transparent_border_ratio": 0.9998004788507582
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "三座三联主炮、蓝长外套白裤与黑短发四帧保持一致；蓄势、抬手、双手展开扫描、复位姿态清晰，完整边界与透明间隔，无飞离的投射物。"
+    }
+  ]
+}

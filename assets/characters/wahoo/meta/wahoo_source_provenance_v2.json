@@ -1,0 +1,327 @@
+{
+  "schema_version": 2,
+  "character_id": "wahoo",
+  "kind": "codex_builtin_generated_art",
+  "source": "Codex built-in ImageGen",
+  "batch_ready_allowed": true,
+  "generation_policy": {
+    "primary_route": "codex_builtin_imagegen_native_alpha",
+    "legacy_fallback": {
+      "authorized": false,
+      "activation": "--allow-legacy-chroma-fallback",
+      "reason": "",
+      "native_failures": []
+    }
+  },
+  "generation": {
+    "requested_model": "codex-account-managed-imagegen",
+    "actual_model": "codex-account-managed-imagegen",
+    "generation_tool": "Codex built-in ImageGen",
+    "endpoint": "Codex account-managed image generation",
+    "quality": "Codex account-managed",
+    "size_control": "per-asset Codex account-managed output",
+    "background_control": "transparent requested and pixel-verified",
+    "output_format": "PNG",
+    "prompt_revision": {
+      "path": "assets/characters/wahoo/meta/wahoo_generation_brief_v2.md",
+      "sha256": "26f430354576db52e63c7d9d96dbfccc90694ceb1c238b4a539b884fb1f7e24e"
+    },
+    "reference_inputs": [
+      {
+        "path": "assets/characters/wahoo/concept/wahoo_concept_full.png",
+        "role": "accepted_style_anchor_for_derivative_sheets"
+      }
+    ],
+    "reproducibility_note": "The Codex account manages the underlying image model and request IDs; those implementation details are not exposed. Accepted PNG outputs are preserved byte-for-byte and tracked by SHA-256."
+  },
+  "source_images": [
+    {
+      "role": "concept_full",
+      "path": "assets/characters/wahoo/concept/wahoo_concept_full.png",
+      "sha256": "7c93388005c27a69da46558ff7d153c5e39e7826b9742bb683fd90c29972753d",
+      "size": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "7c93388005c27a69da46558ff7d153c5e39e7826b9742bb683fd90c29972753d",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.6124833424886068,
+        "transparent_border_ratio": 1.0
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "潜望镜连接指挥塔；六艏四艉管组可数，黑短发、声呐耳机、鲨鱼披风完整，四肢无截断。"
+    },
+    {
+      "role": "ui_sheet",
+      "path": "assets/characters/wahoo/ui/wahoo_ui_sheet.png",
+      "sha256": "65fc014a27aa964c579144f08b231209c1af06992ce6fe2f1bff9007179aa274",
+      "size": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "65fc014a27aa964c579144f08b231209c1af06992ce6fe2f1bff9007179aa274",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.4671427408854167,
+        "transparent_border_ratio": 0.9994136043784206
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "六个人像保留黑发、声呐耳机和鲨鱼领口身份；技能格已改为持续追猎图标，舰种图标明确；浅底合成无黑色矩形底。"
+    },
+    {
+      "role": "battle_grid",
+      "path": "assets/characters/wahoo/battle/wahoo_battle_asset_grid.png",
+      "sha256": "e093f1a2e2d9ad7dd0a7b1cdad954fbe90e4e8d86f1b9f12754a2b8ecc8e69e9",
+      "size": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "e093f1a2e2d9ad7dd0a7b1cdad954fbe90e4e8d86f1b9f12754a2b8ecc8e69e9",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.7228787740071615,
+        "transparent_border_ratio": 0.9949179046129789
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "八件独立拆件齐全：Q版本体、留空安装座舰体、六孔艏管、四孔艉管、声呐、潜望镜、氧气罐和右下潜艇阴影，完整无截断。"
+    },
+    {
+      "role": "vfx_sheet",
+      "path": "assets/characters/wahoo/vfx/wahoo_vfx_reference_sheet.png",
+      "sha256": "b5c6edd94ed08c874c4484d55a1f5927249e7fb24dadf61624ac5cd3e261a937",
+      "size": [
+        1774,
+        887
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "b5c6edd94ed08c874c4484d55a1f5927249e7fb24dadf61624ac5cd3e261a937",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.46984248235504955,
+        "transparent_border_ratio": 0.9497931553215495
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "八项蓝色特效分离，鲨影、装填环、声呐、气泡、尾迹、水下阴影、下潜环和技能环对应契约；浅底核对透明柔边及断开气泡完整。"
+    },
+    {
+      "role": "anim_idle",
+      "path": "assets/characters/wahoo/battle/wahoo_anim_idle_4f_sheet.png",
+      "sha256": "27f7bdd147e0aa29d4840fc16293993578bf650a4446edfc802a55f499f1d108",
+      "size": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "27f7bdd147e0aa29d4840fc16293993578bf650a4446edfc802a55f499f1d108",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.7010790506998698,
+        "transparent_border_ratio": 0.9996090695856138
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "四帧重排后上下排有宽透明间隔，六艏四艉孔和潜望镜完整，原先靴子与下一帧头发连通的问题已消除；各帧仍有表情、腿部与披风变化。"
+    },
+    {
+      "role": "anim_move",
+      "path": "assets/characters/wahoo/battle/wahoo_anim_move_4f_sheet.png",
+      "sha256": "1710cbc5b21bdf636d9d34210dd43bda933ba65ade8e891fa92b611f9fd89ef3",
+      "size": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "1710cbc5b21bdf636d9d34210dd43bda933ba65ade8e891fa92b611f9fd89ef3",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.5577303568522135,
+        "transparent_border_ratio": 0.9955043002345583
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "四帧黑发鲨鱼披风Q版，六艏孔、四艉孔和潜望镜一致；完整留边，动作/表情变化可读。"
+    },
+    {
+      "role": "anim_attack",
+      "path": "assets/characters/wahoo/battle/wahoo_anim_attack_4f_sheet.png",
+      "sha256": "b778643e669bb7cc4f9ed96328251d9567a7de6a739de7a22f1ac38fa34e9d79",
+      "size": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "b778643e669bb7cc4f9ed96328251d9567a7de6a739de7a22f1ac38fa34e9d79",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.5713729858398438,
+        "transparent_border_ratio": 1.0
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "2026-09-21逐图目检：角色身份与服装一致，Q版帧有实际姿态变化，装备和四帧均完整留边；无飞出投射物。"
+    },
+    {
+      "role": "anim_hit",
+      "path": "assets/characters/wahoo/battle/wahoo_anim_hit_4f_sheet.png",
+      "sha256": "6e96a28e6207cb1c0d55e33c6efc02b349380bc35026e735e1d197cb1cdd1ed6",
+      "size": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "6e96a28e6207cb1c0d55e33c6efc02b349380bc35026e735e1d197cb1cdd1ed6",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.5901514689127604,
+        "transparent_border_ratio": 0.9982408131352619
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "四帧黑发鲨鱼披风Q版，六艏孔、四艉孔和潜望镜一致；完整留边，动作/表情变化可读。"
+    },
+    {
+      "role": "anim_firepower",
+      "path": "assets/characters/wahoo/battle/wahoo_anim_firepower_4f_sheet.png",
+      "sha256": "979b64391ce343dde2d3405551f1ae615bc9b81c8fd2013d81a47d2a87531fce",
+      "size": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "979b64391ce343dde2d3405551f1ae615bc9b81c8fd2013d81a47d2a87531fce",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.5890331268310547,
+        "transparent_border_ratio": 0.9990226739640344
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "四帧黑发鲨鱼披风Q版，六艏孔、四艉孔和潜望镜一致；完整留边，动作/表情变化可读。"
+    }
+  ]
+}

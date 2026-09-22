@@ -19,6 +19,19 @@
     "aircraft_recovery": 1,
     "turret_secondary": 8
   },
+  "object_inventory": {
+    "aircraft_launch": {
+      "instances": 1
+    },
+    "aircraft_recovery": {
+      "instances": 1
+    },
+    "turret_secondary": {
+      "instances": 8,
+      "barrels_per_instance": 2,
+      "layout": "four_per_side"
+    }
+  },
   "bindings": {
     "battle_rig_base": [
       "rig_mount",
@@ -34,6 +47,22 @@
       "secondary_mount_06",
       "secondary_mount_07",
       "secondary_mount_08"
+    ],
+    "battle_flight_deck": [
+      "pivot",
+      "aircraft_launch_01",
+      "aircraft_recovery_01"
+    ],
+    "battle_turret_secondary_01": [
+      "pivot",
+      "muzzle_01",
+      "muzzle_02"
+    ],
+    "battle_aa_center": [
+      "pivot",
+      "muzzle_01",
+      "muzzle_02",
+      "muzzle_03"
     ]
   },
   "vfx_roles": [
@@ -51,7 +80,7 @@
     "experimental_flight_lane": "aircraft.path",
     "aircraft_launch_flash": "aircraft.path",
     "aircraft_formation": "aircraft.path",
-    "airstrike_area": "aircraft.path",
+    "airstrike_area": "skill.area",
     "aircraft_recovery": "aircraft.path",
     "aa_burst": "aa.burst.small",
     "skill_aura": "skill.area"
@@ -60,5 +89,137 @@
     "Original TinySeaWar design; no real flags, political symbols, readable insignia, or extremist symbols.",
     "Character body, rig base, weapon nodes, and VFX must remain visually separable.",
     "Clearly unfinished experimental carrier structure; UI plan marker only, no readable text."
-  ]
+  ],
+  "manifest_schema_version": 2,
+  "binding_positions": {
+    "battle_rig_base": {
+      "rig_mount": {
+        "x": 0.5,
+        "y": 0.49
+      },
+      "wake_origin": {
+        "x": 0.17,
+        "y": 0.23
+      },
+      "skill_origin": {
+        "x": 0.5,
+        "y": 0.44
+      },
+      "aircraft_launch_01": {
+        "x": 0.77,
+        "y": 0.64
+      },
+      "aircraft_recovery_01": {
+        "x": 0.25,
+        "y": 0.26
+      },
+      "secondary_mount_01": {
+        "x": 0.12,
+        "y": 0.31
+      },
+      "secondary_mount_02": {
+        "x": 0.22,
+        "y": 0.395
+      },
+      "secondary_mount_03": {
+        "x": 0.42,
+        "y": 0.59
+      },
+      "secondary_mount_04": {
+        "x": 0.56,
+        "y": 0.72
+      },
+      "secondary_mount_05": {
+        "x": 0.44,
+        "y": 0.265
+      },
+      "secondary_mount_06": {
+        "x": 0.59,
+        "y": 0.375
+      },
+      "secondary_mount_07": {
+        "x": 0.72,
+        "y": 0.49
+      },
+      "secondary_mount_08": {
+        "x": 0.83,
+        "y": 0.59
+      }
+    },
+    "battle_flight_deck": {
+      "pivot": {
+        "x": 0.48,
+        "y": 0.46
+      },
+      "aircraft_launch_01": {
+        "x": 0.79,
+        "y": 0.78
+      },
+      "aircraft_recovery_01": {
+        "x": 0.24,
+        "y": 0.18
+      }
+    },
+    "battle_turret_secondary_01": {
+      "pivot": {
+        "x": 0.51,
+        "y": 0.78
+      },
+      "muzzle_01": {
+        "x": 0.115,
+        "y": 0.46
+      },
+      "muzzle_02": {
+        "x": 0.24,
+        "y": 0.545
+      }
+    },
+    "battle_aa_center": {
+      "pivot": {
+        "x": 0.51,
+        "y": 0.78
+      },
+      "muzzle_01": {
+        "x": 0.17,
+        "y": 0.28
+      },
+      "muzzle_02": {
+        "x": 0.13,
+        "y": 0.34
+      },
+      "muzzle_03": {
+        "x": 0.13,
+        "y": 0.43
+      }
+    }
+  },
+  "weapon_binding_rules": {
+    "graf_zeppelin_secondary": {
+      "asset_role": "battle_turret_secondary_01",
+      "launch_bind": "muzzle_01",
+      "muzzle_vfx_role": "muzzle_flash_medium",
+      "launch_profile": "vfx.profile.muzzle_flash.medium",
+      "impact_profile": "vfx.profile.shell_impact.medium"
+    },
+    "graf_zeppelin_aa_03": {
+      "asset_role": "battle_aa_center",
+      "launch_bind": "muzzle_01",
+      "muzzle_vfx_role": "aa_burst",
+      "launch_profile": "vfx.profile.muzzle_flash.medium",
+      "impact_profile": "vfx.profile.shell_impact.medium"
+    },
+    "graf_zeppelin_airstrike": {
+      "asset_role": "battle_flight_deck",
+      "launch_bind": "aircraft_launch_01",
+      "muzzle_vfx_role": "aircraft_launch_flash",
+      "launch_profile": "vfx.profile.aircraft.launch_trail",
+      "impact_profile": "vfx.profile.airstrike_impact"
+    }
+  },
+  "additional_public_vfx_roles": {
+    "muzzle_flash_medium": {
+      "file": "assets/vfx/combat/muzzle/vfx_muzzle_gun_medium_01.png",
+      "semantic": "muzzle_flash.medium"
+    }
+  }
 }

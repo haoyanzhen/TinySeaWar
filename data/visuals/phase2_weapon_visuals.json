@@ -11,13 +11,13 @@
       "projectile_visual_id": "visual.projectile.shell.small",
       "fire_animation_state": "attack",
       "launch_bind": "muzzle_01",
-      "muzzle_vfx_role": "moonwhite_aa_ring",
+      "muzzle_vfx_role": "escort_interception",
       "launch_profile": "vfx.profile.muzzle_flash.medium",
       "impact_profile": "vfx.profile.shell_impact.medium",
       "vfx_role_mappings": {
         "moonwhite_aa_ring": "aa.burst.small",
         "escort_interception": "aa.burst.small",
-        "torpedo_launch_flash": "torpedo.trail.surface",
+        "torpedo_launch_flash": "torpedo.launch.surface",
         "muzzle_flash_small": "muzzle_flash.small",
         "water_splash": "impact.water.medium",
         "aa_circle": "aa.burst.small",
@@ -36,13 +36,13 @@
       "projectile_visual_id": "visual.projectile.shell.small",
       "fire_animation_state": "firepower",
       "launch_bind": "muzzle_01",
-      "muzzle_vfx_role": "moonwhite_aa_ring",
+      "muzzle_vfx_role": "muzzle_flash_small",
       "launch_profile": "vfx.profile.muzzle_flash.medium",
       "impact_profile": "vfx.profile.shell_impact.medium",
       "vfx_role_mappings": {
         "moonwhite_aa_ring": "aa.burst.small",
         "escort_interception": "aa.burst.small",
-        "torpedo_launch_flash": "torpedo.trail.surface",
+        "torpedo_launch_flash": "torpedo.launch.surface",
         "muzzle_flash_small": "muzzle_flash.small",
         "water_splash": "impact.water.medium",
         "aa_circle": "aa.burst.small",
@@ -67,7 +67,7 @@
       "vfx_role_mappings": {
         "moonwhite_aa_ring": "aa.burst.small",
         "escort_interception": "aa.burst.small",
-        "torpedo_launch_flash": "torpedo.trail.surface",
+        "torpedo_launch_flash": "torpedo.launch.surface",
         "muzzle_flash_small": "muzzle_flash.small",
         "water_splash": "impact.water.medium",
         "aa_circle": "aa.burst.small",
@@ -148,7 +148,9 @@
         "aa_circle": "aa.burst.small",
         "radar_scan": "submarine.sonar_pulse",
         "skill_aura": "skill.area",
-        "water_splash": "impact.water.medium"
+        "water_splash": "impact.water.medium",
+        "muzzle_flash_medium": "muzzle_flash.medium",
+        "torpedo_launch_flash": "torpedo.launch.surface"
       }
     },
     {
@@ -163,7 +165,7 @@
       "projectile_visual_id": "visual.projectile.shell.medium",
       "fire_animation_state": "firepower",
       "launch_bind": "muzzle_01",
-      "muzzle_vfx_role": "aa_burst",
+      "muzzle_vfx_role": "muzzle_flash_medium",
       "launch_profile": "vfx.profile.muzzle_flash.medium",
       "impact_profile": "vfx.profile.shell_impact.medium",
       "vfx_role_mappings": {
@@ -174,7 +176,9 @@
         "aa_circle": "aa.burst.small",
         "radar_scan": "submarine.sonar_pulse",
         "skill_aura": "skill.area",
-        "water_splash": "impact.water.medium"
+        "water_splash": "impact.water.medium",
+        "muzzle_flash_medium": "muzzle_flash.medium",
+        "torpedo_launch_flash": "torpedo.launch.surface"
       }
     },
     {
@@ -188,7 +192,7 @@
       "projectile_visual_id": "visual.projectile.torpedo.surface",
       "fire_animation_state": "firepower",
       "launch_bind": "torpedo_port_01",
-      "muzzle_vfx_role": "radar_suppression_sector",
+      "muzzle_vfx_role": "torpedo_launch_flash",
       "launch_profile": "vfx.profile.torpedo_launch",
       "impact_profile": "vfx.profile.torpedo_impact",
       "vfx_role_mappings": {
@@ -199,7 +203,9 @@
         "aa_circle": "aa.burst.small",
         "radar_scan": "submarine.sonar_pulse",
         "skill_aura": "skill.area",
-        "water_splash": "impact.water.medium"
+        "water_splash": "impact.water.medium",
+        "muzzle_flash_medium": "muzzle_flash.medium",
+        "torpedo_launch_flash": "torpedo.launch.surface"
       }
     },
     {
@@ -213,13 +219,13 @@
       "projectile_visual_id": "visual.projectile.shell.small",
       "fire_animation_state": "attack",
       "launch_bind": "muzzle_01",
-      "muzzle_vfx_role": "muzzle_flash_small",
+      "muzzle_vfx_role": "aa_circle",
       "launch_profile": "vfx.profile.muzzle_flash.medium",
       "impact_profile": "vfx.profile.shell_impact.medium",
       "vfx_role_mappings": {
         "forward_escort_wake": "wake.destroyer_fast",
         "early_radar_scan": "submarine.sonar_pulse",
-        "torpedo_launch_flash": "torpedo.trail.surface",
+        "torpedo_launch_flash": "torpedo.launch.surface",
         "muzzle_flash_small": "muzzle_flash.small",
         "water_splash": "impact.water.medium",
         "aa_circle": "aa.burst.small",
@@ -244,7 +250,7 @@
       "vfx_role_mappings": {
         "forward_escort_wake": "wake.destroyer_fast",
         "early_radar_scan": "submarine.sonar_pulse",
-        "torpedo_launch_flash": "torpedo.trail.surface",
+        "torpedo_launch_flash": "torpedo.launch.surface",
         "muzzle_flash_small": "muzzle_flash.small",
         "water_splash": "impact.water.medium",
         "aa_circle": "aa.burst.small",
@@ -269,7 +275,7 @@
       "vfx_role_mappings": {
         "forward_escort_wake": "wake.destroyer_fast",
         "early_radar_scan": "submarine.sonar_pulse",
-        "torpedo_launch_flash": "torpedo.trail.surface",
+        "torpedo_launch_flash": "torpedo.launch.surface",
         "muzzle_flash_small": "muzzle_flash.small",
         "water_splash": "impact.water.medium",
         "aa_circle": "aa.burst.small",
@@ -314,7 +320,6 @@
       "projectile_visual_id": "visual.projectile.shell.medium",
       "fire_animation_state": "firepower",
       "launch_bind": "muzzle_01",
-      "muzzle_vfx_role": "aa_burst",
       "launch_profile": "vfx.profile.muzzle_flash.medium",
       "impact_profile": "vfx.profile.shell_impact.medium",
       "vfx_role_mappings": {
@@ -339,7 +344,6 @@
       "projectile_visual_id": "visual.projectile.torpedo.surface",
       "fire_animation_state": "firepower",
       "launch_bind": "torpedo_port_01",
-      "muzzle_vfx_role": "rectangular_fire_grid",
       "launch_profile": "vfx.profile.torpedo_launch",
       "impact_profile": "vfx.profile.torpedo_impact",
       "vfx_role_mappings": {
@@ -441,7 +445,7 @@
       "projectile_visual_id": "visual.projectile.shell.large",
       "fire_animation_state": "firepower",
       "launch_bind": "muzzle_01",
-      "muzzle_vfx_role": "ironclad_guard_aura",
+      "muzzle_vfx_role": "muzzle_flash_large",
       "launch_profile": "vfx.profile.muzzle_flash.large",
       "impact_profile": "vfx.profile.shell_impact.large",
       "vfx_role_mappings": {
@@ -452,7 +456,9 @@
         "armor_sparks": "impact.armor.spark",
         "command_aura": "skill.area",
         "water_splash_large": "impact.water.large",
-        "fire_control_lock": "skill.area"
+        "fire_control_lock": "skill.area",
+        "muzzle_flash_medium": "muzzle_flash.medium",
+        "muzzle_flash_large": "muzzle_flash.large"
       }
     },
     {
@@ -466,7 +472,7 @@
       "projectile_visual_id": "visual.projectile.shell.medium",
       "fire_animation_state": "firepower",
       "launch_bind": "muzzle_01",
-      "muzzle_vfx_role": "ironclad_guard_aura",
+      "muzzle_vfx_role": "muzzle_flash_medium",
       "launch_profile": "vfx.profile.muzzle_flash.medium",
       "impact_profile": "vfx.profile.shell_impact.medium",
       "vfx_role_mappings": {
@@ -477,7 +483,9 @@
         "armor_sparks": "impact.armor.spark",
         "command_aura": "skill.area",
         "water_splash_large": "impact.water.large",
-        "fire_control_lock": "skill.area"
+        "fire_control_lock": "skill.area",
+        "muzzle_flash_medium": "muzzle_flash.medium",
+        "muzzle_flash_large": "muzzle_flash.large"
       }
     },
     {
@@ -567,7 +575,6 @@
       "projectile_visual_id": "visual.projectile.shell.large",
       "fire_animation_state": "firepower",
       "launch_bind": "muzzle_01",
-      "muzzle_vfx_role": "steel_line_aura",
       "launch_profile": "vfx.profile.muzzle_flash.large",
       "impact_profile": "vfx.profile.shell_impact.large",
       "vfx_role_mappings": {
@@ -592,7 +599,6 @@
       "projectile_visual_id": "visual.projectile.shell.small",
       "fire_animation_state": "firepower",
       "launch_bind": "muzzle_01",
-      "muzzle_vfx_role": "steel_line_aura",
       "launch_profile": "vfx.profile.muzzle_flash.medium",
       "impact_profile": "vfx.profile.shell_impact.medium",
       "vfx_role_mappings": {
@@ -625,10 +631,11 @@
         "experimental_flight_lane": "aircraft.path",
         "aircraft_launch_flash": "aircraft.path",
         "aircraft_formation": "aircraft.path",
-        "airstrike_area": "aircraft.path",
+        "airstrike_area": "skill.area",
         "aircraft_recovery": "aircraft.path",
         "aa_burst": "aa.burst.small",
-        "skill_aura": "skill.area"
+        "skill_aura": "skill.area",
+        "muzzle_flash_medium": "muzzle_flash.medium"
       }
     },
     {
@@ -642,7 +649,7 @@
       "projectile_visual_id": "visual.projectile.aircraft.bomber",
       "fire_animation_state": "firepower",
       "launch_bind": "aircraft_launch_01",
-      "muzzle_vfx_role": "experimental_flight_lane",
+      "muzzle_vfx_role": "aircraft_launch_flash",
       "launch_profile": "vfx.profile.aircraft.launch_trail",
       "impact_profile": "vfx.profile.airstrike_impact",
       "vfx_role_mappings": {
@@ -650,10 +657,11 @@
         "experimental_flight_lane": "aircraft.path",
         "aircraft_launch_flash": "aircraft.path",
         "aircraft_formation": "aircraft.path",
-        "airstrike_area": "aircraft.path",
+        "airstrike_area": "skill.area",
         "aircraft_recovery": "aircraft.path",
         "aa_burst": "aa.burst.small",
-        "skill_aura": "skill.area"
+        "skill_aura": "skill.area",
+        "muzzle_flash_medium": "muzzle_flash.medium"
       }
     },
     {
@@ -667,7 +675,7 @@
       "projectile_visual_id": "visual.projectile.shell.medium",
       "fire_animation_state": "firepower",
       "launch_bind": "muzzle_01",
-      "muzzle_vfx_role": "aa_burst",
+      "muzzle_vfx_role": "muzzle_flash_medium",
       "launch_profile": "vfx.profile.muzzle_flash.medium",
       "impact_profile": "vfx.profile.shell_impact.medium",
       "vfx_role_mappings": {
@@ -675,10 +683,11 @@
         "experimental_flight_lane": "aircraft.path",
         "aircraft_launch_flash": "aircraft.path",
         "aircraft_formation": "aircraft.path",
-        "airstrike_area": "aircraft.path",
+        "airstrike_area": "skill.area",
         "aircraft_recovery": "aircraft.path",
         "aa_burst": "aa.burst.small",
-        "skill_aura": "skill.area"
+        "skill_aura": "skill.area",
+        "muzzle_flash_medium": "muzzle_flash.medium"
       }
     },
     {
@@ -700,7 +709,7 @@
         "training_sonar_ring": "submarine.sonar_pulse",
         "endurance_shadow": "skill.area",
         "sonar_pulse": "submarine.sonar_pulse",
-        "torpedo_launch_flash": "torpedo.trail.submerged",
+        "torpedo_launch_flash": "torpedo.launch.submerged",
         "torpedo_trail": "torpedo.trail.submerged",
         "underwater_shadow": "skill.area",
         "dive_ripple": "skill.area",
@@ -718,18 +727,19 @@
       "projectile_visual_id": "visual.projectile.aircraft.scout",
       "fire_animation_state": "firepower",
       "launch_bind": "aircraft_launch_01",
-      "muzzle_vfx_role": "floatplane_scan",
+      "muzzle_vfx_role": "aircraft_launch_flash",
       "launch_profile": "vfx.profile.aircraft.launch_trail",
       "impact_profile": "vfx.profile.airstrike_impact",
       "vfx_role_mappings": {
         "floatplane_scan": "submarine.sonar_pulse",
         "long_range_torpedo_trail": "torpedo.trail.submerged",
         "sonar_pulse": "submarine.sonar_pulse",
-        "torpedo_launch_flash": "torpedo.trail.submerged",
+        "torpedo_launch_flash": "torpedo.launch.surface",
         "torpedo_trail": "torpedo.trail.submerged",
         "underwater_shadow": "skill.area",
         "dive_ripple": "skill.area",
-        "skill_aura": "skill.area"
+        "skill_aura": "skill.area",
+        "aircraft_launch_flash": "aircraft.path"
       }
     },
     {
@@ -743,18 +753,19 @@
       "projectile_visual_id": "visual.projectile.torpedo.submerged",
       "fire_animation_state": "firepower",
       "launch_bind": "torpedo_port_01",
-      "muzzle_vfx_role": "long_range_torpedo_trail",
+      "muzzle_vfx_role": "torpedo_launch_flash",
       "launch_profile": "vfx.profile.torpedo_launch",
       "impact_profile": "vfx.profile.torpedo_impact",
       "vfx_role_mappings": {
         "floatplane_scan": "submarine.sonar_pulse",
         "long_range_torpedo_trail": "torpedo.trail.submerged",
         "sonar_pulse": "submarine.sonar_pulse",
-        "torpedo_launch_flash": "torpedo.trail.submerged",
+        "torpedo_launch_flash": "torpedo.launch.surface",
         "torpedo_trail": "torpedo.trail.submerged",
         "underwater_shadow": "skill.area",
         "dive_ripple": "skill.area",
-        "skill_aura": "skill.area"
+        "skill_aura": "skill.area",
+        "aircraft_launch_flash": "aircraft.path"
       }
     },
     {
@@ -921,14 +932,14 @@
       "projectile_visual_id": "visual.projectile.torpedo.submerged",
       "fire_animation_state": "firepower",
       "launch_bind": "torpedo_port_01",
-      "muzzle_vfx_role": "ice_torpedo_trail",
+      "muzzle_vfx_role": "torpedo_launch_flash",
       "launch_profile": "vfx.profile.torpedo_launch",
       "impact_profile": "vfx.profile.torpedo_impact",
       "vfx_role_mappings": {
         "polar_tracking_ring": "submarine.sonar_pulse",
         "ice_torpedo_trail": "torpedo.trail.submerged",
         "sonar_pulse": "submarine.sonar_pulse",
-        "torpedo_launch_flash": "torpedo.trail.submerged",
+        "torpedo_launch_flash": "torpedo.launch.submerged",
         "torpedo_trail": "torpedo.trail.submerged",
         "underwater_shadow": "skill.area",
         "dive_ripple": "skill.area",
@@ -955,9 +966,11 @@
         "shell_trail": "shell.trail.medium",
         "aa_burst": "aa.burst.small",
         "aa_circle": "aa.burst.small",
-        "radar_scan": "submarine.sonar_pulse",
+        "radar_scan": "skill.area",
         "skill_aura": "skill.area",
-        "water_splash": "impact.water.medium"
+        "water_splash": "impact.water.medium",
+        "muzzle_flash_medium": "muzzle_flash.medium",
+        "torpedo_launch_flash": "torpedo.launch.surface"
       }
     },
     {
@@ -972,7 +985,7 @@
       "projectile_visual_id": "visual.projectile.shell.medium",
       "fire_animation_state": "firepower",
       "launch_bind": "muzzle_01",
-      "muzzle_vfx_role": "aa_burst",
+      "muzzle_vfx_role": "muzzle_flash_medium",
       "launch_profile": "vfx.profile.muzzle_flash.medium",
       "impact_profile": "vfx.profile.shell_impact.medium",
       "vfx_role_mappings": {
@@ -981,9 +994,11 @@
         "shell_trail": "shell.trail.medium",
         "aa_burst": "aa.burst.small",
         "aa_circle": "aa.burst.small",
-        "radar_scan": "submarine.sonar_pulse",
+        "radar_scan": "skill.area",
         "skill_aura": "skill.area",
-        "water_splash": "impact.water.medium"
+        "water_splash": "impact.water.medium",
+        "muzzle_flash_medium": "muzzle_flash.medium",
+        "torpedo_launch_flash": "torpedo.launch.surface"
       }
     },
     {
@@ -997,7 +1012,7 @@
       "projectile_visual_id": "visual.projectile.torpedo.surface",
       "fire_animation_state": "firepower",
       "launch_bind": "torpedo_port_01",
-      "muzzle_vfx_role": "turn_scale_ring",
+      "muzzle_vfx_role": "torpedo_launch_flash",
       "launch_profile": "vfx.profile.torpedo_launch",
       "impact_profile": "vfx.profile.torpedo_impact",
       "vfx_role_mappings": {
@@ -1006,9 +1021,11 @@
         "shell_trail": "shell.trail.medium",
         "aa_burst": "aa.burst.small",
         "aa_circle": "aa.burst.small",
-        "radar_scan": "submarine.sonar_pulse",
+        "radar_scan": "skill.area",
         "skill_aura": "skill.area",
-        "water_splash": "impact.water.medium"
+        "water_splash": "impact.water.medium",
+        "muzzle_flash_medium": "muzzle_flash.medium",
+        "torpedo_launch_flash": "torpedo.launch.surface"
       }
     },
     {
@@ -1023,18 +1040,20 @@
       "projectile_visual_id": "visual.projectile.shell.large",
       "fire_animation_state": "firepower",
       "launch_bind": "muzzle_01",
-      "muzzle_vfx_role": "interception_line",
+      "muzzle_vfx_role": "muzzle_flash_large",
       "launch_profile": "vfx.profile.muzzle_flash.large",
       "impact_profile": "vfx.profile.shell_impact.large",
       "vfx_role_mappings": {
-        "interception_line": "aa.burst.small",
+        "interception_line": "skill.area",
         "high_speed_heavy_wake": "wake.battleship_heavy",
         "broadside_smoke": "skill.area",
         "shell_trail_heavy": "shell.trail.long",
         "armor_sparks": "impact.armor.spark",
         "command_aura": "skill.area",
         "water_splash_large": "impact.water.large",
-        "fire_control_lock": "skill.area"
+        "fire_control_lock": "skill.area",
+        "muzzle_flash_medium": "muzzle_flash.medium",
+        "muzzle_flash_large": "muzzle_flash.large"
       }
     },
     {
@@ -1048,18 +1067,20 @@
       "projectile_visual_id": "visual.projectile.shell.medium",
       "fire_animation_state": "firepower",
       "launch_bind": "muzzle_01",
-      "muzzle_vfx_role": "interception_line",
+      "muzzle_vfx_role": "muzzle_flash_medium",
       "launch_profile": "vfx.profile.muzzle_flash.medium",
       "impact_profile": "vfx.profile.shell_impact.medium",
       "vfx_role_mappings": {
-        "interception_line": "aa.burst.small",
+        "interception_line": "skill.area",
         "high_speed_heavy_wake": "wake.battleship_heavy",
         "broadside_smoke": "skill.area",
         "shell_trail_heavy": "shell.trail.long",
         "armor_sparks": "impact.armor.spark",
         "command_aura": "skill.area",
         "water_splash_large": "impact.water.large",
-        "fire_control_lock": "skill.area"
+        "fire_control_lock": "skill.area",
+        "muzzle_flash_medium": "muzzle_flash.medium",
+        "muzzle_flash_large": "muzzle_flash.large"
       }
     },
     {
@@ -1125,7 +1146,7 @@
       "projectile_visual_id": "visual.projectile.shell.medium",
       "fire_animation_state": "firepower",
       "launch_bind": "muzzle_01",
-      "muzzle_vfx_role": "night_target_line",
+      "muzzle_vfx_role": "muzzle_flash_medium",
       "launch_profile": "vfx.profile.muzzle_flash.medium",
       "impact_profile": "vfx.profile.shell_impact.medium",
       "vfx_role_mappings": {
@@ -1136,7 +1157,9 @@
         "fire_control_lock": "skill.area",
         "skill_aura": "skill.area",
         "water_splash_large": "impact.water.large",
-        "torpedo_warning": "torpedo.warning.fan"
+        "torpedo_warning": "torpedo.warning.fan",
+        "muzzle_flash_medium": "muzzle_flash.medium",
+        "torpedo_launch_flash": "torpedo.launch.surface"
       }
     },
     {
@@ -1150,7 +1173,7 @@
       "projectile_visual_id": "visual.projectile.torpedo.heavy",
       "fire_animation_state": "firepower",
       "launch_bind": "torpedo_port_01",
-      "muzzle_vfx_role": "heavy_torpedo_sector",
+      "muzzle_vfx_role": "torpedo_launch_flash",
       "launch_profile": "vfx.profile.torpedo_launch",
       "impact_profile": "vfx.profile.torpedo_impact",
       "vfx_role_mappings": {
@@ -1161,7 +1184,9 @@
         "fire_control_lock": "skill.area",
         "skill_aura": "skill.area",
         "water_splash_large": "impact.water.large",
-        "torpedo_warning": "torpedo.warning.fan"
+        "torpedo_warning": "torpedo.warning.fan",
+        "muzzle_flash_medium": "muzzle_flash.medium",
+        "torpedo_launch_flash": "torpedo.launch.surface"
       }
     },
     {
@@ -1181,7 +1206,7 @@
       "vfx_role_mappings": {
         "blue_speed_wake": "wake.destroyer_fast",
         "blade_wake": "wake.destroyer_fast",
-        "torpedo_launch_flash": "torpedo.trail.surface",
+        "torpedo_launch_flash": "torpedo.launch.surface",
         "muzzle_flash_small": "muzzle_flash.small",
         "water_splash": "impact.water.medium",
         "aa_circle": "aa.burst.small",
@@ -1206,7 +1231,7 @@
       "vfx_role_mappings": {
         "blue_speed_wake": "wake.destroyer_fast",
         "blade_wake": "wake.destroyer_fast",
-        "torpedo_launch_flash": "torpedo.trail.surface",
+        "torpedo_launch_flash": "torpedo.launch.surface",
         "muzzle_flash_small": "muzzle_flash.small",
         "water_splash": "impact.water.medium",
         "aa_circle": "aa.burst.small",
@@ -1232,7 +1257,7 @@
         "coastal_ambush_sector": "torpedo.warning.fan",
         "surface_ripple": "skill.area",
         "sonar_pulse": "submarine.sonar_pulse",
-        "torpedo_launch_flash": "torpedo.trail.submerged",
+        "torpedo_launch_flash": "torpedo.launch.submerged",
         "torpedo_trail": "torpedo.trail.submerged",
         "underwater_shadow": "skill.area",
         "dive_ripple": "skill.area",
@@ -1287,7 +1312,8 @@
         "aa_circle": "aa.burst.small",
         "radar_scan": "submarine.sonar_pulse",
         "skill_aura": "skill.area",
-        "water_splash": "impact.water.medium"
+        "water_splash": "impact.water.medium",
+        "muzzle_flash_medium": "muzzle_flash.medium"
       }
     },
     {
@@ -1301,7 +1327,7 @@
       "projectile_visual_id": "visual.projectile.shell.medium",
       "fire_animation_state": "firepower",
       "launch_bind": "muzzle_01",
-      "muzzle_vfx_role": "aa_burst",
+      "muzzle_vfx_role": "muzzle_flash_medium",
       "launch_profile": "vfx.profile.muzzle_flash.medium",
       "impact_profile": "vfx.profile.shell_impact.medium",
       "vfx_role_mappings": {
@@ -1312,7 +1338,8 @@
         "aa_circle": "aa.burst.small",
         "radar_scan": "submarine.sonar_pulse",
         "skill_aura": "skill.area",
-        "water_splash": "impact.water.medium"
+        "water_splash": "impact.water.medium",
+        "muzzle_flash_medium": "muzzle_flash.medium"
       }
     },
     {
@@ -1326,7 +1353,7 @@
       "projectile_visual_id": "visual.projectile.shell.medium",
       "fire_animation_state": "firepower",
       "launch_bind": "muzzle_01",
-      "muzzle_vfx_role": "aa_burst",
+      "muzzle_vfx_role": "muzzle_flash_medium",
       "launch_profile": "vfx.profile.muzzle_flash.medium",
       "impact_profile": "vfx.profile.shell_impact.medium",
       "vfx_role_mappings": {
@@ -1337,7 +1364,8 @@
         "aa_circle": "aa.burst.small",
         "radar_scan": "submarine.sonar_pulse",
         "skill_aura": "skill.area",
-        "water_splash": "impact.water.medium"
+        "water_splash": "impact.water.medium",
+        "muzzle_flash_medium": "muzzle_flash.medium"
       }
     },
     {
@@ -1353,12 +1381,12 @@
       "fire_animation_state": "firepower",
       "launch_bind": "muzzle_01",
       "muzzle_vfx_role": "heavy_destroyer_muzzle",
-      "launch_profile": "vfx.profile.muzzle_flash.medium",
-      "impact_profile": "vfx.profile.shell_impact.medium",
+      "launch_profile": "vfx.profile.muzzle_flash.small",
+      "impact_profile": "vfx.profile.shell_impact.small",
       "vfx_role_mappings": {
         "mode_switch_indicator": "skill.area",
         "heavy_destroyer_muzzle": "muzzle_flash.small",
-        "torpedo_launch_flash": "torpedo.trail.surface",
+        "torpedo_launch_flash": "torpedo.launch.surface",
         "muzzle_flash_small": "muzzle_flash.small",
         "water_splash": "impact.water.medium",
         "aa_circle": "aa.burst.small",
@@ -1383,7 +1411,7 @@
       "vfx_role_mappings": {
         "mode_switch_indicator": "skill.area",
         "heavy_destroyer_muzzle": "muzzle_flash.small",
-        "torpedo_launch_flash": "torpedo.trail.surface",
+        "torpedo_launch_flash": "torpedo.launch.surface",
         "muzzle_flash_small": "muzzle_flash.small",
         "water_splash": "impact.water.medium",
         "aa_circle": "aa.burst.small",

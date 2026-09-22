@@ -1,0 +1,721 @@
+{
+  "mode": "process",
+  "required_gate": "technical_ready",
+  "gate_passed": true,
+  "summary": {
+    "characters": 4,
+    "batch_ready": 4,
+    "complete": 4,
+    "delivery_ready": 0,
+    "blocked": 0,
+    "failed": 0
+  },
+  "results": [
+    {
+      "character_id": "fletcher",
+      "status": "complete",
+      "elapsed_seconds": 35.47,
+      "preview": "assets/characters/qa/edge_qa_fletcher.html",
+      "inspection": {
+        "character_id": "fletcher",
+        "sources": {
+          "complete": true,
+          "missing": [],
+          "source_quality_issues": [],
+          "base_complete": true,
+          "four_frame_complete": true,
+          "production_route": "generated_state_sheets"
+        },
+        "configuration": {
+          "crop_specs": false,
+          "runtime_config": false,
+          "postprocess_plan": true,
+          "generic_postprocess": true,
+          "contract_ship_class": true
+        },
+        "contract": {
+          "character_id": "fletcher",
+          "ship_class": "destroyer",
+          "status": "complete",
+          "missing_roles": [],
+          "invalid_files": [],
+          "data_issues": [],
+          "found_roles": {
+            "full_body": [
+              "assets/characters/fletcher/processed/ui/fletcher_illust_full_alpha.png"
+            ],
+            "half_body": [
+              "assets/characters/fletcher/processed/ui/fletcher_illust_half_alpha.png"
+            ],
+            "skill_cutin": [
+              "assets/characters/fletcher/processed/ui/fletcher_illust_skill_cutin_alpha.png"
+            ],
+            "expression_default": [
+              "assets/characters/fletcher/processed/ui/fletcher_expr_default.png"
+            ],
+            "expression_serious": [
+              "assets/characters/fletcher/processed/ui/fletcher_expr_serious.png"
+            ],
+            "expression_hit": [
+              "assets/characters/fletcher/processed/ui/fletcher_expr_hit.png"
+            ],
+            "portrait": [
+              "assets/characters/fletcher/processed/ui/fletcher_ui_portrait.png"
+            ],
+            "portrait_small": [
+              "assets/characters/fletcher/processed/ui/fletcher_ui_portrait_small.png"
+            ],
+            "chibi_head": [
+              "assets/characters/fletcher/processed/ui/fletcher_ui_chibi_head.png"
+            ],
+            "skill_icon": [
+              "assets/characters/fletcher/processed/ui/fletcher_ui_skill_fleet_hunter_screen.png"
+            ],
+            "class_icon": [
+              "assets/characters/fletcher/processed/ui/fletcher_ui_class_destroyer.png"
+            ],
+            "battle_body": [
+              "assets/characters/fletcher/processed/battle/fletcher_battle_body_r.png"
+            ],
+            "rig_base": [
+              "assets/characters/fletcher/processed/battle/fletcher_battle_rig_base.png"
+            ],
+            "main_weapon": [
+              "assets/characters/fletcher/processed/battle/fletcher_battle_torpedo_tube_01.png",
+              "assets/characters/fletcher/processed/battle/fletcher_battle_turret_main_01.png"
+            ],
+            "anim_idle": [
+              "assets/characters/fletcher/processed/anim/fletcher_anim_idle_keyframe.png"
+            ],
+            "anim_move": [
+              "assets/characters/fletcher/processed/anim/fletcher_anim_move_keyframe.png"
+            ],
+            "anim_attack": [
+              "assets/characters/fletcher/processed/anim/fletcher_anim_attack_keyframe.png"
+            ],
+            "anim_hit": [
+              "assets/characters/fletcher/processed/anim/fletcher_anim_hit_keyframe.png"
+            ],
+            "anim_firepower": [
+              "assets/characters/fletcher/processed/anim/fletcher_anim_firepower_keyframe.png"
+            ],
+            "vfx": [
+              "assets/characters/fletcher/processed/vfx/fletcher_vfx_aa_circle.png",
+              "assets/characters/fletcher/processed/vfx/fletcher_vfx_depth_charge_drop.png",
+              "assets/characters/fletcher/processed/vfx/fletcher_vfx_escort_warning_fan.png",
+              "assets/characters/fletcher/processed/vfx/fletcher_vfx_muzzle_flash_small.png",
+              "assets/characters/fletcher/processed/vfx/fletcher_vfx_range_reticle.png",
+              "assets/characters/fletcher/processed/vfx/fletcher_vfx_skill_aura.png",
+              "assets/characters/fletcher/processed/vfx/fletcher_vfx_torpedo_launch_flash.png",
+              "assets/characters/fletcher/processed/vfx/fletcher_vfx_water_splash.png"
+            ],
+            "bind_points": [
+              "assets/characters/fletcher/processed/config/fletcher_meta_bind_points.json"
+            ],
+            "anim_config": [
+              "assets/characters/fletcher/processed/config/fletcher_anim_config.json"
+            ],
+            "vfx_config": [
+              "assets/characters/fletcher/processed/config/fletcher_vfx_config.json"
+            ],
+            "manifest": [
+              "assets/characters/fletcher/processed/config/fletcher_postprocess_manifest.json"
+            ]
+          }
+        },
+        "batch_ready": true,
+        "technical_ready": true,
+        "visual_review": {
+          "status": "pending",
+          "accepted": false,
+          "issues": [
+            "visual review pending/blocking: assets/characters/fletcher/processed/anim/fletcher_anim_attack_frame_01.png",
+            "visual review pending/blocking: assets/characters/fletcher/processed/anim/fletcher_anim_attack_frame_02.png",
+            "visual review pending/blocking: assets/characters/fletcher/processed/anim/fletcher_anim_attack_frame_03.png",
+            "visual review pending/blocking: assets/characters/fletcher/processed/anim/fletcher_anim_attack_frame_04.png",
+            "visual review pending/blocking: assets/characters/fletcher/processed/anim/fletcher_anim_attack_keyframe.png",
+            "visual review pending/blocking: assets/characters/fletcher/processed/anim/fletcher_anim_firepower_frame_01.png",
+            "visual review pending/blocking: assets/characters/fletcher/processed/anim/fletcher_anim_firepower_frame_02.png",
+            "visual review pending/blocking: assets/characters/fletcher/processed/anim/fletcher_anim_firepower_frame_03.png",
+            "visual review pending/blocking: assets/characters/fletcher/processed/anim/fletcher_anim_firepower_frame_04.png",
+            "visual review pending/blocking: assets/characters/fletcher/processed/anim/fletcher_anim_firepower_keyframe.png",
+            "visual review pending/blocking: assets/characters/fletcher/processed/anim/fletcher_anim_hit_frame_01.png",
+            "visual review pending/blocking: assets/characters/fletcher/processed/anim/fletcher_anim_hit_frame_02.png",
+            "visual review pending/blocking: assets/characters/fletcher/processed/anim/fletcher_anim_hit_frame_03.png",
+            "visual review pending/blocking: assets/characters/fletcher/processed/anim/fletcher_anim_hit_frame_04.png",
+            "visual review pending/blocking: assets/characters/fletcher/processed/anim/fletcher_anim_hit_keyframe.png",
+            "visual review pending/blocking: assets/characters/fletcher/processed/anim/fletcher_anim_idle_frame_01.png",
+            "visual review pending/blocking: assets/characters/fletcher/processed/anim/fletcher_anim_idle_frame_02.png",
+            "visual review pending/blocking: assets/characters/fletcher/processed/anim/fletcher_anim_idle_frame_03.png",
+            "visual review pending/blocking: assets/characters/fletcher/processed/anim/fletcher_anim_idle_frame_04.png",
+            "visual review pending/blocking: assets/characters/fletcher/processed/anim/fletcher_anim_idle_keyframe.png",
+            "visual review pending/blocking: assets/characters/fletcher/processed/anim/fletcher_anim_move_frame_01.png",
+            "visual review pending/blocking: assets/characters/fletcher/processed/anim/fletcher_anim_move_frame_02.png",
+            "visual review pending/blocking: assets/characters/fletcher/processed/anim/fletcher_anim_move_frame_03.png",
+            "visual review pending/blocking: assets/characters/fletcher/processed/anim/fletcher_anim_move_frame_04.png",
+            "visual review pending/blocking: assets/characters/fletcher/processed/anim/fletcher_anim_move_keyframe.png",
+            "visual review pending/blocking: assets/characters/fletcher/processed/battle/fletcher_battle_aa_center.png",
+            "visual review pending/blocking: assets/characters/fletcher/processed/battle/fletcher_battle_body_r.png",
+            "visual review pending/blocking: assets/characters/fletcher/processed/battle/fletcher_battle_depth_charge_rack.png",
+            "visual review pending/blocking: assets/characters/fletcher/processed/battle/fletcher_battle_rig_base.png",
+            "visual review pending/blocking: assets/characters/fletcher/processed/battle/fletcher_battle_sonar_node.png",
+            "visual review pending/blocking: assets/characters/fletcher/processed/battle/fletcher_battle_torpedo_tube_01.png",
+            "visual review pending/blocking: assets/characters/fletcher/processed/battle/fletcher_battle_turret_main_01.png",
+            "visual review pending/blocking: assets/characters/fletcher/processed/battle/fletcher_battle_wake_origin_marker.png",
+            "visual review pending/blocking: assets/characters/fletcher/processed/ui/fletcher_expr_default.png",
+            "visual review pending/blocking: assets/characters/fletcher/processed/ui/fletcher_expr_hit.png",
+            "visual review pending/blocking: assets/characters/fletcher/processed/ui/fletcher_expr_serious.png",
+            "visual review pending/blocking: assets/characters/fletcher/processed/ui/fletcher_illust_full_alpha.png",
+            "visual review pending/blocking: assets/characters/fletcher/processed/ui/fletcher_illust_half_alpha.png",
+            "visual review pending/blocking: assets/characters/fletcher/processed/ui/fletcher_illust_skill_cutin_alpha.png",
+            "visual review pending/blocking: assets/characters/fletcher/processed/ui/fletcher_ui_chibi_head.png",
+            "visual review pending/blocking: assets/characters/fletcher/processed/ui/fletcher_ui_class_destroyer.png",
+            "visual review pending/blocking: assets/characters/fletcher/processed/ui/fletcher_ui_portrait.png",
+            "visual review pending/blocking: assets/characters/fletcher/processed/ui/fletcher_ui_portrait_small.png",
+            "visual review pending/blocking: assets/characters/fletcher/processed/ui/fletcher_ui_skill_fleet_hunter_screen.png",
+            "visual review pending/blocking: assets/characters/fletcher/processed/vfx/fletcher_vfx_aa_circle.png",
+            "visual review pending/blocking: assets/characters/fletcher/processed/vfx/fletcher_vfx_depth_charge_drop.png",
+            "visual review pending/blocking: assets/characters/fletcher/processed/vfx/fletcher_vfx_escort_warning_fan.png",
+            "visual review pending/blocking: assets/characters/fletcher/processed/vfx/fletcher_vfx_muzzle_flash_small.png",
+            "visual review pending/blocking: assets/characters/fletcher/processed/vfx/fletcher_vfx_range_reticle.png",
+            "visual review pending/blocking: assets/characters/fletcher/processed/vfx/fletcher_vfx_skill_aura.png",
+            "visual review pending/blocking: assets/characters/fletcher/processed/vfx/fletcher_vfx_torpedo_launch_flash.png",
+            "visual review pending/blocking: assets/characters/fletcher/processed/vfx/fletcher_vfx_water_splash.png"
+          ]
+        },
+        "delivery_ready": false,
+        "postprocess_ready": true
+      }
+    },
+    {
+      "character_id": "cleveland",
+      "status": "complete",
+      "elapsed_seconds": 36.13,
+      "preview": "assets/characters/qa/edge_qa_cleveland.html",
+      "inspection": {
+        "character_id": "cleveland",
+        "sources": {
+          "complete": true,
+          "missing": [],
+          "source_quality_issues": [],
+          "base_complete": true,
+          "four_frame_complete": true,
+          "production_route": "generated_state_sheets"
+        },
+        "configuration": {
+          "crop_specs": false,
+          "runtime_config": false,
+          "postprocess_plan": true,
+          "generic_postprocess": true,
+          "contract_ship_class": true
+        },
+        "contract": {
+          "character_id": "cleveland",
+          "ship_class": "light_cruiser",
+          "status": "complete",
+          "missing_roles": [],
+          "invalid_files": [],
+          "data_issues": [],
+          "found_roles": {
+            "full_body": [
+              "assets/characters/cleveland/processed/ui/cleveland_illust_full_alpha.png"
+            ],
+            "half_body": [
+              "assets/characters/cleveland/processed/ui/cleveland_illust_half_alpha.png"
+            ],
+            "skill_cutin": [
+              "assets/characters/cleveland/processed/ui/cleveland_illust_skill_cutin_alpha.png"
+            ],
+            "expression_default": [
+              "assets/characters/cleveland/processed/ui/cleveland_expr_default.png"
+            ],
+            "expression_serious": [
+              "assets/characters/cleveland/processed/ui/cleveland_expr_serious.png"
+            ],
+            "expression_hit": [
+              "assets/characters/cleveland/processed/ui/cleveland_expr_hit.png"
+            ],
+            "portrait": [
+              "assets/characters/cleveland/processed/ui/cleveland_ui_portrait.png"
+            ],
+            "portrait_small": [
+              "assets/characters/cleveland/processed/ui/cleveland_ui_portrait_small.png"
+            ],
+            "chibi_head": [
+              "assets/characters/cleveland/processed/ui/cleveland_ui_chibi_head.png"
+            ],
+            "skill_icon": [
+              "assets/characters/cleveland/processed/ui/cleveland_ui_skill_layered_aa_net.png"
+            ],
+            "class_icon": [
+              "assets/characters/cleveland/processed/ui/cleveland_ui_class_light_cruiser.png"
+            ],
+            "battle_body": [
+              "assets/characters/cleveland/processed/battle/cleveland_battle_body_r.png"
+            ],
+            "rig_base": [
+              "assets/characters/cleveland/processed/battle/cleveland_battle_rig_base.png"
+            ],
+            "main_weapon": [
+              "assets/characters/cleveland/processed/battle/cleveland_battle_turret_main_01.png",
+              "assets/characters/cleveland/processed/battle/cleveland_battle_turret_main_02.png"
+            ],
+            "anim_idle": [
+              "assets/characters/cleveland/processed/anim/cleveland_anim_idle_keyframe.png"
+            ],
+            "anim_move": [
+              "assets/characters/cleveland/processed/anim/cleveland_anim_move_keyframe.png"
+            ],
+            "anim_attack": [
+              "assets/characters/cleveland/processed/anim/cleveland_anim_attack_keyframe.png"
+            ],
+            "anim_hit": [
+              "assets/characters/cleveland/processed/anim/cleveland_anim_hit_keyframe.png"
+            ],
+            "anim_firepower": [
+              "assets/characters/cleveland/processed/anim/cleveland_anim_firepower_keyframe.png"
+            ],
+            "vfx": [
+              "assets/characters/cleveland/processed/vfx/cleveland_vfx_aa_burst.png",
+              "assets/characters/cleveland/processed/vfx/cleveland_vfx_aa_circle.png",
+              "assets/characters/cleveland/processed/vfx/cleveland_vfx_layered_aa_net.png",
+              "assets/characters/cleveland/processed/vfx/cleveland_vfx_radar_calibration.png",
+              "assets/characters/cleveland/processed/vfx/cleveland_vfx_radar_scan.png",
+              "assets/characters/cleveland/processed/vfx/cleveland_vfx_shell_trail.png",
+              "assets/characters/cleveland/processed/vfx/cleveland_vfx_skill_aura.png",
+              "assets/characters/cleveland/processed/vfx/cleveland_vfx_water_splash.png"
+            ],
+            "bind_points": [
+              "assets/characters/cleveland/processed/config/cleveland_meta_bind_points.json"
+            ],
+            "anim_config": [
+              "assets/characters/cleveland/processed/config/cleveland_anim_config.json"
+            ],
+            "vfx_config": [
+              "assets/characters/cleveland/processed/config/cleveland_vfx_config.json"
+            ],
+            "manifest": [
+              "assets/characters/cleveland/processed/config/cleveland_postprocess_manifest.json"
+            ]
+          }
+        },
+        "batch_ready": true,
+        "technical_ready": true,
+        "visual_review": {
+          "status": "pending",
+          "accepted": false,
+          "issues": [
+            "visual review pending/blocking: assets/characters/cleveland/processed/anim/cleveland_anim_attack_frame_01.png",
+            "visual review pending/blocking: assets/characters/cleveland/processed/anim/cleveland_anim_attack_frame_02.png",
+            "visual review pending/blocking: assets/characters/cleveland/processed/anim/cleveland_anim_attack_frame_03.png",
+            "visual review pending/blocking: assets/characters/cleveland/processed/anim/cleveland_anim_attack_frame_04.png",
+            "visual review pending/blocking: assets/characters/cleveland/processed/anim/cleveland_anim_attack_keyframe.png",
+            "visual review pending/blocking: assets/characters/cleveland/processed/anim/cleveland_anim_firepower_frame_01.png",
+            "visual review pending/blocking: assets/characters/cleveland/processed/anim/cleveland_anim_firepower_frame_02.png",
+            "visual review pending/blocking: assets/characters/cleveland/processed/anim/cleveland_anim_firepower_frame_03.png",
+            "visual review pending/blocking: assets/characters/cleveland/processed/anim/cleveland_anim_firepower_frame_04.png",
+            "visual review pending/blocking: assets/characters/cleveland/processed/anim/cleveland_anim_firepower_keyframe.png",
+            "visual review pending/blocking: assets/characters/cleveland/processed/anim/cleveland_anim_hit_frame_01.png",
+            "visual review pending/blocking: assets/characters/cleveland/processed/anim/cleveland_anim_hit_frame_02.png",
+            "visual review pending/blocking: assets/characters/cleveland/processed/anim/cleveland_anim_hit_frame_03.png",
+            "visual review pending/blocking: assets/characters/cleveland/processed/anim/cleveland_anim_hit_frame_04.png",
+            "visual review pending/blocking: assets/characters/cleveland/processed/anim/cleveland_anim_hit_keyframe.png",
+            "visual review pending/blocking: assets/characters/cleveland/processed/anim/cleveland_anim_idle_frame_01.png",
+            "visual review pending/blocking: assets/characters/cleveland/processed/anim/cleveland_anim_idle_frame_02.png",
+            "visual review pending/blocking: assets/characters/cleveland/processed/anim/cleveland_anim_idle_frame_03.png",
+            "visual review pending/blocking: assets/characters/cleveland/processed/anim/cleveland_anim_idle_frame_04.png",
+            "visual review pending/blocking: assets/characters/cleveland/processed/anim/cleveland_anim_idle_keyframe.png",
+            "visual review pending/blocking: assets/characters/cleveland/processed/anim/cleveland_anim_move_frame_01.png",
+            "visual review pending/blocking: assets/characters/cleveland/processed/anim/cleveland_anim_move_frame_02.png",
+            "visual review pending/blocking: assets/characters/cleveland/processed/anim/cleveland_anim_move_frame_03.png",
+            "visual review pending/blocking: assets/characters/cleveland/processed/anim/cleveland_anim_move_frame_04.png",
+            "visual review pending/blocking: assets/characters/cleveland/processed/anim/cleveland_anim_move_keyframe.png",
+            "visual review pending/blocking: assets/characters/cleveland/processed/battle/cleveland_battle_aa_center.png",
+            "visual review pending/blocking: assets/characters/cleveland/processed/battle/cleveland_battle_body_r.png",
+            "visual review pending/blocking: assets/characters/cleveland/processed/battle/cleveland_battle_fire_control_node.png",
+            "visual review pending/blocking: assets/characters/cleveland/processed/battle/cleveland_battle_radar_node.png",
+            "visual review pending/blocking: assets/characters/cleveland/processed/battle/cleveland_battle_rig_base.png",
+            "visual review pending/blocking: assets/characters/cleveland/processed/battle/cleveland_battle_turret_main_01.png",
+            "visual review pending/blocking: assets/characters/cleveland/processed/battle/cleveland_battle_turret_main_02.png",
+            "visual review pending/blocking: assets/characters/cleveland/processed/battle/cleveland_battle_wake_origin_marker.png",
+            "visual review pending/blocking: assets/characters/cleveland/processed/ui/cleveland_expr_default.png",
+            "visual review pending/blocking: assets/characters/cleveland/processed/ui/cleveland_expr_hit.png",
+            "visual review pending/blocking: assets/characters/cleveland/processed/ui/cleveland_expr_serious.png",
+            "visual review pending/blocking: assets/characters/cleveland/processed/ui/cleveland_illust_full_alpha.png",
+            "visual review pending/blocking: assets/characters/cleveland/processed/ui/cleveland_illust_half_alpha.png",
+            "visual review pending/blocking: assets/characters/cleveland/processed/ui/cleveland_illust_skill_cutin_alpha.png",
+            "visual review pending/blocking: assets/characters/cleveland/processed/ui/cleveland_ui_chibi_head.png",
+            "visual review pending/blocking: assets/characters/cleveland/processed/ui/cleveland_ui_class_light_cruiser.png",
+            "visual review pending/blocking: assets/characters/cleveland/processed/ui/cleveland_ui_portrait.png",
+            "visual review pending/blocking: assets/characters/cleveland/processed/ui/cleveland_ui_portrait_small.png",
+            "visual review pending/blocking: assets/characters/cleveland/processed/ui/cleveland_ui_skill_layered_aa_net.png",
+            "visual review pending/blocking: assets/characters/cleveland/processed/vfx/cleveland_vfx_aa_burst.png",
+            "visual review pending/blocking: assets/characters/cleveland/processed/vfx/cleveland_vfx_aa_circle.png",
+            "visual review pending/blocking: assets/characters/cleveland/processed/vfx/cleveland_vfx_layered_aa_net.png",
+            "visual review pending/blocking: assets/characters/cleveland/processed/vfx/cleveland_vfx_radar_calibration.png",
+            "visual review pending/blocking: assets/characters/cleveland/processed/vfx/cleveland_vfx_radar_scan.png",
+            "visual review pending/blocking: assets/characters/cleveland/processed/vfx/cleveland_vfx_shell_trail.png",
+            "visual review pending/blocking: assets/characters/cleveland/processed/vfx/cleveland_vfx_skill_aura.png",
+            "visual review pending/blocking: assets/characters/cleveland/processed/vfx/cleveland_vfx_water_splash.png"
+          ]
+        },
+        "delivery_ready": false,
+        "postprocess_ready": true
+      }
+    },
+    {
+      "character_id": "baltimore",
+      "status": "complete",
+      "elapsed_seconds": 38.23,
+      "preview": "assets/characters/qa/edge_qa_baltimore.html",
+      "inspection": {
+        "character_id": "baltimore",
+        "sources": {
+          "complete": true,
+          "missing": [],
+          "source_quality_issues": [],
+          "base_complete": true,
+          "four_frame_complete": true,
+          "production_route": "generated_state_sheets"
+        },
+        "configuration": {
+          "crop_specs": false,
+          "runtime_config": false,
+          "postprocess_plan": true,
+          "generic_postprocess": true,
+          "contract_ship_class": true
+        },
+        "contract": {
+          "character_id": "baltimore",
+          "ship_class": "heavy_cruiser",
+          "status": "complete",
+          "missing_roles": [],
+          "invalid_files": [],
+          "data_issues": [],
+          "found_roles": {
+            "full_body": [
+              "assets/characters/baltimore/processed/ui/baltimore_illust_full_alpha.png"
+            ],
+            "half_body": [
+              "assets/characters/baltimore/processed/ui/baltimore_illust_half_alpha.png"
+            ],
+            "skill_cutin": [
+              "assets/characters/baltimore/processed/ui/baltimore_illust_skill_cutin_alpha.png"
+            ],
+            "expression_default": [
+              "assets/characters/baltimore/processed/ui/baltimore_expr_default.png"
+            ],
+            "expression_serious": [
+              "assets/characters/baltimore/processed/ui/baltimore_expr_serious.png"
+            ],
+            "expression_hit": [
+              "assets/characters/baltimore/processed/ui/baltimore_expr_hit.png"
+            ],
+            "portrait": [
+              "assets/characters/baltimore/processed/ui/baltimore_ui_portrait.png"
+            ],
+            "portrait_small": [
+              "assets/characters/baltimore/processed/ui/baltimore_ui_portrait_small.png"
+            ],
+            "chibi_head": [
+              "assets/characters/baltimore/processed/ui/baltimore_ui_chibi_head.png"
+            ],
+            "skill_icon": [
+              "assets/characters/baltimore/processed/ui/baltimore_ui_skill_radar_ap_calibration.png"
+            ],
+            "class_icon": [
+              "assets/characters/baltimore/processed/ui/baltimore_ui_class_heavy_cruiser.png"
+            ],
+            "battle_body": [
+              "assets/characters/baltimore/processed/battle/baltimore_battle_body_r.png"
+            ],
+            "rig_base": [
+              "assets/characters/baltimore/processed/battle/baltimore_battle_rig_base.png"
+            ],
+            "main_weapon": [
+              "assets/characters/baltimore/processed/battle/baltimore_battle_turret_main_01.png",
+              "assets/characters/baltimore/processed/battle/baltimore_battle_turret_main_02.png",
+              "assets/characters/baltimore/processed/battle/baltimore_battle_turret_main_03.png"
+            ],
+            "anim_idle": [
+              "assets/characters/baltimore/processed/anim/baltimore_anim_idle_keyframe.png"
+            ],
+            "anim_move": [
+              "assets/characters/baltimore/processed/anim/baltimore_anim_move_keyframe.png"
+            ],
+            "anim_attack": [
+              "assets/characters/baltimore/processed/anim/baltimore_anim_attack_keyframe.png"
+            ],
+            "anim_hit": [
+              "assets/characters/baltimore/processed/anim/baltimore_anim_hit_keyframe.png"
+            ],
+            "anim_firepower": [
+              "assets/characters/baltimore/processed/anim/baltimore_anim_firepower_keyframe.png"
+            ],
+            "vfx": [
+              "assets/characters/baltimore/processed/vfx/baltimore_vfx_aa_interception.png",
+              "assets/characters/baltimore/processed/vfx/baltimore_vfx_ap_calibration_frame.png",
+              "assets/characters/baltimore/processed/vfx/baltimore_vfx_armor_sparks.png",
+              "assets/characters/baltimore/processed/vfx/baltimore_vfx_fire_control_lock.png",
+              "assets/characters/baltimore/processed/vfx/baltimore_vfx_radar_lock_line.png",
+              "assets/characters/baltimore/processed/vfx/baltimore_vfx_shell_trail_heavy.png",
+              "assets/characters/baltimore/processed/vfx/baltimore_vfx_skill_aura.png",
+              "assets/characters/baltimore/processed/vfx/baltimore_vfx_water_splash_large.png"
+            ],
+            "bind_points": [
+              "assets/characters/baltimore/processed/config/baltimore_meta_bind_points.json"
+            ],
+            "anim_config": [
+              "assets/characters/baltimore/processed/config/baltimore_anim_config.json"
+            ],
+            "vfx_config": [
+              "assets/characters/baltimore/processed/config/baltimore_vfx_config.json"
+            ],
+            "manifest": [
+              "assets/characters/baltimore/processed/config/baltimore_postprocess_manifest.json"
+            ]
+          }
+        },
+        "batch_ready": true,
+        "technical_ready": true,
+        "visual_review": {
+          "status": "pending",
+          "accepted": false,
+          "issues": [
+            "visual review pending/blocking: assets/characters/baltimore/processed/anim/baltimore_anim_attack_frame_01.png",
+            "visual review pending/blocking: assets/characters/baltimore/processed/anim/baltimore_anim_attack_frame_02.png",
+            "visual review pending/blocking: assets/characters/baltimore/processed/anim/baltimore_anim_attack_frame_03.png",
+            "visual review pending/blocking: assets/characters/baltimore/processed/anim/baltimore_anim_attack_frame_04.png",
+            "visual review pending/blocking: assets/characters/baltimore/processed/anim/baltimore_anim_attack_keyframe.png",
+            "visual review pending/blocking: assets/characters/baltimore/processed/anim/baltimore_anim_firepower_frame_01.png",
+            "visual review pending/blocking: assets/characters/baltimore/processed/anim/baltimore_anim_firepower_frame_02.png",
+            "visual review pending/blocking: assets/characters/baltimore/processed/anim/baltimore_anim_firepower_frame_03.png",
+            "visual review pending/blocking: assets/characters/baltimore/processed/anim/baltimore_anim_firepower_frame_04.png",
+            "visual review pending/blocking: assets/characters/baltimore/processed/anim/baltimore_anim_firepower_keyframe.png",
+            "visual review pending/blocking: assets/characters/baltimore/processed/anim/baltimore_anim_hit_frame_01.png",
+            "visual review pending/blocking: assets/characters/baltimore/processed/anim/baltimore_anim_hit_frame_02.png",
+            "visual review pending/blocking: assets/characters/baltimore/processed/anim/baltimore_anim_hit_frame_03.png",
+            "visual review pending/blocking: assets/characters/baltimore/processed/anim/baltimore_anim_hit_frame_04.png",
+            "visual review pending/blocking: assets/characters/baltimore/processed/anim/baltimore_anim_hit_keyframe.png",
+            "visual review pending/blocking: assets/characters/baltimore/processed/anim/baltimore_anim_idle_frame_01.png",
+            "visual review pending/blocking: assets/characters/baltimore/processed/anim/baltimore_anim_idle_frame_02.png",
+            "visual review pending/blocking: assets/characters/baltimore/processed/anim/baltimore_anim_idle_frame_03.png",
+            "visual review pending/blocking: assets/characters/baltimore/processed/anim/baltimore_anim_idle_frame_04.png",
+            "visual review pending/blocking: assets/characters/baltimore/processed/anim/baltimore_anim_idle_keyframe.png",
+            "visual review pending/blocking: assets/characters/baltimore/processed/anim/baltimore_anim_move_frame_01.png",
+            "visual review pending/blocking: assets/characters/baltimore/processed/anim/baltimore_anim_move_frame_02.png",
+            "visual review pending/blocking: assets/characters/baltimore/processed/anim/baltimore_anim_move_frame_03.png",
+            "visual review pending/blocking: assets/characters/baltimore/processed/anim/baltimore_anim_move_frame_04.png",
+            "visual review pending/blocking: assets/characters/baltimore/processed/anim/baltimore_anim_move_keyframe.png",
+            "visual review pending/blocking: assets/characters/baltimore/processed/battle/baltimore_battle_aa_center.png",
+            "visual review pending/blocking: assets/characters/baltimore/processed/battle/baltimore_battle_body_r.png",
+            "visual review pending/blocking: assets/characters/baltimore/processed/battle/baltimore_battle_fire_control_node.png",
+            "visual review pending/blocking: assets/characters/baltimore/processed/battle/baltimore_battle_rig_base.png",
+            "visual review pending/blocking: assets/characters/baltimore/processed/battle/baltimore_battle_turret_main_01.png",
+            "visual review pending/blocking: assets/characters/baltimore/processed/battle/baltimore_battle_turret_main_02.png",
+            "visual review pending/blocking: assets/characters/baltimore/processed/battle/baltimore_battle_turret_main_03.png",
+            "visual review pending/blocking: assets/characters/baltimore/processed/battle/baltimore_battle_wake_origin_marker.png",
+            "visual review pending/blocking: assets/characters/baltimore/processed/ui/baltimore_expr_default.png",
+            "visual review pending/blocking: assets/characters/baltimore/processed/ui/baltimore_expr_hit.png",
+            "visual review pending/blocking: assets/characters/baltimore/processed/ui/baltimore_expr_serious.png",
+            "visual review pending/blocking: assets/characters/baltimore/processed/ui/baltimore_illust_full_alpha.png",
+            "visual review pending/blocking: assets/characters/baltimore/processed/ui/baltimore_illust_half_alpha.png",
+            "visual review pending/blocking: assets/characters/baltimore/processed/ui/baltimore_illust_skill_cutin_alpha.png",
+            "visual review pending/blocking: assets/characters/baltimore/processed/ui/baltimore_ui_chibi_head.png",
+            "visual review pending/blocking: assets/characters/baltimore/processed/ui/baltimore_ui_class_heavy_cruiser.png",
+            "visual review pending/blocking: assets/characters/baltimore/processed/ui/baltimore_ui_portrait.png",
+            "visual review pending/blocking: assets/characters/baltimore/processed/ui/baltimore_ui_portrait_small.png",
+            "visual review pending/blocking: assets/characters/baltimore/processed/ui/baltimore_ui_skill_radar_ap_calibration.png",
+            "visual review pending/blocking: assets/characters/baltimore/processed/vfx/baltimore_vfx_aa_interception.png",
+            "visual review pending/blocking: assets/characters/baltimore/processed/vfx/baltimore_vfx_ap_calibration_frame.png",
+            "visual review pending/blocking: assets/characters/baltimore/processed/vfx/baltimore_vfx_armor_sparks.png",
+            "visual review pending/blocking: assets/characters/baltimore/processed/vfx/baltimore_vfx_fire_control_lock.png",
+            "visual review pending/blocking: assets/characters/baltimore/processed/vfx/baltimore_vfx_radar_lock_line.png",
+            "visual review pending/blocking: assets/characters/baltimore/processed/vfx/baltimore_vfx_shell_trail_heavy.png",
+            "visual review pending/blocking: assets/characters/baltimore/processed/vfx/baltimore_vfx_skill_aura.png",
+            "visual review pending/blocking: assets/characters/baltimore/processed/vfx/baltimore_vfx_water_splash_large.png"
+          ]
+        },
+        "delivery_ready": false,
+        "postprocess_ready": true
+      }
+    },
+    {
+      "character_id": "jervis",
+      "status": "complete",
+      "elapsed_seconds": 42.86,
+      "preview": "assets/characters/qa/edge_qa_jervis.html",
+      "inspection": {
+        "character_id": "jervis",
+        "sources": {
+          "complete": true,
+          "missing": [],
+          "source_quality_issues": [],
+          "base_complete": true,
+          "four_frame_complete": true,
+          "production_route": "generated_state_sheets"
+        },
+        "configuration": {
+          "crop_specs": false,
+          "runtime_config": false,
+          "postprocess_plan": true,
+          "generic_postprocess": true,
+          "contract_ship_class": true
+        },
+        "contract": {
+          "character_id": "jervis",
+          "ship_class": "destroyer",
+          "status": "complete",
+          "missing_roles": [],
+          "invalid_files": [],
+          "data_issues": [],
+          "found_roles": {
+            "full_body": [
+              "assets/characters/jervis/processed/ui/jervis_illust_full_alpha.png"
+            ],
+            "half_body": [
+              "assets/characters/jervis/processed/ui/jervis_illust_half_alpha.png"
+            ],
+            "skill_cutin": [
+              "assets/characters/jervis/processed/ui/jervis_illust_skill_cutin_alpha.png"
+            ],
+            "expression_default": [
+              "assets/characters/jervis/processed/ui/jervis_expr_default.png"
+            ],
+            "expression_serious": [
+              "assets/characters/jervis/processed/ui/jervis_expr_serious.png"
+            ],
+            "expression_hit": [
+              "assets/characters/jervis/processed/ui/jervis_expr_hit.png"
+            ],
+            "portrait": [
+              "assets/characters/jervis/processed/ui/jervis_ui_portrait.png"
+            ],
+            "portrait_small": [
+              "assets/characters/jervis/processed/ui/jervis_ui_portrait_small.png"
+            ],
+            "chibi_head": [
+              "assets/characters/jervis/processed/ui/jervis_ui_chibi_head.png"
+            ],
+            "skill_icon": [
+              "assets/characters/jervis/processed/ui/jervis_ui_skill_flotilla_leader.png"
+            ],
+            "class_icon": [
+              "assets/characters/jervis/processed/ui/jervis_ui_class_destroyer.png"
+            ],
+            "battle_body": [
+              "assets/characters/jervis/processed/battle/jervis_battle_body_r.png"
+            ],
+            "rig_base": [
+              "assets/characters/jervis/processed/battle/jervis_battle_rig_base.png"
+            ],
+            "main_weapon": [
+              "assets/characters/jervis/processed/battle/jervis_battle_torpedo_tube_01.png",
+              "assets/characters/jervis/processed/battle/jervis_battle_turret_main_01.png"
+            ],
+            "anim_idle": [
+              "assets/characters/jervis/processed/anim/jervis_anim_idle_keyframe.png"
+            ],
+            "anim_move": [
+              "assets/characters/jervis/processed/anim/jervis_anim_move_keyframe.png"
+            ],
+            "anim_attack": [
+              "assets/characters/jervis/processed/anim/jervis_anim_attack_keyframe.png"
+            ],
+            "anim_hit": [
+              "assets/characters/jervis/processed/anim/jervis_anim_hit_keyframe.png"
+            ],
+            "anim_firepower": [
+              "assets/characters/jervis/processed/anim/jervis_anim_firepower_keyframe.png"
+            ],
+            "vfx": [
+              "assets/characters/jervis/processed/vfx/jervis_vfx_aa_circle.png",
+              "assets/characters/jervis/processed/vfx/jervis_vfx_flotilla_aura.png",
+              "assets/characters/jervis/processed/vfx/jervis_vfx_formation_signal.png",
+              "assets/characters/jervis/processed/vfx/jervis_vfx_muzzle_flash_small.png",
+              "assets/characters/jervis/processed/vfx/jervis_vfx_range_reticle.png",
+              "assets/characters/jervis/processed/vfx/jervis_vfx_skill_aura.png",
+              "assets/characters/jervis/processed/vfx/jervis_vfx_torpedo_launch_flash.png",
+              "assets/characters/jervis/processed/vfx/jervis_vfx_water_splash.png"
+            ],
+            "bind_points": [
+              "assets/characters/jervis/processed/config/jervis_meta_bind_points.json"
+            ],
+            "anim_config": [
+              "assets/characters/jervis/processed/config/jervis_anim_config.json"
+            ],
+            "vfx_config": [
+              "assets/characters/jervis/processed/config/jervis_vfx_config.json"
+            ],
+            "manifest": [
+              "assets/characters/jervis/processed/config/jervis_postprocess_manifest.json"
+            ]
+          }
+        },
+        "batch_ready": true,
+        "technical_ready": true,
+        "visual_review": {
+          "status": "pending",
+          "accepted": false,
+          "issues": [
+            "visual review pending/blocking: assets/characters/jervis/processed/anim/jervis_anim_attack_frame_01.png",
+            "visual review pending/blocking: assets/characters/jervis/processed/anim/jervis_anim_attack_frame_02.png",
+            "visual review pending/blocking: assets/characters/jervis/processed/anim/jervis_anim_attack_frame_03.png",
+            "visual review pending/blocking: assets/characters/jervis/processed/anim/jervis_anim_attack_frame_04.png",
+            "visual review pending/blocking: assets/characters/jervis/processed/anim/jervis_anim_attack_keyframe.png",
+            "visual review pending/blocking: assets/characters/jervis/processed/anim/jervis_anim_firepower_frame_01.png",
+            "visual review pending/blocking: assets/characters/jervis/processed/anim/jervis_anim_firepower_frame_02.png",
+            "visual review pending/blocking: assets/characters/jervis/processed/anim/jervis_anim_firepower_frame_03.png",
+            "visual review pending/blocking: assets/characters/jervis/processed/anim/jervis_anim_firepower_frame_04.png",
+            "visual review pending/blocking: assets/characters/jervis/processed/anim/jervis_anim_firepower_keyframe.png",
+            "visual review pending/blocking: assets/characters/jervis/processed/anim/jervis_anim_hit_frame_01.png",
+            "visual review pending/blocking: assets/characters/jervis/processed/anim/jervis_anim_hit_frame_02.png",
+            "visual review pending/blocking: assets/characters/jervis/processed/anim/jervis_anim_hit_frame_03.png",
+            "visual review pending/blocking: assets/characters/jervis/processed/anim/jervis_anim_hit_frame_04.png",
+            "visual review pending/blocking: assets/characters/jervis/processed/anim/jervis_anim_hit_keyframe.png",
+            "visual review pending/blocking: assets/characters/jervis/processed/anim/jervis_anim_idle_frame_01.png",
+            "visual review pending/blocking: assets/characters/jervis/processed/anim/jervis_anim_idle_frame_02.png",
+            "visual review pending/blocking: assets/characters/jervis/processed/anim/jervis_anim_idle_frame_03.png",
+            "visual review pending/blocking: assets/characters/jervis/processed/anim/jervis_anim_idle_frame_04.png",
+            "visual review pending/blocking: assets/characters/jervis/processed/anim/jervis_anim_idle_keyframe.png",
+            "visual review pending/blocking: assets/characters/jervis/processed/anim/jervis_anim_move_frame_01.png",
+            "visual review pending/blocking: assets/characters/jervis/processed/anim/jervis_anim_move_frame_02.png",
+            "visual review pending/blocking: assets/characters/jervis/processed/anim/jervis_anim_move_frame_03.png",
+            "visual review pending/blocking: assets/characters/jervis/processed/anim/jervis_anim_move_frame_04.png",
+            "visual review pending/blocking: assets/characters/jervis/processed/anim/jervis_anim_move_keyframe.png",
+            "visual review pending/blocking: assets/characters/jervis/processed/battle/jervis_battle_aa_center.png",
+            "visual review pending/blocking: assets/characters/jervis/processed/battle/jervis_battle_body_r.png",
+            "visual review pending/blocking: assets/characters/jervis/processed/battle/jervis_battle_command_node.png",
+            "visual review pending/blocking: assets/characters/jervis/processed/battle/jervis_battle_depth_charge_rack.png",
+            "visual review pending/blocking: assets/characters/jervis/processed/battle/jervis_battle_rig_base.png",
+            "visual review pending/blocking: assets/characters/jervis/processed/battle/jervis_battle_torpedo_tube_01.png",
+            "visual review pending/blocking: assets/characters/jervis/processed/battle/jervis_battle_turret_main_01.png",
+            "visual review pending/blocking: assets/characters/jervis/processed/battle/jervis_battle_wake_origin_marker.png",
+            "visual review pending/blocking: assets/characters/jervis/processed/ui/jervis_expr_default.png",
+            "visual review pending/blocking: assets/characters/jervis/processed/ui/jervis_expr_hit.png",
+            "visual review pending/blocking: assets/characters/jervis/processed/ui/jervis_expr_serious.png",
+            "visual review pending/blocking: assets/characters/jervis/processed/ui/jervis_illust_full_alpha.png",
+            "visual review pending/blocking: assets/characters/jervis/processed/ui/jervis_illust_half_alpha.png",
+            "visual review pending/blocking: assets/characters/jervis/processed/ui/jervis_illust_skill_cutin_alpha.png",
+            "visual review pending/blocking: assets/characters/jervis/processed/ui/jervis_ui_chibi_head.png",
+            "visual review pending/blocking: assets/characters/jervis/processed/ui/jervis_ui_class_destroyer.png",
+            "visual review pending/blocking: assets/characters/jervis/processed/ui/jervis_ui_portrait.png",
+            "visual review pending/blocking: assets/characters/jervis/processed/ui/jervis_ui_portrait_small.png",
+            "visual review pending/blocking: assets/characters/jervis/processed/ui/jervis_ui_skill_flotilla_leader.png",
+            "visual review pending/blocking: assets/characters/jervis/processed/vfx/jervis_vfx_aa_circle.png",
+            "visual review pending/blocking: assets/characters/jervis/processed/vfx/jervis_vfx_flotilla_aura.png",
+            "visual review pending/blocking: assets/characters/jervis/processed/vfx/jervis_vfx_formation_signal.png",
+            "visual review pending/blocking: assets/characters/jervis/processed/vfx/jervis_vfx_muzzle_flash_small.png",
+            "visual review pending/blocking: assets/characters/jervis/processed/vfx/jervis_vfx_range_reticle.png",
+            "visual review pending/blocking: assets/characters/jervis/processed/vfx/jervis_vfx_skill_aura.png",
+            "visual review pending/blocking: assets/characters/jervis/processed/vfx/jervis_vfx_torpedo_launch_flash.png",
+            "visual review pending/blocking: assets/characters/jervis/processed/vfx/jervis_vfx_water_splash.png",
+            "visual review pending/blocking: assets/vfx/combat/antisubmarine/vfx_asw_underwater_blast_01.png"
+          ]
+        },
+        "delivery_ready": false,
+        "postprocess_ready": true
+      }
+    }
+  ]
+}

@@ -8,6 +8,7 @@ Faction: 苏系. MVP ship class: 战列. Level: 1 级.
 Personality: 威严旗舰（坚韧老兵）. Combat role: 低速持续齐射.
 Core visual direction: 深红旧式军大衣、磨损金属和补丁式护甲；低矮超长底座承载四座三联主炮，现代化构件以附加层出现，使用老式基础边框表现“低等级资本舰”特例.
 Required MVP asset focus: 全身/半身立绘、技能 cut-in、低矮长舰装、四座三联主炮、副炮节点、旧钢板/改装层、宽重航迹、钢铁阵线展开与持续舷侧齐射动画.
+Expected object inventory: exactly four triple 305mm main-gun turrets with three barrels each; exactly eight single secondary-gun mounts; one low elongated old-dreadnought rig base; one armor-plate node; one smokestack node; one fire-control node. The battle grid carries one reusable main turret and one reusable secondary mount while multiplicity remains in data and bindings.
 No real flags, no political symbols, no readable insignia text, no historical extremist symbols.
 Clean readable silhouette, clear ship-class identity, high-quality anime linework, restrained cel shading, consistent face and hair. Character body, rig base, weapons and effect origins must remain visually separable.
 
@@ -19,6 +20,7 @@ Faction: 苏系. MVP ship class: 战列. Level: 1 级.
 Personality: 威严旗舰（坚韧老兵）. Combat role: 低速持续齐射.
 Core visual direction: 深红旧式军大衣、磨损金属和补丁式护甲；低矮超长底座承载四座三联主炮，现代化构件以附加层出现，使用老式基础边框表现“低等级资本舰”特例.
 Required MVP asset focus: 全身/半身立绘、技能 cut-in、低矮长舰装、四座三联主炮、副炮节点、旧钢板/改装层、宽重航迹、钢铁阵线展开与持续舷侧齐射动画.
+Expected object inventory: exactly four triple 305mm main-gun turrets with three barrels each; exactly eight single secondary-gun mounts; one low elongated old-dreadnought rig base; one armor-plate node; one smokestack node; one fire-control node. The battle grid carries one reusable main turret and one reusable secondary mount while multiplicity remains in data and bindings.
 No real flags, no political symbols, no readable insignia text, no historical extremist symbols.
 Clean readable silhouette, clear ship-class identity, high-quality anime linework, restrained cel shading, consistent face and hair. Character body, rig base, weapons and effect origins must remain visually separable.
 Create the definitive full-body style anchor concept on a transparent background. Front three-quarter standing pose, complete outfit and ship rigging visible, generous empty transparent margin, no environment, no ocean, no UI, no text. Show the body, rig base, weapon identity and core accessory clearly; the accepted anchor will be the sole identity reference for all derivative sheets.
@@ -43,3 +45,10 @@ Create exactly eight isolated character-specific VFX overlays in a 2x4 grid, in 
 
 - Original TinySeaWar design; no real flags, political symbols, readable insignia, or extremist symbols.
 - Character body, rig base, weapon nodes, and VFX must remain visually separable.
+
+## 2026-09-14 production acceptance
+
+- Batch: `phase2_soviet_quartet_20260914`, together with Tashkent, Chapayev, and K-21.
+- Accepted identity: long silver braid, weathered red battleship coat, black boots, and a stern veteran posture.
+- Source route: built-in image generation with the accepted concept as identity anchor; green-screen derivatives are converted to alpha by the deterministic project postprocessor.
+- Hard inventory gate: four triple main turrets and eight compact single-barrel secondary mounts; rejected variants do not enter the repository.

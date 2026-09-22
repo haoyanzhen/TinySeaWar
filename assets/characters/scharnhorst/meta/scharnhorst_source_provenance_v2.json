@@ -1,0 +1,327 @@
+{
+  "schema_version": 2,
+  "character_id": "scharnhorst",
+  "kind": "codex_builtin_generated_art",
+  "source": "Codex built-in ImageGen",
+  "batch_ready_allowed": true,
+  "generation_policy": {
+    "primary_route": "codex_builtin_imagegen_native_alpha",
+    "legacy_fallback": {
+      "authorized": false,
+      "activation": "--allow-legacy-chroma-fallback",
+      "reason": "",
+      "native_failures": []
+    }
+  },
+  "generation": {
+    "requested_model": "codex-account-managed-imagegen",
+    "actual_model": "codex-account-managed-imagegen",
+    "generation_tool": "Codex built-in ImageGen",
+    "endpoint": "Codex account-managed image generation",
+    "quality": "Codex account-managed",
+    "size_control": "per-asset Codex account-managed output",
+    "background_control": "transparent requested and pixel-verified",
+    "output_format": "PNG",
+    "prompt_revision": {
+      "path": "assets/characters/scharnhorst/meta/scharnhorst_generation_brief_v2.md",
+      "sha256": "a46e40c1eab9921617d1cf8c65f2b3bc706e89cb649e6b6de93d31ac37b8a129"
+    },
+    "reference_inputs": [
+      {
+        "path": "assets/characters/scharnhorst/concept/scharnhorst_concept_full.png",
+        "role": "accepted_style_anchor_for_derivative_sheets"
+      }
+    ],
+    "reproducibility_note": "The Codex account manages the underlying image model and request IDs; those implementation details are not exposed. Accepted PNG outputs are preserved byte-for-byte and tracked by SHA-256."
+  },
+  "source_images": [
+    {
+      "role": "concept_full",
+      "path": "assets/characters/scharnhorst/concept/scharnhorst_concept_full.png",
+      "sha256": "ed0a0630c1d5f25ba46a24eadfafb02d97e7d55d5aa6c0f42145558d95e5c3e2",
+      "size": [
+        1024,
+        1536
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "ed0a0630c1d5f25ba46a24eadfafb02d97e7d55d5aa6c0f42145558d95e5c3e2",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.47130584716796875,
+        "transparent_border_ratio": 0.9910086004691165
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "Three distinct triple main turrets, narrow pointed hull modules and coherent adult figure. Small secondary details remain concept-scale."
+    },
+    {
+      "role": "ui_sheet",
+      "path": "assets/characters/scharnhorst/ui/scharnhorst_ui_sheet.png",
+      "sha256": "373b77ff42ff1e069fc31731f40b9471950346dd175eeecb3caac2b93cc6f7da",
+      "size": [
+        1774,
+        887
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "373b77ff42ff1e069fc31731f40b9471950346dd175eeecb3caac2b93cc6f7da",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.5583525787111592,
+        "transparent_border_ratio": 0.9977435125987213
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "白色高马尾蓝瞳、黑银窄长外套红内衬；3 三联主炮。逐件查看 2 排共 8 件：大/小头像、Q版头、默认/认真/受击表情、技能图标和舰种图标均可分离。表情与源概念一致；半身图下缘为有意肖像取景，非完整战斗对象截断。 本轮源图已完成对象级视觉检查；最终裁切与装配不由源图结论代替。"
+    },
+    {
+      "role": "battle_grid",
+      "path": "assets/characters/scharnhorst/battle/scharnhorst_battle_asset_grid.png",
+      "sha256": "41886cb741d07f5196cbc7226eb2c56d8be7125df07ab83a1b48a8e1ede729fa",
+      "size": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "41886cb741d07f5196cbc7226eb2c56d8be7125df07ab83a1b48a8e1ede729fa",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.6527589162190756,
+        "transparent_border_ratio": 0.9845582486317436
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "白色高马尾蓝瞳、黑银窄长外套红内衬；3 三联主炮。8 个独立对象均已查看，角色本体不含舰装，基座与武器分离；完整炮口/机翼/发射管可读。基座可见结构垫不作为精确物理武器数量依据，装配数量由清单及绑定配置决定。 本轮源图已完成对象级视觉检查；最终裁切与装配不由源图结论代替。"
+    },
+    {
+      "role": "vfx_sheet",
+      "path": "assets/characters/scharnhorst/vfx/scharnhorst_vfx_reference_sheet.png",
+      "sha256": "0c9d12a78fd5ae1df034e6377c872d0b32e60e1be532b90f2ac5940bcb791325",
+      "size": [
+        1024,
+        1536
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "0c9d12a78fd5ae1df034e6377c872d0b32e60e1be532b90f2ac5940bcb791325",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.5602302551269531,
+        "transparent_border_ratio": 0.9474198592650508
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "白色高马尾蓝瞳、黑银窄长外套红内衬；3 三联主炮。8 个完整效果逐件查看，水滴、火花、环线允许断开；透明画布无烘焙底色、文字或边框。保留独立组件，实际语义按计划角色映射。 本轮源图已完成对象级视觉检查；最终裁切与装配不由源图结论代替。"
+    },
+    {
+      "role": "anim_idle",
+      "path": "assets/characters/scharnhorst/battle/scharnhorst_anim_idle_4f_sheet.png",
+      "sha256": "7d501b354421f9e3731b2f84aecbd35b30c6d069c9ac387e7f5b239c9253bc86",
+      "size": [
+        1254,
+        1254
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "7d501b354421f9e3731b2f84aecbd35b30c6d069c9ac387e7f5b239c9253bc86",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.4862284390111134,
+        "transparent_border_ratio": 0.9996009577015164
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "白色高马尾蓝瞳、黑银窄长外套红内衬；3 三联主炮。四帧为待机呼吸/眨眼/轻微重心变化；头发、桅杆、炮管与鞋未被源边缘截断。 本轮源图已完成对象级视觉检查；最终裁切与装配不由源图结论代替。"
+    },
+    {
+      "role": "anim_move",
+      "path": "assets/characters/scharnhorst/battle/scharnhorst_anim_move_4f_sheet.png",
+      "sha256": "90624002d3b95003daf864f9b6d55902b82cedfd7065cff43f31c0ef28c91d75",
+      "size": [
+        1254,
+        1254
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "90624002d3b95003daf864f9b6d55902b82cedfd7065cff43f31c0ef28c91d75",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.6874817171971541,
+        "transparent_border_ratio": 0.9982043096568236
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "白色高马尾蓝瞳、黑银窄长外套红内衬；3 三联主炮。四帧为前进步态/重心交替及局部脚下水迹；完整舰装轮廓，动作幅度和水迹细节可后续润色。 本轮源图已完成对象级视觉检查；最终裁切与装配不由源图结论代替。"
+    },
+    {
+      "role": "anim_attack",
+      "path": "assets/characters/scharnhorst/battle/scharnhorst_anim_attack_4f_sheet.png",
+      "sha256": "759da23fcf56415c6454990856bf34da5bd82e0bbae97853ccd9145ee7742610",
+      "size": [
+        1254,
+        1254
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "759da23fcf56415c6454990856bf34da5bd82e0bbae97853ccd9145ee7742610",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.6809259810393026,
+        "transparent_border_ratio": 0.9938148443735035
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "白色高马尾蓝瞳、黑银窄长外套红内衬；3 三联主炮。四帧为准备、开火、后坐/烟、恢复；炮口闪光与炮管同向，完整装备及特效均在画布内。 本轮源图已完成对象级视觉检查；最终裁切与装配不由源图结论代替。"
+    },
+    {
+      "role": "anim_hit",
+      "path": "assets/characters/scharnhorst/battle/scharnhorst_anim_hit_4f_sheet.png",
+      "sha256": "19983da22f721334636d20855aecb5d2a30ba2d4ef9466de39447866cd69fa5a",
+      "size": [
+        1254,
+        1254
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "19983da22f721334636d20855aecb5d2a30ba2d4ef9466de39447866cd69fa5a",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.5037182451561701,
+        "transparent_border_ratio": 0.9952114924181963
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "白色高马尾蓝瞳、黑银窄长外套红内衬；3 三联主炮。四帧为受击、缩身/蹲伏、恢复/准备，脸部受击表情可读；完整轮廓，非击沉动作。 本轮源图已完成对象级视觉检查；最终裁切与装配不由源图结论代替。"
+    },
+    {
+      "role": "anim_firepower",
+      "path": "assets/characters/scharnhorst/battle/scharnhorst_anim_firepower_4f_sheet.png",
+      "sha256": "5e67609744908eba6df5fb52a389cf1624063df9da8064802168a6f3270b391e",
+      "size": [
+        1254,
+        1254
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "5e67609744908eba6df5fb52a389cf1624063df9da8064802168a6f3270b391e",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.5175629373564402,
+        "transparent_border_ratio": 0.9986033519553073
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual review 2026-09-20",
+      "qa_observation": "白色高马尾蓝瞳、黑银窄长外套红内衬；3 三联主炮。四帧为准备、指令、技能强调、恢复；保持原舰装数量，角色专属光效轻量，公共战斗特效另行播放。 本轮源图已完成对象级视觉检查；最终裁切与装配不由源图结论代替。"
+    }
+  ]
+}

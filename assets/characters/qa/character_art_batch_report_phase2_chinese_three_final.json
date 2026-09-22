@@ -1,0 +1,366 @@
+{
+  "mode": "dry-run",
+  "required_gate": "delivery_ready",
+  "gate_passed": true,
+  "summary": {
+    "characters": 3,
+    "batch_ready": 3,
+    "complete": 0,
+    "delivery_ready": 3,
+    "blocked": 0,
+    "failed": 0
+  },
+  "results": [
+    {
+      "character_id": "yat_sen",
+      "sources": {
+        "complete": true,
+        "missing": [],
+        "source_quality_issues": [],
+        "base_complete": true,
+        "four_frame_complete": true,
+        "production_route": "generated_state_sheets"
+      },
+      "configuration": {
+        "crop_specs": false,
+        "runtime_config": false,
+        "postprocess_plan": true,
+        "generic_postprocess": true,
+        "contract_ship_class": true
+      },
+      "contract": {
+        "character_id": "yat_sen",
+        "ship_class": "light_cruiser",
+        "status": "complete",
+        "missing_roles": [],
+        "invalid_files": [],
+        "data_issues": [],
+        "found_roles": {
+          "full_body": [
+            "assets/characters/yat_sen/processed/ui/yat_sen_illust_full_alpha.png"
+          ],
+          "half_body": [
+            "assets/characters/yat_sen/processed/ui/yat_sen_illust_half_alpha.png"
+          ],
+          "skill_cutin": [
+            "assets/characters/yat_sen/processed/ui/yat_sen_illust_skill_cutin_alpha.png"
+          ],
+          "expression_default": [
+            "assets/characters/yat_sen/processed/ui/yat_sen_expr_default.png"
+          ],
+          "expression_serious": [
+            "assets/characters/yat_sen/processed/ui/yat_sen_expr_serious.png"
+          ],
+          "expression_hit": [
+            "assets/characters/yat_sen/processed/ui/yat_sen_expr_hit.png"
+          ],
+          "portrait": [
+            "assets/characters/yat_sen/processed/ui/yat_sen_ui_portrait.png"
+          ],
+          "portrait_small": [
+            "assets/characters/yat_sen/processed/ui/yat_sen_ui_portrait_small.png"
+          ],
+          "chibi_head": [
+            "assets/characters/yat_sen/processed/ui/yat_sen_ui_chibi_head.png"
+          ],
+          "skill_icon": [
+            "assets/characters/yat_sen/processed/ui/yat_sen_ui_skill_mobile_command_post.png"
+          ],
+          "class_icon": [
+            "assets/characters/yat_sen/processed/ui/yat_sen_ui_class_light_cruiser.png"
+          ],
+          "battle_body": [
+            "assets/characters/yat_sen/processed/battle/yat_sen_battle_body_r.png"
+          ],
+          "rig_base": [
+            "assets/characters/yat_sen/processed/battle/yat_sen_battle_rig_base.png"
+          ],
+          "main_weapon": [
+            "assets/characters/yat_sen/processed/battle/yat_sen_battle_turret_main_01.png",
+            "assets/characters/yat_sen/processed/battle/yat_sen_battle_turret_secondary_01.png"
+          ],
+          "anim_idle": [
+            "assets/characters/yat_sen/processed/anim/yat_sen_anim_idle_keyframe.png"
+          ],
+          "anim_move": [
+            "assets/characters/yat_sen/processed/anim/yat_sen_anim_move_keyframe.png"
+          ],
+          "anim_attack": [
+            "assets/characters/yat_sen/processed/anim/yat_sen_anim_attack_keyframe.png"
+          ],
+          "anim_hit": [
+            "assets/characters/yat_sen/processed/anim/yat_sen_anim_hit_keyframe.png"
+          ],
+          "anim_firepower": [
+            "assets/characters/yat_sen/processed/anim/yat_sen_anim_firepower_keyframe.png"
+          ],
+          "vfx": [
+            "assets/characters/yat_sen/processed/vfx/yat_sen_vfx_aa_burst.png",
+            "assets/characters/yat_sen/processed/vfx/yat_sen_vfx_aa_circle.png",
+            "assets/characters/yat_sen/processed/vfx/yat_sen_vfx_jade_support_light.png",
+            "assets/characters/yat_sen/processed/vfx/yat_sen_vfx_mobile_command_ring.png",
+            "assets/characters/yat_sen/processed/vfx/yat_sen_vfx_radar_scan.png",
+            "assets/characters/yat_sen/processed/vfx/yat_sen_vfx_shell_trail.png",
+            "assets/characters/yat_sen/processed/vfx/yat_sen_vfx_skill_aura.png",
+            "assets/characters/yat_sen/processed/vfx/yat_sen_vfx_water_splash.png"
+          ],
+          "bind_points": [
+            "assets/characters/yat_sen/processed/config/yat_sen_meta_bind_points.json"
+          ],
+          "anim_config": [
+            "assets/characters/yat_sen/processed/config/yat_sen_anim_config.json"
+          ],
+          "vfx_config": [
+            "assets/characters/yat_sen/processed/config/yat_sen_vfx_config.json"
+          ],
+          "manifest": [
+            "assets/characters/yat_sen/processed/config/yat_sen_postprocess_manifest.json"
+          ]
+        }
+      },
+      "batch_ready": true,
+      "technical_ready": true,
+      "visual_review": {
+        "status": "polish",
+        "accepted": true,
+        "issues": []
+      },
+      "delivery_ready": true,
+      "postprocess_ready": true
+    },
+    {
+      "character_id": "chang_chun",
+      "sources": {
+        "complete": true,
+        "missing": [],
+        "source_quality_issues": [],
+        "base_complete": true,
+        "four_frame_complete": true,
+        "production_route": "generated_state_sheets"
+      },
+      "configuration": {
+        "crop_specs": false,
+        "runtime_config": false,
+        "postprocess_plan": true,
+        "generic_postprocess": true,
+        "contract_ship_class": true
+      },
+      "contract": {
+        "character_id": "chang_chun",
+        "ship_class": "destroyer",
+        "status": "complete",
+        "missing_roles": [],
+        "invalid_files": [],
+        "data_issues": [],
+        "found_roles": {
+          "full_body": [
+            "assets/characters/chang_chun/processed/ui/chang_chun_illust_full_alpha.png"
+          ],
+          "half_body": [
+            "assets/characters/chang_chun/processed/ui/chang_chun_illust_half_alpha.png"
+          ],
+          "skill_cutin": [
+            "assets/characters/chang_chun/processed/ui/chang_chun_illust_skill_cutin_alpha.png"
+          ],
+          "expression_default": [
+            "assets/characters/chang_chun/processed/ui/chang_chun_expr_default.png"
+          ],
+          "expression_serious": [
+            "assets/characters/chang_chun/processed/ui/chang_chun_expr_serious.png"
+          ],
+          "expression_hit": [
+            "assets/characters/chang_chun/processed/ui/chang_chun_expr_hit.png"
+          ],
+          "portrait": [
+            "assets/characters/chang_chun/processed/ui/chang_chun_ui_portrait.png"
+          ],
+          "portrait_small": [
+            "assets/characters/chang_chun/processed/ui/chang_chun_ui_portrait_small.png"
+          ],
+          "chibi_head": [
+            "assets/characters/chang_chun/processed/ui/chang_chun_ui_chibi_head.png"
+          ],
+          "skill_icon": [
+            "assets/characters/chang_chun/processed/ui/chang_chun_ui_skill_forward_escort.png"
+          ],
+          "class_icon": [
+            "assets/characters/chang_chun/processed/ui/chang_chun_ui_class_destroyer.png"
+          ],
+          "battle_body": [
+            "assets/characters/chang_chun/processed/battle/chang_chun_battle_body_r.png"
+          ],
+          "rig_base": [
+            "assets/characters/chang_chun/processed/battle/chang_chun_battle_rig_base.png"
+          ],
+          "main_weapon": [
+            "assets/characters/chang_chun/processed/battle/chang_chun_battle_torpedo_tube_01.png",
+            "assets/characters/chang_chun/processed/battle/chang_chun_battle_turret_main_01.png"
+          ],
+          "anim_idle": [
+            "assets/characters/chang_chun/processed/anim/chang_chun_anim_idle_keyframe.png"
+          ],
+          "anim_move": [
+            "assets/characters/chang_chun/processed/anim/chang_chun_anim_move_keyframe.png"
+          ],
+          "anim_attack": [
+            "assets/characters/chang_chun/processed/anim/chang_chun_anim_attack_keyframe.png"
+          ],
+          "anim_hit": [
+            "assets/characters/chang_chun/processed/anim/chang_chun_anim_hit_keyframe.png"
+          ],
+          "anim_firepower": [
+            "assets/characters/chang_chun/processed/anim/chang_chun_anim_firepower_keyframe.png"
+          ],
+          "vfx": [
+            "assets/characters/chang_chun/processed/vfx/chang_chun_vfx_aa_circle.png",
+            "assets/characters/chang_chun/processed/vfx/chang_chun_vfx_early_radar_scan.png",
+            "assets/characters/chang_chun/processed/vfx/chang_chun_vfx_forward_escort_wake.png",
+            "assets/characters/chang_chun/processed/vfx/chang_chun_vfx_muzzle_flash_small.png",
+            "assets/characters/chang_chun/processed/vfx/chang_chun_vfx_range_reticle.png",
+            "assets/characters/chang_chun/processed/vfx/chang_chun_vfx_skill_aura.png",
+            "assets/characters/chang_chun/processed/vfx/chang_chun_vfx_torpedo_launch_flash.png",
+            "assets/characters/chang_chun/processed/vfx/chang_chun_vfx_water_splash.png"
+          ],
+          "bind_points": [
+            "assets/characters/chang_chun/processed/config/chang_chun_meta_bind_points.json"
+          ],
+          "anim_config": [
+            "assets/characters/chang_chun/processed/config/chang_chun_anim_config.json"
+          ],
+          "vfx_config": [
+            "assets/characters/chang_chun/processed/config/chang_chun_vfx_config.json"
+          ],
+          "manifest": [
+            "assets/characters/chang_chun/processed/config/chang_chun_postprocess_manifest.json"
+          ]
+        }
+      },
+      "batch_ready": true,
+      "technical_ready": true,
+      "visual_review": {
+        "status": "polish",
+        "accepted": true,
+        "issues": []
+      },
+      "delivery_ready": true,
+      "postprocess_ready": true
+    },
+    {
+      "character_id": "hai_lung",
+      "sources": {
+        "complete": true,
+        "missing": [],
+        "source_quality_issues": [],
+        "base_complete": true,
+        "four_frame_complete": true,
+        "production_route": "generated_state_sheets"
+      },
+      "configuration": {
+        "crop_specs": false,
+        "runtime_config": false,
+        "postprocess_plan": true,
+        "generic_postprocess": true,
+        "contract_ship_class": true
+      },
+      "contract": {
+        "character_id": "hai_lung",
+        "ship_class": "submarine",
+        "status": "complete",
+        "missing_roles": [],
+        "invalid_files": [],
+        "data_issues": [],
+        "found_roles": {
+          "full_body": [
+            "assets/characters/hai_lung/processed/ui/hai_lung_illust_full_alpha.png"
+          ],
+          "half_body": [
+            "assets/characters/hai_lung/processed/ui/hai_lung_illust_half_alpha.png"
+          ],
+          "skill_cutin": [
+            "assets/characters/hai_lung/processed/ui/hai_lung_illust_skill_cutin_alpha.png"
+          ],
+          "expression_default": [
+            "assets/characters/hai_lung/processed/ui/hai_lung_expr_default.png"
+          ],
+          "expression_serious": [
+            "assets/characters/hai_lung/processed/ui/hai_lung_expr_serious.png"
+          ],
+          "expression_hit": [
+            "assets/characters/hai_lung/processed/ui/hai_lung_expr_hit.png"
+          ],
+          "portrait": [
+            "assets/characters/hai_lung/processed/ui/hai_lung_ui_portrait.png"
+          ],
+          "portrait_small": [
+            "assets/characters/hai_lung/processed/ui/hai_lung_ui_portrait_small.png"
+          ],
+          "chibi_head": [
+            "assets/characters/hai_lung/processed/ui/hai_lung_ui_chibi_head.png"
+          ],
+          "skill_icon": [
+            "assets/characters/hai_lung/processed/ui/hai_lung_ui_skill_endurance_training.png"
+          ],
+          "class_icon": [
+            "assets/characters/hai_lung/processed/ui/hai_lung_ui_class_submarine.png"
+          ],
+          "battle_body": [
+            "assets/characters/hai_lung/processed/battle/hai_lung_battle_body_r.png"
+          ],
+          "rig_base": [
+            "assets/characters/hai_lung/processed/battle/hai_lung_battle_rig_base.png"
+          ],
+          "main_weapon": [
+            "assets/characters/hai_lung/processed/battle/hai_lung_battle_torpedo_tube_aft.png",
+            "assets/characters/hai_lung/processed/battle/hai_lung_battle_torpedo_tube_fore.png"
+          ],
+          "anim_idle": [
+            "assets/characters/hai_lung/processed/anim/hai_lung_anim_idle_keyframe.png"
+          ],
+          "anim_move": [
+            "assets/characters/hai_lung/processed/anim/hai_lung_anim_move_keyframe.png"
+          ],
+          "anim_attack": [
+            "assets/characters/hai_lung/processed/anim/hai_lung_anim_attack_keyframe.png"
+          ],
+          "anim_hit": [
+            "assets/characters/hai_lung/processed/anim/hai_lung_anim_hit_keyframe.png"
+          ],
+          "anim_firepower": [
+            "assets/characters/hai_lung/processed/anim/hai_lung_anim_firepower_keyframe.png"
+          ],
+          "vfx": [
+            "assets/characters/hai_lung/processed/vfx/hai_lung_vfx_dive_ripple.png",
+            "assets/characters/hai_lung/processed/vfx/hai_lung_vfx_endurance_shadow.png",
+            "assets/characters/hai_lung/processed/vfx/hai_lung_vfx_skill_aura.png",
+            "assets/characters/hai_lung/processed/vfx/hai_lung_vfx_sonar_pulse.png",
+            "assets/characters/hai_lung/processed/vfx/hai_lung_vfx_torpedo_launch_flash.png",
+            "assets/characters/hai_lung/processed/vfx/hai_lung_vfx_torpedo_trail.png",
+            "assets/characters/hai_lung/processed/vfx/hai_lung_vfx_training_sonar_ring.png",
+            "assets/characters/hai_lung/processed/vfx/hai_lung_vfx_underwater_shadow.png"
+          ],
+          "bind_points": [
+            "assets/characters/hai_lung/processed/config/hai_lung_meta_bind_points.json"
+          ],
+          "anim_config": [
+            "assets/characters/hai_lung/processed/config/hai_lung_anim_config.json"
+          ],
+          "vfx_config": [
+            "assets/characters/hai_lung/processed/config/hai_lung_vfx_config.json"
+          ],
+          "manifest": [
+            "assets/characters/hai_lung/processed/config/hai_lung_postprocess_manifest.json"
+          ]
+        }
+      },
+      "batch_ready": true,
+      "technical_ready": true,
+      "visual_review": {
+        "status": "polish",
+        "accepted": true,
+        "issues": []
+      },
+      "delivery_ready": true,
+      "postprocess_ready": true
+    }
+  ]
+}

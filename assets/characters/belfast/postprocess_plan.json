@@ -18,17 +18,44 @@
     "turret_main": 4,
     "torpedo": 2
   },
+  "object_inventory": {
+    "turret_main": {
+      "instances": 4,
+      "barrels_per_instance": 3
+    },
+    "torpedo": {
+      "instances": 2,
+      "tubes_per_instance": 3
+    }
+  },
   "bindings": {
     "battle_rig_base": [
       "rig_mount",
-      "wake_origin",
       "skill_origin",
+      "wake_origin",
       "turret_mount_01",
       "turret_mount_02",
       "turret_mount_03",
       "turret_mount_04",
       "torpedo_mount_01",
       "torpedo_mount_02"
+    ],
+    "battle_aa_center": [
+      "muzzle_01",
+      "muzzle_02",
+      "pivot"
+    ],
+    "battle_turret_main_01": [
+      "pivot",
+      "muzzle_01",
+      "muzzle_02",
+      "muzzle_03"
+    ],
+    "battle_torpedo_tube_01": [
+      "pivot",
+      "torpedo_port_01",
+      "torpedo_port_02",
+      "torpedo_port_03"
     ]
   },
   "vfx_roles": [
@@ -54,5 +81,129 @@
   "acceptance_rules": [
     "Original TinySeaWar design; no real flags, political symbols, readable insignia, or extremist symbols.",
     "Character body, rig base, weapon nodes, and VFX must remain visually separable."
-  ]
+  ],
+  "manifest_schema_version": 2,
+  "additional_public_vfx_roles": {
+    "muzzle_flash_medium": {
+      "file": "assets/vfx/combat/muzzle/vfx_muzzle_gun_medium_01.png",
+      "semantic": "muzzle_flash.medium"
+    },
+    "torpedo_launch_flash": {
+      "file": "assets/vfx/combat/impacts/vfx_impact_water_small_01.png",
+      "semantic": "torpedo.launch.surface"
+    }
+  },
+  "weapon_binding_rules": {
+    "belfast_aa_04": {
+      "asset_role": "battle_aa_center",
+      "launch_bind": "muzzle_01",
+      "muzzle_vfx_role": "aa_burst",
+      "launch_profile": "vfx.profile.muzzle_flash.medium",
+      "impact_profile": "vfx.profile.shell_impact.medium"
+    },
+    "belfast_main": {
+      "asset_role": "battle_turret_main_01",
+      "launch_bind": "muzzle_01",
+      "muzzle_vfx_role": "muzzle_flash_medium",
+      "launch_profile": "vfx.profile.muzzle_flash.medium",
+      "impact_profile": "vfx.profile.shell_impact.medium"
+    },
+    "belfast_torpedo": {
+      "asset_role": "battle_torpedo_tube_01",
+      "launch_bind": "torpedo_port_01",
+      "muzzle_vfx_role": "torpedo_launch_flash",
+      "launch_profile": "vfx.profile.torpedo_launch",
+      "impact_profile": "vfx.profile.torpedo_impact"
+    }
+  },
+  "binding_positions": {
+    "battle_aa_center": {
+      "muzzle_01": {
+        "x": 0.18113,
+        "y": 0.17429
+      },
+      "muzzle_02": {
+        "x": 0.36604,
+        "y": 0.10571
+      },
+      "pivot": {
+        "x": 0.49057,
+        "y": 0.67429
+      }
+    },
+    "battle_rig_base": {
+      "rig_mount": {
+        "x": 0.42632,
+        "y": 0.3808
+      },
+      "skill_origin": {
+        "x": 0.42632,
+        "y": 0.30031
+      },
+      "wake_origin": {
+        "x": 0.08158,
+        "y": 0.35913
+      },
+      "turret_mount_01": {
+        "x": 0.21053,
+        "y": 0.29721
+      },
+      "turret_mount_02": {
+        "x": 0.30526,
+        "y": 0.34985
+      },
+      "turret_mount_03": {
+        "x": 0.61053,
+        "y": 0.47059
+      },
+      "turret_mount_04": {
+        "x": 0.74474,
+        "y": 0.54799
+      },
+      "torpedo_mount_01": {
+        "x": 0.23421,
+        "y": 0.44272
+      },
+      "torpedo_mount_02": {
+        "x": 0.46579,
+        "y": 0.57585
+      }
+    },
+    "battle_turret_main_01": {
+      "pivot": {
+        "x": 0.47368,
+        "y": 0.73705
+      },
+      "muzzle_01": {
+        "x": 0.90526,
+        "y": 0.45817
+      },
+      "muzzle_02": {
+        "x": 0.87895,
+        "y": 0.61753
+      },
+      "muzzle_03": {
+        "x": 0.83947,
+        "y": 0.79283
+      }
+    },
+    "battle_torpedo_tube_01": {
+      "pivot": {
+        "x": 0.37368,
+        "y": 0.61728
+      },
+      "torpedo_port_01": {
+        "x": 0.67368,
+        "y": 0.74486
+      },
+      "torpedo_port_02": {
+        "x": 0.76316,
+        "y": 0.64198
+      },
+      "torpedo_port_03": {
+        "x": 0.85526,
+        "y": 0.53498
+      }
+    }
+  }
 }

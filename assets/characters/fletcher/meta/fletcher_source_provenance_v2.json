@@ -1,0 +1,327 @@
+{
+  "schema_version": 2,
+  "character_id": "fletcher",
+  "kind": "codex_builtin_generated_art",
+  "source": "Codex built-in ImageGen",
+  "batch_ready_allowed": true,
+  "generation_policy": {
+    "primary_route": "codex_builtin_imagegen_native_alpha",
+    "legacy_fallback": {
+      "authorized": false,
+      "activation": "--allow-legacy-chroma-fallback",
+      "reason": "",
+      "native_failures": []
+    }
+  },
+  "generation": {
+    "requested_model": "codex-account-managed-imagegen",
+    "actual_model": "codex-account-managed-imagegen",
+    "generation_tool": "Codex built-in ImageGen",
+    "endpoint": "Codex account-managed image generation",
+    "quality": "Codex account-managed",
+    "size_control": "per-asset Codex account-managed output",
+    "background_control": "transparent requested and pixel-verified",
+    "output_format": "PNG",
+    "prompt_revision": {
+      "path": "assets/characters/fletcher/meta/fletcher_generation_brief_v2.md",
+      "sha256": "70af44055728bef0557bf1a2dc037510f3ce5db32abbe9805399e6b75db31375"
+    },
+    "reference_inputs": [
+      {
+        "path": "assets/characters/fletcher/concept/fletcher_concept_full.png",
+        "role": "accepted_style_anchor_for_derivative_sheets"
+      }
+    ],
+    "reproducibility_note": "The Codex account manages the underlying image model and request IDs; those implementation details are not exposed. Accepted PNG outputs are preserved byte-for-byte and tracked by SHA-256."
+  },
+  "source_images": [
+    {
+      "role": "concept_full",
+      "path": "assets/characters/fletcher/concept/fletcher_concept_full.png",
+      "sha256": "37308cc2b0b79707b7b47f72e409e43d6cc266c7b9ccb789d414fa259618e9a9",
+      "size": [
+        1024,
+        1536
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "37308cc2b0b79707b7b47f72e409e43d6cc266c7b9ccb789d414fa259618e9a9",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.6063893636067709,
+        "transparent_border_ratio": 0.985340109460516
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "五座单装炮、左右两座各五孔鱼雷架均可数清，海军蓝短夹克白裙与金发身份保留，全身炮管完整。"
+    },
+    {
+      "role": "ui_sheet",
+      "path": "assets/characters/fletcher/ui/fletcher_ui_sheet.png",
+      "sha256": "ab3b29de295104be5fe1efc90f12ef941e3c7b52f217fc86dd70f7059c5248ec",
+      "size": [
+        1774,
+        887
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "ab3b29de295104be5fe1efc90f12ef941e3c7b52f217fc86dd70f7059c5248ec",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.5744862850468181,
+        "transparent_border_ratio": 1.0
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "六头像与护航警戒/驱逐图标完整；金发耳麦、蓝短夹克与白水手服一致，表情可辨，需逐件裁切验证邻件间隔。"
+    },
+    {
+      "role": "battle_grid",
+      "path": "assets/characters/fletcher/battle/fletcher_battle_asset_grid.png",
+      "sha256": "084c184cf4af65cb46209c2d170235f035dfcfa496f3d34b9f87a5768ce32dca",
+      "size": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "084c184cf4af65cb46209c2d170235f035dfcfa496f3d34b9f87a5768ce32dca",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.6746972401936849,
+        "transparent_border_ratio": 1.0
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "八件完整分离；Q版人物、五座空炮台、单炮、五联鱼雷架、双联AA、深弹架、声呐和水花正确；无烘焙鱼雷架混入rig。"
+    },
+    {
+      "role": "vfx_sheet",
+      "path": "assets/characters/fletcher/vfx/fletcher_vfx_reference_sheet.png",
+      "sha256": "54dafa8eda4f542d183544795ed7a770a0cf34de1a25990a8192450007db9b31",
+      "size": [
+        1774,
+        887
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "54dafa8eda4f542d183544795ed7a770a0cf34de1a25990a8192450007db9b31",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 253,
+        "transparent_canvas_ratio": 0.5111468550489406,
+        "transparent_border_ratio": 0.8599097405039489
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "八件护航预警、深弹水花、发射气泡、炮口光、防空与准心语义可辨；无多余武器实物，柔光原生Alpha待成品复核。"
+    },
+    {
+      "role": "anim_idle",
+      "path": "assets/characters/fletcher/battle/fletcher_anim_idle_4f_sheet.png",
+      "sha256": "cea96fe2bd4aca4b8fc184428832be27071d30b08d1ebb6ff1e6ed3d40d5db44",
+      "size": [
+        1312,
+        1199
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "cea96fe2bd4aca4b8fc184428832be27071d30b08d1ebb6ff1e6ed3d40d5db44",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.5036234463679082,
+        "transparent_border_ratio": 0.9709047429254684
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "四帧五座单炮、两架五孔鱼雷管完整，海军蓝短夹克白裙黑短靴跨状态统一；idle的四组手臂/腿部/表情姿态明确，未见飞离投射物；源边距较紧需逐件成品复查。"
+    },
+    {
+      "role": "anim_move",
+      "path": "assets/characters/fletcher/battle/fletcher_anim_move_4f_sheet.png",
+      "sha256": "0342137586b2209c061f9a84273acbf583afb22faa2413cd21ee27fb94da1b9c",
+      "size": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "0342137586b2209c061f9a84273acbf583afb22faa2413cd21ee27fb94da1b9c",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.49479929606119794,
+        "transparent_border_ratio": 0.9947224394057858
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "四帧五座单炮、两架五孔鱼雷管完整，海军蓝短夹克白裙黑短靴跨状态统一；move的四组手臂/腿部/表情姿态明确，未见飞离投射物；源边距较紧需逐件成品复查。"
+    },
+    {
+      "role": "anim_attack",
+      "path": "assets/characters/fletcher/battle/fletcher_anim_attack_4f_sheet.png",
+      "sha256": "ea17e6d51fd38636f62e56aee6af9a4ee657319481bd6dd68cbbda51936dc6c4",
+      "size": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "ea17e6d51fd38636f62e56aee6af9a4ee657319481bd6dd68cbbda51936dc6c4",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.6340662638346354,
+        "transparent_border_ratio": 0.9863174354964817
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "四帧明确蹲伏预备、跨步发射、后仰后坐与站立复位；五座单炮和双五联雷架逐帧保留。炮口火光贴炮口，无飞出弹体，完整身体装备保留。"
+    },
+    {
+      "role": "anim_hit",
+      "path": "assets/characters/fletcher/battle/fletcher_anim_hit_4f_sheet.png",
+      "sha256": "9e7559fc95f557d3b16b40c49968890be523b5b2e6014a69e2173d555a6ac23b",
+      "size": [
+        1312,
+        1199
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "9e7559fc95f557d3b16b40c49968890be523b5b2e6014a69e2173d555a6ac23b",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.48525257328261356,
+        "transparent_border_ratio": 0.9938222399362295
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "四帧五座单炮、两架五孔鱼雷管完整，海军蓝短夹克白裙黑短靴跨状态统一；hit的四组手臂/腿部/表情姿态明确，未见飞离投射物；源边距较紧需逐件成品复查。"
+    },
+    {
+      "role": "anim_firepower",
+      "path": "assets/characters/fletcher/battle/fletcher_anim_firepower_4f_sheet.png",
+      "sha256": "7b181b6099276c31b991044a3cdfa31a78a5c9c8aff3d6972ce435c30f12541c",
+      "size": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "7b181b6099276c31b991044a3cdfa31a78a5c9c8aff3d6972ce435c30f12541c",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.69091796875,
+        "transparent_border_ratio": 1.0
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "四帧蹲伏、跨步展开护航环、后仰反馈与站立复位，五单炮双五联逐帧可数；蓝色环替换炮焰、无飞出弹体，画布留白完整。"
+    }
+  ]
+}

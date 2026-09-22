@@ -15,17 +15,47 @@
     "battle_wake_origin_marker"
   ],
   "mount_instances": {
-    "turret_main": 4
+    "turret_main": 4,
+    "turret_secondary": 8
+  },
+  "object_inventory": {
+    "turret_main": {
+      "instances": 4,
+      "barrels_per_instance": 3
+    },
+    "turret_secondary": {
+      "instances": 8,
+      "barrels_per_instance": 1
+    }
   },
   "bindings": {
     "battle_rig_base": [
+      "pivot",
       "rig_mount",
-      "wake_origin",
       "skill_origin",
+      "wake_origin",
       "turret_mount_01",
       "turret_mount_02",
       "turret_mount_03",
-      "turret_mount_04"
+      "turret_mount_04",
+      "secondary_mount_01",
+      "secondary_mount_02",
+      "secondary_mount_03",
+      "secondary_mount_04",
+      "secondary_mount_05",
+      "secondary_mount_06",
+      "secondary_mount_07",
+      "secondary_mount_08"
+    ],
+    "battle_turret_main_01": [
+      "pivot",
+      "muzzle_01",
+      "muzzle_02",
+      "muzzle_03"
+    ],
+    "battle_turret_secondary_01": [
+      "pivot",
+      "muzzle_01"
     ]
   },
   "vfx_roles": [
@@ -51,5 +81,116 @@
   "acceptance_rules": [
     "Original TinySeaWar design; no real flags, political symbols, readable insignia, or extremist symbols.",
     "Character body, rig base, weapon nodes, and VFX must remain visually separable."
-  ]
+  ],
+  "manifest_schema_version": 2,
+  "binding_positions": {
+    "battle_rig_base": {
+      "pivot": {
+        "x": 0.501661,
+        "y": 0.520424
+      },
+      "rig_mount": {
+        "x": 0.501661,
+        "y": 0.520424
+      },
+      "skill_origin": {
+        "x": 0.501661,
+        "y": 0.520424
+      },
+      "wake_origin": {
+        "x": 0.501661,
+        "y": 0.579425
+      },
+      "turret_mount_01": {
+        "x": 0.318937,
+        "y": 0.393343
+      },
+      "turret_mount_02": {
+        "x": 0.681063,
+        "y": 0.393343
+      },
+      "turret_mount_03": {
+        "x": 0.227575,
+        "y": 0.488654
+      },
+      "turret_mount_04": {
+        "x": 0.792359,
+        "y": 0.488654
+      },
+      "secondary_mount_01": {
+        "x": 0.147841,
+        "y": 0.612708
+      },
+      "secondary_mount_02": {
+        "x": 0.200997,
+        "y": 0.596067
+      },
+      "secondary_mount_03": {
+        "x": 0.270764,
+        "y": 0.580938
+      },
+      "secondary_mount_04": {
+        "x": 0.325581,
+        "y": 0.567322
+      },
+      "secondary_mount_05": {
+        "x": 0.659468,
+        "y": 0.565809
+      },
+      "secondary_mount_06": {
+        "x": 0.729236,
+        "y": 0.583964
+      },
+      "secondary_mount_07": {
+        "x": 0.789037,
+        "y": 0.605144
+      },
+      "secondary_mount_08": {
+        "x": 0.843854,
+        "y": 0.624811
+      }
+    },
+    "battle_turret_main_01": {
+      "pivot": {
+        "x": 0.524558,
+        "y": 0.773649
+      },
+      "muzzle_01": {
+        "x": 0.102161,
+        "y": 0.314189
+      },
+      "muzzle_02": {
+        "x": 0.127701,
+        "y": 0.449324
+      },
+      "muzzle_03": {
+        "x": 0.170923,
+        "y": 0.591216
+      }
+    },
+    "battle_turret_secondary_01": {
+      "pivot": {
+        "x": 0.550481,
+        "y": 0.67234
+      },
+      "muzzle_01": {
+        "x": 0.117788,
+        "y": 0.404255
+      }
+    }
+  },
+  "weapon_binding_rules": {
+    "gangut_main": {
+      "asset_role": "battle_turret_main_01",
+      "launch_bind": "muzzle_01",
+      "launch_profile": "vfx.profile.muzzle_flash.large",
+      "impact_profile": "vfx.profile.shell_impact.large"
+    },
+    "gangut_secondary": {
+      "asset_role": "battle_turret_secondary_01",
+      "launch_bind": "muzzle_01",
+      "launch_profile": "vfx.profile.muzzle_flash.medium",
+      "impact_profile": "vfx.profile.shell_impact.medium"
+    }
+  }
 }

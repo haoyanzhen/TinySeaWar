@@ -1,0 +1,327 @@
+{
+  "schema_version": 2,
+  "character_id": "chapayev",
+  "kind": "codex_builtin_generated_art",
+  "source": "Codex built-in ImageGen",
+  "batch_ready_allowed": true,
+  "generation_policy": {
+    "primary_route": "codex_builtin_imagegen_native_alpha",
+    "legacy_fallback": {
+      "authorized": false,
+      "activation": "--allow-legacy-chroma-fallback",
+      "reason": "",
+      "native_failures": []
+    }
+  },
+  "generation": {
+    "requested_model": "codex-account-managed-imagegen",
+    "actual_model": "codex-account-managed-imagegen",
+    "generation_tool": "Codex built-in ImageGen",
+    "endpoint": "Codex account-managed image generation",
+    "quality": "Codex account-managed",
+    "size_control": "per-asset Codex account-managed output",
+    "background_control": "transparent requested and pixel-verified",
+    "output_format": "PNG",
+    "prompt_revision": {
+      "path": "assets/characters/chapayev/meta/chapayev_generation_brief_v2.md",
+      "sha256": "721c4f16f621e3bcd078b1ce6701072cfb3426d032d73c2b2ec929c9174b4bc9"
+    },
+    "reference_inputs": [
+      {
+        "path": "assets/characters/chapayev/concept/chapayev_concept_full.png",
+        "role": "accepted_style_anchor_for_derivative_sheets"
+      }
+    ],
+    "reproducibility_note": "The Codex account manages the underlying image model and request IDs; those implementation details are not exposed. Accepted PNG outputs are preserved byte-for-byte and tracked by SHA-256."
+  },
+  "source_images": [
+    {
+      "role": "concept_full",
+      "path": "assets/characters/chapayev/concept/chapayev_concept_full.png",
+      "sha256": "a7a1803638cd5cb7ce254385159656f5a26a5a4dcf11b44b8d543035fe899f19",
+      "size": [
+        1222,
+        1287
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "a7a1803638cd5cb7ce254385159656f5a26a5a4dcf11b44b8d543035fe899f19",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.5388627557203662,
+        "transparent_border_ratio": 0.9968089349820503
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "全身与四座三联炮、两座三联鱼雷及测距仪完整，身份配色正确。"
+    },
+    {
+      "role": "ui_sheet",
+      "path": "assets/characters/chapayev/ui/chapayev_ui_sheet.png",
+      "sha256": "3ab06720356a913aeb979090bf5f237a8afbae133b6c01e0c4e690d54650021f",
+      "size": [
+        1774,
+        887
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "3ab06720356a913aeb979090bf5f237a8afbae133b6c01e0c4e690d54650021f",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.7077954266118772,
+        "transparent_border_ratio": 1.0
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "八个UI对象保持原身份和语义顺序，头像之间有清晰透明间隔；第一头像手臂与第二头像头发不再接触，发帽完整。"
+    },
+    {
+      "role": "battle_grid",
+      "path": "assets/characters/chapayev/battle/chapayev_battle_asset_grid.png",
+      "sha256": "d2d881aeb1114f9e77705a984cb40159fd9302a709ae881645ee7875861f1d6a",
+      "size": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "d2d881aeb1114f9e77705a984cb40159fd9302a709ae881645ee7875861f1d6a",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.6089852650960287,
+        "transparent_border_ratio": 0.9519155590304925
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "独立角色本体、四炮座两雷座空底架、三联炮及三联雷管、AA、长测距仪、火控盒及尾迹八角色分别可辨；炮管数三、雷管数三，无邻件接触。"
+    },
+    {
+      "role": "vfx_sheet",
+      "path": "assets/characters/chapayev/vfx/chapayev_vfx_reference_sheet.png",
+      "sha256": "3f10a60465c84de9e15fd3bfb8fedeb70756c96f012b82024261b6be01f70cd9",
+      "size": [
+        1774,
+        887
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "3f10a60465c84de9e15fd3bfb8fedeb70756c96f012b82024261b6be01f70cd9",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.39415126930522176,
+        "transparent_border_ratio": 0.8664911620910116
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "八项特效逐件可分，圆环、水花和断开粒子完整；发射/尾迹参考中含弹体，仅作为现有参考表达，不写入角色动画。原生Alpha。"
+    },
+    {
+      "role": "anim_idle",
+      "path": "assets/characters/chapayev/battle/chapayev_anim_idle_4f_sheet.png",
+      "sha256": "419b47940c65d8e5a373ecc46f9725914d6e4790e5060a19c6ba2deef57fcdb5",
+      "size": [
+        1374,
+        1145
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "419b47940c65d8e5a373ecc46f9725914d6e4790e5060a19c6ba2deef57fcdb5",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.46875218499520094,
+        "transparent_border_ratio": 0.9739769566944776
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "四帧均为银发红帽/红灰衣 Q 版；四座三联炮、两组三联雷管、测距仪保持一致；闭眼/发丝/呼吸变化可辨，完整手脚，无飞出弹体。"
+    },
+    {
+      "role": "anim_move",
+      "path": "assets/characters/chapayev/battle/chapayev_anim_move_4f_sheet.png",
+      "sha256": "695e52e193b1780e7b53bc623afb573779bbfd3b2b15f420d897fa16e099e46b",
+      "size": [
+        1374,
+        1145
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "695e52e193b1780e7b53bc623afb573779bbfd3b2b15f420d897fa16e099e46b",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.4338621816263356,
+        "transparent_border_ratio": 0.9948351211760031
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "Q版动作四帧姿态变化可见；四座三联主炮、两组三联鱼雷与测距仪完整，无串格和边界截断。"
+    },
+    {
+      "role": "anim_attack",
+      "path": "assets/characters/chapayev/battle/chapayev_anim_attack_4f_sheet.png",
+      "sha256": "22d423bd7e6713c1f72ba060d6b2227bd0954bd460f4d200188c2d70a00db2b4",
+      "size": [
+        1374,
+        1145
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "22d423bd7e6713c1f72ba060d6b2227bd0954bd460f4d200188c2d70a00db2b4",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.5675368509372437,
+        "transparent_border_ratio": 0.9990067540723083
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "2026-09-21逐图目检：角色身份与服装一致，Q版帧有实际姿态变化，装备和四帧均完整留边；无飞出投射物。"
+    },
+    {
+      "role": "anim_hit",
+      "path": "assets/characters/chapayev/battle/chapayev_anim_hit_4f_sheet.png",
+      "sha256": "983da0f6adcc119ab09eae1fb2bafe58c350e59fa75e44608860de3047bda014",
+      "size": [
+        1374,
+        1145
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "983da0f6adcc119ab09eae1fb2bafe58c350e59fa75e44608860de3047bda014",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.44382067466295455,
+        "transparent_border_ratio": 0.9968216130313866
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "Q版动作四帧姿态变化可见；四座三联主炮、两组三联鱼雷与测距仪完整，无串格和边界截断。"
+    },
+    {
+      "role": "anim_firepower",
+      "path": "assets/characters/chapayev/battle/chapayev_anim_firepower_4f_sheet.png",
+      "sha256": "3a733a733c8990dec8ba90243165ea113d18a894ceb14850b2c45a5c2981e47a",
+      "size": [
+        1374,
+        1145
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "3a733a733c8990dec8ba90243165ea113d18a894ceb14850b2c45a5c2981e47a",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.5736128855920621,
+        "transparent_border_ratio": 0.9984108065156932
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "pass",
+      "qa_reviewer": "Codex visual inspection 2026-09-21",
+      "qa_observation": "2026-09-21逐图目检：角色身份与服装一致，Q版帧有实际姿态变化，装备和四帧均完整留边；无飞出投射物。"
+    }
+  ]
+}

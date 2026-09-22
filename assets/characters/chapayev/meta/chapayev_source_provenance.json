@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "character_id": "chapayev",
+  "kind": "tool_managed_generated_art",
+  "source": "built_in_image_generation_tool",
+  "batch_ready_allowed": true,
+  "generation": {
+    "requested_model": "gpt-image-2.5 pipeline target; no model selector was exposed by the tool",
+    "actual_model": "tool-managed/unknown",
+    "generation_tool": "image_gen.imagegen",
+    "endpoint": "tool-managed/not exposed",
+    "quality": "tool-managed/not exposed",
+    "size_control": "tool-managed; accepted pixel dimensions are recorded per source image",
+    "background_control": "accepted production sources use reserved near-#00FF00 chroma key for deterministic project-side alpha recovery",
+    "output_format": "PNG",
+    "prompt_revision": {
+      "path": "assets/characters/chapayev/meta/chapayev_generation_brief.md",
+      "sha256": "0b03d1e21165b1ebd0f6faeed252a9b08f09832863bc0c0f60a402febbc64b21"
+    },
+    "reference_inputs": [
+      {"path": "assets/characters/chapayev/concept/chapayev_concept_full.png", "role": "accepted_style_anchor"}
+    ],
+    "generation_ids": "not exposed by the tool"
+  },
+  "reproducibility": {
+    "generation_replayable": false,
+    "generation_limit": "The tool did not expose backend model/version, endpoint payloads, seeds, or generation IDs.",
+    "postprocess_replayable": true,
+    "postprocess_entry": "tools/art_pipeline/postprocess_generated_character.py chapayev"
+  },
+  "source_images": [
+    {"role": "concept_full", "path": "assets/characters/chapayev/concept/chapayev_concept_full.png", "sha256": "47ff67072c1697d1bf4ba4e5534655b7bca61ca075f82b13fb3a96929175f8cc", "size": [1024, 1536], "source_mode": "RGB", "background": "reserved_green_near_#00FF00", "qa_verdict": "pass", "qa_observation": "Identity, optical eyepiece, four triple turrets, and two triple torpedo launchers are clear and unfused."},
+    {"role": "ui_sheet", "path": "assets/characters/chapayev/ui/chapayev_ui_sheet.png", "sha256": "85544e2de8f34e89e7ba26bb296f9c6d6fd27b6c1cc76c2ac290e07925d6fc47", "size": [1774, 887], "source_mode": "RGB", "background": "reserved_green_near_#00FF00", "qa_verdict": "pass", "qa_observation": "Eight row-major UI roles are distinct, readable, and separated."},
+    {"role": "battle_grid", "path": "assets/characters/chapayev/battle/chapayev_battle_asset_grid.png", "sha256": "0cb3d55c0ef7745ff5753532916a82ebf639097388ee8d34b2cb741373636ada", "size": [1774, 887], "source_mode": "RGB", "background": "reserved_green_near_#00FF00", "qa_verdict": "pass", "qa_observation": "Eight battle roles are separated; the reusable gun and torpedo launcher each show exactly three openings."},
+    {"role": "anim_idle", "path": "assets/characters/chapayev/battle/chapayev_anim_idle_4f_sheet.png", "sha256": "1a7b17e7871632a0d472b322a541e5cec5c6af3088f2ff0a1cf21ad58733fb18", "size": [1024, 1536], "source_mode": "RGB", "background": "reserved_green_near_#00FF00", "qa_verdict": "pass", "qa_observation": "Four ordered idle poses preserve the analytical identity, eyepiece, and full rig."},
+    {"role": "anim_move", "path": "assets/characters/chapayev/battle/chapayev_anim_move_4f_sheet.png", "sha256": "c5d7f1d76a3b477c7b74ccabe8871f47fbefc4dfa3d40d13bf5217d2baf362fa", "size": [1024, 1536], "source_mode": "RGB", "background": "reserved_green_near_#00FF00", "qa_verdict": "pass", "qa_observation": "Four distinct movement poses retain the full cruiser silhouette and local wakes."},
+    {"role": "anim_attack", "path": "assets/characters/chapayev/battle/chapayev_anim_attack_4f_sheet.png", "sha256": "3b6a38887644bf8694fa4fbb4767107ac3186ec014656040f20d800e87d83bb9", "size": [1024, 1536], "source_mode": "RGB", "background": "reserved_green_near_#00FF00", "qa_verdict": "pass", "qa_observation": "Four firing-solution poses retain the four main turrets and use only local muzzle flashes."},
+    {"role": "anim_hit", "path": "assets/characters/chapayev/battle/chapayev_anim_hit_4f_sheet.png", "sha256": "3e0d4423e73f0abc0082c1f9f09bf4e02e7f11c48835fdfffafba8e148d6f17b", "size": [1024, 1536], "source_mode": "RGB", "background": "reserved_green_near_#00FF00", "qa_verdict": "pass", "qa_observation": "Four non-graphic hit poses preserve the eyepiece, clipboard, and intact equipment."},
+    {"role": "anim_firepower", "path": "assets/characters/chapayev/battle/chapayev_anim_firepower_4f_sheet.png", "sha256": "65e85a02ac1ced0aef43d957966868fa50f21c5fc2c28d60b5b1ae59d9ec1364", "size": [1024, 1536], "source_mode": "RGB", "background": "reserved_green_near_#00FF00", "qa_verdict": "pass", "qa_observation": "Four long-range fire-control poses keep the targeting grid local and equipment intact."},
+    {"role": "vfx_sheet", "path": "assets/characters/chapayev/vfx/chapayev_vfx_reference_sheet.png", "sha256": "b5afb0928bc0573a167ab857c930a45149414abe71323ce7e60081dcbfb77bb0", "size": [1774, 887], "source_mode": "RGB", "background": "reserved_green_near_#00FF00", "qa_verdict": "pass", "qa_observation": "Eight VFX roles match the required row-major order, including rectangular fire grid and ice impact."}
+  ]
+}

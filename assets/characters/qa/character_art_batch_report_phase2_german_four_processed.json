@@ -1,0 +1,554 @@
+{
+  "mode": "process",
+  "required_gate": "technical_ready",
+  "gate_passed": false,
+  "summary": {
+    "characters": 3,
+    "batch_ready": 0,
+    "complete": 0,
+    "delivery_ready": 0,
+    "blocked": 0,
+    "failed": 0
+  },
+  "results": [
+    {
+      "character_id": "z23",
+      "status": "incomplete",
+      "elapsed_seconds": 19.57,
+      "preview": "assets/characters/qa/edge_qa_z23.html",
+      "inspection": {
+        "character_id": "z23",
+        "sources": {
+          "complete": true,
+          "missing": [],
+          "source_quality_issues": [],
+          "base_complete": true,
+          "four_frame_complete": true,
+          "production_route": "generated_state_sheets"
+        },
+        "configuration": {
+          "crop_specs": false,
+          "runtime_config": false,
+          "postprocess_plan": true,
+          "generic_postprocess": true,
+          "contract_ship_class": true
+        },
+        "contract": {
+          "character_id": "z23",
+          "ship_class": "destroyer",
+          "status": "incomplete",
+          "missing_roles": [],
+          "invalid_files": [],
+          "data_issues": [
+            "animation pose variation too low: idle (registered alpha IoU 0.937 >= 0.92; translations, tints, and detached flashes do not satisfy the action contract)"
+          ],
+          "found_roles": {
+            "full_body": [
+              "assets/characters/z23/processed/ui/z23_illust_full_alpha.png"
+            ],
+            "half_body": [
+              "assets/characters/z23/processed/ui/z23_illust_half_alpha.png"
+            ],
+            "skill_cutin": [
+              "assets/characters/z23/processed/ui/z23_illust_skill_cutin_alpha.png"
+            ],
+            "expression_default": [
+              "assets/characters/z23/processed/ui/z23_expr_default.png"
+            ],
+            "expression_serious": [
+              "assets/characters/z23/processed/ui/z23_expr_serious.png"
+            ],
+            "expression_hit": [
+              "assets/characters/z23/processed/ui/z23_expr_hit.png"
+            ],
+            "portrait": [
+              "assets/characters/z23/processed/ui/z23_ui_portrait.png"
+            ],
+            "portrait_small": [
+              "assets/characters/z23/processed/ui/z23_ui_portrait_small.png"
+            ],
+            "chibi_head": [
+              "assets/characters/z23/processed/ui/z23_ui_chibi_head.png"
+            ],
+            "skill_icon": [
+              "assets/characters/z23/processed/ui/z23_ui_skill_gun_torpedo_conversion.png"
+            ],
+            "class_icon": [
+              "assets/characters/z23/processed/ui/z23_ui_class_destroyer.png"
+            ],
+            "battle_body": [
+              "assets/characters/z23/processed/battle/z23_battle_body_r.png"
+            ],
+            "rig_base": [
+              "assets/characters/z23/processed/battle/z23_battle_rig_base.png"
+            ],
+            "main_weapon": [
+              "assets/characters/z23/processed/battle/z23_battle_torpedo_tube_01.png",
+              "assets/characters/z23/processed/battle/z23_battle_turret_main_01.png",
+              "assets/characters/z23/processed/battle/z23_battle_turret_main_02.png"
+            ],
+            "anim_idle": [
+              "assets/characters/z23/processed/anim/z23_anim_idle_keyframe.png"
+            ],
+            "anim_move": [
+              "assets/characters/z23/processed/anim/z23_anim_move_keyframe.png"
+            ],
+            "anim_attack": [
+              "assets/characters/z23/processed/anim/z23_anim_attack_keyframe.png"
+            ],
+            "anim_hit": [
+              "assets/characters/z23/processed/anim/z23_anim_hit_keyframe.png"
+            ],
+            "anim_firepower": [
+              "assets/characters/z23/processed/anim/z23_anim_firepower_keyframe.png"
+            ],
+            "vfx": [
+              "assets/characters/z23/processed/vfx/z23_vfx_aa_circle.png",
+              "assets/characters/z23/processed/vfx/z23_vfx_heavy_destroyer_muzzle.png",
+              "assets/characters/z23/processed/vfx/z23_vfx_mode_switch_indicator.png",
+              "assets/characters/z23/processed/vfx/z23_vfx_muzzle_flash_small.png",
+              "assets/characters/z23/processed/vfx/z23_vfx_range_reticle.png",
+              "assets/characters/z23/processed/vfx/z23_vfx_skill_aura.png",
+              "assets/characters/z23/processed/vfx/z23_vfx_torpedo_launch_flash.png",
+              "assets/characters/z23/processed/vfx/z23_vfx_water_splash.png"
+            ],
+            "bind_points": [
+              "assets/characters/z23/processed/config/z23_meta_bind_points.json"
+            ],
+            "anim_config": [
+              "assets/characters/z23/processed/config/z23_anim_config.json"
+            ],
+            "vfx_config": [
+              "assets/characters/z23/processed/config/z23_vfx_config.json"
+            ],
+            "manifest": [
+              "assets/characters/z23/processed/config/z23_postprocess_manifest.json"
+            ]
+          }
+        },
+        "batch_ready": false,
+        "technical_ready": false,
+        "visual_review": {
+          "status": "pending",
+          "accepted": false,
+          "issues": [
+            "visual review pending/blocking: assets/characters/z23/processed/anim/z23_anim_attack_frame_01.png",
+            "visual review pending/blocking: assets/characters/z23/processed/anim/z23_anim_attack_frame_02.png",
+            "visual review pending/blocking: assets/characters/z23/processed/anim/z23_anim_attack_frame_03.png",
+            "visual review pending/blocking: assets/characters/z23/processed/anim/z23_anim_attack_frame_04.png",
+            "visual review pending/blocking: assets/characters/z23/processed/anim/z23_anim_attack_keyframe.png",
+            "visual review pending/blocking: assets/characters/z23/processed/anim/z23_anim_firepower_frame_01.png",
+            "visual review pending/blocking: assets/characters/z23/processed/anim/z23_anim_firepower_frame_02.png",
+            "visual review pending/blocking: assets/characters/z23/processed/anim/z23_anim_firepower_frame_03.png",
+            "visual review pending/blocking: assets/characters/z23/processed/anim/z23_anim_firepower_frame_04.png",
+            "visual review pending/blocking: assets/characters/z23/processed/anim/z23_anim_firepower_keyframe.png",
+            "visual review pending/blocking: assets/characters/z23/processed/anim/z23_anim_hit_frame_01.png",
+            "visual review pending/blocking: assets/characters/z23/processed/anim/z23_anim_hit_frame_02.png",
+            "visual review pending/blocking: assets/characters/z23/processed/anim/z23_anim_hit_frame_03.png",
+            "visual review pending/blocking: assets/characters/z23/processed/anim/z23_anim_hit_frame_04.png",
+            "visual review pending/blocking: assets/characters/z23/processed/anim/z23_anim_hit_keyframe.png",
+            "visual review pending/blocking: assets/characters/z23/processed/anim/z23_anim_idle_frame_01.png",
+            "visual review pending/blocking: assets/characters/z23/processed/anim/z23_anim_idle_frame_02.png",
+            "visual review pending/blocking: assets/characters/z23/processed/anim/z23_anim_idle_frame_03.png",
+            "visual review pending/blocking: assets/characters/z23/processed/anim/z23_anim_idle_frame_04.png",
+            "visual review pending/blocking: assets/characters/z23/processed/anim/z23_anim_idle_keyframe.png",
+            "visual review pending/blocking: assets/characters/z23/processed/anim/z23_anim_move_frame_01.png",
+            "visual review pending/blocking: assets/characters/z23/processed/anim/z23_anim_move_frame_02.png",
+            "visual review pending/blocking: assets/characters/z23/processed/anim/z23_anim_move_frame_03.png",
+            "visual review pending/blocking: assets/characters/z23/processed/anim/z23_anim_move_frame_04.png",
+            "visual review pending/blocking: assets/characters/z23/processed/anim/z23_anim_move_keyframe.png",
+            "visual review pending/blocking: assets/characters/z23/processed/battle/z23_battle_body_r.png",
+            "visual review pending/blocking: assets/characters/z23/processed/battle/z23_battle_fire_control_node.png",
+            "visual review pending/blocking: assets/characters/z23/processed/battle/z23_battle_mode_indicator.png",
+            "visual review pending/blocking: assets/characters/z23/processed/battle/z23_battle_rig_base.png",
+            "visual review pending/blocking: assets/characters/z23/processed/battle/z23_battle_torpedo_tube_01.png",
+            "visual review pending/blocking: assets/characters/z23/processed/battle/z23_battle_turret_main_01.png",
+            "visual review pending/blocking: assets/characters/z23/processed/battle/z23_battle_turret_main_02.png",
+            "visual review pending/blocking: assets/characters/z23/processed/battle/z23_battle_wake_origin_marker.png",
+            "visual review pending/blocking: assets/characters/z23/processed/ui/z23_expr_default.png",
+            "visual review pending/blocking: assets/characters/z23/processed/ui/z23_expr_hit.png",
+            "visual review pending/blocking: assets/characters/z23/processed/ui/z23_expr_serious.png",
+            "visual review pending/blocking: assets/characters/z23/processed/ui/z23_illust_full_alpha.png",
+            "visual review pending/blocking: assets/characters/z23/processed/ui/z23_illust_half_alpha.png",
+            "visual review pending/blocking: assets/characters/z23/processed/ui/z23_illust_skill_cutin_alpha.png",
+            "visual review pending/blocking: assets/characters/z23/processed/ui/z23_ui_chibi_head.png",
+            "visual review pending/blocking: assets/characters/z23/processed/ui/z23_ui_class_destroyer.png",
+            "visual review pending/blocking: assets/characters/z23/processed/ui/z23_ui_portrait.png",
+            "visual review pending/blocking: assets/characters/z23/processed/ui/z23_ui_portrait_small.png",
+            "visual review pending/blocking: assets/characters/z23/processed/ui/z23_ui_skill_gun_torpedo_conversion.png",
+            "visual review pending/blocking: assets/characters/z23/processed/vfx/z23_vfx_aa_circle.png",
+            "visual review pending/blocking: assets/characters/z23/processed/vfx/z23_vfx_heavy_destroyer_muzzle.png",
+            "visual review pending/blocking: assets/characters/z23/processed/vfx/z23_vfx_mode_switch_indicator.png",
+            "visual review pending/blocking: assets/characters/z23/processed/vfx/z23_vfx_muzzle_flash_small.png",
+            "visual review pending/blocking: assets/characters/z23/processed/vfx/z23_vfx_range_reticle.png",
+            "visual review pending/blocking: assets/characters/z23/processed/vfx/z23_vfx_skill_aura.png",
+            "visual review pending/blocking: assets/characters/z23/processed/vfx/z23_vfx_torpedo_launch_flash.png",
+            "visual review pending/blocking: assets/characters/z23/processed/vfx/z23_vfx_water_splash.png"
+          ]
+        },
+        "delivery_ready": false,
+        "postprocess_ready": true
+      }
+    },
+    {
+      "character_id": "scharnhorst",
+      "status": "incomplete",
+      "elapsed_seconds": 20.62,
+      "preview": "assets/characters/qa/edge_qa_scharnhorst.html",
+      "inspection": {
+        "character_id": "scharnhorst",
+        "sources": {
+          "complete": true,
+          "missing": [],
+          "source_quality_issues": [],
+          "base_complete": true,
+          "four_frame_complete": true,
+          "production_route": "generated_state_sheets"
+        },
+        "configuration": {
+          "crop_specs": false,
+          "runtime_config": false,
+          "postprocess_plan": true,
+          "generic_postprocess": true,
+          "contract_ship_class": true
+        },
+        "contract": {
+          "character_id": "scharnhorst",
+          "ship_class": "battleship",
+          "status": "incomplete",
+          "missing_roles": [],
+          "invalid_files": [],
+          "data_issues": [
+            "animation pose variation too low: firepower (registered alpha IoU 0.904 >= 0.86; translations, tints, and detached flashes do not satisfy the action contract)"
+          ],
+          "found_roles": {
+            "full_body": [
+              "assets/characters/scharnhorst/processed/ui/scharnhorst_illust_full_alpha.png"
+            ],
+            "half_body": [
+              "assets/characters/scharnhorst/processed/ui/scharnhorst_illust_half_alpha.png"
+            ],
+            "skill_cutin": [
+              "assets/characters/scharnhorst/processed/ui/scharnhorst_illust_skill_cutin_alpha.png"
+            ],
+            "expression_default": [
+              "assets/characters/scharnhorst/processed/ui/scharnhorst_expr_default.png"
+            ],
+            "expression_serious": [
+              "assets/characters/scharnhorst/processed/ui/scharnhorst_expr_serious.png"
+            ],
+            "expression_hit": [
+              "assets/characters/scharnhorst/processed/ui/scharnhorst_expr_hit.png"
+            ],
+            "portrait": [
+              "assets/characters/scharnhorst/processed/ui/scharnhorst_ui_portrait.png"
+            ],
+            "portrait_small": [
+              "assets/characters/scharnhorst/processed/ui/scharnhorst_ui_portrait_small.png"
+            ],
+            "chibi_head": [
+              "assets/characters/scharnhorst/processed/ui/scharnhorst_ui_chibi_head.png"
+            ],
+            "skill_icon": [
+              "assets/characters/scharnhorst/processed/ui/scharnhorst_ui_skill_high_speed_interception.png"
+            ],
+            "class_icon": [
+              "assets/characters/scharnhorst/processed/ui/scharnhorst_ui_class_battleship.png"
+            ],
+            "battle_body": [
+              "assets/characters/scharnhorst/processed/battle/scharnhorst_battle_body_r.png"
+            ],
+            "rig_base": [
+              "assets/characters/scharnhorst/processed/battle/scharnhorst_battle_rig_base.png"
+            ],
+            "main_weapon": [
+              "assets/characters/scharnhorst/processed/battle/scharnhorst_battle_turret_main_01.png",
+              "assets/characters/scharnhorst/processed/battle/scharnhorst_battle_turret_secondary_01.png"
+            ],
+            "anim_idle": [
+              "assets/characters/scharnhorst/processed/anim/scharnhorst_anim_idle_keyframe.png"
+            ],
+            "anim_move": [
+              "assets/characters/scharnhorst/processed/anim/scharnhorst_anim_move_keyframe.png"
+            ],
+            "anim_attack": [
+              "assets/characters/scharnhorst/processed/anim/scharnhorst_anim_attack_keyframe.png"
+            ],
+            "anim_hit": [
+              "assets/characters/scharnhorst/processed/anim/scharnhorst_anim_hit_keyframe.png"
+            ],
+            "anim_firepower": [
+              "assets/characters/scharnhorst/processed/anim/scharnhorst_anim_firepower_keyframe.png"
+            ],
+            "vfx": [
+              "assets/characters/scharnhorst/processed/vfx/scharnhorst_vfx_armor_sparks.png",
+              "assets/characters/scharnhorst/processed/vfx/scharnhorst_vfx_broadside_smoke.png",
+              "assets/characters/scharnhorst/processed/vfx/scharnhorst_vfx_command_aura.png",
+              "assets/characters/scharnhorst/processed/vfx/scharnhorst_vfx_fire_control_lock.png",
+              "assets/characters/scharnhorst/processed/vfx/scharnhorst_vfx_high_speed_heavy_wake.png",
+              "assets/characters/scharnhorst/processed/vfx/scharnhorst_vfx_interception_line.png",
+              "assets/characters/scharnhorst/processed/vfx/scharnhorst_vfx_shell_trail_heavy.png",
+              "assets/characters/scharnhorst/processed/vfx/scharnhorst_vfx_water_splash_large.png"
+            ],
+            "bind_points": [
+              "assets/characters/scharnhorst/processed/config/scharnhorst_meta_bind_points.json"
+            ],
+            "anim_config": [
+              "assets/characters/scharnhorst/processed/config/scharnhorst_anim_config.json"
+            ],
+            "vfx_config": [
+              "assets/characters/scharnhorst/processed/config/scharnhorst_vfx_config.json"
+            ],
+            "manifest": [
+              "assets/characters/scharnhorst/processed/config/scharnhorst_postprocess_manifest.json"
+            ]
+          }
+        },
+        "batch_ready": false,
+        "technical_ready": false,
+        "visual_review": {
+          "status": "pending",
+          "accepted": false,
+          "issues": [
+            "visual review pending/blocking: assets/characters/scharnhorst/processed/anim/scharnhorst_anim_attack_frame_01.png",
+            "visual review pending/blocking: assets/characters/scharnhorst/processed/anim/scharnhorst_anim_attack_frame_02.png",
+            "visual review pending/blocking: assets/characters/scharnhorst/processed/anim/scharnhorst_anim_attack_frame_03.png",
+            "visual review pending/blocking: assets/characters/scharnhorst/processed/anim/scharnhorst_anim_attack_frame_04.png",
+            "visual review pending/blocking: assets/characters/scharnhorst/processed/anim/scharnhorst_anim_attack_keyframe.png",
+            "visual review pending/blocking: assets/characters/scharnhorst/processed/anim/scharnhorst_anim_firepower_frame_01.png",
+            "visual review pending/blocking: assets/characters/scharnhorst/processed/anim/scharnhorst_anim_firepower_frame_02.png",
+            "visual review pending/blocking: assets/characters/scharnhorst/processed/anim/scharnhorst_anim_firepower_frame_03.png",
+            "visual review pending/blocking: assets/characters/scharnhorst/processed/anim/scharnhorst_anim_firepower_frame_04.png",
+            "visual review pending/blocking: assets/characters/scharnhorst/processed/anim/scharnhorst_anim_firepower_keyframe.png",
+            "visual review pending/blocking: assets/characters/scharnhorst/processed/anim/scharnhorst_anim_hit_frame_01.png",
+            "visual review pending/blocking: assets/characters/scharnhorst/processed/anim/scharnhorst_anim_hit_frame_02.png",
+            "visual review pending/blocking: assets/characters/scharnhorst/processed/anim/scharnhorst_anim_hit_frame_03.png",
+            "visual review pending/blocking: assets/characters/scharnhorst/processed/anim/scharnhorst_anim_hit_frame_04.png",
+            "visual review pending/blocking: assets/characters/scharnhorst/processed/anim/scharnhorst_anim_hit_keyframe.png",
+            "visual review pending/blocking: assets/characters/scharnhorst/processed/anim/scharnhorst_anim_idle_frame_01.png",
+            "visual review pending/blocking: assets/characters/scharnhorst/processed/anim/scharnhorst_anim_idle_frame_02.png",
+            "visual review pending/blocking: assets/characters/scharnhorst/processed/anim/scharnhorst_anim_idle_frame_03.png",
+            "visual review pending/blocking: assets/characters/scharnhorst/processed/anim/scharnhorst_anim_idle_frame_04.png",
+            "visual review pending/blocking: assets/characters/scharnhorst/processed/anim/scharnhorst_anim_idle_keyframe.png",
+            "visual review pending/blocking: assets/characters/scharnhorst/processed/anim/scharnhorst_anim_move_frame_01.png",
+            "visual review pending/blocking: assets/characters/scharnhorst/processed/anim/scharnhorst_anim_move_frame_02.png",
+            "visual review pending/blocking: assets/characters/scharnhorst/processed/anim/scharnhorst_anim_move_frame_03.png",
+            "visual review pending/blocking: assets/characters/scharnhorst/processed/anim/scharnhorst_anim_move_frame_04.png",
+            "visual review pending/blocking: assets/characters/scharnhorst/processed/anim/scharnhorst_anim_move_keyframe.png",
+            "visual review pending/blocking: assets/characters/scharnhorst/processed/battle/scharnhorst_battle_body_r.png",
+            "visual review pending/blocking: assets/characters/scharnhorst/processed/battle/scharnhorst_battle_fire_control_node.png",
+            "visual review pending/blocking: assets/characters/scharnhorst/processed/battle/scharnhorst_battle_flagship_marker.png",
+            "visual review pending/blocking: assets/characters/scharnhorst/processed/battle/scharnhorst_battle_propulsion_node.png",
+            "visual review pending/blocking: assets/characters/scharnhorst/processed/battle/scharnhorst_battle_rig_base.png",
+            "visual review pending/blocking: assets/characters/scharnhorst/processed/battle/scharnhorst_battle_turret_main_01.png",
+            "visual review pending/blocking: assets/characters/scharnhorst/processed/battle/scharnhorst_battle_turret_secondary_01.png",
+            "visual review pending/blocking: assets/characters/scharnhorst/processed/battle/scharnhorst_battle_wake_origin_marker.png",
+            "visual review pending/blocking: assets/characters/scharnhorst/processed/ui/scharnhorst_expr_default.png",
+            "visual review pending/blocking: assets/characters/scharnhorst/processed/ui/scharnhorst_expr_hit.png",
+            "visual review pending/blocking: assets/characters/scharnhorst/processed/ui/scharnhorst_expr_serious.png",
+            "visual review pending/blocking: assets/characters/scharnhorst/processed/ui/scharnhorst_illust_full_alpha.png",
+            "visual review pending/blocking: assets/characters/scharnhorst/processed/ui/scharnhorst_illust_half_alpha.png",
+            "visual review pending/blocking: assets/characters/scharnhorst/processed/ui/scharnhorst_illust_skill_cutin_alpha.png",
+            "visual review pending/blocking: assets/characters/scharnhorst/processed/ui/scharnhorst_ui_chibi_head.png",
+            "visual review pending/blocking: assets/characters/scharnhorst/processed/ui/scharnhorst_ui_class_battleship.png",
+            "visual review pending/blocking: assets/characters/scharnhorst/processed/ui/scharnhorst_ui_portrait.png",
+            "visual review pending/blocking: assets/characters/scharnhorst/processed/ui/scharnhorst_ui_portrait_small.png",
+            "visual review pending/blocking: assets/characters/scharnhorst/processed/ui/scharnhorst_ui_skill_high_speed_interception.png",
+            "visual review pending/blocking: assets/characters/scharnhorst/processed/vfx/scharnhorst_vfx_armor_sparks.png",
+            "visual review pending/blocking: assets/characters/scharnhorst/processed/vfx/scharnhorst_vfx_broadside_smoke.png",
+            "visual review pending/blocking: assets/characters/scharnhorst/processed/vfx/scharnhorst_vfx_command_aura.png",
+            "visual review pending/blocking: assets/characters/scharnhorst/processed/vfx/scharnhorst_vfx_fire_control_lock.png",
+            "visual review pending/blocking: assets/characters/scharnhorst/processed/vfx/scharnhorst_vfx_high_speed_heavy_wake.png",
+            "visual review pending/blocking: assets/characters/scharnhorst/processed/vfx/scharnhorst_vfx_interception_line.png",
+            "visual review pending/blocking: assets/characters/scharnhorst/processed/vfx/scharnhorst_vfx_shell_trail_heavy.png",
+            "visual review pending/blocking: assets/characters/scharnhorst/processed/vfx/scharnhorst_vfx_water_splash_large.png"
+          ]
+        },
+        "delivery_ready": false,
+        "postprocess_ready": true
+      }
+    },
+    {
+      "character_id": "graf_zeppelin",
+      "status": "incomplete",
+      "elapsed_seconds": 18.97,
+      "preview": "assets/characters/qa/edge_qa_graf_zeppelin.html",
+      "inspection": {
+        "character_id": "graf_zeppelin",
+        "sources": {
+          "complete": true,
+          "missing": [],
+          "source_quality_issues": [],
+          "base_complete": true,
+          "four_frame_complete": true,
+          "production_route": "generated_state_sheets"
+        },
+        "configuration": {
+          "crop_specs": false,
+          "runtime_config": false,
+          "postprocess_plan": true,
+          "generic_postprocess": true,
+          "contract_ship_class": true
+        },
+        "contract": {
+          "character_id": "graf_zeppelin",
+          "ship_class": "carrier",
+          "status": "incomplete",
+          "missing_roles": [],
+          "invalid_files": [],
+          "data_issues": [
+            "animation pose variation too low: move (registered alpha IoU 0.865 >= 0.86; translations, tints, and detached flashes do not satisfy the action contract)",
+            "animation pose variation too low: attack (registered alpha IoU 0.865 >= 0.78; translations, tints, and detached flashes do not satisfy the action contract)",
+            "animation pose variation too low: firepower (registered alpha IoU 0.893 >= 0.86; translations, tints, and detached flashes do not satisfy the action contract)"
+          ],
+          "found_roles": {
+            "full_body": [
+              "assets/characters/graf_zeppelin/processed/ui/graf_zeppelin_illust_full_alpha.png"
+            ],
+            "half_body": [
+              "assets/characters/graf_zeppelin/processed/ui/graf_zeppelin_illust_half_alpha.png"
+            ],
+            "skill_cutin": [
+              "assets/characters/graf_zeppelin/processed/ui/graf_zeppelin_illust_skill_cutin_alpha.png"
+            ],
+            "expression_default": [
+              "assets/characters/graf_zeppelin/processed/ui/graf_zeppelin_expr_default.png"
+            ],
+            "expression_serious": [
+              "assets/characters/graf_zeppelin/processed/ui/graf_zeppelin_expr_serious.png"
+            ],
+            "expression_hit": [
+              "assets/characters/graf_zeppelin/processed/ui/graf_zeppelin_expr_hit.png"
+            ],
+            "portrait": [
+              "assets/characters/graf_zeppelin/processed/ui/graf_zeppelin_ui_portrait.png"
+            ],
+            "portrait_small": [
+              "assets/characters/graf_zeppelin/processed/ui/graf_zeppelin_ui_portrait_small.png"
+            ],
+            "chibi_head": [
+              "assets/characters/graf_zeppelin/processed/ui/graf_zeppelin_ui_chibi_head.png"
+            ],
+            "skill_icon": [
+              "assets/characters/graf_zeppelin/processed/ui/graf_zeppelin_ui_skill_experimental_air_wing.png"
+            ],
+            "class_icon": [
+              "assets/characters/graf_zeppelin/processed/ui/graf_zeppelin_ui_class_carrier.png"
+            ],
+            "battle_body": [
+              "assets/characters/graf_zeppelin/processed/battle/graf_zeppelin_battle_body_r.png"
+            ],
+            "rig_base": [
+              "assets/characters/graf_zeppelin/processed/battle/graf_zeppelin_battle_rig_base.png"
+            ],
+            "main_weapon": [
+              "assets/characters/graf_zeppelin/processed/battle/graf_zeppelin_battle_aircraft_group_01.png",
+              "assets/characters/graf_zeppelin/processed/battle/graf_zeppelin_battle_aircraft_launch_marker.png",
+              "assets/characters/graf_zeppelin/processed/battle/graf_zeppelin_battle_aircraft_recovery_marker.png",
+              "assets/characters/graf_zeppelin/processed/battle/graf_zeppelin_battle_turret_secondary_01.png"
+            ],
+            "anim_idle": [
+              "assets/characters/graf_zeppelin/processed/anim/graf_zeppelin_anim_idle_keyframe.png"
+            ],
+            "anim_move": [
+              "assets/characters/graf_zeppelin/processed/anim/graf_zeppelin_anim_move_keyframe.png"
+            ],
+            "anim_attack": [
+              "assets/characters/graf_zeppelin/processed/anim/graf_zeppelin_anim_attack_keyframe.png"
+            ],
+            "anim_hit": [
+              "assets/characters/graf_zeppelin/processed/anim/graf_zeppelin_anim_hit_keyframe.png"
+            ],
+            "anim_firepower": [
+              "assets/characters/graf_zeppelin/processed/anim/graf_zeppelin_anim_firepower_keyframe.png"
+            ],
+            "vfx": [
+              "assets/characters/graf_zeppelin/processed/vfx/graf_zeppelin_vfx_aa_burst.png",
+              "assets/characters/graf_zeppelin/processed/vfx/graf_zeppelin_vfx_aircraft_formation.png",
+              "assets/characters/graf_zeppelin/processed/vfx/graf_zeppelin_vfx_aircraft_launch_flash.png",
+              "assets/characters/graf_zeppelin/processed/vfx/graf_zeppelin_vfx_aircraft_recovery.png",
+              "assets/characters/graf_zeppelin/processed/vfx/graf_zeppelin_vfx_airstrike_area.png",
+              "assets/characters/graf_zeppelin/processed/vfx/graf_zeppelin_vfx_experimental_flight_lane.png",
+              "assets/characters/graf_zeppelin/processed/vfx/graf_zeppelin_vfx_skill_aura.png",
+              "assets/characters/graf_zeppelin/processed/vfx/graf_zeppelin_vfx_unfinished_plan_overlay.png"
+            ],
+            "bind_points": [
+              "assets/characters/graf_zeppelin/processed/config/graf_zeppelin_meta_bind_points.json"
+            ],
+            "anim_config": [
+              "assets/characters/graf_zeppelin/processed/config/graf_zeppelin_anim_config.json"
+            ],
+            "vfx_config": [
+              "assets/characters/graf_zeppelin/processed/config/graf_zeppelin_vfx_config.json"
+            ],
+            "manifest": [
+              "assets/characters/graf_zeppelin/processed/config/graf_zeppelin_postprocess_manifest.json"
+            ]
+          }
+        },
+        "batch_ready": false,
+        "technical_ready": false,
+        "visual_review": {
+          "status": "pending",
+          "accepted": false,
+          "issues": [
+            "visual review pending/blocking: assets/characters/graf_zeppelin/processed/anim/graf_zeppelin_anim_attack_frame_01.png",
+            "visual review pending/blocking: assets/characters/graf_zeppelin/processed/anim/graf_zeppelin_anim_attack_frame_02.png",
+            "visual review pending/blocking: assets/characters/graf_zeppelin/processed/anim/graf_zeppelin_anim_attack_frame_03.png",
+            "visual review pending/blocking: assets/characters/graf_zeppelin/processed/anim/graf_zeppelin_anim_attack_frame_04.png",
+            "visual review pending/blocking: assets/characters/graf_zeppelin/processed/anim/graf_zeppelin_anim_attack_keyframe.png",
+            "visual review pending/blocking: assets/characters/graf_zeppelin/processed/anim/graf_zeppelin_anim_firepower_frame_01.png",
+            "visual review pending/blocking: assets/characters/graf_zeppelin/processed/anim/graf_zeppelin_anim_firepower_frame_02.png",
+            "visual review pending/blocking: assets/characters/graf_zeppelin/processed/anim/graf_zeppelin_anim_firepower_frame_03.png",
+            "visual review pending/blocking: assets/characters/graf_zeppelin/processed/anim/graf_zeppelin_anim_firepower_frame_04.png",
+            "visual review pending/blocking: assets/characters/graf_zeppelin/processed/anim/graf_zeppelin_anim_firepower_keyframe.png",
+            "visual review pending/blocking: assets/characters/graf_zeppelin/processed/anim/graf_zeppelin_anim_hit_frame_01.png",
+            "visual review pending/blocking: assets/characters/graf_zeppelin/processed/anim/graf_zeppelin_anim_hit_frame_02.png",
+            "visual review pending/blocking: assets/characters/graf_zeppelin/processed/anim/graf_zeppelin_anim_hit_frame_03.png",
+            "visual review pending/blocking: assets/characters/graf_zeppelin/processed/anim/graf_zeppelin_anim_hit_frame_04.png",
+            "visual review pending/blocking: assets/characters/graf_zeppelin/processed/anim/graf_zeppelin_anim_hit_keyframe.png",
+            "visual review pending/blocking: assets/characters/graf_zeppelin/processed/anim/graf_zeppelin_anim_idle_frame_01.png",
+            "visual review pending/blocking: assets/characters/graf_zeppelin/processed/anim/graf_zeppelin_anim_idle_frame_02.png",
+            "visual review pending/blocking: assets/characters/graf_zeppelin/processed/anim/graf_zeppelin_anim_idle_frame_03.png",
+            "visual review pending/blocking: assets/characters/graf_zeppelin/processed/anim/graf_zeppelin_anim_idle_frame_04.png",
+            "visual review pending/blocking: assets/characters/graf_zeppelin/processed/anim/graf_zeppelin_anim_idle_keyframe.png",
+            "visual review pending/blocking: assets/characters/graf_zeppelin/processed/anim/graf_zeppelin_anim_move_frame_01.png",
+            "visual review pending/blocking: assets/characters/graf_zeppelin/processed/anim/graf_zeppelin_anim_move_frame_02.png",
+            "visual review pending/blocking: assets/characters/graf_zeppelin/processed/anim/graf_zeppelin_anim_move_frame_03.png",
+            "visual review pending/blocking: assets/characters/graf_zeppelin/processed/anim/graf_zeppelin_anim_move_frame_04.png",
+            "visual review pending/blocking: assets/characters/graf_zeppelin/processed/anim/graf_zeppelin_anim_move_keyframe.png",
+            "visual review pending/blocking: assets/characters/graf_zeppelin/processed/battle/graf_zeppelin_battle_aa_center.png",
+            "visual review pending/blocking: assets/characters/graf_zeppelin/processed/battle/graf_zeppelin_battle_aircraft_group_01.png",
+            "visual review pending/blocking: assets/characters/graf_zeppelin/processed/battle/graf_zeppelin_battle_aircraft_launch_marker.png",
+            "visual review pending/blocking: assets/characters/graf_zeppelin/processed/battle/graf_zeppelin_battle_aircraft_recovery_marker.png",
+            "visual review pending/blocking: assets/characters/graf_zeppelin/processed/battle/graf_zeppelin_battle_body_r.png",
+            "visual review pending/blocking: assets/characters/graf_zeppelin/processed/battle/graf_zeppelin_battle_flight_deck.png",
+            "visual review pending/blocking: assets/characters/graf_zeppelin/processed/battle/graf_zeppelin_battle_rig_base.png",
+            "visual review pending/blocking: assets/characters/graf_zeppelin/processed/battle/graf_zeppelin_battle_turret_secondary_01.png",
+            "visual review pending/blocking: assets/characters/graf_zeppelin/processed/ui/graf_zeppelin_expr_default.png",
+            "visual review pending/blocking: assets/characters/graf_zeppelin/processed/ui/graf_zeppelin_expr_hit.png",
+            "visual review pending/blocking: assets/characters/graf_zeppelin/processed/ui/graf_zeppelin_expr_serious.png",
+            "visual review pending/blocking: assets/characters/graf_zeppelin/processed/ui/graf_zeppelin_illust_full_alpha.png",
+            "visual review pending/blocking: assets/characters/graf_zeppelin/processed/ui/graf_zeppelin_illust_half_alpha.png",
+            "visual review pending/blocking: assets/characters/graf_zeppelin/processed/ui/graf_zeppelin_illust_skill_cutin_alpha.png",
+            "visual review pending/blocking: assets/characters/graf_zeppelin/processed/ui/graf_zeppelin_ui_chibi_head.png",
+            "visual review pending/blocking: assets/characters/graf_zeppelin/processed/ui/graf_zeppelin_ui_class_carrier.png",
+            "visual review pending/blocking: assets/characters/graf_zeppelin/processed/ui/graf_zeppelin_ui_portrait.png",
+            "visual review pending/blocking: assets/characters/graf_zeppelin/processed/ui/graf_zeppelin_ui_portrait_small.png",
+            "visual review pending/blocking: assets/characters/graf_zeppelin/processed/ui/graf_zeppelin_ui_skill_experimental_air_wing.png",
+            "visual review pending/blocking: assets/characters/graf_zeppelin/processed/vfx/graf_zeppelin_vfx_aa_burst.png",
+            "visual review pending/blocking: assets/characters/graf_zeppelin/processed/vfx/graf_zeppelin_vfx_aircraft_formation.png",
+            "visual review pending/blocking: assets/characters/graf_zeppelin/processed/vfx/graf_zeppelin_vfx_aircraft_launch_flash.png",
+            "visual review pending/blocking: assets/characters/graf_zeppelin/processed/vfx/graf_zeppelin_vfx_aircraft_recovery.png",
+            "visual review pending/blocking: assets/characters/graf_zeppelin/processed/vfx/graf_zeppelin_vfx_airstrike_area.png",
+            "visual review pending/blocking: assets/characters/graf_zeppelin/processed/vfx/graf_zeppelin_vfx_experimental_flight_lane.png",
+            "visual review pending/blocking: assets/characters/graf_zeppelin/processed/vfx/graf_zeppelin_vfx_skill_aura.png",
+            "visual review pending/blocking: assets/characters/graf_zeppelin/processed/vfx/graf_zeppelin_vfx_unfinished_plan_overlay.png"
+          ]
+        },
+        "delivery_ready": false,
+        "postprocess_ready": true
+      }
+    }
+  ]
+}

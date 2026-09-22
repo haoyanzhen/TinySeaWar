@@ -17,17 +17,31 @@
   "mount_instances": {
     "torpedo_fore": 6
   },
+  "object_inventory": {
+    "torpedo_fore": {
+      "instances": 6
+    }
+  },
   "bindings": {
     "battle_rig_base": [
       "rig_mount",
-      "wake_origin",
       "skill_origin",
+      "wake_origin",
       "torpedo_fore_mount_01",
       "torpedo_fore_mount_02",
       "torpedo_fore_mount_03",
       "torpedo_fore_mount_04",
       "torpedo_fore_mount_05",
       "torpedo_fore_mount_06"
+    ],
+    "battle_torpedo_tube_fore": [
+      "pivot",
+      "torpedo_port_01",
+      "torpedo_port_02",
+      "torpedo_port_03",
+      "torpedo_port_04",
+      "torpedo_port_05",
+      "torpedo_port_06"
     ]
   },
   "vfx_roles": [
@@ -44,7 +58,7 @@
     "coastal_ambush_sector": "torpedo.warning.fan",
     "surface_ripple": "skill.area",
     "sonar_pulse": "submarine.sonar_pulse",
-    "torpedo_launch_flash": "torpedo.trail.submerged",
+    "torpedo_launch_flash": "torpedo.launch.submerged",
     "torpedo_trail": "torpedo.trail.submerged",
     "underwater_shadow": "skill.area",
     "dive_ripple": "skill.area",
@@ -55,5 +69,85 @@
     "Character body, rig base, weapon nodes, and VFX must remain visually separable.",
     "Submarine character must wear fitted waterproof or tactical boots; no swim fins on feet.",
     "Only bow torpedo ports; no stern torpedo node."
-  ]
+  ],
+  "manifest_schema_version": 2,
+  "weapon_binding_rules": {
+    "upholder_torpedo": {
+      "asset_role": "battle_torpedo_tube_fore",
+      "launch_bind": "torpedo_port_01",
+      "muzzle_vfx_role": "torpedo_launch_flash",
+      "launch_profile": "vfx.profile.torpedo_launch",
+      "impact_profile": "vfx.profile.torpedo_impact"
+    }
+  },
+  "binding_positions": {
+    "battle_rig_base": {
+      "rig_mount": {
+        "x": 0.47368,
+        "y": 0.52812
+      },
+      "skill_origin": {
+        "x": 0.47368,
+        "y": 0.52812
+      },
+      "wake_origin": {
+        "x": 0.08158,
+        "y": 0.53438
+      },
+      "torpedo_fore_mount_01": {
+        "x": 0.78421,
+        "y": 0.48438
+      },
+      "torpedo_fore_mount_02": {
+        "x": 0.79737,
+        "y": 0.48438
+      },
+      "torpedo_fore_mount_03": {
+        "x": 0.81053,
+        "y": 0.48438
+      },
+      "torpedo_fore_mount_04": {
+        "x": 0.78421,
+        "y": 0.54063
+      },
+      "torpedo_fore_mount_05": {
+        "x": 0.79737,
+        "y": 0.54063
+      },
+      "torpedo_fore_mount_06": {
+        "x": 0.81053,
+        "y": 0.54063
+      }
+    },
+    "battle_torpedo_tube_fore": {
+      "pivot": {
+        "x": 0.39523,
+        "y": 0.53169
+      },
+      "torpedo_port_01": {
+        "x": 0.58886,
+        "y": 0.39789
+      },
+      "torpedo_port_02": {
+        "x": 0.71088,
+        "y": 0.39789
+      },
+      "torpedo_port_03": {
+        "x": 0.83289,
+        "y": 0.39789
+      },
+      "torpedo_port_04": {
+        "x": 0.58886,
+        "y": 0.60915
+      },
+      "torpedo_port_05": {
+        "x": 0.71088,
+        "y": 0.60915
+      },
+      "torpedo_port_06": {
+        "x": 0.83289,
+        "y": 0.60915
+      }
+    }
+  }
 }

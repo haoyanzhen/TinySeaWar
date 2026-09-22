@@ -18,6 +18,16 @@
     "torpedo_fore": 6,
     "aircraft_launch": 1
   },
+  "object_inventory": {
+    "torpedo_fore": {
+      "instances": 6,
+      "tubes_per_instance": 1,
+      "bank": "six_bow_openings"
+    },
+    "aircraft_launch": {
+      "instances": 1
+    }
+  },
   "bindings": {
     "battle_rig_base": [
       "rig_mount",
@@ -30,6 +40,15 @@
       "torpedo_fore_mount_05",
       "torpedo_fore_mount_06",
       "aircraft_launch_01"
+    ],
+    "battle_torpedo_tube_fore": [
+      "pivot",
+      "torpedo_port_01",
+      "torpedo_port_02",
+      "torpedo_port_03",
+      "torpedo_port_04",
+      "torpedo_port_05",
+      "torpedo_port_06"
     ]
   },
   "vfx_roles": [
@@ -46,7 +65,7 @@
     "floatplane_scan": "submarine.sonar_pulse",
     "long_range_torpedo_trail": "torpedo.trail.submerged",
     "sonar_pulse": "submarine.sonar_pulse",
-    "torpedo_launch_flash": "torpedo.trail.submerged",
+    "torpedo_launch_flash": "torpedo.launch.surface",
     "torpedo_trail": "torpedo.trail.submerged",
     "underwater_shadow": "skill.area",
     "dive_ripple": "skill.area",
@@ -57,5 +76,98 @@
     "Character body, rig base, weapon nodes, and VFX must remain visually separable.",
     "Submarine character must wear fitted waterproof or tactical boots; no swim fins on feet.",
     "Only bow torpedo ports; no stern torpedo node; floatplane remains separable."
-  ]
+  ],
+  "manifest_schema_version": 2,
+  "weapon_binding_rules": {
+    "i_19_torpedo": {
+      "asset_role": "battle_torpedo_tube_fore",
+      "launch_bind": "torpedo_port_01",
+      "muzzle_vfx_role": "torpedo_launch_flash"
+    },
+    "i_19_scout": {
+      "asset_role": "battle_rig_base",
+      "launch_bind": "aircraft_launch_01",
+      "muzzle_vfx_role": "aircraft_launch_flash"
+    }
+  },
+  "additional_public_vfx_roles": {
+    "aircraft_launch_flash": {
+      "semantic": "aircraft.path",
+      "file": "assets/vfx/combat/aircraft/vfx_aircraft_launch_trail_01.png"
+    }
+  },
+  "binding_positions": {
+    "battle_rig_base": {
+      "rig_mount": {
+        "x": 0.5,
+        "y": 0.43
+      },
+      "wake_origin": {
+        "x": 0.91,
+        "y": 0.5
+      },
+      "skill_origin": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "torpedo_fore_mount_01": {
+        "x": 0.12,
+        "y": 0.39
+      },
+      "torpedo_fore_mount_02": {
+        "x": 0.17,
+        "y": 0.39
+      },
+      "torpedo_fore_mount_03": {
+        "x": 0.22,
+        "y": 0.39
+      },
+      "torpedo_fore_mount_04": {
+        "x": 0.12,
+        "y": 0.52
+      },
+      "torpedo_fore_mount_05": {
+        "x": 0.17,
+        "y": 0.52
+      },
+      "torpedo_fore_mount_06": {
+        "x": 0.22,
+        "y": 0.52
+      },
+      "aircraft_launch_01": {
+        "x": 0.24,
+        "y": 0.24
+      }
+    },
+    "battle_torpedo_tube_fore": {
+      "pivot": {
+        "x": 0.58,
+        "y": 0.5
+      },
+      "torpedo_port_01": {
+        "x": 0.18,
+        "y": 0.35
+      },
+      "torpedo_port_02": {
+        "x": 0.32,
+        "y": 0.35
+      },
+      "torpedo_port_03": {
+        "x": 0.47,
+        "y": 0.35
+      },
+      "torpedo_port_04": {
+        "x": 0.18,
+        "y": 0.6
+      },
+      "torpedo_port_05": {
+        "x": 0.32,
+        "y": 0.6
+      },
+      "torpedo_port_06": {
+        "x": 0.47,
+        "y": 0.6
+      }
+    }
+  }
 }

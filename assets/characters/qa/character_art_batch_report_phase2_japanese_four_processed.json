@@ -1,0 +1,725 @@
+{
+  "mode": "process",
+  "required_gate": "technical_ready",
+  "gate_passed": true,
+  "summary": {
+    "characters": 4,
+    "batch_ready": 4,
+    "complete": 4,
+    "delivery_ready": 0,
+    "blocked": 0,
+    "failed": 0
+  },
+  "results": [
+    {
+      "character_id": "akizuki",
+      "status": "complete",
+      "elapsed_seconds": 33.97,
+      "preview": "assets/characters/qa/edge_qa_akizuki.html",
+      "inspection": {
+        "character_id": "akizuki",
+        "sources": {
+          "complete": true,
+          "missing": [],
+          "source_quality_issues": [],
+          "base_complete": true,
+          "four_frame_complete": true,
+          "production_route": "generated_state_sheets"
+        },
+        "configuration": {
+          "crop_specs": false,
+          "runtime_config": false,
+          "postprocess_plan": true,
+          "generic_postprocess": true,
+          "contract_ship_class": true
+        },
+        "contract": {
+          "character_id": "akizuki",
+          "ship_class": "destroyer",
+          "status": "complete",
+          "missing_roles": [],
+          "invalid_files": [],
+          "data_issues": [],
+          "found_roles": {
+            "full_body": [
+              "assets/characters/akizuki/processed/ui/akizuki_illust_full_alpha.png"
+            ],
+            "half_body": [
+              "assets/characters/akizuki/processed/ui/akizuki_illust_half_alpha.png"
+            ],
+            "skill_cutin": [
+              "assets/characters/akizuki/processed/ui/akizuki_illust_skill_cutin_alpha.png"
+            ],
+            "expression_default": [
+              "assets/characters/akizuki/processed/ui/akizuki_expr_default.png"
+            ],
+            "expression_serious": [
+              "assets/characters/akizuki/processed/ui/akizuki_expr_serious.png"
+            ],
+            "expression_hit": [
+              "assets/characters/akizuki/processed/ui/akizuki_expr_hit.png"
+            ],
+            "portrait": [
+              "assets/characters/akizuki/processed/ui/akizuki_ui_portrait.png"
+            ],
+            "portrait_small": [
+              "assets/characters/akizuki/processed/ui/akizuki_ui_portrait_small.png"
+            ],
+            "chibi_head": [
+              "assets/characters/akizuki/processed/ui/akizuki_ui_chibi_head.png"
+            ],
+            "skill_icon": [
+              "assets/characters/akizuki/processed/ui/akizuki_ui_skill_long_ten_cm_air_guard.png"
+            ],
+            "class_icon": [
+              "assets/characters/akizuki/processed/ui/akizuki_ui_class_destroyer.png"
+            ],
+            "battle_body": [
+              "assets/characters/akizuki/processed/battle/akizuki_battle_body_r.png"
+            ],
+            "rig_base": [
+              "assets/characters/akizuki/processed/battle/akizuki_battle_rig_base.png"
+            ],
+            "main_weapon": [
+              "assets/characters/akizuki/processed/battle/akizuki_battle_torpedo_tube_01.png",
+              "assets/characters/akizuki/processed/battle/akizuki_battle_turret_main_01.png"
+            ],
+            "anim_idle": [
+              "assets/characters/akizuki/processed/anim/akizuki_anim_idle_keyframe.png"
+            ],
+            "anim_move": [
+              "assets/characters/akizuki/processed/anim/akizuki_anim_move_keyframe.png"
+            ],
+            "anim_attack": [
+              "assets/characters/akizuki/processed/anim/akizuki_anim_attack_keyframe.png"
+            ],
+            "anim_hit": [
+              "assets/characters/akizuki/processed/anim/akizuki_anim_hit_keyframe.png"
+            ],
+            "anim_firepower": [
+              "assets/characters/akizuki/processed/anim/akizuki_anim_firepower_keyframe.png"
+            ],
+            "vfx": [
+              "assets/characters/akizuki/processed/vfx/akizuki_vfx_aa_circle.png",
+              "assets/characters/akizuki/processed/vfx/akizuki_vfx_escort_interception.png",
+              "assets/characters/akizuki/processed/vfx/akizuki_vfx_moonwhite_aa_ring.png",
+              "assets/characters/akizuki/processed/vfx/akizuki_vfx_muzzle_flash_small.png",
+              "assets/characters/akizuki/processed/vfx/akizuki_vfx_range_reticle.png",
+              "assets/characters/akizuki/processed/vfx/akizuki_vfx_skill_aura.png",
+              "assets/characters/akizuki/processed/vfx/akizuki_vfx_torpedo_launch_flash.png",
+              "assets/characters/akizuki/processed/vfx/akizuki_vfx_water_splash.png"
+            ],
+            "bind_points": [
+              "assets/characters/akizuki/processed/config/akizuki_meta_bind_points.json"
+            ],
+            "anim_config": [
+              "assets/characters/akizuki/processed/config/akizuki_anim_config.json"
+            ],
+            "vfx_config": [
+              "assets/characters/akizuki/processed/config/akizuki_vfx_config.json"
+            ],
+            "manifest": [
+              "assets/characters/akizuki/processed/config/akizuki_postprocess_manifest.json"
+            ]
+          }
+        },
+        "batch_ready": true,
+        "technical_ready": true,
+        "visual_review": {
+          "status": "pending",
+          "accepted": false,
+          "issues": [
+            "visual review pending/blocking: assets/characters/akizuki/processed/anim/akizuki_anim_attack_frame_01.png",
+            "visual review pending/blocking: assets/characters/akizuki/processed/anim/akizuki_anim_attack_frame_02.png",
+            "visual review pending/blocking: assets/characters/akizuki/processed/anim/akizuki_anim_attack_frame_03.png",
+            "visual review pending/blocking: assets/characters/akizuki/processed/anim/akizuki_anim_attack_frame_04.png",
+            "visual review pending/blocking: assets/characters/akizuki/processed/anim/akizuki_anim_attack_keyframe.png",
+            "visual review pending/blocking: assets/characters/akizuki/processed/anim/akizuki_anim_firepower_frame_01.png",
+            "visual review pending/blocking: assets/characters/akizuki/processed/anim/akizuki_anim_firepower_frame_02.png",
+            "visual review pending/blocking: assets/characters/akizuki/processed/anim/akizuki_anim_firepower_frame_03.png",
+            "visual review pending/blocking: assets/characters/akizuki/processed/anim/akizuki_anim_firepower_frame_04.png",
+            "visual review pending/blocking: assets/characters/akizuki/processed/anim/akizuki_anim_firepower_keyframe.png",
+            "visual review pending/blocking: assets/characters/akizuki/processed/anim/akizuki_anim_hit_frame_01.png",
+            "visual review pending/blocking: assets/characters/akizuki/processed/anim/akizuki_anim_hit_frame_02.png",
+            "visual review pending/blocking: assets/characters/akizuki/processed/anim/akizuki_anim_hit_frame_03.png",
+            "visual review pending/blocking: assets/characters/akizuki/processed/anim/akizuki_anim_hit_frame_04.png",
+            "visual review pending/blocking: assets/characters/akizuki/processed/anim/akizuki_anim_hit_keyframe.png",
+            "visual review pending/blocking: assets/characters/akizuki/processed/anim/akizuki_anim_idle_frame_01.png",
+            "visual review pending/blocking: assets/characters/akizuki/processed/anim/akizuki_anim_idle_frame_02.png",
+            "visual review pending/blocking: assets/characters/akizuki/processed/anim/akizuki_anim_idle_frame_03.png",
+            "visual review pending/blocking: assets/characters/akizuki/processed/anim/akizuki_anim_idle_frame_04.png",
+            "visual review pending/blocking: assets/characters/akizuki/processed/anim/akizuki_anim_idle_keyframe.png",
+            "visual review pending/blocking: assets/characters/akizuki/processed/anim/akizuki_anim_move_frame_01.png",
+            "visual review pending/blocking: assets/characters/akizuki/processed/anim/akizuki_anim_move_frame_02.png",
+            "visual review pending/blocking: assets/characters/akizuki/processed/anim/akizuki_anim_move_frame_03.png",
+            "visual review pending/blocking: assets/characters/akizuki/processed/anim/akizuki_anim_move_frame_04.png",
+            "visual review pending/blocking: assets/characters/akizuki/processed/anim/akizuki_anim_move_keyframe.png",
+            "visual review pending/blocking: assets/characters/akizuki/processed/battle/akizuki_battle_aa_center.png",
+            "visual review pending/blocking: assets/characters/akizuki/processed/battle/akizuki_battle_body_r.png",
+            "visual review pending/blocking: assets/characters/akizuki/processed/battle/akizuki_battle_radar_node.png",
+            "visual review pending/blocking: assets/characters/akizuki/processed/battle/akizuki_battle_rig_base.png",
+            "visual review pending/blocking: assets/characters/akizuki/processed/battle/akizuki_battle_support_node.png",
+            "visual review pending/blocking: assets/characters/akizuki/processed/battle/akizuki_battle_torpedo_tube_01.png",
+            "visual review pending/blocking: assets/characters/akizuki/processed/battle/akizuki_battle_turret_main_01.png",
+            "visual review pending/blocking: assets/characters/akizuki/processed/battle/akizuki_battle_wake_origin_marker.png",
+            "visual review pending/blocking: assets/characters/akizuki/processed/ui/akizuki_expr_default.png",
+            "visual review pending/blocking: assets/characters/akizuki/processed/ui/akizuki_expr_hit.png",
+            "visual review pending/blocking: assets/characters/akizuki/processed/ui/akizuki_expr_serious.png",
+            "visual review pending/blocking: assets/characters/akizuki/processed/ui/akizuki_illust_full_alpha.png",
+            "visual review pending/blocking: assets/characters/akizuki/processed/ui/akizuki_illust_half_alpha.png",
+            "visual review pending/blocking: assets/characters/akizuki/processed/ui/akizuki_illust_skill_cutin_alpha.png",
+            "visual review pending/blocking: assets/characters/akizuki/processed/ui/akizuki_ui_chibi_head.png",
+            "visual review pending/blocking: assets/characters/akizuki/processed/ui/akizuki_ui_class_destroyer.png",
+            "visual review pending/blocking: assets/characters/akizuki/processed/ui/akizuki_ui_portrait.png",
+            "visual review pending/blocking: assets/characters/akizuki/processed/ui/akizuki_ui_portrait_small.png",
+            "visual review pending/blocking: assets/characters/akizuki/processed/ui/akizuki_ui_skill_long_ten_cm_air_guard.png",
+            "visual review pending/blocking: assets/characters/akizuki/processed/vfx/akizuki_vfx_aa_circle.png",
+            "visual review pending/blocking: assets/characters/akizuki/processed/vfx/akizuki_vfx_escort_interception.png",
+            "visual review pending/blocking: assets/characters/akizuki/processed/vfx/akizuki_vfx_moonwhite_aa_ring.png",
+            "visual review pending/blocking: assets/characters/akizuki/processed/vfx/akizuki_vfx_muzzle_flash_small.png",
+            "visual review pending/blocking: assets/characters/akizuki/processed/vfx/akizuki_vfx_range_reticle.png",
+            "visual review pending/blocking: assets/characters/akizuki/processed/vfx/akizuki_vfx_skill_aura.png",
+            "visual review pending/blocking: assets/characters/akizuki/processed/vfx/akizuki_vfx_torpedo_launch_flash.png",
+            "visual review pending/blocking: assets/characters/akizuki/processed/vfx/akizuki_vfx_water_splash.png"
+          ]
+        },
+        "delivery_ready": false,
+        "postprocess_ready": true
+      }
+    },
+    {
+      "character_id": "takao",
+      "status": "complete",
+      "elapsed_seconds": 32.39,
+      "preview": "assets/characters/qa/edge_qa_takao.html",
+      "inspection": {
+        "character_id": "takao",
+        "sources": {
+          "complete": true,
+          "missing": [],
+          "source_quality_issues": [],
+          "base_complete": true,
+          "four_frame_complete": true,
+          "production_route": "generated_state_sheets"
+        },
+        "configuration": {
+          "crop_specs": false,
+          "runtime_config": false,
+          "postprocess_plan": true,
+          "generic_postprocess": true,
+          "contract_ship_class": true
+        },
+        "contract": {
+          "character_id": "takao",
+          "ship_class": "heavy_cruiser",
+          "status": "complete",
+          "missing_roles": [],
+          "invalid_files": [],
+          "data_issues": [],
+          "found_roles": {
+            "full_body": [
+              "assets/characters/takao/processed/ui/takao_illust_full_alpha.png"
+            ],
+            "half_body": [
+              "assets/characters/takao/processed/ui/takao_illust_half_alpha.png"
+            ],
+            "skill_cutin": [
+              "assets/characters/takao/processed/ui/takao_illust_skill_cutin_alpha.png"
+            ],
+            "expression_default": [
+              "assets/characters/takao/processed/ui/takao_expr_default.png"
+            ],
+            "expression_serious": [
+              "assets/characters/takao/processed/ui/takao_expr_serious.png"
+            ],
+            "expression_hit": [
+              "assets/characters/takao/processed/ui/takao_expr_hit.png"
+            ],
+            "portrait": [
+              "assets/characters/takao/processed/ui/takao_ui_portrait.png"
+            ],
+            "portrait_small": [
+              "assets/characters/takao/processed/ui/takao_ui_portrait_small.png"
+            ],
+            "chibi_head": [
+              "assets/characters/takao/processed/ui/takao_ui_chibi_head.png"
+            ],
+            "skill_icon": [
+              "assets/characters/takao/processed/ui/takao_ui_skill_night_torpedo.png"
+            ],
+            "class_icon": [
+              "assets/characters/takao/processed/ui/takao_ui_class_heavy_cruiser.png"
+            ],
+            "battle_body": [
+              "assets/characters/takao/processed/battle/takao_battle_body_r.png"
+            ],
+            "rig_base": [
+              "assets/characters/takao/processed/battle/takao_battle_rig_base.png"
+            ],
+            "main_weapon": [
+              "assets/characters/takao/processed/battle/takao_battle_torpedo_tube_01.png",
+              "assets/characters/takao/processed/battle/takao_battle_turret_main_01.png",
+              "assets/characters/takao/processed/battle/takao_battle_turret_main_02.png"
+            ],
+            "anim_idle": [
+              "assets/characters/takao/processed/anim/takao_anim_idle_keyframe.png"
+            ],
+            "anim_move": [
+              "assets/characters/takao/processed/anim/takao_anim_move_keyframe.png"
+            ],
+            "anim_attack": [
+              "assets/characters/takao/processed/anim/takao_anim_attack_keyframe.png"
+            ],
+            "anim_hit": [
+              "assets/characters/takao/processed/anim/takao_anim_hit_keyframe.png"
+            ],
+            "anim_firepower": [
+              "assets/characters/takao/processed/anim/takao_anim_firepower_keyframe.png"
+            ],
+            "vfx": [
+              "assets/characters/takao/processed/vfx/takao_vfx_armor_sparks.png",
+              "assets/characters/takao/processed/vfx/takao_vfx_fire_control_lock.png",
+              "assets/characters/takao/processed/vfx/takao_vfx_heavy_torpedo_sector.png",
+              "assets/characters/takao/processed/vfx/takao_vfx_night_target_line.png",
+              "assets/characters/takao/processed/vfx/takao_vfx_shell_trail_heavy.png",
+              "assets/characters/takao/processed/vfx/takao_vfx_skill_aura.png",
+              "assets/characters/takao/processed/vfx/takao_vfx_torpedo_warning.png",
+              "assets/characters/takao/processed/vfx/takao_vfx_water_splash_large.png"
+            ],
+            "bind_points": [
+              "assets/characters/takao/processed/config/takao_meta_bind_points.json"
+            ],
+            "anim_config": [
+              "assets/characters/takao/processed/config/takao_anim_config.json"
+            ],
+            "vfx_config": [
+              "assets/characters/takao/processed/config/takao_vfx_config.json"
+            ],
+            "manifest": [
+              "assets/characters/takao/processed/config/takao_postprocess_manifest.json"
+            ]
+          }
+        },
+        "batch_ready": true,
+        "technical_ready": true,
+        "visual_review": {
+          "status": "pending",
+          "accepted": false,
+          "issues": [
+            "visual review pending/blocking: assets/characters/takao/processed/anim/takao_anim_attack_frame_01.png",
+            "visual review pending/blocking: assets/characters/takao/processed/anim/takao_anim_attack_frame_02.png",
+            "visual review pending/blocking: assets/characters/takao/processed/anim/takao_anim_attack_frame_03.png",
+            "visual review pending/blocking: assets/characters/takao/processed/anim/takao_anim_attack_frame_04.png",
+            "visual review pending/blocking: assets/characters/takao/processed/anim/takao_anim_attack_keyframe.png",
+            "visual review pending/blocking: assets/characters/takao/processed/anim/takao_anim_firepower_frame_01.png",
+            "visual review pending/blocking: assets/characters/takao/processed/anim/takao_anim_firepower_frame_02.png",
+            "visual review pending/blocking: assets/characters/takao/processed/anim/takao_anim_firepower_frame_03.png",
+            "visual review pending/blocking: assets/characters/takao/processed/anim/takao_anim_firepower_frame_04.png",
+            "visual review pending/blocking: assets/characters/takao/processed/anim/takao_anim_firepower_keyframe.png",
+            "visual review pending/blocking: assets/characters/takao/processed/anim/takao_anim_hit_frame_01.png",
+            "visual review pending/blocking: assets/characters/takao/processed/anim/takao_anim_hit_frame_02.png",
+            "visual review pending/blocking: assets/characters/takao/processed/anim/takao_anim_hit_frame_03.png",
+            "visual review pending/blocking: assets/characters/takao/processed/anim/takao_anim_hit_frame_04.png",
+            "visual review pending/blocking: assets/characters/takao/processed/anim/takao_anim_hit_keyframe.png",
+            "visual review pending/blocking: assets/characters/takao/processed/anim/takao_anim_idle_frame_01.png",
+            "visual review pending/blocking: assets/characters/takao/processed/anim/takao_anim_idle_frame_02.png",
+            "visual review pending/blocking: assets/characters/takao/processed/anim/takao_anim_idle_frame_03.png",
+            "visual review pending/blocking: assets/characters/takao/processed/anim/takao_anim_idle_frame_04.png",
+            "visual review pending/blocking: assets/characters/takao/processed/anim/takao_anim_idle_keyframe.png",
+            "visual review pending/blocking: assets/characters/takao/processed/anim/takao_anim_move_frame_01.png",
+            "visual review pending/blocking: assets/characters/takao/processed/anim/takao_anim_move_frame_02.png",
+            "visual review pending/blocking: assets/characters/takao/processed/anim/takao_anim_move_frame_03.png",
+            "visual review pending/blocking: assets/characters/takao/processed/anim/takao_anim_move_frame_04.png",
+            "visual review pending/blocking: assets/characters/takao/processed/anim/takao_anim_move_keyframe.png",
+            "visual review pending/blocking: assets/characters/takao/processed/battle/takao_battle_body_r.png",
+            "visual review pending/blocking: assets/characters/takao/processed/battle/takao_battle_bridge_node.png",
+            "visual review pending/blocking: assets/characters/takao/processed/battle/takao_battle_fire_control_node.png",
+            "visual review pending/blocking: assets/characters/takao/processed/battle/takao_battle_rig_base.png",
+            "visual review pending/blocking: assets/characters/takao/processed/battle/takao_battle_torpedo_tube_01.png",
+            "visual review pending/blocking: assets/characters/takao/processed/battle/takao_battle_turret_main_01.png",
+            "visual review pending/blocking: assets/characters/takao/processed/battle/takao_battle_turret_main_02.png",
+            "visual review pending/blocking: assets/characters/takao/processed/battle/takao_battle_wake_origin_marker.png",
+            "visual review pending/blocking: assets/characters/takao/processed/ui/takao_expr_default.png",
+            "visual review pending/blocking: assets/characters/takao/processed/ui/takao_expr_hit.png",
+            "visual review pending/blocking: assets/characters/takao/processed/ui/takao_expr_serious.png",
+            "visual review pending/blocking: assets/characters/takao/processed/ui/takao_illust_full_alpha.png",
+            "visual review pending/blocking: assets/characters/takao/processed/ui/takao_illust_half_alpha.png",
+            "visual review pending/blocking: assets/characters/takao/processed/ui/takao_illust_skill_cutin_alpha.png",
+            "visual review pending/blocking: assets/characters/takao/processed/ui/takao_ui_chibi_head.png",
+            "visual review pending/blocking: assets/characters/takao/processed/ui/takao_ui_class_heavy_cruiser.png",
+            "visual review pending/blocking: assets/characters/takao/processed/ui/takao_ui_portrait.png",
+            "visual review pending/blocking: assets/characters/takao/processed/ui/takao_ui_portrait_small.png",
+            "visual review pending/blocking: assets/characters/takao/processed/ui/takao_ui_skill_night_torpedo.png",
+            "visual review pending/blocking: assets/characters/takao/processed/vfx/takao_vfx_armor_sparks.png",
+            "visual review pending/blocking: assets/characters/takao/processed/vfx/takao_vfx_fire_control_lock.png",
+            "visual review pending/blocking: assets/characters/takao/processed/vfx/takao_vfx_heavy_torpedo_sector.png",
+            "visual review pending/blocking: assets/characters/takao/processed/vfx/takao_vfx_night_target_line.png",
+            "visual review pending/blocking: assets/characters/takao/processed/vfx/takao_vfx_shell_trail_heavy.png",
+            "visual review pending/blocking: assets/characters/takao/processed/vfx/takao_vfx_skill_aura.png",
+            "visual review pending/blocking: assets/characters/takao/processed/vfx/takao_vfx_torpedo_warning.png",
+            "visual review pending/blocking: assets/characters/takao/processed/vfx/takao_vfx_water_splash_large.png",
+            "visual review pending/blocking: assets/vfx/combat/impacts/vfx_impact_water_small_01.png",
+            "visual review pending/blocking: assets/vfx/combat/muzzle/vfx_muzzle_gun_medium_01.png"
+          ]
+        },
+        "delivery_ready": false,
+        "postprocess_ready": true
+      }
+    },
+    {
+      "character_id": "shokaku",
+      "status": "complete",
+      "elapsed_seconds": 31.37,
+      "preview": "assets/characters/qa/edge_qa_shokaku.html",
+      "inspection": {
+        "character_id": "shokaku",
+        "sources": {
+          "complete": true,
+          "missing": [],
+          "source_quality_issues": [],
+          "base_complete": true,
+          "four_frame_complete": true,
+          "production_route": "generated_state_sheets"
+        },
+        "configuration": {
+          "crop_specs": false,
+          "runtime_config": false,
+          "postprocess_plan": true,
+          "generic_postprocess": true,
+          "contract_ship_class": true
+        },
+        "contract": {
+          "character_id": "shokaku",
+          "ship_class": "carrier",
+          "status": "complete",
+          "missing_roles": [],
+          "invalid_files": [],
+          "data_issues": [],
+          "found_roles": {
+            "full_body": [
+              "assets/characters/shokaku/processed/ui/shokaku_illust_full_alpha.png"
+            ],
+            "half_body": [
+              "assets/characters/shokaku/processed/ui/shokaku_illust_half_alpha.png"
+            ],
+            "skill_cutin": [
+              "assets/characters/shokaku/processed/ui/shokaku_illust_skill_cutin_alpha.png"
+            ],
+            "expression_default": [
+              "assets/characters/shokaku/processed/ui/shokaku_expr_default.png"
+            ],
+            "expression_serious": [
+              "assets/characters/shokaku/processed/ui/shokaku_expr_serious.png"
+            ],
+            "expression_hit": [
+              "assets/characters/shokaku/processed/ui/shokaku_expr_hit.png"
+            ],
+            "portrait": [
+              "assets/characters/shokaku/processed/ui/shokaku_ui_portrait.png"
+            ],
+            "portrait_small": [
+              "assets/characters/shokaku/processed/ui/shokaku_ui_portrait_small.png"
+            ],
+            "chibi_head": [
+              "assets/characters/shokaku/processed/ui/shokaku_ui_chibi_head.png"
+            ],
+            "skill_icon": [
+              "assets/characters/shokaku/processed/ui/shokaku_ui_skill_coordinated_strike_wave.png"
+            ],
+            "class_icon": [
+              "assets/characters/shokaku/processed/ui/shokaku_ui_class_carrier.png"
+            ],
+            "battle_body": [
+              "assets/characters/shokaku/processed/battle/shokaku_battle_body_r.png"
+            ],
+            "rig_base": [
+              "assets/characters/shokaku/processed/battle/shokaku_battle_rig_base.png"
+            ],
+            "main_weapon": [
+              "assets/characters/shokaku/processed/battle/shokaku_battle_aircraft_group_01.png",
+              "assets/characters/shokaku/processed/battle/shokaku_battle_aircraft_group_02.png",
+              "assets/characters/shokaku/processed/battle/shokaku_battle_aircraft_launch_marker.png",
+              "assets/characters/shokaku/processed/battle/shokaku_battle_aircraft_recovery_marker.png"
+            ],
+            "anim_idle": [
+              "assets/characters/shokaku/processed/anim/shokaku_anim_idle_keyframe.png"
+            ],
+            "anim_move": [
+              "assets/characters/shokaku/processed/anim/shokaku_anim_move_keyframe.png"
+            ],
+            "anim_attack": [
+              "assets/characters/shokaku/processed/anim/shokaku_anim_attack_keyframe.png"
+            ],
+            "anim_hit": [
+              "assets/characters/shokaku/processed/anim/shokaku_anim_hit_keyframe.png"
+            ],
+            "anim_firepower": [
+              "assets/characters/shokaku/processed/anim/shokaku_anim_firepower_keyframe.png"
+            ],
+            "vfx": [
+              "assets/characters/shokaku/processed/vfx/shokaku_vfx_aa_burst.png",
+              "assets/characters/shokaku/processed/vfx/shokaku_vfx_aircraft_formation.png",
+              "assets/characters/shokaku/processed/vfx/shokaku_vfx_aircraft_launch_flash.png",
+              "assets/characters/shokaku/processed/vfx/shokaku_vfx_aircraft_recovery.png",
+              "assets/characters/shokaku/processed/vfx/shokaku_vfx_airstrike_area.png",
+              "assets/characters/shokaku/processed/vfx/shokaku_vfx_crane_formation_marker.png",
+              "assets/characters/shokaku/processed/vfx/shokaku_vfx_dual_wave_path.png",
+              "assets/characters/shokaku/processed/vfx/shokaku_vfx_skill_aura.png"
+            ],
+            "bind_points": [
+              "assets/characters/shokaku/processed/config/shokaku_meta_bind_points.json"
+            ],
+            "anim_config": [
+              "assets/characters/shokaku/processed/config/shokaku_anim_config.json"
+            ],
+            "vfx_config": [
+              "assets/characters/shokaku/processed/config/shokaku_vfx_config.json"
+            ],
+            "manifest": [
+              "assets/characters/shokaku/processed/config/shokaku_postprocess_manifest.json"
+            ]
+          }
+        },
+        "batch_ready": true,
+        "technical_ready": true,
+        "visual_review": {
+          "status": "pending",
+          "accepted": false,
+          "issues": [
+            "visual review pending/blocking: assets/characters/shokaku/processed/anim/shokaku_anim_attack_frame_01.png",
+            "visual review pending/blocking: assets/characters/shokaku/processed/anim/shokaku_anim_attack_frame_02.png",
+            "visual review pending/blocking: assets/characters/shokaku/processed/anim/shokaku_anim_attack_frame_03.png",
+            "visual review pending/blocking: assets/characters/shokaku/processed/anim/shokaku_anim_attack_frame_04.png",
+            "visual review pending/blocking: assets/characters/shokaku/processed/anim/shokaku_anim_attack_keyframe.png",
+            "visual review pending/blocking: assets/characters/shokaku/processed/anim/shokaku_anim_firepower_frame_01.png",
+            "visual review pending/blocking: assets/characters/shokaku/processed/anim/shokaku_anim_firepower_frame_02.png",
+            "visual review pending/blocking: assets/characters/shokaku/processed/anim/shokaku_anim_firepower_frame_03.png",
+            "visual review pending/blocking: assets/characters/shokaku/processed/anim/shokaku_anim_firepower_frame_04.png",
+            "visual review pending/blocking: assets/characters/shokaku/processed/anim/shokaku_anim_firepower_keyframe.png",
+            "visual review pending/blocking: assets/characters/shokaku/processed/anim/shokaku_anim_hit_frame_01.png",
+            "visual review pending/blocking: assets/characters/shokaku/processed/anim/shokaku_anim_hit_frame_02.png",
+            "visual review pending/blocking: assets/characters/shokaku/processed/anim/shokaku_anim_hit_frame_03.png",
+            "visual review pending/blocking: assets/characters/shokaku/processed/anim/shokaku_anim_hit_frame_04.png",
+            "visual review pending/blocking: assets/characters/shokaku/processed/anim/shokaku_anim_hit_keyframe.png",
+            "visual review pending/blocking: assets/characters/shokaku/processed/anim/shokaku_anim_idle_frame_01.png",
+            "visual review pending/blocking: assets/characters/shokaku/processed/anim/shokaku_anim_idle_frame_02.png",
+            "visual review pending/blocking: assets/characters/shokaku/processed/anim/shokaku_anim_idle_frame_03.png",
+            "visual review pending/blocking: assets/characters/shokaku/processed/anim/shokaku_anim_idle_frame_04.png",
+            "visual review pending/blocking: assets/characters/shokaku/processed/anim/shokaku_anim_idle_keyframe.png",
+            "visual review pending/blocking: assets/characters/shokaku/processed/anim/shokaku_anim_move_frame_01.png",
+            "visual review pending/blocking: assets/characters/shokaku/processed/anim/shokaku_anim_move_frame_02.png",
+            "visual review pending/blocking: assets/characters/shokaku/processed/anim/shokaku_anim_move_frame_03.png",
+            "visual review pending/blocking: assets/characters/shokaku/processed/anim/shokaku_anim_move_frame_04.png",
+            "visual review pending/blocking: assets/characters/shokaku/processed/anim/shokaku_anim_move_keyframe.png",
+            "visual review pending/blocking: assets/characters/shokaku/processed/battle/shokaku_battle_aa_center.png",
+            "visual review pending/blocking: assets/characters/shokaku/processed/battle/shokaku_battle_aircraft_group_01.png",
+            "visual review pending/blocking: assets/characters/shokaku/processed/battle/shokaku_battle_aircraft_group_02.png",
+            "visual review pending/blocking: assets/characters/shokaku/processed/battle/shokaku_battle_aircraft_launch_marker.png",
+            "visual review pending/blocking: assets/characters/shokaku/processed/battle/shokaku_battle_aircraft_recovery_marker.png",
+            "visual review pending/blocking: assets/characters/shokaku/processed/battle/shokaku_battle_body_r.png",
+            "visual review pending/blocking: assets/characters/shokaku/processed/battle/shokaku_battle_flight_deck.png",
+            "visual review pending/blocking: assets/characters/shokaku/processed/battle/shokaku_battle_rig_base.png",
+            "visual review pending/blocking: assets/characters/shokaku/processed/ui/shokaku_expr_default.png",
+            "visual review pending/blocking: assets/characters/shokaku/processed/ui/shokaku_expr_hit.png",
+            "visual review pending/blocking: assets/characters/shokaku/processed/ui/shokaku_expr_serious.png",
+            "visual review pending/blocking: assets/characters/shokaku/processed/ui/shokaku_illust_full_alpha.png",
+            "visual review pending/blocking: assets/characters/shokaku/processed/ui/shokaku_illust_half_alpha.png",
+            "visual review pending/blocking: assets/characters/shokaku/processed/ui/shokaku_illust_skill_cutin_alpha.png",
+            "visual review pending/blocking: assets/characters/shokaku/processed/ui/shokaku_ui_chibi_head.png",
+            "visual review pending/blocking: assets/characters/shokaku/processed/ui/shokaku_ui_class_carrier.png",
+            "visual review pending/blocking: assets/characters/shokaku/processed/ui/shokaku_ui_portrait.png",
+            "visual review pending/blocking: assets/characters/shokaku/processed/ui/shokaku_ui_portrait_small.png",
+            "visual review pending/blocking: assets/characters/shokaku/processed/ui/shokaku_ui_skill_coordinated_strike_wave.png",
+            "visual review pending/blocking: assets/characters/shokaku/processed/vfx/shokaku_vfx_aa_burst.png",
+            "visual review pending/blocking: assets/characters/shokaku/processed/vfx/shokaku_vfx_aircraft_formation.png",
+            "visual review pending/blocking: assets/characters/shokaku/processed/vfx/shokaku_vfx_aircraft_launch_flash.png",
+            "visual review pending/blocking: assets/characters/shokaku/processed/vfx/shokaku_vfx_aircraft_recovery.png",
+            "visual review pending/blocking: assets/characters/shokaku/processed/vfx/shokaku_vfx_airstrike_area.png",
+            "visual review pending/blocking: assets/characters/shokaku/processed/vfx/shokaku_vfx_crane_formation_marker.png",
+            "visual review pending/blocking: assets/characters/shokaku/processed/vfx/shokaku_vfx_dual_wave_path.png",
+            "visual review pending/blocking: assets/characters/shokaku/processed/vfx/shokaku_vfx_skill_aura.png"
+          ]
+        },
+        "delivery_ready": false,
+        "postprocess_ready": true
+      }
+    },
+    {
+      "character_id": "i_19",
+      "status": "complete",
+      "elapsed_seconds": 35.27,
+      "preview": "assets/characters/qa/edge_qa_i_19.html",
+      "inspection": {
+        "character_id": "i_19",
+        "sources": {
+          "complete": true,
+          "missing": [],
+          "source_quality_issues": [],
+          "base_complete": true,
+          "four_frame_complete": true,
+          "production_route": "generated_state_sheets"
+        },
+        "configuration": {
+          "crop_specs": false,
+          "runtime_config": false,
+          "postprocess_plan": true,
+          "generic_postprocess": true,
+          "contract_ship_class": true
+        },
+        "contract": {
+          "character_id": "i_19",
+          "ship_class": "submarine",
+          "status": "complete",
+          "missing_roles": [],
+          "invalid_files": [],
+          "data_issues": [],
+          "found_roles": {
+            "full_body": [
+              "assets/characters/i_19/processed/ui/i_19_illust_full_alpha.png"
+            ],
+            "half_body": [
+              "assets/characters/i_19/processed/ui/i_19_illust_half_alpha.png"
+            ],
+            "skill_cutin": [
+              "assets/characters/i_19/processed/ui/i_19_illust_skill_cutin_alpha.png"
+            ],
+            "expression_default": [
+              "assets/characters/i_19/processed/ui/i_19_expr_default.png"
+            ],
+            "expression_serious": [
+              "assets/characters/i_19/processed/ui/i_19_expr_serious.png"
+            ],
+            "expression_hit": [
+              "assets/characters/i_19/processed/ui/i_19_expr_hit.png"
+            ],
+            "portrait": [
+              "assets/characters/i_19/processed/ui/i_19_ui_portrait.png"
+            ],
+            "portrait_small": [
+              "assets/characters/i_19/processed/ui/i_19_ui_portrait_small.png"
+            ],
+            "chibi_head": [
+              "assets/characters/i_19/processed/ui/i_19_ui_chibi_head.png"
+            ],
+            "skill_icon": [
+              "assets/characters/i_19/processed/ui/i_19_ui_skill_floatplane_vanguard.png"
+            ],
+            "class_icon": [
+              "assets/characters/i_19/processed/ui/i_19_ui_class_submarine.png"
+            ],
+            "battle_body": [
+              "assets/characters/i_19/processed/battle/i_19_battle_body_r.png"
+            ],
+            "rig_base": [
+              "assets/characters/i_19/processed/battle/i_19_battle_rig_base.png"
+            ],
+            "main_weapon": [
+              "assets/characters/i_19/processed/battle/i_19_battle_aircraft_launch_marker.png",
+              "assets/characters/i_19/processed/battle/i_19_battle_torpedo_tube_fore.png"
+            ],
+            "anim_idle": [
+              "assets/characters/i_19/processed/anim/i_19_anim_idle_keyframe.png"
+            ],
+            "anim_move": [
+              "assets/characters/i_19/processed/anim/i_19_anim_move_keyframe.png"
+            ],
+            "anim_attack": [
+              "assets/characters/i_19/processed/anim/i_19_anim_attack_keyframe.png"
+            ],
+            "anim_hit": [
+              "assets/characters/i_19/processed/anim/i_19_anim_hit_keyframe.png"
+            ],
+            "anim_firepower": [
+              "assets/characters/i_19/processed/anim/i_19_anim_firepower_keyframe.png"
+            ],
+            "vfx": [
+              "assets/characters/i_19/processed/vfx/i_19_vfx_dive_ripple.png",
+              "assets/characters/i_19/processed/vfx/i_19_vfx_floatplane_scan.png",
+              "assets/characters/i_19/processed/vfx/i_19_vfx_long_range_torpedo_trail.png",
+              "assets/characters/i_19/processed/vfx/i_19_vfx_skill_aura.png",
+              "assets/characters/i_19/processed/vfx/i_19_vfx_sonar_pulse.png",
+              "assets/characters/i_19/processed/vfx/i_19_vfx_torpedo_launch_flash.png",
+              "assets/characters/i_19/processed/vfx/i_19_vfx_torpedo_trail.png",
+              "assets/characters/i_19/processed/vfx/i_19_vfx_underwater_shadow.png"
+            ],
+            "bind_points": [
+              "assets/characters/i_19/processed/config/i_19_meta_bind_points.json"
+            ],
+            "anim_config": [
+              "assets/characters/i_19/processed/config/i_19_anim_config.json"
+            ],
+            "vfx_config": [
+              "assets/characters/i_19/processed/config/i_19_vfx_config.json"
+            ],
+            "manifest": [
+              "assets/characters/i_19/processed/config/i_19_postprocess_manifest.json"
+            ]
+          }
+        },
+        "batch_ready": true,
+        "technical_ready": true,
+        "visual_review": {
+          "status": "pending",
+          "accepted": false,
+          "issues": [
+            "visual review pending/blocking: assets/characters/i_19/processed/anim/i_19_anim_attack_frame_01.png",
+            "visual review pending/blocking: assets/characters/i_19/processed/anim/i_19_anim_attack_frame_02.png",
+            "visual review pending/blocking: assets/characters/i_19/processed/anim/i_19_anim_attack_frame_03.png",
+            "visual review pending/blocking: assets/characters/i_19/processed/anim/i_19_anim_attack_frame_04.png",
+            "visual review pending/blocking: assets/characters/i_19/processed/anim/i_19_anim_attack_keyframe.png",
+            "visual review pending/blocking: assets/characters/i_19/processed/anim/i_19_anim_firepower_frame_01.png",
+            "visual review pending/blocking: assets/characters/i_19/processed/anim/i_19_anim_firepower_frame_02.png",
+            "visual review pending/blocking: assets/characters/i_19/processed/anim/i_19_anim_firepower_frame_03.png",
+            "visual review pending/blocking: assets/characters/i_19/processed/anim/i_19_anim_firepower_frame_04.png",
+            "visual review pending/blocking: assets/characters/i_19/processed/anim/i_19_anim_firepower_keyframe.png",
+            "visual review pending/blocking: assets/characters/i_19/processed/anim/i_19_anim_hit_frame_01.png",
+            "visual review pending/blocking: assets/characters/i_19/processed/anim/i_19_anim_hit_frame_02.png",
+            "visual review pending/blocking: assets/characters/i_19/processed/anim/i_19_anim_hit_frame_03.png",
+            "visual review pending/blocking: assets/characters/i_19/processed/anim/i_19_anim_hit_frame_04.png",
+            "visual review pending/blocking: assets/characters/i_19/processed/anim/i_19_anim_hit_keyframe.png",
+            "visual review pending/blocking: assets/characters/i_19/processed/anim/i_19_anim_idle_frame_01.png",
+            "visual review pending/blocking: assets/characters/i_19/processed/anim/i_19_anim_idle_frame_02.png",
+            "visual review pending/blocking: assets/characters/i_19/processed/anim/i_19_anim_idle_frame_03.png",
+            "visual review pending/blocking: assets/characters/i_19/processed/anim/i_19_anim_idle_frame_04.png",
+            "visual review pending/blocking: assets/characters/i_19/processed/anim/i_19_anim_idle_keyframe.png",
+            "visual review pending/blocking: assets/characters/i_19/processed/anim/i_19_anim_move_frame_01.png",
+            "visual review pending/blocking: assets/characters/i_19/processed/anim/i_19_anim_move_frame_02.png",
+            "visual review pending/blocking: assets/characters/i_19/processed/anim/i_19_anim_move_frame_03.png",
+            "visual review pending/blocking: assets/characters/i_19/processed/anim/i_19_anim_move_frame_04.png",
+            "visual review pending/blocking: assets/characters/i_19/processed/anim/i_19_anim_move_keyframe.png",
+            "visual review pending/blocking: assets/characters/i_19/processed/battle/i_19_battle_aircraft_launch_marker.png",
+            "visual review pending/blocking: assets/characters/i_19/processed/battle/i_19_battle_body_r.png",
+            "visual review pending/blocking: assets/characters/i_19/processed/battle/i_19_battle_floatplane.png",
+            "visual review pending/blocking: assets/characters/i_19/processed/battle/i_19_battle_periscope_node.png",
+            "visual review pending/blocking: assets/characters/i_19/processed/battle/i_19_battle_rig_base.png",
+            "visual review pending/blocking: assets/characters/i_19/processed/battle/i_19_battle_sonar_node.png",
+            "visual review pending/blocking: assets/characters/i_19/processed/battle/i_19_battle_submerged_shadow.png",
+            "visual review pending/blocking: assets/characters/i_19/processed/battle/i_19_battle_torpedo_tube_fore.png",
+            "visual review pending/blocking: assets/characters/i_19/processed/ui/i_19_expr_default.png",
+            "visual review pending/blocking: assets/characters/i_19/processed/ui/i_19_expr_hit.png",
+            "visual review pending/blocking: assets/characters/i_19/processed/ui/i_19_expr_serious.png",
+            "visual review pending/blocking: assets/characters/i_19/processed/ui/i_19_illust_full_alpha.png",
+            "visual review pending/blocking: assets/characters/i_19/processed/ui/i_19_illust_half_alpha.png",
+            "visual review pending/blocking: assets/characters/i_19/processed/ui/i_19_illust_skill_cutin_alpha.png",
+            "visual review pending/blocking: assets/characters/i_19/processed/ui/i_19_ui_chibi_head.png",
+            "visual review pending/blocking: assets/characters/i_19/processed/ui/i_19_ui_class_submarine.png",
+            "visual review pending/blocking: assets/characters/i_19/processed/ui/i_19_ui_portrait.png",
+            "visual review pending/blocking: assets/characters/i_19/processed/ui/i_19_ui_portrait_small.png",
+            "visual review pending/blocking: assets/characters/i_19/processed/ui/i_19_ui_skill_floatplane_vanguard.png",
+            "visual review pending/blocking: assets/characters/i_19/processed/vfx/i_19_vfx_dive_ripple.png",
+            "visual review pending/blocking: assets/characters/i_19/processed/vfx/i_19_vfx_floatplane_scan.png",
+            "visual review pending/blocking: assets/characters/i_19/processed/vfx/i_19_vfx_long_range_torpedo_trail.png",
+            "visual review pending/blocking: assets/characters/i_19/processed/vfx/i_19_vfx_skill_aura.png",
+            "visual review pending/blocking: assets/characters/i_19/processed/vfx/i_19_vfx_sonar_pulse.png",
+            "visual review pending/blocking: assets/characters/i_19/processed/vfx/i_19_vfx_torpedo_launch_flash.png",
+            "visual review pending/blocking: assets/characters/i_19/processed/vfx/i_19_vfx_torpedo_trail.png",
+            "visual review pending/blocking: assets/characters/i_19/processed/vfx/i_19_vfx_underwater_shadow.png",
+            "visual review pending/blocking: assets/vfx/combat/aircraft/vfx_aircraft_launch_trail_01.png"
+          ]
+        },
+        "delivery_ready": false,
+        "postprocess_ready": true
+      }
+    }
+  ]
+}

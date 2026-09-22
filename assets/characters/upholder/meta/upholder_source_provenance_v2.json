@@ -1,0 +1,327 @@
+{
+  "schema_version": 2,
+  "character_id": "upholder",
+  "kind": "codex_builtin_generated_art",
+  "source": "Codex built-in ImageGen",
+  "batch_ready_allowed": true,
+  "generation_policy": {
+    "primary_route": "codex_builtin_imagegen_native_alpha",
+    "legacy_fallback": {
+      "authorized": false,
+      "activation": "--allow-legacy-chroma-fallback",
+      "reason": "",
+      "native_failures": []
+    }
+  },
+  "generation": {
+    "requested_model": "codex-account-managed-imagegen",
+    "actual_model": "codex-account-managed-imagegen",
+    "generation_tool": "Codex built-in ImageGen",
+    "endpoint": "Codex account-managed image generation",
+    "quality": "Codex account-managed",
+    "size_control": "per-asset Codex account-managed output",
+    "background_control": "transparent requested and pixel-verified",
+    "output_format": "PNG",
+    "prompt_revision": {
+      "path": "assets/characters/upholder/meta/upholder_generation_brief_v2.md",
+      "sha256": "3ff296ceb74387630f4874fdc28b8a4f6d63b041196d7a5c9553748384ef0395"
+    },
+    "reference_inputs": [
+      {
+        "path": "assets/characters/upholder/concept/upholder_concept_full.png",
+        "role": "accepted_style_anchor_for_derivative_sheets"
+      }
+    ],
+    "reproducibility_note": "The Codex account manages the underlying image model and request IDs; those implementation details are not exposed. Accepted PNG outputs are preserved byte-for-byte and tracked by SHA-256."
+  },
+  "source_images": [
+    {
+      "role": "concept_full",
+      "path": "assets/characters/upholder/concept/upholder_concept_full.png",
+      "sha256": "79efe1c4f291c9e1804b8c9c94c810fdb5342d71a7dd65db5514a9cc6cb64b4b",
+      "size": [
+        1225,
+        1284
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "79efe1c4f291c9e1804b8c9c94c810fdb5342d71a7dd65db5514a9cc6cb64b4b",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.634509504736474,
+        "transparent_border_ratio": 0.998603909054647
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex source visual review 2026-09-20",
+      "qa_observation": "青黑短发、耳机、潜航服与战术靴一致，无脚蹼；六艏管为2×3，艇尾无鱼雷口。 完整人体与舰装可辨认，Alpha门禁通过；半身与cut-in按契约由锚点派生。"
+    },
+    {
+      "role": "ui_sheet",
+      "path": "assets/characters/upholder/ui/upholder_ui_sheet.png",
+      "sha256": "63aa4849918bcef89577bd3f63b3fad8bfa7f2aac8a5efb88bbba333c390198b",
+      "size": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "63aa4849918bcef89577bd3f63b3fad8bfa7f2aac8a5efb88bbba333c390198b",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.4448089599609375,
+        "transparent_border_ratio": 0.972243940578577
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex source visual review 2026-09-20",
+      "qa_observation": "青黑短发、耳机、潜航服与战术靴一致，无脚蹼；六艏管为2×3，艇尾无鱼雷口。 八项顺序为大小头像、Q版头像、默认/严肃/受击、技能/舰种图标；表情有区别，主体可分离。"
+    },
+    {
+      "role": "battle_grid",
+      "path": "assets/characters/upholder/battle/upholder_battle_asset_grid.png",
+      "sha256": "74ff42d3730f17260a1314fc42d9f9ff37f27f714fcc3e1288587f6e40829654",
+      "size": [
+        1536,
+        1024
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "74ff42d3730f17260a1314fc42d9f9ff37f27f714fcc3e1288587f6e40829654",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 254,
+        "transparent_canvas_ratio": 0.6933135986328125,
+        "transparent_border_ratio": 0.9978498827208757
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex source visual review 2026-09-20",
+      "qa_observation": "青黑短发、耳机、潜航服与战术靴一致，无脚蹼；六艏管为2×3，艇尾无鱼雷口。 八个语义拆件独立；武器为单模板，实例数量归挂点配置；最终挂点仍需成品复核。"
+    },
+    {
+      "role": "vfx_sheet",
+      "path": "assets/characters/upholder/vfx/upholder_vfx_reference_sheet.png",
+      "sha256": "1ec95c0f5d4e702b71e4bd87a8284cecc570628bb6c6e97c3efe62274a76be16",
+      "size": [
+        1024,
+        1536
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "1ec95c0f5d4e702b71e4bd87a8284cecc570628bb6c6e97c3efe62274a76be16",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 253,
+        "transparent_canvas_ratio": 0.5178718566894531,
+        "transparent_border_ratio": 0.8760750586395621
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex source visual review 2026-09-20",
+      "qa_observation": "青黑短发、耳机、潜航服与战术靴一致，无脚蹼；六艏管为2×3，艇尾无鱼雷口。 八项特效按计划顺序可辨认；光环/烟火/水花多连通块全部保留；裁切后需复核边缘。"
+    },
+    {
+      "role": "anim_idle",
+      "path": "assets/characters/upholder/battle/upholder_anim_idle_4f_sheet.png",
+      "sha256": "05db4acfc8607b5cd9a1a62a02c4d35955a288499a83f8107e337e31cf3537f2",
+      "size": [
+        1312,
+        1199
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "05db4acfc8607b5cd9a1a62a02c4d35955a288499a83f8107e337e31cf3537f2",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.6566676498708273,
+        "transparent_border_ratio": 0.9842566759665206
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex source visual review 2026-09-20",
+      "qa_observation": "青黑短发、耳机、潜航服与战术靴一致，无脚蹼；六艏管为2×3，艇尾无鱼雷口。 四帧按左上右上左下右下有姿态变化；仅本体动画层，无飞出弹体、飞机或跨格效果；武器独立资产需运行时绑定。"
+    },
+    {
+      "role": "anim_move",
+      "path": "assets/characters/upholder/battle/upholder_anim_move_4f_sheet.png",
+      "sha256": "b27457d91c60f33cfb9dff834ed5c7dd548614c4a23e9ddcec6901c2a1abfbe1",
+      "size": [
+        1312,
+        1199
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "b27457d91c60f33cfb9dff834ed5c7dd548614c4a23e9ddcec6901c2a1abfbe1",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.6162268099432454,
+        "transparent_border_ratio": 0.9984057393383818
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex source visual review 2026-09-20",
+      "qa_observation": "青黑短发、耳机、潜航服与战术靴一致，无脚蹼；六艏管为2×3，艇尾无鱼雷口。 四帧按左上右上左下右下有姿态变化；仅本体动画层，无飞出弹体、飞机或跨格效果；武器独立资产需运行时绑定。"
+    },
+    {
+      "role": "anim_attack",
+      "path": "assets/characters/upholder/battle/upholder_anim_attack_4f_sheet.png",
+      "sha256": "acbdafe53330192a0e0dd34daf9856af4cdd05a1b030d6257780362c26554393",
+      "size": [
+        1312,
+        1199
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "acbdafe53330192a0e0dd34daf9856af4cdd05a1b030d6257780362c26554393",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.640327813828597,
+        "transparent_border_ratio": 0.9940215225189318
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex source visual review 2026-09-20",
+      "qa_observation": "青黑短发、耳机、潜航服与战术靴一致，无脚蹼；六艏管为2×3，艇尾无鱼雷口。 四帧按左上右上左下右下有姿态变化；仅本体动画层，无飞出弹体、飞机或跨格效果；武器独立资产需运行时绑定。"
+    },
+    {
+      "role": "anim_hit",
+      "path": "assets/characters/upholder/battle/upholder_anim_hit_4f_sheet.png",
+      "sha256": "e0336aa6b7f97a4958779699ff2ee7ec86e4ace3a5dc0afdc30e55a798844ec3",
+      "size": [
+        1312,
+        1199
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "e0336aa6b7f97a4958779699ff2ee7ec86e4ace3a5dc0afdc30e55a798844ec3",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.6294269614923005,
+        "transparent_border_ratio": 0.9958150657632523
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex source visual review 2026-09-20",
+      "qa_observation": "青黑短发、耳机、潜航服与战术靴一致，无脚蹼；六艏管为2×3，艇尾无鱼雷口。 四帧按左上右上左下右下有姿态变化；仅本体动画层，无飞出弹体、飞机或跨格效果；武器独立资产需运行时绑定。"
+    },
+    {
+      "role": "anim_firepower",
+      "path": "assets/characters/upholder/battle/upholder_anim_firepower_4f_sheet.png",
+      "sha256": "b4874247e3dce918531d45ee70a3410e66966feb1a05113c817d68960ef484ab",
+      "size": [
+        1312,
+        1199
+      ],
+      "source_mode": "RGBA",
+      "background": "native_transparent",
+      "generation_route": "codex_builtin_imagegen_native_alpha",
+      "model": "codex-account-managed-imagegen",
+      "quality": "Codex account-managed",
+      "size_control": "Codex account-managed",
+      "background_control": "transparent",
+      "output_format": "PNG",
+      "endpoint": "codex_builtin_imagegen",
+      "request_id": "not_exposed_by_codex_builtin",
+      "raw_response_sha256": "b4874247e3dce918531d45ee70a3410e66966feb1a05113c817d68960ef484ab",
+      "accepted_source_is_raw_response": true,
+      "alpha": {
+        "has_alpha_channel": true,
+        "min": 0,
+        "max": 255,
+        "transparent_canvas_ratio": 0.6405789123049695,
+        "transparent_border_ratio": 0.9954165005978477
+      },
+      "technical_qa_verdict": "pass",
+      "qa_verdict": "polish",
+      "qa_reviewer": "Codex source visual review 2026-09-20",
+      "qa_observation": "青黑短发、耳机、潜航服与战术靴一致，无脚蹼；六艏管为2×3，艇尾无鱼雷口。 四帧按左上右上左下右下有姿态变化；仅本体动画层，无飞出弹体、飞机或跨格效果；武器独立资产需运行时绑定。"
+    }
+  ]
+}

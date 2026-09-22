@@ -1,0 +1,459 @@
+{
+  "character_id": "z23",
+  "reviewer": "Codex visual review 2026-09-20",
+  "method": "Individually inspected source-space object hints; legacy connected-component expansion, trim and balanced padding. No grid cuts. VFX retain disconnected components.",
+  "crops": {
+    "ui_portrait": {
+      "source": "ui_sheet",
+      "box": [
+        40,
+        45,
+        420,
+        425
+      ],
+      "tags": []
+    },
+    "ui_portrait_small": {
+      "source": "ui_sheet",
+      "box": [
+        520,
+        90,
+        860,
+        430
+      ],
+      "tags": []
+    },
+    "ui_chibi_head": {
+      "source": "ui_sheet",
+      "box": [
+        945,
+        155,
+        1270,
+        425
+      ],
+      "tags": []
+    },
+    "expr_default": {
+      "source": "ui_sheet",
+      "box": [
+        1390,
+        85,
+        1710,
+        425
+      ],
+      "tags": []
+    },
+    "expr_serious": {
+      "source": "ui_sheet",
+      "box": [
+        55,
+        490,
+        405,
+        840
+      ],
+      "tags": []
+    },
+    "expr_hit": {
+      "source": "ui_sheet",
+      "box": [
+        500,
+        495,
+        850,
+        845
+      ],
+      "tags": []
+    },
+    "ui_skill": {
+      "source": "ui_sheet",
+      "box": [
+        935,
+        490,
+        1290,
+        830
+      ],
+      "tags": []
+    },
+    "class_icon": {
+      "source": "ui_sheet",
+      "box": [
+        1380,
+        525,
+        1710,
+        820
+      ],
+      "tags": []
+    },
+    "battle_body_r": {
+      "source": "battle_grid",
+      "box": [
+        75,
+        95,
+        270,
+        450
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "battle_rig_base": {
+      "source": "battle_grid",
+      "box": [
+        470,
+        135,
+        865,
+        410
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "battle_turret_main_01": {
+      "source": "battle_grid",
+      "box": [
+        1040,
+        220,
+        1320,
+        420
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "battle_turret_main_02": {
+      "source": "battle_grid",
+      "box": [
+        1470,
+        215,
+        1700,
+        420
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "battle_torpedo_tube_01": {
+      "source": "battle_grid",
+      "box": [
+        80,
+        625,
+        420,
+        815
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "battle_fire_control_node": {
+      "source": "battle_grid",
+      "box": [
+        580,
+        560,
+        800,
+        840
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "battle_mode_indicator": {
+      "source": "battle_grid",
+      "box": [
+        1110,
+        610,
+        1220,
+        780
+      ],
+      "tags": []
+    },
+    "battle_wake_origin_marker": {
+      "source": "battle_grid",
+      "box": [
+        1480,
+        620,
+        1680,
+        770
+      ],
+      "tags": []
+    },
+    "anim_idle_frame_01": {
+      "source": "anim_idle",
+      "box": [
+        110,
+        130,
+        540,
+        545
+      ],
+      "tags": []
+    },
+    "anim_idle_frame_02": {
+      "source": "anim_idle",
+      "box": [
+        735,
+        130,
+        1175,
+        545
+      ],
+      "tags": []
+    },
+    "anim_idle_frame_03": {
+      "source": "anim_idle",
+      "box": [
+        110,
+        745,
+        540,
+        1160
+      ],
+      "tags": []
+    },
+    "anim_idle_frame_04": {
+      "source": "anim_idle",
+      "box": [
+        735,
+        745,
+        1175,
+        1160
+      ],
+      "tags": []
+    },
+    "anim_move_frame_01": {
+      "source": "anim_move",
+      "box": [
+        110,
+        130,
+        540,
+        545
+      ],
+      "tags": []
+    },
+    "anim_move_frame_02": {
+      "source": "anim_move",
+      "box": [
+        735,
+        130,
+        1175,
+        545
+      ],
+      "tags": []
+    },
+    "anim_move_frame_03": {
+      "source": "anim_move",
+      "box": [
+        110,
+        745,
+        540,
+        1160
+      ],
+      "tags": []
+    },
+    "anim_move_frame_04": {
+      "source": "anim_move",
+      "box": [
+        735,
+        745,
+        1175,
+        1160
+      ],
+      "tags": []
+    },
+    "anim_attack_frame_01": {
+      "source": "anim_attack",
+      "box": [
+        110,
+        130,
+        540,
+        545
+      ],
+      "tags": []
+    },
+    "anim_attack_frame_02": {
+      "source": "anim_attack",
+      "box": [
+        735,
+        130,
+        1175,
+        545
+      ],
+      "tags": []
+    },
+    "anim_attack_frame_03": {
+      "source": "anim_attack",
+      "box": [
+        110,
+        745,
+        540,
+        1160
+      ],
+      "tags": []
+    },
+    "anim_attack_frame_04": {
+      "source": "anim_attack",
+      "box": [
+        735,
+        745,
+        1175,
+        1160
+      ],
+      "tags": []
+    },
+    "anim_hit_frame_01": {
+      "source": "anim_hit",
+      "box": [
+        110,
+        130,
+        540,
+        545
+      ],
+      "tags": []
+    },
+    "anim_hit_frame_02": {
+      "source": "anim_hit",
+      "box": [
+        735,
+        130,
+        1175,
+        545
+      ],
+      "tags": []
+    },
+    "anim_hit_frame_03": {
+      "source": "anim_hit",
+      "box": [
+        110,
+        745,
+        540,
+        1160
+      ],
+      "tags": []
+    },
+    "anim_hit_frame_04": {
+      "source": "anim_hit",
+      "box": [
+        735,
+        745,
+        1175,
+        1160
+      ],
+      "tags": []
+    },
+    "anim_firepower_frame_01": {
+      "source": "anim_firepower",
+      "box": [
+        110,
+        130,
+        540,
+        545
+      ],
+      "tags": []
+    },
+    "anim_firepower_frame_02": {
+      "source": "anim_firepower",
+      "box": [
+        735,
+        130,
+        1175,
+        545
+      ],
+      "tags": []
+    },
+    "anim_firepower_frame_03": {
+      "source": "anim_firepower",
+      "box": [
+        110,
+        745,
+        540,
+        1160
+      ],
+      "tags": []
+    },
+    "anim_firepower_frame_04": {
+      "source": "anim_firepower",
+      "box": [
+        735,
+        745,
+        1175,
+        1160
+      ],
+      "tags": []
+    },
+    "vfx:mode_switch_indicator": {
+      "source": "vfx_sheet",
+      "box": [
+        120,
+        85,
+        450,
+        325
+      ],
+      "tags": []
+    },
+    "vfx:heavy_destroyer_muzzle": {
+      "source": "vfx_sheet",
+      "box": [
+        590,
+        80,
+        955,
+        325
+      ],
+      "tags": []
+    },
+    "vfx:torpedo_launch_flash": {
+      "source": "vfx_sheet",
+      "box": [
+        115,
+        425,
+        440,
+        665
+      ],
+      "tags": []
+    },
+    "vfx:muzzle_flash_small": {
+      "source": "vfx_sheet",
+      "box": [
+        610,
+        435,
+        930,
+        660
+      ],
+      "tags": []
+    },
+    "vfx:water_splash": {
+      "source": "vfx_sheet",
+      "box": [
+        100,
+        755,
+        440,
+        1040
+      ],
+      "tags": []
+    },
+    "vfx:aa_circle": {
+      "source": "vfx_sheet",
+      "box": [
+        600,
+        755,
+        935,
+        1070
+      ],
+      "tags": []
+    },
+    "vfx:skill_aura": {
+      "source": "vfx_sheet",
+      "box": [
+        90,
+        1100,
+        460,
+        1450
+      ],
+      "tags": []
+    },
+    "vfx:range_reticle": {
+      "source": "vfx_sheet",
+      "box": [
+        585,
+        1100,
+        965,
+        1460
+      ],
+      "tags": []
+    }
+  }
+}

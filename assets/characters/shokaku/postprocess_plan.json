@@ -18,6 +18,14 @@
     "aircraft_launch": 2,
     "aircraft_recovery": 1
   },
+  "object_inventory": {
+    "aircraft_launch": {
+      "instances": 2
+    },
+    "aircraft_recovery": {
+      "instances": 1
+    }
+  },
   "bindings": {
     "battle_rig_base": [
       "rig_mount",
@@ -26,6 +34,11 @@
       "aircraft_launch_01",
       "aircraft_launch_02",
       "aircraft_recovery_01"
+    ],
+    "battle_aa_center": [
+      "pivot",
+      "muzzle_01",
+      "muzzle_02"
     ]
   },
   "vfx_roles": [
@@ -51,5 +64,49 @@
   "acceptance_rules": [
     "Original TinySeaWar design; no real flags, political symbols, readable insignia, or extremist symbols.",
     "Character body, rig base, weapon nodes, and VFX must remain visually separable."
-  ]
+  ],
+  "manifest_schema_version": 2,
+  "weapon_binding_rules": {},
+  "binding_positions": {
+    "battle_rig_base": {
+      "rig_mount": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "wake_origin": {
+        "x": 0.5,
+        "y": 0.8
+      },
+      "skill_origin": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "aircraft_launch_01": {
+        "x": 0.25,
+        "y": 0.24
+      },
+      "aircraft_launch_02": {
+        "x": 0.7,
+        "y": 0.24
+      },
+      "aircraft_recovery_01": {
+        "x": 0.74,
+        "y": 0.55
+      }
+    },
+    "battle_aa_center": {
+      "pivot": {
+        "x": 0.48,
+        "y": 0.7
+      },
+      "muzzle_01": {
+        "x": 0.12,
+        "y": 0.1
+      },
+      "muzzle_02": {
+        "x": 0.28,
+        "y": 0.16
+      }
+    }
+  }
 }

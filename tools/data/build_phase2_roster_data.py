@@ -400,6 +400,13 @@ def build_visuals(group_info: dict[str, dict[str, Any]]) -> list[dict[str, Any]]
             "launch_profile": launch_profile, "impact_profile": impact_profile,
             "vfx_role_mappings": {role: semantic for role, semantic in plan["public_vfx_profiles"].items()},
         })
+        # Reviewed production semantics override name-based draft guesses.
+        visual_definition = definitions[-1]
+        for field, value in plan.get("weapon_binding_rules", {}).get(group, {}).items():
+            if field in {"launch_bind", "muzzle_vfx_role", "impact_vfx_role", "launch_profile", "impact_profile"}:
+                visual_definition[field] = value
+        for role, public_role in plan.get("additional_public_vfx_roles", {}).items():
+            visual_definition["vfx_role_mappings"][role] = public_role["semantic"]
     return definitions
 
 

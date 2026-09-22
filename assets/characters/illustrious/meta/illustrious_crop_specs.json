@@ -1,0 +1,515 @@
+{
+  "character_id": "illustrious",
+  "reviewer": "Codex visual review 2026-09-20",
+  "method": "Inspected full-source semantic objects; explicit source-space hints, connected-component expansion. No grid cuts.",
+  "crops": {
+    "battle_body_r": {
+      "source": "battle_grid",
+      "box": [
+        55,
+        85,
+        335,
+        585
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "battle_rig_base": {
+      "source": "battle_grid",
+      "box": [
+        410,
+        75,
+        825,
+        590
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "battle_flight_deck": {
+      "source": "battle_grid",
+      "box": [
+        870,
+        183,
+        1230,
+        585
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "battle_hangar": {
+      "source": "battle_grid",
+      "box": [
+        1245,
+        220,
+        1490,
+        545
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "battle_aircraft_group_01": {
+      "source": "battle_grid",
+      "box": [
+        55,
+        720,
+        390,
+        920
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "battle_aircraft_launch_marker": {
+      "source": "battle_grid",
+      "box": [
+        490,
+        730,
+        767,
+        917
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "battle_aircraft_recovery_marker": {
+      "source": "battle_grid",
+      "box": [
+        842,
+        731,
+        1140,
+        916
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "battle_aa_center": {
+      "source": "battle_grid",
+      "box": [
+        1244,
+        692,
+        1495,
+        942
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "vfx:armored_deck_sparks": {
+      "source": "vfx_sheet",
+      "box": [
+        55,
+        85,
+        490,
+        335
+      ],
+      "tags": []
+    },
+    "vfx:steady_launch_lane": {
+      "source": "vfx_sheet",
+      "box": [
+        522,
+        70,
+        1005,
+        343
+      ],
+      "tags": []
+    },
+    "vfx:aircraft_launch_flash": {
+      "source": "vfx_sheet",
+      "box": [
+        95,
+        400,
+        438,
+        738
+      ],
+      "tags": []
+    },
+    "vfx:aircraft_formation": {
+      "source": "vfx_sheet",
+      "box": [
+        525,
+        435,
+        1015,
+        690
+      ],
+      "tags": []
+    },
+    "vfx:airstrike_area": {
+      "source": "vfx_sheet",
+      "box": [
+        15,
+        810,
+        495,
+        1087
+      ],
+      "tags": []
+    },
+    "vfx:aircraft_recovery": {
+      "source": "vfx_sheet",
+      "box": [
+        523,
+        815,
+        1015,
+        1087
+      ],
+      "tags": []
+    },
+    "vfx:aa_burst": {
+      "source": "vfx_sheet",
+      "box": [
+        55,
+        1165,
+        430,
+        1485
+      ],
+      "tags": []
+    },
+    "vfx:skill_aura": {
+      "source": "vfx_sheet",
+      "box": [
+        515,
+        1125,
+        1018,
+        1510
+      ],
+      "tags": []
+    },
+    "ui_portrait": {
+      "source": "ui_sheet",
+      "box": [
+        35,
+        93,
+        387,
+        475
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "ui_portrait_small": {
+      "source": "ui_sheet",
+      "box": [
+        485,
+        181,
+        721,
+        425
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "ui_chibi_head": {
+      "source": "ui_sheet",
+      "box": [
+        823,
+        221,
+        1065,
+        462
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "expr_default": {
+      "source": "ui_sheet",
+      "box": [
+        1150,
+        95,
+        1501,
+        473
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "expr_serious": {
+      "source": "ui_sheet",
+      "box": [
+        37,
+        571,
+        383,
+        950
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "expr_hit": {
+      "source": "ui_sheet",
+      "box": [
+        438,
+        573,
+        773,
+        939
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "ui_skill": {
+      "source": "ui_sheet",
+      "box": [
+        825,
+        581,
+        1090,
+        889
+      ],
+      "tags": []
+    },
+    "class_icon": {
+      "source": "ui_sheet",
+      "box": [
+        1195,
+        603,
+        1467,
+        899
+      ],
+      "tags": []
+    },
+    "anim_idle_frame_01": {
+      "source": "anim_idle",
+      "box": [
+        113,
+        35,
+        525,
+        633
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "anim_idle_frame_02": {
+      "source": "anim_idle",
+      "box": [
+        678,
+        35,
+        1099,
+        634
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "anim_idle_frame_03": {
+      "source": "anim_idle",
+      "box": [
+        118,
+        678,
+        538,
+        1271
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "anim_idle_frame_04": {
+      "source": "anim_idle",
+      "box": [
+        666,
+        675,
+        1131,
+        1271
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "anim_move_frame_01": {
+      "source": "anim_move",
+      "box": [
+        54,
+        44,
+        543,
+        640
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "anim_move_frame_02": {
+      "source": "anim_move",
+      "box": [
+        671,
+        43,
+        1140,
+        648
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "anim_move_frame_03": {
+      "source": "anim_move",
+      "box": [
+        63,
+        684,
+        529,
+        1271
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "anim_move_frame_04": {
+      "source": "anim_move",
+      "box": [
+        689,
+        684,
+        1161,
+        1272
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "anim_attack_frame_01": {
+      "source": "anim_attack",
+      "box": [
+        79,
+        32,
+        495,
+        638
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "anim_attack_frame_02": {
+      "source": "anim_attack",
+      "box": [
+        525,
+        46,
+        1178,
+        636
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "anim_attack_frame_03": {
+      "source": "anim_attack",
+      "box": [
+        30,
+        728,
+        629,
+        1250
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "anim_attack_frame_04": {
+      "source": "anim_attack",
+      "box": [
+        700,
+        675,
+        1054,
+        1268
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "anim_hit_frame_01": {
+      "source": "anim_hit",
+      "box": [
+        140,
+        79,
+        590,
+        614
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "anim_hit_frame_02": {
+      "source": "anim_hit",
+      "box": [
+        679,
+        104,
+        1154,
+        614
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "anim_hit_frame_03": {
+      "source": "anim_hit",
+      "box": [
+        47,
+        791,
+        641,
+        1207
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "anim_hit_frame_04": {
+      "source": "anim_hit",
+      "box": [
+        700,
+        680,
+        1153,
+        1235
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "anim_firepower_frame_01": {
+      "source": "anim_firepower",
+      "box": [
+        90,
+        27,
+        530,
+        638
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "anim_firepower_frame_02": {
+      "source": "anim_firepower",
+      "box": [
+        635,
+        28,
+        1165,
+        639
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "anim_firepower_frame_03": {
+      "source": "anim_firepower",
+      "box": [
+        53,
+        671,
+        615,
+        1273
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    },
+    "anim_firepower_frame_04": {
+      "source": "anim_firepower",
+      "box": [
+        671,
+        669,
+        1139,
+        1277
+      ],
+      "tags": [
+        "keep_largest_component"
+      ]
+    }
+  }
+}

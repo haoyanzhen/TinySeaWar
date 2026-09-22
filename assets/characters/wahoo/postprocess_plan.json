@@ -18,11 +18,20 @@
     "torpedo_fore": 6,
     "torpedo_aft": 4
   },
+  "object_inventory": {
+    "torpedo_fore": {
+      "instances": 6
+    },
+    "torpedo_aft": {
+      "instances": 4
+    }
+  },
   "bindings": {
     "battle_rig_base": [
+      "pivot",
       "rig_mount",
-      "wake_origin",
       "skill_origin",
+      "wake_origin",
       "torpedo_fore_mount_01",
       "torpedo_fore_mount_02",
       "torpedo_fore_mount_03",
@@ -33,6 +42,22 @@
       "torpedo_aft_mount_02",
       "torpedo_aft_mount_03",
       "torpedo_aft_mount_04"
+    ],
+    "battle_torpedo_tube_fore": [
+      "pivot",
+      "torpedo_port_01",
+      "torpedo_port_02",
+      "torpedo_port_03",
+      "torpedo_port_04",
+      "torpedo_port_05",
+      "torpedo_port_06"
+    ],
+    "battle_torpedo_tube_aft": [
+      "pivot",
+      "torpedo_port_01",
+      "torpedo_port_02",
+      "torpedo_port_03",
+      "torpedo_port_04"
     ]
   },
   "vfx_roles": [
@@ -49,7 +74,7 @@
     "shark_shadow": "skill.area",
     "reload_pulse": "skill.area",
     "sonar_pulse": "submarine.sonar_pulse",
-    "torpedo_launch_flash": "torpedo.trail.submerged",
+    "torpedo_launch_flash": "torpedo.launch.submerged",
     "torpedo_trail": "torpedo.trail.submerged",
     "underwater_shadow": "skill.area",
     "dive_ripple": "skill.area",
@@ -59,5 +84,118 @@
     "Original TinySeaWar design; no real flags, political symbols, readable insignia, or extremist symbols.",
     "Character body, rig base, weapon nodes, and VFX must remain visually separable.",
     "Submarine character must wear fitted waterproof or tactical boots; no swim fins on feet."
-  ]
+  ],
+  "manifest_schema_version": 2,
+  "binding_positions": {
+    "battle_rig_base": {
+      "pivot": {
+        "x": 0.510638,
+        "y": 0.585492
+      },
+      "rig_mount": {
+        "x": 0.51773,
+        "y": 0.300518
+      },
+      "skill_origin": {
+        "x": 0.510638,
+        "y": 0.585492
+      },
+      "wake_origin": {
+        "x": 0.927305,
+        "y": 0.479275
+      },
+      "torpedo_fore_mount_01": {
+        "x": 0.297872,
+        "y": 0.624352
+      },
+      "torpedo_fore_mount_02": {
+        "x": 0.336879,
+        "y": 0.619171
+      },
+      "torpedo_fore_mount_03": {
+        "x": 0.37766,
+        "y": 0.608808
+      },
+      "torpedo_fore_mount_04": {
+        "x": 0.297872,
+        "y": 0.673575
+      },
+      "torpedo_fore_mount_05": {
+        "x": 0.336879,
+        "y": 0.665803
+      },
+      "torpedo_fore_mount_06": {
+        "x": 0.37766,
+        "y": 0.65544
+      },
+      "torpedo_aft_mount_01": {
+        "x": 0.689716,
+        "y": 0.551813
+      },
+      "torpedo_aft_mount_02": {
+        "x": 0.72695,
+        "y": 0.544041
+      },
+      "torpedo_aft_mount_03": {
+        "x": 0.689716,
+        "y": 0.61399
+      },
+      "torpedo_aft_mount_04": {
+        "x": 0.72695,
+        "y": 0.606218
+      }
+    },
+    "battle_torpedo_tube_fore": {
+      "pivot": {
+        "x": 0.568345,
+        "y": 0.153153
+      },
+      "torpedo_port_01": {
+        "x": 0.23741,
+        "y": 0.504505
+      },
+      "torpedo_port_02": {
+        "x": 0.392086,
+        "y": 0.522523
+      },
+      "torpedo_port_03": {
+        "x": 0.543165,
+        "y": 0.534535
+      },
+      "torpedo_port_04": {
+        "x": 0.230216,
+        "y": 0.636637
+      },
+      "torpedo_port_05": {
+        "x": 0.384892,
+        "y": 0.660661
+      },
+      "torpedo_port_06": {
+        "x": 0.535971,
+        "y": 0.675676
+      }
+    },
+    "battle_torpedo_tube_aft": {
+      "pivot": {
+        "x": 0.545024,
+        "y": 0.15534
+      },
+      "torpedo_port_01": {
+        "x": 0.49763,
+        "y": 0.514563
+      },
+      "torpedo_port_02": {
+        "x": 0.71564,
+        "y": 0.498382
+      },
+      "torpedo_port_03": {
+        "x": 0.492891,
+        "y": 0.673139
+      },
+      "torpedo_port_04": {
+        "x": 0.7109,
+        "y": 0.656958
+      }
+    }
+  }
 }

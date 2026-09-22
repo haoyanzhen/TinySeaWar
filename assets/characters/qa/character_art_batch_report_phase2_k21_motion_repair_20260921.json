@@ -1,0 +1,191 @@
+{
+  "mode": "process",
+  "required_gate": "technical_ready",
+  "gate_passed": true,
+  "summary": {
+    "characters": 1,
+    "batch_ready": 1,
+    "complete": 1,
+    "delivery_ready": 0,
+    "blocked": 0,
+    "failed": 0
+  },
+  "results": [
+    {
+      "character_id": "k_21",
+      "status": "complete",
+      "elapsed_seconds": 41.68,
+      "preview": "assets/characters/qa/edge_qa_k_21.html",
+      "inspection": {
+        "character_id": "k_21",
+        "sources": {
+          "complete": true,
+          "missing": [],
+          "source_quality_issues": [],
+          "base_complete": true,
+          "four_frame_complete": true,
+          "production_route": "generated_state_sheets"
+        },
+        "configuration": {
+          "crop_specs": false,
+          "runtime_config": false,
+          "postprocess_plan": true,
+          "generic_postprocess": true,
+          "contract_ship_class": true
+        },
+        "contract": {
+          "character_id": "k_21",
+          "ship_class": "submarine",
+          "status": "complete",
+          "missing_roles": [],
+          "invalid_files": [],
+          "data_issues": [],
+          "found_roles": {
+            "full_body": [
+              "assets/characters/k_21/processed/ui/k_21_illust_full_alpha.png"
+            ],
+            "half_body": [
+              "assets/characters/k_21/processed/ui/k_21_illust_half_alpha.png"
+            ],
+            "skill_cutin": [
+              "assets/characters/k_21/processed/ui/k_21_illust_skill_cutin_alpha.png"
+            ],
+            "expression_default": [
+              "assets/characters/k_21/processed/ui/k_21_expr_default.png"
+            ],
+            "expression_serious": [
+              "assets/characters/k_21/processed/ui/k_21_expr_serious.png"
+            ],
+            "expression_hit": [
+              "assets/characters/k_21/processed/ui/k_21_expr_hit.png"
+            ],
+            "portrait": [
+              "assets/characters/k_21/processed/ui/k_21_ui_portrait.png"
+            ],
+            "portrait_small": [
+              "assets/characters/k_21/processed/ui/k_21_ui_portrait_small.png"
+            ],
+            "chibi_head": [
+              "assets/characters/k_21/processed/ui/k_21_ui_chibi_head.png"
+            ],
+            "skill_icon": [
+              "assets/characters/k_21/processed/ui/k_21_ui_skill_polar_tracking.png"
+            ],
+            "class_icon": [
+              "assets/characters/k_21/processed/ui/k_21_ui_class_submarine.png"
+            ],
+            "battle_body": [
+              "assets/characters/k_21/processed/battle/k_21_battle_body_r.png"
+            ],
+            "rig_base": [
+              "assets/characters/k_21/processed/battle/k_21_battle_rig_base.png"
+            ],
+            "main_weapon": [
+              "assets/characters/k_21/processed/battle/k_21_battle_torpedo_tube_aft.png",
+              "assets/characters/k_21/processed/battle/k_21_battle_torpedo_tube_fore.png"
+            ],
+            "anim_idle": [
+              "assets/characters/k_21/processed/anim/k_21_anim_idle_keyframe.png"
+            ],
+            "anim_move": [
+              "assets/characters/k_21/processed/anim/k_21_anim_move_keyframe.png"
+            ],
+            "anim_attack": [
+              "assets/characters/k_21/processed/anim/k_21_anim_attack_keyframe.png"
+            ],
+            "anim_hit": [
+              "assets/characters/k_21/processed/anim/k_21_anim_hit_keyframe.png"
+            ],
+            "anim_firepower": [
+              "assets/characters/k_21/processed/anim/k_21_anim_firepower_keyframe.png"
+            ],
+            "vfx": [
+              "assets/characters/k_21/processed/vfx/k_21_vfx_dive_ripple.png",
+              "assets/characters/k_21/processed/vfx/k_21_vfx_ice_torpedo_trail.png",
+              "assets/characters/k_21/processed/vfx/k_21_vfx_polar_tracking_ring.png",
+              "assets/characters/k_21/processed/vfx/k_21_vfx_skill_aura.png",
+              "assets/characters/k_21/processed/vfx/k_21_vfx_sonar_pulse.png",
+              "assets/characters/k_21/processed/vfx/k_21_vfx_torpedo_launch_flash.png",
+              "assets/characters/k_21/processed/vfx/k_21_vfx_torpedo_trail.png",
+              "assets/characters/k_21/processed/vfx/k_21_vfx_underwater_shadow.png"
+            ],
+            "bind_points": [
+              "assets/characters/k_21/processed/config/k_21_meta_bind_points.json"
+            ],
+            "anim_config": [
+              "assets/characters/k_21/processed/config/k_21_anim_config.json"
+            ],
+            "vfx_config": [
+              "assets/characters/k_21/processed/config/k_21_vfx_config.json"
+            ],
+            "manifest": [
+              "assets/characters/k_21/processed/config/k_21_postprocess_manifest.json"
+            ]
+          }
+        },
+        "batch_ready": true,
+        "technical_ready": true,
+        "visual_review": {
+          "status": "pending",
+          "accepted": false,
+          "issues": [
+            "visual review pending/blocking: assets/characters/k_21/processed/anim/k_21_anim_attack_frame_01.png",
+            "visual review pending/blocking: assets/characters/k_21/processed/anim/k_21_anim_attack_frame_02.png",
+            "visual review pending/blocking: assets/characters/k_21/processed/anim/k_21_anim_attack_frame_03.png",
+            "visual review pending/blocking: assets/characters/k_21/processed/anim/k_21_anim_attack_frame_04.png",
+            "visual review pending/blocking: assets/characters/k_21/processed/anim/k_21_anim_attack_keyframe.png",
+            "visual review pending/blocking: assets/characters/k_21/processed/anim/k_21_anim_firepower_frame_01.png",
+            "visual review pending/blocking: assets/characters/k_21/processed/anim/k_21_anim_firepower_frame_02.png",
+            "visual review pending/blocking: assets/characters/k_21/processed/anim/k_21_anim_firepower_frame_03.png",
+            "visual review pending/blocking: assets/characters/k_21/processed/anim/k_21_anim_firepower_frame_04.png",
+            "visual review pending/blocking: assets/characters/k_21/processed/anim/k_21_anim_firepower_keyframe.png",
+            "visual review pending/blocking: assets/characters/k_21/processed/anim/k_21_anim_hit_frame_01.png",
+            "visual review pending/blocking: assets/characters/k_21/processed/anim/k_21_anim_hit_frame_02.png",
+            "visual review pending/blocking: assets/characters/k_21/processed/anim/k_21_anim_hit_frame_03.png",
+            "visual review pending/blocking: assets/characters/k_21/processed/anim/k_21_anim_hit_frame_04.png",
+            "visual review pending/blocking: assets/characters/k_21/processed/anim/k_21_anim_hit_keyframe.png",
+            "visual review pending/blocking: assets/characters/k_21/processed/anim/k_21_anim_idle_frame_01.png",
+            "visual review pending/blocking: assets/characters/k_21/processed/anim/k_21_anim_idle_frame_02.png",
+            "visual review pending/blocking: assets/characters/k_21/processed/anim/k_21_anim_idle_frame_03.png",
+            "visual review pending/blocking: assets/characters/k_21/processed/anim/k_21_anim_idle_frame_04.png",
+            "visual review pending/blocking: assets/characters/k_21/processed/anim/k_21_anim_idle_keyframe.png",
+            "visual review pending/blocking: assets/characters/k_21/processed/anim/k_21_anim_move_frame_01.png",
+            "visual review pending/blocking: assets/characters/k_21/processed/anim/k_21_anim_move_frame_02.png",
+            "visual review pending/blocking: assets/characters/k_21/processed/anim/k_21_anim_move_frame_03.png",
+            "visual review pending/blocking: assets/characters/k_21/processed/anim/k_21_anim_move_frame_04.png",
+            "visual review pending/blocking: assets/characters/k_21/processed/anim/k_21_anim_move_keyframe.png",
+            "visual review pending/blocking: assets/characters/k_21/processed/battle/k_21_battle_body_r.png",
+            "visual review pending/blocking: assets/characters/k_21/processed/battle/k_21_battle_long_range_antenna.png",
+            "visual review pending/blocking: assets/characters/k_21/processed/battle/k_21_battle_periscope_node.png",
+            "visual review pending/blocking: assets/characters/k_21/processed/battle/k_21_battle_rig_base.png",
+            "visual review pending/blocking: assets/characters/k_21/processed/battle/k_21_battle_sonar_node.png",
+            "visual review pending/blocking: assets/characters/k_21/processed/battle/k_21_battle_submerged_shadow.png",
+            "visual review pending/blocking: assets/characters/k_21/processed/battle/k_21_battle_torpedo_tube_aft.png",
+            "visual review pending/blocking: assets/characters/k_21/processed/battle/k_21_battle_torpedo_tube_fore.png",
+            "visual review pending/blocking: assets/characters/k_21/processed/ui/k_21_expr_default.png",
+            "visual review pending/blocking: assets/characters/k_21/processed/ui/k_21_expr_hit.png",
+            "visual review pending/blocking: assets/characters/k_21/processed/ui/k_21_expr_serious.png",
+            "visual review pending/blocking: assets/characters/k_21/processed/ui/k_21_illust_full_alpha.png",
+            "visual review pending/blocking: assets/characters/k_21/processed/ui/k_21_illust_half_alpha.png",
+            "visual review pending/blocking: assets/characters/k_21/processed/ui/k_21_illust_skill_cutin_alpha.png",
+            "visual review pending/blocking: assets/characters/k_21/processed/ui/k_21_ui_chibi_head.png",
+            "visual review pending/blocking: assets/characters/k_21/processed/ui/k_21_ui_class_submarine.png",
+            "visual review pending/blocking: assets/characters/k_21/processed/ui/k_21_ui_portrait.png",
+            "visual review pending/blocking: assets/characters/k_21/processed/ui/k_21_ui_portrait_small.png",
+            "visual review pending/blocking: assets/characters/k_21/processed/ui/k_21_ui_skill_polar_tracking.png",
+            "visual review pending/blocking: assets/characters/k_21/processed/vfx/k_21_vfx_dive_ripple.png",
+            "visual review pending/blocking: assets/characters/k_21/processed/vfx/k_21_vfx_ice_torpedo_trail.png",
+            "visual review pending/blocking: assets/characters/k_21/processed/vfx/k_21_vfx_polar_tracking_ring.png",
+            "visual review pending/blocking: assets/characters/k_21/processed/vfx/k_21_vfx_skill_aura.png",
+            "visual review pending/blocking: assets/characters/k_21/processed/vfx/k_21_vfx_sonar_pulse.png",
+            "visual review pending/blocking: assets/characters/k_21/processed/vfx/k_21_vfx_torpedo_launch_flash.png",
+            "visual review pending/blocking: assets/characters/k_21/processed/vfx/k_21_vfx_torpedo_trail.png",
+            "visual review pending/blocking: assets/characters/k_21/processed/vfx/k_21_vfx_underwater_shadow.png"
+          ]
+        },
+        "delivery_ready": false,
+        "postprocess_ready": true
+      }
+    }
+  ]
+}

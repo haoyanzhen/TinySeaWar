@@ -8,6 +8,7 @@ Faction: 苏系. MVP ship class: 驱逐. Level: 3 级.
 Personality: 热血突击（自信疾驰）. Combat role: 高速驱逐领舰.
 Core visual direction: 高辨识钴蓝短大衣与雪白围巾，前倾长腿姿态强化“蓝色巡洋舰”；三座双联重炮、三座三联鱼雷管和加长驱逐底座形成大号高速主力驱逐轮廓.
 Required MVP asset focus: 全身/半身立绘、高规格技能 cut-in、三座双联炮、三组鱼雷节点、加长推进底座、领舰指挥点、刀锋白浪与蓝色高速航迹、疾驰炮击动画.
+Expected object inventory: exactly three twin 130mm main-gun turrets with two barrels each; exactly three triple 533mm torpedo launchers with three open tubes each; one elongated destroyer rig base; one propulsion node; one command node; one anti-air center. The battle grid carries one reusable turret and one reusable launcher while mount multiplicity remains in data and bindings.
 No real flags, no political symbols, no readable insignia text, no historical extremist symbols.
 Clean readable silhouette, clear ship-class identity, high-quality anime linework, restrained cel shading, consistent face and hair. Character body, rig base, weapons and effect origins must remain visually separable.
 
@@ -19,6 +20,7 @@ Faction: 苏系. MVP ship class: 驱逐. Level: 3 级.
 Personality: 热血突击（自信疾驰）. Combat role: 高速驱逐领舰.
 Core visual direction: 高辨识钴蓝短大衣与雪白围巾，前倾长腿姿态强化“蓝色巡洋舰”；三座双联重炮、三座三联鱼雷管和加长驱逐底座形成大号高速主力驱逐轮廓.
 Required MVP asset focus: 全身/半身立绘、高规格技能 cut-in、三座双联炮、三组鱼雷节点、加长推进底座、领舰指挥点、刀锋白浪与蓝色高速航迹、疾驰炮击动画.
+Expected object inventory: exactly three twin 130mm main-gun turrets with two barrels each; exactly three triple 533mm torpedo launchers with three open tubes each; one elongated destroyer rig base; one propulsion node; one command node; one anti-air center. The battle grid carries one reusable turret and one reusable launcher while mount multiplicity remains in data and bindings.
 No real flags, no political symbols, no readable insignia text, no historical extremist symbols.
 Clean readable silhouette, clear ship-class identity, high-quality anime linework, restrained cel shading, consistent face and hair. Character body, rig base, weapons and effect origins must remain visually separable.
 Create the definitive full-body style anchor concept on a transparent background. Front three-quarter standing pose, complete outfit and ship rigging visible, generous empty transparent margin, no environment, no ocean, no UI, no text. Show the body, rig base, weapon identity and core accessory clearly; the accepted anchor will be the sole identity reference for all derivative sheets.
@@ -43,3 +45,10 @@ Create exactly eight isolated character-specific VFX overlays in a 2x4 grid, in 
 
 - Original TinySeaWar design; no real flags, political symbols, readable insignia, or extremist symbols.
 - Character body, rig base, weapon nodes, and VFX must remain visually separable.
+
+## 2026-09-14 production acceptance
+
+- Batch: `phase2_soviet_quartet_20260914`, together with Chapayev, Gangut, and K-21.
+- Accepted identity: pale-blue short hair, cobalt coat, white scarf, black thigh-high boots, and a confident high-speed leader posture.
+- Source route: built-in image generation with the accepted concept as identity anchor; green-screen derivatives are converted to alpha by the deterministic project postprocessor.
+- Hard inventory gate: three twin main turrets and three triple torpedo launchers; rejected variants do not enter the repository.

@@ -1,0 +1,456 @@
+{
+  "character_id": "cleveland",
+  "review_note": "2026-09-21 source-layout visual inspection: these per-role pixel hints select source connected components, never final grid cuts. Preserve disconnected VFX. Final output requires independent review.",
+  "source_sha256": {
+    "anim_attack": "22ce03482365948e7bf675bd3c63d796a9ab4b5fabee05a3813c2cf41bdcd956",
+    "anim_firepower": "d09eafe6e880b458840c4ec705175c1234674e7e5c75e71d7daa7780a0b12c43",
+    "anim_hit": "2f8c42b3ce9c9a4d41f2fa56200e141bf1604e0cf38f2b73e4ab4bcb2fa37ff0",
+    "anim_idle": "73b3086ddb418a09e3b20857cd3c1ff6c642a9c92029d5b1f7591d78fd845dd6",
+    "anim_move": "7af080a4f76220d8ebc3557ec28fcc00b2c2c8f93b596f5d445e227f3907461f",
+    "battle_grid": "844bd77c646b6b84064dfd7fffe45278961032bc608d899f0cd2ae38926fa275",
+    "ui_sheet": "ec2a8565cb2aba78c4797292af6d04cfe2f608792c96a4b7d56c5dff747aee8a",
+    "vfx_sheet": "076f25bd32b017c302e93e151c62d93f7e9875e9a0a5bb6379577f81ceac6aac"
+  },
+  "crops": {
+    "ui_portrait": {
+      "source": "ui_sheet",
+      "box": [
+        160,
+        182,
+        284,
+        262
+      ],
+      "tags": []
+    },
+    "ui_portrait_small": {
+      "source": "ui_sheet",
+      "box": [
+        603,
+        182,
+        727,
+        262
+      ],
+      "tags": []
+    },
+    "ui_chibi_head": {
+      "source": "ui_sheet",
+      "box": [
+        1047,
+        182,
+        1171,
+        262
+      ],
+      "tags": []
+    },
+    "expr_default": {
+      "source": "ui_sheet",
+      "box": [
+        1490,
+        182,
+        1614,
+        262
+      ],
+      "tags": []
+    },
+    "expr_serious": {
+      "source": "ui_sheet",
+      "box": [
+        160,
+        625,
+        284,
+        705
+      ],
+      "tags": []
+    },
+    "expr_hit": {
+      "source": "ui_sheet",
+      "box": [
+        603,
+        625,
+        727,
+        705
+      ],
+      "tags": []
+    },
+    "ui_skill": {
+      "source": "ui_sheet",
+      "box": [
+        905,
+        457,
+        1313,
+        878
+      ],
+      "tags": []
+    },
+    "class_icon": {
+      "source": "ui_sheet",
+      "box": [
+        1348,
+        457,
+        1756,
+        878
+      ],
+      "tags": []
+    },
+    "battle_body_r": {
+      "source": "battle_grid",
+      "box": [
+        44,
+        40,
+        399,
+        404
+      ],
+      "tags": []
+    },
+    "battle_rig_base": {
+      "source": "battle_grid",
+      "box": [
+        488,
+        40,
+        843,
+        404
+      ],
+      "tags": []
+    },
+    "battle_turret_main_01": {
+      "source": "battle_grid",
+      "box": [
+        931,
+        40,
+        1286,
+        404
+      ],
+      "tags": []
+    },
+    "battle_turret_main_02": {
+      "source": "battle_grid",
+      "box": [
+        1375,
+        40,
+        1730,
+        404
+      ],
+      "tags": []
+    },
+    "battle_aa_center": {
+      "source": "battle_grid",
+      "box": [
+        44,
+        483,
+        399,
+        847
+      ],
+      "tags": []
+    },
+    "battle_radar_node": {
+      "source": "battle_grid",
+      "box": [
+        488,
+        483,
+        843,
+        847
+      ],
+      "tags": []
+    },
+    "battle_fire_control_node": {
+      "source": "battle_grid",
+      "box": [
+        931,
+        483,
+        1286,
+        847
+      ],
+      "tags": []
+    },
+    "battle_wake_origin_marker": {
+      "source": "battle_grid",
+      "box": [
+        1375,
+        483,
+        1730,
+        847
+      ],
+      "tags": []
+    },
+    "anim_idle_frame_01": {
+      "source": "anim_idle",
+      "box": [
+        25,
+        25,
+        602,
+        602
+      ],
+      "tags": []
+    },
+    "anim_idle_frame_02": {
+      "source": "anim_idle",
+      "box": [
+        652,
+        25,
+        1229,
+        602
+      ],
+      "tags": []
+    },
+    "anim_idle_frame_03": {
+      "source": "anim_idle",
+      "box": [
+        25,
+        652,
+        602,
+        1229
+      ],
+      "tags": []
+    },
+    "anim_idle_frame_04": {
+      "source": "anim_idle",
+      "box": [
+        652,
+        652,
+        1229,
+        1229
+      ],
+      "tags": []
+    },
+    "anim_move_frame_01": {
+      "source": "anim_move",
+      "box": [
+        28,
+        23,
+        665,
+        545
+      ],
+      "tags": []
+    },
+    "anim_move_frame_02": {
+      "source": "anim_move",
+      "box": [
+        720,
+        23,
+        1357,
+        545
+      ],
+      "tags": []
+    },
+    "anim_move_frame_03": {
+      "source": "anim_move",
+      "box": [
+        28,
+        591,
+        665,
+        1113
+      ],
+      "tags": []
+    },
+    "anim_move_frame_04": {
+      "source": "anim_move",
+      "box": [
+        720,
+        591,
+        1357,
+        1113
+      ],
+      "tags": []
+    },
+    "anim_attack_frame_01": {
+      "source": "anim_attack",
+      "box": [
+        25,
+        25,
+        602,
+        602
+      ],
+      "tags": []
+    },
+    "anim_attack_frame_02": {
+      "source": "anim_attack",
+      "box": [
+        652,
+        25,
+        1229,
+        602
+      ],
+      "tags": []
+    },
+    "anim_attack_frame_03": {
+      "source": "anim_attack",
+      "box": [
+        25,
+        652,
+        602,
+        1229
+      ],
+      "tags": []
+    },
+    "anim_attack_frame_04": {
+      "source": "anim_attack",
+      "box": [
+        652,
+        652,
+        1229,
+        1229
+      ],
+      "tags": []
+    },
+    "anim_hit_frame_01": {
+      "source": "anim_hit",
+      "box": [
+        25,
+        25,
+        602,
+        602
+      ],
+      "tags": []
+    },
+    "anim_hit_frame_02": {
+      "source": "anim_hit",
+      "box": [
+        652,
+        25,
+        1229,
+        602
+      ],
+      "tags": []
+    },
+    "anim_hit_frame_03": {
+      "source": "anim_hit",
+      "box": [
+        25,
+        652,
+        602,
+        1229
+      ],
+      "tags": []
+    },
+    "anim_hit_frame_04": {
+      "source": "anim_hit",
+      "box": [
+        652,
+        652,
+        1229,
+        1229
+      ],
+      "tags": []
+    },
+    "anim_firepower_frame_01": {
+      "source": "anim_firepower",
+      "box": [
+        25,
+        25,
+        602,
+        602
+      ],
+      "tags": []
+    },
+    "anim_firepower_frame_02": {
+      "source": "anim_firepower",
+      "box": [
+        652,
+        25,
+        1229,
+        602
+      ],
+      "tags": []
+    },
+    "anim_firepower_frame_03": {
+      "source": "anim_firepower",
+      "box": [
+        25,
+        652,
+        602,
+        1229
+      ],
+      "tags": []
+    },
+    "anim_firepower_frame_04": {
+      "source": "anim_firepower",
+      "box": [
+        652,
+        652,
+        1229,
+        1229
+      ],
+      "tags": []
+    },
+    "vfx:layered_aa_net": {
+      "source": "vfx_sheet",
+      "box": [
+        9,
+        4,
+        435,
+        439
+      ],
+      "tags": []
+    },
+    "vfx:radar_calibration": {
+      "source": "vfx_sheet",
+      "box": [
+        452,
+        4,
+        878,
+        439
+      ],
+      "tags": []
+    },
+    "vfx:shell_trail": {
+      "source": "vfx_sheet",
+      "box": [
+        896,
+        4,
+        1322,
+        439
+      ],
+      "tags": []
+    },
+    "vfx:aa_burst": {
+      "source": "vfx_sheet",
+      "box": [
+        1339,
+        4,
+        1765,
+        439
+      ],
+      "tags": []
+    },
+    "vfx:aa_circle": {
+      "source": "vfx_sheet",
+      "box": [
+        9,
+        448,
+        435,
+        883
+      ],
+      "tags": []
+    },
+    "vfx:radar_scan": {
+      "source": "vfx_sheet",
+      "box": [
+        452,
+        448,
+        878,
+        883
+      ],
+      "tags": []
+    },
+    "vfx:skill_aura": {
+      "source": "vfx_sheet",
+      "box": [
+        896,
+        448,
+        1322,
+        883
+      ],
+      "tags": []
+    },
+    "vfx:water_splash": {
+      "source": "vfx_sheet",
+      "box": [
+        1339,
+        448,
+        1765,
+        883
+      ],
+      "tags": []
+    }
+  }
+}

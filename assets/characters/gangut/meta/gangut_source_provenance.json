@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "character_id": "gangut",
+  "kind": "tool_managed_generated_art",
+  "source": "built_in_image_generation_tool",
+  "batch_ready_allowed": true,
+  "generation": {
+    "requested_model": "gpt-image-2.5 pipeline target; no model selector was exposed by the tool",
+    "actual_model": "tool-managed/unknown",
+    "generation_tool": "image_gen.imagegen",
+    "endpoint": "tool-managed/not exposed",
+    "quality": "tool-managed/not exposed",
+    "size_control": "tool-managed; accepted pixel dimensions are recorded per source image",
+    "background_control": "accepted production sources use reserved near-#00FF00 chroma key for deterministic project-side alpha recovery",
+    "output_format": "PNG",
+    "prompt_revision": {
+      "path": "assets/characters/gangut/meta/gangut_generation_brief.md",
+      "sha256": "3ba72f22f6544a632d7a1469914ca29e688c97ea43180d3f818232c119cd5a88"
+    },
+    "reference_inputs": [
+      {"path": "assets/characters/gangut/concept/gangut_concept_full.png", "role": "accepted_style_anchor"}
+    ],
+    "generation_ids": "not exposed by the tool"
+  },
+  "reproducibility": {
+    "generation_replayable": false,
+    "generation_limit": "The tool did not expose backend model/version, endpoint payloads, seeds, or generation IDs.",
+    "postprocess_replayable": true,
+    "postprocess_entry": "tools/art_pipeline/postprocess_generated_character.py gangut"
+  },
+  "source_images": [
+    {"role": "concept_full", "path": "assets/characters/gangut/concept/gangut_concept_full.png", "sha256": "c71cb1aa901ca92013115b822afb096487af76ea90eaea457542b482db5e377a", "size": [1024, 1536], "source_mode": "RGB", "background": "reserved_green_near_#00FF00", "qa_verdict": "pass", "qa_observation": "Identity, silver braid, veteran coat, four triple main turrets, and compact secondary battery are readable without fused objects."},
+    {"role": "ui_sheet", "path": "assets/characters/gangut/ui/gangut_ui_sheet.png", "sha256": "40d107b6a5d611815dfd1cda8cc121e1a5bc49b0a34f5e7de29d1917c21dd25f", "size": [1774, 887], "source_mode": "RGB", "background": "reserved_green_near_#00FF00", "qa_verdict": "pass", "qa_observation": "Eight row-major UI roles are distinct, readable, and separated."},
+    {"role": "battle_grid", "path": "assets/characters/gangut/battle/gangut_battle_asset_grid.png", "sha256": "7715aba17272055538f4907ab0e35b0dba99bac036fe4e85d3bee546b9abfc41", "size": [1774, 887], "source_mode": "RGB", "background": "reserved_green_near_#00FF00", "qa_verdict": "pass", "qa_observation": "Eight battle roles are separated; the reusable main turret has three barrels and the reusable secondary is single-barrel."},
+    {"role": "anim_idle", "path": "assets/characters/gangut/battle/gangut_anim_idle_4f_sheet.png", "sha256": "334e111a265f4b0234eef34bc33566e9d869185633eb3fc82e86cc71670d906f", "size": [1024, 1536], "source_mode": "RGB", "background": "reserved_green_near_#00FF00", "qa_verdict": "pass", "qa_observation": "Four ordered idle poses preserve the veteran identity, braid, coat, and full battleship rig."},
+    {"role": "anim_move", "path": "assets/characters/gangut/battle/gangut_anim_move_4f_sheet.png", "sha256": "9bea6a53c0a159f79e34497a3c300f5b55a24fac4a8bf92d3ca11b6fc1af8828", "size": [1024, 1536], "source_mode": "RGB", "background": "reserved_green_near_#00FF00", "qa_verdict": "pass", "qa_observation": "Four heavy movement poses retain the armored rig and local wake within each cell."},
+    {"role": "anim_attack", "path": "assets/characters/gangut/battle/gangut_anim_attack_4f_sheet.png", "sha256": "9a87549167de56bc161df110e3447357a0d240059e2d03837f3f1cee2a8b412c", "size": [1024, 1536], "source_mode": "RGB", "background": "reserved_green_near_#00FF00", "qa_verdict": "pass", "qa_observation": "Four broadside attack poses retain intact attached batteries and use local muzzle smoke only."},
+    {"role": "anim_hit", "path": "assets/characters/gangut/battle/gangut_anim_hit_4f_sheet.png", "sha256": "ac9ec07b466084e64f3c36084416d93f28afaea0249902ddd912efc8ef59c957", "size": [1024, 1536], "source_mode": "RGB", "background": "reserved_green_near_#00FF00", "qa_verdict": "pass", "qa_observation": "Four non-graphic hit poses preserve the full intact battleship silhouette."},
+    {"role": "anim_firepower", "path": "assets/characters/gangut/battle/gangut_anim_firepower_4f_sheet.png", "sha256": "6be5c037515991fa5bcfbe88e42dc3694c5fa24eb00b8b024b52a3562bbcfb47", "size": [1024, 1536], "source_mode": "RGB", "background": "reserved_green_near_#00FF00", "qa_verdict": "pass", "qa_observation": "Four Steel Line skill poses keep the heavy broadside and command accents inside their cells."},
+    {"role": "vfx_sheet", "path": "assets/characters/gangut/vfx/gangut_vfx_reference_sheet.png", "sha256": "c17318131a8f721bd93775eb0b03a67226bafcfae2bb9070ca0488c88e7f871f", "size": [1774, 887], "source_mode": "RGB", "background": "reserved_green_near_#00FF00", "qa_verdict": "pass", "qa_observation": "Eight VFX roles match the required row-major order, including steel line, coal smoke, broadside smoke, and armor sparks."}
+  ]
+}

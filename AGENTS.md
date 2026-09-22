@@ -112,7 +112,7 @@ MVP 的核心约束：
 - **十套海岸地图已接入运行时**：十类岛屿均有独立的 `6144 × 3456` 16:9 大型海岸变体、`3840 × 2160` 美术母版，并按最终人工确认以 `2.6 × 3.2` 非等比显示；视觉、硬地形、浅水/航道、设施锚点、审核出生、三档共享导航和小地图均从同一作者变换重建。环形泻湖保持六入口版本。完整生产流水线、十图三档空间专项、十图固定种子 3v3、三分辨率正式镜头矩阵与十图 F9 对齐均通过；人工键鼠近岸航行和有岸大编队交通/绝对性能未通过关闭条件。自定义战斗已使用新变体，既有正式教学/挑战关暂留兼容地图待单独迁移。港湾额外包含潮汐、观察站、岸炮、补给维修、机场任务、水雷、设施生命周期和场景兼容 AI。其余九图尚待正式教学/挑战任务、局部环境、设施与平衡验收。
 - **角色设计第一期完成**：第一期 24 名角色的数据、武器、技能和表现映射已加载并进入现有关卡。
 - **角色设计第二期部分完成**：第二期 24 名角色的数据、武器、技能和表现映射已加载，但未进入现有关卡。
-- **角色美术部分完成**：第二期已有 5 名完成 processed 资产，其中杰维斯于 2026-09-14 通过新角色美术管线、manifest v2 追溯、资产契约以及物体/VFX/绑定点人工审查；其余 19 名仍待生产。
+- **角色美术部分完成**：2026-09-22 第二期 24 套素材包全部达到 complete / polish / delivery_ready，共 1,248 张运行时 PNG；九套旧基线/苏系问题包已重建 81 张原生 Alpha 源图和 468 张运行时 PNG，修复装备数量、动画一致性、截断/串格、透明边缘与静态挂点。61 项 Python 回归、九套 594 个 processed 文件重复构建哈希及 Godot 1,349 项二期资源加载通过。素材齐备不等于实机完成：独立武器装配、角色左右朝向、跨状态比例及实机演出仍待关闭；当前战斗视图仍把组合帧与底座叠画并随航向旋转。Codex 内置 ImageGen 原生 Alpha 生图不变，后处理统一使用 `postprocess_trial_sheets.py` 的逐件提示、源图连通块扩框、trim 与平衡 padding，不按网格硬切；直连 API 和旧绿幕仅保留显式保底。详见 `assets/characters/qa/20260922_phase2_art_completion_validation.md`。
 - **战斗美术部分完成**： 战斗美术基本完成；可见潜艇的角色本体、舰装、脚下阴影、碰撞轮廓和航向线已按权威上下潜进度接入分层冷色/透明度表现，晴昼与雷雨夜间 QA 截图可读。航空、防空、反潜以及潜航气泡/水波等动态效果仍需继续。
 - **环境美术部分完成**： 海面、十张 16:9 大型海岸母版与运行时贴图、港湾浅水/航道、局部天气和设施已形成运行闭环；十图正式战斗镜头与 F9 对齐已完成，人工键鼠近岸航行仍待验收，其余岛屿关卡的局部环境与设施仍需继续。
 - **UI美术部分完成**： UI美术资产与接口已建立，全面换肤仍需继续。
@@ -135,9 +135,16 @@ MVP 的核心约束：
 - `assets/environment/land/source/`：已审核的海岸透明母版、构图参考和权威参考遮罩；`assets/environment/land/land_*_16x9_runtime.png` 与 manifest 是运行时入口。`assets/environment/land/generated/` 只允许作为被 Git 忽略的临时工作区，不保留 raw/chroma-key 中间图。
 - `assets/environment/qa/`：只保留被文档或 manifest 引用的最终 QA 证据；临时审查面板写入系统临时目录或被忽略的 `reports/`。
 - `addons/terrain_authoring/`：仅编辑器使用的地形作者插件，操作、依赖和发布边界见目录内 `README.md`。
-- `tools/data/`：角色批次配置生成；`tools/art_pipeline/`：角色、UI、场景和陆地资产处理与验收；`tools/scene_review/`：正式战斗场景全图与镜头 QA。
+- `tools/data/`：角色批次配置生成；`tools/art_pipeline/record_codex_builtin_art.py` 与 `generation_contract.py`：Codex 内置原生 Alpha 来源登记和源图门禁；`generate_character_art.py` 是非 Codex 环境的可选直连 API 入口；`tools/art_pipeline/` 其余脚本：角色、UI、场景和陆地资产处理与验收；`tools/scene_review/`：正式战斗场景全图与镜头 QA。
 - `artifacts/simulations/`：被 Git 忽略的可再生模拟结果，不是运行时资源或配置真源；`artifacts/.gdignore` 阻止 Godot 导入其中的 CSV/报告。
 - 当前不存在正式 `assets/audio/`；新增音频前必须先补音频设计、语义事件和总线约定。
+
+## Python 工具环境
+
+- 项目 Python 工具统一使用仓库根目录的 uv `.venv`，Python 小版本约束为 `3.12`，当前由 `.python-version` 精确固定为 `3.12.13`；不得使用系统、Homebrew 或 Conda 的裸 `python`、`python3`、`pip`、`pip3` 执行本项目工具。
+- `pyproject.toml` 是 Python 直接依赖声明真源，`uv.lock` 是完整解析版本真源；首次检出或锁文件更新后运行 `uv sync --locked` 创建/同步 `.venv`，不要单独重复安装 Pillow。
+- Python 工具、审计和单测统一使用 `uv run --locked python ...`；需要直接解释器路径时使用 `.venv/bin/python`。新增或调整依赖后使用 `uv add <package>`，并同时提交 `pyproject.toml` 与 `uv.lock`。
+- `.venv/` 与 uv 下载缓存不得提交。受限执行环境无法写入用户级 uv 缓存时，只将 `UV_CACHE_DIR` 指向系统临时目录，不要在正式资源目录留下缓存。
 
 ## Codex 工作指引
 
@@ -145,6 +152,7 @@ MVP 的核心约束：
 
 - 先检查 `git status --short`，保护用户已有改动，不回滚无关文件。
 - 先读 `docs/00_project_status.md`，确认本次任务是在补缺口、扩展部分完成项，还是维护已完成基线。
+- 涉及 Python 工具时先运行 `uv sync --locked`，后续命令使用 `uv run --locked python ...`，不得因当前 shell 激活了 Conda 或裸 `python3` 可用而绕过项目 `.venv`。
 - 根据任务类型阅读上面对应文档；如果涉及代码落点，再读 `docs/34_implementation_map.md`。
 - 用 `rg` 或 `rg --files` 查找引用和调用点，避免只改一处留下旧路径、旧字段或旧规则。
 - 只改和任务直接相关的文件。设计文档、数据、代码、美术资产不要顺手大范围重构。
@@ -172,6 +180,10 @@ MVP 的核心约束：
 - 角色运行时资产真源在 `assets/characters/{character_id}/processed/`，原始 sheet 和 QA 产物不要混作运行时入口。
 - UI 运行时语义清单参考 `assets/ui/qa/ui_asset_manifest.json`，导出倍率目录位于 `assets/ui/export/`。
 - 改角色后处理或资产验收时，优先复用 `tools/art_pipeline/` 中现有脚本。
+- 角色正式拆件统一进入 `postprocess_trial_sheets.py`；已有手写 `CropSpec` 继续使用，新源包在 `meta/{id}_crop_specs.json` 标定逐件源图提示，并由 `postprocess_generated_character.py` 适配后调用同一个旧裁切核心。缺少规格不得回退网格硬切；生产计划不等于裁切规格。 扩框后的安全边距须排除未被提示选中的邻件组件，保留全部选中组件及原有柔边；VFX 提示必须覆盖所有断开图元，不能只标中心。原生 Alpha 直接保留，不随旧裁切流程恢复白底/绿幕清理。
+- 新旧后处理共用 `delivery_review.py` 生成带包哈希和逐件 Alpha/裁切证据的交付核验清单；初始视觉结论只能是 pending。技术 `batch_ready/technical_ready` 不代表视觉通过，`delivery_ready` 还要求当前文件版本逐件有审查人、观察记录和 pass/polish；源图、配置或成品变化必须复验。详见 `46` 第 5.1 节。
+- 内置源图审查可用 `record_codex_builtin_art.py {id} --prepare-review` 准备，换图后旧结论不能直接沿用；正式交付检查使用 `batch_character_art.py --require-delivery --report-tag <批次名> ...`，防止技术通过被当作交付通过，或单批报告覆盖全期结果。
+- Codex 会话中新角色生图直接使用账户内置 ImageGen 请求透明 PNG，并用 `uv run --locked python tools/art_pipeline/record_codex_builtin_art.py {id}` 登记逐图哈希、Alpha 事实和人工结论，不要求 SDK 或用户 API Key；底层模型/请求 ID 未暴露时必须如实记录为 Codex 托管，不得伪造直连 API 信息。非 Codex 环境才显式使用 `generate_character_art.py`。绿幕只有在原生 Alpha 失败后，带 `--allow-legacy-chroma-fallback` 与非空失败原因时才可作为最后保底。
 - 改场景环境资产时先按 `47` 区分视觉图层与规则几何；贴图 alpha 和 `visual_regions` 不得直接成为碰撞、浅水或通行真相。
 - 生图 raw、抠色结果、单次审查面板、缓存和临时导出不得留在正式资源目录；通过审核后只保留可复现所需的源母版/参考遮罩、运行时资产和被路引引用的最终 QA 证据。
 - 模拟报告可留在被忽略的 `artifacts/simulations/` 供本地复核，但不得保留 Godot 为 CSV/文本生成的 `.import`、`.translation` 等导入副产物。

@@ -155,6 +155,11 @@
 | UI 文本 | `scripts/presentation/ui_text.gd` |
 | 场景表现测试 | `scripts/tests/scene_presentation_test.gd` |
 | 场景 QA 渲染 | `scripts/tests/render_scene_qa.gd`；支持分辨率/镜头、F9、地图映射、多舰规模与固定 Tick |
+| GPT Image 2.5 角色原生透明生成、生成契约与批量验收 | `tools/art_pipeline/generate_character_art.py`、`generation_contract.py`、`batch_character_art.py`、`check_character_asset_contract.py` |
+| 角色统一旧裁切入口与原生 Alpha 适配 | `tools/art_pipeline/postprocess_trial_sheets.py`（逐件规格、源图连通块、trim、平衡 padding）；`postprocess_generated_character.py`（来源/计划/schema v2 适配）；`assets/characters/{id}/meta/{id}_crop_specs.json`（新源包逐件坐标提示） |
+| 新旧角色统一交付追溯、逐件视觉审查与失效检测 | `tools/art_pipeline/delivery_review.py`；`processed/config/{id}_delivery_review.json`；技术检查与视觉接受分别汇入批处理报告 |
+| 内置生图来源审查准备与登记 | `tools/art_pipeline/record_codex_builtin_art.py`（`--prepare-review`）；`meta/{id}_source_review.json` |
+| 角色生产流程回归与 Godot 资源引用检查 | `tools/art_pipeline/tests/test_production_workflow.py`、`character_batch_asset_load.gd`（`--` 后指定角色） |
 | 运行时全地图比例视图 | `tools/scene_review/render_runtime_full_map_view.gd` |
 | 16:9 海岸正式画面 QA | `assets/environment/qa/coastal_camera_resolution_matrix.png`、`coastal_f9_runtime_alignment.png`、`coastal_fleet_traffic_review.png`、`coastal_11v11_failure_review.png` |
 

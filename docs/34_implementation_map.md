@@ -19,6 +19,8 @@
 |---|---|
 | 配置加载、索引、校验 | `scripts/infrastructure/data/config_registry.gd` |
 | 资产语义解析 | `scripts/infrastructure/assets/asset_catalog.gd` |
+| 美术路径入口与小地图语义清单 | `assets/README.md`、`assets/ui/processed/battle/terrain/terrain_minimap_manifest.json`；目录规范见 `45` |
+| 资产路径查询与缺失回退专项 | `scripts/tests/asset_path_lookup_test.gd` |
 | 战斗公共设置 | `data/settings/combat_settings.json` |
 | 表现公共设置 | `data/settings/presentation_settings.json` |
 | 公式配置 | `data/formulas/combat_formulas.json` |

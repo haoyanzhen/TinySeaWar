@@ -21,8 +21,9 @@ qa/                          Manifest, contact sheets, filled previews and QA re
 ## Rebuild And Verify
 
 ```bash
-python3 tools/art_pipeline/process_ui_art.py
-python3 tools/art_pipeline/check_ui_asset_contract.py
+uv sync --locked
+uv run --locked python tools/art_pipeline/process_ui_art.py
+uv run --locked python tools/art_pipeline/check_ui_asset_contract.py
 ```
 
 The processed package contains 137 semantic assets. Runtime text is intentionally

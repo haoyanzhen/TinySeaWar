@@ -64,6 +64,8 @@ Use lowercase English file names with underscores:
 
 ### Art
 
+美术目录入口：[assets/README.md](../assets/README.md)；统一路径、命名与兼容例外由 `45` 维护。
+
 - [40_art_direction_design.md](40_art_direction_design.md)
 - [41_character_art_design.md](41_character_art_design.md)
 - [42_combat_art_design.md](42_combat_art_design.md)

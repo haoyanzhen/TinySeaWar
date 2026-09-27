@@ -13,7 +13,37 @@
 - UI 语义清单仍位于 `assets/ui/qa/ui_asset_manifest.json`。
 - `data/visuals/` 保存投射物表现、武器表现映射和 VFX 播放参数；角色裁切、绑定点和资源派生信息仍只保存在 processed 配置与资产 manifest 中。
 
-## 运行时接口
+## 统一物理路径规范
+
+本节是全项目美术路径的统一约束；`46/47` 维护生产细节，`34` 维护代码位置，`assets/README.md` 仅作入口。目录表中的 `{id}` 使用角色配置 ID 去掉 `ship.` 后的标识，不能使用显示名。
+
+| 资产职责 | 正式位置与规则 |
+|---|---|
+| 角色源母版 | `assets/characters/{id}/{concept,ui,battle,vfx}/`；来源、裁切规格和生成记录位于 `meta/`，角色生产计划位于角色根目录 |
+| 角色运行时 | `assets/characters/{id}/processed/{ui,battle,anim,vfx}/`；配置在 `processed/config/`；`processed/source_alpha/` 是可复现的处理源，不是战斗入口 |
+| 角色 QA | `assets/characters/qa/`；保留交付报告、审查证据和总览；临时预览放系统临时目录或 `reports/` |
+| UI | `assets/ui/raw/` 保存生产源母版，`processed/{common,battle,menu}/` 保存成品，`processed/source_alpha/` 保存处理源，`export/{1x,2x,4x}/` 保存倍率导出，`layout/` 保存布局契约 |
+| 小地图 | `assets/ui/processed/battle/terrain/`；按该目录 `terrain_minimap_manifest.json` 中的地图 ID 查询，不从地图 ID 推测 PNG 文件名 |
+| 海面 | `assets/environments/ocean/common/` 保存复用贴图，`concept/` 保存概念母版与说明 |
+| 场景环境 | `assets/environment/{weather,land,terrain,facilities}/`；局部天气在 `weather/zones/`；陆地来源在 `land/source/` |
+| 环境 QA | `assets/environment/qa/` 仅保留文档或 manifest 引用的最终证据；`land/generated/` 仅可作被 Git 忽略的临时工作区 |
+| 公共 VFX | `assets/vfx/combat/{projectiles,trails,wakes,muzzle,impacts,aircraft,antiair,antisubmarine,skills,warnings,environment}/`；子目录按资源类型细分，角色共享模板位于 `character_templates/{ship_class}/` |
+| VFX 来源与 QA | `assets/vfx/combat/source/` 保存可复现源，`qa/` 保存公共 manifest 与交付证据 |
+
+命名和引用约束：
+
+- 新增目录、资产和配置使用小写 ASCII 字母、数字及下划线，扩展名小写；角色文件以 `{id}_` 开头，角色配置与源图后缀见 `46`。公共 VFX 使用 `vfx_`、`projectile_` 或 `aircraft_` 前缀并表达用途；UI 使用 `ui_`，小地图使用 `minimap_`。已登记的旧名称保持兼容，禁止只为改名复制资源。
+- `README.md`、Godot `.gdignore`、自动生成的 `.import` 为明确例外；QA 日期前缀、批次标识中的连字符、已验收源母版原名允许保留。新增类别或例外必须先登记到本节和对应管线。
+- 仓库内资产 manifest/生产配置允许仓库相对 `assets/...`；Godot 运行时统一使用 `res://assets/...`，由 `AssetCatalog` 归一化。`data/visuals` 的贴图字段继续遵循 `25` 的 `res://` 契约。不得把 `../`、机器绝对路径或 `user://` 用作正式美术资源入口。
+- 来源追溯记录中的生成器原始绝对路径允许作为历史元数据保留，但不能作为运行依赖；可复现所需的接受源母版仍须入库。文档 Markdown 链接可以使用相对路径。
+- 原始母版、透明处理源、运行时成品和 QA 各归其位。临时候选、缓存、单次截图及导出放系统临时目录或被忽略的 `reports/`，不可因文件名含 `raw` 就把合法源母版当临时文件删除。
+- `environment/` 与 `environments/ocean/` 是保留的明确兼容边界；UI/VFX manifest 保留在各自 `qa/` 中，属于运行时依赖，不可按临时 QA 清理。未来迁移必须同步 manifest、工具、接口和全部引用。
+- 表现层只提交语义名、角色 ID 或地图 ID，不手拼角色/UI/VFX PNG 路径。资产目录扫描、固定命名适配和路径归一化集中在 Infrastructure 或生产工具中。
+- 固定路径例外限于现有 `ocean_surface.gd`、`weather_overlay.gd` 的共享海面/全局天气贴图，以及稳定 Shader/场景资源引用；局部环境、设施、小地图、角色和 UI 不借用此例外。
+
+路径变更时必须检查：目录职责、manifest 唯一键、引用存在性、语义查询和资源缺失降级，并同步 `34` 与生产工具。路径检查通过不代表像素质量或实机演出验收通过。
+
+## 运行时查询接口
 
 统一入口为 `scripts/infrastructure/assets/asset_catalog.gd`，并通过 `DataRegistry.assets` 在运行时访问。
 
@@ -34,9 +64,12 @@ var water_column := DataRegistry.assets.combat_vfx_asset_path("impact.water.larg
 
 - `animation_state(character_id, state_name)` 返回四帧动画、FPS 和循环标记。
 - `vfx_role(character_id, role_name)` 返回角色 VFX 语义资源。
+- 全部 VFX role 均引用存在的 `assets/vfx/combat/` 公共资源时允许省略角色本地 `processed/vfx/`；空 role 或缺失公共资源不满足该例外。
 - `bind_points(character_id, asset_name)` 返回指定战斗部件的绑定点。
 - `heading_offset_degrees(character_id, asset_name)` 返回该战斗部件相对“舰艏向右”零角度的纯表现校正；缺省为 `0`，只允许校正贴图母版方向，不得改变 Domain 航向或碰撞椭圆。
 - `battle_asset_path(character_id, semantic_name)` 返回战斗部件路径，例如 `rig_base`。
+- `character_ui_asset_path(character_id, semantic_name)` 返回角色 UI 路径；语义为文件名去掉角色前缀与扩展名，例如 `ui_portrait_small`、`ui_portrait`、`illust_full_alpha`。未知角色或语义返回空字符串；HUD 按小头像、普通头像顺序回退。
+- `minimap_asset_path(terrain_definition_id)` 从小地图 manifest 返回遮罩路径；未知地图返回空字符串。加载器拒绝重复地图 ID、不存在资源及不在小地图目录中的路径。
 
 通用战斗表现接口：
 
@@ -89,6 +122,6 @@ UI 接口：
 ## 约束
 
 - 新程序代码应优先使用 `AssetCatalog`，不要直接写死角色或 UI 的完整 PNG 路径。
-- 环境底图、Shader 引用等少量稳定资源可以继续固定路径，必要时再迁入接口层。
+- 固定路径仅按本节上方登记的例外保留；新增资产消费者遵循语义查询。
 - 美术后处理工具继续负责产出 `anim_config`、`vfx_config`、`meta_bind_points` 和 UI manifest。
 - 若资源缺失或 JSON 无法解析，`AssetCatalog.load_all()` 会记录错误，启动时通过 `DataRegistry` 报告。

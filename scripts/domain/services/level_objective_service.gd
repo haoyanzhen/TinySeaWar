@@ -33,6 +33,12 @@ func setup(objective_definition: Dictionary) -> void:
 		"terminal_reason_code": "",
 		"terminal_reason_summary": "",
 		"terminal_reason_context": {},
+		"mission_steps": [],
+		"protection_lines": [],
+		"reinforcement_hint": "",
+		"optional_order_progress": 0,
+		"optional_order_failed": false,
+		"optional_mastery": "",
 	}
 
 
@@ -112,6 +118,12 @@ func record_action(action_id: String, unit_id: String, tick_index: int, facts: D
 	var requirement := _requirement(action_id)
 	if requirement.is_empty():
 		return {"accepted": false, "reason_code": "TUTORIAL_ACTION_NOT_REQUIRED", "events": []}
+	if action_id == "GroupFocusTarget":
+		var members: Array = facts.get("group_unit_ids", [])
+		if str(facts.get("group_order_id", "")).is_empty() or members.size() < int(definition.get("minimum_group_focus_count", 2)):
+			return {"accepted": false, "reason_code": "TUTORIAL_ACTION_MISMATCH", "events": []}
+		for required_member in definition.get("command_player_unit_ids", []):
+			if required_member not in members: return {"accepted": false, "reason_code": "TUTORIAL_ACTION_MISMATCH", "events": []}
 	var required_unit_id := str(requirement.get("unit_id", ""))
 	if required_unit_id.is_empty() and action_id in ["SelectTutorialUnit", "EnableCameraFollow"]:
 		required_unit_id = str(definition.get("player_unit_id", ""))
@@ -121,6 +133,13 @@ func record_action(action_id: String, unit_id: String, tick_index: int, facts: D
 		if requirement.has(fact_key) and str(requirement.get(fact_key, "")) != str(facts.get(fact_key, "")):
 			return {"accepted": false, "reason_code": "TUTORIAL_ACTION_MISMATCH", "events": []}
 	var counts: Dictionary = runtime_state.get("action_counts", {})
+	var prerequisite := str(requirement.get("prerequisite_action_id", ""))
+	if not prerequisite.is_empty() and int(counts.get(prerequisite, 0)) < int(_requirement(prerequisite).get("required_count", 1)):
+		return {"accepted": false, "reason_code": "TUTORIAL_PREREQUISITE_MISSING", "events": []}
+	if requirement.has("required_active_skill_id") and str(requirement["required_active_skill_id"]) not in facts.get("active_skill_ids", []):
+		return {"accepted": false, "reason_code": "TUTORIAL_ACTION_MISMATCH", "events": []}
+	if requirement.has("ammo_type") and requirement["ammo_type"] != facts.get("ammo_type", ""):
+		return {"accepted": false, "reason_code": "TUTORIAL_ACTION_MISMATCH", "events": []}
 	var previous := int(counts.get(action_id, 0))
 	var required := int(requirement.get("required_count", 1))
 	counts[action_id] = mini(required, previous + 1)
@@ -148,6 +167,7 @@ func advance(battle_state: Dictionary) -> Dictionary:
 		return {"events": [], "terminal": {}}
 	var events: Array = []
 	_advance_route_waypoints(battle_state, events)
+	_advance_retreat(battle_state, events)
 	match str(definition.get("objective_kind", "")):
 		"TutorialNavigation": _advance_tutorial_navigation(battle_state, events)
 		"TutorialGunnery", "TutorialSkill": _advance_required_action_tutorial(events)
@@ -164,8 +184,12 @@ func advance(battle_state: Dictionary) -> Dictionary:
 				_advance_first_contact_tutorial(battle_state, events)
 		"TutorialSharedContact": _advance_shared_contact_tutorial(battle_state, events)
 		"TutorialCommand": _advance_command_tutorial(battle_state, events)
-		"FlagshipMission", "ChallengeMission": pass
+		"FlagshipMission", "ChallengeMission": _advance_challenge_progress(battle_state)
 	var terminal := _terminal_result(battle_state)
+	if is_tutorial() and _next_incomplete_action() != "":
+		runtime_state["instruction"] = _next_instruction(runtime_state.get("action_counts", {}))
+	if is_tutorial():
+		runtime_state["next_action_id"] = _next_incomplete_action()
 	if not terminal.is_empty():
 		var completed: bool = str(terminal.get("winner_faction", "")) == "player"
 		runtime_state["status"] = "Completed" if completed else "Failed"
@@ -182,6 +206,66 @@ func advance(battle_state: Dictionary) -> Dictionary:
 			"context": runtime_state["terminal_reason_context"].duplicate(true),
 		})
 	return {"events": events, "terminal": terminal}
+
+
+func refresh_challenge_progress(battle_state: Dictionary) -> void:
+	if str(definition.get("objective_kind", "")) in ["FlagshipMission", "ChallengeMission"]:
+		_advance_challenge_progress(battle_state)
+
+
+func _advance_challenge_progress(battle_state: Dictionary) -> void:
+	var units: Dictionary = battle_state.get("units_by_id", {})
+	var targets: Array = definition.get("required_enemy_unit_ids", []).duplicate()
+	if targets.is_empty(): targets = definition.get("ordered_enemy_unit_ids", []).duplicate()
+	if targets.is_empty(): targets = [str(_flagship(battle_state, "fleet.enemy").get("entity_id", ""))]
+	var steps: Array = []
+	for target_id in targets:
+		var target: Dictionary = units.get(str(target_id), {})
+		steps.append({"label": "击沉%s" % _unit_label(target, str(target_id)), "completed": target.get("life_state", "") == "Sunk"})
+	var minimum := int(definition.get("minimum_enemy_sunk", 0))
+	if minimum > 0:
+		var sunk := 0
+		for unit in units.values():
+			if unit.get("faction_id", "") == "enemy" and unit.get("life_state", "") == "Sunk": sunk += 1
+		steps.append({"label": "击沉敌舰 %d/%d" % [sunk, minimum], "completed": sunk >= minimum})
+	runtime_state["mission_steps"] = steps
+	var protection: Array = []
+	var flagship := _flagship(battle_state, "fleet.player")
+	for unit_id in definition.get("protected_player_unit_ids", []):
+		if str(unit_id) == str(flagship.get("entity_id", "")): continue
+		protection.append("保护%s" % _unit_label(units.get(str(unit_id), {}), str(unit_id)))
+	if not flagship.is_empty(): protection.append("旗舰%s须存活" % _unit_label(flagship))
+	var any_ids: Array = definition.get("required_any_player_unit_ids", [])
+	if not any_ids.is_empty():
+		var labels: Array[String] = []
+		for unit_id in any_ids: labels.append(_unit_label(units.get(str(unit_id), {}), str(unit_id)))
+		protection.append("%s至少存活%d艘" % ["/".join(labels), int(definition.get("minimum_required_any_player_alive", 1))])
+	var hp_id := str(definition.get("minimum_player_hp_ratio_unit_id", ""))
+	if not hp_id.is_empty(): protection.append("%s耐久须高于%.0f%%" % [_unit_label(units.get(hp_id, {}), hp_id), float(definition.get("minimum_player_hp_ratio", 0.0)) * 100.0])
+	if int(definition.get("minimum_player_alive", 0)) > 0: protection.append("己方至少存活%d艘" % int(definition["minimum_player_alive"]))
+	runtime_state["protection_lines"] = protection
+	var hints: Array[String] = []
+	for wave in battle_state.get("reinforcement_waves", []):
+		if wave.get("status", "") != "Pending": continue
+		var wave_def: Dictionary = wave.get("definition", {})
+		var remaining := maxf(0.0, float(wave_def.get("earliest_time", 0.0)) - float(battle_state.get("elapsed_time", 0.0)))
+		var spawn_id := str(wave_def.get("spawn_point_id", ""))
+		var entrance := str({"RN": "北侧入口", "RS": "南侧入口"}.get(spawn_id, ""))
+		hints.append("%s接替增援%s：%s" % ["己方" if wave_def.get("faction_id", "") == "player" else "敌方", "（%s）" % entrance if not entrance.is_empty() else "", "最早%d秒后，需有空位" % ceili(remaining) if remaining > 0.0 else "等待出战空位"])
+	runtime_state["reinforcement_hint"] = "；".join(hints)
+	var optional: Array = definition.get("optional_ordered_enemy_unit_ids", [])
+	if optional.is_empty(): return
+	var progress := int(runtime_state.get("optional_order_progress", 0))
+	# Facts are settled once per Tick; simultaneous kills have no earlier/later order.
+	while progress < optional.size() and units.get(str(optional[progress]), {}).get("life_state", "") == "Sunk":
+		progress += 1
+	for index in range(progress, optional.size()):
+		if units.get(str(optional[index]), {}).get("life_state", "") == "Sunk": runtime_state["optional_order_failed"] = true
+	runtime_state["optional_order_progress"] = progress
+	var labels: Array[String] = []
+	for unit_id in optional: labels.append(_unit_label(units.get(str(unit_id), {}), str(unit_id)))
+	var status := "未达成" if bool(runtime_state["optional_order_failed"]) else ("已完成" if progress == optional.size() else "%d/%d" % [progress, optional.size()])
+	runtime_state["optional_mastery"] = "可选精通：%s（%s，不影响通关奖励）" % [" → ".join(labels), status]
 
 
 func _advance_route_waypoints(battle_state: Dictionary, events: Array) -> void:
@@ -274,18 +358,22 @@ func _advance_shared_contact_tutorial(battle_state: Dictionary, events: Array) -
 		_unlock_engagement(str(definition.get("engagement_instruction", "共享接触建立")), events)
 
 
-func _advance_command_tutorial(battle_state: Dictionary, events: Array) -> void:
+func _advance_command_tutorial(_battle_state: Dictionary, events: Array) -> void:
 	if bool(runtime_state.get("engagement_unlocked", false)): return
-	var target_id := str(definition.get("command_target_unit_id", ""))
-	var focused := 0
-	for unit_id in definition.get("command_player_unit_ids", []):
-		var unit: Dictionary = battle_state.get("units_by_id", {}).get(str(unit_id), {})
-		if unit.get("life_state", "") == "Alive" and str(unit.get("targeting_state", {}).get("focused_target_id", "")) == target_id:
-			focused += 1
-	if focused >= int(definition.get("minimum_group_focus_count", 2)):
-		record_action("GroupFocusTarget", "", int(battle_state.get("tick_index", 0)), {"target_unit_id": target_id})
+	if _required_actions_complete():
 		runtime_state["current_step"] = 1
-		if _required_actions_complete(): _unlock_engagement(str(definition.get("engagement_instruction", "集火指令已确认")), events)
+		_unlock_engagement(str(definition.get("engagement_instruction", "集火指令已确认")), events)
+
+
+func _advance_retreat(battle_state: Dictionary, events: Array) -> void:
+	var zone: Dictionary = definition.get("retreat_zone", {})
+	if zone.is_empty(): return
+	var unit_id := str(zone.get("unit_id", ""))
+	var unit: Dictionary = battle_state.get("units_by_id", {}).get(unit_id, {})
+	var pair: Array = zone.get("position", [])
+	if pair.size() != 2 or unit.get("life_state", "") != "Alive": return
+	if (unit.get("position", Vector2.ZERO) as Vector2).distance_to(Vector2(float(pair[0]), float(pair[1]))) <= float(zone.get("radius", 0.0)):
+		events.append_array(record_action("ReachRetreatZone", unit_id, int(battle_state.get("tick_index", 0)), {"route_zone_id":zone.get("id", "")}).get("events", []))
 
 
 func _unlock_engagement(summary: String, events: Array) -> void:
@@ -399,6 +487,7 @@ func _terminal_result(battle_state: Dictionary) -> Dictionary:
 			break
 	if not all_required_enemies_sunk: return {}
 	if not bool(runtime_state.get("engagement_unlocked", false)) or not _required_actions_complete():
+		if bool(definition.get("allow_post_sink_actions", false)) and int(runtime_state.get("action_counts", {}).get("TorpedoHit", 0)) > 0: return {}
 		return {
 			"winner_faction": "enemy",
 			"reason": "TUTORIAL_SEQUENCE_BROKEN",
@@ -474,13 +563,21 @@ func _required_actions_complete() -> bool:
 
 
 func _next_instruction(counts: Dictionary) -> String:
+	if str(definition.get("engagement_trigger", "")) == "FirstContact" and not bool(runtime_state.get("engagement_unlocked", false)):
+		return str(definition.get("pre_engagement_instruction", "等待首次接触"))
 	for requirement in definition.get("required_actions", []):
 		var action_id := str(requirement.get("action_id", ""))
 		if int(counts.get(action_id, 0)) < int(requirement.get("required_count", 1)):
 			return str(requirement.get("instruction", ""))
-	if str(definition.get("engagement_trigger", "")) == "FirstContact":
-		return str(definition.get("pre_engagement_instruction", "等待首次接触"))
 	return "驶入依次标记的教学航点" if definition.get("objective_kind", "") == "TutorialNavigation" else str(definition.get("engagement_instruction", "等待交战阶段开启"))
+
+
+func _next_incomplete_action() -> String:
+	var counts: Dictionary = runtime_state.get("action_counts", {})
+	for requirement in definition.get("required_actions", []):
+		var action_id := str(requirement.get("action_id", ""))
+		if int(counts.get(action_id, 0)) < int(requirement.get("required_count", 1)): return action_id
+	return ""
 
 
 func _enemy_combat_locked(unit: Dictionary) -> bool:

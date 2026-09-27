@@ -260,7 +260,7 @@ func _queue_policy_commands(session, registry, player_policy_id: String, enemy_p
 		"TutorialT01Deterministic": _queue_t01_tutorial_commands(session)
 		"TutorialT02Deterministic": _queue_t02_tutorial_commands(session)
 		"TutorialT03Deterministic": _queue_t03_tutorial_commands(session, registry)
-		"TutorialT04Deterministic": pass
+		"TutorialT04Deterministic": _queue_t04_tutorial_commands(session)
 		"TutorialT05Deterministic": _queue_t05_tutorial_commands(session)
 		"TutorialT06Deterministic": _queue_t06_tutorial_commands(session)
 		"TutorialT07Deterministic": _queue_t07_tutorial_commands(session)
@@ -307,6 +307,7 @@ func _queue_t01_tutorial_commands(session) -> void:
 			"command_type": "RecordTutorialAction", "issued_at_tick": int(session.state.get("tick_index", 0)),
 			"issuer_type": "SimulationPolicy", "issuer_id": "player", "unit_id": unit_id, "action_id": action_id,
 		})
+		return
 	var queued_count := int(counts.get("AppendMoveWaypoint", 0))
 	var zones: Array = objective.get("waypoint_zones", [])
 	for index in range(queued_count, mini(2, zones.size())):
@@ -350,10 +351,13 @@ func _queue_t02_tutorial_commands(session) -> void:
 func _queue_t03_tutorial_commands(session, registry) -> void:
 	var objective: Dictionary = session.state.get("level_objective", {})
 	if objective.get("objective_set_id", "") != "objective.t03_skill" or objective.get("status", "") != "Active" or bool(objective.get("engagement_unlocked", false)): return
-	if int(session.state.get("tick_index", 0)) < 20 or int(objective.get("action_counts", {}).get("CastSkill", 0)) > 0: return
+	if int(session.state.get("tick_index", 0)) < 20: return
 	var unit: Dictionary = session.state.get("units_by_id", {}).get("unit.player.t03.iowa", {})
 	var target := _first_visible_target(session, unit)
 	if target.is_empty(): return
+	if int(objective.get("action_counts", {}).get("CastSkill", 0)) > 0:
+		_queue_tutorial_manual_gun(session, "unit.player.t03.iowa", target)
+		return
 	var skill: Dictionary = registry.get_definition("skills", "skill.iowa_radar_salvo")
 	if (unit.get("position", Vector2.ZERO) as Vector2).distance_to(target.get("position", Vector2.ZERO)) > float(skill.get("cast_range", 0.0)): return
 	session.queue_command({
@@ -364,9 +368,28 @@ func _queue_t03_tutorial_commands(session, registry) -> void:
 	})
 
 
+func _queue_tutorial_manual_gun(session, unit_id: String, target: Dictionary) -> void:
+	if target.is_empty() or target.get("life_state", "") != "Alive": return
+	var aim: Vector2 = target.get("position", Vector2.ZERO)
+	if not bool(session.get_primary_aim_status(unit_id, aim).get("legal", false)): return
+	session.queue_command({"command_id":"simulation.lesson.fire.%d" % int(session.state["tick_index"]), "command_type":"FirePrimaryWeapon", "issued_at_tick":session.state["tick_index"], "issuer_type":"SimulationPolicy", "issuer_id":"player", "unit_id":unit_id, "target_position":aim})
+
+
+func _queue_t04_tutorial_commands(session) -> void:
+	var objective: Dictionary = session.state.get("level_objective", {})
+	if not bool(objective.get("engagement_unlocked", false)): return
+	var unit: Dictionary = session.state.get("units_by_id", {}).get("unit.player.t04.warspite", {})
+	_queue_tutorial_manual_gun(session, "unit.player.t04.warspite", _first_visible_target(session, unit))
+
+
 func _queue_t05_tutorial_commands(session) -> void:
 	var objective: Dictionary = session.state.get("level_objective", {})
 	if objective.get("objective_set_id", "") != "objective.t05_torpedo" or objective.get("status", "") != "Active": return
+	if int(objective.get("action_counts", {}).get("TorpedoHit", 0)) > 0 and int(objective.get("action_counts", {}).get("ReachRetreatZone", 0)) == 0:
+		var zone: Dictionary = session.registry.get_definition("objectives", "objective.t05_torpedo").get("retreat_zone", {})
+		var pair: Array = zone.get("position", [])
+		_queue_tutorial_move(session, "unit.player.t05.yukikaze", Vector2(float(pair[0]), float(pair[1])), "simulation.t05.retreat")
+		return
 	_queue_tutorial_manual_control(session, ["unit.player.t05.yukikaze", "unit.player.t05.anshan"])
 	if _queue_tutorial_route_move(session, objective): return
 	var target: Dictionary = session.state.get("units_by_id", {}).get("unit.enemy.t05.warspite", {})
@@ -431,7 +454,6 @@ func _queue_t06_tutorial_commands(session) -> void:
 	var objective: Dictionary = session.state.get("level_objective", {})
 	if objective.get("objective_set_id", "") != "objective.t06_carrier_hunt" or objective.get("status", "") != "Active": return
 	if _queue_tutorial_route_move(session, objective): return
-	if not bool(objective.get("engagement_unlocked", false)): return
 	_queue_tutorial_focus(session, ["unit.player.t06.shimakaze", "unit.player.t06.gnevny", "unit.player.t06.ward"], "unit.enemy.t06.argus")
 
 
@@ -462,7 +484,8 @@ func _queue_t08_tutorial_commands(session) -> void:
 	var objective: Dictionary = session.state.get("level_objective", {})
 	if objective.get("objective_set_id", "") != "objective.t08_command" or bool(objective.get("engagement_unlocked", false)): return
 	if _queue_tutorial_route_move(session, objective): return
-	_queue_tutorial_focus(session, ["unit.player.t08.warspite", "unit.player.t08.san_diego"], "unit.enemy.t08.hindenburg")
+	if not session.state.get("visible_by_faction", {}).get("player", {}).has("unit.enemy.t08.hindenburg"): return
+	session.queue_command({"command_id":"simulation.t08.group.%d" % int(session.state["tick_index"]), "group_order_id":"simulation.t08.group.%d" % int(session.state["tick_index"]), "command_type":"FocusTarget", "issued_at_tick":session.state["tick_index"], "issuer_type":"SimulationPolicy", "issuer_id":"player", "unit_ids":["unit.player.t08.warspite", "unit.player.t08.san_diego"], "target_unit_id":"unit.enemy.t08.hindenburg"})
 
 
 func _queue_tutorial_route_move(session, objective: Dictionary) -> bool:

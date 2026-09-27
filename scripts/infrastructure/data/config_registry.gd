@@ -1,5 +1,7 @@
 extends RefCounted
 
+const ShipAcquisitionCatalog = preload("res://scripts/infrastructure/data/ship_acquisition_catalog.gd")
+
 const CATEGORY_PATHS := {
 	"ships": "res://data/ships",
 	"weapons": "res://data/weapons",
@@ -8,6 +10,7 @@ const CATEGORY_PATHS := {
 	"formulas": "res://data/formulas",
 	"levels": "res://data/levels",
 	"objectives": "res://data/objectives",
+	"progress": "res://data/progress",
 	"settings": "res://data/settings",
 	"visuals": "res://data/visuals",
 	"facilities": "res://data/facilities",
@@ -44,6 +47,7 @@ func load_all() -> bool:
 		for path in files:
 			_load_file(category, path, global_ids)
 	_validate_references()
+	errors.append_array(ShipAcquisitionCatalog.validate(get_definition("progress", ShipAcquisitionCatalog.CATALOG_ID), definitions.get("ships", {}), definitions.get("levels", {})))
 	return errors.is_empty()
 
 
@@ -463,15 +467,24 @@ func _validate_objective(objective: Dictionary) -> void:
 		errors.append("Unsupported objective kind in %s" % objective_id)
 	if str(objective.get("title", "")).is_empty():
 		errors.append("Missing objective title in %s" % objective_id)
+	if objective.has("optional_ordered_enemy_unit_ids") and kind != "ChallengeMission":
+		errors.append("Optional mastery is only valid for ChallengeMission in %s" % objective_id)
 	if kind == "ChallengeMission":
 		var challenge_units := _objective_units(objective_id)
 		if challenge_units.is_empty(): errors.append("Challenge objective %s is not referenced by a level" % objective_id)
-		for field_name in ["protected_player_unit_ids", "required_any_player_unit_ids", "required_enemy_unit_ids", "ordered_enemy_unit_ids"]:
+		for field_name in ["protected_player_unit_ids", "required_any_player_unit_ids", "required_enemy_unit_ids", "ordered_enemy_unit_ids", "optional_ordered_enemy_unit_ids"]:
+			if objective.get(field_name, []) is not Array:
+				errors.append("Challenge unit list %s must be an array in %s" % [field_name, objective_id])
+				continue
 			for unit_id_value in objective.get(field_name, []):
 				var unit_id := str(unit_id_value)
 				var expected_faction := "player" if field_name in ["protected_player_unit_ids", "required_any_player_unit_ids"] else "enemy"
 				if unit_id.is_empty() or not challenge_units.has(unit_id) or str(challenge_units[unit_id].get("faction_id", "")) != expected_faction:
 					errors.append("Invalid challenge unit %s in %s" % [unit_id, objective_id])
+		var optional_order: Array = objective.get("optional_ordered_enemy_unit_ids", []) if objective.get("optional_ordered_enemy_unit_ids", []) is Array else []
+		var optional_unique: Dictionary = {}
+		for unit_id in optional_order: optional_unique[str(unit_id)] = true
+		if objective.has("optional_ordered_enemy_unit_ids") and (optional_order.size() < 2 or optional_unique.size() != optional_order.size()): errors.append("Invalid optional mastery order in %s" % objective_id)
 		if objective.get("required_enemy_unit_ids", []).is_empty() and objective.get("ordered_enemy_unit_ids", []).is_empty(): errors.append("Challenge objective %s requires enemy completion targets" % objective_id)
 		var hp_unit_id := str(objective.get("minimum_player_hp_ratio_unit_id", ""))
 		if not hp_unit_id.is_empty() and (not challenge_units.has(hp_unit_id) or str(challenge_units[hp_unit_id].get("faction_id", "")) != "player" or float(objective.get("minimum_player_hp_ratio", 0.0)) <= 0.0): errors.append("Invalid challenge HP protection in %s" % objective_id)
@@ -520,16 +533,25 @@ func _validate_objective(objective: Dictionary) -> void:
 	if kind == "TutorialTorpedo" and (str(objective.get("engagement_trigger", "")) not in ["FirstContact", "RequiredActionsComplete"] or objective.get("contact_target_unit_ids", []).is_empty()):
 		errors.append("Tutorial torpedo objective %s requires a supported engagement trigger and contact target" % objective_id)
 	var action_ids := {}
-	var allowed_actions := ["SelectTutorialUnit", "EnableCameraFollow", "AppendMoveWaypoint", "SwitchAmmo", "ManualPrimaryFire", "CastSkill", "ReachTutorialRouteZone", "TorpedoHit", "EstablishSharedContact", "SharedTargetGunHit", "GroupFocusTarget"]
+	var allowed_actions := ["SelectTutorialUnit", "EnableCameraFollow", "AppendMoveWaypoint", "SwitchAmmo", "ManualPrimaryFire", "CastSkill", "ReachTutorialRouteZone", "TorpedoHit", "EstablishSharedContact", "SharedTargetGunHit", "GroupFocusTarget", "ReachRetreatZone", "FocusPriorityTarget"]
 	for requirement in objective.get("required_actions", []):
 		var action_id := str(requirement.get("action_id", ""))
 		if action_id not in allowed_actions or action_ids.has(action_id) or int(requirement.get("required_count", 0)) <= 0 or str(requirement.get("instruction", "")).is_empty():
 			errors.append("Invalid or duplicate tutorial action in %s" % objective_id)
+		var prerequisite := str(requirement.get("prerequisite_action_id", ""))
+		if not prerequisite.is_empty() and not action_ids.has(prerequisite):
+			errors.append("Tutorial prerequisite must reference an earlier action in %s" % objective_id)
+		if requirement.has("required_active_skill_id") and (action_id != "ManualPrimaryFire" or get_definition("skills", str(requirement["required_active_skill_id"])).is_empty()):
+			errors.append("Invalid tutorial active skill requirement in %s" % objective_id)
+		if requirement.has("ammo_type") and (action_id != "ManualPrimaryFire" or str(requirement["ammo_type"]) not in ["HE", "AP"]):
+			errors.append("Invalid tutorial ammunition requirement in %s" % objective_id)
 		action_ids[action_id] = true
 		var unit_id := str(requirement.get("unit_id", objective.get("player_unit_id", "")))
 		if not unit_id.is_empty() and (not objective_units.has(unit_id) or str(objective_units[unit_id].get("faction_id", "")) != "player"):
 			errors.append("Tutorial action %s references invalid player unit in %s" % [action_id, objective_id])
 		var ship: Dictionary = get_definition("ships", str(objective_units.get(unit_id, {}).get("ship_id", "")))
+		if requirement.has("required_active_skill_id") and str(ship.get("skill_id", "")) != str(requirement["required_active_skill_id"]):
+			errors.append("Tutorial active skill must belong to its source ship in %s" % objective_id)
 		if requirement.has("skill_id") and (get_definition("skills", str(requirement.get("skill_id", ""))).is_empty() or str(ship.get("skill_id", "")) != str(requirement.get("skill_id", ""))):
 			errors.append("Tutorial action %s references an invalid mounted skill in %s" % [action_id, objective_id])
 		if requirement.has("weapon_group_id") and str(ship.get("primary_weapon_group_id", "")) != str(requirement.get("weapon_group_id", "")):
@@ -542,6 +564,17 @@ func _validate_objective(objective: Dictionary) -> void:
 				errors.append("Tutorial action %s references an invalid enemy target in %s" % [action_id, objective_id])
 		if requirement.has("attack_category") and str(requirement.get("attack_category", "")) not in ["Gun", "Torpedo", "Aviation", "AntiAir", "AntiSubmarine", "Skill"]:
 			errors.append("Tutorial action %s has an invalid attack category in %s" % [action_id, objective_id])
+	var retreat: Dictionary = objective.get("retreat_zone", {})
+	if action_ids.has("ReachRetreatZone") and retreat.is_empty():
+		errors.append("Tutorial retreat action requires a retreat zone in %s" % objective_id)
+	if objective.has("allow_post_sink_actions") and (typeof(objective["allow_post_sink_actions"]) != TYPE_BOOL or kind != "TutorialTorpedo" or retreat.is_empty()):
+		errors.append("Post-sink tutorial actions require a torpedo retreat objective in %s" % objective_id)
+	if not retreat.is_empty():
+		if kind != "TutorialTorpedo" or not action_ids.has("ReachRetreatZone") or not _valid_positive_pair(retreat.get("position", [])) or float(retreat.get("radius", 0.0)) <= 0.0 or str(objective_units.get(str(retreat.get("unit_id", "")), {}).get("faction_id", "")) != "player":
+			errors.append("Invalid tutorial retreat zone in %s" % objective_id)
+		for requirement in objective.get("required_actions", []):
+			if requirement.get("action_id", "") == "ReachRetreatZone" and (requirement.get("route_zone_id", "") != retreat.get("id", "") or requirement.get("unit_id", "") != retreat.get("unit_id", "") or requirement.get("prerequisite_action_id", "") != "TorpedoHit"):
+				errors.append("Tutorial retreat must match its zone and follow TorpedoHit in %s" % objective_id)
 	var player_weapon_unlock_action_id := str(objective.get("player_weapon_unlock_action_id", ""))
 	var player_weapon_locked_ids: Array = objective.get("player_weapon_locked_unit_ids_until_action", [])
 	if player_weapon_unlock_action_id.is_empty() != player_weapon_locked_ids.is_empty():

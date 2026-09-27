@@ -40,7 +40,7 @@ ObjectiveConditionDefinition
 | `WaypointSequence` | 指定单位按顺序进入审核航点区。 |
 | `ContactThenHit` | 指定侦察者建立阵营接触，随后指定攻击者命中该共享目标。 |
 
-`Ordered` 按子目标首次完成 Tick 推进且不回退。条件只读 `BattleState` 与已发生领域事件，不读 HUD 或隐藏敌人实时位置。每 Tick 在伤害、沉没、接触和任务取消事实产生后评估一次。挑战关的任务完成即 `PlayerVictory` 并立即结束；保护目标沉没、顺序被破坏或明确限时结束等不可恢复条件使任务取消并立即 `PlayerDefeat`。敌旗舰沉没只有在任务要求时才有结算意义。没有 `objective_set_id` 的原型关保持现有旗舰/超时兼容路径。最终只产生一个 `LevelFinished(level_id, result, reason_code, objective_snapshot, elapsed_time, tick_index)`。
+`Ordered` 按子目标首次完成 Tick 推进且不回退。条件只读 `BattleState` 与已发生领域事件，不读 HUD 或隐藏敌人实时位置。每 Tick 在伤害、沉没、接触和任务取消事实产生后评估一次。挑战关的任务完成即 `PlayerVictory` 并立即结束；保护目标沉没或明确限时结束等不可恢复条件使任务取消并立即 `PlayerDefeat`。普通挑战的顺序要求属于可选精通，单独记录结果，不参与主任务取消、奖励与进度；同 Tick 完成的连续精通目标视为同时满足。严格顺序取消只供另行明确标注的特殊任务。敌旗舰沉没只有在任务要求时才有结算意义。没有 `objective_set_id` 的原型关保持现有旗舰/超时兼容路径。最终只产生一个 `LevelFinished(level_id, result, reason_code, objective_snapshot, elapsed_time, tick_index)`。
 
 ### 2.1 二十三关目标映射
 
@@ -56,17 +56,17 @@ ObjectiveConditionDefinition
 | T-08 | `objective.t08_command` | 双舰集火指令≥1 + 胜利 + 己方存活≥2 |
 | S-01 | `objective.s01_flagship` | 敌旗舰沉没；己旗舰沉没则取消 |
 | S-02 | `objective.s02_escort` | 胜利 + 重庆/雪风任一存活 |
-| S-03 | `objective.s03_carrier_first` | 百眼巨人沉没 -> 俾斯麦沉没 |
+| S-03 | `objective.s03_carrier_first` | 俾斯麦沉没 + 己旗舰存活；可选精通：百眼巨人沉没 -> 俾斯麦沉没 |
 | S-04 | `objective.s04_ambush` | 衣阿华沉没；仅己方旗舰胡德沉没时取消，重庆与海狮损失不单独取消任务 |
 | S-05 | `objective.s05_wolfpack` | 敌方损失≥3 + 敌旗舰沉没；己旗舰沉没则取消 |
 | M-01 | `objective.m01_harbor` | 敌旗舰沉没；己旗舰沉没则取消 |
-| M-02 | `objective.m02_carrier_escort` | 百眼巨人沉没 -> 俾斯麦沉没 + 凤翔存活 |
-| M-03 | `objective.m03_flanks` | 愤怒与鞍山沉没 -> 衣阿华沉没；顺序被破坏则取消 |
+| M-02 | `objective.m02_carrier_escort` | 俾斯麦沉没 + 凤翔与己旗舰存活；可选精通：百眼巨人沉没 -> 俾斯麦沉没 |
+| M-03 | `objective.m03_flanks` | 衣阿华沉没 + 己旗舰存活；可选精通：愤怒与鞍山均沉没 -> 衣阿华沉没，前两舰内部无顺序 |
 | M-04 | `objective.m04_storm` | 敌旗舰沉没 + 己方损失≤2；第 3 艘沉没则取消 |
 | M-05 | `objective.m05_blockade` | 衣阿华沉没 + 敌方损失≥4；己旗舰沉没则取消 |
 | L-01 | `objective.l01_deployment` | 敌旗舰沉没；己旗舰沉没则取消 |
-| L-02 | `objective.l02_air_corridor` | 两艘非旗舰敌航母沉没 -> 企业沉没 + 百眼巨人存活 |
-| L-03 | `objective.l03_gun_lane` | 雪风与海狮均沉没 -> 大和沉没 |
+| L-02 | `objective.l02_air_corridor` | 企业沉没 + 百眼巨人与己旗舰存活；可选精通：两艘非旗舰敌航母均沉没 -> 企业沉没，前两舰内部无顺序 |
+| L-03 | `objective.l03_gun_lane` | 大和沉没 + 己旗舰存活；可选精通：雪风与海狮均沉没 -> 大和沉没，前两舰内部无顺序 |
 | L-04 | `objective.l04_encirclement` | 衣阿华沉没；胡德/百眼巨人任一沉没则取消 |
 | L-05 | `objective.l05_finale` | 敌方损失≥8 + 大和沉没；己旗舰沉没则取消 |
 
@@ -109,7 +109,7 @@ PlayerProgressSave
   unlocked_ship_ids[]
 ```
 
-T-01～T-08 默认全部开放且完成状态不写存档。S/M/L 三个挑战分类默认分别开放第一关；每个分类只根据 `completed_challenge_level_ids` 顺序开放同分类下一关，分类之间互不作为前置。舰船解锁按 `docs/15_battle_level_design.md`：教学奖励第一期 6 艘 1 级舰，其余由挑战逐关首通提供。
+T-01～T-08 默认全部开放且完成状态不写存档。S/M/L 三个挑战分类默认分别开放第一关；每个分类只根据 `completed_challenge_level_ids` 顺序开放同分类下一关，分类之间互不作为前置。舰船获取归属严格分为默认拥有、教学奖励、挑战奖励和待处理四类，具体分配见 `docs/15_battle_level_design.md`，唯一运行清单与旧存档保留契约见 `docs/23_level_progress_data_schema.md`。计划中的奖励关未开放时不发奖，待处理角色不虚构获取途径。
 
 挑战首通处理为幂等事务：在内存副本同时合并挑战成功状态和舰船解锁。存档使用同目录正式槽、候选槽与恢复槽；候选槽带递增 `revision` 和 SHA-256 校验，写后必须重新读取验证，再将旧正式槽保留为恢复槽并提升候选槽。启动时从三个槽中选择校验有效且 revision 最高者，因此切换中断时仍至少保留一个可恢复版本。教学完成只合并对应舰船解锁，不写教学完成记录。重复结算、崩溃恢复和重玩不重复解锁。未知 ID 保留供前向兼容，但不产生当前解锁。
 
@@ -123,3 +123,7 @@ T-01～T-08 默认全部开放且完成状态不写存档。S/M/L 三个挑战�
 - 存档测试覆盖挑战首通、教学舰船解锁、重玩、重复事件、正式槽损坏、候选槽残留、恢复槽回退、校验失败、版本迁移、未知 ID 和不可信战斗来源。
 - 每个完成实现的教学关按 `36_balance_testing_design.md` 执行三轮互不重叠种子的设计路线实验；任一轮不是 100% 无异常时，修复后重跑全部三轮。
 - 契约实施不等于 23 关完成；仍须分别记录正式数据、菜单接入、模拟验收和人工实机验收。
+
+### 教学事实的顺序与正常操作一致性
+
+当前教学子集用 `required_actions.prerequisite_action_id` 表达局部顺序，字段归属与加载约束见 `23`。T-02 记录发射前真实 HE 选择，T-03 记录成功主炮发射前的指定技能消耗效果；失败命令不计数。T-04 接触后仍要求玩家主炮决策。T-05 以命中后的物理区域到达证明脱离，并显式允许目标沉没后完成该动作。T-06 优先目标来自实际 FocusTarget。T-08 来自同一批量 FocusTarget 的成功成员，不再扫描单位目标状态推断编队操作。正常 UI 和确定性策略必须提交同一公开命令，策略不可注入命中、Buff 或抵达事实。教学状态持续提供当前未完成动作与说明，完成教学动作不等于已经通过正常耐久的实战迁移验收。

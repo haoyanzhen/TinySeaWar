@@ -8,6 +8,8 @@
 |---|---|
 | 数据与资产总入口 | `scripts/infrastructure/bootstrap/data_registry.gd`（Autoload：`DataRegistry`） |
 | 游戏流、菜单到战斗 | `scripts/application/game_flow.gd` |
+| 角色获取四分类与奖励来源 | `data/progress/ship_acquisition.json`、`scripts/infrastructure/data/ship_acquisition_catalog.gd` |
+| 玩家拒绝反馈与权威结算文案 | `scripts/presentation/battle/player_command_feedback.gd`、`battle_result_presentation.gd`（同目录） |
 | 单局战斗协调 | `scripts/application/battle_session.gd` |
 | 自定义关卡运行定义 | `scripts/application/game_flow.gd` 持有，调用 `BattleSession.create_battle_from_definition()` |
 | 主菜单场景与脚本 | `scenes/menu/main_menu.tscn`、`scripts/presentation/menu/main_menu.gd` |
@@ -156,6 +158,8 @@
 | 战斗 HUD | `scripts/presentation/battle/battle_hud.gd` |
 | UI 文本 | `scripts/presentation/ui_text.gd` |
 | 场景表现测试 | `scripts/tests/scene_presentation_test.gd` |
+| 玩家交互、暂停、拒绝与结算专项 | `scripts/tests/tactical_pause_ui_test.gd`、`tactical_pause_test.gd`、`player_command_feedback_test.gd`、`battle_result_presentation_test.gd`（均位于同目录） |
+| 获取分类、保存重试与挑战进度专项 | `scripts/tests/ship_acquisition_test.gd`、`progress_save_retry_test.gd`、`challenge_mission_feedback_test.gd`（均位于同目录） |
 | 场景 QA 渲染 | `scripts/tests/render_scene_qa.gd`；支持分辨率/镜头、F9、地图映射、多舰规模与固定 Tick |
 | GPT Image 2.5 角色原生透明生成、生成契约与批量验收 | `tools/art_pipeline/generate_character_art.py`、`generation_contract.py`、`batch_character_art.py`、`check_character_asset_contract.py` |
 | 角色统一旧裁切入口与原生 Alpha 适配 | `tools/art_pipeline/postprocess_trial_sheets.py`（逐件规格、源图连通块、trim、平衡 padding）；`postprocess_generated_character.py`（来源/计划/schema v2 适配）；`assets/characters/{id}/meta/{id}_crop_specs.json`（新源包逐件坐标提示） |

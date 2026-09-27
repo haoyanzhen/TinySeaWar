@@ -1,14 +1,14 @@
 extends Node
 
+signal progress_save_status_changed(state: Dictionary)
+
 const UiText = preload("res://scripts/presentation/ui_text.gd")
 const ProgressSaveStore = preload("res://scripts/infrastructure/persistence/progress_save_store.gd")
+const ShipAcquisitionCatalog = preload("res://scripts/infrastructure/data/ship_acquisition_catalog.gd")
 const DEFAULT_LEVEL_ID := "level.prototype_3v3"
 const USER_SETTINGS_PATH := "user://tiny_sea_war_settings.cfg"
 const USER_PROGRESS_PATH := "user://tiny_sea_war_progress.json"
 const CUSTOM_LEVEL_ID := "level.custom_runtime"
-const DEFAULT_UNLOCKED_SHIP_IDS := [
-	"ship.ward", "ship.gnevny", "ship.argus", "ship.hosho", "ship.hai_shih", "ship.u_47",
-]
 
 var selected_level_id := DEFAULT_LEVEL_ID
 var current_window_size := Vector2i(1920, 1080)
@@ -17,10 +17,13 @@ var completed_challenge_level_ids: Array[String] = []
 var _custom_level_definition: Dictionary = {}
 var _progress_document: Dictionary = {}
 var _progress_store = ProgressSaveStore.new()
+var _progress_path := USER_PROGRESS_PATH
+var _progress_save_status := "Idle"
+var _pending_progress_level_ids: Array[String] = []
 
 
 func _ready() -> void:
-	unlocked_ship_ids.assign(DEFAULT_UNLOCKED_SHIP_IDS)
+	unlocked_ship_ids = ShipAcquisitionCatalog.defaults(ship_acquisition_catalog())
 	_load_unlocked_ships()
 	var settings := presentation_settings()
 	current_window_size = _pair_to_vector(settings.get("window", {}).get("default_size", [1920, 1080]))
@@ -43,18 +46,33 @@ func is_ship_unlocked(ship_id: String) -> bool:
 	return ship_id in unlocked_ship_ids
 
 
-func runtime_level_definition(level_id: String) -> Dictionary:
-	if level_id != CUSTOM_LEVEL_ID or _custom_level_definition.is_empty():
-		return {}
-	return _custom_level_definition.duplicate(true)
+func ship_acquisition_catalog() -> Dictionary:
+	return DataRegistry.registry.get_definition("progress", ShipAcquisitionCatalog.CATALOG_ID)
 
 
-func _load_unlocked_ships() -> void:
-	var parsed := _progress_store.load_best(USER_PROGRESS_PATH)
-	if parsed.is_empty():
-		return
+func ship_acquisition(ship_id: String) -> Dictionary:
+	return ShipAcquisitionCatalog.entry(ship_acquisition_catalog(), ship_id)
+
+
+func ship_acquisition_label(ship_id: String) -> String:
+	var acquisition := ship_acquisition(ship_id)
+	var category := str(acquisition.get("category", "Pending"))
+	if category == "DefaultOwned":
+		return "默认拥有"
+	if category == "Pending":
+		return "待处理 · 暂无获取途径"
+	var source := str(acquisition.get("source_level_id", ""))
+	var code := source.get_slice(".", 2).to_upper()
+	code = code.left(1) + "-" + code.substr(1)
+	var label := "%s · %s 首胜" % ["教学奖励" if category == "TutorialReward" else "挑战奖励", code]
+	if DataRegistry.registry.get_definition("levels", source).is_empty():
+		label += "（关卡尚未开放）"
+	return label
+
+
+func _apply_loaded_progress(parsed: Dictionary) -> void:
 	_progress_document = parsed.duplicate(true)
-	var loaded: Array[String] = []
+	var loaded := ShipAcquisitionCatalog.defaults(ship_acquisition_catalog())
 	for value in parsed.get("unlocked_ship_ids", []):
 		var ship_id := str(value)
 		if not DataRegistry.registry.get_definition("ships", ship_id).is_empty() and ship_id not in loaded:
@@ -67,36 +85,83 @@ func _load_unlocked_ships() -> void:
 			completed_challenge_level_ids.append(level_id)
 
 
+func runtime_level_definition(level_id: String) -> Dictionary:
+	if level_id != CUSTOM_LEVEL_ID or _custom_level_definition.is_empty():
+		return {}
+	return _custom_level_definition.duplicate(true)
+
+
+func _load_unlocked_ships() -> void:
+	var parsed := _progress_store.load_best(_progress_path)
+	if parsed.is_empty():
+		return
+	_apply_loaded_progress(parsed)
+
+
 func record_level_victory(level_id: String) -> bool:
-	var ship_unlock_id := ""
-	match level_id:
-		"level.tutorial.t01": ship_unlock_id = "ship.ward"
-		"level.tutorial.t02": ship_unlock_id = "ship.gnevny"
-		"level.tutorial.t03": ship_unlock_id = "ship.argus"
-		"level.tutorial.t04": ship_unlock_id = "ship.hosho"
-		"level.tutorial.t05": ship_unlock_id = "ship.hai_shih"
-		"level.tutorial.t06": ship_unlock_id = "ship.u_47"
-		"level.challenge.s01": ship_unlock_id = "ship.anshan"
-		"level.challenge.s02": ship_unlock_id = "ship.aurora"
-		"level.challenge.s03": ship_unlock_id = "ship.sirius"
-		"level.challenge.s04": ship_unlock_id = "ship.ning_hai"
-		"level.challenge.s05": ship_unlock_id = "ship.chongqing"
-		_: return false
-	if not ship_unlock_id.is_empty() and ship_unlock_id not in unlocked_ship_ids:
-		unlocked_ship_ids.append(ship_unlock_id)
-	if level_id == "level.challenge.s05":
-		for ship_id in ["ship.yukikaze", "ship.hood", "ship.san_diego"]:
-			if ship_id not in unlocked_ship_ids: unlocked_ship_ids.append(ship_id)
+	var level: Dictionary = DataRegistry.registry.get_definition("levels", level_id)
+	if level.is_empty() or str(level.get("battle_mode", "")) not in ["TutorialBattle", "ChallengeBattle"]:
+		return false
+	var rewards := ShipAcquisitionCatalog.rewards(ship_acquisition_catalog(), level_id)
+	# Tutorials without persistent rewards need no save transaction.
+	if rewards.is_empty() and not level_id.begins_with("level.challenge."):
+		return true
+	for ship_id in rewards:
+		if ship_id not in unlocked_ship_ids:
+			unlocked_ship_ids.append(ship_id)
 	if level_id.begins_with("level.challenge.") and level_id not in completed_challenge_level_ids:
 		completed_challenge_level_ids.append(level_id)
 	_progress_document["schema_version"] = 1
 	_progress_document["profile_id"] = "default"
-	_progress_document["unlocked_ship_ids"] = unlocked_ship_ids.duplicate()
+	# Preserve unknown IDs for forward compatibility without making them playable.
+	var persisted_ids: Array = _progress_document.get("unlocked_ship_ids", []).duplicate()
+	for ship_id in unlocked_ship_ids:
+		if ship_id not in persisted_ids:
+			persisted_ids.append(ship_id)
+	_progress_document["unlocked_ship_ids"] = persisted_ids
 	_progress_document["completed_challenge_level_ids"] = completed_challenge_level_ids.duplicate()
 	_progress_document["updated_at_utc"] = Time.get_datetime_string_from_system(true)
-	var saved := _progress_store.save(USER_PROGRESS_PATH, _progress_document)
+	if level_id not in _pending_progress_level_ids:
+		_pending_progress_level_ids.append(level_id)
+	return _save_pending_progress()
+
+
+func progress_save_state() -> Dictionary:
+	var message := ""
+	if _progress_save_status == "Saved":
+		message = "进度已保存"
+	elif _progress_save_status == "Failed":
+		message = "进度保存失败。本次奖励已在当前会话保留，请重试保存后再关闭游戏。"
+	return {
+		"status": _progress_save_status,
+		"message": message,
+		"can_retry": not _pending_progress_level_ids.is_empty(),
+		"pending_level_ids": _pending_progress_level_ids.duplicate(),
+	}
+
+
+func retry_progress_save() -> bool:
+	# Retry the accumulated facts, never replay victory/reward application.
+	if _pending_progress_level_ids.is_empty():
+		return true
+	return _save_pending_progress()
+
+
+func _save_pending_progress() -> bool:
+	var saved: bool = _progress_store.save(_progress_path, _progress_document)
+	var verified: Dictionary = _progress_store.load_best(_progress_path) if saved else {}
+	# A successful write must be readable and contain every fact being committed.
 	if saved:
-		_progress_document = _progress_store.load_best(USER_PROGRESS_PATH)
+		for field in ["unlocked_ship_ids", "completed_challenge_level_ids"]:
+			for fact in _progress_document.get(field, []):
+				if fact not in verified.get(field, []):
+					saved = false
+		saved = saved and not verified.is_empty()
+	if saved:
+		_progress_document = verified
+		_pending_progress_level_ids.clear()
+	_progress_save_status = "Saved" if saved else "Failed"
+	progress_save_status_changed.emit(progress_save_state())
 	return saved
 
 

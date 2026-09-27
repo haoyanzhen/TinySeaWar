@@ -25,6 +25,7 @@ func _run() -> void:
 	_check((ward["position"] as Vector2).distance_to(ward_start) > 0.1 and not early_events.any(func(event): return event.get("event_type", "") == "WeaponFired"), "T-01 stages the enemy through natural movement without opening fire")
 	for action_id in ["SelectTutorialUnit", "EnableCameraFollow"]:
 		tutorial.queue_command({"command_id":"test.t01.%s" % action_id,"command_type":"RecordTutorialAction","issued_at_tick":tutorial.state["tick_index"],"issuer_type":"Player","issuer_id":"player","unit_id":"unit.player.t01.sirius","action_id":action_id})
+		tutorial.advance_tick(0.1)
 	var zones: Array = registry.get_definition("objectives", "objective.t01_navigation").get("waypoint_zones", [])
 	tutorial.queue_command({"command_id":"test.t01.waypoint.1","command_type":"AppendMoveWaypoint","issued_at_tick":tutorial.state["tick_index"],"issuer_type":"Player","issuer_id":"player","unit_id":"unit.player.t01.sirius","target_position":_pair(zones[0]["position"])})
 	tutorial.queue_command({"command_id":"test.t01.waypoint.2","command_type":"AppendMoveWaypoint","issued_at_tick":tutorial.state["tick_index"],"issuer_type":"Player","issuer_id":"player","unit_id":"unit.player.t01.sirius","target_position":_pair(zones[1]["position"])})
@@ -51,6 +52,7 @@ func _run() -> void:
 	_test_t04_armor(registry)
 	_test_t05_to_t08_routes_and_locks(registry)
 	_test_tutorial_definition_validation(registry)
+	_test_learning_evidence(registry)
 
 	var challenge = BattleSession.new(registry)
 	_check(challenge.create_battle("level.challenge.s01", 102).get("ok", false), "S-01 creates from formal runtime data")
@@ -112,8 +114,8 @@ func _test_s_challenges(registry) -> void:
 	early_flagship["life_state"] = "Sunk"; early_flagship["current_hp"] = 0.0
 	s03.advance_tick(0.1)
 	var s03_failure: Dictionary = s03.state.get("result", {})
-	_check(s03_failure.get("winner_faction", "") == "enemy", "S-03 rejects a flagship kill before the carrier")
-	_check(s03_failure.get("reason_code", "") == "LEVEL_OBJECTIVE_CANCELLED_ORDERED_TARGET_SUNK_EARLY" and str(s03_failure.get("reason_summary", "")).contains("俾斯麦号在百眼巨人号之前沉没"), "S-03 records the actual target-order violation")
+	_check(s03_failure.get("winner_faction", "") == "player", "S-03 permits a flagship kill before the carrier")
+	_check(bool(s03.level_objective_service.snapshot().get("optional_order_failed", false)), "S-03 records missed optional mastery without cancelling victory")
 	var s04 = BattleSession.new(registry)
 	s04.create_battle("level.challenge.s04", 8401)
 	var hood: Dictionary = s04.state["units_by_id"]["unit.player.s04.hood"]
@@ -200,8 +202,10 @@ func _test_t03_skill(registry) -> void:
 		var unlock_events := session.advance_tick(0.1)
 		if session.state["level_objective"].get("action_counts", {}).get("CastSkill", 0) != 1:
 			print("T03_DIAGNOSTIC events=%s objective=%s iowa_pos=%s kirov_pos=%s distance=%.2f" % [unlock_events, session.state["level_objective"], iowa["position"], kirov["position"], (iowa["position"] as Vector2).distance_to(kirov["position"])])
-		_check(session.state["level_objective"].get("action_counts", {}).get("CastSkill", 0) == 1 and bool(session.state["level_objective"].get("engagement_unlocked", false)), "T-03 records the specified successful SkillCast fact and unlocks engagement")
-		_check(unlock_events.any(func(event): return event.get("event_type", "") == "SkillCast" and event.get("skill_id", "") == "skill.iowa_radar_salvo") and bool(iowa.get("primary_auto_fire_enabled", false)), "T-03 uses the public skill command and restores main-gun automation afterward")
+		_check(session.state["level_objective"].get("action_counts", {}).get("CastSkill", 0) == 1 and not bool(session.state["level_objective"].get("engagement_unlocked", false)), "T-03 skill cast alone does not complete the lesson")
+		_check(unlock_events.any(func(event): return event.get("event_type", "") == "SkillCast" and event.get("skill_id", "") == "skill.iowa_radar_salvo") and not bool(iowa.get("primary_auto_fire_enabled", false)), "T-03 leaves automation off until player uses the buff")
+	_check(_fire_training_gun(session, "unit.player.t03.iowa", kirov), "T-03 accepts a legal player shot with the active skill")
+	_check(session.state["level_objective"].get("action_counts", {}).get("ManualPrimaryFire", 0) == 1, "T-03 records buff consumption on a manual shot")
 	kirov["life_state"] = "Sunk"; kirov["current_hp"] = 0.0
 	session.advance_tick(0.1)
 	_check(session.state.get("result", {}).get("winner_faction", "") == "player", "T-03 completes after the specified skill and Kirov sinking")
@@ -221,7 +225,8 @@ func _test_t04_armor(registry) -> void:
 		print("T04_DIAGNOSTIC objective=%s player_visible=%s warspite_pos=%s ward_pos=%s hindenburg_pos=%s aurora_pos=%s contexts=%s" % [session.state["level_objective"], session.state.get("visible_by_faction", {}).get("player", {}), warspite["position"], ward["position"], session.state["units_by_id"]["unit.enemy.t04.hindenburg"]["position"], session.state["units_by_id"]["unit.enemy.t04.aurora"]["position"], {"ward":session.terrain_context_service.context_at(ward["position"]),"aurora":session.terrain_context_service.context_at(session.state["units_by_id"]["unit.enemy.t04.aurora"]["position"])}])
 	_check(bool(session.state["level_objective"].get("engagement_unlocked", false)) and session.state["level_objective"].get("current_step", 0) == 1, "T-04 unlocks only after a real player-faction contact")
 	_check(not staging_events.any(func(event): return event.get("event_type", "") in ["WeaponFired", "SkillCast", "AttackResolved"]), "T-04 deals no damage before the authored first-contact stage")
-	_check(bool(warspite.get("movement_assist_enabled", false)) and bool(warspite.get("primary_auto_fire_enabled", false)), "T-04 restores the authored player assist and main-gun automation on contact")
+	_check(bool(warspite.get("movement_assist_enabled", false)) and not bool(warspite.get("primary_auto_fire_enabled", false)), "T-04 restores assist but leaves the required main-gun shot manual")
+	_check(_fire_training_gun(session, "unit.player.t04.warspite", session.state["units_by_id"]["unit.enemy.t04.hindenburg"]), "T-04 requires a legal manual main-gun decision after contact")
 	for enemy_id in ["unit.enemy.t04.hindenburg", "unit.enemy.t04.aurora"]:
 		var enemy: Dictionary = session.state["units_by_id"][enemy_id]
 		enemy["life_state"] = "Sunk"; enemy["current_hp"] = 0.0
@@ -342,6 +347,45 @@ func _validation_errors(registry, objective: Dictionary) -> Array[String]:
 	return validator.errors
 
 
+func _test_learning_evidence(registry) -> void:
+	var service = preload("res://scripts/domain/services/level_objective_service.gd").new()
+	service.setup(registry.get_definition("objectives", "objective.t02_gunnery"))
+	var fire := {"weapon_group_id":"warspite_main", "ammo_type":"HE"}
+	_check(not service.record_action("ManualPrimaryFire", "unit.player.t02.warspite", 0, fire).get("accepted", false), "T-02 does not count a shot before the ammo lesson")
+	service.record_action("SwitchAmmo", "unit.player.t02.warspite", 1, {"ammo_group_id":"warspite_main"})
+	_check(not service.record_action("ManualPrimaryFire", "unit.player.t02.warspite", 2, {"weapon_group_id":"warspite_main", "ammo_type":"AP"}).get("accepted", false), "T-02 requires real HE ammunition on the following shot")
+	_check(service.record_action("ManualPrimaryFire", "unit.player.t02.warspite", 3, fire).get("accepted", false), "T-02 accepts the ordered source-specific HE shot")
+	service.setup(registry.get_definition("objectives", "objective.t03_skill"))
+	service.record_action("CastSkill", "unit.player.t03.iowa", 1, {"skill_id":"skill.iowa_radar_salvo"})
+	_check(not service.record_action("ManualPrimaryFire", "unit.player.t03.iowa", 2, {"weapon_group_id":"iowa_main", "active_skill_ids":[]}).get("accepted", false), "T-03 rejects an unbuffed shot even after an earlier skill")
+	var t05 = BattleSession.new(registry)
+	t05.create_battle("level.tutorial.t05", 9010)
+	var retreat: Dictionary = t05.level_objective_service.definition["retreat_zone"]
+	var yukikaze: Dictionary = t05.state["units_by_id"]["unit.player.t05.yukikaze"]
+	yukikaze["position"] = _pair(retreat["position"])
+	t05.advance_tick(0.1)
+	_check(t05.state["level_objective"]["action_counts"].get("ReachRetreatZone", 0) == 0, "T-05 cannot credit retreat before a torpedo hit")
+	t05.level_objective_service.runtime_state["action_counts"]["ReachTutorialRouteZone"] = 2
+	t05._record_tutorial_action("TorpedoHit", "unit.player.t05.yukikaze", {"target_unit_id":"unit.enemy.t05.warspite", "attack_category":"Torpedo", "weapon_group_id":"yukikaze_torpedo"})
+	yukikaze["position"] = Vector2(2900,1550)
+	t05.state["units_by_id"]["unit.enemy.t05.warspite"]["life_state"] = "Sunk"
+	t05.advance_tick(0.1)
+	_check(t05.state["phase"] == "Running", "T-05 target sinking preserves the remaining retreat exercise")
+	yukikaze["position"] = _pair(retreat["position"])
+	t05.advance_tick(0.1)
+	_check(t05.state.get("result", {}).get("winner_faction", "") == "player", "T-05 completes only after post-hit physical arrival")
+	service.setup(registry.get_definition("objectives", "objective.t08_command"))
+	service.runtime_state["action_counts"]["ReachTutorialRouteZone"] = 2
+	_check(not service.record_action("GroupFocusTarget", "", 0, {"target_unit_id":"unit.enemy.t08.hindenburg"}).get("accepted", false), "T-08 rejects independent single-focus state without an actual group order")
+	_check(service.record_action("GroupFocusTarget", "", 1, {"target_unit_id":"unit.enemy.t08.hindenburg", "group_order_id":"test.group", "group_unit_ids":["unit.player.t08.warspite", "unit.player.t08.san_diego"]}).get("accepted", false), "T-08 accepts the required ships in one successful group order")
+	var invalid: Dictionary = registry.get_definition("objectives", "objective.t03_skill").duplicate(true)
+	invalid["required_actions"][0]["prerequisite_action_id"] = "ManualPrimaryFire"
+	_check(not _validation_errors(registry, invalid).is_empty(), "validator rejects cyclic or forward prerequisites")
+	invalid = registry.get_definition("objectives", "objective.t05_torpedo").duplicate(true)
+	invalid["retreat_zone"]["radius"] = -1
+	_check(not _validation_errors(registry, invalid).is_empty(), "validator rejects invalid retreat geometry")
+
+
 func _pair(value: Array) -> Vector2:
 	return Vector2(float(value[0]), float(value[1]))
 
@@ -349,3 +393,13 @@ func _pair(value: Array) -> Vector2:
 func _check(condition: bool, message: String) -> void:
 	checks += 1
 	if not condition: failures.append(message)
+
+
+func _fire_training_gun(session, unit_id: String, target: Dictionary) -> bool:
+	for tick in range(800):
+		if bool(session.get_primary_aim_status(unit_id, target["position"]).get("legal", false)):
+			var result: Dictionary = session._apply_command({"command_id":"test.training.fire", "command_type":"FirePrimaryWeapon", "issuer_id":"player", "issuer_type":"Player", "unit_id":unit_id, "target_position":target["position"]})
+			session.advance_tick(0.1)
+			return bool(result.get("accepted", false))
+		session.advance_tick(0.1)
+	return false

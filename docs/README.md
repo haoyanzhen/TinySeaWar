@@ -77,6 +77,7 @@ Use lowercase English file names with underscores:
 
 ### Audit
 
+- [玩家战斗反馈与角色表现工单](../workorder/20260927-player-feedback-character-presentation.md)：反馈事实、威胁识别、角色装配、音频与可访问性；含修改价值和验收条件。
 - [91_character_phase2_historical_validation.md](91_character_phase2_historical_validation.md)
 - [92_character_phase2_static_balance_review.md](92_character_phase2_static_balance_review.md)
 

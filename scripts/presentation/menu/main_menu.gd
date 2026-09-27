@@ -64,11 +64,18 @@ var custom_status: Label
 var custom_start_button: Button
 var selected_ship_ids: Array[String] = []
 var ship_buttons: Dictionary = {}
+var progress_failure_banner: HBoxContainer
+var progress_failure_label: Label
+var progress_retry_button: Button
 
 
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	_build_shell()
+	var flow := get_node_or_null("/root/GameFlow")
+	if flow != null:
+		flow.progress_save_status_changed.connect(_on_progress_save_status_changed)
+		_on_progress_save_status_changed(flow.progress_save_state())
 	_show_home()
 
 
@@ -102,6 +109,22 @@ func _build_shell() -> void:
 	title.add_theme_font_size_override("font_size", 38)
 	title.add_theme_color_override("font_color", TEXT_DARK)
 	header_margin.add_child(title)
+
+	progress_failure_banner = HBoxContainer.new()
+	progress_failure_banner.add_theme_constant_override("separation", 16)
+	progress_failure_banner.visible = false
+	rows.add_child(progress_failure_banner)
+	progress_failure_label = Label.new()
+	progress_failure_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	progress_failure_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	progress_failure_label.add_theme_color_override("font_color", Color("#ad3e39"))
+	progress_failure_label.add_theme_font_size_override("font_size", 18)
+	progress_failure_banner.add_child(progress_failure_label)
+	progress_retry_button = Button.new()
+	progress_retry_button.text = "重试保存"
+	progress_retry_button.custom_minimum_size = Vector2(150, 44)
+	progress_retry_button.pressed.connect(_retry_progress_save)
+	progress_failure_banner.add_child(progress_retry_button)
 
 	var body := HBoxContainer.new()
 	body.add_theme_constant_override("separation", 20)
@@ -139,6 +162,19 @@ func _build_shell() -> void:
 	content = VBoxContainer.new()
 	content.add_theme_constant_override("separation", 16)
 	content_margin.add_child(content)
+
+
+func _on_progress_save_status_changed(state: Dictionary) -> void:
+	progress_failure_banner.visible = str(state.get("status", "Idle")) == "Failed"
+	progress_failure_label.text = str(state.get("message", ""))
+	progress_retry_button.disabled = not bool(state.get("can_retry", false))
+
+
+func _retry_progress_save() -> void:
+	var flow := get_node_or_null("/root/GameFlow")
+	if flow != null:
+		flow.retry_progress_save()
+		_on_progress_save_status_changed(flow.progress_save_state())
 
 
 func _panel() -> PanelContainer:
@@ -261,7 +297,7 @@ func _challenge_level_id(level_code: String) -> String:
 
 func _show_custom() -> void:
 	_clear_content()
-	_heading("自定义战斗", "选择规模、已验收地图和 20 套天气，再从全部角色中选择已解锁舰船。第一艘入选舰自动担任旗舰。")
+	_heading("自定义战斗", "角色按默认拥有、教学奖励、挑战奖励与待处理四类列出；只可编入已拥有舰船。第一艘入选舰自动担任旗舰。")
 	var selectors := HBoxContainer.new()
 	selectors.add_theme_constant_override("separation", 12)
 	content.add_child(selectors)
@@ -347,16 +383,26 @@ func _refresh_custom_maps() -> void:
 
 func _build_ship_cards() -> void:
 	var flow := get_node_or_null("/root/GameFlow")
-	for ship in DataRegistry.registry.all("ships"):
+	var ships: Array = DataRegistry.registry.all("ships")
+	var categories := ["DefaultOwned", "TutorialReward", "ChallengeReward", "Pending"]
+	ships.sort_custom(func(a: Dictionary, b: Dictionary):
+		var a_category := categories.find(str(flow.ship_acquisition(str(a["id"])).get("category", "Pending")))
+		var b_category := categories.find(str(flow.ship_acquisition(str(b["id"])).get("category", "Pending")))
+		return a_category < b_category if a_category != b_category else str(a["id"]) < str(b["id"])
+	)
+	for ship in ships:
 		var ship_id := str(ship.get("id", ""))
 		var unlocked: bool = flow != null and bool(flow.is_ship_unlocked(ship_id))
 		var button := Button.new()
 		button.toggle_mode = true
 		button.disabled = not unlocked
 		button.custom_minimum_size = Vector2(285, 82)
+		button.clip_text = true
+		button.add_theme_font_size_override("font_size", 14)
 		button.alignment = HORIZONTAL_ALIGNMENT_LEFT
-		button.text = "%s\n%s · Lv.%d · Cost %d\n%s" % [ship.get("display_name", ship_id), ship.get("ship_class", ""), int(ship.get("level", 1)), int(ship.get("cost", 0)), "已解锁" if unlocked else "未解锁"]
-		button.tooltip_text = "可加入编成" if unlocked else "通过教学或挑战关解锁"
+		var source_label: String = flow.ship_acquisition_label(ship_id) if flow != null else "获取信息不可用"
+		button.text = "%s（%s）\n%s · Lv.%d · Cost %d\n%s" % [ship.get("display_name", ship_id), "已拥有" if unlocked else "未拥有", ship.get("ship_class", ""), int(ship.get("level", 1)), int(ship.get("cost", 0)), source_label.replace(" 首胜（关卡尚未开放）", "（尚未开放）")]
+		button.tooltip_text = source_label + ("\n可加入编成；既有存档取得的角色持续保留。" if unlocked else "")
 		button.add_theme_color_override("font_disabled_color", LOCKED)
 		button.toggled.connect(func(pressed: bool, id := ship_id): _toggle_ship(id, pressed))
 		fleet_grid.add_child(button)

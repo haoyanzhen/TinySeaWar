@@ -1,127 +1,799 @@
 {
   "definitions": [
-    {"id":"objective.t05_torpedo","objective_kind":"TutorialTorpedo","title":"隐蔽雷击","engagement_trigger":"RequiredActionsComplete","protected_player_unit_ids":["unit.player.t05.yukikaze","unit.player.t05.anshan"],"required_enemy_unit_ids":["unit.enemy.t05.warspite"],"contact_target_unit_ids":["unit.enemy.t05.warspite"],"enemy_staging_positions":{"unit.enemy.t05.warspite":[2500,1152]},"route_player_unit_id":"unit.player.t05.yukikaze","route_waypoint_zones":[{"id":"route.t05.southwest_cover","position":[1472,1728],"radius":150,"label":"沙洲西南遮蔽位"},{"id":"route.t05.southeast_attack","position":[2900,1550],"radius":180,"label":"沙洲东南雷击位"}],"required_actions":[{"action_id":"ReachTutorialRouteZone","unit_id":"unit.player.t05.yukikaze","required_count":2,"instruction":"让雪风沿沙洲南侧依次到达两个遮蔽航点"},{"action_id":"TorpedoHit","unit_id":"unit.player.t05.yukikaze","target_unit_id":"unit.enemy.t05.warspite","attack_category":"Torpedo","weapon_group_id":"yukikaze_torpedo","required_count":1,"instruction":"敌舰进入合法雷击角后，以雪风手动发射并命中至少一枚鱼雷"}],"locked_player_commands_until_engagement":["SetUnitControlState"],"initial_player_control_state":{"movement_assist_enabled":false,"secondary_auto_fire_enabled":false,"primary_auto_fire_enabled":false},"engagement_player_control_state":{"movement_assist_enabled":true,"secondary_auto_fire_enabled":true,"primary_auto_fire_enabled":true},"lock_enemy_primary_and_skill":true,"lock_enemy_automatic_weapons":true,"intro_text":"让雪风沿中央沙洲南侧的遮蔽航点接近厌战","engagement_instruction":"鱼雷已命中；保持两艘驱逐舰存活并击沉厌战","ability_limit_text":"首次鱼雷命中前敌方不交火；移动与手动鱼雷始终可用","engagement_ability_text":"鱼雷已命中：请继续控制雷击角并保护两艘驱逐舰","world_markers":[{"id":"marker.t05.sandbar","marker_type":"Area","position":[2048,1152],"radius":360,"label":"中央沙洲遮挡"},{"id":"marker.t05.route.southwest","marker_type":"Area","position":[1472,1728],"radius":150,"label":"遮蔽航点 1"},{"id":"marker.t05.route.southeast","marker_type":"Area","position":[2900,1550],"radius":180,"label":"雷击航点 2"}],"completion_text":"鱼雷命中并击沉厌战，两艘驱逐舰均存活","failure_text":"任一驱逐舰沉没"},
-    {"id":"objective.t06_carrier_hunt","objective_kind":"TutorialCarrierHunt","title":"航母猎杀","engagement_trigger":"RequiredActionsComplete","protected_player_unit_ids":["unit.player.t06.shimakaze"],"minimum_player_alive":2,"required_enemy_unit_ids":["unit.enemy.t06.argus"],"contact_target_unit_ids":["unit.enemy.t06.argus","unit.enemy.t06.aurora"],"enemy_staging_positions":{"unit.enemy.t06.argus":[2350,1152],"unit.enemy.t06.aurora":[2450,900]},"route_player_unit_id":"unit.player.t06.shimakaze","route_waypoint_zones":[{"id":"route.t06.fog_entry","position":[1472,1600],"radius":200,"label":"内湾海雾西南入口"},{"id":"route.t06.fog_hunt","position":[1984,1344],"radius":220,"label":"海雾猎杀位"}],"required_actions":[{"action_id":"ReachTutorialRouteZone","unit_id":"unit.player.t06.shimakaze","required_count":2,"instruction":"让岛风穿过内湾海雾的两个接近航点"}],"locked_player_commands_until_engagement":["SetUnitControlState"],"initial_player_control_state":{"movement_assist_enabled":false,"secondary_auto_fire_enabled":false,"primary_auto_fire_enabled":false},"engagement_player_control_state":{"movement_assist_enabled":true,"secondary_auto_fire_enabled":true,"primary_auto_fire_enabled":true},"lock_enemy_primary_and_skill":true,"lock_enemy_automatic_weapons":true,"intro_text":"让岛风从新月岛内湾西南入口进入海雾并接近高价值航母目标","engagement_instruction":"优先击沉百眼巨人，并保持至少两艘己方舰艇存活","ability_limit_text":"首次接触前敌护航舰不攻击；移动始终可用","engagement_ability_text":"已建立接触：开放受限辅助与自动索敌，优先猎杀百眼巨人","world_markers":[{"id":"marker.t06.fog","marker_type":"Area","position":[2050,1152],"radius":440,"label":"内湾海雾"},{"id":"marker.t06.route.entry","marker_type":"Area","position":[1472,1600],"radius":200,"label":"海雾西南入口"},{"id":"marker.t06.route.hunt","marker_type":"Area","position":[1984,1344],"radius":220,"label":"航母接近位"}],"completion_text":"击沉百眼巨人且至少两舰存活","failure_text":"旗舰沉没或己方仅剩一舰"},
-    {"id":"objective.t07_shared_contact","objective_kind":"TutorialSharedContact","title":"侦查共享","engagement_trigger":"RequiredActionsComplete","protected_player_unit_ids":["unit.player.t07.iowa"],"required_enemy_unit_ids":["unit.enemy.t07.hindenburg"],"enemy_staging_positions":{"unit.enemy.t07.hindenburg":[1850,1700],"unit.enemy.t07.eugen":[1950,1800],"unit.enemy.t07.gnevny":[1950,1600]},"scout_player_unit_id":"unit.player.t07.ward","shared_contact_target_unit_id":"unit.enemy.t07.hindenburg","player_weapon_locked_unit_ids_until_action":["unit.player.t07.ward","unit.player.t07.argus"],"player_weapon_unlock_action_id":"SharedTargetGunHit","route_player_unit_id":"unit.player.t07.ward","route_waypoint_zones":[{"id":"route.t07.forward_scout","position":[1600,1856],"radius":220,"label":"前出侦查区"}],"required_actions":[{"action_id":"ReachTutorialRouteZone","unit_id":"unit.player.t07.ward","required_count":1,"instruction":"让沃德前出至标记侦查区域，无需进入海峡南口"},{"action_id":"EstablishSharedContact","unit_id":"unit.player.t07.ward","target_unit_id":"unit.enemy.t07.hindenburg","required_count":1,"instruction":"让沃德为舰队建立兴登堡的共享接触"},{"action_id":"SharedTargetGunHit","unit_id":"unit.player.t07.iowa","target_unit_id":"unit.enemy.t07.hindenburg","attack_category":"Gun","weapon_group_id":"iowa_main","required_count":1,"instruction":"选择衣阿华，按 E 手动对共享目标兴登堡完成一次主炮命中"}],"locked_player_commands":["SetUnitControlState"],"locked_player_commands_until_engagement":["FirePrimaryWeapon"],"initial_player_control_state":{"movement_assist_enabled":false,"secondary_auto_fire_enabled":true,"primary_auto_fire_enabled":false},"engagement_player_control_state":{"movement_assist_enabled":false,"secondary_auto_fire_enabled":true,"primary_auto_fire_enabled":false},"lock_enemy_primary_and_skill":true,"lock_enemy_automatic_weapons":true,"enemy_weapon_unlock_action_id":"SharedTargetGunHit","intro_text":"让沃德前出至标记侦查区建立接触，无需进入海峡南口；后方衣阿华读取同一共享目标","engagement_instruction":"共享接触已建立；选择衣阿华，按 E 手动主炮命中兴登堡","ability_limit_text":"己方全舰保持手动航行与手动主武器，仅副武器自动；共享接触前衣阿华主炮与敌方武器暂不交火","engagement_ability_text":"共享接触成立：己方仍保持手动航行与手动主武器，仅副武器自动；衣阿华副炮禁用，按 E 手动主炮命中兴登堡","world_markers":[{"id":"marker.t07.forward_scout","marker_type":"Area","position":[1600,1856],"radius":220,"label":"前出侦查区"},{"id":"marker.t07.shared_target","marker_type":"Unit","unit_id":"unit.enemy.t07.hindenburg","radius":72,"label":"衣阿华手动主炮目标"}],"completion_text":"沃德共享接触、衣阿华手动主炮命中后击沉兴登堡","failure_text":"衣阿华沉没"},
-    {"id":"objective.t08_command","objective_kind":"TutorialCommand","title":"编队考核","engagement_trigger":"RequiredActionsComplete","protected_player_unit_ids":["unit.player.t08.warspite"],"minimum_player_alive":2,"required_enemy_unit_ids":["unit.enemy.t08.hindenburg"],"enemy_staging_positions":{"unit.enemy.t08.hindenburg":[2300,1152],"unit.enemy.t08.argus":[2400,900],"unit.enemy.t08.gnevny":[2400,1404]},"command_target_unit_id":"unit.enemy.t08.hindenburg","command_player_unit_ids":["unit.player.t08.warspite","unit.player.t08.san_diego"],"minimum_group_focus_count":2,"route_player_unit_id":"unit.player.t08.warspite","route_waypoint_zones":[{"id":"route.t08.west_channel","position":[1344,1088],"radius":180,"label":"西侧编队航点"},{"id":"route.t08.central_channel","position":[2240,1088],"radius":190,"label":"中央接敌航点"}],"required_actions":[{"action_id":"ReachTutorialRouteZone","unit_id":"unit.player.t08.warspite","required_count":2,"instruction":"让厌战沿散岛间的两个标记航点带队前进"},{"action_id":"GroupFocusTarget","target_unit_id":"unit.enemy.t08.hindenburg","required_count":1,"instruction":"分别选择厌战与圣地亚哥，对兴登堡下达同一集火目标"}],"locked_player_commands_until_engagement":["FirePrimaryWeapon","SetUnitControlState"],"initial_player_control_state":{"movement_assist_enabled":false,"secondary_auto_fire_enabled":false,"primary_auto_fire_enabled":false},"engagement_player_control_state":{"movement_assist_enabled":true,"secondary_auto_fire_enabled":true,"primary_auto_fire_enabled":true},"lock_enemy_primary_and_skill":true,"lock_enemy_automatic_weapons":true,"intro_text":"先沿散岛航路带队前进，再用两艘舰艇对敌方旗舰下达集火指令","engagement_instruction":"集火已确认；开启受限辅助，保护厌战并击沉兴登堡","ability_limit_text":"首次有效双舰集火前双方不交火；移动与集火始终可用","engagement_ability_text":"集火指令已确认：自动航行与主副武器能力已开放","world_markers":[{"id":"marker.t08.flagship","marker_type":"Unit","unit_id":"unit.enemy.t08.hindenburg","radius":72,"label":"双舰集火目标"},{"id":"marker.t08.route.west","marker_type":"Area","position":[1344,1088],"radius":180,"label":"编队航点 1"},{"id":"marker.t08.route.center","marker_type":"Area","position":[2240,1088],"radius":190,"label":"接敌航点 2"}],"completion_text":"完成双舰集火、击沉兴登堡且至少两舰存活","failure_text":"厌战沉没或己方仅剩一舰"},
     {
-      "id": "objective.t01_navigation",
-      "objective_kind": "TutorialNavigation",
-      "title": "航向与选择",
-      "player_unit_id": "unit.player.t01.sirius",
-      "enemy_flagship_unit_id": "unit.enemy.t01.ward",
-      "enemy_staging_position": [2850.0, 950.0],
-      "waypoint_zones": [
-        {"id": "waypoint.t01.01", "position": [1884.16, 898.56], "radius": 90.0, "label": "航点一"},
-        {"id": "waypoint.t01.02", "position": [2088.96, 1152.0], "radius": 90.0, "label": "航点二"}
+  "id": "objective.t05_torpedo",
+  "objective_kind": "TutorialTorpedo",
+  "title": "隐蔽雷击",
+  "engagement_trigger": "RequiredActionsComplete",
+  "protected_player_unit_ids": [
+    "unit.player.t05.yukikaze",
+    "unit.player.t05.anshan"
+  ],
+  "required_enemy_unit_ids": [
+    "unit.enemy.t05.warspite"
+  ],
+  "contact_target_unit_ids": [
+    "unit.enemy.t05.warspite"
+  ],
+  "enemy_staging_positions": {
+    "unit.enemy.t05.warspite": [
+      2500,
+      1152
+    ]
+  },
+  "route_player_unit_id": "unit.player.t05.yukikaze",
+  "route_waypoint_zones": [
+    {
+      "id": "route.t05.southwest_cover",
+      "position": [
+        1472,
+        1728
       ],
-      "required_actions": [
-        {"action_id": "SelectTutorialUnit", "required_count": 1, "instruction": "选择天狼星（点击舰船或按数字键 1）"},
-        {"action_id": "EnableCameraFollow", "required_count": 1, "instruction": "按 G 开启镜头跟随"},
-        {"action_id": "AppendMoveWaypoint", "required_count": 2, "instruction": "按 Z 进入路径布置，依次点击两个标记航点"}
-      ],
-      "locked_player_commands": ["FirePrimaryWeapon", "CastSkill", "SwitchAmmo", "SetUnitControlState"],
-      "initial_player_control_state": {"movement_assist_enabled": false, "secondary_auto_fire_enabled": false, "primary_auto_fire_enabled": false},
-      "engagement_player_control_state": {"movement_assist_enabled": true, "secondary_auto_fire_enabled": true, "primary_auto_fire_enabled": true},
-      "lock_enemy_primary_and_skill": true,
-      "lock_enemy_automatic_weapons": true,
-      "ability_limit_text": "本关关闭手动主炮、技能、弹药切换和开关；完成航行后开启受限辅助与自动主炮；沃德先驶往训练待机区且不还击",
-      "completion_text": "完成两个航点并击沉沃德",
-      "failure_text": "天狼星沉没"
+      "radius": 150,
+      "label": "沙洲西南遮蔽位"
     },
     {
-      "id": "objective.t02_gunnery",
-      "objective_kind": "TutorialGunnery",
-      "title": "主炮与弹药",
-      "engagement_trigger": "RequiredActionsComplete",
-      "protected_player_unit_ids": ["unit.player.t02.warspite"],
-      "required_enemy_unit_ids": ["unit.enemy.t02.aurora"],
-      "enemy_staging_positions": {
-        "unit.enemy.t02.aurora": [1900.0, 1152.0]
-      },
-      "required_actions": [
-        {"action_id": "SwitchAmmo", "unit_id": "unit.player.t02.warspite", "ammo_group_id": "warspite_main", "required_count": 1, "instruction": "按 Q 将厌战主炮从 AP 切换为 HE，观察装填不会重置"},
-        {"action_id": "ManualPrimaryFire", "unit_id": "unit.player.t02.warspite", "weapon_group_id": "warspite_main", "required_count": 1, "instruction": "目标进入射程后按 E 瞄准标记海域，左键合法发射一次主炮"}
+      "id": "route.t05.southeast_attack",
+      "position": [
+        2900,
+        1550
       ],
-      "locked_player_commands": ["CastSkill"],
-      "locked_player_commands_until_engagement": ["MoveUnits", "AppendMoveWaypoint", "ClearMoveRoute", "SetUnitControlState"],
-      "initial_player_control_state": {"movement_assist_enabled": false, "secondary_auto_fire_enabled": false, "primary_auto_fire_enabled": false},
-      "engagement_player_control_state": {"movement_assist_enabled": true, "secondary_auto_fire_enabled": true, "primary_auto_fire_enabled": true},
-      "lock_enemy_primary_and_skill": true,
-      "lock_enemy_automatic_weapons": true,
-      "intro_text": "学习切换主炮弹种并完成一次合法手动炮击",
-      "engagement_instruction": "保持厌战存活，继续观察大口径主炮的射界、装填与装甲伤害",
-      "ability_limit_text": "当前仅开放 Q 切弹与 E 手动主炮；技能、移动和自动开关暂时关闭，阿芙乐尔驶入训练位且不还击",
-      "engagement_ability_text": "操作完成：已开放移动、受限辅助、副武器与主炮自动能力；技能仍关闭",
-      "world_markers": [
-        {"id": "marker.t02.aurora", "marker_type": "Unit", "unit_id": "unit.enemy.t02.aurora", "radius": 72.0, "label": "主炮训练目标"}
-      ],
-      "completion_text": "完成切弹与手动主炮教学并击沉阿芙乐尔",
-      "failure_text": "厌战沉没"
+      "radius": 180,
+      "label": "沙洲东南雷击位"
+    }
+  ],
+  "required_actions": [
+    {
+      "action_id": "ReachTutorialRouteZone",
+      "unit_id": "unit.player.t05.yukikaze",
+      "required_count": 2,
+      "instruction": "让雪风沿沙洲南侧依次到达两个遮蔽航点"
     },
     {
-      "id": "objective.t03_skill",
-      "objective_kind": "TutorialSkill",
-      "title": "技能窗口",
-      "engagement_trigger": "RequiredActionsComplete",
-      "protected_player_unit_ids": ["unit.player.t03.iowa"],
-      "required_enemy_unit_ids": ["unit.enemy.t03.kirov"],
-      "enemy_staging_positions": {
-        "unit.enemy.t03.kirov": [1950.0, 1152.0]
-      },
-      "required_actions": [
-        {"action_id": "CastSkill", "unit_id": "unit.player.t03.iowa", "skill_id": "skill.iowa_radar_salvo", "required_count": 1, "instruction": "基洛夫进入合法窗口后按 F，选择目标并施放“雷达校准齐射”"}
-      ],
-      "locked_player_commands": ["SwitchAmmo"],
-      "locked_player_commands_until_engagement": ["MoveUnits", "AppendMoveWaypoint", "ClearMoveRoute", "FirePrimaryWeapon", "SetUnitControlState"],
-      "initial_player_control_state": {"movement_assist_enabled": false, "secondary_auto_fire_enabled": false, "primary_auto_fire_enabled": false},
-      "engagement_player_control_state": {"movement_assist_enabled": true, "secondary_auto_fire_enabled": true, "primary_auto_fire_enabled": true},
-      "lock_enemy_primary_and_skill": true,
-      "lock_enemy_automatic_weapons": true,
-      "intro_text": "等待合法技能窗口并施放雷达校准齐射",
-      "engagement_instruction": "保持衣阿华存活，观察技能增益如何被下一轮主炮消耗",
-      "ability_limit_text": "当前仅开放 F 主动技能；移动、主炮、切弹和自动开关暂时关闭，基洛夫驶入技能窗口且不还击",
-      "engagement_ability_text": "技能成功：已开放移动、手动/自动主炮和副武器；观察校准齐射收益被下一轮主炮消耗",
-      "world_markers": [
-        {"id": "marker.t03.kirov", "marker_type": "Unit", "unit_id": "unit.enemy.t03.kirov", "radius": 72.0, "label": "技能训练目标"}
-      ],
-      "completion_text": "施放雷达校准齐射并击沉基洛夫",
-      "failure_text": "衣阿华沉没"
+      "action_id": "TorpedoHit",
+      "unit_id": "unit.player.t05.yukikaze",
+      "target_unit_id": "unit.enemy.t05.warspite",
+      "attack_category": "Torpedo",
+      "weapon_group_id": "yukikaze_torpedo",
+      "required_count": 1,
+      "instruction": "敌舰进入合法雷击角后，以雪风手动发射并命中至少一枚鱼雷"
     },
     {
-      "id": "objective.t04_armor",
-      "objective_kind": "TutorialArmor",
-      "title": "重甲压制",
-      "engagement_trigger": "FirstContact",
-      "protected_player_unit_ids": ["unit.player.t04.warspite"],
-      "required_enemy_unit_ids": ["unit.enemy.t04.hindenburg", "unit.enemy.t04.aurora"],
-      "contact_target_unit_ids": ["unit.enemy.t04.hindenburg", "unit.enemy.t04.aurora"],
-      "enemy_staging_positions": {
-		"unit.enemy.t04.hindenburg": [1650.0, 967.68],
-		"unit.enemy.t04.aurora": [1550.0, 1336.32]
-      },
-	  "engagement_enemy_mode_locks": {"ship.hindenburg": "VanguardLine", "ship.aurora": "VanguardLine"},
-      "required_actions": [],
-      "locked_player_commands": ["CastSkill", "SwitchAmmo"],
-      "locked_player_commands_until_engagement": ["MoveUnits", "AppendMoveWaypoint", "ClearMoveRoute", "FirePrimaryWeapon", "SetUnitControlState"],
-      "initial_player_control_state": {"movement_assist_enabled": false, "secondary_auto_fire_enabled": true, "primary_auto_fire_enabled": false},
-      "engagement_player_control_state": {"movement_assist_enabled": true, "secondary_auto_fire_enabled": true, "primary_auto_fire_enabled": true},
-      "lock_enemy_primary_and_skill": true,
-      "lock_enemy_automatic_weapons": true,
-      "intro_text": "观察敌巡洋舰穿过月光水域并建立首次接触",
-      "pre_engagement_instruction": "观察中央月光水域；等待沃德或厌战按公开侦查规则建立接触",
-      "engagement_instruction": "保持厌战存活，击沉兴登堡与阿芙乐尔",
-      "ability_limit_text": "沃德副武器自动能力保持开启；兴登堡使用 HE 训练弹；首次真实接触前暂时关闭移动、主炮、技能、切弹与自动开关",
-      "engagement_ability_text": "已建立接触：兴登堡保持 HE 训练弹，双方恢复简单 AI 交战；己方开放移动、手动/自动主炮与副武器；保持厌战存活",
-      "world_markers": [
-        {"id": "marker.t04.moonlit", "marker_type": "Area", "position": [1975.0, 1152.0], "radius": 420.0, "label": "中央月光水域"}
+      "action_id": "ReachRetreatZone",
+      "unit_id": "unit.player.t05.yukikaze",
+      "route_zone_id": "retreat.t05",
+      "prerequisite_action_id": "TorpedoHit",
+      "required_count": 1,
+      "instruction": "鱼雷已命中：让雪风返回南侧脱离区；目标已沉没也必须完成脱离练习。"
+    }
+  ],
+  "locked_player_commands_until_engagement": [
+    "SetUnitControlState"
+  ],
+  "initial_player_control_state": {
+    "movement_assist_enabled": false,
+    "secondary_auto_fire_enabled": false,
+    "primary_auto_fire_enabled": false
+  },
+  "engagement_player_control_state": {
+    "movement_assist_enabled": true,
+    "secondary_auto_fire_enabled": true,
+    "primary_auto_fire_enabled": true
+  },
+  "lock_enemy_primary_and_skill": true,
+  "lock_enemy_automatic_weapons": true,
+  "intro_text": "战损练习：厌战仅有 3% 耐久，不代表正常战列抗性。沿沙洲南侧接近，雷击命中后返回脱离区。",
+  "engagement_instruction": "鱼雷已命中；保持两艘驱逐舰存活并击沉厌战",
+  "ability_limit_text": "命中并完成脱离前敌方不交火；移动与手动鱼雷始终可用",
+  "engagement_ability_text": "鱼雷已命中：请继续控制雷击角并保护两艘驱逐舰",
+  "world_markers": [
+    {
+      "id": "marker.t05.sandbar",
+      "marker_type": "Area",
+      "position": [
+        2048,
+        1152
       ],
-      "completion_text": "厌战存活并击沉兴登堡与阿芙乐尔",
-      "failure_text": "厌战沉没"
+      "radius": 360,
+      "label": "中央沙洲遮挡"
     },
+    {
+      "id": "marker.t05.route.southwest",
+      "marker_type": "Area",
+      "position": [
+        1472,
+        1728
+      ],
+      "radius": 150,
+      "label": "遮蔽航点 1"
+    },
+    {
+      "id": "marker.t05.route.southeast",
+      "marker_type": "Area",
+      "position": [
+        2900,
+        1550
+      ],
+      "radius": 180,
+      "label": "雷击航点 2"
+    },
+    {
+      "id": "marker.t05.retreat",
+      "marker_type": "Area",
+      "position": [
+        2350,
+        1850
+      ],
+      "radius": 200,
+      "label": "命中后脱离区"
+    }
+  ],
+  "completion_text": "雪风命中鱼雷并抵达脱离区，击沉厌战且两驱逐存活",
+  "failure_text": "任一驱逐舰沉没",
+  "retreat_zone": {
+    "id": "retreat.t05",
+    "unit_id": "unit.player.t05.yukikaze",
+    "position": [
+      2350,
+      1850
+    ],
+    "radius": 200
+  },
+  "allow_post_sink_actions": true
+},
+    {
+  "id": "objective.t06_carrier_hunt",
+  "objective_kind": "TutorialCarrierHunt",
+  "title": "航母猎杀",
+  "engagement_trigger": "RequiredActionsComplete",
+  "protected_player_unit_ids": [
+    "unit.player.t06.shimakaze"
+  ],
+  "minimum_player_alive": 2,
+  "required_enemy_unit_ids": [
+    "unit.enemy.t06.argus"
+  ],
+  "contact_target_unit_ids": [
+    "unit.enemy.t06.argus",
+    "unit.enemy.t06.aurora"
+  ],
+  "enemy_staging_positions": {
+    "unit.enemy.t06.argus": [
+      2350,
+      1152
+    ],
+    "unit.enemy.t06.aurora": [
+      2450,
+      900
+    ]
+  },
+  "route_player_unit_id": "unit.player.t06.shimakaze",
+  "route_waypoint_zones": [
+    {
+      "id": "route.t06.fog_entry",
+      "position": [
+        1472,
+        1600
+      ],
+      "radius": 200,
+      "label": "内湾海雾西南入口"
+    },
+    {
+      "id": "route.t06.fog_hunt",
+      "position": [
+        1984,
+        1344
+      ],
+      "radius": 220,
+      "label": "海雾猎杀位"
+    }
+  ],
+  "required_actions": [
+    {
+      "action_id": "ReachTutorialRouteZone",
+      "unit_id": "unit.player.t06.shimakaze",
+      "required_count": 2,
+      "instruction": "让岛风穿过内湾海雾的两个接近航点"
+    },
+    {
+      "action_id": "FocusPriorityTarget",
+      "unit_id": "unit.player.t06.shimakaze",
+      "target_unit_id": "unit.enemy.t06.argus",
+      "prerequisite_action_id": "ReachTutorialRouteZone",
+      "required_count": 1,
+      "instruction": "接近完成：发现百眼巨人后，选择岛风对其下达集火；优先航母而非护航舰。"
+    }
+  ],
+  "locked_player_commands_until_engagement": [
+    "SetUnitControlState"
+  ],
+  "initial_player_control_state": {
+    "movement_assist_enabled": false,
+    "secondary_auto_fire_enabled": false,
+    "primary_auto_fire_enabled": false
+  },
+  "engagement_player_control_state": {
+    "movement_assist_enabled": true,
+    "secondary_auto_fire_enabled": true,
+    "primary_auto_fire_enabled": true
+  },
+  "lock_enemy_primary_and_skill": true,
+  "lock_enemy_automatic_weapons": true,
+  "intro_text": "先沿海雾路线接近，再由岛风明确集火航母；百眼巨人为 50% 耐久训练目标。",
+  "engagement_instruction": "优先击沉百眼巨人，并保持至少两艘己方舰艇存活",
+  "ability_limit_text": "路线与目标优先指令完成前敌方不交火；移动和集火可用。",
+  "engagement_ability_text": "已建立接触：开放受限辅助与自动索敌，优先猎杀百眼巨人",
+  "world_markers": [
+    {
+      "id": "marker.t06.fog",
+      "marker_type": "Area",
+      "position": [
+        2050,
+        1152
+      ],
+      "radius": 440,
+      "label": "内湾海雾"
+    },
+    {
+      "id": "marker.t06.route.entry",
+      "marker_type": "Area",
+      "position": [
+        1472,
+        1600
+      ],
+      "radius": 200,
+      "label": "海雾西南入口"
+    },
+    {
+      "id": "marker.t06.route.hunt",
+      "marker_type": "Area",
+      "position": [
+        1984,
+        1344
+      ],
+      "radius": 220,
+      "label": "航母接近位"
+    }
+  ],
+  "completion_text": "击沉百眼巨人且至少两舰存活",
+  "failure_text": "旗舰沉没或己方仅剩一舰"
+},
+    {
+  "id": "objective.t07_shared_contact",
+  "objective_kind": "TutorialSharedContact",
+  "title": "侦查共享",
+  "engagement_trigger": "RequiredActionsComplete",
+  "protected_player_unit_ids": [
+    "unit.player.t07.iowa"
+  ],
+  "required_enemy_unit_ids": [
+    "unit.enemy.t07.hindenburg"
+  ],
+  "enemy_staging_positions": {
+    "unit.enemy.t07.hindenburg": [
+      1850,
+      1700
+    ],
+    "unit.enemy.t07.eugen": [
+      1950,
+      1800
+    ],
+    "unit.enemy.t07.gnevny": [
+      1950,
+      1600
+    ]
+  },
+  "scout_player_unit_id": "unit.player.t07.ward",
+  "shared_contact_target_unit_id": "unit.enemy.t07.hindenburg",
+  "player_weapon_locked_unit_ids_until_action": [
+    "unit.player.t07.ward",
+    "unit.player.t07.argus"
+  ],
+  "player_weapon_unlock_action_id": "SharedTargetGunHit",
+  "route_player_unit_id": "unit.player.t07.ward",
+  "route_waypoint_zones": [
+    {
+      "id": "route.t07.forward_scout",
+      "position": [
+        1600,
+        1856
+      ],
+      "radius": 220,
+      "label": "前出侦查区"
+    }
+  ],
+  "required_actions": [
+    {
+      "action_id": "ReachTutorialRouteZone",
+      "unit_id": "unit.player.t07.ward",
+      "required_count": 1,
+      "instruction": "让沃德前出至标记侦查区域，无需进入海峡南口"
+    },
+    {
+      "action_id": "EstablishSharedContact",
+      "unit_id": "unit.player.t07.ward",
+      "target_unit_id": "unit.enemy.t07.hindenburg",
+      "required_count": 1,
+      "instruction": "让沃德为舰队建立兴登堡的共享接触"
+    },
+    {
+      "action_id": "SharedTargetGunHit",
+      "unit_id": "unit.player.t07.iowa",
+      "target_unit_id": "unit.enemy.t07.hindenburg",
+      "attack_category": "Gun",
+      "weapon_group_id": "iowa_main",
+      "required_count": 1,
+      "instruction": "选择衣阿华，按 E 手动对共享目标兴登堡完成一次主炮命中",
+      "prerequisite_action_id": "EstablishSharedContact"
+    }
+  ],
+  "locked_player_commands": [
+    "SetUnitControlState"
+  ],
+  "locked_player_commands_until_engagement": [
+    "FirePrimaryWeapon"
+  ],
+  "initial_player_control_state": {
+    "movement_assist_enabled": false,
+    "secondary_auto_fire_enabled": true,
+    "primary_auto_fire_enabled": false
+  },
+  "engagement_player_control_state": {
+    "movement_assist_enabled": false,
+    "secondary_auto_fire_enabled": true,
+    "primary_auto_fire_enabled": false
+  },
+  "lock_enemy_primary_and_skill": true,
+  "lock_enemy_automatic_weapons": true,
+  "enemy_weapon_unlock_action_id": "SharedTargetGunHit",
+  "intro_text": "战损练习：兴登堡仅有 1% 耐久，不代表正常炮击威力。沃德前出建立共享接触，再由衣阿华手动打击。",
+  "engagement_instruction": "共享接触已建立；选择衣阿华，按 E 手动主炮命中兴登堡",
+  "ability_limit_text": "己方全舰保持手动航行与手动主武器，仅副武器自动；共享接触前衣阿华主炮与敌方武器暂不交火",
+  "engagement_ability_text": "共享接触成立：己方仍保持手动航行与手动主武器，仅副武器自动；衣阿华副炮禁用，按 E 手动主炮命中兴登堡",
+  "world_markers": [
+    {
+      "id": "marker.t07.forward_scout",
+      "marker_type": "Area",
+      "position": [
+        1600,
+        1856
+      ],
+      "radius": 220,
+      "label": "前出侦查区"
+    },
+    {
+      "id": "marker.t07.shared_target",
+      "marker_type": "Unit",
+      "unit_id": "unit.enemy.t07.hindenburg",
+      "radius": 72,
+      "label": "衣阿华手动主炮目标"
+    }
+  ],
+  "completion_text": "沃德共享接触、衣阿华手动主炮命中后击沉兴登堡",
+  "failure_text": "衣阿华沉没"
+},
+    {
+  "id": "objective.t08_command",
+  "objective_kind": "TutorialCommand",
+  "title": "编队考核",
+  "engagement_trigger": "RequiredActionsComplete",
+  "protected_player_unit_ids": [
+    "unit.player.t08.warspite"
+  ],
+  "minimum_player_alive": 2,
+  "required_enemy_unit_ids": [
+    "unit.enemy.t08.hindenburg"
+  ],
+  "enemy_staging_positions": {
+    "unit.enemy.t08.hindenburg": [
+      2300,
+      1152
+    ],
+    "unit.enemy.t08.argus": [
+      2400,
+      900
+    ],
+    "unit.enemy.t08.gnevny": [
+      2400,
+      1404
+    ]
+  },
+  "command_target_unit_id": "unit.enemy.t08.hindenburg",
+  "command_player_unit_ids": [
+    "unit.player.t08.warspite",
+    "unit.player.t08.san_diego"
+  ],
+  "minimum_group_focus_count": 2,
+  "route_player_unit_id": "unit.player.t08.warspite",
+  "route_waypoint_zones": [
+    {
+      "id": "route.t08.west_channel",
+      "position": [
+        1344,
+        1088
+      ],
+      "radius": 180,
+      "label": "西侧编队航点"
+    },
+    {
+      "id": "route.t08.central_channel",
+      "position": [
+        2240,
+        1088
+      ],
+      "radius": 190,
+      "label": "中央接敌航点"
+    }
+  ],
+  "required_actions": [
+    {
+      "action_id": "ReachTutorialRouteZone",
+      "unit_id": "unit.player.t08.warspite",
+      "required_count": 2,
+      "instruction": "让厌战沿散岛间的两个标记航点带队前进"
+    },
+    {
+      "action_id": "GroupFocusTarget",
+      "target_unit_id": "unit.enemy.t08.hindenburg",
+      "required_count": 1,
+      "instruction": "框选厌战与圣地亚哥，再对兴登堡一次下达编队集火；分别点选集火不计入考核。",
+      "prerequisite_action_id": "ReachTutorialRouteZone"
+    }
+  ],
+  "locked_player_commands_until_engagement": [
+    "FirePrimaryWeapon",
+    "SetUnitControlState"
+  ],
+  "initial_player_control_state": {
+    "movement_assist_enabled": false,
+    "secondary_auto_fire_enabled": false,
+    "primary_auto_fire_enabled": false
+  },
+  "engagement_player_control_state": {
+    "movement_assist_enabled": true,
+    "secondary_auto_fire_enabled": true,
+    "primary_auto_fire_enabled": true
+  },
+  "lock_enemy_primary_and_skill": true,
+  "lock_enemy_automatic_weapons": true,
+  "intro_text": "沿散岛路线接近后，框选厌战与圣地亚哥，用一次编队集火指令指定兴登堡。",
+  "engagement_instruction": "集火已确认；开启受限辅助，保护厌战并击沉兴登堡",
+  "ability_limit_text": "首次有效双舰集火前双方不交火；移动与集火始终可用",
+  "engagement_ability_text": "集火指令已确认：自动航行与主副武器能力已开放",
+  "world_markers": [
+    {
+      "id": "marker.t08.flagship",
+      "marker_type": "Unit",
+      "unit_id": "unit.enemy.t08.hindenburg",
+      "radius": 72,
+      "label": "双舰集火目标"
+    },
+    {
+      "id": "marker.t08.route.west",
+      "marker_type": "Area",
+      "position": [
+        1344,
+        1088
+      ],
+      "radius": 180,
+      "label": "编队航点 1"
+    },
+    {
+      "id": "marker.t08.route.center",
+      "marker_type": "Area",
+      "position": [
+        2240,
+        1088
+      ],
+      "radius": 190,
+      "label": "接敌航点 2"
+    }
+  ],
+  "completion_text": "完成双舰集火、击沉兴登堡且至少两舰存活",
+  "failure_text": "厌战沉没或己方仅剩一舰"
+},
+    {
+  "id": "objective.t01_navigation",
+  "objective_kind": "TutorialNavigation",
+  "title": "航向与选择",
+  "player_unit_id": "unit.player.t01.sirius",
+  "enemy_flagship_unit_id": "unit.enemy.t01.ward",
+  "enemy_staging_position": [
+    2850.0,
+    950.0
+  ],
+  "waypoint_zones": [
+    {
+      "id": "waypoint.t01.01",
+      "position": [
+        1884.16,
+        898.56
+      ],
+      "radius": 90.0,
+      "label": "航点一"
+    },
+    {
+      "id": "waypoint.t01.02",
+      "position": [
+        2088.96,
+        1152.0
+      ],
+      "radius": 90.0,
+      "label": "航点二"
+    }
+  ],
+  "required_actions": [
+    {
+      "action_id": "SelectTutorialUnit",
+      "required_count": 1,
+      "instruction": "选择天狼星（点击舰船或按数字键 1）"
+    },
+    {
+      "action_id": "EnableCameraFollow",
+      "required_count": 1,
+      "instruction": "按 G 开启镜头跟随",
+      "prerequisite_action_id": "SelectTutorialUnit"
+    },
+    {
+      "action_id": "AppendMoveWaypoint",
+      "required_count": 2,
+      "instruction": "按 Z 进入路径布置，依次点击两个标记航点",
+      "prerequisite_action_id": "EnableCameraFollow"
+    }
+  ],
+  "locked_player_commands": [
+    "FirePrimaryWeapon",
+    "CastSkill",
+    "SwitchAmmo",
+    "SetUnitControlState"
+  ],
+  "initial_player_control_state": {
+    "movement_assist_enabled": false,
+    "secondary_auto_fire_enabled": false,
+    "primary_auto_fire_enabled": false
+  },
+  "engagement_player_control_state": {
+    "movement_assist_enabled": true,
+    "secondary_auto_fire_enabled": true,
+    "primary_auto_fire_enabled": true
+  },
+  "lock_enemy_primary_and_skill": true,
+  "lock_enemy_automatic_weapons": true,
+  "ability_limit_text": "本关关闭手动主炮、技能、弹药切换和开关；完成航行后开启受限辅助与自动主炮；沃德先驶往训练待机区且不还击",
+  "completion_text": "完成两个航点并击沉沃德",
+  "failure_text": "天狼星沉没",
+  "intro_text": "先选择天狼星，再跟随镜头与布置航点；完成航行才开启自动交战。",
+  "engagement_instruction": "航行完成：受限辅助与自动主炮已开启；观察其击沉敌旗舰，保护天狼星。"
+},
+    {
+  "id": "objective.t02_gunnery",
+  "objective_kind": "TutorialGunnery",
+  "title": "主炮与弹药",
+  "engagement_trigger": "RequiredActionsComplete",
+  "protected_player_unit_ids": [
+    "unit.player.t02.warspite"
+  ],
+  "required_enemy_unit_ids": [
+    "unit.enemy.t02.aurora"
+  ],
+  "enemy_staging_positions": {
+    "unit.enemy.t02.aurora": [
+      1900.0,
+      1152.0
+    ]
+  },
+  "required_actions": [
+    {
+      "action_id": "SwitchAmmo",
+      "unit_id": "unit.player.t02.warspite",
+      "ammo_group_id": "warspite_main",
+      "required_count": 1,
+      "instruction": "按 Q 将厌战主炮从 AP 切换为 HE，观察装填不会重置"
+    },
+    {
+      "action_id": "ManualPrimaryFire",
+      "unit_id": "unit.player.t02.warspite",
+      "weapon_group_id": "warspite_main",
+      "required_count": 1,
+      "instruction": "切到 HE 后，以厌战主炮合法发射；HE 与 AP 的收益取决于装甲，不保证每次命中。",
+      "prerequisite_action_id": "SwitchAmmo",
+      "ammo_type": "HE"
+    }
+  ],
+  "locked_player_commands": [
+    "CastSkill"
+  ],
+  "locked_player_commands_until_engagement": [
+    "MoveUnits",
+    "AppendMoveWaypoint",
+    "ClearMoveRoute",
+    "SetUnitControlState"
+  ],
+  "initial_player_control_state": {
+    "movement_assist_enabled": false,
+    "secondary_auto_fire_enabled": false,
+    "primary_auto_fire_enabled": false
+  },
+  "engagement_player_control_state": {
+    "movement_assist_enabled": true,
+    "secondary_auto_fire_enabled": true,
+    "primary_auto_fire_enabled": true
+  },
+  "lock_enemy_primary_and_skill": true,
+  "lock_enemy_automatic_weapons": true,
+  "intro_text": "AP 与 HE 适用装甲不同；切弹保留装填进度。本课考核先切到 HE，再亲自发射。",
+  "engagement_instruction": "保持厌战存活，继续观察大口径主炮的射界、装填与装甲伤害",
+  "ability_limit_text": "当前仅开放 Q 切弹与 E 手动主炮；技能、移动和自动开关暂时关闭，阿芙乐尔驶入训练位且不还击",
+  "engagement_ability_text": "操作完成：已开放移动、受限辅助、副武器与主炮自动能力；技能仍关闭",
+  "world_markers": [
+    {
+      "id": "marker.t02.aurora",
+      "marker_type": "Unit",
+      "unit_id": "unit.enemy.t02.aurora",
+      "radius": 72.0,
+      "label": "主炮训练目标"
+    }
+  ],
+  "completion_text": "完成切弹与手动主炮教学并击沉阿芙乐尔",
+  "failure_text": "厌战沉没"
+},
+    {
+  "id": "objective.t03_skill",
+  "objective_kind": "TutorialSkill",
+  "title": "技能窗口",
+  "engagement_trigger": "RequiredActionsComplete",
+  "protected_player_unit_ids": [
+    "unit.player.t03.iowa"
+  ],
+  "required_enemy_unit_ids": [
+    "unit.enemy.t03.kirov"
+  ],
+  "enemy_staging_positions": {
+    "unit.enemy.t03.kirov": [
+      1950.0,
+      1152.0
+    ]
+  },
+  "required_actions": [
+    {
+      "action_id": "CastSkill",
+      "unit_id": "unit.player.t03.iowa",
+      "skill_id": "skill.iowa_radar_salvo",
+      "required_count": 1,
+      "instruction": "基洛夫进入合法窗口后按 F，选择目标并施放“雷达校准齐射”"
+    },
+    {
+      "action_id": "ManualPrimaryFire",
+      "unit_id": "unit.player.t03.iowa",
+      "weapon_group_id": "iowa_main",
+      "required_active_skill_id": "skill.iowa_radar_salvo",
+      "prerequisite_action_id": "CastSkill",
+      "required_count": 1,
+      "instruction": "校准增益已就绪：按 E 对基洛夫手动发射主炮，将增益用于下一轮齐射。"
+    }
+  ],
+  "locked_player_commands": [
+    "SwitchAmmo"
+  ],
+  "locked_player_commands_until_engagement": [
+    "MoveUnits",
+    "AppendMoveWaypoint",
+    "ClearMoveRoute",
+    "SetUnitControlState"
+  ],
+  "initial_player_control_state": {
+    "movement_assist_enabled": false,
+    "secondary_auto_fire_enabled": false,
+    "primary_auto_fire_enabled": false
+  },
+  "engagement_player_control_state": {
+    "movement_assist_enabled": true,
+    "secondary_auto_fire_enabled": true,
+    "primary_auto_fire_enabled": true
+  },
+  "lock_enemy_primary_and_skill": true,
+  "lock_enemy_automatic_weapons": true,
+  "intro_text": "等待合法技能窗口并施放雷达校准齐射",
+  "engagement_instruction": "增益齐射已发射；保持衣阿华存活并击沉基洛夫。",
+  "ability_limit_text": "开放 F 技能和 E 手动主炮；先施放技能，再消耗校准增益发射；自动武器与敌方交火暂锁。",
+  "engagement_ability_text": "增益主炮完成：已开放移动、手动/自动主炮和副武器。",
+  "world_markers": [
+    {
+      "id": "marker.t03.kirov",
+      "marker_type": "Unit",
+      "unit_id": "unit.enemy.t03.kirov",
+      "radius": 72.0,
+      "label": "技能训练目标"
+    }
+  ],
+  "completion_text": "施放校准技能并亲自发射增益主炮，击沉基洛夫",
+  "failure_text": "衣阿华沉没"
+},
+    {
+  "id": "objective.t04_armor",
+  "objective_kind": "TutorialArmor",
+  "title": "重甲压制",
+  "engagement_trigger": "FirstContact",
+  "protected_player_unit_ids": [
+    "unit.player.t04.warspite"
+  ],
+  "required_enemy_unit_ids": [
+    "unit.enemy.t04.hindenburg",
+    "unit.enemy.t04.aurora"
+  ],
+  "contact_target_unit_ids": [
+    "unit.enemy.t04.hindenburg",
+    "unit.enemy.t04.aurora"
+  ],
+  "enemy_staging_positions": {
+    "unit.enemy.t04.hindenburg": [
+      1650.0,
+      967.68
+    ],
+    "unit.enemy.t04.aurora": [
+      1550.0,
+      1336.32
+    ]
+  },
+  "engagement_enemy_mode_locks": {
+    "ship.hindenburg": "VanguardLine",
+    "ship.aurora": "VanguardLine"
+  },
+  "required_actions": [
+    {
+      "action_id": "ManualPrimaryFire",
+      "unit_id": "unit.player.t04.warspite",
+      "weapon_group_id": "warspite_main",
+      "required_count": 1,
+      "instruction": "首次接触后，选择厌战并调整合法射界，按 E 手动发射一次主炮。"
+    }
+  ],
+  "locked_player_commands": [
+    "CastSkill",
+    "SwitchAmmo"
+  ],
+  "locked_player_commands_until_engagement": [
+    "MoveUnits",
+    "AppendMoveWaypoint",
+    "ClearMoveRoute",
+    "FirePrimaryWeapon",
+    "SetUnitControlState"
+  ],
+  "initial_player_control_state": {
+    "movement_assist_enabled": false,
+    "secondary_auto_fire_enabled": true,
+    "primary_auto_fire_enabled": false
+  },
+  "engagement_player_control_state": {
+    "movement_assist_enabled": true,
+    "secondary_auto_fire_enabled": true,
+    "primary_auto_fire_enabled": false
+  },
+  "lock_enemy_primary_and_skill": true,
+  "lock_enemy_automatic_weapons": true,
+  "intro_text": "观察敌巡洋舰穿过月光水域并建立首次接触",
+  "pre_engagement_instruction": "观察中央月光水域；等待沃德或厌战按公开侦查规则建立接触",
+  "engagement_instruction": "接触建立：选择厌战手动主炮，观察重甲防护；保护旗舰并击沉两艘巡洋舰。",
+  "ability_limit_text": "沃德副武器自动能力保持开启；兴登堡使用 HE 训练弹；首次真实接触前暂时关闭移动、主炮、技能、切弹与自动开关",
+  "engagement_ability_text": "移动、受限辅助和副武器开放；主炮初始保持手动，可用 V 切换。技能和切弹仍关闭。",
+  "world_markers": [
+    {
+      "id": "marker.t04.moonlit",
+      "marker_type": "Area",
+      "position": [
+        1975.0,
+        1152.0
+      ],
+      "radius": 420.0,
+      "label": "中央月光水域"
+    }
+  ],
+  "completion_text": "厌战完成手动主炮且存活，击沉两艘巡洋舰",
+  "failure_text": "厌战沉没"
+},
     {
       "id":"objective.s02_escort","objective_kind":"ChallengeMission","title":"侧翼雷线","protected_player_unit_ids":[],"required_any_player_unit_ids":["unit.player.s02.chongqing","unit.player.s02.yukikaze"],"minimum_required_any_player_alive":1,"required_enemy_unit_ids":["unit.enemy.s02.warspite"],"completion_text":"击沉厌战，且重庆或雪风至少一艘存活","failure_text":"重庆与雪风均沉没"},
-    {"id":"objective.s03_carrier_first","objective_kind":"ChallengeMission","title":"航空诱饵","protected_player_unit_ids":[],"ordered_enemy_unit_ids":["unit.enemy.s03.argus","unit.enemy.s03.bismarck"],"completion_text":"先击沉百眼巨人，再击沉俾斯麦","failure_text":"先击沉俾斯麦导致任务取消"},
+    {"id":"objective.s03_carrier_first","objective_kind":"ChallengeMission","title":"航空诱饵","protected_player_unit_ids":[],"required_enemy_unit_ids":["unit.enemy.s03.bismarck"],"optional_ordered_enemy_unit_ids":["unit.enemy.s03.argus","unit.enemy.s03.bismarck"],"intro_text":"击沉俾斯麦；可选精通：先击沉百眼巨人，再击沉俾斯麦（不影响通关与奖励）","completion_text":"击沉俾斯麦","failure_text":"己方旗舰厌战沉没"},
     {"id":"objective.s04_ambush","objective_kind":"ChallengeMission","title":"双向伏击","protected_player_unit_ids":[],"required_enemy_unit_ids":["unit.enemy.s04.iowa"],"completion_text":"击沉衣阿华","failure_text":"己方旗舰胡德沉没"},
     {"id":"objective.s05_wolfpack","objective_kind":"ChallengeMission","title":"狼群门槛","protected_player_unit_ids":[],"required_enemy_unit_ids":["unit.enemy.s05.bismarck"],"minimum_enemy_sunk":3,"completion_text":"累计击沉至少三艘敌舰并击沉俾斯麦","failure_text":"己方旗舰厌战沉没"},
     {

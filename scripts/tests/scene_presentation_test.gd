@@ -38,7 +38,7 @@ func _run() -> void:
 	menu._refresh_custom_maps()
 	_check(all_sizes_expose_expected_maps, "all scales expose the ten reviewed 16:9 coastal maps")
 	_check(menu.ship_buttons.size() == 48, "custom fleet builder lists all configured characters")
-	var custom_ship_ids: Array[String] = ["ship.ward", "ship.gnevny", "ship.argus"]
+	var custom_ship_ids: Array[String] = ["ship.ward", "ship.gnevny", "ship.hosho"]
 	var custom_result: Dictionary = flow.configure_custom_battle("level.prototype_3v3", "level.prototype_harbor_3v3", "clear_night", custom_ship_ids)
 	var custom_level: Dictionary = flow.runtime_level_definition("level.custom_runtime")
 	_check(custom_result.get("ok", false) and custom_level.get("player_fleet", []).size() == 3, "custom fleet selection builds a runtime level with the selected roster")

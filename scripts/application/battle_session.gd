@@ -51,6 +51,7 @@ var random_source
 var recorder := BattleRecorder.new()
 var state := {}
 var command_queue: Array = []
+var _player_command_sequence: int = 0
 var delayed_attacks: Array = []
 var terrain_query = TerrainQueryService.new()
 var terrain_collision_field_loader = TerrainCollisionFieldLoader.new()
@@ -240,6 +241,8 @@ func create_battle_from_definition(level_definition: Dictionary, seed_value: int
 	_build_fleet("fleet.player", PLAYER_FACTION, level.get("player_fleet", []))
 	_build_fleet("fleet.enemy", ENEMY_FACTION, level.get("enemy_fleet", []))
 	_initialize_reinforcements(level)
+	level_objective_service.refresh_challenge_progress(state)
+	state["level_objective"] = level_objective_service.snapshot()
 	if level_objective_service.is_tutorial():
 		var initial_control_state := level_objective_service.initial_player_control_state()
 		for unit_id in state["fleets_by_id"]["fleet.player"]["unit_ids"]:
@@ -265,8 +268,52 @@ func queue_command(command: Dictionary) -> Dictionary:
 	var rejection := _validate_command_structure(command)
 	if not rejection.is_empty():
 		return rejection
-	command_queue.append(command.duplicate(true))
-	return {"accepted": true}
+	if state.get("phase", "") not in ["Running", "Paused"]:
+		return _rejection(str(command.get("command_id", "")), "BATTLE_NOT_RUNNING")
+	var queued := command.duplicate(true)
+	queued.erase("_pause_sequence")
+	var staged: bool = state.get("phase", "") == "Paused" and str(command.get("issuer_type", "Player")) == "Player"
+	if staged:
+		_player_command_sequence += 1
+		queued["_pause_sequence"] = _player_command_sequence
+	command_queue.append(queued)
+	return {"accepted": true, "staged": staged, "command_id": command.get("command_id", "")}
+
+
+## A detached plan for UI inspection; acceptance is not execution success.
+func pending_player_commands() -> Array:
+	return command_queue.filter(func(command): return str(command.get("issuer_type", "Player")) == "Player" and str(command.get("issuer_id", "")) == PLAYER_FACTION).duplicate(true)
+
+
+func cancel_pending_player_command(command_id: String) -> Dictionary:
+	if state.get("phase", "") != "Paused":
+		return _rejection(command_id, "BATTLE_NOT_PAUSED")
+	for index in range(command_queue.size()):
+		var command: Dictionary = command_queue[index]
+		if str(command.get("command_id", "")) == command_id and str(command.get("issuer_type", "Player")) == "Player" and str(command.get("issuer_id", "")) == PLAYER_FACTION:
+			if str(command.get("command_type", "")) == "RecordTutorialAction" or command.has("primary_auto_fire_suspended"):
+				return _rejection(command_id, "INTERNAL_COMMAND_NOT_CANCELLABLE")
+			command_queue.remove_at(index)
+			return {"accepted": true}
+	return _rejection(command_id, "COMMAND_NOT_PENDING")
+
+
+## Preview only: never overwrite authoritative unit flags while time is frozen.
+func get_planned_control_state(unit_id: String) -> Dictionary:
+	var unit: Dictionary = state.get("units_by_id", {}).get(unit_id, {})
+	if unit.is_empty() or str(unit.get("faction_id", "")) != PLAYER_FACTION:
+		return {}
+	var result := {}
+	var fields := ["movement_assist_enabled", "secondary_auto_fire_enabled", "primary_auto_fire_enabled", "primary_auto_fire_suspended"]
+	for field in fields:
+		result[field] = bool(unit.get(field, false))
+	for command in pending_player_commands():
+		if str(command.get("command_type", "")) != "SetUnitControlState": continue
+		var ids: Array = command.get("unit_ids", [command.get("unit_id", "")])
+		if unit_id not in ids: continue
+		for field in fields:
+			if command.has(field): result[field] = bool(command[field])
+	return result
 
 
 func pause() -> Dictionary:
@@ -650,7 +697,7 @@ func get_operation_status(unit_id: String) -> Dictionary:
 		"primary_reload_max": primary_reload_max,
 		"primary_mount_launch_remaining": group_launch_remaining,
 		"primary_range": primary_range,
-		"primary_ready": primary_ready and primary_reason == "OK" and unit.get("life_state", "") == "Alive" and state.get("phase", "") == "Running",
+		"primary_ready": primary_ready and primary_reason == "OK" and unit.get("life_state", "") == "Alive" and state.get("phase", "") in ["Running", "Paused"],
 		"primary_reason": primary_reason,
 		"ammo_group_id": ammo_group_id,
 		"ammo_options": ammo_options,
@@ -658,7 +705,7 @@ func get_operation_status(unit_id: String) -> Dictionary:
 		"q_enabled": ammo_options.size() > 1,
 		"skill_id": unit["skill_state"].get("definition_id", ""),
 		"skill_cooldown": skill_cooldown,
-		"skill_ready": skill_cooldown <= 0.0 and unit.get("life_state", "") == "Alive" and state.get("phase", "") == "Running",
+		"skill_ready": skill_cooldown <= 0.0 and unit.get("life_state", "") == "Alive" and state.get("phase", "") in ["Running", "Paused"],
 		"movement_assist_enabled": bool(unit.get("movement_assist_enabled", false)),
 		"secondary_auto_fire_enabled": bool(unit.get("secondary_auto_fire_enabled", true)),
 		"primary_auto_fire_enabled": bool(unit.get("primary_auto_fire_enabled", false)),
@@ -669,7 +716,7 @@ func get_operation_status(unit_id: String) -> Dictionary:
 		"depth_hold_remaining": float(unit.get("depth_hold_remaining", 0.0)),
 		"oxygen_state": unit.get("oxygen_state", {}).duplicate(true),
 		"depth_change_target": depth_target,
-		"depth_change_available": is_submarine and depth_change_reason in ["OK", "SUBMARINE_DEPTH_UNCHANGED"] and unit.get("life_state", "") == "Alive" and state.get("phase", "") == "Running",
+		"depth_change_available": is_submarine and depth_change_reason in ["OK", "SUBMARINE_DEPTH_UNCHANGED"] and unit.get("life_state", "") == "Alive" and state.get("phase", "") in ["Running", "Paused"],
 		"depth_change_reason": depth_change_reason,
 		"player_route_waypoints": unit.get("player_route_waypoints", []).duplicate(true),
 		"player_route_remaining": _remaining_player_route(unit),
@@ -1068,6 +1115,13 @@ func _build_ammo_state(ship: Dictionary, initial_ammo_override: String = "") -> 
 
 func _process_commands() -> void:
 	command_queue.sort_custom(func(a, b):
+		# Paused plans execute in authored order, after already pending commands.
+		var staged_a := int(a.get("_pause_sequence", -1))
+		var staged_b := int(b.get("_pause_sequence", -1))
+		if staged_a >= 0 or staged_b >= 0:
+			if staged_a < 0: return true
+			if staged_b < 0: return false
+			return staged_a < staged_b
 		var tick_a := int(a.get("issued_at_tick", 0))
 		var tick_b := int(b.get("issued_at_tick", 0))
 		if tick_a != tick_b: return tick_a < tick_b
@@ -1079,17 +1133,40 @@ func _process_commands() -> void:
 	for command in pending:
 		var result := _apply_command(command)
 		if not result.get("accepted", false):
-			_emit("CommandRejected", {"command_id": command.get("command_id", ""), "command_type": command.get("command_type", ""), "reason_code": result.get("reason_code", "UNKNOWN"), "issuer_type": command.get("issuer_type", ""), "unit_id": command.get("unit_id", "")})
+			_emit("CommandRejected", {"command_id": command.get("command_id", ""), "command_type": command.get("command_type", ""), "reason_code": result.get("reason_code", "UNKNOWN"), "issuer_id": command.get("issuer_id", ""), "issuer_type": command.get("issuer_type", "Player"), "unit_id": command.get("unit_id", ""), "unit_ids": command.get("unit_ids", []), "successful_unit_ids": result.get("successful_unit_ids", []), "rejected_unit_ids": result.get("rejected_unit_ids", []), "internal": str(command.get("command_type", "")) == "RecordTutorialAction" or (str(command.get("command_type", "")) == "SetUnitControlState" and command.has("primary_auto_fire_suspended"))})
 
 
 func _apply_command(command: Dictionary) -> Dictionary:
 	if state["phase"] != "Running": return _rejection(command.get("command_id", ""), "BATTLE_NOT_RUNNING")
 	if command.get("command_type", "") == "RecordTutorialAction":
+		if str(command.get("action_id", "")) not in ["SelectTutorialUnit", "EnableCameraFollow"]:
+			return _rejection(command.get("command_id", ""), "TUTORIAL_ACTION_NOT_REQUIRED")
 		return _record_tutorial_action(str(command.get("action_id", "")), str(command.get("unit_id", "")))
 	if str(command.get("issuer_id", PLAYER_FACTION)) == PLAYER_FACTION and str(command.get("issuer_type", "Player")) in ["Player", "SimulationPolicy"] and str(command.get("command_type", "")) in level_objective_service.locked_player_commands():
 		return _rejection(command.get("command_id", ""), "TUTORIAL_ACTION_LOCKED")
 	if command.get("command_type", "") == "SetUnitControlState":
 		return _set_unit_control_state(command)
+	if str(command.get("command_type", "")) in ["FocusTarget", "MoveUnits"] and command.has("unit_ids"):
+		var successful_ids: Array = []
+		var rejected_ids: Array = []
+		var first_reason := ""
+		var seen := {}
+		for requested_id in command.get("unit_ids", []):
+			var requested := str(requested_id)
+			if seen.has(requested): continue
+			seen[requested] = true
+			var individual := command.duplicate(true)
+			individual.erase("unit_ids")
+			individual["unit_id"] = requested
+			var individual_result := _apply_command(individual)
+			if bool(individual_result.get("accepted", false)):
+				successful_ids.append(requested)
+			else:
+				rejected_ids.append(requested)
+				if first_reason.is_empty(): first_reason = str(individual_result.get("reason_code", "UNKNOWN"))
+		if str(command.get("command_type", "")) == "FocusTarget" and successful_ids.size() >= 2 and _is_player_tutorial_command(command):
+			_record_tutorial_action("GroupFocusTarget", "", {"target_unit_id": command.get("target_unit_id", ""), "group_order_id": command.get("group_order_id", ""), "group_unit_ids": successful_ids})
+		return {"accepted": not successful_ids.is_empty() and rejected_ids.is_empty(), "successful_unit_ids": successful_ids, "rejected_unit_ids": rejected_ids, "reason_code": first_reason if not first_reason.is_empty() else ("OK" if not successful_ids.is_empty() else "INVALID_COMMAND_STRUCTURE")}
 	var unit_id := str(command.get("unit_id", ""))
 	var unit: Dictionary = state["units_by_id"].get(unit_id, {})
 	if unit.is_empty(): return _rejection(command.get("command_id", ""), "UNIT_NOT_FOUND")
@@ -1145,6 +1222,8 @@ func _apply_command(command: Dictionary) -> Dictionary:
 			unit["targeting_state"]["mode"] = "Focused"
 			unit["targeting_state"]["focused_target_id"] = target_id
 			_emit("FocusTargetChanged", {"unit_id": unit_id, "old_target_id": old_target, "new_target_id": target_id})
+			if _is_player_tutorial_command(command):
+				_record_tutorial_action("FocusPriorityTarget", unit_id, {"target_unit_id":target_id})
 			return {"accepted": true}
 		"ClearFocusTarget":
 			unit["targeting_state"]["mode"] = "Automatic"
@@ -1165,9 +1244,13 @@ func _apply_command(command: Dictionary) -> Dictionary:
 				return _rejection(command.get("command_id", ""), "AUTO_FIRE_DISABLED")
 			var target_position = command.get("target_position")
 			if typeof(target_position) != TYPE_VECTOR2: return _rejection(command.get("command_id", ""), "INVALID_TARGET_TYPE")
+			var tutorial_fire_facts := {"weapon_group_id":str(unit.get("stats", {}).get("primary_weapon_group_id", "")), "ammo_type":str(unit.get("ammo_state", {}).get(str(unit.get("stats", {}).get("ammo_selection_group_id", "")), "")), "active_skill_ids":[]}
+			for effect in _active_status_effects(unit):
+				if bool(effect.get("consume_on_fire", false)) and str(effect.get("consume_weapon_group_id", "")) == str(tutorial_fire_facts["weapon_group_id"]):
+					tutorial_fire_facts["active_skill_ids"].append(str(effect.get("status_id", "")))
 			var fire_result := _fire_primary_weapon(unit, target_position, command.get("command_id", ""), str(command.get("weapon_state_instance_id", "")))
 			if bool(fire_result.get("accepted", false)) and _is_player_tutorial_command(command):
-				_record_tutorial_action("ManualPrimaryFire", unit_id, {"weapon_group_id": str(unit.get("stats", {}).get("primary_weapon_group_id", ""))})
+				_record_tutorial_action("ManualPrimaryFire", unit_id, tutorial_fire_facts)
 			return fire_result
 		"DeclareFacilityControl":
 			var facility_result := facility_service.declare_control(str(command.get("facility_id", "")), unit)
@@ -6076,7 +6159,7 @@ func _ammo_options_for_ship(ship: Dictionary, ammo_group_id: String) -> Array[St
 
 
 func _primary_unavailable_reason(unit: Dictionary, primary_states: Array) -> String:
-	if state.get("phase", "") != "Running": return "BATTLE_NOT_RUNNING"
+	if state.get("phase", "") not in ["Running", "Paused"]: return "BATTLE_NOT_RUNNING"
 	if unit.get("life_state", "") != "Alive": return "UNIT_SUNK"
 	if primary_states.is_empty(): return "PRIMARY_WEAPON_UNAVAILABLE"
 	if primary_states.all(func(weapon_state): return not bool(weapon_state.get("enabled", true))): return "WEAPON_GROUP_DISABLED"
@@ -6097,7 +6180,7 @@ func _primary_unavailable_reason(unit: Dictionary, primary_states: Array) -> Str
 
 
 func _validate_primary_fire(unit: Dictionary, weapon_states: Array, target_position: Vector2) -> Dictionary:
-	if state.get("phase", "") != "Running": return {"legal": false, "reason_code": "BATTLE_NOT_RUNNING", "legal_weapon_states": []}
+	if state.get("phase", "") not in ["Running", "Paused"]: return {"legal": false, "reason_code": "BATTLE_NOT_RUNNING", "legal_weapon_states": []}
 	if unit.get("life_state", "") != "Alive": return {"legal": false, "reason_code": "UNIT_SUNK", "legal_weapon_states": []}
 	if weapon_states.is_empty(): return {"legal": false, "reason_code": "PRIMARY_WEAPON_UNAVAILABLE", "legal_weapon_states": []}
 	var primary_group_id := str(unit.get("stats", {}).get("primary_weapon_group_id", ""))

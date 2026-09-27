@@ -2,6 +2,11 @@ extends Control
 
 signal return_to_menu_requested
 signal restart_requested
+signal resume_requested
+signal pending_cancel_requested(command_id: String)
+signal unit_pressed(unit_id: String, additive: bool)
+signal action_pressed(key: String)
+signal retry_save_requested
 
 const UiText = preload("res://scripts/presentation/ui_text.gd")
 const PANEL_FILL := Color(0.93, 0.98, 1.0, 0.88)
@@ -23,10 +28,23 @@ var player_slots: Array = []
 var texture_cache: Dictionary = {}
 var return_button: Button
 var restart_button: Button
+var pause_panel: PanelContainer
+var pending_rows: VBoxContainer
+var pending_signature := ""
+var pause_confirmation: ConfirmationDialog
+var pause_confirmation_action := ""
+var interaction_controls: Array[Control] = []
+var retry_save_button: Button
+var mission_detail_button: Button
+var mission_details_open := false
+var objective_panel: PanelContainer
+var objective_label: Label
 
 
 func _ready() -> void:
 	_create_result_buttons()
+	_create_pause_controls()
+	_create_interaction_controls()
 
 
 func update_state(new_snapshot: Dictionary, new_level_id: String, messages: Array[String], new_camera_mode: String, new_selected_name: String, new_palette_id: String, new_operation_status: Dictionary = {}, new_operation_mode: String = "NORMAL", new_player_slots: Array = []) -> void:
@@ -40,6 +58,8 @@ func update_state(new_snapshot: Dictionary, new_level_id: String, messages: Arra
 	operation_mode = new_operation_mode
 	player_slots = new_player_slots.duplicate(true)
 	_sync_result_buttons()
+	_sync_pause_controls()
+	_sync_interaction_controls()
 	queue_redraw()
 
 
@@ -54,8 +74,11 @@ func _draw() -> void:
 	_draw_minimap(Rect2(Vector2(28.0, viewport_size.y - 266.0), Vector2(330.0, 226.0)))
 	_draw_log_panel(Rect2(Vector2(viewport_size.x - 380.0, 206.0), Vector2(352.0, 300.0)))
 	_draw_selected_panel(Rect2(Vector2(viewport_size.x - 380.0, viewport_size.y - 286.0), Vector2(352.0, 246.0)))
-	if snapshot.get("phase", "") == "Paused":
-		_draw_pause_panel(viewport_size)
+	var feedback: Dictionary = snapshot.get("command_feedback", {})
+	if not feedback.is_empty():
+		var feedback_rect := Rect2(Vector2((viewport_size.x - 900.0) * 0.5, viewport_size.y - 186.0), Vector2(900.0, 28.0))
+		draw_rect(feedback_rect, Color(0.06, 0.15, 0.2, 0.88))
+		draw_string(ThemeDB.fallback_font, feedback_rect.position + Vector2(12.0, 20.0), str(feedback.get("text", "")), HORIZONTAL_ALIGNMENT_LEFT, 876.0, 16, Color("#ffe1a0"))
 	if not snapshot.get("result", {}).is_empty():
 		_draw_result_panel(viewport_size)
 
@@ -70,23 +93,8 @@ func _draw_top_status(viewport_size: Vector2) -> void:
 	_draw_icon("ui_icon_pause" if phase == "Running" else "ui_icon_continue", Rect2(panel.position + Vector2(panel.size.x - 58.0, 18.0), Vector2(36.0, 36.0)))
 
 
-func _draw_level_objective(viewport_size: Vector2) -> void:
-	var objective: Dictionary = snapshot.get("level_objective", {})
-	if objective.is_empty(): return
-	var tutorial := bool(objective.get("is_tutorial", false))
-	var panel_height := 82.0 if tutorial else 54.0
-	var panel := Rect2(Vector2((viewport_size.x - 620.0) * 0.5, 100.0), Vector2(620.0, panel_height))
-	_draw_panel(panel, "")
-	var status := str(objective.get("status", "Active"))
-	var prefix := "教学" if tutorial else "任务"
-	var text := "%s · %s：%s" % [prefix, objective.get("title", ""), objective.get("summary", "")]
-	draw_string(ThemeDB.fallback_font, panel.position + Vector2(18.0, 34.0), text, HORIZONTAL_ALIGNMENT_LEFT, panel.size.x - 36.0, 17, TEXT_DARK if status == "Active" else Color("#35c99a"))
-	if tutorial:
-		var instruction := "当前操作：%s" % objective.get("instruction", "")
-		draw_string(ThemeDB.fallback_font, panel.position + Vector2(18.0, 59.0), instruction, HORIZONTAL_ALIGNMENT_LEFT, panel.size.x - 36.0, 16, Color("#225f73"))
-		var limit_text := str(objective.get("ability_limit_text", ""))
-		if not limit_text.is_empty():
-			draw_string(ThemeDB.fallback_font, panel.position + Vector2(18.0, 78.0), limit_text, HORIZONTAL_ALIGNMENT_LEFT, panel.size.x - 36.0, 13, TEXT_SOFT)
+func _draw_level_objective(_viewport_size: Vector2) -> void:
+	pass # Wrapped Control content is synchronized with the snapshot.
 
 
 func _draw_fleet_panel(rect: Rect2, friendly: bool) -> void:
@@ -105,7 +113,7 @@ func _draw_fleet_panel(rect: Rect2, friendly: bool) -> void:
 
 func _draw_roster_cell(rect: Rect2, entry: Dictionary, slot_number: int, friendly: bool) -> void:
 	var alive := str(entry.get("life_state", "Alive")) != "Sunk"
-	var selected := str(entry.get("unit_id", entry.get("entity_id", ""))) == str(snapshot.get("selected_unit_id", ""))
+	var selected: bool = str(entry.get("unit_id", entry.get("entity_id", ""))) in snapshot.get("selected_unit_ids", [snapshot.get("selected_unit_id", "")])
 	var base := Color(0.82, 0.94, 0.98, 0.92) if friendly else Color(0.98, 0.86, 0.84, 0.9)
 	if entry.is_empty(): base = Color(0.17, 0.27, 0.33, 0.52)
 	if selected: base = Color(1.0, 0.94, 0.48, 0.95)
@@ -129,7 +137,7 @@ func _draw_roster_cell(rect: Rect2, entry: Dictionary, slot_number: int, friendl
 
 func _draw_operation_dock(rect: Rect2) -> void:
 	_draw_panel(rect, "")
-	var title := "选中：%s  |  镜头：%s  |  操作：%s  |  海域：%s" % [selected_name, UiText.camera_mode_name(camera_mode), UiText.operation_mode_name(operation_mode), UiText.palette_name(palette_id)]
+	var title := "主焦点：%s（%d 艘） | 单舰技能/武器 | %s" % [selected_name, snapshot.get("selected_unit_ids", []).size(), UiText.operation_mode_name(operation_mode)]
 	draw_string(ThemeDB.fallback_font, rect.position + Vector2(22.0, 24.0), title, HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 44.0, 17, TEXT_DARK)
 	var cards := [
 		{"key": "E", "icon": "ui_icon_gunfire", "text": _primary_text(), "ready": bool(operation_status.get("primary_ready", false))},
@@ -347,12 +355,107 @@ func _draw_facility_panel(rect: Rect2, facility: Dictionary) -> void:
 
 
 func _draw_pause_panel(viewport_size: Vector2) -> void:
-	var rect := Rect2((viewport_size - Vector2(420.0, 112.0)) * 0.5, Vector2(420.0, 112.0))
-	draw_rect(Rect2(Vector2.ZERO, viewport_size), Color(0.0, 0.06, 0.1, 0.24), true)
-	_draw_panel(rect, "")
-	_draw_icon("ui_icon_pause", Rect2(rect.position + Vector2(30.0, 34.0), Vector2(44.0, 44.0)))
-	draw_string(ThemeDB.fallback_font, rect.position + Vector2(92.0, 60.0), "战斗已暂停", HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 120.0, 28, TEXT_DARK)
-	draw_string(ThemeDB.fallback_font, rect.position + Vector2(92.0, 86.0), "按空格键继续战斗。", HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 120.0, 16, TEXT_SOFT)
+	# Kept as an empty compatibility hook; actual controls leave the sea interactive.
+	pass
+
+
+func _create_pause_controls() -> void:
+	pause_panel = PanelContainer.new()
+	pause_panel.name = "TacticalPauseToolbar"
+	pause_panel.position = Vector2(28.0, 174.0)
+	pause_panel.custom_minimum_size = Vector2(330.0, 0.0)
+	pause_panel.mouse_filter = Control.MOUSE_FILTER_STOP
+	add_child(pause_panel)
+	var column := VBoxContainer.new()
+	pause_panel.add_child(column)
+	var title := Label.new()
+	title.text = "战术暂停 · 指令恢复后执行"
+	column.add_child(title)
+	var buttons := HBoxContainer.new()
+	column.add_child(buttons)
+	for action in ["继续", "重新开始", "退出战斗"]:
+		var button := Button.new()
+		button.text = action
+		button.focus_mode = Control.FOCUS_NONE
+		button.custom_minimum_size = Vector2(104.0, 34.0)
+		button.pressed.connect(_pause_action.bind(action))
+		buttons.add_child(button)
+	var hint := Label.new()
+	hint.text = "可继续操作 · 待执行计划可逐条撤销"
+	column.add_child(hint)
+	var scroll := ScrollContainer.new()
+	scroll.custom_minimum_size = Vector2(330.0, 156.0)
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	column.add_child(scroll)
+	pending_rows = VBoxContainer.new()
+	pending_rows.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	scroll.add_child(pending_rows)
+	pause_confirmation = ConfirmationDialog.new()
+	pause_confirmation.title = "确认离开当前战斗"
+	pause_confirmation.ok_button_text = "确认"
+	pause_confirmation.cancel_button_text = "取消"
+	pause_confirmation.confirmed.connect(func():
+		if pause_confirmation_action == "重新开始": restart_requested.emit()
+		else: return_to_menu_requested.emit())
+	add_child(pause_confirmation)
+
+
+func _pause_action(action: String) -> void:
+	if action == "继续":
+		resume_requested.emit()
+		return
+	pause_confirmation_action = action
+	pause_confirmation.dialog_text = "%s？当前对局和待执行指令将丢弃。" % action
+	pause_confirmation.popup_centered(Vector2i(410, 130))
+
+
+func _sync_pause_controls() -> void:
+	if pause_panel == null: return
+	pause_panel.visible = snapshot.get("phase", "") == "Paused"
+	if not pause_panel.visible:
+		pause_confirmation.hide()
+		return
+	var pending: Array = snapshot.get("pending_player_commands", []).filter(func(command): return command.get("command_type", "") != "RecordTutorialAction" and not command.has("primary_auto_fire_suspended"))
+	var signature := str(pending)
+	if signature == pending_signature: return
+	pending_signature = signature
+	for child in pending_rows.get_children():
+		pending_rows.remove_child(child)
+		child.queue_free()
+	if pending.is_empty():
+		var empty := Label.new()
+		empty.text = "暂无待执行指令"
+		pending_rows.add_child(empty)
+	for command in pending:
+		var row := HBoxContainer.new()
+		pending_rows.add_child(row)
+		var label := Label.new()
+		var unit: Dictionary = snapshot.get("units", {}).get(str(command.get("unit_id", "")), {})
+		label.text = "%s · %s" % [str(unit.get("display_name", "编队")), _pending_command_text(command)]
+		label.tooltip_text = label.text
+		label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		label.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+		label.custom_minimum_size.x = 240.0
+		row.add_child(label)
+		var cancel := Button.new()
+		cancel.text = "撤销"
+		cancel.focus_mode = Control.FOCUS_NONE
+		cancel.pressed.connect(func(): pending_cancel_requested.emit(str(command.get("command_id", ""))))
+		row.add_child(cancel)
+
+
+func _pending_command_text(command: Dictionary) -> String:
+	var text := preload("res://scripts/presentation/battle/player_command_feedback.gd").command_name(str(command.get("command_type", "")))
+	for field in ["movement_assist_enabled", "secondary_auto_fire_enabled", "primary_auto_fire_enabled"]:
+		if command.has(field):
+			var label: String = {"movement_assist_enabled": "航行辅助", "secondary_auto_fire_enabled": "副武器自动", "primary_auto_fire_enabled": "主武器自动"}[field]
+			return "%s%s" % [label, "开" if bool(command[field]) else "关"]
+	if command.has("target_depth_state"):
+		return "上浮" if command["target_depth_state"] == "Surface" else "下潜"
+	if command.has("target_position") and typeof(command["target_position"]) == TYPE_VECTOR2:
+		var point: Vector2 = command["target_position"]
+		return "%s (%d, %d)" % [text, point.x, point.y]
+	return text
 
 
 func _draw_result_panel(viewport_size: Vector2) -> void:
@@ -360,33 +463,31 @@ func _draw_result_panel(viewport_size: Vector2) -> void:
 	draw_rect(Rect2(Vector2.ZERO, viewport_size), Color(0.0, 0.06, 0.1, 0.34), true)
 	_draw_panel(rect, "")
 	var result: Dictionary = snapshot["result"]
-	var player_won := str(result.get("winner_faction", "")) == "player"
-	var title := "胜利" if player_won else "失败"
-	var subtitle := "敌方旗舰已经失去作战能力。" if player_won else "己方旗舰失去作战能力。"
-	if str(result.get("reason", "")) == "TIME_LIMIT":
-		subtitle = "时间耗尽，按双方剩余总耐久比例判定。"
-	elif str(result.get("reason", "")) == "LEVEL_TECHNICAL_LIMIT":
-		title = "本局无效"
-		subtitle = "达到技术保护上限；本局不判定任务胜负，也不写入进度。"
+	var result_view := preload("res://scripts/presentation/battle/battle_result_presentation.gd").describe(result)
+	var title := str(result_view.get("title", "本局无效"))
+	var subtitle := str(result_view.get("subtitle", ""))
 	var reason_summary := str(result.get("reason_summary", ""))
-	if not reason_summary.is_empty(): subtitle = reason_summary
 	_draw_result_character(Rect2(rect.position + Vector2(34.0, 28.0), Vector2(400.0, 548.0)))
 	draw_string(ThemeDB.fallback_font, rect.position + Vector2(470.0, 92.0), title, HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 520.0, 54, TEXT_DARK)
-	draw_rect(Rect2(rect.position + Vector2(472.0, 112.0), Vector2(132.0, 5.0)), Color("#70db84") if player_won else Color("#ff9a8c"), true)
+	draw_rect(Rect2(rect.position + Vector2(472.0, 112.0), Vector2(132.0, 5.0)), result_view.get("color", TEXT_SOFT), true)
 	draw_string(ThemeDB.fallback_font, rect.position + Vector2(472.0, 156.0), subtitle, HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 520.0, 22, TEXT_SOFT)
 	var duration := _format_duration(float(result.get("elapsed_time", snapshot.get("elapsed_time", 0.0))))
 	var rows := [
 		"战斗模式：%s" % UiText.mode_name(level_id),
 		"战斗时长：%s" % duration,
 		"结算类型：%s" % UiText.result_reason_name(str(result.get("reason", ""))),
-		"胜利阵营：%s" % UiText.faction_name(str(result.get("winner_faction", ""))),
+		"获胜方：%s" % ("无（平局）" if result_view.get("kind") == "Draw" else ("不适用（无效）" if result_view.get("kind") == "Invalid" else UiText.faction_name(str(result.get("winner_faction", ""))))),
 	]
 	if not reason_summary.is_empty(): rows.insert(3, "具体原因：%s" % reason_summary)
 	var y := rect.position.y + 228.0
 	for row in rows:
 		draw_string(ThemeDB.fallback_font, Vector2(rect.position.x + 474.0, y), row, HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 540.0, 22, TEXT_DARK)
 		y += 42.0
-	draw_string(ThemeDB.fallback_font, rect.position + Vector2(474.0, 438.0), "复盘提示：留意主要武器待发时间、集火目标和旗舰位置。", HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 540.0, 18, TEXT_SOFT)
+	draw_string(ThemeDB.fallback_font, rect.position + Vector2(474.0, 438.0), "复盘：主要武器时机 · 集火目标 · 旗舰位置", HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 510.0, 17, TEXT_SOFT)
+	var save: Dictionary = snapshot.get("progress_save_state", {})
+	var save_failed := str(save.get("status", "")) == "Failed"
+	var save_text := "进度未保存；奖励暂留本会话，请重试后再退出。" if save_failed else str(save.get("message", ""))
+	draw_string(ThemeDB.fallback_font, rect.position + Vector2(474.0, 464.0), save_text, HORIZONTAL_ALIGNMENT_LEFT, 480.0, 16, Color("#a04e32") if save_failed else TEXT_SOFT)
 
 
 func _draw_panel(rect: Rect2, title: String) -> void:
@@ -576,3 +677,109 @@ func _format_duration(seconds: float) -> String:
 	var minutes := int(total_seconds / 60)
 	var remainder := total_seconds % 60
 	return "%02d:%02d" % [minutes, remainder]
+
+
+func _make_hit_button() -> Button:
+	var button := Button.new()
+	button.flat = true
+	button.focus_mode = Control.FOCUS_NONE
+	button.mouse_filter = Control.MOUSE_FILTER_STOP
+	var clear := StyleBoxEmpty.new()
+	button.add_theme_stylebox_override("normal", clear)
+	var hover := StyleBoxFlat.new()
+	hover.bg_color = Color(0.7, 0.95, 1.0, 0.15)
+	button.add_theme_stylebox_override("hover", hover)
+	add_child(button)
+	interaction_controls.append(button)
+	return button
+
+
+func _create_interaction_controls() -> void:
+	# Transparent real controls preserve the existing art while owning GUI input.
+	for index in range(24):
+		var button := _make_hit_button()
+		button.name = "RosterHit%d" % index
+		button.pressed.connect(_roster_pressed.bind(index))
+	for key in ["E", "Q", "F", "G", "Z", "X", "C", "V"]:
+		var button := _make_hit_button()
+		button.name = "ActionHit%s" % key
+		button.tooltip_text = "%s · 主焦点舰操作" % key
+		button.pressed.connect(func(): action_pressed.emit(key))
+	retry_save_button = Button.new()
+	retry_save_button.text = "重试保存"
+	retry_save_button.focus_mode = Control.FOCUS_NONE
+	retry_save_button.pressed.connect(func(): retry_save_requested.emit())
+	add_child(retry_save_button)
+	mission_detail_button = Button.new()
+	mission_detail_button.text = "任务详情"
+	mission_detail_button.focus_mode = Control.FOCUS_NONE
+	mission_detail_button.pressed.connect(func(): mission_details_open = not mission_details_open; queue_redraw())
+	objective_panel = PanelContainer.new()
+	objective_panel.name = "ObjectivePanel"
+	objective_panel.mouse_filter = Control.MOUSE_FILTER_STOP
+	var style := StyleBoxFlat.new()
+	style.bg_color = PANEL_FILL
+	style.content_margin_left = 14.0
+	style.content_margin_right = 14.0
+	style.content_margin_top = 10.0
+	style.content_margin_bottom = 10.0
+	objective_panel.add_theme_stylebox_override("panel", style)
+	add_child(objective_panel)
+	var column := VBoxContainer.new()
+	objective_panel.add_child(column)
+	objective_label = Label.new()
+	objective_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	objective_label.add_theme_color_override("font_color", TEXT_DARK)
+	objective_label.add_theme_font_size_override("font_size", 16)
+	column.add_child(objective_label)
+	column.add_child(mission_detail_button)
+
+
+func _roster_pressed(index: int) -> void:
+	var entries: Array = _friendly_entries() if index < 12 else _enemy_entries()
+	var slot := index % 12
+	if slot >= entries.size(): return
+	var entry: Dictionary = entries[slot]
+	unit_pressed.emit(str(entry.get("unit_id", entry.get("entity_id", ""))), Input.is_key_pressed(KEY_SHIFT))
+
+
+func _sync_interaction_controls() -> void:
+	var active: bool = snapshot.get("result", {}).is_empty()
+	for index in range(interaction_controls.size()):
+		var button := interaction_controls[index]
+		button.visible = active
+		if index < 24:
+			var slot := index % 12
+			var origin := Vector2(44.0 if index < 12 else size.x - 608.0, 54.0)
+			button.position = origin + Vector2((slot % 6) * 96.0, int(slot / 6) * 54.0)
+			button.size = Vector2(88.0, 44.0)
+		else:
+			var slot := index - 24
+			button.position = Vector2((size.x - 900.0) * 0.5 + 22.0 + (slot % 4) * 214.0, size.y - 116.0 + int(slot / 4) * 42.0)
+			button.size = Vector2(198.0, 36.0)
+	var save: Dictionary = snapshot.get("progress_save_state", {})
+	retry_save_button.visible = not active and bool(save.get("can_retry", false))
+	retry_save_button.position = (size - Vector2(980.0, 620.0)) * 0.5 + Vector2(474.0, 476.0)
+	retry_save_button.size = Vector2(150.0, 32.0)
+	mission_detail_button.visible = active and not snapshot.get("level_objective", {}).get("mission_steps", []).is_empty()
+	objective_panel.visible = active and not snapshot.get("level_objective", {}).is_empty()
+	# Below both fleet rows; leave side toolbars free even at narrower viewports.
+	var objective_width := minf(620.0, maxf(260.0, size.x - 760.0))
+	objective_panel.position = Vector2((size.x - objective_width) * 0.5, 174.0)
+	objective_panel.size = Vector2(objective_width, 0.0)
+	var objective: Dictionary = snapshot.get("level_objective", {})
+	var lines: Array[String] = ["%s：%s" % [objective.get("title", "任务"), objective.get("summary", "")]]
+	if bool(objective.get("is_tutorial", false)):
+		lines.append("当前操作：%s" % objective.get("instruction", ""))
+		if not str(objective.get("ability_limit_text", "")).is_empty(): lines.append(str(objective["ability_limit_text"]))
+	else:
+		var steps: Array = objective.get("mission_steps", [])
+		var completed: int = steps.filter(func(step): return bool(step.get("completed", false))).size()
+		lines.append("目标 %d/%d" % [completed, steps.size()])
+		if mission_details_open:
+			for step in steps: lines.append(("✓ " if bool(step.get("completed", false)) else "○ ") + str(step.get("label", "")))
+			for line in objective.get("protection_lines", []): lines.append(str(line))
+			for field in ["reinforcement_hint", "optional_mastery"]:
+				if not str(objective.get(field, "")).is_empty(): lines.append(str(objective[field]))
+	objective_label.text = "\n".join(lines)
+	mission_detail_button.text = "收起任务详情" if mission_details_open else "任务详情 · 保护 / 增援 / 精通"

@@ -2,6 +2,7 @@ extends RefCounted
 
 const CHARACTER_ROOT := "res://assets/characters"
 const UI_MANIFEST_PATH := "res://assets/ui/qa/ui_asset_manifest.json"
+const MINIMAP_MANIFEST_PATH := "res://assets/ui/processed/battle/terrain/terrain_minimap_manifest.json"
 const COMBAT_VFX_MANIFEST_PATH := "res://assets/vfx/combat/qa/combat_vfx_asset_manifest.json"
 const VISUAL_CONFIG_ROOT := "res://data/visuals"
 const ENVIRONMENT_MANIFEST_PATHS := [
@@ -34,6 +35,7 @@ const UI_SEMANTIC_PREFIXES := {
 var characters := {}
 var ui_assets := {}
 var ui_aliases := {}
+var minimap_assets := {}
 var combat_vfx_assets := {}
 var environment_assets := {}
 var projectile_visuals := {}
@@ -46,6 +48,7 @@ func load_all() -> bool:
 	characters.clear()
 	ui_assets.clear()
 	ui_aliases.clear()
+	minimap_assets.clear()
 	combat_vfx_assets.clear()
 	environment_assets.clear()
 	projectile_visuals.clear()
@@ -54,6 +57,7 @@ func load_all() -> bool:
 	errors.clear()
 	_load_characters()
 	_load_ui_assets()
+	_load_minimap_assets()
 	_load_combat_vfx_assets()
 	_load_environment_assets()
 	_load_visual_configs()
@@ -143,6 +147,34 @@ func ui_asset_path(asset_key: String, scale := "processed") -> String:
 	return ""
 
 
+func character_ui_asset_path(character_id: String, semantic_name: String) -> String:
+	return str(characters.get(character_id, {}).get("ui_assets", {}).get(semantic_name, ""))
+
+
+func minimap_asset_path(terrain_definition_id: String) -> String:
+	return str(minimap_assets.get(terrain_definition_id, ""))
+
+
+func _load_minimap_assets() -> void:
+	var manifest := _read_json(MINIMAP_MANIFEST_PATH)
+	if typeof(manifest.get("masks")) != TYPE_ARRAY:
+		errors.append("Missing or invalid minimap manifest: %s" % MINIMAP_MANIFEST_PATH)
+		return
+	for raw_mask in manifest["masks"]:
+		if typeof(raw_mask) != TYPE_DICTIONARY:
+			errors.append("Non-object minimap mask in manifest")
+			continue
+		var terrain_id := str(raw_mask.get("terrain_definition_id", ""))
+		var path := _to_res_path(str(raw_mask.get("path", "")))
+		if terrain_id.is_empty() or not path.begins_with("res://assets/ui/processed/battle/terrain/") or not ResourceLoader.exists(path):
+			errors.append("Invalid minimap mask: %s -> %s" % [terrain_id, path])
+			continue
+		if minimap_assets.has(terrain_id):
+			errors.append("Duplicate minimap terrain id: %s" % terrain_id)
+			continue
+		minimap_assets[terrain_id] = path
+
+
 func ui_asset(asset_key: String) -> Dictionary:
 	var canonical := str(ui_aliases.get(asset_key, asset_key))
 	return ui_assets.get(canonical, {}).duplicate(true)
@@ -221,8 +253,21 @@ func _load_character(character_id: String) -> void:
 		"battle_assets": battle_assets,
 		"ui_assets": _scan_named_assets("%s/ui" % root, "%s_" % character_id),
 		"anim_assets": _scan_named_assets("%s/anim" % root, "%s_anim_" % character_id),
-		"vfx_assets": _scan_named_assets("%s/vfx" % root, "%s_vfx_" % character_id),
+		"vfx_assets": _scan_named_assets("%s/vfx" % root, "%s_vfx_" % character_id, not _uses_only_shared_vfx(configs.get("vfx", {}))),
 	}
+
+
+func _uses_only_shared_vfx(config: Dictionary) -> bool:
+	var roles: Variant = config.get("roles", {})
+	if typeof(roles) != TYPE_DICTIONARY or roles.is_empty():
+		return false
+	for role in roles.values():
+		if typeof(role) != TYPE_DICTIONARY:
+			return false
+		var path := _to_res_path(str(role.get("file", "")))
+		if not path.begins_with("res://assets/vfx/combat/") or not ResourceLoader.exists(path):
+			return false
+	return true
 
 
 func _validate_heading_offsets(character_id: String, bind_point_config: Dictionary, battle_assets: Dictionary) -> void:
@@ -251,11 +296,12 @@ func _validate_heading_offsets(character_id: String, bind_point_config: Dictiona
 			errors.append("Invalid heading offset for %s:%s: expected finite number in [-180, 180]" % [character_id, asset_name])
 
 
-func _scan_named_assets(directory_path: String, prefix: String) -> Dictionary:
+func _scan_named_assets(directory_path: String, prefix: String, required := true) -> Dictionary:
 	var result := {}
 	var directory := DirAccess.open(directory_path)
 	if directory == null:
-		errors.append("Missing runtime asset directory: %s" % directory_path)
+		if required:
+			errors.append("Missing runtime asset directory: %s" % directory_path)
 		return result
 	directory.list_dir_begin()
 	var file_name := directory.get_next()

@@ -4,7 +4,6 @@ signal return_to_menu_requested
 signal restart_requested
 
 const UiText = preload("res://scripts/presentation/ui_text.gd")
-const UI_ASSET_ROOT := "res://assets/ui/export/2x"
 const PANEL_FILL := Color(0.93, 0.98, 1.0, 0.88)
 const PANEL_STROKE := Color(0.48, 0.82, 0.95, 0.62)
 const TEXT_DARK := Color("#123443")
@@ -211,7 +210,7 @@ func _draw_minimap_terrain(map_rect: Rect2, map_data: Dictionary) -> void:
 	var terrain_id := str(snapshot.get("terrain_map", {}).get("id", ""))
 	if terrain_id.is_empty():
 		return
-	var path := "res://assets/ui/processed/battle/terrain/minimap_%s.png" % terrain_id.replace(".", "_")
+	var path := DataRegistry.assets.minimap_asset_path(terrain_id)
 	var texture := _texture(path)
 	if texture != null:
 		draw_texture_rect(texture, map_rect, false, Color(1.0, 1.0, 1.0, 0.9))
@@ -414,7 +413,7 @@ func _draw_portrait(entry: Dictionary, rect: Rect2, modulate: Color = Color.WHIT
 
 
 func _draw_icon(icon_name: String, rect: Rect2, modulate: Color = Color.WHITE) -> void:
-	var texture := _texture("%s/%s.png" % [UI_ASSET_ROOT, icon_name])
+	var texture := _texture(DataRegistry.assets.ui_asset_path(icon_name, "2x"))
 	if texture == null: return
 	draw_texture_rect(texture, rect, false, modulate)
 
@@ -517,13 +516,13 @@ func _portrait_texture(entry: Dictionary) -> Texture2D:
 	var definition_id := str(entry.get("definition_id", ""))
 	if definition_id.is_empty(): return null
 	var slug := definition_id.trim_prefix("ship.")
-	var asset_root := str(entry.get("asset_root", "res://assets/characters/%s/processed" % slug))
-	var small := _texture("%s/ui/%s_ui_portrait_small.png" % [asset_root, slug])
+	var small := _texture(DataRegistry.assets.character_ui_asset_path(slug, "ui_portrait_small"))
 	if small != null: return small
-	return _texture("%s/ui/%s_ui_portrait.png" % [asset_root, slug])
+	return _texture(DataRegistry.assets.character_ui_asset_path(slug, "ui_portrait"))
 
 
 func _texture(path: String) -> Texture2D:
+	if path.is_empty(): return null
 	if texture_cache.has(path): return texture_cache[path]
 	var resource := load(path)
 	texture_cache[path] = resource if resource is Texture2D else null
@@ -563,7 +562,7 @@ func _sync_result_buttons() -> void:
 
 func _draw_result_character(rect: Rect2) -> void:
 	var character_id := str(snapshot.get("result_character_id", "warspite"))
-	var texture := _texture("res://assets/characters/%s/processed/ui/%s_illust_full_alpha.png" % [character_id, character_id])
+	var texture := _texture(DataRegistry.assets.character_ui_asset_path(character_id, "illust_full_alpha"))
 	if texture == null:
 		return
 	var scale_value := minf(rect.size.x / texture.get_width(), rect.size.y / texture.get_height())

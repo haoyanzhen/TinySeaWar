@@ -11,7 +11,6 @@ const FIXED_STEP := 0.1
 const CAMERA_SPEED := 900.0
 const CAMERA_EDGE_MARGIN := 28.0
 const CAMERA_FOLLOW_DAMPING := 7.5
-const UI_ASSET_ROOT := "res://assets/ui/export/2x"
 const DEFAULT_UNIT_SCALE := 0.28
 const RANGE_AVAILABLE_FILL := Color(0.18, 1.0, 0.48, 0.13)
 const RANGE_AVAILABLE_EDGE := Color(0.28, 1.0, 0.55, 0.86)
@@ -256,7 +255,7 @@ func _draw_projectile(projectile: Dictionary) -> void:
 
 
 func _draw_icon_centered(icon_name: String, position: Vector2, scale_value: float = 1.0, modulate: Color = Color.WHITE) -> void:
-	var texture := _texture("%s/%s.png" % [UI_ASSET_ROOT, icon_name])
+	var texture := _texture(DataRegistry.assets.ui_asset_path(icon_name, "2x"))
 	if texture == null: return
 	_draw_texture_centered(texture, position, 0.0, scale_value, modulate)
 
@@ -271,10 +270,9 @@ func _unit_visuals(unit: Dictionary) -> Dictionary:
 	var definition_id := str(unit.get("definition_id", ""))
 	if unit_visual_cache.has(definition_id): return unit_visual_cache[definition_id]
 	var slug := definition_id.trim_prefix("ship.")
-	var asset_root := str(unit.get("asset_root", "res://assets/characters/%s/processed" % slug))
 	var visuals := {
-		"rig": _texture("%s/battle/%s_battle_rig_base.png" % [asset_root, slug]),
-		"body": _texture("%s/battle/%s_battle_body_r.png" % [asset_root, slug]),
+		"rig": _texture(DataRegistry.assets.battle_asset_path(slug, "rig_base")),
+		"body": _texture(DataRegistry.assets.battle_asset_path(slug, "body_r")),
 	}
 	unit_visual_cache[definition_id] = visuals
 	return visuals
@@ -308,6 +306,7 @@ func _world_ellipse_points(center: Vector2, extents: Vector2, heading: float, cl
 
 
 func _texture(path: String) -> Texture2D:
+	if path.is_empty(): return null
 	if texture_cache.has(path): return texture_cache[path]
 	var resource := load(path)
 	texture_cache[path] = resource if resource is Texture2D else null

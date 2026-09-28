@@ -335,6 +335,7 @@ func _texture(path: String) -> Texture2D:
 
 
 func _draw_operation_overlay() -> void:
+	if not battle_hud.battle_rect().has_point(get_viewport().get_mouse_position()): return
 	_draw_gun_scope_confirmation()
 	if selected_unit_id.is_empty(): return
 	var selected: Dictionary = session.state.get("units_by_id", {}).get(selected_unit_id, {})
@@ -601,12 +602,19 @@ func _draw_annular_sector(center: Vector2, inner_radius: float, outer_radius: fl
 func _input(event: InputEvent) -> void:
 	# Releasing a drag over GUI cancels it; GUI owns this release, never the sea.
 	if selection_drag_active and event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and not event.pressed:
-		if get_viewport().gui_get_hovered_control() != null:
+		if get_viewport().gui_get_hovered_control() != null or not battle_hud.battle_rect().has_point(event.position):
 			selection_drag_active = false
 
 
 func _unhandled_input(event: InputEvent) -> void:
 	if session == null: return
+	if event is InputEventMouseButton and not battle_hud.battle_rect().has_point(event.position):
+		if event.pressed and event.button_index == MOUSE_BUTTON_LEFT and operation_mode == OperationMode.NORMAL:
+			var facility := _minimap_facility_at(event.position, session.snapshot("player", false))
+			if not facility.is_empty():
+				selected_facility_id = str(facility.get("facility_id", ""))
+				_push_message("已选择设施：%s" % facility.get("display_name", selected_facility_id))
+		return
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and not event.pressed and selection_drag_active:
 		selection_drag_active = false
 		var view: Dictionary = session.snapshot("player", false)
@@ -655,12 +663,6 @@ func _unhandled_input(event: InputEvent) -> void:
 			_adjust_camera_zoom(1.0 / float(camera_settings.get("zoom_step", 1.0)), event.position)
 			return
 		var snapshot: Dictionary = session.snapshot("player", false)
-		if event.button_index == MOUSE_BUTTON_LEFT and operation_mode == OperationMode.NORMAL:
-			var minimap_facility: Dictionary = _minimap_facility_at(event.position, snapshot)
-			if not minimap_facility.is_empty():
-				selected_facility_id = str(minimap_facility.get("facility_id", ""))
-				_push_message("已选择设施：%s" % minimap_facility.get("display_name", selected_facility_id))
-				return
 		var world_position := get_global_mouse_position()
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			if operation_mode == OperationMode.AIMING_PRIMARY: _confirm_primary_aim(world_position)
@@ -700,7 +702,7 @@ func _adjust_camera_zoom(multiplier: float, screen_position: Vector2) -> void:
 	var new_zoom := clampf(old_zoom * multiplier, camera_zoom_min, camera_zoom_max)
 	if is_equal_approx(old_zoom, new_zoom):
 		return
-	var screen_offset := screen_position - get_viewport_rect().size * 0.5
+	var screen_offset: Vector2 = screen_position - battle_hud.battle_rect().get_center()
 	var anchor_world := battle_camera.position + screen_offset / old_zoom
 	battle_camera.zoom = Vector2.ONE * new_zoom
 	battle_camera.position = anchor_world - screen_offset / new_zoom
@@ -709,7 +711,7 @@ func _adjust_camera_zoom(multiplier: float, screen_position: Vector2) -> void:
 
 
 func _configure_camera_zoom(map_data: Dictionary) -> void:
-	var viewport_size := get_viewport_rect().size
+	var viewport_size: Vector2 = battle_hud.battle_rect().size
 	var map_size := Vector2(float(map_data.get("width", 4096.0)), float(map_data.get("height", 2304.0)))
 	var min_visible_size := _pair_to_vector(camera_settings.get("min_visible_size", []))
 	var max_visible_fraction := float(camera_settings.get("max_map_visible_fraction", 0.0))
@@ -733,7 +735,7 @@ func _configure_camera_zoom(map_data: Dictionary) -> void:
 
 
 func _camera_visible_size() -> Vector2:
-	return get_viewport_rect().size / maxf(battle_camera.zoom.x, 0.01)
+	return battle_hud.battle_rect().size / maxf(battle_camera.zoom.x, 0.01)
 
 
 func _pair_to_vector(value: Array) -> Vector2:
@@ -776,6 +778,8 @@ func _clamp_camera_to_map() -> void:
 		minimum.y = map_size.y * 0.5
 		maximum.y = minimum.y
 	battle_camera.position = battle_camera.position.clamp(minimum, maximum)
+	# Keep the authoritative camera target at the centre of the unobstructed sea.
+	battle_camera.offset = (get_viewport_rect().size * 0.5 - battle_hud.battle_rect().get_center()) / battle_camera.zoom
 
 
 func _toggle_follow_selected() -> void:
@@ -864,8 +868,8 @@ func _facility_at(world_position: Vector2, snapshot: Dictionary) -> Dictionary:
 
 
 func _minimap_facility_at(screen_position: Vector2, snapshot: Dictionary) -> Dictionary:
-	var outer := Rect2(Vector2(28.0, get_viewport_rect().size.y - 266.0), Vector2(330.0, 226.0))
-	var map_rect := Rect2(outer.position + Vector2(14.0, 36.0), outer.size - Vector2(28.0, 52.0))
+	var outer: Rect2 = battle_hud.minimap_rect()
+	var map_rect := Rect2(outer.position + Vector2(14.0, 36.0), outer.size - Vector2(28.0, 68.0))
 	if not map_rect.has_point(screen_position): return {}
 	var map_data: Dictionary = snapshot.get("map", {})
 	var world: Vector2 = Vector2((screen_position.x - map_rect.position.x) / map_rect.size.x * float(map_data.get("width", 1.0)), (screen_position.y - map_rect.position.y) / map_rect.size.y * float(map_data.get("height", 1.0)))
@@ -1214,11 +1218,12 @@ func _sync_visuals() -> void:
 	terrain_debug_overlay.sync_runtime(snapshot.get("terrain_contexts", {}), snapshot.get("facilities", {}), selected_unit_id, snapshot.get("contacts", {}))
 
 
-func _configure_camera_limits(map_data: Dictionary) -> void:
-	battle_camera.limit_left = 0
-	battle_camera.limit_top = 0
-	battle_camera.limit_right = int(float(map_data.get("width", 4096.0)))
-	battle_camera.limit_bottom = int(float(map_data.get("height", 2304.0)))
+func _configure_camera_limits(_map_data: Dictionary) -> void:
+	# Clamping is based on the sea frame; full-window Camera2D limits would hide map edges.
+	battle_camera.limit_left = -10000000
+	battle_camera.limit_top = -10000000
+	battle_camera.limit_right = 10000000
+	battle_camera.limit_bottom = 10000000
 
 
 func _player_fleet_center() -> Vector2:
@@ -1342,6 +1347,9 @@ func _select_ui_unit(unit_id: String, additive: bool) -> void:
 
 func _invoke_hud_action(key: String) -> void:
 	match key:
+		"SPACE":
+			if session.state["phase"] == "Paused": session.resume()
+			else: session.pause()
 		"E": _begin_primary_aim()
 		"Q": _switch_selected_ammo()
 		"F": _begin_or_cast_skill()

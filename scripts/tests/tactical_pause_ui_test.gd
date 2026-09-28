@@ -81,7 +81,7 @@ func _run() -> void:
 	for width in [1280.0, 1600.0, 1920.0]:
 		battle.battle_hud.size = Vector2(width, 1080.0)
 		battle.battle_hud._sync_interaction_controls()
-		var objective_rect: Rect2 = battle.battle_hud.objective_panel.get_rect()
+		var objective_rect: Rect2 = battle.battle_hud.objective_scroll.get_rect()
 		_check(battle.battle_hud.interaction_controls.slice(0, 24).all(func(button): return not objective_rect.intersects(button.get_rect())), "objective avoids every actual roster button at width %d" % width)
 	battle.session.resume()
 	battle.session.advance_tick(0.1)

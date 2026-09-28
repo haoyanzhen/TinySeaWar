@@ -197,8 +197,8 @@ func _run() -> void:
 	_check(harbor_snapshot.get("facilities", {}).size() == 8 and battle.terrain_view.facility_root.get_child_count() == 8, "harbor facilities share runtime state and presentation placement")
 	var world_facility: Dictionary = harbor_snapshot["facilities"]["facility.harbor.observation_west"]
 	_check(battle._facility_at(world_facility["position"], harbor_snapshot).get("facility_id", "") == world_facility["facility_id"], "world facility markers can select a known facility")
-	var minimap_outer := Rect2(Vector2(28.0, viewport_size.y - 266.0), Vector2(330.0, 226.0))
-	var minimap_rect := Rect2(minimap_outer.position + Vector2(14.0, 36.0), minimap_outer.size - Vector2(28.0, 52.0))
+	var minimap_outer: Rect2 = battle.battle_hud.minimap_rect()
+	var minimap_rect := Rect2(minimap_outer.position + Vector2(14.0, 36.0), minimap_outer.size - Vector2(28.0, 68.0))
 	var minimap_point: Vector2 = battle.battle_hud._minimap_position(world_facility["position"], minimap_rect, harbor_snapshot["map"])
 	_check(battle._minimap_facility_at(minimap_point, harbor_snapshot).get("facility_id", "") == world_facility["facility_id"], "minimap facility markers can select a known facility")
 	battle.selected_unit_id = "unit.player.shimakaze"
@@ -221,7 +221,7 @@ func _run() -> void:
 	battle._start_battle("level.prototype_3v3")
 	await process_frame
 	warspite_view = battle.effect_director.unit_views.get("unit.player.warspite", null)
-	var camera_center := viewport_size * 0.5
+	var camera_center: Vector2 = battle.battle_hud.battle_rect().get_center()
 	for index in range(32):
 		battle._adjust_camera_zoom(0.8, camera_center)
 	var far_visible_size: Vector2 = battle._camera_visible_size()

@@ -158,6 +158,7 @@
 | 伤害数字 | `scripts/presentation/battle/damage_number_view.gd` |
 | 战斗 HUD | `scripts/presentation/battle/battle_hud.gd` |
 | UI 文本 | `scripts/presentation/ui_text.gd` |
+| 海域分区、镜头投影与边框输入回归 | `scripts/tests/battle_frame_layout_test.gd` |
 | 场景表现测试 | `scripts/tests/scene_presentation_test.gd` |
 | 玩家交互、暂停、拒绝与结算专项 | `scripts/tests/tactical_pause_ui_test.gd`、`tactical_pause_test.gd`、`player_command_feedback_test.gd`、`battle_result_presentation_test.gd`（均位于同目录） |
 | 获取分类、保存重试与挑战进度专项 | `scripts/tests/ship_acquisition_test.gd`、`progress_save_retry_test.gd`、`challenge_mission_feedback_test.gd`（均位于同目录） |

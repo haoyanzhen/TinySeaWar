@@ -87,6 +87,7 @@
 | 编组与协同测试 | `scripts/tests/ai_group_formation_test.gd`、`ai_coordination_test.gd` |
 | 模拟完整 AI 初始化与技能射程测试 | `scripts/tests/battle_simulator_test.gd` |
 | 潜艇六阶段、装填 ETA 发射器规划、AttackRun 超时重规划、长期诊断与 S-04/S-05 `1 -> 3` 固定种子门禁 | `scripts/tests/test_runner.gd`、`scripts/tests/submarine_ai_fixed_seed_test.gd`、`scripts/tests/battle_simulator_test.gd` |
+| 潜艇低氧、接触保持、尾管、真实可见性、独立深度意图、反潜受击自卫、追踪和2倍雷击预算回归 | `scripts/tests/submarine_review_regression_test.gd` |
 | 航迹、碰撞场与恢复测试 | `scripts/tests/trajectory_navigation_test.gd`、`navigation_collision_field_test.gd`、`ai_route_recovery_test.gd` |
 | Tick 分阶段、导航/侦查性能、投影路线、失败/等待与大编队碰撞测试 | `scripts/tests/ai_navigation_performance_test.gd` |
 

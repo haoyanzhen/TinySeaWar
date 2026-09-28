@@ -106,6 +106,8 @@ maximum_behavior_anomalies?
 ```text
 definition_id, display_name, faction_id, lineup_id?
 decision_samples, visible_target_samples
+selected_target_samples, eligible_target_samples, weapon_evaluation_samples
+target_rejections_by_reason{}
 ready_weapon_samples, legal_solution_samples
 scored_window_samples, window_score_total, window_score_max
 window_threshold_total, outcomes_by_reason{}, rejections_by_reason{}
@@ -128,6 +130,8 @@ incomplete_attack_cycles, recovery_self_defense_fires
 cycle_examples[]
 zero_fire_classification
 ```
+
+  - `visible_target_samples` 统计阵营真实观察中存在可见敌人的决策样本，与阶段是否执行武器评估无关；`selected_target_samples`、`eligible_target_samples`、`weapon_evaluation_samples` 分别统计已选中目标、最近目标筛选存在合格目标、实际执行武器评估的样本，均为非负整数，默认 `0`。`target_rejections_by_reason` 累加样本中最近一次筛选的拒绝计数，默认 `{}`，不是独立目标数量。无合格目标和阶段未评估分别允许分类为 `SUBMARINE_NO_ELIGIBLE_TARGET`、`SUBMARINE_PHASE_HELD`，不得伪报无可见目标。
 
   - `zero_fire_classification` 至少区分 `FIRED | SUBMARINE_NO_FIRE_DECISIONS | SUBMARINE_NO_VISIBLE_TARGET | SUBMARINE_NO_READY_WEAPON | SUBMARINE_NO_LEGAL_SOLUTION | SUBMARINE_ELIGIBLE_WINDOW_NO_FIRE | SUBMARINE_COMMITTED_WITHOUT_FIRE | SUBMARINE_DISCIPLINE_HELD | SUBMARINE_ZERO_FIRE_UNCLASSIFIED`。
   - 潜艇窗口暂不使用友军风险评分：`friendly_risk_ignored_samples` 记录显式归零的评分样本，`friendly_risk_observed_samples/max` 只保留同一发射器雷道的实际观察事实，不能反向参与本轮开火判定。

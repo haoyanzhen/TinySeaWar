@@ -462,7 +462,7 @@ actual_heading[i]
 - 下潜侧按 `oxygen_consumption_rate` 减少，上浮侧按 `oxygen_recovery_rate` 恢复；状态效果继续通过公共修正顺序作用于对应速率。
 - 氧气耗尽时立即进入稳定 `Surface`，取消当前深度转换并产生强制上浮事实。
 - 主动深度转换以 `depth_transition_duration` 计时，转换完成前沿用起始深度规则；完成后设置 `depth_state_minimum_hold`，保持结束前拒绝下一次主动转换。
-- 主动下潜要求 `current_oxygen / max_oxygen >= redive_oxygen_ratio`；主动上浮不检查该比例。强制上浮优先于主动转换和最短保持。
+- 主动下潜要求 `current_oxygen > 0`，不设氧气比例门槛；主动上浮不检查氧气量。强制上浮优先于主动转换和最短保持。
 - 氧气上限、消耗/恢复速度、重新下潜门槛、转换时间和最短保持放在舰船战斗配置中，并由加载器校验。
 
 ## 12. 胜负与超时

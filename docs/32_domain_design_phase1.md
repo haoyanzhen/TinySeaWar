@@ -170,7 +170,7 @@ Application 提供待执行玩家命令的只读副本、暂停期间按命令 I
 
 ### 6.5 潜艇深度与氧气
 
-`SetSubmarineDepth` 携带显式 `target_depth_state=Surface|Submerged`，玩家与完整 AI 共用该命令。Domain 拒绝非潜艇、转换中、最短保持未结束或低于重新下潜氧气门槛的请求；零氧强制上浮优先并取消主动转换。稳定深度改变后才更新受击类型与深度派生侦查，转换期间沿用起始深度并禁止鱼雷发射。
+`SetSubmarineDepth` 携带显式 `target_depth_state=Surface|Submerged`，玩家与完整 AI 共用该命令。Domain 拒绝非潜艇、转换中、最短保持未结束或零氧下潜的请求；零氧强制上浮优先并取消主动转换。稳定深度改变后才更新受击类型与深度派生侦查，转换期间沿用起始深度并禁止鱼雷发射。
 
 ## 7. Domain 服务职责
 

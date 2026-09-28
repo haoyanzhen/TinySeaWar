@@ -156,7 +156,8 @@ func _run() -> void:
 			enemy_shots += int(first_run["units"][unit_id].get("shots", 0))
 	_check(player_shots > 0, "player formation AI fires weapons")
 	_check(enemy_shots > 0, "enemy formation AI fires weapons")
-	var output_directory := "user://battle_simulator_test"
+	var arguments := OS.get_cmdline_user_args()
+	var output_directory := arguments[0] if not arguments.is_empty() else "user://battle_simulator_test"
 	var written := ReportWriter.new().write_all(output_directory, first)
 	_check(bool(written.get("ok", false)), "report artifacts are written")
 	_check(FileAccess.file_exists(output_directory.path_join("report.md")), "Markdown report exists")

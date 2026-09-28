@@ -66,6 +66,10 @@ func _new_submarine_ai_entry(unit: Dictionary) -> Dictionary:
 		"faction_id": unit.get("faction_id", ""),
 		"decision_samples": 0,
 		"visible_target_samples": 0,
+		"selected_target_samples": 0,
+		"eligible_target_samples": 0,
+		"weapon_evaluation_samples": 0,
+		"target_rejections_by_reason": {},
 		"ready_weapon_samples": 0,
 		"legal_solution_samples": 0,
 		"scored_window_samples": 0,
@@ -214,6 +218,10 @@ func _record_submarine_fire_decision(event: Dictionary) -> void:
 	if entry.is_empty(): return
 	entry["decision_samples"] += 1
 	if bool(event.get("visible_target", false)): entry["visible_target_samples"] += 1
+	if bool(event.get("selected_target", not str(event.get("target_unit_id", "")).is_empty())): entry["selected_target_samples"] += 1
+	if int(event.get("eligible_target_count", 1 if bool(event.get("visible_target", false)) else 0)) > 0: entry["eligible_target_samples"] += 1
+	if bool(event.get("weapon_evaluated", int(event.get("legal_candidate_count", 0)) > 0)): entry["weapon_evaluation_samples"] += 1
+	_merge_count_map(entry["target_rejections_by_reason"], event.get("target_rejections_by_reason", {}))
 	if int(event.get("ready_weapon_count", 0)) > 0: entry["ready_weapon_samples"] += 1
 	if int(event.get("legal_candidate_count", 0)) > 0: entry["legal_solution_samples"] += 1
 	if bool(event.get("opportunity_forced", false)): entry["opportunity_forced_samples"] += 1
@@ -357,14 +365,18 @@ func _refresh_submarine_zero_fire_classifications() -> void:
 			entry["zero_fire_classification"] = "SUBMARINE_NO_FIRE_DECISIONS"
 		elif int(entry.get("visible_target_samples", 0)) <= 0:
 			entry["zero_fire_classification"] = "SUBMARINE_NO_VISIBLE_TARGET"
+		elif int(entry.get("fire_commitments", 0)) > 0:
+			entry["zero_fire_classification"] = "SUBMARINE_COMMITTED_WITHOUT_FIRE"
 		elif int(entry.get("ready_weapon_samples", 0)) <= 0:
 			entry["zero_fire_classification"] = "SUBMARINE_NO_READY_WEAPON"
+		elif int(entry.get("eligible_target_samples", 0)) <= 0:
+			entry["zero_fire_classification"] = "SUBMARINE_NO_ELIGIBLE_TARGET"
+		elif int(entry.get("weapon_evaluation_samples", 0)) <= 0:
+			entry["zero_fire_classification"] = "SUBMARINE_PHASE_HELD"
 		elif int(entry.get("legal_solution_samples", 0)) <= 0:
 			entry["zero_fire_classification"] = "SUBMARINE_NO_LEGAL_SOLUTION"
 		elif int(entry.get("legal_solution_samples", 0)) >= 5:
 			entry["zero_fire_classification"] = "SUBMARINE_ELIGIBLE_WINDOW_NO_FIRE"
-		elif int(entry.get("fire_commitments", 0)) > 0:
-			entry["zero_fire_classification"] = "SUBMARINE_COMMITTED_WITHOUT_FIRE"
 		elif int(entry.get("outcomes_by_reason", {}).get("SUB_ATTACK_HELD_DISCIPLINE", 0)) > 0:
 			entry["zero_fire_classification"] = "SUBMARINE_DISCIPLINE_HELD"
 		else:

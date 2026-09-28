@@ -125,7 +125,7 @@ static func reason_name(reason_code: String) -> String:
 		"INVALID_SUBMARINE_DEPTH": return "潜艇目标深度无效"
 		"SUBMARINE_DEPTH_TRANSITION_ACTIVE": return "潜艇正在改变深度"
 		"SUBMARINE_DEPTH_HOLD_ACTIVE": return "潜艇深度保持时间尚未结束"
-		"SUBMARINE_OXYGEN_TOO_LOW": return "氧气不足，无法下潜"
+		"SUBMARINE_OXYGEN_TOO_LOW": return "氧气已耗尽，补充后可下潜"
 		"SUBMARINE_DEPTH_UNCHANGED": return "潜艇已处于目标深度"
 		"TARGET_TOO_CLOSE": return "目标距离过近"
 		"TARGET_OUT_OF_RANGE": return "目标超出射程"

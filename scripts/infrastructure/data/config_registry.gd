@@ -186,8 +186,8 @@ func _validate_ship(ship: Dictionary) -> void:
 			if float(ship.get(field, 0.0)) <= 0.0:
 				errors.append("%s must be positive for submarine %s" % [field, ship_id])
 		var redive_ratio := float(ship.get("redive_oxygen_ratio", -1.0))
-		if redive_ratio < 0.0 or redive_ratio > 1.0:
-			errors.append("redive_oxygen_ratio must be within [0, 1] for submarine %s" % ship_id)
+		if not is_zero_approx(redive_ratio):
+			errors.append("redive_oxygen_ratio is a compatibility field and must be 0 for submarine %s" % ship_id)
 		if not is_equal_approx(float(ship.get("base_detection_range", 0.0)), float(ship.get("base_concealment_distance", 0.0)) * 1.5):
 			errors.append("Submarine base_detection_range must equal 1.5x base_concealment_distance in %s" % ship_id)
 		if not ship.has("can_launch_torpedoes_submerged") or typeof(ship.get("can_launch_torpedoes_submerged")) != TYPE_BOOL:

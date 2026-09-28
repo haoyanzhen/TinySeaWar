@@ -167,6 +167,10 @@ func _aggregate_submarine_ai(runs: Array) -> Dictionary:
 		"zero_fire_classifications": {},
 		"decision_samples": 0,
 		"visible_target_samples": 0,
+		"selected_target_samples": 0,
+		"eligible_target_samples": 0,
+		"weapon_evaluation_samples": 0,
+		"target_rejections_by_reason": {},
 		"ready_weapon_samples": 0,
 		"legal_solution_samples": 0,
 		"scored_window_samples": 0,
@@ -204,7 +208,7 @@ func _aggregate_submarine_ai(runs: Array) -> Dictionary:
 		"by_ship": {},
 	}
 	var numeric_keys := [
-		"decision_samples", "visible_target_samples", "ready_weapon_samples", "legal_solution_samples", "scored_window_samples", "friendly_risk_ignored_samples", "friendly_risk_observed_samples",
+		"decision_samples", "selected_target_samples", "eligible_target_samples", "weapon_evaluation_samples", "visible_target_samples", "ready_weapon_samples", "legal_solution_samples", "scored_window_samples", "friendly_risk_ignored_samples", "friendly_risk_observed_samples",
 		"fire_commitments", "weapon_fires", "opportunities_observed", "opportunities_expired", "opportunity_forced_samples",
 		"attack_run_timeouts", "normal_full_cycles", "submerged_launch_cycles",
 		"incomplete_attack_cycles", "recovery_self_defense_fires", "depth_changes", "forced_surfaces", "depth_requests",
@@ -222,7 +226,7 @@ func _aggregate_submarine_ai(runs: Array) -> Dictionary:
 			result["window_threshold_total"] += float(source.get("window_threshold_total", 0.0))
 			result["window_score_max"] = maxf(float(result["window_score_max"]), float(source.get("window_score_max", 0.0)))
 			result["friendly_risk_observed_max"] = maxf(float(result["friendly_risk_observed_max"]), float(source.get("friendly_risk_observed_max", 0.0)))
-			for map_key in ["outcomes_by_reason", "rejections_by_reason", "phase_transitions", "phase_reasons", "opportunity_expiry_reasons", "command_rejections_by_reason", "depth_requests_by_target", "depth_changes_by_target", "depth_request_holds_by_reason"]:
+			for map_key in ["target_rejections_by_reason", "outcomes_by_reason", "rejections_by_reason", "phase_transitions", "phase_reasons", "opportunity_expiry_reasons", "command_rejections_by_reason", "depth_requests_by_target", "depth_changes_by_target", "depth_request_holds_by_reason"]:
 				_merge_aggregate_map(result[map_key], source.get(map_key, {}))
 			for map_key in ["phase_dwell_seconds", "depth_dwell_seconds", "oxygen_dwell_seconds"]:
 				_merge_aggregate_float_map(result[map_key], source.get(map_key, {}))
@@ -234,6 +238,7 @@ func _aggregate_submarine_ai(runs: Array) -> Dictionary:
 					"display_name": source.get("display_name", unit_id),
 					"samples": 0,
 					"zero_fire_classifications": {},
+					"target_rejections_by_reason": {},
 					"outcomes_by_reason": {},
 					"rejections_by_reason": {},
 					"phase_transitions": {},
@@ -260,7 +265,7 @@ func _aggregate_submarine_ai(runs: Array) -> Dictionary:
 			ship_entry["window_threshold_total"] += float(source.get("window_threshold_total", 0.0))
 			ship_entry["window_score_max"] = maxf(float(ship_entry["window_score_max"]), float(source.get("window_score_max", 0.0)))
 			ship_entry["friendly_risk_observed_max"] = maxf(float(ship_entry["friendly_risk_observed_max"]), float(source.get("friendly_risk_observed_max", 0.0)))
-			for map_key in ["outcomes_by_reason", "rejections_by_reason", "phase_transitions", "phase_reasons", "opportunity_expiry_reasons", "command_rejections_by_reason", "depth_requests_by_target", "depth_changes_by_target", "depth_request_holds_by_reason"]:
+			for map_key in ["target_rejections_by_reason", "outcomes_by_reason", "rejections_by_reason", "phase_transitions", "phase_reasons", "opportunity_expiry_reasons", "command_rejections_by_reason", "depth_requests_by_target", "depth_changes_by_target", "depth_request_holds_by_reason"]:
 				_merge_aggregate_map(ship_entry[map_key], source.get(map_key, {}))
 			for map_key in ["phase_dwell_seconds", "depth_dwell_seconds", "oxygen_dwell_seconds"]:
 				_merge_aggregate_float_map(ship_entry[map_key], source.get(map_key, {}))

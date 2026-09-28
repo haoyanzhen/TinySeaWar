@@ -1099,7 +1099,7 @@ func _test_submarine_depth_oxygen_and_detection() -> void:
 	_check(is_equal_approx(float(stats["base_detection_range"]), float(stats["base_concealment_distance"]) * 1.5), "submarine configuration derives surface detection from detectability")
 	_check(is_equal_approx(float(stats["oxygen_consumption_rate"]), 1.0) and is_equal_approx(float(stats["oxygen_recovery_rate"]), 3.0), "submarine loads explicit oxygen consumption and recovery rates")
 	var configured_submarines: Array = registry.all("ships").filter(func(ship): return str(ship.get("ship_class", "")) == "Submarine")
-	_check(configured_submarines.size() == 7 and configured_submarines.all(func(ship): return is_equal_approx(float(ship.get("oxygen_consumption_rate", 0.0)), 1.0) and is_equal_approx(float(ship.get("oxygen_recovery_rate", 0.0)), 3.0)), "all seven configured submarines share the one-per-second consumption and three-per-second recovery baseline")
+	_check(configured_submarines.size() == 7 and configured_submarines.all(func(ship): return is_equal_approx(float(ship.get("oxygen_consumption_rate", 0.0)), 1.0) and is_equal_approx(float(ship.get("oxygen_recovery_rate", 0.0)), 3.0 if int(ship.get("level", 1)) == 1 else 4.5)), "all seven configured submarines use tier-specific recovery and one-per-second consumption")
 	var submerged_fact: Dictionary = session._detection_unit_fact(submarine)
 	_check(is_equal_approx(float(submerged_fact["detection_range"]), float(stats["concealment_distance"]) * 0.5), "submerged submarine detection is half its surface detectability")
 	_check(is_equal_approx(float(submerged_fact["concealment"]), float(stats["concealment_distance"]) * 0.25), "submerged submarine detectability is one quarter of its surface value")
@@ -1127,10 +1127,10 @@ func _test_submarine_depth_oxygen_and_detection() -> void:
 	_check(is_equal_approx(float(submarine["oxygen_state"]["current"]) - oxygen_before_recovery, 3.0), "stable surface submarine recovers three oxygen points per second")
 	submarine["depth_hold_remaining"] = 0.0
 	var maximum := float(submarine["oxygen_state"]["maximum"])
-	submarine["oxygen_state"]["current"] = maximum * float(stats["redive_oxygen_ratio"]) - 0.01
-	_check(session._apply_command(dive_command).get("reason_code", "") == "SUBMARINE_OXYGEN_TOO_LOW", "redive threshold rejects low oxygen")
-	submarine["oxygen_state"]["current"] = maximum * float(stats["redive_oxygen_ratio"])
-	_check(session._apply_command(dive_command).get("accepted", false), "redive threshold accepts oxygen exactly at the configured ratio")
+	submarine["oxygen_state"]["current"] = 0.0
+	_check(session._apply_command(dive_command).get("reason_code", "") == "SUBMARINE_OXYGEN_TOO_LOW", "zero oxygen rejects active diving")
+	submarine["oxygen_state"]["current"] = 0.001
+	_check(session._apply_command(dive_command).get("accepted", false), "any positive oxygen permits diving")
 	session._update_submarine_resources(float(stats["depth_transition_duration"]))
 	_check(submarine.get("depth_state", "") == "Submerged", "active dive transition completes back to submerged state")
 	submarine["oxygen_state"]["current"] = 0.5
@@ -1244,7 +1244,11 @@ func _test_submarine_combat_ai_policy() -> void:
 	_check(submarine["ai_state"].get("submarine_combat_phase", "") == "BreakContact" and bool(submarine["ai_state"].get("submarine_attack_completed", false)), "only an actual planned WeaponFired completes AttackRun and enters BreakContact")
 	submarine["ai_state"]["submarine_phase_entered_at"] = float(session.state.get("elapsed_time", 0.0)) - 3.1
 	session._update_submarine_break_contact_intent(submarine, target)
+	_check(submarine["ai_state"].get("submarine_combat_phase", "") == "BreakContact", "BreakContact does not mistake its minimum dwell for reaching the safe exit")
+	submarine["position"] = submarine["ai_state"]["planned_exit_position"]
+	session._update_submarine_break_contact_intent(submarine, target)
 	_check(submarine["ai_state"].get("submarine_combat_phase", "") == "RecoverOxygen", "BreakContact always enters RecoverOxygen before the next Search cycle")
+	submarine["position"] = Vector2(2000.0, 1100.0)
 
 	for weapon_state in submarine["weapon_states"]: weapon_state["reload_remaining"] = 0.0
 	submarine["weapon_group_launch_remaining"].clear()
@@ -1264,7 +1268,7 @@ func _test_submarine_combat_ai_policy() -> void:
 	submarine["depth_state"] = "Surface"
 	submarine["depth_transition"]["active"] = false
 	submarine["depth_hold_remaining"] = 0.0
-	submarine["oxygen_state"]["current"] = float(submarine["oxygen_state"]["maximum"]) * 0.49
+	submarine["oxygen_state"]["current"] = 0.0
 	session.command_queue.clear()
 	session.drain_events()
 	session._set_submarine_phase(submarine, "RecoverOxygen", "TEST_RECOVER_DOMAIN_REJECTION")
@@ -1275,10 +1279,12 @@ func _test_submarine_combat_ai_policy() -> void:
 	session.command_queue.clear()
 	session._set_submarine_phase(submarine, "RecoverOxygen", "TEST_RECOVER_LOW")
 	session._update_submarine_recovery_intent(submarine)
-	_check(session.command_queue.all(func(command): return command.get("command_type", "") != "SetSubmarineDepth") and submarine["ai_state"].get("submarine_phase_reason", "") == "SUB_RECOVER_OXYGEN", "RecoverOxygen holds surface depth below the 75 percent AI redive threshold")
+	session._update_submarine_depth_intent(submarine)
+	_check(session.command_queue.all(func(command): return command.get("command_type", "") != "SetSubmarineDepth") and submarine["ai_state"].get("submarine_depth_intent", "") == "Recover", "safe recovery chooses replenishment without creating a Domain diving threshold")
 	submarine["oxygen_state"]["current"] = float(submarine["oxygen_state"]["maximum"]) * 0.75
 	session.command_queue.clear()
 	session._update_submarine_recovery_intent(submarine)
+	session._update_submarine_depth_intent(submarine)
 	var redive_commands: Array = session.command_queue.filter(func(command): return command.get("command_type", "") == "SetSubmarineDepth" and command.get("target_depth_state", "") == "Submerged")
 	_check(redive_commands.size() == 1 and submarine["ai_state"].get("submarine_combat_phase", "") == "RecoverOxygen", "Redive is a requested depth transition inside RecoverOxygen rather than a seventh combat phase")
 	session._process_commands()

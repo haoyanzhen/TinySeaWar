@@ -37,6 +37,7 @@ func _run() -> void:
 	var route_failure_samples: Array = []
 	var route_projection_samples: Array = []
 	var trajectory_failure_samples: Array = []
+	var recovery_samples: Array = []
 	var event_counts := {
 		"terrain_collisions":0,
 		"route_failures":0,
@@ -45,6 +46,10 @@ func _run() -> void:
 		"contacts_acquired":0,
 		"contacts_lost":0,
 		"contact_types_changed":0,
+		"recovery_started":0,
+		"recovery_completed":0,
+		"recovery_retried":0,
+		"navigation_stalled":0,
 	}
 	var route_waypoint_total := 0
 	var route_completions := 0
@@ -63,6 +68,14 @@ func _run() -> void:
 	var prediction_position_errors: Array = []
 	while executed_ticks < requested_ticks and session.state.get("phase", "") == "Running":
 		for event in session.advance_tick(0.1):
+			if str(event.get("event_type", "")) in ["NavigationRecoveryStarted", "NavigationRecoveryCompleted", "NavigationRecoveryRetried", "NavigationRecoveryCancelled", "NavigationStalled"] and recovery_samples.size() < 64:
+				var recovering_unit: Dictionary = session.state.get("units_by_id", {}).get(str(event.get("unit_id", "")), {})
+				recovery_samples.append({"event":event, "position":recovering_unit.get("position", Vector2.ZERO), "goal":session._current_corridor_goal(recovering_unit), "recovery":recovering_unit.get("navigation_state", {}).get("recovery", {}).duplicate(true)})
+			match str(event.get("event_type", "")):
+				"NavigationRecoveryStarted": event_counts["recovery_started"] += 1
+				"NavigationRecoveryCompleted": event_counts["recovery_completed"] += 1
+				"NavigationRecoveryRetried": event_counts["recovery_retried"] += 1
+				"NavigationStalled": event_counts["navigation_stalled"] += 1
 			if str(event.get("event_type", "")) in ["NavigationRequestCompleted", "NavigationRequestFailed"]:
 				route_samples.append({"event_type":event.get("event_type", ""), "unit_id":event.get("unit_id", ""), "command_id":event.get("command_id", ""), "start":str(event.get("start", Vector2.ZERO)), "target":str(event.get("target", Vector2.ZERO)), "elapsed_usec":event.get("elapsed_usec", 0), "route_profile":event.get("route_profile", {})})
 			if str(event.get("event_type", "")) == "NavigationRequestCompleted":
@@ -193,6 +206,7 @@ func _run() -> void:
 		"route_failure_samples": route_failure_samples,
 		"route_projection_samples": route_projection_samples,
 		"trajectory_failure_samples":trajectory_failure_samples,
+		"recovery_samples":recovery_samples,
 	}
 	if bool(options.get("compact", false)):
 		var compact := {
@@ -211,6 +225,7 @@ func _run() -> void:
 			"trajectory_motion_expansion_ms":result["trajectory_motion_expansion_ms"], "trajectory_terrain_validation_ms":result["trajectory_terrain_validation_ms"], "trajectory_dynamic_validation_ms":result["trajectory_dynamic_validation_ms"], "trajectory_candidate_scoring_ms":result["trajectory_candidate_scoring_ms"],
 			"trajectory_selected_candidate_ids":trajectory_candidate_ids, "normal_single_candidate_plans":normal_single_candidate_plans, "prediction_utilization":result["prediction_utilization"], "prediction_reuse":result["prediction_reuse"],
 			"trajectory_failure_samples":trajectory_failure_samples,
+			"recovery_samples":recovery_samples,
 		}
 		print("AI_NAV_PERF_COMPACT_JSON=" + JSON.stringify(compact))
 	else:

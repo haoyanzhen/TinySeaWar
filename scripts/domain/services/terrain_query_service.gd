@@ -290,6 +290,15 @@ func resolve_circle_motion(start: Vector2, displacement: Vector2, radius: float,
 	if displacement.length_squared() <= EPSILON * EPSILON:
 		return {"position": start, "collided": false, "hit": _miss(start, "ShipMovement", 0.0)}
 	var first_hit := first_segment_hit(start, start + displacement, "ShipMovement", radius)
+	# A hard-boundary contact can be within the occupancy epsilon after a
+	# collision. Permit only outward departure from that numerical skin, using
+	# the same continuous validator as the planner; deep overlaps still fail.
+	if bool(first_hit.get("hit", false)) and float(first_hit.get("fraction", 1.0)) <= EPSILON:
+		var contact_normal: Vector2 = first_hit.get("normal", Vector2.ZERO)
+		if displacement.dot(contact_normal) > EPSILON and can_occupy_circle(start, maxf(0.0, radius - EPSILON * 2.0), movement_tags) and can_occupy_circle(start + displacement, radius, movement_tags):
+			var departure := validate_movement_segment(start, start + displacement, radius, movement_tags, 0.0, contact_normal)
+			if str(departure.get("status", "Collides")) != "Collides":
+				return {"position":start + displacement, "collided":false, "hit":_miss(start + displacement, "ShipMovement", displacement.length())}
 	var water_fraction := _first_illegal_movement_fraction(start, start + displacement, radius, movement_tags)
 	if water_fraction >= 0.0 and (not bool(first_hit.get("hit", false)) or water_fraction <= float(first_hit.get("fraction", 1.0)) + EPSILON):
 		var safe_fraction := maxf(0.0, water_fraction - EPSILON / maxf(displacement.length(), EPSILON))

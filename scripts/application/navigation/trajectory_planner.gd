@@ -46,14 +46,27 @@ func plan_normal(motion_state: Dictionary, goal: Vector2, radius: float, movemen
 	var maximum_speed := maxf(0.01, float(motion_state.get("maximum_speed", 0.0)))
 	var remaining_distance := maxf(0.0, desired_direction.length() - arrival_tolerance(radius))
 	var approach_thrust := clampf(remaining_distance / (maximum_speed * NORMAL_HORIZON), 0.03, 1.0) if remaining_distance > 0.0 else 0.0
-	var use_arrival_control := final_approach and desired_direction.length() <= maxf(maximum_speed * 1.5, arrival_tolerance(radius) * 4.0)
+	# Match approach speed to the whole validated horizon, including drift and
+	# braking, before a shore beyond the destination makes cruise impossible.
+	var drift: Vector2 = motion_state.get("current_vector", Vector2.ZERO)
+	var braking_distance := pow(float(motion_state.get("speed", 0.0)), 2.0) / (2.0 * maxf(0.01, float(motion_state.get("braking", maximum_speed * 2.0))))
+	var use_arrival_control := final_approach and desired_direction.length() <= maxf((maximum_speed + drift.length()) * NORMAL_HORIZON + braking_distance, arrival_tolerance(radius) * 4.0)
+	var slow_thrust := minf(0.45, approach_thrust)
 	var templates: Array = []
 	if use_arrival_control:
+		# Approach is a ground-velocity request. Account for the current before
+		# converting it to hull heading/thrust; the shared simulator still checks
+		# the resulting trajectory against spatially varying conditions.
+		if drift.length_squared() > 0.0001:
+			var approach_velocity := desired_direction.normalized() * maxf(remaining_distance / NORMAL_HORIZON, maximum_speed * 0.03) - drift
+			desired_angle = angle_difference(float(motion_state.get("heading", 0.0)), approach_velocity.angle())
+			preferred_turn = clampf(desired_angle / maxf(0.01, float(motion_state.get("turn_rate_limit", 0.01)) * NORMAL_HORIZON), -1.0, 1.0)
+			approach_thrust = clampf(approach_velocity.length() / maximum_speed, 0.0, 1.0)
 		templates = [
 			_constant_template(approach_thrust, preferred_turn, "arrival"),
 			_constant_template(1.0, preferred_turn, "arrival_full"),
-			_constant_template(0.45, preferred_turn, "arrival_slow"),
-			_constant_template(0.0, preferred_turn, "arrival_brake"),
+			_constant_template(minf(0.15, approach_thrust), preferred_turn, "arrival_slow"),
+			{"controls":_turn_then_straight_controls(desired_angle, float(motion_state.get("turn_rate_limit", 0.0)), 0.0), "tag":"arrival_brake"},
 			_constant_template(approach_thrust, clampf(preferred_turn - 0.35, -1.0, 1.0), "arrival_left"),
 			_constant_template(approach_thrust, clampf(preferred_turn + 0.35, -1.0, 1.0), "arrival_right"),
 		]
@@ -65,7 +78,7 @@ func plan_normal(motion_state: Dictionary, goal: Vector2, radius: float, movemen
 		templates = [
 			{"controls":_turn_then_straight_controls(desired_angle, float(motion_state.get("turn_rate_limit", 0.0)), 1.0), "tag":"player_fast_direct"},
 			{"controls":_turn_then_straight_controls(desired_angle, float(motion_state.get("turn_rate_limit", 0.0)), 0.75), "tag":"player_cruise_direct"},
-			{"controls":_turn_then_straight_controls(desired_angle, float(motion_state.get("turn_rate_limit", 0.0)), 0.45), "tag":"player_slow_direct"},
+			{"controls":_turn_then_straight_controls(desired_angle, float(motion_state.get("turn_rate_limit", 0.0)), slow_thrust), "tag":"player_slow_direct"},
 			_constant_template(0.0, signf(desired_angle), "player_brake_turn"),
 			_constant_template(1.0, clampf(signf(desired_angle) * 0.65, -1.0, 1.0), "player_wide_turn"),
 			_constant_template(0.0, 0.0, "player_hold"),
@@ -74,23 +87,11 @@ func plan_normal(motion_state: Dictionary, goal: Vector2, radius: float, movemen
 		templates = [
 			_constant_template(1.0, preferred_turn, "cruise"),
 			_constant_template(0.75, preferred_turn, "cruise_reduced"),
-			_constant_template(0.45, preferred_turn, "slow_turn"),
-			_constant_template(0.0, preferred_turn, "brake_turn"),
+			_constant_template(slow_thrust, preferred_turn, "slow_turn"),
+			{"controls":_turn_then_straight_controls(desired_angle, float(motion_state.get("turn_rate_limit", 0.0)), 0.0), "tag":"brake_turn"},
 			_constant_template(0.75, clampf(preferred_turn - 0.35, -1.0, 1.0), "outer_left"),
 			_constant_template(0.75, clampf(preferred_turn + 0.35, -1.0, 1.0), "outer_right"),
 		]
-	var recovery: Dictionary = motion_state.get("collision_recovery", {})
-	var recovery_normal: Vector2 = recovery.get("normal", Vector2.ZERO)
-	if recovery_normal.length_squared() > 0.001:
-		var escape_angle := wrapf(recovery_normal.angle() - float(motion_state.get("heading", 0.0)), -PI, PI)
-		var recovery_turn := signf(escape_angle)
-		var recovery_templates: Array = [
-			_constant_template(-0.25, recovery_turn, "collision_reverse_departure"),
-			_constant_template(0.0, recovery_turn, "collision_brake_turn"),
-			_constant_template(0.45, recovery_turn, "collision_forward_departure"),
-		]
-		recovery_templates.append_array(templates)
-		templates = recovery_templates
 	return _select_plan(templates.slice(0, NORMAL_CANDIDATE_LIMIT), motion_state, goal, NORMAL_HORIZON, radius, movement_tags, terrain_query, terrain_context, nearby_units, [], false, use_arrival_control, next_goals, prioritize_direct_player_motion)
 
 
@@ -109,6 +110,34 @@ func plan_emergency(motion_state: Dictionary, threats: Array, radius: float, mov
 		templates.append(contact)
 	var limit := EMERGENCY_TOTAL_LIMIT if extended else EMERGENCY_BASE_LIMIT
 	return _select_plan(templates.slice(0, limit), motion_state, motion_state.get("position", Vector2.ZERO), EMERGENCY_HORIZON, radius, movement_tags, terrain_query, terrain_context, nearby_units, threats, true, false, [], false)
+
+
+func plan_recovery(motion_state: Dictionary, recovery: Dictionary, radius: float, movement_tags: Array, terrain_query, terrain_context, nearby_units: Array = []) -> Dictionary:
+	var direction: Vector2 = recovery["direction"]
+	var heading := float(motion_state.get("heading", 0.0))
+	var reverse_angle := angle_difference(heading, direction.angle() + PI)
+	var forward_angle := angle_difference(heading, direction.angle())
+	var turn_rate := float(motion_state.get("turn_rate_limit", 0.0))
+	var preferred_turn := float(recovery.get("turn", 1.0))
+	# Replace the normal budget, never add another batch. Reverse thrust is a
+	# fraction of reverse_speed (already capped to 25% of forward speed).
+	var templates: Array = [
+		_recovery_pulse(-1.0, 0.0, "recovery_reverse_straight"),
+		{"controls":_turn_then_straight_controls(reverse_angle, turn_rate, -1.0), "tag":"recovery_reverse_align"},
+		{"controls":_turn_then_straight_controls(forward_angle, turn_rate, 0.45), "tag":"recovery_forward_align"},
+		_recovery_pulse(-1.0, preferred_turn * 0.5, "recovery_reverse_turn"),
+		_recovery_pulse(-1.0, -preferred_turn * 0.5, "recovery_reverse_other"),
+		{"controls":_turn_then_straight_controls(forward_angle, turn_rate, 0.0), "tag":"recovery_brake_turn"},
+	]
+	if not bool(recovery.get("departure_feasible", true)):
+		templates = [_constant_template(0.0, preferred_turn, "recovery_brake_turn")]
+	return _select_plan(templates, motion_state, recovery["escape_goal"], NORMAL_HORIZON, radius, movement_tags, terrain_query, terrain_context, nearby_units, [], false, false, [], false)
+
+
+func _recovery_pulse(thrust: float, turn: float, tag: String) -> Dictionary:
+	# The complete six seconds are validated, including stopping and drift.
+	# A short retreat can be useful even where sustained reverse hits another bank.
+	return {"tag":tag, "controls":[{"duration":2.0,"thrust_ratio":thrust,"turn_ratio":turn}, {"duration":NORMAL_HORIZON - 2.0,"thrust_ratio":0.0,"turn_ratio":0.0}]}
 
 
 func _select_plan(templates: Array, initial_state: Dictionary, goal: Vector2, horizon: float, radius: float, movement_tags: Array, terrain_query, terrain_context, nearby_units: Array, threats: Array, emergency: bool, final_approach: bool, next_goals: Array, prioritize_direct_player_motion: bool) -> Dictionary:
@@ -163,14 +192,15 @@ func _select_plan(templates: Array, initial_state: Dictionary, goal: Vector2, ho
 		var next_gate_alignment := _next_gate_alignment(terminal_state, next_goals)
 		var direct_bonus := 80.0 if prioritize_direct_player_motion and str(template.get("tag", "")) == "player_fast_direct" else 0.0
 		var recovery_tag := str(template.get("tag", ""))
-		var recovery_bonus := 3000.0 if recovery_tag == "collision_reverse_departure" else (1800.0 if recovery_tag == "collision_forward_departure" else 0.0)
-		var score := threat_score * 10000.0 + progress * 10.0 + clearance_score * 30.0 + next_gate_alignment * 80.0 + continuity + direct_bonus + recovery_bonus - near_shore_speed_cost * 600.0 - contact_cost - stall_cost
+		var score := threat_score * 10000.0 + progress * 10.0 + clearance_score * 30.0 + next_gate_alignment * 80.0 + continuity + direct_bonus - near_shore_speed_cost * 600.0 - contact_cost - stall_cost
 		candidates.append({"template":template, "simulation":simulation, "score":score, "index":index, "threat_safety":threat_score})
 		_record_diagnostic("candidate_scoring_usec", scoring_started_usec)
-		# Templates are ordered from the fastest intent-preserving control toward
-		# slower/wider fallbacks. Once one has generous whole-trajectory clearance,
-		# evaluating lower-priority controls adds CPU cost without adding safety.
-		if not emergency and not final_approach and threats.is_empty() and minimum_clearance >= comfort_clearance and recovery_tag in ["cruise", "cruise_reduced", "slow_turn", "player_fast_direct", "player_cruise_direct", "player_slow_direct"]:
+		# Clearance alone can accept an orbit away from a passed gate. A fast
+		# acceptance must advance this corridor leg and retain an onward heading.
+		var remaining_direction := goal - terminal
+		var heading_error := absf(angle_difference(float(terminal_state.get("heading", 0.0)), remaining_direction.angle()))
+		var intent_preserved := progress > minf(18.0, origin.distance_to(goal) * 0.08) and heading_error < PI * 0.25
+		if not emergency and not final_approach and threats.is_empty() and intent_preserved and minimum_clearance >= comfort_clearance and recovery_tag in ["cruise", "cruise_reduced", "slow_turn", "player_fast_direct", "player_cruise_direct", "player_slow_direct"]:
 			break
 	if candidates.is_empty():
 		return {"ok":false, "reason_code":"NO_SAFE_TRAJECTORY", "candidate_count":evaluated_candidates, "segments_simulated":segments_simulated, "candidates_rejected_by_terrain":rejected_by_terrain}
@@ -191,6 +221,7 @@ func _select_plan(templates: Array, initial_state: Dictionary, goal: Vector2, ho
 		"candidate_rank":int(best["index"]) + 1,
 		"valid_candidate_count":candidates.size(),
 		"minimum_clearance":best_simulation.get("minimum_clearance", 0.0),
+		"predicted_progress":(initial_state.get("position", Vector2.ZERO) as Vector2).distance_to(goal) - (best_simulation.get("terminal_state", {}).get("position", Vector2.ZERO) as Vector2).distance_to(goal),
 		"segments_simulated":segments_simulated,
 		"candidates_rejected_by_terrain":rejected_by_terrain,
 	}

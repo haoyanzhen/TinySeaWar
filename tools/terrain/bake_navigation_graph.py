@@ -23,6 +23,7 @@ PROFILES = [
 	{"id": "navigation.profile.small_shallow", "radius": 20.0, "movement_tags": ["Surface", "ShallowDraft"]},
 	{"id": "navigation.profile.standard_shallow", "radius": 32.0, "movement_tags": ["Surface", "ShallowDraft"]},
 	{"id": "navigation.profile.large_deep", "radius": 46.0, "movement_tags": ["Surface"]},
+	{"id": "navigation.profile.standard_deep", "radius": 32.0, "movement_tags": ["Surface"]},
 ]
 
 
@@ -84,6 +85,10 @@ def _swept_circle_clear(start: list[float], end: list[float], radius: float, obs
 def _segment_clear(start: list[float], end: list[float], radius: float, obstacles: list[dict], regions: list[dict], tags: set[str]) -> bool:
 	if not _swept_circle_clear(start, end, radius, obstacles):
 		return False
+	return _water_segment_clear(start, end, regions, tags)
+
+
+def _water_segment_clear(start: list[float], end: list[float], regions: list[dict], tags: set[str]) -> bool:
 	fractions = [0.0, 1.0]
 	for region in regions:
 		polygon = region.get("polygon", [])
@@ -139,6 +144,35 @@ def bake_profile(terrain: dict, profile: dict, cell_size: float) -> dict:
 	return {**profile, "cell_size": cell_size, "nodes": [nodes[key] for key in sorted(nodes)]}
 
 
+def restrict_profile(terrain: dict, source: dict, profile: dict) -> dict:
+	"""Reuse same-radius hull geometry, then revalidate stricter water permissions."""
+	if source["radius"] != profile["radius"] or not set(profile["movement_tags"]) < set(source["movement_tags"]):
+		raise ValueError("restricted profile requires equal hull radius and strictly fewer permissions")
+	tags = set(profile["movement_tags"])
+	regions = terrain.get("regions", [])
+	nodes = {node["id"]: {**node, "neighbors": []} for node in source["nodes"] if _region_allows(node["position"], regions, tags)}
+	for node in source["nodes"]:
+		if node["id"] not in nodes:
+			continue
+		for neighbor_id in node["neighbors"]:
+			if neighbor_id <= node["id"] or neighbor_id not in nodes:
+				continue
+			if _water_segment_clear(node["position"], nodes[neighbor_id]["position"], regions, tags):
+				nodes[node["id"]]["neighbors"].append(neighbor_id)
+				nodes[neighbor_id]["neighbors"].append(node["id"])
+	for node in nodes.values():
+		node["neighbors"].sort()
+	return {**profile, "cell_size": source["cell_size"], "nodes": list(nodes.values())}
+
+
+def bake_profiles(terrain: dict, cell_size: float) -> list[dict]:
+	profiles = []
+	for profile in PROFILES:
+		source = next((p for p in profiles if p["radius"] == profile["radius"] and set(profile["movement_tags"]) < set(p["movement_tags"])), None)
+		profiles.append(restrict_profile(terrain, source, profile) if source else bake_profile(terrain, profile, cell_size))
+	return profiles
+
+
 def main() -> int:
 	parser = argparse.ArgumentParser()
 	parser.add_argument("--terrain", default="data/terrain/terrain_definitions.json")
@@ -154,7 +188,7 @@ def main() -> int:
 				"definition_type": "NavigationGraph",
 				"terrain_definition_id": terrain["id"],
 				"navigation_revision": terrain.get("navigation_revision", 1),
-				"profiles": [bake_profile(terrain, profile, args.cell_size) for profile in PROFILES],
+				"profiles": bake_profiles(terrain, args.cell_size),
 			})
 		write_json(args.out, {"schema_version": 1, "generated_by": "tools/terrain/bake_navigation_graph.py", "definitions": definitions})
 		return 0

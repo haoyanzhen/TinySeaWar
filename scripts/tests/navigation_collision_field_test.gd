@@ -24,6 +24,7 @@ func _run() -> void:
 	_test_player_fast_turn_then_straight()
 	_test_motion_context_equivalence(registry)
 	_test_continuous_nearshore_fixtures()
+	_test_contact_departure()
 	_test_region_restriction_masks()
 	_test_corrupt_field_fallback(registry)
 	_test_collision_immediately_invalidates_plan(registry)
@@ -130,6 +131,24 @@ func _test_continuous_nearshore_fixtures() -> void:
 	_check(str(margin_departure.get("status", "")) == "ExactClear", "a Domain-legal hull may depart outward from the soft navigation margin over a short fixed-Tick segment")
 	var margin_entry: Dictionary = terrain.validate_movement_trajectory([{"position":Vector2(389.0, 400.0)}, {"position":Vector2(391.0, 400.0)}], 30.0, ["Surface"], 4.0)
 	_check(str(margin_entry.get("status", "")) == "Collides", "the soft navigation margin still rejects a short segment that moves toward land")
+
+
+func _test_contact_departure() -> void:
+	var query = TerrainQueryService.new()
+	var terrain := {"id":"contact", "map_size":[1000,800], "obstacles":[{"id":"bank", "block_mask":["ShipMovement"], "polygon":[[420,250],[620,250],[620,550],[420,550]]}], "regions":[]}
+	query.configure(terrain)
+	var start := Vector2(390,400)
+	var outward: Dictionary = query.resolve_circle_motion(start, Vector2(-1,0), 30.0, ["Surface"])
+	_check(not outward["collided"] and outward["position"] == Vector2(389,400), "contact skin can depart outward without teleport or false collision")
+	_check(query.resolve_circle_motion(start, Vector2(1,0), 30.0, ["Surface"])["collided"], "contact skin cannot move into the bank")
+	_check(query.resolve_circle_motion(Vector2(395,400), Vector2(-10,0), 30.0, ["Surface"])["collided"], "deep overlap is not treated as numerical contact")
+	terrain["obstacles"].append({"id":"other_bank", "block_mask":["ShipMovement"], "polygon":[[100,250],[300,250],[300,550],[100,550]]})
+	query.configure(terrain)
+	var crossing: Dictionary = query.resolve_circle_motion(start, Vector2(-330,0), 30.0, ["Surface"])
+	_check(crossing["collided"], "outward contact exception still rejects crossing a second bank")
+	terrain["regions"] = [{"id":"reef", "region_type":"ReefOrSandbar", "priority":10, "polygon":[[350,250],[385,250],[385,550],[350,550]]}]
+	query.configure(terrain)
+	_check(query.resolve_circle_motion(start, Vector2(-10,0), 30.0, ["Surface"])["collided"], "outward contact exception still honors restricted water")
 
 
 func _test_region_restriction_masks() -> void:

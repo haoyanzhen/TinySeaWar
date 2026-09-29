@@ -81,19 +81,24 @@ func plan_path(terrain_query, navigation_definition: Dictionary, start: Vector2,
 	stage_started = Time.get_ticks_usec()
 	var goals := _nearest_visible_nodes(profile, target, radius, movement_tags, terrain_query, terrain_context, target_occupiable)
 	_last_profile["goal_attachment_usec"] = Time.get_ticks_usec() - stage_started
-	var target_projected := goals.is_empty()
+	var target_projected := not target_occupiable or goals.is_empty()
+	var projection := {}
 	stage_started = Time.get_ticks_usec()
 	_profile_astar_expansions = 0
 	_profile_astar_environment_usec = 0
 	_profile_astar_neighbor_checks = 0
-	var result := _best_progress_path(by_id, starts, target, terrain_context) if target_projected else _a_star(by_id, starts, goals, target, terrain_context)
+	var progress_limit := start.distance_to(target) - maxf(18.0, radius * 0.5)
+	# One search: if the goal component is unreachable, use the best reachable
+	# stage discovered by that same search, never run a second full flood.
+	var result := _a_star(by_id, starts, [] if target_projected else goals, target, terrain_context, projection, progress_limit)
+	target_projected = target_projected or bool(projection.get("target_projected", false))
 	_last_profile["astar_usec"] = Time.get_ticks_usec() - stage_started
 	_last_profile["astar_expansions"] = _profile_astar_expansions
 	_last_profile["astar_environment_usec"] = _profile_astar_environment_usec
 	_last_profile["astar_neighbor_checks"] = _profile_astar_neighbor_checks
 	if result.is_empty():
 		_last_profile["total_usec"] = Time.get_ticks_usec() - total_started
-		return {"ok": false, "reason_code": "NO_GOAL_ATTACHMENT" if target_projected else "ASTAR_DISCONNECTED", "waypoints": []}
+		return {"ok": false, "reason_code": "TARGET_UNREACHABLE", "waypoints": []}
 	var raw_points: Array = []
 	for node_id in result:
 		raw_points.append(_vector2(by_id[node_id]["position"]))
@@ -154,68 +159,19 @@ func _nearest_visible_nodes(profile: Dictionary, position: Vector2, radius: floa
 	return result
 
 
-func _best_progress_path(by_id: Dictionary, start_ids: Array, target: Vector2, terrain_context) -> Array:
-	var open: Array = []
-	var closed := {}
-	var came_from := {}
-	var cost := {}
-	var best_id := ""
-	var best_distance := INF
-	var best_cost := INF
-	var start_distance := INF
-	for start_id_value in start_ids:
-		var start_id := str(start_id_value)
-		if not by_id.has(start_id): continue
-		var distance := _vector2(by_id[start_id]["position"]).distance_to(target)
-		start_distance = minf(start_distance, distance)
-		cost[start_id] = 0.0
-		_heap_push(open, {"id":start_id, "score":0.0})
-	while not open.is_empty():
-		var current_id: String = str(_heap_pop(open)["id"])
-		if closed.has(current_id): continue
-		closed[current_id] = true
-		_profile_astar_expansions += 1
-		var current_position := _vector2(by_id[current_id]["position"])
-		var distance_to_target := current_position.distance_to(target)
-		var current_cost := float(cost.get(current_id, INF))
-		if distance_to_target < best_distance - 0.001 or (is_equal_approx(distance_to_target, best_distance) and (current_cost < best_cost - 0.001 or (is_equal_approx(current_cost, best_cost) and current_id < best_id))):
-			best_id = current_id
-			best_distance = distance_to_target
-			best_cost = current_cost
-		for neighbor_id_value in by_id[current_id].get("neighbors", []):
-			_profile_astar_neighbor_checks += 1
-			var neighbor_id := str(neighbor_id_value)
-			if not by_id.has(neighbor_id) or closed.has(neighbor_id): continue
-			var neighbor_position := _vector2(by_id[neighbor_id]["position"])
-			var environment_started := Time.get_ticks_usec()
-			var environment_allowed := _environment_segment_allowed(terrain_context, current_position, neighbor_position)
-			_profile_astar_environment_usec += Time.get_ticks_usec() - environment_started
-			if not environment_allowed: continue
-			var candidate_cost := current_cost + current_position.distance_to(neighbor_position)
-			if cost.has(neighbor_id) and candidate_cost >= float(cost[neighbor_id]) - 0.001: continue
-			cost[neighbor_id] = candidate_cost
-			came_from[neighbor_id] = current_id
-			_heap_push(open, {"id":neighbor_id, "score":candidate_cost})
-	if best_id.is_empty() or best_distance >= start_distance - 0.001:
-		return []
-	var path: Array = [best_id]
-	var path_id := best_id
-	while came_from.has(path_id):
-		path_id = str(came_from[path_id])
-		path.push_front(path_id)
-	return path
-
-
 func _node_cell(position: Vector2) -> Vector2i:
 	return Vector2i(floori(position.x / NODE_CELL_SIZE), floori(position.y / NODE_CELL_SIZE))
 
 
-func _a_star(by_id: Dictionary, start_ids: Array, goal_ids: Array, target: Vector2, terrain_context) -> Array:
+func _a_star(by_id: Dictionary, start_ids: Array, goal_ids: Array, target: Vector2, terrain_context, projection: Dictionary, progress_limit: float) -> Array:
 	var open: Array = []
 	var closed := {}
 	var came_from := {}
 	var cost := {}
 	var goals := {}
+	var best_id := ""
+	var best_distance := progress_limit
+	var best_cost := INF
 	for goal_id in goal_ids:
 		goals[goal_id] = true
 	for start_id in start_ids:
@@ -235,6 +191,12 @@ func _a_star(by_id: Dictionary, start_ids: Array, goal_ids: Array, target: Vecto
 			path.push_front(current_id)
 			return path
 		var current_position := _vector2(by_id[current_id]["position"])
+		var distance := current_position.distance_to(target)
+		var current_cost := float(cost[current_id])
+		if distance < best_distance - 0.001 or (not best_id.is_empty() and is_equal_approx(distance, best_distance) and (current_cost < best_cost - 0.001 or (is_equal_approx(current_cost, best_cost) and current_id < best_id))):
+			best_id = current_id
+			best_distance = distance
+			best_cost = current_cost
 		for neighbor_id in by_id[current_id].get("neighbors", []):
 			_profile_astar_neighbor_checks += 1
 			if not by_id.has(neighbor_id):
@@ -253,7 +215,13 @@ func _a_star(by_id: Dictionary, start_ids: Array, goal_ids: Array, target: Vecto
 			cost[neighbor_id] = candidate_cost
 			came_from[neighbor_id] = current_id
 			_heap_push(open, {"id": neighbor_id, "score": candidate_cost + neighbor_position.distance_to(target)})
-	return []
+	if best_id.is_empty(): return []
+	projection["target_projected"] = true
+	var path: Array = [best_id]
+	while came_from.has(best_id):
+		best_id = str(came_from[best_id])
+		path.push_front(best_id)
+	return path
 
 
 func _heap_push(heap: Array, item: Dictionary) -> void:

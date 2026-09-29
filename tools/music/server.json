@@ -1,0 +1,10 @@
+{
+  "ssh_target": "hyz@192.168.252.143",
+  "remote_root": "/home/hyz/server/musicGen",
+  "remote_python": "/home/hyz/server/musicGen/app/.venv/bin/python",
+  "api_url": "http://127.0.0.1:8001",
+  "gpu_index": 0,
+  "service": "musicgen.service",
+  "poll_timeout_seconds": 1800,
+  "poll_interval_seconds": 5
+}

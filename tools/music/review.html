@@ -1,0 +1,53 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>音乐人工评审</title>
+<style>body{font:16px/1.6 system-ui;margin:0;background:#eef4f8;color:#18394b}main{max-width:1250px;margin:auto;padding:28px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:18px}article{background:white;border:1px solid #ccdae3;border-radius:14px;padding:20px}h2{font-size:20px}audio,textarea{width:100%}textarea{box-sizing:border-box;min-height:95px}button,select,input{font:inherit;padding:6px;margin:5px 5px 5px 0}small{display:block;color:#526c7c}.flag{color:#94381f}details p{white-space:pre-wrap;overflow-wrap:anywhere}header{margin-bottom:20px}.status{padding:10px;background:#fff7d8}a{color:#17658b}</style>
+<main><header><h1>音乐人工评审</h1><p id="batch"></p><p>技术检查不等于音乐验收。请完整试听，关注抖动、提前结束、配器主次、场景适配与循环接缝。胜负音乐还需比较情绪是否明确。</p><p class="status" id="storage">意见暂存在当前浏览器；请导出 JSON 交回项目，避免浏览器清理后丢失。未制作循环的候选不能标为循环成品。</p><label>评审人 <input id="reviewer" placeholder="姓名或代号"></label><button id="export">导出评审 JSON</button><label>导入评审 JSON <input id="import" type="file" accept="application/json"></label></header><div class="grid" id="cards"></div></main>
+<script>
+'use strict';
+const data=/*BATCH_DATA*/;
+const categories={title:'标题',battle:'出击',victory:'胜利',defeat:'失败',neutral:'中性'};
+const statuses={basic_checks_passed:'基础检查通过，待试听',needs_review:'存在待复查区间',missing:'音频缺失'};
+const issuesText={duration_mismatch:'时长与请求不符',unexpected_format:'音频格式待核对',silent:'未检测到有效音量',long_quiet_tail:'曲尾有较长低电平区间',quiet_regions_review:'部分区间音量较低，请试听',clipped_samples:'存在削波样本'};
+const key='music-review:'+data.batch_sha256;
+let opinions={}; let reviewer='';
+try{const old=JSON.parse(localStorage.getItem(key)||'{}'); opinions=old.tracks||{}; reviewer=old.reviewer||'';}catch(e){}
+const el=(tag,text)=>{const node=document.createElement(tag);if(text!==undefined)node.textContent=text;return node};
+const persist=()=>{try{localStorage.setItem(key,JSON.stringify({reviewer:reviewer,tracks:opinions}));}catch(e){document.querySelector('#storage').textContent='浏览器暂存不可用，请立即导出 JSON 保留意见。';}};
+document.querySelector('#batch').textContent='批次：'+data.batch_id+' · '+data.tracks.length+' 首';
+document.querySelector('#reviewer').value=reviewer;
+document.querySelector('#reviewer').oninput=e=>{reviewer=e.target.value;persist()};
+function render(){
+ const cards=document.querySelector('#cards');cards.replaceChildren();
+ for(const t of data.tracks){
+  const v=t.validation;const opinion=opinions[t.id]||{decision:'pending',notes:'',timestamps:[],loop_checked:false};opinions[t.id]=opinion;
+  const card=el('article');card.append(el('h2',t.title),el('small',categories[t.category]+' · '+t.id));
+  card.append(el('p',v.duration_seconds===undefined?'音频尚未下载':v.duration_seconds.toFixed(2)+' 秒 · '+v.sample_rate+' Hz · '+v.channels+' 声道'));
+  const status=el('p','检查结果：'+statuses[v.technical_status]+'；人工意见独立记录');card.append(status);
+  if(v.issues.length){const issues=el('p','待查看：'+v.issues.map(i=>issuesText[i]||i).join('；'));issues.className='flag';card.append(issues)}
+  const audio=el('audio');audio.controls=true;audio.preload='metadata';if(v.sha256)audio.src=t.id+'.wav';
+  audio.onplay=()=>document.querySelectorAll('audio').forEach(other=>{if(other!==audio)other.pause()});card.append(audio);
+  if(v.quiet_regions_seconds?.length)card.append(el('small','低电平区间（非音乐性结论）：'+JSON.stringify(v.quiet_regions_seconds)));
+  const mark=el('button','标记当前问题时间');mark.onclick=()=>{opinion.timestamps.push(Number(audio.currentTime.toFixed(2)));marks.textContent='问题时间：'+opinion.timestamps.join(', ')+' 秒';persist()};
+  const marks=el('small','问题时间：'+opinion.timestamps.join(', ')+' 秒');const clear=el('button','清除时间标记');clear.onclick=()=>{opinion.timestamps=[];marks.textContent='问题时间：';persist()};card.append(mark,clear,marks);
+  const select=el('select');select.setAttribute('aria-label',t.title+'评审结论');
+  for(const [value,label] of [['pending','待评审'],['preferred','偏好候选'],['revise','需修改'],['reject','不采用']]){const option=el('option',label);option.value=value;select.append(option)}
+  select.value=opinion.decision;select.onchange=()=>{opinion.decision=select.value;persist()};card.append(select);
+  const label=el('label',' 已单独验证循环接缝 ');const check=el('input');check.type='checkbox';check.checked=opinion.loop_checked;check.onchange=()=>{opinion.loop_checked=check.checked;persist()};label.prepend(check);card.append(label);
+  const notes=el('textarea');notes.placeholder='旋律／情绪／完整性／配器／需修改处';notes.setAttribute('aria-label',t.title+'评审意见');notes.value=opinion.notes;notes.oninput=()=>{opinion.notes=notes.value;persist()};card.append(notes);
+  const details=el('details');details.append(el('summary','提示词、参数和校验记录'),el('p',JSON.stringify({request:t.request,validation:v},null,2)));card.append(details);
+  if(v.sha256){const link=el('a','下载 WAV');link.href=t.id+'.wav';link.download='';card.append(link)}cards.append(card);
+ }
+}
+render();
+document.querySelector('#export').onclick=()=>{
+ const content={version:1,batch_id:data.batch_id,batch_sha256:data.batch_sha256,reviewer,exported_at:new Date().toISOString(),tracks:data.tracks.map(t=>({id:t.id,audio_sha256:t.validation.sha256||null,...opinions[t.id]}))};
+ const url=URL.createObjectURL(new Blob([JSON.stringify(content,null,2)],{type:'application/json'}));const a=el('a');a.href=url;a.download=data.batch_id+'.review.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+};
+document.querySelector('#import').onchange=async e=>{
+ try{const incoming=JSON.parse(await e.target.files[0].text());if(incoming.batch_sha256!==data.batch_sha256)throw Error('批次不匹配');
+ const next={};for(const row of incoming.tracks){const t=data.tracks.find(t=>t.id===row.id);if(!t||row.audio_sha256!==(t.validation.sha256||null))throw Error('音频版本不匹配');
+ if(!['pending','preferred','revise','reject'].includes(row.decision)||typeof row.notes!=='string'||!Array.isArray(row.timestamps)||!row.timestamps.every(x=>Number.isFinite(x)&&x>=0)||typeof row.loop_checked!=='boolean')throw Error('意见格式错误');
+ next[row.id]={decision:row.decision,notes:row.notes,timestamps:row.timestamps,loop_checked:row.loop_checked};}
+ opinions=next;reviewer=String(incoming.reviewer||'');document.querySelector('#reviewer').value=reviewer;persist();render();
+ }catch(err){alert('未导入：'+err.message)}
+};
+</script></html>

@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "id": "example_title_study_v1",
+  "tracks": [
+    {
+      "id": "title_heroic_01",
+      "title": "标题主题 · 舰队启航",
+      "category": "title",
+      "request": {
+        "model": "acestep-v15-xl-sft",
+        "prompt": "Cinematic symphonic title-screen overture for an anime naval strategy game. A majestic fleet appears on the vast blue horizon. Broad lyrical French horn theme introduced early, soaring violins, rich low strings, luminous woodwinds and rippling harp. Measured timpani and restrained orchestral snare support a noble maritime pulse. Begin with poised anticipation, unfold a sweeping heroic main melody, build to one radiant orchestral crest, then reprise the theme with dignity. Grand scale, hopeful courage and open ocean space, polished natural orchestral recording. Preserve melodic warmth and clear instrument separation; percussion supports the theme. Entirely instrumental: no vocals, choir, singing, speech or spoken words. Music only, no ocean ambience, explosions, gunshots or other sound effects. High-fidelity stereo, clean balanced mix, natural musical phrasing.",
+        "lyrics": "[Instrumental]",
+        "thinking": true,
+        "vocal_language": "unknown",
+        "bpm": 100,
+        "key_scale": "D Major",
+        "time_signature": "4",
+        "audio_duration": 90,
+        "batch_size": 1,
+        "inference_steps": 50,
+        "guidance_scale": 7.0,
+        "use_random_seed": false,
+        "seed": 2026092902,
+        "audio_format": "wav",
+        "use_cot_caption": false,
+        "use_cot_language": false,
+        "lm_backend": "pt",
+        "lm_model_path": "acestep-5Hz-lm-4B"
+      }
+    }
+  ]
+}

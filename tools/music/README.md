@@ -6,7 +6,7 @@
 
 `server.json` 保存已授权服务器的位置，不含密码。SSH 使用已有密钥／agent、BatchMode 与严格主机校验。工具不安装软件、不启动服务、不释放其他进程显存、不改 GPU、不自动降低模型配置。可通过 `--config` 指定其他部署；API 必须为远端 loopback。
 
-批次清单示例见 `example_batch.json`：`version=1`，稳定批次 `id`，`tracks` 中每项包含唯一 `id`、展示 `title`、`category`、完整 API `request`。类别为 title/battle/victory/defeat/neutral，不再单列菜单。请求固定种子、单曲单批、WAV、XL SFT + 4B；提示词和曲式由 agent 按用户目标编写。
+批次清单示例见 `example_batch.json`：`version=1`，稳定批次 `id`，`tracks` 中每项包含唯一 `id`、展示 `title`、`category`、完整 API `request`。类别为 title/battle/victory/defeat/neutral，不再单列菜单。请求固定种子、单曲单批、WAV、XL SFT + 4B；提示词和曲式由 agent 按用户目标编写。示例为 150 秒标题主主题，仅演示结构；实际时长按用户要求或设计目标填写。
 
 ```sh
 uv run --locked python tools/music/music.py check --manifest tools/music/example_batch.json
@@ -24,9 +24,9 @@ uv run --locked python tools/music/music.py serve --output reports/audio/my_batc
 
 每次提交新曲前读取 `nvidia-smi`，并核对运行中服务进程树的 `CUDA_VISIBLE_DEVICES` 和 API 加载模型。健康检查或 GPU 信息不明时直接报错，不能靠授权文件绕过。
 
-当前自动放行范围仅限已加载 XL SFT + 4B、A100 80GB、90 秒、50 步、CFG7、batch=1，且当时空闲显存至少 **16384 MiB**。这个值是保守的新增推理余量：历史单曲日志峰值约 27.5 GiB，常驻服务约 22 GiB，另留安全空间；不是模型显存精确公式或容量保证。已有服务占用不重复计入空闲显存。其他时长（包括正式 2–4 分钟曲）、硬件或参数属于未测配置，必须先由用户决定试跑，再根据实测评估新容量基线。不得为了自动放行而擅自降低阈值。
+所有时长在服务 GPU 映射和已加载模型核验通过后，统一检查空闲显存至少 **16384 MiB**。时长按用户要求或设计 50 的类别目标填写，不默认缩成 90 秒，不因超过历史测量时长单独要求试跑批准；清单接受任意有限正数时长，服务实际支持范围以返回结果为准。16 GiB 是运行余量门槛，不是任意时长都能成功的容量保证，也不按时长编造显存估算。已有服务占用不重复计入空闲显存。服务拒绝或生成失败时保留证据并停止，不自动缩短时长或重试。
 
-显存不足／超出容量基线时返回 `needs_user_decision`，本地退出码 3，不发生成 POST。报告 GPU UUID、总/用/空闲显存、任务参数、门槛及原因，请用户决定等待、调整任务，或按当前条件试跑。**超时等待不代表同意。** 不自动终止现有任务、切卡或降配。
+显存不足时返回 `needs_user_decision`，本地退出码 3，不发生成 POST。报告 GPU UUID、总/用/空闲显存、任务参数、门槛及原因，请用户决定等待、调整任务，或按当前条件试跑。**超时等待不代表同意。** 不自动终止现有任务、切卡或降配。
 
 只有用户明确决定继续，agent 才可创建临时 `approval.json`，通过 `--approval` 传入：
 

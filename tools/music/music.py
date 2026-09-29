@@ -62,7 +62,8 @@ def validate(batch):
         assert req['audio_format'] == 'wav' and req['batch_size'] == 1
         assert req['use_random_seed'] is False and type(req['seed']) is int
         assert isinstance(req['prompt'], str) and req['prompt'].strip()
-        assert 1 <= req['audio_duration'] <= 600 and 1 <= req['inference_steps'] <= 200
+        assert type(req['audio_duration']) in (int, float) and math.isfinite(req['audio_duration']) and req['audio_duration'] > 0
+        assert 1 <= req['inference_steps'] <= 200
         assert req.get('thinking') is True and req.get('lm_backend') == 'pt'
         # Keep generation self-contained. Uploaded audio/reference workflows need a separate contract.
         assert not (set(req) & {'reference_audio_path', 'src_audio_path', 'audio_codes'})
@@ -112,15 +113,11 @@ def probe(config):
 
 
 def gate(snapshot, track, batch_hash, approval=None):
-    gpu, req = snapshot['gpu'], track['request']
+    gpu = snapshot['gpu']
     reasons = []
-    # Conservative incremental allowance for the already-loaded, measured 90s profile.
+    # Operational free-memory reserve, not a duration limit or a capacity guarantee.
     if gpu['free_mib'] < 16384:
         reasons.append('free VRAM below 16384 MiB incremental reserve')
-    if not ('A100' in gpu['name'] and gpu['total_mib'] >= 80000 and
-            req['audio_duration'] == 90 and req['inference_steps'] == 50 and
-            req.get('guidance_scale') == 7.0):
-        reasons.append('outside measured A100 80GB / 90s / 50-step / CFG7 profile')
     if not reasons:
         return {'allowed':True,'reasons':[],'override':False}
     valid = approval is not None and (

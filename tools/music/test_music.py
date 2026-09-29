@@ -36,13 +36,21 @@ class WorkflowTests(unittest.TestCase):
             if mode=='seed':b['tracks'][0]['request']['use_random_seed']=True
             with self.assertRaises(AssertionError):music.validate(b)
 
-    def test_gpu_gate_boundaries_and_unknown_duration(self):
+    def test_gpu_gate_boundaries_and_arbitrary_duration(self):
         t=self.batch['tracks'][0];h=music.digest(self.batch)
         self.assertTrue(music.gate(self.snapshot,t,h)['allowed'])
         self.snapshot['gpu']['free_mib']=16383
         self.assertFalse(music.gate(self.snapshot,t,h)['allowed'])
-        self.snapshot['gpu']['free_mib']=60000;t['request']['audio_duration']=180
-        self.assertFalse(music.gate(self.snapshot,t,h)['allowed'])
+        self.snapshot['gpu']['free_mib']=16384
+        for duration in (45, 90, 150, 210, 601, 1200):
+            t['request']['audio_duration']=duration
+            music.validate(self.batch)
+            self.assertTrue(music.gate(self.snapshot,t,h)['allowed'])
+
+    def test_invalid_durations_rejected(self):
+        for duration in (0, -1, float('inf'), float('nan'), True, '150'):
+            self.batch['tracks'][0]['request']['audio_duration']=duration
+            with self.assertRaises(AssertionError):music.validate(self.batch)
 
     def test_approval_is_scoped_and_cannot_cover_falling_capacity(self):
         self.snapshot['gpu']['free_mib']=12000;t=self.batch['tracks'][0];h=music.digest(self.batch)

@@ -8,6 +8,7 @@ var friendly_units := {}
 var visible_enemies := {}
 var contact_ghosts := {}
 var known_projectiles := {}
+var visible_aircraft := {}
 var known_facilities := {}
 var known_minefields := {}
 var environment_zones: Array = []
@@ -32,6 +33,7 @@ static func from_battle_state(state: Dictionary, observer_faction: String):
 		var contact: Dictionary = state["contacts_by_faction"][observer_faction][contact_id]
 		if not bool(contact.get("visible", false)):
 			observation.contact_ghosts[contact_id] = contact.duplicate(true)
+	observation.visible_aircraft = state.get("aviation_observations_by_faction", {}).get(observer_faction, {}).duplicate(true)
 	var known: Dictionary = state.get("known_projectiles_by_faction", {}).get(observer_faction, {})
 	for projectile_id in state.get("projectiles_by_id", {}):
 		var projectile: Dictionary = state["projectiles_by_id"][projectile_id]

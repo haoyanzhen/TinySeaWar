@@ -129,3 +129,5 @@ UI 接口：
 ## 菜单封面接口（B 方案）
 
 菜单通过 `DataRegistry.assets.menu_covers()` 和 `menu_cover(id)` 查询 `assets/ui/processed/menu/cover_manifest.json`。加载器检查唯一 ID、正式 menu 资源路径和文件存在性；表现层不拼接角色封面物理路径。七张场景插画位于 `assets/ui/processed/menu/covers/`，与角色战斗透明立绘分别管理。共享可缩放面板和按钮由 `scripts/presentation/ui_theme.gd` 绘制；头像、图标、血条继续通过现有语义接口查询。
+
+航空持续消费者从可见投影携带的具体武器/机型解析公共 `visual.projectile.aircraft.*`，在视图绑定时缓存映射。投放实体 `projectile.air_torpedo` 交公共鱼雷查询，不从角色目录拼接。程序绘制的阴影、敌我形状标记、缺图箭头和符号LOD不新增角色包必需项。

@@ -26,7 +26,9 @@ func _run() -> void:
 	_check(not session.facility_service.declare_control(airfield_id, surface_unit).get("accepted", false), "surface ships cannot capture the airfield")
 	_check(is_equal_approx(float(airfield.get("max_hp", 0.0)), 2600.0) and is_equal_approx(float(definition.get("suppression_damage_threshold", 0.0)), 140.0) and is_equal_approx(float(definition.get("suppression_duration", 0.0)), 15.0), "airfield exposes authored durability and suppression rules")
 
-	var target_position: Vector2 = session.state["units_by_id"]["unit.player.aurora"]["position"]
+	# The enlarged harbor can put the initial fleet beyond mission range.
+	# This test exercises lifecycle, so use an explicit legal target near the airfield.
+	var target_position: Vector2 = airfield["position"] + Vector2(-300.0, 0.0)
 	var recon_request: Dictionary = session.facility_service.request_support(airfield_id, "support_mission.air_recon", "enemy", target_position, 0.0, {})
 	_check(recon_request.get("accepted", false) and recon_request.get("event", {}).get("mission_state") == "Preparing", "recon mission enters Preparing through remote command")
 	var recon_launch: Array = session.facility_service.advance(2.1, 2.1, session.state["units_by_id"])

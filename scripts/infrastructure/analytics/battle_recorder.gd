@@ -18,6 +18,7 @@ func reset(battle_id: String, seed_value: int) -> void:
 		"first_sinking_time": -1.0,
 		"commands": 0,
 		"skill_casts": 0,
+		"aviation": {"waves_launched":0, "waves_completed":0, "anti_air_rounds":0, "aircraft_damage":0.0, "waves_destroyed":0, "payloads_released":0},
 		"units": {},
 		"non_ship_damage": {},
 		"result": {},
@@ -146,6 +147,12 @@ func consume(events: Array, elapsed_time: float) -> void:
 				if summary["first_fire_time"] < 0.0: summary["first_fire_time"] = elapsed_time
 				_record_submarine_weapon_fired(event, elapsed_time)
 			"SkillCast": summary["skill_casts"] += 1
+			"AviationWaveLaunched": summary.aviation.waves_launched += 1
+			"AviationWaveResolved": summary.aviation.waves_completed += 1
+			"AntiAirFired": summary.aviation.anti_air_rounds += 1
+			"AircraftDamaged": summary.aviation.aircraft_damage += float(event.get("damage", 0))
+			"AircraftDestroyed": summary.aviation.waves_destroyed += 1
+			"AviationPayloadReleased": summary.aviation.payloads_released += 1
 			"AttackResolved": _record_damage(event.get("damage_result", {}), elapsed_time)
 			"UnitSunk":
 				if summary["first_sinking_time"] < 0.0: summary["first_sinking_time"] = elapsed_time

@@ -299,3 +299,7 @@ controller_rules?
 - 多边形和安全航道通过地形校验。
 - 阵营快照只返回该阵营已知或拥有的雷区；全量边界只进入全知调试。
 - 水雷触发复用第 8.3 节的引用规则，不保存独立易漂移伤害副本。
+
+### 航空支援运行关联
+
+设施 `support_missions` 的 `mission_id/facility_id/faction_id/launch_at_time/resolve_at_time/target_position/state` 同时作为岸基航空投影来源。Physical 的空袭编队使用 `support.<mission_id>` 稳定关联；可选 `aircraft_hp > 0` 缺省350。侦察/巡逻区域仍按既有 `support_effects` 发布，不新增机体或击杀字段。

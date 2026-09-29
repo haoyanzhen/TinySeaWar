@@ -1,6 +1,7 @@
 extends SceneTree
 const Session = preload("res://scripts/application/battle_session.gd")
 const Registry = preload("res://scripts/infrastructure/data/config_registry.gd")
+const EXPECTED_SHA256 = "786f7e74663108baf2515db038a8b8d7b88fd5368054e8ced5bd93a1ca418441"
 const BASELINE = "res://reports/aviation/20260929-runtime/baseline.txt"
 func _init(): call_deferred("run")
 func run():
@@ -26,7 +27,7 @@ func run():
 				source.position += Vector2(0, 0.5)
 				s._resolve_delayed_attacks()
 				# Snapshot creation must remain read-only and independent of frame frequency.
-				if tick % 3 == 0: s.snapshot("player")
+				if tick % 3 == 0 and "--no-snapshots" not in OS.get_cmdline_user_args(): s.snapshot("player")
 			for event in s._event_buffer:
 				if str(event.event_type).begins_with("Aviation"): continue
 				var copy: Dictionary = event.duplicate(true)
@@ -39,7 +40,7 @@ func run():
 		print("Recorded aviation baseline: ", facts.size(), " facts")
 		quit()
 	else:
-		var matches := FileAccess.get_file_as_string(BASELINE) == text
+		var matches := text.sha256_text() == EXPECTED_SHA256
 		print("Aviation equivalence: ", matches, " / ", facts.size(), " facts")
 		if not matches: FileAccess.open(BASELINE + ".actual", FileAccess.WRITE).store_string(text)
 		quit(0 if matches else 1)

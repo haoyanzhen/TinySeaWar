@@ -85,3 +85,5 @@ Search | Approach | SurfaceForAttack | AttackRun | BreakContact | RecoverOxygen
 - 舰队方案、可配置模式和 Rule Set 当前没有注册表 Definition；它们仍由 16 号设计与程序白名单拥有，只有在加载器、负例和迁移策略落地后才能加入本契约。
 
 `submarine_last_asw_damage_at`、`submarine_last_dive_at` 为战斗秒数，默认 `-INF`；前者只记录有效反潜伤害，后者只记录权威下潜完成。`submarine_depth_intent` 枚举为 `Attack | SelfDefense | Conceal | Recover | Hunt`，默认 `Hunt`，不新增持久战斗阶段。
+
+航空真实模式观察对象增加 `visible_aircraft: Dictionary`，从 `aviation_observations_by_faction` 读取当前合法敌机片段，仅含公共ID、机型、位置、航向、HP及飞行状态。没有来源舰、武器、目标落点、剩余航时或隐藏路线；不作为舰船导航实体。抽象模式不凭新航空视图扩展AI观察权限。

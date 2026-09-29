@@ -234,6 +234,14 @@ func _validate_ship(ship: Dictionary) -> void:
 
 func _validate_weapon(weapon: Dictionary) -> void:
 	var weapon_id := str(weapon.get("id", "?"))
+	if weapon.get("mount_type", "") == "Aviation" and float(weapon.get("aircraft_hp",350)) <= 0:
+		errors.append("Invalid aircraft_hp in %s" % weapon_id)
+	if weapon.get("aviation_payload", "Bomb") not in ["Bomb", "Torpedo"]:
+		errors.append("Invalid aviation_payload in %s" % weapon_id)
+	if weapon.get("aviation_payload", "Bomb") == "Torpedo":
+		var payload: Dictionary = get_definition("projectiles", str(weapon.get("air_torpedo_projectile_id", "")))
+		if weapon.get("mount_type", "") != "Aviation" or payload.get("behavior", "") != "Straight" or float(weapon.get("air_torpedo_range", 0)) <= 0 or float(weapon.get("air_torpedo_drop_distance", 0)) <= 0:
+			errors.append("Invalid physical aviation torpedo parameters in %s" % weapon_id)
 	if weapon.get("mount_type", "") not in ["Gun", "Torpedo", "AntiAir", "Aviation", "AntiSubmarine", "Special"]:
 		errors.append("Invalid mount type in %s" % weapon_id)
 	if str(weapon.get("weapon_group_id", "")).is_empty():
@@ -726,6 +734,8 @@ func _valid_normalized_rgba(value: Variant) -> bool:
 
 
 func _validate_combat_settings(settings: Dictionary) -> void:
+	if settings.get("aviation_rules_mode", "Abstract") not in ["Abstract", "Physical"]:
+		errors.append("Invalid aviation_rules_mode in settings.combat")
 	var dispersion: Dictionary = settings.get("gun_dispersion", {})
 	var sigma_scale := float(dispersion.get("sigma_scale", 0.0))
 	var longitudinal_ratio := float(dispersion.get("longitudinal_sigma_ratio", 0.0))

@@ -62,7 +62,7 @@ Use lowercase English file names with underscores:
 - [technical/t00_coastal_ai_performance_solution.md](technical/t00_coastal_ai_performance_solution.md)：有岸与大编队战斗的 AI、导航、空间查询、Tick 拆分和单位侦查性能治理。
 - [technical/t01_inertial_navigation_and_emergency_avoidance.md](technical/t01_inertial_navigation_and_emergency_avoidance.md)：战略走廊、常规动力学航迹与高威胁紧急避险。
 - [technical/t02_level_objective_reinforcement_progress_solution.md](technical/t02_level_objective_reinforcement_progress_solution.md)：声明式关卡目标、接替增援、结算与进度实现。
-- [technical/t10_carrier_combat_presentation_solution.md](technical/t10_carrier_combat_presentation_solution.md)：航空表现投影、事件接管、规则闭环与分阶段验收；不替代航空规则和公式真源。
+- [technical/t10_carrier_combat_presentation_solution.md](technical/t10_carrier_combat_presentation_solution.md)：航空表现投影、事件接管、A默认表现与B显式规则闭环及分阶段验收；当前证据见00，不替代规则和公式真源。
 
 ### Art
 

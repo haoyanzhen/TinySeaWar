@@ -16,4 +16,4 @@
 - [t00_coastal_ai_performance_solution.md](t00_coastal_ai_performance_solution.md)：有岸与大编队战斗的 AI 调度、导航、空间查询、Tick 阶段及单位侦查性能治理方案。
 - [t01_inertial_navigation_and_emergency_avoidance.md](t01_inertial_navigation_and_emergency_avoidance.md)：`3-5s` 战略走廊、`1.0s` 常规动力学航迹与 `0.1s` 高威胁紧急避险状态机。
 - [t02_level_objective_reinforcement_progress_solution.md](t02_level_objective_reinforcement_progress_solution.md)：23 个教学/挑战关的声明式目标、接替增援与幂等进度存档契约。
-- [t10_carrier_combat_presentation_solution.md](t10_carrier_combat_presentation_solution.md)：航空过程投影、新旧事件接管、全圈防空与实体投雷的分阶段方案；当前仅设计修订，运行时及后续平衡待验收。
+- [t10_carrier_combat_presentation_solution.md](t10_carrier_combat_presentation_solution.md)：航空过程投影、新旧事件接管、全圈防空与实体投雷的分阶段方案；A默认表现与B显式真实规则已接入；自动/画面证据见00，人工、GPU与后续平衡待验收。

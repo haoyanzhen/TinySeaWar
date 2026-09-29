@@ -1,5 +1,6 @@
 extends Node
 
+const AircraftSquadronView = preload("res://scripts/presentation/battle/aircraft_squadron_view.gd")
 const ShipUnitView = preload("res://scripts/presentation/battle/ship_unit_view.gd")
 const ProjectileView = preload("res://scripts/presentation/battle/projectile_view.gd")
 const BattleVfx = preload("res://scripts/presentation/battle/battle_vfx.gd")
@@ -12,6 +13,11 @@ const SUPERHEAVY_GUN_CALIBER_MM := 420.0
 var unit_layer: Node2D
 var projectile_layer: Node2D
 var vfx_layer: Node2D
+var aviation_views := {}
+var aviation_pool: Array = []
+var aviation_enabled := true
+var consumed_events := {}
+var last_event_sequence := 0
 var unit_views := {}
 var projectile_views := {}
 var damage_number_views_by_target := {}
@@ -26,6 +32,10 @@ func setup(new_unit_layer: Node2D, new_projectile_layer: Node2D, new_vfx_layer: 
 
 
 func clear() -> void:
+	aviation_views.clear()
+	aviation_pool.clear()
+	consumed_events.clear()
+	last_event_sequence = 0
 	for view in unit_views.values():
 		if is_instance_valid(view):
 			view.queue_free()
@@ -45,23 +55,44 @@ func clear() -> void:
 
 
 func sync_snapshot(snapshot: Dictionary, selected_unit_id: String, focused_target_id: String) -> void:
+	var mode := Node.PROCESS_MODE_DISABLED if snapshot.get("phase", "") == "Paused" else Node.PROCESS_MODE_INHERIT
+	if projectile_layer: projectile_layer.process_mode = mode
+	if vfx_layer: vfx_layer.process_mode = mode
 	_sync_units(snapshot.get("units", {}), selected_unit_id, focused_target_id)
 	_sync_projectiles(snapshot.get("projectiles", {}))
+	_sync_aviation(snapshot, selected_unit_id)
 
 
-func consume_events(events: Array, session) -> void:
+func consume_events(events: Array, context) -> void:
 	for event in events:
+		var key := str(event.get("event_id", ""))
+		if not key.is_empty():
+			if key.begins_with("event."):
+				var sequence := int(key.trim_prefix("event."))
+				if sequence <= last_event_sequence: continue
+				last_event_sequence = sequence
+			if consumed_events.has(key): continue
+			consumed_events[key] = true
+			if consumed_events.size() > 4096: consumed_events.erase(consumed_events.keys()[0])
 		match str(event.get("event_type", "")):
-			"WeaponFired": _handle_weapon_fired(event, session)
-			"ProjectileHit": _handle_projectile_hit(event, session)
+			"AviationWaveLaunched":
+				var view = unit_views.get(str(event.get("source_unit_id", "")))
+				if view: view.play_fire_state("attack")
+			"AviationArrival": _spawn_public_vfx("impact.water.medium", event.get("position", Vector2.ZERO), "vfx.profile.airstrike_impact")
+			"AviationImpact": _handle_aviation_impact(event, context)
+			"AntiAirFired": _spawn_public_vfx("aa.tracer.light", event.get("position", Vector2.ZERO), "vfx.profile.aa.tracer.light")
+			"AircraftDamaged": _spawn_public_vfx("aircraft.intercept_hit", event.get("position", Vector2.ZERO), "vfx.profile.aircraft.intercept_hit")
+			"AircraftDestroyed": _spawn_public_vfx("aircraft.fall", event.get("position", Vector2.ZERO), "vfx.profile.aircraft.fall")
+			"WeaponFired": _handle_weapon_fired(event, context)
+			"ProjectileHit": _handle_projectile_hit(event, context)
 			"ProjectileBlockedByTerrain": _handle_projectile_blocked(event)
 			"ShellBlockedByTerrain": _handle_shell_blocked(event)
 			"UnitTerrainCollision": _handle_unit_terrain_collision(event)
 			"MineTriggered": _spawn_environment_marker("environment.mine_trigger", event.get("position", Vector2.ZERO), "vfx.profile.shell_impact")
-			"FacilityDamaged", "FacilityDestroyed": _handle_facility_damage(event, session)
+			"FacilityDamaged", "FacilityDestroyed": _handle_facility_damage(event, context)
 			"SupportMissionResolved": _handle_support_resolved(event)
-			"AttackResolved": _handle_attack_resolved(event, session)
-			"SkillCast": _handle_skill_cast(event, session)
+			"AttackResolved": _handle_attack_resolved(event, context)
+			"SkillCast": _handle_skill_cast(event, context)
 
 
 func _sync_units(units: Dictionary, selected_unit_id: String, focused_target_id: String) -> void:
@@ -107,9 +138,9 @@ func _sync_projectiles(projectiles: Dictionary) -> void:
 			old_view.queue_free()
 
 
-func _handle_weapon_fired(event: Dictionary, session) -> void:
+func _handle_weapon_fired(event: Dictionary, context) -> void:
 	var source_unit_id := str(event.get("unit_id", ""))
-	var source: Dictionary = session.state.get("units_by_id", {}).get(source_unit_id, {})
+	var source: Dictionary = context.state.get("units_by_id", {}).get(source_unit_id, {})
 	if source.is_empty():
 		return
 	var character_id := str(source.get("definition_id", "")).trim_prefix("ship.")
@@ -119,18 +150,18 @@ func _handle_weapon_fired(event: Dictionary, session) -> void:
 	if view != null:
 		view.play_fire_state(str(visual.get("fire_animation_state", "attack")))
 		var launch_position := view.bind_point_world(str(visual.get("launch_bind", "")))
-		_spawn_shell_flights(event, session, weapon, visual, source, launch_position)
+		_spawn_shell_flights(event, context, weapon, visual, source, launch_position)
 		_spawn_role_vfx(character_id, str(visual.get("muzzle_vfx_role", "")), launch_position, float(source.get("heading", 0.0)), str(visual.get("launch_profile", "vfx.profile.muzzle_flash")))
 
 
-func _handle_projectile_hit(event: Dictionary, session) -> void:
+func _handle_projectile_hit(event: Dictionary, context) -> void:
 	var projectile_id := str(event.get("projectile_id", ""))
 	var projectile_view: Node = projectile_views.get(projectile_id, null)
 	if projectile_view != null and is_instance_valid(projectile_view):
 		projectile_view.queue_free()
 		projectile_views.erase(projectile_id)
 	var target_id := str(event.get("target_unit_id", ""))
-	var target: Dictionary = session.state.get("units_by_id", {}).get(target_id, {})
+	var target: Dictionary = context.state.get("units_by_id", {}).get(target_id, {})
 	if target.is_empty():
 		return
 	var character_id := str(target.get("definition_id", "")).trim_prefix("ship.")
@@ -167,8 +198,9 @@ func _handle_unit_terrain_collision(event: Dictionary) -> void:
 	_spawn_environment_marker("terrain_collision", event.get("position", Vector2.ZERO), "vfx.profile.skill_area")
 
 
-func _handle_facility_damage(event: Dictionary, session) -> void:
-	var facility: Dictionary = session.state.get("facilities_by_id", {}).get(str(event.get("facility_id", "")), {})
+func _handle_facility_damage(event: Dictionary, context) -> void:
+	if bool(event.get("aviation_feedback_owned", false)): return
+	var facility: Dictionary = context.state.get("facilities_by_id", {}).get(str(event.get("facility_id", "")), {})
 	if facility.is_empty(): return
 	_spawn_public_vfx("environment.shell_terrain_impact.medium", facility.get("position", Vector2.ZERO), "vfx.profile.shell_impact")
 
@@ -178,9 +210,9 @@ func _handle_support_resolved(event: Dictionary) -> void:
 		_spawn_public_vfx("impact.water.large", event.get("target_position", Vector2.ZERO), "vfx.profile.water_impact.large")
 
 
-func _handle_attack_resolved(event: Dictionary, session) -> void:
+func _handle_attack_resolved(event: Dictionary, context) -> void:
 	var result: Dictionary = event.get("damage_result", {})
-	var source: Dictionary = session.state.get("units_by_id", {}).get(str(result.get("source_unit_id", "")), {})
+	var source: Dictionary = context.state.get("units_by_id", {}).get(str(result.get("source_unit_id", "")), {})
 	var source_character := str(source.get("definition_id", "")).trim_prefix("ship.")
 	var weapon: Dictionary = DataRegistry.registry.get_definition("weapons", str(result.get("source_weapon_id", "")))
 	var visual := DataRegistry.assets.weapon_visual(source_character, str(weapon.get("weapon_group_id", "")))
@@ -188,13 +220,13 @@ func _handle_attack_resolved(event: Dictionary, session) -> void:
 	if target_id.is_empty():
 		_spawn_large_gun_water_column(result, weapon, visual)
 		return
-	var target: Dictionary = session.state.get("units_by_id", {}).get(target_id, {})
+	var target: Dictionary = context.state.get("units_by_id", {}).get(target_id, {})
 	if target.is_empty():
 		return
 	var target_view: ShipUnitView = unit_views.get(target_id, null)
 	if target_view != null and bool(result.get("hit", false)):
 		target_view.play_hit_state()
-	_spawn_damage_number(result, session)
+	_spawn_damage_number(result, context)
 	if not bool(result.get("hit", false)):
 		_spawn_large_gun_water_column(result, weapon, visual)
 		return
@@ -219,8 +251,8 @@ func _is_large_caliber_gun(weapon: Dictionary, weapon_visual: Dictionary) -> boo
 	return _weapon_caliber_mm(weapon, weapon_visual, projectile_visual) >= LARGE_GUN_CALIBER_MM
 
 
-func _handle_skill_cast(event: Dictionary, session) -> void:
-	var source: Dictionary = session.state.get("units_by_id", {}).get(str(event.get("unit_id", "")), {})
+func _handle_skill_cast(event: Dictionary, context) -> void:
+	var source: Dictionary = context.state.get("units_by_id", {}).get(str(event.get("unit_id", "")), {})
 	if source.is_empty():
 		return
 	var character_id := str(source.get("definition_id", "")).trim_prefix("ship.")
@@ -230,7 +262,7 @@ func _handle_skill_cast(event: Dictionary, session) -> void:
 	if typeof(target_ref.get("position")) == TYPE_VECTOR2:
 		target_position = target_ref["position"]
 	elif not str(target_ref.get("entity_id", "")).is_empty():
-		var target: Dictionary = session.state.get("units_by_id", {}).get(str(target_ref.get("entity_id", "")), {})
+		var target: Dictionary = context.state.get("units_by_id", {}).get(str(target_ref.get("entity_id", "")), {})
 		if not target.is_empty():
 			target_position = target.get("position", target_position)
 	_spawn_role_vfx(character_id, role, target_position, 0.0, "vfx.profile.skill_area")
@@ -272,7 +304,7 @@ func _spawn_environment_marker(semantic: String, world_position: Vector2, profil
 	effect.configure(texture_path, DataRegistry.assets.vfx_playback_profile(profile_id))
 
 
-func _spawn_shell_flights(event: Dictionary, session, weapon: Dictionary, weapon_visual: Dictionary, source: Dictionary, launch_position: Vector2) -> void:
+func _spawn_shell_flights(event: Dictionary, context, weapon: Dictionary, weapon_visual: Dictionary, source: Dictionary, launch_position: Vector2) -> void:
 	if projectile_layer == null or str(weapon.get("mount_type", "")) != "Gun":
 		return
 	var projectile_visual_id := str(weapon_visual.get("projectile_visual_id", weapon.get("projectile_id", "")))
@@ -283,7 +315,7 @@ func _spawn_shell_flights(event: Dictionary, session, weapon: Dictionary, weapon
 	var projectile_visual := _caliber_shell_visual(caliber_mm, fallback_visual)
 	var trail_profile := _shell_trail_profile(caliber_mm, weapon_visual, projectile_visual)
 	var color := _shell_trail_color(weapon, weapon_visual, projectile_visual)
-	for destination in _shell_flight_destinations(event, session, weapon, source, launch_position):
+	for destination in _shell_flight_destinations(event, context, weapon, source, launch_position):
 		var travel_seconds := launch_position.distance_to(destination) / maxf(1.0, float(weapon.get("projectile_speed", 1.0)))
 		var duration_seconds := maxf(float(weapon_visual.get("shell_flight_min_duration", 0.08)), travel_seconds)
 		var flight := ShellFlightView.new()
@@ -319,7 +351,7 @@ func _shell_trail_profile(caliber_mm: float, weapon_visual: Dictionary, projecti
 	}
 
 
-func _shell_flight_destinations(event: Dictionary, session, weapon: Dictionary, source: Dictionary, launch_position: Vector2) -> Array:
+func _shell_flight_destinations(event: Dictionary, context, weapon: Dictionary, source: Dictionary, launch_position: Vector2) -> Array:
 	var count := clampi(int(event.get("shot_count", 1)), 1, 12)
 	var fixed_impact_positions: Array = event.get("impact_positions", [])
 	if not fixed_impact_positions.is_empty():
@@ -328,18 +360,18 @@ func _shell_flight_destinations(event: Dictionary, session, weapon: Dictionary, 
 			if typeof(fixed_impact_positions[index]) == TYPE_VECTOR2:
 				fixed_destinations.append(fixed_impact_positions[index])
 		return fixed_destinations
-	var base_destination := _weapon_fire_destination(event, session, source, launch_position)
+	var base_destination := _weapon_fire_destination(event, context, source, launch_position)
 	var destinations: Array = []
 	for shot_index in range(count): destinations.append(base_destination)
 	return destinations
 
 
-func _weapon_fire_destination(event: Dictionary, session, source: Dictionary, launch_position: Vector2) -> Vector2:
+func _weapon_fire_destination(event: Dictionary, context, source: Dictionary, launch_position: Vector2) -> Vector2:
 	if typeof(event.get("target_position")) == TYPE_VECTOR2:
 		return event["target_position"]
 	var target_id := str(event.get("target_unit_id", ""))
 	if not target_id.is_empty():
-		var target: Dictionary = session.state.get("units_by_id", {}).get(target_id, {})
+		var target: Dictionary = context.state.get("units_by_id", {}).get(target_id, {})
 		if not target.is_empty():
 			return target.get("position", launch_position)
 	return launch_position + Vector2.RIGHT.rotated(float(source.get("heading", 0.0))) * 160.0
@@ -386,10 +418,10 @@ func _shell_trail_color(weapon: Dictionary, weapon_visual: Dictionary, projectil
 	return Color(str(projectile_visual.get("trail_color", "#ffd777")))
 
 
-func _spawn_damage_number(result: Dictionary, session) -> void:
-	if vfx_layer == null or not _damage_result_visible_to_player(result, session):
+func _spawn_damage_number(result: Dictionary, context) -> void:
+	if vfx_layer == null or not _damage_result_visible_to_player(result, context):
 		return
-	var entry := _damage_number_entry(result, session)
+	var entry := _damage_number_entry(result, context)
 	if entry.is_empty():
 		return
 	var target_id := str(entry.get("target_unit_id", ""))
@@ -426,26 +458,26 @@ func _active_damage_number_views(target_id: String) -> Array:
 	return result
 
 
-func _damage_result_visible_to_player(result: Dictionary, session) -> bool:
+func _damage_result_visible_to_player(result: Dictionary, context) -> bool:
 	var target_id := str(result.get("target_unit_id", ""))
 	if target_id.is_empty():
 		return false
-	var target: Dictionary = session.state.get("units_by_id", {}).get(target_id, {})
+	var target: Dictionary = context.state.get("units_by_id", {}).get(target_id, {})
 	if target.is_empty():
 		return false
 	if str(target.get("faction_id", "")) == "player":
 		return true
-	return session.state.get("visible_by_faction", {}).get("player", {}).has(target_id)
+	return context.state.get("visible_by_faction", {}).get("player", {}).has(target_id)
 
 
-func _damage_number_entry(result: Dictionary, session) -> Dictionary:
+func _damage_number_entry(result: Dictionary, context) -> Dictionary:
 	var target_id := str(result.get("target_unit_id", ""))
 	if target_id.is_empty():
 		return {}
-	var target: Dictionary = session.state.get("units_by_id", {}).get(target_id, {})
+	var target: Dictionary = context.state.get("units_by_id", {}).get(target_id, {})
 	if target.is_empty():
 		return {}
-	var source: Dictionary = session.state.get("units_by_id", {}).get(str(result.get("source_unit_id", "")), {})
+	var source: Dictionary = context.state.get("units_by_id", {}).get(str(result.get("source_unit_id", "")), {})
 	var weapon: Dictionary = DataRegistry.registry.get_definition("weapons", str(result.get("source_weapon_id", "")))
 	var style := _damage_number_style(result, weapon)
 	if style.is_empty():
@@ -539,3 +571,43 @@ func _skill_role_for_character(character_id: String) -> String:
 		if roles.has(candidate):
 			return candidate
 	return ""
+
+
+func _sync_aviation(snapshot: Dictionary, selected_id: String) -> void:
+	var waves: Dictionary = snapshot.get("aviation", {}) if aviation_enabled else {}
+	for id in aviation_views.keys():
+		if waves.has(id): continue
+		var view = aviation_views[id]
+		aviation_views.erase(id)
+		view.reset()
+		if aviation_pool.size() < 32: aviation_pool.append(view)
+		else: view.queue_free()
+	for id in waves:
+		var wave: Dictionary = waves[id].duplicate()
+		var view = aviation_views.get(id)
+		if view == null:
+			var weapon: Dictionary = DataRegistry.registry.get_definition("weapons", str(wave.get("source_weapon_id", "")))
+			var mapping := DataRegistry.assets.weapon_visual(str(wave.get("character_id", "")), str(weapon.get("id", "")))
+			if mapping.is_empty(): mapping = DataRegistry.assets.weapon_visual(str(wave.get("character_id", "")), str(weapon.get("weapon_group_id", "")))
+			var visual_id := str(mapping.get("projectile_visual_id", "visual.projectile.aircraft.bomber"))
+			if wave.has("aircraft_kind"): visual_id = "visual.projectile.aircraft." + str(wave.aircraft_kind)
+			view = aviation_pool.pop_back() if not aviation_pool.is_empty() else AircraftSquadronView.new()
+			if view.get_parent() == null: projectile_layer.add_child(view)
+			view.z_index = 22
+			view.aircraft_kind = visual_id.trim_prefix("visual.projectile.aircraft.")
+			var visual := DataRegistry.assets.projectile_visual(visual_id)
+			view.configure(visual, DataRegistry.assets.projectile_visual(str(visual.get("payload_visual_id", ""))))
+			aviation_views[id] = view
+		wave.aircraft_kind = view.aircraft_kind
+		view.update_wave(wave, float(snapshot.get("elapsed_time", 0)), waves.size() > 32, str(wave.get("source_unit_id", "")) == selected_id)
+
+
+
+func _handle_aviation_impact(event: Dictionary, context) -> void:
+	var result: Dictionary = event.get("damage_result", {})
+	var position: Vector2 = result.get("impact_position", Vector2.ZERO)
+	_spawn_damage_number(result, context)
+	if result.get("hit_reason", "") == "COLLISION": return # Public torpedo chain owns impact VFX.
+	var target = unit_views.get(str(result.get("target_unit_id", "")))
+	if target != null and bool(result.get("hit", false)): target.play_hit_state()
+	_spawn_public_vfx("impact.armor.flash" if result.get("hit", false) else "impact.water.medium", position, "vfx.profile.airstrike_impact")

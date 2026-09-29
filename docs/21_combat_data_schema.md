@@ -187,3 +187,13 @@ gun_dispersion.reference_battleship_length
 - `sigma_scale>0`；`0 < longitudinal_sigma_ratio <= 1`。
 - 两个 reference ID 必须存在；三个 reference 数值满足 12 号文档定义的标定关系。
 - 运行时所有舰炮共享该设置，不允许角色私有 sigma 覆盖。
+
+## 10. 航空任务与版本
+
+- `CombatSettings.aviation_rules_mode: Abstract | Physical`，缺省 `Abstract`；关卡可同名覆盖，会话创建时固定，非法枚举拒绝创建。
+- 航空 Weapon 可配置 `aircraft_hp: float > 0`（缺省350）、`aviation_payload: Bomb | Torpedo`（缺省Bomb）。`Torpedo` 必须给出 `air_torpedo_projectile_id`（Straight 投射物引用）、`air_torpedo_drop_distance > 0`、`air_torpedo_range > 0`；`air_torpedo_lane_spacing` 缺省80、`air_torpedo_angular_sigma_ratio` 缺省0.2，均为运行单位。
+- `AviationWave`：`wave_id/mission_id: String`、`attack_ids: Array[String]`、来源单位/设施/武器/技能 ID、阵营、`origin/target_position: Vector2`、`launch_at_time/resolve_at_time: float`、`phase: Scheduled | Flying | Completed | Destroyed | Cancelled`。ID 使用独立航空序列，既有 attack ID 不改。
+- Physical 服务额外拥有 `spawn_position/release_position/position: Vector2`、`heading/progress/release_at_time: float`、`current_hp/max_hp/damage_floor: float`、`payload: Bomb | Torpedo`；规则阶段为 `Scheduled | Flying | Released | Destroyed | Cancelled`。一波关联的所有攻击共享一份 HP。
+- Physical 公共鱼雷额外保存 `aviation_physical: bool`、`aviation_wave_id: String`、`damage_multiplier: float`；碰撞结果携带 `aviation_wave_id`，仍使用原 `attack_id`。身份字段不等同于可公开观察字段。
+- 事件 `AviationWaveLaunched/Resolved/Ended` 只发布阶段；`AntiAirFired` 发布射击轮次；`AircraftDamaged/Destroyed` 发布实际受损/终止；`AviationPayloadReleased/Rejected` 发布投放实体或拒绝原因。带普通事件 ID、Tick 和波次关联，不替代逐次 `AttackResolved`。
+- A 的 `arrival_survival_ratio?: float` 只在旧算法实际计算折损时存在，不是逐 Tick HP 或击落事实。

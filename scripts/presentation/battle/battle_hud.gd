@@ -196,6 +196,9 @@ func _draw_selected_summary(rect: Rect2) -> void:
 	_draw_hp_bar(Rect2(rect.position + Vector2(116, 70), Vector2(186, 10)), float(selected.get("current_hp", 0)), float(selected.get("max_hp", 1)), true)
 	var status := "%s  ·  %s" % [UiText.ship_class_name(str(selected.get("ship_class", ""))), "跟随中" if camera_mode == "Follow" else "自由视角"]
 	if str(operation_status.get("ship_class", "")) == "Submarine": status = _c_action_text()
+	var missions: Array = snapshot.get("aviation", {}).values().filter(func(wave): return wave.get("source_unit_id", "") == snapshot.get("selected_unit_id", "") and wave.get("phase", "") != "Completed")
+	if not missions.is_empty():
+		status = "航空 %d 队 · %s %.1fs" % [missions.size(), "准备" if missions[0].get("phase", "") == "Scheduled" else "在途", float(missions[0].get("remaining", 0))]
 	draw_string(ThemeDB.fallback_font, rect.position + Vector2(116, 104), status, HORIZONTAL_ALIGNMENT_LEFT, 188, 13, TEXT_SOFT)
 
 
@@ -262,6 +265,13 @@ func _draw_minimap(rect: Rect2) -> void:
 		var position := _minimap_position(unit.get("position", Vector2.ZERO), map_rect, map_data)
 		var icon_name := _minimap_icon(unit, friendly)
 		_draw_icon(icon_name, Rect2(position - Vector2(7.0, 7.0), Vector2(14.0, 14.0)))
+	for wave in snapshot.get("aviation", {}).values():
+		if wave.get("phase", "") in ["Scheduled", "Completed"]: continue
+		var point := _minimap_position(wave.get("position", Vector2.ZERO), map_rect, map_data)
+		var direction := Vector2.RIGHT.rotated(float(wave.get("heading", 0)))
+		var friendly: bool = wave.get("faction_id", "") == "player"
+		draw_line(point - direction * 4, point + direction * 5, Color("#a5f3ef") if friendly else Color("#ffac83"), 2.0)
+		_draw_icon("ui_minimap_aircraft_player" if friendly else "ui_minimap_aircraft_enemy", Rect2(point - Vector2(5, 5), Vector2(10, 10)))
 	for contact in snapshot.get("contacts", {}).values():
 		var contact_position := _minimap_position(contact.get("last_known_position", Vector2.ZERO), map_rect, map_data)
 		var contact_color := Color(0.35, 0.9, 1.0, 0.9) if contact.get("primary_contact_type", "") == "Radar" else Color(1.0, 0.72, 0.72, 0.8)

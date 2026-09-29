@@ -150,3 +150,9 @@ screen_shake?
 `assets/ui/processed/menu/cover_manifest.json` 使用 `schema_version: 1` 与 `covers` 数组；每项的稳定字段为 `id`、`character_id`、`display_name`、`title`、`category`、`image`。`image` 为仓库相对 PNG 路径，加载时归一为资源路径。`sha256`、`generator`、`model`、`review`、`prompt_brief` 为来源记录，不参与玩法。封面只服务菜单。
 
 GameFlow 的本机 ConfigFile `menu` 节保存 `cover_id`、`reduce_motion`、`auto_view`；与已有 `display` 节互相保留。默认胡德海港、正常动效、允许自动观赏。会话内 `menu_return_page` 保存战后返回页，不属于进度存档或角色解锁。
+
+## 航空持续投影
+
+`Snapshot.aviation: Dictionary[wave_id, Dictionary]`。己方可含 `phase`、`position/heading`、`spawn_position/target_position`、`progress/end_progress`、`remaining`、`character_id/source_weapon_id/source_unit_id`；侦察/巡逻增加 `aircraft_kind/radius`，Physical 增加 `current_hp/max_hp`。敌方只允许当前公开片段白名单；字段缺失不允许通过资产或单位 ID 补查。
+
+公共飞机 visual 可配置 `screen_canvas_width`（逻辑画布像素，缺省36），透明主体约24–28像素；渲染比例受镜头缩放补偿。初版每编队3架装饰，侦察/巡逻1架；这些数量不参与规则结算。炸弹使用该公共机型的 `payload_visual_id`，鱼雷机 A 阶段不生成水中装饰雷。

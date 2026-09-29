@@ -225,6 +225,14 @@
 
 - `scripts/presentation/menu/main_menu.gd`：封面、看板、观赏、教学/挑战详情、编队、帮助与设置。
 - `scripts/presentation/menu/menu_content.gd`：现有菜单章节、规模和地图选项。
-- `scripts/presentation/ui_theme.gd`：菜单与战斗共享主题。
+- `scripts/presentation/ui_theme.gd`：菜单与战斗共享主题；`naval_button_style.gd` 提供封面切角罗盘按钮绘制。
 - `assets/ui/processed/menu/cover_manifest.json`：正式菜单封面清单。
 - `scripts/tests/menu_cover_flow_test.gd`、`render_menu_qa.gd`：菜单交互契约与真实渲染入口。
+
+### 航空运行时与表现
+
+- Application：`aviation_presentation_projection.gd`（逐波时间线）、`battle_presentation_filter.gd`（事件脱敏）；`battle_session.gd` 接入排程、观察、固定Tick、防空及公共投雷。
+- Domain：`scripts/domain/services/aviation_service.gd`（波次HP、位置、全圈防空、投放预算）。
+- Presentation：`aircraft_squadron_view.gd`、`aviation_payload_view.gd`，由战斗导演同步并复用；HUD与小地图共用航空快照。
+- 验证：`aviation_equivalence_test.gd`（388条排程事实）、`aviation_tick_equivalence_test.gd` 与 `fixtures/aviation_abstract_baseline.json`（旧版完整Tick指纹）、`aviation_runtime_test.gd`、`aviation_presentation_test.gd`、`aviation_performance_test.gd`、`aviation_domain_performance_test.gd`、`aviation_ai_smoke_test.gd`、`render_aviation_qa.gd`，均位于 `scripts/tests/`。
+- 可操作纵切：`godot --path . res://scenes/battle/prototype_battle.tscn -- --aviation-demo`；追加 `--aviation-physical` 可在创建时选择真实规则；演示模式不写入胜利奖励。普通主菜单/关卡默认仍由 `settings.combat.aviation_rules_mode` 决定。

@@ -7,14 +7,14 @@ func clear() -> void:
 	waves.clear()
 	sequence = 0
 
-func register(attacks: Array, source: Dictionary, now: float) -> Dictionary:
+func register(attacks: Array, source: Dictionary, now: float, mission_id: String = "") -> Dictionary:
 	if attacks.is_empty(): return {}
 	sequence += 1
 	var first: Dictionary = attacks[0]
 	var id := "aviation.%06d" % sequence
 	var ids: Array = []
 	for attack in attacks: ids.append(str(attack.attack_id))
-	var wave := {"wave_id":id, "mission_id":id, "attack_ids":ids,
+	var wave := {"wave_id":id, "mission_id":id if mission_id.is_empty() else mission_id, "attack_ids":ids,
 		"source_unit_id":str(first.get("source_unit_id", "")), "source_facility_id":str(first.get("source_facility_id", "")),
 		"source_weapon_id":str(first.get("source_weapon_id", "")), "source_skill_id":str(first.get("source_skill_id", "")),
 		"character_id":str(source.get("definition_id", "")).trim_prefix("ship."), "faction_id":str(source.get("faction_id", "")),
@@ -37,6 +37,7 @@ func advance(now: float, units: Dictionary, active_ids: Dictionary) -> Array:
 		if not active:
 			wave.phase = "Cancelled" if wave.phase == "Scheduled" else "Completed"
 			wave.ended_at_time = now
+			if wave.phase == "Completed": events.append(event_for(wave, "AviationWaveResolved"))
 			events.append(event_for(wave, "AviationWaveEnded"))
 			continue
 		if now < float(wave.launch_at_time): continue
@@ -52,7 +53,7 @@ func advance(now: float, units: Dictionary, active_ids: Dictionary) -> Array:
 
 func event_for(wave: Dictionary, type: String) -> Dictionary:
 	return {"event_type":type, "wave_id":wave.wave_id, "mission_id":wave.mission_id, "faction_id":wave.faction_id,
-		"source_unit_id":wave.source_unit_id, "phase":wave.phase, "position":wave.position}
+		"source_unit_id":wave.source_unit_id, "phase":wave.phase, "position":wave.position, "reason_code":("ATTACK_COMPLETED" if wave.phase == "Completed" else ("AIRCRAFT_DESTROYED" if wave.phase == "Destroyed" else "SOURCE_CANCELLED")) if type == "AviationWaveEnded" else "" }
 
 func snapshot(now: float, faction: String, omniscient: bool, effects: Dictionary, supports: Dictionary, missions: Array, facilities: Dictionary) -> Dictionary:
 	var visible := {}

@@ -19,6 +19,8 @@ const TrajectoryPlanner = preload("res://scripts/application/navigation/trajecto
 const NavigationProgress = preload("res://scripts/application/navigation/navigation_progress.gd")
 const ShipMotionService = preload("res://scripts/domain/services/ship_motion_service.gd")
 const AIQuantitativeModel = preload("res://scripts/application/ai/ai_quantitative_model.gd")
+const PresentationFilter = preload("res://scripts/application/battle_presentation_filter.gd")
+const AviationService = preload("res://scripts/domain/services/aviation_service.gd")
 const AviationProjection = preload("res://scripts/application/aviation_presentation_projection.gd")
 const AIObservation = preload("res://scripts/application/ai/ai_observation.gd")
 
@@ -55,6 +57,9 @@ var command_queue: Array = []
 var _player_command_sequence: int = 0
 var delayed_attacks: Array = []
 var aviation_projection = AviationProjection.new()
+var aviation_service = AviationService.new()
+var aviation_rules_mode := "Abstract"
+var _aviation_observed := {}
 var terrain_query = TerrainQueryService.new()
 var terrain_collision_field_loader = TerrainCollisionFieldLoader.new()
 var terrain_context_service = TerrainContextService.new()
@@ -115,6 +120,7 @@ func configure_performance_profiling(enabled: bool = true) -> void:
 		"ai_unit_intents_usec": [],
 		"ai_primary_weapons_usec": [],
 		"combat_actions_usec": [],
+		"aviation_runtime_usec": [],
 		"facility_mine_usec": [],
 		"settlement_recording_usec": [],
 		"tick_unclassified_usec": [],
@@ -199,6 +205,9 @@ func create_battle_from_definition(level_definition: Dictionary, seed_value: int
 	command_queue.clear()
 	delayed_attacks.clear()
 	aviation_projection.clear()
+	aviation_service.clear()
+	_aviation_observed.clear()
+	aviation_rules_mode = str(level.get("aviation_rules_mode", registry.get_definition("settings", "settings.combat").get("aviation_rules_mode", "Abstract")))
 	navigation_request_broker.clear()
 	navigation_request_broker.configure(1, 2000)
 	_ai_battlefield_context_cache.clear()
@@ -513,7 +522,7 @@ func snapshot(viewer_faction: String = PLAYER_FACTION, omniscient: bool = false)
 		"units": units,
 		"contacts": contacts,
 		"projectiles": _visible_projectiles(viewer_faction, omniscient),
-		"aviation": aviation_projection.snapshot(float(state.get("elapsed_time", 0.0)), viewer_faction, omniscient, state.get("skill_effects_by_id", {}), state.get("support_effects_by_id", {}), facility_service.support_missions, state.get("facilities_by_id", {})),
+		"aviation": _visible_aviation(viewer_faction, omniscient),
 		"terrain_map": state.get("terrain_map", {}).duplicate(true),
 		"environment_zones": state.get("environment_zones", []).duplicate(true),
 		"global_environment": state.get("global_environment", {}).duplicate(true),
@@ -864,6 +873,7 @@ func _resolved_facility_definitions() -> Array:
 
 func _validate_level_runtime(level: Dictionary) -> Array[String]:
 	var errors: Array[String] = []
+	if level.get("aviation_rules_mode", "Abstract") not in ["Abstract", "Physical"]: errors.append("INVALID_AVIATION_RULES_MODE")
 	var all_entity_ids := {}
 	for fleet_name in ["player_fleet", "enemy_fleet"]:
 		var flagship_count := 0
@@ -2440,6 +2450,9 @@ func _visible_projectiles(viewer_faction: String, omniscient: bool) -> Dictionar
 		var projectile: Dictionary = state["projectiles_by_id"][projectile_id]
 		if str(projectile.get("faction_id", "")) == viewer_faction or known.has(projectile_id):
 			result[projectile_id] = projectile.duplicate(true)
+			if projectile.get("faction_id", "") != viewer_faction:
+				for key in result[projectile_id].keys():
+					if str(key).begins_with("source_") or key in ["attack_id", "aviation_wave_id", "damage_multiplier"]: result[projectile_id].erase(key)
 	return result
 
 
@@ -2873,6 +2886,8 @@ func _has_hidden_contact(source: Dictionary) -> bool:
 
 
 func _has_incoming_aviation(source: Dictionary) -> bool:
+	if aviation_rules_mode == "Physical":
+		return not _ai_observation_for(str(source.get("faction_id", ""))).visible_aircraft.is_empty()
 	for attack in delayed_attacks:
 		var weapon: Dictionary = registry.get_definition("weapons", str(attack.get("source_weapon_id", "")))
 		if str(weapon.get("mount_type", "")) != "Aviation": continue
@@ -4830,6 +4845,7 @@ func _queue_skill_attack(source: Dictionary, skill: Dictionary, attack_spec: Dic
 		temporary_effects.append(effect)
 	var launch_effects := _active_status_effects(source).duplicate(true)
 	launch_effects.append_array(temporary_effects)
+	var aviation_mission_id := ""
 	for wave_index in range(waves):
 		var aviation_attacks: Array = []
 		var launch_at_time := float(state["elapsed_time"]) + charge_time + wave_index * wave_interval
@@ -4865,7 +4881,7 @@ func _queue_skill_attack(source: Dictionary, skill: Dictionary, attack_spec: Dic
 			_apply_dispersion_metadata(attack, dispersion_sample)
 			delayed_attacks.append(attack)
 			aviation_attacks.append(attack)
-		_register_aviation_wave(aviation_attacks, source, weapon)
+		aviation_mission_id = _register_aviation_wave(aviation_attacks, source, weapon, aviation_mission_id)
 	_emit("SkillAttackScheduled", {"unit_id":source["entity_id"], "skill_id":skill["id"], "weapon_id":weapon["id"], "waves":waves, "shots_per_wave":shot_count, "target_position":target_position})
 
 
@@ -5294,7 +5310,10 @@ func _update_projectiles(delta: float) -> void:
 			var impact_position := start.lerp(end, float(unit_hit["fraction"]))
 			projectile["position"] = impact_position
 			_emit("ProjectileHit", {"projectile_id": projectile_id, "target_unit_id": unit_hit["target_unit_id"], "position": impact_position})
-			_resolve_attack({"attack_id": projectile["attack_id"], "source_unit_id": projectile["source_unit_id"], "source_weapon_id": projectile["source_weapon_id"], "target_unit_id": unit_hit["target_unit_id"], "origin": impact_position, "accuracy_modifier": 0.0, "source_status_effects":projectile.get("source_status_effects", []).duplicate(true)}, true)
+			var projectile_attack := {"attack_id":projectile.attack_id, "source_unit_id":projectile.source_unit_id, "source_weapon_id":projectile.source_weapon_id, "target_unit_id":unit_hit.target_unit_id, "origin":impact_position, "accuracy_modifier":0.0, "source_status_effects":projectile.get("source_status_effects", []).duplicate(true)}
+			if bool(projectile.get("aviation_physical", false)):
+				projectile_attack.merge({"target_position":impact_position, "aviation_physical":true, "aviation_wave_id":projectile.get("aviation_wave_id", ""), "damage_multiplier":projectile.get("damage_multiplier", 1.0)})
+			_resolve_attack(projectile_attack, true)
 			state["projectiles_by_id"].erase(projectile_id)
 			continue
 		projectile["position"] = end
@@ -5306,10 +5325,14 @@ func _update_projectiles(delta: float) -> void:
 			state["projectiles_by_id"].erase(projectile_id)
 
 
-func _register_aviation_wave(attacks: Array, source: Dictionary, weapon: Dictionary) -> void:
-	if str(weapon.get("mount_type", "")) != "Aviation": return
-	aviation_projection.register(attacks, source, float(state["elapsed_time"]))
+func _register_aviation_wave(attacks: Array, source: Dictionary, weapon: Dictionary, mission_id: String = "") -> String:
+	if str(weapon.get("mount_type", "")) != "Aviation": return ""
+	var wave: Dictionary = aviation_projection.register(attacks, source, float(state["elapsed_time"]), mission_id)
+	if aviation_rules_mode == "Physical" and not wave.is_empty():
+		var effects: Array = attacks[0].get("source_status_effects", _active_status_effects(source))
+		aviation_service.register(wave, float(weapon.get("aircraft_hp", 350.0)) * maxf(0.1, ModifierService.calculate(1.0, effects, "AircraftHP", "Aviation")), clampf(ModifierService.sum_modifier(effects, "AviationDamageFloor", "Aviation"), 0, 1), weapon)
 	_advance_aviation_projection()
+	return str(wave.get("mission_id", ""))
 
 
 func _advance_aviation_projection() -> void:
@@ -5321,9 +5344,27 @@ func _advance_aviation_projection() -> void:
 
 func _resolve_delayed_attacks() -> void:
 	_advance_aviation_projection()
+	if aviation_rules_mode == "Physical":
+		var aviation_started := Time.get_ticks_usec()
+		_advance_aviation_runtime()
+		if _performance_profile_enabled: _profile_detail("aviation_runtime_usec", Time.get_ticks_usec() - aviation_started)
 	delayed_attacks.sort_custom(func(a, b): return float(a["resolve_at_time"]) < float(b["resolve_at_time"]) if not is_equal_approx(float(a["resolve_at_time"]), float(b["resolve_at_time"])) else str(a["attack_id"]) < str(b["attack_id"]))
 	var remaining: Array = []
 	for attack in delayed_attacks:
+		var task: Dictionary = aviation_service.task_for_attack(str(attack.attack_id)) if aviation_rules_mode == "Physical" else {}
+		if not task.is_empty():
+			if task.phase in ["Destroyed", "Cancelled"]: continue
+			if task.phase == "Scheduled" or float(task.get("release_at_time", INF)) > float(state["elapsed_time"]):
+				remaining.append(attack)
+				continue
+			if not bool(task.get("payload_announced", false)):
+				task.payload_announced = true
+				if task.payload != "Torpedo": _emit_aviation_fact({"event_type":"AviationPayloadReleased", "wave_id":task.wave_id, "faction_id":task.faction_id, "source_unit_id":task.source_unit_id, "position":task.position})
+			attack["aviation_physical"] = true
+			attack["damage_multiplier"] = aviation_service.payload_ratio(task)
+			if task.payload == "Torpedo":
+				_release_aviation_torpedo(task, attack)
+				continue
 		if float(attack["resolve_at_time"]) <= float(state["elapsed_time"]):
 			if bool(attack.get("blocked_by_terrain", false)):
 				_emit("ShellBlockedByTerrain", {"attack_id": attack.get("attack_id", ""), "source_unit_id": attack.get("source_unit_id", ""), "source_weapon_id": attack.get("source_weapon_id", ""), "obstacle_id": attack.get("terrain_obstacle_id", ""), "position": attack.get("resolved_impact_position", attack.get("target_position", Vector2.ZERO)), "intended_impact_position": attack.get("intended_impact_position", Vector2.ZERO)})
@@ -5331,6 +5372,11 @@ func _resolve_delayed_attacks() -> void:
 				_resolve_attack(attack, false)
 		else: remaining.append(attack)
 	delayed_attacks = remaining
+	if aviation_rules_mode == "Physical":
+		for task in aviation_service.waves.values():
+			if task.phase == "Flying" and float(task.get("release_at_time", INF)) <= float(state["elapsed_time"]):
+				task.phase = "Released"
+				task.ended_at_time = float(state["elapsed_time"])
 	_advance_aviation_projection()
 
 
@@ -5353,11 +5399,13 @@ func _resolve_attack(attack: Dictionary, forced_hit: bool) -> void:
 	source_snapshot["position"] = attack.get("origin", source["position"])
 	if attack.has("source_status_effects"):
 		source_snapshot["status_effects"] = _resolved_attack_effects(source, target, attack.get("source_status_effects", []))
-	if str(weapon.get("mount_type", "")) == "Aviation":
+	if str(weapon.get("mount_type", "")) == "Aviation" and not bool(attack.get("aviation_physical", false)):
 		attack["damage_multiplier"] = float(attack.get("damage_multiplier", 1.0)) * _aviation_survival_ratio(attack, source_snapshot)
 	var result := DamageService.resolve(attack, source_snapshot, target, weapon, formula, random_source, forced_hit)
 	result = DamageStatistics.enrich_result(result, weapon, source.get("stats", source), attack)
 	_annotate_non_ship_damage_result(result, attack)
+	if bool(attack.get("aviation_physical", false)):
+		result["aviation_wave_id"] = attack.get("aviation_wave_id", aviation_service.attack_wave.get(str(attack.get("attack_id", "")), ""))
 	result["geometry_intersection"] = bool(attack.get("geometry_intersection", false))
 	result["impact_position"] = attack.get("target_position", target.get("position", Vector2.ZERO))
 	result["aimed_target_unit_id"] = attack.get("aimed_target_unit_id", attack.get("target_unit_id", ""))
@@ -5407,7 +5455,10 @@ func _aviation_survival_ratio(attack: Dictionary, aviation_source: Dictionary) -
 			var reload := ModifierService.reload_time(float(aa_weapon.get("reload_time", 1.0)), _active_status_effects(defender), "AntiAir")
 			anti_air_damage += raw * damage_bonus * float(aa_weapon.get("mount_count", 1)) * float(aa_weapon.get("shots_per_mount", 1)) / maxf(0.2, reload) * 0.12
 	var floor_ratio := clampf(ModifierService.sum_modifier(source_effects, "AviationDamageFloor", "Aviation"), 0.0, 1.0)
-	return maxf(floor_ratio, clampf((aircraft_hp - anti_air_damage) / aircraft_hp, 0.0, 1.0))
+	var ratio := maxf(floor_ratio, clampf((aircraft_hp - anti_air_damage) / aircraft_hp, 0.0, 1.0))
+	for wave in aviation_projection.waves.values():
+		if str(attack.get("attack_id", "")) in wave.attack_ids: wave["arrival_survival_ratio"] = ratio
+	return ratio
 
 
 func _resolve_area_attack(attack: Dictionary, source: Dictionary, forced_hit: bool) -> void:
@@ -5479,6 +5530,7 @@ func _resolve_facility_attack(attack: Dictionary, source: Dictionary, forced_hit
 	result["facility_damage_limited"] = facility_events.any(func(event): return event.get("event_type", "") == "FacilityDamageLimited")
 	_emit("AttackResolved", {"damage_result": result})
 	for event in facility_events:
+		if weapon.get("mount_type", "") == "Aviation": event["aviation_feedback_owned"] = true
 		_handle_facility_event(event)
 	state["facilities_by_id"] = facility_service.snapshot()
 
@@ -5583,6 +5635,10 @@ func _resolve_support_mission(event: Dictionary) -> void:
 		_emit("SupportMissionResolved", {"mission_id":event["mission_id"], "definition_id":event["definition_id"], "effect_type":mission_type, "target_position":target_position})
 		return
 	if mission_type != "Airstrike": return
+	var aviation_task: Dictionary = aviation_service.waves.get("support." + str(event.get("mission_id", "")), {})
+	if aviation_rules_mode == "Physical" and not aviation_task.is_empty() and float(aviation_task.current_hp) <= 0:
+		_emit("SupportMissionCancelled", {"mission_id":event.mission_id, "reason_code":"AIRCRAFT_DESTROYED"})
+		return
 	var facility_id := str(event.get("facility_id", ""))
 	var source := facility_service.combat_source(facility_id)
 	var weapon: Dictionary = registry.get_definition("weapons", str(mission.get("weapon_id", "")))
@@ -5599,6 +5655,9 @@ func _resolve_support_mission(event: Dictionary) -> void:
 			"origin": source["position"],
 			"accuracy_modifier": _environment_accuracy_modifier(str(event.get("faction_id", "")), source["position"], target_position, "Aviation"),
 		}
+		if aviation_rules_mode == "Physical" and not aviation_task.is_empty():
+			attack.aviation_physical = true
+			attack.damage_multiplier = aviation_service.payload_ratio(aviation_task)
 		_resolve_area_attack(attack, source, false)
 	_emit("SupportMissionResolved", {"mission_id":event["mission_id"], "definition_id":event["definition_id"], "effect_type":"Airstrike", "target_position":target_position})
 
@@ -5613,7 +5672,7 @@ func _update_support_effects(delta: float) -> void:
 	for effect_id in state.get("skill_effects_by_id", {}).keys():
 		var effect: Dictionary = state["skill_effects_by_id"][effect_id]
 		effect["remaining"] = maxf(0.0, float(effect.get("remaining", 0.0)) - delta)
-		if str(effect.get("effect_type", "")) == "Reconnaissance" and float(effect.get("current_hp", 0.0)) > 0.0:
+		if aviation_rules_mode == "Abstract" and str(effect.get("effect_type", "")) == "Reconnaissance" and float(effect.get("current_hp", 0.0)) > 0.0:
 			effect["current_hp"] = maxf(0.0, float(effect["current_hp"]) - _anti_air_dps_at_position(str(effect.get("faction_id", "")), effect.get("position", Vector2.ZERO)) * delta)
 			if is_zero_approx(float(effect["current_hp"])):
 				var source: Dictionary = state.get("units_by_id", {}).get(str(effect.get("source_unit_id", "")), {})
@@ -6850,6 +6909,15 @@ func _emit(event_type: String, payload: Dictionary = {}) -> void:
 	var event := {"event_id": "event.%06d" % _event_sequence, "battle_id": state.get("battle_id", ""), "tick_index": state.get("tick_index", 0), "event_type": event_type}
 	for key in payload: event[key] = payload[key]
 	_event_buffer.append(event)
+	if event_type == "BattleFinished":
+		for wave in aviation_projection.waves.values():
+			if float(wave.get("ended_at_time", -1)) >= 0: continue
+			var ended: Dictionary = aviation_projection.event_for(wave, "AviationWaveEnded")
+			ended.reason_code = "SESSION_ENDED"
+			_emit("AviationWaveEnded", ended)
+		aviation_projection.clear()
+		aviation_service.clear()
+		_aviation_observed.clear()
 
 
 func _rejection(command_id: String, reason_code: String) -> Dictionary:
@@ -6863,3 +6931,194 @@ func _assert_invariants() -> void:
 		assert(float(unit["current_hp"]) >= 0.0 and float(unit["current_hp"]) <= float(unit["max_hp"]))
 		for weapon_state in unit["weapon_states"]:
 			assert(float(weapon_state["reload_remaining"]) >= 0.0)
+
+
+func presentation_events(events: Array, faction: String = PLAYER_FACTION) -> Array:
+	return PresentationFilter.events(events, state, registry, faction)
+
+
+func _aviation_targets() -> Dictionary:
+	var targets: Dictionary = aviation_service.waves.duplicate()
+	for id in state.get("skill_effects_by_id", {}):
+		var effect: Dictionary = state.skill_effects_by_id[id]
+		if effect.get("effect_type", "") == "Reconnaissance": targets["orbit." + str(id)] = effect
+	return targets
+
+
+func _refresh_aviation_observation(targets: Dictionary) -> void:
+	_aviation_observed = {PLAYER_FACTION:{}, ENEMY_FACTION:{}}
+	var observers := {PLAYER_FACTION:[], ENEMY_FACTION:[]}
+	for unit_id in _sorted_unit_ids():
+		var observer: Dictionary = state.units_by_id[unit_id]
+		if observer.life_state != "Alive" or observer.get("depth_state", "Surface") != "Surface": continue
+		var radius := ModifierService.calculate(float(observer.stats.get("detection_range", 0)), _active_status_effects(observer), "DetectionRange")
+		observers[observer.faction_id].append({"position":observer.position, "range":radius, "visibility":float(terrain_context_service.context_at(observer.position).get("optical_visibility_multiplier", 1))})
+	for id in targets:
+		var target: Dictionary = targets[id]
+		if target.get("phase", "Flying") not in ["Flying", "Destroyed"]: continue
+		var target_visibility := float(terrain_context_service.context_at(target.position).get("optical_visibility_multiplier", 1))
+		for faction in _aviation_observed:
+			if target.get("faction_id", "") == faction:
+				_aviation_observed[faction][id] = true
+				continue
+			for observer in observers[faction]:
+				var radius: float = observer.range * minf(observer.visibility, target_visibility)
+				if (observer.position as Vector2).distance_squared_to(target.position) <= radius * radius:
+					_aviation_observed[faction][id] = true
+					break
+	# AI reads the same redacted current segments as world/HUD, never flight destinations.
+	state["aviation_observations_by_faction"] = {}
+	for faction in _aviation_observed:
+		var visible := {}
+		for id in _aviation_observed[faction]:
+			if targets[id].get("faction_id", "") != faction: visible[id] = _anonymous_aircraft(id, targets[id])
+		state.aviation_observations_by_faction[faction] = visible
+	_ai_observations_by_faction.clear()
+
+
+func _advance_aviation_runtime() -> void:
+	var active := {}
+	for attack in delayed_attacks: active[str(attack.attack_id)] = true
+	for mission in facility_service.support_missions:
+		var definition: Dictionary = facility_service.mission_definition(str(mission.definition_id))
+		if definition.get("mission_type", "") != "Airstrike": continue
+		var id := "support." + str(mission.mission_id)
+		active[id] = true
+		if not aviation_service.waves.has(id):
+			var facility: Dictionary = state.facilities_by_id.get(str(mission.facility_id), {})
+			var wave := {"wave_id":id, "mission_id":mission.mission_id, "attack_ids":[id], "source_unit_id":"", "source_facility_id":mission.facility_id, "source_weapon_id":definition.get("weapon_id", ""), "faction_id":mission.faction_id, "origin":facility.get("position", mission.target_position), "position":facility.get("position", mission.target_position), "target_position":mission.target_position, "launch_at_time":mission.launch_at_time, "resolve_at_time":mission.resolve_at_time}
+			aviation_service.register(wave, float(definition.get("aircraft_hp", 350)), 0, registry.get_definition("weapons", str(definition.get("weapon_id", ""))))
+	aviation_service.advance(float(state.elapsed_time), state.units_by_id, active)
+	var targets := _aviation_targets()
+	_refresh_aviation_observation(targets)
+	for unit_id in _sorted_unit_ids():
+		var defender: Dictionary = state.units_by_id[unit_id]
+		if defender.life_state != "Alive" or defender.get("depth_state", "Surface") != "Surface": continue
+		for weapon_state in defender.get("weapon_states", []):
+			if not bool(weapon_state.get("enabled", true)) or float(weapon_state.get("reload_remaining", 0)) > 0: continue
+			var weapon: Dictionary = registry.get_definition("weapons", str(weapon_state.get("definition_id", "")))
+			if weapon.get("mount_type", "") != "AntiAir": continue
+			var formula: Dictionary = registry.get_definition("formulas", str(weapon.get("formula_id", "")))
+			var effects := _active_status_effects(defender)
+			var damage := (float(formula.get("base_damage", 0)) + float(defender.stats.get("anti_air_power", 0)) * float(formula.get("power_coefficient", 0))) * int(weapon.get("mount_count", 1)) * int(weapon.get("shots_per_mount", 1))
+			damage *= maxf(0, 1 + ModifierService.sum_modifier(effects, "Damage", "AntiAir")) * maxf(0, 1 + ModifierService.sum_modifier(effects, "AllDamage", "All"))
+			var events: Array = aviation_service.fire_round(unit_id, defender.faction_id, defender.position, _effective_weapon_range(defender, weapon), damage, targets, _aviation_observed.get(defender.faction_id, {}))
+			if events.is_empty(): continue
+			_set_weapon_reload(defender, weapon_state, weapon)
+			for event in events:
+				event.source_weapon_id = weapon.id
+				_emit_aviation_fact(event)
+				if event.event_type == "AircraftDestroyed":
+					var id := str(event.wave_id)
+					if id.begins_with("orbit."):
+						var effect_id := id.trim_prefix("orbit.")
+						var effect: Dictionary = state.skill_effects_by_id.get(effect_id, {})
+						var source: Dictionary = state.units_by_id.get(str(effect.get("source_unit_id", "")), {})
+						if not source.is_empty(): source.skill_state.cooldown_remaining += float(effect.get("destroyed_cooldown_penalty", 0))
+						state.skill_effects_by_id.erase(effect_id)
+						_emit("SkillReconDestroyed", {"effect_id":effect_id, "skill_id":effect.get("source_skill_id", ""), "cooldown_penalty":effect.get("destroyed_cooldown_penalty", 0)})
+					else:
+						aviation_service.waves[id].ended_at_time = float(state.elapsed_time)
+						if aviation_projection.waves.has(id):
+							aviation_projection.waves[id].phase = "Destroyed"
+							aviation_projection.waves[id].ended_at_time = float(state.elapsed_time)
+							_emit("AviationWaveEnded", aviation_projection.event_for(aviation_projection.waves[id], "AviationWaveEnded"))
+
+
+func _emit_aviation_fact(event: Dictionary) -> void:
+	var published := {}
+	for faction in [PLAYER_FACTION, ENEMY_FACTION]:
+		var own: bool = event.get("faction_id", "") == faction
+		var observed: bool = _aviation_observed.get(faction, {}).has(str(event.get("wave_id", "")))
+		var source_known := PresentationFilter.known(str(event.get("source_unit_id", "")), state.units_by_id, state.visible_by_faction.get(faction, {}), faction)
+		if not own and not observed: continue
+		var fact := {"event_type":event.event_type, "position":event.position}
+		for key in ["wave_id", "damage", "current_hp", "projectile_id"]:
+			if key == "projectile_id" and not own: continue
+			if event.has(key): fact[key] = event[key]
+		if source_known: fact.source_unit_id = event.get("source_unit_id", "")
+		published[faction] = fact
+	event.presentation_by_faction = published
+	_emit(str(event.event_type), event)
+
+
+func _release_aviation_torpedo(task: Dictionary, attack: Dictionary) -> void:
+	var weapon: Dictionary = registry.get_definition("weapons", str(attack.source_weapon_id))
+	var definition: Dictionary = registry.get_definition("projectiles", str(weapon.get("air_torpedo_projectile_id", "")))
+	var position: Vector2 = task.release_position
+	if definition.is_empty(): return
+	var effects: Array = attack.get("source_status_effects", [])
+	var radius := ModifierService.calculate(float(definition.get("collision_radius", 12)), effects, "ProjectileRadius", "Torpedo")
+	if terrain_query.is_configured() and bool(terrain_query.first_segment_hit(position, position, "TorpedoTravel", radius).get("hit", false)):
+		_emit("AviationPayloadRejected", {"wave_id":task.wave_id, "attack_id":attack.attack_id, "reason_code":"NO_LEGAL_WATER"})
+		return
+	var id := _next_entity_id("projectile")
+	# Fixed approach direction; no target re-query or homing after commitment.
+	var ids: Array = task.attack_ids
+	var index := ids.find(str(attack.attack_id))
+	var water_range := float(weapon.get("air_torpedo_range", 0))
+	var adjacent_angle := 2.0 * asin(clampf(float(weapon.get("air_torpedo_lane_spacing", 80)) / (2.0 * water_range), 0, 1))
+	var spread := adjacent_angle * (float(index) - float(ids.size() - 1) * 0.5)
+	var environment_multiplier := float(terrain_context_service.context_at(position).get("torpedo_sigma_multiplier", 1))
+	var sigma := adjacent_angle * float(weapon.get("air_torpedo_angular_sigma_ratio", 0.2)) * environment_multiplier
+	var error: float = random_source.randfn(0, sigma)
+	var heading := float(task.heading) + spread + error
+	var projectile := {"entity_id":id, "definition_id":definition.id, "attack_id":attack.attack_id, "source_unit_id":attack.source_unit_id,
+		"source_weapon_id":weapon.id, "source_mount_id":"", "faction_id":task.faction_id, "position":position, "heading":heading,
+		"ideal_heading":float(task.heading) + spread, "angular_error":error, "angular_sigma":sigma, "environmental_sigma_multiplier":environment_multiplier,
+		"speed":ModifierService.calculate(float(definition.speed), effects, "ProjectileSpeed", "Torpedo"), "collision_radius":radius, "minimum_detection_distance":float(definition.minimum_detection_distance),
+		"max_range":water_range, "remaining_range":water_range, "travelled_distance":0.0, "observed_raw_damage":0.0,
+		"target_types":weapon.target_types.duplicate(), "source_status_effects":attack.get("source_status_effects", []).duplicate(true),
+		"aviation_physical":true, "aviation_wave_id":task.wave_id, "damage_multiplier":float(attack.damage_multiplier)}
+	var source: Dictionary = state.units_by_id.get(str(attack.source_unit_id), {})
+	var formula: Dictionary = registry.get_definition("formulas", str(weapon.formula_id))
+	projectile.observed_raw_damage = (float(formula.get("base_damage", 0)) + float(source.get("stats", {}).get("aviation_power", 0)) * float(formula.get("power_coefficient", 0))) * float(attack.damage_multiplier)
+	state.projectiles_by_id[id] = projectile
+	state.known_projectiles_by_faction[task.faction_id][id] = true
+	_emit_aviation_fact({"event_type":"AviationPayloadReleased", "wave_id":task.wave_id, "attack_id":attack.attack_id, "projectile_id":id, "source_unit_id":attack.source_unit_id, "faction_id":task.faction_id, "position":position})
+
+
+func _anonymous_aircraft(id: String, task: Dictionary) -> Dictionary:
+	var kind := str(task.get("aircraft_kind", "bomber"))
+	if task.get("effect_type", "") == "Reconnaissance": kind = "scout"
+	return {"wave_id":id, "position":task.position, "heading":task.get("heading", 0), "faction_id":task.faction_id,
+		"phase":"Flying", "aircraft_kind":kind, "progress":1.0, "current_hp":task.get("current_hp", 0), "max_hp":task.get("max_hp", 1)}
+
+
+func _visible_aviation(faction: String, omniscient: bool) -> Dictionary:
+	var result: Dictionary = aviation_projection.snapshot(float(state.get("elapsed_time", 0)), faction, omniscient, state.get("skill_effects_by_id", {}), state.get("support_effects_by_id", {}), facility_service.support_missions, state.get("facilities_by_id", {}))
+	for item in result.values():
+		if item.has("source_facility_id") and not str(item.source_facility_id).is_empty():
+			var mission: Dictionary = facility_service.mission_definition(str(item.get("definition_id", "")))
+			item.aircraft_kind = {"Reconnaissance":"scout", "FighterPatrol":"fighter"}.get(str(mission.get("mission_type", "")), "bomber")
+	if state.get("phase", "") == "Finished": return {}
+	if aviation_rules_mode != "Physical": return result
+	for id in aviation_service.waves:
+		var task: Dictionary = aviation_service.waves[id]
+		if task.phase in ["Destroyed", "Cancelled"]:
+			result.erase(id)
+			continue
+		if result.has(id):
+			for key in ["position", "heading", "progress", "current_hp", "max_hp", "spawn_position"]:
+				if task.has(key): result[id][key] = task[key]
+			if task.has("release_at_time"): result[id].remaining = maxf(0, float(task.release_at_time) - float(state.elapsed_time))
+		elif _aviation_observed.get(faction, {}).has(id) and task.phase == "Flying": result[id] = _anonymous_aircraft(id, task)
+	for id in state.get("skill_effects_by_id", {}):
+		if _aviation_observed.get(faction, {}).has("orbit." + str(id)) and not result.has("orbit." + str(id)):
+			result["orbit." + str(id)] = _anonymous_aircraft("orbit." + str(id), state.skill_effects_by_id[id])
+	return result
+
+
+func presentation_context(faction: String = PLAYER_FACTION) -> Dictionary:
+	# Small filtered event context; avoid copying terrain/navigation every event batch.
+	var units := {}
+	var visible: Dictionary = state.get("visible_by_faction", {}).get(faction, {})
+	for id in _sorted_unit_ids():
+		var unit: Dictionary = state.units_by_id[id]
+		if not PresentationFilter.known(id, state.units_by_id, visible, faction): continue
+		units[id] = {"entity_id":id, "definition_id":unit.definition_id, "faction_id":unit.faction_id, "position":unit.position, "heading":unit.heading, "life_state":unit.life_state, "stats":{"collision_radius":unit.stats.get("collision_radius",20)}}
+	var facilities := {}
+	for id in _ai_observation_for(faction).known_facilities:
+		var facility: Dictionary = state.get("facilities_by_id", {}).get(id, {})
+		facilities[id] = {"facility_id":id, "position":facility.get("position",Vector2.ZERO)}
+	return {"state":{"units_by_id":units, "facilities_by_id":facilities, "visible_by_faction":{faction:units}}}

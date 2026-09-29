@@ -137,3 +137,5 @@ zero_fire_classification
   - 潜艇窗口暂不使用友军风险评分：`friendly_risk_ignored_samples` 记录显式归零的评分样本，`friendly_risk_observed_samples/max` 只保留同一发射器雷道的实际观察事实，不能反向参与本轮开火判定。
   - 聚合结果的 `submarine_ai` 按总体和 `lineup_id|definition_id` 汇总上述计数、原因、阶段/深度/氧气驻留、完整循环、超时和开火样本率；CSV/Markdown 派生产物固定为 `submarine_ai.csv` 与 `submarine_ai.md`。
 - Definition 覆盖、临时舰队、Acceptance Profile 和并行恢复字段只有在隔离校验实现后才能加入正式契约；当前完成度只见 `docs/00_project_status.md`。
+
+航空迁移诊断的 recorder summary 增加 `aviation`：`waves_launched/waves_completed/anti_air_rounds/waves_destroyed/payloads_released: int`、`aircraft_damage: float`。飞机HP损失单独统计，不混入逐舰对舰伤害；炸弹/鱼雷仍由一次 `AttackResolved` 计入原攻击分类。性能明细增加 `aviation_runtime_usec`，与表现帧成本分开。

@@ -67,6 +67,7 @@ var current_palette_id := "cloudy"
 var palette_override := ""
 var texture_cache: Dictionary = {}
 var unit_visual_cache: Dictionary = {}
+var aviation_demo_active := false
 var result_character_id := ""
 var unit_layer: Node2D
 var projectile_layer: Node2D
@@ -1113,11 +1114,14 @@ func _unit_at(world_position: Vector2, snapshot: Dictionary) -> Dictionary:
 
 
 func _consume_events(events: Array) -> void:
-	if effect_director != null:
-		effect_director.consume_events(events, session)
 	terrain_debug_overlay.record_events(events)
+	events = session.presentation_events(events)
+	if effect_director != null:
+		effect_director.consume_events(events, session.presentation_context("player"))
 	for event in events:
 		match event.get("event_type", ""):
+			"AviationWaveLaunched": _push_message("%s：航空编队出击" % _unit_display_name(str(event.get("source_unit_id", ""))))
+			"AircraftDestroyed": _push_message("航空编队被击落")
 			"LevelObjectiveAdvanced": _push_message("教学进度：%s（%d/%d）" % [event.get("label", "航点"), int(event.get("step", 0)), int(event.get("step_count", 0))])
 			"TutorialStageChanged": _push_message(str(event.get("summary", "进入交战阶段")))
 			"LevelObjectiveCompleted": _push_message("任务完成：%s" % event.get("summary", ""))
@@ -1145,7 +1149,7 @@ func _consume_events(events: Array) -> void:
 				result_character_id = _random_player_character_id()
 				if str(event.get("result", {}).get("winner_faction", "")) == "player":
 					var flow := get_node_or_null("/root/GameFlow")
-					if flow != null: flow.record_level_victory(level_id)
+					if flow != null and not aviation_demo_active: flow.record_level_victory(level_id)
 				var result_view := preload("res://scripts/presentation/battle/battle_result_presentation.gd").describe(event.get("result", {}))
 				_push_message("%s：%s" % [result_view.get("title", "本局无效"), result_view.get("subtitle", "")])
 
@@ -1172,6 +1176,15 @@ func _start_battle(new_level_id: String) -> void:
 	session = BattleSession.new(DataRegistry.registry)
 	var flow := get_node_or_null("/root/GameFlow")
 	var runtime_level: Dictionary = flow.runtime_level_definition(new_level_id) if flow != null else {}
+	aviation_demo_active = "--aviation-demo" in OS.get_cmdline_user_args()
+	if aviation_demo_active:
+		runtime_level = DataRegistry.registry.get_definition("levels", "level.prototype_1v1").duplicate(true)
+		runtime_level.player_fleet[0].ship_id = "ship.enterprise_cv6"
+		runtime_level.player_fleet[0].position = [1700.0, 1100.0]
+		runtime_level.enemy_fleet[0].position = [2350.0, 1100.0]
+	if "--aviation-physical" in OS.get_cmdline_user_args():
+		if runtime_level.is_empty(): runtime_level = DataRegistry.registry.get_definition("levels", new_level_id).duplicate(true)
+		runtime_level.aviation_rules_mode = "Physical"
 	var result: Dictionary = session.create_battle_from_definition(runtime_level, 20260614) if not runtime_level.is_empty() else session.create_battle(new_level_id, 20260614)
 	if not result.get("ok", false):
 		push_error("Battle creation failed: %s" % result.get("errors", []))

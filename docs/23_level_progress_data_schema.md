@@ -166,3 +166,5 @@ checksum
 - 缺失舰船、技能、武器组、AI Profile、地图或出生点引用。
 - 多旗舰、无旗舰或等 Cost 关卡预算不一致。
 - 教学目标引用隐藏脚本、未知动作/命令、错误阵营单位或非法世界标识。
+
+关卡可选 `aviation_rules_mode: Abstract | Physical`，不配置时使用CombatSettings。该覆盖用于航空迁移实验和可操作演示，创建后固定，不进入进度存档或奖励判定。

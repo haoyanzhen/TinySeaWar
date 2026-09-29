@@ -74,21 +74,25 @@
 
 ## 6. AI 与导航
 
+近岸目标可达性与窄通道回归：`scripts/tests/navigation_reachability_test.gd`；同半径吃水档烘焙与正式图一致性：`tools/terrain/test_navigation_bake.py`。
+
 | 职责 | 当前文件 |
 |---|---|
 | 阵营合法观察 | `scripts/application/ai/ai_observation.gd` |
 | 量化决策模型 | `scripts/application/ai/ai_quantitative_model.gd` |
 | 完整 AI 阵营授权、初始/增援初始化、残影搜索、技能提交、潜艇六阶段策略/深度请求/原子雷击解与同 Tick 观察刷新 | `scripts/application/battle_session.gd` |
 | 战略路线规划、不可接入目标的正向阶段投影与分类失败 | `scripts/application/navigation/route_planner.gd` |
+| 公共导航有效进展监测 | `scripts/application/navigation/navigation_progress.gd` |
 | 路线请求预算 | `scripts/application/navigation/navigation_request_broker.gd` |
-| 常规/紧急航迹候选 | `scripts/application/navigation/trajectory_planner.gd` |
+| 常规/紧急/持续脱困航迹候选 | `scripts/application/navigation/trajectory_planner.gd` |
 | AI 观察与残影/同 Tick 缓存测试 | `scripts/tests/ai_observation_test.gd` |
 | AI 行为与难度测试 | `scripts/tests/ai_behavior_quantitative_test.gd`、`ai_difficulty_profile_test.gd` |
 | 编组与协同测试 | `scripts/tests/ai_group_formation_test.gd`、`ai_coordination_test.gd` |
 | 模拟完整 AI 初始化与技能射程测试 | `scripts/tests/battle_simulator_test.gd` |
 | 潜艇六阶段、装填 ETA 发射器规划、AttackRun 超时重规划、长期诊断与 S-04/S-05 `1 -> 3` 固定种子门禁 | `scripts/tests/test_runner.gd`、`scripts/tests/submarine_ai_fixed_seed_test.gd`、`scripts/tests/battle_simulator_test.gd` |
 | 潜艇低氧、接触保持、尾管、真实可见性、独立深度意图、反潜受击自卫、追踪和2倍雷击预算回归 | `scripts/tests/submarine_review_regression_test.gd` |
-| 航迹、碰撞场与恢复测试 | `scripts/tests/trajectory_navigation_test.gd`、`navigation_collision_field_test.gd`、`ai_route_recovery_test.gd` |
+| 航迹、碰撞场与恢复测试 | `scripts/tests/trajectory_navigation_test.gd`、`navigation_collision_field_test.gd`、`ai_route_recovery_test.gd`、`navigation_progress_recovery_test.gd` |
+| 岬角、凹湾、双岸水道和水流下的持续到达回归 | `scripts/tests/coastal_navigation_progress_test.gd` |
 | Tick 分阶段、导航/侦查性能、投影路线、失败/等待与大编队碰撞测试 | `scripts/tests/ai_navigation_performance_test.gd` |
 
 ## 7. 硬地形与场景空间

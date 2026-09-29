@@ -132,6 +132,7 @@ profiles[]
 ```
 
 - 地形引用必须存在，所有节点和边必须位于对应地图合法区域。
+- 当前审核 Profile 为 `small_shallow`（20，Surface/ShallowDraft）、`standard_shallow`（32，Surface/ShallowDraft）、`large_deep`（46，Surface）、`standard_deep`（32，Surface），ID 均带 `navigation.profile.` 前缀。按半径与吃水权限分别匹配，不得因缺少标准深吃水档而将所有深吃水舰一律按大型舰处理。
 - 玩家与 AI 读取同一 Profile；难度配置不得提供私有候选数、隐藏节点或绕过统一 Broker 的路线入口。
 - 门间距、接入候选、常规/紧急航迹候选与请求预算不在本 Schema 配置，统一由 t00/t01 的共享技术设置拥有。
 

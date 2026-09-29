@@ -90,6 +90,9 @@ primary_auto_fire_suspended
 skill_auto_cast_enabled
 player_route_waypoints[]
 movement_state.waypoint_index
+navigation_state.progress # Dictionary，默认 {}
+navigation_state.recovery # Dictionary，默认 {}
+navigation_state.target_projected # bool，默认 false，当前完整走廊终点是否为语义目标的阶段投影
 radar_stealth_state # Exposed | Stealthed
 depth_state # Surface | Submerged
 depth_transition # target_depth_state, remaining, duration
@@ -97,6 +100,8 @@ depth_hold_remaining
 oxygen_state # current, maximum
 ```
 
+- `navigation_state.progress` 为单局公共导航记忆：`goal: Vector2`、`best_distance/progress_distance/stalled_seconds/best_heading_error/turn_grace: float`、`execution_grace: float`（缺省0）、`last_heading: float`（首次观察初始化）、`stuck_reported: bool`；不属于 AI Profile，不写入存档。
+- `navigation_state.recovery` 为空表示无恢复；非空包含 `stage: Depart|Rejoin`、`origin/direction/base_direction/escape_goal/checkpoint_position/checkpoint_goal: Vector2`、`turn/elapsed/stage_seconds/best_distance/departure_distance: float`、`departure_feasible: bool`、`attempts: int`、`reason: String`；`Rejoin` 另有 `rejoin_position/rejoin_goal: Vector2`、`rejoin_best_distance/rejoin_progress/rejoin_stage_progress: float`。恢复状态使用 `navigation_state.state=NavigationRecovery`，紧急或无安全候选时可暂由相应导航状态接管。行为与预算只见 `technical/t01`。
 - 玩家默认 `movement=false`、`secondary=true`、`primary=false`、`skill_auto_cast=false`；技能自动释放权限不通过玩家配置开放。
 - `primary_auto_fire_suspended` 是手动瞄准期间的瞬态互斥，不覆盖玩家偏好。
 - 在途攻击固定保存发射时的弹种与修正快照。

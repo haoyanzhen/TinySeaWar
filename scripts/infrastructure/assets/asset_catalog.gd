@@ -2,6 +2,7 @@ extends RefCounted
 
 const CHARACTER_ROOT := "res://assets/characters"
 const UI_MANIFEST_PATH := "res://assets/ui/qa/ui_asset_manifest.json"
+const COVER_MANIFEST_PATH := "res://assets/ui/processed/menu/cover_manifest.json"
 const MINIMAP_MANIFEST_PATH := "res://assets/ui/processed/battle/terrain/terrain_minimap_manifest.json"
 const COMBAT_VFX_MANIFEST_PATH := "res://assets/vfx/combat/qa/combat_vfx_asset_manifest.json"
 const VISUAL_CONFIG_ROOT := "res://data/visuals"
@@ -35,6 +36,7 @@ const UI_SEMANTIC_PREFIXES := {
 var characters := {}
 var ui_assets := {}
 var ui_aliases := {}
+var cover_assets: Array[Dictionary] = []
 var minimap_assets := {}
 var combat_vfx_assets := {}
 var environment_assets := {}
@@ -48,6 +50,7 @@ func load_all() -> bool:
 	characters.clear()
 	ui_assets.clear()
 	ui_aliases.clear()
+	cover_assets.clear()
 	minimap_assets.clear()
 	combat_vfx_assets.clear()
 	environment_assets.clear()
@@ -57,6 +60,7 @@ func load_all() -> bool:
 	errors.clear()
 	_load_characters()
 	_load_ui_assets()
+	_load_menu_covers()
 	_load_minimap_assets()
 	_load_combat_vfx_assets()
 	_load_environment_assets()
@@ -149,6 +153,33 @@ func ui_asset_path(asset_key: String, scale := "processed") -> String:
 
 func character_ui_asset_path(character_id: String, semantic_name: String) -> String:
 	return str(characters.get(character_id, {}).get("ui_assets", {}).get(semantic_name, ""))
+
+
+func menu_covers() -> Array[Dictionary]:
+	return cover_assets.duplicate(true)
+
+
+func menu_cover(cover_id: String) -> Dictionary:
+	for cover in cover_assets:
+		if str(cover.get("id", "")) == cover_id:
+			return cover.duplicate(true)
+	return {}
+
+
+func _load_menu_covers() -> void:
+	var seen := {}
+	for raw in _read_json(COVER_MANIFEST_PATH).get("covers", []):
+		if raw is not Dictionary:
+			errors.append("Invalid menu cover entry")
+			continue
+		var cover: Dictionary = _normalize_paths(raw)
+		var cover_id := str(cover.get("id", ""))
+		var path := str(cover.get("image", ""))
+		if cover_id.is_empty() or seen.has(cover_id) or not path.begins_with("res://assets/ui/processed/menu/") or not FileAccess.file_exists(path):
+			errors.append("Invalid or missing menu cover: %s" % cover_id)
+			continue
+		seen[cover_id] = true
+		cover_assets.append(cover)
 
 
 func minimap_asset_path(terrain_definition_id: String) -> String:

@@ -8,6 +8,7 @@ signal unit_pressed(unit_id: String, additive: bool)
 signal action_pressed(key: String)
 signal retry_save_requested
 
+const Kit = preload("res://scripts/presentation/ui_theme.gd")
 const UiText = preload("res://scripts/presentation/ui_text.gd")
 const PANEL_FILL := Color("#f7fcff")
 const PANEL_STROKE := Color(0.48, 0.82, 0.95, 0.62)
@@ -90,26 +91,9 @@ func _ready() -> void:
 
 
 func _create_hud_theme() -> void:
-	theme = Theme.new()
+	theme = Kit.make_theme()
 	theme.default_font_size = 16
-	for type in ["Label", "Button", "CheckButton"]:
-		theme.set_color("font_color", type, TEXT_DARK)
-		theme.set_color("font_hover_color", type, TEXT_DARK)
-		theme.set_color("font_pressed_color", type, TEXT_DARK)
-		theme.set_color("font_disabled_color", type, TEXT_SOFT)
-	for state in ["normal", "hover", "pressed", "disabled"]:
-		var suffix: String = "default" if state == "normal" else state
-		var style := _skin_style("ui_button_menu_primary_" + suffix, 12)
-		if style != null: theme.set_stylebox(state, "Button", style)
-	var panel := StyleBoxFlat.new()
-	panel.bg_color = PANEL_FILL
-	panel.set_corner_radius_all(14)
-	panel.set_border_width_all(1)
-	panel.border_color = PANEL_STROKE
-	for side in [SIDE_LEFT, SIDE_TOP, SIDE_RIGHT, SIDE_BOTTOM]: panel.set_content_margin(side, 12)
-	theme.set_stylebox("panel", "PanelContainer", panel)
-	theme.set_stylebox("panel", "TooltipPanel", panel)
-	theme.set_color("font_color", "TooltipLabel", TEXT_DARK)
+	theme.set_stylebox("panel", "PanelContainer", Kit.panel(Kit.PAPER, 14, 12))
 
 
 func update_state(new_snapshot: Dictionary, new_level_id: String, messages: Array[String], new_camera_mode: String, new_selected_name: String, new_palette_id: String, new_operation_status: Dictionary = {}, new_operation_mode: String = "NORMAL", new_player_slots: Array = []) -> void:
@@ -488,7 +472,11 @@ func _pause_action(action: String) -> void:
 
 func _sync_pause_controls() -> void:
 	if pause_panel == null: return
+	var was_visible := pause_panel.visible
 	pause_panel.visible = snapshot.get("phase", "") == "Paused"
+	if pause_panel.visible and not was_visible:
+		pause_panel.modulate.a = 0.3
+		create_tween().tween_property(pause_panel, "modulate:a", 1.0, 0.01 if bool(GameFlow.menu_preferences.get("reduce_motion", false)) else 0.18)
 	if not pause_panel.visible:
 		pause_confirmation.hide()
 		return
@@ -560,7 +548,6 @@ func _draw_result_panel(viewport_size: Vector2) -> void:
 	for row in rows:
 		draw_string(ThemeDB.fallback_font, Vector2(rect.position.x + 474.0, y), row, HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 540.0, 22, TEXT_DARK)
 		y += 42.0
-	draw_string(ThemeDB.fallback_font, rect.position + Vector2(474.0, 438.0), "复盘：主要武器时机 · 集火目标 · 旗舰位置", HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 510.0, 17, TEXT_SOFT)
 	var save: Dictionary = snapshot.get("progress_save_state", {})
 	var save_failed := str(save.get("status", "")) == "Failed"
 	var save_text := "进度未保存；奖励暂留本会话，请重试后再退出。" if save_failed else str(save.get("message", ""))
@@ -595,10 +582,9 @@ func _draw_round_rect(rect: Rect2, color: Color, radius: int) -> void:
 
 
 func _draw_panel(rect: Rect2, title: String) -> void:
-	var key := "ui_panel_menu_info" if rect.size.y > 180.0 else "ui_panel_menu_mode_card"
-	var texture := _texture(DataRegistry.assets.ui_asset_path(key))
-	if texture != null: draw_texture_rect(texture, rect, false)
-	else: _draw_round_rect(rect, PANEL_FILL, 12)
+	if not skin_cache.has("shared_panel"):
+		skin_cache["shared_panel"] = Kit.panel(Kit.PAPER, 12, 12)
+	draw_style_box(skin_cache["shared_panel"], rect)
 	if not title.is_empty():
 		draw_string(ThemeDB.fallback_font, rect.position + Vector2(20, 30), title, HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 40, 17, TEXT_DARK)
 

@@ -12,6 +12,8 @@ const CUSTOM_LEVEL_ID := "level.custom_runtime"
 
 var selected_level_id := DEFAULT_LEVEL_ID
 var current_window_size := Vector2i(1920, 1080)
+var menu_preferences := {"cover_id": "hood_harbor", "reduce_motion": false, "auto_view": true}
+var menu_return_page := "home"
 var unlocked_ship_ids: Array[String] = []
 var completed_challenge_level_ids: Array[String] = []
 var _custom_level_definition: Dictionary = {}
@@ -29,6 +31,8 @@ func _ready() -> void:
 	current_window_size = _pair_to_vector(settings.get("window", {}).get("default_size", [1920, 1080]))
 	var config := ConfigFile.new()
 	if config.load(USER_SETTINGS_PATH) == OK:
+		for key in menu_preferences:
+			menu_preferences[key] = config.get_value("menu", key, menu_preferences[key])
 		var saved_size := Vector2i(
 			int(config.get_value("display", "width", current_window_size.x)),
 			int(config.get_value("display", "height", current_window_size.y))
@@ -252,8 +256,19 @@ func apply_window_size(value: Vector2i) -> bool:
 	current_window_size = value
 	_apply_window_size_to_display(value)
 	var config := ConfigFile.new()
+	config.load(USER_SETTINGS_PATH)
 	config.set_value("display", "width", value.x)
 	config.set_value("display", "height", value.y)
+	return config.save(USER_SETTINGS_PATH) == OK
+
+
+func save_menu_preference(key: String, value: Variant) -> bool:
+	if not menu_preferences.has(key):
+		return false
+	menu_preferences[key] = value
+	var config := ConfigFile.new()
+	config.load(USER_SETTINGS_PATH)
+	config.set_value("menu", key, value)
 	return config.save(USER_SETTINGS_PATH) == OK
 
 

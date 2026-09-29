@@ -17,6 +17,7 @@ func _run() -> void:
 	var map_level_id := ""
 	var simulation_ticks := 0
 	var full_ai := false
+	var ui_state := ""
 	for argument in OS.get_cmdline_user_args():
 		if argument.begins_with("--size="):
 			var parts := argument.trim_prefix("--size=").split("x")
@@ -40,6 +41,8 @@ func _run() -> void:
 			map_level_id = argument.trim_prefix("--map-level=")
 		elif argument.begins_with("--ticks="):
 			simulation_ticks = int(argument.trim_prefix("--ticks="))
+		elif argument.begins_with("--ui-state="):
+			ui_state = argument.trim_prefix("--ui-state=")
 		elif argument == "--full-ai":
 			full_ai = true
 
@@ -99,6 +102,18 @@ func _run() -> void:
 		battle._update_hud()
 	await process_frame
 	await process_frame
+	# Presentation-only fixtures; do not record progression or claim a played result.
+	if ui_state == "paused":
+		battle.session.state["phase"] = "Paused"
+		battle._update_hud()
+	elif ui_state == "result":
+		battle.session.state["phase"] = "Finished"
+		battle.session.state["result"] = {"winner_faction":"player", "reason":"FLAGSHIP_SUNK", "elapsed_time":93.0}
+		battle.result_character_id = "warspite"
+		battle._update_hud()
+	if not ui_state.is_empty():
+		await create_timer(0.25).timeout
+		await process_frame
 	var image := viewport.get_texture().get_image()
 	if image == null:
 		push_error("Could not read scene QA image; use a real rendering driver")

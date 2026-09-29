@@ -18,12 +18,16 @@ func _run() -> void:
 	var flow = root.get_node_or_null("GameFlow")
 	_check(not menu.has_node("btn_mode_1v1") and not menu.has_node("btn_mode_coastal"), "main menu removes direct prototype battle entry buttons")
 	menu._show_tutorial()
-	var tutorial_buttons := _descendants_of_type(menu.content, "Button")
+	var tutorial_buttons: Array = menu.level_buttons.values()
 	_check(tutorial_buttons.size() == 8, "tutorial entry exposes all eight designed training levels")
 	var enabled_tutorial_buttons := tutorial_buttons.filter(func(button): return not button.disabled)
 	_check(enabled_tutorial_buttons.size() == 8 and ["T-01", "T-02", "T-03", "T-04", "T-05", "T-06", "T-07", "T-08"].all(func(code): return enabled_tutorial_buttons.any(func(button): return button.text.contains(code))), "tutorial entry enables all eight implemented training levels")
 	menu._show_challenge()
-	var challenge_buttons := _descendants_of_type(menu.content, "Button")
+	var challenge_buttons: Array = []
+	for chapter in range(3):
+		menu.challenge_chapter = chapter
+		menu._show_challenge()
+		challenge_buttons.append_array(menu.level_buttons.values())
 	_check(challenge_buttons.size() == 15, "challenge entry exposes all fifteen designed challenge levels")
 	_check(challenge_buttons.any(func(button): return not button.disabled and button.text.contains("S-01")), "challenge entry always enables the first implemented S challenge")
 	_check(menu._challenge_level_id("S-01") == "level.challenge.s01" and menu._challenge_level_id("M-01") == "level.challenge.m01" and menu._challenge_level_id("L-01") == "level.challenge.l01", "challenge menu codes resolve to formal level ids without display hyphens")

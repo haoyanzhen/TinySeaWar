@@ -18,13 +18,17 @@ func _run() -> void:
 	_check(menu.home_actions.map(func(button): return button.text) == ["教学关", "挑战关", "自定义战斗"], "home uses concise mode labels")
 	_check(["tutorial", "challenge", "custom"].all(func(key): return not menu.nav_buttons[key].is_visible_in_tree()), "no duplicate home mode entries")
 	menu.home_actions[0].grab_focus()
+	var background_tint: Color = menu.cover_front.self_modulate
 	menu.set_viewing(true)
+	_check(menu.clock_panel.visible and menu.clock_time.text.length() == 5, "view mode shows local clock")
+	_check(menu.cover_front.self_modulate == background_tint, "view mode preserves background tint")
 	_check(not menu.chrome.visible and get_root().gui_get_focus_owner() == null, "viewing removes hidden controls and keyboard focus")
 	var click := InputEventMouseButton.new()
 	click.button_index = MOUSE_BUTTON_LEFT
 	click.pressed = true
 	menu._input(click)
 	_check(not menu.viewing and menu.page == "home" and root.is_input_handled(), "first click restores without navigating")
+	_check(not menu.clock_panel.visible, "clock hides on return to menu")
 	menu._show_gallery()
 	menu._show_tutorial()
 	_check(menu.gallery == null and menu.level_buttons.size() == 8, "navigation closes gallery and exposes teaching choices")

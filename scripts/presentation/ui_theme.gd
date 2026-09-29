@@ -67,18 +67,21 @@ static func label(text: String, pixels := 20, color := INK) -> Label:
 	result.add_theme_color_override("font_color", color)
 	return result
 
-# Cover controls use translucent naval glass, independent of the paper content panels.
+# Chamfered enamel plates, compass engraving and rank marks remain crisp at any size.
 static func cover_button(button: Button, hero := false) -> void:
+	var naval_style = preload("res://scripts/presentation/naval_button_style.gd")
 	for state in ["normal", "hover", "pressed", "disabled", "focus"]:
 		var active: bool = state in ["hover", "pressed", "focus"]
-		var fill := Color(0.035, 0.12, 0.16, 0.66 if hero else 0.48)
-		if active: fill = Color(0.09, 0.29, 0.34, 0.91)
-		var style := panel(fill, 5, 20 if hero else 14)
-		style.border_color = Color(0.89, 0.77, 0.52, 0.85) if active else Color(0.77, 0.87, 0.89, 0.30)
-		style.shadow_size = 0
-		if hero:
-			style.border_width_left = 3
-			style.border_color = Color(0.89, 0.77, 0.52, 0.90 if active else 0.55)
+		var style = naval_style.new()
+		style.hero = hero
+		style.focus_only = state == "focus"
+		style.fill = Color("#285967") if active else Color("#173c4b")
+		style.fill.a = 0.96 if active else 0.88
+		style.edge = Color("#f3d99b") if active else Color("#bcae83")
+		style.content_margin_left = 62 if hero else 18
+		style.content_margin_right = 62 if hero else 18
+		style.content_margin_top = 14
+		style.content_margin_bottom = 14
 		button.add_theme_stylebox_override(state, style)
 	for key in ["font_color", "font_hover_color", "font_pressed_color", "font_focus_color"]:
-		button.add_theme_color_override(key, Color("#fff4db") if hero else Color("#e7f3f4"))
+		button.add_theme_color_override(key, Color("#fff4db"))

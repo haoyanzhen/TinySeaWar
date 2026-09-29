@@ -27,7 +27,10 @@ var cover_index := 0
 var covers: Array[Dictionary] = []
 var cover_front: TextureRect
 var cover_back: TextureRect
-var shade: TextureRect
+var clock_panel: Control
+var clock_time: Label
+var clock_date: Label
+var clock_elapsed := 0.0
 var chrome: Control
 var page_panel: PanelContainer
 var home_panel: Control
@@ -51,7 +54,6 @@ var viewing := false
 var idle_seconds := 0.0
 var page_tween: Tween
 var cover_tween: Tween
-var view_tween: Tween
 var settings_status: Label
 var launching := false
 
@@ -146,18 +148,6 @@ func _build_shell() -> void:
 		_box(image, Rect2(-8, -5, 1936, 1090))
 		if index == 0: cover_back = image
 		else: cover_front = image
-	var gradient := Gradient.new()
-	gradient.set_color(0, Color(0.025, 0.10, 0.14, 0.90))
-	gradient.set_color(1, Color(0.025, 0.10, 0.14, 0.0))
-	gradient.add_point(0.46, Color(0.025, 0.10, 0.14, 0.44))
-	var mask := GradientTexture2D.new()
-	mask.gradient = gradient
-	mask.fill_from = Vector2.ZERO
-	mask.fill_to = Vector2.RIGHT
-	shade = TextureRect.new()
-	shade.texture = mask
-	shade.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_box(shade, Rect2(0, 0, 1920, 1080))
 	chrome = Control.new()
 	chrome.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_box(chrome, Rect2(0, 0, 1920, 1080))
@@ -197,6 +187,10 @@ func _build_shell() -> void:
 		button.add_theme_font_size_override("font_size", 28)
 		Kit.cover_button(button, true)
 		home_actions.append(button)
+	for label in [eyebrow, title, subtitle]:
+		label.add_theme_color_override("font_shadow_color", Color(0.03, 0.10, 0.15, 0.85))
+		label.add_theme_constant_override("shadow_offset_y", 2)
+		label.add_theme_constant_override("shadow_outline_size", 2)
 	var footer := HBoxContainer.new()
 	footer.add_theme_constant_override("separation", 12)
 	_box(footer, Rect2(64, 992, 736, 54), chrome)
@@ -221,10 +215,42 @@ func _build_shell() -> void:
 	Kit.cover_button(restore_button)
 	restore_button.position = Vector2(64, 990)
 	restore_button.visible = false
+	_build_clock()
+
+
+func _build_clock() -> void:
+	clock_panel = Control.new()
+	clock_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_box(clock_panel, Rect2(72, 76, 600, 260))
+	var font := SystemFont.new()
+	font.font_names = PackedStringArray(["Helvetica Neue", "Arial", "sans-serif"])
+	font.font_weight = 300
+	clock_time = Kit.label("", 144, Color("#fff7e5"))
+	clock_time.add_theme_font_override("font", font)
+	clock_time.add_theme_color_override("font_shadow_color", Color(0.03, 0.10, 0.15, 0.55))
+	clock_time.add_theme_constant_override("shadow_offset_y", 3)
+	clock_time.add_theme_constant_override("shadow_outline_size", 1)
+	_box(clock_time, Rect2(0, 0, 600, 184), clock_panel)
+	clock_date = Kit.label("", 26, Color("#fff7e5"))
+	clock_date.add_theme_color_override("font_shadow_color", Color(0.03, 0.10, 0.15, 0.9))
+	clock_date.add_theme_constant_override("shadow_offset_y", 2)
+	_box(clock_date, Rect2(6, 186, 560, 42), clock_panel)
+	_update_clock()
+	clock_panel.hide()
+
+
+func _update_clock() -> void:
+	var now := Time.get_datetime_dict_from_system()
+	clock_time.text = "%02d:%02d" % [now.hour, now.minute]
+	clock_date.text = "%d年%02d月%02d日  ·  %s" % [now.year, now.month, now.day, ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"][now.weekday]]
 
 
 func _process(delta: float) -> void:
 	idle_seconds += delta
+	clock_elapsed += delta
+	if viewing and clock_elapsed >= 1.0:
+		clock_elapsed = 0.0
+		_update_clock()
 	var offset := Vector2.ZERO
 	if not bool(GameFlow.menu_preferences.get("reduce_motion", false)):
 		offset = (get_local_mouse_position() / Vector2(1920, 1080) - Vector2(0.5, 0.5)).clamp(Vector2(-0.5, -0.5), Vector2(0.5, 0.5)) * Vector2(12, 8)
@@ -256,15 +282,14 @@ func set_viewing(value: bool) -> void:
 	viewing = value
 	idle_seconds = 0.0
 	if gallery != null: _close_gallery()
-	if view_tween != null: view_tween.kill()
 	chrome.visible = true
 	# Hidden controls lose focus and become invisible immediately to GUI input.
 	if value:
 		var focused := get_viewport().gui_get_focus_owner()
 		if focused != null: focused.release_focus()
 		chrome.hide()
-	view_tween = create_tween().set_parallel(true)
-	view_tween.tween_property(shade, "modulate:a", 0.0 if value else 1.0, _motion_seconds(0.35))
+	clock_panel.visible = value
+	if value: _update_clock()
 	restore_button.visible = value
 
 
@@ -367,7 +392,7 @@ func _show_tutorial() -> void:
 
 
 func _show_challenge() -> void:
-	_begin_page("challenge", "挑战 · 下一片海", "选择作战章节，查看任务和舰队。完成本章前一关后开放下一关。")
+	_begin_page("challenge", "挑战 · 下一片海", "小型、中型、大型各自推进，首关无需前置通关；完成一关后开放同板块下一关。")
 	var tabs := _row(content)
 	var names: Array = CHALLENGES.keys()
 	for index in range(names.size()):
@@ -385,7 +410,7 @@ func _show_challenge() -> void:
 		var id := _challenge_level_id(entry[0])
 		var exists: bool = not DataRegistry.registry.get_definition("levels", id).is_empty()
 		var unlocked: bool = exists and (index == 0 or _challenge_level_id(entries[index - 1][0]) in GameFlow.completed_challenge_level_ids)
-		var status := "已完成" if id in GameFlow.completed_challenge_level_ids else ("可出击" if unlocked else ("完成前一关后开放" if exists else "筹备中"))
+		var status := "筹备中" if not exists else ("已完成" if id in GameFlow.completed_challenge_level_ids else ("可出击" if unlocked else "完成本板块前一关后开放"))
 		var button := _button(list, "%s  %s\n%s" % [entry[0], entry[1], status], _show_level_detail.bind(id, "", unlocked), Vector2(420, 86))
 		button.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		button.toggle_mode = true
@@ -415,7 +440,7 @@ func _show_level_detail(id: String, summary: String, unlocked: bool) -> void:
 	var level: Dictionary = DataRegistry.registry.get_definition("levels", id)
 	if level.is_empty():
 		_label(detail_column, "新的航程，正在准备", 32)
-		_label(detail_column, "这个章节尚未开放，先去小型海战检验你的战术吧。", 21, Kit.MUTED)
+		_label(detail_column, "本关内容正在制作，暂时无法出击。三个板块独立推进，无需先通关其他板块。", 21, Kit.MUTED)
 		return
 	_label(detail_column, str(level.get("display_name", "作战任务")), 30)
 	var objective: Dictionary = DataRegistry.registry.get_definition("objectives", str(level.get("objective_set_id", "")))
@@ -446,7 +471,7 @@ func _show_level_detail(id: String, summary: String, unlocked: bool) -> void:
 		if str(GameFlow.ship_acquisition(str(ship["id"])).get("source_level_id", "")) == id:
 			rewards.append(str(ship.get("display_name", "")))
 	if not rewards.is_empty(): _label(detail_column, "首胜可获得：" + "、".join(rewards), 18, Kit.TEAL)
-	var start := _button(detail_column, "准备好了 · 出击" if unlocked else "完成前一关后开放", _start_level.bind(id), Vector2(0, 58), true)
+	var start := _button(detail_column, "准备好了 · 出击" if unlocked else "完成本板块前一关后开放", _start_level.bind(id), Vector2(0, 58), true)
 	start.disabled = not unlocked
 
 

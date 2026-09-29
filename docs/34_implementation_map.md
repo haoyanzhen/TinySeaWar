@@ -177,6 +177,8 @@
 
 表现配置位于 `data/visuals/`，包括武器、投射物、VFX 播放 Profile 和第二期映射。角色运行时资产位于 `assets/characters/{character_id}/processed/`；公共 VFX、环境和 UI 资产分别位于 `assets/vfx/`、`assets/environment|environments/` 与 `assets/ui/`。
 
+公共飞机源图与生成记录位于 `assets/vfx/combat/source/aircraft_shared_v2/`，运行时机体与独立清单位于 `assets/vfx/combat/aircraft/aircraft_*_v2.png`、`shared_aircraft_manifest.json`；重建和只读验证入口为 `tools/art_pipeline/build_shared_aircraft_assets.py`（`--check`）。`scripts/tests/shared_aircraft_asset_test.gd` 检查 Godot 导入、公共语义和实际航空武器映射；静态审查证据见 `assets/vfx/combat/qa/shared_aircraft_v2_review.md` 与 `shared_aircraft_v2_contact.png`。
+
 ## 11. 模拟、统计与报告
 
 | 职责 | 当前文件/目录 |
@@ -198,6 +200,10 @@
 
 ## 12. 常见改动入口
 
+音乐生产与评审工具：`tools/music/music.py`（check/generate/fetch/review/e2e/serve）、`server.json`、`example_batch.json`、`review.html`、`test_music.py`；操作与容量门禁见 [tools/music/README.md](../tools/music/README.md)。端到端 skill 位于 `.agents/skills/tiny-sea-war-music-review/SKILL.md`。这些是离线生产工具，不是游戏运行时播放器。
+
+音乐评审台账：`tools/music/tracker.py`、`test_tracker.py`；持久记录位于 `tools/music/reviews/registry.json`，人工阅读表为同目录 `registry.md`，原始反馈快照位于 `reviews/sources/`。台账记录曲目版本、反馈历史、制作计划及改良来源关系。
+
 | 要修改的内容 | 先读的设计真源 | 再定位的实现 |
 |---|---|---|
 | 核心规则/结算 | `10`、`12`、`32` | `battle_session.gd`、`scripts/domain/services/`、`test_runner.gd` |
@@ -210,6 +216,15 @@
 | 天气/局部环境 | `18`、`37`、`22` | `data/environments/`、`terrain_context_service.gd` |
 | 设施/水雷 | `18`、`38`、`22` | `data/facilities/`、`facility_service.gd`、`minefield_service.gd` |
 | 表现资产 | `33`、`40–47`、`25` | `scripts/presentation/`、`data/visuals/`、`assets/` |
+| 音乐生成与人工评审 | `50` | `tools/music/`、`.agents/skills/tiny-sea-war-music-review/` |
 | 模拟实验 | `19`、`26`、`36` | `data/simulations/`、`scripts/*/simulation/`、`tools/simulation/` |
 
 路径不存在或职责已移动时，应先修正本文，再更新引用；不要为了符合旧路引恢复过期目录。
+
+### B 方案菜单表现
+
+- `scripts/presentation/menu/main_menu.gd`：封面、看板、观赏、教学/挑战详情、编队、帮助与设置。
+- `scripts/presentation/menu/menu_content.gd`：现有菜单章节、规模和地图选项。
+- `scripts/presentation/ui_theme.gd`：菜单与战斗共享主题。
+- `assets/ui/processed/menu/cover_manifest.json`：正式菜单封面清单。
+- `scripts/tests/menu_cover_flow_test.gd`、`render_menu_qa.gd`：菜单交互契约与真实渲染入口。

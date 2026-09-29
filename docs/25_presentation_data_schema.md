@@ -102,6 +102,7 @@ arc_mode?
 - 宽度、时长、光晕和口径非负；外层宽度倍率至少 `1`；透明度位于 `[0,1]`。
 - 残影采样数和尾迹分段数使用加载器允许的有限范围。
 - 口径只选择表现档位，不改变 WeaponDefinition；缺失时允许按稳定武器元数据回退，不把显示名解析结果写回数据。
+- `projectile_type=Aircraft` 的 `sprite` 统一引用公共飞机资产；五类机型使用 `visual.projectile.aircraft.fighter/bomber/torpedo_bomber/scout/asw`，机头向右为零旋转，`scale` 仅为表现初值。阴影复用该贴图 Alpha，由独立节点调制，机体不烘焙阴影或载荷。
 
 ## 6. WeaponVisualDefinition
 
@@ -122,6 +123,8 @@ vfx_role_mappings?
 
 角色、武器或武器组、投射物表现和 VFX Profile 引用必须存在；`weapon_group_id` 与 `weapon_id` 至少有一个。公共表现优先按武器类别复用；角色覆盖只声明差异。音频尚无正式设计和运行时资产，不在本契约预留字段。
 
+新航空链按具体 `weapon_id` 优先查询，缺省才按 `weapon_group_id` 查询；同组多种载荷必须有具体武器覆盖，不能以次级贴图字段推断实际武器。机体映射统一指向公共机型，旧角色飞机和回收字段仅保留兼容。`launch_bind=unit_center` 使用单位中心回退；逐波表现生成位置与权威时间线仍服从 Application 投影，不从绑定点重算航程。
+
 ## 7. VFXPlaybackProfile
 
 ```text
@@ -141,3 +144,9 @@ screen_shake?
 - 表现 ID 唯一，所有武器、投射物、VFX 和资产语义引用可解析。
 - 缺失表现可以使用明确公共回退，但不得让配置加载失败静默隐藏规则对象。
 - 资产路径、目录和 manifest 结构只由 `docs/45_art_asset_interface_design.md` 维护。
+
+## 菜单封面与本机偏好（B 方案）
+
+`assets/ui/processed/menu/cover_manifest.json` 使用 `schema_version: 1` 与 `covers` 数组；每项的稳定字段为 `id`、`character_id`、`display_name`、`title`、`category`、`image`。`image` 为仓库相对 PNG 路径，加载时归一为资源路径。`sha256`、`generator`、`model`、`review`、`prompt_brief` 为来源记录，不参与玩法。封面只服务菜单。
+
+GameFlow 的本机 ConfigFile `menu` 节保存 `cover_id`、`reduce_motion`、`auto_view`；与已有 `display` 节互相保留。默认胡德海港、正常动效、允许自动观赏。会话内 `menu_return_page` 保存战后返回页，不属于进度存档或角色解锁。

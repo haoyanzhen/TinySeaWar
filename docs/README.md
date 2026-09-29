@@ -9,6 +9,7 @@ This folder uses numeric prefixes so design files stay grouped in a useful readi
 - `20-29`: data contracts and schema.
 - `30-39`: technical architecture and implementation notes.
 - `40-49`: art direction, asset contracts, and art pipeline notes.
+- `50-59`: music and audio design, playback policies, and audio asset standards.
 - `90-99`: audits, reviews, and historical reports.
 
 Use lowercase English file names with underscores:
@@ -61,6 +62,7 @@ Use lowercase English file names with underscores:
 - [technical/t00_coastal_ai_performance_solution.md](technical/t00_coastal_ai_performance_solution.md)：有岸与大编队战斗的 AI、导航、空间查询、Tick 拆分和单位侦查性能治理。
 - [technical/t01_inertial_navigation_and_emergency_avoidance.md](technical/t01_inertial_navigation_and_emergency_avoidance.md)：战略走廊、常规动力学航迹与高威胁紧急避险。
 - [technical/t02_level_objective_reinforcement_progress_solution.md](technical/t02_level_objective_reinforcement_progress_solution.md)：声明式关卡目标、接替增援、结算与进度实现。
+- [technical/t10_carrier_combat_presentation_solution.md](technical/t10_carrier_combat_presentation_solution.md)：航空表现投影、事件接管、规则闭环与分阶段验收；不替代航空规则和公式真源。
 
 ### Art
 
@@ -74,6 +76,11 @@ Use lowercase English file names with underscores:
 - [45_art_asset_interface_design.md](45_art_asset_interface_design.md)
 - [46_character_art_asset_pipeline.md](46_character_art_asset_pipeline.md)
 - [47_scene_art_asset_pipeline.md](47_scene_art_asset_pipeline.md)
+
+### Music And Audio
+
+- [50_music_playback_and_asset_design.md](50_music_playback_and_asset_design.md)：标题与出击曲池、胜负结算音乐、播放切换和音乐资产验收；不负责战斗音效与语音。
+- [51_music_generation_and_review_pipeline.md](51_music_generation_and_review_pipeline.md)：服务器音乐生成路径、确定性工具、端到端 skill 与人工评审交付入口。
 
 ### Audit
 

@@ -107,7 +107,7 @@ assets/environment/weather/zones/environment_zone_asset_manifest.json
 - 鱼雷口使用 `torpedo_port_01`、`torpedo_port_02`；旧配置中的单点 `torpedo_port` 读取时应能映射为 `torpedo_port_01`。
 - 舰尾/侧投反潜投放点使用 `asw_launch_01`、`asw_launch_02`；不得复用主炮 `muzzle_*` 作为深水炸弹来源。
 - 航迹使用 `wake_origin`。
-- 航母使用 `aircraft_launch_01`、`aircraft_launch_02`、`aircraft_recovery`。
+- 航母旧 `aircraft_launch_01`、`aircraft_launch_02`、`aircraft_recovery` 保留兼容，新航空链从 Application 发布的角色位置生成，不依赖这些挂点或角色专属飞机。`unit_center` 表示无局部挂点的单位中心回退，不改变规则原点。
 - 侦查、技能和扫描使用 `scan_origin`、`skill_origin`。
 - 舰装挂点使用 `rig_mount`。
 - processed 绑定点配置可在根级 `heading_offsets_degrees` 中按完整资产文件名记录角度；字段形状、范围与加载拒绝规则只见 `docs/25_presentation_data_schema.md`。`ShipUnitView` 对舰装绘制与该资产绑定点使用同一偏移，避免图像转正后炮口或特效挂点留在旧角度。
@@ -125,3 +125,7 @@ UI 接口：
 - 固定路径仅按本节上方登记的例外保留；新增资产消费者遵循语义查询。
 - 美术后处理工具继续负责产出 `anim_config`、`vfx_config`、`meta_bind_points` 和 UI manifest。
 - 若资源缺失或 JSON 无法解析，`AssetCatalog.load_all()` 会记录错误，启动时通过 `DataRegistry` 报告。
+
+## 菜单封面接口（B 方案）
+
+菜单通过 `DataRegistry.assets.menu_covers()` 和 `menu_cover(id)` 查询 `assets/ui/processed/menu/cover_manifest.json`。加载器检查唯一 ID、正式 menu 资源路径和文件存在性；表现层不拼接角色封面物理路径。七张场景插画位于 `assets/ui/processed/menu/covers/`，与角色战斗透明立绘分别管理。共享可缩放面板和按钮由 `scripts/presentation/ui_theme.gd` 绘制；头像、图标、血条继续通过现有语义接口查询。

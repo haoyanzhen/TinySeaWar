@@ -7,6 +7,11 @@ from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFilter
 
+if __package__:
+    from .build_shared_aircraft_assets import public_entries as shared_aircraft_entries
+else:
+    from build_shared_aircraft_assets import public_entries as shared_aircraft_entries
+
 
 ROOT = Path(__file__).resolve().parents[2]
 COMBAT_ROOT = ROOT / "assets" / "vfx" / "combat"
@@ -334,6 +339,11 @@ def generate_assets(source_sheet):
                 "alpha": False,
             })
 
+    # Reviewed native-alpha aircraft supersede the historical procedural symbols.
+    # Their versioned files are never overwritten by this generator.
+    replacements = {entry["semantic"]: entry for entry in shared_aircraft_entries()}
+    manifest = [replacements.pop(entry["semantic"], entry) for entry in manifest]
+    manifest.extend(replacements.values())
     qa_dir = COMBAT_ROOT / "qa"
     qa_dir.mkdir(parents=True, exist_ok=True)
     (qa_dir / "combat_vfx_asset_manifest.json").write_text(json.dumps({"assets": manifest}, indent=2) + "\n", encoding="utf-8")

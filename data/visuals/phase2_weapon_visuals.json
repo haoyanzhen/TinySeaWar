@@ -1418,6 +1418,21 @@
         "skill_aura": "skill.area",
         "range_reticle": "skill.area"
       }
+    },
+    {
+      "id": "weapon_visual.shokaku_torpedo_bomber",
+      "aliases": [
+        "weapon.shokaku_torpedo_bomber"
+      ],
+      "character_id": "shokaku",
+      "weapon_id": "weapon.shokaku_torpedo_bomber",
+      "projectile_visual_id": "visual.projectile.aircraft.torpedo_bomber",
+      "fire_animation_state": "firepower",
+      "launch_bind": "unit_center",
+      "impact_profile": "vfx.profile.torpedo_impact",
+      "trail_profile": "vfx.profile.aircraft.path",
+      "hit_profile": "vfx.profile.aircraft.intercept_hit",
+      "fall_profile": "vfx.profile.aircraft.fall"
     }
   ]
 }

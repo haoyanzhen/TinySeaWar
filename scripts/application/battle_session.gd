@@ -19,6 +19,7 @@ const TrajectoryPlanner = preload("res://scripts/application/navigation/trajecto
 const NavigationProgress = preload("res://scripts/application/navigation/navigation_progress.gd")
 const ShipMotionService = preload("res://scripts/domain/services/ship_motion_service.gd")
 const AIQuantitativeModel = preload("res://scripts/application/ai/ai_quantitative_model.gd")
+const AviationProjection = preload("res://scripts/application/aviation_presentation_projection.gd")
 const AIObservation = preload("res://scripts/application/ai/ai_observation.gd")
 
 const PLAYER_FACTION := "player"
@@ -53,6 +54,7 @@ var state := {}
 var command_queue: Array = []
 var _player_command_sequence: int = 0
 var delayed_attacks: Array = []
+var aviation_projection = AviationProjection.new()
 var terrain_query = TerrainQueryService.new()
 var terrain_collision_field_loader = TerrainCollisionFieldLoader.new()
 var terrain_context_service = TerrainContextService.new()
@@ -196,6 +198,7 @@ func create_battle_from_definition(level_definition: Dictionary, seed_value: int
 	_event_buffer.clear()
 	command_queue.clear()
 	delayed_attacks.clear()
+	aviation_projection.clear()
 	navigation_request_broker.clear()
 	navigation_request_broker.configure(1, 2000)
 	_ai_battlefield_context_cache.clear()
@@ -510,6 +513,7 @@ func snapshot(viewer_faction: String = PLAYER_FACTION, omniscient: bool = false)
 		"units": units,
 		"contacts": contacts,
 		"projectiles": _visible_projectiles(viewer_faction, omniscient),
+		"aviation": aviation_projection.snapshot(float(state.get("elapsed_time", 0.0)), viewer_faction, omniscient, state.get("skill_effects_by_id", {}), state.get("support_effects_by_id", {}), facility_service.support_missions, state.get("facilities_by_id", {})),
 		"terrain_map": state.get("terrain_map", {}).duplicate(true),
 		"environment_zones": state.get("environment_zones", []).duplicate(true),
 		"global_environment": state.get("global_environment", {}).duplicate(true),
@@ -4827,6 +4831,7 @@ func _queue_skill_attack(source: Dictionary, skill: Dictionary, attack_spec: Dic
 	var launch_effects := _active_status_effects(source).duplicate(true)
 	launch_effects.append_array(temporary_effects)
 	for wave_index in range(waves):
+		var aviation_attacks: Array = []
 		var launch_at_time := float(state["elapsed_time"]) + charge_time + wave_index * wave_interval
 		for shot_index in range(shot_count):
 			var impact_position := target_position
@@ -4859,6 +4864,8 @@ func _queue_skill_attack(source: Dictionary, skill: Dictionary, attack_spec: Dic
 			}
 			_apply_dispersion_metadata(attack, dispersion_sample)
 			delayed_attacks.append(attack)
+			aviation_attacks.append(attack)
+		_register_aviation_wave(aviation_attacks, source, weapon)
 	_emit("SkillAttackScheduled", {"unit_id":source["entity_id"], "skill_id":skill["id"], "weapon_id":weapon["id"], "waves":waves, "shots_per_wave":shot_count, "target_position":target_position})
 
 
@@ -4934,6 +4941,7 @@ func _fire_facility_weapon(facility: Dictionary, target: Dictionary, weapon: Dic
 	var mount_reference: Dictionary = facility_service.definition_for(str(facility.get("facility_id", ""))).get("weapon_mount_reference", {})
 	var shot_count := int(mount_reference.get("mount_count", weapon.get("mount_count", 1))) * int(mount_reference.get("shots_per_mount", weapon.get("shots_per_mount", 1)))
 	var impact_positions: Array = []
+	var aviation_attacks: Array = []
 	var dispersion_samples: Array = []
 	for shot_index in range(shot_count):
 		var dispersion_sample := _sample_gun_impact(origin, target_position, weapon)
@@ -5061,6 +5069,7 @@ func _fire_weapon(unit: Dictionary, target: Dictionary, weapon_state: Dictionary
 	var base_heading := (aim_position - (unit["position"] as Vector2)).angle()
 	var torpedo_error_profile := _torpedo_error_profile(unit, weapon, shot_count, launch_effects)
 	var impact_positions: Array = []
+	var aviation_attacks: Array = []
 	var dispersion_samples: Array = []
 	for shot_index in range(shot_count):
 		var spread_offset := 0.0
@@ -5081,6 +5090,8 @@ func _fire_weapon(unit: Dictionary, target: Dictionary, weapon_state: Dictionary
 			var delayed_attack := {"attack_id": attack_id, "source_unit_id": unit["entity_id"], "source_weapon_id": weapon["id"], "target_unit_id": "", "aimed_target_unit_id": target["entity_id"], "target_position": resolved_impact, "intended_impact_position": intended_impact, "resolved_impact_position": resolved_impact, "terrain_obstacle_id": terrain_hit.get("obstacle_id", ""), "blocked_by_terrain": bool(terrain_hit.get("hit", false)), "impact_radius": float(weapon.get("impact_radius", 40.0)), "origin": unit["position"], "resolve_at_time": float(state["elapsed_time"]) + travel_seconds, "accuracy_modifier": _environment_accuracy_modifier(unit["faction_id"], unit["position"], intended_impact, category), "source_status_effects":launch_effects.duplicate(true)}
 			_apply_dispersion_metadata(delayed_attack, dispersion_sample)
 			delayed_attacks.append(delayed_attack)
+			aviation_attacks.append(delayed_attack)
+	_register_aviation_wave(aviation_attacks, unit, weapon)
 	_mark_ai_effective_attack(unit)
 	_emit("WeaponFired", {"unit_id": unit["entity_id"], "weapon_id": weapon["id"], "mount_id": weapon_state.get("mount_id", ""), "target_unit_id": target["entity_id"], "target_position": aim_position, "impact_positions": impact_positions, "dispersion_samples": dispersion_samples, "shot_count": shot_count, "submarine_phase": unit.get("ai_state", {}).get("submarine_combat_phase", ""), "tick_index": state.get("tick_index", 0)})
 	_consume_on_fire_effects(unit, weapon)
@@ -5097,6 +5108,7 @@ func _fire_weapon_at_position(unit: Dictionary, target_position: Vector2, weapon
 	var base_heading := (target_position - (unit["position"] as Vector2)).angle()
 	var torpedo_error_profile := _torpedo_error_profile(unit, weapon, shot_count, launch_effects)
 	var impact_positions: Array = []
+	var aviation_attacks: Array = []
 	var dispersion_samples: Array = []
 	for shot_index in range(shot_count):
 		var spread_offset := 0.0
@@ -5117,6 +5129,8 @@ func _fire_weapon_at_position(unit: Dictionary, target_position: Vector2, weapon
 			var delayed_attack := {"attack_id": attack_id, "source_unit_id": unit["entity_id"], "source_weapon_id": weapon["id"], "target_unit_id": "", "target_position": resolved_impact, "intended_impact_position": intended_impact, "resolved_impact_position": resolved_impact, "terrain_obstacle_id": terrain_hit.get("obstacle_id", ""), "blocked_by_terrain": bool(terrain_hit.get("hit", false)), "impact_radius": float(weapon.get("impact_radius", 40.0)), "origin": unit["position"], "resolve_at_time": float(state["elapsed_time"]) + travel_seconds, "accuracy_modifier": _environment_accuracy_modifier(unit["faction_id"], unit["position"], intended_impact, category), "source_status_effects":launch_effects.duplicate(true)}
 			_apply_dispersion_metadata(delayed_attack, dispersion_sample)
 			delayed_attacks.append(delayed_attack)
+			aviation_attacks.append(delayed_attack)
+	_register_aviation_wave(aviation_attacks, unit, weapon)
 	_mark_ai_effective_attack(unit)
 	_emit("WeaponFired", {"unit_id": unit["entity_id"], "weapon_id": weapon["id"], "weapon_state_instance_id": weapon_state.get("instance_id", ""), "mount_id": weapon_state.get("mount_id", ""), "target_position": target_position, "impact_positions": impact_positions, "dispersion_samples": dispersion_samples, "shot_count": shot_count, "manual": manual, "submarine_phase": unit.get("ai_state", {}).get("submarine_combat_phase", ""), "tick_index": state.get("tick_index", 0)})
 	_handle_submarine_weapon_fired(unit, weapon_state, weapon)
@@ -5292,7 +5306,21 @@ func _update_projectiles(delta: float) -> void:
 			state["projectiles_by_id"].erase(projectile_id)
 
 
+func _register_aviation_wave(attacks: Array, source: Dictionary, weapon: Dictionary) -> void:
+	if str(weapon.get("mount_type", "")) != "Aviation": return
+	aviation_projection.register(attacks, source, float(state["elapsed_time"]))
+	_advance_aviation_projection()
+
+
+func _advance_aviation_projection() -> void:
+	var active := {}
+	for attack in delayed_attacks: active[str(attack.attack_id)] = true
+	for event in aviation_projection.advance(float(state["elapsed_time"]), state["units_by_id"], active):
+		_emit(str(event.event_type), event)
+
+
 func _resolve_delayed_attacks() -> void:
+	_advance_aviation_projection()
 	delayed_attacks.sort_custom(func(a, b): return float(a["resolve_at_time"]) < float(b["resolve_at_time"]) if not is_equal_approx(float(a["resolve_at_time"]), float(b["resolve_at_time"])) else str(a["attack_id"]) < str(b["attack_id"]))
 	var remaining: Array = []
 	for attack in delayed_attacks:
@@ -5303,6 +5331,7 @@ func _resolve_delayed_attacks() -> void:
 				_resolve_attack(attack, false)
 		else: remaining.append(attack)
 	delayed_attacks = remaining
+	_advance_aviation_projection()
 
 
 func _resolve_attack(attack: Dictionary, forced_hit: bool) -> void:

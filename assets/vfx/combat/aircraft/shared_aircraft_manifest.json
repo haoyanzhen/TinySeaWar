@@ -1,0 +1,122 @@
+{
+  "schema_version": 1,
+  "generation": "assets/vfx/combat/source/aircraft_shared_v2/generation.json",
+  "processing": "full-alpha bounding trim, proportional Lanczos resize to 224px max, centered 256px canvas; no chroma key or alpha replacement",
+  "assets": [
+    {
+      "kind": "fighter",
+      "semantic": "visual.projectile.aircraft.fighter",
+      "file": "assets/vfx/combat/aircraft/aircraft_fighter_v2.png",
+      "source_file": "assets/vfx/combat/source/aircraft_shared_v2/fighter.png",
+      "source_sha256": "5a5442835f7412e5c62610998f904dfa3c6d591013990726c20920429042886c",
+      "sha256": "388b99feba3961f0bead42751b60170b9f498b2131dfd8aa1b6cc230535a02dd",
+      "source_alpha_bbox": [
+        122,
+        53,
+        1288,
+        1071
+      ],
+      "canvas_size": [
+        256,
+        256
+      ],
+      "heading_degrees": 0,
+      "reviewer": "Codex static pixel review",
+      "review": "pass",
+      "observation": "Single top-down compact tapered-wing fighter, retracted gear, no glow or payload.",
+      "in_engine_review": "pending"
+    },
+    {
+      "kind": "bomber",
+      "semantic": "visual.projectile.aircraft.bomber",
+      "file": "assets/vfx/combat/aircraft/aircraft_bomber_v2.png",
+      "source_file": "assets/vfx/combat/source/aircraft_shared_v2/bomber.png",
+      "source_sha256": "2955ee23b362a002a26f5b77d0ef813ee48505d7218ed8ae7b92394bd96598f6",
+      "sha256": "8f7586c374a81084d441e6a29d1a261858477054350c3a27eca99ce778560a7b",
+      "source_alpha_bbox": [
+        33,
+        43,
+        1314,
+        1079
+      ],
+      "canvas_size": [
+        256,
+        256
+      ],
+      "heading_degrees": 0,
+      "reviewer": "Codex static pixel review",
+      "review": "pass",
+      "observation": "Single intact broad-wing bomber, top-down right-facing, no baked flight effects.",
+      "in_engine_review": "pending"
+    },
+    {
+      "kind": "torpedo_bomber",
+      "semantic": "visual.projectile.aircraft.torpedo_bomber",
+      "file": "assets/vfx/combat/aircraft/aircraft_torpedo_bomber_v2.png",
+      "source_file": "assets/vfx/combat/source/aircraft_shared_v2/torpedo_bomber.png",
+      "source_sha256": "b483c94dce3b3cf4369faec2e92f50d602d1cb05653d7b58e198950bff939bbe",
+      "sha256": "43996c166a975324298486b6adf2995133284684adaa1e79edcd6f5cb05e10dd",
+      "source_alpha_bbox": [
+        98,
+        21,
+        1752,
+        849
+      ],
+      "canvas_size": [
+        256,
+        256
+      ],
+      "heading_degrees": 0,
+      "reviewer": "Codex static pixel review",
+      "review": "pass",
+      "observation": "Long narrow fuselage and short angular wings; clean replacement after two rejected glow attempts.",
+      "in_engine_review": "pending"
+    },
+    {
+      "kind": "scout",
+      "semantic": "visual.projectile.aircraft.scout",
+      "file": "assets/vfx/combat/aircraft/aircraft_scout_v2.png",
+      "source_file": "assets/vfx/combat/source/aircraft_shared_v2/scout.png",
+      "source_sha256": "ad280b23aad1484ec9733e26745fac6d4d32a4e22b8d18d1bbb717b21758f1f6",
+      "sha256": "51d9a3dc4944fffd8628452207c9f562c50e5cef406a18b2772ffec84d47db0b",
+      "source_alpha_bbox": [
+        256,
+        38,
+        1284,
+        1073
+      ],
+      "canvas_size": [
+        256,
+        256
+      ],
+      "heading_degrees": 0,
+      "reviewer": "Codex static pixel review",
+      "review": "pass",
+      "observation": "Distinct long narrow wings and light fuselage, no detached parts or baked shadow.",
+      "in_engine_review": "pending"
+    },
+    {
+      "kind": "asw",
+      "semantic": "visual.projectile.aircraft.asw",
+      "file": "assets/vfx/combat/aircraft/aircraft_asw_v2.png",
+      "source_file": "assets/vfx/combat/source/aircraft_shared_v2/asw.png",
+      "source_sha256": "2102910f4fad6dc05fbcd35b4fc83d4bb4f5bd5e6619c2f5c0185ea3aa36e486",
+      "sha256": "7195415c82c645a911583c9b9c302c2207d1126b5bc766a968270f4e35c04df1",
+      "source_alpha_bbox": [
+        33,
+        35,
+        1290,
+        1079
+      ],
+      "canvas_size": [
+        256,
+        256
+      ],
+      "heading_degrees": 0,
+      "reviewer": "Codex static pixel review",
+      "review": "pass",
+      "observation": "Two intact symmetric wing engines and tail sensor boom; no extra engines or external ordnance.",
+      "in_engine_review": "pending"
+    }
+  ]
+}

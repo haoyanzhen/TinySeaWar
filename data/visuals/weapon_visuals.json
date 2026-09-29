@@ -189,7 +189,9 @@
       "id": "weapon_visual.enterprise_cv6_airstrike",
       "aliases": [
         "enterprise_cv6.airstrike",
-        "enterprise_cv6.main_air_group"
+        "enterprise_cv6.main_air_group",
+        "enterprise_airstrike",
+        "weapon.enterprise_airstrike"
       ],
       "character_id": "enterprise_cv6",
       "weapon_group_id": "enterprise_cv6_airstrike",
@@ -278,6 +280,42 @@
         "torpedo_trail": "torpedo.trail.submerged",
         "stealth": "submarine.underwater_shadow"
       }
+    },
+    {
+      "id": "weapon_visual.argus_airstrike",
+      "character_id": "argus",
+      "weapon_group_id": "argus_airstrike",
+      "projectile_visual_id": "visual.projectile.aircraft.bomber",
+      "fire_animation_state": "firepower",
+      "launch_bind": "unit_center",
+      "impact_profile": "vfx.profile.airstrike_impact",
+      "trail_profile": "vfx.profile.aircraft.path",
+      "hit_profile": "vfx.profile.aircraft.intercept_hit",
+      "fall_profile": "vfx.profile.aircraft.fall"
+    },
+    {
+      "id": "weapon_visual.pobeda_airstrike",
+      "character_id": "pobeda",
+      "weapon_group_id": "pobeda_airstrike",
+      "projectile_visual_id": "visual.projectile.aircraft.bomber",
+      "fire_animation_state": "firepower",
+      "launch_bind": "unit_center",
+      "impact_profile": "vfx.profile.airstrike_impact",
+      "trail_profile": "vfx.profile.aircraft.path",
+      "hit_profile": "vfx.profile.aircraft.intercept_hit",
+      "fall_profile": "vfx.profile.aircraft.fall"
+    },
+    {
+      "id": "weapon_visual.hosho_airstrike",
+      "character_id": "hosho",
+      "weapon_group_id": "hosho_airstrike",
+      "projectile_visual_id": "visual.projectile.aircraft.bomber",
+      "fire_animation_state": "firepower",
+      "launch_bind": "unit_center",
+      "impact_profile": "vfx.profile.airstrike_impact",
+      "trail_profile": "vfx.profile.aircraft.path",
+      "hit_profile": "vfx.profile.aircraft.intercept_hit",
+      "fall_profile": "vfx.profile.aircraft.fall"
     }
   ]
 }

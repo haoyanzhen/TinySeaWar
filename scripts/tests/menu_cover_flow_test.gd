@@ -16,6 +16,24 @@ func _run() -> void:
 		menu._switch_cover(index, false)
 		_check(menu.cover_front.texture != null, "cover loads %d" % index)
 	_check(menu.home_actions.map(func(button): return button.text) == ["教学关", "挑战关", "自定义战斗"], "home uses concise mode labels")
+	var catalog = root.get_node("DataRegistry").assets
+	_check(catalog.errors.is_empty(), "menu asset catalog has no duplicate or invalid entries")
+	for state in ["primary_normal", "primary_hover", "primary_pressed", "secondary_normal", "secondary_selected", "disabled", "light_normal", "light_hover", "light_pressed", "focus", "warning", "back"]:
+		var texture = load(catalog.ui_asset_path("ui.button.naval_" + state))
+		_check(texture is AtlasTexture and texture.get_size() == Vector2(658, 170), "naval atlas region loads: " + state)
+	var primary = menu.home_actions[0]
+	_check(primary.get_theme_stylebox("normal").get("texture") is AtlasTexture, "home uses illustrated button")
+	_check(primary.get_theme_stylebox("normal").texture != primary.get_theme_stylebox("hover").texture and primary.get_theme_stylebox("hover").texture != primary.get_theme_stylebox("pressed").texture, "hover and press have separate art")
+	_check(primary.get_theme_stylebox("focus") is StyleBoxFlat and primary.get_theme_stylebox("focus").bg_color.a == 0, "focus overlay preserves the active artwork")
+	# Missing assets keep the complete vector fallback, rather than half a state family.
+	var saved: Dictionary = catalog.ui_assets["ui_button_naval_primary_normal"]
+	catalog.ui_assets.erase("ui_button_naval_primary_normal")
+	var fallback := Button.new()
+	fallback.custom_minimum_size = Vector2(384, 70)
+	menu.Kit.cover_button(fallback, true)
+	_check(fallback.get_theme_stylebox("normal").get("texture") == null, "missing menu art retains vector fallback")
+	fallback.free()
+	catalog.ui_assets["ui_button_naval_primary_normal"] = saved
 	_check(["tutorial", "challenge", "custom"].all(func(key): return not menu.nav_buttons[key].is_visible_in_tree()), "no duplicate home mode entries")
 	menu.home_actions[0].grab_focus()
 	var background_tint: Color = menu.cover_front.self_modulate

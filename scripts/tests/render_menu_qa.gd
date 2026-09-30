@@ -7,9 +7,11 @@ func _run() -> void:
 	var target := Vector2i(1920, 1080)
 	var output := "/tmp/tsw_menu_home.png"
 	var page := "home"
+	var chapter := 0
 	for arg in OS.get_cmdline_user_args():
 		if arg.begins_with("--page="): page = arg.trim_prefix("--page=")
 		elif arg.begins_with("--output="): output = arg.trim_prefix("--output=")
+		elif arg.begins_with("--chapter="): chapter = int(arg.trim_prefix("--chapter="))
 		elif arg == "--1440": target = Vector2i(2560, 1440)
 	var viewport := SubViewport.new()
 	viewport.size = target
@@ -19,6 +21,7 @@ func _run() -> void:
 	root.add_child(viewport)
 	var menu = load("res://scenes/menu/main_menu.tscn").instantiate()
 	viewport.add_child(menu)
+	menu.challenge_chapter = clampi(chapter, 0, 2)
 	if page == "gallery": menu._show_home(); menu._show_gallery()
 	elif page == "view": menu._show_home(); menu.set_viewing(true)
 	else: menu.call("_show_" + page)

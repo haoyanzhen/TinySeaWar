@@ -35,3 +35,11 @@ or masked by Godot over the generated art.
 
 Character portraits remain under `assets/characters/*/processed/ui/` and should
 be clipped into the fleet portrait frames at runtime.
+
+## Illustrated menu buttons
+
+`uv run --locked python tools/art_pipeline/build_menu_button_atlas.py` rebuilds
+the approved native-alpha sheet as twelve lossless Godot AtlasTexture regions.
+`processed/menu/button_manifest.json` supplements the original UI manifest via
+AssetCatalog; the legacy UI builder does not overwrite this menu family.
+Runtime consumers use `ui.button.naval_<state>` semantic keys.

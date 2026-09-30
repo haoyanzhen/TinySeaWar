@@ -85,3 +85,49 @@ static func cover_button(button: Button, hero := false) -> void:
 		button.add_theme_stylebox_override(state, style)
 	for key in ["font_color", "font_hover_color", "font_pressed_color", "font_focus_color"]:
 		button.add_theme_color_override(key, Color("#fff4db"))
+	# Compact controls retain the vector treatment; illustrated caps need label space.
+	if hero or button.custom_minimum_size.x >= 180:
+		menu_button(button, "primary" if hero else "secondary")
+
+static func menu_button(button: Button, family := "primary") -> void:
+	var loop := Engine.get_main_loop() as SceneTree
+	if loop == null:
+		return
+	var registry := loop.root.get_node_or_null("DataRegistry")
+	if registry == null:
+		return
+	var states := {"normal": "primary_normal", "hover": "primary_hover", "pressed": "primary_pressed", "hover_pressed": "primary_pressed", "disabled": "disabled"}
+	if family == "secondary":
+		states.merge({"normal": "secondary_normal", "hover": "primary_hover", "pressed": "secondary_selected", "hover_pressed": "secondary_selected"}, true)
+	elif family == "light":
+		states.merge({"normal": "light_normal", "hover": "light_hover", "pressed": "secondary_selected", "hover_pressed": "secondary_selected"}, true)
+	# Resolve all resources before overriding anything, preserving the complete fallback.
+	var textures := {}
+	for state in states:
+		var path: String = registry.assets.ui_asset_path("ui.button.naval_" + states[state])
+		if path.is_empty() or not ResourceLoader.exists(path):
+			return
+		var texture := load(path) as Texture2D
+		if texture == null:
+			return
+		textures[state] = texture
+	for state in textures:
+		var style = preload("res://scripts/presentation/menu_button_texture_style.gd").new()
+		style.texture = textures[state]
+		style.content_margin_left = 68 if family == "primary" else 48
+		style.content_margin_right = style.content_margin_left
+		style.content_margin_top = 12
+		style.content_margin_bottom = 12
+		button.add_theme_stylebox_override(state, style)
+	# Focus is a transparent overlay, never an opaque atlas plaque over the current state.
+	var focus := panel(Color.TRANSPARENT, 12, 0)
+	focus.border_color = Color("#8dd9e8")
+	focus.set_border_width_all(2)
+	focus.shadow_size = 0
+	button.add_theme_stylebox_override("focus", focus)
+	for key in ["font_color", "font_hover_color", "font_pressed_color", "font_hover_pressed_color", "font_focus_color"]:
+		button.add_theme_color_override(key, INK if family == "light" else Color("#fff4db"))
+	if family == "light":
+		button.add_theme_color_override("font_pressed_color", Color("#fff4db"))
+		button.add_theme_color_override("font_hover_pressed_color", Color("#fff4db"))
+	button.add_theme_color_override("font_disabled_color", Color("#eef2f5"))

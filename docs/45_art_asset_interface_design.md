@@ -128,6 +128,10 @@ UI 接口：
 
 ## 菜单封面接口（B 方案）
 
-菜单通过 `DataRegistry.assets.menu_covers()` 和 `menu_cover(id)` 查询 `assets/ui/processed/menu/cover_manifest.json`。加载器检查唯一 ID、正式 menu 资源路径和文件存在性；表现层不拼接角色封面物理路径。七张场景插画位于 `assets/ui/processed/menu/covers/`，与角色战斗透明立绘分别管理。共享可缩放面板和按钮由 `scripts/presentation/ui_theme.gd` 绘制；头像、图标、血条继续通过现有语义接口查询。
+菜单通过 `DataRegistry.assets.menu_covers()` 和 `menu_cover(id)` 查询 `assets/ui/processed/menu/cover_manifest.json`。加载器检查唯一 ID、正式 menu 资源路径和文件存在性；表现层不拼接角色封面物理路径。七张场景插画位于 `assets/ui/processed/menu/covers/`，与角色战斗透明立绘分别管理。菜单按钮补充清单 `assets/ui/processed/menu/button_manifest.json` 复用公共 UI `assets` 结构，由 `ui_asset_path("ui.button.naval_<state>")` 查询 `processed/menu/buttons/` 下的 AtlasTexture；资源引用同目录透明图集，表现层不依赖 raw 路径。焦点描边保持透明，缺图回退程序按钮。共享主题由 `scripts/presentation/ui_theme.gd` 维护；头像、图标、血条继续通过现有语义接口查询。
 
 航空持续消费者从可见投影携带的具体武器/机型解析公共 `visual.projectile.aircraft.*`，在视图绑定时缓存映射。投放实体 `projectile.air_torpedo` 交公共鱼雷查询，不从角色目录拼接。程序绘制的阴影、敌我形状标记、缺图箭头和符号LOD不新增角色包必需项。
+
+### 技能闪回资产消费
+
+通过 `DataRegistry.assets.character_ui_asset_path(character_id, "illust_full_alpha")` 读取既有透明全身立绘；部分旧 `illust_skill_cutin_alpha` 带场景背景，不用于无底板闪回；头像优先 `ui_portrait_small`，其次 `ui_portrait`。调用方不得拼接角色物理路径；无有效 Texture2D 时按 `33` 降级。缓存以角色 ID 标识，生命周期限单场战斗；本次不改角色素材或 manifest。

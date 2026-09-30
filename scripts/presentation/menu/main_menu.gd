@@ -14,6 +14,9 @@ var content: VBoxContainer
 var custom_size_selector: OptionButton
 var custom_map_selector: OptionButton
 var custom_weather_selector: OptionButton
+var custom_environment_selector: OptionButton
+var custom_environment_schedule: Label
+var custom_environment_id := ""
 var fleet_grid: GridContainer
 var custom_status: Label
 var custom_start_button: Button
@@ -96,7 +99,11 @@ func _button(parent: Node, text: String, callback: Callable, minimum := Vector2(
 	button.text = text
 	button.custom_minimum_size = minimum
 	button.pressed.connect(callback)
-	if primary: Kit.primary(button)
+	if primary:
+		Kit.primary(button)
+		Kit.menu_button(button)
+	elif minimum.x >= 180 and minimum.y <= 70:
+		Kit.menu_button(button, "light")
 	parent.add_child(button)
 	button.mouse_entered.connect(func():
 		if not button.disabled: create_tween().tween_property(button, "modulate", Color(1.04, 1.04, 1.04), _motion_seconds(0.12))
@@ -411,6 +418,9 @@ func _show_challenge() -> void:
 		var exists: bool = not DataRegistry.registry.get_definition("levels", id).is_empty()
 		var unlocked: bool = exists and (index == 0 or _challenge_level_id(entries[index - 1][0]) in GameFlow.completed_challenge_level_ids)
 		var status := "筹备中" if not exists else ("已完成" if id in GameFlow.completed_challenge_level_ids else ("可出击" if unlocked else "完成本板块前一关后开放"))
+		if id in GameFlow.completed_challenge_level_ids:
+			if index < 4: status += " · " + ["铜章", "银章", "金章", "精锐章"][index]
+			elif entries.all(func(item): return _challenge_level_id(item[0]) in GameFlow.completed_challenge_level_ids): status += " · 本章完成"
 		var button := _button(list, "%s  %s\n%s" % [entry[0], entry[1], status], _show_level_detail.bind(id, "", unlocked), Vector2(420, 86))
 		button.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		button.toggle_mode = true
@@ -466,19 +476,32 @@ func _show_level_detail(id: String, summary: String, unlocked: bool) -> void:
 		_label(instructions, "完成目标：" + str(objective["completion_text"]), 19, Kit.TEAL)
 	if not str(objective.get("failure_text", "")).is_empty():
 		_label(instructions, "取消条件：" + str(objective["failure_text"]), 19, Color("#a7424e"))
+	for wave in level.get("reinforcement_waves", []):
+		_label(instructions, "接替增援：最早%d秒，%s，须有出战空位" % [int(wave.get("earliest_time", 0)), str(wave.get("spawn_display_name", wave.get("spawn_point_id", "入口")))], 18, Kit.MUTED)
+	var timeline: Dictionary = DataRegistry.registry.get_definition("environment_zones", str(level.get("map", {}).get("environment_timeline_id", "")))
+	if not timeline.is_empty():
+		var stages: Array[String] = []
+		for stage in timeline.get("stages", []): stages.append("%d秒 %s" % [int(stage.start_seconds), ("雷雨" if str(stage.ocean_palette).begins_with("thunderstorm") else "雨天")])
+		_label(instructions, "天气预报：" + " → ".join(stages), 18, Kit.MUTED)
 	var rewards: Array[String] = []
 	for ship in DataRegistry.registry.all("ships"):
 		if str(GameFlow.ship_acquisition(str(ship["id"])).get("source_level_id", "")) == id:
 			rewards.append(str(ship.get("display_name", "")))
 	if not rewards.is_empty(): _label(detail_column, "首胜可获得：" + "、".join(rewards), 18, Kit.TEAL)
 	var start := _button(detail_column, "准备好了 · 出击" if unlocked else "完成本板块前一关后开放", _start_level.bind(id), Vector2(0, 58), true)
+	start.custom_minimum_size.x = 380
+	start.size_flags_horizontal = Control.SIZE_SHRINK_END
 	start.disabled = not unlocked
 
 
 func _fleet_preview(parent: Node, title: String, fleet: Array) -> void:
 	var column := _column(parent, 8)
 	_label(column, "%s  /  %d 艘" % [title, fleet.size()], 18, Kit.MUTED)
-	var row := _row(column, 10)
+	var row := GridContainer.new()
+	row.columns = mini(6, maxi(1, fleet.size()))
+	row.add_theme_constant_override("h_separation", 10)
+	row.add_theme_constant_override("v_separation", 8)
+	column.add_child(row)
 	for member in fleet:
 		var id := str(member.get("ship_id", ""))
 		var ship: Dictionary = DataRegistry.registry.get_definition("ships", id)
@@ -499,8 +522,21 @@ func _show_custom() -> void:
 	custom_size_selector.select(custom_size_index)
 	custom_map_selector = _selector_with_label(selectors, "作战海域")
 	custom_weather_selector = _selector_with_label(selectors, "天气与时段")
+	custom_environment_selector = _selector_with_label(selectors, "环境变化")
+	custom_environment_selector.add_item("固定环境")
+	custom_environment_selector.set_item_metadata(0, "")
+	for id in ["environment.timeline.storm_passage", "environment.timeline.day_cycle"]:
+		var definition: Dictionary = DataRegistry.registry.get_definition("environment_zones", id)
+		custom_environment_selector.add_item(str(definition.get("display_name", id)))
+		var index := custom_environment_selector.item_count - 1
+		custom_environment_selector.set_item_metadata(index, id)
+		if id == custom_environment_id: custom_environment_selector.select(index)
+	custom_environment_schedule = _label(content, "", 14, Kit.MUTED)
+	custom_environment_schedule.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	custom_environment_selector.item_selected.connect(func(index): custom_environment_id = str(custom_environment_selector.get_item_metadata(index)); _refresh_environment_schedule())
 	_refresh_custom_maps()
 	_load_weather_options()
+	_refresh_environment_schedule()
 	custom_size_selector.item_selected.connect(func(index): custom_size_index = index; custom_map_index = 0; _refresh_custom_maps(); _refresh_fleet_state())
 	custom_map_selector.item_selected.connect(func(index): custom_map_index = index)
 	custom_weather_selector.item_selected.connect(func(index): custom_weather_id = str(custom_weather_selector.get_item_metadata(index)))
@@ -640,7 +676,7 @@ func _refresh_fleet_state() -> void:
 
 
 func _start_custom_battle() -> void:
-	var result: Dictionary = GameFlow.configure_custom_battle(str(CUSTOM_SIZES[custom_size_index]["base"]), str(custom_map_selector.get_item_metadata(custom_map_selector.selected)), str(custom_weather_selector.get_item_metadata(custom_weather_selector.selected)), selected_ship_ids)
+	var result: Dictionary = GameFlow.configure_custom_battle(str(CUSTOM_SIZES[custom_size_index]["base"]), str(custom_map_selector.get_item_metadata(custom_map_selector.selected)), str(custom_weather_selector.get_item_metadata(custom_weather_selector.selected)), selected_ship_ids, custom_environment_id)
 	if not result.get("ok", false):
 		custom_status.text = "编成或地图暂不可用，请检查舰队人数与角色解锁状态。"
 		return
@@ -669,7 +705,7 @@ func _show_help() -> void:
 		["选择与航行", "左键 / 拖框    选择舰娘，Shift 增选\n左键敌舰    集火；右键海面    移动\n1–9 / 0 / -    切换舰娘\nZ    连续航点；Esc 退出布置"],
 		["武器与技能", "E    主要武器瞄准，左键确认\nQ    切换 HE / AP 弹药\nF    主动技能\n右键 / Esc    取消当前瞄准"],
 		["辅助与潜航", "X    辅助航行；V    主武器自动\nC    水面舰副武器 / 潜艇上下潜\nCmd / Alt + X / C / V    舰队开关\n舰队 C 不改变潜艇深度"],
-		["镜头与战术暂停", "WASD    移动镜头；滚轮    缩放\nG    跟踪选中舰娘\nSpace    暂停 / 继续并执行计划\n暂停时可布置航点、集火与攻击指令"],
+		["镜头与战术暂停", "WASD    移动镜头；滚轮    缩放\nT    全选存活己方舰队；G    跟踪主焦点舰娘\nSpace    暂停 / 继续并执行计划\n暂停时可布置航点、集火与攻击指令"],
 	]
 	for group in groups:
 		var panel := PanelContainer.new()
@@ -722,3 +758,19 @@ func _on_progress_save_status_changed(state: Dictionary) -> void:
 func _retry_progress_save() -> void:
 	GameFlow.retry_progress_save()
 	_on_progress_save_status_changed(GameFlow.progress_save_state())
+
+
+func _refresh_environment_schedule() -> void:
+	custom_weather_selector.disabled = not custom_environment_id.is_empty()
+	if custom_environment_id.is_empty():
+		for index in range(custom_weather_selector.item_count):
+			if str(custom_weather_selector.get_item_metadata(index)) == custom_weather_id: custom_weather_selector.select(index)
+		custom_environment_schedule.text = "固定环境：整局保持所选天气与时段。"
+		return
+	var definition: Dictionary = DataRegistry.registry.get_definition("environment_zones", custom_environment_id)
+	for index in range(custom_weather_selector.item_count):
+		if str(custom_weather_selector.get_item_metadata(index)) == str(definition.stages[0].ocean_palette): custom_weather_selector.select(index)
+	var segments: PackedStringArray = []
+	for stage in definition.get("stages", []):
+		segments.append("%d秒 %s" % [int(stage.start_seconds), preload("res://scripts/presentation/ui_text.gd").palette_name(str(stage.ocean_palette))])
+	custom_environment_schedule.text = " → ".join(segments) + ("；240秒循环" if definition.has("loop_seconds") else "；结束后保持晴朗") + "。切换前10秒预告。"

@@ -265,7 +265,7 @@ MVP 采用“同类加算、异类乘算、特殊效果独立乘算”的统一�
 
 ```text
 effective_spread
-= ModifierService(weapon.spread, WeaponSpread, Gun)
+= ModifierService(weapon.spread * battle_multipliers.shell_spread, WeaponSpread, Gun)
 
 sigma_perpendicular
 = firing_distance
@@ -283,7 +283,7 @@ impact_position[i]
 ```
 
 - 全舰统一 `gun_dispersion_sigma_scale = 0.5684105110424833`，`gun_dispersion_longitudinal_sigma_ratio = 0.5`，不为角色设置隐藏系数。
-- 统一系数以厌战号 AP 主炮标定：最大射程 `1080`、散布 `14°` 时，垂直发射线的 `1σ = 150`，等于其游戏内舰装椭圆全长；平行发射线的 `1σ = 75`。
+- 原始统一系数以厌战号 AP 主炮标定：最大射程 `1080`、原始散布 `14°` 时，未叠加对战倍率的横/纵 `1σ = 150/75`。当前 `shell_spread=0.5` 后有效角为7°、横/纵sigma为75/37.5；标定系数和舰体尺寸不变。
 - 每发炮弹独立抽取两次固定种子高斯随机数。短距离射击自然收拢，距离或散布翻倍时两轴 sigma 同比翻倍。
 - `impact_radius` 只表示单发炮弹落点的几何命中圆，不再参与散布尺度计算。抽样落点先参与岛岸路径阻挡，再作为炮弹表现终点和区域伤害中心。
 - 落点圆与目标椭圆相交后，仍进入现有命中、闪避、环境命中修正与伤害流程；几何散布和命中率表达不同层次，不互相替代。
@@ -386,6 +386,8 @@ actual_heading[i]
 - 发现距离不乘光学能见度，不检查岛屿水面视线；岸线仍按鱼雷航行碰撞规则阻挡实体。
 - 己方投射物在生成时直接写入己方已知集合。
 - 技能只修改观察者自身的发现距离；其贡献在首次发现后通过阵营共享惠及全队。
+
+炮弹飞行时间使用距离除以公共有效速度（原始运行速度乘 `shell_speed`）；航空飞行时间使用距离除以原始运行速度和 `aircraft_speed`，再乘源点/目标点公共航空延迟倍率。手动、自动、技能与表现同口径，倍率不缩放蓄力和波次间隔。
 
 ## 8. 航空与防空
 

@@ -7,7 +7,7 @@ static func events(raw: Array, state: Dictionary, registry, faction: String) -> 
 	for original in raw:
 		var event: Dictionary = original.duplicate(true)
 		var type := str(event.get("event_type", ""))
-		if type == "AviationPayloadRejected": continue
+		if type in ["AviationPayloadRejected", "FormationTransitChanged"]: continue
 		var source_id := str(event.get("unit_id", event.get("source_unit_id", "")))
 		var source_known := known(source_id, units, visible, faction)
 		if type in ["WeaponFired", "SkillCast", "SkillAttackScheduled", "UnitSunk"] and not source_known: continue

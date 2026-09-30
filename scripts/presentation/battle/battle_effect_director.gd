@@ -1,5 +1,8 @@
 extends Node
 
+signal skill_cutin_requested(request: Dictionary)
+
+const CombatTuningService = preload("res://scripts/domain/services/combat_tuning_service.gd")
 const AircraftSquadronView = preload("res://scripts/presentation/battle/aircraft_squadron_view.gd")
 const ShipUnitView = preload("res://scripts/presentation/battle/ship_unit_view.gd")
 const ProjectileView = preload("res://scripts/presentation/battle/projectile_view.gd")
@@ -54,17 +57,23 @@ func clear() -> void:
 			child.queue_free()
 
 
-func sync_snapshot(snapshot: Dictionary, selected_unit_id: String, focused_target_id: String) -> void:
+func sync_snapshot(snapshot: Dictionary, selected_unit_id: String, focused_target_id: String, selected_unit_ids: Array = []) -> void:
 	var mode := Node.PROCESS_MODE_DISABLED if snapshot.get("phase", "") == "Paused" else Node.PROCESS_MODE_INHERIT
 	if projectile_layer: projectile_layer.process_mode = mode
 	if vfx_layer: vfx_layer.process_mode = mode
-	_sync_units(snapshot.get("units", {}), selected_unit_id, focused_target_id)
+	_sync_units(snapshot.get("units", {}), selected_unit_id, focused_target_id, selected_unit_ids)
 	_sync_projectiles(snapshot.get("projectiles", {}))
 	_sync_aviation(snapshot, selected_unit_id)
 
 
 func consume_events(events: Array, context) -> void:
-	for event in events:
+	var ordered := events.duplicate()
+	ordered.sort_custom(func(a, b):
+		var a_tick := int(a.get("tick_index", 0))
+		var b_tick := int(b.get("tick_index", 0))
+		if a_tick != b_tick: return a_tick < b_tick
+		return int(str(a.get("event_id", "")).trim_prefix("event.")) < int(str(b.get("event_id", "")).trim_prefix("event.")))
+	for event in ordered:
 		var key := str(event.get("event_id", ""))
 		if not key.is_empty():
 			if key.begins_with("event."):
@@ -95,7 +104,7 @@ func consume_events(events: Array, context) -> void:
 			"SkillCast": _handle_skill_cast(event, context)
 
 
-func _sync_units(units: Dictionary, selected_unit_id: String, focused_target_id: String) -> void:
+func _sync_units(units: Dictionary, selected_unit_id: String, focused_target_id: String, selected_unit_ids: Array = []) -> void:
 	var live_ids := {}
 	for unit_id in units:
 		live_ids[unit_id] = true
@@ -106,7 +115,7 @@ func _sync_units(units: Dictionary, selected_unit_id: String, focused_target_id:
 			unit_layer.add_child(view)
 			view.configure(unit)
 			unit_views[unit_id] = view
-		view.update_unit(unit, str(unit_id) == selected_unit_id, str(unit_id) == focused_target_id)
+		view.update_unit(unit, str(unit_id) == selected_unit_id or str(unit_id) in selected_unit_ids, str(unit_id) == focused_target_id, str(unit_id) == selected_unit_id)
 	for unit_id in unit_views.keys():
 		if live_ids.has(unit_id):
 			continue
@@ -256,6 +265,9 @@ func _handle_skill_cast(event: Dictionary, context) -> void:
 	if source.is_empty():
 		return
 	var character_id := str(source.get("definition_id", "")).trim_prefix("ship.")
+	var ship: Dictionary = DataRegistry.registry.get_definition("ships", str(source.get("definition_id", "")))
+	var skill: Dictionary = DataRegistry.registry.get_definition("skills", str(event.get("skill_id", "")))
+	skill_cutin_requested.emit({"character_id":character_id, "character_name":str(ship.get("display_name", character_id)), "skill_name":str(skill.get("display_name", "技能")), "faction_id":str(source.get("faction_id", "")), "event_id":str(event.get("event_id", ""))})
 	var role := _skill_role_for_character(character_id)
 	var target_position: Vector2 = source.get("position", Vector2.ZERO)
 	var target_ref: Dictionary = event.get("target_ref", {})
@@ -315,8 +327,9 @@ func _spawn_shell_flights(event: Dictionary, context, weapon: Dictionary, weapon
 	var projectile_visual := _caliber_shell_visual(caliber_mm, fallback_visual)
 	var trail_profile := _shell_trail_profile(caliber_mm, weapon_visual, projectile_visual)
 	var color := _shell_trail_color(weapon, weapon_visual, projectile_visual)
+	var combat_settings: Dictionary = context.get("combat_settings", DataRegistry.registry.get_definition("settings", "settings.combat")) if context is Dictionary else context.registry.get_definition("settings", "settings.combat")
 	for destination in _shell_flight_destinations(event, context, weapon, source, launch_position):
-		var travel_seconds := launch_position.distance_to(destination) / maxf(1.0, float(weapon.get("projectile_speed", 1.0)))
+		var travel_seconds := launch_position.distance_to(destination) / maxf(1.0, CombatTuningService.weapon_flight_speed(weapon, combat_settings))
 		var duration_seconds := maxf(float(weapon_visual.get("shell_flight_min_duration", 0.08)), travel_seconds)
 		var flight := ShellFlightView.new()
 		flight.z_index = 18

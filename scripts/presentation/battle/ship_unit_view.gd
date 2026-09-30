@@ -15,6 +15,7 @@ var unit_id := ""
 var character_id := ""
 var unit := {}
 var selected := false
+var primary_selected := false
 var focused := false
 var animation := AnimationStateMachine.new()
 var texture_cache := {}
@@ -38,10 +39,11 @@ func configure(snapshot: Dictionary) -> void:
 	update_unit(snapshot, false, false)
 
 
-func update_unit(snapshot: Dictionary, is_selected: bool, is_focused: bool) -> void:
+func update_unit(snapshot: Dictionary, is_selected: bool, is_focused: bool, is_primary_selected: bool = true) -> void:
 	var previous_position := position
 	unit = snapshot.duplicate(true)
 	selected = is_selected
+	primary_selected = is_selected and is_primary_selected
 	focused = is_focused
 	position = snapshot.get("position", Vector2.ZERO)
 	if previous_position.distance_to(position) > 0.08:
@@ -100,7 +102,7 @@ func _draw() -> void:
 	draw_line(Vector2.ZERO, heading_vector * (collision_half_extents.x + 34.0), visual_style["heading_color"], 2.5)
 	if selected:
 		_draw_ui_icon("ui_marker_selected", Vector2.ZERO, 0.85)
-		draw_polyline(_ellipse_points(collision_half_extents + Vector2(19.0, 19.0), heading, true), Color("#f8ef9a"), 3.0, true)
+		draw_polyline(_ellipse_points(collision_half_extents + Vector2(19.0, 19.0), heading, true), Color("#f8ef9a") if primary_selected else Color("#66e6ff"), 3.0, true)
 	if focused:
 		_draw_ui_icon("ui_marker_target", Vector2.ZERO, 0.9)
 		draw_polyline(_ellipse_points(collision_half_extents + Vector2(25.0, 25.0), heading, true), Color("#ffb35c"), 3.0, true)

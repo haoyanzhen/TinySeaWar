@@ -1,5 +1,7 @@
 extends Control
 
+signal skill_cutin_mode_changed(mode: String)
+
 signal return_to_menu_requested
 signal restart_requested
 signal resume_requested
@@ -29,6 +31,8 @@ var player_slots: Array = []
 var texture_cache: Dictionary = {}
 var return_button: Button
 var restart_button: Button
+var skill_cutin_selector: OptionButton
+var skill_cutin_save_hint: Label
 var pause_panel: PanelContainer
 var pending_rows: VBoxContainer
 var pending_signature := ""
@@ -43,6 +47,9 @@ var objective_label: Label
 var objective_scroll: ScrollContainer
 var skin_cache: Dictionary = {}
 var pause_button: Button
+var weather_button: Button
+var weather_details: PanelContainer
+var weather_details_label: Label
 
 
 func battle_rect() -> Rect2:
@@ -80,7 +87,7 @@ func _draw_frame() -> void:
 	draw_rect(Rect2(Vector2(sea.end.x, sea.position.y), Vector2(size.x - sea.end.x, sea.size.y)), paper)
 	draw_rect(sea.grow(3.0), Color("#ffffff"), false, 4.0)
 	draw_rect(sea.grow(1.0), Color("#658b9b"), false, 1.0)
-	draw_string(ThemeDB.fallback_font, Vector2(30, size.y - 164), "战术海域  ·  WASD 移动视角  /  滚轮缩放  /  Space 暂停", HORIZONTAL_ALIGNMENT_LEFT, 900, 14, TEXT_SOFT)
+	draw_string(ThemeDB.fallback_font, Vector2(30, size.y - 164), "WASD 视角 / T 全选 / 滚轮缩放 / Space 暂停", HORIZONTAL_ALIGNMENT_LEFT, 400, 14, TEXT_SOFT)
 
 
 func _ready() -> void:
@@ -88,6 +95,7 @@ func _ready() -> void:
 	_create_result_buttons()
 	_create_pause_controls()
 	_create_interaction_controls()
+	_create_weather_controls()
 
 
 func _create_hud_theme() -> void:
@@ -109,6 +117,7 @@ func update_state(new_snapshot: Dictionary, new_level_id: String, messages: Arra
 	_sync_result_buttons()
 	_sync_pause_controls()
 	_sync_interaction_controls()
+	_sync_weather_controls()
 	queue_redraw()
 
 
@@ -204,7 +213,7 @@ func _draw_selected_summary(rect: Rect2) -> void:
 
 func _draw_operation_dock(rect: Rect2) -> void:
 	_draw_panel(rect, "")
-	var title := "舰船指令  /  %s   ·   武器与技能作用于当前指挥舰" % UiText.operation_mode_name(operation_mode)
+	var title := "舰船指令  /  %s   ·   指令作用于全部 %d 艘已选舰" % [UiText.operation_mode_name(operation_mode), snapshot.get("selected_unit_ids", []).size()]
 	draw_string(ThemeDB.fallback_font, rect.position + Vector2(20.0, 21.0), title, HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 44.0, 14, TEXT_SOFT)
 	var cards := [
 		{"key": "E", "icon": "ui_icon_gunfire", "text": _primary_text(), "ready": bool(operation_status.get("primary_ready", false))},
@@ -217,6 +226,23 @@ func _draw_operation_dock(rect: Rect2) -> void:
 		{"key": "V", "icon": "ui_icon_gunfire", "text": "主武器 开" if bool(operation_status.get("primary_auto_fire_enabled", false)) else "主武器 关", "ready": bool(operation_status.get("primary_auto_fire_enabled", false))},
 	]
 	for index in range(cards.size()):
+		var statuses: Array = operation_status.get("selection_statuses", [])
+		if statuses.size() > 1:
+			var key: String = cards[index]["key"]
+			var ready_field := str({"E":"primary_ready", "Q":"q_enabled", "F":"skill_ready"}.get(key, ""))
+			if not ready_field.is_empty():
+				var count := statuses.filter(func(status): return bool(status.get(ready_field, false))).size()
+				cards[index]["text"] = "%s %d/%d" % [{"E":"武器就绪", "Q":"切换弹药", "F":"技能就绪"}[key], count, statuses.size()]
+				cards[index]["ready"] = count > 0
+			elif key in ["X", "V"]:
+				var field := "movement_assist_enabled" if key == "X" else "primary_auto_fire_enabled"
+				var applicable := statuses.filter(func(status): return key == "X" or not str(status.get("primary_group_id", "")).is_empty())
+				var count := applicable.filter(func(status): return bool(status.get(field, false))).size()
+				cards[index]["text"] = "%s %d/%d开" % ["航行" if key == "X" else "主武器", count, applicable.size()]
+				cards[index]["ready"] = count > 0
+			elif key == "C":
+				cards[index]["text"] = "副武器 / 潜艇深度"
+				cards[index]["ready"] = true
 		_draw_action_card(action_rect(index), cards[index])
 
 
@@ -282,7 +308,7 @@ func _draw_minimap(rect: Rect2) -> void:
 		var bottom_right := _minimap_position(camera_rect.position + camera_rect.size, map_rect, map_data)
 		draw_rect(Rect2(top_left, bottom_right - top_left), Color(1.0, 1.0, 1.0, 0.85), false, 1.5)
 		_draw_icon("ui_minimap_camera_frame", Rect2(top_left - Vector2(8.0, 8.0), Vector2(16.0, 16.0)), Color(1.0, 1.0, 1.0, 0.8))
-	draw_string(ThemeDB.fallback_font, rect.position + Vector2(14.0, rect.size.y - 14.0), "A/D/W/S 移动镜头  |  1-0/- 选择角色", HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 28.0, 13, TEXT_SOFT)
+	draw_string(ThemeDB.fallback_font, rect.position + Vector2(14.0, rect.size.y - 14.0), "WASD 移动镜头  |  T 全选己方舰队", HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 28.0, 13, TEXT_SOFT)
 
 
 func _draw_minimap_terrain(map_rect: Rect2, map_data: Dictionary) -> void:
@@ -451,11 +477,30 @@ func _create_pause_controls() -> void:
 		button.custom_minimum_size = Vector2(104.0, 34.0)
 		button.pressed.connect(_pause_action.bind(action))
 		buttons.add_child(button)
+	skill_cutin_selector = OptionButton.new()
+	skill_cutin_selector.name = "SkillCutinMode"
+	skill_cutin_selector.focus_mode = Control.FOCUS_NONE
+	for label in ["技能立绘：完整", "技能立绘：简化", "技能立绘：关闭"]: skill_cutin_selector.add_item(label)
+	skill_cutin_selector.select(["full", "simple", "off"].find(GameFlow.skill_cutin_mode))
+	skill_cutin_selector.item_selected.connect(func(index):
+		var value: String = ["full", "simple", "off"][index]
+		var saved := GameFlow.save_skill_cutin_mode(value)
+		skill_cutin_save_hint.text = "" if saved else "设置未保存，本次会话仍生效；请重新选择以重试"
+		skill_cutin_save_hint.visible = not saved
+		skill_cutin_mode_changed.emit(value))
+	column.add_child(skill_cutin_selector)
+	skill_cutin_save_hint = Label.new()
+	skill_cutin_save_hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	skill_cutin_save_hint.add_theme_font_size_override("font_size", 12)
+	skill_cutin_save_hint.custom_minimum_size.x = 280.0
+	skill_cutin_save_hint.hide()
+	column.add_child(skill_cutin_save_hint)
 	var hint := Label.new()
 	hint.text = "可继续操作 · 待执行计划可逐条撤销"
 	column.add_child(hint)
 	var scroll := ScrollContainer.new()
-	scroll.custom_minimum_size = Vector2(310.0, 136.0)
+	scroll.custom_minimum_size = Vector2(310.0, 32.0)
+	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	column.add_child(scroll)
 	pending_rows = VBoxContainer.new()
@@ -819,7 +864,7 @@ func _create_interaction_controls() -> void:
 	for key in ["E", "Q", "F", "G", "Z", "X", "C", "V"]:
 		var button := _make_hit_button()
 		button.name = "ActionHit%s" % key
-		button.tooltip_text = "%s · 主焦点舰操作" % key
+		button.tooltip_text = "%s · %s" % [key, "跟随主焦点舰" if key == "G" else "对全部选中舰执行；逐舰检查条件"]
 		button.pressed.connect(func(): action_pressed.emit(key))
 	retry_save_button = Button.new()
 	retry_save_button.text = "重试保存"
@@ -916,3 +961,55 @@ func _sync_interaction_controls() -> void:
 		lines = ["作战指引", "击沉敌方旗舰，保护己方旗舰。", "", "选择舰船，右键下达移动指令。", "按 Space 暂停，可规划下一步。"]
 	objective_label.text = "\n".join(lines)
 	mission_detail_button.text = "收起任务详情" if mission_details_open else "任务详情 · 保护 / 增援 / 精通"
+
+
+func _create_weather_controls() -> void:
+	weather_button = Button.new()
+	weather_button.flat = true
+	for style in ["normal", "hover", "pressed", "focus", "disabled"]:
+		weather_button.add_theme_stylebox_override(style, StyleBoxEmpty.new())
+	weather_button.alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	weather_button.add_theme_font_size_override("font_size", 14)
+	weather_button.mouse_filter = Control.MOUSE_FILTER_STOP
+	add_child(weather_button)
+	weather_details = PanelContainer.new()
+	weather_details.mouse_filter = Control.MOUSE_FILTER_STOP
+	weather_details.custom_minimum_size = Vector2(500, 300)
+	weather_details.size = Vector2(500, 300)
+	weather_details.resized.connect(func(): weather_details.position = battle_rect().get_center() - weather_details.size * 0.5)
+	add_child(weather_details)
+	var column := VBoxContainer.new()
+	column.name = "Column"
+	column.add_theme_constant_override("separation", 12)
+	weather_details.add_child(column)
+	weather_details_label = Label.new()
+	weather_details_label.custom_minimum_size.x = 460
+	weather_details_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	weather_details_label.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	column.add_child(weather_details_label)
+	var close := Button.new()
+	close.name = "Close"
+	close.text = "关闭"
+	close.custom_minimum_size.y = 34
+	column.add_child(close)
+	close.pressed.connect(func(): weather_details.hide())
+	weather_details.hide()
+	weather_button.pressed.connect(func(): weather_details.visible = not weather_details.visible)
+
+
+func _sync_weather_controls() -> void:
+	if weather_button == null: return
+	weather_button.visible = snapshot.get("command_feedback", {}).is_empty()
+	var environment: Dictionary = snapshot.get("global_environment", {})
+	var effects: Dictionary = environment.get("global_effects", {})
+	weather_button.position = Vector2(380, size.y - 178)
+	weather_button.size = Vector2(maxf(100, battle_rect().end.x - 384), 24)
+	weather_button.text = "%s / 海况%d · 详情" % [UiText.palette_name(str(environment.get("canonical_ocean_palette", palette_id))), int(effects.get("sea_state", 0))]
+	var forecast: Dictionary = environment.get("forecast", {})
+	if not forecast.is_empty():
+		weather_button.text += "  |  %d秒后 %s" % [ceili(float(forecast.get("remaining_seconds", 0))), UiText.palette_name(str(forecast.get("ocean_palette", "")))]
+	var aviation := {"Normal":"正常", "Restricted":"受限", "Severe":"恶劣（常规航空攻击禁飞）", "Grounded":"禁飞"}
+	var details := "%s\n全局条件（未叠加局部区域）\n\n光学倍率：%.2f    航速倍率：%.2f\n命中修正：%+.2f    鱼雷散布倍率：%.2f\n航空延迟倍率：%.3f\n航空条件：%s\n\n局部环境可能进一步修正上述效果。" % [UiText.palette_name(str(environment.get("canonical_ocean_palette", palette_id))), float(effects.get("optical_visibility_multiplier", 1)), float(effects.get("movement_speed_multiplier", 1)), float(effects.get("weapon_accuracy_modifier", 0)), float(effects.get("torpedo_sigma_multiplier", 1)), float(effects.get("aviation_delay_multiplier", 1)), str(aviation.get(str(effects.get("aviation_condition", "Normal")), "未知"))]
+	weather_button.tooltip_text = details
+	weather_details_label.text = details
+	weather_details.position = battle_rect().get_center() - weather_details.size * 0.5

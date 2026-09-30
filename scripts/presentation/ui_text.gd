@@ -1,6 +1,7 @@
 extends RefCounted
 
 const OCEAN_PALETTE_PATH := "res://data/environments/ocean_palettes.json"
+static var _palette_names: Dictionary = {}
 
 
 static func mode_name(level_id: String) -> String:
@@ -18,6 +19,16 @@ static func mode_name(level_id: String) -> String:
 		"level.challenge.s03": return "S-03 航空诱饵"
 		"level.challenge.s04": return "S-04 双向伏击"
 		"level.challenge.s05": return "S-05 狼群门槛"
+		"level.challenge.m01": return "M-01 港湾扩编"
+		"level.challenge.m02": return "M-02 泻湖护航"
+		"level.challenge.m03": return "M-03 群岛雷击"
+		"level.challenge.m04": return "M-04 风暴猎场"
+		"level.challenge.m05": return "M-05 海峡封锁"
+		"level.challenge.l01": return "L-01 舰队展开"
+		"level.challenge.l02": return "L-02 岛侧航空走廊"
+		"level.challenge.l03": return "L-03 双航道巨炮"
+		"level.challenge.l04": return "L-04 风暴群岛合围"
+		"level.challenge.l05": return "L-05 雷夜环礁终局"
 		"level.custom_runtime": return "自定义战斗"
 		"level.prototype_1v1": return "1v1 单舰对决"
 		"level.prototype_3v3": return "3v3 小队演习"
@@ -58,14 +69,14 @@ static func operation_mode_name(mode: String) -> String:
 
 
 static func palette_name(palette_id: String) -> String:
-	var file := FileAccess.open(OCEAN_PALETTE_PATH, FileAccess.READ)
-	if file != null:
-		var parsed = JSON.parse_string(file.get_as_text())
-		if typeof(parsed) == TYPE_DICTIONARY and typeof(parsed.get("palettes")) == TYPE_DICTIONARY:
-			var palette: Dictionary = parsed["palettes"].get(palette_id, {})
-			if not palette.is_empty():
-				return str(palette.get("display_name", palette_id))
-	return "未知海域"
+	if _palette_names.is_empty():
+		var file := FileAccess.open(OCEAN_PALETTE_PATH, FileAccess.READ)
+		if file != null:
+			var parsed = JSON.parse_string(file.get_as_text())
+			if parsed is Dictionary:
+				for id in parsed.get("palettes", {}):
+					_palette_names[id] = str(parsed.palettes[id].get("display_name", id))
+	return str(_palette_names.get(palette_id, "未知海域"))
 
 
 static func ship_class_name(ship_class: String) -> String:

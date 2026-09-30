@@ -1,5 +1,6 @@
 extends Node2D
 
+const SkillCutinOverlay = preload("res://scripts/presentation/battle/skill_cutin_overlay.gd")
 const PlayerCommandFeedback = preload("res://scripts/presentation/battle/player_command_feedback.gd")
 const BattleSession = preload("res://scripts/application/battle_session.gd")
 const BattleEffectDirector = preload("res://scripts/presentation/battle/battle_effect_director.gd")
@@ -63,16 +64,22 @@ var camera_zoom_min := 1.0
 var camera_zoom_max := 1.0
 var operation_mode := OperationMode.NORMAL
 var skill_target_type := ""
+var primary_aim_unit_ids: Array[String] = []
+var skill_target_unit_ids: Array[String] = []
 var current_palette_id := "cloudy"
 var palette_override := ""
+var environment_visual_revision := -1
 var texture_cache: Dictionary = {}
 var unit_visual_cache: Dictionary = {}
 var aviation_demo_active := false
+# QA scenes and scripted playback must not grant campaign progress.
+var progress_recording_enabled := true
 var result_character_id := ""
 var unit_layer: Node2D
 var projectile_layer: Node2D
 var vfx_layer: Node2D
 var effect_director
+var skill_cutin
 var gun_scope_confirmation_position := Vector2.ZERO
 var gun_scope_confirmation_started_msec := 0
 var gun_scope_confirmation_until_msec := 0
@@ -98,12 +105,19 @@ func _ready() -> void:
 	effect_director = BattleEffectDirector.new()
 	add_child(effect_director)
 	effect_director.setup(unit_layer, projectile_layer, vfx_layer)
+	skill_cutin = SkillCutinOverlay.new()
+	skill_cutin.name = "SkillCutinOverlay"
+	skill_cutin.configure(DataRegistry.registry.get_definition("settings", "settings.presentation").get("skill_cutin", {}))
+	skill_cutin.set_mode(GameFlow.skill_cutin_mode)
+	battle_hud.add_child(skill_cutin)
+	effect_director.skill_cutin_requested.connect(skill_cutin.present)
+	battle_hud.skill_cutin_mode_changed.connect(skill_cutin.set_mode)
 	_start_battle(level_id)
-	if not palette_override.is_empty(): _set_ocean_palette(palette_override)
 
 
 func _process(delta: float) -> void:
 	if session == null: return
+	_sync_skill_cutin()
 	accumulator += minf(delta, 0.25)
 	while accumulator >= FIXED_STEP:
 		accumulator -= FIXED_STEP
@@ -122,9 +136,6 @@ func _draw() -> void:
 	if session == null or session.state.is_empty(): return
 	var snapshot: Dictionary = session.snapshot("player", false)
 	_draw_map_boundary(snapshot)
-	for unit_id in _selected_live_ids():
-		var unit: Dictionary = snapshot.get("units", {}).get(unit_id, {})
-		if not unit.is_empty() and unit_id != selected_unit_id: draw_arc(unit["position"], float(unit.get("collision_radius", 24.0)) + 14.0, 0.0, TAU, 40, Color(0.4, 0.9, 1.0, 0.95), 3.0)
 	if selection_drag_active:
 		var drag_rect := Rect2(selection_drag_start, get_global_mouse_position() - selection_drag_start).abs()
 		draw_rect(drag_rect, Color(0.3, 0.8, 1.0, 0.12))
@@ -341,22 +352,29 @@ func _draw_operation_overlay() -> void:
 	if selected_unit_id.is_empty(): return
 	var selected: Dictionary = session.state.get("units_by_id", {}).get(selected_unit_id, {})
 	if selected.is_empty(): return
-	_draw_selected_route(selected)
+	for id in _selected_live_ids():
+		_draw_selected_route(session.state["units_by_id"][id])
 	if operation_mode == OperationMode.NORMAL or operation_mode == OperationMode.PLACING_ROUTE: return
 	var cursor := get_global_mouse_position()
 	if operation_mode == OperationMode.AIMING_PRIMARY:
-		var aim_status: Dictionary = session.get_primary_aim_status(selected_unit_id, cursor)
-		var reason_offset := Vector2(18.0, -18.0)
-		if aim_status.get("control_type", "") == "Direction":
-			_draw_directional_aim_overlay(selected, cursor, aim_status)
-		elif aim_status.get("weapon_type", "") == "Gun":
-			_draw_gun_aim_overlay(selected, cursor, aim_status)
-			reason_offset = Vector2(18.0, MAIN_GUN_SCOPE_HALF_HEIGHT_PX + 28.0) * _scope_world_per_pixel()
-		else:
-			_draw_area_target_overlay(selected, cursor, aim_status, float(aim_status.get("impact_radius", DEFAULT_AREA_TARGET_RADIUS)))
-		_draw_aim_reason_label(cursor, str(aim_status.get("reason_code", "OK")), bool(aim_status.get("legal", false)), reason_offset)
+		for id in primary_aim_unit_ids:
+			var unit: Dictionary = session.state["units_by_id"].get(id, {})
+			if unit.is_empty() or unit.get("life_state", "") != "Alive": continue
+			var aim_status: Dictionary = session.get_primary_aim_status(id, cursor)
+			var reason_offset := Vector2(18.0, -18.0)
+			if aim_status.get("control_type", "") == "Direction":
+				_draw_directional_aim_overlay(unit, cursor, aim_status)
+			elif aim_status.get("weapon_type", "") == "Gun":
+				_draw_gun_aim_overlay(unit, cursor, aim_status)
+				reason_offset = Vector2(18.0, MAIN_GUN_SCOPE_HALF_HEIGHT_PX + 28.0) * _scope_world_per_pixel()
+			else:
+				_draw_area_target_overlay(unit, cursor, aim_status, float(aim_status.get("impact_radius", DEFAULT_AREA_TARGET_RADIUS)))
+			if id == primary_aim_unit_ids[0]:
+				_draw_aim_reason_label(cursor, str(aim_status.get("reason_code", "OK")), bool(aim_status.get("legal", false)), reason_offset)
 	elif operation_mode == OperationMode.TARGETING_SKILL:
-		_draw_skill_target_overlay(selected, cursor)
+		for id in skill_target_unit_ids:
+			var unit: Dictionary = session.state["units_by_id"].get(id, {})
+			if not unit.is_empty() and unit.get("life_state", "") == "Alive": _draw_skill_target_overlay(unit, cursor)
 
 
 func _draw_selected_route(selected: Dictionary) -> void:
@@ -555,17 +573,18 @@ func _draw_area_target_overlay(selected: Dictionary, cursor: Vector2, aim_status
 
 func _draw_skill_target_overlay(selected: Dictionary, cursor: Vector2) -> void:
 	var skill: Dictionary = DataRegistry.registry.get_definition("skills", str(selected.get("skill_state", {}).get("definition_id", "")))
+	var target_type := str(skill.get("target_type", "Self"))
 	var cast_range := float(skill.get("cast_range", 0.0))
 	var legal := cast_range <= 0.0 or (selected["position"] as Vector2).distance_to(cursor) <= cast_range
 	_draw_range_overlay(selected["position"], 0.0, cast_range)
 	draw_line(selected["position"], cursor, RANGE_SELECTION_WHITE, 1.8)
-	if skill_target_type == "Enemy":
+	if target_type == "Enemy":
 		draw_arc(cursor, 34.0, 0.0, TAU, 36, RANGE_SELECTION_WHITE, 2.0)
 	else:
 		var effect_radius := float(skill.get("effect_radius", DEFAULT_AREA_TARGET_RADIUS))
 		draw_circle(cursor, effect_radius, Color(1.0, 1.0, 1.0, 0.10))
 		draw_arc(cursor, effect_radius, 0.0, TAU, 48, RANGE_SELECTION_WHITE, 2.0)
-	var label := "技能目标：%s" % UiText.target_type_name(skill_target_type)
+	var label := "技能目标：%s" % UiText.target_type_name(target_type)
 	if not legal:
 		label = "%s / %s" % [label, UiText.reason_name("TARGET_OUT_OF_RANGE")]
 	draw_string(ThemeDB.fallback_font, cursor + Vector2(18.0, -18.0), label, HORIZONTAL_ALIGNMENT_LEFT, -1.0, 16, RANGE_SELECTION_WHITE if legal else RANGE_UNAVAILABLE_EDGE)
@@ -620,9 +639,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		selection_drag_active = false
 		var view: Dictionary = session.snapshot("player", false)
 		if event.position.distance_to(selection_drag_screen) >= 6.0:
-			_select_in_rect(Rect2(selection_drag_start, get_global_mouse_position() - selection_drag_start).abs(), view, selection_drag_additive)
+			_select_in_rect(Rect2(selection_drag_start, _pointer_event_world_position(event.position) - selection_drag_start).abs(), view, selection_drag_additive)
 		else:
-			_select_at(get_global_mouse_position(), view, selection_drag_additive)
+			_select_at(_pointer_event_world_position(event.position), view, selection_drag_additive)
 		return
 	if event is InputEventKey and event.pressed and not event.echo:
 		var slot := _slot_for_key(event.keycode)
@@ -630,6 +649,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			_select_slot(slot)
 			return
 		match event.keycode:
+			KEY_T: _select_all_player_units()
 			KEY_F9:
 				terrain_debug_overlay.visible = not terrain_debug_overlay.visible
 				terrain_debug_overlay.queue_redraw()
@@ -664,7 +684,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			_adjust_camera_zoom(1.0 / float(camera_settings.get("zoom_step", 1.0)), event.position)
 			return
 		var snapshot: Dictionary = session.snapshot("player", false)
-		var world_position := get_global_mouse_position()
+		var world_position := _pointer_event_world_position(event.position)
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			if operation_mode == OperationMode.AIMING_PRIMARY: _confirm_primary_aim(world_position)
 			elif operation_mode == OperationMode.TARGETING_SKILL: _confirm_skill_target(world_position, snapshot)
@@ -819,8 +839,7 @@ func _slot_for_key(keycode: int) -> int:
 func _select_slot(slot: int) -> void:
 	for slot_data in session.get_player_slots():
 		if int(slot_data["slot"]) != slot: continue
-		if operation_mode == OperationMode.AIMING_PRIMARY:
-			_queue_primary_auto_suspend(false)
+		_cancel_operation_mode()
 		selected_unit_id = str(slot_data["unit_id"])
 		selected_unit_ids.assign([selected_unit_id])
 		operation_mode = OperationMode.NORMAL
@@ -886,14 +905,15 @@ func _queue_facility_control() -> void:
 
 func _queue_facility_service_or_approach() -> void:
 	if selected_unit_id.is_empty() or selected_facility_id.is_empty(): return
-	var status: Dictionary = session.get_facility_action_status(selected_unit_id, selected_facility_id)
-	_queue_facility_command("RequestFacilityService" if bool(status.get("service_ready", false)) else "ApproachFacility")
+	for id in _selected_live_ids():
+		var status: Dictionary = session.get_facility_action_status(id, selected_facility_id)
+		_submit_unit_action("RequestFacilityService" if bool(status.get("service_ready", false)) else "ApproachFacility", id, {"facility_id": selected_facility_id})
 
 
 func _queue_facility_support(patrol: bool = false, recon: bool = false) -> void:
 	if selected_unit_id.is_empty() or selected_facility_id.is_empty(): return
 	var mission_id := "support_mission.air_recon" if recon else ("support_mission.fighter_patrol" if patrol else "support_mission.airstrike")
-	_submit_player_command({"command_id":"ui.facility.support.%s" % session.state["tick_index"], "command_type":"RequestSupportMission", "issued_at_tick":session.state["tick_index"], "issuer_id":"player", "unit_id":selected_unit_id, "facility_id":selected_facility_id, "mission_definition_id":mission_id, "target_position":get_global_mouse_position()})
+	_queue_facility_command("RequestSupportMission", {"mission_definition_id":mission_id, "target_position":get_global_mouse_position()})
 
 
 func _queue_facility_mine() -> void:
@@ -906,9 +926,10 @@ func _queue_facility_cancel() -> void:
 
 func _queue_facility_command(command_type: String, extra: Dictionary = {}) -> void:
 	if selected_unit_id.is_empty() or selected_facility_id.is_empty(): return
-	var command: Dictionary = {"command_id":"ui.facility.%s.%s" % [command_type, session.state["tick_index"]], "command_type":command_type, "issued_at_tick":session.state["tick_index"], "issuer_id":"player", "unit_id":selected_unit_id, "facility_id":selected_facility_id}
-	command.merge(extra, true)
-	_submit_player_command(command)
+	var payload := extra.duplicate(true)
+	payload["facility_id"] = selected_facility_id
+	for id in _selected_live_ids():
+		_submit_unit_action(command_type, id, payload)
 
 
 func _begin_primary_aim() -> void:
@@ -916,74 +937,85 @@ func _begin_primary_aim() -> void:
 	if operation_mode == OperationMode.AIMING_PRIMARY:
 		_cancel_operation_mode()
 		return
-	var selected: Dictionary = session.state["units_by_id"].get(selected_unit_id, {})
-	if selected.is_empty(): return
-	var operation_status: Dictionary = session.get_operation_status(selected_unit_id)
-	if not bool(operation_status.get("primary_ready", false)):
-		_reject_player_action("FirePrimaryWeapon", str(operation_status.get("primary_reason", "PRIMARY_WEAPON_UNAVAILABLE")))
-		return
 	if operation_mode != OperationMode.NORMAL:
 		_cancel_operation_mode()
+	primary_aim_unit_ids.clear()
+	for id in _selected_live_ids():
+		var status: Dictionary = session.get_operation_status(id)
+		if bool(status.get("primary_ready", false)):
+			primary_aim_unit_ids.append(id)
+		else:
+			_reject_player_action("FirePrimaryWeapon", str(status.get("primary_reason", "PRIMARY_WEAPON_UNAVAILABLE")))
+	if primary_aim_unit_ids.is_empty(): return
 	operation_mode = OperationMode.AIMING_PRIMARY
 	_queue_primary_auto_suspend(true)
-	_push_message("正在瞄准：%s" % operation_status.get("primary_name", "主要武器"))
+	_push_message("正在瞄准：%d 艘主要武器" % primary_aim_unit_ids.size())
 
 
 func _confirm_primary_aim(world_position: Vector2) -> void:
-	if selected_unit_id.is_empty(): return
-	var aim_status: Dictionary = session.get_primary_aim_status(selected_unit_id, world_position)
-	if not bool(aim_status.get("legal", false)):
-		_reject_player_action("FirePrimaryWeapon", str(aim_status.get("reason_code", "INVALID_TARGET")))
-		return
-	if aim_status.get("weapon_type", "") == "Gun":
-		gun_scope_confirmation_position = world_position
-		gun_scope_confirmation_started_msec = Time.get_ticks_msec()
-		gun_scope_confirmation_until_msec = gun_scope_confirmation_started_msec + MAIN_GUN_SCOPE_CONFIRM_MS
-	_submit_player_command({"command_id": "ui.primary.%s" % session.state["tick_index"], "command_type": "FirePrimaryWeapon", "issued_at_tick": session.state["tick_index"], "issuer_id": "player", "unit_id": selected_unit_id, "target_position": world_position})
+	var submitted := false
+	for id in primary_aim_unit_ids:
+		var aim_status: Dictionary = session.get_primary_aim_status(id, world_position)
+		if not bool(aim_status.get("legal", false)):
+			_reject_player_action("FirePrimaryWeapon", str(aim_status.get("reason_code", "INVALID_TARGET")))
+			continue
+		if aim_status.get("weapon_type", "") == "Gun":
+			gun_scope_confirmation_position = world_position
+			gun_scope_confirmation_started_msec = Time.get_ticks_msec()
+			gun_scope_confirmation_until_msec = gun_scope_confirmation_started_msec + MAIN_GUN_SCOPE_CONFIRM_MS
+		_submit_unit_action("FirePrimaryWeapon", id, {"target_position": world_position})
+		submitted = true
+	if not submitted: return
 	_queue_primary_auto_suspend(false)
+	primary_aim_unit_ids.clear()
 	operation_mode = OperationMode.NORMAL
 
 
 func _switch_selected_ammo() -> void:
-	if selected_unit_id.is_empty(): return
-	var operation_status: Dictionary = session.get_operation_status(selected_unit_id)
-	if not bool(operation_status.get("q_enabled", false)):
-		_reject_player_action("SwitchAmmo", "AMMO_SWITCH_DISABLED")
-		return
-	_submit_player_command({"command_id": "ui.ammo.%s" % session.state["tick_index"], "command_type": "SwitchAmmo", "issued_at_tick": session.state["tick_index"], "issuer_id": "player", "unit_id": selected_unit_id})
+	for id in _selected_live_ids():
+		if bool(session.get_operation_status(id).get("q_enabled", false)):
+			_submit_unit_action("SwitchAmmo", id)
+		else:
+			_reject_player_action("SwitchAmmo", "AMMO_SWITCH_DISABLED")
 
 
 func _begin_or_cast_skill() -> void:
 	if selected_unit_id.is_empty(): return
-	var selected: Dictionary = session.state["units_by_id"].get(selected_unit_id, {})
-	if selected.is_empty(): return
-	var operation_status: Dictionary = session.get_operation_status(selected_unit_id)
-	if not bool(operation_status.get("skill_ready", false)):
-		_reject_player_action("CastSkill", "SKILL_ON_COOLDOWN")
-		return
 	if operation_mode != OperationMode.NORMAL:
 		_cancel_operation_mode()
-	var skill: Dictionary = DataRegistry.registry.get_definition("skills", str(selected["skill_state"]["definition_id"]))
-	skill_target_type = str(skill.get("target_type", "Self"))
-	if skill_target_type == "Self":
-		_queue_skill_command({"type": "Self"})
-	else:
+	skill_target_unit_ids.clear()
+	for id in _selected_live_ids():
+		if not bool(session.get_operation_status(id).get("skill_ready", false)):
+			_reject_player_action("CastSkill", "SKILL_ON_COOLDOWN")
+			continue
+		if _skill_type_for(id) == "Self":
+			_submit_unit_action("CastSkill", id, {"target_ref": {"type": "Self"}})
+		else:
+			skill_target_unit_ids.append(id)
+	if not skill_target_unit_ids.is_empty():
+		skill_target_type = _skill_type_for(skill_target_unit_ids[0])
 		operation_mode = OperationMode.TARGETING_SKILL
-		_push_message("%s：%s；请选择%s" % [skill.get("display_name", "技能"), skill.get("description", ""), UiText.target_type_name(skill_target_type)])
+		_push_message("为 %d 艘选择技能目标；区域技能使用点击位置" % skill_target_unit_ids.size())
+
+
+func _skill_type_for(unit_id: String) -> String:
+	var unit: Dictionary = session.state["units_by_id"].get(unit_id, {})
+	var skill: Dictionary = DataRegistry.registry.get_definition("skills", str(unit.get("skill_state", {}).get("definition_id", "")))
+	return str(skill.get("target_type", "Self"))
 
 
 func _confirm_skill_target(world_position: Vector2, snapshot: Dictionary) -> void:
-	if selected_unit_id.is_empty(): return
-	if skill_target_type == "Area":
-		_queue_skill_command({"type": "Position", "position": world_position})
-		operation_mode = OperationMode.NORMAL
-		return
 	var clicked := _unit_at(world_position, snapshot)
-	if clicked.is_empty() or clicked.get("faction_id", "") == "player":
-		_reject_player_action("CastSkill", "INVALID_TARGET_TYPE")
-		return
-	_queue_skill_command({"type": "Entity", "entity_id": clicked["entity_id"]})
-	operation_mode = OperationMode.NORMAL
+	for id in skill_target_unit_ids.duplicate():
+		if _skill_type_for(id) == "Area":
+			_submit_unit_action("CastSkill", id, {"target_ref": {"type": "Position", "position": world_position}})
+		elif not clicked.is_empty() and clicked.get("faction_id", "") != "player":
+			_submit_unit_action("CastSkill", id, {"target_ref": {"type": "Entity", "entity_id": clicked["entity_id"]}})
+		else:
+			_reject_player_action("CastSkill", "INVALID_TARGET_TYPE")
+			continue
+		skill_target_unit_ids.erase(id)
+	if skill_target_unit_ids.is_empty(): operation_mode = OperationMode.NORMAL
 
 
 func _queue_skill_command(target_ref: Dictionary) -> void:
@@ -994,6 +1026,8 @@ func _cancel_operation_mode() -> void:
 	if operation_mode == OperationMode.NORMAL: return
 	if operation_mode == OperationMode.AIMING_PRIMARY:
 		_queue_primary_auto_suspend(false)
+	primary_aim_unit_ids.clear()
+	skill_target_unit_ids.clear()
 	operation_mode = OperationMode.NORMAL
 	skill_target_type = ""
 	_push_message("已取消当前操作")
@@ -1012,15 +1046,14 @@ func _toggle_route_placement() -> void:
 
 
 func _append_route_waypoint(world_position: Vector2) -> void:
-	if selected_unit_id.is_empty(): return
-	_submit_player_command({
-		"command_id": "ui.waypoint.%s.%s" % [session.state["tick_index"], Time.get_ticks_msec()],
-		"command_type": "AppendMoveWaypoint",
-		"issued_at_tick": session.state["tick_index"],
-		"issuer_id": "player",
-		"unit_id": selected_unit_id,
-		"target_position": world_position,
-	})
+	for id in _selected_live_ids():
+		_submit_unit_action("AppendMoveWaypoint", id, {"target_position": world_position})
+
+
+func _submit_unit_action(command_type: String, unit_id: String, extra: Dictionary = {}) -> Dictionary:
+	var command := {"command_type": command_type, "issued_at_tick": session.state["tick_index"], "issuer_id": "player", "unit_id": unit_id}
+	command.merge(extra, true)
+	return _submit_player_command(command)
 
 
 func _report_tutorial_action(action_id: String, unit_id: String) -> void:
@@ -1036,23 +1069,15 @@ func _report_tutorial_action(action_id: String, unit_id: String) -> void:
 
 
 func _handle_selected_c_action() -> void:
-	if selected_unit_id.is_empty(): return
-	var selected: Dictionary = session.state.get("units_by_id", {}).get(selected_unit_id, {})
-	if str(selected.get("stats", {}).get("ship_class", "")) != "Submarine":
-		_toggle_control_state("secondary_auto_fire_enabled", "副武器自动开火", false)
-		return
-	var status: Dictionary = session.get_operation_status(selected_unit_id)
-	var target_depth_state := str(status.get("depth_change_target", "Surface"))
-	_submit_player_command({
-		"command_id": "ui.submarine_depth.%s.%s" % [session.state["tick_index"], selected_unit_id],
-		"command_type": "SetSubmarineDepth",
-		"issued_at_tick": session.state["tick_index"],
-		"issuer_type": "Player",
-		"issuer_id": "player",
-		"unit_id": selected_unit_id,
-		"target_depth_state": target_depth_state,
-	})
-	_push_message("潜艇深度请求：%s" % ("上浮" if target_depth_state == "Surface" else "下潜"))
+	var has_surface := false
+	for id in _selected_live_ids():
+		var unit: Dictionary = session.state["units_by_id"][id]
+		if str(unit.get("stats", {}).get("ship_class", "")) == "Submarine":
+			var status: Dictionary = session.get_operation_status(id)
+			_submit_unit_action("SetSubmarineDepth", id, {"target_depth_state": str(status.get("depth_change_target", "Surface"))})
+		else:
+			has_surface = true
+	if has_surface: _toggle_control_state("secondary_auto_fire_enabled", "副武器自动开火", false, true)
 
 
 func _toggle_control_state(control_field: String, display_name: String, fleet_scope: bool, exclude_submarines: bool = false) -> void:
@@ -1067,7 +1092,11 @@ func _toggle_control_state(control_field: String, display_name: String, fleet_sc
 			if fleet_unit.get("life_state", "") == "Alive":
 				unit_ids.append(fleet_unit_id)
 	else:
-		unit_ids = [selected_unit_id]
+		unit_ids = _selected_live_ids()
+	unit_ids = unit_ids.filter(func(id):
+		var unit: Dictionary = session.state["units_by_id"][id]
+		if exclude_submarines and str(unit.get("stats", {}).get("ship_class", "")) == "Submarine": return false
+		return control_field != "primary_auto_fire_enabled" or not str(unit.get("stats", {}).get("primary_weapon_group_id", "")).is_empty())
 	if unit_ids.is_empty():
 		_push_message("没有适用的水面舰副武器")
 		return
@@ -1097,7 +1126,7 @@ func _queue_primary_auto_suspend(suspended: bool) -> void:
 		"command_type": "SetUnitControlState",
 		"issued_at_tick": session.state["tick_index"],
 		"issuer_id": "player",
-		"unit_id": selected_unit_id,
+		"unit_ids": primary_aim_unit_ids.duplicate() if not primary_aim_unit_ids.is_empty() else _selected_live_ids(),
 		"primary_auto_fire_suspended": suspended,
 	})
 
@@ -1116,10 +1145,13 @@ func _unit_at(world_position: Vector2, snapshot: Dictionary) -> Dictionary:
 func _consume_events(events: Array) -> void:
 	terrain_debug_overlay.record_events(events)
 	events = session.presentation_events(events)
+	_sync_skill_cutin()
 	if effect_director != null:
 		effect_director.consume_events(events, session.presentation_context("player"))
 	for event in events:
 		match event.get("event_type", ""):
+			"GlobalEnvironmentChanged": _push_message("环境变化：%s" % UiText.palette_name(str(event.get("ocean_palette", ""))))
+			"GlobalEnvironmentForecast": _push_message("环境预告：%.0f秒后%s" % [ceilf(float(event.get("remaining_seconds", 0))), UiText.palette_name(str(event.get("ocean_palette", "")))])
 			"AviationWaveLaunched": _push_message("%s：航空编队出击" % _unit_display_name(str(event.get("source_unit_id", ""))))
 			"AircraftDestroyed": _push_message("航空编队被击落")
 			"LevelObjectiveAdvanced": _push_message("教学进度：%s（%d/%d）" % [event.get("label", "航点"), int(event.get("step", 0)), int(event.get("step_count", 0))])
@@ -1149,7 +1181,7 @@ func _consume_events(events: Array) -> void:
 				result_character_id = _random_player_character_id()
 				if str(event.get("result", {}).get("winner_faction", "")) == "player":
 					var flow := get_node_or_null("/root/GameFlow")
-					if flow != null and not aviation_demo_active: flow.record_level_victory(level_id)
+					if flow != null and progress_recording_enabled and not aviation_demo_active: flow.record_level_victory(level_id)
 				var result_view := preload("res://scripts/presentation/battle/battle_result_presentation.gd").describe(event.get("result", {}))
 				_push_message("%s：%s" % [result_view.get("title", "本局无效"), result_view.get("subtitle", "")])
 
@@ -1170,6 +1202,8 @@ func _push_message(message: String) -> void:
 
 
 func _start_battle(new_level_id: String) -> void:
+	if battle_hud.weather_details != null: battle_hud.weather_details.hide()
+	if skill_cutin != null: skill_cutin.clear(true)
 	command_feedback.clear()
 	selected_unit_ids.clear()
 	selection_drag_active = false
@@ -1185,6 +1219,10 @@ func _start_battle(new_level_id: String) -> void:
 	if "--aviation-physical" in OS.get_cmdline_user_args():
 		if runtime_level.is_empty(): runtime_level = DataRegistry.registry.get_definition("levels", new_level_id).duplicate(true)
 		runtime_level.aviation_rules_mode = "Physical"
+	if not palette_override.is_empty():
+		if runtime_level.is_empty(): runtime_level = DataRegistry.registry.get_definition("levels", new_level_id).duplicate(true)
+		runtime_level["map"]["ocean_palette"] = palette_override
+		runtime_level["map"].erase("environment_timeline_id")
 	var result: Dictionary = session.create_battle_from_definition(runtime_level, 20260614) if not runtime_level.is_empty() else session.create_battle(new_level_id, 20260614)
 	if not result.get("ok", false):
 		push_error("Battle creation failed: %s" % result.get("errors", []))
@@ -1198,6 +1236,8 @@ func _start_battle(new_level_id: String) -> void:
 	operation_mode = OperationMode.NORMAL
 	skill_target_type = ""
 	gun_scope_confirmation_started_msec = 0
+	primary_aim_unit_ids.clear()
+	skill_target_unit_ids.clear()
 	gun_scope_confirmation_until_msec = 0
 	camera_mode = "Manual"
 	camera_follow_unit_id = ""
@@ -1205,7 +1245,8 @@ func _start_battle(new_level_id: String) -> void:
 	if effect_director != null:
 		effect_director.clear()
 	var map_data: Dictionary = session.state.get("map", {})
-	current_palette_id = str(map_data.get("ocean_palette", "day_clear"))
+	current_palette_id = str(session.state.get("global_environment", {}).get("canonical_ocean_palette", map_data.get("ocean_palette", "day_clear")))
+	environment_visual_revision = -1
 	var map_size := Vector2(float(map_data.get("width", 4096.0)), float(map_data.get("height", 2304.0)))
 	ocean_surface.configure(map_size, current_palette_id)
 	weather_overlay.configure(map_size, current_palette_id)
@@ -1226,7 +1267,9 @@ func _sync_visuals() -> void:
 	if effect_director == null or session == null or session.state.is_empty():
 		return
 	var snapshot: Dictionary = session.snapshot("player", terrain_debug_overlay.visible)
-	effect_director.sync_snapshot(snapshot, selected_unit_id, focused_target_id)
+	_sync_environment_visuals(snapshot.get("global_environment", {}))
+	effect_director.sync_snapshot(snapshot, selected_unit_id, focused_target_id, _selected_live_ids())
+	if skill_cutin != null: skill_cutin.cache_units(snapshot.get("units", {}))
 	terrain_view.sync_dynamic(snapshot.get("environment_zones", []), snapshot.get("facilities", {}), snapshot.get("minefields", {}), snapshot.get("support_effects", {}))
 	terrain_debug_overlay.sync_runtime(snapshot.get("terrain_contexts", {}), snapshot.get("facilities", {}), selected_unit_id, snapshot.get("contacts", {}))
 
@@ -1249,11 +1292,17 @@ func _player_fleet_center() -> Vector2:
 	return total / float(maxi(count, 1))
 
 
-func _set_ocean_palette(palette_id: String) -> void:
-	current_palette_id = palette_id
-	ocean_surface.set_palette(palette_id)
-	weather_overlay.set_palette(palette_id)
-	_update_hud()
+func _set_ocean_palette(palette_id: String) -> Dictionary:
+	return session.queue_environment_override(palette_id, "Debug")
+
+
+func _sync_environment_visuals(environment: Dictionary) -> void:
+	var revision := int(environment.get("environment_revision", 0))
+	if revision == environment_visual_revision: return
+	environment_visual_revision = revision
+	current_palette_id = str(environment.get("canonical_ocean_palette", "clear_day"))
+	ocean_surface.set_palette(current_palette_id)
+	weather_overlay.set_palette(current_palette_id)
 
 
 func _update_hud() -> void:
@@ -1279,6 +1328,12 @@ func _update_hud() -> void:
 		snapshot["result_character_id"] = result_character_id
 	var planned_status: Dictionary = session.get_operation_status(selected_unit_id)
 	planned_status.merge(session.get_planned_control_state(selected_unit_id), true)
+	var group_statuses: Array = []
+	for id in _selected_live_ids():
+		var status: Dictionary = session.get_operation_status(id)
+		status.merge(session.get_planned_control_state(id), true)
+		group_statuses.append(status)
+	planned_status["selection_statuses"] = group_statuses
 	battle_hud.update_state(snapshot, level_id, recent_messages, camera_mode, selected_name, current_palette_id, planned_status, _operation_mode_name(), session.get_player_slots())
 
 
@@ -1334,8 +1389,26 @@ func _selected_live_ids() -> Array[String]:
 	if selected_unit_id not in candidates and not selected_unit_id.is_empty(): candidates.append(selected_unit_id)
 	for id in candidates:
 		var unit: Dictionary = session.state.get("units_by_id", {}).get(id, {})
-		if unit.get("faction_id", "") == "player" and unit.get("life_state", "") == "Alive": result.append(str(id))
+		if unit.get("faction_id", "") == "player" and unit.get("life_state", "") == "Alive" and str(id) not in result: result.append(str(id))
 	return result
+
+
+func _select_all_player_units() -> void:
+	_cancel_operation_mode()
+	selection_drag_active = false
+	selected_unit_ids.clear()
+	for slot_data in session.get_player_slots():
+		var id := str(slot_data["unit_id"])
+		var unit: Dictionary = session.state.get("units_by_id", {}).get(id, {})
+		if unit.get("faction_id", "") == "player" and unit.get("life_state", "") == "Alive":
+			selected_unit_ids.append(id)
+	if selected_unit_id not in selected_unit_ids:
+		selected_unit_id = selected_unit_ids[0] if not selected_unit_ids.is_empty() else ""
+	if camera_mode == "Follow": camera_follow_unit_id = selected_unit_id
+	for id in selected_unit_ids: _report_tutorial_action("SelectTutorialUnit", id)
+	_sync_visuals()
+	_update_hud()
+	queue_redraw()
 
 
 func _select_in_rect(rect: Rect2, view: Dictionary, additive: bool = false) -> void:
@@ -1371,3 +1444,14 @@ func _invoke_hud_action(key: String) -> void:
 		"X": _toggle_control_state("movement_assist_enabled", "自动航行", false)
 		"C": _handle_selected_c_action()
 		"V": _toggle_control_state("primary_auto_fire_enabled", "主武器自动开火", false)
+
+
+func _sync_skill_cutin() -> void:
+	if skill_cutin == null or session == null: return
+	var busy := selection_drag_active or operation_mode in [OperationMode.AIMING_PRIMARY, OperationMode.TARGETING_SKILL, OperationMode.PLACING_ROUTE]
+	skill_cutin.sync_state(battle_hud.battle_rect(), str(session.state.get("phase", "")), busy)
+
+
+func _pointer_event_world_position(screen_position: Vector2) -> Vector2:
+	# Button intent belongs to its event, even when native/remote pointer polling lags.
+	return get_global_transform_with_canvas().affine_inverse() * screen_position

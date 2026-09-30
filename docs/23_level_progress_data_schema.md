@@ -2,7 +2,7 @@
 
 ## 1. 文档功能与边界
 
-本文是当前关卡、舰队成员、目标和长期进度的数据形状真源。关卡内容意图见 `docs/15_battle_level_design.md`；尚未进入运行配置的分阶段目标、接替增援和事务存档扩展方案见 `docs/technical/t02_level_objective_reinforcement_progress_solution.md`。
+本文是当前关卡、舰队成员、目标和长期进度的数据形状真源。关卡内容意图见 `docs/15_battle_level_design.md`；通用条件树、分阶段目标和后续扩展方案见 `docs/technical/t02_level_objective_reinforcement_progress_solution.md`。
 
 本文不维护具体 23 关任务副本、目标胜率、当前实施数量或测试结果；它们分别归 15、36、00。
 
@@ -27,7 +27,7 @@ reinforcement_waves[]?
 - `require_equal_fleet_cost` 默认 `false`；为 `true` 时加载器按所有初始成员引用舰船 Cost 校验两侧相等。
 - 旗舰引用必须属于对应舰队且每侧恰有一个有效旗舰。
 
-`reinforcement_waves[]` 的成员在开局不进入舰队、视野或损失统计；运行时按 `earliest_time`、`concurrent_unit_cap`、`wave_id` 与审核出生点顺序生成。每波包含 `wave_id, faction_id, earliest_time, concurrent_unit_cap, spawn_point_id, members[]`；波 ID 与所有初始/预备实体 ID 必须唯一，预备成员不得是旗舰。
+`reinforcement_waves[]` 的成员在开局不进入舰队、视野或损失统计；运行时按 `earliest_time`、`concurrent_unit_cap`、`wave_id` 与审核出生点顺序生成。每波包含 `wave_id, faction_id, earliest_time, concurrent_unit_cap, spawn_point_id, spawn_display_name?, members[]`；波 ID 与所有初始/预备实体 ID 必须唯一，预备成员不得是旗舰。波按 `wave_id` 排序，每 Tick 至多生成一整波；整波容量、所有成员的实际舰体/吃水/潮态合法性和与存活单位及同波成员的入口分离均满足后才入场，否则继续 Pending。终局将未入场波设为 Cancelled。`spawn_display_name` 是可选非空公开入口名；优先用于提示，不暴露敌舰实时位置。
 
 ## 3. FleetMemberDefinition
 
@@ -55,6 +55,7 @@ protected_player_unit_ids[]?, required_enemy_unit_ids[]?
 required_any_player_unit_ids[]?, minimum_required_any_player_alive?
 ordered_enemy_unit_ids[]?, minimum_enemy_sunk?
 optional_ordered_enemy_unit_ids[]?
+optional_enemy_sunk_stages[][]?
 minimum_player_hp_ratio_unit_id?, minimum_player_hp_ratio?
 contact_target_unit_ids[]?
 required_actions[]?
@@ -79,12 +80,13 @@ waypoint_zones[]?
 
 - `objective_kind` 当前只允许 `TutorialNavigation | TutorialGunnery | TutorialSkill | TutorialArmor | TutorialTorpedo | TutorialCarrierHunt | TutorialSharedContact | TutorialCommand | FlagshipMission | ChallengeMission`。
 - `ChallengeMission` 只使用白名单任务事实：指定目标沉没、指定敌方沉没数量、按列出的敌方 ID 顺序沉没、指定保护舰存活、指定集合的最少存活数和单舰 HP 比例下限。`ordered_enemy_unit_ids` 是特殊任务的硬顺序条件；`optional_ordered_enemy_unit_ids` 是独立可选精通，不参与取消、通关、奖励或章节开放。保护舰沉没、集合存活不足或 HP 触及下限仍立即取消。
-- `optional_ordered_enemy_unit_ids` 只用于 `ChallengeMission`，省略时为空；提供时必须是至少两个唯一、可解析、敌方实体 ID 的数组。每 Tick 消费连续已经沉没的目标；同 Tick 完成的连续目标同时满足，不虚构先后。后续目标已沉没而前置目标仍存活时，将精通标记为未达成且不回退。M/L 设计中的“前置一组全部完成后再完成旗舰”不等于组内严格顺序，尚未接入的分组条件表达仍归 t02，不用当前平面数组替代。
+- `optional_ordered_enemy_unit_ids` 只用于 `ChallengeMission`，省略时为空；提供时必须是至少两个唯一、可解析、敌方实体 ID 的数组。每 Tick 消费连续已经沉没的目标；同 Tick 完成的连续目标同时满足，不虚构先后。后续目标已沉没而前置目标仍存活时，将精通标记为未达成且不回退。`optional_enemy_sunk_stages: String[][]` 表达有序阶段、阶段内全部满足且无先后，至少两个非空阶段；全局成员唯一、必须解析到敌方实体，与旧单序列字段互斥。按完整 Tick 事实连续推进，前置组与末阶段同 Tick 可以通过；后续阶段提前沉没则精通永久失败。
 - 教学动作、命令锁、世界标识、控制状态和单位引用必须属于加载器白名单并能在引用关卡中解析。
 - 教学能力限制必须显式列出；除 `FleetMemberDefinition.initial_hp_ratio` 所声明的开局战损外，不得在运行中修改 HP、伤害、命中、装填或无敌状态模拟教学。
 - `player_weapon_locked_unit_ids_until_action` 与 `player_weapon_unlock_action_id` 必须成对出现；前者只能引用己方单位，后者必须引用本目标的必做动作。指定单位的主武器、技能和自动武器在该动作首次获得合法证据前保持锁定。
 - `enemy_weapon_unlock_action_id` 必须引用本目标的必做动作；教学进入交战阶段后，敌方主武器、技能和自动武器仍保持锁定，直至该动作首次取得合法证据。该字段不锁敌方移动、侦查、受击或碰撞。
 - 通用条件树和教学分阶段计划仍只存在于 t02 技术方案；当前接替增援已成为关卡 Definition 字段，加载器校验波、成员与目标引用。
+- M/L 十关的主任务到现有字段的映射见 t02 第 2.2 节；M-04 使用五个固定己方实体的最少存活数表达损失额度。无序前置组精通已使用 optional_enemy_sunk_stages 接入加载校验与快照契约。
 
 教学动作增量字段：
 
@@ -120,7 +122,7 @@ waypoint_zones[]?
 | `mission_steps` | Object[] / `[]` | 每项 `label:String, completed:bool`；必需击沉目标与实际入场敌舰损失进度，不包含可选精通 |
 | `protection_lines` | String[] / `[]` | 旗舰、指定保护舰、集合存活和耐久阈值说明；旗舰不重复显示 |
 | `reinforcement_hint` | String / `""` | 只列 Pending 波；来自公开作者配置的最早时间、空位条件与已知入口名，不揭示隐藏单位状态；未知入口名省略 |
-| `optional_order_progress` | int / `0` | 已连续满足的精通目标数量 |
+| `optional_order_progress` | int / `0` | 已连续满足的精通阶段数量（旧单序列每成员视为一个阶段） |
 | `optional_order_failed` | bool / `false` | 一旦提前击沉后续目标即为 true，不撤销主任务胜利 |
 | `optional_mastery` | String / `""` | 独立说明精通进度、已完成或未达成，并明确不影响通关奖励 |
 
@@ -147,7 +149,7 @@ checksum
 | 字段 | 类型 / 必填性 | 约束 |
 |---|---|---|
 | `id` | String / 必填 | 固定为 `progress.ship_acquisition` |
-| `planned_challenge_level_ids` | String[] / 必填 | 尚未配置的 `level.challenge.m01..m05/l01..l05`，不得重复 |
+| `planned_challenge_level_ids` | String[] / 必填 | 尚未配置的挑战 ID，不得重复；M/L 十关接入后为 `[]` |
 | `ships` | Object[] / 必填 | 覆盖所有已加载舰船，每舰恰有一项 |
 | `ships[].ship_id` | String / 必填 | 有效舰船引用，唯一 |
 | `ships[].category` | String / 必填 | `DefaultOwned`、`TutorialReward`、`ChallengeReward`、`Pending` 四选一 |

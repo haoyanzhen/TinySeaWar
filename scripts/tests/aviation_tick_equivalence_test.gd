@@ -6,6 +6,8 @@ func _init(): call_deferred("run")
 func run():
 	var registry = Registry.new()
 	assert(registry.load_all())
+	# Historical A-mode golden facts predate the 2026-09-30 balance multipliers.
+	registry.definitions.settings["settings.combat"]["battle_multipliers"] = {"shell_speed":1.0, "shell_spread":1.0, "aircraft_speed":1.0}
 	var legacy := "--capture-legacy" in OS.get_cmdline_user_args()
 	var implementation = load("res://reports/aviation/20260929-runtime/battle_session_before.gd") if legacy else Session
 	var expected: Dictionary = {} if legacy else JSON.parse_string(FileAccess.get_file_as_string(FIXTURE))

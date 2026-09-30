@@ -7,6 +7,8 @@ func _init(): call_deferred("run")
 func run():
 	var registry = Registry.new()
 	assert(registry.load_all())
+	# Historical A-mode golden facts predate the 2026-09-30 balance multipliers.
+	registry.definitions.settings["settings.combat"]["battle_multipliers"] = {"shell_speed":1.0, "shell_spread":1.0, "aircraft_speed":1.0}
 	var facts := []
 	for weather in ["Normal", "Limited"]:
 		for id in ["enterprise_airstrike", "argus_airstrike", "pobeda_bomber", "pobeda_ap_bomber", "hosho_airstrike", "illustrious_bomber", "graf_zeppelin_bomber", "shokaku_bomber", "shokaku_torpedo_bomber"]:

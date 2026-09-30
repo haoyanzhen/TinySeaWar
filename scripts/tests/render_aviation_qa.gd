@@ -41,7 +41,7 @@ func run():
 	battle.selected_unit_id = source.entity_id
 	battle.selected_unit_ids.assign([str(source.entity_id)])
 	battle.session.state.visible_by_faction.player = {target.entity_id:true}
-	battle._set_ocean_palette(palette)
+	battle.environment_visual_revision = -1
 	battle.battle_camera.zoom = Vector2.ONE * zoom
 	battle.battle_camera.position = Vector2(1950,1100)
 	battle._clamp_camera_to_map()

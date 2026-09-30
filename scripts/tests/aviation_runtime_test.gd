@@ -65,13 +65,14 @@ func test_runtime():
 	for wave in s.aviation_service.waves.values():
 		wave.max_hp = 10000.0
 		wave.current_hp = 10000.0
-	time(s, 3)
+	var flight_midpoint: float = s.aviation_service.waves.values()[0].resolve_at_time * 0.5
+	time(s, flight_midpoint)
 	var tasks: Array = s.aviation_service.waves.values()
 	check(tasks.size() == 2, "same tick launches have distinct wave IDs")
 	check(tasks[0].current_hp == tasks[1].current_hp, "all waves receive identical full round")
 	check(tasks[0].current_hp < tasks[0].max_hp, "real AA reduces airborne HP")
 	var hp: float = tasks[0].current_hp
-	time(s, 3.1)
+	time(s, flight_midpoint + 0.1)
 	check(tasks[0].current_hp == hp, "reload prevents repeated AA")
 	check(s.delayed_attacks.size() > 0, "in flight has no damage settlement")
 	var no_aa = fixture()
@@ -114,6 +115,8 @@ func test_torpedo():
 	for event in results: check(event.damage_result.hit_reason == "COLLISION", "public forced-hit semantics")
 func test_observation():
 	var s = fixture()
+	# Observe a live wave independently of how quickly it enters an AA kill zone.
+	s.state.units_by_id["unit.enemy.bismarck"].weapon_states.clear()
 	launch(s)
 	time(s, 1)
 	s.state.visible_by_faction.enemy = {}

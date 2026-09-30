@@ -2,6 +2,7 @@ extends RefCounted
 
 const CHARACTER_ROOT := "res://assets/characters"
 const UI_MANIFEST_PATH := "res://assets/ui/qa/ui_asset_manifest.json"
+const MENU_BUTTON_MANIFEST_PATH := "res://assets/ui/processed/menu/button_manifest.json"
 const COVER_MANIFEST_PATH := "res://assets/ui/processed/menu/cover_manifest.json"
 const MINIMAP_MANIFEST_PATH := "res://assets/ui/processed/battle/terrain/terrain_minimap_manifest.json"
 const COMBAT_VFX_MANIFEST_PATH := "res://assets/vfx/combat/qa/combat_vfx_asset_manifest.json"
@@ -191,7 +192,8 @@ func _load_minimap_assets() -> void:
 	if typeof(manifest.get("masks")) != TYPE_ARRAY:
 		errors.append("Missing or invalid minimap manifest: %s" % MINIMAP_MANIFEST_PATH)
 		return
-	for raw_mask in manifest["masks"]:
+	var challenge_manifest := _read_json("res://assets/ui/processed/battle/terrain/challenge_minimap_manifest.json")
+	for raw_mask in manifest["masks"] + challenge_manifest.get("masks", []):
 		if typeof(raw_mask) != TYPE_DICTIONARY:
 			errors.append("Non-object minimap mask in manifest")
 			continue
@@ -353,6 +355,7 @@ func _load_ui_assets() -> void:
 		errors.append("Missing or invalid UI asset manifest: %s" % UI_MANIFEST_PATH)
 		return
 	var assets: Array = manifest.get("assets", [])
+	assets.append_array(_read_json(MENU_BUTTON_MANIFEST_PATH).get("assets", []))
 	for raw_asset in assets:
 		if typeof(raw_asset) != TYPE_DICTIONARY:
 			errors.append("Non-object UI asset in manifest")

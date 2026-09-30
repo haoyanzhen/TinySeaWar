@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "definitions": [
+    {
+      "id": "environment.timeline.storm_passage",
+      "definition_type": "EnvironmentTimeline",
+      "display_name": "风暴过境",
+      "forecast_seconds": 10,
+      "stages": [
+        {
+          "start_seconds": 0,
+          "ocean_palette": "clear_day"
+        },
+        {
+          "start_seconds": 60,
+          "ocean_palette": "overcast_day"
+        },
+        {
+          "start_seconds": 120,
+          "ocean_palette": "thunderstorm_day"
+        },
+        {
+          "start_seconds": 180,
+          "ocean_palette": "rain_day"
+        },
+        {
+          "start_seconds": 240,
+          "ocean_palette": "clear_day"
+        }
+      ]
+    },
+    {
+      "id": "environment.timeline.day_cycle",
+      "definition_type": "EnvironmentTimeline",
+      "display_name": "昼夜轮转",
+      "forecast_seconds": 10,
+      "loop_seconds": 240,
+      "stages": [
+        {
+          "start_seconds": 0,
+          "ocean_palette": "clear_dawn"
+        },
+        {
+          "start_seconds": 60,
+          "ocean_palette": "clear_day"
+        },
+        {
+          "start_seconds": 120,
+          "ocean_palette": "clear_dusk"
+        },
+        {
+          "start_seconds": 180,
+          "ocean_palette": "clear_night"
+        }
+      ]
+    }
+  ]
+}

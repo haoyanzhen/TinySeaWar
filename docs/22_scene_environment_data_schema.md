@@ -15,6 +15,7 @@ width, height, ocean_palette
 terrain_definition_id?
 navigation_definition_id?
 environment_zone_set_id?
+environment_timeline_id?
 facility_layout_id?
 ```
 
@@ -62,6 +63,26 @@ OceanConditionAliases
 - `aviation_condition`：`Normal | Restricted | Severe | Grounded`。
 - 倍率为非负值；`minimum_optical_visibility_multiplier` 在 `(0,1]`；海况规则按 `minimum_sea_state` 唯一排序。
 - 兼容别名只用于旧数据迁移，新配置必须写正式 ID。
+
+### 3.1 EnvironmentTimeline
+
+时间线归入现有环境定义类别，字段：
+
+```text
+id, definition_type # EnvironmentTimeline
+display_name
+forecast_seconds # 缺省 10
+loop_seconds? # 省略表示结束后保持最后阶段
+stages[]
+  start_seconds
+  ocean_palette
+```
+
+- 阶段非空，首项从 `0` 开始，时间严格递增；所有时间为有限非负数并对齐 `0.1s` 固定 Tick。
+- 阶段 palette 必须是正式天气／时段 ID，不使用兼容别名；循环周期必须严格大于最后阶段时间。
+- `LevelMap.environment_timeline_id` 可选，非空时引用本类型，且 `map.ocean_palette` 必须等于首阶段。省略时整局固定环境。
+- 运行时公开全局快照增加 `environment_revision`、`timeline_id`、`stage_index`（从 0 起）、`cycle`、`global_effects` 和 `forecast`。`global_effects` 是不叠加局部区域、已应用海况档位的只读环境上下文；`forecast` 在预告窗口内包含 `ocean_palette`、`remaining_seconds`、`at_usec`，窗口外为空。
+- 变化事件 `GlobalEnvironmentChanged` 包含前后 palette、环境版本、阶段、循环及来源；`GlobalEnvironmentForecast` 包含目标 palette、剩余秒数和绝对环境微秒时点。事件再由会话附加 Tick 与事件 ID。
 
 ## 4. TerrainAssetTemplate
 
@@ -280,7 +301,7 @@ facility_state_policy
   EnRoute # Cancel | Continue
 ```
 
-`launch_time` 必须早于 `arrival_time`；攻击任务引用合法 WeaponDefinition。阶段策略只决定任务取消或继续，不绕过公共航空、侦查和伤害规则。
+`launch_time` 必须早于 `arrival_time`；实际飞行段为 `max(0, arrival_time × aviation_delay_multiplier - launch_time) / battle_multipliers.aircraft_speed`，起飞准备仍为 `launch_time`；攻击任务引用合法 WeaponDefinition。阶段策略只决定任务取消或继续，不绕过公共航空、侦查和伤害规则。
 
 ## 12. MinefieldDefinition
 
@@ -303,3 +324,7 @@ controller_rules?
 ### 航空支援运行关联
 
 设施 `support_missions` 的 `mission_id/facility_id/faction_id/launch_at_time/resolve_at_time/target_position/state` 同时作为岸基航空投影来源。Physical 的空袭编队使用 `support.<mission_id>` 稳定关联；可选 `aircraft_hp > 0` 缺省350。侦察/巡逻区域仍按既有 `support_effects` 发布，不新增机体或击杀字段。
+
+### 挑战地图派生约定
+
+M/L 挑战地图保留两方 `player_1..11` / `enemy_1..11` 标准槽位，可额外声明审核过的 RN/RS 接替入口；所有槽位仍遵守唯一 ID、位置、半径和吃水校验。中型关只使用前五个初始槽位。挑战地图与自定义母图为独立定义；共用图像和相同规则几何允许复用导航拓扑，但 ID 和引用独立，碰撞场按实例重新烘焙。

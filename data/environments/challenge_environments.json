@@ -1,0 +1,1066 @@
+{
+  "schema_version": 1,
+  "definitions": [
+    {
+      "id": "environment.zone_set.challenge_m01",
+      "definition_type": "EnvironmentZoneSet",
+      "global_environment": {
+        "seed_offset": 91000,
+        "tide": {
+          "initial_phase": "Flood",
+          "phases": [
+            "Flood",
+            "High",
+            "Ebb",
+            "Low"
+          ],
+          "phase_duration": 45,
+          "open_phases": [
+            "Flood",
+            "High"
+          ]
+        }
+      },
+      "zones": [
+        {
+          "id": "zone.m01.0",
+          "effect_id": "environment.effect.tidal_water",
+          "polygon": [
+            [
+              2181.12,
+              2142.72
+            ],
+            [
+              2181.12,
+              3041.28
+            ],
+            [
+              2715.648,
+              3041.28
+            ],
+            [
+              2715.648,
+              2142.72
+            ]
+          ],
+          "position": [
+            0,
+            0
+          ],
+          "heading": 0,
+          "drift_speed": 0,
+          "intensity": 1.0,
+          "phase": "Stable",
+          "duration": 0,
+          "public_trend": "Stable"
+        },
+        {
+          "id": "zone.m01.1",
+          "effect_id": "environment.effect.lee_water",
+          "polygon": [
+            [
+              2088.96,
+              2039.04
+            ],
+            [
+              2088.96,
+              3179.52
+            ],
+            [
+              4055.04,
+              3179.52
+            ],
+            [
+              4055.04,
+              2039.04
+            ]
+          ],
+          "position": [
+            0,
+            0
+          ],
+          "heading": 0,
+          "drift_speed": 0,
+          "intensity": 1.0,
+          "phase": "Stable",
+          "duration": 0,
+          "public_trend": "Stable"
+        }
+      ]
+    },
+    {
+      "id": "environment.zone_set.challenge_m02",
+      "definition_type": "EnvironmentZoneSet",
+      "global_environment": {
+        "seed_offset": 91001
+      },
+      "zones": [
+        {
+          "id": "zone.m02.0",
+          "effect_id": "environment.effect.sea_fog",
+          "polygon": [
+            [
+              2396.16,
+              1278.72
+            ],
+            [
+              2396.16,
+              2177.28
+            ],
+            [
+              3747.84,
+              2177.28
+            ],
+            [
+              3747.84,
+              1278.72
+            ]
+          ],
+          "position": [
+            0,
+            0
+          ],
+          "heading": 0,
+          "drift_speed": 0,
+          "intensity": 1.0,
+          "phase": "Stable",
+          "duration": 0,
+          "public_trend": "Stable"
+        }
+      ]
+    },
+    {
+      "id": "environment.zone_set.challenge_m03",
+      "definition_type": "EnvironmentZoneSet",
+      "global_environment": {
+        "seed_offset": 91002
+      },
+      "zones": [
+        {
+          "id": "zone.m03.0",
+          "effect_id": "environment.effect.strong_current",
+          "polygon": [
+            [
+              1536.0,
+              622.0799999999999
+            ],
+            [
+              1536.0,
+              1036.8
+            ],
+            [
+              4608.0,
+              1036.8
+            ],
+            [
+              4608.0,
+              622.0799999999999
+            ]
+          ],
+          "position": [
+            0,
+            0
+          ],
+          "heading": 0,
+          "drift_speed": 0,
+          "intensity": 1.0,
+          "phase": "Stable",
+          "duration": 0,
+          "public_trend": "Stable"
+        },
+        {
+          "id": "zone.m03.1",
+          "effect_id": "environment.effect.strong_current",
+          "polygon": [
+            [
+              1536.0,
+              2419.2
+            ],
+            [
+              1536.0,
+              2833.9199999999996
+            ],
+            [
+              4608.0,
+              2833.9199999999996
+            ],
+            [
+              4608.0,
+              2419.2
+            ]
+          ],
+          "position": [
+            0,
+            0
+          ],
+          "heading": 180,
+          "drift_speed": 0,
+          "intensity": 1.0,
+          "phase": "Stable",
+          "duration": 0,
+          "public_trend": "Stable"
+        },
+        {
+          "id": "zone.m03.2",
+          "effect_id": "environment.effect.moonlit_lane",
+          "polygon": [
+            [
+              2641.92,
+              1382.4
+            ],
+            [
+              2641.92,
+              2073.6
+            ],
+            [
+              3502.08,
+              2073.6
+            ],
+            [
+              3502.08,
+              1382.4
+            ]
+          ],
+          "position": [
+            0,
+            0
+          ],
+          "heading": 0,
+          "drift_speed": 0,
+          "intensity": 1.0,
+          "phase": "Stable",
+          "duration": 0,
+          "public_trend": "Stable"
+        }
+      ]
+    },
+    {
+      "id": "environment.timeline.challenge_m04",
+      "definition_type": "EnvironmentTimeline",
+      "display_name": "风暴猎场·雷雨过境",
+      "forecast_seconds": 10,
+      "stages": [
+        {
+          "start_seconds": 0,
+          "ocean_palette": "thunderstorm_day"
+        },
+        {
+          "start_seconds": 60,
+          "ocean_palette": "rain_day"
+        },
+        {
+          "start_seconds": 240,
+          "ocean_palette": "thunderstorm_day"
+        },
+        {
+          "start_seconds": 300,
+          "ocean_palette": "rain_day"
+        }
+      ]
+    },
+    {
+      "id": "environment.zone_set.challenge_m04",
+      "definition_type": "EnvironmentZoneSet",
+      "global_environment": {
+        "seed_offset": 91003
+      },
+      "zones": [
+        {
+          "id": "zone.m04.0",
+          "effect_id": "environment.effect.high_sea",
+          "polygon": [
+            [
+              614.4000000000001,
+              138.24
+            ],
+            [
+              614.4000000000001,
+              691.2
+            ],
+            [
+              5529.6,
+              691.2
+            ],
+            [
+              5529.6,
+              138.24
+            ]
+          ],
+          "position": [
+            0,
+            0
+          ],
+          "heading": 0,
+          "drift_speed": 0,
+          "intensity": 1.0,
+          "phase": "Stable",
+          "duration": 0,
+          "public_trend": "Stable"
+        },
+        {
+          "id": "zone.m04.1",
+          "effect_id": "environment.effect.high_sea",
+          "polygon": [
+            [
+              614.4000000000001,
+              2764.8
+            ],
+            [
+              614.4000000000001,
+              3317.7599999999998
+            ],
+            [
+              5529.6,
+              3317.7599999999998
+            ],
+            [
+              5529.6,
+              2764.8
+            ]
+          ],
+          "position": [
+            0,
+            0
+          ],
+          "heading": 0,
+          "drift_speed": 0,
+          "intensity": 1.0,
+          "phase": "Stable",
+          "duration": 0,
+          "public_trend": "Stable"
+        },
+        {
+          "id": "zone.m04.2",
+          "effect_id": "environment.effect.lee_water",
+          "polygon": [
+            [
+              1843.1999999999998,
+              1036.8
+            ],
+            [
+              1843.1999999999998,
+              1728.0
+            ],
+            [
+              2641.92,
+              1728.0
+            ],
+            [
+              2641.92,
+              1036.8
+            ]
+          ],
+          "position": [
+            0,
+            0
+          ],
+          "heading": 0,
+          "drift_speed": 0,
+          "intensity": 1.0,
+          "phase": "Stable",
+          "duration": 0,
+          "public_trend": "Stable"
+        },
+        {
+          "id": "zone.m04.3",
+          "effect_id": "environment.effect.lee_water",
+          "polygon": [
+            [
+              3502.08,
+              1728.0
+            ],
+            [
+              3502.08,
+              2419.2
+            ],
+            [
+              4300.799999999999,
+              2419.2
+            ],
+            [
+              4300.799999999999,
+              1728.0
+            ]
+          ],
+          "position": [
+            0,
+            0
+          ],
+          "heading": 0,
+          "drift_speed": 0,
+          "intensity": 1.0,
+          "phase": "Stable",
+          "duration": 0,
+          "public_trend": "Stable"
+        }
+      ]
+    },
+    {
+      "id": "environment.timeline.challenge_m05",
+      "definition_type": "EnvironmentTimeline",
+      "display_name": "海峡封锁·雷雨过境",
+      "forecast_seconds": 10,
+      "stages": [
+        {
+          "start_seconds": 0,
+          "ocean_palette": "thunderstorm_dawn"
+        },
+        {
+          "start_seconds": 60,
+          "ocean_palette": "rain_dawn"
+        },
+        {
+          "start_seconds": 240,
+          "ocean_palette": "thunderstorm_dawn"
+        },
+        {
+          "start_seconds": 300,
+          "ocean_palette": "rain_dawn"
+        }
+      ]
+    },
+    {
+      "id": "environment.zone_set.challenge_m05",
+      "definition_type": "EnvironmentZoneSet",
+      "global_environment": {
+        "seed_offset": 91004
+      },
+      "zones": [
+        {
+          "id": "zone.m05.0",
+          "effect_id": "environment.effect.rain_squall",
+          "polygon": [
+            [
+              2334.7200000000003,
+              1382.4
+            ],
+            [
+              2334.7200000000003,
+              2073.6
+            ],
+            [
+              3194.88,
+              2073.6
+            ],
+            [
+              3194.88,
+              1382.4
+            ]
+          ],
+          "position": [
+            0,
+            0
+          ],
+          "heading": 0,
+          "drift_speed": 3.0,
+          "intensity": 1.0,
+          "phase": "Stable",
+          "duration": 0,
+          "public_trend": "DriftingEast",
+          "drift_path": [
+            [
+              0,
+              0
+            ],
+            [
+              900,
+              0
+            ]
+          ]
+        },
+        {
+          "id": "zone.m05.1",
+          "effect_id": "environment.effect.lee_water",
+          "polygon": [
+            [
+              2457.6000000000004,
+              2419.2
+            ],
+            [
+              2457.6000000000004,
+              3041.28
+            ],
+            [
+              3686.3999999999996,
+              3041.28
+            ],
+            [
+              3686.3999999999996,
+              2419.2
+            ]
+          ],
+          "position": [
+            0,
+            0
+          ],
+          "heading": 0,
+          "drift_speed": 0,
+          "intensity": 1.0,
+          "phase": "Stable",
+          "duration": 0,
+          "public_trend": "Stable"
+        },
+        {
+          "id": "zone.m05.2",
+          "effect_id": "environment.effect.lee_water",
+          "polygon": [
+            [
+              2457.6000000000004,
+              414.71999999999997
+            ],
+            [
+              2457.6000000000004,
+              1036.8
+            ],
+            [
+              3686.3999999999996,
+              1036.8
+            ],
+            [
+              3686.3999999999996,
+              414.71999999999997
+            ]
+          ],
+          "position": [
+            0,
+            0
+          ],
+          "heading": 0,
+          "drift_speed": 0,
+          "intensity": 1.0,
+          "phase": "Stable",
+          "duration": 0,
+          "public_trend": "Stable"
+        }
+      ]
+    },
+    {
+      "id": "environment.zone_set.challenge_l01",
+      "definition_type": "EnvironmentZoneSet",
+      "global_environment": {
+        "seed_offset": 91005
+      },
+      "zones": []
+    },
+    {
+      "id": "environment.zone_set.challenge_l02",
+      "definition_type": "EnvironmentZoneSet",
+      "global_environment": {
+        "seed_offset": 91006
+      },
+      "zones": [
+        {
+          "id": "zone.l02.0",
+          "effect_id": "environment.effect.strong_current",
+          "polygon": [
+            [
+              1413.1200000000001,
+              414.71999999999997
+            ],
+            [
+              1413.1200000000001,
+              967.6800000000001
+            ],
+            [
+              4792.32,
+              967.6800000000001
+            ],
+            [
+              4792.32,
+              414.71999999999997
+            ]
+          ],
+          "position": [
+            0,
+            0
+          ],
+          "heading": 0,
+          "drift_speed": 0,
+          "intensity": 1.0,
+          "phase": "Stable",
+          "duration": 0,
+          "public_trend": "Stable"
+        }
+      ]
+    },
+    {
+      "id": "environment.zone_set.challenge_l03",
+      "definition_type": "EnvironmentZoneSet",
+      "global_environment": {
+        "seed_offset": 91007
+      },
+      "zones": [
+        {
+          "id": "zone.l03.0",
+          "effect_id": "environment.effect.high_sea",
+          "polygon": [
+            [
+              1351.68,
+              138.24
+            ],
+            [
+              1351.68,
+              622.0799999999999
+            ],
+            [
+              4792.32,
+              622.0799999999999
+            ],
+            [
+              4792.32,
+              138.24
+            ]
+          ],
+          "position": [
+            0,
+            0
+          ],
+          "heading": 0,
+          "drift_speed": 0,
+          "intensity": 1.0,
+          "phase": "Stable",
+          "duration": 0,
+          "public_trend": "Stable"
+        },
+        {
+          "id": "zone.l03.1",
+          "effect_id": "environment.effect.high_sea",
+          "polygon": [
+            [
+              1351.68,
+              2833.9199999999996
+            ],
+            [
+              1351.68,
+              3317.7599999999998
+            ],
+            [
+              4792.32,
+              3317.7599999999998
+            ],
+            [
+              4792.32,
+              2833.9199999999996
+            ]
+          ],
+          "position": [
+            0,
+            0
+          ],
+          "heading": 0,
+          "drift_speed": 0,
+          "intensity": 1.0,
+          "phase": "Stable",
+          "duration": 0,
+          "public_trend": "Stable"
+        },
+        {
+          "id": "zone.l03.2",
+          "effect_id": "environment.effect.lee_water",
+          "polygon": [
+            [
+              2150.3999999999996,
+              967.6800000000001
+            ],
+            [
+              2150.3999999999996,
+              1347.8400000000001
+            ],
+            [
+              3993.6000000000004,
+              1347.8400000000001
+            ],
+            [
+              3993.6000000000004,
+              967.6800000000001
+            ]
+          ],
+          "position": [
+            0,
+            0
+          ],
+          "heading": 0,
+          "drift_speed": 0,
+          "intensity": 1.0,
+          "phase": "Stable",
+          "duration": 0,
+          "public_trend": "Stable"
+        },
+        {
+          "id": "zone.l03.3",
+          "effect_id": "environment.effect.lee_water",
+          "polygon": [
+            [
+              2150.3999999999996,
+              2108.16
+            ],
+            [
+              2150.3999999999996,
+              2488.3199999999997
+            ],
+            [
+              3993.6000000000004,
+              2488.3199999999997
+            ],
+            [
+              3993.6000000000004,
+              2108.16
+            ]
+          ],
+          "position": [
+            0,
+            0
+          ],
+          "heading": 0,
+          "drift_speed": 0,
+          "intensity": 1.0,
+          "phase": "Stable",
+          "duration": 0,
+          "public_trend": "Stable"
+        }
+      ]
+    },
+    {
+      "id": "environment.timeline.challenge_l04",
+      "definition_type": "EnvironmentTimeline",
+      "display_name": "风暴群岛合围·雷雨过境",
+      "forecast_seconds": 10,
+      "stages": [
+        {
+          "start_seconds": 0,
+          "ocean_palette": "thunderstorm_dusk"
+        },
+        {
+          "start_seconds": 60,
+          "ocean_palette": "rain_dusk"
+        },
+        {
+          "start_seconds": 240,
+          "ocean_palette": "thunderstorm_dusk"
+        },
+        {
+          "start_seconds": 300,
+          "ocean_palette": "rain_dusk"
+        }
+      ]
+    },
+    {
+      "id": "environment.zone_set.challenge_l04",
+      "definition_type": "EnvironmentZoneSet",
+      "global_environment": {
+        "seed_offset": 91008
+      },
+      "zones": [
+        {
+          "id": "zone.l04.0",
+          "effect_id": "environment.effect.rain_squall",
+          "polygon": [
+            [
+              1658.88,
+              691.2
+            ],
+            [
+              1658.88,
+              1175.0400000000002
+            ],
+            [
+              2580.48,
+              1175.0400000000002
+            ],
+            [
+              2580.48,
+              691.2
+            ]
+          ],
+          "position": [
+            0,
+            0
+          ],
+          "heading": 0,
+          "drift_speed": 3.0,
+          "intensity": 1.0,
+          "phase": "Stable",
+          "duration": 0,
+          "public_trend": "DriftingEast",
+          "drift_path": [
+            [
+              0,
+              0
+            ],
+            [
+              900,
+              0
+            ]
+          ]
+        },
+        {
+          "id": "zone.l04.1",
+          "effect_id": "environment.effect.rain_squall",
+          "polygon": [
+            [
+              3563.5199999999995,
+              2280.96
+            ],
+            [
+              3563.5199999999995,
+              2764.8
+            ],
+            [
+              4485.12,
+              2764.8
+            ],
+            [
+              4485.12,
+              2280.96
+            ]
+          ],
+          "position": [
+            0,
+            0
+          ],
+          "heading": 180,
+          "drift_speed": 3.0,
+          "intensity": 1.0,
+          "phase": "Stable",
+          "duration": 0,
+          "public_trend": "DriftingWest",
+          "drift_path": [
+            [
+              0,
+              0
+            ],
+            [
+              -900,
+              0
+            ]
+          ]
+        },
+        {
+          "id": "zone.l04.2",
+          "effect_id": "environment.effect.lee_water",
+          "polygon": [
+            [
+              2396.16,
+              1347.8400000000001
+            ],
+            [
+              2396.16,
+              1797.1200000000001
+            ],
+            [
+              2949.12,
+              1797.1200000000001
+            ],
+            [
+              2949.12,
+              1347.8400000000001
+            ]
+          ],
+          "position": [
+            0,
+            0
+          ],
+          "heading": 0,
+          "drift_speed": 0,
+          "intensity": 1.0,
+          "phase": "Stable",
+          "duration": 0,
+          "public_trend": "Stable"
+        },
+        {
+          "id": "zone.l04.3",
+          "effect_id": "environment.effect.lee_water",
+          "polygon": [
+            [
+              3194.88,
+              1658.8799999999999
+            ],
+            [
+              3194.88,
+              2108.16
+            ],
+            [
+              3747.84,
+              2108.16
+            ],
+            [
+              3747.84,
+              1658.8799999999999
+            ]
+          ],
+          "position": [
+            0,
+            0
+          ],
+          "heading": 0,
+          "drift_speed": 0,
+          "intensity": 1.0,
+          "phase": "Stable",
+          "duration": 0,
+          "public_trend": "Stable"
+        }
+      ]
+    },
+    {
+      "id": "environment.timeline.challenge_l05",
+      "definition_type": "EnvironmentTimeline",
+      "display_name": "雷夜环礁终局·雷雨过境",
+      "forecast_seconds": 10,
+      "stages": [
+        {
+          "start_seconds": 0,
+          "ocean_palette": "thunderstorm_night"
+        },
+        {
+          "start_seconds": 60,
+          "ocean_palette": "rain_night"
+        },
+        {
+          "start_seconds": 240,
+          "ocean_palette": "thunderstorm_night"
+        },
+        {
+          "start_seconds": 300,
+          "ocean_palette": "rain_night"
+        }
+      ]
+    },
+    {
+      "id": "environment.zone_set.challenge_l05",
+      "definition_type": "EnvironmentZoneSet",
+      "global_environment": {
+        "seed_offset": 91009
+      },
+      "zones": [
+        {
+          "id": "zone.l05.0",
+          "effect_id": "environment.effect.high_sea",
+          "polygon": [
+            [
+              614.4000000000001,
+              138.24
+            ],
+            [
+              614.4000000000001,
+              622.0799999999999
+            ],
+            [
+              5529.6,
+              622.0799999999999
+            ],
+            [
+              5529.6,
+              138.24
+            ]
+          ],
+          "position": [
+            0,
+            0
+          ],
+          "heading": 0,
+          "drift_speed": 0,
+          "intensity": 1.0,
+          "phase": "Stable",
+          "duration": 0,
+          "public_trend": "Stable"
+        },
+        {
+          "id": "zone.l05.1",
+          "effect_id": "environment.effect.high_sea",
+          "polygon": [
+            [
+              614.4000000000001,
+              2833.9199999999996
+            ],
+            [
+              614.4000000000001,
+              3317.7599999999998
+            ],
+            [
+              5529.6,
+              3317.7599999999998
+            ],
+            [
+              5529.6,
+              2833.9199999999996
+            ]
+          ],
+          "position": [
+            0,
+            0
+          ],
+          "heading": 0,
+          "drift_speed": 0,
+          "intensity": 1.0,
+          "phase": "Stable",
+          "duration": 0,
+          "public_trend": "Stable"
+        },
+        {
+          "id": "zone.l05.2",
+          "effect_id": "environment.effect.moonlit_lane",
+          "polygon": [
+            [
+              3993.6000000000004,
+              1313.28
+            ],
+            [
+              3993.6000000000004,
+              2142.72
+            ],
+            [
+              4792.32,
+              2142.72
+            ],
+            [
+              4792.32,
+              1313.28
+            ]
+          ],
+          "position": [
+            0,
+            0
+          ],
+          "heading": 0,
+          "drift_speed": 0,
+          "intensity": 1.0,
+          "phase": "Stable",
+          "duration": 0,
+          "public_trend": "Stable"
+        },
+        {
+          "id": "zone.l05.3",
+          "effect_id": "environment.effect.strong_current",
+          "polygon": [
+            [
+              3993.6000000000004,
+              1416.9599999999998
+            ],
+            [
+              3993.6000000000004,
+              2039.04
+            ],
+            [
+              5038.08,
+              2039.04
+            ],
+            [
+              5038.08,
+              1416.9599999999998
+            ]
+          ],
+          "position": [
+            0,
+            0
+          ],
+          "heading": 180,
+          "drift_speed": 0,
+          "intensity": 1.0,
+          "phase": "Stable",
+          "duration": 0,
+          "public_trend": "Stable"
+        }
+      ]
+    }
+  ]
+}

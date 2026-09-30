@@ -156,3 +156,9 @@ GameFlow 的本机 ConfigFile `menu` 节保存 `cover_id`、`reduce_motion`、`a
 `Snapshot.aviation: Dictionary[wave_id, Dictionary]`。己方可含 `phase`、`position/heading`、`spawn_position/target_position`、`progress/end_progress`、`remaining`、`character_id/source_weapon_id/source_unit_id`；侦察/巡逻增加 `aircraft_kind/radius`，Physical 增加 `current_hp/max_hp`。敌方只允许当前公开片段白名单；字段缺失不允许通过资产或单位 ID 补查。
 
 公共飞机 visual 可配置 `screen_canvas_width`（逻辑画布像素，缺省36），透明主体约24–28像素；渲染比例受镜头缩放补偿。初版每编队3架装饰，侦察/巡逻1架；这些数量不参与规则结算。炸弹使用该公共机型的 `payload_visual_id`，鱼雷机 A 阶段不生成水中装饰雷。
+
+## 技能立绘闪回配置与偏好
+
+`PresentationSettings.skill_cutin` 仅供表现层使用：`enter_seconds`、`hold_seconds`、`exit_seconds`、`compact_seconds` 为正有限秒数；`width_ratio`、`height_ratio` 为海域比例，上限分别 0.25 / 0.45；`compact_limit` 为 1–3 的整数。正式默认值由 `data/settings/presentation_settings.json` 维护；缺失或非法数值回退默认，上限在控件边界限制。播放行为真源见 `33`。
+
+GameFlow 本机 ConfigFile 新增 `battle.skill_cutin_mode = full | simple | off`；旧配置缺字段或未知值回退 `full`，保存保留 `menu` 与 `display` 等其他节。写入失败保留本次会话选择并向 UI 返回失败，不进入进度存档、Domain 或模拟清单。

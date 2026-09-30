@@ -8,11 +8,18 @@ var tide_zone_indices: PackedInt32Array = PackedInt32Array()
 var effects_by_id: Dictionary = {}
 var definitions_by_id: Dictionary = {}
 var global_elapsed := 0.0
+var authored_environment: Dictionary = {}
+var timeline: Dictionary = {}
+var environment_elapsed_usec := 0
+var environment_revision := 1
+var timeline_stage_index := 0
+var timeline_cycle := 0
+var forecast_key := -1
 var tide_phase_index := 0
 var tide_initial_phase_index := 0
 
 
-func configure(query, zone_set: Dictionary, effects: Array, ocean_palette_id: String = "") -> void:
+func configure(query, zone_set: Dictionary, effects: Array, ocean_palette_id: String = "", environment_timeline: Dictionary = {}) -> void:
 	terrain_query = query
 	effects_by_id.clear()
 	definitions_by_id.clear()
@@ -21,7 +28,14 @@ func configure(query, zone_set: Dictionary, effects: Array, ocean_palette_id: St
 		definitions_by_id[definition_id] = effect.duplicate(true)
 		if str(effect.get("definition_type", "")) == "EnvironmentEffect":
 			effects_by_id[definition_id] = effect.duplicate(true)
-	global_environment = _compose_global_environment(zone_set.get("global_environment", {}), ocean_palette_id)
+	authored_environment = zone_set.get("global_environment", {}).duplicate(true)
+	timeline = environment_timeline.duplicate(true)
+	environment_elapsed_usec = 0
+	environment_revision = 1
+	timeline_stage_index = 0
+	timeline_cycle = 0
+	forecast_key = -1
+	global_environment = _compose_global_environment(authored_environment, ocean_palette_id)
 	global_elapsed = 0.0
 	var tide: Dictionary = global_environment.get("tide", {})
 	var phases: Array = tide.get("phases", [])
@@ -71,6 +85,8 @@ func configure(query, zone_set: Dictionary, effects: Array, ocean_palette_id: St
 func advance(delta: float) -> Array:
 	var events: Array = []
 	global_elapsed += delta
+	environment_elapsed_usec += roundi(delta * 1000000.0)
+	events.append_array(_advance_timeline())
 	var tide: Dictionary = global_environment.get("tide", {})
 	var phases: Array = tide.get("phases", [])
 	var phase_duration := float(tide.get("phase_duration", 0.0))
@@ -100,9 +116,9 @@ func advance(delta: float) -> Array:
 	return events
 
 
-func context_at(position: Vector2) -> Dictionary:
-	var context := {
-		"water_regions": terrain_query.regions_at(position) if terrain_query != null else [],
+func _base_context() -> Dictionary:
+	return {
+		"water_regions": [],
 		"current_vector": Vector2.ZERO,
 		"sea_state": int(global_environment.get("base_sea_state", 0)),
 		"wind_speed": float(global_environment.get("wind_speed", 0.0)),
@@ -118,6 +134,18 @@ func context_at(position: Vector2) -> Dictionary:
 		"tide_access_state": "Open",
 		"effect_sources": global_environment.get("condition_sources", []).duplicate(true),
 	}
+
+
+func global_context() -> Dictionary:
+	var context := _base_context()
+	_apply_sea_state_rule(context)
+	_apply_torpedo_sigma_multiplier(context)
+	return context
+
+
+func context_at(position: Vector2) -> Dictionary:
+	var context := _base_context()
+	context["water_regions"] = terrain_query.regions_at(position) if terrain_query != null else []
 	var selected_by_effect := {}
 	var vector_zones: Array = []
 	for zone in zones:
@@ -275,6 +303,10 @@ func _distance_to_zone_boundary(zone: Dictionary, position: Vector2) -> float:
 	return result
 
 
+func can_enter(position: Vector2) -> bool:
+	return _restricted_tide_zone_ids_at(position).is_empty()
+
+
 func movement_segment_access(start: Vector2, end: Vector2) -> Dictionary:
 	if not _tide_access_restricted():
 		return {"allowed": true, "reason_code": "OK", "fraction": 1.0}
@@ -353,6 +385,12 @@ func global_snapshot() -> Dictionary:
 	var result := global_environment.duplicate(true)
 	result["tide_phase"] = _tide_phase()
 	result["elapsed"] = global_elapsed
+	result["environment_revision"] = environment_revision
+	result["timeline_id"] = str(timeline.get("id", ""))
+	result["stage_index"] = timeline_stage_index
+	result["cycle"] = timeline_cycle
+	result["global_effects"] = global_context()
+	result["forecast"] = environment_forecast()
 	return result
 
 
@@ -511,3 +549,68 @@ func _more_severe_aviation_condition(first: String, second: String) -> String:
 
 func _vector2(value: Variant) -> Vector2:
 	return value if value is Vector2 else Vector2(float(value[0]), float(value[1]))
+
+
+func canonical_palette(palette_id: String) -> String:
+	var aliases: Dictionary = definitions_by_id.get("environment.condition_aliases.ocean", {}).get("aliases", {})
+	var canonical := str(aliases.get(palette_id, palette_id))
+	var parts := canonical.split("_")
+	if parts.size() != 2: return ""
+	if not definitions_by_id.has("environment.weather." + parts[0]) or not definitions_by_id.has("environment.time." + parts[1]): return ""
+	return canonical
+
+
+func override_environment(palette_id: String, source: String) -> Dictionary:
+	var canonical := canonical_palette(palette_id)
+	if canonical.is_empty(): return {}
+	timeline.clear()
+	timeline_stage_index = 0
+	timeline_cycle = 0
+	forecast_key = -1
+	return _change_environment(canonical, source)
+
+
+func _change_environment(palette_id: String, source: String) -> Dictionary:
+	var previous := str(global_environment.get("canonical_ocean_palette", ""))
+	global_environment = _compose_global_environment(authored_environment, palette_id)
+	environment_revision += 1
+	return {"event_type":"GlobalEnvironmentChanged", "previous_palette":previous, "ocean_palette":palette_id, "environment_revision":environment_revision, "timeline_id":str(timeline.get("id", "")), "stage_index":timeline_stage_index, "cycle":timeline_cycle, "source":source}
+
+
+func _next_environment_stage() -> Dictionary:
+	if timeline.is_empty(): return {}
+	var stages: Array = timeline.get("stages", [])
+	var next_index := timeline_stage_index + 1
+	var next_cycle := timeline_cycle
+	var period := roundi(float(timeline.get("loop_seconds", 0.0)) * 1000000.0)
+	if next_index >= stages.size():
+		if period <= 0: return {}
+		next_index = 0
+		next_cycle += 1
+	var stage: Dictionary = stages[next_index]
+	return {"stage_index":next_index, "cycle":next_cycle, "at_usec":next_cycle * period + roundi(float(stage.start_seconds) * 1000000.0), "ocean_palette":stage.ocean_palette}
+
+
+func environment_forecast() -> Dictionary:
+	var next := _next_environment_stage()
+	if next.is_empty(): return {}
+	var remaining := int(next.at_usec) - environment_elapsed_usec
+	if remaining > roundi(float(timeline.get("forecast_seconds", 10.0)) * 1000000.0): return {}
+	return {"ocean_palette":next.ocean_palette, "remaining_seconds":maxf(0.0, remaining / 1000000.0), "at_usec":next.at_usec}
+
+
+func _advance_timeline() -> Array:
+	var events: Array = []
+	var next := _next_environment_stage()
+	while not next.is_empty() and int(next.at_usec) <= environment_elapsed_usec:
+		timeline_stage_index = int(next.stage_index)
+		timeline_cycle = int(next.cycle)
+		events.append(_change_environment(str(next.ocean_palette), "Timeline"))
+		next = _next_environment_stage()
+	var forecast := environment_forecast()
+	if not forecast.is_empty() and int(forecast.at_usec) != forecast_key:
+		forecast_key = int(forecast.at_usec)
+		var event := forecast.duplicate(true)
+		event["event_type"] = "GlobalEnvironmentForecast"
+		events.append(event)
+	return events

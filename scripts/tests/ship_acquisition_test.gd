@@ -63,12 +63,13 @@ func _run() -> void:
 	_check(flow.record_level_victory("level.challenge.s05"), "implemented challenge succeeds")
 	for ship_id in ["ship.chongqing", "ship.yukikaze", "ship.hood", "ship.san_diego"]:
 		_check(flow.is_ship_unlocked(ship_id), "chapter reward %s" % ship_id)
+	_check(flow.record_level_victory("level.challenge.m01") and flow.is_ship_unlocked("ship.kirov"), "implemented medium challenge grants Kirov")
 	var writes_before := store.writes
-	_check(not flow.record_level_victory("level.challenge.m01"), "planned challenge cannot grant rewards")
+	_check(not flow.record_level_victory("level.challenge.missing"), "missing challenge cannot grant rewards")
 	_check(not flow.record_level_victory("level.prototype_3v3"), "prototype cannot grant rewards")
 	_check(flow.record_level_victory("level.tutorial.t08"), "reward-free tutorial succeeds without save")
 	_check(store.writes == writes_before, "unimplemented and reward-free results do not write")
-	_check(flow.ship_acquisition_label("ship.kirov").contains("尚未开放"), "planned source label truthful")
+	_check(not flow.ship_acquisition_label("ship.kirov").contains("尚未开放"), "implemented source label truthful")
 	_check(flow.ship_acquisition_label("ship.akizuki").contains("暂无获取途径"), "pending source label truthful")
 	flow.free()
 	var menu = load("res://scripts/presentation/menu/main_menu.gd").new()
@@ -76,7 +77,7 @@ func _run() -> void:
 	menu._show_custom()
 	_check(menu.ship_buttons.size() == 48, "menu lists complete roster")
 	_check(menu.ship_buttons["ship.akizuki"].tooltip_text.contains("暂无获取途径"), "menu renders pending source")
-	_check(menu.ship_buttons["ship.kirov"].tooltip_text.contains("尚未开放"), "menu renders planned reward source")
+	_check(not menu.ship_buttons["ship.kirov"].tooltip_text.contains("尚未开放"), "menu renders implemented reward source")
 	menu.free()
 	for failure in failures:
 		push_error(failure)

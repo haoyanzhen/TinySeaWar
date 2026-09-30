@@ -193,6 +193,7 @@
 | 伤害统计 | `scripts/infrastructure/analytics/damage_statistics.gd` |
 | 命令行实验入口 | `tools/simulation/run_experiment.gd` |
 | 平衡分析工具 | `tools/simulation/analyze_damage_ttk_balance.py`、`run_damage_ttk_balance.gd` |
+| AI无接触巡搜承诺测试 | `scripts/tests/ai_search_patrol_test.gd` |
 | 模拟器测试 | `scripts/tests/battle_simulator_test.gd`、`batch_simulation.gd` |
 | 单局冒烟 | `scripts/tests/battle_smoke_single_test.gd` |
 

@@ -40,6 +40,7 @@ ai_tags[]
 current_mode_id, mode_candidate_id, mode_confirmations
 current_tactic, current_target_id
 target_memory, contact_confidence
+search_patrol # {} | {destination: Vector2}
 group_id, group_role, formation_slot
 objective_assignment, reservation_state
 last_decision_tick, hold_until_tick
@@ -62,6 +63,8 @@ last_submarine_fire_tick
 ```
 
 State 的所有敌情来源必须可追溯到阵营过滤的 AIObservation。
+
+`search_patrol` 默认空字典，仅保存无接触搜索的语义目的地；生命周期见16号设计。它不拥有路径、可达性或恢复状态，不读取隐藏敌舰位置，不写入Profile或进度存档。
 
 `submarine_contact_lost_at` 为浮点战斗秒数，默认 `-1` 表示无接触等待；`submarine_target_rejections` 为最近一次目标筛选的原因码到非负整数计数映射，默认 `{}`；`submarine_eligible_target_count` 为该次筛选的合格目标数，默认 `0`。以上均为运行时 State，不进入难度配置。
 

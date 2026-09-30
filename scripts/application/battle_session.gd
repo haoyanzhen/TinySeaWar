@@ -1063,6 +1063,7 @@ func _build_unit(member: Dictionary, ship: Dictionary, fleet_id: String, faction
 			"group_role": "",
 			"formation_id": "",
 			"formation_slot_index": -1,
+			"search_patrol": {},
 			"path_stuck": false,
 			"objective_role": "",
 			"last_route_command_at": -1000.0,
@@ -2909,6 +2910,11 @@ func _known_hostile_torpedo_count(source: Dictionary) -> int:
 func _queue_ai_move(unit: Dictionary, target_position: Vector2, issuer_type: String = "AI", movement_mode: String = "AutoNavigate") -> void:
 	if str(unit.get("faction_id", "")) == PLAYER_FACTION and movement_mode != "ImmediateAvoidance" and str(unit.get("movement_state", {}).get("mode", "")) in ["PlayerMoveOrder", "PlayerWaypointRoute"]:
 		return
+	# A tactical/facility move supersedes a patrol commitment. Local navigation
+	# recovery and corridor projection do not pass through this intent boundary.
+	var search: Dictionary = unit.get("ai_state", {}).get("search_patrol", {})
+	if not search.is_empty() and (search["destination"] as Vector2).distance_squared_to(target_position) > 1.0:
+		unit["ai_state"]["search_patrol"] = {}
 	target_position = minefield_service.avoidance_waypoint(str(unit.get("faction_id", "")), unit["position"], target_position)
 	var navigation: Dictionary = unit.get("navigation_state", {})
 	var current_target: Vector2 = navigation.get("strategic_intent_target", unit.get("movement_state", {}).get("target_position", unit.get("position", Vector2.ZERO)))
@@ -2991,8 +2997,10 @@ func _update_enemy_ai_intent(unit: Dictionary) -> void:
 		var active_action := facility_service.active_action_for_unit(str(unit.get("entity_id", "")))
 		if not active_action.is_empty(): facility_service.cancel_action(str(active_action.get("facility_id", "")), str(unit.get("entity_id", "")))
 		_record_ai_facility_failure(unit, str(ai_state.get("task_target_ref", {}).get("facility_id", "")))
+	if not target.is_empty(): ai_state["search_patrol"] = {}
 	var facility_plan := _scheduled_ai_facility_plan(unit, target.is_empty())
 	if not facility_plan.is_empty():
+		ai_state["search_patrol"] = {}
 		if bool(facility_plan.get("hold_interaction", false)):
 			return
 		elif facility_plan.has("action_type"):
@@ -3011,14 +3019,23 @@ func _update_enemy_ai_intent(unit: Dictionary) -> void:
 
 
 func _queue_enemy_search_intent(unit: Dictionary, previous_target_id: String = "") -> void:
+	var ai_state: Dictionary = unit["ai_state"]
 	var contact_search_position := _contact_search_position(unit, previous_target_id)
 	if not contact_search_position.is_equal_approx(Vector2.INF):
+		ai_state["search_patrol"] = {}
 		_queue_ai_move(unit, contact_search_position)
 		return
 	var context := terrain_context_service.context_at(unit["position"])
 	var lee_center := terrain_context_service.zone_center_for_effect("environment.effect.lee_water")
 	if int(context.get("sea_state", 0)) >= 4 and lee_center != Vector2.ZERO:
+		ai_state["search_patrol"] = {}
 		_queue_ai_move(unit, lee_center)
+		return
+	var search: Dictionary = ai_state.get("search_patrol", {})
+	# Crossing the map centre is not arrival. Keep the semantic destination
+	# through route retries, intermediate projections and local recovery.
+	if not search.is_empty() and (unit["position"] as Vector2).distance_to(search["destination"]) > 120.0:
+		_queue_ai_move(unit, search["destination"])
 		return
 	var map_center := _map_center()
 	var search_x := float(state["map"].get("width", 1200.0)) * (0.25 if float(unit["position"].x) >= map_center.x else 0.75)
@@ -3029,7 +3046,9 @@ func _queue_enemy_search_intent(unit: Dictionary, previous_target_id: String = "
 	var lane_index := maxi(0, faction_units.find(str(unit.get("entity_id", ""))))
 	var lane_spacing := minf(96.0, float(state["map"].get("height", 800.0)) * 0.5 / maxf(1.0, float(faction_units.size() - 1)))
 	var lane_offset := (float(lane_index) - float(faction_units.size() - 1) * 0.5) * lane_spacing
-	_queue_ai_move(unit, Vector2(search_x, map_center.y + lane_offset))
+	var destination := Vector2(search_x, map_center.y + lane_offset)
+	ai_state["search_patrol"] = {"destination": destination}
+	_queue_ai_move(unit, destination)
 
 
 func _update_submarine_ai_intent(unit: Dictionary) -> void:

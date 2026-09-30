@@ -87,6 +87,10 @@
 | 常规/紧急/持续脱困航迹候选 | `scripts/application/navigation/trajectory_planner.gd` |
 | AI 观察与残影/同 Tick 缓存测试 | `scripts/tests/ai_observation_test.gd` |
 | AI 行为与难度测试 | `scripts/tests/ai_behavior_quantitative_test.gd`、`ai_difficulty_profile_test.gd` |
+| 多选独立终点与唯一阵位 | `scripts/application/navigation/formation_movement.gd`；命令/共享行进角在 `battle_session.gd`，跟船候选在 `trajectory_planner.gd` |
+| 编队移动专项与前后航迹对照 | `scripts/tests/formation_movement_test.gd`、`formation_movement_probe.gd` |
+| 临时纵队/实际航迹跟随与友舰承诺预测 | `scripts/application/navigation/column_transit.gd`；协调和前缀有效性在 `battle_session.gd`，动态包络在 `trajectory_planner.gd` |
+| 窄水道、弯道、11舰及承诺失效专项 | `scripts/tests/column_transit_test.gd` |
 | 编组与协同测试 | `scripts/tests/ai_group_formation_test.gd`、`ai_coordination_test.gd` |
 | 模拟完整 AI 初始化与技能射程测试 | `scripts/tests/battle_simulator_test.gd` |
 | 潜艇六阶段、装填 ETA 发射器规划、AttackRun 超时重规划、长期诊断与 S-04/S-05 `1 -> 3` 固定种子门禁 | `scripts/tests/test_runner.gd`、`scripts/tests/submarine_ai_fixed_seed_test.gd`、`scripts/tests/battle_simulator_test.gd` |
@@ -130,6 +134,7 @@
 | 海面调色板 | `data/environments/ocean_palettes.json` |
 | 环境上下文服务 | `scripts/domain/services/terrain_context_service.gd` |
 | 海面表现 | `scripts/presentation/battle/ocean_surface.gd` |
+| 环境时间线与专项验证 | `data/environments/environment_timelines.json`、`scripts/tests/weather_runtime_test.gd`、`weather_transition_performance_test.gd`、`render_weather_qa.gd`（后三者同目录） |
 | 天气叠层 | `scripts/presentation/battle/weather_overlay.gd` |
 
 ## 9. 设施与水雷
@@ -165,6 +170,7 @@
 | 海域分区、镜头投影与边框输入回归 | `scripts/tests/battle_frame_layout_test.gd` |
 | 场景表现测试 | `scripts/tests/scene_presentation_test.gd` |
 | 玩家交互、暂停、拒绝与结算专项 | `scripts/tests/tactical_pause_ui_test.gd`、`tactical_pause_test.gd`、`player_command_feedback_test.gd`、`battle_result_presentation_test.gd`（均位于同目录） |
+| 框选标记、群体快捷键与画面验证 | `scripts/tests/multi_selection_ui_test.gd`、`render_multi_selection_qa.gd`（同目录） |
 | 获取分类、保存重试与挑战进度专项 | `scripts/tests/ship_acquisition_test.gd`、`progress_save_retry_test.gd`、`challenge_mission_feedback_test.gd`（均位于同目录） |
 | 场景 QA 渲染 | `scripts/tests/render_scene_qa.gd`；支持分辨率/镜头、F9、地图映射、多舰规模与固定 Tick |
 | GPT Image 2.5 角色原生透明生成、生成契约与批量验收 | `tools/art_pipeline/generate_character_art.py`、`generation_contract.py`、`batch_character_art.py`、`check_character_asset_contract.py` |
@@ -226,8 +232,9 @@
 
 - `scripts/presentation/menu/main_menu.gd`：封面、看板、观赏、教学/挑战详情、编队、帮助与设置。
 - `scripts/presentation/menu/menu_content.gd`：现有菜单章节、规模和地图选项。
-- `scripts/presentation/ui_theme.gd`：菜单与战斗共享主题；`naval_button_style.gd` 提供封面切角罗盘按钮绘制。
+- `scripts/presentation/ui_theme.gd`：菜单与战斗共享主题；`menu_button_texture_style.gd` 提供原生透明图集分段缩放，`naval_button_style.gd` 保留窄控件和缺图回退。
 - `assets/ui/processed/menu/cover_manifest.json`：正式菜单封面清单。
+- `assets/ui/processed/menu/button_manifest.json`：12个珐琅按钮区域的补充语义清单；`tools/art_pipeline/build_menu_button_atlas.py` 无损复制母版并重建 AtlasTexture 与清单。
 - `scripts/tests/menu_cover_flow_test.gd`、`render_menu_qa.gd`：菜单交互契约与真实渲染入口。
 
 ### 航空运行时与表现
@@ -237,3 +244,28 @@
 - Presentation：`aircraft_squadron_view.gd`、`aviation_payload_view.gd`，由战斗导演同步并复用；HUD与小地图共用航空快照。
 - 验证：`aviation_equivalence_test.gd`（388条排程事实）、`aviation_tick_equivalence_test.gd` 与 `fixtures/aviation_abstract_baseline.json`（旧版完整Tick指纹）、`aviation_runtime_test.gd`、`aviation_presentation_test.gd`、`aviation_performance_test.gd`、`aviation_domain_performance_test.gd`、`aviation_ai_smoke_test.gd`、`render_aviation_qa.gd`，均位于 `scripts/tests/`。
 - 可操作纵切：`godot --path . res://scenes/battle/prototype_battle.tscn -- --aviation-demo`；追加 `--aviation-physical` 可在创建时选择真实规则；演示模式不写入胜利奖励。普通主菜单/关卡默认仍由 `settings.combat.aviation_rules_mode` 决定。
+
+## 音效候选制作工具
+
+- `tools/sfx/catalog_source.tsv` / `english_briefs.json` / `build_catalog.py`：分类、英文音色提示与三候选批次构建；`batch_20260930.json` 含工单逐项映射。
+- `tools/sfx/build_full_batch.py`：按人工反馈构建全量候选与请求；`prepare_review.py`：已部署ModelScope/ComfyUI离线CLI产物的后期；`review.py`：下载后文件校验、响度测量与试听页构建。服务器调用入口见工具README，父目录`generate_remote.py`是未用于当前打包权重的旧适配器。当前完成状态见00，以上均不是运行时播放入口。
+
+## 中大型挑战实现入口
+
+- `tools/levels/build_challenge_levels.py`：十关、独立派生地图/环境、实验清单与碰撞场的可复现生成器；使用方式见同目录 README。
+- `data/levels/formal_challenge_{m,l}_levels.json`、`data/objectives/challenge_ml_objectives.json`：正式编队、目标和增援。
+- `data/terrain/challenge_{terrains,navigation,collision_fields}.json`、`data/environments/challenge_environments.json`：独立空间/环境实例与四个雷雨时间线。
+- `scripts/tests/challenge_ml_runtime_test.gd`、`challenge_ml_progress_test.gd`：任务、地图、增援、旧存档/章内推进与调试存档隔离。
+- `scripts/tests/challenge_ml_battle_probe.gd`：整场 CPU 分段与航母所在位置天气窗口诊断；规则性能需单进程采集，窗口不是命中保证。
+
+### 技能立绘闪回
+
+- `scripts/presentation/battle/skill_cutin_overlay.gd`：纯表现调度、贴图缓存、侧边绘制和简化回退；`battle_effect_director.gd` 发布已过滤去重的技能请求，`prototype_battle.gd` 同步战斗阶段和输入状态。
+- `battle_hud.gd` 暂停面板与 `scripts/application/game_flow.gd` 本机偏好承载三档选项。
+- `scripts/tests/skill_cutin_test.gd` 为专项回归，`scripts/tests/render_skill_cutin_qa.gd` 生成三分辨率晴昼／雷雨夜间与设置画面及逐帧透明演出；当前证据见 `reports/skill_cutin/20260930-transparent/validation.md`，最初技术验收见 `reports/skill_cutin/20260930/validation.md`。
+
+### 对战统一倍率
+
+- `data/settings/combat_settings.json`：炮弹速度、炮弹角弥散、飞机航速公共倍率。
+- `scripts/domain/services/combat_tuning_service.gd`：纯有效值查询，供会话与表现共享；配置不原地缩放。
+- `scripts/tests/combat_tuning_test.gd`：全武器类别、自动/手动/技能/岸炮、A/B航空、机场准备与飞行段、瞄准及非法倍率验证。

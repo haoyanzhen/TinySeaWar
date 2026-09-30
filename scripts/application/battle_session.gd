@@ -4,6 +4,7 @@ const SeededRandomSource = preload("res://scripts/infrastructure/random/seeded_r
 const ModifierService = preload("res://scripts/domain/services/modifier_service.gd")
 const DamageService = preload("res://scripts/domain/services/damage_service.gd")
 const CollisionGeometryService = preload("res://scripts/domain/services/collision_geometry_service.gd")
+const CombatTuningService = preload("res://scripts/domain/services/combat_tuning_service.gd")
 const GunDispersionService = preload("res://scripts/domain/services/gun_dispersion_service.gd")
 const BattleRecorder = preload("res://scripts/infrastructure/analytics/battle_recorder.gd")
 const DamageStatistics = preload("res://scripts/infrastructure/analytics/damage_statistics.gd")
@@ -15,6 +16,8 @@ const MinefieldService = preload("res://scripts/domain/services/minefield_servic
 const RoutePlanner = preload("res://scripts/application/navigation/route_planner.gd")
 const LevelObjectiveService = preload("res://scripts/domain/services/level_objective_service.gd")
 const NavigationRequestBroker = preload("res://scripts/application/navigation/navigation_request_broker.gd")
+const ColumnTransit = preload("res://scripts/application/navigation/column_transit.gd")
+const FormationMovement = preload("res://scripts/application/navigation/formation_movement.gd")
 const TrajectoryPlanner = preload("res://scripts/application/navigation/trajectory_planner.gd")
 const NavigationProgress = preload("res://scripts/application/navigation/navigation_progress.gd")
 const ShipMotionService = preload("res://scripts/domain/services/ship_motion_service.gd")
@@ -53,6 +56,7 @@ var registry
 var random_source
 var recorder := BattleRecorder.new()
 var state := {}
+var environment_command_queue: Array[Dictionary] = []
 var command_queue: Array = []
 var _player_command_sequence: int = 0
 var delayed_attacks: Array = []
@@ -203,6 +207,7 @@ func create_battle_from_definition(level_definition: Dictionary, seed_value: int
 	random_source = SeededRandomSource.new(seed_value)
 	_event_buffer.clear()
 	command_queue.clear()
+	environment_command_queue.clear()
 	delayed_attacks.clear()
 	aviation_projection.clear()
 	aviation_service.clear()
@@ -276,7 +281,18 @@ func create_battle_from_definition(level_definition: Dictionary, seed_value: int
 	return {"ok": true, "battle_id": state["battle_id"]}
 
 
+## Application-only environment control. Never accepted through unit commands.
+func queue_environment_override(palette_id: String, source: String = "Debug") -> Dictionary:
+	if state.get("phase", "") not in ["Running", "Paused"]: return {"accepted":false, "reason_code":"BATTLE_NOT_RUNNING"}
+	if source not in ["Debug", "Script", "Validation"]: return {"accepted":false, "reason_code":"ENVIRONMENT_SOURCE_NOT_ALLOWED"}
+	var canonical: String = terrain_context_service.canonical_palette(palette_id)
+	if canonical.is_empty(): return {"accepted":false, "reason_code":"INVALID_ENVIRONMENT_PALETTE"}
+	environment_command_queue.append({"palette_id":canonical, "source":source})
+	return {"accepted":true}
+
+
 func queue_command(command: Dictionary) -> Dictionary:
+	if str(command.get("command_type", "")) == "SetEnvironment": return {"accepted":false, "reason_code":"ENVIRONMENT_APPLICATION_ONLY"}
 	var rejection := _validate_command_structure(command)
 	if not rejection.is_empty():
 		return rejection
@@ -363,10 +379,27 @@ func advance_tick(delta: float = 0.1) -> Array:
 	if int(state["tick_index"]) % 5 == 0:
 		_ai_battlefield_context_cache.clear()
 		_ai_local_power_cache.clear()
+	var old_environment_revision: int = terrain_context_service.environment_revision
+	var old_sea_state := int(terrain_context_service.global_environment.get("base_sea_state", 0))
+	var old_motion_multiplier := float(terrain_context_service.global_environment.get("movement_speed_multiplier", 1.0))
+	for command in environment_command_queue:
+		var change: Dictionary = terrain_context_service.override_environment(str(command.palette_id), str(command.source))
+		_emit(str(change.event_type), change)
+	environment_command_queue.clear()
 	for environment_event in terrain_context_service.advance(delta):
 		_emit(str(environment_event.get("event_type", "EnvironmentZoneChanged")), environment_event)
 	state["environment_zones"] = terrain_context_service.snapshot()
 	state["global_environment"] = terrain_context_service.global_snapshot()
+	if old_environment_revision != terrain_context_service.environment_revision:
+		_ai_battlefield_context_cache.clear()
+		_ai_local_power_cache.clear()
+		if old_sea_state != int(terrain_context_service.global_environment.get("base_sea_state", 0)) or not is_equal_approx(old_motion_multiplier, float(terrain_context_service.global_environment.get("movement_speed_multiplier", 1.0))):
+			for unit in state["units_by_id"].values():
+				var navigation: Dictionary = unit.get("navigation_state", {})
+				navigation["trajectory_plan"] = {}
+				navigation["trajectory_dirty"] = true
+				navigation["next_normal_plan_tick"] = int(state["tick_index"])
+				navigation["environment_replan"] = true
 	_update_support_effects(delta)
 	if _performance_profile_enabled: _profile_stage("tick_setup_environment_usec", Time.get_ticks_usec() - stage_started_usec)
 	stage_started_usec = Time.get_ticks_usec() if _performance_profile_enabled else 0
@@ -387,6 +420,10 @@ func advance_tick(delta: float = 0.1) -> Array:
 	if _performance_profile_enabled: _profile_stage("movement_usec", Time.get_ticks_usec() - stage_started_usec)
 	stage_started_usec = Time.get_ticks_usec() if _performance_profile_enabled else 0
 	_resolve_unit_overlap()
+	# Observe executed positions after authoritative separation, not the motion
+	# prediction that another hull may immediately push back.
+	for unit in state["units_by_id"].values():
+		if unit.get("life_state", "") == "Alive": _update_navigation_progress(unit, delta)
 	if _performance_profile_enabled: _profile_stage("unit_overlap_usec", Time.get_ticks_usec() - stage_started_usec)
 	stage_started_usec = Time.get_ticks_usec() if _performance_profile_enabled else 0
 	_update_projectiles(delta)
@@ -755,7 +792,7 @@ func get_primary_aim_status(unit_id: String, target_position: Vector2) -> Dictio
 	var direction_weapon := _direction_weapon_for_aim(unit, aim_weapons, target_position)
 	validation["minimum_range"] = float(direction_weapon.get("minimum_range", 0.0))
 	validation["selected_range"] = _effective_weapon_range(unit, direction_weapon) if not direction_weapon.is_empty() else float(validation["range"])
-	var spread_degrees := float(direction_weapon.get("spread", 0.0))
+	var spread_degrees := get_weapon_spread(direction_weapon)
 	if direction_weapon.get("mount_type", "") == "Gun":
 		spread_degrees = ModifierService.calculate(spread_degrees, unit.get("status_effects", []), "WeaponSpread", "Gun")
 	validation["spread_degrees"] = spread_degrees
@@ -838,7 +875,7 @@ func _configure_scene_combat(level: Dictionary) -> void:
 		route_planner.configure(navigation_definition)
 	var environment_id := str(map.get("environment_zone_set_id", terrain_definition.get("environment_zone_set_id", "")))
 	var environment_set: Dictionary = registry.get_definition("environment_zones", environment_id) if not environment_id.is_empty() else {}
-	terrain_context_service.configure(terrain_query, environment_set, registry.all("environment_zones"), str(map.get("ocean_palette", "day_clear")))
+	terrain_context_service.configure(terrain_query, environment_set, registry.all("environment_zones"), str(map.get("ocean_palette", "day_clear")), registry.get_definition("environment_zones", str(map.get("environment_timeline_id", ""))))
 	state["environment_zones"] = terrain_context_service.snapshot()
 	state["global_environment"] = terrain_context_service.global_snapshot()
 	var facility_layout_id := str(map.get("facility_layout_id", terrain_definition.get("facility_layout_id", "")))
@@ -872,7 +909,7 @@ func _resolved_facility_definitions() -> Array:
 
 
 func _validate_level_runtime(level: Dictionary) -> Array[String]:
-	var errors: Array[String] = []
+	var errors: Array[String] = registry.validate_environment_map(level.get("map", {}))
 	if level.get("aviation_rules_mode", "Abstract") not in ["Abstract", "Physical"]: errors.append("INVALID_AVIATION_RULES_MODE")
 	var all_entity_ids := {}
 	for fleet_name in ["player_fleet", "enemy_fleet"]:
@@ -909,10 +946,12 @@ func _initialize_reinforcements(level: Dictionary) -> void:
 	for wave_definition_value in level.get("reinforcement_waves", []):
 		var wave_definition: Dictionary = wave_definition_value.duplicate(true)
 		waves.append({"wave_id": str(wave_definition.get("wave_id", "")), "definition": wave_definition, "status": "Pending", "spawned_at_tick": -1})
+	waves.sort_custom(func(a, b): return str(a.wave_id) < str(b.wave_id))
 	state["reinforcement_waves"] = waves
 
 
 func _update_reinforcements() -> void:
+	if state.get("phase", "") != "Running": return
 	var waves: Array = state.get("reinforcement_waves", [])
 	for wave in waves:
 		if str(wave.get("status", "")) != "Pending": continue
@@ -924,7 +963,8 @@ func _update_reinforcements() -> void:
 		var alive_count := 0
 		for unit_id in fleet.get("unit_ids", []):
 			if state["units_by_id"].get(str(unit_id), {}).get("life_state", "") == "Alive": alive_count += 1
-		if alive_count >= int(definition.get("concurrent_unit_cap", 3)): continue
+		if alive_count + definition.get("members", []).size() > int(definition.get("concurrent_unit_cap", 3)): continue
+		if not _reinforcement_positions_safe(definition, fleet_id): continue
 		for member_value in definition.get("members", []):
 			var member: Dictionary = member_value
 			var ship: Dictionary = registry.get_definition("ships", str(member.get("ship_id", "")))
@@ -940,6 +980,26 @@ func _update_reinforcements() -> void:
 		_emit("ReinforcementWaveSpawned", {"wave_id": wave.get("wave_id", ""), "faction_id": faction_id})
 		_rebuild_ai_groups(faction_id)
 		break
+
+
+func _reinforcement_positions_safe(wave: Dictionary, fleet_id: String) -> bool:
+	var candidates: Array = []
+	for member in wave.get("members", []):
+		var ship: Dictionary = registry.get_definition("ships", str(member.get("ship_id", "")))
+		var unit := _build_unit(member, ship, fleet_id, str(wave.get("faction_id", "")), 0)
+		var position: Vector2 = unit["position"]
+		var radius := float(unit["stats"].get("collision_radius", 20.0))
+		if terrain_query.is_configured() and not terrain_query.can_occupy_circle(position, radius, _movement_tags(unit)): return false
+		if not terrain_context_service.can_enter(position): return false
+		for other in state.get("units_by_id", {}).values() + candidates:
+			if other.get("life_state", "") != "Alive": continue
+			var direction: Vector2 = other["position"] - position
+			var separation := maxf(radius + float(other.get("stats", {}).get("collision_radius", 20.0)), CollisionGeometryService.separation_distance(
+				_unit_collision_half_extents(unit), float(unit["heading"]),
+				_unit_collision_half_extents(other), float(other["heading"]), direction))
+			if direction.length_squared() <= separation * separation: return false
+		candidates.append(unit)
+	return true
 
 
 func _build_unit(member: Dictionary, ship: Dictionary, fleet_id: String, faction_id: String, operation_slot: int) -> Dictionary:
@@ -1167,6 +1227,19 @@ func _apply_command(command: Dictionary) -> Dictionary:
 	if command.get("command_type", "") == "SetUnitControlState":
 		return _set_unit_control_state(command)
 	if str(command.get("command_type", "")) in ["FocusTarget", "MoveUnits"] and command.has("unit_ids"):
+		var group_destinations := {}
+		var allocate_group := false
+		if str(command.get("command_type", "")) == "MoveUnits" and typeof(command.get("target_position")) == TYPE_VECTOR2 and _inside_map(command["target_position"]):
+			var members: Array = []
+			var member_ids := {}
+			for value in command.get("unit_ids", []):
+				var member: Dictionary = state.units_by_id.get(str(value), {})
+				if member.is_empty() or member.get("life_state", "") != "Alive" or member.get("faction_id", "") != str(command.get("issuer_id", PLAYER_FACTION)) or member_ids.has(str(value)): continue
+				member_ids[str(value)] = true
+				var extents := _unit_collision_half_extents(member)
+				members.append({"id":str(value), "position":member.position, "extent":maxf(extents.x, extents.y)})
+			allocate_group = members.size() > 1
+			if allocate_group: group_destinations = FormationMovement.allocate(members, command.target_position, _formation_endpoint_clear.bind(member_ids))
 		var successful_ids: Array = []
 		var rejected_ids: Array = []
 		var first_reason := ""
@@ -1178,12 +1251,19 @@ func _apply_command(command: Dictionary) -> Dictionary:
 			var individual := command.duplicate(true)
 			individual.erase("unit_ids")
 			individual["unit_id"] = requested
-			var individual_result := _apply_command(individual)
+			if group_destinations.has(requested):
+				individual["target_position"] = group_destinations[requested]
+				individual["formation_center"] = command.target_position
+			var member: Dictionary = state.units_by_id.get(requested, {})
+			var allocation_failed: bool = allocate_group and not group_destinations.has(requested) and not member.is_empty() and member.get("life_state", "") == "Alive" and member.get("faction_id", "") == str(command.get("issuer_id", PLAYER_FACTION))
+			var individual_result := _rejection(command.get("command_id", ""), "TARGET_UNREACHABLE") if allocation_failed else _apply_command(individual)
 			if bool(individual_result.get("accepted", false)):
 				successful_ids.append(requested)
 			else:
 				rejected_ids.append(requested)
 				if first_reason.is_empty(): first_reason = str(individual_result.get("reason_code", "UNKNOWN"))
+		if allocate_group and successful_ids.size() >= 2:
+			_register_formation_transit(successful_ids, command.target_position)
 		if str(command.get("command_type", "")) == "FocusTarget" and successful_ids.size() >= 2 and _is_player_tutorial_command(command):
 			_record_tutorial_action("GroupFocusTarget", "", {"target_unit_id": command.get("target_unit_id", ""), "group_order_id": command.get("group_order_id", ""), "group_unit_ids": successful_ids})
 		return {"accepted": not successful_ids.is_empty() and rejected_ids.is_empty(), "successful_unit_ids": successful_ids, "rejected_unit_ids": rejected_ids, "reason_code": first_reason if not first_reason.is_empty() else ("OK" if not successful_ids.is_empty() else "INVALID_COMMAND_STRUCTURE")}
@@ -1216,6 +1296,8 @@ func _apply_command(command: Dictionary) -> Dictionary:
 			if player_order:
 				_begin_navigation_intent(unit)
 				unit["player_route_waypoints"] = [target_position]
+				if command.has("formation_center"):
+					unit["navigation_state"]["formation_move"] = {"center":command.formation_center, "destination":target_position}
 			var strategic_target_position: Vector2 = command.get("strategic_target_position", target_position)
 			_submit_navigation_request(unit, unit["position"], target_position, "Replace", movement_mode, str(command.get("command_id", "")), 0 if player_order else 10, strategic_target_position, command)
 			_emit("MoveOrderQueued", {"unit_id": unit_id, "target_position": target_position})
@@ -1310,7 +1392,7 @@ func _apply_command(command: Dictionary) -> Dictionary:
 			var support_target = command.get("target_position")
 			if typeof(support_target) != TYPE_VECTOR2: return _rejection(command.get("command_id", ""), "INVALID_TARGET_TYPE")
 			var support_context := terrain_context_service.context_at(support_target)
-			var support_result := facility_service.request_support(str(command.get("facility_id", "")), str(command.get("mission_definition_id", "")), unit["faction_id"], support_target, float(state["elapsed_time"]), support_context)
+			var support_result := facility_service.request_support(str(command.get("facility_id", "")), str(command.get("mission_definition_id", "")), unit["faction_id"], support_target, float(state["elapsed_time"]), support_context, CombatTuningService.multiplier(registry.get_definition("settings", "settings.combat"), "aircraft_speed"))
 			if bool(support_result.get("accepted", false)) and support_result.has("event"):
 				var support_event: Dictionary = support_result["event"]
 				_emit(str(support_event.get("event_type", "SupportMissionStarted")), support_event)
@@ -1373,6 +1455,27 @@ func _set_unit_control_state(command: Dictionary) -> Dictionary:
 	return {"accepted": not changed.is_empty(), "changed_unit_ids": changed, "reason_code": "OK" if not changed.is_empty() else "UNIT_NOT_CONTROLLABLE"}
 
 
+func _formation_endpoint_clear(unit_id: String, destination: Vector2, moving_ids: Dictionary) -> bool:
+	var unit: Dictionary = state.units_by_id[unit_id]
+	var radius := float(unit.stats.collision_radius) + 4.0
+	var map_size := Vector2(float(state.map.width), float(state.map.height))
+	if destination.x < radius or destination.y < radius or destination.x > map_size.x - radius or destination.y > map_size.y - radius: return false
+	if terrain_query.is_configured() and not terrain_query.can_occupy_circle(destination, radius, _movement_tags(unit)): return false
+	if not bool(terrain_context_service.movement_segment_access(destination, destination).get("allowed", true)): return false
+	var extents := _unit_collision_half_extents(unit)
+	for other_id in _sorted_unit_ids():
+		if moving_ids.has(other_id): continue
+		var other: Dictionary = state.units_by_id[other_id]
+		if other.life_state != "Alive": continue
+		if other.faction_id != unit.faction_id and not _is_visible_to(str(unit.faction_id), other_id): continue
+		var other_extents := _unit_collision_half_extents(other)
+		var clearance := maxf(extents.x, extents.y) + maxf(other_extents.x, other_extents.y) + FormationMovement.ENDPOINT_MARGIN
+		if destination.distance_to(other.position) < clearance: return false
+		var other_route: Array = other.get("player_route_waypoints", [])
+		if other.faction_id == unit.faction_id and not other_route.is_empty() and destination.distance_to(other_route[-1]) < clearance: return false
+	return true
+
+
 func _submarine_depth_change_rejection(unit: Dictionary, target_depth_state: String) -> String:
 	if str(unit.get("stats", {}).get("ship_class", "")) != "Submarine":
 		return "NOT_SUBMARINE"
@@ -1417,6 +1520,7 @@ func _set_submarine_depth(unit: Dictionary, command: Dictionary) -> Dictionary:
 
 func _append_player_waypoint(unit: Dictionary, target_position: Vector2, command_id: String, command: Dictionary = {}) -> Dictionary:
 	if not _inside_map(target_position): return _rejection(command_id, "TARGET_POSITION_ON_LAND")
+	_detach_formation_transit(unit)
 	var authored_points: Array = unit.get("player_route_waypoints", [])
 	if authored_points.is_empty():
 		_begin_navigation_intent(unit)
@@ -1432,6 +1536,8 @@ func _append_player_waypoint(unit: Dictionary, target_position: Vector2, command
 
 func _begin_navigation_intent(unit: Dictionary) -> int:
 	var navigation: Dictionary = unit.get("navigation_state", {})
+	navigation.erase("formation_move")
+	_detach_formation_transit(unit)
 	# Only explicit player route replacement/cancellation enters this function.
 	_cancel_navigation_recovery(unit, "PLAYER_ORDER")
 	navigation["progress"] = {}
@@ -1691,7 +1797,206 @@ func _update_submarine_resources(delta: float) -> void:
 			unit["depth_transition"] = transition
 
 
+func _detach_formation_transit(unit: Dictionary) -> void:
+	var navigation: Dictionary = unit.get("navigation_state", {})
+	for key in ["transit_group_id", "column_guidance", "sailed_trail", "column_cursor", "column_predecessor"]: navigation.erase(key)
+
+
+func _register_formation_transit(member_ids: Array, center: Vector2) -> void:
+	var sequence := int(state.get("formation_transit_sequence", 0)) + 1
+	state["formation_transit_sequence"] = sequence
+	var id := "player.transit.%d" % sequence
+	if not state.has("formation_transits"): state["formation_transits"] = {}
+	state.formation_transits[id] = {"member_ids":member_ids.duplicate(), "mode":"Expanded", "center":center, "next_update_tick":0, "clear_seconds":0.0}
+	for member_id in member_ids: state.units_by_id[member_id].navigation_state["transit_group_id"] = id
+
+
+func _formation_narrow_ahead(unit: Dictionary, width_radius: float) -> Dictionary:
+	var start: Vector2 = unit.position
+	var endpoint: Vector2 = unit.movement_state.get("target_position", start)
+	if str(unit.movement_state.get("mode", "")) != "PlayerWaypointRoute" and terrain_query.is_navigation_segment_clear(start, endpoint, width_radius, _movement_tags(unit)):
+		return {"narrow":false}
+	var points: Array = [_current_corridor_goal(unit)]
+	points.append_array(_current_corridor_lookahead(unit, 2))
+	var remaining := maxf(360.0, absf(float(unit.current_speed)) * 7.0)
+	for raw_point in points:
+		var point: Vector2 = raw_point
+		var length := start.distance_to(point)
+		if length < 1.0: continue
+		var end := start.move_toward(point, minf(remaining, length))
+		if not terrain_query.is_navigation_segment_clear(start, end, width_radius, _movement_tags(unit)):
+			var side := (end - start).normalized().orthogonal() * width_radius
+			var radius := float(unit.stats.collision_radius) + 4.0
+			var left: bool = terrain_query.is_navigation_segment_clear(start + side, end + side, radius, _movement_tags(unit))
+			var right: bool = terrain_query.is_navigation_segment_clear(start - side, end - side, radius, _movement_tags(unit))
+			if not left and not right: return {"narrow":true, "anchor":end}
+		remaining -= length
+		if remaining <= 0.0: break
+		start = end
+	return {"narrow":false}
+
+
+func _update_formation_transits() -> void:
+	if not terrain_query.is_configured(): return
+	if not state.has("formation_transits"): state["formation_transits"] = {}
+	var groups: Dictionary = state.formation_transits
+	# AI groups use the same coordinator, but never take over explicit orders.
+	for faction in state.get("ai_groups_by_faction", {}):
+		for ai_group in state.ai_groups_by_faction[faction].values():
+			var id := "ai.transit." + str(ai_group.group_id)
+			var eligible: Array = []
+			for member_id in ai_group.member_ids:
+				var member: Dictionary = state.units_by_id.get(member_id, {})
+				if member.is_empty() or not _uses_full_ai(member) or str(member.navigation_state.get("transit_group_id", "")).begins_with("player."): continue
+				if str(member.movement_state.get("mode", "HoldPosition")) in ["HoldPosition", "Docked", "PlayerMoveOrder", "PlayerWaypointRoute"] and not bool(member.navigation_state.get("route_waiting", false)): continue
+				eligible.append(member_id)
+			if eligible.size() < 2: continue
+			if not groups.has(id): groups[id] = {"member_ids":eligible, "mode":"Expanded", "next_update_tick":0, "clear_seconds":0.0}
+			else:
+				for former_id in groups[id].member_ids:
+					if former_id in eligible: continue
+					var former: Dictionary = state.units_by_id.get(former_id, {})
+					if not former.is_empty() and former.navigation_state.get("transit_group_id", "") == id: _detach_formation_transit(former)
+				groups[id].member_ids = eligible
+			for member_id in eligible: state.units_by_id[member_id].navigation_state["transit_group_id"] = id
+	var tick := int(state.get("tick_index", 0))
+	var ids: Array = groups.keys()
+	ids.sort()
+	for id in ids:
+		var group: Dictionary = groups[id]
+		var members: Array = []
+		for member_id in group.member_ids:
+			var unit: Dictionary = state.units_by_id.get(member_id, {})
+			if unit.is_empty() or unit.life_state != "Alive" or unit.navigation_state.get("transit_group_id", "") != id: continue
+			if str(unit.movement_state.get("mode", "HoldPosition")) in ["HoldPosition", "Docked"] and not bool(unit.navigation_state.get("route_waiting", false)):
+				unit.navigation_state.erase("column_guidance")
+				var destination: Vector2 = unit.navigation_state.get("formation_move", {}).get("destination", Vector2.INF)
+				if str(id).begins_with("ai.") or (unit.position as Vector2).distance_to(destination) > trajectory_planner.arrival_tolerance(float(unit.stats.collision_radius)) + 0.1: continue
+			members.append(unit)
+			if not unit.navigation_state.has("sailed_trail"): unit.navigation_state["sailed_trail"] = []
+			if not unit.navigation_state.get("recovery", {}).is_empty() or str(unit.navigation_state.get("state", "")) == "EmergencyEvasion":
+				unit.navigation_state["sailed_trail"] = []
+			else: ColumnTransit.record(unit.navigation_state.sailed_trail, unit.position, float(unit.heading))
+		var all_finished := members.all(func(member): return str(member.movement_state.get("mode", "")) == "HoldPosition" and not bool(member.navigation_state.get("route_waiting", false)))
+		if members.size() < 2 or all_finished:
+			for member in members: member.navigation_state.erase("column_guidance")
+			if str(group.mode) == "Column":
+				group["mode"] = "Expanded"
+				_emit("FormationTransitChanged", {"group_id":id, "mode":"Expanded", "reason":"ORDER_FINISHED"})
+			for member_id in group.member_ids:
+				var former: Dictionary = state.units_by_id.get(member_id, {})
+				if not former.is_empty() and former.navigation_state.get("transit_group_id", "") == id: _detach_formation_transit(former)
+			groups.erase(id)
+			continue
+		if tick < int(group.get("next_update_tick", 0)): continue
+		group["next_update_tick"] = tick + NAVIGATION_NORMAL_INTERVAL_TICKS
+		var width := 160.0
+		for member in members: width = maxf(width, maxf(_unit_collision_half_extents(member).x, _unit_collision_half_extents(member).y) * 2.0 + 60.0)
+		var narrow := false
+		var anchor: Vector2 = members[0].position
+		for member in members:
+			member.navigation_state.erase("column_guidance")
+			if bool(member.navigation_state.get("route_waiting", false)) or str(member.movement_state.get("mode", "")) == "HoldPosition": continue
+			var detection := _formation_narrow_ahead(member, width)
+			if bool(detection.get("narrow", false)):
+				narrow = true
+				anchor = detection.anchor
+				break
+		if tick < int(group.get("cooldown_until", 0)): continue
+		if narrow:
+			group["clear_seconds"] = 0.0
+			if str(group.mode) != "Column":
+				members.sort_custom(func(a, b):
+					var da: float = (a.position as Vector2).distance_squared_to(anchor)
+					var db: float = (b.position as Vector2).distance_squared_to(anchor)
+					return da < db if not is_equal_approx(da, db) else str(a.entity_id) < str(b.entity_id))
+				group["order"] = members.map(func(member): return str(member.entity_id))
+				group["mode"] = "Column"
+				group["entered_tick"] = tick
+				_emit("FormationTransitChanged", {"group_id":id, "mode":"Column", "member_ids":group.order})
+		else:
+			group["clear_seconds"] = float(group.get("clear_seconds", 0.0)) + 1.0
+			if str(group.mode) == "Column" and float(group.clear_seconds) >= 3.0:
+				group["mode"] = "Expanded"
+				_emit("FormationTransitChanged", {"group_id":id, "mode":"Expanded"})
+		if str(group.mode) != "Column": continue
+		var changed_intent := false
+		if str(id).begins_with("ai."):
+			var previous_targets: Dictionary = group.get("intent_targets", {})
+			for member in members:
+				var target: Vector2 = member.movement_state.get("target_position", member.position)
+				if previous_targets.has(member.entity_id) and (previous_targets[member.entity_id] as Vector2).distance_to(target) > 300.0: changed_intent = true
+				previous_targets[member.entity_id] = target
+			group["intent_targets"] = previous_targets
+		if changed_intent:
+			group["mode"] = "Expanded"
+			group["cooldown_until"] = tick + 30
+			_emit("FormationTransitChanged", {"group_id":id, "mode":"Expanded", "reason":"INTENT_CHANGED"})
+			continue
+		var ordered: Array = []
+		for member_id in group.get("order", []):
+			for member in members:
+				if member.entity_id == member_id: ordered.append(member)
+		for member in members:
+			if not ordered.has(member): ordered.append(member)
+		group["order"] = ordered.map(func(member): return str(member.entity_id))
+		var leader: Dictionary = ordered[0]
+		var remaining := (leader.position as Vector2).distance_to(_current_corridor_goal(leader))
+		var previous_point := _current_corridor_goal(leader)
+		for point in _current_corridor_lookahead(leader, 100):
+			remaining += previous_point.distance_to(point)
+			previous_point = point
+		if group.get("leader_id", "") != leader.entity_id or remaining < float(group.get("leader_best_remaining", INF)) - 5.0:
+			group["leader_id"] = leader.entity_id
+			group["leader_best_remaining"] = remaining
+			group["last_leader_progress_tick"] = tick
+		if tick - int(group.get("last_leader_progress_tick", tick)) >= 120 and str(leader.movement_state.get("mode", "")) != "HoldPosition":
+			group["mode"] = "Expanded"
+			group["cooldown_until"] = tick + 100
+			_emit("FormationTransitChanged", {"group_id":id, "mode":"Expanded", "reason":"LEADER_NO_PROGRESS"})
+			continue
+		var queue_spacing := 0.0
+		for index in range(1, ordered.size()):
+			var member: Dictionary = ordered[index]
+			var predecessor: Dictionary = ordered[index - 1]
+			var berth := maxf(120.0, _unit_collision_half_extents(member).x + _unit_collision_half_extents(predecessor).x + 48.0)
+			queue_spacing += berth
+			var navigation: Dictionary = member.navigation_state
+			if str(member.movement_state.get("mode", "")) == "HoldPosition":
+				queue_spacing -= berth
+				continue
+			if str(navigation.get("state", "")) == "EmergencyEvasion" or not navigation.get("recovery", {}).is_empty(): continue
+			var final_target: Vector2 = member.movement_state.get("target_position", member.position)
+			# Release each ship once it has a wide, legal connection to its own
+			# endpoint. Never drag the tail back to a predecessor that has parked.
+			if (member.position as Vector2).distance_to(final_target) < 200.0:
+				queue_spacing -= berth
+				continue
+			if str(member.movement_state.get("mode", "")) != "PlayerWaypointRoute" and terrain_query.is_navigation_segment_clear(member.position, final_target, width, _movement_tags(member)) and bool(terrain_context_service.movement_segment_access(member.position, final_target).get("allowed", true)):
+				member.movement_state["corridor_index"] = maxi(0, member.movement_state.get("corridor_points", []).size() - 1)
+				queue_spacing -= berth
+				continue
+			var own_direction: Vector2 = _current_corridor_goal(member) - (member.position as Vector2)
+			var lead_direction: Vector2 = _current_corridor_goal(leader) - (leader.position as Vector2)
+			if str(id).begins_with("ai.") and own_direction.normalized().dot(lead_direction.normalized()) < 0.3: continue
+			if str(leader.navigation_state.get("state", "")) == "EmergencyEvasion" or not leader.navigation_state.get("recovery", {}).is_empty(): continue
+			var trail: Array = leader.navigation_state.get("sailed_trail", [])
+			var cursor := float(navigation.get("column_cursor", 0.0)) if str(navigation.get("column_predecessor", "")) == str(leader.entity_id) else 0.0
+			var guidance := ColumnTransit.follow(trail, member.position, queue_spacing, cursor, maxf(absf(float(member.current_speed)), float(member.stats.speed)))
+			if guidance.is_empty(): continue
+			var radius := float(member.stats.collision_radius) + 4.0
+			var lookahead: Vector2 = guidance.get("lookahead_goal", guidance.goal)
+			if terrain_query.is_navigation_segment_clear(member.position, lookahead, radius, _movement_tags(member)) and bool(terrain_context_service.movement_segment_access(member.position, lookahead).get("allowed", true)):
+				guidance["goal"] = lookahead
+			if not terrain_query.is_navigation_segment_clear(member.position, guidance.goal, radius, _movement_tags(member)) or not bool(terrain_context_service.movement_segment_access(member.position, guidance.goal).get("allowed", true)): continue
+			guidance["leader_progress_tick"] = int(group.get("last_leader_progress_tick", tick))
+			navigation["column_guidance"] = guidance
+			navigation["column_cursor"] = guidance.cursor
+			navigation["column_predecessor"] = leader.entity_id
+
+
 func _update_navigation_plans() -> void:
+	_update_formation_transits()
 	for unit_id in _sorted_unit_ids():
 		var unit: Dictionary = state["units_by_id"][unit_id]
 		if unit.get("life_state", "") != "Alive": continue
@@ -1717,6 +2022,10 @@ func _update_navigation_plans() -> void:
 		var tick := int(state.get("tick_index", 0))
 		if tick >= int(navigation.get("next_normal_plan_tick", 0)):
 			_plan_normal_trajectory(unit)
+		if bool(navigation.get("environment_replan", false)):
+			# Rebuild immediately for safety, then return to the shared staggered wheel.
+			navigation.erase("environment_replan")
+			navigation["next_normal_plan_tick"] = tick + 1 + posmod(int(navigation.get("normal_plan_slot", 0)) - tick - 1, NAVIGATION_NORMAL_INTERVAL_TICKS)
 
 
 func _plan_normal_trajectory(unit: Dictionary) -> void:
@@ -1735,6 +2044,7 @@ func _plan_normal_trajectory(unit: Dictionary) -> void:
 	var motion_state := ShipMotionService.state_for_unit(unit, terrain_context_service.context_at(unit["position"]), _active_status_effects(unit), ModifierService)
 	motion_state["map_width"] = float(state.get("map", {}).get("width", 0.0))
 	motion_state["map_height"] = float(state.get("map", {}).get("height", 0.0))
+	motion_state["collision_half_extents"] = _unit_collision_half_extents(unit)
 	motion_state["previous_control"] = navigation.get("current_control", {"thrust_ratio":0.0, "turn_ratio":0.0})
 	if navigation.has("last_collision") and navigation.get("recovery", {}).is_empty():
 		_start_navigation_recovery(unit, "TERRAIN_CONTACT")
@@ -1757,11 +2067,18 @@ func _plan_normal_trajectory(unit: Dictionary) -> void:
 	var prioritize_direct_player_motion := movement_mode in ["PlayerMoveOrder", "PlayerWaypointRoute"]
 	var departing := not recovery.is_empty() and str(recovery.get("stage", "")) == "Depart"
 	var nearby_units := _nearby_navigation_units(unit)
+	var column: Dictionary = navigation.get("column_guidance", {}) if recovery.is_empty() else {}
+	var final_approach := _current_corridor_goal_is_final(unit)
+	var next_goals := _current_corridor_lookahead(unit, 2)
+	if not column.is_empty():
+		goal = column.goal
+		final_approach = bool(column.get("waiting", false))
+		next_goals = column.get("next_goals", [])
 	var result: Dictionary
 	if departing:
 		result = trajectory_planner.plan_recovery(motion_state, recovery, radius, _movement_tags(unit), terrain_query, terrain_context_service, nearby_units)
 	else:
-		result = trajectory_planner.plan_normal(motion_state, goal, radius, _movement_tags(unit), terrain_query, terrain_context_service, nearby_units, _current_corridor_goal_is_final(unit), _current_corridor_lookahead(unit, 2), prioritize_direct_player_motion)
+		result = trajectory_planner.plan_normal(motion_state, goal, radius, _movement_tags(unit), terrain_query, terrain_context_service, nearby_units, final_approach, next_goals, prioritize_direct_player_motion)
 	var prediction_reuse := _prediction_reuse_diagnostic(unit, navigation.get("trajectory_plan", {}), result) if _performance_profile_enabled else {}
 	_profile_increment("trajectory_segments_simulated_per_tick", int(result.get("segments_simulated", 0)))
 	_profile_increment("trajectory_candidates_rejected_by_terrain_per_tick", int(result.get("candidates_rejected_by_terrain", 0)))
@@ -1778,6 +2095,8 @@ func _plan_normal_trajectory(unit: Dictionary) -> void:
 		result["planned_at_tick"] = int(state.get("tick_index", 0))
 		result["valid_until_tick"] = int(state.get("tick_index", 0)) + NAVIGATION_NORMAL_INTERVAL_TICKS
 		result["terrain_revision"] = int(state.get("terrain_map", {}).get("navigation_revision", 0))
+		result["environment_revision"] = terrain_context_service.environment_revision
+		result["tide_phase_index"] = terrain_context_service.tide_phase_index
 		navigation["trajectory_plan"] = result
 		navigation["current_control"] = result.get("controls", [{"thrust_ratio": 0.0, "turn_ratio": 0.0}])[0]
 		_emit("TrajectoryPlanned", {"unit_id": unit["entity_id"], "mode": "NavigationRecovery" if not recovery.is_empty() else "NormalNavigation", "candidate_count": result.get("candidate_count", 0), "valid_candidate_count":result.get("valid_candidate_count", 0), "candidate_id":result.get("candidate_id", ""), "candidate_rank":result.get("candidate_rank", 0), "predicted_segment_count":maxi(0, result.get("predicted_samples", []).size() - 1), "committed_segment_count":NAVIGATION_NORMAL_INTERVAL_TICKS, "previous_candidate_id":prediction_reuse.get("previous_candidate_id", ""), "prediction_position_error":prediction_reuse.get("position_error", -1.0), "prediction_heading_error":prediction_reuse.get("heading_error", -1.0), "prediction_speed_error":prediction_reuse.get("speed_error", -1.0), "prediction_suffix_reusable":prediction_reuse.get("suffix_reusable", false), "goal": goal, "minimum_clearance":result.get("minimum_clearance", 0.0)})
@@ -1830,6 +2149,7 @@ func _plan_emergency_trajectory(unit: Dictionary, threats: Array) -> void:
 	var motion_state := ShipMotionService.state_for_unit(unit, terrain_context_service.context_at(unit["position"]), _active_status_effects(unit), ModifierService)
 	motion_state["map_width"] = float(state.get("map", {}).get("width", 0.0))
 	motion_state["map_height"] = float(state.get("map", {}).get("height", 0.0))
+	motion_state["collision_half_extents"] = _unit_collision_half_extents(unit)
 	var result := trajectory_planner.plan_emergency(motion_state, threats, float(unit["stats"].get("collision_radius", 20.0)), _movement_tags(unit), terrain_query, terrain_context_service, _nearby_navigation_units(unit), false)
 	if not bool(result.get("ok", false)) or float(result.get("threat_safety", 0.0)) < 0.75:
 		result = trajectory_planner.plan_emergency(motion_state, threats, float(unit["stats"].get("collision_radius", 20.0)), _movement_tags(unit), terrain_query, terrain_context_service, _nearby_navigation_units(unit), true)
@@ -1845,6 +2165,8 @@ func _plan_emergency_trajectory(unit: Dictionary, threats: Array) -> void:
 	result["planned_at_tick"] = int(state.get("tick_index", 0))
 	result["valid_until_tick"] = int(state.get("tick_index", 0)) + 1
 	result["terrain_revision"] = int(state.get("terrain_map", {}).get("navigation_revision", 0))
+	result["environment_revision"] = terrain_context_service.environment_revision
+	result["tide_phase_index"] = terrain_context_service.tide_phase_index
 	navigation["trajectory_plan"] = result
 	navigation["current_control"] = result.get("controls", [{"thrust_ratio": 0.0, "turn_ratio": 0.0}])[0]
 	navigation["tracked_threat_ids"] = threats.map(func(threat): return str(threat.get("id", "")))
@@ -1875,9 +2197,15 @@ func _update_movement(delta: float) -> void:
 		var environment_access := terrain_context_service.movement_segment_access(movement_start, desired_position)
 		if not bool(environment_access.get("allowed", true)):
 			desired_motion = Vector2.ZERO
+			desired_position = movement_start
 			unit["current_speed"] = 0.0
-			navigation["trajectory_dirty"] = true
-			_emit("UnitTideAccessRestricted", {"unit_id": unit_id, "zone_id": environment_access.get("zone_id", ""), "position": movement_start})
+			var active_plan: Dictionary = navigation.get("trajectory_plan", {})
+			if _navigation_plan_is_committed(active_plan) and int(active_plan.get("environment_revision", -1)) == terrain_context_service.environment_revision and int(active_plan.get("tide_phase_index", -1)) == terrain_context_service.tide_phase_index:
+				_emit("NavigationCollisionContractViolated", {"unit_id":unit_id, "reason_code":"WATER_ACCESS", "plan_tick":active_plan.get("planned_at_tick", -1), "collision_tick":state.get("tick_index", 0), "environment_revision":terrain_context_service.environment_revision, "candidate_id":active_plan.get("candidate_id", ""), "obstacle_id":environment_access.get("zone_id", "")})
+			navigation["trajectory_plan"] = {}
+			navigation["current_control"] = {"thrust_ratio":0.0, "turn_ratio":0.0}
+			_mark_navigation_dirty_immediate(unit)
+			_emit("UnitTideAccessRestricted", {"unit_id": unit_id, "reason_code":environment_access.get("reason_code", "WATER_ACCESS"), "zone_id": environment_access.get("zone_id", ""), "position": movement_start})
 		if terrain_query.is_configured():
 			var motion_result := terrain_query.resolve_circle_motion(unit["position"], desired_motion, float(unit["stats"].get("collision_radius", 20.0)), _movement_tags(unit))
 			unit["position"] = motion_result["position"]
@@ -1886,7 +2214,7 @@ func _update_movement(delta: float) -> void:
 				unit["current_speed"] = 0.0
 				var hit: Dictionary = motion_result.get("hit", {})
 				var active_plan: Dictionary = navigation.get("trajectory_plan", {})
-				if bool(active_plan.get("ok", false)) and int(active_plan.get("terrain_revision", -1)) == int(state.get("terrain_map", {}).get("navigation_revision", 0)):
+				if _navigation_plan_is_committed(active_plan) and int(active_plan.get("terrain_revision", -1)) == int(state.get("terrain_map", {}).get("navigation_revision", 0)):
 					_emit("NavigationCollisionContractViolated", {"unit_id":unit_id, "plan_tick":active_plan.get("planned_at_tick", -1), "collision_tick":state.get("tick_index", 0), "field_revision":active_plan.get("terrain_revision", -1), "terrain_revision":state.get("terrain_map", {}).get("navigation_revision", 0), "candidate_id":active_plan.get("candidate_id", ""), "obstacle_id":hit.get("obstacle_id", "")})
 				navigation["trajectory_plan"] = {}
 				navigation["current_control"] = {"thrust_ratio":0.0, "turn_ratio":0.0}
@@ -1897,7 +2225,6 @@ func _update_movement(delta: float) -> void:
 			unit["position"] = _clamp_to_map(desired_position)
 		var mine_trigger := minefield_service.resolve_unit_motion(unit, movement_start, unit["position"])
 		if bool(mine_trigger.get("triggered", false)): _apply_mine_trigger(unit, mine_trigger)
-		_update_navigation_progress(unit, delta)
 
 
 func _current_corridor_goal(unit: Dictionary) -> Vector2:
@@ -1940,6 +2267,11 @@ func _active_trajectory_control(navigation: Dictionary) -> Dictionary:
 	return controls[-1]
 
 
+func _navigation_plan_is_committed(plan: Dictionary) -> bool:
+	var tick := int(state.get("tick_index", 0))
+	return bool(plan.get("ok", false)) and int(plan.get("planned_at_tick", -1)) <= tick and int(plan.get("valid_until_tick", -1)) >= tick
+
+
 func _advance_corridor_progress(unit: Dictionary) -> void:
 	var movement: Dictionary = unit.get("movement_state", {})
 	var points: Array = movement.get("corridor_points", [])
@@ -1970,6 +2302,7 @@ func _advance_corridor_progress(unit: Dictionary) -> void:
 	if index < points.size(): return
 	var final_target: Vector2 = movement.get("target_position", unit.get("position", Vector2.ZERO))
 	if (unit.get("position", Vector2.ZERO) as Vector2).distance_to(final_target) > arrival_distance: return
+	unit.get("navigation_state", {})["arrival_goal"] = final_target
 	if str(movement.get("mode", "")) in ["PlayerMoveOrder", "PlayerWaypointRoute"]:
 		unit["player_route_waypoints"] = []
 	movement["mode"] = "AssistNavigate" if bool(unit.get("movement_assist_enabled", false)) else "HoldPosition"
@@ -1986,8 +2319,35 @@ func _nearby_navigation_units(unit: Dictionary) -> Array:
 		if other_id == unit.get("entity_id", ""): continue
 		var other: Dictionary = state["units_by_id"][other_id]
 		if other.get("life_state", "") != "Alive": continue
+		if other.get("faction_id", "") != unit.get("faction_id", "") and not _is_visible_to(str(unit.get("faction_id", "")), str(other_id)): continue
 		if origin.distance_to(other.get("position", Vector2.ZERO)) > 500.0: continue
-		result.append({"id": other_id, "position": other.get("position", Vector2.ZERO), "radius": float(other.get("stats", {}).get("collision_radius", 20.0))})
+		var heading := float(other.get("heading", 0.0))
+		var neighbor := {"_cache_prediction":true, "id":other_id, "friendly":other.faction_id == unit.faction_id, "navigating":other.faction_id == unit.faction_id and str(other.get("movement_state", {}).get("mode", "HoldPosition")) not in ["HoldPosition", "Docked"], "position":other.get("position", Vector2.ZERO), "radius":float(other.get("stats", {}).get("collision_radius", 20.0)), "half_extents":_unit_collision_half_extents(other), "heading":heading, "velocity":Vector2.RIGHT.rotated(heading) * float(other.get("current_speed", 0.0)) + terrain_context_service.context_at(other["position"]).get("current_vector", Vector2.ZERO)}
+		if bool(neighbor.friendly):
+			var committed := _friendly_committed_samples(other)
+			if not committed.is_empty(): neighbor["committed_samples"] = committed
+		result.append(neighbor)
+	return result
+
+
+func _friendly_committed_samples(unit: Dictionary) -> Array:
+	var navigation: Dictionary = unit.get("navigation_state", {})
+	var plan: Dictionary = navigation.get("trajectory_plan", {})
+	var tick := int(state.get("tick_index", 0))
+	if unit.get("life_state", "") != "Alive" or bool(navigation.get("trajectory_dirty", false)) or not _navigation_plan_is_committed(plan): return []
+	if tick >= int(navigation.get("next_normal_plan_tick", tick)) and str(navigation.get("state", "")) != "EmergencyEvasion": return []
+	if int(plan.get("terrain_revision", -1)) != int(state.get("terrain_map", {}).get("navigation_revision", 0)) or int(plan.get("environment_revision", -1)) != terrain_context_service.environment_revision or int(plan.get("tide_phase_index", -1)) != terrain_context_service.tide_phase_index: return []
+	var samples: Array = plan.get("predicted_samples", [])
+	var offset := tick - int(plan.get("planned_at_tick", tick))
+	var remaining := mini(int(plan.get("valid_until_tick", tick)) - tick, NAVIGATION_NORMAL_INTERVAL_TICKS)
+	if offset < 0 or remaining <= 0 or offset + remaining >= samples.size(): return []
+	var current: Dictionary = samples[offset]
+	if (current.get("position", Vector2.INF) as Vector2).distance_to(unit.position) > 0.05 or absf(angle_difference(float(current.get("heading", 0.0)), float(unit.heading))) > 0.001 or absf(float(current.get("speed", 0.0)) - float(unit.current_speed)) > 0.05: return []
+	var result: Array = []
+	for index in range(offset, offset + remaining + 1):
+		var sample: Dictionary = samples[index].duplicate()
+		sample["tick_offset"] = float(index - offset) * NAVIGATION_FIXED_TICK_DELTA
+		result.append(sample)
 	return result
 
 
@@ -2048,7 +2408,13 @@ func _update_navigation_progress(unit: Dictionary, delta: float) -> void:
 	if not moving:
 		if str(movement.get("mode", "")) in ["HoldPosition", "Docked"] or not bool(navigation.get("route_waiting", false)):
 			navigation["progress"] = {}
+			var arrival_goal: Vector2 = navigation.get("arrival_goal", Vector2.INF)
+			if not recovery.is_empty() and arrival_goal != Vector2.INF and position.distance_to(arrival_goal) <= trajectory_planner.arrival_tolerance(float(unit["stats"].get("collision_radius", 20.0))):
+				_emit("NavigationRecoveryCompleted", {"unit_id":unit["entity_id"], "duration":recovery.get("elapsed", 0.0), "attempts":recovery.get("attempts", 1), "reason_code":"ARRIVED"})
+				navigation["recovery"] = {}
+				navigation.erase("last_collision")
 			_cancel_navigation_recovery(unit, "INTENT_FINISHED")
+			navigation.erase("arrival_goal")
 		return
 	if not recovery.is_empty():
 		recovery["elapsed"] = float(recovery.get("elapsed", 0.0)) + delta
@@ -2062,17 +2428,20 @@ func _update_navigation_progress(unit: Dictionary, delta: float) -> void:
 			if rejoin_goal.distance_squared_to(goal) > 1.0:
 				recovery["rejoin_goal"] = goal
 				recovery["rejoin_best_distance"] = position.distance_to(goal)
-			if float(recovery["rejoin_progress"]) - float(recovery.get("rejoin_stage_progress", 0.0)) >= NavigationProgress.PROGRESS_DISTANCE:
+			var required_progress := minf(NavigationProgress.PROGRESS_DISTANCE, maxf(1.0, position.distance_to(goal) * 0.08))
+			if float(recovery["rejoin_progress"]) - float(recovery.get("rejoin_stage_progress", 0.0)) >= required_progress:
 				recovery["stage_seconds"] = 0.0
 				recovery["rejoin_stage_progress"] = recovery["rejoin_progress"]
 			var plan: Dictionary = navigation.get("trajectory_plan", {})
 			var checkpoint: Vector2 = recovery["checkpoint_position"]
 			var checkpoint_goal: Vector2 = recovery["checkpoint_goal"]
-			var crossed_checkpoint := checkpoint.distance_to(checkpoint_goal) - position.distance_to(checkpoint_goal) >= NavigationProgress.PROGRESS_DISTANCE
+			var arrival := trajectory_planner.arrival_tolerance(float(unit["stats"].get("collision_radius", 20.0)))
+			var checkpoint_progress := minf(NavigationProgress.PROGRESS_DISTANCE, maxf(1.0, checkpoint.distance_to(checkpoint_goal) - arrival))
+			var crossed_checkpoint := checkpoint.distance_to(checkpoint_goal) - position.distance_to(checkpoint_goal) >= checkpoint_progress
 			# A changed route may bypass the old gate. Measure its net progress
 			# from the ORIGINAL stuck position, never from the retreat position.
-			var bypassed_checkpoint := checkpoint.distance_to(goal) - position.distance_to(goal) >= NavigationProgress.PROGRESS_DISTANCE
-			if float(recovery["rejoin_progress"]) >= NavigationProgress.PROGRESS_DISTANCE and (crossed_checkpoint or bypassed_checkpoint) and bool(plan.get("ok", false)) and float(plan.get("predicted_progress", 0.0)) > 0.0:
+			var bypassed_checkpoint := checkpoint.distance_to(goal) - position.distance_to(goal) >= minf(NavigationProgress.PROGRESS_DISTANCE, maxf(1.0, checkpoint.distance_to(goal) - arrival))
+			if float(recovery["rejoin_progress"]) >= required_progress and (crossed_checkpoint or bypassed_checkpoint) and bool(plan.get("ok", false)) and float(plan.get("predicted_progress", 0.0)) > 0.0:
 				_emit("NavigationRecoveryCompleted", {"unit_id":unit["entity_id"], "duration":recovery["elapsed"], "attempts":recovery["attempts"]})
 				navigation["recovery"] = {}
 				navigation["progress"] = {}
@@ -2101,6 +2470,10 @@ func _update_navigation_progress(unit: Dictionary, delta: float) -> void:
 		return
 	var plan: Dictionary = navigation.get("trajectory_plan", {})
 	var productive_control := bool(plan.get("ok", false)) and int(plan.get("valid_until_tick", -1)) >= int(state.get("tick_index", 0)) and float(plan.get("predicted_progress", 0.0)) > NavigationProgress.PROGRESS_DISTANCE
+	var column: Dictionary = navigation.get("column_guidance", {})
+	if not column.is_empty():
+		if bool(column.get("waiting", false)) and int(state.get("tick_index", 0)) - int(column.get("leader_progress_tick", -100)) < 30: return
+		if not bool(column.get("waiting", false)): goal = column.goal
 	NavigationProgress.observe(memory, position, float(unit["heading"]), goal, delta, false, productive_control)
 	if NavigationProgress.needs_recovery(memory):
 		_start_navigation_recovery(unit, "NO_EFFECTIVE_PROGRESS")
@@ -2175,7 +2548,8 @@ func _select_navigation_departure(unit: Dictionary, recovery: Dictionary) -> voi
 func _cancel_navigation_recovery(unit: Dictionary, reason: String) -> void:
 	var navigation: Dictionary = unit.get("navigation_state", {})
 	if not navigation.get("recovery", {}).is_empty():
-		_emit("NavigationRecoveryCancelled", {"unit_id":unit["entity_id"], "reason_code":reason})
+		var recovery: Dictionary = navigation["recovery"]
+		_emit("NavigationRecoveryCancelled", {"unit_id":unit["entity_id"], "reason_code":reason, "duration":recovery.get("elapsed", 0.0), "attempts":recovery.get("attempts", 1), "stage":recovery.get("stage", "")})
 	navigation["recovery"] = {}
 	if str(navigation.get("state", "")) == "NavigationRecovery": navigation["state"] = "NormalNavigation"
 	unit.get("ai_state", {})["path_stuck"] = false
@@ -2335,18 +2709,34 @@ func _resolve_unit_overlap() -> void:
 				_unit_collision_half_extents(second), float(second["heading"]),
 				center_direction,
 			)
-			if delta_position.length_squared() <= 0.0001 or delta_position.length() >= minimum_distance: continue
+			if delta_position.length() >= minimum_distance: continue
 			var first_docked := not _docked_action_for_unit(str(first.get("entity_id", ""))).is_empty()
 			var second_docked := not _docked_action_for_unit(str(second.get("entity_id", ""))).is_empty()
 			if first_docked and second_docked: continue
 			var correction_scale := 1.0 if first_docked or second_docked else 0.5
-			var correction := delta_position.normalized() * (minimum_distance - delta_position.length()) * correction_scale
+			var correction := center_direction * (minimum_distance - delta_position.length()) * correction_scale
 			var first_position: Vector2 = _clamp_to_map(first["position"] - correction)
 			var second_position: Vector2 = _clamp_to_map(second["position"] + correction)
-			if not first_docked and (not terrain_query.is_configured() or terrain_query.can_occupy_circle(first_position, float(first["stats"]["collision_radius"]), _movement_tags(first))):
-				first["position"] = first_position
-			if not second_docked and (not terrain_query.is_configured() or terrain_query.can_occupy_circle(second_position, float(second["stats"]["collision_radius"]), _movement_tags(second))):
-				second["position"] = second_position
+			if not first_docked: _apply_navigation_separation(first, first_position, str(second["entity_id"]))
+			if not second_docked: _apply_navigation_separation(second, second_position, str(first["entity_id"]))
+
+
+func _apply_navigation_separation(unit: Dictionary, destination: Vector2, other_id: String) -> void:
+	var origin: Vector2 = unit["position"]
+	var allowed := bool(terrain_context_service.movement_segment_access(origin, destination).get("allowed", true))
+	if allowed and terrain_query.is_configured():
+		allowed = str(terrain_query.validate_movement_segment(origin, destination, float(unit["stats"]["collision_radius"]), _movement_tags(unit), 0.0).get("status", "Collides")) != "Collides"
+	if allowed: unit["position"] = destination
+	var distance := origin.distance_to(unit["position"])
+	var navigation: Dictionary = unit.get("navigation_state", {})
+	navigation["separation_distance"] = float(navigation.get("separation_distance", 0.0)) + distance
+	# The committed controls no longer start at their predicted pose. Invalidate
+	# immediately, but preserve the ordinary 1s planning budget while braking.
+	if distance > 0.001:
+		navigation["trajectory_plan"] = {}
+		navigation["current_control"] = {"thrust_ratio":0.0, "turn_ratio":0.0}
+		navigation["trajectory_dirty"] = true
+	_emit("NavigationSeparationApplied", {"unit_id":unit["entity_id"], "other_unit_id":other_id, "distance":distance, "allowed":allowed})
 
 
 func _update_detection(delta: float = 0.1) -> void:
@@ -2915,6 +3305,9 @@ func _queue_ai_move(unit: Dictionary, target_position: Vector2, issuer_type: Str
 	var search: Dictionary = unit.get("ai_state", {}).get("search_patrol", {})
 	if not search.is_empty() and (search["destination"] as Vector2).distance_squared_to(target_position) > 1.0:
 		unit["ai_state"]["search_patrol"] = {}
+	var station: Dictionary = unit.get("ai_state", {}).get("contact_search_station", {})
+	var station_target := not station.is_empty() and (station["destination"] as Vector2).distance_squared_to(target_position) <= 1.0
+	if not station.is_empty() and not station_target: unit["ai_state"].erase("contact_search_station")
 	target_position = minefield_service.avoidance_waypoint(str(unit.get("faction_id", "")), unit["position"], target_position)
 	var navigation: Dictionary = unit.get("navigation_state", {})
 	var current_target: Vector2 = navigation.get("strategic_intent_target", unit.get("movement_state", {}).get("target_position", unit.get("position", Vector2.ZERO)))
@@ -2930,7 +3323,8 @@ func _queue_ai_move(unit: Dictionary, target_position: Vector2, issuer_type: Str
 		var since_route := float(state.get("elapsed_time", 0.0)) - float(unit.get("ai_state", {}).get("last_route_command_at", -1000.0))
 		var stage_finished: bool = bool(navigation.get("target_projected", false)) and unit.get("movement_state", {}).get("corridor_points", []).is_empty()
 		var retry_needed: bool = int(navigation.get("route_failure_count", 0)) > 0 or stage_finished
-		if since_route < NAVIGATION_STRATEGIC_INTERVAL or (target_shift < 120.0 and not retry_needed): return
+		var intent_shift := 8.0 if station_target else 120.0
+		if since_route < NAVIGATION_STRATEGIC_INTERVAL or (target_shift < intent_shift and not retry_needed): return
 	if (unit["movement_state"].get("target_position", unit["position"]) as Vector2).distance_to(target_position) < 8.0: return
 	command_queue.append({
 		"command_id": "ai.move.%s.%s" % [state["tick_index"] + 1, unit["entity_id"]],
@@ -3023,8 +3417,9 @@ func _queue_enemy_search_intent(unit: Dictionary, previous_target_id: String = "
 	var contact_search_position := _contact_search_position(unit, previous_target_id)
 	if not contact_search_position.is_equal_approx(Vector2.INF):
 		ai_state["search_patrol"] = {}
-		_queue_ai_move(unit, contact_search_position)
+		_queue_ai_move(unit, _contact_search_station(unit, contact_search_position))
 		return
+	ai_state.erase("contact_search_station")
 	var context := terrain_context_service.context_at(unit["position"])
 	var lee_center := terrain_context_service.zone_center_for_effect("environment.effect.lee_water")
 	if int(context.get("sea_state", 0)) >= 4 and lee_center != Vector2.ZERO:
@@ -3049,6 +3444,51 @@ func _queue_enemy_search_intent(unit: Dictionary, previous_target_id: String = "
 	var destination := Vector2(search_x, map_center.y + lane_offset)
 	ai_state["search_patrol"] = {"destination": destination}
 	_queue_ai_move(unit, destination)
+
+
+func _contact_search_station(unit: Dictionary, center: Vector2) -> Vector2:
+	# A ghost denotes a search area. Reserve stable, simultaneously occupiable
+	# stations instead of asking every friendly hull to occupy its centre.
+	var ai: Dictionary = unit["ai_state"]
+	var now := float(state.get("elapsed_time", 0.0))
+	var prior: Dictionary = ai.get("contact_search_station", {})
+	if not prior.is_empty() and float(prior.get("expires_at", 0.0)) >= now and (prior["center"] as Vector2).distance_to(center) < 120.0:
+		prior["expires_at"] = now + 3.0
+		return prior["destination"]
+	var occupied: Array = []
+	var own_extent := _unit_collision_half_extents(unit).x
+	var spacing := own_extent * 2.0 + 24.0
+	for id in _sorted_unit_ids():
+		var other: Dictionary = state["units_by_id"][id]
+		if id == unit["entity_id"] or other.get("life_state", "") != "Alive" or other["faction_id"] != unit["faction_id"]: continue
+		var station: Dictionary = other.get("ai_state", {}).get("contact_search_station", {})
+		if station.is_empty() or float(station.get("expires_at", 0.0)) < now: continue
+		var extent := _unit_collision_half_extents(other).x
+		occupied.append({"position":station["destination"], "distance":own_extent + extent + 24.0})
+		spacing = maxf(spacing, own_extent + extent + 24.0)
+	var best := Vector2.INF
+	var best_score := INF
+	# Bounded allocation, only on a new ghost region. Broker still owns route
+	# reachability; endpoint legality cannot assert an unobstructed route.
+	for index in range(17):
+		var candidate := center if index == 0 else center + Vector2.RIGHT.rotated(float((index - 1) % 8) * TAU / 8.0) * spacing * (1.0 if index <= 8 else 2.0)
+		if not _inside_map(candidate): continue
+		if terrain_query.is_configured() and not terrain_query.can_occupy_circle(candidate, float(unit["stats"]["collision_radius"]), _movement_tags(unit)): continue
+		var free := true
+		for reservation in occupied:
+			if candidate.distance_to(reservation["position"]) < float(reservation["distance"]) - 0.01:
+				free = false
+				break
+		if not free: continue
+		var score := (unit["position"] as Vector2).distance_to(candidate) + candidate.distance_to(center) * 0.25
+		if score < best_score:
+			best = candidate
+			best_score = score
+	# No legal station means retain current safe position, never share an
+	# already reserved endpoint. A later decision may try again.
+	if best == Vector2.INF: return unit["position"]
+	ai["contact_search_station"] = {"center":center, "destination":best, "expires_at":now + 3.0}
+	return best
 
 
 func _update_submarine_ai_intent(unit: Dictionary) -> void:
@@ -3826,12 +4266,35 @@ func _rebuild_ai_groups(faction_id: String) -> void:
 		var unit: Dictionary = state["units_by_id"][unit_id]
 		if unit.get("life_state", "") == "Alive" and unit.get("faction_id", "") == faction_id:
 			members.append(unit)
+	var old_groups: Dictionary = state.get("ai_groups_by_faction", {}).get(faction_id, {})
+	# Retain membership order through rebuilds, deaths and reinforcements.
+	members.sort_custom(func(a, b):
+		var old_a := str(a.get("ai_state", {}).get("group_id", "~"))
+		var old_b := str(b.get("ai_state", {}).get("group_id", "~"))
+		if old_a.is_empty(): old_a = "~"
+		if old_b.is_empty(): old_b = "~"
+		if old_a != old_b: return old_a < old_b
+		var slot_a := int(a.get("ai_state", {}).get("formation_slot_index", -1))
+		var slot_b := int(b.get("ai_state", {}).get("formation_slot_index", -1))
+		return slot_a < slot_b if slot_a != slot_b else str(a.entity_id) < str(b.entity_id))
 	var groups := {}
 	for start in range(0, members.size(), 4):
 		var group_members: Array = members.slice(start, mini(start + 4, members.size()))
 		var group_id := "group.%s.%02d" % [faction_id, start / 4 + 1]
 		var leader: Dictionary = _choose_group_leader(group_members)
+		var previous: Dictionary = old_groups.get(group_id, {})
 		var formation := _choose_group_formation(group_members)
+		var now := float(state.get("elapsed_time", 0.0))
+		var changed_at := float(previous.get("formation_changed_at", now))
+		if not previous.is_empty() and formation != str(previous.get("formation_id", "")):
+			if now - changed_at < 3.0 and formation != "Dispersed": formation = str(previous.formation_id)
+			else: changed_at = now
+		group_members.erase(leader)
+		group_members.push_front(leader)
+		var heading := float(previous.get("heading", leader.get("heading", 0.0)))
+		var direction: Vector2 = _current_corridor_goal(leader) - (leader.position as Vector2)
+		var desired_heading := direction.angle() if direction.length_squared() > 100.0 else float(leader.heading)
+		heading += clampf(angle_difference(heading, desired_heading), -PI / 12.0, PI / 12.0)
 		var member_ids: Array[String] = []
 		for index in range(group_members.size()):
 			var member: Dictionary = group_members[index]
@@ -3841,7 +4304,7 @@ func _rebuild_ai_groups(faction_id: String) -> void:
 			member["ai_state"]["formation_id"] = formation
 			member["ai_state"]["formation_slot_index"] = index
 			member_ids.append(str(member["entity_id"]))
-		groups[group_id] = {"group_id": group_id, "leader_unit_id": leader.get("entity_id", ""), "member_ids": member_ids, "formation_id": formation}
+		groups[group_id] = {"group_id": group_id, "leader_unit_id": leader.get("entity_id", ""), "member_ids": member_ids, "formation_id": formation, "heading":heading, "formation_changed_at":changed_at}
 	state["ai_groups_by_faction"][faction_id] = groups
 
 
@@ -3914,34 +4377,35 @@ func _tactical_destination_without_formation(unit: Dictionary, target: Dictionar
 	return unit_position
 
 
-func _apply_group_formation(unit: Dictionary, target: Dictionary, base: Vector2) -> Vector2:
+func _apply_group_formation(unit: Dictionary, _target: Dictionary, base: Vector2) -> Vector2:
+	if not unit.get("navigation_state", {}).get("column_guidance", {}).is_empty(): return base
 	var ai_state: Dictionary = unit.get("ai_state", {})
 	if str(ai_state.get("level_task", "")) in ["CaptureFacility", "ServiceFacility"]: return base
 	var group: Dictionary = state.get("ai_groups_by_faction", {}).get(unit.get("faction_id", ""), {}).get(str(ai_state.get("group_id", "")), {})
 	if group.is_empty() or group.get("member_ids", []).size() <= 1: return base
 	var leader: Dictionary = state.get("units_by_id", {}).get(str(group.get("leader_unit_id", "")), {})
 	if leader.is_empty() or leader.get("life_state", "") != "Alive": return base
-	var heading := float(leader.get("heading", 0.0))
-	if not target.is_empty(): heading = (target.get("position", leader["position"]) - leader["position"]).angle()
-	var forward := Vector2.RIGHT.rotated(heading)
-	var side := forward.orthogonal()
-	var index := int(ai_state.get("formation_slot_index", 0))
-	var spacing := 150.0
-	var offset := Vector2.ZERO
-	match str(ai_state.get("formation_id", "Wedge")):
-		"Column": offset = -forward * spacing * float(index)
-		"LineAbreast": offset = side * spacing * (float(index) - float(group.get("member_ids", []).size() - 1) * 0.5)
-		"Screen":
-			var ring_index := maxi(0, index - 1)
-			offset = Vector2.RIGHT.rotated(heading + PI + (-0.65 + 1.3 * float(ring_index % 2))) * spacing
-		"Dispersed": offset = Vector2.RIGHT.rotated(float(index) * TAU / float(group.get("member_ids", []).size())) * spacing * 1.5
-		_: offset = -forward * spacing * float((index + 1) / 2) + side * spacing * (-1.0 if index % 2 == 1 else 1.0) * float((index + 1) / 2)
-	var slot: Vector2 = leader.get("position", Vector2.ZERO) + offset
 	if unit.get("entity_id", "") == leader.get("entity_id", ""): return base
-	var distance := (unit.get("position", Vector2.ZERO) as Vector2).distance_to(slot)
-	if distance <= 70.0: return base
-	var correction_weight := 0.65 if distance > 300.0 else 0.35
-	return _clamp_to_map(base.lerp(slot, correction_weight))
+	var heading := float(group.get("heading", leader.get("heading", 0.0)))
+	var spacing := 150.0
+	for member_id in group.member_ids:
+		var member: Dictionary = state.units_by_id.get(member_id, {})
+		var extents := _unit_collision_half_extents(member)
+		spacing = maxf(spacing, maxf(extents.x, extents.y) * 2.0 + FormationMovement.ENDPOINT_MARGIN)
+	var index := int(ai_state.get("formation_slot_index", 0))
+	var offset := FormationMovement.slot_offset(str(group.formation_id), index, group.member_ids.size(), spacing).rotated(heading)
+	# A loose envelope follows the group's shared travel frame. Corrections
+	# are bounded and never demand an exact moving slot or an unsafe connector.
+	var slot: Vector2 = leader.position + offset
+	var error := slot - (unit.position as Vector2)
+	var comfort := maxf(100.0, spacing * 0.75)
+	if error.length() <= comfort: return base
+	var correction := error.normalized() * minf(60.0, (error.length() - comfort) * 0.2)
+	var corrected := _clamp_to_map(base + correction)
+	var radius := float(unit.stats.collision_radius) + 4.0
+	if terrain_query.is_configured() and not terrain_query.is_navigation_segment_clear(base, corrected, radius, _movement_tags(unit)): return base
+	if not bool(terrain_context_service.movement_segment_access(base, corrected).get("allowed", true)): return base
+	return corrected
 
 
 func _best_ai_cover_position(unit: Dictionary, target: Dictionary) -> Dictionary:
@@ -4877,7 +5341,7 @@ func _queue_skill_attack(source: Dictionary, skill: Dictionary, attack_spec: Dic
 				impact_position = dispersion_sample.get("position", target_position)
 				terrain_hit = _terrain_hit_for_attack(source["position"], impact_position, str(source.get("faction_id", "")))
 				if bool(terrain_hit.get("hit", false)): impact_position = terrain_hit.get("position", impact_position)
-			var travel_seconds := (source["position"] as Vector2).distance_to(impact_position) / maxf(1.0, float(weapon.get("projectile_speed", 1.0)))
+			var travel_seconds := (source["position"] as Vector2).distance_to(impact_position) / maxf(1.0, get_weapon_flight_speed(weapon))
 			if str(weapon.get("mount_type", "")) == "Aviation": travel_seconds *= _aviation_delay_multiplier(source["position"], impact_position)
 			var attack := {
 				"attack_id": _next_entity_id("skill_attack"),
@@ -4985,7 +5449,7 @@ func _fire_facility_weapon(facility: Dictionary, target: Dictionary, weapon: Dic
 		var resolved_impact: Vector2 = terrain_hit.get("position", intended_impact) if bool(terrain_hit.get("hit", false)) else intended_impact
 		impact_positions.append(resolved_impact)
 		dispersion_samples.append(dispersion_sample)
-		var travel_seconds := origin.distance_to(resolved_impact) / maxf(1.0, float(weapon.get("projectile_speed", 1.0)))
+		var travel_seconds := origin.distance_to(resolved_impact) / maxf(1.0, get_weapon_flight_speed(weapon))
 		delayed_attacks.append({"attack_id":_next_entity_id("facility_attack"), "source_unit_id":"", "source_facility_id":facility["facility_id"], "source_weapon_id":weapon["id"], "target_unit_id":"", "aimed_target_unit_id":target["entity_id"], "target_position":resolved_impact, "intended_impact_position":intended_impact, "resolved_impact_position":resolved_impact, "terrain_obstacle_id":terrain_hit.get("obstacle_id", ""), "blocked_by_terrain":bool(terrain_hit.get("hit", false)), "impact_radius":float(weapon.get("impact_radius", 40.0)), "origin":origin, "resolve_at_time":float(state["elapsed_time"]) + travel_seconds, "accuracy_modifier":_environment_accuracy_modifier(str(facility.get("faction_id", "")), origin, intended_impact, "Gun"), "dispersion_lateral_sigma":dispersion_sample["lateral_sigma"], "dispersion_longitudinal_sigma":dispersion_sample["longitudinal_sigma"], "dispersion_lateral_error":dispersion_sample["lateral_error"], "dispersion_longitudinal_error":dispersion_sample["longitudinal_error"]})
 	facility_service.mark_weapon_fired(str(facility["facility_id"]), str(weapon["id"]), float(weapon.get("reload_time", 1.0)))
 	_emit("FacilityWeaponFired", {"facility_id":facility["facility_id"], "weapon_id":weapon["id"], "target_unit_id":target["entity_id"], "target_position":target_position, "impact_positions":impact_positions, "dispersion_samples":dispersion_samples, "shot_count":shot_count})
@@ -5071,7 +5535,7 @@ func _automatic_attack_speed(unit: Dictionary, weapon: Dictionary) -> float:
 	if weapon.get("mount_type", "") == "Torpedo":
 		var projectile: Dictionary = registry.get_definition("projectiles", str(weapon.get("projectile_id", "")))
 		return maxf(1.0, ModifierService.calculate(float(projectile.get("speed", weapon.get("projectile_speed", 1.0))), _active_status_effects(unit), "ProjectileSpeed", "Torpedo"))
-	return maxf(1.0, float(weapon.get("projectile_speed", 1.0)))
+	return maxf(1.0, get_weapon_flight_speed(weapon))
 
 
 func _positive_intercept_time(relative_position: Vector2, target_velocity: Vector2, projectile_speed: float) -> float:
@@ -5108,7 +5572,7 @@ func _fire_weapon(unit: Dictionary, target: Dictionary, weapon_state: Dictionary
 	var dispersion_samples: Array = []
 	for shot_index in range(shot_count):
 		var spread_offset := 0.0
-		if shot_count > 1: spread_offset = deg_to_rad(float(weapon.get("spread", 0.0))) * (float(shot_index) / float(shot_count - 1) - 0.5)
+		if shot_count > 1: spread_offset = deg_to_rad(get_weapon_spread(weapon)) * (float(shot_index) / float(shot_count - 1) - 0.5)
 		var attack_id := _next_entity_id("attack")
 		if category == "Torpedo":
 			var angular_error: float = random_source.randfn(0.0, float(torpedo_error_profile["sigma_radians"]))
@@ -5120,7 +5584,7 @@ func _fire_weapon(unit: Dictionary, target: Dictionary, weapon_state: Dictionary
 			var resolved_impact: Vector2 = terrain_hit.get("position", intended_impact) if bool(terrain_hit.get("hit", false)) else intended_impact
 			impact_positions.append(resolved_impact)
 			if not dispersion_sample.is_empty(): dispersion_samples.append(dispersion_sample)
-			var travel_seconds := (unit["position"] as Vector2).distance_to(resolved_impact) / maxf(1.0, float(weapon.get("projectile_speed", 1.0)))
+			var travel_seconds := (unit["position"] as Vector2).distance_to(resolved_impact) / maxf(1.0, get_weapon_flight_speed(weapon))
 			if category == "Aviation": travel_seconds *= _aviation_delay_multiplier(unit["position"], intended_impact)
 			var delayed_attack := {"attack_id": attack_id, "source_unit_id": unit["entity_id"], "source_weapon_id": weapon["id"], "target_unit_id": "", "aimed_target_unit_id": target["entity_id"], "target_position": resolved_impact, "intended_impact_position": intended_impact, "resolved_impact_position": resolved_impact, "terrain_obstacle_id": terrain_hit.get("obstacle_id", ""), "blocked_by_terrain": bool(terrain_hit.get("hit", false)), "impact_radius": float(weapon.get("impact_radius", 40.0)), "origin": unit["position"], "resolve_at_time": float(state["elapsed_time"]) + travel_seconds, "accuracy_modifier": _environment_accuracy_modifier(unit["faction_id"], unit["position"], intended_impact, category), "source_status_effects":launch_effects.duplicate(true)}
 			_apply_dispersion_metadata(delayed_attack, dispersion_sample)
@@ -5147,7 +5611,7 @@ func _fire_weapon_at_position(unit: Dictionary, target_position: Vector2, weapon
 	var dispersion_samples: Array = []
 	for shot_index in range(shot_count):
 		var spread_offset := 0.0
-		if shot_count > 1: spread_offset = deg_to_rad(float(weapon.get("spread", 0.0))) * (float(shot_index) / float(shot_count - 1) - 0.5)
+		if shot_count > 1: spread_offset = deg_to_rad(get_weapon_spread(weapon)) * (float(shot_index) / float(shot_count - 1) - 0.5)
 		var attack_id := _next_entity_id("attack")
 		if category == "Torpedo":
 			var angular_error: float = random_source.randfn(0.0, float(torpedo_error_profile["sigma_radians"]))
@@ -5159,7 +5623,7 @@ func _fire_weapon_at_position(unit: Dictionary, target_position: Vector2, weapon
 			var resolved_impact: Vector2 = terrain_hit.get("position", intended_impact) if bool(terrain_hit.get("hit", false)) else intended_impact
 			impact_positions.append(resolved_impact)
 			if not dispersion_sample.is_empty(): dispersion_samples.append(dispersion_sample)
-			var travel_seconds := (unit["position"] as Vector2).distance_to(resolved_impact) / maxf(1.0, float(weapon.get("projectile_speed", 1.0)))
+			var travel_seconds := (unit["position"] as Vector2).distance_to(resolved_impact) / maxf(1.0, get_weapon_flight_speed(weapon))
 			if category == "Aviation": travel_seconds *= _aviation_delay_multiplier(unit["position"], intended_impact)
 			var delayed_attack := {"attack_id": attack_id, "source_unit_id": unit["entity_id"], "source_weapon_id": weapon["id"], "target_unit_id": "", "target_position": resolved_impact, "intended_impact_position": intended_impact, "resolved_impact_position": resolved_impact, "terrain_obstacle_id": terrain_hit.get("obstacle_id", ""), "blocked_by_terrain": bool(terrain_hit.get("hit", false)), "impact_radius": float(weapon.get("impact_radius", 40.0)), "origin": unit["position"], "resolve_at_time": float(state["elapsed_time"]) + travel_seconds, "accuracy_modifier": _environment_accuracy_modifier(unit["faction_id"], unit["position"], intended_impact, category), "source_status_effects":launch_effects.duplicate(true)}
 			_apply_dispersion_metadata(delayed_attack, dispersion_sample)
@@ -5192,10 +5656,18 @@ func _salvo_impact_position(origin: Vector2, target_position: Vector2, spread_of
 
 func _sample_gun_impact(origin: Vector2, aim_position: Vector2, weapon: Dictionary, status_effects: Array = []) -> Dictionary:
 	var settings := _gun_dispersion_settings()
-	var effective_spread := ModifierService.calculate(float(weapon.get("spread", 0.0)), status_effects, "WeaponSpread", "Gun")
+	var effective_spread := ModifierService.calculate(get_weapon_spread(weapon), status_effects, "WeaponSpread", "Gun")
 	var sample := GunDispersionService.sample(origin, aim_position, effective_spread, float(settings["sigma_scale"]), float(settings["longitudinal_sigma_ratio"]), random_source)
 	sample["spread_degrees"] = effective_spread
 	return sample
+
+
+func get_weapon_flight_speed(weapon: Dictionary) -> float:
+	return CombatTuningService.weapon_flight_speed(weapon, registry.get_definition("settings", "settings.combat"))
+
+
+func get_weapon_spread(weapon: Dictionary) -> float:
+	return CombatTuningService.weapon_spread(weapon, registry.get_definition("settings", "settings.combat"))
 
 
 func _gun_dispersion_settings() -> Dictionary:
@@ -5248,7 +5720,7 @@ func _start_mount_launch_interval(unit: Dictionary, weapon: Dictionary) -> void:
 func _torpedo_error_profile(unit: Dictionary, weapon: Dictionary, shot_count: int, status_effects: Array = []) -> Dictionary:
 	if weapon.get("mount_type", "") != "Torpedo" or shot_count <= 1:
 		return {"sigma_radians": 0.0, "environment_multiplier": 1.0}
-	var effective_spread := ModifierService.calculate(float(weapon.get("spread", 0.0)), status_effects, "WeaponSpread", "Torpedo")
+	var effective_spread := ModifierService.calculate(get_weapon_spread(weapon), status_effects, "WeaponSpread", "Torpedo")
 	var adjacent_angle := deg_to_rad(effective_spread) / float(shot_count - 1)
 	var environment_context := terrain_context_service.context_at(unit.get("position", Vector2.ZERO))
 	var environment_multiplier := float(environment_context.get("torpedo_sigma_multiplier", 1.0))
@@ -5840,6 +6312,7 @@ func _attack_source_faction(attack: Dictionary, source: Dictionary) -> String:
 func _sink_unit(unit: Dictionary, source_unit_id: String) -> void:
 	navigation_request_broker.cancel_for_unit(str(unit.get("entity_id", "")))
 	if unit["life_state"] == "Sunk": return
+	_cancel_navigation_recovery(unit, "UNIT_SUNK")
 	unit["life_state"] = "Sunk"
 	unit["current_hp"] = 0.0
 	unit["current_speed"] = 0.0
@@ -5942,6 +6415,9 @@ func _apply_tutorial_control_state(unit: Dictionary, control_state: Dictionary) 
 
 
 func _finish_battle(winner: String, reason: String, reason_code: String = "", reason_summary: String = "", reason_context: Dictionary = {}) -> void:
+	if state.get("phase", "") == "Finished": return
+	for wave in state.get("reinforcement_waves", []):
+		if wave.get("status", "") == "Pending": wave["status"] = "Cancelled"
 	state["phase"] = "Finished"
 	state["result"] = {
 		"winner_faction": winner,
@@ -6783,7 +7259,7 @@ func _aim_fire_arcs(weapons: Array) -> Array:
 				"degrees": float(arc.get("degrees", 360.0)),
 				"minimum_range": float(weapon.get("minimum_range", 0.0)),
 				"range": float(weapon.get("range", 0.0)),
-				"spread_degrees": float(weapon.get("spread", 0.0)),
+				"spread_degrees": get_weapon_spread(weapon),
 				"weapon_id": str(weapon.get("id", "")),
 			}
 			var key := "%s|%s|%s|%s|%s" % [entry["center"], entry["degrees"], entry["minimum_range"], entry["range"], entry["spread_degrees"]]
@@ -7140,4 +7616,4 @@ func presentation_context(faction: String = PLAYER_FACTION) -> Dictionary:
 	for id in _ai_observation_for(faction).known_facilities:
 		var facility: Dictionary = state.get("facilities_by_id", {}).get(id, {})
 		facilities[id] = {"facility_id":id, "position":facility.get("position",Vector2.ZERO)}
-	return {"state":{"units_by_id":units, "facilities_by_id":facilities, "visible_by_faction":{faction:units}}}
+	return {"combat_settings":registry.get_definition("settings", "settings.combat").duplicate(true), "state":{"units_by_id":units, "facilities_by_id":facilities, "visible_by_faction":{faction:units}}}

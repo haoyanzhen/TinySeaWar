@@ -8,7 +8,7 @@ func _init() -> void:
 func _run() -> void:
 	var target_size := Vector2i(1920, 1080)
 	var output_path := "/tmp/tinyseawar_scene_qa.png"
-	var palette_id := "cloudy"
+	var palette_id := ""
 	var level_id := "level.prototype_3v3"
 	var camera_position := Vector2(-1.0, -1.0)
 	var camera_zoom := -1.0
@@ -67,7 +67,7 @@ func _run() -> void:
 				player_ship_ids.append(ship_id)
 				if ship_id not in flow.unlocked_ship_ids:
 					flow.unlocked_ship_ids.append(ship_id)
-			var custom_result: Dictionary = flow.configure_custom_battle(base_level_id, map_level_id, palette_id, player_ship_ids)
+			var custom_result: Dictionary = flow.configure_custom_battle(base_level_id, map_level_id, palette_id if not palette_id.is_empty() else "cloudy_day", player_ship_ids)
 			if not bool(custom_result.get("ok", false)):
 				push_error("Could not configure scene QA custom battle: %s" % custom_result)
 				quit(1)
@@ -76,6 +76,8 @@ func _run() -> void:
 		flow.select_level(level_id)
 	var scene: PackedScene = load("res://scenes/battle/prototype_battle.tscn")
 	var battle = scene.instantiate()
+	battle.progress_recording_enabled = false
+	if not palette_id.is_empty(): battle.palette_override = palette_id
 	viewport.add_child(battle)
 	await process_frame
 	battle.set_process(false)
@@ -85,7 +87,8 @@ func _run() -> void:
 	while executed_ticks < simulation_ticks and battle.session.state.get("phase", "") == "Running":
 		battle._consume_events(battle.session.advance_tick(0.1))
 		executed_ticks += 1
-	battle._set_ocean_palette(palette_id)
+	battle._sync_visuals()
+	battle._update_hud()
 	if camera_zoom > 0.0:
 		battle.battle_camera.zoom = Vector2.ONE * camera_zoom
 	if camera_position.x < 0.0 and camera_position.y < 0.0 and executed_ticks > 0:
@@ -103,7 +106,10 @@ func _run() -> void:
 	await process_frame
 	await process_frame
 	# Presentation-only fixtures; do not record progression or claim a played result.
-	if ui_state == "paused":
+	if ui_state == "mission":
+		battle.battle_hud.mission_details_open = true
+		battle._update_hud()
+	elif ui_state == "paused":
 		battle.session.state["phase"] = "Paused"
 		battle._update_hud()
 	elif ui_state == "result":

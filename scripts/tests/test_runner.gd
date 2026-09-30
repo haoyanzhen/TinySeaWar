@@ -29,8 +29,8 @@ func _run() -> void:
 	registry = ConfigRegistry.new()
 	_check(registry.load_all(), "configuration registry loads: %s" % str(registry.errors))
 	_check(registry.all("ships").size() == 48, "all 48 phase-one and phase-two character ship definitions load")
-	_check(registry.all("levels").size() == 27, "four open-sea, ten coastal, and thirteen formal levels load")
-	_check(registry.all("objectives").size() == 13, "T-01 through T-08 and S-01 through S-05 objective definitions load")
+	_check(registry.all("levels").size() == 37, "four open-sea, ten coastal, and twenty-three formal levels load")
+	_check(registry.all("objectives").size() == 23, "all tutorial and S/M/L challenge objective definitions load")
 	_test_terrain_configuration_and_rules()
 	_test_coastal_runtime_levels()
 	_test_scene_combat_tactical_effects()
@@ -96,9 +96,9 @@ func _test_chinese_display_text() -> void:
 
 
 func _test_terrain_configuration_and_rules() -> void:
-	_check(registry.all("terrain").size() == 40, "ten legacy and ten 16:9 terrain templates plus their twenty runtime maps load")
-	_check(registry.all("navigation").size() == 20, "legacy and 16:9 navigation graphs load for all ten coastal layouts")
-	_check(registry.all("environment_zones").size() == 23, "seven local effects, five authored zone sets, and eleven ocean condition definitions load")
+	_check(registry.all("terrain").size() == 50, "legacy/16:9 templates, runtime maps and ten independent challenges load")
+	_check(registry.all("navigation").size() == 30, "legacy, 16:9 and ten independent challenge navigation graphs load")
+	_check(registry.all("environment_zones").size() == 39, "effects, original/challenge zones, ocean conditions and six timelines load")
 	_check(registry.all("facilities").size() == 15, "facility, support mission, legacy and 16:9 minefield/layout definitions load")
 	var harbor_level: Dictionary = registry.get_definition("levels", "level.prototype_harbor_3v3")
 	var harbor_costs := {"player":0, "enemy":0}
@@ -556,7 +556,7 @@ func _test_gun_dispersion_rules() -> void:
 	var weapon_state := _weapon_state(warspite, weapon["id"])
 	warspite["status_effects"].append({"stat":"WeaponSpread", "operation":"PercentAdd", "value":-0.5, "category":"Gun"})
 	var reduced_sample: Dictionary = session._sample_gun_impact(warspite["position"], Vector2(1580.0, 1000.0), weapon, warspite["status_effects"])
-	_check(is_equal_approx(float(reduced_sample["lateral_sigma"]), 75.0) and is_equal_approx(float(session.get_primary_aim_status(warspite["entity_id"], Vector2(1580.0, 1000.0))["spread_degrees"]), 7.0), "WeaponSpread modifiers scale both runtime sigma and the aiming ellipse")
+	_check(is_equal_approx(float(reduced_sample["lateral_sigma"]), 37.5) and is_equal_approx(float(session.get_primary_aim_status(warspite["entity_id"], Vector2(1580.0, 1000.0))["spread_degrees"]), 3.5), "WeaponSpread modifiers scale both runtime sigma and the aiming ellipse")
 	warspite["status_effects"].clear()
 	session.delayed_attacks.clear()
 	session.drain_events()
@@ -565,7 +565,7 @@ func _test_gun_dispersion_rules() -> void:
 	var metadata_valid: bool = session.delayed_attacks.size() == 8
 	for attack in session.delayed_attacks:
 		independent_positions[str(attack["target_position"])] = true
-		metadata_valid = metadata_valid and is_equal_approx(float(attack.get("dispersion_lateral_sigma", 0.0)), 150.0) and is_equal_approx(float(attack.get("dispersion_longitudinal_sigma", 0.0)), 75.0)
+		metadata_valid = metadata_valid and is_equal_approx(float(attack.get("dispersion_lateral_sigma", 0.0)), 75.0) and is_equal_approx(float(attack.get("dispersion_longitudinal_sigma", 0.0)), 37.5)
 	var fired_event: Dictionary = {}
 	for event in session.drain_events():
 		if event.get("event_type", "") == "WeaponFired": fired_event = event

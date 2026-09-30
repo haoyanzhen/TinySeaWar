@@ -14,6 +14,7 @@ var selected_level_id := DEFAULT_LEVEL_ID
 var current_window_size := Vector2i(1920, 1080)
 var menu_preferences := {"cover_id": "hood_harbor", "reduce_motion": false, "auto_view": true}
 var menu_return_page := "home"
+var skill_cutin_mode := "full"
 var unlocked_ship_ids: Array[String] = []
 var completed_challenge_level_ids: Array[String] = []
 var _custom_level_definition: Dictionary = {}
@@ -31,6 +32,7 @@ func _ready() -> void:
 	current_window_size = _pair_to_vector(settings.get("window", {}).get("default_size", [1920, 1080]))
 	var config := ConfigFile.new()
 	if config.load(USER_SETTINGS_PATH) == OK:
+		skill_cutin_mode = normalize_skill_cutin_mode(str(config.get_value("battle", "skill_cutin_mode", "full")))
 		for key in menu_preferences:
 			menu_preferences[key] = config.get_value("menu", key, menu_preferences[key])
 		var saved_size := Vector2i(
@@ -169,7 +171,7 @@ func _save_pending_progress() -> bool:
 	return saved
 
 
-func configure_custom_battle(base_level_id: String, map_level_id: String, ocean_palette: String, player_ship_ids: Array[String]) -> Dictionary:
+func configure_custom_battle(base_level_id: String, map_level_id: String, ocean_palette: String, player_ship_ids: Array[String], environment_timeline_id: String = "") -> Dictionary:
 	var base_level: Dictionary = DataRegistry.registry.get_definition("levels", base_level_id)
 	var map_level: Dictionary = DataRegistry.registry.get_definition("levels", map_level_id)
 	if base_level.is_empty() or map_level.is_empty():
@@ -187,7 +189,14 @@ func configure_custom_battle(base_level_id: String, map_level_id: String, ocean_
 	custom_level["display_name"] = "自定义战斗"
 	custom_level["battle_mode"] = "CustomBattle"
 	custom_level["map"] = map_level.get("map", {}).duplicate(true)
+	custom_level["map"].erase("environment_timeline_id")
 	custom_level["map"]["ocean_palette"] = ocean_palette
+	if not environment_timeline_id.is_empty():
+		var timeline: Dictionary = DataRegistry.registry.get_definition("environment_zones", environment_timeline_id)
+		if not DataRegistry.registry.validate_environment_timeline(timeline).is_empty(): return {"ok":false, "error":"INVALID_ENVIRONMENT_TIMELINE"}
+		custom_level["map"]["environment_timeline_id"] = environment_timeline_id
+		custom_level["map"]["ocean_palette"] = str(timeline.stages[0].ocean_palette)
+	if not DataRegistry.registry.validate_environment_map(custom_level["map"]).is_empty(): return {"ok":false, "error":"INVALID_ENVIRONMENT_MAP"}
 	custom_level.erase("require_equal_fleet_cost")
 	var custom_fleet: Array = []
 	for index in range(player_ship_ids.size()):
@@ -298,3 +307,16 @@ func _pair_to_vector(value: Array) -> Vector2i:
 	if value.size() != 2:
 		return Vector2i.ZERO
 	return Vector2i(int(value[0]), int(value[1]))
+
+
+func normalize_skill_cutin_mode(value: String) -> String:
+	return value if value in ["full", "simple", "off"] else "full"
+
+
+func save_skill_cutin_mode(value: String, path := USER_SETTINGS_PATH) -> bool:
+	skill_cutin_mode = normalize_skill_cutin_mode(value)
+	var config := ConfigFile.new()
+	var error := config.load(path)
+	if error != OK and error != ERR_FILE_NOT_FOUND: return false
+	config.set_value("battle", "skill_cutin_mode", skill_cutin_mode)
+	return config.save(path) == OK

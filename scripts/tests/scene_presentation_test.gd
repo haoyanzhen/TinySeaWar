@@ -170,7 +170,7 @@ func _run() -> void:
 	var warspite_aim: Dictionary = battle.session.get_primary_aim_status("unit.player.warspite", warspite_snapshot["position"] + Vector2(0.0, 400.0))
 	_check(warspite_aim.get("fire_arcs", []).size() == 1 and warspite_aim.get("full_salvo_fire_arcs", []).size() == 2, "main-gun overlay receives green available sectors and dark-green all-mount sectors")
 	var dispersion_radii: Vector2 = battle._main_gun_dispersion_radii(1080.0, float(warspite_aim.get("spread_degrees", 0.0)))
-	_check(is_equal_approx(dispersion_radii.x, 150.0) and is_equal_approx(dispersion_radii.y, 75.0), "main-gun scope shows the Warspite-calibrated lateral and longitudinal one-sigma ellipse")
+	_check(is_equal_approx(dispersion_radii.x, 75.0) and is_equal_approx(dispersion_radii.y, 37.5), "main-gun scope shows the Warspite-calibrated lateral and longitudinal one-sigma ellipse")
 	_check(battle.has_method("_draw_main_gun_scope") and battle.has_method("_draw_main_gun_dispersion"), "main-gun aiming uses a precise programmatic scope and dispersion overlay")
 	battle._update_hud()
 	_check(is_equal_approx(float(battle.session.get_operation_status("unit.player.warspite").get("primary_range", 0.0)), 1080.0), "HUD operation status displays the 1.5x main-gun range")
@@ -254,8 +254,8 @@ func _run() -> void:
 	battle._update_camera(0.1)
 	_check(battle.camera_mode == "Follow" and battle.battle_camera.position.distance_to(followed["position"]) < distance_before_follow, "follow camera smoothly approaches the selected friendly unit")
 
-	battle._set_ocean_palette("dusk")
-	_check(battle.current_palette_id == "dusk", "ocean palette can switch at runtime")
+	_apply_palette(battle, "dusk")
+	_check(battle.current_palette_id == "cloudy_dusk", "ocean palette can switch at runtime")
 	var ocean_material := battle.ocean_surface.material as ShaderMaterial
 	var weather_material := battle.weather_overlay.material as ShaderMaterial
 	_check(weather_material != null, "battle scene includes an independent weather overlay material")
@@ -270,15 +270,15 @@ func _run() -> void:
 		for time_of_day in ocean_times:
 			var palette_id := "%s_%s" % [weather, time_of_day]
 			_check(ocean_palettes.has(palette_id), "ocean palette exists: %s" % palette_id)
-			battle._set_ocean_palette(palette_id)
+			_apply_palette(battle, palette_id)
 			_check(ocean_material.get_shader_parameter("base_texture") != null, "ocean palette binds texture: %s" % palette_id)
-	battle._set_ocean_palette("rain_night")
+	_apply_palette(battle, "rain_night")
 	_check(float(ocean_material.get_shader_parameter("rain_strength")) > 0.0 and float(ocean_material.get_shader_parameter("mist_strength")) > 0.0, "rain ocean palette drives rain and mist shader layers")
 	_check(float(ocean_material.get_shader_parameter("rain_density")) > 1.0 and float(ocean_material.get_shader_parameter("rain_line_strength")) > 1.0, "rain ocean palette drives visible rain-line profile parameters")
 	_check(ocean_material.get_shader_parameter("rain_line_texture") != null and ocean_material.get_shader_parameter("rain_ripple_texture") != null, "rain ocean palette binds authored rain texture masters")
 	_check(float(weather_material.get_shader_parameter("rain_strength")) > 0.0 and weather_material.get_shader_parameter("rain_line_texture") != null, "rain weather overlay binds authored rain layer")
 	_check(weather_material.get_shader_parameter("snow_flake_texture") != null and weather_material.get_shader_parameter("snow_haze_texture") != null, "weather overlay binds authored snow master textures")
-	battle._set_ocean_palette("thunderstorm_night")
+	_apply_palette(battle, "thunderstorm_night")
 	_check(float(ocean_material.get_shader_parameter("lightning_strength")) > 0.0 and float(ocean_material.get_shader_parameter("foam_strength")) > 0.0, "thunderstorm ocean palette drives lightning and foam shader layers")
 	_check(float(ocean_material.get_shader_parameter("squall_strength")) > 0.0 and float(ocean_material.get_shader_parameter("wave_scale")) > 1.0, "thunderstorm ocean palette drives squall and rough-wave profile parameters")
 	_check(ocean_material.get_shader_parameter("storm_shadow_texture") != null and ocean_material.get_shader_parameter("lightning_mask_texture") != null, "thunderstorm ocean palette binds authored storm texture masters")
@@ -287,7 +287,7 @@ func _run() -> void:
 	Input.action_press("camera_right")
 	await process_frame
 	Input.action_release("camera_right")
-	_check(battle.camera_mode == "Manual" and battle.battle_camera.position.x > camera_before_input.x, "WASD input exits follow mode and moves the camera")
+	_check(battle.camera_mode == "Manual" and battle.battle_camera.position.x > camera_before_input.x, "camera input exits follow mode and moves the camera")
 	battle.battle_camera.position = Vector2(-1000.0, -1000.0)
 	battle._clamp_camera_to_map()
 	_check(battle.battle_camera.position.x > 0.0 and battle.battle_camera.position.y > 0.0, "camera clamp prevents exposing outside the map")
@@ -308,13 +308,14 @@ func _run() -> void:
 			"impact_positions": [warspite_snapshot["position"] + Vector2(380.0, 72.0), warspite_snapshot["position"] + Vector2(340.0, -58.0)],
 			"shot_count": 2,
 		}
-	], battle.session)
+	], battle.session.presentation_context())
 	await process_frame
 	var shell_flight_found := false
 	for child in battle.projectile_layer.get_children():
 		var script: Script = child.get_script() as Script
 		if script != null and str(script.resource_path).ends_with("shell_flight_view.gd"):
 			shell_flight_found = true
+			_check(is_equal_approx(child.duration, child.start_position.distance_to(child.end_position) / 315.0), "shell flight view uses tuned speed from filtered battle context")
 			break
 	_check(battle.projectile_layer.get_child_count() > shell_count_before and shell_flight_found, "gun fire spawns visible shell flight nodes with trailing effects")
 	var shell_destinations: Array = battle.effect_director._shell_flight_destinations({
@@ -445,3 +446,10 @@ func _descendants_of_type(node: Node, class_name_value: String) -> Array[Node]:
 			result.append(child)
 		result.append_array(_descendants_of_type(child, class_name_value))
 	return result
+
+
+func _apply_palette(battle, palette: String) -> void:
+	_check(bool(battle._set_ocean_palette(palette).get("accepted", false)), "environment override accepted")
+	battle._consume_events(battle.session.advance_tick(0.1))
+	battle._sync_visuals()
+	battle._update_hud()

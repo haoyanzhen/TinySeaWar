@@ -41,7 +41,8 @@ current_mode_id, mode_candidate_id, mode_confirmations
 current_tactic, current_target_id
 target_memory, contact_confidence
 search_patrol # {} | {destination: Vector2}
-group_id, group_role, formation_slot
+contact_search_station # {} | {center: Vector2, destination: Vector2, expires_at: float}
+group_id, group_role, formation_slot_index
 objective_assignment, reservation_state
 last_decision_tick, hold_until_tick
 interrupt_state, recovery_state
@@ -63,6 +64,8 @@ last_submarine_fire_tick
 ```
 
 State 的所有敌情来源必须可追溯到阵营过滤的 AIObservation。
+
+`ai_groups_by_faction[faction][group_id]` 的运行时编组记录保存 `leader_unit_id`、有序 `member_ids`、`formation_id`，另有共享行进角 `heading: float` 与阵型切换战斗秒数 `formation_changed_at: float`。仅完整AI建立这些记录，玩家集合指令不扩权为完整AI。共享导航邻舰快照的 `friendly/navigating: bool` 只用于同向跟随偏好，敌方导航模式不得用于该偏好。
 
 `search_patrol` 默认空字典，仅保存无接触搜索的语义目的地；生命周期见16号设计。它不拥有路径、可达性或恢复状态，不读取隐藏敌舰位置，不写入Profile或进度存档。
 
@@ -90,3 +93,9 @@ Search | Approach | SurfaceForAttack | AttackRun | BreakContact | RecoverOxygen
 `submarine_last_asw_damage_at`、`submarine_last_dive_at` 为战斗秒数，默认 `-INF`；前者只记录有效反潜伤害，后者只记录权威下潜完成。`submarine_depth_intent` 枚举为 `Attack | SelfDefense | Conceal | Recover | Hunt`，默认 `Hunt`，不新增持久战斗阶段。
 
 航空真实模式观察对象增加 `visible_aircraft: Dictionary`，从 `aviation_observations_by_faction` 读取当前合法敌机片段，仅含公共ID、机型、位置、航向、HP及飞行状态。没有来源舰、武器、目标落点、剩余航时或隐藏路线；不作为舰船导航实体。抽象模式不凭新航空视图扩展AI观察权限。
+
+### 临时编队通行与友舰短期预测
+
+会话 `formation_transits[group_id]` 保存 `member_ids/order`、`mode: Expanded|Column`、`next_update_tick`、`clear_seconds`、`leader_id/leader_best_remaining/last_leader_progress_tick`、`cooldown_until` 与AI的 `intent_targets`；玩家集合另带 `center`，序号来自 `formation_transit_sequence`。这是导航协调运行时，不是AI Profile或玩家战术权限。完成/失效即释放，行为与预算见t01 11.2。
+
+共享导航邻舰快照可携带友方 `committed_samples`（位置、航向、航速与相对秒数 `tick_offset`），仅包含有效承诺前缀、最多11点；敌方不得读取未来控制。`_pose_cache` 只存在本次调用的邻舰快照中，不能跨Tick、跨意图或作为战略路线缓存。内部 `FormationTransitChanged` 不投影到玩家表现事件。

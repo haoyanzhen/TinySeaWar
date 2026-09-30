@@ -17,10 +17,10 @@ const CATEGORY_PATHS := {
 	"ai_profiles": "res://data/ai",
 }
 const CATEGORY_FILES := {
-	"collision_fields": ["res://data/terrain/collision_field_manifest.json"],
-	"terrain": ["res://data/terrain/terrain_templates.json", "res://data/terrain/terrain_definitions.json"],
-	"navigation": ["res://data/terrain/navigation_definitions.json"],
-	"environment_zones": ["res://data/environments/environment_zone_definitions.json", "res://data/environments/ocean_battle_condition_definitions.json"],
+	"collision_fields": ["res://data/terrain/collision_field_manifest.json", "res://data/terrain/challenge_collision_fields.json"],
+	"terrain": ["res://data/terrain/terrain_templates.json", "res://data/terrain/terrain_definitions.json", "res://data/terrain/challenge_terrains.json"],
+	"navigation": ["res://data/terrain/navigation_definitions.json", "res://data/terrain/challenge_navigation.json"],
+	"environment_zones": ["res://data/environments/environment_zone_definitions.json", "res://data/environments/ocean_battle_condition_definitions.json", "res://data/environments/environment_timelines.json", "res://data/environments/challenge_environments.json"],
 }
 const DISTANCE_BASELINE_MULTIPLIER := 1.5
 const MOTION_BASELINE_MULTIPLIER := 0.5
@@ -373,6 +373,7 @@ func _validate_level(level: Dictionary) -> void:
 	var ocean_palette := str(map.get("ocean_palette", ""))
 	if ocean_palette.is_empty() or not _ocean_condition_exists(ocean_palette):
 		errors.append("Missing ocean battle condition for palette %s referenced by %s" % [ocean_palette, level_id])
+	errors.append_array(validate_environment_map(map))
 	var terrain_definition_id := str(map.get("terrain_definition_id", ""))
 	if not terrain_definition_id.is_empty() and get_definition("terrain", terrain_definition_id).is_empty():
 		errors.append("Missing terrain %s referenced by %s" % [terrain_definition_id, level_id])
@@ -459,6 +460,10 @@ func _validate_level(level: Dictionary) -> void:
 		if wave_id.is_empty() or wave_ids.has(wave_id) or str(wave.get("faction_id", "")) not in ["player", "enemy"] or float(wave.get("earliest_time", -1.0)) < 0.0 or int(wave.get("concurrent_unit_cap", 0)) <= 0:
 			errors.append("Invalid reinforcement wave in %s" % level_id)
 		wave_ids[wave_id] = true
+		if wave.get("members", []).is_empty() or wave.get("members", []).size() > int(wave.get("concurrent_unit_cap", 0)):
+			errors.append("Invalid reinforcement capacity in %s" % level_id)
+		if wave.has("spawn_display_name") and (wave["spawn_display_name"] is not String or str(wave["spawn_display_name"]).strip_edges().is_empty()):
+			errors.append("Invalid reinforcement entrance label in %s" % level_id)
 		for member_value in wave.get("members", []):
 			var member: Dictionary = member_value
 			var entity_id := str(member.get("entity_id", ""))
@@ -477,6 +482,23 @@ func _validate_objective(objective: Dictionary) -> void:
 		errors.append("Missing objective title in %s" % objective_id)
 	if objective.has("optional_ordered_enemy_unit_ids") and kind != "ChallengeMission":
 		errors.append("Optional mastery is only valid for ChallengeMission in %s" % objective_id)
+	if objective.has("optional_enemy_sunk_stages"):
+		var stages = objective["optional_enemy_sunk_stages"]
+		var units := _objective_units(objective_id)
+		var seen := {}
+		if kind != "ChallengeMission" or objective.has("optional_ordered_enemy_unit_ids") or stages is not Array:
+			errors.append("Invalid optional mastery stages in %s" % objective_id)
+		elif stages.size() < 2:
+			errors.append("Optional mastery needs two stages in %s" % objective_id)
+		else:
+			for stage in stages:
+				if stage is not Array or stage.is_empty():
+					errors.append("Empty or invalid mastery stage in %s" % objective_id)
+					continue
+				for unit_id in stage:
+					if unit_id is not String or seen.has(unit_id) or not units.has(unit_id) or units.get(unit_id, {}).get("faction_id", "") != "enemy":
+						errors.append("Invalid mastery stage member in %s" % objective_id)
+					seen[unit_id] = true
 	if kind == "ChallengeMission":
 		var challenge_units := _objective_units(objective_id)
 		if challenge_units.is_empty(): errors.append("Challenge objective %s is not referenced by a level" % objective_id)
@@ -734,6 +756,17 @@ func _valid_normalized_rgba(value: Variant) -> bool:
 
 
 func _validate_combat_settings(settings: Dictionary) -> void:
+	var multipliers: Variant = settings.get("battle_multipliers", {})
+	if not multipliers is Dictionary:
+		errors.append("battle_multipliers must be an object in settings.combat")
+	else:
+		for key in multipliers:
+			if key not in ["shell_speed", "shell_spread", "aircraft_speed"]:
+				errors.append("Unknown battle multiplier: %s" % key)
+				continue
+			var value: Variant = multipliers[key]
+			if typeof(value) not in [TYPE_INT, TYPE_FLOAT] or not is_finite(float(value)) or float(value) <= 0.0:
+				errors.append("Battle multiplier %s must be finite and positive" % key)
 	if settings.get("aviation_rules_mode", "Abstract") not in ["Abstract", "Physical"]:
 		errors.append("Invalid aviation_rules_mode in settings.combat")
 	var dispersion: Dictionary = settings.get("gun_dispersion", {})
@@ -847,7 +880,7 @@ func _validate_terrain(definition: Dictionary) -> void:
 		var spawn_ids := {}
 		for faction_id in ["player", "enemy"]:
 			var faction_spawns: Array = definition.get("spawn_points", []).filter(func(spawn): return str(spawn.get("faction_id", "")) == faction_id)
-			if faction_spawns.size() != 11:
+			if range(1, 12).any(func(index): return not faction_spawns.any(func(spawn): return str(spawn.get("id", "")) == "%s_%d" % [faction_id, index])):
 				errors.append("Terrain map %s must provide 11 %s spawn slots" % [definition_id, faction_id])
 			for spawn in faction_spawns:
 				var spawn_id := str(spawn.get("id", ""))
@@ -897,10 +930,12 @@ func _validate_navigation(definition: Dictionary) -> void:
 func _validate_environment_definition(definition: Dictionary) -> void:
 	var definition_id := str(definition.get("id", "?"))
 	var definition_type := str(definition.get("definition_type", ""))
-	if definition_type not in ["EnvironmentEffect", "EnvironmentZoneSet", "WeatherBattleProfile", "TimeBattleProfile", "OceanConditionRules", "OceanConditionAliases"]:
+	if definition_type not in ["EnvironmentEffect", "EnvironmentZoneSet", "WeatherBattleProfile", "TimeBattleProfile", "OceanConditionRules", "OceanConditionAliases", "EnvironmentTimeline"]:
 		errors.append("Unsupported environment definition type in %s" % definition_id)
 		return
-	if definition_type == "WeatherBattleProfile":
+	if definition_type == "EnvironmentTimeline":
+		errors.append_array(validate_environment_timeline(definition))
+	elif definition_type == "WeatherBattleProfile":
 		if definition.get("weather", "") not in ["clear", "cloudy", "overcast", "rain", "thunderstorm"]:
 			errors.append("Unsupported weather battle profile in %s" % definition_id)
 		_validate_environment_context(definition.get("context", {}), definition_id, true)
@@ -1171,3 +1206,40 @@ func _resource_exists(path: String) -> bool:
 	if resource_path.begins_with("assets/") or resource_path.begins_with("data/"):
 		resource_path = "res://%s" % resource_path
 	return FileAccess.file_exists(resource_path)
+
+
+func validate_environment_timeline(definition: Dictionary) -> Array[String]:
+	var problems: Array[String] = []
+	var stages = definition.get("stages", [])
+	if definition.get("definition_type", "") != "EnvironmentTimeline" or not stages is Array or stages.is_empty():
+		return ["INVALID_ENVIRONMENT_TIMELINE"]
+	var previous := -1.0
+	for stage in stages:
+		if not stage is Dictionary: return ["INVALID_ENVIRONMENT_STAGE"]
+		var value = stage.get("start_seconds", -1)
+		if not _valid_environment_seconds(value) or float(value) <= previous or (previous < 0.0 and float(value) != 0.0):
+			problems.append("INVALID_ENVIRONMENT_STAGE_TIME")
+		if not _formal_ocean_condition_exists(str(stage.get("ocean_palette", ""))): problems.append("INVALID_ENVIRONMENT_PALETTE")
+		if value is float or value is int: previous = float(value)
+	var forecast = definition.get("forecast_seconds", 10)
+	if not _valid_environment_seconds(forecast): problems.append("INVALID_ENVIRONMENT_FORECAST")
+	if definition.has("loop_seconds"):
+		var period = definition.loop_seconds
+		if not _valid_environment_seconds(period) or float(period) <= previous: problems.append("INVALID_ENVIRONMENT_LOOP")
+	return problems
+
+
+func _valid_environment_seconds(value: Variant) -> bool:
+	return (value is float or value is int) and is_finite(float(value)) and float(value) >= 0.0 and absf(float(value) * 10.0 - roundf(float(value) * 10.0)) < 0.000001
+
+
+func validate_environment_map(map: Dictionary) -> Array[String]:
+	var problems: Array[String] = []
+	if not _ocean_condition_exists(str(map.get("ocean_palette", ""))): problems.append("INVALID_ENVIRONMENT_PALETTE")
+	var timeline_id := str(map.get("environment_timeline_id", ""))
+	if timeline_id.is_empty(): return problems
+	var timeline := get_definition("environment_zones", timeline_id)
+	problems.append_array(validate_environment_timeline(timeline))
+	if problems.is_empty() and str(map.get("ocean_palette", "")) != str(timeline.stages[0].ocean_palette):
+		problems.append("ENVIRONMENT_INITIAL_PALETTE_MISMATCH")
+	return problems

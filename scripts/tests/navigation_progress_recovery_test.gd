@@ -107,6 +107,9 @@ func _step(session) -> void:
 	session.state["elapsed_time"] = float(session.state["elapsed_time"]) + 0.1
 	session._update_navigation_plans()
 	session._update_movement(0.1)
+	session._resolve_unit_overlap()
+	for unit in session.state["units_by_id"].values():
+		if unit.get("life_state", "") == "Alive": session._update_navigation_progress(unit, 0.1)
 
 
 func _test_recovery(registry, mode: String, position: Vector2, heading: float) -> void:

@@ -41,7 +41,10 @@ func _test_all_fields_load(registry) -> void:
 	var loader = TerrainCollisionFieldLoader.new()
 	var definitions: Array = registry.all("collision_fields")
 	var first_loaded_field = null
-	_check(definitions.size() == 20, "all 20 terrain maps have collision fields")
+	var maps: Array = registry.all("terrain").filter(func(item): return str(item.get("id", "")).begins_with("terrain.map."))
+	var field_terrains := {}
+	for definition in definitions: field_terrains[str(definition.get("terrain_definition_id", ""))] = true
+	_check(not maps.is_empty() and maps.all(func(item): return field_terrains.has(str(item["id"]))), "every registered terrain map has a collision field")
 	for definition in definitions:
 		var terrain: Dictionary = registry.get_definition("terrain", str(definition.get("terrain_definition_id", "")))
 		var result := loader.load_field(definition, terrain)
@@ -262,7 +265,7 @@ func _test_collision_immediately_invalidates_plan(registry) -> void:
 	unit["heading"] = PI
 	unit["current_speed"] = float(unit.get("stats", {}).get("speed", 60.0))
 	unit["movement_state"] = session._new_movement_state("PlayerMoveOrder", Vector2(500.0, 900.0), [Vector2(500.0, 900.0)])
-	unit["navigation_state"]["trajectory_plan"] = {"ok":true, "candidate_id":"injected_unsafe", "planned_at_tick":session.state.get("tick_index", 0), "terrain_revision":int(session.state.get("terrain_map", {}).get("navigation_revision", 0)), "controls":[{"duration":1.0, "thrust_ratio":1.0, "turn_ratio":0.0}]}
+	unit["navigation_state"]["trajectory_plan"] = {"ok":true, "candidate_id":"injected_unsafe", "planned_at_tick":session.state.get("tick_index", 0), "valid_until_tick":int(session.state.get("tick_index", 0)) + 10, "terrain_revision":int(session.state.get("terrain_map", {}).get("navigation_revision", 0)), "controls":[{"duration":1.0, "thrust_ratio":1.0, "turn_ratio":0.0}]}
 	unit["navigation_state"]["current_control"] = {"thrust_ratio":1.0, "turn_ratio":0.0}
 	session._update_movement(0.1)
 	var navigation: Dictionary = unit["navigation_state"]

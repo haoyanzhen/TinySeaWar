@@ -1,6 +1,7 @@
 extends RefCounted
 
 const ShipMotionService = preload("res://scripts/domain/services/ship_motion_service.gd")
+const CollisionGeometry = preload("res://scripts/domain/services/collision_geometry_service.gd")
 
 const NORMAL_INTERVAL := 1.0
 const EMERGENCY_INTERVAL := 0.1
@@ -92,7 +93,53 @@ func plan_normal(motion_state: Dictionary, goal: Vector2, radius: float, movemen
 			_constant_template(0.75, clampf(preferred_turn - 0.35, -1.0, 1.0), "outer_left"),
 			_constant_template(0.75, clampf(preferred_turn + 0.35, -1.0, 1.0), "outer_right"),
 		]
+	var following := _following_thrust_limit(motion_state, goal, radius, nearby_units)
+	if following < 1.0:
+		# Apply the speed request BEFORE simulation; Domain executes the same
+		# controls that passed the full six-second safety validation.
+		for template in templates:
+			for control in template.get("controls", []):
+				control["thrust_ratio"] = minf(float(control.get("thrust_ratio", 0.0)), following)
+		templates[4] = {"controls":_turn_then_straight_controls(desired_angle, float(motion_state.get("turn_rate_limit", 0.0)), following), "tag":"traffic_follow"}
+		templates[5] = _constant_template(0.0, 0.0, "traffic_follow_brake")
+	elif _approaching_traffic(motion_state, radius, nearby_units):
+		# Both ships use starboard, so head-on traffic chooses complementary
+		# sides rather than oscillating between symmetric left/right winners.
+		# Replace, never add to, the six ordinary candidates.
+		templates[4] = _constant_template(0.45, 1.0, "traffic_starboard")
+		templates[5] = _constant_template(0.0, 1.0, "traffic_yield")
 	return _select_plan(templates.slice(0, NORMAL_CANDIDATE_LIMIT), motion_state, goal, NORMAL_HORIZON, radius, movement_tags, terrain_query, terrain_context, nearby_units, [], false, use_arrival_control, next_goals, prioritize_direct_player_motion)
+
+
+func _following_thrust_limit(motion: Dictionary, goal: Vector2, radius: float, nearby: Array) -> float:
+	var forward := Vector2.RIGHT.rotated(float(motion.get("heading", 0.0)))
+	var direction := goal - (motion.get("position", Vector2.ZERO) as Vector2)
+	if direction.length_squared() < 1.0 or direction.normalized().dot(forward) < 0.8: return 1.0
+	var extents: Vector2 = motion.get("collision_half_extents", Vector2.ONE * radius)
+	var maximum := maxf(0.01, float(motion.get("maximum_speed", 0.0)))
+	var speed := maxf(0.0, float(motion.get("speed", 0.0)))
+	var braking := maxf(0.01, float(motion.get("braking", maximum * 2.0)))
+	var drift: Vector2 = motion.get("current_vector", Vector2.ZERO)
+	var limit := 1.0
+	for other in nearby:
+		if not bool(other.get("friendly", false)) or not bool(other.get("navigating", false)): continue
+		var other_forward := Vector2.RIGHT.rotated(float(other.get("heading", 0.0)))
+		if forward.dot(other_forward) < 0.8: continue
+		var offset: Vector2 = other.position - motion.position
+		var gap := offset.dot(forward)
+		if gap <= 0.0: continue
+		var other_extents: Vector2 = other.get("half_extents", Vector2.ONE * float(other.get("radius", 0.0)))
+		# A conservative transverse envelope accounts for modest heading error.
+		var lateral_extent := absf(other_forward.dot(forward.orthogonal())) * other_extents.x + absf(other_forward.dot(forward)) * other_extents.y
+		if absf(offset.dot(forward.orthogonal())) > extents.y + lateral_extent + 12.0: continue
+		var front_speed := maxf(0.0, ((other.get("velocity", Vector2.ZERO) as Vector2) - drift).dot(forward))
+		var hull_gap := gap - extents.x - maxf(other_extents.x, other_extents.y) - 24.0
+		var headway := maxf(16.0, speed * NORMAL_INTERVAL)
+		var available := maxf(0.0, hull_gap - headway)
+		var stopping_limit := sqrt(maxf(0.0, front_speed * front_speed + 2.0 * braking * available))
+		var horizon_limit := maxf(0.0, front_speed + (hull_gap - headway) / NORMAL_HORIZON)
+		limit = minf(limit, minf(stopping_limit, horizon_limit) / maximum)
+	return clampf(limit, 0.0, 1.0)
 
 
 func plan_emergency(motion_state: Dictionary, threats: Array, radius: float, movement_tags: Array, terrain_query, terrain_context, nearby_units: Array = [], extended: bool = false) -> Dictionary:
@@ -265,6 +312,8 @@ func _simulate(initial_state: Dictionary, controls: Array, horizon: float, radiu
 			else:
 				return {"valid":false, "reason_code":"TERRAIN_COLLISION", "segments_simulated":int(trajectory_access.get("segments_validated", 0)), "exact_segment_checks":exact_segment_checks, "field_cells_visited":field_cells_visited}
 	var dynamic_started_usec := Time.get_ticks_usec() if diagnostics_enabled else 0
+	var dynamic_units := _dynamic_candidate_units(samples, initial_state, radius, nearby_units)
+	var dynamic_penetration := {}
 	for index in range(1, sample_limit):
 		var previous: Vector2 = samples[index - 1].get("position", Vector2.ZERO)
 		var next_position: Vector2 = samples[index].get("position", previous)
@@ -276,7 +325,7 @@ func _simulate(initial_state: Dictionary, controls: Array, horizon: float, radiu
 				sample_limit = index
 				break
 			return {"valid":false, "reason_code":"TERRAIN_COLLISION", "segments_simulated":index}
-		if not nearby_units.is_empty() and _dynamic_collision(next_position, radius, nearby_units):
+		if not dynamic_units.is_empty() and _dynamic_pose_collision(samples[index], initial_state, radius, dynamic_units, dynamic_penetration):
 			_record_diagnostic("dynamic_validation_usec", dynamic_started_usec)
 			return {"valid":false, "reason_code":"DYNAMIC_COLLISION", "segments_simulated":index}
 	_record_diagnostic("dynamic_validation_usec", dynamic_started_usec)
@@ -349,11 +398,97 @@ func _next_gate_alignment(terminal_state: Dictionary, next_goals: Array) -> floa
 	return 1.0 - absf(angle_difference(float(terminal_state.get("heading", 0.0)), direction.angle())) / PI
 
 
-func _dynamic_collision(position: Vector2, radius: float, nearby_units: Array) -> bool:
-	for other in nearby_units:
-		var combined_radius := radius + float(other.get("radius", 0.0))
-		if (other.get("position", Vector2.INF) as Vector2).distance_squared_to(position) < combined_radius * combined_radius:
-			return true
+func _neighbor_pose(other: Dictionary, time: float) -> Dictionary:
+	if not bool(other.get("_cache_prediction", false)): return _compute_neighbor_pose(other, time)
+	if not other.has("_pose_cache"): other["_pose_cache"] = {}
+	var cache: Dictionary = other["_pose_cache"]
+	var key := snappedf(time, 0.000001)
+	if cache.has(key): return cache[key]
+	var pose := _compute_neighbor_pose(other, time)
+	cache[key] = pose
+	return pose
+
+
+func _compute_neighbor_pose(other: Dictionary, time: float) -> Dictionary:
+	var committed: Array = other.get("committed_samples", []) if bool(other.get("friendly", false)) else []
+	if committed.is_empty():
+		return {"position":other.position + other.get("velocity", Vector2.ZERO) * time, "heading":float(other.get("heading", 0.0)), "margin":0.0}
+	var last: Dictionary = committed[-1]
+	var until := float(last.tick_offset)
+	if time <= until + 0.00001:
+		var index := mini(floori(time / FIXED_TICK_DELTA + 0.00001), committed.size() - 1)
+		var a: Dictionary = committed[index]
+		var b: Dictionary = committed[mini(index + 1, committed.size() - 1)]
+		var weight := clampf((time - float(a.tick_offset)) / FIXED_TICK_DELTA, 0.0, 1.0)
+		return {"position":(a.position as Vector2).lerp(b.position, weight), "heading":lerp_angle(float(a.heading), float(b.heading), weight), "margin":0.0}
+	var velocity := Vector2.RIGHT.rotated(float(last.heading)) * float(last.get("speed", 0.0)) + (last.get("current_vector", Vector2.ZERO) as Vector2)
+	var extra := time - until
+	return {"position":last.position + velocity * extra, "heading":float(last.heading), "margin":minf(12.0, extra * NAVIGATION_MARGIN)}
+
+
+func _dynamic_candidate_units(samples: Array, initial: Dictionary, radius: float, nearby: Array) -> Array:
+	if nearby.is_empty(): return nearby
+	var bounds := Rect2(samples[0]["position"], Vector2.ZERO)
+	for sample in samples: bounds = bounds.expand(sample["position"])
+	var own_extents: Vector2 = initial.get("collision_half_extents", Vector2.ONE * radius)
+	bounds = bounds.grow(maxf(own_extents.x, own_extents.y))
+	var horizon := float(samples[-1].get("tick_offset", 0.0))
+	var relevant: Array = []
+	for other in nearby:
+		var extents: Vector2 = other.get("half_extents", Vector2.ONE * float(other.get("radius", 0.0)))
+		var other_bounds: Rect2
+		if other.has("committed_samples") and bool(other.get("friendly", false)):
+			var end := _neighbor_pose(other, horizon)
+			other_bounds = Rect2(other["position"], Vector2.ZERO).expand(end.position)
+			for committed in other.committed_samples: other_bounds = other_bounds.expand(committed.position)
+			other_bounds = other_bounds.grow(maxf(extents.x, extents.y) + float(end.margin))
+		else:
+			other_bounds = Rect2(other.position, Vector2.ZERO).expand(other.position + other.get("velocity", Vector2.ZERO) * horizon).grow(maxf(extents.x, extents.y))
+		if bounds.intersects(other_bounds, true): relevant.append(other)
+	return relevant
+
+
+func _dynamic_pose_collision(sample: Dictionary, initial: Dictionary, radius: float, nearby: Array, penetration: Dictionary) -> bool:
+	var own_extents: Vector2 = initial.get("collision_half_extents", Vector2(radius, radius))
+	var time := float(sample.get("tick_offset", 0.0))
+	for other in nearby:
+		var other_extents: Vector2 = other.get("half_extents", Vector2.ONE * float(other.get("radius", 0.0)))
+		var initial_other_extents := other_extents
+		var other_position: Vector2 = other.position + other.get("velocity", Vector2.ZERO) * time
+		var other_heading := float(other.get("heading", 0.0))
+		if other.has("committed_samples") and bool(other.get("friendly", false)):
+			var pose := _neighbor_pose(other, time)
+			other_extents += Vector2.ONE * float(pose.margin)
+			other_position = pose.position
+			other_heading = float(pose.heading)
+		var offset: Vector2 = sample["position"] - other_position
+		var broad_radius := maxf(own_extents.x, own_extents.y) + maxf(other_extents.x, other_extents.y)
+		var key = other.get("id", other["position"])
+		if offset.length_squared() >= broad_radius * broad_radius:
+			penetration[key] = 0.0
+			continue
+		var depth := CollisionGeometry.separation_distance(own_extents, float(sample.get("heading", 0.0)), other_extents, other_heading, offset) - offset.length()
+		if not penetration.has(key):
+			var initial_offset: Vector2 = initial["position"] - other["position"]
+			penetration[key] = maxf(0.0, CollisionGeometry.separation_distance(own_extents, float(initial.get("heading", 0.0)), initial_other_extents, float(other.get("heading", 0.0)), initial_offset) - initial_offset.length())
+		# Existing overlap may escape monotonically; never allow a new overlap
+		# or deeper penetration. This is not a terrain-safety exception.
+		var previous_depth := float(penetration[key])
+		if depth > 0.001 and (previous_depth <= 0.001 or depth > previous_depth + 0.001): return true
+		penetration[key] = maxf(0.0, depth)
+	return false
+
+
+func _approaching_traffic(motion: Dictionary, radius: float, nearby: Array) -> bool:
+	var velocity := Vector2.RIGHT.rotated(float(motion.get("heading", 0.0))) * float(motion.get("speed", 0.0)) + (motion.get("current_vector", Vector2.ZERO) as Vector2)
+	var extent: Vector2 = motion.get("collision_half_extents", Vector2.ONE * radius)
+	for other in nearby:
+		var offset: Vector2 = other["position"] - motion["position"]
+		var relative: Vector2 = other.get("velocity", Vector2.ZERO) - velocity
+		if offset.dot(relative) >= 0.0 or relative.length_squared() < 0.001: continue
+		var closest := clampf(-offset.dot(relative) / relative.length_squared(), 0.0, NORMAL_HORIZON)
+		var other_extent: Vector2 = other.get("half_extents", Vector2.ONE * float(other.get("radius", 0.0)))
+		if (offset + relative * closest).length() < maxf(extent.x, extent.y) + maxf(other_extent.x, other_extent.y) + NAVIGATION_MARGIN: return true
 	return false
 
 

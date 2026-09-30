@@ -38,6 +38,47 @@
 | 第二轮 B · 蔚蓝舰队·旋律起伏 | 标题 | 不采用 | 高 | 听不到？ | 用户反馈听不到，先作为播放问题处理；本地120秒WAV信号正常，2026-09-30检查时旧8884服务已停止，不能确定反馈发生时原因。不据此修改作曲，保留原文件供复听。 | 已记录反馈 |
 | 第三轮 A · 蔚蓝舰队·叙事转折 | 标题 | 需改良 | 高 | 感觉旋律不太吸引人，有点太平缓了。 | 用户反馈旋律不吸引、过平。第四轮A回到第二轮A认可方向，增加清晰短动机、低弦律动、对比与变化回归；候选title_120s_iteration04_20260930/title_120_a，文本重生成，实际效果待试听。 | 已记录反馈 |
 | 第三轮 B · 蔚蓝舰队·温暖归航 | 标题 | 需改良 | 高 | 旋律倒是好听，不过和海战主题关联不大，可以作为主界面风格备选，可以多加萨克斯或大提琴的部分。 | 保留为用户认可旋律的主界面舒缓风格备选，原人工判定仍为需修改。第四轮B突出温暖次中音萨克斯与大提琴交替主奏，候选title_120s_iteration04_20260930/title_120_b；不宣称保留原乐句或已符合海战主主题。 | 已记录反馈 |
+| 第四轮 A · 蔚蓝舰队·启航动机 | 标题 | 偏好候选 | 高 | 前期基本可用，40～80s的低情绪旋律还是太长了 | 按用户要求改为90秒并保留小小海战主题。第五轮A仅改变时长作对照；B缩短低情绪对比段，强化舰队启航主题、无鼓组编制。候选title_90s_iteration05_20260930/title_90_a与title_90_b，待人工评审，不继承认可或循环验收。 | 已记录反馈 |
+| 第四轮 B · 港湾来信·萨克斯与大提琴 | 标题 | 需改良 | 高 | 背景的鼓很吵，旋律展开也不太好 | 用户反馈鼓吵、旋律展开差；本轮停止沿此版本扩写，两首新候选回到第四轮A舰队方向。后续标题曲按90秒制作，配器控制鼓组密度并保留海战主题辨识度。 | 已记录反馈 |
+| 第五轮 A · 蔚蓝舰队·90秒对照 | 标题 | 偏好候选 | 未排期 | 可以作为备选音乐 | — | 已记录反馈 |
+| 第五轮 B · 小小海战·扬帆同行 | 标题 | 偏好候选 | 未排期 |  | — | 已记录反馈 |
+| 舰队整备 · 晨光起航 | 标题 | 需改良 | 未排期 | 这一版普遍旋律不太好，重新做一版，注意保证音乐质量 | — | 已记录反馈 |
+| 日常陪伴 · 甲板午后 | 标题 | 需改良 | 未排期 | 这一版普遍旋律不太好，重新做一版，注意保证音乐质量 | — | 已记录反馈 |
+| 温情时刻 · 归航灯火 | 标题 | 需改良 | 未排期 | 这一版普遍旋律不太好，重新做一版，注意保证音乐质量 | — | 已记录反馈 |
+| 悠扬叙事 · 海图与远方 | 标题 | 需改良 | 未排期 | 这一版普遍旋律不太好，重新做一版，注意保证音乐质量 | — | 已记录反馈 |
+| 明朗冒险 · 逐风航线 | 标题 | 需改良 | 未排期 | 这一版普遍旋律不太好，重新做一版，注意保证音乐质量 | — | 已记录反馈 |
+| 舰队整备 · 迎风启航 | 标题 | 偏好候选 | 高 | 是音乐有突然的听感卡顿，就好像某个瞬间被捂住了扬声器一样的感觉。迎风启航可以保留，后四个再次生成 | 保留偏好候选，用户标记1秒及8.78秒音乐中断。局部10ms信号诊断已保存interruption_diagnostic.json；信号存在不能排除听感断裂或播放卡顿，先复听定位后选择局部修复或重生成，不标为成品。 | 已记录反馈 |
+| 日常陪伴 · 与你同航 | 标题 | 不采用 | 未排期 |  | — | 已记录反馈 |
+| 温情时刻 · 灯火相迎 | 标题 | 不采用 | 未排期 |  | — | 已记录反馈 |
+| 悠扬叙事 · 写给海的信 | 标题 | 不采用 | 未排期 |  | — | 已记录反馈 |
+| 明朗冒险 · 海风与旗帜 | 标题 | 需改良 | 未排期 |  | — | 已记录反馈 |
+| 日常陪伴 · 晴海相伴 | 标题 | 需改良 | 未排期 | 前10s重做，引入不自然，有断音问题；25s～35s重做，旋律不好。删掉76s以后片段。 | — | 已记录反馈 |
+| 温情时刻 · 归航的约定 | 标题 | 不采用 | 未排期 | 配器；旋律不太好，整个重做，注意符合温情时刻的主题。 | — | 已记录反馈 |
+| 悠扬叙事 · 海风来信 | 标题 | 需改良 | 未排期 | 整体背景低音可以稍弱一些，不要突出太严重即可；最后3s重做 | — | 已记录反馈 |
+| 明朗冒险 · 向着海平线 | 标题 | 不采用 | 未排期 | 整体主旋律还差点意思，但其他地方还不错，可以调整一下提示词再做一版 | — | 已记录反馈 |
+| 温情时刻 · 港灯与约定 | 标题 | 待评审 | 未排期 | — | — | 待首次评审 |
+| 明朗冒险 · 晴海远行 | 标题 | 待评审 | 未排期 | — | — | 待首次评审 |
+| companions_intro | 标题 | 待评审 | 未排期 | — | — | 待首次评审；后继版本 1 个，需对照复查 |
+| companions_middle | 标题 | 待评审 | 未排期 | — | — | 待首次评审 |
+| story_ending | 标题 | 待评审 | 未排期 | — | — | 待首次评审 |
+| 日常陪伴 · 晴海相伴 · 局部修订 | 标题 | 需改良 | 高 | 前10s根本不是音乐啊！修复了个什么！救命！检查一下局部重绘是否正常吧！ | 原v3晴海相伴0–10及25–35秒用哈希绑定源的局部重绘替换，段内0.1秒交叉淡化，截至76秒并加20ms尾淡化；10–25和35–75.98秒PCM保持一致。详细原料哈希与操作见同目录manifest.json和edit_provenance.json，已远端备份，待人工复查。 | 已记录反馈 |
+| 悠扬叙事 · 海风来信 · 局部修订 | 标题 | 需改良 | 高 | 低频可以再降2dB试试，最后3s和上一条一样的问题，重修以后修的根本不是音乐了。 | 原v3海风来信87–90秒局部重绘，0.1秒段内交叉淡化；整曲180Hz低架衰减2dB。EQ前0–87秒PCM保持一致；完整来源哈希与操作见同目录manifest.json和edit_provenance.json，已远端备份，待人工复查。 | 已记录反馈 |
+| 舰队整备 · 迎风启航 | 标题 | 待评审 | 未排期 | — | — | 待首次评审 |
+| 日常陪伴 · 晴海相伴 | 标题 | 待评审 | 未排期 | — | — | 待首次评审 |
+| 温情时刻 · 港灯与约定 | 标题 | 待评审 | 未排期 | — | — | 待首次评审 |
+| 悠扬叙事 · 海风来信 | 标题 | 待评审 | 未排期 | — | — | 待首次评审 |
+| 明朗冒险 · 晴海远行 | 标题 | 待评审 | 未排期 | — | — | 待首次评审 |
+| companions_intro | 标题 | 待评审 | 未排期 | — | — | 改良版待复查 |
+| companions_intro | 标题 | 待评审 | 未排期 | — | — | 待首次评审 |
+| companions_middle | 标题 | 待评审 | 未排期 | — | — | 待首次评审 |
+| story_ending | 标题 | 待评审 | 未排期 | — | — | 待首次评审 |
+| 舰队整备 · 迎风启航 | 标题 | 待评审 | 未排期 | — | — | 待首次评审 |
+| 舰队整备 · 迎风启航 | 标题 | 待评审 | 未排期 | — | — | 待首次评审 |
+| 舰队整备 · 迎风启航 | 标题 | 待评审 | 高 | — | 仅替换0.4–1.6及8.2–9.4秒，强度0.2，保留修改前偏好版本对照；人工确认闷顿是否改善及是否损坏旋律。 | 待首次评审 |
+| 日常陪伴 · 晴海相伴 | 标题 | 待评审 | 高 | — | 本轮0–10及25–35秒显式遮罩保守重绘完成；开头原始重绘RMS仍高约6.7dB。需人工比较音乐性、接缝与动态；不得据基础检查关闭旧问题。 | 待首次评审 |
+| 温情时刻 · 港灯与约定 | 标题 | 待评审 | 未排期 | — | — | 待首次评审 |
+| 悠扬叙事 · 海风来信 | 标题 | 待评审 | 高 | — | 本轮87–90秒显式遮罩保守重绘，低频累计-4dB；尾声较原弱尾音突出，需人工检查87秒接缝与自然收束。旧问题尚未验收关闭。 | 待首次评审 |
+| 明朗冒险 · 晴海远行 | 标题 | 待评审 | 未排期 | — | — | 待首次评审 |
 
 ## 版本与评审历史
 
@@ -505,3 +546,533 @@
     来源：用户提交第三轮评审JSON；原件保留，仅补空白reviewer，不改变revise判定或原话。；问题秒数：[]；循环自查：未标记。
 - 改良计划历史（不属于用户原话）：
   - 2026-09-30T03:06:53.624268+00:00 · Codex（制作计划） · 高：保留为用户认可旋律的主界面舒缓风格备选，原人工判定仍为需修改。第四轮B突出温暖次中音萨克斯与大提琴交替主奏，候选title_120s_iteration04_20260930/title_120_b；不宣称保留原乐句或已符合海战主主题。
+
+### 第四轮 A · 蔚蓝舰队·启航动机
+
+- 记录：`title_120s_iteration04_20260930/title_120_a`
+- 音频 SHA256：`a4d06c93befc256f9770fb5f9efb61d5dbe8c768569fca3b282cf3e0840dd6e0`
+- [本地试听 WAV](../../../reports/audio/title_120s_iteration04_20260930/title_120_a.wav)
+- 远端音频：`/home/hyz/server/musicGen/outputs/batches/title_120s_iteration04_20260930/title_120_a.wav`
+- 改良来源：`初始候选`
+- 后继版本：无
+- 技术检测提示：无自动提示；不代表人工通过
+- 人工历史：
+  - 2026-09-30T03:31:00.692Z · 用户（通过本聊天提交，原评审人字段为空） · 偏好候选：前期基本可用，40～80s的低情绪旋律还是太长了
+    来源：用户提交第四轮评审JSON，保留原件与原话，仅补空白reviewer。；问题秒数：[]；循环自查：未标记。
+- 改良计划历史（不属于用户原话）：
+  - 2026-09-30T03:32:26.354370+00:00 · Codex（制作计划） · 高：按用户要求改为90秒并保留小小海战主题。第五轮A仅改变时长作对照；B缩短低情绪对比段，强化舰队启航主题、无鼓组编制。候选title_90s_iteration05_20260930/title_90_a与title_90_b，待人工评审，不继承认可或循环验收。
+
+### 第四轮 B · 港湾来信·萨克斯与大提琴
+
+- 记录：`title_120s_iteration04_20260930/title_120_b`
+- 音频 SHA256：`11aaa7a729f6d887d5e4e1f5c1d4eed5be3bb25572130812927b1eb4c2569ee6`
+- [本地试听 WAV](../../../reports/audio/title_120s_iteration04_20260930/title_120_b.wav)
+- 远端音频：`/home/hyz/server/musicGen/outputs/batches/title_120s_iteration04_20260930/title_120_b.wav`
+- 改良来源：`初始候选`
+- 后继版本：无
+- 技术检测提示：无自动提示；不代表人工通过
+- 人工历史：
+  - 2026-09-30T03:31:00.692Z · 用户（通过本聊天提交，原评审人字段为空） · 需改良：背景的鼓很吵，旋律展开也不太好
+    来源：用户提交第四轮评审JSON，保留原件与原话，仅补空白reviewer。；问题秒数：[]；循环自查：未标记。
+- 改良计划历史（不属于用户原话）：
+  - 2026-09-30T03:32:26.478039+00:00 · Codex（制作计划） · 高：用户反馈鼓吵、旋律展开差；本轮停止沿此版本扩写，两首新候选回到第四轮A舰队方向。后续标题曲按90秒制作，配器控制鼓组密度并保留海战主题辨识度。
+
+### 第五轮 A · 蔚蓝舰队·90秒对照
+
+- 记录：`title_90s_iteration05_20260930/title_90_a`
+- 音频 SHA256：`57c3b72a121ecb76b48f95354072607fafdfd600babfc1e97c8bb1031bacc39d`
+- [本地试听 WAV](../../../reports/audio/title_90s_iteration05_20260930/title_90_a.wav)
+- 远端音频：`/home/hyz/server/musicGen/outputs/batches/title_90s_iteration05_20260930/title_90_a.wav`
+- 改良来源：`初始候选`
+- 后继版本：无
+- 技术检测提示：quiet_regions_review
+- 人工历史：
+  - 2026-09-30T03:44:04.795Z · 用户（通过本聊天提交，原评审人字段为空） · 偏好候选：可以作为备选音乐
+    来源：用户提交第五轮评审JSON；保留原件，仅补空白reviewer，B无文字意见不补写评价。；问题秒数：[]；循环自查：未标记。
+
+### 第五轮 B · 小小海战·扬帆同行
+
+- 记录：`title_90s_iteration05_20260930/title_90_b`
+- 音频 SHA256：`68d404005880274c7223c91612185609c177d6a06b805e102fd35c8d7c7762fc`
+- [本地试听 WAV](../../../reports/audio/title_90s_iteration05_20260930/title_90_b.wav)
+- 远端音频：`/home/hyz/server/musicGen/outputs/batches/title_90s_iteration05_20260930/title_90_b.wav`
+- 改良来源：`初始候选`
+- 后继版本：无
+- 技术检测提示：无自动提示；不代表人工通过
+- 人工历史：
+  - 2026-09-30T03:44:04.795Z · 用户（通过本聊天提交，原评审人字段为空） · 偏好候选：
+    来源：用户提交第五轮评审JSON；保留原件，仅补空白reviewer，B无文字意见不补写评价。；问题秒数：[]；循环自查：未标记。
+
+### 舰队整备 · 晨光起航
+
+- 记录：`title_90s_five_styles_20260930/title_fleet`
+- 音频 SHA256：`e86a92e2d3f0fcc3decf3113c77a4bff2c66a20807064c40d2e1f4a6033ca673`
+- [本地试听 WAV](../../../reports/audio/title_90s_five_styles_20260930/title_fleet.wav)
+- 远端音频：`/home/hyz/server/musicGen/outputs/batches/title_90s_five_styles_20260930/title_fleet.wav`
+- 改良来源：`初始候选`
+- 后继版本：无
+- 技术检测提示：无自动提示；不代表人工通过
+- 人工历史：
+  - 2026-09-30T03:58:59.708007+00:00 · 用户（聊天批次整体反馈） · 需改良：这一版普遍旋律不太好，重新做一版，注意保证音乐质量
+    来源：本聊天批次整体反馈：应用于五首作为待修改记录，不代表用户逐首独立评价或提供了时间点。；问题秒数：[]；循环自查：未标记。
+
+### 日常陪伴 · 甲板午后
+
+- 记录：`title_90s_five_styles_20260930/title_companions`
+- 音频 SHA256：`5542d229e458421bd213806bf294a35b264c65ac491985e2b1f914b03ac6925b`
+- [本地试听 WAV](../../../reports/audio/title_90s_five_styles_20260930/title_companions.wav)
+- 远端音频：`/home/hyz/server/musicGen/outputs/batches/title_90s_five_styles_20260930/title_companions.wav`
+- 改良来源：`初始候选`
+- 后继版本：无
+- 技术检测提示：无自动提示；不代表人工通过
+- 人工历史：
+  - 2026-09-30T03:58:59.708007+00:00 · 用户（聊天批次整体反馈） · 需改良：这一版普遍旋律不太好，重新做一版，注意保证音乐质量
+    来源：本聊天批次整体反馈：应用于五首作为待修改记录，不代表用户逐首独立评价或提供了时间点。；问题秒数：[]；循环自查：未标记。
+
+### 温情时刻 · 归航灯火
+
+- 记录：`title_90s_five_styles_20260930/title_homecoming`
+- 音频 SHA256：`b996d2e2b91ca44c5625170a459dfb33786e62a156231737190e7f94e6bcd8ff`
+- [本地试听 WAV](../../../reports/audio/title_90s_five_styles_20260930/title_homecoming.wav)
+- 远端音频：`/home/hyz/server/musicGen/outputs/batches/title_90s_five_styles_20260930/title_homecoming.wav`
+- 改良来源：`初始候选`
+- 后继版本：无
+- 技术检测提示：long_quiet_tail, quiet_regions_review
+- 人工历史：
+  - 2026-09-30T03:58:59.708007+00:00 · 用户（聊天批次整体反馈） · 需改良：这一版普遍旋律不太好，重新做一版，注意保证音乐质量
+    来源：本聊天批次整体反馈：应用于五首作为待修改记录，不代表用户逐首独立评价或提供了时间点。；问题秒数：[]；循环自查：未标记。
+
+### 悠扬叙事 · 海图与远方
+
+- 记录：`title_90s_five_styles_20260930/title_story`
+- 音频 SHA256：`c7f115ae4c5d6bb2adc546506fbd8a2e56d4451ada5811735d8dfab5af8bf245`
+- [本地试听 WAV](../../../reports/audio/title_90s_five_styles_20260930/title_story.wav)
+- 远端音频：`/home/hyz/server/musicGen/outputs/batches/title_90s_five_styles_20260930/title_story.wav`
+- 改良来源：`初始候选`
+- 后继版本：无
+- 技术检测提示：无自动提示；不代表人工通过
+- 人工历史：
+  - 2026-09-30T03:58:59.708007+00:00 · 用户（聊天批次整体反馈） · 需改良：这一版普遍旋律不太好，重新做一版，注意保证音乐质量
+    来源：本聊天批次整体反馈：应用于五首作为待修改记录，不代表用户逐首独立评价或提供了时间点。；问题秒数：[]；循环自查：未标记。
+
+### 明朗冒险 · 逐风航线
+
+- 记录：`title_90s_five_styles_20260930/title_adventure`
+- 音频 SHA256：`e309437d6430ad9a1d865d281494f6cacb9d46dfae8b15cd5ed3eb32e53ef5a8`
+- [本地试听 WAV](../../../reports/audio/title_90s_five_styles_20260930/title_adventure.wav)
+- 远端音频：`/home/hyz/server/musicGen/outputs/batches/title_90s_five_styles_20260930/title_adventure.wav`
+- 改良来源：`初始候选`
+- 后继版本：无
+- 技术检测提示：无自动提示；不代表人工通过
+- 人工历史：
+  - 2026-09-30T03:58:59.708007+00:00 · 用户（聊天批次整体反馈） · 需改良：这一版普遍旋律不太好，重新做一版，注意保证音乐质量
+    来源：本聊天批次整体反馈：应用于五首作为待修改记录，不代表用户逐首独立评价或提供了时间点。；问题秒数：[]；循环自查：未标记。
+
+### 舰队整备 · 迎风启航
+
+- 记录：`title_90s_five_styles_v2_20260930/title_fleet`
+- 音频 SHA256：`0641adf8e2b123ff67ff88d23c1021cb9485ec7916195ef38fb08dda5fa42a39`
+- [本地试听 WAV](../../../reports/audio/title_90s_five_styles_v2_20260930/title_fleet.wav)
+- 远端音频：`/home/hyz/server/musicGen/outputs/batches/title_90s_five_styles_v2_20260930/title_fleet.wav`
+- 改良来源：`初始候选`
+- 后继版本：无
+- 技术检测提示：无自动提示；不代表人工通过
+- 人工历史：
+  - 2026-09-30T08:45:17.944Z · 用户（通过本聊天提交，原评审人字段为空） · 偏好候选：有部分音乐中断的情况，
+    来源：用户提交五风格第二版评审JSON，保留原件，仅补空白reviewer；未填写原因不推测。；问题秒数：[1, 8.78]；循环自查：未标记。
+  - 2026-09-30T09:43:21.648106+00:00 · 用户（聊天补充说明） · 偏好候选：是音乐有突然的听感卡顿，就好像某个瞬间被捂住了扬声器一样的感觉。迎风启航可以保留，后四个再次生成
+    来源：本聊天用户澄清：音乐听感瞬间闷住；保留迎风启航，授权仅重生成后四首。旧时间标记保留于上一评审事件。；问题秒数：[]；循环自查：未标记。
+- 改良计划历史（不属于用户原话）：
+  - 2026-09-30T08:46:06.940446+00:00 · Codex（制作计划） · 高：保留偏好候选，用户标记1秒及8.78秒音乐中断。局部10ms信号诊断已保存interruption_diagnostic.json；信号存在不能排除听感断裂或播放卡顿，先复听定位后选择局部修复或重生成，不标为成品。
+
+### 日常陪伴 · 与你同航
+
+- 记录：`title_90s_five_styles_v2_20260930/title_companions`
+- 音频 SHA256：`8a828f8eb7c53b8c59f207e784a42c81776efe5686bd0833c8136ed2191d5103`
+- [本地试听 WAV](../../../reports/audio/title_90s_five_styles_v2_20260930/title_companions.wav)
+- 远端音频：`/home/hyz/server/musicGen/outputs/batches/title_90s_five_styles_v2_20260930/title_companions.wav`
+- 改良来源：`初始候选`
+- 后继版本：无
+- 技术检测提示：quiet_regions_review
+- 人工历史：
+  - 2026-09-30T08:45:17.944Z · 用户（通过本聊天提交，原评审人字段为空） · 不采用：
+    来源：用户提交五风格第二版评审JSON，保留原件，仅补空白reviewer；未填写原因不推测。；问题秒数：[]；循环自查：未标记。
+
+### 温情时刻 · 灯火相迎
+
+- 记录：`title_90s_five_styles_v2_20260930/title_homecoming`
+- 音频 SHA256：`734a98584fc3998daaf971e75db4d46bf22a2234f278cefd40c90ce500190544`
+- [本地试听 WAV](../../../reports/audio/title_90s_five_styles_v2_20260930/title_homecoming.wav)
+- 远端音频：`/home/hyz/server/musicGen/outputs/batches/title_90s_five_styles_v2_20260930/title_homecoming.wav`
+- 改良来源：`初始候选`
+- 后继版本：无
+- 技术检测提示：无自动提示；不代表人工通过
+- 人工历史：
+  - 2026-09-30T08:45:17.944Z · 用户（通过本聊天提交，原评审人字段为空） · 不采用：
+    来源：用户提交五风格第二版评审JSON，保留原件，仅补空白reviewer；未填写原因不推测。；问题秒数：[]；循环自查：未标记。
+
+### 悠扬叙事 · 写给海的信
+
+- 记录：`title_90s_five_styles_v2_20260930/title_story`
+- 音频 SHA256：`c9c4387b12b61811b1c43c2e1a0de0261f1b1809bad4e11487f82f3ad9f60982`
+- [本地试听 WAV](../../../reports/audio/title_90s_five_styles_v2_20260930/title_story.wav)
+- 远端音频：`/home/hyz/server/musicGen/outputs/batches/title_90s_five_styles_v2_20260930/title_story.wav`
+- 改良来源：`初始候选`
+- 后继版本：无
+- 技术检测提示：无自动提示；不代表人工通过
+- 人工历史：
+  - 2026-09-30T08:45:17.944Z · 用户（通过本聊天提交，原评审人字段为空） · 不采用：
+    来源：用户提交五风格第二版评审JSON，保留原件，仅补空白reviewer；未填写原因不推测。；问题秒数：[]；循环自查：未标记。
+
+### 明朗冒险 · 海风与旗帜
+
+- 记录：`title_90s_five_styles_v2_20260930/title_adventure`
+- 音频 SHA256：`d725dd38f2791db8383129b2086634e046fb9836b900cfbcc9ebb637690cb6b6`
+- [本地试听 WAV](../../../reports/audio/title_90s_five_styles_v2_20260930/title_adventure.wav)
+- 远端音频：`/home/hyz/server/musicGen/outputs/batches/title_90s_five_styles_v2_20260930/title_adventure.wav`
+- 改良来源：`初始候选`
+- 后继版本：无
+- 技术检测提示：long_quiet_tail, quiet_regions_review
+- 人工历史：
+  - 2026-09-30T08:45:17.944Z · 用户（通过本聊天提交，原评审人字段为空） · 需改良：
+    来源：用户提交五风格第二版评审JSON，保留原件，仅补空白reviewer；未填写原因不推测。；问题秒数：[]；循环自查：未标记。
+
+### 日常陪伴 · 晴海相伴
+
+- 记录：`title_90s_four_styles_v3_20260930/title_companions`
+- 音频 SHA256：`1714fe659674c7d16ed0a8c6a4cb5030f7a44fa9eb35cf38ee2cb239e09208cb`
+- [本地试听 WAV](../../../reports/audio/title_90s_four_styles_v3_20260930/title_companions.wav)
+- 远端音频：`/home/hyz/server/musicGen/outputs/batches/title_90s_four_styles_v3_20260930/title_companions.wav`
+- 改良来源：`初始候选`
+- 后继版本：无
+- 技术检测提示：quiet_regions_review
+- 人工历史：
+  - 2026-09-30T09:56:32.452Z · 用户（通过本聊天提交，原评审人字段为空） · 需改良：前10s重做，引入不自然，有断音问题；25s～35s重做，旋律不好。删掉76s以后片段。
+    来源：用户提交四风格第三版评审JSON；保留原文与原件，仅补空白reviewer，片段要求不转写为虚构时间标记。；问题秒数：[]；循环自查：未标记。
+
+### 温情时刻 · 归航的约定
+
+- 记录：`title_90s_four_styles_v3_20260930/title_homecoming`
+- 音频 SHA256：`da6907d8a696bf60ca2688e8f5b3392e7f4baa9c8e26b7c3a88c20f3e8850071`
+- [本地试听 WAV](../../../reports/audio/title_90s_four_styles_v3_20260930/title_homecoming.wav)
+- 远端音频：`/home/hyz/server/musicGen/outputs/batches/title_90s_four_styles_v3_20260930/title_homecoming.wav`
+- 改良来源：`初始候选`
+- 后继版本：无
+- 技术检测提示：quiet_regions_review
+- 人工历史：
+  - 2026-09-30T09:56:32.452Z · 用户（通过本聊天提交，原评审人字段为空） · 不采用：配器；旋律不太好，整个重做，注意符合温情时刻的主题。
+    来源：用户提交四风格第三版评审JSON；保留原文与原件，仅补空白reviewer，片段要求不转写为虚构时间标记。；问题秒数：[]；循环自查：未标记。
+
+### 悠扬叙事 · 海风来信
+
+- 记录：`title_90s_four_styles_v3_20260930/title_story`
+- 音频 SHA256：`897b108c86f702e3674769c49c3941b25e49872e83b480148e84caf684743794`
+- [本地试听 WAV](../../../reports/audio/title_90s_four_styles_v3_20260930/title_story.wav)
+- 远端音频：`/home/hyz/server/musicGen/outputs/batches/title_90s_four_styles_v3_20260930/title_story.wav`
+- 改良来源：`初始候选`
+- 后继版本：无
+- 技术检测提示：无自动提示；不代表人工通过
+- 人工历史：
+  - 2026-09-30T09:56:32.452Z · 用户（通过本聊天提交，原评审人字段为空） · 需改良：整体背景低音可以稍弱一些，不要突出太严重即可；最后3s重做
+    来源：用户提交四风格第三版评审JSON；保留原文与原件，仅补空白reviewer，片段要求不转写为虚构时间标记。；问题秒数：[]；循环自查：未标记。
+
+### 明朗冒险 · 向着海平线
+
+- 记录：`title_90s_four_styles_v3_20260930/title_adventure`
+- 音频 SHA256：`2bf4e56f0cb423dbdf2c0bcb42b0b695aa92311e771d38a0d57da75741721c49`
+- [本地试听 WAV](../../../reports/audio/title_90s_four_styles_v3_20260930/title_adventure.wav)
+- 远端音频：`/home/hyz/server/musicGen/outputs/batches/title_90s_four_styles_v3_20260930/title_adventure.wav`
+- 改良来源：`初始候选`
+- 后继版本：无
+- 技术检测提示：无自动提示；不代表人工通过
+- 人工历史：
+  - 2026-09-30T09:56:32.452Z · 用户（通过本聊天提交，原评审人字段为空） · 不采用：整体主旋律还差点意思，但其他地方还不错，可以调整一下提示词再做一版
+    来源：用户提交四风格第三版评审JSON；保留原文与原件，仅补空白reviewer，片段要求不转写为虚构时间标记。；问题秒数：[]；循环自查：未标记。
+
+### 温情时刻 · 港灯与约定
+
+- 记录：`title_revision04_full_20260930/title_homecoming`
+- 音频 SHA256：`8a2b12ac33924590ed89efd024aeed3fa7d9c2ed656f2efb685ed06a311b872a`
+- [本地试听 WAV](../../../reports/audio/title_revision04_full_20260930/title_homecoming.wav)
+- 远端音频：`/home/hyz/server/musicGen/outputs/batches/title_revision04_full_20260930/title_homecoming.wav`
+- 改良来源：`初始候选`
+- 后继版本：无
+- 技术检测提示：无自动提示；不代表人工通过
+- 人工历史：
+  - 待评审。
+
+### 明朗冒险 · 晴海远行
+
+- 记录：`title_revision04_full_20260930/title_adventure`
+- 音频 SHA256：`5879e22ade01bf281f17b3a9e5b0b5a860713190b4b9124f398195aacb2f5740`
+- [本地试听 WAV](../../../reports/audio/title_revision04_full_20260930/title_adventure.wav)
+- 远端音频：`/home/hyz/server/musicGen/outputs/batches/title_revision04_full_20260930/title_adventure.wav`
+- 改良来源：`初始候选`
+- 后继版本：无
+- 技术检测提示：quiet_regions_review
+- 人工历史：
+  - 待评审。
+
+### companions_intro
+
+- 记录：`title_revision04_repaint_fixed_20260930/companions_intro`
+- 音频 SHA256：`e834590cfe386a6fd994e15ac45a424bbbb7c5e9ea387fe6d529da2413f2e8e7`
+- [本地试听 WAV](../../../reports/audio/title_revision04_repaint_fixed_20260930/companions_intro.wav)
+- 远端音频：`/home/hyz/server/musicGen/outputs/batches/title_revision04_repaint_fixed_20260930/companions_intro.wav`
+- 改良来源：`初始候选`
+- 后继版本：`title_repaint_explicit_probe_20260930/companions_intro`
+- 技术检测提示：quiet_regions_review
+- 人工历史：
+  - 待评审。
+
+### companions_middle
+
+- 记录：`title_revision04_repaint_fixed_20260930/companions_middle`
+- 音频 SHA256：`d9b5790247ee86dc1e7b4c40dfecce36c3d50ea9cffa970af7ed8157329b7670`
+- [本地试听 WAV](../../../reports/audio/title_revision04_repaint_fixed_20260930/companions_middle.wav)
+- 远端音频：`/home/hyz/server/musicGen/outputs/batches/title_revision04_repaint_fixed_20260930/companions_middle.wav`
+- 改良来源：`初始候选`
+- 后继版本：无
+- 技术检测提示：quiet_regions_review
+- 人工历史：
+  - 待评审。
+
+### story_ending
+
+- 记录：`title_revision04_repaint_fixed_20260930/story_ending`
+- 音频 SHA256：`74a1f09f0b4858b70376801c4db3a04ae9e4abf2e003505b0d032a353be393cb`
+- [本地试听 WAV](../../../reports/audio/title_revision04_repaint_fixed_20260930/story_ending.wav)
+- 远端音频：`/home/hyz/server/musicGen/outputs/batches/title_revision04_repaint_fixed_20260930/story_ending.wav`
+- 改良来源：`初始候选`
+- 后继版本：无
+- 技术检测提示：无自动提示；不代表人工通过
+- 人工历史：
+  - 待评审。
+
+### 日常陪伴 · 晴海相伴 · 局部修订
+
+- 记录：`title_revision04_local_edits_20260930/title_companions`
+- 音频 SHA256：`e4a846c2e2dc257c6c57c7a0a6ff56578ea81e893161356967bacea20fc74753`
+- [本地试听 WAV](../../../reports/audio/title_revision04_local_edits_20260930/title_companions.wav)
+- 远端音频：`/home/hyz/server/musicGen/outputs/batches/title_revision04_local_edits_20260930/title_companions.wav`
+- 改良来源：`初始候选`
+- 后继版本：无
+- 技术检测提示：无自动提示；不代表人工通过
+- 人工历史：
+  - 2026-09-30T10:14:19.089Z · 用户（通过本聊天提交，原评审人字段为空） · 需改良：前10s根本不是音乐啊！修复了个什么！救命！检查一下局部重绘是否正常吧！
+    来源：用户提交局部修订评审，明确指出重绘片段非正常音乐；原件和原话保留。；问题秒数：[]；循环自查：未标记。
+- 改良计划历史（不属于用户原话）：
+  - 2026-09-30T10:08:34.968378+00:00 · Codex（制作计划） · 高：原v3晴海相伴0–10及25–35秒用哈希绑定源的局部重绘替换，段内0.1秒交叉淡化，截至76秒并加20ms尾淡化；10–25和35–75.98秒PCM保持一致。详细原料哈希与操作见同目录manifest.json和edit_provenance.json，已远端备份，待人工复查。
+
+### 悠扬叙事 · 海风来信 · 局部修订
+
+- 记录：`title_revision04_local_edits_20260930/title_story`
+- 音频 SHA256：`db3690d578396621cb7c5f34f79021311197f3571c5226094b45ac17cd4eca56`
+- [本地试听 WAV](../../../reports/audio/title_revision04_local_edits_20260930/title_story.wav)
+- 远端音频：`/home/hyz/server/musicGen/outputs/batches/title_revision04_local_edits_20260930/title_story.wav`
+- 改良来源：`初始候选`
+- 后继版本：无
+- 技术检测提示：无自动提示；不代表人工通过
+- 人工历史：
+  - 2026-09-30T10:14:19.089Z · 用户（通过本聊天提交，原评审人字段为空） · 需改良：低频可以再降2dB试试，最后3s和上一条一样的问题，重修以后修的根本不是音乐了。
+    来源：用户提交局部修订评审，明确指出重绘片段非正常音乐；原件和原话保留。；问题秒数：[]；循环自查：未标记。
+- 改良计划历史（不属于用户原话）：
+  - 2026-09-30T10:08:35.044118+00:00 · Codex（制作计划） · 高：原v3海风来信87–90秒局部重绘，0.1秒段内交叉淡化；整曲180Hz低架衰减2dB。EQ前0–87秒PCM保持一致；完整来源哈希与操作见同目录manifest.json和edit_provenance.json，已远端备份，待人工复查。
+
+### 舰队整备 · 迎风启航
+
+- 记录：`title_five_style_overview_20260930_r5/title_fleet`
+- 音频 SHA256：`0641adf8e2b123ff67ff88d23c1021cb9485ec7916195ef38fb08dda5fa42a39`
+- [本地试听 WAV](../../../reports/audio/title_five_style_overview_20260930_r5/title_fleet.wav)
+- 远端音频：`/home/hyz/server/musicGen/outputs/batches/title_five_style_overview_20260930_r5/title_fleet.wav`
+- 改良来源：`初始候选`
+- 后继版本：无
+- 技术检测提示：无自动提示；不代表人工通过
+- 人工历史：
+  - 待评审。
+
+### 日常陪伴 · 晴海相伴
+
+- 记录：`title_five_style_overview_20260930_r5/title_companions`
+- 音频 SHA256：`26d0d9829acabbb88204b16adca30671230d9c1ecdf7cb8c0359424b49d0958c`
+- [本地试听 WAV](../../../reports/audio/title_five_style_overview_20260930_r5/title_companions.wav)
+- 远端音频：`/home/hyz/server/musicGen/outputs/batches/title_five_style_overview_20260930_r5/title_companions.wav`
+- 改良来源：`初始候选`
+- 后继版本：无
+- 技术检测提示：无自动提示；不代表人工通过
+- 人工历史：
+  - 待评审。
+
+### 温情时刻 · 港灯与约定
+
+- 记录：`title_five_style_overview_20260930_r5/title_homecoming`
+- 音频 SHA256：`8a2b12ac33924590ed89efd024aeed3fa7d9c2ed656f2efb685ed06a311b872a`
+- [本地试听 WAV](../../../reports/audio/title_five_style_overview_20260930_r5/title_homecoming.wav)
+- 远端音频：`/home/hyz/server/musicGen/outputs/batches/title_five_style_overview_20260930_r5/title_homecoming.wav`
+- 改良来源：`初始候选`
+- 后继版本：无
+- 技术检测提示：无自动提示；不代表人工通过
+- 人工历史：
+  - 待评审。
+
+### 悠扬叙事 · 海风来信
+
+- 记录：`title_five_style_overview_20260930_r5/title_story`
+- 音频 SHA256：`1a1153669227dd6f7251c628bba80c5f991afbeabc9532e16aa41dddef20f627`
+- [本地试听 WAV](../../../reports/audio/title_five_style_overview_20260930_r5/title_story.wav)
+- 远端音频：`/home/hyz/server/musicGen/outputs/batches/title_five_style_overview_20260930_r5/title_story.wav`
+- 改良来源：`初始候选`
+- 后继版本：无
+- 技术检测提示：无自动提示；不代表人工通过
+- 人工历史：
+  - 待评审。
+
+### 明朗冒险 · 晴海远行
+
+- 记录：`title_five_style_overview_20260930_r5/title_adventure`
+- 音频 SHA256：`5879e22ade01bf281f17b3a9e5b0b5a860713190b4b9124f398195aacb2f5740`
+- [本地试听 WAV](../../../reports/audio/title_five_style_overview_20260930_r5/title_adventure.wav)
+- 远端音频：`/home/hyz/server/musicGen/outputs/batches/title_five_style_overview_20260930_r5/title_adventure.wav`
+- 改良来源：`初始候选`
+- 后继版本：无
+- 技术检测提示：quiet_regions_review
+- 人工历史：
+  - 待评审。
+
+### companions_intro
+
+- 记录：`title_repaint_explicit_probe_20260930/companions_intro`
+- 音频 SHA256：`e84d3f7ea73275986784025c68d95d2392a4037018a833ee33e0b79de3beb20f`
+- [本地试听 WAV](../../../reports/audio/title_repaint_explicit_probe_20260930/companions_intro.wav)
+- 远端音频：`/home/hyz/server/musicGen/outputs/batches/title_repaint_explicit_probe_20260930/companions_intro.wav`
+- 改良来源：`title_revision04_repaint_fixed_20260930/companions_intro`
+- 后继版本：无
+- 技术检测提示：quiet_regions_review
+- 人工历史：
+  - 待评审。
+
+### companions_intro
+
+- 记录：`title_local_repair_gentle_20260930/companions_intro`
+- 音频 SHA256：`24d7b73139cb20c8f94ea5b2d002cc91b5fd2a69cb8a89107b547b759498e325`
+- [本地试听 WAV](../../../reports/audio/title_local_repair_gentle_20260930/companions_intro.wav)
+- 远端音频：`/home/hyz/server/musicGen/outputs/batches/title_local_repair_gentle_20260930/companions_intro.wav`
+- 改良来源：`初始候选`
+- 后继版本：无
+- 技术检测提示：quiet_regions_review
+- 人工历史：
+  - 待评审。
+
+### companions_middle
+
+- 记录：`title_local_repair_gentle_20260930/companions_middle`
+- 音频 SHA256：`00b74387e5d0fee4de72a6a7b32700f4132059d078d944e4a6844c9b1c4488d4`
+- [本地试听 WAV](../../../reports/audio/title_local_repair_gentle_20260930/companions_middle.wav)
+- 远端音频：`/home/hyz/server/musicGen/outputs/batches/title_local_repair_gentle_20260930/companions_middle.wav`
+- 改良来源：`初始候选`
+- 后继版本：无
+- 技术检测提示：quiet_regions_review
+- 人工历史：
+  - 待评审。
+
+### story_ending
+
+- 记录：`title_local_repair_gentle_20260930/story_ending`
+- 音频 SHA256：`93ecf9223e97dad01bf69c6040cd883c63d7ffe2be82c349d13714fd7c1f3420`
+- [本地试听 WAV](../../../reports/audio/title_local_repair_gentle_20260930/story_ending.wav)
+- 远端音频：`/home/hyz/server/musicGen/outputs/batches/title_local_repair_gentle_20260930/story_ending.wav`
+- 改良来源：`初始候选`
+- 后继版本：无
+- 技术检测提示：无自动提示；不代表人工通过
+- 人工历史：
+  - 待评审。
+
+### 舰队整备 · 迎风启航
+
+- 记录：`title_local_repair_gentle_20260930/fleet_first`
+- 音频 SHA256：`51d63a4221d28abd9e698c8371c986ac0a8fa66a80d1805c5a9b40c76e9f6511`
+- [本地试听 WAV](../../../reports/audio/title_local_repair_gentle_20260930/fleet_first.wav)
+- 远端音频：`/home/hyz/server/musicGen/outputs/batches/title_local_repair_gentle_20260930/fleet_first.wav`
+- 改良来源：`初始候选`
+- 后继版本：无
+- 技术检测提示：无自动提示；不代表人工通过
+- 人工历史：
+  - 待评审。
+
+### 舰队整备 · 迎风启航
+
+- 记录：`title_local_repair_gentle_20260930/fleet_second`
+- 音频 SHA256：`9904307832e47bb7bf22d0e66af1c5edf9eab2dfcb0aee7b0969bb12e953b4f3`
+- [本地试听 WAV](../../../reports/audio/title_local_repair_gentle_20260930/fleet_second.wav)
+- 远端音频：`/home/hyz/server/musicGen/outputs/batches/title_local_repair_gentle_20260930/fleet_second.wav`
+- 改良来源：`初始候选`
+- 后继版本：无
+- 技术检测提示：无自动提示；不代表人工通过
+- 人工历史：
+  - 待评审。
+
+### 舰队整备 · 迎风启航
+
+- 记录：`title_five_style_overview_20260930_r6/title_fleet`
+- 音频 SHA256：`5ad2f007042b5482d4a59de5d4ec27a64daadd5aa9ea7409ccab3a81f62661d6`
+- [本地试听 WAV](../../../reports/audio/title_five_style_overview_20260930_r6/title_fleet.wav)
+- 远端音频：`/home/hyz/server/musicGen/outputs/batches/title_five_style_overview_20260930_r6/title_fleet.wav`
+- 改良来源：`初始候选`
+- 后继版本：无
+- 技术检测提示：无自动提示；不代表人工通过
+- 人工历史：
+  - 待评审。
+- 改良计划历史（不属于用户原话）：
+  - 2026-09-30T12:58:58.711835+00:00 · Codex（制作计划） · 高：仅替换0.4–1.6及8.2–9.4秒，强度0.2，保留修改前偏好版本对照；人工确认闷顿是否改善及是否损坏旋律。
+
+### 日常陪伴 · 晴海相伴
+
+- 记录：`title_five_style_overview_20260930_r6/title_companions`
+- 音频 SHA256：`345013bf57f3d7db49cba1ee34cc7192d4140d4138637944a718a024543ba189`
+- [本地试听 WAV](../../../reports/audio/title_five_style_overview_20260930_r6/title_companions.wav)
+- 远端音频：`/home/hyz/server/musicGen/outputs/batches/title_five_style_overview_20260930_r6/title_companions.wav`
+- 改良来源：`初始候选`
+- 后继版本：无
+- 技术检测提示：无自动提示；不代表人工通过
+- 人工历史：
+  - 待评审。
+- 改良计划历史（不属于用户原话）：
+  - 2026-09-30T12:58:58.548489+00:00 · Codex（制作计划） · 高：本轮0–10及25–35秒显式遮罩保守重绘完成；开头原始重绘RMS仍高约6.7dB。需人工比较音乐性、接缝与动态；不得据基础检查关闭旧问题。
+
+### 温情时刻 · 港灯与约定
+
+- 记录：`title_five_style_overview_20260930_r6/title_homecoming`
+- 音频 SHA256：`8a2b12ac33924590ed89efd024aeed3fa7d9c2ed656f2efb685ed06a311b872a`
+- [本地试听 WAV](../../../reports/audio/title_five_style_overview_20260930_r6/title_homecoming.wav)
+- 远端音频：`/home/hyz/server/musicGen/outputs/batches/title_five_style_overview_20260930_r6/title_homecoming.wav`
+- 改良来源：`初始候选`
+- 后继版本：无
+- 技术检测提示：无自动提示；不代表人工通过
+- 人工历史：
+  - 待评审。
+
+### 悠扬叙事 · 海风来信
+
+- 记录：`title_five_style_overview_20260930_r6/title_story`
+- 音频 SHA256：`b0558bed5e3816093d084e4bc493b60f579a1e06ab09b5a00c39818e615a08b7`
+- [本地试听 WAV](../../../reports/audio/title_five_style_overview_20260930_r6/title_story.wav)
+- 远端音频：`/home/hyz/server/musicGen/outputs/batches/title_five_style_overview_20260930_r6/title_story.wav`
+- 改良来源：`初始候选`
+- 后继版本：无
+- 技术检测提示：无自动提示；不代表人工通过
+- 人工历史：
+  - 待评审。
+- 改良计划历史（不属于用户原话）：
+  - 2026-09-30T12:58:58.630831+00:00 · Codex（制作计划） · 高：本轮87–90秒显式遮罩保守重绘，低频累计-4dB；尾声较原弱尾音突出，需人工检查87秒接缝与自然收束。旧问题尚未验收关闭。
+
+### 明朗冒险 · 晴海远行
+
+- 记录：`title_five_style_overview_20260930_r6/title_adventure`
+- 音频 SHA256：`5879e22ade01bf281f17b3a9e5b0b5a860713190b4b9124f398195aacb2f5740`
+- [本地试听 WAV](../../../reports/audio/title_five_style_overview_20260930_r6/title_adventure.wav)
+- 远端音频：`/home/hyz/server/musicGen/outputs/batches/title_five_style_overview_20260930_r6/title_adventure.wav`
+- 改良来源：`初始候选`
+- 后继版本：无
+- 技术检测提示：quiet_regions_review
+- 人工历史：
+  - 待评审。

@@ -20,11 +20,14 @@ function render(){
  for(const t of data.tracks){
   const v=t.validation;const opinion=opinions[t.id]||{decision:'pending',notes:'',timestamps:[],loop_checked:false};opinions[t.id]=opinion;
   const card=el('article');card.append(el('h2',t.title),el('small',categories[t.category]+' · '+t.id));
+  if(t.version_note)card.append(el('p','版本说明：'+t.version_note));
+  if(t.source_record)card.append(el('small','来源版本：'+t.source_record));
   card.append(el('p',v.duration_seconds===undefined?'音频尚未下载':v.duration_seconds.toFixed(2)+' 秒 · '+v.sample_rate+' Hz · '+v.channels+' 声道'));
   const status=el('p','检查结果：'+statuses[v.technical_status]+'；人工意见独立记录');card.append(status);
   if(v.issues.length){const issues=el('p','待查看：'+v.issues.map(i=>issuesText[i]||i).join('；'));issues.className='flag';card.append(issues)}
   const audio=el('audio');audio.controls=true;audio.preload='metadata';if(v.sha256)audio.src=t.id+'.wav';
   audio.onplay=()=>document.querySelectorAll('audio').forEach(other=>{if(other!==audio)other.pause()});card.append(audio);
+  if(t.comparison_audio){const comparison=el('details');comparison.append(el('summary','展开修改前音频对照（评审意见针对上方本轮版本）'));const original=el('audio');original.controls=true;original.preload='none';original.src=t.comparison_audio;original.onplay=()=>document.querySelectorAll('audio').forEach(other=>{if(other!==original)other.pause()});comparison.append(original);card.append(comparison)}
   if(v.quiet_regions_seconds?.length)card.append(el('small','低电平区间（非音乐性结论）：'+JSON.stringify(v.quiet_regions_seconds)));
   const mark=el('button','标记当前问题时间');mark.onclick=()=>{opinion.timestamps.push(Number(audio.currentTime.toFixed(2)));marks.textContent='问题时间：'+opinion.timestamps.join(', ')+' 秒';persist()};
   const marks=el('small','问题时间：'+opinion.timestamps.join(', ')+' 秒');const clear=el('button','清除时间标记');clear.onclick=()=>{opinion.timestamps=[];marks.textContent='问题时间：';persist()};card.append(mark,clear,marks);
@@ -33,7 +36,7 @@ function render(){
   select.value=opinion.decision;select.onchange=()=>{opinion.decision=select.value;persist()};card.append(select);
   const label=el('label',' 已单独验证循环接缝 ');const check=el('input');check.type='checkbox';check.checked=opinion.loop_checked;check.onchange=()=>{opinion.loop_checked=check.checked;persist()};label.prepend(check);card.append(label);
   const notes=el('textarea');notes.placeholder='旋律／情绪／完整性／配器／需修改处';notes.setAttribute('aria-label',t.title+'评审意见');notes.value=opinion.notes;notes.oninput=()=>{opinion.notes=notes.value;persist()};card.append(notes);
-  const details=el('details');details.append(el('summary','提示词、参数和校验记录'),el('p',JSON.stringify({request:t.request,validation:v},null,2)));card.append(details);
+  const details=el('details');details.append(el('summary','提示词、参数和校验记录'),el('p',JSON.stringify({request:t.request,validation:v,source_record:t.source_record,postprocess:t.postprocess},null,2)));card.append(details);
   if(v.sha256){const link=el('a','下载 WAV');link.href=t.id+'.wav';link.download='';card.append(link)}cards.append(card);
  }
 }

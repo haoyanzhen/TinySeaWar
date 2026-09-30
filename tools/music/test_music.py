@@ -36,6 +36,26 @@ class WorkflowTests(unittest.TestCase):
             if mode=='seed':b['tracks'][0]['request']['use_random_seed']=True
             with self.assertRaises(AssertionError):music.validate(b)
 
+    def test_repaint_source_and_ranges(self):
+        track=self.batch['tracks'][0]
+        track['request'].update(task_type='repaint',repainting_start=0,repainting_end=10)
+        with self.assertRaises(AssertionError):music.validate(self.batch)
+        track['source_audio']={'batch_id':'source','track_id':'song','sha256':'a'*64}
+        music.validate(self.batch)
+        for start,end in ((-1,10),(10,10),(0,999),(float('nan'),10)):
+            track['request'].update(repainting_start=start,repainting_end=end)
+            with self.assertRaises(AssertionError):music.validate(self.batch)
+
+    def test_new_repaint_requires_explicit_mask_before_submission(self):
+        track=self.batch['tracks'][0]
+        track['request'].update(task_type='repaint',repainting_start=0,repainting_end=10)
+        track['source_audio']={'batch_id':'source','track_id':'song','sha256':'a'*64}
+        with patch.object(music,'api') as api,patch.object(music,'probe') as probe:
+            with self.assertRaisesRegex(AssertionError,'explicit interval masks'):
+                music.run_batch(self.config,self.batch)
+            api.assert_not_called()
+            probe.assert_not_called()
+
     def test_gpu_gate_boundaries_and_arbitrary_duration(self):
         t=self.batch['tracks'][0];h=music.digest(self.batch)
         self.assertTrue(music.gate(self.snapshot,t,h)['allowed'])

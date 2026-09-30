@@ -67,6 +67,15 @@ def validate(batch):
         assert req.get('thinking') is True and req.get('lm_backend') == 'pt'
         # Keep generation self-contained. Uploaded audio/reference workflows need a separate contract.
         assert not (set(req) & {'reference_audio_path', 'src_audio_path', 'audio_codes'})
+        if req.get('task_type') == 'repaint':
+            source = track.get('source_audio', {})
+            assert SAFE.fullmatch(source.get('batch_id', '')) and SAFE.fullmatch(source.get('track_id', '')), 'Invalid repaint source'
+            assert re.fullmatch(r'[0-9a-f]{64}', source.get('sha256', '')), 'Source hash required'
+            start, end = req.get('repainting_start'), req.get('repainting_end')
+            assert all(type(v) in (int, float) and math.isfinite(v) for v in (start, end)), 'Invalid repaint range'
+            assert 0 <= start < end <= req['audio_duration'], 'Invalid repaint range'
+        else:
+            assert not track.get('source_audio'), 'Source audio requires repaint'
     return batch
 
 
@@ -165,6 +174,18 @@ def run_batch(config, batch, approval=None):
             if state['phase'] in ('submitting','failed'):
                 raise RuntimeError(f'{slug}: {state["phase"]}; inspect state/API logs, never auto-resubmit')
             if state['phase'] == 'new':
+                request = dict(track['request'])
+                if request.get('task_type') == 'repaint':
+                    assert request.get('chunk_mask_mode') == 'explicit', 'New repaint jobs require explicit interval masks'
+                    source = track['source_audio']
+                    source_path = root/'outputs'/'batches'/source['batch_id']/(source['track_id']+'.wav')
+                    assert source_path.resolve().is_relative_to((root/'outputs'/'batches').resolve()), 'Source outside batches'
+                    assert hashlib.sha256(source_path.read_bytes()).hexdigest() == source['sha256'], 'Repaint source hash mismatch'
+                    # The API allows absolute paths under its system temp directory.
+                    import tempfile, shutil
+                    source_temp = Path(tempfile.mkdtemp(prefix='music-repaint-'))/'source.wav'
+                    shutil.copyfile(source_path, source_temp)
+                    request['src_audio_path'] = str(source_temp)
                 snapshot = probe(config)
                 decision = gate(snapshot,track,digest(batch),approval)
                 save(folder/f'{slug}.preflight.json',{'snapshot':snapshot,'decision':decision,
@@ -172,10 +193,10 @@ def run_batch(config, batch, approval=None):
                 if not decision['allowed']:
                     return {'status':'needs_user_decision','track':slug,'snapshot':snapshot,
                             'decision':decision,'batch_sha256':digest(batch)}
-                save(folder/f'{slug}.request.json',track['request'])
+                save(folder/f'{slug}.request.json',request)
                 # Persist intent BEFORE POST; uncertain network outcomes must not create duplicate jobs.
                 save(state_path,{'phase':'submitting','started_at':time.time()})
-                submitted = api(config,'/release_task',track['request'])
+                submitted = api(config,'/release_task',request)
                 save(folder/f'{slug}.submission.json',submitted)
                 state = {'phase':'submitted','task_id':submitted['data']['task_id']}
                 save(state_path,state)

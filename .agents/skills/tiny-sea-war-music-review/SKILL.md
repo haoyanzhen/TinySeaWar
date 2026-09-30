@@ -38,3 +38,7 @@ Duration alone never requires trial approval. After verifying the service GPU an
 `review` and `serve` do not need GPU authorization and can reuse existing WAVs with a manifest. Existing legacy sample folders can be adapted with a new manifest without copying or rerunning inference; preserve original requests and audio files. Do not overwrite their existing historical manifests.
 
 Production candidates stay under ignored reports until separately accepted for runtime integration. Formal progress belongs in `docs/00_project_status.md`; music design in `50`; schemas and game playback implementation remain outside this skill's default scope. Fixed seeds support reproducibility but do not promise bit-identical inference across environments.
+
+## TinySeaWar title-pool review preference
+
+For each title-music revision round, deliver one listening overview containing all five styles (fleet preparation, everyday companionship, tender moments, lyrical storytelling, bright adventure). Reuse retained candidates for unchanged styles; do not generate five new tracks unless requested. Each card must identify its source version and whether it is retained, revised, rolled back or still awaiting repair. Keep failed revisions and feedback in history without presenting them as successful fixes. Aggregate manifests and review exports remain bound to exact audio hashes.

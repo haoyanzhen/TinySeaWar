@@ -250,21 +250,28 @@ func _advance_challenge_progress(battle_state: Dictionary) -> void:
 		var wave_def: Dictionary = wave.get("definition", {})
 		var remaining := maxf(0.0, float(wave_def.get("earliest_time", 0.0)) - float(battle_state.get("elapsed_time", 0.0)))
 		var spawn_id := str(wave_def.get("spawn_point_id", ""))
-		var entrance := str({"RN": "北侧入口", "RS": "南侧入口"}.get(spawn_id, ""))
+		var entrance := str(wave_def.get("spawn_display_name", {"RN": "北侧入口", "RS": "南侧入口"}.get(spawn_id, "")))
 		hints.append("%s接替增援%s：%s" % ["己方" if wave_def.get("faction_id", "") == "player" else "敌方", "（%s）" % entrance if not entrance.is_empty() else "", "最早%d秒后，需有空位" % ceili(remaining) if remaining > 0.0 else "等待出战空位"])
 	runtime_state["reinforcement_hint"] = "；".join(hints)
-	var optional: Array = definition.get("optional_ordered_enemy_unit_ids", [])
-	if optional.is_empty(): return
+	var stages: Array = definition.get("optional_enemy_sunk_stages", []).duplicate(true)
+	if stages.is_empty():
+		for unit_id in definition.get("optional_ordered_enemy_unit_ids", []): stages.append([unit_id])
+	if stages.is_empty(): return
 	var progress := int(runtime_state.get("optional_order_progress", 0))
-	# Facts are settled once per Tick; simultaneous kills have no earlier/later order.
-	while progress < optional.size() and units.get(str(optional[progress]), {}).get("life_state", "") == "Sunk":
+	while progress < stages.size() and stages[progress].all(func(id): return units.get(str(id), {}).get("life_state", "") == "Sunk"):
 		progress += 1
-	for index in range(progress, optional.size()):
-		if units.get(str(optional[index]), {}).get("life_state", "") == "Sunk": runtime_state["optional_order_failed"] = true
+	for index in range(progress + 1, stages.size()):
+		if stages[index].any(func(id): return units.get(str(id), {}).get("life_state", "") == "Sunk"):
+			runtime_state["optional_order_failed"] = true
 	runtime_state["optional_order_progress"] = progress
 	var labels: Array[String] = []
-	for unit_id in optional: labels.append(_unit_label(units.get(str(unit_id), {}), str(unit_id)))
-	var status := "未达成" if bool(runtime_state["optional_order_failed"]) else ("已完成" if progress == optional.size() else "%d/%d" % [progress, optional.size()])
+	for stage in stages:
+		var members: Array[String] = []
+		for unit_id in stage:
+			var unit: Dictionary = units.get(str(unit_id), {})
+			members.append("%s%s" % [_unit_label(unit, str(unit_id)), "✓" if unit.get("life_state", "") == "Sunk" else ""])
+		labels.append(" + ".join(members))
+	var status := "未达成" if bool(runtime_state["optional_order_failed"]) else ("已完成" if progress == stages.size() else "%d/%d" % [progress, stages.size()])
 	runtime_state["optional_mastery"] = "可选精通：%s（%s，不影响通关奖励）" % [" → ".join(labels), status]
 
 

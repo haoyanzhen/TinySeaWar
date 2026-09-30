@@ -139,3 +139,13 @@ zero_fire_classification
 - Definition 覆盖、临时舰队、Acceptance Profile 和并行恢复字段只有在隔离校验实现后才能加入正式契约；当前完成度只见 `docs/00_project_status.md`。
 
 航空迁移诊断的 recorder summary 增加 `aviation`：`waves_launched/waves_completed/anti_air_rounds/waves_destroyed/payloads_released: int`、`aircraft_damage: float`。飞机HP损失单独统计，不混入逐舰对舰伤害；炸弹/鱼雷仍由一次 `AttackResolved` 计入原攻击分类。性能明细增加 `aviation_runtime_usec`，与表现帧成本分开。
+
+### 挑战诊断补充（2026-09-30）
+
+每局公共 `navigation` 统计不限于完整AI：`event_counts`计入Navigation事件、TrajectoryPlanFailed、UnitTerrainCollision及UnitTideAccessRestricted；`failures_by_reason`按拒绝原因细分。`separation_distance`为每次权威分离实际执行距离之和，`separation_applied/rejected`区分允许与拒绝的单舰处理次数，均不是独立事故数。聚合的`navigation_all_attempts/navigation_invalid_attempts`分别保留全部尝试与无效局数值，不能因未正常结算漏计。
+
+`ai_behavior.navigation_events`同时保留导航报警、水域拒绝、地形碰撞、无安全航迹事实。恢复取消含duration、attempts、stage，沉没以UNIT_SUNK取消；ARRIVED完成须在权威分离后的真实位置满足终点容差。终局尚未结束的恢复由测量工具记录为截尾，不能补记成功。高频分离事件只做数值汇总，不追加到该事实数组。
+
+每局 `fleet_cost` 按阵营记录 initial / reserve / total / entered；预备 Cost 不冒充已经入场的作战规模。`ai_behavior.route_unavailable` 同时统计 AIRouteUnavailable 与 NavigationRequestFailed，并按 reason_code 与 unit_id 分类。`navigation_events` 保留请求失败和恢复事件的时间及结构化上下文；其中 `elapsed_usec` 及 `route_profile` 的 `*_usec` 是机器耗时诊断，不属于确定性战斗事实，复现比对必须排除这些计时字段。聚合的 `ai_behavior` 仍仅针对 Finished 有效局；`ai_behavior_all_attempts` / `ai_behavior_invalid_attempts` 分别递归汇总全部尝试和无效局数值，包括原因与单位分项。数组事件留在每局 runs.jsonl，不纳入胜率分母。技术无效不得通过漏聚合隐藏。
+
+十个 `level_{m01..l05}_win_rate_20.json` 为独立正式清单，固定20种子、不换边、双方同档 LatestRuntimeAI 和默认航空规则。三种子行为核查用独立 FullBattleSimulation 副本，不能输出正式平衡通过结论。

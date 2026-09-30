@@ -90,6 +90,12 @@ primary_auto_fire_suspended
 skill_auto_cast_enabled
 player_route_waypoints[]
 movement_state.waypoint_index
+navigation_state.formation_move # 可选 {center: Vector2, destination: Vector2}，多选右键的集合中心与独立终点
+navigation_state.transit_group_id # 可选 String，单局通行组
+navigation_state.sailed_trail # 可选 Array[{position, heading, distance}]，最多512点
+navigation_state.column_guidance # 可选 Dictionary，临时局部目标/等待，不覆盖原终点
+navigation_state.column_cursor # 可选 float，沿领舰历史路线的进展
+navigation_state.column_predecessor # 可选 String，当前使用历史路线的领舰ID
 navigation_state.progress # Dictionary，默认 {}
 navigation_state.recovery # Dictionary，默认 {}
 navigation_state.target_projected # bool，默认 false，当前完整走廊终点是否为语义目标的阶段投影
@@ -100,6 +106,8 @@ depth_hold_remaining
 oxygen_state # current, maximum
 ```
 
+- `navigation_state.formation_move` 是单局指令元数据，普通单舰新指令、路线替换或取消时移除；不写入存档，不代替实际 `player_route_waypoints`，不改变终点可达性校验。
+- 纵队字段只属于单局导航记忆，不保存到定义或存档；`column_guidance` 包含 `goal/lookahead_goal: Vector2`、`cursor/stop_distance: float`、`waiting: bool`、`next_goals: Array[Vector2]` 与 `leader_progress_tick: int`。缺省即无引导，更换/追加指令、离组和完成时清理。行为见t01 11.2。
 - `navigation_state.progress` 为单局公共导航记忆：`goal: Vector2`、`best_distance/progress_distance/stalled_seconds/best_heading_error/turn_grace: float`、`execution_grace: float`（缺省0）、`last_heading: float`（首次观察初始化）、`stuck_reported: bool`；不属于 AI Profile，不写入存档。
 - `navigation_state.recovery` 为空表示无恢复；非空包含 `stage: Depart|Rejoin`、`origin/direction/base_direction/escape_goal/checkpoint_position/checkpoint_goal: Vector2`、`turn/elapsed/stage_seconds/best_distance/departure_distance: float`、`departure_feasible: bool`、`attempts: int`、`reason: String`；`Rejoin` 另有 `rejoin_position/rejoin_goal: Vector2`、`rejoin_best_distance/rejoin_progress/rejoin_stage_progress: float`。恢复状态使用 `navigation_state.state=NavigationRecovery`，紧急或无安全候选时可暂由相应导航状态接管。行为与预算只见 `technical/t01`。
 - 玩家默认 `movement=false`、`secondary=true`、`primary=false`、`skill_auto_cast=false`；技能自动释放权限不通过玩家配置开放。
@@ -175,6 +183,9 @@ duration, limit_min?, limit_max?
 
 ```text
 id # settings.combat
+battle_multipliers.shell_speed # 1.5
+battle_multipliers.shell_spread # 0.5
+battle_multipliers.aircraft_speed # 2.0
 gun_dispersion.sigma_scale
 gun_dispersion.longitudinal_sigma_ratio
 gun_dispersion.reference_ship_id
@@ -184,6 +195,7 @@ gun_dispersion.reference_spread_degrees
 gun_dispersion.reference_battleship_length
 ```
 
+- `battle_multipliers` 为可选对象；三个字段缺省1，均要求有限正数，未知键、非数字、零、负数拒绝加载。它们只通过公共有效值查询作用一次，不改写 Weapon/Projectile Definition 的原始运行字段。类别范围与当前值见13。
 - `sigma_scale>0`；`0 < longitudinal_sigma_ratio <= 1`。
 - 两个 reference ID 必须存在；三个 reference 数值满足 12 号文档定义的标定关系。
 - 运行时所有舰炮共享该设置，不允许角色私有 sigma 覆盖。

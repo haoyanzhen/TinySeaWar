@@ -23,13 +23,14 @@ func reset(battle_id: String, seed_value: int) -> void:
 		"non_ship_damage": {},
 		"result": {},
 		"submarine_ai": {},
+		"navigation": {"event_counts":{}, "failures_by_reason":{}, "separation_distance":0.0, "separation_applied":0, "separation_rejected":0},
 		"ai_behavior": {
 			"mode_switches": 0, "tactic_switches": 0, "target_switches": 0,
 			"interrupt_entries": 0, "interrupt_clears": 0, "interrupt_by_type": {},
 			"fire_commitments": 0, "skill_commitments": 0,
 			"skill_score_total": 0.0, "coordination_score_total": 0.0,
 			"task_assignments": 0, "task_clears": 0,
-			"route_selections": 0, "route_fallbacks": 0, "route_unavailable": 0, "route_unavailable_by_reason": {}, "route_unavailable_by_unit": {}, "cover_selections": 0, "path_stuck_events": 0, "path_stuck_by_unit": {}, "path_stuck_details": [],
+			"route_selections": 0, "route_fallbacks": 0, "route_unavailable": 0, "route_unavailable_by_reason": {}, "route_unavailable_by_unit": {}, "cover_selections": 0, "path_stuck_events": 0, "path_stuck_by_unit": {}, "path_stuck_details": [], "navigation_events": [],
 			"damage_reservations": 0, "effect_reservations": 0, "skill_holds": 0, "skill_holds_by_reason": {},
 			"ai_command_rejections": 0, "rejections_by_reason": {},
 			"facility_interactions_started": 0, "facility_interactions_completed": 0, "facility_interactions_interrupted": 0,
@@ -139,6 +140,20 @@ func sample_submarines(units_by_id: Dictionary, delta: float) -> void:
 func consume(events: Array, elapsed_time: float) -> void:
 	summary["duration"] = elapsed_time
 	for event in events:
+		var navigation_kind := str(event.get("event_type", ""))
+		if navigation_kind.begins_with("Navigation") or navigation_kind in ["TrajectoryPlanFailed", "UnitTerrainCollision", "UnitTideAccessRestricted"]:
+			var navigation: Dictionary = summary["navigation"]
+			navigation["event_counts"][navigation_kind] = int(navigation["event_counts"].get(navigation_kind, 0)) + 1
+			if navigation_kind in ["NavigationRequestFailed", "TrajectoryPlanFailed", "NavigationCollisionContractViolated", "UnitTideAccessRestricted"]:
+				var reason := str(event.get("reason_code", event.get("obstacle_id", navigation_kind)))
+				navigation["failures_by_reason"][reason] = int(navigation["failures_by_reason"].get(reason, 0)) + 1
+			if navigation_kind == "NavigationSeparationApplied":
+				navigation["separation_distance"] += float(event.get("distance", 0.0))
+				navigation["separation_applied" if bool(event.get("allowed", false)) else "separation_rejected"] += 1
+		if navigation_kind in ["NavigationRequestFailed", "NavigationRecoveryStarted", "NavigationRecoveryCompleted", "NavigationRecoveryRetried", "NavigationRecoveryCancelled", "NavigationCollisionContractViolated", "NavigationStalled", "UnitTerrainCollision", "UnitTideAccessRestricted", "TrajectoryPlanFailed"]:
+			var fact: Dictionary = event.duplicate(true)
+			fact["elapsed_time"] = elapsed_time
+			summary["ai_behavior"]["navigation_events"].append(fact)
 		match event.get("event_type", ""):
 			"MoveOrderAccepted", "FocusTargetChanged": summary["commands"] += 1
 			"ContactAcquired":
@@ -182,7 +197,7 @@ func consume(events: Array, elapsed_time: float) -> void:
 				else: summary["ai_behavior"]["task_assignments"] += 1
 			"AIRouteSelected": summary["ai_behavior"]["route_selections"] += 1
 			"AIRouteFallbackSelected": summary["ai_behavior"]["route_fallbacks"] += 1
-			"AIRouteUnavailable":
+			"AIRouteUnavailable", "NavigationRequestFailed":
 				_record_counted_type("route_unavailable", "route_unavailable_by_reason", str(event.get("reason_code", "UNKNOWN")))
 				var route_unit_id := str(event.get("unit_id", "UNKNOWN"))
 				summary["ai_behavior"]["route_unavailable_by_unit"][route_unit_id] = int(summary["ai_behavior"]["route_unavailable_by_unit"].get(route_unit_id, 0)) + 1

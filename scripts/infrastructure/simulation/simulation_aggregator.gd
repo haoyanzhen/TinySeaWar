@@ -48,6 +48,10 @@ func _aggregate_core(runs: Array) -> Dictionary:
 	var enemy_wins := 0
 	var lineup_wins := {"original_player": 0, "original_enemy": 0}
 	var ai_behavior_totals := {}
+	var all_behavior_totals := {}
+	var invalid_behavior_totals := {}
+	var navigation_totals := {}
+	var invalid_navigation_totals := {}
 	var total_overkill := 0.0
 	var total_effective_damage := 0.0
 	var facility_usage_runs := 0
@@ -60,7 +64,11 @@ func _aggregate_core(runs: Array) -> Dictionary:
 		policy_command_rejections += int(run.get("policy_command_rejections", 0))
 		var end_state := str(run.get("end_state", "Unknown"))
 		result_counts[end_state] = int(result_counts.get(end_state, 0)) + 1
+		_merge_numeric_metrics(all_behavior_totals, run.get("ai_behavior", {}))
+		_merge_numeric_metrics(navigation_totals, run.get("navigation", {}))
 		if end_state != "Finished":
+			_merge_numeric_metrics(invalid_behavior_totals, run.get("ai_behavior", {}))
+			_merge_numeric_metrics(invalid_navigation_totals, run.get("navigation", {}))
 			continue
 		finished_runs += 1
 		var winner := str(run.get("winner_faction", ""))
@@ -123,6 +131,10 @@ func _aggregate_core(runs: Array) -> Dictionary:
 		"average_damage_by_ship": _average_damage_by_ship(runs),
 		"average_damage_by_non_ship": _average_damage_by_non_ship(runs),
 		"ai_behavior": _finalize_ai_behavior(ai_behavior_totals, durations, finished_runs, total_effective_damage, total_overkill),
+		"ai_behavior_all_attempts": all_behavior_totals,
+		"ai_behavior_invalid_attempts": invalid_behavior_totals,
+		"navigation_all_attempts": navigation_totals,
+		"navigation_invalid_attempts": invalid_navigation_totals,
 		"submarine_ai": _aggregate_submarine_ai(runs),
 	}
 

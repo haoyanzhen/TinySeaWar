@@ -1,0 +1,193 @@
+{
+  "schema_version": 1,
+  "definitions": [
+    {
+      "id": "objective.m01_harbor",
+      "objective_kind": "ChallengeMission",
+      "title": "M-01 港湾扩编",
+      "completion_text": "击沉厌战号",
+      "failure_text": "胡德号任一沉没",
+      "required_enemy_unit_ids": [
+        "unit.enemy.m01.warspite"
+      ],
+      "protected_player_unit_ids": [
+        "unit.player.m01.hood"
+      ],
+      "description": "前卫侦查，主力推进；涨潮捷径与外侧深水路线均可选择。"
+    },
+    {
+      "id": "objective.m02_carrier_escort",
+      "objective_kind": "ChallengeMission",
+      "title": "M-02 泻湖护航",
+      "completion_text": "击沉俾斯麦号",
+      "failure_text": "厌战号、凤翔号任一沉没",
+      "required_enemy_unit_ids": [
+        "unit.enemy.m02.bismarck"
+      ],
+      "protected_player_unit_ids": [
+        "unit.player.m02.warspite",
+        "unit.player.m02.hosho"
+      ],
+      "description": "保护凤翔；选择直接击沉敌旗舰，或先削弱敌方航空支援。",
+      "optional_enemy_sunk_stages": [
+        [
+          "unit.enemy.m02.argus"
+        ],
+        [
+          "unit.enemy.m02.bismarck"
+        ]
+      ]
+    },
+    {
+      "id": "objective.m03_flanks",
+      "objective_kind": "ChallengeMission",
+      "title": "M-03 群岛雷击",
+      "completion_text": "击沉衣阿华号",
+      "failure_text": "胡德号任一沉没",
+      "required_enemy_unit_ids": [
+        "unit.enemy.m03.iowa"
+      ],
+      "protected_player_unit_ids": [
+        "unit.player.m03.hood"
+      ],
+      "description": "分路观察并利用流向雷击；拆除两翼仅为可选精通。",
+      "optional_enemy_sunk_stages": [
+        [
+          "unit.enemy.m03.gnevny",
+          "unit.enemy.m03.anshan"
+        ],
+        [
+          "unit.enemy.m03.iowa"
+        ]
+      ]
+    },
+    {
+      "id": "objective.m04_storm",
+      "objective_kind": "ChallengeMission",
+      "title": "M-04 风暴猎场",
+      "completion_text": "击沉俾斯麦号",
+      "failure_text": "厌战号任一沉没，或己方第3艘舰沉没",
+      "required_enemy_unit_ids": [
+        "unit.enemy.m04.bismarck"
+      ],
+      "protected_player_unit_ids": [
+        "unit.player.m04.warspite"
+      ],
+      "description": "争取背风水域，集中突破；旗舰须存活，最多损失两舰。",
+      "required_any_player_unit_ids": [
+        "unit.player.m04.warspite",
+        "unit.player.m04.san_diego",
+        "unit.player.m04.kirov",
+        "unit.player.m04.shimakaze",
+        "unit.player.m04.argus"
+      ],
+      "minimum_required_any_player_alive": 3
+    },
+    {
+      "id": "objective.m05_blockade",
+      "objective_kind": "ChallengeMission",
+      "title": "M-05 海峡封锁",
+      "completion_text": "击沉衣阿华号，累计击沉至少4艘敌舰（含旗舰）",
+      "failure_text": "胡德号任一沉没",
+      "required_enemy_unit_ids": [
+        "unit.enemy.m05.iowa"
+      ],
+      "protected_player_unit_ids": [
+        "unit.player.m05.hood"
+      ],
+      "description": "突破封锁，累计击沉四舰；敌旗舰沉没后可能仍需继续交战。",
+      "minimum_enemy_sunk": 4
+    },
+    {
+      "id": "objective.l01_deployment",
+      "objective_kind": "ChallengeMission",
+      "title": "L-01 舰队展开",
+      "completion_text": "击沉厌战号",
+      "failure_text": "胡德号任一沉没",
+      "required_enemy_unit_ids": [
+        "unit.enemy.l01.warspite"
+      ],
+      "protected_player_unit_ids": [
+        "unit.player.l01.hood"
+      ],
+      "description": "前卫、主力、后卫分组展开；集中一翼或保持双翼观察。"
+    },
+    {
+      "id": "objective.l02_air_corridor",
+      "objective_kind": "ChallengeMission",
+      "title": "L-02 岛侧航空走廊",
+      "completion_text": "击沉企业号",
+      "failure_text": "胡德号、百眼巨人号任一沉没",
+      "required_enemy_unit_ids": [
+        "unit.enemy.l02.enterprise_cv6"
+      ],
+      "protected_player_unit_ids": [
+        "unit.player.l02.hood",
+        "unit.player.l02.argus"
+      ],
+      "description": "保护己方百眼巨人；快速斩首或先拆敌方两艘护航航母。",
+      "optional_enemy_sunk_stages": [
+        [
+          "unit.enemy.l02.pobeda",
+          "unit.enemy.l02.argus"
+        ],
+        [
+          "unit.enemy.l02.enterprise_cv6"
+        ]
+      ]
+    },
+    {
+      "id": "objective.l03_gun_lane",
+      "objective_kind": "ChallengeMission",
+      "title": "L-03 双航道巨炮",
+      "completion_text": "击沉大和号",
+      "failure_text": "胡德号任一沉没",
+      "required_enemy_unit_ids": [
+        "unit.enemy.l03.yamato"
+      ],
+      "protected_player_unit_ids": [
+        "unit.player.l03.hood"
+      ],
+      "description": "主力牵制一条航道，雷击侧翼争取另一条；无需强制追杀潜艇。",
+      "optional_enemy_sunk_stages": [
+        [
+          "unit.enemy.l03.yukikaze",
+          "unit.enemy.l03.hai_shih"
+        ],
+        [
+          "unit.enemy.l03.yamato"
+        ]
+      ]
+    },
+    {
+      "id": "objective.l04_encirclement",
+      "objective_kind": "ChallengeMission",
+      "title": "L-04 风暴群岛合围",
+      "completion_text": "击沉衣阿华号",
+      "failure_text": "胡德号、百眼巨人号任一沉没",
+      "required_enemy_unit_ids": [
+        "unit.enemy.l04.iowa"
+      ],
+      "protected_player_unit_ids": [
+        "unit.player.l04.hood",
+        "unit.player.l04.argus"
+      ],
+      "description": "打穿一翼并保持后卫支援；胡德与百眼巨人都必须存活。"
+    },
+    {
+      "id": "objective.l05_finale",
+      "objective_kind": "ChallengeMission",
+      "title": "L-05 雷夜环礁终局",
+      "completion_text": "击沉大和号，累计击沉至少8艘敌舰（含旗舰）",
+      "failure_text": "衣阿华号任一沉没",
+      "required_enemy_unit_ids": [
+        "unit.enemy.l05.yamato"
+      ],
+      "protected_player_unit_ids": [
+        "unit.player.l05.iowa"
+      ],
+      "description": "保护衣阿华并分配火力；击沉大和且累计八舰即可结束。",
+      "minimum_enemy_sunk": 8
+    }
+  ]
+}

@@ -222,7 +222,7 @@ func apply_system_handover(event_id: String, faction_id: String) -> Dictionary:
 	return {"accepted":true, "events":events}
 
 
-func request_support(facility_id: String, mission_id: String, faction_id: String, target_position: Vector2, elapsed_time: float, environment_context: Dictionary = {}) -> Dictionary:
+func request_support(facility_id: String, mission_id: String, faction_id: String, target_position: Vector2, elapsed_time: float, environment_context: Dictionary = {}, aircraft_speed_multiplier: float = 1.0) -> Dictionary:
 	var facility: Dictionary = facilities_by_id.get(facility_id, {})
 	var definition: Dictionary = definition_for(facility_id)
 	var mission: Dictionary = definitions_by_id.get(mission_id, {})
@@ -251,7 +251,7 @@ func request_support(facility_id: String, mission_id: String, faction_id: String
 		"faction_id": faction_id,
 		"target_position": target_position,
 		"launch_at_time": elapsed_time + launch_time,
-		"resolve_at_time": elapsed_time + float(mission.get("arrival_time", 0.0)) * arrival_multiplier,
+		"resolve_at_time": elapsed_time + launch_time + maxf(0.0, float(mission.get("arrival_time", 0.0)) * arrival_multiplier - launch_time) / aircraft_speed_multiplier,
 		"state": "Preparing" if launch_time > 0.0 else "EnRoute",
 		"facility_state_policy": mission.get("facility_state_policy", {"Preparing":"Cancel", "EnRoute":"Continue"}).duplicate(true),
 	}

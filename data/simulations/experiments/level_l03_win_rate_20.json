@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "experiment_id": "sim.level.l03.win_rate_20",
+  "description": "双航道巨炮正式二十种子验收",
+  "authorization": "用户2026-09-30授权十关实现、20种子验收及设计范围内调参",
+  "simulation_kind": "LevelWinRateEvaluation",
+  "player_policy_id": "LatestRuntimeAI",
+  "enemy_policy_id": "LatestRuntimeAI",
+  "ai_profile_id": "ai.profile.standard",
+  "side_swap": false,
+  "tick_seconds": 0.1,
+  "maximum_ticks": 12000,
+  "seed_plan": {
+    "type": "SequentialRange",
+    "start": 92201,
+    "count": 20
+  },
+  "win_rate_evaluation": {
+    "settlement_source": "BattleStatisticsReport",
+    "target_player_win_rate": 0.3,
+    "tolerance": 0.05
+  },
+  "scenarios": [
+    {
+      "scenario_id": "challenge_l03",
+      "level_definition_id": "level.challenge.l03"
+    }
+  ],
+  "output_directory": "res://artifacts/simulations/challenge_ml_20260930/v4/l03"
+}

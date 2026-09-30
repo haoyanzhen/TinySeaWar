@@ -1,0 +1,656 @@
+{
+  "schema_version": 1,
+  "definitions": [
+    {
+      "id": "level.challenge.m01",
+      "display_name": "M-01 港湾扩编",
+      "battle_mode": "ChallengeBattle",
+      "objective_set_id": "objective.m01_harbor",
+      "enemy_ai_profile_id": "ai.profile.standard",
+      "map": {
+        "width": 6144,
+        "height": 3456,
+        "ocean_palette": "rain_dawn",
+        "terrain_definition_id": "terrain.map.challenge_m01",
+        "navigation_definition_id": "navigation.challenge_m01",
+        "environment_zone_set_id": "environment.zone_set.challenge_m01",
+        "facility_layout_id": ""
+      },
+      "time_limit": 1200.0,
+      "player_fleet": [
+        {
+          "entity_id": "unit.player.m01.hood",
+          "ship_id": "ship.hood",
+          "position": [
+            3008.0,
+            2880.0
+          ],
+          "heading": 270,
+          "is_flagship": true
+        },
+        {
+          "entity_id": "unit.player.m01.san_diego",
+          "ship_id": "ship.san_diego",
+          "position": [
+            2496.0,
+            2880.0
+          ],
+          "heading": 270,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.player.m01.chongqing",
+          "ship_id": "ship.chongqing",
+          "position": [
+            3648.0,
+            2880.0
+          ],
+          "heading": 270,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.player.m01.yukikaze",
+          "ship_id": "ship.yukikaze",
+          "position": [
+            1856.0,
+            3008.0
+          ],
+          "heading": 270,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.player.m01.hai_shih",
+          "ship_id": "ship.hai_shih",
+          "position": [
+            4288.0,
+            3008.0
+          ],
+          "heading": 270,
+          "is_flagship": false
+        }
+      ],
+      "enemy_fleet": [
+        {
+          "entity_id": "unit.enemy.m01.warspite",
+          "ship_id": "ship.warspite",
+          "position": [
+            3008.0,
+            704.0
+          ],
+          "heading": 90,
+          "is_flagship": true
+        },
+        {
+          "entity_id": "unit.enemy.m01.kirov",
+          "ship_id": "ship.kirov",
+          "position": [
+            2496.0,
+            576.0
+          ],
+          "heading": 90,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.enemy.m01.sirius",
+          "ship_id": "ship.sirius",
+          "position": [
+            3648.0,
+            576.0
+          ],
+          "heading": 90,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.enemy.m01.gnevny",
+          "ship_id": "ship.gnevny",
+          "position": [
+            1856.0,
+            448.0
+          ],
+          "heading": 90,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.enemy.m01.ward",
+          "ship_id": "ship.ward",
+          "position": [
+            4288.0,
+            448.0
+          ],
+          "heading": 90,
+          "is_flagship": false
+        }
+      ]
+    },
+    {
+      "id": "level.challenge.m02",
+      "display_name": "M-02 泻湖护航",
+      "battle_mode": "ChallengeBattle",
+      "objective_set_id": "objective.m02_carrier_escort",
+      "enemy_ai_profile_id": "ai.profile.standard",
+      "map": {
+        "width": 6144,
+        "height": 3456,
+        "ocean_palette": "rain_dusk",
+        "terrain_definition_id": "terrain.map.challenge_m02",
+        "navigation_definition_id": "navigation.challenge_m02",
+        "environment_zone_set_id": "environment.zone_set.challenge_m02",
+        "facility_layout_id": ""
+      },
+      "time_limit": 1200.0,
+      "player_fleet": [
+        {
+          "entity_id": "unit.player.m02.warspite",
+          "ship_id": "ship.warspite",
+          "position": [
+            3008.0,
+            2752.0
+          ],
+          "heading": 270,
+          "is_flagship": true
+        },
+        {
+          "entity_id": "unit.player.m02.san_diego",
+          "ship_id": "ship.san_diego",
+          "position": [
+            2496.0,
+            3008.0
+          ],
+          "heading": 270,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.player.m02.kirov",
+          "ship_id": "ship.kirov",
+          "position": [
+            3776.0,
+            3008.0
+          ],
+          "heading": 270,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.player.m02.hosho",
+          "ship_id": "ship.hosho",
+          "position": [
+            1856.0,
+            3008.0
+          ],
+          "heading": 270,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.player.m02.anshan",
+          "ship_id": "ship.anshan",
+          "position": [
+            4288.0,
+            3008.0
+          ],
+          "heading": 270,
+          "is_flagship": false
+        }
+      ],
+      "enemy_fleet": [
+        {
+          "entity_id": "unit.enemy.m02.bismarck",
+          "ship_id": "ship.bismarck",
+          "position": [
+            3008.0,
+            704.0
+          ],
+          "heading": 90,
+          "is_flagship": true
+        },
+        {
+          "entity_id": "unit.enemy.m02.prinz_eugen",
+          "ship_id": "ship.prinz_eugen",
+          "position": [
+            2368.0,
+            704.0
+          ],
+          "heading": 90,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.enemy.m02.yukikaze",
+          "ship_id": "ship.yukikaze",
+          "position": [
+            3776.0,
+            704.0
+          ],
+          "heading": 90,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.enemy.m02.ward",
+          "ship_id": "ship.ward",
+          "position": [
+            1856.0,
+            448.0
+          ],
+          "heading": 90,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.enemy.m02.argus",
+          "ship_id": "ship.argus",
+          "position": [
+            4288.0,
+            448.0
+          ],
+          "heading": 90,
+          "is_flagship": false
+        }
+      ]
+    },
+    {
+      "id": "level.challenge.m03",
+      "display_name": "M-03 群岛雷击",
+      "battle_mode": "ChallengeBattle",
+      "objective_set_id": "objective.m03_flanks",
+      "enemy_ai_profile_id": "ai.profile.standard",
+      "map": {
+        "width": 6144,
+        "height": 3456,
+        "ocean_palette": "rain_night",
+        "terrain_definition_id": "terrain.map.challenge_m03",
+        "navigation_definition_id": "navigation.challenge_m03",
+        "environment_zone_set_id": "environment.zone_set.challenge_m03",
+        "facility_layout_id": ""
+      },
+      "time_limit": 1200.0,
+      "player_fleet": [
+        {
+          "entity_id": "unit.player.m03.hood",
+          "ship_id": "ship.hood",
+          "position": [
+            1216.0,
+            1728.0
+          ],
+          "heading": 0,
+          "is_flagship": true
+        },
+        {
+          "entity_id": "unit.player.m03.san_diego",
+          "ship_id": "ship.san_diego",
+          "position": [
+            1088.0,
+            1216.0
+          ],
+          "heading": 0,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.player.m03.chongqing",
+          "ship_id": "ship.chongqing",
+          "position": [
+            1088.0,
+            2240.0
+          ],
+          "heading": 0,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.player.m03.yukikaze",
+          "ship_id": "ship.yukikaze",
+          "position": [
+            1344.0,
+            704.0
+          ],
+          "heading": 0,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.player.m03.hai_shih",
+          "ship_id": "ship.hai_shih",
+          "position": [
+            1344.0,
+            2752.0
+          ],
+          "heading": 0,
+          "is_flagship": false
+        }
+      ],
+      "enemy_fleet": [
+        {
+          "entity_id": "unit.enemy.m03.iowa",
+          "ship_id": "ship.iowa",
+          "position": [
+            4928.0,
+            1728.0
+          ],
+          "heading": 180,
+          "is_flagship": true
+        },
+        {
+          "entity_id": "unit.enemy.m03.hindenburg",
+          "ship_id": "ship.hindenburg",
+          "position": [
+            5056.0,
+            1216.0
+          ],
+          "heading": 180,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.enemy.m03.hosho",
+          "ship_id": "ship.hosho",
+          "position": [
+            5056.0,
+            2240.0
+          ],
+          "heading": 180,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.enemy.m03.gnevny",
+          "ship_id": "ship.gnevny",
+          "position": [
+            4800.0,
+            704.0
+          ],
+          "heading": 180,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.enemy.m03.anshan",
+          "ship_id": "ship.anshan",
+          "position": [
+            4800.0,
+            2752.0
+          ],
+          "heading": 180,
+          "is_flagship": false
+        }
+      ]
+    },
+    {
+      "id": "level.challenge.m04",
+      "display_name": "M-04 风暴猎场",
+      "battle_mode": "ChallengeBattle",
+      "objective_set_id": "objective.m04_storm",
+      "enemy_ai_profile_id": "ai.profile.hard",
+      "map": {
+        "width": 6144,
+        "height": 3456,
+        "ocean_palette": "thunderstorm_day",
+        "terrain_definition_id": "terrain.map.challenge_m04",
+        "navigation_definition_id": "navigation.challenge_m04",
+        "environment_zone_set_id": "environment.zone_set.challenge_m04",
+        "facility_layout_id": "",
+        "environment_timeline_id": "environment.timeline.challenge_m04"
+      },
+      "time_limit": 1200.0,
+      "player_fleet": [
+        {
+          "entity_id": "unit.player.m04.warspite",
+          "ship_id": "ship.warspite",
+          "position": [
+            1216.0,
+            1728.0
+          ],
+          "heading": 0,
+          "is_flagship": true
+        },
+        {
+          "entity_id": "unit.player.m04.san_diego",
+          "ship_id": "ship.san_diego",
+          "position": [
+            1088.0,
+            1216.0
+          ],
+          "heading": 0,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.player.m04.kirov",
+          "ship_id": "ship.kirov",
+          "position": [
+            1088.0,
+            2240.0
+          ],
+          "heading": 0,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.player.m04.shimakaze",
+          "ship_id": "ship.shimakaze",
+          "position": [
+            1216.0,
+            704.0
+          ],
+          "heading": 0,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.player.m04.argus",
+          "ship_id": "ship.argus",
+          "position": [
+            1344.0,
+            2880.0
+          ],
+          "heading": 0,
+          "is_flagship": false
+        }
+      ],
+      "enemy_fleet": [
+        {
+          "entity_id": "unit.enemy.m04.bismarck",
+          "ship_id": "ship.bismarck",
+          "position": [
+            4928.0,
+            1728.0
+          ],
+          "heading": 180,
+          "is_flagship": true
+        },
+        {
+          "entity_id": "unit.enemy.m04.san_diego",
+          "ship_id": "ship.san_diego",
+          "position": [
+            5056.0,
+            1216.0
+          ],
+          "heading": 180,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.enemy.m04.shimakaze",
+          "ship_id": "ship.shimakaze",
+          "position": [
+            5056.0,
+            2240.0
+          ],
+          "heading": 180,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.enemy.m04.u_47",
+          "ship_id": "ship.u_47",
+          "position": [
+            4800.0,
+            704.0
+          ],
+          "heading": 180,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.enemy.m04.argus",
+          "ship_id": "ship.argus",
+          "position": [
+            4800.0,
+            2880.0
+          ],
+          "heading": 180,
+          "is_flagship": false
+        }
+      ],
+      "reinforcement_waves": [
+        {
+          "wave_id": "wave.m04.01",
+          "faction_id": "enemy",
+          "earliest_time": 150,
+          "concurrent_unit_cap": 5,
+          "spawn_point_id": "RN",
+          "spawn_display_name": "东侧北口",
+          "members": [
+            {
+              "entity_id": "unit.enemy.m04.ward_reserve",
+              "ship_id": "ship.ward",
+              "position": [
+                5696.0,
+                576.0
+              ],
+              "heading": 180,
+              "is_flagship": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "level.challenge.m05",
+      "display_name": "M-05 海峡封锁",
+      "battle_mode": "ChallengeBattle",
+      "objective_set_id": "objective.m05_blockade",
+      "enemy_ai_profile_id": "ai.profile.hard",
+      "map": {
+        "width": 6144,
+        "height": 3456,
+        "ocean_palette": "thunderstorm_dawn",
+        "terrain_definition_id": "terrain.map.challenge_m05",
+        "navigation_definition_id": "navigation.challenge_m05",
+        "environment_zone_set_id": "environment.zone_set.challenge_m05",
+        "facility_layout_id": "",
+        "environment_timeline_id": "environment.timeline.challenge_m05"
+      },
+      "time_limit": 1200.0,
+      "player_fleet": [
+        {
+          "entity_id": "unit.player.m05.hood",
+          "ship_id": "ship.hood",
+          "position": [
+            3136.0,
+            2752.0
+          ],
+          "heading": 270,
+          "is_flagship": true
+        },
+        {
+          "entity_id": "unit.player.m05.san_diego",
+          "ship_id": "ship.san_diego",
+          "position": [
+            2240.0,
+            3136.0
+          ],
+          "heading": 270,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.player.m05.chongqing",
+          "ship_id": "ship.chongqing",
+          "position": [
+            3776.0,
+            3264.0
+          ],
+          "heading": 270,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.player.m05.yukikaze",
+          "ship_id": "ship.yukikaze",
+          "position": [
+            1856.0,
+            3008.0
+          ],
+          "heading": 270,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.player.m05.hai_shih",
+          "ship_id": "ship.hai_shih",
+          "position": [
+            4288.0,
+            3008.0
+          ],
+          "heading": 270,
+          "is_flagship": false
+        }
+      ],
+      "enemy_fleet": [
+        {
+          "entity_id": "unit.enemy.m05.iowa",
+          "ship_id": "ship.iowa",
+          "position": [
+            3008.0,
+            704.0
+          ],
+          "heading": 90,
+          "is_flagship": true
+        },
+        {
+          "entity_id": "unit.enemy.m05.hindenburg",
+          "ship_id": "ship.hindenburg",
+          "position": [
+            2240.0,
+            320.0
+          ],
+          "heading": 90,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.enemy.m05.san_diego",
+          "ship_id": "ship.san_diego",
+          "position": [
+            3904.0,
+            448.0
+          ],
+          "heading": 90,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.enemy.m05.shimakaze",
+          "ship_id": "ship.shimakaze",
+          "position": [
+            1856.0,
+            448.0
+          ],
+          "heading": 90,
+          "is_flagship": false
+        },
+        {
+          "entity_id": "unit.enemy.m05.u_47",
+          "ship_id": "ship.u_47",
+          "position": [
+            4288.0,
+            448.0
+          ],
+          "heading": 90,
+          "is_flagship": false
+        }
+      ],
+      "reinforcement_waves": [
+        {
+          "wave_id": "wave.m05.01",
+          "faction_id": "enemy",
+          "earliest_time": 120,
+          "concurrent_unit_cap": 5,
+          "spawn_point_id": "RS",
+          "spawn_display_name": "北侧东口",
+          "members": [
+            {
+              "entity_id": "unit.enemy.m05.pobeda_reserve",
+              "ship_id": "ship.pobeda",
+              "position": [
+                4160.0,
+                320.0
+              ],
+              "heading": 90,
+              "is_flagship": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

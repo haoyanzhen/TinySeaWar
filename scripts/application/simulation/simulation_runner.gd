@@ -156,8 +156,10 @@ func _run_battle(registry, manifest: Dictionary, scenario: Dictionary, seed_valu
 		"policy_command_rejections_by_reason": policy_command_rejections_by_reason,
 		"policy_command_rejection_details": policy_command_rejection_details,
 		"ai_behavior": stats.get("ai_behavior", {}).duplicate(true),
+		"navigation": stats.get("navigation", {}).duplicate(true),
 		"submarine_ai": submarine_ai_statistics,
 		"fleet_health": fleet_health,
+		"fleet_cost": _fleet_cost(run_registry, run_registry.get_definition("levels", level_id), session.state),
 		"unit_end_states": _unit_end_states(session.state),
 		"units": unit_damage_statistics,
 		"non_ship_damage": non_ship_damage_statistics,
@@ -697,4 +699,21 @@ func _fleet_health(state: Dictionary) -> Dictionary:
 			"remaining_hp_ratio": current_hp / initial_hp,
 			"alive_units": alive_units,
 		}
+	return result
+
+
+func _fleet_cost(registry, level: Dictionary, state: Dictionary) -> Dictionary:
+	var result := {}
+	for faction in ["player", "enemy"]:
+		var initial := 0
+		var reserve := 0
+		var entered_reserve := 0
+		for member in level.get(faction + "_fleet", []): initial += int(registry.get_definition("ships", member.ship_id).get("cost", 0))
+		for wave in level.get("reinforcement_waves", []):
+			if wave.get("faction_id", "") != faction: continue
+			for member in wave.get("members", []):
+				var cost := int(registry.get_definition("ships", member.ship_id).get("cost", 0))
+				reserve += cost
+				if state.get("units_by_id", {}).has(member.entity_id): entered_reserve += cost
+		result[faction] = {"initial":initial, "reserve":reserve, "total":initial + reserve, "entered":initial + entered_reserve}
 	return result

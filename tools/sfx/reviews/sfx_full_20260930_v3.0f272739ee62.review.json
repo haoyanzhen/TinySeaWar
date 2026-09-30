@@ -1,0 +1,976 @@
+{
+  "batch_id": "sfx_full_20260930_v3",
+  "batch_sha256": "4d1cd2f07e2abb4699a4cc6e3e71480b2237080da3a70b79baf18d1642ca8b4c",
+  "audio_hashes": {
+    "W01_full_a": "782e41b1edbb2daa5a7cbdf9b883f663cce70a6a12138697c10cf01b48cf8b95",
+    "W01_full_b": "efbd80dceedd56c2a6036bdc377eff04af0810690fc4e9d30f95b65bab444fde",
+    "W01_full_c": "51439b8a0cac27cc258ef77e22582afec9fb403e98d40f1f4b4064a0cd6d7483",
+    "W02_full_a": "4a8abc984f7bb2a230e839d4c24214b921334810ae3f6688f651a64ad2bd7471",
+    "W02_full_b": "bd4c6fd3c9bc2a232598275a52675f552f5b4971d6443ba2edca677bd2c43cdd",
+    "W02_full_c": "c479d33444704d078a9d44ca14ad1157dc19eaf11c929e50a41a59919f8a6076",
+    "W03_full_a": "0aa0f4ea24ec49125b0eab32f82d10178806f13ed90aa74bde2dcef3f396e530",
+    "W03_full_b": "346210b16243af17512975001d2721bdd68449875ba6232f6726a0ac10f28417",
+    "W03_full_c": "057f3ea43a62d1d8f469d9fc0c2ed38455ac3d364ae8dbbe8925481f4cd27270",
+    "W04_full_a": "8ec9212b15bb2a2fc70921ac936c38cffa1cd6a7dd60dbd78e78f3c42ae6f6ee",
+    "W04_full_b": "d350ad7ce56dc7b5e6e5c95756c20bc7cadb0fa72858c234090ea9d0f77bd579",
+    "W04_full_c": "1eec112b1d942b41d593fe501b9f6d313873833ed6ad4d631ab5b7115c2c9633",
+    "W05_full_a": "c9234af451d11fa2275939392dfc556a91edcbf5dd844972ce4599d327218eff",
+    "W05_full_b": "ba1a4388c3f4af2683484db8c02737d25da06d0b9af4010722887771cafc16c6",
+    "W05_full_c": "56a90987933f325c30e7b1e5733ec0bab43c1260a2464d73d8219256e848fd4e",
+    "W06_full_a": "b789bf8a6f18dc39b602f582d03beecf01733c20d06cba39a0ec7b6eef3d20a9",
+    "W06_full_b": "580f3fd7b8f35cc0b0029dbfb449366ccd1c3d68d55a634c2ac51ebbb8444f60",
+    "W06_full_c": "40a3021c65f859a527b9a452ba6e4cc7aea174c55e20403532a91f82565baf5b",
+    "W07a_full_a": "ddcd6e363d27f2f715ac8d19238b190ca117fada8f21bbb4994701b8557ffc5b",
+    "W07a_full_b": "161aa451400702bae9a7200907b24ca25648253763002bfa286c2113653664d3",
+    "W07a_full_c": "0082f656d55024ac4d5fa9ba206b29f8454ba5eac5e41be1215c93b49fd18894",
+    "W07b_full_a": "0763ed2067d97987ff0383ecdcc8fa6551d856c4095e6d7dea12eba4eeb9d9db",
+    "W07b_full_b": "dbde4c40763fabb4aa100eb613a89ade78566b57f72836821f65c655cacd2ba1",
+    "W07b_full_c": "f84aa2f5c35ce9997b6bc006d7b6d4a6b76c1ad484d17aa9955db3910cac1d7b",
+    "W08_full_a": "471688bbf60106cbd44d50178f4d3d44fe6b4a8f985afdbd78dad0ff8f1ec42d",
+    "W08_full_b": "e3f130a1cae8434569624dce1770804c06359d1aba6c31b8b2e01a59d467bc5f",
+    "W08_full_c": "06ca0034482ecd150a7ccc7d21ba5e53d81a351494faae0b1f81f6932e967982",
+    "W09_full_a": "c107d88abca79865c45a3d72ae73e5d41af10567967a743b6859dbc2860f1a12",
+    "W09_full_b": "c0208efa872194f2247faf49549d5b9e20cddd9c7b22ff5771c9a0c24dbd63d0",
+    "W09_full_c": "fb04db5437c06f21875f0212196d98366c1d5c0e714c3b840f5a9bfac2f9f131",
+    "W10a_full_a": "69c6bdb9cbdbdcba73060b28c3c476c2318ab46dab04a7b5a22d355fe8a1a5d9",
+    "W10a_full_b": "152d17b8342e40f46d8b782afb1905a13aeed3604044230978b2130f435b92d7",
+    "W10a_full_c": "a2a55e63115e84d48682b32e147b9e8533601844c16ac28c61310a23ed6a9284",
+    "W10b_full_a": "dd69d9db2730c670a80986db856578c5b557417fbd9afc0e26023df4a4d3c06b",
+    "W10b_full_b": "3cd12837d012a258793dea8d15e86c9e987abb366ce398ab94957ee074d502dc",
+    "W10b_full_c": "df3b855f59faec61dbba4a6f668cebbe39fd4927689e5a763e5ce51b3d2bd2ed",
+    "W11_full_a": "dc0589472c84a45ffde4f4cd8100270de4791165c981426ea45500a023211aac",
+    "W11_full_b": "3dabad62b7dfab2b95d183b029c3518fa7d0ec780cf4aca30abed2353f77f100",
+    "W11_full_c": "f282247496de02903213ac33f1e59970e66068496bc57cf499c0248e8cdd8827",
+    "W12a_full_a": "ac978bb74df28edbc1f8655b06a2ffc05a10b9f270f8ca019ed48bc726cbe030",
+    "W12a_full_b": "040cae1db573a1ff4ab84ccf66ed8c65bb8a21928c40afbec3641eb92ee93295",
+    "W12a_full_c": "db6276449f4bdaf524329075a9de64732a321163fc0370f090af907844b05339",
+    "W12b_full_a": "51d1fdf59ef7bfcab0838990902db21279ceda62e1e66e1106cc14c32a29911b",
+    "W12b_full_b": "3da3e6573d963517d95070fce1576b6d5c70a0378318b1290d566cf95dd4dcaa",
+    "W12b_full_c": "ca47e7f8a807babfd01217f17650ac8667712efd277f4d88634bdca2dbe9d451",
+    "W12c_full_a": "c10bdb362904e09a71e5d865097e6b302beb8768e22ec952e90e10041a441b8d",
+    "W12c_full_b": "b773b976de7319e47c757d3b9f391bfc783c493780bf0f566d60944b8e31b8cc",
+    "W12c_full_c": "dd1fcc6f84ebde82b233b56498b7b9baa4465f5bb173aeb68d91a1f7fd51d4f0",
+    "W13a_full_a": "9ac55c3c13840284d6645a592108eaa29c52096f7caafb16853ce6cf5f0a1633",
+    "W13a_full_b": "18097e51ab31137fcfa9b94f5c459a9e6298e70955dac565c338329dd5e1a4e9",
+    "W13a_full_c": "aed82af468cf75ce88b5a9305d88ce0a0786ff457221f99906fcbb67e9c1a518",
+    "W13b_full_a": "5eed6fe997193f01b2ac9ca6299fb8e71cd9d1ddb944501b21368535c2a88eec",
+    "W13b_full_b": "58b56448811de470d3db1dfc7ca6dd31231e70a396cecdf65569ec4d97f99187",
+    "W13b_full_c": "0a8554585f6ae74ef3af3ae9a6f1e5b78eaebe91bc831991941b2840ea56df6e",
+    "W14_full_a": "65b300bbd01a08eea203c1a3c8b028505aa358dcc8fac28eaf51624fbf8156f8",
+    "W14_full_b": "025c746bf5e79307d473d5f0ff6c61bbb016e4af79151f82c774bef72c31bf3e",
+    "W14_full_c": "06e8b83d51bebd5781a1ad76fdafd12dc96029855c4d5d5cae2d957433e10350",
+    "W15a_full_a": "606a143c6f9652f346ad2a85839babc95ed7de278152d4b7d5aae880af44586e",
+    "W15a_full_b": "b46fd3053d784b81e33426d624c8979551ba2b69c3153a962da6d6b735dce196",
+    "W15a_full_c": "e03f8f09a5f9c6dc603d7d7743e56eb56edc35776ec26001d7f2da13a57348ca",
+    "W15b_full_a": "10b8939d8c79fa973d1aeca7eb0cc38d3b663091b447f27dfd33315ea418c1c3",
+    "W15b_full_b": "988d2f62cc1260dd76bde72b0648b1a901f94ecaee899f3e8967e24e75485812",
+    "W15b_full_c": "a861933940a5fa84cf486b11519b896ed5c821a52025eb3415ced9f89acbc7d5",
+    "W16_full_a": "d9665f11e654a909a43eab795cf9bb389926a5b89c6818d8764ce97f714de913",
+    "W16_full_b": "9a7f56c457906e82c10d6a92cbb8ba7173b376c4c2d4e8486e87b359a52db756",
+    "W16_full_c": "4b8830713af4f47e1a2ff1ec9d2deeceb9435dcda01eacdf2adfaebf70d8a908",
+    "W17a_full_a": "366b84e0f2e2d2d795063811afcbfab63900026f33a1bf706402fd1e0503367b",
+    "W17a_full_b": "264cfcad6aa367d9587e4b59cfa36ad3b217d1c87dcf3449f25903f48b5ace35",
+    "W17a_full_c": "70d87c3f959f9a621c3900bd90fe867f21fdf1b836e7f72c98b62323758ae87c",
+    "W17b_full_a": "3ca06a6bef7f02f613943220548f9b5f670a62e31b991c519ec6933d1c704474",
+    "W17b_full_b": "038a2c2af2699f6a4de59ea5abfadc31363e58099afaefe0c591c7b204c9b77e",
+    "W17b_full_c": "ad4a37752a9b08dcd1a589ab6ffed580d3bdcb3fa27d62a5544d9e3043862d12",
+    "W17c_full_a": "3b64bfda1bd7e3c67fb954a66a19343d28d93805d142e39d2b4c0e3c75d47149",
+    "W17c_full_b": "b50ae339410a4139a07c9444f8689e033efcd0e88be4abe1437d4d2097cb9678",
+    "W17c_full_c": "8429f24abcdde3e0c2f7f7941a6d3d6debdf42f62e552eca63eddab7af41aab2",
+    "W18_full_a": "71c4acd13d7a0892246a15a66043dfbc35a9dc9bea006001991fd5cac293fed4",
+    "W18_full_b": "456e5a24719a2f4d91963808c8ea2a783da791e0ba19f2843a5527330238bc5a",
+    "W18_full_c": "768885baaf2d8e8070afb61280e12b5300e1e455254beed3aaa62cc835337aa7",
+    "W19_full_a": "7d33332a9a5baa31459c213df695508954a165f30166b56d0fcab9446c611993",
+    "W19_full_b": "9e520f393ac9abb43274e4292d1de92662a9f00d1a95ca4f4a7d411b0126e46d",
+    "W19_full_c": "60de7a8f3a1329320b848d8b7187e83d2485d675bddd17d8c0d3a8ee521544d2",
+    "A01_full_a": "482a4c2597a4f166b269b4fe095fb0914fecf4d768175da1527ed4ffc914abda",
+    "A01_full_b": "ad06c62c5590d0371e6579a88159352c087c37137a125f07158bb58c7f55a372",
+    "A01_full_c": "076ed9843d65c346871555ee7f4e6122fc3012ad8bfe01c7611f23f597262d79",
+    "A02_full_a": "8bc58c19ca6b3b8fddeda1d54df21a44931d94528104a8ef5b44b1bbd338aebc",
+    "A02_full_b": "b18a99f40fd361f2e334a353082eb534a018d99168782bc5b36be6c7b0e06c4e",
+    "A02_full_c": "56e3e4fffdea522385b7d7b93dbd8728b754338c1046a0926935e8c3a97e2cc2",
+    "A03_full_a": "d624d70b59e7f747d822b1722a4dd275fc857b13864460d9367d6c356e37b06b",
+    "A03_full_b": "eeb065b60510ed00397bde445a4ddb2cb502c69bffb058f2548e9c226d34a276",
+    "A03_full_c": "12ebd240107ed87f6ccdb33931ea2db6e8788ef15e1ee63ae458346c725ec601",
+    "A05_full_a": "0296bd9702764bdd3376d409682394ca951f42b8e72f24711125a0a762f21b27",
+    "A05_full_b": "6102c010440ec6a2bb7715dfebd9e985658169e258c12fa5da2d9df7e2e1b0f5",
+    "A05_full_c": "c3b1a4d29fb11121ce5af249d6d6a10241706374adbfd42f324923ae8ca581a9",
+    "A06a_full_a": "1be44a9adc65bff13e32ccf7d72f52840eacc38c01b9b724ad0e382a3c69111a",
+    "A06a_full_b": "0c541b770ebb07b364766d1abe3dbf25becfa27c2d8dc7a76da1160a25345fc4",
+    "A06a_full_c": "9d36c950a7c74b7cc43b960f11feb061afbade8c0edfaf6a795327738cfed909",
+    "A06b_full_a": "515b0502cb71f43485825452680cc19a37e4d889ae84dec952e42ad79618ea2e",
+    "A06b_full_b": "21d7d178df40a2d05b8a311f5eced5947a5a06064b9a56a04dfbec72191571f5",
+    "A06b_full_c": "a0889cb5ba88313641c10ebb5af501d8a6fe4ea011d86ccbe8188ca50aaea11c",
+    "S01_full_a": "84fdd67db2298e35aca32b3e082c69050cf558b97ddb18c3fcb289bf4f0a0ff4",
+    "S01_full_b": "1a7fca4a3bb326dcf72b4281d5fbaa4bddb5bdcf570e7f60f6b0d9a719506177",
+    "S01_full_c": "92120a6492b1ff23d522e80e91f5acaf12221948e7c8d0d211ca17ba7121eebc",
+    "S02_full_a": "b2c2c2515a56603c0b7c9a006fd508bfcc3857c903076c488cb924a03a9e3295",
+    "S02_full_b": "9d9542a18fb98fe4d7b8142111e0a88b3da5a5c576285073a05b6ea08c1fd651",
+    "S02_full_c": "bb94e1edee21a48aa7a39a4edf76ae040a52a9be85db94fb3eb5ad903e9f1920",
+    "S03a_full_a": "c86cab5780141a59f16083533c869c986cf13421cbeb6921bfd5cc51e3655b9e",
+    "S03a_full_b": "d1838f92d81febeeba8360d6684390864e53505694a93f05e858849745feb38b",
+    "S03a_full_c": "6e5ed37e29afc9b4ed2be7d9057532539b976440b0cc7420a2c89542eda41851",
+    "S03b_full_a": "538fbccd28e091e6230c4831e10d07284157659045d7db77f4a51e0eb1ec9e8c",
+    "S03b_full_b": "039aeefe756857ab8c7a8c3f6b86729d5c2dcf20fac17c7297f1d48cb5d01487",
+    "S03b_full_c": "6121163b39e22a00db21c92314cd8cd574a395e9f659bcc7beee44edfe8dd793",
+    "S04_full_a": "9e8ed09000bd03ae537a0f49ec5f807e4b1054b646a5a3e638ae2f9d20653f9c",
+    "S04_full_b": "1f53fd8b51fe869528e244cbae578dbd14ed4b5ef85f408788da899a39c2100b",
+    "S04_full_c": "40d80623572466e257246894da8d8ea7be9fc96ee487341397d44f11fea2456d",
+    "S05_full_a": "3e9750ab01350f31cc37549a8bc2308f368eaf206f4ff60c9b6e23a64cf780d4",
+    "S05_full_b": "6a6bc77acb70271d36ce7af68ae5bf691e161b91fa35164596e34a98e9066d1f",
+    "S05_full_c": "494030cf6c5283fa1cbf6064430d9c2b14b0118ba7cace92dd5a619512d9fcf5",
+    "S06_full_a": "0c98829c07f83e0525f45f0d06f79ba8fbb96565f1361eb785a0aaf39506fd2f",
+    "S06_full_b": "2485794732b59c06082c770723a6cbc07a29728fff8b83992604f853c58b03cd",
+    "S06_full_c": "21d01d80a97769b62d7ae8f22814ef7bc4cfce46456491f231305501fb977440",
+    "S07_full_a": "e28a9da86139bb2261dfdcb50daff680d20a7bd47eca79ee7b5f6ec20c9ded74",
+    "S07_full_b": "bc1a3522243d9b98b0448f499d927af1ab6396ecbd8f7e289417df324143c099",
+    "S07_full_c": "49847488417c90684e90639fe10c8803adc49fa36bc61f7226627727d1b8bb8b",
+    "K01_full_a": "1990dcfa16d57454962a9283031ec1ca0ae0a399c43fdd83d52fd8000929237f",
+    "K01_full_b": "ef26fa717c846937f079bf2a8911a06da482d7779c02cab1872239980edea5ef",
+    "K01_full_c": "d28494eeacd0d6a4c87245626c49baa2519a478be0558208c481d87c48e0d9c8",
+    "K02_full_a": "50863f0c67916d2867859be5ec6d3ff28f2a41d51a93cac98dcffcf6f56fb6b3",
+    "K02_full_b": "6245e25c725824a5784b7651dce265976ca07085555599290b280fdb33b25b63",
+    "K02_full_c": "38e6acf2cd223d2f3c887d312e211c53e8d706a158a81c670de22a6f46500284",
+    "K03_full_a": "d3ab61e274b43fa5567f22b2f0f00d136b72ca05ed9bf65bbacd36f59660d1ff",
+    "K03_full_b": "d6577ebf038fde4748280cf4cd692ab134e92134e820a50d450e8b0d8db26a62",
+    "K03_full_c": "9243c5754a68d7dfe5bbfaa7a16b4b04dbcea8aa63ea3cdd436cc297271c0a97",
+    "K04_full_a": "02e78c7232d27c1d11b6e681f435bf669585c542d5816f0e41ab5c8403580080",
+    "K04_full_b": "98e5a459dafe699850dfff24ed7e61c7a9ec0bcccef363c654afb9fce130271f",
+    "K04_full_c": "1449e23fe8ab4c4cf5d204cfec0c2fa4c40a9949148bae9917aa6cfee618fcbf",
+    "K05_full_a": "855a55afa9bf2f31c89f2cc5ebe4d10e2cff31e7f5a511aadd2cec53ffa52d2a",
+    "K05_full_b": "f460265df68c5d1a18270afdd6bd1f9f4660376a92c27dc582b0d07b038e13df",
+    "K05_full_c": "85acc5e047cfbdd7ba4d5236f86395ce59f7e73b3879fc2a37eb3295992e33de",
+    "K06_full_a": "3602288137e79d79c0adcf12351a210bead53d600e9ec71121fd9fa7dab8aea2",
+    "K06_full_b": "f11aaa4f0ccba99997ea102e107e8a1d447a84f58d3b9e4f694277ec7a4ad358",
+    "K06_full_c": "1af467105a0a3d262c805a252c3a693964948db8824492f4aa46d54d0132ca55",
+    "K07_full_a": "0809e332e7cba6e070ea831fc083906d3dfd06ec836b393de2ce5f6b3b533f66",
+    "K07_full_b": "68fe0f27c3a728fb5c71ae9fcf35014da255ddeead489bdffc54bad1797d507a",
+    "K07_full_c": "7d6e36d2f4491a9a462f9500eecd4e4d7770b30eae12e15ba7c32d605c762f09",
+    "K08_full_a": "061f1d390fb8c52250c69d9cbfbb4ee51899293cddf96f1ae654ccc39fb50496",
+    "K08_full_b": "00630224db2b4c3104f6a521c2c4b237d230a32a3b27b78e0df10fed19297c8f",
+    "K08_full_c": "52770cd78bcfe01c2e687437f7c43f30d1cc18a18e71fdd629302639611ea142",
+    "K09_full_a": "76c222b01092e8d0e0411d72550f097b3d5e5e99125c7f2bb43ddf0417271073",
+    "K09_full_b": "c007113b5829c05b3cf2aaa18bb0771c925a22bd7da29ce6fb77bf6425114827",
+    "K09_full_c": "a90ead95bd3fde8332d7e9abaf194c7a26f791203a1b2bb5ffdaa922738600e5",
+    "N01_full_a": "4cd22012f8dc3efd6ae651cdd446684998c1a3ab8484512bd159c38d99900593",
+    "N01_full_b": "eeacb8977a2723ab744101a39792de298d03df514c80bd3e06cd418631afbbce",
+    "N01_full_c": "d8a9dc692ba52d1982ada8e51dfdce1c5eab7c7e9a93e888c90891aecd276ee9",
+    "N02_full_a": "bf3bd718eb7deded57e19d252480ad33a6397c9d42cc9f7c00d554636987027c",
+    "N02_full_b": "ff4f7e33ae45a81af09a075b86c7f6957387205f210f3ef104ce91fdb5b01055",
+    "N02_full_c": "6d89843f471719f1f8465d79186c7f2fa2cfb8a7d70278c353babfc7e5e934b6",
+    "N03_full_a": "e6d1fc33de0c3b4c5d2a17bcb28a0daef36b736c953f2a829d90295df758766d",
+    "N03_full_b": "8bff3c8a1a9122e77e97603e5a8e15d5df0a582a7600c5414f87ac2929c32587",
+    "N03_full_c": "6447e369d0cbbe92e10ac41fc5336bfb8dd68c2e7c4b24d32bd695a92cb1e12f",
+    "N05_full_a": "764ad5b2fc3473a104c58f055d570b4593d56d5474364ad3288d3cc0018f4ebf",
+    "N05_full_b": "ee55625aca9d1d29f6267300f01ee9b1d1f0d1439aca7bcf63a01adc2109d8e7",
+    "N05_full_c": "3b716ae7cca765693b762e692ffd1e2ee04750c9c60870af9a58434e614302ba",
+    "N06_full_a": "4622275b75b10bbdafe5fdfa632b08c1a8f6994ee4273b782a1273e23687df05",
+    "N06_full_b": "8ff27b84c7a339a2971808edf5f98447569f1d05ca6479fabd94600c130970b4",
+    "N06_full_c": "c3cb2aaa69a75461a7ae5cbd4711e83374aadc7ae046a476c9c6094aab63c98b",
+    "N07a_full_a": "61ae8cf19f87dae7fc9ce6d6bf092089530fc5f9a8d1a9b0a6a50f7ef2318127",
+    "N07a_full_b": "396c0d1b11ef050fb8a18d4df8239ba39c6da430c7e47fd823b0bfc4855dbd28",
+    "N07a_full_c": "5313ba368877a282aa47754435b277a38b116880feff880060dc418bd4b9fe36",
+    "N07b_full_a": "ab7b033bb3d8c3d8c2be081395c56087867cfd49b24af0ba388ae8a9c4060ae1",
+    "N07b_full_b": "2e6745d874a3a243f2568e5f5012bec6e18524a58aa8b29dd4ae4e43e137c6c9",
+    "N07b_full_c": "563b8fdd6fc1349e5b3c37714cd52e8fb9797690463a193c0fa3672c79d604e4",
+    "N08_full_a": "9c187dd1839a631b989c7bc3301249838f2fb966122d44ad4dcbbb6c7f49d6d7",
+    "N08_full_b": "fa89fad4a0bd5f94b30a4d8a5b0887facbd52498c4ed5c20dc067b8392441a63",
+    "N08_full_c": "e69cb809543de2cd7c7875d42f1f3333bab6952edf617b43cab463cd904165a5",
+    "N09_full_a": "fdc13cc6e6b1bafcd7076d02b9f15fc8425ef467809ecd6e79fbfc6838532ef1",
+    "N09_full_b": "d723775212a74a9bfe6537371ea190452cb6550fdfa6e4f9ebd62ddf7b22d17d",
+    "N09_full_c": "75111b69faa62ce407ffdd4e1e623dea2593d7b1f92b09922eebffc5d85f24f2",
+    "N10_full_a": "be76df0c98b6224975c3c23b6adbc637b50e6119282685487b984a951ad21854",
+    "N10_full_b": "3368f86cfb714477d3d88713bba74e5641f632d7d563771e3b599956aba9fa80",
+    "N10_full_c": "78c01413bafd792c0020a5956974c03f096071b8698931b372e24ce644f2c0b0",
+    "N11a_full_a": "7053ba1368b6a1a3e501ed527c95e38349f8b310ca12b6c707615b80eceb8305",
+    "N11a_full_b": "b17f071c6d189350867796358d9998b0fb3d8b3a9a661dd7632efb0bffbb079b",
+    "N11a_full_c": "30ec364f4e57612dc7c84f15c9fead318732d1be1e3464d3be221329d8a9e2f8",
+    "N11b_full_a": "71a841f724384684540a0d4a8a516284eea986d4271b26e4ec877bb02e83b5ea",
+    "N11b_full_b": "7435818f11f0685d00e5a3b87239c91ce7f92d687973580b8a4f46a50157fbf9",
+    "N11b_full_c": "2e81a2f0ac64918e401693cad315b0620951c882b85fd88df28fec51ff9193c0",
+    "N12a_full_a": "af92b094b339caaa70b6b739a5ed8d1adc31de6f9ef81494500e832e94ff4338",
+    "N12a_full_b": "059475b25065e5d11af8cf01e4d8db4fb00ce042d10d2351e1d60cb1c1553273",
+    "N12a_full_c": "a6da83c0e3d0afba34524e16f844b3c8567ce2580a322020dac7008944612dc5",
+    "N12b_full_a": "53da88de1ce63f42150cc9f7412ebc080ffbe18874f1a8b15c5f9bd724ef0d44",
+    "N12b_full_b": "2bee999166d6f5e81c9c71e662473a9561ac0d5f816d80afef9d6963a84a8236",
+    "N12b_full_c": "b07af1d5280b686c94445f95971ecb627bafa1de4e25878eefbe8411a37f5211",
+    "N13_full_a": "e05f06b7365f6543d0a07f82c8fa990f41bf2fbef8cf12e83395157a3fa9881e",
+    "N13_full_b": "19988e92beacfce55c3bf03a0cf1aea3990a6fddbc79bf37c811b777f9a023b7",
+    "N13_full_c": "31d7b9d51689e1f1b90a9a93bd644d80fff671b0ba054a9be9543da52d9fa09d",
+    "N16_full_a": "2198e306b6716b194561e0d524546f63851767a154ab8f1f14cd7068c5e6038a",
+    "N16_full_b": "aa9f28b75bea65dfce78e959f2c3923588acecf32f29251c801100e96930f56f",
+    "N16_full_c": "2f2f056aeefb0708fea0fdbe10c8ee9d1821152e9538990a928d3c4bd4085b0f",
+    "E01_full_a": "ac229c4e4d26053aeca29688c51a3f4f4044a151a5781a1658f168d6176c2860",
+    "E01_full_b": "69767375ac3cfc690e17d5140cac07830b8bccb868ed65badbd3466b7ffe88f0",
+    "E01_full_c": "0ad8983a0b640e7f4fbc70b4d7a45567406968c607cd8d43d8bf72bdfa17526f",
+    "E02a_full_a": "7fdd6d811f545cf40735c35ae884a04ca1d6d9fc575d3d0dd6dbc1653bee52fa",
+    "E02a_full_b": "61771b19f702bd50cc839432a28a7b8c654c8e145a1c34a11955551c20ccd9e3",
+    "E02a_full_c": "7d2f0f44628facd339dae7cfacbc53257a5391d89276f872799bd169754111e9",
+    "E02b_full_a": "03e9e0280bdf6619f88de710616f1833d58f8caba7c2705909ab9b457e3f5eb3",
+    "E02b_full_b": "2a09f4b18ff119b9d2d964588fc8c37930bf2227e57b313f803044c48b39aef3",
+    "E02b_full_c": "08d1d18f81a660e6a7d2dc4fae2253dc581ea3360e431ffb70f1f98e57d17103",
+    "E03a_full_a": "4795686530f68aefb16d53fc4476ff88d531b2c909b1cc1c74860593824a87a3",
+    "E03a_full_b": "796c9c62b5f82ff4424185d377dc0181f4cdf084524f29c2340908075a8fafec",
+    "E03a_full_c": "173c247842bb3ce42788c36c96561bead4a07fe04e501ed06de294654a198850",
+    "E03b_full_a": "f2bf08b2c81bc009340ef223e3822cbed26b9297ee0a8a02baf26ad47ab4ebad",
+    "E03b_full_b": "3a03d1c6e81514283f2f4d3b1506ab2386e7070e9294271d7f068cb9eadc9e72",
+    "E03b_full_c": "601ce70bc564186d8a1ca3615bf5ad0cae3ff83fc05b629a348558b8e89cc2f6",
+    "E04a_full_a": "47f22050e2a62c7964f1fbe5796765d68c0a80ef0ef5d1dc98763381fcbcde25",
+    "E04a_full_b": "b324a811ff2cfdf1ebcdd12576202f9a25d1b51b4f18ca502af0ac8ae10bde20",
+    "E04a_full_c": "0fdbf4c1390632dc5ce269a4c6a6fb188f7a3fe88f6bca189c6cf377bf7a8802",
+    "E04b_full_a": "e3b38ba8ebd6768a7f7e52ee783d163b485ba6a94832f3888869a5d642896870",
+    "E04b_full_b": "4481610140c8fd76fcd9b619edc6d0e1b1167e62003c754e5198a2acb893cdf1",
+    "E04b_full_c": "84b77fcd792b5b13c43c50cfe8c5b7009a45ef3e00b0443beffc1a46693ddc91",
+    "E05a_full_a": "40c9a6964e7d8d97edf1cfc349edaeba53ac187cbea68271f4d4dc67b467fcb6",
+    "E05a_full_b": "25a6abdca2d7f70eb42b0c41587e9e2189a4436eedd728536939f457014aca56",
+    "E05a_full_c": "106b9b809b906f45b23039250eef4b2ad154cf5c92210d3ad3b42523f2e65787",
+    "E05b_full_a": "69c0b06152dec10f22a59288e4f78ffde01267c584191b04b29292de4dc7b6a4",
+    "E05b_full_b": "38dad5cd844609f16f22dd1eea2f7820d97ff384e025d69111ac34acc27b22fd",
+    "E05b_full_c": "b4edb8ad320e37e7e3ca59635402faf29275948f5a89354ee8908026b220fdaf",
+    "E06_full_a": "42839ec67999335be4ba967e75e0b37d9ae8f65cb4ae3985ee42aac513e59adb",
+    "E06_full_b": "e9a7d55a3e1e8d08974663511654ee1dada68aced25a33f4a48a4a824322c4e8",
+    "E06_full_c": "527daf2fbe11e39ec1c9a2050158ea84e933b4d35964260ad9728a63dbdff379",
+    "E10a_full_a": "812a05640be977dcc533bc98ec4b61b814a28a6015c536d7f6dcef283ad14f37",
+    "E10a_full_b": "4ff0ec07cdf0439e4958ba339a1576c5149dee62e7424f18068cf060b2ee9c59",
+    "E10a_full_c": "1b60417d3e021cd7abab3202daef38f06ec7948833ca08a1e75caaa8356af58c",
+    "E10b_full_a": "17bdccd33d668c3f54a5f7b8d657fa19ad22a0e259953706bc21a557c0ac4435",
+    "E10b_full_b": "3e77758953087b56ce8a550eb9b28fa8da488178e15539ba6df31d17dbc0d711",
+    "E10b_full_c": "86f659bace035f8bcccadd6eacf056c3699d2693436ba6d60f56620058b11125",
+    "E12a_full_a": "a5ac47773dc976628491d60726775b2c507a064f1f137ec2bdf5188783bae656",
+    "E12a_full_b": "219944aae4045733e91bbcb059c80cc16d2b7eda3416e334430612778692eab1",
+    "E12a_full_c": "fe62aece10bccd3e537ecc8c7a64eed8e2d91d7cd87a742579bc73fefa77e7db",
+    "E12b_full_a": "3ce779aba4df47a9389a309f594e4265ece097fd70ce4033a17ac58e7fe5f2d0",
+    "E12b_full_b": "f48f00edf006ebf1b0ae315d8437620b7d506e77d244eeba8d400edb19bd1fae",
+    "E12b_full_c": "608959c6d3c7a95197f6c508cb6c2866ddb2b2450ebbe1bacbdea12542aacca3",
+    "E13a_full_a": "3e66ad6c82a439f60806884bae133ad52dd25d20f1a716fbd140d2ed15c94b2a",
+    "E13a_full_b": "9a99d83b9fd2473b1101b3d4a4d5aecd901970da24f86b85ef249643ef5a0aa0",
+    "E13a_full_c": "d67cd936f5dd8a1baf0619b69a5324ce308cf9d16d21794cec4539b40aa5bce8",
+    "E13b_full_a": "f525d0eb78f8ac7fc9e09aa0a90d7dd9009345919fb687880be37b433429353a",
+    "E13b_full_b": "4319270cedca5dd35d9c166818a9bd66c3592e2c82cdd7afa69372c975dbb879",
+    "E13b_full_c": "735cb2770ecd321b15c784d7062694b9bada464e7d015f470b5d35884634231c",
+    "E14_full_a": "1d8de4e91ec5c4dbf658b7b6ec776b217851f2a2d2730941574bfe1a970d6301",
+    "E14_full_b": "6ce4f369cac254494eb9510a5d91a25cc2b24c4dfedb15129181fd2e0ecd7b45",
+    "E14_full_c": "21b1587c931f7082ae2f3e62f9cd8ea59ffd4f1e36e8878545a3d573ec9dfce3",
+    "F01a_full_a": "107b35d2c150979c9acb722994ae5c0e62af1d6869635b3dd49b1b54ef3c0d97",
+    "F01a_full_b": "573c6af499033da552861f996708a499bf210e1049c3a22eb6066b1cbf10ad3f",
+    "F01a_full_c": "3a454989488a2a050153b8adcfc6f9cc83511270ba125833ae1cf66663007974",
+    "F01b_full_a": "d14d1070ac4b45aaba5bfe31b032986a9f268f905f03fd1715b45698772cb4e6",
+    "F01b_full_b": "7459e491d3ab6cb3849bc2bd680ccb27f072307416e7251dbb69e1f5bd304276",
+    "F01b_full_c": "1bd585cc750fbc214afd2e2d5aec6b4d0c2e27b4ec749cf9004142002313cffc",
+    "F02_full_a": "bf3466f83dfb9d94716eedc80661984af6b34479312237b1760fcbb9cb8fb2d4",
+    "F02_full_b": "0a21d128e9f65cde198a9f8454eeaa4b42123c0bfb4ad54a69cd4af8c0a6aacd",
+    "F02_full_c": "6aa2c4b9019f9543266c470a0eb8523b98a29a4f1bef56085364b39adee6cc15",
+    "F03a_full_a": "59a76dad498d0b875a130133dc37a9184553719545f3f45df24932f2b0076bb2",
+    "F03a_full_b": "067e8bc174418423f957a51d56e366aafbb62ffb9b342809013ef3e498c0b981",
+    "F03a_full_c": "690ede6b14d6fd1ad044430e0d71a53e1c7d37a6dd641b68906e9761f2d12463",
+    "F03b_full_a": "1465b07caae0d75578d5c6c48e05b8fe04eaad165b915d51627cf7417b67856e",
+    "F03b_full_b": "8f4505fb9222313284b63bd75a134a62a5b857e44900811b6929003a57934bca",
+    "F03b_full_c": "7950798dd5803bd59bb20b84db2b5dd44d09adeae67c76268cd3ffa80b121b43",
+    "F04_full_a": "057a921a659b0dba70af4a4ef470bf57c5de00b38575f96675d6a4e1c08f7068",
+    "F04_full_b": "efd3664207649c4ebe837f80527606dc6768729497cae8396423d11d526b52eb",
+    "F04_full_c": "891b286d0da90f126c5cd1f3f03d94f70fa753b7ef9c834f94c80600424c2931",
+    "F05a_full_a": "02b206a56d8163662c29c3005760431bff53a1a1e6fd9a69bd229e0b7d5b44ed",
+    "F05a_full_b": "ed70d726697a5656ce015a1652a69f1dc29ce6b128beef6ca3a61d7929d3640e",
+    "F05a_full_c": "537a3816b13599837653bc96ef7e45d2c045c0ac1890201a84464507a9ab5cf6",
+    "F05b_full_a": "018789fc336ad3996e05066b79cd5e2d452465312513f0b325231b0533c6d28e",
+    "F05b_full_b": "4b25dda95e88684f12169b832b61d3c0673785d86c8f50cc0fea52f5247aa23f",
+    "F05b_full_c": "709df0c15f042e8123cb57443f080b6ffcff2795cfa49ff355af8ebc27eadd04",
+    "F05c_full_a": "ebec45b5c1532438a03e5db6c5d578b4a24f25dc1d346991fd757e0565cb41ea",
+    "F05c_full_b": "c5a689f113dfd98db7f3a43d5ffeb42a95f4496a7d721842f41219f48ce1cacf",
+    "F05c_full_c": "3fc5629525c29ad969e590f9bfa113cc3985489a364eb51bd6a27f216358518b",
+    "F05d_full_a": "c984e2f75433e1a916e8e783521af80cc649100e8845999d91bbaf9d82e190e8",
+    "F05d_full_b": "98bc2a8f3903be01cfb0df7a77865c9812220119f00b21828e1df5635533482b",
+    "F05d_full_c": "cba5959a9887f9aecf0e7c4248584d3ded8a9fbbba785459fced0f82e18392b0",
+    "F05e_full_a": "0a66f4c9cbba2dbce32da9f2ad8f6fcc58adbf8c5e4ea772ebb54f4a3deb3c22",
+    "F05e_full_b": "e52802f92675ab3ffdcc1ef65625f76127978584554e52d02287369e79ad6c60",
+    "F05e_full_c": "01eabf61d8577a97edb359435963af3533e449caa23af7ad2bf01784b4201584",
+    "F07_full_a": "2ed0a95094a696c18a0c85bbe9177d8505cb1fd759824e08d9be7196a9af2938",
+    "F07_full_b": "247c3cc09ea214ed7af54f63d661c831d210eeac756e0483bf8cbc3fb7fddfec",
+    "F07_full_c": "01cacc203422895b979ce1f0bede825b53934e72b5393be8e2561e54d4fe7c9e",
+    "F09a_full_a": "09fee9a4f8b9ab204cfa9320ca592e6c9863c64c81a9523263151d0191dff70c",
+    "F09a_full_b": "5032167e37eabb38186caf8f2c3228ab89fe2b6943528151c4bce30493e9893f",
+    "F09a_full_c": "ec7e47438ec039c7632d5bf866b661b8844c2868328b7a204f9c2911878c8a80",
+    "F09b_full_a": "fb344e5f3d6c57653f163fdcbb3b55a7f3047b06349c9586e87f91a63632e142",
+    "F09b_full_b": "144946ebefc76460236ab89090ed0999f594216e6e9f19d63892c2a7c5db889b",
+    "F09b_full_c": "89f8ca0c65b9e8802bb0b478114def5b0efb753692bc8df5908df95073591f31",
+    "F11a_full_a": "32ad3ee300307888a1555e0e465688605391f2d6d961682304364f3943b6f4b9",
+    "F11a_full_b": "c993fb9fa459c9a7c16b2c0034af0b3640b52611d2f90ff40c942c04c00da093",
+    "F11a_full_c": "bf39816134ad414e87cca2034117426d179c4f87d68b14c08878b15efbf34ea8",
+    "F11b_full_a": "1e68c6ba58fc1bb0fe3b4902d68dbfcc7ce86ecf614dbc84d93c163df2106d4c",
+    "F11b_full_b": "329dd1353aba55087311236b147098d48ea0b24e5aba06b6e84e49e1d3416be6",
+    "F11b_full_c": "aae760592d070fa1b8c97ee9a4b20e415eb7fda408f4f95b0fadb4b0e690515d",
+    "U01_full_a": "3e20762e24f825ef1d50594493d9925fdeecf69c79379777329e23d4bff4af98",
+    "U01_full_b": "0f7d8d4ecfe1284386cc4a7a5af0fe6770339a9d123f49361b61ba6ea90a9ff2",
+    "U01_full_c": "3d943dedcf2c981e17a7575ad88c71093bfcdf6811a746377182e4a90fbce22c",
+    "U02_full_a": "2bce574adcb7cd661b13ac2f4226f91d03b5bb19e2bea2e21acda40755ea634e",
+    "U02_full_b": "e8641d9aee8eb490cb2e8cffa68c991077400dd84c016d6fa07cc772dde251f7",
+    "U02_full_c": "627c6183b656578aed9debadd630ad4d20ba0af9f25f802d75ca4fc6b34231a1",
+    "U03_full_a": "2ee5cdc492fea6650d8ff99838c01026432390e3d752a900c2549dc7c039c8ca",
+    "U03_full_b": "f26e2e4accc1f2aa3c9dfd8c85d2ea7d1c17b1cba01f33d8fa993f28333f32ad",
+    "U03_full_c": "ad3a5659dcfe61f7f516a96bd32d896b81c154515b7888fccf8ce88b935afb7f",
+    "U04a_full_a": "767bdd0d4cfe5dfd828a6749ca58fa719c8d706cdc0a7470661987735bbca674",
+    "U04a_full_b": "2917bf56c3883635f6c734cc60f75b817aba130c54be1766d9f0cb7f1e948b6b",
+    "U04a_full_c": "8990eaaafb35f0c39de4719e4345a053fff26b2c4dff69b6e007a0057d146752",
+    "U04b_full_a": "b06b924b4871a912505f013bf02277d121923847b5355f3216ecb46a47a58f1b",
+    "U04b_full_b": "4558715eeceff4ae55fae7189d6c3cd6796e2b013b08f08bfa099e17d222609e",
+    "U04b_full_c": "0d694c027ef7d711a3d3a8450d5c0c9f068db088cff918e2f10da21662c9275c",
+    "U04c_full_a": "c71c0800542e728abba951d58811b3a1513dd16bf192d9a2d2bcd525b26022b7",
+    "U04c_full_b": "3282e06d76bb95860541f24ff9ee136962572a2f498074db5e3e1a0e4623c212",
+    "U04c_full_c": "6543ae33b538048d65f2adc24f37afe323f2acec3efc94e8e7815d48abd0d620",
+    "U05a_full_a": "debf2c9d879cced15fedb6a9140f59df5caef2d8e49bbdece93a82a3ddcfe274",
+    "U05a_full_b": "c1518bc5f26dc39362958aa64d18577af83f6ac922c637cdf7ab078d36dd4db7",
+    "U05a_full_c": "072e1a49672feeb46b5c7b3b7e042d338370238d1d69caf3142afc1f3fb22683",
+    "U05b_full_a": "154a3ba3efd0803bb159c00ceb383283a74e2e3ae0c34b6307e3907132dbd457",
+    "U05b_full_b": "a3927255a502209f169052dc3f35ab7b93dc5e3fb7d821c7503093589d5770b6",
+    "U05b_full_c": "214ea3dc18bcb1b2195f3d796dcc28001134af0ae7f15fdce2847357a1f2202c",
+    "U05c_full_a": "0dc76164fb24e88edbda01943563bd4ed236fbf10983953a11a89ec760193c58",
+    "U05c_full_b": "9234bb98d3c20b50cbc2d24c147b57fd46ba1daa52aba5cc6ca992754aee825c",
+    "U05c_full_c": "080250dc6fc1d512c816c24db3644e6be606d7cde930fd597ac73335aeccb1df",
+    "U06_full_a": "76381219aed4b6e3356ae3bc8ce04e442b09ec500d4b3f491e865fdf605365f5",
+    "U06_full_b": "c6c57819ef03409f6a8375880d9bc545373db15560616a5261e38dfc88890cb8",
+    "U06_full_c": "03fc4098c2abd9b201eabbb18345a9e21590dbcdbba60eaf4ae80371e860675a",
+    "U07a_full_a": "afb838caceaeaf4ff02fc132f6abc37d006e43b5bd9e7f7c00e4e379f2c24925",
+    "U07a_full_b": "d8de8498a80b0c9232b0e1a69b7718304d838b27ff13385f93dc407b25412233",
+    "U07a_full_c": "582c41f92f47ec1aa4d560b5122d39415f524fbf9ef46b1b25773d1a7cb06231",
+    "U07b_full_a": "e5bf20c414cd25ecf6028011fe22a100d34128e4ae0b464b422418045e399632",
+    "U07b_full_b": "99b7b022d846905d9df0fc0e00ea746303d431930aa86b34e7bc8712a5965c36",
+    "U07b_full_c": "f9a5938e3740a6d0099584966fe90af1d210a002e0f1a236cf3d9a1f1dee633a",
+    "U08_full_a": "8bb98a5aef922bbd54a4a49923049c691431455b93fc7e0d1d04a4f50b07d1ec",
+    "U08_full_b": "2298c83348fb87d8f02021805e73d3cc2addec60884d424295fbb116cafd535f",
+    "U08_full_c": "e2af4960d583cdc8fba9bb2476033accf57dbe9cae6cc7f02c4cc80006239c98",
+    "U09_full_a": "d5f2344278690302f6d61eccbe03365882f0023a816b2ca730bf818252f84698",
+    "U09_full_b": "8f9f1eb18888141f12bc6c64df4e98fe54bd7ac2e2719230ec38ef02300896bd",
+    "U09_full_c": "eb0559297938bc500202616afce0211a3091f1a53ef52fe06516749c31f2e0ae",
+    "U10a_full_a": "9525bd94699b61b5f9017f13adbf5241fe1437a187caa1e9ba04c51e3442655c",
+    "U10a_full_b": "3eb4f1ce3230ea851d6e0eb7022dbda260edf7248b3ed255d997e87bde7caf29",
+    "U10a_full_c": "5217790cdd95fa0907e9716677272f2e4c3b2879f4f158ef7ec974c6aab37971",
+    "U10b_full_a": "514398d7dd414d5629aa69d1baf327de3b03f8d68b73d5d81a086117a1e1c3cd",
+    "U10b_full_b": "81f0e859a9a1771d89f76f1f24a7de1b814e082e8bdfe388b110f4874399b8ff",
+    "U10b_full_c": "3d7e96c1bca68bd7426c0ea3587211f4be99be5aff06e9869cdae7a9b6d3822f",
+    "U11_full_a": "393a9087cd3965743fed13af80bb7dd4434b65a0efec78a2b7fb742500c98f4b",
+    "U11_full_b": "843c7ce18b5854f6cd0fb65c549bf49e33f6a4a91603189a55e5cd7c032eb077",
+    "U11_full_c": "5f4a4f2a178d2dd65ce41ab37c32a2758c5d9842496a2087435b6894b9a0ca17",
+    "U12a_full_a": "a4b725fa0588e558ecc1b73911eb6db1d6ff577bab23f48c25fdb1f2974438ad",
+    "U12a_full_b": "5d48ee0aafd92fd31363f56ca3828b76f1ed60333ee6d31506e7135e7a8d3bc4",
+    "U12a_full_c": "793a6593b49d0fd27a3b7f4532ec488388d9649e6ae4497f3ce6926c8ed56bd0",
+    "U12b_full_a": "1e324b87921686662ddee2b91e41569f6b3e86c314df8dd5fff7bf209c533205",
+    "U12b_full_b": "9aa2dc4472e78feeb6ceaf4781fdc13d9e28281e9e098abecf2243d405e70639",
+    "U12b_full_c": "feb4f3646a62bb9a1d8ef3b1ac134a2a1f940baaa330c854a73950caa6f30e5f",
+    "U12c_full_a": "539c8fa2fb98514d356dcbeb9797684a8778805131199e97f7b5e901be9fa8b6",
+    "U12c_full_b": "6483973767f8ef33b6aafb6facae51dab3b9e9268007e5b851017ab6128d40de",
+    "U12c_full_c": "713dc63993ef86078fa948b2549884a390e81aafd47fc77c91f153a6dcda8f5e",
+    "U14a_full_a": "cf6a9c45995743a078c07fdb16278912b8f6d937b9edd2d2183db94f9db4b5f5",
+    "U14a_full_b": "6e231d766bf502e710f585649aa202e34a2e8527d3433ff724595d875818c840",
+    "U14a_full_c": "d569408aba53ca1e9d4b10ac4f2be82cb0a97501fc3958e43aac8da70a3d6c8e",
+    "U14b_full_a": "4acdb52734e09ed02376b726b24ae34e31056f64c1e30691568314ac20c519ad",
+    "U14b_full_b": "589bb68db89a5c91c186851fbec5d4a6bbeb8661191181b575704e7f95774625",
+    "U14b_full_c": "02e42b35581dd8f2d4d488ef2f9492e88c03f1dbe6e04159020957e89bc88e15"
+  },
+  "feedback": {
+    "W01": {
+      "choice": "全部返工",
+      "notes": "都太轻了，像枪声不像战舰主炮",
+      "reviewed_at": "2026-09-30T10:28:12.273Z"
+    },
+    "W02": {
+      "choice": "全部返工",
+      "notes": "可以简单一点",
+      "reviewed_at": "2026-09-30T10:28:28.675Z"
+    },
+    "W03": {
+      "choice": "A",
+      "notes": "重炮是不是选过了？可以用之前选的那一版",
+      "reviewed_at": "2026-09-30T10:29:17.441Z"
+    },
+    "W04": {
+      "choice": "B",
+      "notes": "",
+      "reviewed_at": "2026-09-30T10:29:33.369Z"
+    },
+    "W05": {
+      "choice": "C",
+      "notes": "",
+      "reviewed_at": "2026-09-30T10:29:45.104Z"
+    },
+    "W06": {
+      "choice": "",
+      "notes": "取消这个音效",
+      "reviewed_at": "2026-09-30T10:29:56.125Z"
+    },
+    "W07a": {
+      "choice": "B",
+      "notes": "",
+      "reviewed_at": "2026-09-30T10:30:14.956Z"
+    },
+    "W07b": {
+      "choice": "B",
+      "notes": "",
+      "reviewed_at": "2026-09-30T10:30:24.756Z"
+    },
+    "W08": {
+      "choice": "A",
+      "notes": "",
+      "reviewed_at": "2026-09-30T10:30:39.019Z"
+    },
+    "W09": {
+      "choice": "A",
+      "notes": "防空炮声音可以修低一点",
+      "reviewed_at": "2026-09-30T10:31:29.426Z"
+    },
+    "W10a": {
+      "choice": "",
+      "notes": "防空炮声音可以修低一点，重炮防空炮也是连发的",
+      "reviewed_at": "2026-09-30T10:31:24.425Z"
+    },
+    "W10b": {
+      "choice": "",
+      "notes": "取消这个音效",
+      "reviewed_at": "2026-09-30T10:31:42.150Z"
+    },
+    "W11": {
+      "choice": "",
+      "notes": "取消这个音效",
+      "reviewed_at": "2026-09-30T10:31:52.895Z"
+    },
+    "W12a": {
+      "choice": "",
+      "notes": "取消这个音效",
+      "reviewed_at": "2026-09-30T10:32:01.437Z"
+    },
+    "W12b": {
+      "choice": "",
+      "notes": "取消音效",
+      "reviewed_at": "2026-09-30T10:32:07.277Z"
+    },
+    "W12c": {
+      "choice": "",
+      "notes": "取消音效",
+      "reviewed_at": "2026-09-30T10:32:18.968Z"
+    },
+    "W13a": {
+      "choice": "A",
+      "notes": "",
+      "reviewed_at": "2026-09-30T10:32:29.788Z"
+    },
+    "W13b": {
+      "choice": "全部返工",
+      "notes": "像鼓声不像炮击命中舰装",
+      "reviewed_at": "2026-09-30T10:33:00.501Z"
+    },
+    "W14": {
+      "choice": "C",
+      "notes": "",
+      "reviewed_at": "2026-09-30T10:33:09.163Z"
+    },
+    "W15a": {
+      "choice": "B",
+      "notes": "",
+      "reviewed_at": "2026-09-30T10:33:30.016Z"
+    },
+    "W15b": {
+      "choice": "",
+      "notes": "取消音效",
+      "reviewed_at": "2026-09-30T10:33:43.726Z"
+    },
+    "W16": {
+      "choice": "",
+      "notes": "取消音效",
+      "reviewed_at": "2026-09-30T10:33:56.035Z"
+    },
+    "W17a": {
+      "choice": "",
+      "notes": "取消",
+      "reviewed_at": "2026-09-30T10:34:06.934Z"
+    },
+    "W17b": {
+      "choice": "",
+      "notes": "取消",
+      "reviewed_at": "2026-09-30T10:34:11.586Z"
+    },
+    "W17c": {
+      "choice": "",
+      "notes": "取消",
+      "reviewed_at": "2026-09-30T10:34:17.534Z"
+    },
+    "W18": {
+      "choice": "",
+      "notes": "取消",
+      "reviewed_at": "2026-09-30T10:34:23.303Z"
+    },
+    "W19": {
+      "choice": "B",
+      "notes": "",
+      "reviewed_at": "2026-09-30T10:34:34.298Z"
+    },
+    "A01": {
+      "choice": "C",
+      "notes": "",
+      "reviewed_at": "2026-09-30T10:34:48.991Z"
+    },
+    "A02": {
+      "choice": "A",
+      "notes": "",
+      "reviewed_at": "2026-09-30T10:34:59.990Z"
+    },
+    "A03": {
+      "choice": "全部返工",
+      "notes": "更柔和一点",
+      "reviewed_at": "2026-09-30T10:35:15.017Z"
+    },
+    "A05": {
+      "choice": "B",
+      "notes": "",
+      "reviewed_at": "2026-09-30T10:35:24.522Z"
+    },
+    "A06a": {
+      "choice": "",
+      "notes": "取消",
+      "reviewed_at": "2026-09-30T12:32:29.130Z"
+    },
+    "A06b": {
+      "choice": "",
+      "notes": "取消",
+      "reviewed_at": "2026-09-30T12:32:34.348Z"
+    },
+    "S01": {
+      "choice": "全部返工",
+      "notes": "电话感严重",
+      "reviewed_at": "2026-09-30T12:32:50.336Z"
+    },
+    "S02": {
+      "choice": "全部返工",
+      "notes": "水声不对",
+      "reviewed_at": "2026-09-30T12:33:09.807Z"
+    },
+    "S03a": {
+      "choice": "B",
+      "notes": "",
+      "reviewed_at": "2026-09-30T12:33:21.176Z"
+    },
+    "S03b": {
+      "choice": "B",
+      "notes": "",
+      "reviewed_at": "2026-09-30T12:33:30.152Z"
+    },
+    "S04": {
+      "choice": "B",
+      "notes": "",
+      "reviewed_at": "2026-09-30T12:33:40.610Z"
+    },
+    "S05": {
+      "choice": "",
+      "notes": "取消",
+      "reviewed_at": "2026-09-30T12:33:49.494Z"
+    },
+    "S06": {
+      "choice": "",
+      "notes": "取消",
+      "reviewed_at": "2026-09-30T12:33:54.422Z"
+    },
+    "S07": {
+      "choice": "",
+      "notes": "取消",
+      "reviewed_at": "2026-09-30T12:34:16.515Z"
+    },
+    "K01": {
+      "choice": "全部返工",
+      "notes": "太尖锐了",
+      "reviewed_at": "2026-09-30T12:34:27.774Z"
+    },
+    "K02": {
+      "choice": "",
+      "notes": "取消",
+      "reviewed_at": "2026-09-30T12:34:38.897Z"
+    },
+    "K03": {
+      "choice": "",
+      "notes": "取消",
+      "reviewed_at": "2026-09-30T12:34:49.390Z"
+    },
+    "K04": {
+      "choice": "",
+      "notes": "取消",
+      "reviewed_at": "2026-09-30T12:34:58.177Z"
+    },
+    "K05": {
+      "choice": "",
+      "notes": "取消",
+      "reviewed_at": "2026-09-30T12:35:04.997Z"
+    },
+    "K06": {
+      "choice": "",
+      "notes": "取消",
+      "reviewed_at": "2026-09-30T12:35:11.859Z"
+    },
+    "K07": {
+      "choice": "",
+      "notes": "取消",
+      "reviewed_at": "2026-09-30T12:35:16.540Z"
+    },
+    "K08": {
+      "choice": "",
+      "notes": "取消",
+      "reviewed_at": "2026-09-30T12:35:21.768Z"
+    },
+    "K09": {
+      "choice": "",
+      "notes": "取消",
+      "reviewed_at": "2026-09-30T12:35:31.007Z"
+    },
+    "N01": {
+      "choice": "A",
+      "notes": "",
+      "reviewed_at": "2026-09-30T12:35:38.420Z"
+    },
+    "N02": {
+      "choice": "",
+      "notes": "取消",
+      "reviewed_at": "2026-09-30T12:35:47.079Z"
+    },
+    "N03": {
+      "choice": "",
+      "notes": "取消",
+      "reviewed_at": "2026-09-30T12:35:51.283Z"
+    },
+    "N05": {
+      "choice": "",
+      "notes": "取消",
+      "reviewed_at": "2026-09-30T12:35:54.860Z"
+    },
+    "N06": {
+      "choice": "B",
+      "notes": "",
+      "reviewed_at": "2026-09-30T12:36:07.652Z"
+    },
+    "N07a": {
+      "choice": "",
+      "notes": "取消",
+      "reviewed_at": "2026-09-30T12:36:12.312Z"
+    },
+    "N07b": {
+      "choice": "",
+      "notes": "取消",
+      "reviewed_at": "2026-09-30T12:36:16.481Z"
+    },
+    "N08": {
+      "choice": "",
+      "notes": "取消",
+      "reviewed_at": "2026-09-30T12:36:23.483Z"
+    },
+    "N09": {
+      "choice": "",
+      "notes": "取消",
+      "reviewed_at": "2026-09-30T12:36:30.532Z"
+    },
+    "N10": {
+      "choice": "全部返工",
+      "notes": "音高，可以低一点",
+      "reviewed_at": "2026-09-30T12:36:51.159Z"
+    },
+    "N11a": {
+      "choice": "全部返工",
+      "notes": "风格不对",
+      "reviewed_at": "2026-09-30T12:37:03.060Z"
+    },
+    "N11b": {
+      "choice": "B",
+      "notes": "",
+      "reviewed_at": "2026-09-30T12:37:11.099Z"
+    },
+    "N12a": {
+      "choice": "",
+      "notes": "取消",
+      "reviewed_at": "2026-09-30T12:37:16.445Z"
+    },
+    "N12b": {
+      "choice": "",
+      "notes": "取消",
+      "reviewed_at": "2026-09-30T12:37:26.632Z"
+    },
+    "N13": {
+      "choice": "全部返工",
+      "notes": "音效体现的意义不明确",
+      "reviewed_at": "2026-09-30T12:37:43.501Z"
+    },
+    "N16": {
+      "choice": "C",
+      "notes": "",
+      "reviewed_at": "2026-09-30T12:37:55.150Z"
+    },
+    "E01": {
+      "choice": "C",
+      "notes": "",
+      "reviewed_at": "2026-09-30T12:38:22.101Z"
+    },
+    "E02a": {
+      "choice": "A",
+      "notes": "",
+      "reviewed_at": "2026-09-30T12:38:42.550Z"
+    },
+    "E02b": {
+      "choice": "B",
+      "notes": "",
+      "reviewed_at": "2026-09-30T12:39:01.440Z"
+    },
+    "E03a": {
+      "choice": "C",
+      "notes": "",
+      "reviewed_at": "2026-09-30T12:39:33.403Z"
+    },
+    "E03b": {
+      "choice": "B",
+      "notes": "",
+      "reviewed_at": "2026-09-30T12:40:00.664Z"
+    },
+    "E04a": {
+      "choice": "B",
+      "notes": "",
+      "reviewed_at": "2026-09-30T12:40:20.065Z"
+    },
+    "E04b": {
+      "choice": "A",
+      "notes": "",
+      "reviewed_at": "2026-09-30T12:40:30.331Z"
+    },
+    "E05a": {
+      "choice": "C",
+      "notes": "",
+      "reviewed_at": "2026-09-30T12:40:42.377Z"
+    },
+    "E05b": {
+      "choice": "A",
+      "notes": "",
+      "reviewed_at": "2026-09-30T12:40:54.664Z"
+    },
+    "E06": {
+      "choice": "A",
+      "notes": "",
+      "reviewed_at": "2026-09-30T12:41:09.716Z"
+    },
+    "E10a": {
+      "choice": "",
+      "notes": "取消",
+      "reviewed_at": "2026-09-30T12:41:18.790Z"
+    },
+    "E10b": {
+      "choice": "",
+      "notes": "取消",
+      "reviewed_at": "2026-09-30T12:41:22.989Z"
+    },
+    "E12a": {
+      "choice": "",
+      "notes": "取消",
+      "reviewed_at": "2026-09-30T12:41:30.142Z"
+    },
+    "E12b": {
+      "choice": "",
+      "notes": "取消",
+      "reviewed_at": "2026-09-30T12:41:34.759Z"
+    },
+    "E13a": {
+      "choice": "",
+      "notes": "取消",
+      "reviewed_at": "2026-09-30T12:41:38.284Z"
+    },
+    "E13b": {
+      "choice": "",
+      "notes": "取消",
+      "reviewed_at": "2026-09-30T12:41:42.660Z"
+    },
+    "E14": {
+      "choice": "",
+      "notes": "取消",
+      "reviewed_at": "2026-09-30T12:41:47.191Z"
+    },
+    "F01a": {
+      "choice": "C",
+      "notes": "",
+      "reviewed_at": "2026-09-30T12:41:56.007Z"
+    },
+    "F01b": {
+      "choice": "C",
+      "notes": "",
+      "reviewed_at": "2026-09-30T12:42:04.716Z"
+    },
+    "F02": {
+      "choice": "全部返工",
+      "notes": "无明显意义",
+      "reviewed_at": "2026-09-30T12:42:22.258Z"
+    },
+    "F03a": {
+      "choice": "A",
+      "notes": "",
+      "reviewed_at": "2026-09-30T12:42:30.948Z"
+    },
+    "F03b": {
+      "choice": "A",
+      "notes": "",
+      "reviewed_at": "2026-09-30T12:42:38.332Z"
+    },
+    "F04": {
+      "choice": "全部返工",
+      "notes": "意义不明",
+      "reviewed_at": "2026-09-30T12:42:54.349Z"
+    },
+    "F05a": {
+      "choice": "",
+      "notes": "意义不明",
+      "reviewed_at": "2026-09-30T12:43:07.094Z"
+    },
+    "F05b": {
+      "choice": "",
+      "notes": "取消",
+      "reviewed_at": "2026-09-30T12:43:11.916Z"
+    },
+    "F05c": {
+      "choice": "",
+      "notes": "取消",
+      "reviewed_at": "2026-09-30T12:43:17.634Z"
+    },
+    "F05d": {
+      "choice": "",
+      "notes": "取消",
+      "reviewed_at": "2026-09-30T12:43:21.651Z"
+    },
+    "F05e": {
+      "choice": "",
+      "notes": "取消",
+      "reviewed_at": "2026-09-30T12:43:27.242Z"
+    },
+    "F07": {
+      "choice": "",
+      "notes": "取消",
+      "reviewed_at": "2026-09-30T12:43:35.741Z"
+    },
+    "F09a": {
+      "choice": "",
+      "notes": "意义不明",
+      "reviewed_at": "2026-09-30T12:43:44.335Z"
+    },
+    "F09b": {
+      "choice": "全部返工",
+      "notes": "意义不明",
+      "reviewed_at": "2026-09-30T12:43:51.384Z"
+    },
+    "F11a": {
+      "choice": "全部返工",
+      "notes": "意义不明",
+      "reviewed_at": "2026-09-30T12:43:57.195Z"
+    },
+    "F11b": {
+      "choice": "",
+      "notes": "意义不明",
+      "reviewed_at": "2026-09-30T12:44:02.727Z"
+    },
+    "U01": {
+      "choice": "C",
+      "notes": "",
+      "reviewed_at": "2026-09-30T12:44:15.982Z"
+    },
+    "U02": {
+      "choice": "全部返工",
+      "notes": "不好听",
+      "reviewed_at": "2026-09-30T12:44:27.143Z"
+    },
+    "U03": {
+      "choice": "",
+      "notes": "取消",
+      "reviewed_at": "2026-09-30T12:44:41.302Z"
+    },
+    "U04a": {
+      "choice": "全部返工",
+      "notes": "意义不明",
+      "reviewed_at": "2026-09-30T12:44:51.376Z"
+    },
+    "U04b": {
+      "choice": "",
+      "notes": "意义不明",
+      "reviewed_at": "2026-09-30T12:45:02.126Z"
+    },
+    "U04c": {
+      "choice": "全部返工",
+      "notes": "意义不明",
+      "reviewed_at": "2026-09-30T12:45:09.676Z"
+    },
+    "U05a": {
+      "choice": "B",
+      "notes": "",
+      "reviewed_at": "2026-09-30T12:45:15.791Z"
+    },
+    "U05b": {
+      "choice": "",
+      "notes": "取消",
+      "reviewed_at": "2026-09-30T12:45:22.455Z"
+    },
+    "U05c": {
+      "choice": "",
+      "notes": "取消",
+      "reviewed_at": "2026-09-30T12:46:38.075Z"
+    },
+    "U06": {
+      "choice": "全部返工",
+      "notes": "意义不明",
+      "reviewed_at": "2026-09-30T12:47:12.143Z"
+    },
+    "U07a": {
+      "choice": "全部返工",
+      "notes": "意义不明",
+      "reviewed_at": "2026-09-30T12:47:29.641Z"
+    },
+    "U07b": {
+      "choice": "全部返工",
+      "notes": "意义不明",
+      "reviewed_at": "2026-09-30T12:47:37.632Z"
+    },
+    "U08": {
+      "choice": "",
+      "notes": "取消",
+      "reviewed_at": "2026-09-30T12:47:43.075Z"
+    },
+    "U09": {
+      "choice": "",
+      "notes": "取消",
+      "reviewed_at": "2026-09-30T12:47:47.605Z"
+    },
+    "U10a": {
+      "choice": "",
+      "notes": "取消",
+      "reviewed_at": "2026-09-30T12:48:02.994Z"
+    },
+    "U10b": {
+      "choice": "",
+      "notes": "取消",
+      "reviewed_at": "2026-09-30T12:48:06.933Z"
+    },
+    "U11": {
+      "choice": "全部返工",
+      "notes": "意义不明",
+      "reviewed_at": "2026-09-30T12:48:17.687Z"
+    },
+    "U12a": {
+      "choice": "",
+      "notes": "取消",
+      "reviewed_at": "2026-09-30T12:48:27.844Z"
+    },
+    "U12b": {
+      "choice": "",
+      "notes": "取消",
+      "reviewed_at": "2026-09-30T12:48:32.884Z"
+    },
+    "U12c": {
+      "choice": "",
+      "notes": "取消",
+      "reviewed_at": "2026-09-30T12:48:36.400Z"
+    },
+    "U14a": {
+      "choice": "",
+      "notes": "取消，用主界面音乐",
+      "reviewed_at": "2026-09-30T12:48:49.933Z"
+    },
+    "U14b": {
+      "choice": "",
+      "notes": "取消",
+      "reviewed_at": "2026-09-30T12:48:55.427Z"
+    }
+  }
+}

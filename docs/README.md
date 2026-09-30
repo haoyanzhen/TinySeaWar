@@ -29,7 +29,7 @@ Use lowercase English file names with underscores:
 - [12_combat_formula_design.md](12_combat_formula_design.md)
 - [13_balance_baseline.md](13_balance_baseline.md)
 - [14_character_balance_design.md](14_character_balance_design.md)
-- [15_battle_level_design.md](15_battle_level_design.md)
+- [15_battle_level_design.md](15_battle_level_design.md)：教学与三规模挑战真源；中型 M-01～M-05、大型 L-01～L-05 的逐关战术设计见第 7、8 节，地图制作与实施门禁见第 3.7、10.3 节。
 - [16_enemy_ai_behavior_design.md](16_enemy_ai_behavior_design.md)
 - [17_play_design.md](17_play_design.md)
 - [18_facility_weather_effect_design.md](18_facility_weather_effect_design.md)
@@ -82,8 +82,11 @@ Use lowercase English file names with underscores:
 - [50_music_playback_and_asset_design.md](50_music_playback_and_asset_design.md)：标题与出击曲池、胜负结算音乐、播放切换和音乐资产验收；不负责战斗音效与语音。
 - [51_music_generation_and_review_pipeline.md](51_music_generation_and_review_pipeline.md)：服务器音乐生成路径、确定性工具、端到端 skill 与人工评审交付入口。
 
+- [52_sound_effect_design_and_production.md](52_sound_effect_design_and_production.md)：音效分类、工单映射、每条三候选及试听生产标准。
+
 ### Audit
 
+- [实际关卡慢恢复调研与实施](../workorder/20260930-slow-recovery-investigation.md)：S-03/S-04逐Tick原因、分舰站位/动态椭圆/恢复修复及CPU前后测量；剩余慢例、无安全航迹与潜艇循环仍待关闭。
 - [潜艇战斗 AI 闭环工单](../workorder/20260810-submarine-combat-ai-runtime-closure.md)：潜艇执行、独立深度意图、反潜受击自卫、等级续航与雷击预算；当前状态见 `00`。
 - [玩家战斗反馈与角色表现工单](../workorder/20260927-player-feedback-character-presentation.md)：反馈事实、威胁识别、角色装配、音频与可访问性；含修改价值和验收条件。
 - [91_character_phase2_historical_validation.md](91_character_phase2_historical_validation.md)

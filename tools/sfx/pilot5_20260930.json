@@ -1,0 +1,237 @@
+{
+  "id": "sfx_pilot5_20260930_v1",
+  "version": 1,
+  "backend": "stabilityai/stable-audio-3-small-sfx",
+  "status": "submitted",
+  "source": "workorder/20260929-sound-effects-inventory-and-integration.md",
+  "candidates_per_asset": 3,
+  "sample_rate_source": 44100,
+  "sample_rate_delivery": 48000,
+  "steps": 8,
+  "guidance_scale": 1.0,
+  "assets": [
+    {
+      "id": "W03",
+      "category": "weapon",
+      "title": "重炮发射",
+      "target_seconds": 1.8,
+      "generation_seconds": 4,
+      "loop": false,
+      "direction": "深厚冲击、空气压缩、克制低频尾音",
+      "english_brief": "A single heavy naval cannon shot, deep pressure impact and a restrained bass decay",
+      "candidates": [
+        {
+          "id": "W03_a",
+          "seed": 2026093020,
+          "variation": "干净短促",
+          "prompt": "A single heavy naval cannon shot, deep pressure impact and a restrained bass decay. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "W03_b",
+          "seed": 2026093021,
+          "variation": "厚实机械",
+          "prompt": "A single heavy naval cannon shot, deep pressure impact and a restrained bass decay. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "W03_c",
+          "seed": 2026093022,
+          "variation": "柔和耐听",
+          "prompt": "A single heavy naval cannon shot, deep pressure impact and a restrained bass decay. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "W14",
+      "category": "impact",
+      "title": "鱼雷爆炸",
+      "target_seconds": 2.0,
+      "generation_seconds": 4,
+      "loop": false,
+      "direction": "深水爆破、巨大破水、控制低频尾部",
+      "english_brief": "A single torpedo explosion in water, deep blast, huge splash and controlled rumbling tail",
+      "candidates": [
+        {
+          "id": "W14_a",
+          "seed": 2026093180,
+          "variation": "干净短促",
+          "prompt": "A single torpedo explosion in water, deep blast, huge splash and controlled rumbling tail. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "W14_b",
+          "seed": 2026093181,
+          "variation": "厚实机械",
+          "prompt": "A single torpedo explosion in water, deep blast, huge splash and controlled rumbling tail. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "W14_c",
+          "seed": 2026093182,
+          "variation": "柔和耐听",
+          "prompt": "A single torpedo explosion in water, deep blast, huge splash and controlled rumbling tail. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "N04",
+      "category": "alert",
+      "title": "鱼雷危险窗",
+      "target_seconds": 1.0,
+      "generation_seconds": 2,
+      "loop": false,
+      "direction": "快速交替短脉冲、辨识度高、不刺耳",
+      "english_brief": "An approaching torpedo danger warning, a compact sequence of rapidly alternating electronic pulses",
+      "candidates": [
+        {
+          "id": "N04_a",
+          "seed": 2026093530,
+          "variation": "干净短促",
+          "prompt": "An approaching torpedo danger warning, a compact sequence of rapidly alternating electronic pulses. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "N04_b",
+          "seed": 2026093531,
+          "variation": "厚实机械",
+          "prompt": "An approaching torpedo danger warning, a compact sequence of rapidly alternating electronic pulses. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "N04_c",
+          "seed": 2026093532,
+          "variation": "柔和耐听",
+          "prompt": "An approaching torpedo danger warning, a compact sequence of rapidly alternating electronic pulses. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "U01",
+      "category": "ui",
+      "title": "按钮确认",
+      "target_seconds": 0.18,
+      "generation_seconds": 1,
+      "loop": false,
+      "direction": "轻珐琅触点与温暖短音",
+      "english_brief": "A game interface confirm click, light enamel tap with a warm short tone",
+      "candidates": [
+        {
+          "id": "U01_a",
+          "seed": 2026094000,
+          "variation": "干净短促",
+          "prompt": "A game interface confirm click, light enamel tap with a warm short tone. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "U01_b",
+          "seed": 2026094001,
+          "variation": "厚实机械",
+          "prompt": "A game interface confirm click, light enamel tap with a warm short tone. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "U01_c",
+          "seed": 2026094002,
+          "variation": "柔和耐听",
+          "prompt": "A game interface confirm click, light enamel tap with a warm short tone. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "E01",
+      "category": "ambience",
+      "title": "平静海面",
+      "target_seconds": 12.0,
+      "generation_seconds": 12,
+      "loop": true,
+      "direction": "柔和宽阔海水循环、无鸟声或音乐",
+      "english_brief": "Quiet calm open sea water, gentle broad ripples and soft small waves",
+      "candidates": [
+        {
+          "id": "E01_a",
+          "seed": 2026093670,
+          "variation": "干净短促",
+          "prompt": "Quiet calm open sea water, gentle broad ripples and soft small waves. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "E01_b",
+          "seed": 2026093671,
+          "variation": "厚实机械",
+          "prompt": "Quiet calm open sea water, gentle broad ripples and soft small waves. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "E01_c",
+          "seed": 2026093672,
+          "variation": "柔和耐听",
+          "prompt": "Quiet calm open sea water, gentle broad ripples and soft small waves. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "id": "W03",
+      "title": "重口径炮发射：低频冲击与较长尾音",
+      "assets": [
+        "W03"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E `WeaponFired`",
+      "constraints": "P1；战列和实际对应装备；多炮齐射不线性叠响"
+    },
+    {
+      "id": "W14",
+      "title": "鱼雷命中：爆炸与破水",
+      "assets": [
+        "W14"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E `ProjectileHit` + `AttackResolved`",
+      "constraints": "P1；同一命中只保留一个音频所有者"
+    },
+    {
+      "id": "N04",
+      "title": "已发现鱼雷进入己舰危险窗",
+      "assets": [
+        "N04"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "G 复用合法公共威胁输出；单靠 N03 不足以证明逼近",
+      "constraints": "P1；较强短警报，按受威胁舰/危险区间聚合；不报“必定命中”"
+    },
+    {
+      "id": "E01",
+      "title": "平静海面底噪循环",
+      "assets": [
+        "E01"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "S 当前战场公开环境",
+      "constraints": "P1；晴朗/多云基础共用，不按时段复制"
+    },
+    {
+      "id": "U01",
+      "title": "按钮确认/页面进入",
+      "assets": [
+        "U01"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "S 本地有效 UI 操作",
+      "constraints": "P1；鼠标/键盘同一入口；禁用按钮不能播成功声"
+    }
+  ],
+  "runtime": "modelscope-runtime/ComfyUI"
+}

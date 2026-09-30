@@ -1,0 +1,2581 @@
+{
+  "id": "sfx_rework27_20260930_v1",
+  "version": 1,
+  "backend": "stabilityai/stable-audio-3-small-sfx",
+  "status": "planned",
+  "source": "workorder/20260929-sound-effects-inventory-and-integration.md",
+  "candidates_per_asset": 3,
+  "sample_rate_source": 44100,
+  "sample_rate_delivery": 48000,
+  "steps": 8,
+  "guidance_scale": 1.0,
+  "assets": [
+    {
+      "id": "W01",
+      "category": "weapon",
+      "title": "轻炮发射",
+      "target_seconds": 0.7,
+      "generation_seconds": 2,
+      "loop": false,
+      "direction": "保留舰炮的膛压低中频体积和后坐机构，去除手枪式尖脆孤立枪响；轻炮相对重炮轻，不等于轻武器。",
+      "english_brief": "One small naval deck cannon fires. A compact deep gunpowder blast with a full chesty pressure body, followed by a heavy sliding recoil mechanism. Clearly a ship cannon, not a pistol or rifle. Short outdoor decay.",
+      "candidates": [
+        {
+          "id": "W01_rw1_a",
+          "seed": 202609309000,
+          "variation": "干净动作",
+          "prompt": "One small naval deck cannon fires. A compact deep gunpowder blast with a full chesty pressure body, followed by a heavy sliding recoil mechanism. Clearly a ship cannon, not a pistol or rifle. Short outdoor decay. Close and dry recording, precise transient detail and a brief natural decay. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        },
+        {
+          "id": "W01_rw1_b",
+          "seed": 202609309001,
+          "variation": "温暖材质",
+          "prompt": "One small naval deck cannon fires. A compact deep gunpowder blast with a full chesty pressure body, followed by a heavy sliding recoil mechanism. Clearly a ship cannon, not a pistol or rifle. Short outdoor decay. Warmer material body with subdued treble, keeping the exact action sequence and timing clear. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        },
+        {
+          "id": "W01_rw1_c",
+          "seed": 202609309002,
+          "variation": "柔和耐听",
+          "prompt": "One small naval deck cannon fires. A compact deep gunpowder blast with a full chesty pressure body, followed by a heavy sliding recoil mechanism. Clearly a ship cannon, not a pistol or rifle. Short outdoor decay. Softer attack with rounded edges, quiet fine detail, preserving the exact action and rhythm. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        }
+      ],
+      "review_target_rms_dbfs": -23,
+      "previous_feedback": {
+        "choice": "全部返工",
+        "notes": "都太轻了，像枪声不像战舰主炮",
+        "reviewed_at": "2026-09-30T10:28:12.273Z"
+      }
+    },
+    {
+      "id": "W02",
+      "category": "weapon",
+      "title": "中炮发射",
+      "target_seconds": 1.1,
+      "generation_seconds": 2,
+      "loop": false,
+      "direction": "单次清楚的炮口爆发与短后坐；去掉多层碎响、重复击发和复杂长尾。",
+      "english_brief": "One medium naval cannon fires once: a solid low boom followed by one short recoil clunk. Simple clean two-part action, no scattered debris, no layered explosions.",
+      "candidates": [
+        {
+          "id": "W02_rw1_a",
+          "seed": 202609309010,
+          "variation": "干净动作",
+          "prompt": "One medium naval cannon fires once: a solid low boom followed by one short recoil clunk. Simple clean two-part action, no scattered debris, no layered explosions. Close and dry recording, precise transient detail and a brief natural decay. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        },
+        {
+          "id": "W02_rw1_b",
+          "seed": 202609309011,
+          "variation": "温暖材质",
+          "prompt": "One medium naval cannon fires once: a solid low boom followed by one short recoil clunk. Simple clean two-part action, no scattered debris, no layered explosions. Warmer material body with subdued treble, keeping the exact action sequence and timing clear. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        },
+        {
+          "id": "W02_rw1_c",
+          "seed": 202609309012,
+          "variation": "柔和耐听",
+          "prompt": "One medium naval cannon fires once: a solid low boom followed by one short recoil clunk. Simple clean two-part action, no scattered debris, no layered explosions. Softer attack with rounded edges, quiet fine detail, preserving the exact action and rhythm. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        }
+      ],
+      "review_target_rms_dbfs": -23,
+      "previous_feedback": {
+        "choice": "全部返工",
+        "notes": "可以简单一点",
+        "reviewed_at": "2026-09-30T10:28:28.675Z"
+      }
+    },
+    {
+      "id": "W09",
+      "category": "weapon",
+      "title": "近防机炮",
+      "target_seconds": 0.7,
+      "generation_seconds": 3,
+      "loop": false,
+      "direction": "降低尖锐高频，保留可辨短连射节奏及机械循环；A仅作修改参考，未采纳为最终版。",
+      "english_brief": "A short controlled burst of a naval close-in automatic cannon. Several clearly separated low-mid throaty reports with rhythmic mechanical cycling. Rounded edges, subdued treble, no shrill rattling.",
+      "candidates": [
+        {
+          "id": "W09_rw1_a",
+          "seed": 202609309020,
+          "variation": "干净动作",
+          "prompt": "A short controlled burst of a naval close-in automatic cannon. Several clearly separated low-mid throaty reports with rhythmic mechanical cycling. Rounded edges, subdued treble, no shrill rattling. Close and dry recording, precise transient detail and a brief natural decay. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        },
+        {
+          "id": "W09_rw1_b",
+          "seed": 202609309021,
+          "variation": "温暖材质",
+          "prompt": "A short controlled burst of a naval close-in automatic cannon. Several clearly separated low-mid throaty reports with rhythmic mechanical cycling. Rounded edges, subdued treble, no shrill rattling. Warmer material body with subdued treble, keeping the exact action sequence and timing clear. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        },
+        {
+          "id": "W09_rw1_c",
+          "seed": 202609309022,
+          "variation": "柔和耐听",
+          "prompt": "A short controlled burst of a naval close-in automatic cannon. Several clearly separated low-mid throaty reports with rhythmic mechanical cycling. Rounded edges, subdued treble, no shrill rattling. Softer attack with rounded edges, quiet fine detail, preserving the exact action and rhythm. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        }
+      ],
+      "review_target_rms_dbfs": -23,
+      "previous_feedback": {
+        "choice": "A",
+        "notes": "防空炮声音可以修低一点",
+        "reviewed_at": "2026-09-30T10:31:29.426Z"
+      }
+    },
+    {
+      "id": "W10a",
+      "category": "weapon",
+      "title": "重防空炮",
+      "target_seconds": 0.9,
+      "generation_seconds": 3,
+      "loop": false,
+      "direction": "更低沉厚重的防空炮短连发，逐发节奏可辨；避免单发重炮和电影爆炸长尾。",
+      "english_brief": "A heavy naval anti-aircraft autocannon fires a short regular burst of three heavy low-pitched reports, each with a mechanical recoil. Slower and deeper than a light autocannon. Not a single cannon shot. Short decay.",
+      "candidates": [
+        {
+          "id": "W10a_rw1_a",
+          "seed": 202609309030,
+          "variation": "干净动作",
+          "prompt": "A heavy naval anti-aircraft autocannon fires a short regular burst of three heavy low-pitched reports, each with a mechanical recoil. Slower and deeper than a light autocannon. Not a single cannon shot. Short decay. Close and dry recording, precise transient detail and a brief natural decay. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        },
+        {
+          "id": "W10a_rw1_b",
+          "seed": 202609309031,
+          "variation": "温暖材质",
+          "prompt": "A heavy naval anti-aircraft autocannon fires a short regular burst of three heavy low-pitched reports, each with a mechanical recoil. Slower and deeper than a light autocannon. Not a single cannon shot. Short decay. Warmer material body with subdued treble, keeping the exact action sequence and timing clear. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        },
+        {
+          "id": "W10a_rw1_c",
+          "seed": 202609309032,
+          "variation": "柔和耐听",
+          "prompt": "A heavy naval anti-aircraft autocannon fires a short regular burst of three heavy low-pitched reports, each with a mechanical recoil. Slower and deeper than a light autocannon. Not a single cannon shot. Short decay. Softer attack with rounded edges, quiet fine detail, preserving the exact action and rhythm. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        }
+      ],
+      "review_target_rms_dbfs": -23,
+      "previous_feedback": {
+        "choice": "",
+        "notes": "防空炮声音可以修低一点，重炮防空炮也是连发的",
+        "reviewed_at": "2026-09-30T10:31:24.425Z"
+      }
+    },
+    {
+      "id": "W13b",
+      "category": "impact",
+      "title": "重舰装受击",
+      "target_seconds": 1.0,
+      "generation_seconds": 2,
+      "loop": false,
+      "direction": "金属舰装受炮击的短硬冲击、板件弯曲与零件震颤；去掉有调鼓膜共鸣。",
+      "english_brief": "A shell strikes thick steel naval armor: one sharp dense impact followed by brief bending metal and loose steel fittings vibrating. Dry irregular metallic stress, no drum tone, no musical resonance.",
+      "candidates": [
+        {
+          "id": "W13b_rw1_a",
+          "seed": 202609309040,
+          "variation": "干净动作",
+          "prompt": "A shell strikes thick steel naval armor: one sharp dense impact followed by brief bending metal and loose steel fittings vibrating. Dry irregular metallic stress, no drum tone, no musical resonance. Close and dry recording, precise transient detail and a brief natural decay. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        },
+        {
+          "id": "W13b_rw1_b",
+          "seed": 202609309041,
+          "variation": "温暖材质",
+          "prompt": "A shell strikes thick steel naval armor: one sharp dense impact followed by brief bending metal and loose steel fittings vibrating. Dry irregular metallic stress, no drum tone, no musical resonance. Warmer material body with subdued treble, keeping the exact action sequence and timing clear. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        },
+        {
+          "id": "W13b_rw1_c",
+          "seed": 202609309042,
+          "variation": "柔和耐听",
+          "prompt": "A shell strikes thick steel naval armor: one sharp dense impact followed by brief bending metal and loose steel fittings vibrating. Dry irregular metallic stress, no drum tone, no musical resonance. Softer attack with rounded edges, quiet fine detail, preserving the exact action and rhythm. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        }
+      ],
+      "review_target_rms_dbfs": -23,
+      "previous_feedback": {
+        "choice": "全部返工",
+        "notes": "像鼓声不像炮击命中舰装",
+        "reviewed_at": "2026-09-30T10:33:00.501Z"
+      }
+    },
+    {
+      "id": "A03",
+      "category": "aviation",
+      "title": "航空炸弹释放",
+      "target_seconds": 0.6,
+      "generation_seconds": 2,
+      "loop": false,
+      "direction": "弱化尖锐释放瞬态，保留轻机械解锁和柔和空气掠过；不含爆炸命中。",
+      "english_brief": "An aircraft bomb rack gently releases its load: one quiet rounded mechanical latch opening followed by a soft brief air swish moving away. No explosion, no landing impact, no shrill whistle.",
+      "candidates": [
+        {
+          "id": "A03_rw1_a",
+          "seed": 202609309050,
+          "variation": "干净动作",
+          "prompt": "An aircraft bomb rack gently releases its load: one quiet rounded mechanical latch opening followed by a soft brief air swish moving away. No explosion, no landing impact, no shrill whistle. Close and dry recording, precise transient detail and a brief natural decay. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        },
+        {
+          "id": "A03_rw1_b",
+          "seed": 202609309051,
+          "variation": "温暖材质",
+          "prompt": "An aircraft bomb rack gently releases its load: one quiet rounded mechanical latch opening followed by a soft brief air swish moving away. No explosion, no landing impact, no shrill whistle. Warmer material body with subdued treble, keeping the exact action sequence and timing clear. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        },
+        {
+          "id": "A03_rw1_c",
+          "seed": 202609309052,
+          "variation": "柔和耐听",
+          "prompt": "An aircraft bomb rack gently releases its load: one quiet rounded mechanical latch opening followed by a soft brief air swish moving away. No explosion, no landing impact, no shrill whistle. Softer attack with rounded edges, quiet fine detail, preserving the exact action and rhythm. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        }
+      ],
+      "review_target_rms_dbfs": -23,
+      "previous_feedback": {
+        "choice": "全部返工",
+        "notes": "更柔和一点",
+        "reviewed_at": "2026-09-30T10:35:15.017Z"
+      }
+    },
+    {
+      "id": "S01",
+      "category": "submarine",
+      "title": "下潜过程",
+      "target_seconds": 2.0,
+      "generation_seconds": 3,
+      "loop": false,
+      "direction": "下潜以表面水流包覆后渐入气泡表达，保留自然宽频；不用窄带电话式滤波。",
+      "english_brief": "A small submarine slips below the sea surface: broad natural water folds over the hull, then a few soft bubbles fade underwater. A clear surface-to-submerged transition. Full natural bandwidth, no telephone or radio sound, no sonar.",
+      "candidates": [
+        {
+          "id": "S01_rw1_a",
+          "seed": 202609309060,
+          "variation": "干净动作",
+          "prompt": "A small submarine slips below the sea surface: broad natural water folds over the hull, then a few soft bubbles fade underwater. A clear surface-to-submerged transition. Full natural bandwidth, no telephone or radio sound, no sonar. Close and dry recording, precise transient detail and a brief natural decay. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        },
+        {
+          "id": "S01_rw1_b",
+          "seed": 202609309061,
+          "variation": "温暖材质",
+          "prompt": "A small submarine slips below the sea surface: broad natural water folds over the hull, then a few soft bubbles fade underwater. A clear surface-to-submerged transition. Full natural bandwidth, no telephone or radio sound, no sonar. Warmer material body with subdued treble, keeping the exact action sequence and timing clear. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        },
+        {
+          "id": "S01_rw1_c",
+          "seed": 202609309062,
+          "variation": "柔和耐听",
+          "prompt": "A small submarine slips below the sea surface: broad natural water folds over the hull, then a few soft bubbles fade underwater. A clear surface-to-submerged transition. Full natural bandwidth, no telephone or radio sound, no sonar. Softer attack with rounded edges, quiet fine detail, preserving the exact action and rhythm. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        }
+      ],
+      "review_target_rms_dbfs": -23,
+      "previous_feedback": {
+        "choice": "全部返工",
+        "notes": "电话感严重",
+        "reviewed_at": "2026-09-30T12:32:50.336Z"
+      }
+    },
+    {
+      "id": "S02",
+      "category": "submarine",
+      "title": "上浮过程",
+      "target_seconds": 2.0,
+      "generation_seconds": 3,
+      "loop": false,
+      "direction": "上浮先水体推开，再短暂破面与水流滑落；不使用海滩碎浪或水龙头声。",
+      "english_brief": "A small submarine gently breaks the sea surface: a short broad displacement of water rises, then water sheets drain softly off metal. Clear emerge-then-drain sequence. Not beach surf, not a tap or fountain.",
+      "candidates": [
+        {
+          "id": "S02_rw1_a",
+          "seed": 202609309070,
+          "variation": "干净动作",
+          "prompt": "A small submarine gently breaks the sea surface: a short broad displacement of water rises, then water sheets drain softly off metal. Clear emerge-then-drain sequence. Not beach surf, not a tap or fountain. Close and dry recording, precise transient detail and a brief natural decay. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        },
+        {
+          "id": "S02_rw1_b",
+          "seed": 202609309071,
+          "variation": "温暖材质",
+          "prompt": "A small submarine gently breaks the sea surface: a short broad displacement of water rises, then water sheets drain softly off metal. Clear emerge-then-drain sequence. Not beach surf, not a tap or fountain. Warmer material body with subdued treble, keeping the exact action sequence and timing clear. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        },
+        {
+          "id": "S02_rw1_c",
+          "seed": 202609309072,
+          "variation": "柔和耐听",
+          "prompt": "A small submarine gently breaks the sea surface: a short broad displacement of water rises, then water sheets drain softly off metal. Clear emerge-then-drain sequence. Not beach surf, not a tap or fountain. Softer attack with rounded edges, quiet fine detail, preserving the exact action and rhythm. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        }
+      ],
+      "review_target_rms_dbfs": -23,
+      "previous_feedback": {
+        "choice": "全部返工",
+        "notes": "水声不对",
+        "reviewed_at": "2026-09-30T12:33:09.807Z"
+      }
+    },
+    {
+      "id": "K01",
+      "category": "skill",
+      "title": "技能施放确认",
+      "target_seconds": 0.35,
+      "generation_seconds": 2,
+      "loop": false,
+      "direction": "唯一通用技能确认采用短而温暖的舰装解锁起势，去尖锐高音；已取消的技能分族不再跟进。",
+      "english_brief": "A compact mechanical ability activation: a softly spring-loaded precision latch releases, a warm brief airy impulse expands and quickly settles. Rounded low-mid body, gentle treble, no sharp chime, no spell explosion.",
+      "candidates": [
+        {
+          "id": "K01_rw1_a",
+          "seed": 202609309080,
+          "variation": "干净动作",
+          "prompt": "A compact mechanical ability activation: a softly spring-loaded precision latch releases, a warm brief airy impulse expands and quickly settles. Rounded low-mid body, gentle treble, no sharp chime, no spell explosion. Close and dry recording, precise transient detail and a brief natural decay. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        },
+        {
+          "id": "K01_rw1_b",
+          "seed": 202609309081,
+          "variation": "温暖材质",
+          "prompt": "A compact mechanical ability activation: a softly spring-loaded precision latch releases, a warm brief airy impulse expands and quickly settles. Rounded low-mid body, gentle treble, no sharp chime, no spell explosion. Warmer material body with subdued treble, keeping the exact action sequence and timing clear. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        },
+        {
+          "id": "K01_rw1_c",
+          "seed": 202609309082,
+          "variation": "柔和耐听",
+          "prompt": "A compact mechanical ability activation: a softly spring-loaded precision latch releases, a warm brief airy impulse expands and quickly settles. Rounded low-mid body, gentle treble, no sharp chime, no spell explosion. Softer attack with rounded edges, quiet fine detail, preserving the exact action and rhythm. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        }
+      ],
+      "review_target_rms_dbfs": -24,
+      "previous_feedback": {
+        "choice": "全部返工",
+        "notes": "太尖锐了",
+        "reviewed_at": "2026-09-30T12:34:27.774Z"
+      }
+    },
+    {
+      "id": "N10",
+      "category": "alert",
+      "title": "任务阶段更新",
+      "target_seconds": 0.45,
+      "generation_seconds": 2,
+      "loop": false,
+      "direction": "任务阶段更新降低音高，以低中频两步落定表达状态推进；区别于任务完成。",
+      "english_brief": "A quiet task progress interface cue: two discrete warm low-mid wooden clicks, the second slightly firmer, then silence. A small step forward, restrained and dry, no high-pitched bells.",
+      "candidates": [
+        {
+          "id": "N10_rw1_a",
+          "seed": 202609309090,
+          "variation": "干净动作",
+          "prompt": "A quiet task progress interface cue: two discrete warm low-mid wooden clicks, the second slightly firmer, then silence. A small step forward, restrained and dry, no high-pitched bells. Close and dry recording, precise transient detail and a brief natural decay. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        },
+        {
+          "id": "N10_rw1_b",
+          "seed": 202609309091,
+          "variation": "温暖材质",
+          "prompt": "A quiet task progress interface cue: two discrete warm low-mid wooden clicks, the second slightly firmer, then silence. A small step forward, restrained and dry, no high-pitched bells. Warmer material body with subdued treble, keeping the exact action sequence and timing clear. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        },
+        {
+          "id": "N10_rw1_c",
+          "seed": 202609309092,
+          "variation": "柔和耐听",
+          "prompt": "A quiet task progress interface cue: two discrete warm low-mid wooden clicks, the second slightly firmer, then silence. A small step forward, restrained and dry, no high-pitched bells. Softer attack with rounded edges, quiet fine detail, preserving the exact action and rhythm. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        }
+      ],
+      "review_target_rms_dbfs": -23,
+      "previous_feedback": {
+        "choice": "全部返工",
+        "notes": "音高，可以低一点",
+        "reviewed_at": "2026-09-30T12:36:51.159Z"
+      }
+    },
+    {
+      "id": "N11a",
+      "category": "alert",
+      "title": "目标完成",
+      "target_seconds": 0.7,
+      "generation_seconds": 2,
+      "loop": false,
+      "direction": "目标完成用克制温暖的短收束与机械落定，体现完成而非科幻警报；需要与失败B对照试听。",
+      "english_brief": "A restrained objective complete cue: a soft tension release followed by a single warm resonant wooden closure with a tiny rounded upward finish. Calm satisfaction and finality, no alarm, no fanfare, no science fiction laser.",
+      "candidates": [
+        {
+          "id": "N11a_rw1_a",
+          "seed": 202609309100,
+          "variation": "干净动作",
+          "prompt": "A restrained objective complete cue: a soft tension release followed by a single warm resonant wooden closure with a tiny rounded upward finish. Calm satisfaction and finality, no alarm, no fanfare, no science fiction laser. Close and dry recording, precise transient detail and a brief natural decay. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        },
+        {
+          "id": "N11a_rw1_b",
+          "seed": 202609309101,
+          "variation": "温暖材质",
+          "prompt": "A restrained objective complete cue: a soft tension release followed by a single warm resonant wooden closure with a tiny rounded upward finish. Calm satisfaction and finality, no alarm, no fanfare, no science fiction laser. Warmer material body with subdued treble, keeping the exact action sequence and timing clear. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        },
+        {
+          "id": "N11a_rw1_c",
+          "seed": 202609309102,
+          "variation": "柔和耐听",
+          "prompt": "A restrained objective complete cue: a soft tension release followed by a single warm resonant wooden closure with a tiny rounded upward finish. Calm satisfaction and finality, no alarm, no fanfare, no science fiction laser. Softer attack with rounded edges, quiet fine detail, preserving the exact action and rhythm. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        }
+      ],
+      "review_target_rms_dbfs": -23,
+      "previous_feedback": {
+        "choice": "全部返工",
+        "notes": "风格不对",
+        "reviewed_at": "2026-09-30T12:37:03.060Z"
+      }
+    },
+    {
+      "id": "N13",
+      "category": "alert",
+      "title": "时间即将耗尽",
+      "target_seconds": 0.7,
+      "generation_seconds": 3,
+      "loop": false,
+      "direction": "倒计时：低中频干燥钟表滴答，末段间隔缩短；不使用发现敌人的上扬提示音，不做持续警笛。",
+      "english_brief": "A short countdown warning made of dry low-mid clock ticks. Three evenly distinct ticks followed by two ticks closer together, then silence. Subtle urgency through accelerating spacing, no rising notification chime, no siren.",
+      "candidates": [
+        {
+          "id": "N13_rw1_a",
+          "seed": 202609309110,
+          "variation": "干净动作",
+          "prompt": "A short countdown warning made of dry low-mid clock ticks. Three evenly distinct ticks followed by two ticks closer together, then silence. Subtle urgency through accelerating spacing, no rising notification chime, no siren. Close and dry recording, precise transient detail and a brief natural decay. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        },
+        {
+          "id": "N13_rw1_b",
+          "seed": 202609309111,
+          "variation": "温暖材质",
+          "prompt": "A short countdown warning made of dry low-mid clock ticks. Three evenly distinct ticks followed by two ticks closer together, then silence. Subtle urgency through accelerating spacing, no rising notification chime, no siren. Warmer material body with subdued treble, keeping the exact action sequence and timing clear. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        },
+        {
+          "id": "N13_rw1_c",
+          "seed": 202609309112,
+          "variation": "柔和耐听",
+          "prompt": "A short countdown warning made of dry low-mid clock ticks. Three evenly distinct ticks followed by two ticks closer together, then silence. Subtle urgency through accelerating spacing, no rising notification chime, no siren. Softer attack with rounded edges, quiet fine detail, preserving the exact action and rhythm. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        }
+      ],
+      "review_target_rms_dbfs": -23,
+      "previous_feedback": {
+        "choice": "全部返工",
+        "notes": "音效体现的意义不明确",
+        "reviewed_at": "2026-09-30T12:37:43.501Z"
+      }
+    },
+    {
+      "id": "F02",
+      "category": "facility",
+      "title": "设施易主",
+      "target_seconds": 0.6,
+      "generation_seconds": 2,
+      "loop": false,
+      "direction": "易主：机械锁扣释放后重新咬合的一次双阶段动作，末尾短促落定；区别于设施启停的电机声。",
+      "english_brief": "A precision mechanical lock changes ownership: one latch disengages, a tiny pause, then a second latch firmly clicks into place. Clear release then secure sequence, dry intimate mechanism, no motor hum or electronic notification.",
+      "candidates": [
+        {
+          "id": "F02_rw1_a",
+          "seed": 202609309120,
+          "variation": "干净动作",
+          "prompt": "A precision mechanical lock changes ownership: one latch disengages, a tiny pause, then a second latch firmly clicks into place. Clear release then secure sequence, dry intimate mechanism, no motor hum or electronic notification. Close and dry recording, precise transient detail and a brief natural decay. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        },
+        {
+          "id": "F02_rw1_b",
+          "seed": 202609309121,
+          "variation": "温暖材质",
+          "prompt": "A precision mechanical lock changes ownership: one latch disengages, a tiny pause, then a second latch firmly clicks into place. Clear release then secure sequence, dry intimate mechanism, no motor hum or electronic notification. Warmer material body with subdued treble, keeping the exact action sequence and timing clear. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        },
+        {
+          "id": "F02_rw1_c",
+          "seed": 202609309122,
+          "variation": "柔和耐听",
+          "prompt": "A precision mechanical lock changes ownership: one latch disengages, a tiny pause, then a second latch firmly clicks into place. Clear release then secure sequence, dry intimate mechanism, no motor hum or electronic notification. Softer attack with rounded edges, quiet fine detail, preserving the exact action and rhythm. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        }
+      ],
+      "review_target_rms_dbfs": -23,
+      "previous_feedback": {
+        "choice": "全部返工",
+        "notes": "无明显意义",
+        "reviewed_at": "2026-09-30T12:42:22.258Z"
+      }
+    },
+    {
+      "id": "F04",
+      "category": "facility",
+      "title": "靠泊完成",
+      "target_seconds": 0.8,
+      "generation_seconds": 2,
+      "loop": false,
+      "direction": "靠泊：缆绳绷紧、轻缓橡胶护舷接触，随后静止；不使用炮击金属撞击或奖励音。",
+      "english_brief": "Gentle boat docking: a mooring rope briefly stretches taut, a rubber fender softly compresses against the hull, then all motion stops. Close small-scale physical detail, no steel crash or reward chime.",
+      "candidates": [
+        {
+          "id": "F04_rw1_a",
+          "seed": 202609309130,
+          "variation": "干净动作",
+          "prompt": "Gentle boat docking: a mooring rope briefly stretches taut, a rubber fender softly compresses against the hull, then all motion stops. Close small-scale physical detail, no steel crash or reward chime. Close and dry recording, precise transient detail and a brief natural decay. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        },
+        {
+          "id": "F04_rw1_b",
+          "seed": 202609309131,
+          "variation": "温暖材质",
+          "prompt": "Gentle boat docking: a mooring rope briefly stretches taut, a rubber fender softly compresses against the hull, then all motion stops. Close small-scale physical detail, no steel crash or reward chime. Warmer material body with subdued treble, keeping the exact action sequence and timing clear. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        },
+        {
+          "id": "F04_rw1_c",
+          "seed": 202609309132,
+          "variation": "柔和耐听",
+          "prompt": "Gentle boat docking: a mooring rope briefly stretches taut, a rubber fender softly compresses against the hull, then all motion stops. Close small-scale physical detail, no steel crash or reward chime. Softer attack with rounded edges, quiet fine detail, preserving the exact action and rhythm. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        }
+      ],
+      "review_target_rms_dbfs": -23,
+      "previous_feedback": {
+        "choice": "全部返工",
+        "notes": "意义不明",
+        "reviewed_at": "2026-09-30T12:42:54.349Z"
+      }
+    },
+    {
+      "id": "F05a",
+      "category": "facility",
+      "title": "补给开始",
+      "target_seconds": 0.6,
+      "generation_seconds": 2,
+      "loop": false,
+      "direction": "补给开始：软管接头扣合后一次短促液流起动；只有开始事件，不把已取消的完成/维修条目恢复。",
+      "english_brief": "Naval refueling begins: a hose coupling clicks securely into its socket, immediately followed by a short smooth liquid flow starting inside the hose. Clear connect then flow, no completion signal, no tools hammering.",
+      "candidates": [
+        {
+          "id": "F05a_rw1_a",
+          "seed": 202609309140,
+          "variation": "干净动作",
+          "prompt": "Naval refueling begins: a hose coupling clicks securely into its socket, immediately followed by a short smooth liquid flow starting inside the hose. Clear connect then flow, no completion signal, no tools hammering. Close and dry recording, precise transient detail and a brief natural decay. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        },
+        {
+          "id": "F05a_rw1_b",
+          "seed": 202609309141,
+          "variation": "温暖材质",
+          "prompt": "Naval refueling begins: a hose coupling clicks securely into its socket, immediately followed by a short smooth liquid flow starting inside the hose. Clear connect then flow, no completion signal, no tools hammering. Warmer material body with subdued treble, keeping the exact action sequence and timing clear. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        },
+        {
+          "id": "F05a_rw1_c",
+          "seed": 202609309142,
+          "variation": "柔和耐听",
+          "prompt": "Naval refueling begins: a hose coupling clicks securely into its socket, immediately followed by a short smooth liquid flow starting inside the hose. Clear connect then flow, no completion signal, no tools hammering. Softer attack with rounded edges, quiet fine detail, preserving the exact action and rhythm. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        }
+      ],
+      "review_target_rms_dbfs": -23,
+      "previous_feedback": {
+        "choice": "",
+        "notes": "意义不明",
+        "reviewed_at": "2026-09-30T12:43:07.094Z"
+      }
+    },
+    {
+      "id": "F09a",
+      "category": "facility",
+      "title": "布雷开始",
+      "target_seconds": 0.6,
+      "generation_seconds": 2,
+      "loop": false,
+      "direction": "布雷开始：机械保险拨开、投放滑轨拉动的准备动作；不包含实际爆炸。",
+      "english_brief": "A naval mine deployment rack is prepared: a safety lever flips open, then a metal carriage slides outward along its rail and stops softly. Preparation only, no splash, no detonation.",
+      "candidates": [
+        {
+          "id": "F09a_rw1_a",
+          "seed": 202609309150,
+          "variation": "干净动作",
+          "prompt": "A naval mine deployment rack is prepared: a safety lever flips open, then a metal carriage slides outward along its rail and stops softly. Preparation only, no splash, no detonation. Close and dry recording, precise transient detail and a brief natural decay. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        },
+        {
+          "id": "F09a_rw1_b",
+          "seed": 202609309151,
+          "variation": "温暖材质",
+          "prompt": "A naval mine deployment rack is prepared: a safety lever flips open, then a metal carriage slides outward along its rail and stops softly. Preparation only, no splash, no detonation. Warmer material body with subdued treble, keeping the exact action sequence and timing clear. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        },
+        {
+          "id": "F09a_rw1_c",
+          "seed": 202609309152,
+          "variation": "柔和耐听",
+          "prompt": "A naval mine deployment rack is prepared: a safety lever flips open, then a metal carriage slides outward along its rail and stops softly. Preparation only, no splash, no detonation. Softer attack with rounded edges, quiet fine detail, preserving the exact action and rhythm. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        }
+      ],
+      "review_target_rms_dbfs": -23,
+      "previous_feedback": {
+        "choice": "",
+        "notes": "意义不明",
+        "reviewed_at": "2026-09-30T12:43:44.335Z"
+      }
+    },
+    {
+      "id": "F09b",
+      "category": "facility",
+      "title": "布雷完成",
+      "target_seconds": 0.6,
+      "generation_seconds": 2,
+      "loop": false,
+      "direction": "布雷完成：同一滑轨回位并锁止的一次结束动作；与开始的拉开方向/时序配对。",
+      "english_brief": "A naval mine deployment rack finishes its action: a metal carriage slides back inward along its rail and seats with one clear locking click. Return then lock, no splash, no detonation.",
+      "candidates": [
+        {
+          "id": "F09b_rw1_a",
+          "seed": 202609309160,
+          "variation": "干净动作",
+          "prompt": "A naval mine deployment rack finishes its action: a metal carriage slides back inward along its rail and seats with one clear locking click. Return then lock, no splash, no detonation. Close and dry recording, precise transient detail and a brief natural decay. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        },
+        {
+          "id": "F09b_rw1_b",
+          "seed": 202609309161,
+          "variation": "温暖材质",
+          "prompt": "A naval mine deployment rack finishes its action: a metal carriage slides back inward along its rail and seats with one clear locking click. Return then lock, no splash, no detonation. Warmer material body with subdued treble, keeping the exact action sequence and timing clear. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        },
+        {
+          "id": "F09b_rw1_c",
+          "seed": 202609309162,
+          "variation": "柔和耐听",
+          "prompt": "A naval mine deployment rack finishes its action: a metal carriage slides back inward along its rail and seats with one clear locking click. Return then lock, no splash, no detonation. Softer attack with rounded edges, quiet fine detail, preserving the exact action and rhythm. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        }
+      ],
+      "review_target_rms_dbfs": -23,
+      "previous_feedback": {
+        "choice": "全部返工",
+        "notes": "意义不明",
+        "reviewed_at": "2026-09-30T12:43:51.384Z"
+      }
+    },
+    {
+      "id": "F11a",
+      "category": "facility",
+      "title": "雷场启用",
+      "target_seconds": 0.45,
+      "generation_seconds": 2,
+      "loop": false,
+      "direction": "雷场启用：继电器两次紧邻咬合，低中频稳定短音收束；与停用共享设备材质。",
+      "english_brief": "A compact naval electrical relay arms: two closely spaced firm relay clicks followed by a very brief stable low-mid electrical tone. Clear engagement and settled powered state, no spark or explosion.",
+      "candidates": [
+        {
+          "id": "F11a_rw1_a",
+          "seed": 202609309170,
+          "variation": "干净动作",
+          "prompt": "A compact naval electrical relay arms: two closely spaced firm relay clicks followed by a very brief stable low-mid electrical tone. Clear engagement and settled powered state, no spark or explosion. Close and dry recording, precise transient detail and a brief natural decay. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        },
+        {
+          "id": "F11a_rw1_b",
+          "seed": 202609309171,
+          "variation": "温暖材质",
+          "prompt": "A compact naval electrical relay arms: two closely spaced firm relay clicks followed by a very brief stable low-mid electrical tone. Clear engagement and settled powered state, no spark or explosion. Warmer material body with subdued treble, keeping the exact action sequence and timing clear. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        },
+        {
+          "id": "F11a_rw1_c",
+          "seed": 202609309172,
+          "variation": "柔和耐听",
+          "prompt": "A compact naval electrical relay arms: two closely spaced firm relay clicks followed by a very brief stable low-mid electrical tone. Clear engagement and settled powered state, no spark or explosion. Softer attack with rounded edges, quiet fine detail, preserving the exact action and rhythm. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        }
+      ],
+      "review_target_rms_dbfs": -23,
+      "previous_feedback": {
+        "choice": "全部返工",
+        "notes": "意义不明",
+        "reviewed_at": "2026-09-30T12:43:57.195Z"
+      }
+    },
+    {
+      "id": "F11b",
+      "category": "facility",
+      "title": "雷场停用",
+      "target_seconds": 0.45,
+      "generation_seconds": 2,
+      "loop": false,
+      "direction": "雷场停用：单次继电器释放，余振迅速消失；不以启用声随机变调替代。",
+      "english_brief": "The same compact naval electrical relay disarms: one soft release click followed by a tiny electrical vibration rapidly dying into silence. Clear release and power-off, no two-click engagement.",
+      "candidates": [
+        {
+          "id": "F11b_rw1_a",
+          "seed": 202609309180,
+          "variation": "干净动作",
+          "prompt": "The same compact naval electrical relay disarms: one soft release click followed by a tiny electrical vibration rapidly dying into silence. Clear release and power-off, no two-click engagement. Close and dry recording, precise transient detail and a brief natural decay. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        },
+        {
+          "id": "F11b_rw1_b",
+          "seed": 202609309181,
+          "variation": "温暖材质",
+          "prompt": "The same compact naval electrical relay disarms: one soft release click followed by a tiny electrical vibration rapidly dying into silence. Clear release and power-off, no two-click engagement. Warmer material body with subdued treble, keeping the exact action sequence and timing clear. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        },
+        {
+          "id": "F11b_rw1_c",
+          "seed": 202609309182,
+          "variation": "柔和耐听",
+          "prompt": "The same compact naval electrical relay disarms: one soft release click followed by a tiny electrical vibration rapidly dying into silence. Clear release and power-off, no two-click engagement. Softer attack with rounded edges, quiet fine detail, preserving the exact action and rhythm. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        }
+      ],
+      "review_target_rms_dbfs": -23,
+      "previous_feedback": {
+        "choice": "",
+        "notes": "意义不明",
+        "reviewed_at": "2026-09-30T12:44:02.727Z"
+      }
+    },
+    {
+      "id": "U02",
+      "category": "ui",
+      "title": "返回取消",
+      "target_seconds": 0.2,
+      "generation_seconds": 1,
+      "loop": false,
+      "direction": "返回取消用柔和短回收动作和低落点；与已选确认C形成进退对照，避免刺耳拒绝蜂鸣。",
+      "english_brief": "A gentle interface back action: a very short soft sliding mechanism retracts inward and lands on a rounded low wooden stop. Quiet, smooth and reassuring, no harsh buzzer, no rejection alarm.",
+      "candidates": [
+        {
+          "id": "U02_rw1_a",
+          "seed": 202609309190,
+          "variation": "干净动作",
+          "prompt": "A gentle interface back action: a very short soft sliding mechanism retracts inward and lands on a rounded low wooden stop. Quiet, smooth and reassuring, no harsh buzzer, no rejection alarm. Close and dry recording, precise transient detail and a brief natural decay. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        },
+        {
+          "id": "U02_rw1_b",
+          "seed": 202609309191,
+          "variation": "温暖材质",
+          "prompt": "A gentle interface back action: a very short soft sliding mechanism retracts inward and lands on a rounded low wooden stop. Quiet, smooth and reassuring, no harsh buzzer, no rejection alarm. Warmer material body with subdued treble, keeping the exact action sequence and timing clear. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        },
+        {
+          "id": "U02_rw1_c",
+          "seed": 202609309192,
+          "variation": "柔和耐听",
+          "prompt": "A gentle interface back action: a very short soft sliding mechanism retracts inward and lands on a rounded low wooden stop. Quiet, smooth and reassuring, no harsh buzzer, no rejection alarm. Softer attack with rounded edges, quiet fine detail, preserving the exact action and rhythm. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        }
+      ],
+      "review_target_rms_dbfs": -24,
+      "previous_feedback": {
+        "choice": "全部返工",
+        "notes": "不好听",
+        "reviewed_at": "2026-09-30T12:44:27.143Z"
+      }
+    },
+    {
+      "id": "U04a",
+      "category": "ui",
+      "title": "移动指令接受",
+      "target_seconds": 0.25,
+      "generation_seconds": 1,
+      "loop": false,
+      "direction": "移动接受：一次圆润短触点接极短前向滑动，表达立即执行；与排队的双触点区分。",
+      "english_brief": "A short move-command interface acknowledgment: one rounded soft contact click followed immediately by a tiny smooth forward air glide. One gesture, dry and light, no double click, no chime.",
+      "candidates": [
+        {
+          "id": "U04a_rw1_a",
+          "seed": 202609309200,
+          "variation": "干净动作",
+          "prompt": "A short move-command interface acknowledgment: one rounded soft contact click followed immediately by a tiny smooth forward air glide. One gesture, dry and light, no double click, no chime. Close and dry recording, precise transient detail and a brief natural decay. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        },
+        {
+          "id": "U04a_rw1_b",
+          "seed": 202609309201,
+          "variation": "温暖材质",
+          "prompt": "A short move-command interface acknowledgment: one rounded soft contact click followed immediately by a tiny smooth forward air glide. One gesture, dry and light, no double click, no chime. Warmer material body with subdued treble, keeping the exact action sequence and timing clear. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        },
+        {
+          "id": "U04a_rw1_c",
+          "seed": 202609309202,
+          "variation": "柔和耐听",
+          "prompt": "A short move-command interface acknowledgment: one rounded soft contact click followed immediately by a tiny smooth forward air glide. One gesture, dry and light, no double click, no chime. Softer attack with rounded edges, quiet fine detail, preserving the exact action and rhythm. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        }
+      ],
+      "review_target_rms_dbfs": -24,
+      "previous_feedback": {
+        "choice": "全部返工",
+        "notes": "意义不明",
+        "reviewed_at": "2026-09-30T12:44:51.376Z"
+      }
+    },
+    {
+      "id": "U04b",
+      "category": "ui",
+      "title": "航点排队",
+      "target_seconds": 0.2,
+      "generation_seconds": 1,
+      "loop": false,
+      "direction": "航点排队：两次轻触点，后一下更轻，表达追加一项；不包含移动滑动尾音。",
+      "english_brief": "A queued waypoint interface acknowledgment: two separate soft rounded contact clicks, the second noticeably lighter. A concise add-one-item gesture, no glide or notification bell.",
+      "candidates": [
+        {
+          "id": "U04b_rw1_a",
+          "seed": 202609309210,
+          "variation": "干净动作",
+          "prompt": "A queued waypoint interface acknowledgment: two separate soft rounded contact clicks, the second noticeably lighter. A concise add-one-item gesture, no glide or notification bell. Close and dry recording, precise transient detail and a brief natural decay. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        },
+        {
+          "id": "U04b_rw1_b",
+          "seed": 202609309211,
+          "variation": "温暖材质",
+          "prompt": "A queued waypoint interface acknowledgment: two separate soft rounded contact clicks, the second noticeably lighter. A concise add-one-item gesture, no glide or notification bell. Warmer material body with subdued treble, keeping the exact action sequence and timing clear. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        },
+        {
+          "id": "U04b_rw1_c",
+          "seed": 202609309212,
+          "variation": "柔和耐听",
+          "prompt": "A queued waypoint interface acknowledgment: two separate soft rounded contact clicks, the second noticeably lighter. A concise add-one-item gesture, no glide or notification bell. Softer attack with rounded edges, quiet fine detail, preserving the exact action and rhythm. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        }
+      ],
+      "review_target_rms_dbfs": -24,
+      "previous_feedback": {
+        "choice": "",
+        "notes": "意义不明",
+        "reviewed_at": "2026-09-30T12:45:02.126Z"
+      }
+    },
+    {
+      "id": "U04c",
+      "category": "ui",
+      "title": "集火确认",
+      "target_seconds": 0.3,
+      "generation_seconds": 1,
+      "loop": false,
+      "direction": "集火确认：左右机械定位声收拢成一次干燥锁定；不包含真实开炮或敌方命中。",
+      "english_brief": "A focus-target interface acknowledgment: two small precision mechanical parts converge into one dry centered locking click. Tight controlled closure, no gunfire, no impact explosion, no electronic beep.",
+      "candidates": [
+        {
+          "id": "U04c_rw1_a",
+          "seed": 202609309220,
+          "variation": "干净动作",
+          "prompt": "A focus-target interface acknowledgment: two small precision mechanical parts converge into one dry centered locking click. Tight controlled closure, no gunfire, no impact explosion, no electronic beep. Close and dry recording, precise transient detail and a brief natural decay. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        },
+        {
+          "id": "U04c_rw1_b",
+          "seed": 202609309221,
+          "variation": "温暖材质",
+          "prompt": "A focus-target interface acknowledgment: two small precision mechanical parts converge into one dry centered locking click. Tight controlled closure, no gunfire, no impact explosion, no electronic beep. Warmer material body with subdued treble, keeping the exact action sequence and timing clear. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        },
+        {
+          "id": "U04c_rw1_c",
+          "seed": 202609309222,
+          "variation": "柔和耐听",
+          "prompt": "A focus-target interface acknowledgment: two small precision mechanical parts converge into one dry centered locking click. Tight controlled closure, no gunfire, no impact explosion, no electronic beep. Softer attack with rounded edges, quiet fine detail, preserving the exact action and rhythm. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        }
+      ],
+      "review_target_rms_dbfs": -24,
+      "previous_feedback": {
+        "choice": "全部返工",
+        "notes": "意义不明",
+        "reviewed_at": "2026-09-30T12:45:09.676Z"
+      }
+    },
+    {
+      "id": "U06",
+      "category": "ui",
+      "title": "弹种切换",
+      "target_seconds": 0.3,
+      "generation_seconds": 1,
+      "loop": false,
+      "direction": "弹种切换：一次清楚的旋钮定位/卡榫换档；不使用装填或开火声。",
+      "english_brief": "An ammunition selector turns one notch: a short rotary mechanical detent snaps into the next position with a rounded tactile click. No cartridge loading, no gunshot, no electronic flourish.",
+      "candidates": [
+        {
+          "id": "U06_rw1_a",
+          "seed": 202609309230,
+          "variation": "干净动作",
+          "prompt": "An ammunition selector turns one notch: a short rotary mechanical detent snaps into the next position with a rounded tactile click. No cartridge loading, no gunshot, no electronic flourish. Close and dry recording, precise transient detail and a brief natural decay. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        },
+        {
+          "id": "U06_rw1_b",
+          "seed": 202609309231,
+          "variation": "温暖材质",
+          "prompt": "An ammunition selector turns one notch: a short rotary mechanical detent snaps into the next position with a rounded tactile click. No cartridge loading, no gunshot, no electronic flourish. Warmer material body with subdued treble, keeping the exact action sequence and timing clear. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        },
+        {
+          "id": "U06_rw1_c",
+          "seed": 202609309232,
+          "variation": "柔和耐听",
+          "prompt": "An ammunition selector turns one notch: a short rotary mechanical detent snaps into the next position with a rounded tactile click. No cartridge loading, no gunshot, no electronic flourish. Softer attack with rounded edges, quiet fine detail, preserving the exact action and rhythm. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        }
+      ],
+      "review_target_rms_dbfs": -24,
+      "previous_feedback": {
+        "choice": "全部返工",
+        "notes": "意义不明",
+        "reviewed_at": "2026-09-30T12:47:12.143Z"
+      }
+    },
+    {
+      "id": "U07a",
+      "category": "ui",
+      "title": "辅助开启",
+      "target_seconds": 0.22,
+      "generation_seconds": 1,
+      "loop": false,
+      "direction": "辅助开启：圆润物理开关点击，随后极短低到中频抬升；与关闭严格配对。",
+      "english_brief": "A small tactile toggle switches on: a soft physical click followed by a very short rounded low-to-mid rising tone. Clear activation, warm and gentle, no shrill high pitch.",
+      "candidates": [
+        {
+          "id": "U07a_rw1_a",
+          "seed": 202609309240,
+          "variation": "干净动作",
+          "prompt": "A small tactile toggle switches on: a soft physical click followed by a very short rounded low-to-mid rising tone. Clear activation, warm and gentle, no shrill high pitch. Close and dry recording, precise transient detail and a brief natural decay. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        },
+        {
+          "id": "U07a_rw1_b",
+          "seed": 202609309241,
+          "variation": "温暖材质",
+          "prompt": "A small tactile toggle switches on: a soft physical click followed by a very short rounded low-to-mid rising tone. Clear activation, warm and gentle, no shrill high pitch. Warmer material body with subdued treble, keeping the exact action sequence and timing clear. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        },
+        {
+          "id": "U07a_rw1_c",
+          "seed": 202609309242,
+          "variation": "柔和耐听",
+          "prompt": "A small tactile toggle switches on: a soft physical click followed by a very short rounded low-to-mid rising tone. Clear activation, warm and gentle, no shrill high pitch. Softer attack with rounded edges, quiet fine detail, preserving the exact action and rhythm. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        }
+      ],
+      "review_target_rms_dbfs": -24,
+      "previous_feedback": {
+        "choice": "全部返工",
+        "notes": "意义不明",
+        "reviewed_at": "2026-09-30T12:47:29.641Z"
+      }
+    },
+    {
+      "id": "U07b",
+      "category": "ui",
+      "title": "辅助关闭",
+      "target_seconds": 0.22,
+      "generation_seconds": 1,
+      "loop": false,
+      "direction": "辅助关闭：同材质开关点击，随后中到低频回落并止住；不用另一个随机电子音。",
+      "english_brief": "The same small tactile toggle switches off: a soft physical click followed by a very short rounded mid-to-low falling tone that stops cleanly. Clear deactivation, warm and gentle.",
+      "candidates": [
+        {
+          "id": "U07b_rw1_a",
+          "seed": 202609309250,
+          "variation": "干净动作",
+          "prompt": "The same small tactile toggle switches off: a soft physical click followed by a very short rounded mid-to-low falling tone that stops cleanly. Clear deactivation, warm and gentle. Close and dry recording, precise transient detail and a brief natural decay. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        },
+        {
+          "id": "U07b_rw1_b",
+          "seed": 202609309251,
+          "variation": "温暖材质",
+          "prompt": "The same small tactile toggle switches off: a soft physical click followed by a very short rounded mid-to-low falling tone that stops cleanly. Clear deactivation, warm and gentle. Warmer material body with subdued treble, keeping the exact action sequence and timing clear. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        },
+        {
+          "id": "U07b_rw1_c",
+          "seed": 202609309252,
+          "variation": "柔和耐听",
+          "prompt": "The same small tactile toggle switches off: a soft physical click followed by a very short rounded mid-to-low falling tone that stops cleanly. Clear deactivation, warm and gentle. Softer attack with rounded edges, quiet fine detail, preserving the exact action and rhythm. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        }
+      ],
+      "review_target_rms_dbfs": -24,
+      "previous_feedback": {
+        "choice": "全部返工",
+        "notes": "意义不明",
+        "reviewed_at": "2026-09-30T12:47:37.632Z"
+      }
+    },
+    {
+      "id": "U11",
+      "category": "ui",
+      "title": "面板出现",
+      "target_seconds": 0.3,
+      "generation_seconds": 1,
+      "loop": false,
+      "direction": "面板出现：极轻短滑轨展开，柔和停止；区别于按钮点击，不添加通知铃。",
+      "english_brief": "A lightweight interface panel opens: a very quiet short sliding rail moves outward and comes to a soft cushioned stop. Delicate airy friction, no button click, no notification bell.",
+      "candidates": [
+        {
+          "id": "U11_rw1_a",
+          "seed": 202609309260,
+          "variation": "干净动作",
+          "prompt": "A lightweight interface panel opens: a very quiet short sliding rail moves outward and comes to a soft cushioned stop. Delicate airy friction, no button click, no notification bell. Close and dry recording, precise transient detail and a brief natural decay. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        },
+        {
+          "id": "U11_rw1_b",
+          "seed": 202609309261,
+          "variation": "温暖材质",
+          "prompt": "A lightweight interface panel opens: a very quiet short sliding rail moves outward and comes to a soft cushioned stop. Delicate airy friction, no button click, no notification bell. Warmer material body with subdued treble, keeping the exact action sequence and timing clear. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        },
+        {
+          "id": "U11_rw1_c",
+          "seed": 202609309262,
+          "variation": "柔和耐听",
+          "prompt": "A lightweight interface panel opens: a very quiet short sliding rail moves outward and comes to a soft cushioned stop. Delicate airy friction, no button click, no notification bell. Softer attack with rounded edges, quiet fine detail, preserving the exact action and rhythm. Isolated sound effect for a small-scale naval tactics game. Complete action then silence. No speech, voices, music, or background ambience.",
+          "status": "planned"
+        }
+      ],
+      "review_target_rms_dbfs": -24,
+      "previous_feedback": {
+        "choice": "全部返工",
+        "notes": "意义不明",
+        "reviewed_at": "2026-09-30T12:48:17.687Z"
+      }
+    }
+  ],
+  "requirements": [
+    {
+      "id": "W01",
+      "title": "轻口径炮发射：短、清楚的机械爆发",
+      "assets": [
+        "W01"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `WeaponFired`，按武器组映射",
+      "constraints": "P1；驱逐、副炮及部分轻巡共用；每轮受控合并",
+      "historical_assets": [
+        "W01"
+      ]
+    },
+    {
+      "id": "W02",
+      "title": "中口径炮发射：较厚炮口瞬态",
+      "assets": [
+        "W02"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `WeaponFired`",
+      "constraints": "P1；轻/重巡，HE/AP 共用发射底色",
+      "historical_assets": [
+        "W02"
+      ]
+    },
+    {
+      "id": "W03",
+      "title": "重口径炮发射：低频冲击与较长尾音",
+      "assets": [
+        "W03"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `WeaponFired`",
+      "constraints": "P1；战列和实际对应装备；多炮齐射不线性叠响",
+      "historical_assets": [
+        "W03"
+      ]
+    },
+    {
+      "id": "W04",
+      "title": "超重炮差异层",
+      "assets": [
+        "W04"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `WeaponFired`，显式武器映射",
+      "constraints": "P2；大和等适用武器；叠 W03 或独立变体二选一",
+      "historical_assets": [
+        "W04"
+      ]
+    },
+    {
+      "id": "W05",
+      "title": "鱼雷管组发射：机械开阀、短促破水",
+      "assets": [
+        "W05"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `WeaponFired` + `ProjectileSpawned` 对应关系",
+      "constraints": "P1；按一次实际管组发射触发，不两事件各播一次",
+      "historical_assets": [
+        "W05"
+      ]
+    },
+    {
+      "id": "W06",
+      "title": "已知鱼雷近场航行水声",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "S 合法可见投射物生命周期",
+      "constraints": "P3；稀疏/聚合循环；未发现敌雷绝不播放",
+      "historical_assets": [
+        "W06"
+      ]
+    },
+    {
+      "id": "W07",
+      "title": "深弹/反潜投放与入水",
+      "assets": [
+        "W07a",
+        "W07b"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `WeaponFired`；G 如需独立延迟入水则补同源表现时序",
+      "constraints": "P2；只对 AntiSubmarine 实际武器，不能当普通炮声",
+      "historical_assets": [
+        "W07a",
+        "W07b"
+      ]
+    },
+    {
+      "id": "W08",
+      "title": "反潜水下爆炸：低沉、短闷冲击",
+      "assets": [
+        "W08"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `AttackResolved` 的反潜事实",
+      "constraints": "P2；无合法目标信息时不能泄露潜艇位置或命中结果",
+      "historical_assets": [
+        "W08"
+      ]
+    },
+    {
+      "id": "W09",
+      "title": "近防机炮短连射",
+      "assets": [
+        "W09"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E B `AntiAirFired` 或现有合法防空事实",
+      "constraints": "P2；按发射单位/短时间窗合并，拒绝逐弹叠播",
+      "historical_assets": [
+        "W09"
+      ]
+    },
+    {
+      "id": "W10",
+      "title": "中重防空炮/空爆",
+      "assets": [
+        "W10a"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E 有据防空事件；G 独立空爆须有公开位置/时序",
+      "constraints": "P2；无口径元数据时显式映射；不从 A 装饰弹幕猜真实拦截",
+      "historical_assets": [
+        "W10a",
+        "W10b"
+      ]
+    },
+    {
+      "id": "W11",
+      "title": "炮弹掠过/飞行短层",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "S 已公开 `ShellFlightView` 生命周期",
+      "constraints": "P3；仅近镜头少量重炮，无每枚弹持续尖啸",
+      "historical_assets": [
+        "W11"
+      ]
+    },
+    {
+      "id": "W12",
+      "title": "炮弹落水：小/中/大水柱变体",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "E/S 权威落点及现有炮弹表现落点时序",
+      "constraints": "P1；尺寸复用；没有伤害也可落水，但不能暗示隐藏命中",
+      "historical_assets": [
+        "W12a",
+        "W12b",
+        "W12c"
+      ]
+    },
+    {
+      "id": "W13",
+      "title": "舰装受击：轻金属/重冲击变体",
+      "assets": [
+        "W13a",
+        "W13b"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `AttackResolved` 的已公开有效受击",
+      "constraints": "P1；按受击目标合并，不按每个伤害数字播放",
+      "historical_assets": [
+        "W13a",
+        "W13b"
+      ]
+    },
+    {
+      "id": "W14",
+      "title": "鱼雷命中：爆炸与破水",
+      "assets": [
+        "W14"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `ProjectileHit` + `AttackResolved`",
+      "constraints": "P1；同一命中只保留一个音频所有者",
+      "historical_assets": [
+        "W14"
+      ]
+    },
+    {
+      "id": "W15",
+      "title": "岸地爆炸、鱼雷撞岸",
+      "assets": [
+        "W15a"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `ShellBlockedByTerrain` / `ProjectileBlockedByTerrain`",
+      "constraints": "P2；与落水/命中互斥；大小复用 W12/W14 的尾部层",
+      "historical_assets": [
+        "W15a",
+        "W15b"
+      ]
+    },
+    {
+      "id": "W16",
+      "title": "舰体触岸摩擦/顿挫",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "E `UnitTerrainCollision`",
+      "constraints": "P2；限频，只表接触，不虚构碰撞伤害；持续贴岸不能每 Tick 响",
+      "historical_assets": [
+        "W16"
+      ]
+    },
+    {
+      "id": "W17",
+      "title": "水面航行起步/加速破水",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "S 己方或当前可见舰运动快照",
+      "constraints": "P2；轻/中/重层共享，不用舰种代替真实速度",
+      "historical_assets": [
+        "W17a",
+        "W17b",
+        "W17c"
+      ]
+    },
+    {
+      "id": "W18",
+      "title": "舰装低强度巡航/尾流循环",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "S 运动、可见性、距离与生命周期",
+      "constraints": "P3；只保留近场代表声源，停止/沉没/失去可见即淡出",
+      "historical_assets": [
+        "W18"
+      ]
+    },
+    {
+      "id": "W19",
+      "title": "沉没：受损收尾与入水",
+      "assets": [
+        "W19"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `UnitSunk`",
+      "constraints": "P1；与最后一击爆炸合并控制；不额外叠连续爆炸",
+      "historical_assets": [
+        "W19"
+      ]
+    },
+    {
+      "id": "W20",
+      "title": "跳弹、装甲未击穿、舰船互撞专属声",
+      "assets": [],
+      "status": "silent_deferred",
+      "reason": "无公开精确事实，暂缓专属跳弹/互撞声",
+      "trigger": "G/D 缺对应可公开且足够精确的事实时不用",
+      "constraints": "P3；不能凭 AP 名称、零伤害或视觉相交猜原因",
+      "historical_assets": []
+    },
+    {
+      "id": "A01",
+      "title": "舰载编队出击",
+      "assets": [
+        "A01"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `AviationWaveLaunched`",
+      "constraints": "P1；波次是所有者，不再响应旧 Aviation `WeaponFired`",
+      "historical_assets": [
+        "A01"
+      ]
+    },
+    {
+      "id": "A02",
+      "title": "飞机巡航/掠过循环",
+      "assets": [
+        "A02"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "S 合法航空快照与编队阶段",
+      "constraints": "P2；公共螺旋桨音色，按编队而非逐架；侦察机可弱化",
+      "historical_assets": [
+        "A02"
+      ]
+    },
+    {
+      "id": "A03",
+      "title": "炸弹释放/短下落声",
+      "assets": [
+        "A03"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E B `AviationPayloadReleased`；S/G A 读取投影公开投放阶段",
+      "constraints": "P2；不得假装 A 已有 B 的实体投放事实",
+      "historical_assets": [
+        "A03"
+      ]
+    },
+    {
+      "id": "A04",
+      "title": "航空炸弹爆炸/落水",
+      "assets": [
+        "W13b"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `AviationImpact` / `AviationArrival`",
+      "constraints": "P1；复用 W12/W13；Arrival 只能中性落点声，隐藏命中和落空听感一致",
+      "historical_assets": [
+        "W12b",
+        "W12c",
+        "W13b"
+      ]
+    },
+    {
+      "id": "A05",
+      "title": "航空鱼雷入水",
+      "assets": [
+        "A05"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E B `AviationPayloadReleased` 的鱼雷投放语义",
+      "constraints": "P2；后续实体命中归 W14；A 不伪造实体鱼雷接触",
+      "historical_assets": [
+        "A05"
+      ]
+    },
+    {
+      "id": "A06",
+      "title": "飞机受损、坠毁/落水",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "E B `AircraftDamaged` / `AircraftDestroyed`",
+      "constraints": "P2；只能播已发布的阵营合法事实；A 装饰减员不得触发",
+      "historical_assets": [
+        "A06a",
+        "A06b"
+      ]
+    },
+    {
+      "id": "A07",
+      "title": "侦察/巡逻编队建立与结束",
+      "assets": [
+        "N10",
+        "U02"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "S 公开波次/任务快照；G 需明确结束原因",
+      "constraints": "P2；启动提示复用任务族，正常结束、取消、被击落不能混成爆炸",
+      "historical_assets": [
+        "N10",
+        "K09",
+        "U02"
+      ]
+    },
+    {
+      "id": "A08",
+      "title": "航空波次结束/返航收尾",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "E `AviationWaveEnded` + S 公开 phase",
+      "constraints": "P2；按真实原因淡出飞行；没有降落事实不补轮胎着舰声",
+      "historical_assets": [
+        "K09"
+      ]
+    },
+    {
+      "id": "S01",
+      "title": "下潜开始与气泡过程",
+      "assets": [
+        "S01"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `SubmarineDepthTransitionStarted`，目标 Submerged",
+      "constraints": "P1；可见/己方舰；转换进度控制短层，不拖延规则",
+      "historical_assets": [
+        "S01"
+      ]
+    },
+    {
+      "id": "S02",
+      "title": "上浮开始与破水过程",
+      "assets": [
+        "S02"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E 同上，目标 Surface；强制上浮另看 S05",
+      "constraints": "P1；与下潜听感可辨，复用水层",
+      "historical_assets": [
+        "S02"
+      ]
+    },
+    {
+      "id": "S03",
+      "title": "深度转换完成",
+      "assets": [
+        "S03a",
+        "S03b"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `SubmarineDepthChanged`",
+      "constraints": "P1；己方状态提示与空间水声分开；请求被拒绝不播完成",
+      "historical_assets": [
+        "S03a",
+        "S03b"
+      ]
+    },
+    {
+      "id": "S04",
+      "title": "低氧预警",
+      "assets": [
+        "S04"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "S 己方 oxygen 状态；G 跨阈值/恢复迟滞配置待定",
+      "constraints": "P1；每次低氧区间一次，切换选中舰不重播",
+      "historical_assets": [
+        "S04"
+      ]
+    },
+    {
+      "id": "S05",
+      "title": "零氧强制上浮警告",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "E `SubmarineForcedSurface`",
+      "constraints": "P1；覆盖较低级低氧提示；不得与 S02 重复响两次报警",
+      "historical_assets": [
+        "S05"
+      ]
+    },
+    {
+      "id": "S06",
+      "title": "恢复至设定氧量提示",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "S 己方氧气恢复跨阈值",
+      "constraints": "P2；可选关闭；不能宣称任意固定百分比是允许下潜的规则门槛",
+      "historical_assets": [
+        "S06"
+      ]
+    },
+    {
+      "id": "S07",
+      "title": "潜航近场气泡/水声循环",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "S 己方或合法可见潜艇的深度状态",
+      "constraints": "P3；不因隐藏潜艇存在改变海面环境声，不模拟被动声呐定位",
+      "historical_assets": [
+        "S07"
+      ]
+    },
+    {
+      "id": "K01",
+      "title": "通用技能成功施放短提示",
+      "assets": [
+        "K01"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `SkillCast`",
+      "constraints": "P1；己方操作确认；技能拒绝统一走 U05",
+      "historical_assets": [
+        "K01"
+      ]
+    },
+    {
+      "id": "K02",
+      "title": "校射/锁定/集中火控",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "E 技能与已公开状态；厌战、衣阿华、巴尔的摩、恰巴耶夫等",
+      "constraints": "P2；短机械/电子收束，不提示隐藏目标坐标",
+      "historical_assets": [
+        "K02"
+      ]
+    },
+    {
+      "id": "K03",
+      "title": "鱼雷突击/伏击起势",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "E 岛风、愤怒、高雄、U-47、拥护者等实际技能施放",
+      "constraints": "P2；复用 W05，不能在仅加 Buff 时伪造实际发射",
+      "historical_assets": [
+        "K03"
+      ]
+    },
+    {
+      "id": "K04",
+      "title": "航空技能起势",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "E 企业、胜利、凤翔、翔鹤、齐柏林伯爵等",
+      "constraints": "P2；施放提示一次，逐波出击归 A01",
+      "historical_assets": [
+        "K04"
+      ]
+    },
+    {
+      "id": "K05",
+      "title": "防空/反潜警戒与护航圈建立",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "E 圣地亚哥、天狼星、弗莱彻、克利夫兰、秋月等",
+      "constraints": "P2；短提示，不用永久警笛代表持续 Buff",
+      "historical_assets": [
+        "K05"
+      ]
+    },
+    {
+      "id": "K06",
+      "title": "侦查/照明/区域标记",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "E 阿芙乐尔、贝尔法斯特、沃德等技能；航空侦察归 A07",
+      "constraints": "P2；可用抽象扫描声，不创造声呐/雷达探测规则",
+      "historical_assets": [
+        "K06"
+      ]
+    },
+    {
+      "id": "K07",
+      "title": "机动/规避/队伍鼓舞",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "E 胡德、杰维斯、塔什干、纽伦堡、雪风等",
+      "constraints": "P2；轻上扬/流动声，共用一族，不逐受益友舰播放",
+      "historical_assets": [
+        "K07"
+      ]
+    },
+    {
+      "id": "K08",
+      "title": "防护/隐蔽/续航起势",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "E 俾斯麦、甘古特、定远、光辉、海龙等按实际效果映射",
+      "constraints": "P2；护甲增强不等于护盾生成，隐蔽增强不等于已经脱离侦查",
+      "historical_assets": [
+        "K08"
+      ]
+    },
+    {
+      "id": "K09",
+      "title": "重要状态结束或被消耗",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "E `StatusExpired` / `StatusConsumed` 等，需识别玩家关注的状态",
+      "constraints": "P2；只对选中舰关键主动状态，一般属性 Buff 默认无声",
+      "historical_assets": [
+        "K09"
+      ]
+    },
+    {
+      "id": "K10",
+      "title": "角色专属技能签名、cut-in、喊招",
+      "assets": [],
+      "status": "silent_deferred",
+      "reason": "专属演出/语音另立制作，不制作喊招",
+      "trigger": "D 依专属表现与语音方案",
+      "constraints": "P3；不作为首期全舰种覆盖必需项",
+      "historical_assets": []
+    },
+    {
+      "id": "N01",
+      "title": "初次发现敌舰/新接触",
+      "assets": [
+        "N01"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `ContactAcquired`，核对 observer 阵营",
+      "constraints": "P1；首次/新一轮交战聚合，不逐舰雷达滴答；不等于旗舰已识别",
+      "historical_assets": [
+        "N01"
+      ]
+    },
+    {
+      "id": "N02",
+      "title": "当前集火目标丢失/转为残影",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "E `ContactLost` / `ContactTypeChanged`",
+      "constraints": "P2；仅与玩家操作有关时提示，不每次侦查抖动播放",
+      "historical_assets": [
+        "N02"
+      ]
+    },
+    {
+      "id": "N03",
+      "title": "敌雷被发现",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "E `ProjectileDetected`，只取本阵营",
+      "constraints": "P1；一次雷群提示；己方投射物不用敌袭音色",
+      "historical_assets": [
+        "N03"
+      ]
+    },
+    {
+      "id": "N04",
+      "title": "已发现鱼雷进入己舰危险窗",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "G 复用合法公共威胁输出；单靠 N03 不足以证明逼近",
+      "constraints": "P1；较强短警报，按受威胁舰/危险区间聚合；不报“必定命中”",
+      "historical_assets": []
+    },
+    {
+      "id": "N05",
+      "title": "已发现水雷/已知雷区风险",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "E `MineDetected` + S 已知区域与己方状态",
+      "constraints": "P1；未知雷点、失效雷区和安全航道不能错误报警",
+      "historical_assets": [
+        "N05"
+      ]
+    },
+    {
+      "id": "N06",
+      "title": "己方旗舰危急",
+      "assets": [
+        "N06"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "S 己方旗舰生命跨阈值，阈值待定",
+      "constraints": "P1；高于一般受击；恢复迟滞后方可再次触发",
+      "historical_assets": [
+        "N06"
+      ]
+    },
+    {
+      "id": "N07",
+      "title": "其他己舰危急/被击沉",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "S 生命阈值；E `UnitSunk`",
+      "constraints": "P2；按舰聚合，配头像；与 W19 物理声区分",
+      "historical_assets": [
+        "N07a",
+        "N07b"
+      ]
+    },
+    {
+      "id": "N08",
+      "title": "敌舰/敌旗舰击沉确认",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "E 已公开 `UnitSunk` / `FlagshipSunk`",
+      "constraints": "P1；不能从单位消失推断；同 Tick 结算优先，避免先庆祝再判平局",
+      "historical_assets": [
+        "N08"
+      ]
+    },
+    {
+      "id": "N09",
+      "title": "战斗开始/出击就绪",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "E `BattleStarted` + 场景可操作状态",
+      "constraints": "P1；每局一次；加载失败不播出击成功",
+      "historical_assets": [
+        "N09"
+      ]
+    },
+    {
+      "id": "N10",
+      "title": "教学阶段、任务步骤更新",
+      "assets": [
+        "N10"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `TutorialStageChanged` / `LevelObjectiveAdvanced`",
+      "constraints": "P1；一次阶段提示；`TutorialActionRecorded` 不逐操作发奖励声",
+      "historical_assets": [
+        "N10"
+      ]
+    },
+    {
+      "id": "N11",
+      "title": "单项目标达成/失败",
+      "assets": [
+        "N11a",
+        "N11b"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `LevelObjectiveCompleted` / `LevelObjectiveFailed`",
+      "constraints": "P1；主目标、可选精通区分；不能替代最终胜负判断",
+      "historical_assets": [
+        "N11a",
+        "N11b"
+      ]
+    },
+    {
+      "id": "N12",
+      "title": "接替增援实际抵达",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "E `ReinforcementWaveSpawned`",
+      "constraints": "P1；一波一次，敌方须有公开通知授权，不能只凭 raw faction 判断可播",
+      "historical_assets": [
+        "N12a",
+        "N12b"
+      ]
+    },
+    {
+      "id": "N13",
+      "title": "战斗时间即将耗尽",
+      "assets": [
+        "N13"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "S 正式战斗剩余时间跨阈值",
+      "constraints": "P2；一次或有限档位，不逐秒急促蜂鸣；技术保护计时不用此声",
+      "historical_assets": [
+        "N13"
+      ]
+    },
+    {
+      "id": "N14",
+      "title": "权威结算展示短提示",
+      "assets": [
+        "U11"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `BattleFinished` + 结果展示分类",
+      "constraints": "P1；可复用 U11；胜负乐句归 50，不另造一套重复胜负音乐",
+      "historical_assets": [
+        "U11"
+      ]
+    },
+    {
+      "id": "N15",
+      "title": "技术无效/加载失败/保存失败",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "S 现有错误/结果 UI 状态",
+      "constraints": "P1；复用 U05 的中性故障变体，不用战败声；保存失败不改已确认胜负",
+      "historical_assets": [
+        "U05c"
+      ]
+    },
+    {
+      "id": "N16",
+      "title": "奖励/新角色/关卡解锁确认",
+      "assets": [
+        "N16"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "S 真实进度结果与保存状态",
+      "constraints": "P2；一次结果呈现聚合，重开面板或重试保存不重播奖励；不得暗示未持久化已成功",
+      "historical_assets": [
+        "N16"
+      ]
+    },
+    {
+      "id": "E01",
+      "title": "平静海面底噪循环",
+      "assets": [
+        "E01"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "S 当前战场公开环境",
+      "constraints": "P1；晴朗/多云基础共用，不按时段复制",
+      "historical_assets": [
+        "E01"
+      ]
+    },
+    {
+      "id": "E02",
+      "title": "中/高海况浪声层",
+      "assets": [
+        "E02a",
+        "E02b"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "S 有效海况",
+      "constraints": "P2；按强度交叉淡化；不要同时叠三条完整浪声",
+      "historical_assets": [
+        "E02a",
+        "E02b"
+      ]
+    },
+    {
+      "id": "E03",
+      "title": "轻风/强风循环层",
+      "assets": [
+        "E03a",
+        "E03b"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "S 公开风力/天气与允许使用的局部上下文",
+      "constraints": "P2；多云/阴云/雨/雷雨共享强度层，不每舰播放",
+      "historical_assets": [
+        "E03a",
+        "E03b"
+      ]
+    },
+    {
+      "id": "E04",
+      "title": "雨循环：普通/强雨变体",
+      "assets": [
+        "E04a",
+        "E04b"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "S 全局雨、雷雨及公开局部飑线",
+      "constraints": "P1；雨滴与风分层，避免持续掩盖就绪提示",
+      "historical_assets": [
+        "E04a",
+        "E04b"
+      ]
+    },
+    {
+      "id": "E05",
+      "title": "雷声：远闷雷/较近雷鸣变体",
+      "assets": [
+        "E05a",
+        "E05b"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "G 当前闪电为着色器表现，需共享可同步的表现闪电时序",
+      "constraints": "P2；雷声与闪光关联、限峰；不从像素闪烁或任意每帧随机触发",
+      "historical_assets": [
+        "E05a",
+        "E05b"
+      ]
+    },
+    {
+      "id": "E06",
+      "title": "近岸浪拍/海湾水声",
+      "assets": [
+        "E06"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "S 已知岸线与镜头近场；需明确空间混合范围",
+      "constraints": "P3；十图共用，不为每岛录独占背景；远离岸线淡出",
+      "historical_assets": [
+        "E06"
+      ]
+    },
+    {
+      "id": "E07",
+      "title": "强流/局部浪涌增强",
+      "assets": [
+        "E02b"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "S 己舰/镜头可用环境上下文",
+      "constraints": "P2；复用 E02，避免不可见局部区通过空间音色泄露",
+      "historical_assets": [
+        "E02b"
+      ]
+    },
+    {
+      "id": "E08",
+      "title": "海雾、月光、背风、昼夜的专属底噪",
+      "assets": [],
+      "status": "silent_deferred",
+      "reason": "无独立物理声源，用混音变化表达",
+      "trigger": "D 不要求独立文件",
+      "constraints": "P3；海雾/月光不是物理发声体；背风降风浪；时段改变混音但不无据加虫鸣/海鸥",
+      "historical_assets": []
+    },
+    {
+      "id": "E09",
+      "title": "开局天气/时段摘要到达",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "S 首次环境 HUD 展示",
+      "constraints": "P2；与 N09 合并，先文字再一次中性信息声；无需二十句语音",
+      "historical_assets": [
+        "N09"
+      ]
+    },
+    {
+      "id": "E10",
+      "title": "天气恶化/改善提示",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "G 当前未证实有通用全局天气转场事件",
+      "constraints": "P2；仅未来真实公开转场时启用；不能把潮汐事件当风暴来临",
+      "historical_assets": [
+        "E10a",
+        "E10b"
+      ]
+    },
+    {
+      "id": "E11",
+      "title": "己舰进入/离开显著局部影响",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "S/G 对己舰有效上下文差分及通知适配；非 `EnvironmentZoneChanged` 直接等价",
+      "constraints": "P2；海雾/飑线/高海况/强流共享注意声，背风/月光改善共享恢复声；边界迟滞",
+      "historical_assets": [
+        "E10a",
+        "E10b"
+      ]
+    },
+    {
+      "id": "E12",
+      "title": "航空条件受限/恢复",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "S 己方航空条件等级变化",
+      "constraints": "P1；用 Normal/Restricted/Severe 的真实语义，不把 Severe 宣称绝对禁飞；被拒绝仍归 U05",
+      "historical_assets": [
+        "E12a",
+        "E12b"
+      ]
+    },
+    {
+      "id": "E13",
+      "title": "潮态切换与通行收紧/恢复",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "E `EnvironmentForecastChanged` + S 公开潮态/通行上下文",
+      "constraints": "P1；仅对当前战术有关时通知；阶段变化不等于每艘船都遭封锁",
+      "historical_assets": [
+        "E13a",
+        "E13b"
+      ]
+    },
+    {
+      "id": "E14",
+      "title": "己舰潮汐通行受限",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "E `UnitTideAccessRestricted`",
+      "constraints": "P1；按舰/同原因合并，避免每 Tick 报警；文字说明仍可撤离",
+      "historical_assets": [
+        "E14"
+      ]
+    },
+    {
+      "id": "E15",
+      "title": "局部区消散/已公开预报更新",
+      "assets": [
+        "N10"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `EnvironmentZoneChanged` 消散；G 其他预报待公开接口",
+      "constraints": "P2；只通知影响当前操作的变化；无未来精确数据不播倒计时预警",
+      "historical_assets": [
+        "N10"
+      ]
+    },
+    {
+      "id": "F01",
+      "title": "占领/控制开始与完成",
+      "assets": [
+        "F01a",
+        "F01b"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `FacilityControlDeclared` / `FacilityControlCompleted`",
+      "constraints": "P2；开始轻确认、完成任务提示；避免与 OwnershipChanged 重复",
+      "historical_assets": [
+        "F01a",
+        "F01b"
+      ]
+    },
+    {
+      "id": "F02",
+      "title": "设施易主/整套系统移交",
+      "assets": [
+        "F02"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `FacilityOwnershipChanged` / `FacilitySystemHandedOver`",
+      "constraints": "P2；按一次系统移交聚合；只对已知设施",
+      "historical_assets": [
+        "F02"
+      ]
+    },
+    {
+      "id": "F03",
+      "title": "设施启用、受压制、恢复/停用",
+      "assets": [
+        "F03a",
+        "F03b"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `FacilityActivated` / `FacilitySuppressed` / `FacilityRecovered` / `FacilityOperationStateChanged`",
+      "constraints": "P2；启用/恢复与异常两族，依赖连锁不逐建筑轰炸提示",
+      "historical_assets": [
+        "F03a",
+        "F03b"
+      ]
+    },
+    {
+      "id": "F04",
+      "title": "靠泊/进坞完成",
+      "assets": [
+        "F04"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `FacilityDockingCompleted`",
+      "constraints": "P2；短机械/水声；申请服务不等于已靠泊",
+      "historical_assets": [
+        "F04"
+      ]
+    },
+    {
+      "id": "F05",
+      "title": "补给/维修开始、工作、完成",
+      "assets": [
+        "F05a"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `FacilityServiceStarted` / `FacilityServiceCompleted`；S 工作循环",
+      "constraints": "P2；补给装填、维修轻工具变体，循环仅选中/近场；`UnitServiced` 不再重复报喜",
+      "historical_assets": [
+        "F05a",
+        "F05b",
+        "F05c",
+        "F05d",
+        "F05e"
+      ]
+    },
+    {
+      "id": "F06",
+      "title": "服务中断、取消/离泊",
+      "assets": [
+        "U02",
+        "U05a"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `FacilityActionInterrupted`，读取 reason_code",
+      "constraints": "P2；主动取消用取消声，受重击等异常用警示声",
+      "historical_assets": [
+        "U02",
+        "U05a"
+      ]
+    },
+    {
+      "id": "F07",
+      "title": "岸炮开火、设施受击/摧毁",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "E `FacilityWeaponFired` / `FacilityDamaged` / `FacilityDestroyed`",
+      "constraints": "P2；复用 W02/W03/W13，摧毁加短结构坍塌尾声；无敌情泄露",
+      "historical_assets": [
+        "F07",
+        "W02",
+        "W03",
+        "W13a",
+        "W13b"
+      ]
+    },
+    {
+      "id": "F08",
+      "title": "机场支援申请、发起、完成/取消",
+      "assets": [
+        "U04b",
+        "A01",
+        "N11a",
+        "U02"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E 服务已有任务事件；G 当前表现过滤器会抑制部分原始任务事件，需合法任务摘要",
+      "constraints": "P2；申请与实际出动分开；飞行/空袭只由 A 系列发声",
+      "historical_assets": [
+        "U04b",
+        "A01",
+        "N11a",
+        "U02"
+      ]
+    },
+    {
+      "id": "F09",
+      "title": "布雷开始、完成/取消",
+      "assets": [
+        "F09a",
+        "F09b",
+        "U02"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `MineDeploymentStarted` / `MineDeploymentCompleted` / `MineDeploymentCancelled`，结合 batch 结果",
+      "constraints": "P2；完成播一次并显示有效/失效数量，不能每个 MineDeployed 都响",
+      "historical_assets": [
+        "F09a",
+        "F09b",
+        "U02"
+      ]
+    },
+    {
+      "id": "F10",
+      "title": "水雷触发爆炸",
+      "assets": [
+        "W14"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `MineTriggered`",
+      "constraints": "P1；复用 W14；发现声 N05 与触发爆炸分离",
+      "historical_assets": [
+        "W14"
+      ]
+    },
+    {
+      "id": "F11",
+      "title": "雷场启停/控制站联动",
+      "assets": [
+        "F11a",
+        "F11b"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `MineFieldStateChanged`，只取合法已知状态",
+      "constraints": "P2；按一次控制结果合并；不暴露隐藏雷点布局",
+      "historical_assets": [
+        "F11a",
+        "F11b"
+      ]
+    },
+    {
+      "id": "F12",
+      "title": "观察站/雷达/通信设备循环",
+      "assets": [],
+      "status": "silent_deferred",
+      "reason": "首轮设备持续工作静默",
+      "trigger": "D 首轮默认静默，P3 可补局部设备底噪",
+      "constraints": "P3；设备持续工作不等于每 Tick 探测；新接触已由 N01 覆盖",
+      "historical_assets": []
+    },
+    {
+      "id": "U01",
+      "title": "按钮确认/页面进入",
+      "assets": [
+        "U01"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "S 本地有效 UI 操作",
+      "constraints": "P1；鼠标/键盘同一入口；禁用按钮不能播成功声",
+      "historical_assets": [
+        "U01"
+      ]
+    },
+    {
+      "id": "U02",
+      "title": "返回/取消/关闭",
+      "assets": [
+        "U02"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "S 本地状态实际改变",
+      "constraints": "P1；取消瞄准、关闭面板共享；不等于命令已经撤回",
+      "historical_assets": [
+        "U02"
+      ]
+    },
+    {
+      "id": "U03",
+      "title": "选中舰/群体选择/设施选择",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "S 选择集合实际变化",
+      "constraints": "P1；一次拖框只响一次，不逐成员播放；重复点击同一对象可静默",
+      "historical_assets": [
+        "U03"
+      ]
+    },
+    {
+      "id": "U04",
+      "title": "移动、航点、集火确认",
+      "assets": [
+        "U04a",
+        "U04b",
+        "U04c"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `MoveOrderAccepted` / `MoveOrderQueued` / `MoveWaypointQueued` / `FocusTargetChanged` 等",
+      "constraints": "P1；排队音色不暗示路线已可达；连续布点短促限频",
+      "historical_assets": [
+        "U04a",
+        "U04b",
+        "U04c"
+      ]
+    },
+    {
+      "id": "U05",
+      "title": "命令拒绝/部分执行/异常",
+      "assets": [
+        "U05a"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `CommandRejected` + 现有 PlayerCommandFeedback",
+      "constraints": "P1；沿用玩家来源和合并 key，当前合并窗 1.5 秒内不重复发声；部分成功不播全成功",
+      "historical_assets": [
+        "U05a",
+        "U05b",
+        "U05c"
+      ]
+    },
+    {
+      "id": "U06",
+      "title": "HE/AP 弹种切换",
+      "assets": [
+        "U06"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `AmmoSwitched`",
+      "constraints": "P1；一次轻机械切换；不加装填完成声，不重置冷却",
+      "historical_assets": [
+        "U06"
+      ]
+    },
+    {
+      "id": "U07",
+      "title": "辅助/自动开火开关开、关",
+      "assets": [
+        "U07a",
+        "U07b"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `UnitControlStateChanged` + S 本地控件",
+      "constraints": "P1；高低两种短提示，舰队统一一次；潜艇深度操作归 S 系列",
+      "historical_assets": [
+        "U07a",
+        "U07b"
+      ]
+    },
+    {
+      "id": "U08",
+      "title": "主要武器装填完成",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "S 己舰实际 reload/可用状态跨边沿",
+      "constraints": "P1；首轮只选中舰，可选扩展；切换选中对象不重播，管组完成聚合",
+      "historical_assets": [
+        "U08"
+      ]
+    },
+    {
+      "id": "U09",
+      "title": "主动技能冷却完成",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "S 己方技能冷却边沿",
+      "constraints": "P1；与 U08 听感可辨；开局已经就绪不连发 48/多舰提示",
+      "historical_assets": [
+        "U09"
+      ]
+    },
+    {
+      "id": "U10",
+      "title": "战术暂停/继续",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "S 战斗阶段实际变化",
+      "constraints": "P1；暂停时 UI 可响，冻结战斗新触发，恢复不重放积压",
+      "historical_assets": [
+        "U10a",
+        "U10b"
+      ]
+    },
+    {
+      "id": "U11",
+      "title": "任务/结果面板出现",
+      "assets": [
+        "U11"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "S 面板首次正式显示",
+      "constraints": "P2；供 N10/N11/N14 复用，已有语义提示时不另响一层",
+      "historical_assets": [
+        "U11"
+      ]
+    },
+    {
+      "id": "U12",
+      "title": "暂停计划排入、撤销、恢复执行",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "S 计划队列变化 + 恢复后的命令结果",
+      "constraints": "P1；排入只表示计划记录，真正拒绝仍 U05；批量执行聚合",
+      "historical_assets": [
+        "U12a",
+        "U12b",
+        "U12c"
+      ]
+    },
+    {
+      "id": "U13",
+      "title": "编队加入/移除、合法配置切换",
+      "assets": [
+        "U01",
+        "U02",
+        "U05a"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "S 菜单实际变更",
+      "constraints": "P2；复用 U01/U02；Cost 超限/锁定复用拒绝声，筹备中不播解锁",
+      "historical_assets": [
+        "U01",
+        "U02",
+        "U05a"
+      ]
+    },
+    {
+      "id": "U14",
+      "title": "音量调节试听、设置保存",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "S 未来音频设置 UI",
+      "constraints": "P1；拖动不逐像素出声，静音后无试听；保存状态与即时效果区分",
+      "historical_assets": [
+        "U14a",
+        "U14b"
+      ]
+    },
+    {
+      "id": "U15",
+      "title": "看板切换、观赏/退出观赏",
+      "assets": [
+        "U01",
+        "U02"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "S 当前封面流程",
+      "constraints": "P2；一次轻 UI 转场，可复用 U01/U02；不附送角色语音",
+      "historical_assets": [
+        "U01",
+        "U02"
+      ]
+    },
+    {
+      "id": "U16",
+      "title": "悬停、镜头缩放/拖动、持续瞄准、F9 调试",
+      "assets": [],
+      "status": "silent_deferred",
+      "reason": "高频悬停/镜头/调试默认静默",
+      "trigger": "D 默认静默",
+      "constraints": "P3；这些高频动作不应占用战斗提示预算；若加悬停需可关且限频",
+      "historical_assets": []
+    },
+    {
+      "id": "U17",
+      "title": "音乐播放/暂停/下一首/循环控件",
+      "assets": [
+        "U01"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "S/G 按 50 未来控件行为",
+      "constraints": "P2；最多复用 UI 点击，音乐播放本身由音乐系统负责",
+      "historical_assets": [
+        "U01"
+      ]
+    }
+  ],
+  "runtime": "modelscope-runtime/ComfyUI",
+  "parent_batches": [
+    "sfx_full_20260930_v3"
+  ],
+  "retained_preferences": {},
+  "cancelled": [
+    "A06a",
+    "A06b",
+    "E10a",
+    "E10b",
+    "E12a",
+    "E12b",
+    "E13a",
+    "E13b",
+    "E14",
+    "F05b",
+    "F05c",
+    "F05d",
+    "F05e",
+    "F07",
+    "K02",
+    "K03",
+    "K04",
+    "K05",
+    "K06",
+    "K07",
+    "K08",
+    "K09",
+    "N02",
+    "N03",
+    "N04",
+    "N05",
+    "N07a",
+    "N07b",
+    "N08",
+    "N09",
+    "N12a",
+    "N12b",
+    "S05",
+    "S06",
+    "S07",
+    "U03",
+    "U05b",
+    "U05c",
+    "U08",
+    "U09",
+    "U10a",
+    "U10b",
+    "U12a",
+    "U12b",
+    "U12c",
+    "U14a",
+    "U14b",
+    "W06",
+    "W10b",
+    "W11",
+    "W12a",
+    "W12b",
+    "W12c",
+    "W15b",
+    "W16",
+    "W17a",
+    "W17b",
+    "W17c",
+    "W18"
+  ],
+  "duration_note": "Integer source seconds; retain full source and natural decay.",
+  "review_source": "tools/sfx/reviews/sfx_full_20260930_v3.0f272739ee62.review.json"
+}

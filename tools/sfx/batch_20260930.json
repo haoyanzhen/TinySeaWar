@@ -1,0 +1,5241 @@
+{
+  "id": "sfx_20260930_v1",
+  "version": 1,
+  "backend": "stabilityai/stable-audio-3-small-sfx",
+  "status": "planned_not_generated",
+  "source": "workorder/20260929-sound-effects-inventory-and-integration.md",
+  "candidates_per_asset": 3,
+  "sample_rate_source": 44100,
+  "sample_rate_delivery": 48000,
+  "steps": 8,
+  "guidance_scale": 1.0,
+  "assets": [
+    {
+      "id": "W01",
+      "category": "weapon",
+      "title": "轻炮发射",
+      "target_seconds": 0.7,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "干脆机械击发、短火药爆发、少低频",
+      "english_brief": "A single light naval cannon shot, crisp mechanical firing and a short gunpowder crack",
+      "candidates": [
+        {
+          "id": "W01_a",
+          "seed": 2026093000,
+          "variation": "干净短促",
+          "prompt": "A single light naval cannon shot, crisp mechanical firing and a short gunpowder crack. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "W01_b",
+          "seed": 2026093001,
+          "variation": "厚实机械",
+          "prompt": "A single light naval cannon shot, crisp mechanical firing and a short gunpowder crack. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "W01_c",
+          "seed": 2026093002,
+          "variation": "柔和耐听",
+          "prompt": "A single light naval cannon shot, crisp mechanical firing and a short gunpowder crack. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "W02",
+      "category": "weapon",
+      "title": "中炮发射",
+      "target_seconds": 1.1,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "厚实炮口瞬态、金属后坐、适量中低频",
+      "english_brief": "A single medium naval cannon shot, thick muzzle blast and metal recoil mechanism",
+      "candidates": [
+        {
+          "id": "W02_a",
+          "seed": 2026093010,
+          "variation": "干净短促",
+          "prompt": "A single medium naval cannon shot, thick muzzle blast and metal recoil mechanism. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "W02_b",
+          "seed": 2026093011,
+          "variation": "厚实机械",
+          "prompt": "A single medium naval cannon shot, thick muzzle blast and metal recoil mechanism. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "W02_c",
+          "seed": 2026093012,
+          "variation": "柔和耐听",
+          "prompt": "A single medium naval cannon shot, thick muzzle blast and metal recoil mechanism. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "W03",
+      "category": "weapon",
+      "title": "重炮发射",
+      "target_seconds": 1.8,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "深厚冲击、空气压缩、克制低频尾音",
+      "english_brief": "A single heavy naval cannon shot, deep pressure impact and a restrained bass decay",
+      "candidates": [
+        {
+          "id": "W03_a",
+          "seed": 2026093020,
+          "variation": "干净短促",
+          "prompt": "A single heavy naval cannon shot, deep pressure impact and a restrained bass decay. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "W03_b",
+          "seed": 2026093021,
+          "variation": "厚实机械",
+          "prompt": "A single heavy naval cannon shot, deep pressure impact and a restrained bass decay. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "W03_c",
+          "seed": 2026093022,
+          "variation": "柔和耐听",
+          "prompt": "A single heavy naval cannon shot, deep pressure impact and a restrained bass decay. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "W04",
+      "category": "weapon",
+      "title": "超重炮发射",
+      "target_seconds": 2.4,
+      "generation_seconds": 3.4,
+      "loop": false,
+      "direction": "独立完整炮声、更深压力波、不额外叠重炮",
+      "english_brief": "A single super heavy naval cannon shot, massive low pressure wave and detailed mechanical recoil",
+      "candidates": [
+        {
+          "id": "W04_a",
+          "seed": 2026093030,
+          "variation": "干净短促",
+          "prompt": "A single super heavy naval cannon shot, massive low pressure wave and detailed mechanical recoil. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "W04_b",
+          "seed": 2026093031,
+          "variation": "厚实机械",
+          "prompt": "A single super heavy naval cannon shot, massive low pressure wave and detailed mechanical recoil. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "W04_c",
+          "seed": 2026093032,
+          "variation": "柔和耐听",
+          "prompt": "A single super heavy naval cannon shot, massive low pressure wave and detailed mechanical recoil. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "W05",
+      "category": "weapon",
+      "title": "鱼雷管发射",
+      "target_seconds": 0.9,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "锁扣释放、压缩空气、短促破水",
+      "english_brief": "A torpedo tube launching one torpedo, latch release, compressed air and a short splash",
+      "candidates": [
+        {
+          "id": "W05_a",
+          "seed": 2026093040,
+          "variation": "干净短促",
+          "prompt": "A torpedo tube launching one torpedo, latch release, compressed air and a short splash. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "W05_b",
+          "seed": 2026093041,
+          "variation": "厚实机械",
+          "prompt": "A torpedo tube launching one torpedo, latch release, compressed air and a short splash. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "W05_c",
+          "seed": 2026093042,
+          "variation": "柔和耐听",
+          "prompt": "A torpedo tube launching one torpedo, latch release, compressed air and a short splash. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "W06",
+      "category": "water",
+      "title": "鱼雷近场航行",
+      "target_seconds": 8.0,
+      "generation_seconds": 8.0,
+      "loop": true,
+      "direction": "低强度细水流循环，无警报或定位脉冲",
+      "english_brief": "Steady quiet close underwater torpedo wake, flowing water and subtle bubbles",
+      "candidates": [
+        {
+          "id": "W06_a",
+          "seed": 2026093050,
+          "variation": "干净短促",
+          "prompt": "Steady quiet close underwater torpedo wake, flowing water and subtle bubbles. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "W06_b",
+          "seed": 2026093051,
+          "variation": "厚实机械",
+          "prompt": "Steady quiet close underwater torpedo wake, flowing water and subtle bubbles. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "W06_c",
+          "seed": 2026093052,
+          "variation": "柔和耐听",
+          "prompt": "Steady quiet close underwater torpedo wake, flowing water and subtle bubbles. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "W07a",
+      "category": "weapon",
+      "title": "反潜投放",
+      "target_seconds": 0.5,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "机械释放、重物滑脱",
+      "english_brief": "A heavy depth charge released from a mechanical rack, metallic latch and sliding weight",
+      "candidates": [
+        {
+          "id": "W07a_a",
+          "seed": 2026093060,
+          "variation": "干净短促",
+          "prompt": "A heavy depth charge released from a mechanical rack, metallic latch and sliding weight. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "W07a_b",
+          "seed": 2026093061,
+          "variation": "厚实机械",
+          "prompt": "A heavy depth charge released from a mechanical rack, metallic latch and sliding weight. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "W07a_c",
+          "seed": 2026093062,
+          "variation": "柔和耐听",
+          "prompt": "A heavy depth charge released from a mechanical rack, metallic latch and sliding weight. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "W07b",
+      "category": "water",
+      "title": "深弹入水",
+      "target_seconds": 0.8,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "沉重入水、短气泡",
+      "english_brief": "One heavy depth charge splashing into water, deep splash and brief bubbles",
+      "candidates": [
+        {
+          "id": "W07b_a",
+          "seed": 2026093070,
+          "variation": "干净短促",
+          "prompt": "One heavy depth charge splashing into water, deep splash and brief bubbles. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "W07b_b",
+          "seed": 2026093071,
+          "variation": "厚实机械",
+          "prompt": "One heavy depth charge splashing into water, deep splash and brief bubbles. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "W07b_c",
+          "seed": 2026093072,
+          "variation": "柔和耐听",
+          "prompt": "One heavy depth charge splashing into water, deep splash and brief bubbles. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "W08",
+      "category": "impact",
+      "title": "水下反潜爆炸",
+      "target_seconds": 1.4,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "低通闷爆、短压力波、无地上碎片",
+      "english_brief": "One muffled underwater depth charge explosion, deep pressure thump and short watery decay",
+      "candidates": [
+        {
+          "id": "W08_a",
+          "seed": 2026093080,
+          "variation": "干净短促",
+          "prompt": "One muffled underwater depth charge explosion, deep pressure thump and short watery decay. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "W08_b",
+          "seed": 2026093081,
+          "variation": "厚实机械",
+          "prompt": "One muffled underwater depth charge explosion, deep pressure thump and short watery decay. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "W08_c",
+          "seed": 2026093082,
+          "variation": "柔和耐听",
+          "prompt": "One muffled underwater depth charge explosion, deep pressure thump and short watery decay. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "W09",
+      "category": "weapon",
+      "title": "近防机炮",
+      "target_seconds": 0.7,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "受控短连射、清楚节奏、不过度尖锐",
+      "english_brief": "A short controlled burst of naval anti aircraft autocannon fire, distinct fast mechanical shots",
+      "candidates": [
+        {
+          "id": "W09_a",
+          "seed": 2026093090,
+          "variation": "干净短促",
+          "prompt": "A short controlled burst of naval anti aircraft autocannon fire, distinct fast mechanical shots. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "W09_b",
+          "seed": 2026093091,
+          "variation": "厚实机械",
+          "prompt": "A short controlled burst of naval anti aircraft autocannon fire, distinct fast mechanical shots. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "W09_c",
+          "seed": 2026093092,
+          "variation": "柔和耐听",
+          "prompt": "A short controlled burst of naval anti aircraft autocannon fire, distinct fast mechanical shots. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "W10a",
+      "category": "weapon",
+      "title": "重防空炮",
+      "target_seconds": 0.9,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "短炮击、偏中频、轻后坐",
+      "english_brief": "A single heavy anti aircraft gun shot, sharp midrange blast and mechanical recoil",
+      "candidates": [
+        {
+          "id": "W10a_a",
+          "seed": 2026093100,
+          "variation": "干净短促",
+          "prompt": "A single heavy anti aircraft gun shot, sharp midrange blast and mechanical recoil. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "W10a_b",
+          "seed": 2026093101,
+          "variation": "厚实机械",
+          "prompt": "A single heavy anti aircraft gun shot, sharp midrange blast and mechanical recoil. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "W10a_c",
+          "seed": 2026093102,
+          "variation": "柔和耐听",
+          "prompt": "A single heavy anti aircraft gun shot, sharp midrange blast and mechanical recoil. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "W10b",
+      "category": "impact",
+      "title": "防空空爆",
+      "target_seconds": 0.7,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "空气中干裂爆破、无水声",
+      "english_brief": "A single anti aircraft shell bursting in open air, short dry explosive crack",
+      "candidates": [
+        {
+          "id": "W10b_a",
+          "seed": 2026093110,
+          "variation": "干净短促",
+          "prompt": "A single anti aircraft shell bursting in open air, short dry explosive crack. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "W10b_b",
+          "seed": 2026093111,
+          "variation": "厚实机械",
+          "prompt": "A single anti aircraft shell bursting in open air, short dry explosive crack. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "W10b_c",
+          "seed": 2026093112,
+          "variation": "柔和耐听",
+          "prompt": "A single anti aircraft shell bursting in open air, short dry explosive crack. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "W11",
+      "category": "weapon",
+      "title": "重炮掠过",
+      "target_seconds": 0.8,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "短空气撕裂、单次通过、无长尖啸",
+      "english_brief": "One large artillery shell rushing past, brief tearing air whoosh",
+      "candidates": [
+        {
+          "id": "W11_a",
+          "seed": 2026093120,
+          "variation": "干净短促",
+          "prompt": "One large artillery shell rushing past, brief tearing air whoosh. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "W11_b",
+          "seed": 2026093121,
+          "variation": "厚实机械",
+          "prompt": "One large artillery shell rushing past, brief tearing air whoosh. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "W11_c",
+          "seed": 2026093122,
+          "variation": "柔和耐听",
+          "prompt": "One large artillery shell rushing past, brief tearing air whoosh. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "W12a",
+      "category": "water",
+      "title": "小水柱",
+      "target_seconds": 0.6,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "清脆小溅水、细水滴",
+      "english_brief": "One small shell splashing into the sea, crisp splash and fine falling droplets",
+      "candidates": [
+        {
+          "id": "W12a_a",
+          "seed": 2026093130,
+          "variation": "干净短促",
+          "prompt": "One small shell splashing into the sea, crisp splash and fine falling droplets. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "W12a_b",
+          "seed": 2026093131,
+          "variation": "厚实机械",
+          "prompt": "One small shell splashing into the sea, crisp splash and fine falling droplets. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "W12a_c",
+          "seed": 2026093132,
+          "variation": "柔和耐听",
+          "prompt": "One small shell splashing into the sea, crisp splash and fine falling droplets. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "W12b",
+      "category": "water",
+      "title": "中水柱",
+      "target_seconds": 1.0,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "较宽破水、回落水滴",
+      "english_brief": "One medium shell splashing into the sea, broad water impact and falling droplets",
+      "candidates": [
+        {
+          "id": "W12b_a",
+          "seed": 2026093140,
+          "variation": "干净短促",
+          "prompt": "One medium shell splashing into the sea, broad water impact and falling droplets. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "W12b_b",
+          "seed": 2026093141,
+          "variation": "厚实机械",
+          "prompt": "One medium shell splashing into the sea, broad water impact and falling droplets. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "W12b_c",
+          "seed": 2026093142,
+          "variation": "柔和耐听",
+          "prompt": "One medium shell splashing into the sea, broad water impact and falling droplets. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "W12c",
+      "category": "water",
+      "title": "大水柱",
+      "target_seconds": 1.6,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "深厚水冲击、大量水落回海面",
+      "english_brief": "One large shell splashing into the sea, deep water impact and a large falling water column",
+      "candidates": [
+        {
+          "id": "W12c_a",
+          "seed": 2026093150,
+          "variation": "干净短促",
+          "prompt": "One large shell splashing into the sea, deep water impact and a large falling water column. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "W12c_b",
+          "seed": 2026093151,
+          "variation": "厚实机械",
+          "prompt": "One large shell splashing into the sea, deep water impact and a large falling water column. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "W12c_c",
+          "seed": 2026093152,
+          "variation": "柔和耐听",
+          "prompt": "One large shell splashing into the sea, deep water impact and a large falling water column. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "W13a",
+      "category": "impact",
+      "title": "轻舰装受击",
+      "target_seconds": 0.45,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "短金属敲击、轻结构振动",
+      "english_brief": "A light projectile striking metal ship equipment, brief metallic knock and structural rattle",
+      "candidates": [
+        {
+          "id": "W13a_a",
+          "seed": 2026093160,
+          "variation": "干净短促",
+          "prompt": "A light projectile striking metal ship equipment, brief metallic knock and structural rattle. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "W13a_b",
+          "seed": 2026093161,
+          "variation": "厚实机械",
+          "prompt": "A light projectile striking metal ship equipment, brief metallic knock and structural rattle. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "W13a_c",
+          "seed": 2026093162,
+          "variation": "柔和耐听",
+          "prompt": "A light projectile striking metal ship equipment, brief metallic knock and structural rattle. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "W13b",
+      "category": "impact",
+      "title": "重舰装受击",
+      "target_seconds": 1.0,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "厚金属冲击、短暂结构共振",
+      "english_brief": "A heavy projectile striking thick metal ship equipment, solid impact and short low resonance",
+      "candidates": [
+        {
+          "id": "W13b_a",
+          "seed": 2026093170,
+          "variation": "干净短促",
+          "prompt": "A heavy projectile striking thick metal ship equipment, solid impact and short low resonance. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "W13b_b",
+          "seed": 2026093171,
+          "variation": "厚实机械",
+          "prompt": "A heavy projectile striking thick metal ship equipment, solid impact and short low resonance. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "W13b_c",
+          "seed": 2026093172,
+          "variation": "柔和耐听",
+          "prompt": "A heavy projectile striking thick metal ship equipment, solid impact and short low resonance. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "W14",
+      "category": "impact",
+      "title": "鱼雷爆炸",
+      "target_seconds": 2.0,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "深水爆破、巨大破水、控制低频尾部",
+      "english_brief": "A single torpedo explosion in water, deep blast, huge splash and controlled rumbling tail",
+      "candidates": [
+        {
+          "id": "W14_a",
+          "seed": 2026093180,
+          "variation": "干净短促",
+          "prompt": "A single torpedo explosion in water, deep blast, huge splash and controlled rumbling tail. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "W14_b",
+          "seed": 2026093181,
+          "variation": "厚实机械",
+          "prompt": "A single torpedo explosion in water, deep blast, huge splash and controlled rumbling tail. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "W14_c",
+          "seed": 2026093182,
+          "variation": "柔和耐听",
+          "prompt": "A single torpedo explosion in water, deep blast, huge splash and controlled rumbling tail. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "W15a",
+      "category": "impact",
+      "title": "岸地爆炸",
+      "target_seconds": 1.3,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "岩石碎裂、干燥爆炸、无水柱",
+      "english_brief": "A single shell explosion on rocky shore, dry blast and scattering stone debris",
+      "candidates": [
+        {
+          "id": "W15a_a",
+          "seed": 2026093190,
+          "variation": "干净短促",
+          "prompt": "A single shell explosion on rocky shore, dry blast and scattering stone debris. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "W15a_b",
+          "seed": 2026093191,
+          "variation": "厚实机械",
+          "prompt": "A single shell explosion on rocky shore, dry blast and scattering stone debris. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "W15a_c",
+          "seed": 2026093192,
+          "variation": "柔和耐听",
+          "prompt": "A single shell explosion on rocky shore, dry blast and scattering stone debris. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "W15b",
+      "category": "impact",
+      "title": "鱼雷撞岸",
+      "target_seconds": 1.6,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "贴岸闷爆、岩屑与少量回水",
+      "english_brief": "A torpedo exploding against a rocky shoreline, muffled blast, rock debris and a little water",
+      "candidates": [
+        {
+          "id": "W15b_a",
+          "seed": 2026093200,
+          "variation": "干净短促",
+          "prompt": "A torpedo exploding against a rocky shoreline, muffled blast, rock debris and a little water. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "W15b_b",
+          "seed": 2026093201,
+          "variation": "厚实机械",
+          "prompt": "A torpedo exploding against a rocky shoreline, muffled blast, rock debris and a little water. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "W15b_c",
+          "seed": 2026093202,
+          "variation": "柔和耐听",
+          "prompt": "A torpedo exploding against a rocky shoreline, muffled blast, rock debris and a little water. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "W16",
+      "category": "impact",
+      "title": "触岸摩擦",
+      "target_seconds": 0.7,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "粗糙摩擦、机械顿挫、无爆炸",
+      "english_brief": "Ship equipment scraping against rough coastal rock, short friction and mechanical jolt",
+      "candidates": [
+        {
+          "id": "W16_a",
+          "seed": 2026093210,
+          "variation": "干净短促",
+          "prompt": "Ship equipment scraping against rough coastal rock, short friction and mechanical jolt. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "W16_b",
+          "seed": 2026093211,
+          "variation": "厚实机械",
+          "prompt": "Ship equipment scraping against rough coastal rock, short friction and mechanical jolt. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "W16_c",
+          "seed": 2026093212,
+          "variation": "柔和耐听",
+          "prompt": "Ship equipment scraping against rough coastal rock, short friction and mechanical jolt. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "W17a",
+      "category": "water",
+      "title": "轻起步破水",
+      "target_seconds": 0.7,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "轻滑行加速、小水花",
+      "english_brief": "A small hull accelerating across water, light swish and small splashes",
+      "candidates": [
+        {
+          "id": "W17a_a",
+          "seed": 2026093220,
+          "variation": "干净短促",
+          "prompt": "A small hull accelerating across water, light swish and small splashes. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "W17a_b",
+          "seed": 2026093221,
+          "variation": "厚实机械",
+          "prompt": "A small hull accelerating across water, light swish and small splashes. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "W17a_c",
+          "seed": 2026093222,
+          "variation": "柔和耐听",
+          "prompt": "A small hull accelerating across water, light swish and small splashes. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "W17b",
+      "category": "water",
+      "title": "中起步破水",
+      "target_seconds": 0.9,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "中等滑行加速、扇形水花",
+      "english_brief": "A medium hull accelerating across water, broad swish and fanning spray",
+      "candidates": [
+        {
+          "id": "W17b_a",
+          "seed": 2026093230,
+          "variation": "干净短促",
+          "prompt": "A medium hull accelerating across water, broad swish and fanning spray. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "W17b_b",
+          "seed": 2026093231,
+          "variation": "厚实机械",
+          "prompt": "A medium hull accelerating across water, broad swish and fanning spray. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "W17b_c",
+          "seed": 2026093232,
+          "variation": "柔和耐听",
+          "prompt": "A medium hull accelerating across water, broad swish and fanning spray. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "W17c",
+      "category": "water",
+      "title": "重起步破水",
+      "target_seconds": 1.2,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "厚重滑行水流、低频浪头",
+      "english_brief": "A heavy hull accelerating across water, thick rushing water and a low rolling bow wave",
+      "candidates": [
+        {
+          "id": "W17c_a",
+          "seed": 2026093240,
+          "variation": "干净短促",
+          "prompt": "A heavy hull accelerating across water, thick rushing water and a low rolling bow wave. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "W17c_b",
+          "seed": 2026093241,
+          "variation": "厚实机械",
+          "prompt": "A heavy hull accelerating across water, thick rushing water and a low rolling bow wave. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "W17c_c",
+          "seed": 2026093242,
+          "variation": "柔和耐听",
+          "prompt": "A heavy hull accelerating across water, thick rushing water and a low rolling bow wave. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "W18",
+      "category": "water",
+      "title": "巡航尾流",
+      "target_seconds": 8.0,
+      "generation_seconds": 8.0,
+      "loop": true,
+      "direction": "低强度水流循环、没有巨舰发动机轰鸣",
+      "english_brief": "Quiet continuous water wake behind a gliding hull, gentle flowing water",
+      "candidates": [
+        {
+          "id": "W18_a",
+          "seed": 2026093250,
+          "variation": "干净短促",
+          "prompt": "Quiet continuous water wake behind a gliding hull, gentle flowing water. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "W18_b",
+          "seed": 2026093251,
+          "variation": "厚实机械",
+          "prompt": "Quiet continuous water wake behind a gliding hull, gentle flowing water. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "W18_c",
+          "seed": 2026093252,
+          "variation": "柔和耐听",
+          "prompt": "Quiet continuous water wake behind a gliding hull, gentle flowing water. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "W19",
+      "category": "impact",
+      "title": "沉没收尾",
+      "target_seconds": 2.8,
+      "generation_seconds": 3.8,
+      "loop": false,
+      "direction": "舰装缓慢吱响、沉水、气泡、无重复爆炸",
+      "english_brief": "Damaged metal equipment sinking into the sea, slow creaking followed by submerging water and bubbles",
+      "candidates": [
+        {
+          "id": "W19_a",
+          "seed": 2026093260,
+          "variation": "干净短促",
+          "prompt": "Damaged metal equipment sinking into the sea, slow creaking followed by submerging water and bubbles. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "W19_b",
+          "seed": 2026093261,
+          "variation": "厚实机械",
+          "prompt": "Damaged metal equipment sinking into the sea, slow creaking followed by submerging water and bubbles. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "W19_c",
+          "seed": 2026093262,
+          "variation": "柔和耐听",
+          "prompt": "Damaged metal equipment sinking into the sea, slow creaking followed by submerging water and bubbles. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "A01",
+      "category": "aviation",
+      "title": "编队出击",
+      "target_seconds": 1.5,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "螺旋桨加速、短集体掠离",
+      "english_brief": "A group of propeller aircraft launching and flying away, rising engines and a short collective flyby",
+      "candidates": [
+        {
+          "id": "A01_a",
+          "seed": 2026093270,
+          "variation": "干净短促",
+          "prompt": "A group of propeller aircraft launching and flying away, rising engines and a short collective flyby. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "A01_b",
+          "seed": 2026093271,
+          "variation": "厚实机械",
+          "prompt": "A group of propeller aircraft launching and flying away, rising engines and a short collective flyby. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "A01_c",
+          "seed": 2026093272,
+          "variation": "柔和耐听",
+          "prompt": "A group of propeller aircraft launching and flying away, rising engines and a short collective flyby. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "A02",
+      "category": "aviation",
+      "title": "编队巡航",
+      "target_seconds": 8.0,
+      "generation_seconds": 8.0,
+      "loop": true,
+      "direction": "稳定螺旋桨循环、轻气流",
+      "english_brief": "A small formation of propeller aircraft cruising steadily, even engine flutter and soft airflow",
+      "candidates": [
+        {
+          "id": "A02_a",
+          "seed": 2026093280,
+          "variation": "干净短促",
+          "prompt": "A small formation of propeller aircraft cruising steadily, even engine flutter and soft airflow. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "A02_b",
+          "seed": 2026093281,
+          "variation": "厚实机械",
+          "prompt": "A small formation of propeller aircraft cruising steadily, even engine flutter and soft airflow. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "A02_c",
+          "seed": 2026093282,
+          "variation": "柔和耐听",
+          "prompt": "A small formation of propeller aircraft cruising steadily, even engine flutter and soft airflow. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "A03",
+      "category": "aviation",
+      "title": "航空炸弹释放",
+      "target_seconds": 0.6,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "轻机械解锁、短下坠风声",
+      "english_brief": "An aircraft bomb release mechanism unclipping followed by a very short falling air whistle",
+      "candidates": [
+        {
+          "id": "A03_a",
+          "seed": 2026093290,
+          "variation": "干净短促",
+          "prompt": "An aircraft bomb release mechanism unclipping followed by a very short falling air whistle. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "A03_b",
+          "seed": 2026093291,
+          "variation": "厚实机械",
+          "prompt": "An aircraft bomb release mechanism unclipping followed by a very short falling air whistle. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "A03_c",
+          "seed": 2026093292,
+          "variation": "柔和耐听",
+          "prompt": "An aircraft bomb release mechanism unclipping followed by a very short falling air whistle. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "A05",
+      "category": "water",
+      "title": "航空鱼雷入水",
+      "target_seconds": 1.0,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "斜向细长入水、破水后气泡",
+      "english_brief": "An aerial torpedo entering water at an angle, elongated splash followed by bubbles",
+      "candidates": [
+        {
+          "id": "A05_a",
+          "seed": 2026093300,
+          "variation": "干净短促",
+          "prompt": "An aerial torpedo entering water at an angle, elongated splash followed by bubbles. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "A05_b",
+          "seed": 2026093301,
+          "variation": "厚实机械",
+          "prompt": "An aerial torpedo entering water at an angle, elongated splash followed by bubbles. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "A05_c",
+          "seed": 2026093302,
+          "variation": "柔和耐听",
+          "prompt": "An aerial torpedo entering water at an angle, elongated splash followed by bubbles. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "A06a",
+      "category": "aviation",
+      "title": "飞机受损",
+      "target_seconds": 0.5,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "短金属破损与引擎不稳",
+      "english_brief": "A propeller aircraft taking damage, short metallic tearing and an engine stutter",
+      "candidates": [
+        {
+          "id": "A06a_a",
+          "seed": 2026093310,
+          "variation": "干净短促",
+          "prompt": "A propeller aircraft taking damage, short metallic tearing and an engine stutter. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "A06a_b",
+          "seed": 2026093311,
+          "variation": "厚实机械",
+          "prompt": "A propeller aircraft taking damage, short metallic tearing and an engine stutter. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "A06a_c",
+          "seed": 2026093312,
+          "variation": "柔和耐听",
+          "prompt": "A propeller aircraft taking damage, short metallic tearing and an engine stutter. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "A06b",
+      "category": "aviation",
+      "title": "飞机坠海",
+      "target_seconds": 1.5,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "下降引擎、破水、不加胜利提示",
+      "english_brief": "A damaged propeller aircraft descending and crashing into the sea, falling engine and splash",
+      "candidates": [
+        {
+          "id": "A06b_a",
+          "seed": 2026093320,
+          "variation": "干净短促",
+          "prompt": "A damaged propeller aircraft descending and crashing into the sea, falling engine and splash. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "A06b_b",
+          "seed": 2026093321,
+          "variation": "厚实机械",
+          "prompt": "A damaged propeller aircraft descending and crashing into the sea, falling engine and splash. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "A06b_c",
+          "seed": 2026093322,
+          "variation": "柔和耐听",
+          "prompt": "A damaged propeller aircraft descending and crashing into the sea, falling engine and splash. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "S01",
+      "category": "submarine",
+      "title": "下潜过程",
+      "target_seconds": 2.0,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "泄压、逐渐变闷的气泡与水流",
+      "english_brief": "A submarine diving, a brief valve hiss followed by bubbles and water becoming muffled",
+      "candidates": [
+        {
+          "id": "S01_a",
+          "seed": 2026093330,
+          "variation": "干净短促",
+          "prompt": "A submarine diving, a brief valve hiss followed by bubbles and water becoming muffled. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "S01_b",
+          "seed": 2026093331,
+          "variation": "厚实机械",
+          "prompt": "A submarine diving, a brief valve hiss followed by bubbles and water becoming muffled. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "S01_c",
+          "seed": 2026093332,
+          "variation": "柔和耐听",
+          "prompt": "A submarine diving, a brief valve hiss followed by bubbles and water becoming muffled. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "S02",
+      "category": "submarine",
+      "title": "上浮过程",
+      "target_seconds": 2.0,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "由闷到清的水流、最后破水",
+      "english_brief": "A submarine surfacing, muffled water growing clearer then a final surface splash",
+      "candidates": [
+        {
+          "id": "S02_a",
+          "seed": 2026093340,
+          "variation": "干净短促",
+          "prompt": "A submarine surfacing, muffled water growing clearer then a final surface splash. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "S02_b",
+          "seed": 2026093341,
+          "variation": "厚实机械",
+          "prompt": "A submarine surfacing, muffled water growing clearer then a final surface splash. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "S02_c",
+          "seed": 2026093342,
+          "variation": "柔和耐听",
+          "prompt": "A submarine surfacing, muffled water growing clearer then a final surface splash. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "S03a",
+      "category": "submarine",
+      "title": "下潜完成提示",
+      "target_seconds": 0.4,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "柔和下降双音、短结束",
+      "english_brief": "A subtle submarine submerged status notification, two soft descending electronic notes",
+      "candidates": [
+        {
+          "id": "S03a_a",
+          "seed": 2026093350,
+          "variation": "干净短促",
+          "prompt": "A subtle submarine submerged status notification, two soft descending electronic notes. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "S03a_b",
+          "seed": 2026093351,
+          "variation": "厚实机械",
+          "prompt": "A subtle submarine submerged status notification, two soft descending electronic notes. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "S03a_c",
+          "seed": 2026093352,
+          "variation": "柔和耐听",
+          "prompt": "A subtle submarine submerged status notification, two soft descending electronic notes. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "S03b",
+      "category": "submarine",
+      "title": "上浮完成提示",
+      "target_seconds": 0.4,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "清楚上升双音、与下潜成对",
+      "english_brief": "A subtle submarine surfaced status notification, two clear ascending electronic notes",
+      "candidates": [
+        {
+          "id": "S03b_a",
+          "seed": 2026093360,
+          "variation": "干净短促",
+          "prompt": "A subtle submarine surfaced status notification, two clear ascending electronic notes. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "S03b_b",
+          "seed": 2026093361,
+          "variation": "厚实机械",
+          "prompt": "A subtle submarine surfaced status notification, two clear ascending electronic notes. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "S03b_c",
+          "seed": 2026093362,
+          "variation": "柔和耐听",
+          "prompt": "A subtle submarine surfaced status notification, two clear ascending electronic notes. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "S04",
+      "category": "alert",
+      "title": "低氧预警",
+      "target_seconds": 0.7,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "中低音双脉冲、克制提醒",
+      "english_brief": "A restrained low oxygen warning, two medium low electronic pulses",
+      "candidates": [
+        {
+          "id": "S04_a",
+          "seed": 2026093370,
+          "variation": "干净短促",
+          "prompt": "A restrained low oxygen warning, two medium low electronic pulses. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "S04_b",
+          "seed": 2026093371,
+          "variation": "厚实机械",
+          "prompt": "A restrained low oxygen warning, two medium low electronic pulses. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "S04_c",
+          "seed": 2026093372,
+          "variation": "柔和耐听",
+          "prompt": "A restrained low oxygen warning, two medium low electronic pulses. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "S05",
+      "category": "alert",
+      "title": "强制上浮警告",
+      "target_seconds": 1.0,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "紧凑三脉冲、与低氧节奏不同、无长警笛",
+      "english_brief": "A forced surfacing warning, three urgent compact electronic pulses",
+      "candidates": [
+        {
+          "id": "S05_a",
+          "seed": 2026093380,
+          "variation": "干净短促",
+          "prompt": "A forced surfacing warning, three urgent compact electronic pulses. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "S05_b",
+          "seed": 2026093381,
+          "variation": "厚实机械",
+          "prompt": "A forced surfacing warning, three urgent compact electronic pulses. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "S05_c",
+          "seed": 2026093382,
+          "variation": "柔和耐听",
+          "prompt": "A forced surfacing warning, three urgent compact electronic pulses. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "S06",
+      "category": "alert",
+      "title": "氧气恢复提示",
+      "target_seconds": 0.5,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "柔和回升三音、无奖励感",
+      "english_brief": "An oxygen recovery notification, three gentle rising electronic notes",
+      "candidates": [
+        {
+          "id": "S06_a",
+          "seed": 2026093390,
+          "variation": "干净短促",
+          "prompt": "An oxygen recovery notification, three gentle rising electronic notes. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "S06_b",
+          "seed": 2026093391,
+          "variation": "厚实机械",
+          "prompt": "An oxygen recovery notification, three gentle rising electronic notes. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "S06_c",
+          "seed": 2026093392,
+          "variation": "柔和耐听",
+          "prompt": "An oxygen recovery notification, three gentle rising electronic notes. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "S07",
+      "category": "submarine",
+      "title": "潜航水声",
+      "target_seconds": 8.0,
+      "generation_seconds": 8.0,
+      "loop": true,
+      "direction": "细密低通气泡循环、无声呐",
+      "english_brief": "Quiet continuous underwater bubbles and muffled flowing water around a submerged hull",
+      "candidates": [
+        {
+          "id": "S07_a",
+          "seed": 2026093400,
+          "variation": "干净短促",
+          "prompt": "Quiet continuous underwater bubbles and muffled flowing water around a submerged hull. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "S07_b",
+          "seed": 2026093401,
+          "variation": "厚实机械",
+          "prompt": "Quiet continuous underwater bubbles and muffled flowing water around a submerged hull. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "S07_c",
+          "seed": 2026093402,
+          "variation": "柔和耐听",
+          "prompt": "Quiet continuous underwater bubbles and muffled flowing water around a submerged hull. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "K01",
+      "category": "skill",
+      "title": "技能施放确认",
+      "target_seconds": 0.35,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "短金属亮点、明确成功、不含爆炸",
+      "english_brief": "A short tactical skill activation confirmation, a bright metallic point and a warm electronic accent",
+      "candidates": [
+        {
+          "id": "K01_a",
+          "seed": 2026093410,
+          "variation": "干净短促",
+          "prompt": "A short tactical skill activation confirmation, a bright metallic point and a warm electronic accent. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "K01_b",
+          "seed": 2026093411,
+          "variation": "厚实机械",
+          "prompt": "A short tactical skill activation confirmation, a bright metallic point and a warm electronic accent. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "K01_c",
+          "seed": 2026093412,
+          "variation": "柔和耐听",
+          "prompt": "A short tactical skill activation confirmation, a bright metallic point and a warm electronic accent. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "K02",
+      "category": "skill",
+      "title": "火控收束",
+      "target_seconds": 0.55,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "两次机械聚焦、短电子收束",
+      "english_brief": "A fire control focusing effect, two small mechanical clicks converging into a short electronic focus tone",
+      "candidates": [
+        {
+          "id": "K02_a",
+          "seed": 2026093420,
+          "variation": "干净短促",
+          "prompt": "A fire control focusing effect, two small mechanical clicks converging into a short electronic focus tone. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "K02_b",
+          "seed": 2026093421,
+          "variation": "厚实机械",
+          "prompt": "A fire control focusing effect, two small mechanical clicks converging into a short electronic focus tone. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "K02_c",
+          "seed": 2026093422,
+          "variation": "柔和耐听",
+          "prompt": "A fire control focusing effect, two small mechanical clicks converging into a short electronic focus tone. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "K03",
+      "category": "skill",
+      "title": "鱼雷突击起势",
+      "target_seconds": 0.55,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "机械蓄势、短气流、不含实际发射",
+      "english_brief": "A torpedo attack preparation effect, mechanical tension building and a brief air rush",
+      "candidates": [
+        {
+          "id": "K03_a",
+          "seed": 2026093430,
+          "variation": "干净短促",
+          "prompt": "A torpedo attack preparation effect, mechanical tension building and a brief air rush. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "K03_b",
+          "seed": 2026093431,
+          "variation": "厚实机械",
+          "prompt": "A torpedo attack preparation effect, mechanical tension building and a brief air rush. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "K03_c",
+          "seed": 2026093432,
+          "variation": "柔和耐听",
+          "prompt": "A torpedo attack preparation effect, mechanical tension building and a brief air rush. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "K04",
+      "category": "skill",
+      "title": "航空技能起势",
+      "target_seconds": 0.65,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "轻推进上扬、无实际飞机起飞",
+      "english_brief": "A naval aviation skill preparation effect, a short airy rising electronic sweep",
+      "candidates": [
+        {
+          "id": "K04_a",
+          "seed": 2026093440,
+          "variation": "干净短促",
+          "prompt": "A naval aviation skill preparation effect, a short airy rising electronic sweep. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "K04_b",
+          "seed": 2026093441,
+          "variation": "厚实机械",
+          "prompt": "A naval aviation skill preparation effect, a short airy rising electronic sweep. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "K04_c",
+          "seed": 2026093442,
+          "variation": "柔和耐听",
+          "prompt": "A naval aviation skill preparation effect, a short airy rising electronic sweep. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "K05",
+      "category": "skill",
+      "title": "防空反潜警戒",
+      "target_seconds": 0.55,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "清楚双音展开、不持续警笛",
+      "english_brief": "An escort vigilance skill effect, two clear electronic tones opening outward",
+      "candidates": [
+        {
+          "id": "K05_a",
+          "seed": 2026093450,
+          "variation": "干净短促",
+          "prompt": "An escort vigilance skill effect, two clear electronic tones opening outward. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "K05_b",
+          "seed": 2026093451,
+          "variation": "厚实机械",
+          "prompt": "An escort vigilance skill effect, two clear electronic tones opening outward. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "K05_c",
+          "seed": 2026093452,
+          "variation": "柔和耐听",
+          "prompt": "An escort vigilance skill effect, two clear electronic tones opening outward. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "K06",
+      "category": "skill",
+      "title": "侦查照明起势",
+      "target_seconds": 0.65,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "抽象扫描纹理、轻亮展开",
+      "english_brief": "An abstract reconnaissance skill effect, a brief scanning texture and light shimmering expansion",
+      "candidates": [
+        {
+          "id": "K06_a",
+          "seed": 2026093460,
+          "variation": "干净短促",
+          "prompt": "An abstract reconnaissance skill effect, a brief scanning texture and light shimmering expansion. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "K06_b",
+          "seed": 2026093461,
+          "variation": "厚实机械",
+          "prompt": "An abstract reconnaissance skill effect, a brief scanning texture and light shimmering expansion. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "K06_c",
+          "seed": 2026093462,
+          "variation": "柔和耐听",
+          "prompt": "An abstract reconnaissance skill effect, a brief scanning texture and light shimmering expansion. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "K07",
+      "category": "skill",
+      "title": "机动鼓舞起势",
+      "target_seconds": 0.6,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "流动上扬、轻水流与柔和音高",
+      "english_brief": "A maneuver and morale skill effect, a light flowing upward whoosh with a soft tonal accent",
+      "candidates": [
+        {
+          "id": "K07_a",
+          "seed": 2026093470,
+          "variation": "干净短促",
+          "prompt": "A maneuver and morale skill effect, a light flowing upward whoosh with a soft tonal accent. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "K07_b",
+          "seed": 2026093471,
+          "variation": "厚实机械",
+          "prompt": "A maneuver and morale skill effect, a light flowing upward whoosh with a soft tonal accent. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "K07_c",
+          "seed": 2026093472,
+          "variation": "柔和耐听",
+          "prompt": "A maneuver and morale skill effect, a light flowing upward whoosh with a soft tonal accent. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "K08",
+      "category": "skill",
+      "title": "防护隐蔽续航起势",
+      "target_seconds": 0.7,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "低而温暖的收拢声、无魔法护盾碰撞",
+      "english_brief": "A defensive concealment skill effect, a warm low gathering sound and a restrained close",
+      "candidates": [
+        {
+          "id": "K08_a",
+          "seed": 2026093480,
+          "variation": "干净短促",
+          "prompt": "A defensive concealment skill effect, a warm low gathering sound and a restrained close. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "K08_b",
+          "seed": 2026093481,
+          "variation": "厚实机械",
+          "prompt": "A defensive concealment skill effect, a warm low gathering sound and a restrained close. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "K08_c",
+          "seed": 2026093482,
+          "variation": "柔和耐听",
+          "prompt": "A defensive concealment skill effect, a warm low gathering sound and a restrained close. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "K09",
+      "category": "skill",
+      "title": "关键状态结束",
+      "target_seconds": 0.4,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "轻下降收束、不表示失败",
+      "english_brief": "A key temporary state ending, a light descending electronic closure",
+      "candidates": [
+        {
+          "id": "K09_a",
+          "seed": 2026093490,
+          "variation": "干净短促",
+          "prompt": "A key temporary state ending, a light descending electronic closure. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "K09_b",
+          "seed": 2026093491,
+          "variation": "厚实机械",
+          "prompt": "A key temporary state ending, a light descending electronic closure. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "K09_c",
+          "seed": 2026093492,
+          "variation": "柔和耐听",
+          "prompt": "A key temporary state ending, a light descending electronic closure. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "N01",
+      "category": "alert",
+      "title": "新接触",
+      "target_seconds": 0.55,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "清楚中高双点、克制注意声",
+      "english_brief": "A new enemy contact notification, two distinct restrained mid high electronic pips",
+      "candidates": [
+        {
+          "id": "N01_a",
+          "seed": 2026093500,
+          "variation": "干净短促",
+          "prompt": "A new enemy contact notification, two distinct restrained mid high electronic pips. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "N01_b",
+          "seed": 2026093501,
+          "variation": "厚实机械",
+          "prompt": "A new enemy contact notification, two distinct restrained mid high electronic pips. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "N01_c",
+          "seed": 2026093502,
+          "variation": "柔和耐听",
+          "prompt": "A new enemy contact notification, two distinct restrained mid high electronic pips. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "N02",
+      "category": "alert",
+      "title": "目标失去接触",
+      "target_seconds": 0.5,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "中音短下降、不过度危急",
+      "english_brief": "A lost target contact notification, a short descending midrange electronic tone",
+      "candidates": [
+        {
+          "id": "N02_a",
+          "seed": 2026093510,
+          "variation": "干净短促",
+          "prompt": "A lost target contact notification, a short descending midrange electronic tone. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "N02_b",
+          "seed": 2026093511,
+          "variation": "厚实机械",
+          "prompt": "A lost target contact notification, a short descending midrange electronic tone. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "N02_c",
+          "seed": 2026093512,
+          "variation": "柔和耐听",
+          "prompt": "A lost target contact notification, a short descending midrange electronic tone. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "N03",
+      "category": "alert",
+      "title": "发现敌雷",
+      "target_seconds": 0.75,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "中频三点、不暗示必定逼近",
+      "english_brief": "An enemy torpedo discovery notification, three evenly spaced midrange electronic pips",
+      "candidates": [
+        {
+          "id": "N03_a",
+          "seed": 2026093520,
+          "variation": "干净短促",
+          "prompt": "An enemy torpedo discovery notification, three evenly spaced midrange electronic pips. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "N03_b",
+          "seed": 2026093521,
+          "variation": "厚实机械",
+          "prompt": "An enemy torpedo discovery notification, three evenly spaced midrange electronic pips. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "N03_c",
+          "seed": 2026093522,
+          "variation": "柔和耐听",
+          "prompt": "An enemy torpedo discovery notification, three evenly spaced midrange electronic pips. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "N04",
+      "category": "alert",
+      "title": "鱼雷危险窗",
+      "target_seconds": 1.0,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "快速交替短脉冲、辨识度高、不刺耳",
+      "english_brief": "An approaching torpedo danger warning, a compact sequence of rapidly alternating electronic pulses",
+      "candidates": [
+        {
+          "id": "N04_a",
+          "seed": 2026093530,
+          "variation": "干净短促",
+          "prompt": "An approaching torpedo danger warning, a compact sequence of rapidly alternating electronic pulses. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "N04_b",
+          "seed": 2026093531,
+          "variation": "厚实机械",
+          "prompt": "An approaching torpedo danger warning, a compact sequence of rapidly alternating electronic pulses. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "N04_c",
+          "seed": 2026093532,
+          "variation": "柔和耐听",
+          "prompt": "An approaching torpedo danger warning, a compact sequence of rapidly alternating electronic pulses. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "N05",
+      "category": "alert",
+      "title": "已知水雷风险",
+      "target_seconds": 0.8,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "低中频断续双组、区别鱼雷",
+      "english_brief": "A known naval mine risk warning, two separated groups of low midrange pulses",
+      "candidates": [
+        {
+          "id": "N05_a",
+          "seed": 2026093540,
+          "variation": "干净短促",
+          "prompt": "A known naval mine risk warning, two separated groups of low midrange pulses. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "N05_b",
+          "seed": 2026093541,
+          "variation": "厚实机械",
+          "prompt": "A known naval mine risk warning, two separated groups of low midrange pulses. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "N05_c",
+          "seed": 2026093542,
+          "variation": "柔和耐听",
+          "prompt": "A known naval mine risk warning, two separated groups of low midrange pulses. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "N06",
+      "category": "alert",
+      "title": "旗舰危急",
+      "target_seconds": 1.1,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "低高交替三组、突出节奏而非音量",
+      "english_brief": "A flagship critical health warning, three distinctive groups of alternating low and high electronic tones",
+      "candidates": [
+        {
+          "id": "N06_a",
+          "seed": 2026093550,
+          "variation": "干净短促",
+          "prompt": "A flagship critical health warning, three distinctive groups of alternating low and high electronic tones. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "N06_b",
+          "seed": 2026093551,
+          "variation": "厚实机械",
+          "prompt": "A flagship critical health warning, three distinctive groups of alternating low and high electronic tones. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "N06_c",
+          "seed": 2026093552,
+          "variation": "柔和耐听",
+          "prompt": "A flagship critical health warning, three distinctive groups of alternating low and high electronic tones. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "N07a",
+      "category": "alert",
+      "title": "友舰危急",
+      "target_seconds": 0.7,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "中音双组、低于旗舰紧迫度",
+      "english_brief": "A friendly ship critical health warning, two restrained midrange pulse groups",
+      "candidates": [
+        {
+          "id": "N07a_a",
+          "seed": 2026093560,
+          "variation": "干净短促",
+          "prompt": "A friendly ship critical health warning, two restrained midrange pulse groups. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "N07a_b",
+          "seed": 2026093561,
+          "variation": "厚实机械",
+          "prompt": "A friendly ship critical health warning, two restrained midrange pulse groups. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "N07a_c",
+          "seed": 2026093562,
+          "variation": "柔和耐听",
+          "prompt": "A friendly ship critical health warning, two restrained midrange pulse groups. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "N07b",
+      "category": "alert",
+      "title": "友舰击沉确认",
+      "target_seconds": 0.8,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "克制下降三音、无爆炸",
+      "english_brief": "A friendly ship lost notification, three restrained descending notes, serious and brief",
+      "candidates": [
+        {
+          "id": "N07b_a",
+          "seed": 2026093570,
+          "variation": "干净短促",
+          "prompt": "A friendly ship lost notification, three restrained descending notes, serious and brief. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "N07b_b",
+          "seed": 2026093571,
+          "variation": "厚实机械",
+          "prompt": "A friendly ship lost notification, three restrained descending notes, serious and brief. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "N07b_c",
+          "seed": 2026093572,
+          "variation": "柔和耐听",
+          "prompt": "A friendly ship lost notification, three restrained descending notes, serious and brief. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "N08",
+      "category": "alert",
+      "title": "敌舰击沉确认",
+      "target_seconds": 0.55,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "清晰落定双音、无庆功乐句",
+      "english_brief": "An enemy ship sunk confirmation, two clear settled electronic notes, restrained and tactical",
+      "candidates": [
+        {
+          "id": "N08_a",
+          "seed": 2026093580,
+          "variation": "干净短促",
+          "prompt": "An enemy ship sunk confirmation, two clear settled electronic notes, restrained and tactical. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "N08_b",
+          "seed": 2026093581,
+          "variation": "厚实机械",
+          "prompt": "An enemy ship sunk confirmation, two clear settled electronic notes, restrained and tactical. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "N08_c",
+          "seed": 2026093582,
+          "variation": "柔和耐听",
+          "prompt": "An enemy ship sunk confirmation, two clear settled electronic notes, restrained and tactical. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "N09",
+      "category": "alert",
+      "title": "出击就绪",
+      "target_seconds": 0.8,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "干净上行短序列、明确开始",
+      "english_brief": "A battle ready signal, a clean short ascending electronic sequence",
+      "candidates": [
+        {
+          "id": "N09_a",
+          "seed": 2026093590,
+          "variation": "干净短促",
+          "prompt": "A battle ready signal, a clean short ascending electronic sequence. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "N09_b",
+          "seed": 2026093591,
+          "variation": "厚实机械",
+          "prompt": "A battle ready signal, a clean short ascending electronic sequence. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "N09_c",
+          "seed": 2026093592,
+          "variation": "柔和耐听",
+          "prompt": "A battle ready signal, a clean short ascending electronic sequence. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "N10",
+      "category": "alert",
+      "title": "任务阶段更新",
+      "target_seconds": 0.45,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "轻中音两点、信息到达",
+      "english_brief": "A mission stage update signal, two light midrange electronic notes",
+      "candidates": [
+        {
+          "id": "N10_a",
+          "seed": 2026093600,
+          "variation": "干净短促",
+          "prompt": "A mission stage update signal, two light midrange electronic notes. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "N10_b",
+          "seed": 2026093601,
+          "variation": "厚实机械",
+          "prompt": "A mission stage update signal, two light midrange electronic notes. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "N10_c",
+          "seed": 2026093602,
+          "variation": "柔和耐听",
+          "prompt": "A mission stage update signal, two light midrange electronic notes. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "N11a",
+      "category": "alert",
+      "title": "目标完成",
+      "target_seconds": 0.7,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "温暖上行三音、短而明确",
+      "english_brief": "An objective completed signal, three warm ascending notes, concise and restrained",
+      "candidates": [
+        {
+          "id": "N11a_a",
+          "seed": 2026093610,
+          "variation": "干净短促",
+          "prompt": "An objective completed signal, three warm ascending notes, concise and restrained. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "N11a_b",
+          "seed": 2026093611,
+          "variation": "厚实机械",
+          "prompt": "An objective completed signal, three warm ascending notes, concise and restrained. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "N11a_c",
+          "seed": 2026093612,
+          "variation": "柔和耐听",
+          "prompt": "An objective completed signal, three warm ascending notes, concise and restrained. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "N11b",
+      "category": "alert",
+      "title": "目标失败",
+      "target_seconds": 0.65,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "克制下行两音、非战败音乐",
+      "english_brief": "An objective failed signal, two restrained descending notes, concise and subdued",
+      "candidates": [
+        {
+          "id": "N11b_a",
+          "seed": 2026093620,
+          "variation": "干净短促",
+          "prompt": "An objective failed signal, two restrained descending notes, concise and subdued. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "N11b_b",
+          "seed": 2026093621,
+          "variation": "厚实机械",
+          "prompt": "An objective failed signal, two restrained descending notes, concise and subdued. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "N11b_c",
+          "seed": 2026093622,
+          "variation": "柔和耐听",
+          "prompt": "An objective failed signal, two restrained descending notes, concise and subdued. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "N12a",
+      "category": "alert",
+      "title": "己方增援抵达",
+      "target_seconds": 0.65,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "中音上扬双组、集体抵达",
+      "english_brief": "A friendly reinforcement arrival signal, two rising groups of midrange electronic notes",
+      "candidates": [
+        {
+          "id": "N12a_a",
+          "seed": 2026093630,
+          "variation": "干净短促",
+          "prompt": "A friendly reinforcement arrival signal, two rising groups of midrange electronic notes. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "N12a_b",
+          "seed": 2026093631,
+          "variation": "厚实机械",
+          "prompt": "A friendly reinforcement arrival signal, two rising groups of midrange electronic notes. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "N12a_c",
+          "seed": 2026093632,
+          "variation": "柔和耐听",
+          "prompt": "A friendly reinforcement arrival signal, two rising groups of midrange electronic notes. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "N12b",
+      "category": "alert",
+      "title": "公开敌方增援",
+      "target_seconds": 0.7,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "中音压低双组、注意而非庆祝",
+      "english_brief": "An enemy reinforcement arrival signal, two lower midrange electronic groups requesting attention",
+      "candidates": [
+        {
+          "id": "N12b_a",
+          "seed": 2026093640,
+          "variation": "干净短促",
+          "prompt": "An enemy reinforcement arrival signal, two lower midrange electronic groups requesting attention. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "N12b_b",
+          "seed": 2026093641,
+          "variation": "厚实机械",
+          "prompt": "An enemy reinforcement arrival signal, two lower midrange electronic groups requesting attention. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "N12b_c",
+          "seed": 2026093642,
+          "variation": "柔和耐听",
+          "prompt": "An enemy reinforcement arrival signal, two lower midrange electronic groups requesting attention. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "N13",
+      "category": "alert",
+      "title": "时间即将耗尽",
+      "target_seconds": 0.7,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "有限双脉冲、无逐秒倒数",
+      "english_brief": "A battle time running low signal, two finite electronic pulses",
+      "candidates": [
+        {
+          "id": "N13_a",
+          "seed": 2026093650,
+          "variation": "干净短促",
+          "prompt": "A battle time running low signal, two finite electronic pulses. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "N13_b",
+          "seed": 2026093651,
+          "variation": "厚实机械",
+          "prompt": "A battle time running low signal, two finite electronic pulses. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "N13_c",
+          "seed": 2026093652,
+          "variation": "柔和耐听",
+          "prompt": "A battle time running low signal, two finite electronic pulses. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "N16",
+      "category": "alert",
+      "title": "奖励解锁确认",
+      "target_seconds": 0.9,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "温暖明亮三音、节制成就感",
+      "english_brief": "A reward unlocked notification, three warm bright notes and a short settled finish",
+      "candidates": [
+        {
+          "id": "N16_a",
+          "seed": 2026093660,
+          "variation": "干净短促",
+          "prompt": "A reward unlocked notification, three warm bright notes and a short settled finish. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "N16_b",
+          "seed": 2026093661,
+          "variation": "厚实机械",
+          "prompt": "A reward unlocked notification, three warm bright notes and a short settled finish. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "N16_c",
+          "seed": 2026093662,
+          "variation": "柔和耐听",
+          "prompt": "A reward unlocked notification, three warm bright notes and a short settled finish. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "E01",
+      "category": "ambience",
+      "title": "平静海面",
+      "target_seconds": 12.0,
+      "generation_seconds": 12.0,
+      "loop": true,
+      "direction": "柔和宽阔海水循环、无鸟声或音乐",
+      "english_brief": "Quiet calm open sea water, gentle broad ripples and soft small waves",
+      "candidates": [
+        {
+          "id": "E01_a",
+          "seed": 2026093670,
+          "variation": "干净短促",
+          "prompt": "Quiet calm open sea water, gentle broad ripples and soft small waves. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "E01_b",
+          "seed": 2026093671,
+          "variation": "厚实机械",
+          "prompt": "Quiet calm open sea water, gentle broad ripples and soft small waves. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "E01_c",
+          "seed": 2026093672,
+          "variation": "柔和耐听",
+          "prompt": "Quiet calm open sea water, gentle broad ripples and soft small waves. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "E02a",
+      "category": "ambience",
+      "title": "中海况浪层",
+      "target_seconds": 12.0,
+      "generation_seconds": 12.0,
+      "loop": true,
+      "direction": "连续起伏浪涌循环、平滑波峰",
+      "english_brief": "Continuous moderate ocean swell, smooth rolling waves and gentle breaking water",
+      "candidates": [
+        {
+          "id": "E02a_a",
+          "seed": 2026093680,
+          "variation": "干净短促",
+          "prompt": "Continuous moderate ocean swell, smooth rolling waves and gentle breaking water. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "E02a_b",
+          "seed": 2026093681,
+          "variation": "厚实机械",
+          "prompt": "Continuous moderate ocean swell, smooth rolling waves and gentle breaking water. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "E02a_c",
+          "seed": 2026093682,
+          "variation": "柔和耐听",
+          "prompt": "Continuous moderate ocean swell, smooth rolling waves and gentle breaking water. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "E02b",
+      "category": "ambience",
+      "title": "高海况浪层",
+      "target_seconds": 12.0,
+      "generation_seconds": 12.0,
+      "loop": true,
+      "direction": "较密厚浪循环、保留动态、无雷声",
+      "english_brief": "Continuous rough ocean swell, dense thick rolling waves with natural dynamics",
+      "candidates": [
+        {
+          "id": "E02b_a",
+          "seed": 2026093690,
+          "variation": "干净短促",
+          "prompt": "Continuous rough ocean swell, dense thick rolling waves with natural dynamics. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "E02b_b",
+          "seed": 2026093691,
+          "variation": "厚实机械",
+          "prompt": "Continuous rough ocean swell, dense thick rolling waves with natural dynamics. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "E02b_c",
+          "seed": 2026093692,
+          "variation": "柔和耐听",
+          "prompt": "Continuous rough ocean swell, dense thick rolling waves with natural dynamics. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "E03a",
+      "category": "ambience",
+      "title": "轻风层",
+      "target_seconds": 12.0,
+      "generation_seconds": 12.0,
+      "loop": true,
+      "direction": "柔和空气流动循环、无浪雨",
+      "english_brief": "Continuous gentle sea breeze, soft clean flowing air",
+      "candidates": [
+        {
+          "id": "E03a_a",
+          "seed": 2026093700,
+          "variation": "干净短促",
+          "prompt": "Continuous gentle sea breeze, soft clean flowing air. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "E03a_b",
+          "seed": 2026093701,
+          "variation": "厚实机械",
+          "prompt": "Continuous gentle sea breeze, soft clean flowing air. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "E03a_c",
+          "seed": 2026093702,
+          "variation": "柔和耐听",
+          "prompt": "Continuous gentle sea breeze, soft clean flowing air. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "E03b",
+      "category": "ambience",
+      "title": "强风层",
+      "target_seconds": 12.0,
+      "generation_seconds": 12.0,
+      "loop": true,
+      "direction": "较低宽频风循环、无尖啸或雨",
+      "english_brief": "Continuous strong sea wind, broad low rushing air without whistling",
+      "candidates": [
+        {
+          "id": "E03b_a",
+          "seed": 2026093710,
+          "variation": "干净短促",
+          "prompt": "Continuous strong sea wind, broad low rushing air without whistling. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "E03b_b",
+          "seed": 2026093711,
+          "variation": "厚实机械",
+          "prompt": "Continuous strong sea wind, broad low rushing air without whistling. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "E03b_c",
+          "seed": 2026093712,
+          "variation": "柔和耐听",
+          "prompt": "Continuous strong sea wind, broad low rushing air without whistling. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "E04a",
+      "category": "ambience",
+      "title": "普通雨层",
+      "target_seconds": 12.0,
+      "generation_seconds": 12.0,
+      "loop": true,
+      "direction": "细密雨落海面循环、无雷风",
+      "english_brief": "Continuous moderate rain falling onto the sea, fine dense droplets",
+      "candidates": [
+        {
+          "id": "E04a_a",
+          "seed": 2026093720,
+          "variation": "干净短促",
+          "prompt": "Continuous moderate rain falling onto the sea, fine dense droplets. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "E04a_b",
+          "seed": 2026093721,
+          "variation": "厚实机械",
+          "prompt": "Continuous moderate rain falling onto the sea, fine dense droplets. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "E04a_c",
+          "seed": 2026093722,
+          "variation": "柔和耐听",
+          "prompt": "Continuous moderate rain falling onto the sea, fine dense droplets. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "E04b",
+      "category": "ambience",
+      "title": "强雨层",
+      "target_seconds": 12.0,
+      "generation_seconds": 12.0,
+      "loop": true,
+      "direction": "密集较粗雨滴循环、无雷声",
+      "english_brief": "Continuous heavy rain falling onto the sea, dense coarse raindrops",
+      "candidates": [
+        {
+          "id": "E04b_a",
+          "seed": 2026093730,
+          "variation": "干净短促",
+          "prompt": "Continuous heavy rain falling onto the sea, dense coarse raindrops. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "E04b_b",
+          "seed": 2026093731,
+          "variation": "厚实机械",
+          "prompt": "Continuous heavy rain falling onto the sea, dense coarse raindrops. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "E04b_c",
+          "seed": 2026093732,
+          "variation": "柔和耐听",
+          "prompt": "Continuous heavy rain falling onto the sea, dense coarse raindrops. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "E05a",
+      "category": "ambience",
+      "title": "远闷雷",
+      "target_seconds": 4.0,
+      "generation_seconds": 5.0,
+      "loop": false,
+      "direction": "远方柔闷低沉滚雷、自然衰减",
+      "english_brief": "A single distant rumble of thunder, soft deep rolling decay",
+      "candidates": [
+        {
+          "id": "E05a_a",
+          "seed": 2026093740,
+          "variation": "干净短促",
+          "prompt": "A single distant rumble of thunder, soft deep rolling decay. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "E05a_b",
+          "seed": 2026093741,
+          "variation": "厚实机械",
+          "prompt": "A single distant rumble of thunder, soft deep rolling decay. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "E05a_c",
+          "seed": 2026093742,
+          "variation": "柔和耐听",
+          "prompt": "A single distant rumble of thunder, soft deep rolling decay. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "E05b",
+      "category": "ambience",
+      "title": "近雷鸣",
+      "target_seconds": 3.0,
+      "generation_seconds": 4.0,
+      "loop": false,
+      "direction": "较清晰雷鸣冲击、受控尾音、无雨底噪",
+      "english_brief": "A single nearby thunderclap, clear initial impact followed by a controlled rolling tail",
+      "candidates": [
+        {
+          "id": "E05b_a",
+          "seed": 2026093750,
+          "variation": "干净短促",
+          "prompt": "A single nearby thunderclap, clear initial impact followed by a controlled rolling tail. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "E05b_b",
+          "seed": 2026093751,
+          "variation": "厚实机械",
+          "prompt": "A single nearby thunderclap, clear initial impact followed by a controlled rolling tail. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "E05b_c",
+          "seed": 2026093752,
+          "variation": "柔和耐听",
+          "prompt": "A single nearby thunderclap, clear initial impact followed by a controlled rolling tail. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "E06",
+      "category": "ambience",
+      "title": "近岸浪拍",
+      "target_seconds": 12.0,
+      "generation_seconds": 12.0,
+      "loop": true,
+      "direction": "轻浪拍岸与回水循环、无海鸥人声",
+      "english_brief": "Gentle waves lapping a rocky bay shoreline, soft wash and receding water",
+      "candidates": [
+        {
+          "id": "E06_a",
+          "seed": 2026093760,
+          "variation": "干净短促",
+          "prompt": "Gentle waves lapping a rocky bay shoreline, soft wash and receding water. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "E06_b",
+          "seed": 2026093761,
+          "variation": "厚实机械",
+          "prompt": "Gentle waves lapping a rocky bay shoreline, soft wash and receding water. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "E06_c",
+          "seed": 2026093762,
+          "variation": "柔和耐听",
+          "prompt": "Gentle waves lapping a rocky bay shoreline, soft wash and receding water. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "E10a",
+      "category": "alert",
+      "title": "环境恶化提示",
+      "target_seconds": 0.6,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "中音轻下降、非危险警报",
+      "english_brief": "A worsening environmental conditions notification, a light descending midrange tone",
+      "candidates": [
+        {
+          "id": "E10a_a",
+          "seed": 2026093770,
+          "variation": "干净短促",
+          "prompt": "A worsening environmental conditions notification, a light descending midrange tone. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "E10a_b",
+          "seed": 2026093771,
+          "variation": "厚实机械",
+          "prompt": "A worsening environmental conditions notification, a light descending midrange tone. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "E10a_c",
+          "seed": 2026093772,
+          "variation": "柔和耐听",
+          "prompt": "A worsening environmental conditions notification, a light descending midrange tone. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "E10b",
+      "category": "alert",
+      "title": "环境改善提示",
+      "target_seconds": 0.6,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "柔和回升、非奖励",
+      "english_brief": "An improving environmental conditions notification, a soft rising midrange tone",
+      "candidates": [
+        {
+          "id": "E10b_a",
+          "seed": 2026093780,
+          "variation": "干净短促",
+          "prompt": "An improving environmental conditions notification, a soft rising midrange tone. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "E10b_b",
+          "seed": 2026093781,
+          "variation": "厚实机械",
+          "prompt": "An improving environmental conditions notification, a soft rising midrange tone. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "E10b_c",
+          "seed": 2026093782,
+          "variation": "柔和耐听",
+          "prompt": "An improving environmental conditions notification, a soft rising midrange tone. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "E12a",
+      "category": "alert",
+      "title": "航空条件受限",
+      "target_seconds": 0.65,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "两短一长中音、非绝对禁飞警笛",
+      "english_brief": "An aviation conditions restricted notification, two short and one longer midrange electronic tone",
+      "candidates": [
+        {
+          "id": "E12a_a",
+          "seed": 2026093790,
+          "variation": "干净短促",
+          "prompt": "An aviation conditions restricted notification, two short and one longer midrange electronic tone. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "E12a_b",
+          "seed": 2026093791,
+          "variation": "厚实机械",
+          "prompt": "An aviation conditions restricted notification, two short and one longer midrange electronic tone. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "E12a_c",
+          "seed": 2026093792,
+          "variation": "柔和耐听",
+          "prompt": "An aviation conditions restricted notification, two short and one longer midrange electronic tone. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "E12b",
+      "category": "alert",
+      "title": "航空条件恢复",
+      "target_seconds": 0.5,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "短促回升、与受限成对",
+      "english_brief": "An aviation conditions restored notification, a short clear rising electronic pair",
+      "candidates": [
+        {
+          "id": "E12b_a",
+          "seed": 2026093800,
+          "variation": "干净短促",
+          "prompt": "An aviation conditions restored notification, a short clear rising electronic pair. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "E12b_b",
+          "seed": 2026093801,
+          "variation": "厚实机械",
+          "prompt": "An aviation conditions restored notification, a short clear rising electronic pair. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "E12b_c",
+          "seed": 2026093802,
+          "variation": "柔和耐听",
+          "prompt": "An aviation conditions restored notification, a short clear rising electronic pair. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "E13a",
+      "category": "alert",
+      "title": "潮汐通行收紧",
+      "target_seconds": 0.65,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "低中音两组、注意通行",
+      "english_brief": "A tidal passage narrowing notification, two low midrange electronic groups",
+      "candidates": [
+        {
+          "id": "E13a_a",
+          "seed": 2026093810,
+          "variation": "干净短促",
+          "prompt": "A tidal passage narrowing notification, two low midrange electronic groups. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "E13a_b",
+          "seed": 2026093811,
+          "variation": "厚实机械",
+          "prompt": "A tidal passage narrowing notification, two low midrange electronic groups. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "E13a_c",
+          "seed": 2026093812,
+          "variation": "柔和耐听",
+          "prompt": "A tidal passage narrowing notification, two low midrange electronic groups. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "E13b",
+      "category": "alert",
+      "title": "潮汐通行恢复",
+      "target_seconds": 0.5,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "低中音回升、明确恢复",
+      "english_brief": "A tidal passage restored notification, a low midrange rising electronic pair",
+      "candidates": [
+        {
+          "id": "E13b_a",
+          "seed": 2026093820,
+          "variation": "干净短促",
+          "prompt": "A tidal passage restored notification, a low midrange rising electronic pair. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "E13b_b",
+          "seed": 2026093821,
+          "variation": "厚实机械",
+          "prompt": "A tidal passage restored notification, a low midrange rising electronic pair. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "E13b_c",
+          "seed": 2026093822,
+          "variation": "柔和耐听",
+          "prompt": "A tidal passage restored notification, a low midrange rising electronic pair. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "E14",
+      "category": "alert",
+      "title": "己舰潮汐受限",
+      "target_seconds": 0.7,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "短中低三点、克制操作提醒",
+      "english_brief": "A ship affected by tidal passage restrictions notification, three short low midrange pips",
+      "candidates": [
+        {
+          "id": "E14_a",
+          "seed": 2026093830,
+          "variation": "干净短促",
+          "prompt": "A ship affected by tidal passage restrictions notification, three short low midrange pips. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "E14_b",
+          "seed": 2026093831,
+          "variation": "厚实机械",
+          "prompt": "A ship affected by tidal passage restrictions notification, three short low midrange pips. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "E14_c",
+          "seed": 2026093832,
+          "variation": "柔和耐听",
+          "prompt": "A ship affected by tidal passage restrictions notification, three short low midrange pips. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "F01a",
+      "category": "facility",
+      "title": "占领开始",
+      "target_seconds": 0.4,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "短机械确认、未完成感",
+      "english_brief": "A facility capture starting confirmation, a short mechanical click with an open electronic tail",
+      "candidates": [
+        {
+          "id": "F01a_a",
+          "seed": 2026093840,
+          "variation": "干净短促",
+          "prompt": "A facility capture starting confirmation, a short mechanical click with an open electronic tail. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "F01a_b",
+          "seed": 2026093841,
+          "variation": "厚实机械",
+          "prompt": "A facility capture starting confirmation, a short mechanical click with an open electronic tail. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "F01a_c",
+          "seed": 2026093842,
+          "variation": "柔和耐听",
+          "prompt": "A facility capture starting confirmation, a short mechanical click with an open electronic tail. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "F01b",
+      "category": "facility",
+      "title": "占领完成",
+      "target_seconds": 0.65,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "机械闭锁加温暖落定音",
+      "english_brief": "A facility capture completed confirmation, a mechanical locking click and a warm settled tone",
+      "candidates": [
+        {
+          "id": "F01b_a",
+          "seed": 2026093850,
+          "variation": "干净短促",
+          "prompt": "A facility capture completed confirmation, a mechanical locking click and a warm settled tone. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "F01b_b",
+          "seed": 2026093851,
+          "variation": "厚实机械",
+          "prompt": "A facility capture completed confirmation, a mechanical locking click and a warm settled tone. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "F01b_c",
+          "seed": 2026093852,
+          "variation": "柔和耐听",
+          "prompt": "A facility capture completed confirmation, a mechanical locking click and a warm settled tone. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "F02",
+      "category": "facility",
+      "title": "设施易主",
+      "target_seconds": 0.6,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "短继电器切换、明确状态改变",
+      "english_brief": "A facility ownership changed notification, a short relay switch and neutral electronic accent",
+      "candidates": [
+        {
+          "id": "F02_a",
+          "seed": 2026093860,
+          "variation": "干净短促",
+          "prompt": "A facility ownership changed notification, a short relay switch and neutral electronic accent. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "F02_b",
+          "seed": 2026093861,
+          "variation": "厚实机械",
+          "prompt": "A facility ownership changed notification, a short relay switch and neutral electronic accent. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "F02_c",
+          "seed": 2026093862,
+          "variation": "柔和耐听",
+          "prompt": "A facility ownership changed notification, a short relay switch and neutral electronic accent. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "F03a",
+      "category": "facility",
+      "title": "设施启用恢复",
+      "target_seconds": 0.55,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "轻开关与上升电机",
+      "english_brief": "A facility activated effect, a light switch and a short motor spinning up",
+      "candidates": [
+        {
+          "id": "F03a_a",
+          "seed": 2026093870,
+          "variation": "干净短促",
+          "prompt": "A facility activated effect, a light switch and a short motor spinning up. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "F03a_b",
+          "seed": 2026093871,
+          "variation": "厚实机械",
+          "prompt": "A facility activated effect, a light switch and a short motor spinning up. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "F03a_c",
+          "seed": 2026093872,
+          "variation": "柔和耐听",
+          "prompt": "A facility activated effect, a light switch and a short motor spinning up. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "F03b",
+      "category": "facility",
+      "title": "设施压制停用",
+      "target_seconds": 0.55,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "轻开关与下降电机",
+      "english_brief": "A facility deactivated effect, a light switch and a short motor spinning down",
+      "candidates": [
+        {
+          "id": "F03b_a",
+          "seed": 2026093880,
+          "variation": "干净短促",
+          "prompt": "A facility deactivated effect, a light switch and a short motor spinning down. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "F03b_b",
+          "seed": 2026093881,
+          "variation": "厚实机械",
+          "prompt": "A facility deactivated effect, a light switch and a short motor spinning down. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "F03b_c",
+          "seed": 2026093882,
+          "variation": "柔和耐听",
+          "prompt": "A facility deactivated effect, a light switch and a short motor spinning down. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "F04",
+      "category": "facility",
+      "title": "靠泊完成",
+      "target_seconds": 0.8,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "短机械锁定与柔和水声",
+      "english_brief": "A ship docking completed, a short mechanical lock and gentle water splash",
+      "candidates": [
+        {
+          "id": "F04_a",
+          "seed": 2026093890,
+          "variation": "干净短促",
+          "prompt": "A ship docking completed, a short mechanical lock and gentle water splash. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "F04_b",
+          "seed": 2026093891,
+          "variation": "厚实机械",
+          "prompt": "A ship docking completed, a short mechanical lock and gentle water splash. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "F04_c",
+          "seed": 2026093892,
+          "variation": "柔和耐听",
+          "prompt": "A ship docking completed, a short mechanical lock and gentle water splash. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "F05a",
+      "category": "facility",
+      "title": "补给开始",
+      "target_seconds": 0.6,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "装填锁扣、轻机械推进",
+      "english_brief": "A ship resupply starting, a loading latch and a light mechanical slide",
+      "candidates": [
+        {
+          "id": "F05a_a",
+          "seed": 2026093900,
+          "variation": "干净短促",
+          "prompt": "A ship resupply starting, a loading latch and a light mechanical slide. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "F05a_b",
+          "seed": 2026093901,
+          "variation": "厚实机械",
+          "prompt": "A ship resupply starting, a loading latch and a light mechanical slide. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "F05a_c",
+          "seed": 2026093902,
+          "variation": "柔和耐听",
+          "prompt": "A ship resupply starting, a loading latch and a light mechanical slide. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "F05b",
+      "category": "facility",
+      "title": "补给工作",
+      "target_seconds": 8.0,
+      "generation_seconds": 8.0,
+      "loop": true,
+      "direction": "低强度间歇装填循环",
+      "english_brief": "Quiet intermittent ammunition loading machinery working steadily",
+      "candidates": [
+        {
+          "id": "F05b_a",
+          "seed": 2026093910,
+          "variation": "干净短促",
+          "prompt": "Quiet intermittent ammunition loading machinery working steadily. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "F05b_b",
+          "seed": 2026093911,
+          "variation": "厚实机械",
+          "prompt": "Quiet intermittent ammunition loading machinery working steadily. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "F05b_c",
+          "seed": 2026093912,
+          "variation": "柔和耐听",
+          "prompt": "Quiet intermittent ammunition loading machinery working steadily. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "F05c",
+      "category": "facility",
+      "title": "维修开始",
+      "target_seconds": 0.6,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "轻工具扣合、微弱电机",
+      "english_brief": "A ship repair starting, a small tool engaging and a quiet electric motor",
+      "candidates": [
+        {
+          "id": "F05c_a",
+          "seed": 2026093920,
+          "variation": "干净短促",
+          "prompt": "A ship repair starting, a small tool engaging and a quiet electric motor. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "F05c_b",
+          "seed": 2026093921,
+          "variation": "厚实机械",
+          "prompt": "A ship repair starting, a small tool engaging and a quiet electric motor. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "F05c_c",
+          "seed": 2026093922,
+          "variation": "柔和耐听",
+          "prompt": "A ship repair starting, a small tool engaging and a quiet electric motor. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "F05d",
+      "category": "facility",
+      "title": "维修工作",
+      "target_seconds": 8.0,
+      "generation_seconds": 8.0,
+      "loop": true,
+      "direction": "低强度工具振动循环、无工业巨响",
+      "english_brief": "Quiet small repair tools working steadily, restrained mechanical vibration",
+      "candidates": [
+        {
+          "id": "F05d_a",
+          "seed": 2026093930,
+          "variation": "干净短促",
+          "prompt": "Quiet small repair tools working steadily, restrained mechanical vibration. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "F05d_b",
+          "seed": 2026093931,
+          "variation": "厚实机械",
+          "prompt": "Quiet small repair tools working steadily, restrained mechanical vibration. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "F05d_c",
+          "seed": 2026093932,
+          "variation": "柔和耐听",
+          "prompt": "Quiet small repair tools working steadily, restrained mechanical vibration. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "F05e",
+      "category": "facility",
+      "title": "服务完成",
+      "target_seconds": 0.6,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "工具收回、短完成双音",
+      "english_brief": "A ship service completed, a tool retracting and two short warm confirmation tones",
+      "candidates": [
+        {
+          "id": "F05e_a",
+          "seed": 2026093940,
+          "variation": "干净短促",
+          "prompt": "A ship service completed, a tool retracting and two short warm confirmation tones. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "F05e_b",
+          "seed": 2026093941,
+          "variation": "厚实机械",
+          "prompt": "A ship service completed, a tool retracting and two short warm confirmation tones. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "F05e_c",
+          "seed": 2026093942,
+          "variation": "柔和耐听",
+          "prompt": "A ship service completed, a tool retracting and two short warm confirmation tones. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "F07",
+      "category": "impact",
+      "title": "设施坍塌尾声",
+      "target_seconds": 1.7,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "短结构崩塌、碎块落下、无开火",
+      "english_brief": "A small coastal facility structure collapsing, short structural creaking and falling debris",
+      "candidates": [
+        {
+          "id": "F07_a",
+          "seed": 2026093950,
+          "variation": "干净短促",
+          "prompt": "A small coastal facility structure collapsing, short structural creaking and falling debris. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "F07_b",
+          "seed": 2026093951,
+          "variation": "厚实机械",
+          "prompt": "A small coastal facility structure collapsing, short structural creaking and falling debris. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "F07_c",
+          "seed": 2026093952,
+          "variation": "柔和耐听",
+          "prompt": "A small coastal facility structure collapsing, short structural creaking and falling debris. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "F09a",
+      "category": "facility",
+      "title": "布雷开始",
+      "target_seconds": 0.6,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "机械准备、不含爆炸",
+      "english_brief": "Naval mine deployment preparation, a short mechanical rack arming sound",
+      "candidates": [
+        {
+          "id": "F09a_a",
+          "seed": 2026093960,
+          "variation": "干净短促",
+          "prompt": "Naval mine deployment preparation, a short mechanical rack arming sound. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "F09a_b",
+          "seed": 2026093961,
+          "variation": "厚实机械",
+          "prompt": "Naval mine deployment preparation, a short mechanical rack arming sound. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "F09a_c",
+          "seed": 2026093962,
+          "variation": "柔和耐听",
+          "prompt": "Naval mine deployment preparation, a short mechanical rack arming sound. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "F09b",
+      "category": "facility",
+      "title": "布雷完成",
+      "target_seconds": 0.6,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "机械合扣与短完成音",
+      "english_brief": "Naval mine deployment completed, a mechanical latch closing and a short confirmation tone",
+      "candidates": [
+        {
+          "id": "F09b_a",
+          "seed": 2026093970,
+          "variation": "干净短促",
+          "prompt": "Naval mine deployment completed, a mechanical latch closing and a short confirmation tone. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "F09b_b",
+          "seed": 2026093971,
+          "variation": "厚实机械",
+          "prompt": "Naval mine deployment completed, a mechanical latch closing and a short confirmation tone. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "F09b_c",
+          "seed": 2026093972,
+          "variation": "柔和耐听",
+          "prompt": "Naval mine deployment completed, a mechanical latch closing and a short confirmation tone. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "F11a",
+      "category": "facility",
+      "title": "雷场启用",
+      "target_seconds": 0.45,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "低频开关与短上音",
+      "english_brief": "A known naval minefield activated, a low mechanical switch and a short rising electronic note",
+      "candidates": [
+        {
+          "id": "F11a_a",
+          "seed": 2026093980,
+          "variation": "干净短促",
+          "prompt": "A known naval minefield activated, a low mechanical switch and a short rising electronic note. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "F11a_b",
+          "seed": 2026093981,
+          "variation": "厚实机械",
+          "prompt": "A known naval minefield activated, a low mechanical switch and a short rising electronic note. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "F11a_c",
+          "seed": 2026093982,
+          "variation": "柔和耐听",
+          "prompt": "A known naval minefield activated, a low mechanical switch and a short rising electronic note. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "F11b",
+      "category": "facility",
+      "title": "雷场停用",
+      "target_seconds": 0.45,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "低频开关与短下音",
+      "english_brief": "A known naval minefield deactivated, a low mechanical switch and a short falling electronic note",
+      "candidates": [
+        {
+          "id": "F11b_a",
+          "seed": 2026093990,
+          "variation": "干净短促",
+          "prompt": "A known naval minefield deactivated, a low mechanical switch and a short falling electronic note. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "F11b_b",
+          "seed": 2026093991,
+          "variation": "厚实机械",
+          "prompt": "A known naval minefield deactivated, a low mechanical switch and a short falling electronic note. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "F11b_c",
+          "seed": 2026093992,
+          "variation": "柔和耐听",
+          "prompt": "A known naval minefield deactivated, a low mechanical switch and a short falling electronic note. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "U01",
+      "category": "ui",
+      "title": "按钮确认",
+      "target_seconds": 0.18,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "轻珐琅触点与温暖短音",
+      "english_brief": "A game interface confirm click, light enamel tap with a warm short tone",
+      "candidates": [
+        {
+          "id": "U01_a",
+          "seed": 2026094000,
+          "variation": "干净短促",
+          "prompt": "A game interface confirm click, light enamel tap with a warm short tone. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "U01_b",
+          "seed": 2026094001,
+          "variation": "厚实机械",
+          "prompt": "A game interface confirm click, light enamel tap with a warm short tone. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "U01_c",
+          "seed": 2026094002,
+          "variation": "柔和耐听",
+          "prompt": "A game interface confirm click, light enamel tap with a warm short tone. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "U02",
+      "category": "ui",
+      "title": "返回取消",
+      "target_seconds": 0.2,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "轻滑落、低于确认音高",
+      "english_brief": "A game interface cancel click, a soft brief descending tick",
+      "candidates": [
+        {
+          "id": "U02_a",
+          "seed": 2026094010,
+          "variation": "干净短促",
+          "prompt": "A game interface cancel click, a soft brief descending tick. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "U02_b",
+          "seed": 2026094011,
+          "variation": "厚实机械",
+          "prompt": "A game interface cancel click, a soft brief descending tick. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "U02_c",
+          "seed": 2026094012,
+          "variation": "柔和耐听",
+          "prompt": "A game interface cancel click, a soft brief descending tick. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "U03",
+      "category": "ui",
+      "title": "选择改变",
+      "target_seconds": 0.15,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "清晰小触点、不尖锐",
+      "english_brief": "A game unit selection click, a crisp small rounded tap",
+      "candidates": [
+        {
+          "id": "U03_a",
+          "seed": 2026094020,
+          "variation": "干净短促",
+          "prompt": "A game unit selection click, a crisp small rounded tap. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "U03_b",
+          "seed": 2026094021,
+          "variation": "厚实机械",
+          "prompt": "A game unit selection click, a crisp small rounded tap. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "U03_c",
+          "seed": 2026094022,
+          "variation": "柔和耐听",
+          "prompt": "A game unit selection click, a crisp small rounded tap. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "U04a",
+      "category": "ui",
+      "title": "移动指令接受",
+      "target_seconds": 0.25,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "短清楚双音、落定",
+      "english_brief": "A movement command accepted notification, two short clear settled electronic notes",
+      "candidates": [
+        {
+          "id": "U04a_a",
+          "seed": 2026094030,
+          "variation": "干净短促",
+          "prompt": "A movement command accepted notification, two short clear settled electronic notes. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "U04a_b",
+          "seed": 2026094031,
+          "variation": "厚实机械",
+          "prompt": "A movement command accepted notification, two short clear settled electronic notes. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "U04a_c",
+          "seed": 2026094032,
+          "variation": "柔和耐听",
+          "prompt": "A movement command accepted notification, two short clear settled electronic notes. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "U04b",
+      "category": "ui",
+      "title": "航点排队",
+      "target_seconds": 0.2,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "轻触点、开放尾音、不暗示可达",
+      "english_brief": "A waypoint queued notification, a light click with a short open ending",
+      "candidates": [
+        {
+          "id": "U04b_a",
+          "seed": 2026094040,
+          "variation": "干净短促",
+          "prompt": "A waypoint queued notification, a light click with a short open ending. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "U04b_b",
+          "seed": 2026094041,
+          "variation": "厚实机械",
+          "prompt": "A waypoint queued notification, a light click with a short open ending. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "U04b_c",
+          "seed": 2026094042,
+          "variation": "柔和耐听",
+          "prompt": "A waypoint queued notification, a light click with a short open ending. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "U04c",
+      "category": "ui",
+      "title": "集火确认",
+      "target_seconds": 0.3,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "短机械聚焦、明确指向",
+      "english_brief": "A focus fire command confirmation, a short mechanical focusing click",
+      "candidates": [
+        {
+          "id": "U04c_a",
+          "seed": 2026094050,
+          "variation": "干净短促",
+          "prompt": "A focus fire command confirmation, a short mechanical focusing click. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "U04c_b",
+          "seed": 2026094051,
+          "variation": "厚实机械",
+          "prompt": "A focus fire command confirmation, a short mechanical focusing click. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "U04c_c",
+          "seed": 2026094052,
+          "variation": "柔和耐听",
+          "prompt": "A focus fire command confirmation, a short mechanical focusing click. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "U05a",
+      "category": "ui",
+      "title": "命令拒绝",
+      "target_seconds": 0.3,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "柔和低音双击、非惩罚蜂鸣",
+      "english_brief": "A command rejected notification, two soft low electronic taps",
+      "candidates": [
+        {
+          "id": "U05a_a",
+          "seed": 2026094060,
+          "variation": "干净短促",
+          "prompt": "A command rejected notification, two soft low electronic taps. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "U05a_b",
+          "seed": 2026094061,
+          "variation": "厚实机械",
+          "prompt": "A command rejected notification, two soft low electronic taps. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "U05a_c",
+          "seed": 2026094062,
+          "variation": "柔和耐听",
+          "prompt": "A command rejected notification, two soft low electronic taps. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "U05b",
+      "category": "ui",
+      "title": "部分执行",
+      "target_seconds": 0.35,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "一亮一暗短音、区别完全接受",
+      "english_brief": "A command partially accepted notification, one bright note then one darker note",
+      "candidates": [
+        {
+          "id": "U05b_a",
+          "seed": 2026094070,
+          "variation": "干净短促",
+          "prompt": "A command partially accepted notification, one bright note then one darker note. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "U05b_b",
+          "seed": 2026094071,
+          "variation": "厚实机械",
+          "prompt": "A command partially accepted notification, one bright note then one darker note. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "U05b_c",
+          "seed": 2026094072,
+          "variation": "柔和耐听",
+          "prompt": "A command partially accepted notification, one bright note then one darker note. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "U05c",
+      "category": "ui",
+      "title": "技术故障",
+      "target_seconds": 0.4,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "中性三点、无战败情绪",
+      "english_brief": "A neutral technical error notification, three restrained electronic pips",
+      "candidates": [
+        {
+          "id": "U05c_a",
+          "seed": 2026094080,
+          "variation": "干净短促",
+          "prompt": "A neutral technical error notification, three restrained electronic pips. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "U05c_b",
+          "seed": 2026094081,
+          "variation": "厚实机械",
+          "prompt": "A neutral technical error notification, three restrained electronic pips. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "U05c_c",
+          "seed": 2026094082,
+          "variation": "柔和耐听",
+          "prompt": "A neutral technical error notification, three restrained electronic pips. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "U06",
+      "category": "ui",
+      "title": "弹种切换",
+      "target_seconds": 0.3,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "短金属拨片、无就绪提示",
+      "english_brief": "An ammunition type switching click, a short metallic toggle",
+      "candidates": [
+        {
+          "id": "U06_a",
+          "seed": 2026094090,
+          "variation": "干净短促",
+          "prompt": "An ammunition type switching click, a short metallic toggle. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "U06_b",
+          "seed": 2026094091,
+          "variation": "厚实机械",
+          "prompt": "An ammunition type switching click, a short metallic toggle. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "U06_c",
+          "seed": 2026094092,
+          "variation": "柔和耐听",
+          "prompt": "An ammunition type switching click, a short metallic toggle. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "U07a",
+      "category": "ui",
+      "title": "辅助开启",
+      "target_seconds": 0.22,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "短上行双音",
+      "english_brief": "An assistance enabled toggle, two short ascending electronic notes",
+      "candidates": [
+        {
+          "id": "U07a_a",
+          "seed": 2026094100,
+          "variation": "干净短促",
+          "prompt": "An assistance enabled toggle, two short ascending electronic notes. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "U07a_b",
+          "seed": 2026094101,
+          "variation": "厚实机械",
+          "prompt": "An assistance enabled toggle, two short ascending electronic notes. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "U07a_c",
+          "seed": 2026094102,
+          "variation": "柔和耐听",
+          "prompt": "An assistance enabled toggle, two short ascending electronic notes. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "U07b",
+      "category": "ui",
+      "title": "辅助关闭",
+      "target_seconds": 0.22,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "短下行双音",
+      "english_brief": "An assistance disabled toggle, two short descending electronic notes",
+      "candidates": [
+        {
+          "id": "U07b_a",
+          "seed": 2026094110,
+          "variation": "干净短促",
+          "prompt": "An assistance disabled toggle, two short descending electronic notes. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "U07b_b",
+          "seed": 2026094111,
+          "variation": "厚实机械",
+          "prompt": "An assistance disabled toggle, two short descending electronic notes. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "U07b_c",
+          "seed": 2026094112,
+          "variation": "柔和耐听",
+          "prompt": "An assistance disabled toggle, two short descending electronic notes. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "U08",
+      "category": "ui",
+      "title": "主武器就绪",
+      "target_seconds": 0.4,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "机械闭锁与一个温暖短音",
+      "english_brief": "A main weapon reload ready notification, mechanical locking and one warm short note",
+      "candidates": [
+        {
+          "id": "U08_a",
+          "seed": 2026094120,
+          "variation": "干净短促",
+          "prompt": "A main weapon reload ready notification, mechanical locking and one warm short note. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "U08_b",
+          "seed": 2026094121,
+          "variation": "厚实机械",
+          "prompt": "A main weapon reload ready notification, mechanical locking and one warm short note. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "U08_c",
+          "seed": 2026094122,
+          "variation": "柔和耐听",
+          "prompt": "A main weapon reload ready notification, mechanical locking and one warm short note. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "U09",
+      "category": "ui",
+      "title": "技能就绪",
+      "target_seconds": 0.45,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "轻亮双音、区别装填",
+      "english_brief": "A skill cooldown ready notification, two light bright rounded electronic notes",
+      "candidates": [
+        {
+          "id": "U09_a",
+          "seed": 2026094130,
+          "variation": "干净短促",
+          "prompt": "A skill cooldown ready notification, two light bright rounded electronic notes. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "U09_b",
+          "seed": 2026094131,
+          "variation": "厚实机械",
+          "prompt": "A skill cooldown ready notification, two light bright rounded electronic notes. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "U09_c",
+          "seed": 2026094132,
+          "variation": "柔和耐听",
+          "prompt": "A skill cooldown ready notification, two light bright rounded electronic notes. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "U10a",
+      "category": "ui",
+      "title": "战术暂停",
+      "target_seconds": 0.3,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "柔和向内收束",
+      "english_brief": "A tactical pause effect, a soft electronic sweep drawing inward",
+      "candidates": [
+        {
+          "id": "U10a_a",
+          "seed": 2026094140,
+          "variation": "干净短促",
+          "prompt": "A tactical pause effect, a soft electronic sweep drawing inward. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "U10a_b",
+          "seed": 2026094141,
+          "variation": "厚实机械",
+          "prompt": "A tactical pause effect, a soft electronic sweep drawing inward. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "U10a_c",
+          "seed": 2026094142,
+          "variation": "柔和耐听",
+          "prompt": "A tactical pause effect, a soft electronic sweep drawing inward. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "U10b",
+      "category": "ui",
+      "title": "战术继续",
+      "target_seconds": 0.3,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "柔和向外展开",
+      "english_brief": "A tactical resume effect, a soft electronic sweep expanding outward",
+      "candidates": [
+        {
+          "id": "U10b_a",
+          "seed": 2026094150,
+          "variation": "干净短促",
+          "prompt": "A tactical resume effect, a soft electronic sweep expanding outward. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "U10b_b",
+          "seed": 2026094151,
+          "variation": "厚实机械",
+          "prompt": "A tactical resume effect, a soft electronic sweep expanding outward. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "U10b_c",
+          "seed": 2026094152,
+          "variation": "柔和耐听",
+          "prompt": "A tactical resume effect, a soft electronic sweep expanding outward. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "U11",
+      "category": "ui",
+      "title": "面板出现",
+      "target_seconds": 0.3,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "中性轻展开、无成功失败判断",
+      "english_brief": "A neutral game panel opening sound, a subtle airy electronic expansion",
+      "candidates": [
+        {
+          "id": "U11_a",
+          "seed": 2026094160,
+          "variation": "干净短促",
+          "prompt": "A neutral game panel opening sound, a subtle airy electronic expansion. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "U11_b",
+          "seed": 2026094161,
+          "variation": "厚实机械",
+          "prompt": "A neutral game panel opening sound, a subtle airy electronic expansion. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "U11_c",
+          "seed": 2026094162,
+          "variation": "柔和耐听",
+          "prompt": "A neutral game panel opening sound, a subtle airy electronic expansion. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "U12a",
+      "category": "ui",
+      "title": "计划排入",
+      "target_seconds": 0.22,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "轻笔触与触点、未执行感",
+      "english_brief": "A tactical plan queued sound, a light pencil stroke and soft tick",
+      "candidates": [
+        {
+          "id": "U12a_a",
+          "seed": 2026094170,
+          "variation": "干净短促",
+          "prompt": "A tactical plan queued sound, a light pencil stroke and soft tick. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "U12a_b",
+          "seed": 2026094171,
+          "variation": "厚实机械",
+          "prompt": "A tactical plan queued sound, a light pencil stroke and soft tick. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "U12a_c",
+          "seed": 2026094172,
+          "variation": "柔和耐听",
+          "prompt": "A tactical plan queued sound, a light pencil stroke and soft tick. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "U12b",
+      "category": "ui",
+      "title": "计划撤销",
+      "target_seconds": 0.22,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "轻反向滑动",
+      "english_brief": "A tactical plan undone sound, a light short reverse swish",
+      "candidates": [
+        {
+          "id": "U12b_a",
+          "seed": 2026094180,
+          "variation": "干净短促",
+          "prompt": "A tactical plan undone sound, a light short reverse swish. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "U12b_b",
+          "seed": 2026094181,
+          "variation": "厚实机械",
+          "prompt": "A tactical plan undone sound, a light short reverse swish. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "U12b_c",
+          "seed": 2026094182,
+          "variation": "柔和耐听",
+          "prompt": "A tactical plan undone sound, a light short reverse swish. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "U12c",
+      "category": "ui",
+      "title": "计划开始执行",
+      "target_seconds": 0.35,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "短序列启动、不暗示全部成功",
+      "english_brief": "A tactical plan execution starting sound, a short electronic startup sequence",
+      "candidates": [
+        {
+          "id": "U12c_a",
+          "seed": 2026094190,
+          "variation": "干净短促",
+          "prompt": "A tactical plan execution starting sound, a short electronic startup sequence. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "U12c_b",
+          "seed": 2026094191,
+          "variation": "厚实机械",
+          "prompt": "A tactical plan execution starting sound, a short electronic startup sequence. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "U12c_c",
+          "seed": 2026094192,
+          "variation": "柔和耐听",
+          "prompt": "A tactical plan execution starting sound, a short electronic startup sequence. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "U14a",
+      "category": "ui",
+      "title": "音量试听",
+      "target_seconds": 0.35,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "平滑中音、无强瞬态",
+      "english_brief": "A volume preview sound, a smooth comfortable midrange electronic tone",
+      "candidates": [
+        {
+          "id": "U14a_a",
+          "seed": 2026094200,
+          "variation": "干净短促",
+          "prompt": "A volume preview sound, a smooth comfortable midrange electronic tone. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "U14a_b",
+          "seed": 2026094201,
+          "variation": "厚实机械",
+          "prompt": "A volume preview sound, a smooth comfortable midrange electronic tone. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "U14a_c",
+          "seed": 2026094202,
+          "variation": "柔和耐听",
+          "prompt": "A volume preview sound, a smooth comfortable midrange electronic tone. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "U14b",
+      "category": "ui",
+      "title": "设置保存成功",
+      "target_seconds": 0.3,
+      "generation_seconds": 3.0,
+      "loop": false,
+      "direction": "短轻落定双音",
+      "english_brief": "A settings saved confirmation, two light short settled electronic notes",
+      "candidates": [
+        {
+          "id": "U14b_a",
+          "seed": 2026094210,
+          "variation": "干净短促",
+          "prompt": "A settings saved confirmation, two light short settled electronic notes. Clean dry close sound, controlled transient, minimal reverberation.",
+          "status": "planned"
+        },
+        {
+          "id": "U14b_b",
+          "seed": 2026094211,
+          "variation": "厚实机械",
+          "prompt": "A settings saved confirmation, two light short settled electronic notes. Fuller warm body and detailed texture, controlled low end, clear separation.",
+          "status": "planned"
+        },
+        {
+          "id": "U14b_c",
+          "seed": 2026094212,
+          "variation": "柔和耐听",
+          "prompt": "A settings saved confirmation, two light short settled electronic notes. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+          "status": "planned"
+        }
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "id": "W01",
+      "title": "轻口径炮发射：短、清楚的机械爆发",
+      "assets": [
+        "W01"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E `WeaponFired`，按武器组映射",
+      "constraints": "P1；驱逐、副炮及部分轻巡共用；每轮受控合并"
+    },
+    {
+      "id": "W02",
+      "title": "中口径炮发射：较厚炮口瞬态",
+      "assets": [
+        "W02"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E `WeaponFired`",
+      "constraints": "P1；轻/重巡，HE/AP 共用发射底色"
+    },
+    {
+      "id": "W03",
+      "title": "重口径炮发射：低频冲击与较长尾音",
+      "assets": [
+        "W03"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E `WeaponFired`",
+      "constraints": "P1；战列和实际对应装备；多炮齐射不线性叠响"
+    },
+    {
+      "id": "W04",
+      "title": "超重炮差异层",
+      "assets": [
+        "W04"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E `WeaponFired`，显式武器映射",
+      "constraints": "P2；大和等适用武器；叠 W03 或独立变体二选一"
+    },
+    {
+      "id": "W05",
+      "title": "鱼雷管组发射：机械开阀、短促破水",
+      "assets": [
+        "W05"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E `WeaponFired` + `ProjectileSpawned` 对应关系",
+      "constraints": "P1；按一次实际管组发射触发，不两事件各播一次"
+    },
+    {
+      "id": "W06",
+      "title": "已知鱼雷近场航行水声",
+      "assets": [
+        "W06"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "S 合法可见投射物生命周期",
+      "constraints": "P3；稀疏/聚合循环；未发现敌雷绝不播放"
+    },
+    {
+      "id": "W07",
+      "title": "深弹/反潜投放与入水",
+      "assets": [
+        "W07a",
+        "W07b"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E `WeaponFired`；G 如需独立延迟入水则补同源表现时序",
+      "constraints": "P2；只对 AntiSubmarine 实际武器，不能当普通炮声"
+    },
+    {
+      "id": "W08",
+      "title": "反潜水下爆炸：低沉、短闷冲击",
+      "assets": [
+        "W08"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E `AttackResolved` 的反潜事实",
+      "constraints": "P2；无合法目标信息时不能泄露潜艇位置或命中结果"
+    },
+    {
+      "id": "W09",
+      "title": "近防机炮短连射",
+      "assets": [
+        "W09"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E B `AntiAirFired` 或现有合法防空事实",
+      "constraints": "P2；按发射单位/短时间窗合并，拒绝逐弹叠播"
+    },
+    {
+      "id": "W10",
+      "title": "中重防空炮/空爆",
+      "assets": [
+        "W10a",
+        "W10b"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E 有据防空事件；G 独立空爆须有公开位置/时序",
+      "constraints": "P2；无口径元数据时显式映射；不从 A 装饰弹幕猜真实拦截"
+    },
+    {
+      "id": "W11",
+      "title": "炮弹掠过/飞行短层",
+      "assets": [
+        "W11"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "S 已公开 `ShellFlightView` 生命周期",
+      "constraints": "P3；仅近镜头少量重炮，无每枚弹持续尖啸"
+    },
+    {
+      "id": "W12",
+      "title": "炮弹落水：小/中/大水柱变体",
+      "assets": [
+        "W12a",
+        "W12b",
+        "W12c"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E/S 权威落点及现有炮弹表现落点时序",
+      "constraints": "P1；尺寸复用；没有伤害也可落水，但不能暗示隐藏命中"
+    },
+    {
+      "id": "W13",
+      "title": "舰装受击：轻金属/重冲击变体",
+      "assets": [
+        "W13a",
+        "W13b"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E `AttackResolved` 的已公开有效受击",
+      "constraints": "P1；按受击目标合并，不按每个伤害数字播放"
+    },
+    {
+      "id": "W14",
+      "title": "鱼雷命中：爆炸与破水",
+      "assets": [
+        "W14"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E `ProjectileHit` + `AttackResolved`",
+      "constraints": "P1；同一命中只保留一个音频所有者"
+    },
+    {
+      "id": "W15",
+      "title": "岸地爆炸、鱼雷撞岸",
+      "assets": [
+        "W15a",
+        "W15b"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E `ShellBlockedByTerrain` / `ProjectileBlockedByTerrain`",
+      "constraints": "P2；与落水/命中互斥；大小复用 W12/W14 的尾部层"
+    },
+    {
+      "id": "W16",
+      "title": "舰体触岸摩擦/顿挫",
+      "assets": [
+        "W16"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E `UnitTerrainCollision`",
+      "constraints": "P2；限频，只表接触，不虚构碰撞伤害；持续贴岸不能每 Tick 响"
+    },
+    {
+      "id": "W17",
+      "title": "水面航行起步/加速破水",
+      "assets": [
+        "W17a",
+        "W17b",
+        "W17c"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "S 己方或当前可见舰运动快照",
+      "constraints": "P2；轻/中/重层共享，不用舰种代替真实速度"
+    },
+    {
+      "id": "W18",
+      "title": "舰装低强度巡航/尾流循环",
+      "assets": [
+        "W18"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "S 运动、可见性、距离与生命周期",
+      "constraints": "P3；只保留近场代表声源，停止/沉没/失去可见即淡出"
+    },
+    {
+      "id": "W19",
+      "title": "沉没：受损收尾与入水",
+      "assets": [
+        "W19"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E `UnitSunk`",
+      "constraints": "P1；与最后一击爆炸合并控制；不额外叠连续爆炸"
+    },
+    {
+      "id": "W20",
+      "title": "跳弹、装甲未击穿、舰船互撞专属声",
+      "assets": [],
+      "status": "silent_deferred",
+      "reason": "无公开精确事实，暂缓专属跳弹/互撞声",
+      "trigger": "G/D 缺对应可公开且足够精确的事实时不用",
+      "constraints": "P3；不能凭 AP 名称、零伤害或视觉相交猜原因"
+    },
+    {
+      "id": "A01",
+      "title": "舰载编队出击",
+      "assets": [
+        "A01"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E `AviationWaveLaunched`",
+      "constraints": "P1；波次是所有者，不再响应旧 Aviation `WeaponFired`"
+    },
+    {
+      "id": "A02",
+      "title": "飞机巡航/掠过循环",
+      "assets": [
+        "A02"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "S 合法航空快照与编队阶段",
+      "constraints": "P2；公共螺旋桨音色，按编队而非逐架；侦察机可弱化"
+    },
+    {
+      "id": "A03",
+      "title": "炸弹释放/短下落声",
+      "assets": [
+        "A03"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E B `AviationPayloadReleased`；S/G A 读取投影公开投放阶段",
+      "constraints": "P2；不得假装 A 已有 B 的实体投放事实"
+    },
+    {
+      "id": "A04",
+      "title": "航空炸弹爆炸/落水",
+      "assets": [
+        "W12b",
+        "W12c",
+        "W13b"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E `AviationImpact` / `AviationArrival`",
+      "constraints": "P1；复用 W12/W13；Arrival 只能中性落点声，隐藏命中和落空听感一致"
+    },
+    {
+      "id": "A05",
+      "title": "航空鱼雷入水",
+      "assets": [
+        "A05"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E B `AviationPayloadReleased` 的鱼雷投放语义",
+      "constraints": "P2；后续实体命中归 W14；A 不伪造实体鱼雷接触"
+    },
+    {
+      "id": "A06",
+      "title": "飞机受损、坠毁/落水",
+      "assets": [
+        "A06a",
+        "A06b"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E B `AircraftDamaged` / `AircraftDestroyed`",
+      "constraints": "P2；只能播已发布的阵营合法事实；A 装饰减员不得触发"
+    },
+    {
+      "id": "A07",
+      "title": "侦察/巡逻编队建立与结束",
+      "assets": [
+        "N10",
+        "K09",
+        "U02"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "S 公开波次/任务快照；G 需明确结束原因",
+      "constraints": "P2；启动提示复用任务族，正常结束、取消、被击落不能混成爆炸"
+    },
+    {
+      "id": "A08",
+      "title": "航空波次结束/返航收尾",
+      "assets": [
+        "K09"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E `AviationWaveEnded` + S 公开 phase",
+      "constraints": "P2；按真实原因淡出飞行；没有降落事实不补轮胎着舰声"
+    },
+    {
+      "id": "S01",
+      "title": "下潜开始与气泡过程",
+      "assets": [
+        "S01"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E `SubmarineDepthTransitionStarted`，目标 Submerged",
+      "constraints": "P1；可见/己方舰；转换进度控制短层，不拖延规则"
+    },
+    {
+      "id": "S02",
+      "title": "上浮开始与破水过程",
+      "assets": [
+        "S02"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E 同上，目标 Surface；强制上浮另看 S05",
+      "constraints": "P1；与下潜听感可辨，复用水层"
+    },
+    {
+      "id": "S03",
+      "title": "深度转换完成",
+      "assets": [
+        "S03a",
+        "S03b"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E `SubmarineDepthChanged`",
+      "constraints": "P1；己方状态提示与空间水声分开；请求被拒绝不播完成"
+    },
+    {
+      "id": "S04",
+      "title": "低氧预警",
+      "assets": [
+        "S04"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "S 己方 oxygen 状态；G 跨阈值/恢复迟滞配置待定",
+      "constraints": "P1；每次低氧区间一次，切换选中舰不重播"
+    },
+    {
+      "id": "S05",
+      "title": "零氧强制上浮警告",
+      "assets": [
+        "S05"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E `SubmarineForcedSurface`",
+      "constraints": "P1；覆盖较低级低氧提示；不得与 S02 重复响两次报警"
+    },
+    {
+      "id": "S06",
+      "title": "恢复至设定氧量提示",
+      "assets": [
+        "S06"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "S 己方氧气恢复跨阈值",
+      "constraints": "P2；可选关闭；不能宣称任意固定百分比是允许下潜的规则门槛"
+    },
+    {
+      "id": "S07",
+      "title": "潜航近场气泡/水声循环",
+      "assets": [
+        "S07"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "S 己方或合法可见潜艇的深度状态",
+      "constraints": "P3；不因隐藏潜艇存在改变海面环境声，不模拟被动声呐定位"
+    },
+    {
+      "id": "K01",
+      "title": "通用技能成功施放短提示",
+      "assets": [
+        "K01"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E `SkillCast`",
+      "constraints": "P1；己方操作确认；技能拒绝统一走 U05"
+    },
+    {
+      "id": "K02",
+      "title": "校射/锁定/集中火控",
+      "assets": [
+        "K02"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E 技能与已公开状态；厌战、衣阿华、巴尔的摩、恰巴耶夫等",
+      "constraints": "P2；短机械/电子收束，不提示隐藏目标坐标"
+    },
+    {
+      "id": "K03",
+      "title": "鱼雷突击/伏击起势",
+      "assets": [
+        "K03"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E 岛风、愤怒、高雄、U-47、拥护者等实际技能施放",
+      "constraints": "P2；复用 W05，不能在仅加 Buff 时伪造实际发射"
+    },
+    {
+      "id": "K04",
+      "title": "航空技能起势",
+      "assets": [
+        "K04"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E 企业、胜利、凤翔、翔鹤、齐柏林伯爵等",
+      "constraints": "P2；施放提示一次，逐波出击归 A01"
+    },
+    {
+      "id": "K05",
+      "title": "防空/反潜警戒与护航圈建立",
+      "assets": [
+        "K05"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E 圣地亚哥、天狼星、弗莱彻、克利夫兰、秋月等",
+      "constraints": "P2；短提示，不用永久警笛代表持续 Buff"
+    },
+    {
+      "id": "K06",
+      "title": "侦查/照明/区域标记",
+      "assets": [
+        "K06"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E 阿芙乐尔、贝尔法斯特、沃德等技能；航空侦察归 A07",
+      "constraints": "P2；可用抽象扫描声，不创造声呐/雷达探测规则"
+    },
+    {
+      "id": "K07",
+      "title": "机动/规避/队伍鼓舞",
+      "assets": [
+        "K07"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E 胡德、杰维斯、塔什干、纽伦堡、雪风等",
+      "constraints": "P2；轻上扬/流动声，共用一族，不逐受益友舰播放"
+    },
+    {
+      "id": "K08",
+      "title": "防护/隐蔽/续航起势",
+      "assets": [
+        "K08"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E 俾斯麦、甘古特、定远、光辉、海龙等按实际效果映射",
+      "constraints": "P2；护甲增强不等于护盾生成，隐蔽增强不等于已经脱离侦查"
+    },
+    {
+      "id": "K09",
+      "title": "重要状态结束或被消耗",
+      "assets": [
+        "K09"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E `StatusExpired` / `StatusConsumed` 等，需识别玩家关注的状态",
+      "constraints": "P2；只对选中舰关键主动状态，一般属性 Buff 默认无声"
+    },
+    {
+      "id": "K10",
+      "title": "角色专属技能签名、cut-in、喊招",
+      "assets": [],
+      "status": "silent_deferred",
+      "reason": "专属演出/语音另立制作，不制作喊招",
+      "trigger": "D 依专属表现与语音方案",
+      "constraints": "P3；不作为首期全舰种覆盖必需项"
+    },
+    {
+      "id": "N01",
+      "title": "初次发现敌舰/新接触",
+      "assets": [
+        "N01"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E `ContactAcquired`，核对 observer 阵营",
+      "constraints": "P1；首次/新一轮交战聚合，不逐舰雷达滴答；不等于旗舰已识别"
+    },
+    {
+      "id": "N02",
+      "title": "当前集火目标丢失/转为残影",
+      "assets": [
+        "N02"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E `ContactLost` / `ContactTypeChanged`",
+      "constraints": "P2；仅与玩家操作有关时提示，不每次侦查抖动播放"
+    },
+    {
+      "id": "N03",
+      "title": "敌雷被发现",
+      "assets": [
+        "N03"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E `ProjectileDetected`，只取本阵营",
+      "constraints": "P1；一次雷群提示；己方投射物不用敌袭音色"
+    },
+    {
+      "id": "N04",
+      "title": "已发现鱼雷进入己舰危险窗",
+      "assets": [
+        "N04"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "G 复用合法公共威胁输出；单靠 N03 不足以证明逼近",
+      "constraints": "P1；较强短警报，按受威胁舰/危险区间聚合；不报“必定命中”"
+    },
+    {
+      "id": "N05",
+      "title": "已发现水雷/已知雷区风险",
+      "assets": [
+        "N05"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E `MineDetected` + S 已知区域与己方状态",
+      "constraints": "P1；未知雷点、失效雷区和安全航道不能错误报警"
+    },
+    {
+      "id": "N06",
+      "title": "己方旗舰危急",
+      "assets": [
+        "N06"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "S 己方旗舰生命跨阈值，阈值待定",
+      "constraints": "P1；高于一般受击；恢复迟滞后方可再次触发"
+    },
+    {
+      "id": "N07",
+      "title": "其他己舰危急/被击沉",
+      "assets": [
+        "N07a",
+        "N07b"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "S 生命阈值；E `UnitSunk`",
+      "constraints": "P2；按舰聚合，配头像；与 W19 物理声区分"
+    },
+    {
+      "id": "N08",
+      "title": "敌舰/敌旗舰击沉确认",
+      "assets": [
+        "N08"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E 已公开 `UnitSunk` / `FlagshipSunk`",
+      "constraints": "P1；不能从单位消失推断；同 Tick 结算优先，避免先庆祝再判平局"
+    },
+    {
+      "id": "N09",
+      "title": "战斗开始/出击就绪",
+      "assets": [
+        "N09"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E `BattleStarted` + 场景可操作状态",
+      "constraints": "P1；每局一次；加载失败不播出击成功"
+    },
+    {
+      "id": "N10",
+      "title": "教学阶段、任务步骤更新",
+      "assets": [
+        "N10"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E `TutorialStageChanged` / `LevelObjectiveAdvanced`",
+      "constraints": "P1；一次阶段提示；`TutorialActionRecorded` 不逐操作发奖励声"
+    },
+    {
+      "id": "N11",
+      "title": "单项目标达成/失败",
+      "assets": [
+        "N11a",
+        "N11b"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E `LevelObjectiveCompleted` / `LevelObjectiveFailed`",
+      "constraints": "P1；主目标、可选精通区分；不能替代最终胜负判断"
+    },
+    {
+      "id": "N12",
+      "title": "接替增援实际抵达",
+      "assets": [
+        "N12a",
+        "N12b"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E `ReinforcementWaveSpawned`",
+      "constraints": "P1；一波一次，敌方须有公开通知授权，不能只凭 raw faction 判断可播"
+    },
+    {
+      "id": "N13",
+      "title": "战斗时间即将耗尽",
+      "assets": [
+        "N13"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "S 正式战斗剩余时间跨阈值",
+      "constraints": "P2；一次或有限档位，不逐秒急促蜂鸣；技术保护计时不用此声"
+    },
+    {
+      "id": "N14",
+      "title": "权威结算展示短提示",
+      "assets": [
+        "U11"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E `BattleFinished` + 结果展示分类",
+      "constraints": "P1；可复用 U11；胜负乐句归 50，不另造一套重复胜负音乐"
+    },
+    {
+      "id": "N15",
+      "title": "技术无效/加载失败/保存失败",
+      "assets": [
+        "U05c"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "S 现有错误/结果 UI 状态",
+      "constraints": "P1；复用 U05 的中性故障变体，不用战败声；保存失败不改已确认胜负"
+    },
+    {
+      "id": "N16",
+      "title": "奖励/新角色/关卡解锁确认",
+      "assets": [
+        "N16"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "S 真实进度结果与保存状态",
+      "constraints": "P2；一次结果呈现聚合，重开面板或重试保存不重播奖励；不得暗示未持久化已成功"
+    },
+    {
+      "id": "E01",
+      "title": "平静海面底噪循环",
+      "assets": [
+        "E01"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "S 当前战场公开环境",
+      "constraints": "P1；晴朗/多云基础共用，不按时段复制"
+    },
+    {
+      "id": "E02",
+      "title": "中/高海况浪声层",
+      "assets": [
+        "E02a",
+        "E02b"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "S 有效海况",
+      "constraints": "P2；按强度交叉淡化；不要同时叠三条完整浪声"
+    },
+    {
+      "id": "E03",
+      "title": "轻风/强风循环层",
+      "assets": [
+        "E03a",
+        "E03b"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "S 公开风力/天气与允许使用的局部上下文",
+      "constraints": "P2；多云/阴云/雨/雷雨共享强度层，不每舰播放"
+    },
+    {
+      "id": "E04",
+      "title": "雨循环：普通/强雨变体",
+      "assets": [
+        "E04a",
+        "E04b"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "S 全局雨、雷雨及公开局部飑线",
+      "constraints": "P1；雨滴与风分层，避免持续掩盖就绪提示"
+    },
+    {
+      "id": "E05",
+      "title": "雷声：远闷雷/较近雷鸣变体",
+      "assets": [
+        "E05a",
+        "E05b"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "G 当前闪电为着色器表现，需共享可同步的表现闪电时序",
+      "constraints": "P2；雷声与闪光关联、限峰；不从像素闪烁或任意每帧随机触发"
+    },
+    {
+      "id": "E06",
+      "title": "近岸浪拍/海湾水声",
+      "assets": [
+        "E06"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "S 已知岸线与镜头近场；需明确空间混合范围",
+      "constraints": "P3；十图共用，不为每岛录独占背景；远离岸线淡出"
+    },
+    {
+      "id": "E07",
+      "title": "强流/局部浪涌增强",
+      "assets": [
+        "E02b"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "S 己舰/镜头可用环境上下文",
+      "constraints": "P2；复用 E02，避免不可见局部区通过空间音色泄露"
+    },
+    {
+      "id": "E08",
+      "title": "海雾、月光、背风、昼夜的专属底噪",
+      "assets": [],
+      "status": "silent_deferred",
+      "reason": "无独立物理声源，用混音变化表达",
+      "trigger": "D 不要求独立文件",
+      "constraints": "P3；海雾/月光不是物理发声体；背风降风浪；时段改变混音但不无据加虫鸣/海鸥"
+    },
+    {
+      "id": "E09",
+      "title": "开局天气/时段摘要到达",
+      "assets": [
+        "N09"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "S 首次环境 HUD 展示",
+      "constraints": "P2；与 N09 合并，先文字再一次中性信息声；无需二十句语音"
+    },
+    {
+      "id": "E10",
+      "title": "天气恶化/改善提示",
+      "assets": [
+        "E10a",
+        "E10b"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "G 当前未证实有通用全局天气转场事件",
+      "constraints": "P2；仅未来真实公开转场时启用；不能把潮汐事件当风暴来临"
+    },
+    {
+      "id": "E11",
+      "title": "己舰进入/离开显著局部影响",
+      "assets": [
+        "E10a",
+        "E10b"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "S/G 对己舰有效上下文差分及通知适配；非 `EnvironmentZoneChanged` 直接等价",
+      "constraints": "P2；海雾/飑线/高海况/强流共享注意声，背风/月光改善共享恢复声；边界迟滞"
+    },
+    {
+      "id": "E12",
+      "title": "航空条件受限/恢复",
+      "assets": [
+        "E12a",
+        "E12b"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "S 己方航空条件等级变化",
+      "constraints": "P1；用 Normal/Restricted/Severe 的真实语义，不把 Severe 宣称绝对禁飞；被拒绝仍归 U05"
+    },
+    {
+      "id": "E13",
+      "title": "潮态切换与通行收紧/恢复",
+      "assets": [
+        "E13a",
+        "E13b"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E `EnvironmentForecastChanged` + S 公开潮态/通行上下文",
+      "constraints": "P1；仅对当前战术有关时通知；阶段变化不等于每艘船都遭封锁"
+    },
+    {
+      "id": "E14",
+      "title": "己舰潮汐通行受限",
+      "assets": [
+        "E14"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E `UnitTideAccessRestricted`",
+      "constraints": "P1；按舰/同原因合并，避免每 Tick 报警；文字说明仍可撤离"
+    },
+    {
+      "id": "E15",
+      "title": "局部区消散/已公开预报更新",
+      "assets": [
+        "N10"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E `EnvironmentZoneChanged` 消散；G 其他预报待公开接口",
+      "constraints": "P2；只通知影响当前操作的变化；无未来精确数据不播倒计时预警"
+    },
+    {
+      "id": "F01",
+      "title": "占领/控制开始与完成",
+      "assets": [
+        "F01a",
+        "F01b"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E `FacilityControlDeclared` / `FacilityControlCompleted`",
+      "constraints": "P2；开始轻确认、完成任务提示；避免与 OwnershipChanged 重复"
+    },
+    {
+      "id": "F02",
+      "title": "设施易主/整套系统移交",
+      "assets": [
+        "F02"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E `FacilityOwnershipChanged` / `FacilitySystemHandedOver`",
+      "constraints": "P2；按一次系统移交聚合；只对已知设施"
+    },
+    {
+      "id": "F03",
+      "title": "设施启用、受压制、恢复/停用",
+      "assets": [
+        "F03a",
+        "F03b"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E `FacilityActivated` / `FacilitySuppressed` / `FacilityRecovered` / `FacilityOperationStateChanged`",
+      "constraints": "P2；启用/恢复与异常两族，依赖连锁不逐建筑轰炸提示"
+    },
+    {
+      "id": "F04",
+      "title": "靠泊/进坞完成",
+      "assets": [
+        "F04"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E `FacilityDockingCompleted`",
+      "constraints": "P2；短机械/水声；申请服务不等于已靠泊"
+    },
+    {
+      "id": "F05",
+      "title": "补给/维修开始、工作、完成",
+      "assets": [
+        "F05a",
+        "F05b",
+        "F05c",
+        "F05d",
+        "F05e"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E `FacilityServiceStarted` / `FacilityServiceCompleted`；S 工作循环",
+      "constraints": "P2；补给装填、维修轻工具变体，循环仅选中/近场；`UnitServiced` 不再重复报喜"
+    },
+    {
+      "id": "F06",
+      "title": "服务中断、取消/离泊",
+      "assets": [
+        "U02",
+        "U05a"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E `FacilityActionInterrupted`，读取 reason_code",
+      "constraints": "P2；主动取消用取消声，受重击等异常用警示声"
+    },
+    {
+      "id": "F07",
+      "title": "岸炮开火、设施受击/摧毁",
+      "assets": [
+        "F07",
+        "W02",
+        "W03",
+        "W13a",
+        "W13b"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E `FacilityWeaponFired` / `FacilityDamaged` / `FacilityDestroyed`",
+      "constraints": "P2；复用 W02/W03/W13，摧毁加短结构坍塌尾声；无敌情泄露"
+    },
+    {
+      "id": "F08",
+      "title": "机场支援申请、发起、完成/取消",
+      "assets": [
+        "U04b",
+        "A01",
+        "N11a",
+        "U02"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E 服务已有任务事件；G 当前表现过滤器会抑制部分原始任务事件，需合法任务摘要",
+      "constraints": "P2；申请与实际出动分开；飞行/空袭只由 A 系列发声"
+    },
+    {
+      "id": "F09",
+      "title": "布雷开始、完成/取消",
+      "assets": [
+        "F09a",
+        "F09b",
+        "U02"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E `MineDeploymentStarted` / `MineDeploymentCompleted` / `MineDeploymentCancelled`，结合 batch 结果",
+      "constraints": "P2；完成播一次并显示有效/失效数量，不能每个 MineDeployed 都响"
+    },
+    {
+      "id": "F10",
+      "title": "水雷触发爆炸",
+      "assets": [
+        "W14"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E `MineTriggered`",
+      "constraints": "P1；复用 W14；发现声 N05 与触发爆炸分离"
+    },
+    {
+      "id": "F11",
+      "title": "雷场启停/控制站联动",
+      "assets": [
+        "F11a",
+        "F11b"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E `MineFieldStateChanged`，只取合法已知状态",
+      "constraints": "P2；按一次控制结果合并；不暴露隐藏雷点布局"
+    },
+    {
+      "id": "F12",
+      "title": "观察站/雷达/通信设备循环",
+      "assets": [],
+      "status": "silent_deferred",
+      "reason": "首轮设备持续工作静默",
+      "trigger": "D 首轮默认静默，P3 可补局部设备底噪",
+      "constraints": "P3；设备持续工作不等于每 Tick 探测；新接触已由 N01 覆盖"
+    },
+    {
+      "id": "U01",
+      "title": "按钮确认/页面进入",
+      "assets": [
+        "U01"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "S 本地有效 UI 操作",
+      "constraints": "P1；鼠标/键盘同一入口；禁用按钮不能播成功声"
+    },
+    {
+      "id": "U02",
+      "title": "返回/取消/关闭",
+      "assets": [
+        "U02"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "S 本地状态实际改变",
+      "constraints": "P1；取消瞄准、关闭面板共享；不等于命令已经撤回"
+    },
+    {
+      "id": "U03",
+      "title": "选中舰/群体选择/设施选择",
+      "assets": [
+        "U03"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "S 选择集合实际变化",
+      "constraints": "P1；一次拖框只响一次，不逐成员播放；重复点击同一对象可静默"
+    },
+    {
+      "id": "U04",
+      "title": "移动、航点、集火确认",
+      "assets": [
+        "U04a",
+        "U04b",
+        "U04c"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E `MoveOrderAccepted` / `MoveOrderQueued` / `MoveWaypointQueued` / `FocusTargetChanged` 等",
+      "constraints": "P1；排队音色不暗示路线已可达；连续布点短促限频"
+    },
+    {
+      "id": "U05",
+      "title": "命令拒绝/部分执行/异常",
+      "assets": [
+        "U05a",
+        "U05b",
+        "U05c"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E `CommandRejected` + 现有 PlayerCommandFeedback",
+      "constraints": "P1；沿用玩家来源和合并 key，当前合并窗 1.5 秒内不重复发声；部分成功不播全成功"
+    },
+    {
+      "id": "U06",
+      "title": "HE/AP 弹种切换",
+      "assets": [
+        "U06"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E `AmmoSwitched`",
+      "constraints": "P1；一次轻机械切换；不加装填完成声，不重置冷却"
+    },
+    {
+      "id": "U07",
+      "title": "辅助/自动开火开关开、关",
+      "assets": [
+        "U07a",
+        "U07b"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "E `UnitControlStateChanged` + S 本地控件",
+      "constraints": "P1；高低两种短提示，舰队统一一次；潜艇深度操作归 S 系列"
+    },
+    {
+      "id": "U08",
+      "title": "主要武器装填完成",
+      "assets": [
+        "U08"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "S 己舰实际 reload/可用状态跨边沿",
+      "constraints": "P1；首轮只选中舰，可选扩展；切换选中对象不重播，管组完成聚合"
+    },
+    {
+      "id": "U09",
+      "title": "主动技能冷却完成",
+      "assets": [
+        "U09"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "S 己方技能冷却边沿",
+      "constraints": "P1；与 U08 听感可辨；开局已经就绪不连发 48/多舰提示"
+    },
+    {
+      "id": "U10",
+      "title": "战术暂停/继续",
+      "assets": [
+        "U10a",
+        "U10b"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "S 战斗阶段实际变化",
+      "constraints": "P1；暂停时 UI 可响，冻结战斗新触发，恢复不重放积压"
+    },
+    {
+      "id": "U11",
+      "title": "任务/结果面板出现",
+      "assets": [
+        "U11"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "S 面板首次正式显示",
+      "constraints": "P2；供 N10/N11/N14 复用，已有语义提示时不另响一层"
+    },
+    {
+      "id": "U12",
+      "title": "暂停计划排入、撤销、恢复执行",
+      "assets": [
+        "U12a",
+        "U12b",
+        "U12c"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "S 计划队列变化 + 恢复后的命令结果",
+      "constraints": "P1；排入只表示计划记录，真正拒绝仍 U05；批量执行聚合"
+    },
+    {
+      "id": "U13",
+      "title": "编队加入/移除、合法配置切换",
+      "assets": [
+        "U01",
+        "U02",
+        "U05a"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "S 菜单实际变更",
+      "constraints": "P2；复用 U01/U02；Cost 超限/锁定复用拒绝声，筹备中不播解锁"
+    },
+    {
+      "id": "U14",
+      "title": "音量调节试听、设置保存",
+      "assets": [
+        "U14a",
+        "U14b"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "S 未来音频设置 UI",
+      "constraints": "P1；拖动不逐像素出声，静音后无试听；保存状态与即时效果区分"
+    },
+    {
+      "id": "U15",
+      "title": "看板切换、观赏/退出观赏",
+      "assets": [
+        "U01",
+        "U02"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "S 当前封面流程",
+      "constraints": "P2；一次轻 UI 转场，可复用 U01/U02；不附送角色语音"
+    },
+    {
+      "id": "U16",
+      "title": "悬停、镜头缩放/拖动、持续瞄准、F9 调试",
+      "assets": [],
+      "status": "silent_deferred",
+      "reason": "高频悬停/镜头/调试默认静默",
+      "trigger": "D 默认静默",
+      "constraints": "P3；这些高频动作不应占用战斗提示预算；若加悬停需可关且限频"
+    },
+    {
+      "id": "U17",
+      "title": "音乐播放/暂停/下一首/循环控件",
+      "assets": [
+        "U01"
+      ],
+      "status": "planned",
+      "reason": "制作候选；实际触发仍须观察过滤、语义判定与去重",
+      "trigger": "S/G 按 50 未来控件行为",
+      "constraints": "P2；最多复用 UI 点击，音乐播放本身由音乐系统负责"
+    }
+  ]
+}

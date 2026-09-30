@@ -1,0 +1,22 @@
+{
+  "status": "blocked_model_access",
+  "audio_generated": 0,
+  "planned": 366,
+  "server": "hyz@192.168.252.143",
+  "gpu_uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+  "free_mib_at_check": 59069,
+  "model": "stabilityai/stable-audio-3-small-sfx",
+  "access_result": "GatedRepoError HTTP 403",
+  "huggingface_login_configured": false,
+  "server_environment": "TangoFlux isolated environment installed; unused. Stable Audio source clone interrupted after network stall; installation remains pending.",
+  "rejected_model": "declare-lab/TangoFlux",
+  "rejection_reason": "LICENSE.md declares non-commercial research-only usage; no inference performed, download stopped",
+  "local_validation": "105 requirement mappings, 122 assets, 366 unique candidate IDs and seeds; all English prompts present; 5 silent/deferred; Python syntax passed",
+  "limitations": [
+    "No generated audio",
+    "No GPU inference validation",
+    "No listening QA",
+    "No runtime integration"
+  ],
+  "required_next_action": "Account owner accepts model access conditions and configures Hugging Face credentials on server; do not send token in chat"
+}

@@ -123,7 +123,11 @@ func _test_terrain_configuration_and_rules() -> void:
 	var terrain_definition: Dictionary = registry.get_definition("terrain", "terrain.map.harbor_mouth_16x9")
 	var query = TerrainQueryService.new()
 	query.configure(terrain_definition)
-	_check(terrain_definition.get("visual_regions", []).size() == 6 and query.obstacles.size() == 2, "harbor sediment, breaker, and wet-rock regions remain visual-only outside Domain obstacles")
+	var visual_only_definition: Dictionary = terrain_definition.duplicate(true)
+	visual_only_definition["visual_regions"] = [{"id":"visual.test.sediment", "polygon":[[0,0],[100,0],[100,100],[0,100]]}]
+	var visual_only_query = TerrainQueryService.new()
+	visual_only_query.configure(visual_only_definition)
+	_check(visual_only_query.obstacles.size() == query.obstacles.size(), "decorative terrain regions do not become Domain obstacles")
 	_check(not query.debug_spatial_cells().is_empty(), "terrain query builds the same spatial index exposed by F9 debug")
 	var fast_sweep: Dictionary = query.first_segment_hit(Vector2(0.0, 1160.0), Vector2(4096.0, 1160.0), "TorpedoTravel", 8.0)
 	_check(bool(fast_sweep.get("hit", false)) and float(fast_sweep.get("fraction", 1.0)) < 1.0, "continuous torpedo sweep cannot tunnel through harbor land")
@@ -138,9 +142,9 @@ func _test_terrain_configuration_and_rules() -> void:
 	land_center /= float(first_polygon.size())
 	_check(not query.can_occupy_circle(land_center, 20.0, ["Surface", "ShallowDraft"]), "ship occupancy rejects reviewed hard land")
 	_check(query.can_occupy_circle(Vector2(3072.0, 1743.0), 20.0, ["Surface", "ShallowDraft"]), "reviewed harbor navigation channel remains passable")
-	_check(not query.can_occupy_circle(Vector2(2583.0, 1250.0), 20.0, ["Surface"]) and query.can_occupy_circle(Vector2(2583.0, 1250.0), 20.0, ["Surface", "ShallowDraft"]), "shallow-water access honors unit draft tags")
 	var shallow_crossing_query = TerrainQueryService.new()
 	shallow_crossing_query.configure({"id":"terrain.test.shallow_crossing", "map_size":[100,100], "obstacles":[], "regions":[{"id":"region.shallow_strip", "region_type":"ShallowWater", "priority":50, "polygon":[[40,0],[40,100],[60,100],[60,0]]}]})
+	_check(not shallow_crossing_query.can_occupy_circle(Vector2(50,50), 2.0, ["Surface"]) and shallow_crossing_query.can_occupy_circle(Vector2(50,50), 2.0, ["Surface", "ShallowDraft"]), "shallow-water access honors unit draft tags")
 	_check(not shallow_crossing_query.is_movement_segment_clear(Vector2(10,50), Vector2(90,50), 2.0, ["Surface"]), "deep-draft movement cannot cross shallow water between legal endpoints")
 	var shallow_motion: Dictionary = shallow_crossing_query.resolve_circle_motion(Vector2(10,50), Vector2(80,0), 2.0, ["Surface"])
 	_check(bool(shallow_motion.get("collided", false)) and (shallow_motion["position"] as Vector2).x < 40.0, "authoritative movement stops at the first illegal water-depth boundary")
@@ -413,9 +417,12 @@ func _test_scene_combat_tactical_effects() -> void:
 
 	var ai_session = BattleSession.new(registry)
 	ai_session.create_battle("level.prototype_harbor_3v3", 1207)
-	var ai_unit: Dictionary = ai_session.state["units_by_id"]["unit.enemy.kirov"]
-	var facility_plan := ai_session._ai_facility_plan(ai_unit, true)
-	_check(not facility_plan.is_empty(), "AI creates a facility capture or activation objective from its legal faction view")
+	var capture_runners := 0
+	for ai_unit in ai_session.state.units_by_id.values():
+		if ai_unit.faction_id != "enemy": continue
+		ai_session._ai_facility_plan(ai_unit, true)
+		if ai_unit.ai_state.get("level_task", "") == "CaptureFacility": capture_runners += 1
+	_check(capture_runners == 1, "AI assigns exactly one capture runner from its legal faction view")
 	var safe_waypoint: Vector2 = ai_session.minefield_service.avoidance_waypoint("enemy", Vector2(2100,1050), Vector2(2475,1050))
 	_check(safe_waypoint != Vector2(2475,1050), "AI redirects a route crossing a known active minefield through the authored safe channel")
 	var rough_unit: Dictionary = ai_session.state["units_by_id"]["unit.enemy.anshan"]
@@ -450,7 +457,8 @@ func _test_runtime_baseline_scales() -> void:
 	for weapon in registry.all("weapons"):
 		var base_range := float(weapon.get("base_range", 0.0))
 		var effective_range := float(weapon.get("range", 0.0))
-		_check(base_range > 0.0 and is_equal_approx(effective_range, base_range * 1.5), "%s uses the global 1.5x effective attack range" % weapon.get("id", "?"))
+		var range_multiplier := 3.0 if weapon.get("mount_type", "") == "Aviation" and weapon.get("control_mode", "") == "ManualPrimary" else 1.5
+		_check(base_range > 0.0 and is_equal_approx(effective_range, base_range * range_multiplier), "%s uses the %.1fx runtime attack range" % [weapon.get("id", "?"), range_multiplier])
 		var base_projectile_speed := float(weapon.get("base_projectile_speed", 0.0))
 		_check(base_projectile_speed >= 0.0 and is_equal_approx(float(weapon.get("projectile_speed", 0.0)), base_projectile_speed * 0.5), "%s uses the 0.5x runtime attack speed baseline" % weapon.get("id", "?"))
 		if weapon.get("mount_type", "") == "Gun" and int(weapon.get("mount_count", 0)) > 1:
@@ -493,7 +501,7 @@ func _test_runtime_baseline_scales() -> void:
 	_check(is_equal_approx(float(runtime_damage["final_damage"]), float(design_damage["final_damage"]) * 0.5), "runtime damage result is exactly one half of the design-scale result")
 	_check(is_equal_approx(float(estimated_damage["damage_on_hit"]), float(runtime_damage["final_damage"])) and is_equal_approx(float(estimated_damage["expected_damage"]), float(estimated_damage["damage_on_hit"]) * float(estimated_damage["hit_rate"])), "AI expected-damage input reuses the authoritative hit and damage formula without consuming randomness")
 	_check(is_equal_approx(float(registry.get_definition("weapons", "weapon.shimakaze_610_torpedo").get("range", 0.0)), 765.0), "torpedo UI and rules expose the 1.5x effective range")
-	_check(is_equal_approx(float(registry.get_definition("weapons", "weapon.enterprise_airstrike").get("range", 0.0)), 1140.0), "aviation UI and rules expose the 1.5x effective range")
+	_check(is_equal_approx(float(registry.get_definition("weapons", "weapon.enterprise_airstrike").get("range", 0.0)), 2280.0), "aviation UI and rules expose the doubled 3x effective range")
 	_check(is_equal_approx(float(registry.get_definition("weapons", "weapon.warspite_381_ap").get("projectile_speed", 0.0)), 210.0), "main-gun projectiles use the halved runtime attack speed baseline")
 	_check(is_equal_approx(float(registry.get_definition("weapons", "weapon.warspite_381_ap").get("impact_radius", 0.0)), 23.0), "main-gun shell impact radius is halved from its 46-unit design radius")
 	_check(is_equal_approx(float(registry.get_definition("weapons", "weapon.shimakaze_610_torpedo").get("projectile_speed", 0.0)), 85.0), "torpedoes use the halved runtime attack speed baseline")

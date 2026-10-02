@@ -176,74 +176,6 @@
       }
     },
     {
-      "role": "ui_portrait",
-      "crop": {
-        "content_bbox": [
-          62,
-          34,
-          443,
-          412
-        ],
-        "final_crop_box": [
-          44,
-          16,
-          443,
-          430
-        ],
-        "output_edge_margins": {
-          "left": 18,
-          "top": 19,
-          "right": 73,
-          "bottom": 71
-        }
-      },
-      "path": "assets/characters/argus/processed/ui/argus_ui_portrait.png",
-      "size": [
-        472,
-        468
-      ],
-      "edge_margins": {
-        "left": 18,
-        "top": 19,
-        "right": 73,
-        "bottom": 71
-      }
-    },
-    {
-      "role": "ui_portrait_small",
-      "crop": {
-        "content_bbox": [
-          0,
-          75,
-          411,
-          412
-        ],
-        "final_crop_box": [
-          0,
-          57,
-          429,
-          430
-        ],
-        "output_edge_margins": {
-          "left": 19,
-          "top": 19,
-          "right": 154,
-          "bottom": 42
-        }
-      },
-      "path": "assets/characters/argus/processed/ui/argus_ui_portrait_small.png",
-      "size": [
-        584,
-        398
-      ],
-      "edge_margins": {
-        "left": 166,
-        "top": 19,
-        "right": 154,
-        "bottom": 44
-      }
-    },
-    {
       "role": "ui_chibi_head",
       "crop": {
         "content_bbox": [
@@ -1370,6 +1302,224 @@
         "right": 18,
         "bottom": 19
       }
+    },
+    {
+      "role": "ui_portrait",
+      "path": "assets/characters/argus/processed/ui/argus_ui_portrait.png",
+      "file": "assets/characters/argus/processed/ui/argus_ui_portrait.png",
+      "source": "assets/characters/argus/ui/argus_portrait_20261001_unframed_v1.png",
+      "sha256": "b4f5b47a056f97062dbb6f21639203ad32737e6a64421e9a9f95b6afcef73940",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA",
+      "alpha_bbox": [
+        85,
+        56,
+        438,
+        454
+      ],
+      "alpha_pixel_count": 95897,
+      "edge_margins": {
+        "left": 85,
+        "top": 56,
+        "right": 74,
+        "bottom": 58
+      },
+      "output_padding": {
+        "left": 85,
+        "top": 56,
+        "right": 74,
+        "bottom": 58
+      },
+      "alpha_centroid": [
+        272.6382217187289,
+        270.47601411808563
+      ],
+      "centroid_offset_normalized": {
+        "x": 0.03249652679439241,
+        "y": 0.028273465074385995
+      },
+      "component_tags": [
+        "ui",
+        "portrait_revision"
+      ],
+      "crop": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          41,
+          47,
+          1141,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              41,
+              47,
+              1141,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 85,
+          "top": 56,
+          "right": 74,
+          "bottom": 58
+        },
+        "cleanup_tags": []
+      },
+      "source_crop_qa": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          41,
+          47,
+          1141,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              41,
+              47,
+              1141,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 85,
+          "top": 56,
+          "right": 74,
+          "bottom": 58
+        },
+        "cleanup_tags": []
+      }
+    },
+    {
+      "role": "ui_portrait_small",
+      "path": "assets/characters/argus/processed/ui/argus_ui_portrait_small.png",
+      "file": "assets/characters/argus/processed/ui/argus_ui_portrait_small.png",
+      "source": "assets/characters/argus/ui/argus_portrait_20261001_unframed_v1.png",
+      "sha256": "c6152ad219180507459d44fe1fd3a7559818ab50eddef56ac73899556ddb2386",
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_bbox": [
+        23,
+        12,
+        112,
+        115
+      ],
+      "alpha_pixel_count": 6528,
+      "edge_margins": {
+        "left": 23,
+        "top": 12,
+        "right": 16,
+        "bottom": 13
+      },
+      "output_padding": {
+        "left": 23,
+        "top": 12,
+        "right": 16,
+        "bottom": 13
+      },
+      "alpha_centroid": [
+        68.14665458469081,
+        67.61978475925092
+      ],
+      "centroid_offset_normalized": {
+        "x": 0.032395738942896934,
+        "y": 0.028279568431647806
+      },
+      "component_tags": [
+        "ui",
+        "portrait_revision"
+      ],
+      "crop": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          41,
+          47,
+          1141,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              41,
+              47,
+              1141,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 23,
+          "top": 12,
+          "right": 16,
+          "bottom": 13
+        },
+        "cleanup_tags": []
+      },
+      "source_crop_qa": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          41,
+          47,
+          1141,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              41,
+              47,
+              1141,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 23,
+          "top": 12,
+          "right": 16,
+          "bottom": 13
+        },
+        "cleanup_tags": []
+      }
     }
-  ]
+  ],
+  "portrait_revision": {
+    "path": "assets/characters/argus/meta/argus_portrait_revision.json",
+    "sha256": "fa5d813f272435bd8c6a8f0c32d8c9751eb5a5be0e348b9e08ec8566d424feb3"
+  }
 }

@@ -176,74 +176,6 @@
       }
     },
     {
-      "role": "ui_portrait",
-      "crop": {
-        "content_bbox": [
-          51,
-          33,
-          411,
-          433
-        ],
-        "final_crop_box": [
-          33,
-          15,
-          429,
-          443
-        ],
-        "output_edge_margins": {
-          "left": 19,
-          "top": 19,
-          "right": 23,
-          "bottom": 85
-        }
-      },
-      "path": "assets/characters/gnevny/processed/ui/gnevny_ui_portrait.png",
-      "size": [
-        402,
-        504
-      ],
-      "edge_margins": {
-        "left": 19,
-        "top": 19,
-        "right": 24,
-        "bottom": 85
-      }
-    },
-    {
-      "role": "ui_portrait_small",
-      "crop": {
-        "content_bbox": [
-          63,
-          47,
-          415,
-          433
-        ],
-        "final_crop_box": [
-          45,
-          29,
-          433,
-          443
-        ],
-        "output_edge_margins": {
-          "left": 19,
-          "top": 19,
-          "right": 19,
-          "bottom": 85
-        }
-      },
-      "path": "assets/characters/gnevny/processed/ui/gnevny_ui_portrait_small.png",
-      "size": [
-        390,
-        490
-      ],
-      "edge_margins": {
-        "left": 19,
-        "top": 19,
-        "right": 19,
-        "bottom": 85
-      }
-    },
-    {
       "role": "ui_chibi_head",
       "crop": {
         "content_bbox": [
@@ -1370,6 +1302,224 @@
         "right": 22,
         "bottom": 19
       }
+    },
+    {
+      "role": "ui_portrait",
+      "path": "assets/characters/gnevny/processed/ui/gnevny_ui_portrait.png",
+      "file": "assets/characters/gnevny/processed/ui/gnevny_ui_portrait.png",
+      "source": "assets/characters/gnevny/ui/gnevny_portrait_20261001_unframed_v1.png",
+      "sha256": "db1ee5ea3acc0fd69bfe9764777e61e1228b51a78e666f961cc9f8311fb30cc1",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA",
+      "alpha_bbox": [
+        59,
+        56,
+        438,
+        456
+      ],
+      "alpha_pixel_count": 95607,
+      "edge_margins": {
+        "left": 59,
+        "top": 56,
+        "right": 74,
+        "bottom": 56
+      },
+      "output_padding": {
+        "left": 59,
+        "top": 56,
+        "right": 74,
+        "bottom": 56
+      },
+      "alpha_centroid": [
+        267.27496478756944,
+        275.22287305394127
+      ],
+      "centroid_offset_normalized": {
+        "x": 0.022021415600721572,
+        "y": 0.037544673933479045
+      },
+      "component_tags": [
+        "ui",
+        "portrait_revision"
+      ],
+      "crop": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          12,
+          1224,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              12,
+              1224,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 59,
+          "top": 56,
+          "right": 74,
+          "bottom": 56
+        },
+        "cleanup_tags": []
+      },
+      "source_crop_qa": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          12,
+          1224,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              12,
+              1224,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 59,
+          "top": 56,
+          "right": 74,
+          "bottom": 56
+        },
+        "cleanup_tags": []
+      }
+    },
+    {
+      "role": "ui_portrait_small",
+      "path": "assets/characters/gnevny/processed/ui/gnevny_ui_portrait_small.png",
+      "file": "assets/characters/gnevny/processed/ui/gnevny_ui_portrait_small.png",
+      "source": "assets/characters/gnevny/ui/gnevny_portrait_20261001_unframed_v1.png",
+      "sha256": "82a7fe9149e04903e2bda7ea68dd9d22f9c78de2365cc050d3f06411f6ff9efe",
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_bbox": [
+        22,
+        12,
+        111,
+        116
+      ],
+      "alpha_pixel_count": 6436,
+      "edge_margins": {
+        "left": 22,
+        "top": 12,
+        "right": 17,
+        "bottom": 12
+      },
+      "output_padding": {
+        "left": 22,
+        "top": 12,
+        "right": 17,
+        "bottom": 12
+      },
+      "alpha_centroid": [
+        66.81043549633328,
+        68.79279415525315
+      ],
+      "centroid_offset_normalized": {
+        "x": 0.02195652731510378,
+        "y": 0.03744370433791522
+      },
+      "component_tags": [
+        "ui",
+        "portrait_revision"
+      ],
+      "crop": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          12,
+          1224,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              12,
+              1224,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 22,
+          "top": 12,
+          "right": 17,
+          "bottom": 12
+        },
+        "cleanup_tags": []
+      },
+      "source_crop_qa": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          12,
+          1224,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              12,
+              1224,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 22,
+          "top": 12,
+          "right": 17,
+          "bottom": 12
+        },
+        "cleanup_tags": []
+      }
     }
-  ]
+  ],
+  "portrait_revision": {
+    "path": "assets/characters/gnevny/meta/gnevny_portrait_revision.json",
+    "sha256": "14f70d6c05f8b46b02898a87dc29e47ebf0b3e0ba00d5df2000ee6d3227bee82"
+  }
 }

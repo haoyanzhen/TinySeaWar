@@ -176,74 +176,6 @@
       }
     },
     {
-      "role": "ui_portrait",
-      "crop": {
-        "content_bbox": [
-          47,
-          59,
-          426,
-          409
-        ],
-        "final_crop_box": [
-          29,
-          41,
-          443,
-          427
-        ],
-        "output_edge_margins": {
-          "left": 18,
-          "top": 19,
-          "right": 19,
-          "bottom": 93
-        }
-      },
-      "path": "assets/characters/pobeda/processed/ui/pobeda_ui_portrait.png",
-      "size": [
-        416,
-        462
-      ],
-      "edge_margins": {
-        "left": 18,
-        "top": 19,
-        "right": 19,
-        "bottom": 93
-      }
-    },
-    {
-      "role": "ui_portrait_small",
-      "crop": {
-        "content_bbox": [
-          52,
-          79,
-          401,
-          397
-        ],
-        "final_crop_box": [
-          34,
-          61,
-          419,
-          415
-        ],
-        "output_edge_margins": {
-          "left": 21,
-          "top": 18,
-          "right": 18,
-          "bottom": 76
-        }
-      },
-      "path": "assets/characters/pobeda/processed/ui/pobeda_ui_portrait_small.png",
-      "size": [
-        388,
-        412
-      ],
-      "edge_margins": {
-        "left": 21,
-        "top": 18,
-        "right": 18,
-        "bottom": 76
-      }
-    },
-    {
       "role": "ui_chibi_head",
       "crop": {
         "content_bbox": [
@@ -1370,6 +1302,224 @@
         "right": 18,
         "bottom": 19
       }
+    },
+    {
+      "role": "ui_portrait",
+      "path": "assets/characters/pobeda/processed/ui/pobeda_ui_portrait.png",
+      "file": "assets/characters/pobeda/processed/ui/pobeda_ui_portrait.png",
+      "source": "assets/characters/pobeda/ui/pobeda_portrait_20261001_unframed_v1.png",
+      "sha256": "792c76aad9b49d0f8547ca3a41d253ffd33054c4d87a53f4812066bb921964bd",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA",
+      "alpha_bbox": [
+        56,
+        64,
+        456,
+        451
+      ],
+      "alpha_pixel_count": 100506,
+      "edge_margins": {
+        "left": 56,
+        "top": 64,
+        "right": 56,
+        "bottom": 61
+      },
+      "output_padding": {
+        "left": 56,
+        "top": 64,
+        "right": 56,
+        "bottom": 61
+      },
+      "alpha_centroid": [
+        256.03830993227643,
+        286.58076138230655
+      ],
+      "centroid_offset_normalized": {
+        "x": 7.482408647740968e-05,
+        "y": 0.05972804957481748
+      },
+      "component_tags": [
+        "ui",
+        "portrait_revision"
+      ],
+      "crop": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          25,
+          57,
+          1254,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              25,
+              57,
+              1254,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 56,
+          "top": 64,
+          "right": 56,
+          "bottom": 61
+        },
+        "cleanup_tags": []
+      },
+      "source_crop_qa": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          25,
+          57,
+          1254,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              25,
+              57,
+              1254,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 56,
+          "top": 64,
+          "right": 56,
+          "bottom": 61
+        },
+        "cleanup_tags": []
+      }
+    },
+    {
+      "role": "ui_portrait_small",
+      "path": "assets/characters/pobeda/processed/ui/pobeda_ui_portrait_small.png",
+      "file": "assets/characters/pobeda/processed/ui/pobeda_ui_portrait_small.png",
+      "source": "assets/characters/pobeda/ui/pobeda_portrait_20261001_unframed_v1.png",
+      "sha256": "8b324e6deb7fb1192e818b1d71bcc9aad4b300e2ab8627cbb3efbe829abeb092",
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_bbox": [
+        12,
+        14,
+        116,
+        114
+      ],
+      "alpha_pixel_count": 6704,
+      "edge_margins": {
+        "left": 12,
+        "top": 14,
+        "right": 12,
+        "bottom": 14
+      },
+      "output_padding": {
+        "left": 12,
+        "top": 14,
+        "right": 12,
+        "bottom": 14
+      },
+      "alpha_centroid": [
+        63.996858839504036,
+        71.64230625789558
+      ],
+      "centroid_offset_normalized": {
+        "x": -2.4540316374721538e-05,
+        "y": 0.05970551763980925
+      },
+      "component_tags": [
+        "ui",
+        "portrait_revision"
+      ],
+      "crop": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          25,
+          57,
+          1254,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              25,
+              57,
+              1254,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 12,
+          "top": 14,
+          "right": 12,
+          "bottom": 14
+        },
+        "cleanup_tags": []
+      },
+      "source_crop_qa": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          25,
+          57,
+          1254,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              25,
+              57,
+              1254,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 12,
+          "top": 14,
+          "right": 12,
+          "bottom": 14
+        },
+        "cleanup_tags": []
+      }
     }
-  ]
+  ],
+  "portrait_revision": {
+    "path": "assets/characters/pobeda/meta/pobeda_portrait_revision.json",
+    "sha256": "462d1531f2f321af54b7d30c844bad9c6148c600c488e2d7d7b80db334268a36"
+  }
 }

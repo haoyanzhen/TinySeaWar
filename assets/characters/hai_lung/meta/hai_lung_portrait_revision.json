@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "character_id": "hai_lung",
+  "revision": "20261001_unframed_v1",
+  "scope": "Portraits only; does not migrate or approve the full character package",
+  "generation_route": "codex_builtin_imagegen_native_alpha",
+  "model": "account-managed/not-exposed",
+  "request_id": "not-exposed",
+  "background_control": "transparent",
+  "prompt": "Create ONE independent head-and-shoulders transparent game portrait for TinySeaWar. Image 1 is ONLY the identity reference for this character; preserve face, hair, eyes, outfit colors and core accessories exactly. Image 2 is ONLY the approved rendering/composition style sample (a DIFFERENT character); do NOT copy its blonde hair, crown or outfit. Match the style sample's polished fine anime linework, restrained cel shading, soft neutral light and bust framing. Head upright, slight three-quarter face toward viewer, neutral character-appropriate expression, eye line around 42% of square canvas height, complete hair and hats visible, upper shoulders/chest, no hands. Isolated bust at most84% canvas width/height,8%EMPTY TRANSPARENT margin every side. NO FRAME, border, card, medallion, background, text, checkerboard, weapons, ship parts, rigging or effects. Real native Alpha PNG, one portrait not a sheet, readable at40px. Character ID: hai_lung. Keep the individual expression, hair, eyes, headwear/headset, distinctive hair streak or facial scar and uniform of image1. No hands, binoculars, guns, periscope, source backdrop or external equipment.",
+  "raw_output_path": "/Users/qingyue/.codex/generated_images/01a0f530-85bc-7132-9cf0-51e103bf539a/exec-53644871-3af6-4c44-a222-0a3c9b871d94.png",
+  "raw_sha256": "f784b72b1e1c6f42888aeb3e49eb0ba8ef95c7e0303e1409f3b8547f39c24d73",
+  "references": [
+    {
+      "path": "assets/characters/hai_lung/concept/hai_lung_concept_full.png",
+      "sha256": "3c42663d319fcffa4d317e174a7605a2e146ef7f5b51fec6ea6c5aa7d21955f9"
+    },
+    {
+      "path": "assets/characters/warspite/ui/warspite_portrait_20261001_unframed_v1.png",
+      "sha256": "2de3b58ce65dc2a54b426434d5b7a477e93bb28b8e99ad51ad9bc9ca2af6cab9"
+    }
+  ],
+  "source": {
+    "path": "assets/characters/hai_lung/ui/hai_lung_portrait_20261001_unframed_v1.png",
+    "sha256": "f784b72b1e1c6f42888aeb3e49eb0ba8ef95c7e0303e1409f3b8547f39c24d73",
+    "alpha_facts": {
+      "format": "PNG",
+      "source_mode": "RGBA",
+      "width": 1254,
+      "height": 1254,
+      "has_alpha_channel": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixel_count": 610156,
+      "visible_pixel_count": 962360,
+      "transparent_canvas_ratio": 0.3880125861994409,
+      "visible_canvas_ratio": 0.6119874138005591,
+      "transparent_border_ratio": 0.9365522745411013
+    }
+  },
+  "source_review": {
+    "sha256": "f784b72b1e1c6f42888aeb3e49eb0ba8ef95c7e0303e1409f3b8547f39c24d73",
+    "verdict": "pass",
+    "reviewer": "Codex visual inspection",
+    "observation": "Deep teal tied hair, teal eyes, metallic headset, teal coat and dark diving collar retained. Pixels inspected: one complete bust, no frame, hands, external machinery or backdrop."
+  },
+  "output_reviews": {
+    "ui_portrait": {
+      "sha256": "ddeef952f519b2e3247285796cc94fd05b1e8decdcb1e0ce118d41f935e3aa4b",
+      "verdict": "pass",
+      "reviewer": "Codex visual inspection",
+      "observation": "Deep teal tied hair, teal eyes, metallic headset, teal coat and dark diving collar retained. Pixels inspected: one complete bust, no frame, hands, external machinery or backdrop. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+    },
+    "ui_portrait_small": {
+      "sha256": "da595dd63294b6f4b9f8426421435f6b7702e0bcbb206e33cb3ed73882b0d1ee",
+      "verdict": "pass",
+      "reviewer": "Codex visual inspection",
+      "observation": "Deep teal tied hair, teal eyes, metallic headset, teal coat and dark diving collar retained. Pixels inspected: one complete bust, no frame, hands, external machinery or backdrop. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+    }
+  }
+}

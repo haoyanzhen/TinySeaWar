@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "character_id": "hai_shih",
+  "revision": "20261001_unframed_v1",
+  "scope": "Portraits only; does not migrate or approve the full character package",
+  "generation_route": "codex_builtin_imagegen_native_alpha",
+  "model": "account-managed/not-exposed",
+  "request_id": "not-exposed",
+  "background_control": "transparent",
+  "prompt": "Create ONE independent head-and-shoulders transparent game portrait for TinySeaWar. Image 1 is ONLY the identity reference for this character; preserve face, hair, eyes, outfit colors and core accessories exactly. Image 2 is ONLY the approved rendering/composition style sample (a DIFFERENT character); do NOT copy its blonde hair, crown or outfit. Match the style sample's polished fine anime linework, restrained cel shading, soft neutral light and bust framing. Head upright, slight three-quarter face toward viewer, neutral character-appropriate expression, eye line around 42% of square canvas height, complete hair and hats visible, upper shoulders/chest, no hands. Isolated bust at most84% canvas width/height,8%EMPTY TRANSPARENT margin every side. NO FRAME, border, card, medallion, background, text, checkerboard, weapons, ship parts, rigging or effects. Real native Alpha PNG, one portrait not a sheet, readable at40px. Character: Hai Shih: black bob with teal underlayer, teal eyes, teal/black headset, dark teal diving collar, calm alert face. No periscope above head.",
+  "raw_output_path": "/Users/qingyue/.codex/generated_images/01a0f530-85bc-7132-9cf0-51e103bf539a/exec-4f9d2ef9-b754-4a0c-83bd-e8757de722a5.png",
+  "raw_sha256": "4addc2a7ac37ad288d8a9a2ba1e0f3eb7e7673a551e82f4415f9fed1b6841499",
+  "references": [
+    {
+      "path": "assets/characters/hai_shih/concept/hai_shih_concept_full.png",
+      "sha256": "893ffcd76f09cb19c9b89a0310eb18d6e177a0c8438cd82a692f4f71cfcff675"
+    },
+    {
+      "path": "assets/characters/warspite/ui/warspite_portrait_20261001_unframed_v1.png",
+      "sha256": "2de3b58ce65dc2a54b426434d5b7a477e93bb28b8e99ad51ad9bc9ca2af6cab9"
+    }
+  ],
+  "source": {
+    "path": "assets/characters/hai_shih/ui/hai_shih_portrait_20261001_unframed_v1.png",
+    "sha256": "4addc2a7ac37ad288d8a9a2ba1e0f3eb7e7673a551e82f4415f9fed1b6841499",
+    "alpha_facts": {
+      "format": "PNG",
+      "source_mode": "RGBA",
+      "width": 1254,
+      "height": 1254,
+      "has_alpha_channel": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixel_count": 780739,
+      "visible_pixel_count": 791777,
+      "transparent_canvas_ratio": 0.4964903377771673,
+      "visible_canvas_ratio": 0.5035096622228327,
+      "transparent_border_ratio": 0.9996009577015164
+    }
+  },
+  "source_review": {
+    "sha256": "4addc2a7ac37ad288d8a9a2ba1e0f3eb7e7673a551e82f4415f9fed1b6841499",
+    "verdict": "pass",
+    "reviewer": "Codex visual inspection",
+    "observation": "Black/teal bob, cool teal eyes and waveform headset retained; no periscope, border or machinery."
+  },
+  "output_reviews": {
+    "ui_portrait": {
+      "sha256": "81af9e28833ddab2395ae6a032d800d62bb8489639f9d82c6052f62b1d9eaf6b",
+      "verdict": "pass",
+      "reviewer": "Codex visual inspection",
+      "observation": "Black/teal bob, cool teal eyes and waveform headset retained; no periscope, border or machinery. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+    },
+    "ui_portrait_small": {
+      "sha256": "2b00ce948d3900e29f08deacd8cc2a964c480bf21dcf9254e723063ae133d0a3",
+      "verdict": "pass",
+      "reviewer": "Codex visual inspection",
+      "observation": "Black/teal bob, cool teal eyes and waveform headset retained; no periscope, border or machinery. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+    }
+  }
+}

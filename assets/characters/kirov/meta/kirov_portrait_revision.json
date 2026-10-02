@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "character_id": "kirov",
+  "revision": "20261001_unframed_v1",
+  "scope": "Portraits only; does not migrate or approve the full character package",
+  "generation_route": "codex_builtin_imagegen_native_alpha",
+  "model": "account-managed/not-exposed",
+  "request_id": "not-exposed",
+  "background_control": "transparent",
+  "prompt": "Create ONE independent head-and-shoulders transparent game portrait for TinySeaWar. Image 1 is ONLY the identity reference for this character; preserve face, hair, eyes, outfit colors and core accessories exactly. Image 2 is ONLY the approved rendering/composition style sample (a DIFFERENT character); do NOT copy its blonde hair, crown or outfit. Match the style sample's polished fine anime linework, restrained cel shading, soft neutral light and bust framing. Head upright, slight three-quarter face toward viewer, neutral character-appropriate expression, eye line around 42% of square canvas height, complete hair and hats visible, upper shoulders/chest, no hands. Isolated bust at most84% canvas width/height,8%EMPTY TRANSPARENT margin every side. NO FRAME, border, card, medallion, background, text, checkerboard, weapons, ship parts, rigging or effects. Real native Alpha PNG, one portrait not a sheet, readable at40px. No new accessories absent from identity reference; preserve hairstyle and only original worn eyewear. Character identity: Ash silver short bob, gray blue eyes, black military coat with burgundy red trim and silver angular star details. NO eyewear.",
+  "raw_output_path": "/Users/qingyue/.codex/generated_images/01a0f530-85bc-7132-9cf0-51e103bf539a/exec-f801abc2-6d38-4809-b6dd-c692cb9c3ada.png",
+  "raw_sha256": "aec60abd6a77ef627f555f145257899d3f52678682b624933e4cea16f9195aef",
+  "references": [
+    {
+      "path": "assets/characters/kirov/concept/kirov_concept_full.png",
+      "sha256": "d5d8990cd0b31575a682928cde9d0ab04cf053663fb6831d8165aba8d7fdc369"
+    },
+    {
+      "path": "assets/characters/warspite/ui/warspite_portrait_20261001_unframed_v1.png",
+      "sha256": "2de3b58ce65dc2a54b426434d5b7a477e93bb28b8e99ad51ad9bc9ca2af6cab9"
+    }
+  ],
+  "source": {
+    "path": "assets/characters/kirov/ui/kirov_portrait_20261001_unframed_v1.png",
+    "sha256": "aec60abd6a77ef627f555f145257899d3f52678682b624933e4cea16f9195aef",
+    "alpha_facts": {
+      "format": "PNG",
+      "source_mode": "RGBA",
+      "width": 1254,
+      "height": 1254,
+      "has_alpha_channel": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixel_count": 731788,
+      "visible_pixel_count": 840728,
+      "transparent_canvas_ratio": 0.4653612427472916,
+      "visible_canvas_ratio": 0.5346387572527084,
+      "transparent_border_ratio": 0.9968076616121309
+    }
+  },
+  "source_review": {
+    "sha256": "aec60abd6a77ef627f555f145257899d3f52678682b624933e4cea16f9195aef",
+    "verdict": "pass",
+    "reviewer": "Codex visual inspection",
+    "observation": "Ash short bob, gray eyes, stern face and black-burgundy angular military collar preserved; no frame or added eyewear."
+  },
+  "output_reviews": {
+    "ui_portrait": {
+      "sha256": "400640f291f2575f9b37ae9ed1d6a5c40d9522fb43a701aa9ced9ca7186645a5",
+      "verdict": "pass",
+      "reviewer": "Codex visual inspection",
+      "observation": "Ash short bob, gray eyes, stern face and black-burgundy angular military collar preserved; no frame or added eyewear. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+    },
+    "ui_portrait_small": {
+      "sha256": "191f13d8bcab50f06c17c52b0393796cd5b1e7e9ce7d658993a3bd58a974b6b9",
+      "verdict": "pass",
+      "reviewer": "Codex visual inspection",
+      "observation": "Ash short bob, gray eyes, stern face and black-burgundy angular military collar preserved; no frame or added eyewear. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+    }
+  }
+}

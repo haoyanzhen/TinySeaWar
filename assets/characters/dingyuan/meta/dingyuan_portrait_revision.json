@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "character_id": "dingyuan",
+  "revision": "20261001_unframed_v1",
+  "scope": "Portraits only; does not migrate or approve the full character package",
+  "generation_route": "codex_builtin_imagegen_native_alpha",
+  "model": "account-managed/not-exposed",
+  "request_id": "not-exposed",
+  "background_control": "transparent",
+  "prompt": "Create ONE independent head-and-shoulders transparent game portrait for TinySeaWar. Image 1 is ONLY the identity reference for this character; preserve face, hair, eyes, outfit colors and core accessories exactly. Image 2 is ONLY the approved rendering/composition style sample (a DIFFERENT character); do NOT copy its blonde hair, crown or outfit. Match the style sample's polished fine anime linework, restrained cel shading, soft neutral light and bust framing. Head upright, slight three-quarter face toward viewer, neutral character-appropriate expression, eye line around 42% of square canvas height, complete hair and hats visible, upper shoulders/chest, no hands. Isolated bust at most84% canvas width/height,8%EMPTY TRANSPARENT margin every side. NO FRAME, border, card, medallion, background, text, checkerboard, weapons, ship parts, rigging or effects. Real native Alpha PNG, one portrait not a sheet, readable at40px. Character ID: dingyuan. Keep this character's individual expression, hair, eyes, head ornaments/headset and uniform from image1. Small worn head ornaments are allowed, but no tall radar dish, guns, handheld optics, hands, source backdrop or external equipment.",
+  "raw_output_path": "/Users/qingyue/.codex/generated_images/01a0f530-85bc-7132-9cf0-51e103bf539a/exec-fae081ec-a2b2-47ba-a8c9-854f30a1a5af.png",
+  "raw_sha256": "409863a417f1d8ad608c915b3316b2b2cc15fc2096c78b16871485e5ea125e61",
+  "references": [
+    {
+      "path": "assets/characters/dingyuan/concept/dingyuan_concept_full.png",
+      "sha256": "bceafea8d139ad84fdbffc54febb2e0908354c442c6b90d40277774b8d715ebb"
+    },
+    {
+      "path": "assets/characters/warspite/ui/warspite_portrait_20261001_unframed_v1.png",
+      "sha256": "2de3b58ce65dc2a54b426434d5b7a477e93bb28b8e99ad51ad9bc9ca2af6cab9"
+    }
+  ],
+  "source": {
+    "path": "assets/characters/dingyuan/ui/dingyuan_portrait_20261001_unframed_v1.png",
+    "sha256": "409863a417f1d8ad608c915b3316b2b2cc15fc2096c78b16871485e5ea125e61",
+    "alpha_facts": {
+      "format": "PNG",
+      "source_mode": "RGBA",
+      "width": 1254,
+      "height": 1254,
+      "has_alpha_channel": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixel_count": 709356,
+      "visible_pixel_count": 863160,
+      "transparent_canvas_ratio": 0.4510962050624604,
+      "visible_canvas_ratio": 0.5489037949375396,
+      "transparent_border_ratio": 0.9455307262569832
+    }
+  },
+  "source_review": {
+    "sha256": "409863a417f1d8ad608c915b3316b2b2cc15fc2096c78b16871485e5ea125e61",
+    "verdict": "pass",
+    "reviewer": "Codex visual inspection",
+    "observation": "Black braided bun, green eyes, ornate gold hairpins/tassels and teal/ivory/gold collar retained. Generated pixels inspected: complete isolated bust, no decorative frame, external rigging, hands or backdrop."
+  },
+  "output_reviews": {
+    "ui_portrait": {
+      "sha256": "8c24d6070affea8f0b084d31b75b1e36427605dc1e3f134242fe3fe2b33684d7",
+      "verdict": "pass",
+      "reviewer": "Codex visual inspection",
+      "observation": "Black braided bun, green eyes, ornate gold hairpins/tassels and teal/ivory/gold collar retained. Generated pixels inspected: complete isolated bust, no decorative frame, external rigging, hands or backdrop. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+    },
+    "ui_portrait_small": {
+      "sha256": "e25d288eeca439d7c6e881d420625c49eefe1a92d3fc84f4cb66b10df56bc958",
+      "verdict": "pass",
+      "reviewer": "Codex visual inspection",
+      "observation": "Black braided bun, green eyes, ornate gold hairpins/tassels and teal/ivory/gold collar retained. Generated pixels inspected: complete isolated bust, no decorative frame, external rigging, hands or backdrop. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+    }
+  }
+}

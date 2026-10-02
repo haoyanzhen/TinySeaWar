@@ -62,6 +62,18 @@ def write_review(root: Path, character_id: str, manifest: dict[str, Any]) -> Pat
         previous_assets = {}
     metadata = {item.get("path", item.get("file")): item
                 for item in manifest.get("outputs", manifest.get("components", []))}
+    # An unrelated package recrop invalidates the package review, but independent
+    # portraits retain their own source/reference/output-bound visual evidence.
+    from portrait_revision import load_revision, validate_revision, SIZES
+    portrait_reviews = {}
+    try:
+        revision = load_revision(root, character_id)
+        if revision is not None and not validate_revision(root, character_id):
+            portrait_reviews = {
+                f"assets/characters/{character_id}/processed/ui/{character_id}_{semantic}.png":
+                revision["output_reviews"][semantic] for semantic in SIZES}
+    except (ValueError, OSError, KeyError, TypeError):
+        pass
     assets = {}
     for filename in runtime:
         old = previous_assets.get(filename, {})
@@ -75,6 +87,9 @@ def write_review(root: Path, character_id: str, manifest: dict[str, Any]) -> Pat
             "crop_evidence": crop,
             "review": old.get("review", {"verdict": "pending", "reviewer": "", "observation": ""}),
         }
+        if filename in portrait_reviews:
+            review = portrait_reviews[filename]
+            assets[filename]["review"] = {key: review[key] for key in ("verdict", "reviewer", "observation")}
     document = {
         "schema_version": 1, "character_id": character_id,
         "scope": "Visual evidence only; technical contract must pass separately. Not runtime acceptance.",

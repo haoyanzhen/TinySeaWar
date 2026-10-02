@@ -176,74 +176,6 @@
       }
     },
     {
-      "role": "ui_portrait",
-      "crop": {
-        "content_bbox": [
-          61,
-          30,
-          393,
-          419
-        ],
-        "final_crop_box": [
-          43,
-          12,
-          411,
-          437
-        ],
-        "output_edge_margins": {
-          "left": 19,
-          "top": 18,
-          "right": 35,
-          "bottom": 73
-        }
-      },
-      "path": "assets/characters/prinz_eugen/processed/ui/prinz_eugen_ui_portrait.png",
-      "size": [
-        386,
-        480
-      ],
-      "edge_margins": {
-        "left": 19,
-        "top": 18,
-        "right": 35,
-        "bottom": 73
-      }
-    },
-    {
-      "role": "ui_portrait_small",
-      "crop": {
-        "content_bbox": [
-          67,
-          84,
-          369,
-          403
-        ],
-        "final_crop_box": [
-          49,
-          66,
-          387,
-          421
-        ],
-        "output_edge_margins": {
-          "left": 18,
-          "top": 18,
-          "right": 34,
-          "bottom": 57
-        }
-      },
-      "path": "assets/characters/prinz_eugen/processed/ui/prinz_eugen_ui_portrait_small.png",
-      "size": [
-        354,
-        394
-      ],
-      "edge_margins": {
-        "left": 18,
-        "top": 18,
-        "right": 34,
-        "bottom": 57
-      }
-    },
-    {
       "role": "ui_chibi_head",
       "crop": {
         "content_bbox": [
@@ -1370,6 +1302,224 @@
         "right": 18,
         "bottom": 88
       }
+    },
+    {
+      "role": "ui_portrait",
+      "path": "assets/characters/prinz_eugen/processed/ui/prinz_eugen_ui_portrait.png",
+      "file": "assets/characters/prinz_eugen/processed/ui/prinz_eugen_ui_portrait.png",
+      "source": "assets/characters/prinz_eugen/ui/prinz_eugen_portrait_20261001_unframed_v1.png",
+      "sha256": "7fcd10e5604d83e5c666016174175de331b825f6de6722b4e206c4821ad7b54f",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA",
+      "alpha_bbox": [
+        68,
+        57,
+        454,
+        456
+      ],
+      "alpha_pixel_count": 91036,
+      "edge_margins": {
+        "left": 68,
+        "top": 57,
+        "right": 58,
+        "bottom": 56
+      },
+      "output_padding": {
+        "left": 68,
+        "top": 57,
+        "right": 58,
+        "bottom": 56
+      },
+      "alpha_centroid": [
+        258.53323521722956,
+        287.21557412294925
+      ],
+      "centroid_offset_normalized": {
+        "x": 0.004947725033651484,
+        "y": 0.06096791820888525
+      },
+      "component_tags": [
+        "ui",
+        "portrait_revision"
+      ],
+      "crop": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          21,
+          1208,
+          1240
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              21,
+              1208,
+              1240
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 68,
+          "top": 57,
+          "right": 58,
+          "bottom": 56
+        },
+        "cleanup_tags": []
+      },
+      "source_crop_qa": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          21,
+          1208,
+          1240
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              21,
+              1208,
+              1240
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 68,
+          "top": 57,
+          "right": 58,
+          "bottom": 56
+        },
+        "cleanup_tags": []
+      }
+    },
+    {
+      "role": "ui_portrait_small",
+      "path": "assets/characters/prinz_eugen/processed/ui/prinz_eugen_ui_portrait_small.png",
+      "file": "assets/characters/prinz_eugen/processed/ui/prinz_eugen_ui_portrait_small.png",
+      "source": "assets/characters/prinz_eugen/ui/prinz_eugen_portrait_20261001_unframed_v1.png",
+      "sha256": "2f2627570e790099fd3c52f429e2a4d2a3349506b4c02d561378e1fa16e57ebd",
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_bbox": [
+        15,
+        12,
+        115,
+        116
+      ],
+      "alpha_pixel_count": 6140,
+      "edge_margins": {
+        "left": 15,
+        "top": 12,
+        "right": 13,
+        "bottom": 12
+      },
+      "output_padding": {
+        "left": 15,
+        "top": 12,
+        "right": 13,
+        "bottom": 12
+      },
+      "alpha_centroid": [
+        64.62278247719863,
+        71.80547342171556
+      ],
+      "centroid_offset_normalized": {
+        "x": 0.004865488103114268,
+        "y": 0.06098026110715282
+      },
+      "component_tags": [
+        "ui",
+        "portrait_revision"
+      ],
+      "crop": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          21,
+          1208,
+          1240
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              21,
+              1208,
+              1240
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 15,
+          "top": 12,
+          "right": 13,
+          "bottom": 12
+        },
+        "cleanup_tags": []
+      },
+      "source_crop_qa": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          21,
+          1208,
+          1240
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              21,
+              1208,
+              1240
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 15,
+          "top": 12,
+          "right": 13,
+          "bottom": 12
+        },
+        "cleanup_tags": []
+      }
     }
-  ]
+  ],
+  "portrait_revision": {
+    "path": "assets/characters/prinz_eugen/meta/prinz_eugen_portrait_revision.json",
+    "sha256": "57f52d651fd9be9e29a24629cff7aefca6ae33f7d787cc5319f6c76005e4e7d5"
+  }
 }

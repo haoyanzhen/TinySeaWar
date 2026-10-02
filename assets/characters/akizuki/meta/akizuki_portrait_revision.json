@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "character_id": "akizuki",
+  "revision": "20261001_unframed_v1",
+  "scope": "Portraits only; does not migrate or approve the full character package",
+  "generation_route": "codex_builtin_imagegen_native_alpha",
+  "model": "account-managed/not-exposed",
+  "request_id": "not-exposed",
+  "background_control": "transparent",
+  "prompt": "Create ONE independent head-and-shoulders transparent game portrait for TinySeaWar. Image 1 is ONLY the identity reference for this character; preserve face, hair, eyes, outfit colors and core accessories exactly. Image 2 is ONLY the approved rendering/composition style sample (a DIFFERENT character); do NOT copy its blonde hair, crown or outfit. Match the style sample's polished fine anime linework, restrained cel shading, soft neutral light and bust framing. Head upright, slight three-quarter face toward viewer, neutral character-appropriate expression, eye line around 42% of square canvas height, complete hair and hats visible, upper shoulders/chest, no hands. Isolated bust at most84% canvas width/height,8%EMPTY TRANSPARENT margin every side. NO FRAME, border, card, medallion, background, text, checkerboard, weapons, ship parts, rigging or effects. Real native Alpha PNG, one portrait not a sheet, readable at40px. Character: Akizuki: dark navy bob, light blue eyes, crescent moon hair ornament, navy/white naval collar, gently confident smile. No radar above head.",
+  "raw_output_path": "/Users/qingyue/.codex/generated_images/01a0f530-85bc-7132-9cf0-51e103bf539a/exec-13a43637-1496-4173-8b98-af10e69d3e55.png",
+  "raw_sha256": "23c4d95bf33d56e9611bf5066c07ade8c83bddc3481042d4fdd64e1c26f6fa19",
+  "references": [
+    {
+      "path": "assets/characters/akizuki/concept/akizuki_concept_full.png",
+      "sha256": "a0257df5166e12825f66b28e27fe48d5d8a93bf578553d809dd79eea87ce7391"
+    },
+    {
+      "path": "assets/characters/warspite/ui/warspite_portrait_20261001_unframed_v1.png",
+      "sha256": "2de3b58ce65dc2a54b426434d5b7a477e93bb28b8e99ad51ad9bc9ca2af6cab9"
+    }
+  ],
+  "source": {
+    "path": "assets/characters/akizuki/ui/akizuki_portrait_20261001_unframed_v1.png",
+    "sha256": "23c4d95bf33d56e9611bf5066c07ade8c83bddc3481042d4fdd64e1c26f6fa19",
+    "alpha_facts": {
+      "format": "PNG",
+      "source_mode": "RGBA",
+      "width": 1254,
+      "height": 1254,
+      "has_alpha_channel": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixel_count": 690151,
+      "visible_pixel_count": 882365,
+      "transparent_canvas_ratio": 0.4388832927614091,
+      "visible_canvas_ratio": 0.5611167072385909,
+      "transparent_border_ratio": 0.9984038308060654
+    }
+  },
+  "source_review": {
+    "sha256": "23c4d95bf33d56e9611bf5066c07ade8c83bddc3481042d4fdd64e1c26f6fa19",
+    "verdict": "pass",
+    "reviewer": "Codex visual inspection",
+    "observation": "Navy bob, blue eyes, crescent/headset and naval collar retained; no radar, border or weapons."
+  },
+  "output_reviews": {
+    "ui_portrait": {
+      "sha256": "a5ddb8e0ccbc5a991ce25f5ca40f7b23719fa4ffcd3547adc7e0b438f3a2c11b",
+      "verdict": "pass",
+      "reviewer": "Codex visual inspection",
+      "observation": "Navy bob, blue eyes, crescent/headset and naval collar retained; no radar, border or weapons. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+    },
+    "ui_portrait_small": {
+      "sha256": "415773fe118b6aba72e2032fad1d2684c7ae2e994b0265957460103d492147ea",
+      "verdict": "pass",
+      "reviewer": "Codex visual inspection",
+      "observation": "Navy bob, blue eyes, crescent/headset and naval collar retained; no radar, border or weapons. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+    }
+  }
+}

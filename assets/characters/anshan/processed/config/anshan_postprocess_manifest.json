@@ -176,74 +176,6 @@
       }
     },
     {
-      "role": "ui_portrait",
-      "crop": {
-        "content_bbox": [
-          38,
-          40,
-          438,
-          415
-        ],
-        "final_crop_box": [
-          20,
-          22,
-          443,
-          433
-        ],
-        "output_edge_margins": {
-          "left": 19,
-          "top": 19,
-          "right": 45,
-          "bottom": 74
-        }
-      },
-      "path": "assets/characters/anshan/processed/ui/anshan_ui_portrait.png",
-      "size": [
-        464,
-        468
-      ],
-      "edge_margins": {
-        "left": 19,
-        "top": 19,
-        "right": 45,
-        "bottom": 74
-      }
-    },
-    {
-      "role": "ui_portrait_small",
-      "crop": {
-        "content_bbox": [
-          83,
-          81,
-          382,
-          392
-        ],
-        "final_crop_box": [
-          65,
-          63,
-          400,
-          410
-        ],
-        "output_edge_margins": {
-          "left": 46,
-          "top": 19,
-          "right": 19,
-          "bottom": 44
-        }
-      },
-      "path": "assets/characters/anshan/processed/ui/anshan_ui_portrait_small.png",
-      "size": [
-        364,
-        374
-      ],
-      "edge_margins": {
-        "left": 46,
-        "top": 19,
-        "right": 19,
-        "bottom": 44
-      }
-    },
-    {
       "role": "ui_chibi_head",
       "crop": {
         "content_bbox": [
@@ -1370,6 +1302,224 @@
         "right": 22,
         "bottom": 19
       }
+    },
+    {
+      "role": "ui_portrait",
+      "path": "assets/characters/anshan/processed/ui/anshan_ui_portrait.png",
+      "file": "assets/characters/anshan/processed/ui/anshan_ui_portrait.png",
+      "source": "assets/characters/anshan/ui/anshan_portrait_20261001_unframed_v1.png",
+      "sha256": "3b2aea3d454dd0fed9dc69642d99c0333a61b5e1d880e12b8d108d4a8a3b11c5",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA",
+      "alpha_bbox": [
+        99,
+        62,
+        444,
+        442
+      ],
+      "alpha_pixel_count": 89991,
+      "edge_margins": {
+        "left": 99,
+        "top": 62,
+        "right": 68,
+        "bottom": 70
+      },
+      "output_padding": {
+        "left": 99,
+        "top": 62,
+        "right": 68,
+        "bottom": 70
+      },
+      "alpha_centroid": [
+        264.3551521122348,
+        264.6304270150338
+      ],
+      "centroid_offset_normalized": {
+        "x": 0.016318656469208603,
+        "y": 0.01685630276373784
+      },
+      "component_tags": [
+        "ui",
+        "portrait_revision"
+      ],
+      "crop": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          40,
+          1236,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              40,
+              1236,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 99,
+          "top": 62,
+          "right": 68,
+          "bottom": 70
+        },
+        "cleanup_tags": []
+      },
+      "source_crop_qa": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          40,
+          1236,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              40,
+              1236,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 99,
+          "top": 62,
+          "right": 68,
+          "bottom": 70
+        },
+        "cleanup_tags": []
+      }
+    },
+    {
+      "role": "ui_portrait_small",
+      "path": "assets/characters/anshan/processed/ui/anshan_ui_portrait_small.png",
+      "file": "assets/characters/anshan/processed/ui/anshan_ui_portrait_small.png",
+      "source": "assets/characters/anshan/ui/anshan_portrait_20261001_unframed_v1.png",
+      "sha256": "76913bcccd267602283acd89c902bfe4c5d5fdc05f657d46fe61b7b41f6d9c6d",
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_bbox": [
+        23,
+        13,
+        113,
+        112
+      ],
+      "alpha_pixel_count": 6062,
+      "edge_margins": {
+        "left": 23,
+        "top": 13,
+        "right": 15,
+        "bottom": 16
+      },
+      "output_padding": {
+        "left": 23,
+        "top": 13,
+        "right": 15,
+        "bottom": 16
+      },
+      "alpha_centroid": [
+        66.08227456940972,
+        66.15841242335574
+      ],
+      "centroid_offset_normalized": {
+        "x": 0.016267770073513432,
+        "y": 0.016862597057466733
+      },
+      "component_tags": [
+        "ui",
+        "portrait_revision"
+      ],
+      "crop": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          40,
+          1236,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              40,
+              1236,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 23,
+          "top": 13,
+          "right": 15,
+          "bottom": 16
+        },
+        "cleanup_tags": []
+      },
+      "source_crop_qa": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          40,
+          1236,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              40,
+              1236,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 23,
+          "top": 13,
+          "right": 15,
+          "bottom": 16
+        },
+        "cleanup_tags": []
+      }
     }
-  ]
+  ],
+  "portrait_revision": {
+    "path": "assets/characters/anshan/meta/anshan_portrait_revision.json",
+    "sha256": "e4d37a6201b754e481806355d7035522b9c857fad19f23e912c5100a4f4a220d"
+  }
 }

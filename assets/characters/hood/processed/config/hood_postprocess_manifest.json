@@ -176,74 +176,6 @@
       }
     },
     {
-      "role": "ui_portrait",
-      "crop": {
-        "content_bbox": [
-          55,
-          44,
-          418,
-          448
-        ],
-        "final_crop_box": [
-          37,
-          26,
-          418,
-          466
-        ],
-        "output_edge_margins": {
-          "left": 19,
-          "top": 19,
-          "right": 44,
-          "bottom": 97
-        }
-      },
-      "path": "assets/characters/hood/processed/ui/hood_ui_portrait.png",
-      "size": [
-        426,
-        520
-      ],
-      "edge_margins": {
-        "left": 19,
-        "top": 19,
-        "right": 44,
-        "bottom": 97
-      }
-    },
-    {
-      "role": "ui_portrait_small",
-      "crop": {
-        "content_bbox": [
-          0,
-          105,
-          418,
-          448
-        ],
-        "final_crop_box": [
-          0,
-          87,
-          418,
-          466
-        ],
-        "output_edge_margins": {
-          "left": 18,
-          "top": 18,
-          "right": 92,
-          "bottom": 73
-        }
-      },
-      "path": "assets/characters/hood/processed/ui/hood_ui_portrait_small.png",
-      "size": [
-        528,
-        434
-      ],
-      "edge_margins": {
-        "left": 151,
-        "top": 18,
-        "right": 92,
-        "bottom": 73
-      }
-    },
-    {
       "role": "ui_chibi_head",
       "crop": {
         "content_bbox": [
@@ -1370,6 +1302,224 @@
         "right": 19,
         "bottom": 31
       }
+    },
+    {
+      "role": "ui_portrait",
+      "path": "assets/characters/hood/processed/ui/hood_ui_portrait.png",
+      "file": "assets/characters/hood/processed/ui/hood_ui_portrait.png",
+      "source": "assets/characters/hood/ui/hood_portrait_20261001_unframed_v1.png",
+      "sha256": "a4d6fa1596048f26c928d49853fc73ca1cd6d3317d1fd4301a6730b5cba8f127",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA",
+      "alpha_bbox": [
+        56,
+        56,
+        456,
+        455
+      ],
+      "alpha_pixel_count": 101877,
+      "edge_margins": {
+        "left": 56,
+        "top": 56,
+        "right": 56,
+        "bottom": 57
+      },
+      "output_padding": {
+        "left": 56,
+        "top": 56,
+        "right": 56,
+        "bottom": 57
+      },
+      "alpha_centroid": [
+        254.74995422177858,
+        286.7760818437606
+      ],
+      "centroid_offset_normalized": {
+        "x": -0.0024414956605887106,
+        "y": 0.06010953485109494
+      },
+      "component_tags": [
+        "ui",
+        "portrait_revision"
+      ],
+      "crop": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          32,
+          31,
+          1243,
+          1238
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              32,
+              31,
+              1243,
+              1238
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 56,
+          "top": 56,
+          "right": 56,
+          "bottom": 57
+        },
+        "cleanup_tags": []
+      },
+      "source_crop_qa": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          32,
+          31,
+          1243,
+          1238
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              32,
+              31,
+              1243,
+              1238
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 56,
+          "top": 56,
+          "right": 56,
+          "bottom": 57
+        },
+        "cleanup_tags": []
+      }
+    },
+    {
+      "role": "ui_portrait_small",
+      "path": "assets/characters/hood/processed/ui/hood_ui_portrait_small.png",
+      "file": "assets/characters/hood/processed/ui/hood_ui_portrait_small.png",
+      "source": "assets/characters/hood/ui/hood_portrait_20261001_unframed_v1.png",
+      "sha256": "a554136480753efd7ba092b6d9bcf2531dd9097edce80dc82332002d4f4945c7",
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_bbox": [
+        12,
+        12,
+        116,
+        116
+      ],
+      "alpha_pixel_count": 6839,
+      "edge_margins": {
+        "left": 12,
+        "top": 12,
+        "right": 12,
+        "bottom": 12
+      },
+      "output_padding": {
+        "left": 12,
+        "top": 12,
+        "right": 12,
+        "bottom": 12
+      },
+      "alpha_centroid": [
+        63.678193222680655,
+        71.67386160840722
+      ],
+      "centroid_offset_normalized": {
+        "x": -0.0025141154478073857,
+        "y": 0.05995204381568142
+      },
+      "component_tags": [
+        "ui",
+        "portrait_revision"
+      ],
+      "crop": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          32,
+          31,
+          1243,
+          1238
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              32,
+              31,
+              1243,
+              1238
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 12,
+          "top": 12,
+          "right": 12,
+          "bottom": 12
+        },
+        "cleanup_tags": []
+      },
+      "source_crop_qa": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          32,
+          31,
+          1243,
+          1238
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              32,
+              31,
+              1243,
+              1238
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 12,
+          "top": 12,
+          "right": 12,
+          "bottom": 12
+        },
+        "cleanup_tags": []
+      }
     }
-  ]
+  ],
+  "portrait_revision": {
+    "path": "assets/characters/hood/meta/hood_portrait_revision.json",
+    "sha256": "a000d363da6e8385dab36dffdd86c26e92f6eadc911c63b4775ff430265a6c86"
+  }
 }

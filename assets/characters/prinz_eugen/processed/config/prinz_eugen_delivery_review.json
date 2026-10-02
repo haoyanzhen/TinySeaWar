@@ -1,0 +1,1813 @@
+{
+  "schema_version": 1,
+  "character_id": "prinz_eugen",
+  "scope": "Visual evidence only; technical contract must pass separately. Not runtime acceptance.",
+  "checklist": [
+    "identity_and_inventory",
+    "no_truncation_or_neighbor_fragments",
+    "alpha_edges_and_small_scale_readability",
+    "animation_consistency",
+    "mechanical_binding_and_vfx_semantics"
+  ],
+  "package_sha256": {
+    "assets/characters/prinz_eugen/battle/prinz_eugen_anim_5x4_master.png": "ea8a6c7f8247fe7acb62d0ed432e7ae614d84b6efe4f496d121900d5e0834a1d",
+    "assets/characters/prinz_eugen/battle/prinz_eugen_battle_asset_grid.png": "004426feb96073b0913c72fe8fb8565cc50baaa9f56edb90f6fab6c35c27af81",
+    "assets/characters/prinz_eugen/concept/prinz_eugen_concept_full.png": "6159b468a94e998b867ab01a318722122a46ab1bd93d64a548628124ad8f77df",
+    "assets/characters/prinz_eugen/meta/prinz_eugen_portrait_revision.json": "57f52d651fd9be9e29a24629cff7aefca6ae33f7d787cc5319f6c76005e4e7d5",
+    "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_attack_frame_01.png": "b3eebbf9309cdd2774546295096d181cf9f7819dacd91f625409fe9dc3bad5c3",
+    "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_attack_frame_02.png": "cdb0daeb6dd51455cfbc363a1fa4ce21f4545fef07703a64268aefb1d4413752",
+    "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_attack_frame_03.png": "54460fe06688a45a300f82970a117264db9f1cc7cfb4091ce9f494327a5a22cd",
+    "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_attack_frame_04.png": "c4713afddc904ba658cfa29722e3767f8bd3db29ee3ed7a0aff2054db599c876",
+    "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_attack_keyframe.png": "b3eebbf9309cdd2774546295096d181cf9f7819dacd91f625409fe9dc3bad5c3",
+    "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_firepower_frame_01.png": "8d5aa5556b010b39feed629833190bc5961896fd6283fc94e960f433837e9515",
+    "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_firepower_frame_02.png": "75f3598b658fc179a5924ca6ae7bfbce02b08103d761dc26fe9aaceec5bff668",
+    "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_firepower_frame_03.png": "ba4b384851ac2846e22c62a7c87be1a87600cb64240999bcfb20af0bd54c2cb5",
+    "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_firepower_frame_04.png": "ea30ec4c08b005c7a8735bc4da971187dd28292e9fe95d06d946eb132515f642",
+    "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_firepower_keyframe.png": "8d5aa5556b010b39feed629833190bc5961896fd6283fc94e960f433837e9515",
+    "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_hit_frame_01.png": "9a6505fc19dd5c6a53e41586c14e0736d069fe9bcff8de70fc320da15d2fff1b",
+    "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_hit_frame_02.png": "5eec1f085dd81f565ad9961c430eeeeaf2eda0986925d1e3c05cc0323919d391",
+    "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_hit_frame_03.png": "3d384ec646c60c7f72a30ab4bda16b486b5ddbdacf6623c2a7d0a5e6240ca6aa",
+    "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_hit_frame_04.png": "58d2f784b58b2204cc0234f19334a9f0f84d0e000f7e477ef1dd6dd4a8171474",
+    "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_hit_keyframe.png": "9a6505fc19dd5c6a53e41586c14e0736d069fe9bcff8de70fc320da15d2fff1b",
+    "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_idle_frame_01.png": "5265a4692d761e9c4fa6260eb1683e654f17005c6d5e1bf6c6de1b2644a0e131",
+    "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_idle_frame_02.png": "7e1e268bc82990d70f0035b83fa7b44c98ea7c18443afe5de1a54fe2fb7be7ac",
+    "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_idle_frame_03.png": "7b6732f230bde219ee11d802260c8fc4673b82a77180c0d04099665e48b840b0",
+    "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_idle_frame_04.png": "2a3f75156086eda6d7a11810a7b720d329983e02df0c9efe3598722b06a2620b",
+    "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_idle_keyframe.png": "5265a4692d761e9c4fa6260eb1683e654f17005c6d5e1bf6c6de1b2644a0e131",
+    "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_move_frame_01.png": "943c5832f5091b7ea71f4c676d886aed04418d054f0fbc007fe2c6b2a81776db",
+    "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_move_frame_02.png": "56c9e2a455332d4f359ca4dd0ec1b973243d65e7e1a2719024b95f9209684382",
+    "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_move_frame_03.png": "f4e723149ca037fab623b6b92214c5ef6de2203a816d63aae4a1c158317e8731",
+    "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_move_frame_04.png": "fff693455e0c18e105354e6799ae3623d9e9fb051f0ceb2e22ceecfc7065ec1b",
+    "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_move_keyframe.png": "943c5832f5091b7ea71f4c676d886aed04418d054f0fbc007fe2c6b2a81776db",
+    "assets/characters/prinz_eugen/processed/battle/prinz_eugen_battle_body_r.png": "5265a4692d761e9c4fa6260eb1683e654f17005c6d5e1bf6c6de1b2644a0e131",
+    "assets/characters/prinz_eugen/processed/battle/prinz_eugen_battle_fire_control_node.png": "c48d4f4e16734dc4ac5f49fdf4c3952ccc55b142797ca436458c4fd1c4ce90d2",
+    "assets/characters/prinz_eugen/processed/battle/prinz_eugen_battle_rig_base.png": "88013c8fff8a42ee6e5ec66e406a95385b23aa36fafa72346e60131e73467fc9",
+    "assets/characters/prinz_eugen/processed/battle/prinz_eugen_battle_turret_main_01.png": "3f5c3cdc205595ba6f5e5b710ca26bb2a42d0a806cd04ca5e85ead79c497605d",
+    "assets/characters/prinz_eugen/processed/battle/prinz_eugen_battle_turret_main_02.png": "089ce63017879805fda6fe826c87ed660cefe4f2f14e1b83d33a218a014097aa",
+    "assets/characters/prinz_eugen/processed/battle/prinz_eugen_battle_turret_main_03.png": "99c1d1ece2c31519a8711fb0bdebffbb8b8081d00f9bf08747faa5df5bd88d99",
+    "assets/characters/prinz_eugen/processed/battle/prinz_eugen_battle_turret_secondary_01.png": "9f367614fc15ead1b9620c376b74675277fe4895b0b93a4ea406111ea4f3c031",
+    "assets/characters/prinz_eugen/processed/battle/prinz_eugen_battle_wake_origin_marker.png": "f43f525a0cca37e90615b94d7e9ca38d973d28f8eae8d25979f8f6b6c14ca500",
+    "assets/characters/prinz_eugen/processed/config/prinz_eugen_anim_config.json": "3b6bdf05294ec47e0d5ef00df8ba7c80a6fb73828ca7fe59853b6271a478f06f",
+    "assets/characters/prinz_eugen/processed/config/prinz_eugen_meta_bind_points.json": "21b4d6739ae9585695a7513db765a34c14e28bc39855a13c4b7ce36322d0fbf3",
+    "assets/characters/prinz_eugen/processed/config/prinz_eugen_postprocess_manifest.json": "18984b42e53b2dda8ecff99b9883284a911b82888092fd4463a2bcc189264a7e",
+    "assets/characters/prinz_eugen/processed/config/prinz_eugen_vfx_config.json": "43d2d47491db23c6d886f1164aec5db38703627fc96f25d1e40c89187524e80f",
+    "assets/characters/prinz_eugen/processed/source_alpha/prinz_eugen_anim_5x4_master_alpha_source.png": "9b01f5cc6f2f20e4f18ca58fe376c563283c09b03ac1c435eefb9cb716414218",
+    "assets/characters/prinz_eugen/processed/source_alpha/prinz_eugen_battle_asset_grid_alpha_source.png": "c1cffbc3ad193e556850a78300606c5d9bf62e23357271d75bca29c14814e8f5",
+    "assets/characters/prinz_eugen/processed/source_alpha/prinz_eugen_concept_full_alpha_source.png": "129459be17426a95a06ea0238d6c117d98d8594ed0790956c227a094aaf563eb",
+    "assets/characters/prinz_eugen/processed/source_alpha/prinz_eugen_ui_sheet_alpha_source.png": "f3a7cdbdce3e0e1058b27fc611c1f495a0d9b267ade85cc7b968611cfbc74f7d",
+    "assets/characters/prinz_eugen/processed/source_alpha/prinz_eugen_vfx_reference_sheet_alpha_source.png": "b9b40f20e4bf54b0102ecee244e01eb746344ecfc70ac9e69baba47f28a102e8",
+    "assets/characters/prinz_eugen/processed/ui/prinz_eugen_expr_default.png": "ee2de44db03bcd05840440b1259fe073c50c43f80f62d6114e898f52a074d8e1",
+    "assets/characters/prinz_eugen/processed/ui/prinz_eugen_expr_hit.png": "4e3cfcbd2d27622ed99578e1d9b32ffdac9ac60c6647b46e1081b4f4076c2db1",
+    "assets/characters/prinz_eugen/processed/ui/prinz_eugen_expr_serious.png": "efe2d047a940d712a103af3d38c300f277c642b6eb1398cdde742b4537d1e553",
+    "assets/characters/prinz_eugen/processed/ui/prinz_eugen_illust_full_alpha.png": "94ad38b0fb5fe4c1e44b7a62fba0bb17eb1206be0ac5da841571ec323b218b98",
+    "assets/characters/prinz_eugen/processed/ui/prinz_eugen_illust_half_alpha.png": "c62dba19fd15121d528f0c82c6ec7517173bb4eecb4b1fd0f6ecdbcbfb7e276f",
+    "assets/characters/prinz_eugen/processed/ui/prinz_eugen_illust_skill_cutin_alpha.png": "02d4d2920d58432a06f478bbc522a399f856d2b657b621ee3b13fc9fd9550968",
+    "assets/characters/prinz_eugen/processed/ui/prinz_eugen_ui_chibi_head.png": "49b159d4638194b8783135b1e506d7a1a110635c93ede5d0d13db4f379b33cea",
+    "assets/characters/prinz_eugen/processed/ui/prinz_eugen_ui_class_heavy_cruiser.png": "4c7f28f8a98b6296fb95d1d785b2541ba45ab015850930a075a888c6eeb9edc0",
+    "assets/characters/prinz_eugen/processed/ui/prinz_eugen_ui_portrait.png": "7fcd10e5604d83e5c666016174175de331b825f6de6722b4e206c4821ad7b54f",
+    "assets/characters/prinz_eugen/processed/ui/prinz_eugen_ui_portrait_small.png": "2f2627570e790099fd3c52f429e2a4d2a3349506b4c02d561378e1fa16e57ebd",
+    "assets/characters/prinz_eugen/processed/ui/prinz_eugen_ui_skill_fire_control.png": "d19a63001e608f9d9eea39bdb322894969c982afc6c61d374f0acea785b9cbac",
+    "assets/characters/prinz_eugen/ui/prinz_eugen_portrait_20261001_unframed_v1.png": "29c88b698dac040dc57870b7077ce0e2a1d9760f6587056104273b7af8512efa",
+    "assets/characters/prinz_eugen/ui/prinz_eugen_ui_sheet.png": "e5e602d3105b48c070e569cee33b3d35a77b60c0257160c92e0b6b12da0fb826",
+    "assets/characters/prinz_eugen/vfx/prinz_eugen_vfx_reference_sheet.png": "b17361c36d6cfc34cf347a5f18abf69c63202c4e85846e876aa050169f62404f",
+    "assets/vfx/combat/character_templates/heavy_cruiser/vfx_heavy_cruiser_armor_sparks.png": "8e41852a991cb653489b9e71a9fa5aad3b7889e3953f9fb2f028896bd71d57be",
+    "assets/vfx/combat/character_templates/heavy_cruiser/vfx_heavy_cruiser_broadside_smoke.png": "8e5bb261d6c71b9a8c732df3ce42ac15ce808d917e20780b8c51c1c31aafb980",
+    "assets/vfx/combat/character_templates/heavy_cruiser/vfx_heavy_cruiser_fire_control_lock_line.png": "371cbd944be04150419c06641eb27a472c5c1507ed5839a156702df1530ed172",
+    "assets/vfx/combat/character_templates/heavy_cruiser/vfx_heavy_cruiser_muzzle_flash_large.png": "350970a3009bb1655fee673be864ada9708d7bf284e65ac5d138071302f9f07a",
+    "assets/vfx/combat/character_templates/heavy_cruiser/vfx_heavy_cruiser_shell_trail_heavy.png": "15300958b915209f380370754b2cb601feb74e380e69d0c67cf5b42309dcabd1",
+    "assets/vfx/combat/character_templates/heavy_cruiser/vfx_heavy_cruiser_suppression_aura.png": "20d0d72b328175839b4c97e35c04dc34476f1707d2d6ae15d1a798eacd98bb74",
+    "assets/vfx/combat/character_templates/heavy_cruiser/vfx_heavy_cruiser_wake_heavy.png": "f9ff3755eab5073a5cd47121c7395dd3e19bb87c80f2dc4e997450a7f783bceb",
+    "assets/vfx/combat/character_templates/heavy_cruiser/vfx_heavy_cruiser_water_splash_large.png": "d91ff14d7cefab59183d7ba387367d022f04816e35846176c1691c3a04a6b89a"
+  },
+  "assets": {
+    "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_attack_frame_01.png": {
+      "sha256": "b3eebbf9309cdd2774546295096d181cf9f7819dacd91f625409fe9dc3bad5c3",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 388,
+        "height": 230,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 66668,
+        "visible_pixel_count": 22572,
+        "transparent_canvas_ratio": 0.7470640968175706,
+        "visible_canvas_ratio": 0.2529359031824294,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_attack_frame_02.png": {
+      "sha256": "cdb0daeb6dd51455cfbc363a1fa4ce21f4545fef07703a64268aefb1d4413752",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 388,
+        "height": 230,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 66010,
+        "visible_pixel_count": 23230,
+        "transparent_canvas_ratio": 0.7396907216494846,
+        "visible_canvas_ratio": 0.2603092783505155,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_attack_frame_03.png": {
+      "sha256": "54460fe06688a45a300f82970a117264db9f1cc7cfb4091ce9f494327a5a22cd",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 388,
+        "height": 230,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 65190,
+        "visible_pixel_count": 24050,
+        "transparent_canvas_ratio": 0.7305020170327208,
+        "visible_canvas_ratio": 0.2694979829672792,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_attack_frame_04.png": {
+      "sha256": "c4713afddc904ba658cfa29722e3767f8bd3db29ee3ed7a0aff2054db599c876",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 388,
+        "height": 230,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 66943,
+        "visible_pixel_count": 22297,
+        "transparent_canvas_ratio": 0.7501456745853877,
+        "visible_canvas_ratio": 0.24985432541461228,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_attack_keyframe.png": {
+      "sha256": "b3eebbf9309cdd2774546295096d181cf9f7819dacd91f625409fe9dc3bad5c3",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 388,
+        "height": 230,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 66668,
+        "visible_pixel_count": 22572,
+        "transparent_canvas_ratio": 0.7470640968175706,
+        "visible_canvas_ratio": 0.2529359031824294,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_firepower_frame_01.png": {
+      "sha256": "8d5aa5556b010b39feed629833190bc5961896fd6283fc94e960f433837e9515",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 398,
+        "height": 216,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 59360,
+        "visible_pixel_count": 26608,
+        "transparent_canvas_ratio": 0.6904894844593337,
+        "visible_canvas_ratio": 0.3095105155406663,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_firepower_frame_02.png": {
+      "sha256": "75f3598b658fc179a5924ca6ae7bfbce02b08103d761dc26fe9aaceec5bff668",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 398,
+        "height": 216,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 57828,
+        "visible_pixel_count": 28140,
+        "transparent_canvas_ratio": 0.6726689000558347,
+        "visible_canvas_ratio": 0.32733109994416526,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_firepower_frame_03.png": {
+      "sha256": "ba4b384851ac2846e22c62a7c87be1a87600cb64240999bcfb20af0bd54c2cb5",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 398,
+        "height": 216,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 61604,
+        "visible_pixel_count": 24364,
+        "transparent_canvas_ratio": 0.7165922203610646,
+        "visible_canvas_ratio": 0.28340777963893543,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_firepower_frame_04.png": {
+      "sha256": "ea30ec4c08b005c7a8735bc4da971187dd28292e9fe95d06d946eb132515f642",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 398,
+        "height": 216,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 62315,
+        "visible_pixel_count": 23653,
+        "transparent_canvas_ratio": 0.7248627396240461,
+        "visible_canvas_ratio": 0.2751372603759538,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_firepower_keyframe.png": {
+      "sha256": "8d5aa5556b010b39feed629833190bc5961896fd6283fc94e960f433837e9515",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 398,
+        "height": 216,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 59360,
+        "visible_pixel_count": 26608,
+        "transparent_canvas_ratio": 0.6904894844593337,
+        "visible_canvas_ratio": 0.3095105155406663,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_hit_frame_01.png": {
+      "sha256": "9a6505fc19dd5c6a53e41586c14e0736d069fe9bcff8de70fc320da15d2fff1b",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 266,
+        "height": 232,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 40575,
+        "visible_pixel_count": 21137,
+        "transparent_canvas_ratio": 0.6574896292455276,
+        "visible_canvas_ratio": 0.3425103707544724,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_hit_frame_02.png": {
+      "sha256": "5eec1f085dd81f565ad9961c430eeeeaf2eda0986925d1e3c05cc0323919d391",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 266,
+        "height": 232,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 42562,
+        "visible_pixel_count": 19150,
+        "transparent_canvas_ratio": 0.6896875810215193,
+        "visible_canvas_ratio": 0.31031241897848066,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_hit_frame_03.png": {
+      "sha256": "3d384ec646c60c7f72a30ab4bda16b486b5ddbdacf6623c2a7d0a5e6240ca6aa",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 266,
+        "height": 232,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 41433,
+        "visible_pixel_count": 20279,
+        "transparent_canvas_ratio": 0.6713929219600726,
+        "visible_canvas_ratio": 0.3286070780399274,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_hit_frame_04.png": {
+      "sha256": "58d2f784b58b2204cc0234f19334a9f0f84d0e000f7e477ef1dd6dd4a8171474",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 266,
+        "height": 232,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 41620,
+        "visible_pixel_count": 20092,
+        "transparent_canvas_ratio": 0.6744231267824734,
+        "visible_canvas_ratio": 0.3255768732175266,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_hit_keyframe.png": {
+      "sha256": "9a6505fc19dd5c6a53e41586c14e0736d069fe9bcff8de70fc320da15d2fff1b",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 266,
+        "height": 232,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 40575,
+        "visible_pixel_count": 21137,
+        "transparent_canvas_ratio": 0.6574896292455276,
+        "visible_canvas_ratio": 0.3425103707544724,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_idle_frame_01.png": {
+      "sha256": "5265a4692d761e9c4fa6260eb1683e654f17005c6d5e1bf6c6de1b2644a0e131",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 240,
+        "height": 234,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 36043,
+        "visible_pixel_count": 20117,
+        "transparent_canvas_ratio": 0.6417913105413106,
+        "visible_canvas_ratio": 0.35820868945868944,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_idle_frame_02.png": {
+      "sha256": "7e1e268bc82990d70f0035b83fa7b44c98ea7c18443afe5de1a54fe2fb7be7ac",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 240,
+        "height": 234,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 36054,
+        "visible_pixel_count": 20106,
+        "transparent_canvas_ratio": 0.6419871794871795,
+        "visible_canvas_ratio": 0.3580128205128205,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_idle_frame_03.png": {
+      "sha256": "7b6732f230bde219ee11d802260c8fc4673b82a77180c0d04099665e48b840b0",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 240,
+        "height": 234,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 36042,
+        "visible_pixel_count": 20118,
+        "transparent_canvas_ratio": 0.6417735042735043,
+        "visible_canvas_ratio": 0.35822649572649573,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_idle_frame_04.png": {
+      "sha256": "2a3f75156086eda6d7a11810a7b720d329983e02df0c9efe3598722b06a2620b",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 240,
+        "height": 234,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 35988,
+        "visible_pixel_count": 20172,
+        "transparent_canvas_ratio": 0.6408119658119659,
+        "visible_canvas_ratio": 0.3591880341880342,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_idle_keyframe.png": {
+      "sha256": "5265a4692d761e9c4fa6260eb1683e654f17005c6d5e1bf6c6de1b2644a0e131",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 240,
+        "height": 234,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 36043,
+        "visible_pixel_count": 20117,
+        "transparent_canvas_ratio": 0.6417913105413106,
+        "visible_canvas_ratio": 0.35820868945868944,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_move_frame_01.png": {
+      "sha256": "943c5832f5091b7ea71f4c676d886aed04418d054f0fbc007fe2c6b2a81776db",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 306,
+        "height": 226,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 49015,
+        "visible_pixel_count": 20141,
+        "transparent_canvas_ratio": 0.7087599051419978,
+        "visible_canvas_ratio": 0.2912400948580022,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_move_frame_02.png": {
+      "sha256": "56c9e2a455332d4f359ca4dd0ec1b973243d65e7e1a2719024b95f9209684382",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 306,
+        "height": 226,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 47186,
+        "visible_pixel_count": 21970,
+        "transparent_canvas_ratio": 0.6823124530048007,
+        "visible_canvas_ratio": 0.31768754699519924,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_move_frame_03.png": {
+      "sha256": "f4e723149ca037fab623b6b92214c5ef6de2203a816d63aae4a1c158317e8731",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 306,
+        "height": 226,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 44466,
+        "visible_pixel_count": 24690,
+        "transparent_canvas_ratio": 0.6429810862398057,
+        "visible_canvas_ratio": 0.35701891376019435,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_move_frame_04.png": {
+      "sha256": "fff693455e0c18e105354e6799ae3623d9e9fb051f0ceb2e22ceecfc7065ec1b",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 306,
+        "height": 226,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 48275,
+        "visible_pixel_count": 20881,
+        "transparent_canvas_ratio": 0.6980594597721095,
+        "visible_canvas_ratio": 0.3019405402278906,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/prinz_eugen/processed/anim/prinz_eugen_anim_move_keyframe.png": {
+      "sha256": "943c5832f5091b7ea71f4c676d886aed04418d054f0fbc007fe2c6b2a81776db",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 306,
+        "height": 226,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 49015,
+        "visible_pixel_count": 20141,
+        "transparent_canvas_ratio": 0.7087599051419978,
+        "visible_canvas_ratio": 0.2912400948580022,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/prinz_eugen/processed/battle/prinz_eugen_battle_body_r.png": {
+      "sha256": "5265a4692d761e9c4fa6260eb1683e654f17005c6d5e1bf6c6de1b2644a0e131",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 240,
+        "height": 234,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 36043,
+        "visible_pixel_count": 20117,
+        "transparent_canvas_ratio": 0.6417913105413106,
+        "visible_canvas_ratio": 0.35820868945868944,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/prinz_eugen/processed/battle/prinz_eugen_battle_fire_control_node.png": {
+      "sha256": "c48d4f4e16734dc4ac5f49fdf4c3952ccc55b142797ca436458c4fd1c4ce90d2",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 212,
+        "height": 326,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 42919,
+        "visible_pixel_count": 26193,
+        "transparent_canvas_ratio": 0.6210064822317398,
+        "visible_canvas_ratio": 0.37899351776826024,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          131,
+          64,
+          300,
+          312
+        ],
+        "final_crop_box": [
+          113,
+          46,
+          318,
+          330
+        ],
+        "component_area": 26193,
+        "output_edge_margins": {
+          "left": 25,
+          "top": 19,
+          "right": 18,
+          "bottom": 59
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/prinz_eugen/processed/battle/prinz_eugen_battle_rig_base.png": {
+      "sha256": "88013c8fff8a42ee6e5ec66e406a95385b23aa36fafa72346e60131e73467fc9",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 416,
+        "height": 298,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 77775,
+        "visible_pixel_count": 46193,
+        "transparent_canvas_ratio": 0.627379646360351,
+        "visible_canvas_ratio": 0.37262035363964896,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          57,
+          148,
+          393,
+          385
+        ],
+        "final_crop_box": [
+          39,
+          130,
+          411,
+          403
+        ],
+        "component_area": 46193,
+        "output_edge_margins": {
+          "left": 61,
+          "top": 43,
+          "right": 19,
+          "bottom": 18
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/prinz_eugen/processed/battle/prinz_eugen_battle_turret_main_01.png": {
+      "sha256": "3f5c3cdc205595ba6f5e5b710ca26bb2a42d0a806cd04ca5e85ead79c497605d",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 404,
+        "height": 246,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 61913,
+        "visible_pixel_count": 37471,
+        "transparent_canvas_ratio": 0.6229674796747967,
+        "visible_canvas_ratio": 0.37703252032520324,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          78,
+          152,
+          393,
+          360
+        ],
+        "final_crop_box": [
+          60,
+          134,
+          411,
+          378
+        ],
+        "component_area": 37471,
+        "output_edge_margins": {
+          "left": 71,
+          "top": 20,
+          "right": 18,
+          "bottom": 18
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/prinz_eugen/processed/battle/prinz_eugen_battle_turret_main_02.png": {
+      "sha256": "089ce63017879805fda6fe826c87ed660cefe4f2f14e1b83d33a218a014097aa",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 402,
+        "height": 246,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 61648,
+        "visible_pixel_count": 37244,
+        "transparent_canvas_ratio": 0.623387129393682,
+        "visible_canvas_ratio": 0.376612870606318,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          56,
+          152,
+          369,
+          360
+        ],
+        "final_crop_box": [
+          38,
+          134,
+          387,
+          378
+        ],
+        "component_area": 37244,
+        "output_edge_margins": {
+          "left": 70,
+          "top": 20,
+          "right": 19,
+          "bottom": 18
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/prinz_eugen/processed/battle/prinz_eugen_battle_turret_main_03.png": {
+      "sha256": "99c1d1ece2c31519a8711fb0bdebffbb8b8081d00f9bf08747faa5df5bd88d99",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 406,
+        "height": 248,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 62854,
+        "visible_pixel_count": 37834,
+        "transparent_canvas_ratio": 0.6242451930716669,
+        "visible_canvas_ratio": 0.3757548069283331,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          82,
+          91,
+          398,
+          301
+        ],
+        "final_crop_box": [
+          64,
+          73,
+          416,
+          319
+        ],
+        "component_area": 37834,
+        "output_edge_margins": {
+          "left": 71,
+          "top": 20,
+          "right": 19,
+          "bottom": 18
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/prinz_eugen/processed/battle/prinz_eugen_battle_turret_secondary_01.png": {
+      "sha256": "9f367614fc15ead1b9620c376b74675277fe4895b0b93a4ea406111ea4f3c031",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 268,
+        "height": 224,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 36190,
+        "visible_pixel_count": 23842,
+        "transparent_canvas_ratio": 0.6028451492537313,
+        "visible_canvas_ratio": 0.39715485074626866,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          121,
+          102,
+          322,
+          281
+        ],
+        "final_crop_box": [
+          103,
+          84,
+          340,
+          299
+        ],
+        "component_area": 23842,
+        "output_edge_margins": {
+          "left": 49,
+          "top": 19,
+          "right": 18,
+          "bottom": 26
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/prinz_eugen/processed/battle/prinz_eugen_battle_wake_origin_marker.png": {
+      "sha256": "f43f525a0cca37e90615b94d7e9ca38d973d28f8eae8d25979f8f6b6c14ca500",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 322,
+        "height": 242,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 56642,
+        "visible_pixel_count": 21282,
+        "transparent_canvas_ratio": 0.7268877367691597,
+        "visible_canvas_ratio": 0.2731122632308403,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          69,
+          110,
+          340,
+          304
+        ],
+        "final_crop_box": [
+          51,
+          92,
+          358,
+          322
+        ],
+        "component_area": 21282,
+        "output_edge_margins": {
+          "left": 32,
+          "top": 18,
+          "right": 19,
+          "bottom": 30
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/prinz_eugen/processed/ui/prinz_eugen_expr_default.png": {
+      "sha256": "ee2de44db03bcd05840440b1259fe073c50c43f80f62d6114e898f52a074d8e1",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 360,
+        "height": 378,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 70547,
+        "visible_pixel_count": 65533,
+        "transparent_canvas_ratio": 0.518422986478542,
+        "visible_canvas_ratio": 0.481577013521458,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          45,
+          78,
+          356,
+          394
+        ],
+        "final_crop_box": [
+          27,
+          60,
+          374,
+          412
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 30,
+          "bottom": 43
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/prinz_eugen/processed/ui/prinz_eugen_expr_hit.png": {
+      "sha256": "4e3cfcbd2d27622ed99578e1d9b32ffdac9ac60c6647b46e1081b4f4076c2db1",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 342,
+        "height": 372,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 65053,
+        "visible_pixel_count": 62171,
+        "transparent_canvas_ratio": 0.5113264792806389,
+        "visible_canvas_ratio": 0.48867352071936115,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          68,
+          44,
+          366,
+          355
+        ],
+        "final_crop_box": [
+          50,
+          26,
+          384,
+          373
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 25,
+          "bottom": 43
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/prinz_eugen/processed/ui/prinz_eugen_expr_serious.png": {
+      "sha256": "efe2d047a940d712a103af3d38c300f277c642b6eb1398cdde742b4537d1e553",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 346,
+        "height": 374,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 65851,
+        "visible_pixel_count": 63553,
+        "transparent_canvas_ratio": 0.5088791691137832,
+        "visible_canvas_ratio": 0.49112083088621683,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          90,
+          44,
+          393,
+          357
+        ],
+        "final_crop_box": [
+          72,
+          26,
+          411,
+          375
+        ],
+        "output_edge_margins": {
+          "left": 18,
+          "top": 18,
+          "right": 25,
+          "bottom": 43
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/prinz_eugen/processed/ui/prinz_eugen_illust_full_alpha.png": {
+      "sha256": "94ad38b0fb5fe4c1e44b7a62fba0bb17eb1206be0ac5da841571ec323b218b98",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 1002,
+        "height": 1620,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 964961,
+        "visible_pixel_count": 658279,
+        "transparent_canvas_ratio": 0.5944660062590867,
+        "visible_canvas_ratio": 0.40553399374091326,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          18,
+          41,
+          995,
+          1507
+        ],
+        "final_crop_box": [
+          6,
+          29,
+          1007,
+          1519
+        ],
+        "output_edge_margins": {
+          "left": 13,
+          "top": 142,
+          "right": 12,
+          "bottom": 12
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/prinz_eugen/processed/ui/prinz_eugen_illust_half_alpha.png": {
+      "sha256": "c62dba19fd15121d528f0c82c6ec7517173bb4eecb4b1fd0f6ecdbcbfb7e276f",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 1018,
+        "height": 1248,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 677547,
+        "visible_pixel_count": 592917,
+        "transparent_canvas_ratio": 0.5333067288801572,
+        "visible_canvas_ratio": 0.4666932711198428,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          25,
+          17,
+          1002,
+          1072
+        ],
+        "final_crop_box": [
+          9,
+          1,
+          1018,
+          1088
+        ],
+        "output_edge_margins": {
+          "left": 25,
+          "top": 17,
+          "right": 16,
+          "bottom": 176
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/prinz_eugen/processed/ui/prinz_eugen_illust_skill_cutin_alpha.png": {
+      "sha256": "02d4d2920d58432a06f478bbc522a399f856d2b657b621ee3b13fc9fd9550968",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 1024,
+        "height": 1108,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 645214,
+        "visible_pixel_count": 489378,
+        "transparent_canvas_ratio": 0.5686749069268953,
+        "visible_canvas_ratio": 0.4313250930731047,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          516,
+          16,
+          1493,
+          866
+        ],
+        "final_crop_box": [
+          500,
+          0,
+          1509,
+          882
+        ],
+        "output_edge_margins": {
+          "left": 31,
+          "top": 16,
+          "right": 16,
+          "bottom": 242
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/prinz_eugen/processed/ui/prinz_eugen_ui_chibi_head.png": {
+      "sha256": "49b159d4638194b8783135b1e506d7a1a110635c93ede5d0d13db4f379b33cea",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 370,
+        "height": 364,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 68937,
+        "visible_pixel_count": 65743,
+        "transparent_canvas_ratio": 0.5118577368577368,
+        "visible_canvas_ratio": 0.48814226314226317,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          43,
+          82,
+          358,
+          390
+        ],
+        "final_crop_box": [
+          25,
+          64,
+          376,
+          408
+        ],
+        "output_edge_margins": {
+          "left": 18,
+          "top": 19,
+          "right": 37,
+          "bottom": 37
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/prinz_eugen/processed/ui/prinz_eugen_ui_class_heavy_cruiser.png": {
+      "sha256": "4c7f28f8a98b6296fb95d1d785b2541ba45ab015850930a075a888c6eeb9edc0",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 308,
+        "height": 308,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 37241,
+        "visible_pixel_count": 57623,
+        "transparent_canvas_ratio": 0.3925725248777197,
+        "visible_canvas_ratio": 0.6074274751222803,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          57,
+          78,
+          327,
+          349
+        ],
+        "final_crop_box": [
+          39,
+          60,
+          345,
+          367
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 19,
+          "bottom": 18
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/prinz_eugen/processed/ui/prinz_eugen_ui_portrait.png": {
+      "sha256": "7fcd10e5604d83e5c666016174175de331b825f6de6722b4e206c4821ad7b54f",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 512,
+        "height": 512,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 171108,
+        "visible_pixel_count": 91036,
+        "transparent_canvas_ratio": 0.6527252197265625,
+        "visible_canvas_ratio": 0.3472747802734375,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          21,
+          1208,
+          1240
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              21,
+              1208,
+              1240
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 68,
+          "top": 57,
+          "right": 58,
+          "bottom": 56
+        },
+        "cleanup_tags": []
+      },
+      "review": {
+        "verdict": "pass",
+        "reviewer": "Codex visual inspection",
+        "observation": "Auburn long hair, gray-blue eyes, complete black officer cap and silver angular insignia retained; no binoculars or baked frame. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+      }
+    },
+    "assets/characters/prinz_eugen/processed/ui/prinz_eugen_ui_portrait_small.png": {
+      "sha256": "2f2627570e790099fd3c52f429e2a4d2a3349506b4c02d561378e1fa16e57ebd",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 128,
+        "height": 128,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 10244,
+        "visible_pixel_count": 6140,
+        "transparent_canvas_ratio": 0.625244140625,
+        "visible_canvas_ratio": 0.374755859375,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          21,
+          1208,
+          1240
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              21,
+              1208,
+              1240
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 15,
+          "top": 12,
+          "right": 13,
+          "bottom": 12
+        },
+        "cleanup_tags": []
+      },
+      "review": {
+        "verdict": "pass",
+        "reviewer": "Codex visual inspection",
+        "observation": "Auburn long hair, gray-blue eyes, complete black officer cap and silver angular insignia retained; no binoculars or baked frame. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+      }
+    },
+    "assets/characters/prinz_eugen/processed/ui/prinz_eugen_ui_skill_fire_control.png": {
+      "sha256": "d19a63001e608f9d9eea39bdb322894969c982afc6c61d374f0acea785b9cbac",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 310,
+        "height": 308,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 37921,
+        "visible_pixel_count": 57559,
+        "transparent_canvas_ratio": 0.39716170925848343,
+        "visible_canvas_ratio": 0.6028382907415165,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          68,
+          78,
+          339,
+          348
+        ],
+        "final_crop_box": [
+          50,
+          60,
+          357,
+          366
+        ],
+        "output_edge_margins": {
+          "left": 20,
+          "top": 20,
+          "right": 19,
+          "bottom": 18
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/heavy_cruiser/vfx_heavy_cruiser_armor_sparks.png": {
+      "sha256": "8e41852a991cb653489b9e71a9fa5aad3b7889e3953f9fb2f028896bd71d57be",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 310,
+        "height": 166,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 252,
+        "transparent_pixel_count": 41822,
+        "visible_pixel_count": 9638,
+        "transparent_canvas_ratio": 0.8127089001165955,
+        "visible_canvas_ratio": 0.1872910998834046,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          45,
+          216,
+          290,
+          301
+        ],
+        "final_crop_box": [
+          27,
+          198,
+          308,
+          319
+        ],
+        "component_area": 4793,
+        "output_edge_margins": {
+          "left": 34,
+          "top": 39,
+          "right": 18,
+          "bottom": 18
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/heavy_cruiser/vfx_heavy_cruiser_broadside_smoke.png": {
+      "sha256": "8e5bb261d6c71b9a8c732df3ce42ac15ce808d917e20780b8c51c1c31aafb980",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 310,
+        "height": 290,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 229,
+        "transparent_pixel_count": 60974,
+        "visible_pixel_count": 28926,
+        "transparent_canvas_ratio": 0.6782424916573971,
+        "visible_canvas_ratio": 0.3217575083426029,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          26,
+          170,
+          274,
+          408
+        ],
+        "final_crop_box": [
+          8,
+          152,
+          292,
+          418
+        ],
+        "component_area": 28871,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 43,
+          "bottom": 28
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/heavy_cruiser/vfx_heavy_cruiser_fire_control_lock_line.png": {
+      "sha256": "371cbd944be04150419c06641eb27a472c5c1507ed5839a156702df1530ed172",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 282,
+        "height": 306,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 129,
+        "transparent_pixel_count": 78342,
+        "visible_pixel_count": 7950,
+        "transparent_canvas_ratio": 0.907870949798359,
+        "visible_canvas_ratio": 0.09212905020164094,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          60,
+          163,
+          289,
+          411
+        ],
+        "final_crop_box": [
+          42,
+          145,
+          307,
+          418
+        ],
+        "component_area": 7400,
+        "output_edge_margins": {
+          "left": 35,
+          "top": 18,
+          "right": 18,
+          "bottom": 40
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/heavy_cruiser/vfx_heavy_cruiser_muzzle_flash_large.png": {
+      "sha256": "350970a3009bb1655fee673be864ada9708d7bf284e65ac5d138071302f9f07a",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 312,
+        "height": 320,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 76686,
+        "visible_pixel_count": 23154,
+        "transparent_canvas_ratio": 0.7680889423076923,
+        "visible_canvas_ratio": 0.2319110576923077,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          29,
+          148,
+          282,
+          418
+        ],
+        "final_crop_box": [
+          11,
+          130,
+          300,
+          418
+        ],
+        "component_area": 20440,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 19,
+          "right": 23,
+          "bottom": 31
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/heavy_cruiser/vfx_heavy_cruiser_shell_trail_heavy.png": {
+      "sha256": "15300958b915209f380370754b2cb601feb74e380e69d0c67cf5b42309dcabd1",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 222,
+        "height": 300,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 243,
+        "transparent_pixel_count": 61542,
+        "visible_pixel_count": 5058,
+        "transparent_canvas_ratio": 0.924054054054054,
+        "visible_canvas_ratio": 0.07594594594594595,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          85,
+          175,
+          198,
+          411
+        ],
+        "final_crop_box": [
+          67,
+          157,
+          216,
+          418
+        ],
+        "component_area": 3507,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 24,
+          "right": 56,
+          "bottom": 18
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/heavy_cruiser/vfx_heavy_cruiser_suppression_aura.png": {
+      "sha256": "20d0d72b328175839b4c97e35c04dc34476f1707d2d6ae15d1a798eacd98bb74",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 316,
+        "height": 358,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 254,
+        "transparent_pixel_count": 85627,
+        "visible_pixel_count": 27501,
+        "transparent_canvas_ratio": 0.7569036843221837,
+        "visible_canvas_ratio": 0.24309631567781628,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          24,
+          97,
+          287,
+          320
+        ],
+        "final_crop_box": [
+          6,
+          79,
+          305,
+          338
+        ],
+        "component_area": 26970,
+        "output_edge_margins": {
+          "left": 27,
+          "top": 18,
+          "right": 19,
+          "bottom": 117
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/heavy_cruiser/vfx_heavy_cruiser_wake_heavy.png": {
+      "sha256": "f9ff3755eab5073a5cd47121c7395dd3e19bb87c80f2dc4e997450a7f783bceb",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 254,
+        "height": 334,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 69225,
+        "visible_pixel_count": 15611,
+        "transparent_canvas_ratio": 0.8159861379602998,
+        "visible_canvas_ratio": 0.18401386203970013,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          49,
+          110,
+          220,
+          314
+        ],
+        "final_crop_box": [
+          31,
+          92,
+          238,
+          332
+        ],
+        "component_area": 13563,
+        "output_edge_margins": {
+          "left": 29,
+          "top": 19,
+          "right": 18,
+          "bottom": 88
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/heavy_cruiser/vfx_heavy_cruiser_water_splash_large.png": {
+      "sha256": "d91ff14d7cefab59183d7ba387367d022f04816e35846176c1691c3a04a6b89a",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 318,
+        "height": 264,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 56629,
+        "visible_pixel_count": 27323,
+        "transparent_canvas_ratio": 0.6745402134553078,
+        "visible_canvas_ratio": 0.3254597865446922,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          48,
+          99,
+          313,
+          304
+        ],
+        "final_crop_box": [
+          30,
+          81,
+          313,
+          322
+        ],
+        "component_area": 26919,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 18,
+          "right": 35,
+          "bottom": 35
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    }
+  }
+}

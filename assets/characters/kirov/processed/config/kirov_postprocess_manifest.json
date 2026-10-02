@@ -176,74 +176,6 @@
       }
     },
     {
-      "role": "ui_portrait",
-      "crop": {
-        "content_bbox": [
-          26,
-          32,
-          425,
-          423
-        ],
-        "final_crop_box": [
-          8,
-          14,
-          443,
-          441
-        ],
-        "output_edge_margins": {
-          "left": 48,
-          "top": 18,
-          "right": 19,
-          "bottom": 73
-        }
-      },
-      "path": "assets/characters/kirov/processed/ui/kirov_ui_portrait.png",
-      "size": [
-        466,
-        482
-      ],
-      "edge_margins": {
-        "left": 48,
-        "top": 18,
-        "right": 19,
-        "bottom": 73
-      }
-    },
-    {
-      "role": "ui_portrait_small",
-      "crop": {
-        "content_bbox": [
-          59,
-          83,
-          394,
-          423
-        ],
-        "final_crop_box": [
-          41,
-          65,
-          412,
-          441
-        ],
-        "output_edge_margins": {
-          "left": 42,
-          "top": 19,
-          "right": 19,
-          "bottom": 51
-        }
-      },
-      "path": "assets/characters/kirov/processed/ui/kirov_ui_portrait_small.png",
-      "size": [
-        396,
-        410
-      ],
-      "edge_margins": {
-        "left": 42,
-        "top": 19,
-        "right": 19,
-        "bottom": 51
-      }
-    },
-    {
       "role": "ui_chibi_head",
       "crop": {
         "content_bbox": [
@@ -1370,6 +1302,224 @@
         "right": 18,
         "bottom": 88
       }
+    },
+    {
+      "role": "ui_portrait",
+      "path": "assets/characters/kirov/processed/ui/kirov_ui_portrait.png",
+      "file": "assets/characters/kirov/processed/ui/kirov_ui_portrait.png",
+      "source": "assets/characters/kirov/ui/kirov_portrait_20261001_unframed_v1.png",
+      "sha256": "400640f291f2575f9b37ae9ed1d6a5c40d9522fb43a701aa9ced9ca7186645a5",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA",
+      "alpha_bbox": [
+        67,
+        62,
+        451,
+        448
+      ],
+      "alpha_pixel_count": 87972,
+      "edge_margins": {
+        "left": 67,
+        "top": 62,
+        "right": 61,
+        "bottom": 64
+      },
+      "output_padding": {
+        "left": 67,
+        "top": 62,
+        "right": 61,
+        "bottom": 64
+      },
+      "alpha_centroid": [
+        265.4366859418714,
+        280.3315376853134
+      ],
+      "centroid_offset_normalized": {
+        "x": 0.01843102723021761,
+        "y": 0.04752253454162769
+      },
+      "component_tags": [
+        "ui",
+        "portrait_revision"
+      ],
+      "crop": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          49,
+          1242,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              49,
+              1242,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 67,
+          "top": 62,
+          "right": 61,
+          "bottom": 64
+        },
+        "cleanup_tags": []
+      },
+      "source_crop_qa": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          49,
+          1242,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              49,
+              1242,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 67,
+          "top": 62,
+          "right": 61,
+          "bottom": 64
+        },
+        "cleanup_tags": []
+      }
+    },
+    {
+      "role": "ui_portrait_small",
+      "path": "assets/characters/kirov/processed/ui/kirov_ui_portrait_small.png",
+      "file": "assets/characters/kirov/processed/ui/kirov_ui_portrait_small.png",
+      "source": "assets/characters/kirov/ui/kirov_portrait_20261001_unframed_v1.png",
+      "sha256": "191f13d8bcab50f06c17c52b0393796cd5b1e7e9ce7d658993a3bd58a974b6b9",
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_bbox": [
+        15,
+        14,
+        114,
+        114
+      ],
+      "alpha_pixel_count": 5949,
+      "edge_margins": {
+        "left": 15,
+        "top": 14,
+        "right": 14,
+        "bottom": 14
+      },
+      "output_padding": {
+        "left": 15,
+        "top": 14,
+        "right": 14,
+        "bottom": 14
+      },
+      "alpha_centroid": [
+        66.3618895904796,
+        70.07719025277493
+      ],
+      "centroid_offset_normalized": {
+        "x": 0.018452262425621924,
+        "y": 0.04747804884980411
+      },
+      "component_tags": [
+        "ui",
+        "portrait_revision"
+      ],
+      "crop": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          49,
+          1242,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              49,
+              1242,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 15,
+          "top": 14,
+          "right": 14,
+          "bottom": 14
+        },
+        "cleanup_tags": []
+      },
+      "source_crop_qa": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          49,
+          1242,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              49,
+              1242,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 15,
+          "top": 14,
+          "right": 14,
+          "bottom": 14
+        },
+        "cleanup_tags": []
+      }
     }
-  ]
+  ],
+  "portrait_revision": {
+    "path": "assets/characters/kirov/meta/kirov_portrait_revision.json",
+    "sha256": "bc84d87c68696d3d0b51aa5c04d2aa9dbf3cae62dd46b9fcb9b258d7e5061c82"
+  }
 }

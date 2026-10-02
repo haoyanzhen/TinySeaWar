@@ -195,6 +195,25 @@ class LegacyRoutingTests(unittest.TestCase):
                 self.assertEqual("connected_components_intersecting_initial_box", output["crop"]["auto_crop_method"])
                 self.assertEqual(adapter.alpha_pixel_count(self.sheet), output["alpha_pixel_count"])
 
+    def test_generated_adapter_keeps_independent_portraits_on_rebuild(self) -> None:
+        import portrait_revision as portraits
+        self.write_specs()
+        raw = self.root / "independent_portrait.png"
+        image = Image.new("RGBA", (240,240))
+        ImageDraw.Draw(image).ellipse((30,20,210,225),fill=(240,180,80,255))
+        image.save(raw)
+        portraits.register(self.root,self.character,raw,"Unframed portrait",[self.paths["concept_full"]],"Fixture inspected")
+        with patch.object(adapter,"build_contact_sheet"):
+            adapter.process_generated_sources(self.character)
+        base = self.characters / self.character / "processed"
+        for semantic,expected in portraits.normalized_portraits(raw).items():
+            with Image.open(base/"ui"/f"{self.character}_{semantic}.png") as actual:
+                self.assertEqual(expected.tobytes(),actual.tobytes())
+        manifest=json.loads((base/"config"/f"{self.character}_postprocess_manifest.json").read_text())
+        for output in manifest["outputs"]:
+            if output["role"] in portraits.SIZES:
+                self.assertEqual("independent_portrait_alpha_bbox_square_fit",output["crop"]["auto_crop_method"])
+
     def test_vfx_cleanup_cannot_drop_components(self) -> None:
         specs = self.write_specs()
         specs["vfx:speed_wake"]["tags"] = ["keep_largest_component"]

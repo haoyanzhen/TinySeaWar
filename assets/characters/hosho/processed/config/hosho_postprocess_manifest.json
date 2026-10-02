@@ -176,74 +176,6 @@
       }
     },
     {
-      "role": "ui_portrait",
-      "crop": {
-        "content_bbox": [
-          71,
-          33,
-          377,
-          411
-        ],
-        "final_crop_box": [
-          53,
-          15,
-          395,
-          429
-        ],
-        "output_edge_margins": {
-          "left": 18,
-          "top": 19,
-          "right": 20,
-          "bottom": 69
-        }
-      },
-      "path": "assets/characters/hosho/processed/ui/hosho_ui_portrait.png",
-      "size": [
-        344,
-        466
-      ],
-      "edge_margins": {
-        "left": 18,
-        "top": 20,
-        "right": 20,
-        "bottom": 69
-      }
-    },
-    {
-      "role": "ui_portrait_small",
-      "crop": {
-        "content_bbox": [
-          89,
-          57,
-          362,
-          410
-        ],
-        "final_crop_box": [
-          71,
-          39,
-          380,
-          428
-        ],
-        "output_edge_margins": {
-          "left": 22,
-          "top": 19,
-          "right": 19,
-          "bottom": 62
-        }
-      },
-      "path": "assets/characters/hosho/processed/ui/hosho_ui_portrait_small.png",
-      "size": [
-        314,
-        434
-      ],
-      "edge_margins": {
-        "left": 22,
-        "top": 19,
-        "right": 20,
-        "bottom": 62
-      }
-    },
-    {
       "role": "ui_chibi_head",
       "crop": {
         "content_bbox": [
@@ -1370,6 +1302,224 @@
         "right": 18,
         "bottom": 19
       }
+    },
+    {
+      "role": "ui_portrait",
+      "path": "assets/characters/hosho/processed/ui/hosho_ui_portrait.png",
+      "file": "assets/characters/hosho/processed/ui/hosho_ui_portrait.png",
+      "source": "assets/characters/hosho/ui/hosho_portrait_20261001_unframed_v1.png",
+      "sha256": "1a84fe17f57b49343ac8313319249f91ebb6af8e49cbc75f35e2ec0321841a42",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA",
+      "alpha_bbox": [
+        114,
+        56,
+        446,
+        456
+      ],
+      "alpha_pixel_count": 87020,
+      "edge_margins": {
+        "left": 114,
+        "top": 56,
+        "right": 66,
+        "bottom": 56
+      },
+      "output_padding": {
+        "left": 114,
+        "top": 56,
+        "right": 66,
+        "bottom": 56
+      },
+      "alpha_centroid": [
+        270.57072977570215,
+        280.69092135065085
+      ],
+      "centroid_offset_normalized": {
+        "x": 0.028458456593168258,
+        "y": 0.04822445576298995
+      },
+      "component_tags": [
+        "ui",
+        "portrait_revision"
+      ],
+      "crop": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          20,
+          1176,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              20,
+              1176,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 114,
+          "top": 56,
+          "right": 66,
+          "bottom": 56
+        },
+        "cleanup_tags": []
+      },
+      "source_crop_qa": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          20,
+          1176,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              20,
+              1176,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 114,
+          "top": 56,
+          "right": 66,
+          "bottom": 56
+        },
+        "cleanup_tags": []
+      }
+    },
+    {
+      "role": "ui_portrait_small",
+      "path": "assets/characters/hosho/processed/ui/hosho_ui_portrait_small.png",
+      "file": "assets/characters/hosho/processed/ui/hosho_ui_portrait_small.png",
+      "source": "assets/characters/hosho/ui/hosho_portrait_20261001_unframed_v1.png",
+      "sha256": "3cf1bab860322250eeab61a2ae8b8e8697f08445a764007a545654821fd70cad",
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_bbox": [
+        26,
+        12,
+        113,
+        117
+      ],
+      "alpha_pixel_count": 5920,
+      "edge_margins": {
+        "left": 26,
+        "top": 12,
+        "right": 15,
+        "bottom": 11
+      },
+      "output_padding": {
+        "left": 26,
+        "top": 12,
+        "right": 15,
+        "bottom": 11
+      },
+      "alpha_centroid": [
+        67.64080416305714,
+        70.16265532398602
+      ],
+      "centroid_offset_normalized": {
+        "x": 0.02844378252388391,
+        "y": 0.04814574471864075
+      },
+      "component_tags": [
+        "ui",
+        "portrait_revision"
+      ],
+      "crop": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          20,
+          1176,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              20,
+              1176,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 26,
+          "top": 12,
+          "right": 15,
+          "bottom": 11
+        },
+        "cleanup_tags": []
+      },
+      "source_crop_qa": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          20,
+          1176,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              20,
+              1176,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 26,
+          "top": 12,
+          "right": 15,
+          "bottom": 11
+        },
+        "cleanup_tags": []
+      }
     }
-  ]
+  ],
+  "portrait_revision": {
+    "path": "assets/characters/hosho/meta/hosho_portrait_revision.json",
+    "sha256": "e26e771753016938ecc0b5de8ef5b6b9666d4c868821767d38d59f754be68161"
+  }
 }

@@ -260,74 +260,6 @@
       }
     },
     {
-      "role": "ui_portrait",
-      "crop": {
-        "content_bbox": [
-          37,
-          68,
-          384,
-          442
-        ],
-        "final_crop_box": [
-          19,
-          50,
-          384,
-          460
-        ],
-        "output_edge_margins": {
-          "left": 18,
-          "top": 18,
-          "right": 67,
-          "bottom": 106
-        }
-      },
-      "path": "assets/characters/iowa/processed/ui/iowa_ui_portrait.png",
-      "size": [
-        432,
-        498
-      ],
-      "edge_margins": {
-        "left": 18,
-        "top": 19,
-        "right": 67,
-        "bottom": 106
-      }
-    },
-    {
-      "role": "ui_portrait_small",
-      "crop": {
-        "content_bbox": [
-          0,
-          147,
-          352,
-          442
-        ],
-        "final_crop_box": [
-          0,
-          129,
-          370,
-          460
-        ],
-        "output_edge_margins": {
-          "left": 18,
-          "top": 19,
-          "right": 88,
-          "bottom": 58
-        }
-      },
-      "path": "assets/characters/iowa/processed/ui/iowa_ui_portrait_small.png",
-      "size": [
-        458,
-        372
-      ],
-      "edge_margins": {
-        "left": 102,
-        "top": 19,
-        "right": 88,
-        "bottom": 67
-      }
-    },
-    {
       "role": "ui_chibi_head",
       "crop": {
         "content_bbox": [
@@ -1475,6 +1407,224 @@
         "right": 19,
         "bottom": 27
       }
+    },
+    {
+      "role": "ui_portrait",
+      "path": "assets/characters/iowa/processed/ui/iowa_ui_portrait.png",
+      "file": "assets/characters/iowa/processed/ui/iowa_ui_portrait.png",
+      "source": "assets/characters/iowa/ui/iowa_portrait_20261001_unframed_v1.png",
+      "sha256": "16f6f748872b4a1c18aa94615d1e71462dabf1865c5c15019a8a60d06123f47b",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA",
+      "alpha_bbox": [
+        56,
+        71,
+        456,
+        451
+      ],
+      "alpha_pixel_count": 91726,
+      "edge_margins": {
+        "left": 56,
+        "top": 71,
+        "right": 56,
+        "bottom": 61
+      },
+      "output_padding": {
+        "left": 56,
+        "top": 71,
+        "right": 56,
+        "bottom": 61
+      },
+      "alpha_centroid": [
+        260.9669982673484,
+        290.90367131592444
+      ],
+      "centroid_offset_normalized": {
+        "x": 0.009701168490914847,
+        "y": 0.06817123303891492
+      },
+      "component_tags": [
+        "ui",
+        "portrait_revision"
+      ],
+      "crop": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          17,
+          1254,
+          1242
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              17,
+              1254,
+              1242
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 56,
+          "top": 71,
+          "right": 56,
+          "bottom": 61
+        },
+        "cleanup_tags": []
+      },
+      "source_crop_qa": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          17,
+          1254,
+          1242
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              17,
+              1254,
+              1242
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 56,
+          "top": 71,
+          "right": 56,
+          "bottom": 61
+        },
+        "cleanup_tags": []
+      }
+    },
+    {
+      "role": "ui_portrait_small",
+      "path": "assets/characters/iowa/processed/ui/iowa_ui_portrait_small.png",
+      "file": "assets/characters/iowa/processed/ui/iowa_ui_portrait_small.png",
+      "source": "assets/characters/iowa/ui/iowa_portrait_20261001_unframed_v1.png",
+      "sha256": "ebfe9832db1be9e9700ae2ce6f43de666223b976fab40b21720d66f267a11234",
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_bbox": [
+        13,
+        16,
+        116,
+        114
+      ],
+      "alpha_pixel_count": 6137,
+      "edge_margins": {
+        "left": 13,
+        "top": 16,
+        "right": 12,
+        "bottom": 14
+      },
+      "output_padding": {
+        "left": 13,
+        "top": 16,
+        "right": 12,
+        "bottom": 14
+      },
+      "alpha_centroid": [
+        65.2383589710468,
+        72.72557025522892
+      ],
+      "centroid_offset_normalized": {
+        "x": 0.00967467946130307,
+        "y": 0.06816851761897591
+      },
+      "component_tags": [
+        "ui",
+        "portrait_revision"
+      ],
+      "crop": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          17,
+          1254,
+          1242
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              17,
+              1254,
+              1242
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 13,
+          "top": 16,
+          "right": 12,
+          "bottom": 14
+        },
+        "cleanup_tags": []
+      },
+      "source_crop_qa": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          17,
+          1254,
+          1242
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              17,
+              1254,
+              1242
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 13,
+          "top": 16,
+          "right": 12,
+          "bottom": 14
+        },
+        "cleanup_tags": []
+      }
     }
-  ]
+  ],
+  "portrait_revision": {
+    "path": "assets/characters/iowa/meta/iowa_portrait_revision.json",
+    "sha256": "f2dba283f142b3562efee8fa4f2df23567b5f6f4fa685fcec0a72e6fb8ebd43d"
+  }
 }

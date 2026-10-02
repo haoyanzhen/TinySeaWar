@@ -1,0 +1,1813 @@
+{
+  "schema_version": 1,
+  "character_id": "anshan",
+  "scope": "Visual evidence only; technical contract must pass separately. Not runtime acceptance.",
+  "checklist": [
+    "identity_and_inventory",
+    "no_truncation_or_neighbor_fragments",
+    "alpha_edges_and_small_scale_readability",
+    "animation_consistency",
+    "mechanical_binding_and_vfx_semantics"
+  ],
+  "package_sha256": {
+    "assets/characters/anshan/battle/anshan_anim_5x4_master.png": "76c7e7051d7ac5c364fe463bb5ac85d5b34babd3385d2c6887ffef01cb14b090",
+    "assets/characters/anshan/battle/anshan_battle_asset_grid.png": "6c0d3eb8824010868972be83cd8c28664c2a3f99115b87030187188341660174",
+    "assets/characters/anshan/concept/anshan_concept_full.png": "c81ccbe821ff7e2dbbf7ad869ea4420d14d000e91df530e3ba5563376445186c",
+    "assets/characters/anshan/meta/anshan_portrait_revision.json": "e4d37a6201b754e481806355d7035522b9c857fad19f23e912c5100a4f4a220d",
+    "assets/characters/anshan/processed/anim/anshan_anim_attack_frame_01.png": "ff616e0acbdaa2c32b9a523f472efd6ecf62040317727863244d59718bda67ab",
+    "assets/characters/anshan/processed/anim/anshan_anim_attack_frame_02.png": "2313d442faeaac08f4fe15e8b29736c6d852fe4d160867245b743fd37d8ac483",
+    "assets/characters/anshan/processed/anim/anshan_anim_attack_frame_03.png": "3b6ea33b26c47c2eb10b75c2d0e893c141725f5a3c9a4d14ca270e8bbc7c0e9f",
+    "assets/characters/anshan/processed/anim/anshan_anim_attack_frame_04.png": "bb49c4847cf9dced230637bc679d668e18c25f555642d56ea84acf88753fc09c",
+    "assets/characters/anshan/processed/anim/anshan_anim_attack_keyframe.png": "ff616e0acbdaa2c32b9a523f472efd6ecf62040317727863244d59718bda67ab",
+    "assets/characters/anshan/processed/anim/anshan_anim_firepower_frame_01.png": "28a5fa275b1ac91c82ee6ab9fb642b714888f02cee0bb37539c439aec105f5ee",
+    "assets/characters/anshan/processed/anim/anshan_anim_firepower_frame_02.png": "0f239c23fed520750b2354bf3efa24b62fabf245c169d9315adeddc8bf638712",
+    "assets/characters/anshan/processed/anim/anshan_anim_firepower_frame_03.png": "5ae4c691de40a2fa39974fc68d4db0a98b8819d45ee151fb72b682b353d4a9e2",
+    "assets/characters/anshan/processed/anim/anshan_anim_firepower_frame_04.png": "019e03140c2ce7fc1ac4a99624a890dcf9db59411c22a2b711d119da2713c5b0",
+    "assets/characters/anshan/processed/anim/anshan_anim_firepower_keyframe.png": "28a5fa275b1ac91c82ee6ab9fb642b714888f02cee0bb37539c439aec105f5ee",
+    "assets/characters/anshan/processed/anim/anshan_anim_hit_frame_01.png": "00a50ab9615a21b1844091c21f53184185c56570e31774e27ff0e179e753fcc8",
+    "assets/characters/anshan/processed/anim/anshan_anim_hit_frame_02.png": "746b3840e8d40ac3eb45e1b7aded5b8c108bf0ba1bd0b77809c15725bdc91943",
+    "assets/characters/anshan/processed/anim/anshan_anim_hit_frame_03.png": "47951d086c33b86295db8bfcf92cbea831a211ba14d2aea5618eaa694571529e",
+    "assets/characters/anshan/processed/anim/anshan_anim_hit_frame_04.png": "a6734fe1daff155256bfeefbd4ba6ce48268a44eeb7b05113a1aadbba372f21b",
+    "assets/characters/anshan/processed/anim/anshan_anim_hit_keyframe.png": "00a50ab9615a21b1844091c21f53184185c56570e31774e27ff0e179e753fcc8",
+    "assets/characters/anshan/processed/anim/anshan_anim_idle_frame_01.png": "0efed2bf15a0334c395eea0dab55f26cff94c36758d7215d20826a98dc3c1abd",
+    "assets/characters/anshan/processed/anim/anshan_anim_idle_frame_02.png": "f086fe19b928f371cbb0b5261b5403ecc759e0f7675e408e99e839dc255ed80d",
+    "assets/characters/anshan/processed/anim/anshan_anim_idle_frame_03.png": "ff8d10a7191b597bde5bb53ca279f1e01716d16971b7892396068cb8304dfcdb",
+    "assets/characters/anshan/processed/anim/anshan_anim_idle_frame_04.png": "2243171473a70c45d4a819bee22a6eb4438bfec6d2a598b9f00f5e98bf38c10a",
+    "assets/characters/anshan/processed/anim/anshan_anim_idle_keyframe.png": "0efed2bf15a0334c395eea0dab55f26cff94c36758d7215d20826a98dc3c1abd",
+    "assets/characters/anshan/processed/anim/anshan_anim_move_frame_01.png": "6e0d4647833551339502f85e07559c7c9424bd206057e906a0771865832b52ad",
+    "assets/characters/anshan/processed/anim/anshan_anim_move_frame_02.png": "9180806392e62d74ca4bc087899a83500da94151a7a59188aa06786ebd4736aa",
+    "assets/characters/anshan/processed/anim/anshan_anim_move_frame_03.png": "84f262fd76576b8e4b8fac8e12832bd411f6c48ecf1dcb8c41127ebc56632bfb",
+    "assets/characters/anshan/processed/anim/anshan_anim_move_frame_04.png": "b203f176acd6a2a8d5aa59346554785fcc35e6886885b7e81b6740988a9cf79b",
+    "assets/characters/anshan/processed/anim/anshan_anim_move_keyframe.png": "6e0d4647833551339502f85e07559c7c9424bd206057e906a0771865832b52ad",
+    "assets/characters/anshan/processed/battle/anshan_battle_body_r.png": "0efed2bf15a0334c395eea0dab55f26cff94c36758d7215d20826a98dc3c1abd",
+    "assets/characters/anshan/processed/battle/anshan_battle_propulsion_node.png": "413573e0b2cef9d4e5e60100ad4a4455946721eb08711f42dfee8d6c9267cf4c",
+    "assets/characters/anshan/processed/battle/anshan_battle_radar_node.png": "0b61793118bff9de28c7e5ed07559650f471c935550fec5fd62236a7db442851",
+    "assets/characters/anshan/processed/battle/anshan_battle_rig_base.png": "63acb846de68e5b9ee0fc90ff350ea34a40fa58d15ec4b13e6009380b4209cc7",
+    "assets/characters/anshan/processed/battle/anshan_battle_torpedo_tube_01.png": "4c63585b5d330c2d0619941e1f79a97a7e913fc65a6c19254d65b9ed6a4aced1",
+    "assets/characters/anshan/processed/battle/anshan_battle_torpedo_tube_02.png": "8824f7e34ff1fe6f9404ea1c7ec6ed1ca067010461560908ecd0cdec33c43290",
+    "assets/characters/anshan/processed/battle/anshan_battle_turret_main_01.png": "f15c7d3b43e015f5aa5ad83500e548d94deb7c27655ab4a15b461f6f9d3851cd",
+    "assets/characters/anshan/processed/battle/anshan_battle_wake_origin_marker.png": "d46ecaaf0f5f1c91ece30dd28b58d911aea39fb4d42675ec609b6eefb4a60dce",
+    "assets/characters/anshan/processed/config/anshan_anim_config.json": "15bd7c33af37901960cca0da5855972439d400d5d521f878d04c40933df83ed7",
+    "assets/characters/anshan/processed/config/anshan_meta_bind_points.json": "be297490b9e31126e0a2017f1f6e9966ada0e07b960f90c6cbbcbb2a6eb64ad9",
+    "assets/characters/anshan/processed/config/anshan_postprocess_manifest.json": "3f3da1e1ce94d3f90aafa7f44cdde375fb9e91e00250e5668c92ffc53834d197",
+    "assets/characters/anshan/processed/config/anshan_vfx_config.json": "583863b66902011db876de576a92ccfc835f53dcf48e46f5c0087a3d2c6900d3",
+    "assets/characters/anshan/processed/source_alpha/anshan_anim_5x4_master_alpha_source.png": "c3215bb7f24e7347518f32ea70e3ae70892b28e53f9faac57887edc0f591c34c",
+    "assets/characters/anshan/processed/source_alpha/anshan_battle_asset_grid_alpha_source.png": "f27d6f606ad7658ceabf2ff6ba138177e372fc8424f7008b5b43b5924c183e24",
+    "assets/characters/anshan/processed/source_alpha/anshan_concept_full_alpha_source.png": "ce430013c11fdc7fb6486fd14fc49941b648936db08d141df883b0dd1dc5dcfb",
+    "assets/characters/anshan/processed/source_alpha/anshan_ui_sheet_alpha_source.png": "4a73aa7f1e0460b9ac3722a9475739d68c7970b03e1c595444ffc883fdcc4a81",
+    "assets/characters/anshan/processed/source_alpha/anshan_vfx_reference_sheet_alpha_source.png": "cbc4c7bf9047193f4441ac7c2a016b38713ec0859ae9b12204b1c1222bd47b1f",
+    "assets/characters/anshan/processed/ui/anshan_expr_default.png": "24978132b1f0f447b2aa5de40ce54341bfe3ecceb6d29ab2fb0a6ee915a0dfd6",
+    "assets/characters/anshan/processed/ui/anshan_expr_hit.png": "a2ad373030e59955aded18f700432adf21d73089b98c09f11c92dd1ae5199baa",
+    "assets/characters/anshan/processed/ui/anshan_expr_serious.png": "f4e30999ab341252a22b707df181537d2952d2b5dabfbbf6234ff9d15153bd24",
+    "assets/characters/anshan/processed/ui/anshan_illust_full_alpha.png": "83a55cf16c7e5fddf375d3179559756dfa17f361509025ef92a675dc354cc273",
+    "assets/characters/anshan/processed/ui/anshan_illust_half_alpha.png": "04602cb127398c4d70d772f059197bb90351c3a85b94a75f4e7145ea0af96cdd",
+    "assets/characters/anshan/processed/ui/anshan_illust_skill_cutin_alpha.png": "a8d8d465eb4b129d91bec0d77b8db2ef5c9ebf00963018aa0567be68cad654a8",
+    "assets/characters/anshan/processed/ui/anshan_ui_chibi_head.png": "09eb5fec0fe39da2d8e05531298a7faa517f407d3a50e7703b03427a2bf67058",
+    "assets/characters/anshan/processed/ui/anshan_ui_class_destroyer.png": "cae1e6a55650acc7538f0424f9cb47ad4b9ce4d347b5a0bcdf2553bd1ad37bd9",
+    "assets/characters/anshan/processed/ui/anshan_ui_portrait.png": "3b2aea3d454dd0fed9dc69642d99c0333a61b5e1d880e12b8d108d4a8a3b11c5",
+    "assets/characters/anshan/processed/ui/anshan_ui_portrait_small.png": "76913bcccd267602283acd89c902bfe4c5d5fdc05f657d46fe61b7b41f6d9c6d",
+    "assets/characters/anshan/processed/ui/anshan_ui_skill_torpedo_rush.png": "6f8596545114c03cc2fc0ccc9dd604c6f5b6906c3bf9e6e95c68e2331502b268",
+    "assets/characters/anshan/ui/anshan_portrait_20261001_unframed_v1.png": "2fdb898d94024ea68068a9ce113f27609e61b6347912ecf5e646dae12940e65b",
+    "assets/characters/anshan/ui/anshan_ui_sheet.png": "e109e477c1c7f594160355eaec1cc0f84d0dbe457dc3dccb50a91775ed1348e0",
+    "assets/characters/anshan/vfx/anshan_vfx_reference_sheet.png": "0859db8f74cf4ae95e1a82e3576ed69f977e1c4d4aad2117473a97cfec60d09f",
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_range_reticle.png": "a2d15007b940b39cad3e844351f3a7899da095b40d11e720127f8b78d1c3e0d6",
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_skill_aura.png": "256fbd95e8fd7acbd0954d29470eedd5537c7cfc9fb526984ea665dc0393270f",
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_smoke_screen.png": "a1046ceb68e33eaca72b03ea66de05ade2da5ddc12662d5721f24cd6eb1208d9",
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_speed_lines.png": "c705bdf5eca024779dc64815b45122b142ce159f06d25005b55d7f77319c5655",
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_speed_wake.png": "19942879341d851b6068916f14e5bf908caba2c3e4dd4e3c5e4d72a77b2d81dd",
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_torpedo_launch_flash.png": "497430a66b4a6f91f22b3b935125ebc73f48a9a56b51ebb845eeb9ee0e5e239b",
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_torpedo_warning.png": "0e18fbe8047578b7c94d552f9acd46c3901d1b32a3471259ca64e80a4a43f361",
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_water_splash.png": "b60aeb30bdd91f5b354fbd9bc0c5354e80884954f5f8d2d915273f4f3135252a"
+  },
+  "assets": {
+    "assets/characters/anshan/processed/anim/anshan_anim_attack_frame_01.png": {
+      "sha256": "ff616e0acbdaa2c32b9a523f472efd6ecf62040317727863244d59718bda67ab",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 342,
+        "height": 234,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 59393,
+        "visible_pixel_count": 20635,
+        "transparent_canvas_ratio": 0.7421527465387114,
+        "visible_canvas_ratio": 0.25784725346128856,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/anshan/processed/anim/anshan_anim_attack_frame_02.png": {
+      "sha256": "2313d442faeaac08f4fe15e8b29736c6d852fe4d160867245b743fd37d8ac483",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 342,
+        "height": 234,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 58284,
+        "visible_pixel_count": 21744,
+        "transparent_canvas_ratio": 0.7282950967161493,
+        "visible_canvas_ratio": 0.27170490328385066,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/anshan/processed/anim/anshan_anim_attack_frame_03.png": {
+      "sha256": "3b6ea33b26c47c2eb10b75c2d0e893c141725f5a3c9a4d14ca270e8bbc7c0e9f",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 342,
+        "height": 234,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 58687,
+        "visible_pixel_count": 21341,
+        "transparent_canvas_ratio": 0.7333308342080271,
+        "visible_canvas_ratio": 0.2666691657919728,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/anshan/processed/anim/anshan_anim_attack_frame_04.png": {
+      "sha256": "bb49c4847cf9dced230637bc679d668e18c25f555642d56ea84acf88753fc09c",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 342,
+        "height": 234,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 59488,
+        "visible_pixel_count": 20540,
+        "transparent_canvas_ratio": 0.7433398310591293,
+        "visible_canvas_ratio": 0.2566601689408707,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/anshan/processed/anim/anshan_anim_attack_keyframe.png": {
+      "sha256": "ff616e0acbdaa2c32b9a523f472efd6ecf62040317727863244d59718bda67ab",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 342,
+        "height": 234,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 59393,
+        "visible_pixel_count": 20635,
+        "transparent_canvas_ratio": 0.7421527465387114,
+        "visible_canvas_ratio": 0.25784725346128856,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/anshan/processed/anim/anshan_anim_firepower_frame_01.png": {
+      "sha256": "28a5fa275b1ac91c82ee6ab9fb642b714888f02cee0bb37539c439aec105f5ee",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 298,
+        "height": 236,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 55271,
+        "visible_pixel_count": 15057,
+        "transparent_canvas_ratio": 0.7859031964509157,
+        "visible_canvas_ratio": 0.21409680354908428,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/anshan/processed/anim/anshan_anim_firepower_frame_02.png": {
+      "sha256": "0f239c23fed520750b2354bf3efa24b62fabf245c169d9315adeddc8bf638712",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 298,
+        "height": 236,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 46492,
+        "visible_pixel_count": 23836,
+        "transparent_canvas_ratio": 0.6610738255033557,
+        "visible_canvas_ratio": 0.3389261744966443,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/anshan/processed/anim/anshan_anim_firepower_frame_03.png": {
+      "sha256": "5ae4c691de40a2fa39974fc68d4db0a98b8819d45ee151fb72b682b353d4a9e2",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 298,
+        "height": 236,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 51687,
+        "visible_pixel_count": 18641,
+        "transparent_canvas_ratio": 0.7349419861221704,
+        "visible_canvas_ratio": 0.2650580138778296,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/anshan/processed/anim/anshan_anim_firepower_frame_04.png": {
+      "sha256": "019e03140c2ce7fc1ac4a99624a890dcf9db59411c22a2b711d119da2713c5b0",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 298,
+        "height": 236,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 53727,
+        "visible_pixel_count": 16601,
+        "transparent_canvas_ratio": 0.7639489250369697,
+        "visible_canvas_ratio": 0.23605107496303038,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/anshan/processed/anim/anshan_anim_firepower_keyframe.png": {
+      "sha256": "28a5fa275b1ac91c82ee6ab9fb642b714888f02cee0bb37539c439aec105f5ee",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 298,
+        "height": 236,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 55271,
+        "visible_pixel_count": 15057,
+        "transparent_canvas_ratio": 0.7859031964509157,
+        "visible_canvas_ratio": 0.21409680354908428,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/anshan/processed/anim/anshan_anim_hit_frame_01.png": {
+      "sha256": "00a50ab9615a21b1844091c21f53184185c56570e31774e27ff0e179e753fcc8",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 222,
+        "height": 244,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 34232,
+        "visible_pixel_count": 19936,
+        "transparent_canvas_ratio": 0.6319598286811402,
+        "visible_canvas_ratio": 0.36804017131885985,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/anshan/processed/anim/anshan_anim_hit_frame_02.png": {
+      "sha256": "746b3840e8d40ac3eb45e1b7aded5b8c108bf0ba1bd0b77809c15725bdc91943",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 222,
+        "height": 244,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 35202,
+        "visible_pixel_count": 18966,
+        "transparent_canvas_ratio": 0.6498670801949491,
+        "visible_canvas_ratio": 0.35013291980505096,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/anshan/processed/anim/anshan_anim_hit_frame_03.png": {
+      "sha256": "47951d086c33b86295db8bfcf92cbea831a211ba14d2aea5618eaa694571529e",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 222,
+        "height": 244,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 35415,
+        "visible_pixel_count": 18753,
+        "transparent_canvas_ratio": 0.6537992910943731,
+        "visible_canvas_ratio": 0.34620070890562693,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/anshan/processed/anim/anshan_anim_hit_frame_04.png": {
+      "sha256": "a6734fe1daff155256bfeefbd4ba6ce48268a44eeb7b05113a1aadbba372f21b",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 222,
+        "height": 244,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 35095,
+        "visible_pixel_count": 19073,
+        "transparent_canvas_ratio": 0.6478917442032196,
+        "visible_canvas_ratio": 0.3521082557967804,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/anshan/processed/anim/anshan_anim_hit_keyframe.png": {
+      "sha256": "00a50ab9615a21b1844091c21f53184185c56570e31774e27ff0e179e753fcc8",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 222,
+        "height": 244,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 34232,
+        "visible_pixel_count": 19936,
+        "transparent_canvas_ratio": 0.6319598286811402,
+        "visible_canvas_ratio": 0.36804017131885985,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/anshan/processed/anim/anshan_anim_idle_frame_01.png": {
+      "sha256": "0efed2bf15a0334c395eea0dab55f26cff94c36758d7215d20826a98dc3c1abd",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 182,
+        "height": 256,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 26175,
+        "visible_pixel_count": 20417,
+        "transparent_canvas_ratio": 0.5617917239010989,
+        "visible_canvas_ratio": 0.4382082760989011,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/anshan/processed/anim/anshan_anim_idle_frame_02.png": {
+      "sha256": "f086fe19b928f371cbb0b5261b5403ecc759e0f7675e408e99e839dc255ed80d",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 182,
+        "height": 256,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 27483,
+        "visible_pixel_count": 19109,
+        "transparent_canvas_ratio": 0.5898652129120879,
+        "visible_canvas_ratio": 0.41013478708791207,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/anshan/processed/anim/anshan_anim_idle_frame_03.png": {
+      "sha256": "ff8d10a7191b597bde5bb53ca279f1e01716d16971b7892396068cb8304dfcdb",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 182,
+        "height": 256,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 28098,
+        "visible_pixel_count": 18494,
+        "transparent_canvas_ratio": 0.6030649038461539,
+        "visible_canvas_ratio": 0.39693509615384615,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/anshan/processed/anim/anshan_anim_idle_frame_04.png": {
+      "sha256": "2243171473a70c45d4a819bee22a6eb4438bfec6d2a598b9f00f5e98bf38c10a",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 182,
+        "height": 256,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 28346,
+        "visible_pixel_count": 18246,
+        "transparent_canvas_ratio": 0.6083877060439561,
+        "visible_canvas_ratio": 0.39161229395604397,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/anshan/processed/anim/anshan_anim_idle_keyframe.png": {
+      "sha256": "0efed2bf15a0334c395eea0dab55f26cff94c36758d7215d20826a98dc3c1abd",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 182,
+        "height": 256,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 26175,
+        "visible_pixel_count": 20417,
+        "transparent_canvas_ratio": 0.5617917239010989,
+        "visible_canvas_ratio": 0.4382082760989011,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/anshan/processed/anim/anshan_anim_move_frame_01.png": {
+      "sha256": "6e0d4647833551339502f85e07559c7c9424bd206057e906a0771865832b52ad",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 206,
+        "height": 248,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 31432,
+        "visible_pixel_count": 19656,
+        "transparent_canvas_ratio": 0.6152521139993736,
+        "visible_canvas_ratio": 0.38474788600062637,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/anshan/processed/anim/anshan_anim_move_frame_02.png": {
+      "sha256": "9180806392e62d74ca4bc087899a83500da94151a7a59188aa06786ebd4736aa",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 206,
+        "height": 248,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 32538,
+        "visible_pixel_count": 18550,
+        "transparent_canvas_ratio": 0.6369010335108048,
+        "visible_canvas_ratio": 0.3630989664891951,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/anshan/processed/anim/anshan_anim_move_frame_03.png": {
+      "sha256": "84f262fd76576b8e4b8fac8e12832bd411f6c48ecf1dcb8c41127ebc56632bfb",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 206,
+        "height": 248,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 32627,
+        "visible_pixel_count": 18461,
+        "transparent_canvas_ratio": 0.638643125587222,
+        "visible_canvas_ratio": 0.361356874412778,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/anshan/processed/anim/anshan_anim_move_frame_04.png": {
+      "sha256": "b203f176acd6a2a8d5aa59346554785fcc35e6886885b7e81b6740988a9cf79b",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 206,
+        "height": 248,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 32346,
+        "visible_pixel_count": 18742,
+        "transparent_canvas_ratio": 0.6331428124021297,
+        "visible_canvas_ratio": 0.36685718759787034,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/anshan/processed/anim/anshan_anim_move_keyframe.png": {
+      "sha256": "6e0d4647833551339502f85e07559c7c9424bd206057e906a0771865832b52ad",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 206,
+        "height": 248,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 31432,
+        "visible_pixel_count": 19656,
+        "transparent_canvas_ratio": 0.6152521139993736,
+        "visible_canvas_ratio": 0.38474788600062637,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/anshan/processed/battle/anshan_battle_body_r.png": {
+      "sha256": "0efed2bf15a0334c395eea0dab55f26cff94c36758d7215d20826a98dc3c1abd",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 182,
+        "height": 256,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 26175,
+        "visible_pixel_count": 20417,
+        "transparent_canvas_ratio": 0.5617917239010989,
+        "visible_canvas_ratio": 0.4382082760989011,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/anshan/processed/battle/anshan_battle_propulsion_node.png": {
+      "sha256": "413573e0b2cef9d4e5e60100ad4a4455946721eb08711f42dfee8d6c9267cf4c",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 294,
+        "height": 320,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 53491,
+        "visible_pixel_count": 40589,
+        "transparent_canvas_ratio": 0.5685693027210884,
+        "visible_canvas_ratio": 0.4314306972789116,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          81,
+          53,
+          327,
+          303
+        ],
+        "final_crop_box": [
+          63,
+          35,
+          345,
+          321
+        ],
+        "component_area": 40589,
+        "output_edge_margins": {
+          "left": 29,
+          "top": 19,
+          "right": 19,
+          "bottom": 51
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/anshan/processed/battle/anshan_battle_radar_node.png": {
+      "sha256": "0b61793118bff9de28c7e5ed07559650f471c935550fec5fd62236a7db442851",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 236,
+        "height": 420,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 69406,
+        "visible_pixel_count": 29714,
+        "transparent_canvas_ratio": 0.7002219531880549,
+        "visible_canvas_ratio": 0.29977804681194514,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          91,
+          16,
+          281,
+          337
+        ],
+        "final_crop_box": [
+          73,
+          0,
+          299,
+          355
+        ],
+        "component_area": 29714,
+        "output_edge_margins": {
+          "left": 27,
+          "top": 19,
+          "right": 19,
+          "bottom": 80
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/anshan/processed/battle/anshan_battle_rig_base.png": {
+      "sha256": "63acb846de68e5b9ee0fc90ff350ea34a40fa58d15ec4b13e6009380b4209cc7",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 340,
+        "height": 286,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 52964,
+        "visible_pixel_count": 44276,
+        "transparent_canvas_ratio": 0.5446729740847388,
+        "visible_canvas_ratio": 0.4553270259152612,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          55,
+          153,
+          347,
+          387
+        ],
+        "final_crop_box": [
+          37,
+          135,
+          365,
+          405
+        ],
+        "component_area": 44276,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 19,
+          "right": 30,
+          "bottom": 33
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/anshan/processed/battle/anshan_battle_torpedo_tube_01.png": {
+      "sha256": "4c63585b5d330c2d0619941e1f79a97a7e913fc65a6c19254d65b9ed6a4aced1",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 314,
+        "height": 310,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 52983,
+        "visible_pixel_count": 44357,
+        "transparent_canvas_ratio": 0.5443086089993836,
+        "visible_canvas_ratio": 0.4556913910006164,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          65,
+          108,
+          340,
+          373
+        ],
+        "final_crop_box": [
+          47,
+          90,
+          358,
+          391
+        ],
+        "component_area": 44357,
+        "output_edge_margins": {
+          "left": 20,
+          "top": 18,
+          "right": 19,
+          "bottom": 27
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/anshan/processed/battle/anshan_battle_torpedo_tube_02.png": {
+      "sha256": "8824f7e34ff1fe6f9404ea1c7ec6ed1ca067010461560908ecd0cdec33c43290",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 308,
+        "height": 306,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 51679,
+        "visible_pixel_count": 42569,
+        "transparent_canvas_ratio": 0.5483299380358204,
+        "visible_canvas_ratio": 0.45167006196417964,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          89,
+          66,
+          358,
+          326
+        ],
+        "final_crop_box": [
+          71,
+          48,
+          376,
+          344
+        ],
+        "component_area": 42569,
+        "output_edge_margins": {
+          "left": 20,
+          "top": 18,
+          "right": 19,
+          "bottom": 28
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/anshan/processed/battle/anshan_battle_turret_main_01.png": {
+      "sha256": "f15c7d3b43e015f5aa5ad83500e548d94deb7c27655ab4a15b461f6f9d3851cd",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 442,
+        "height": 256,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 69943,
+        "visible_pixel_count": 43209,
+        "transparent_canvas_ratio": 0.6181331306561086,
+        "visible_canvas_ratio": 0.3818668693438914,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          13,
+          165,
+          364,
+          380
+        ],
+        "final_crop_box": [
+          0,
+          147,
+          382,
+          398
+        ],
+        "component_area": 43209,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 23,
+          "right": 72,
+          "bottom": 18
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/anshan/processed/battle/anshan_battle_wake_origin_marker.png": {
+      "sha256": "d46ecaaf0f5f1c91ece30dd28b58d911aea39fb4d42675ec609b6eefb4a60dce",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 338,
+        "height": 316,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 72207,
+        "visible_pixel_count": 34601,
+        "transparent_canvas_ratio": 0.6760448655531421,
+        "visible_canvas_ratio": 0.3239551344468579,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          42,
+          79,
+          328,
+          344
+        ],
+        "final_crop_box": [
+          24,
+          61,
+          346,
+          362
+        ],
+        "component_area": 34601,
+        "output_edge_margins": {
+          "left": 33,
+          "top": 31,
+          "right": 18,
+          "bottom": 19
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/anshan/processed/ui/anshan_expr_default.png": {
+      "sha256": "24978132b1f0f447b2aa5de40ce54341bfe3ecceb6d29ab2fb0a6ee915a0dfd6",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 442,
+        "height": 452,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 112231,
+        "visible_pixel_count": 87553,
+        "transparent_canvas_ratio": 0.56176170263885,
+        "visible_canvas_ratio": 0.43823829736115005,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          27,
+          49,
+          414,
+          415
+        ],
+        "final_crop_box": [
+          9,
+          31,
+          432,
+          433
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 36,
+          "bottom": 67
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/anshan/processed/ui/anshan_expr_hit.png": {
+      "sha256": "a2ad373030e59955aded18f700432adf21d73089b98c09f11c92dd1ae5199baa",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 390,
+        "height": 402,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 79128,
+        "visible_pixel_count": 77652,
+        "transparent_canvas_ratio": 0.5047072330654421,
+        "visible_canvas_ratio": 0.495292766934558,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          65,
+          41,
+          401,
+          382
+        ],
+        "final_crop_box": [
+          47,
+          23,
+          419,
+          400
+        ],
+        "output_edge_margins": {
+          "left": 35,
+          "top": 18,
+          "right": 19,
+          "bottom": 43
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/anshan/processed/ui/anshan_expr_serious.png": {
+      "sha256": "f4e30999ab341252a22b707df181537d2952d2b5dabfbbf6234ff9d15153bd24",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 408,
+        "height": 420,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 87934,
+        "visible_pixel_count": 83426,
+        "transparent_canvas_ratio": 0.5131535947712418,
+        "visible_canvas_ratio": 0.48684640522875816,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          83,
+          35,
+          425,
+          382
+        ],
+        "final_crop_box": [
+          65,
+          17,
+          443,
+          400
+        ],
+        "output_edge_margins": {
+          "left": 48,
+          "top": 19,
+          "right": 18,
+          "bottom": 54
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/anshan/processed/ui/anshan_illust_full_alpha.png": {
+      "sha256": "83a55cf16c7e5fddf375d3179559756dfa17f361509025ef92a675dc354cc273",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 1034,
+        "height": 1524,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 1122068,
+        "visible_pixel_count": 453748,
+        "transparent_canvas_ratio": 0.7120552145681983,
+        "visible_canvas_ratio": 0.2879447854318017,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          31,
+          59,
+          1008,
+          1428
+        ],
+        "final_crop_box": [
+          19,
+          47,
+          1020,
+          1440
+        ],
+        "output_edge_margins": {
+          "left": 44,
+          "top": 143,
+          "right": 13,
+          "bottom": 12
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/anshan/processed/ui/anshan_illust_half_alpha.png": {
+      "sha256": "04602cb127398c4d70d772f059197bb90351c3a85b94a75f4e7145ea0af96cdd",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 1048,
+        "height": 1126,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 780772,
+        "visible_pixel_count": 399276,
+        "transparent_canvas_ratio": 0.6616442720974062,
+        "visible_canvas_ratio": 0.3383557279025938,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          54,
+          16,
+          1031,
+          1001
+        ],
+        "final_crop_box": [
+          38,
+          0,
+          1047,
+          1017
+        ],
+        "output_edge_margins": {
+          "left": 54,
+          "top": 16,
+          "right": 17,
+          "bottom": 125
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/anshan/processed/ui/anshan_illust_skill_cutin_alpha.png": {
+      "sha256": "a8d8d465eb4b129d91bec0d77b8db2ef5c9ebf00963018aa0567be68cad654a8",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 1044,
+        "height": 1000,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 709226,
+        "visible_pixel_count": 334774,
+        "transparent_canvas_ratio": 0.6793352490421456,
+        "visible_canvas_ratio": 0.3206647509578544,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          437,
+          16,
+          1405,
+          810
+        ],
+        "final_crop_box": [
+          421,
+          0,
+          1421,
+          826
+        ],
+        "output_edge_margins": {
+          "left": 59,
+          "top": 16,
+          "right": 17,
+          "bottom": 190
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/anshan/processed/ui/anshan_ui_chibi_head.png": {
+      "sha256": "09eb5fec0fe39da2d8e05531298a7faa517f407d3a50e7703b03427a2bf67058",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 350,
+        "height": 352,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 53677,
+        "visible_pixel_count": 69523,
+        "transparent_canvas_ratio": 0.4356899350649351,
+        "visible_canvas_ratio": 0.564310064935065,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          70,
+          89,
+          378,
+          398
+        ],
+        "final_crop_box": [
+          52,
+          71,
+          396,
+          416
+        ],
+        "output_edge_margins": {
+          "left": 23,
+          "top": 24,
+          "right": 19,
+          "bottom": 19
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/anshan/processed/ui/anshan_ui_class_destroyer.png": {
+      "sha256": "cae1e6a55650acc7538f0424f9cb47ad4b9ce4d347b5a0bcdf2553bd1ad37bd9",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 178,
+        "height": 412,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 42492,
+        "visible_pixel_count": 30844,
+        "transparent_canvas_ratio": 0.5794152939893095,
+        "visible_canvas_ratio": 0.42058470601069053,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          135,
+          40,
+          274,
+          382
+        ],
+        "final_crop_box": [
+          117,
+          22,
+          292,
+          400
+        ],
+        "output_edge_margins": {
+          "left": 20,
+          "top": 18,
+          "right": 19,
+          "bottom": 52
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/anshan/processed/ui/anshan_ui_portrait.png": {
+      "sha256": "3b2aea3d454dd0fed9dc69642d99c0333a61b5e1d880e12b8d108d4a8a3b11c5",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 512,
+        "height": 512,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 172153,
+        "visible_pixel_count": 89991,
+        "transparent_canvas_ratio": 0.6567115783691406,
+        "visible_canvas_ratio": 0.3432884216308594,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          40,
+          1236,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              40,
+              1236,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 99,
+          "top": 62,
+          "right": 68,
+          "bottom": 70
+        },
+        "cleanup_tags": []
+      },
+      "review": {
+        "verdict": "pass",
+        "reviewer": "Codex visual inspection",
+        "observation": "Black/teal bob, brown eyes and angular teal clips retained, blue/white collar with red abstract compass patch; single bust, no frame, hand or equipment. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+      }
+    },
+    "assets/characters/anshan/processed/ui/anshan_ui_portrait_small.png": {
+      "sha256": "76913bcccd267602283acd89c902bfe4c5d5fdc05f657d46fe61b7b41f6d9c6d",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 128,
+        "height": 128,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 10322,
+        "visible_pixel_count": 6062,
+        "transparent_canvas_ratio": 0.6300048828125,
+        "visible_canvas_ratio": 0.3699951171875,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          40,
+          1236,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              40,
+              1236,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 23,
+          "top": 13,
+          "right": 15,
+          "bottom": 16
+        },
+        "cleanup_tags": []
+      },
+      "review": {
+        "verdict": "pass",
+        "reviewer": "Codex visual inspection",
+        "observation": "Black/teal bob, brown eyes and angular teal clips retained, blue/white collar with red abstract compass patch; single bust, no frame, hand or equipment. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+      }
+    },
+    "assets/characters/anshan/processed/ui/anshan_ui_skill_torpedo_rush.png": {
+      "sha256": "6f8596545114c03cc2fc0ccc9dd604c6f5b6906c3bf9e6e95c68e2331502b268",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 322,
+        "height": 326,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 40911,
+        "visible_pixel_count": 64061,
+        "transparent_canvas_ratio": 0.3897325000952635,
+        "visible_canvas_ratio": 0.6102674999047365,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          67,
+          58,
+          351,
+          345
+        ],
+        "final_crop_box": [
+          49,
+          40,
+          369,
+          363
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 20,
+          "right": 19,
+          "bottom": 19
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_range_reticle.png": {
+      "sha256": "a2d15007b940b39cad3e844351f3a7899da095b40d11e720127f8b78d1c3e0d6",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 266,
+        "height": 294,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 75329,
+        "visible_pixel_count": 2875,
+        "transparent_canvas_ratio": 0.9632371745690758,
+        "visible_canvas_ratio": 0.03676282543092425,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          39,
+          125,
+          246,
+          359
+        ],
+        "final_crop_box": [
+          21,
+          107,
+          264,
+          377
+        ],
+        "component_area": 1684,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 23,
+          "right": 22,
+          "bottom": 19
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_skill_aura.png": {
+      "sha256": "256fbd95e8fd7acbd0954d29470eedd5537c7cfc9fb526984ea665dc0393270f",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 198,
+        "height": 184,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 35009,
+        "visible_pixel_count": 1423,
+        "transparent_canvas_ratio": 0.9609409310496267,
+        "visible_canvas_ratio": 0.039059068950373296,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          24,
+          155,
+          144,
+          268
+        ],
+        "final_crop_box": [
+          6,
+          137,
+          162,
+          286
+        ],
+        "component_area": 1226,
+        "output_edge_margins": {
+          "left": 49,
+          "top": 21,
+          "right": 19,
+          "bottom": 18
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_smoke_screen.png": {
+      "sha256": "a1046ceb68e33eaca72b03ea66de05ade2da5ddc12662d5721f24cd6eb1208d9",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 246,
+        "height": 258,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 33863,
+        "visible_pixel_count": 29605,
+        "transparent_canvas_ratio": 0.5335444633516102,
+        "visible_canvas_ratio": 0.46645553664838973,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          68,
+          120,
+          265,
+          328
+        ],
+        "final_crop_box": [
+          50,
+          102,
+          283,
+          346
+        ],
+        "component_area": 29600,
+        "output_edge_margins": {
+          "left": 30,
+          "top": 19,
+          "right": 19,
+          "bottom": 31
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_speed_lines.png": {
+      "sha256": "c705bdf5eca024779dc64815b45122b142ce159f06d25005b55d7f77319c5655",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 274,
+        "height": 296,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 78203,
+        "visible_pixel_count": 2901,
+        "transparent_canvas_ratio": 0.9642311106727165,
+        "visible_canvas_ratio": 0.03576888932728349,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          50,
+          198,
+          239,
+          368
+        ],
+        "final_crop_box": [
+          32,
+          180,
+          257,
+          386
+        ],
+        "component_area": 1358,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 39,
+          "bottom": 78
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_speed_wake.png": {
+      "sha256": "19942879341d851b6068916f14e5bf908caba2c3e4dd4e3c5e4d72a77b2d81dd",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 320,
+        "height": 340,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 96006,
+        "visible_pixel_count": 12794,
+        "transparent_canvas_ratio": 0.8824080882352942,
+        "visible_canvas_ratio": 0.11759191176470589,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          104,
+          187,
+          347,
+          446
+        ],
+        "final_crop_box": [
+          86,
+          169,
+          365,
+          464
+        ],
+        "component_area": 11797,
+        "output_edge_margins": {
+          "left": 40,
+          "top": 18,
+          "right": 19,
+          "bottom": 46
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_torpedo_launch_flash.png": {
+      "sha256": "497430a66b4a6f91f22b3b935125ebc73f48a9a56b51ebb845eeb9ee0e5e239b",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 260,
+        "height": 190,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 42197,
+        "visible_pixel_count": 7203,
+        "transparent_canvas_ratio": 0.8541902834008097,
+        "visible_canvas_ratio": 0.1458097165991903,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          21,
+          297,
+          222,
+          412
+        ],
+        "final_crop_box": [
+          3,
+          279,
+          240,
+          430
+        ],
+        "component_area": 7049,
+        "output_edge_margins": {
+          "left": 22,
+          "top": 18,
+          "right": 19,
+          "bottom": 39
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_torpedo_warning.png": {
+      "sha256": "0e18fbe8047578b7c94d552f9acd46c3901d1b32a3471259ca64e80a4a43f361",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 296,
+        "height": 288,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 63760,
+        "visible_pixel_count": 21488,
+        "transparent_canvas_ratio": 0.7479354354354354,
+        "visible_canvas_ratio": 0.25206456456456455,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          84,
+          233,
+          306,
+          425
+        ],
+        "final_crop_box": [
+          66,
+          215,
+          324,
+          443
+        ],
+        "component_area": 21377,
+        "output_edge_margins": {
+          "left": 25,
+          "top": 60,
+          "right": 18,
+          "bottom": 18
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_water_splash.png": {
+      "sha256": "b60aeb30bdd91f5b354fbd9bc0c5354e80884954f5f8d2d915273f4f3135252a",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 290,
+        "height": 330,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 76726,
+        "visible_pixel_count": 18974,
+        "transparent_canvas_ratio": 0.8017345872518287,
+        "visible_canvas_ratio": 0.19826541274817136,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          91,
+          132,
+          319,
+          335
+        ],
+        "final_crop_box": [
+          73,
+          114,
+          337,
+          353
+        ],
+        "component_area": 18030,
+        "output_edge_margins": {
+          "left": 30,
+          "top": 19,
+          "right": 19,
+          "bottom": 81
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    }
+  }
+}

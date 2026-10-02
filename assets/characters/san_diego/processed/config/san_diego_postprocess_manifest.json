@@ -176,74 +176,6 @@
       }
     },
     {
-      "role": "ui_portrait",
-      "crop": {
-        "content_bbox": [
-          58,
-          104,
-          384,
-          456
-        ],
-        "final_crop_box": [
-          40,
-          86,
-          384,
-          474
-        ],
-        "output_edge_margins": {
-          "left": 19,
-          "top": 18,
-          "right": 53,
-          "bottom": 64
-        }
-      },
-      "path": "assets/characters/san_diego/processed/ui/san_diego_ui_portrait.png",
-      "size": [
-        398,
-        434
-      ],
-      "edge_margins": {
-        "left": 19,
-        "top": 18,
-        "right": 53,
-        "bottom": 64
-      }
-    },
-    {
-      "role": "ui_portrait_small",
-      "crop": {
-        "content_bbox": [
-          0,
-          151,
-          356,
-          444
-        ],
-        "final_crop_box": [
-          0,
-          133,
-          374,
-          462
-        ],
-        "output_edge_margins": {
-          "left": 19,
-          "top": 18,
-          "right": 111,
-          "bottom": 37
-        }
-      },
-      "path": "assets/characters/san_diego/processed/ui/san_diego_ui_portrait_small.png",
-      "size": [
-        486,
-        348
-      ],
-      "edge_margins": {
-        "left": 110,
-        "top": 18,
-        "right": 111,
-        "bottom": 37
-      }
-    },
-    {
       "role": "ui_chibi_head",
       "crop": {
         "content_bbox": [
@@ -1370,6 +1302,224 @@
         "right": 18,
         "bottom": 33
       }
+    },
+    {
+      "role": "ui_portrait",
+      "path": "assets/characters/san_diego/processed/ui/san_diego_ui_portrait.png",
+      "file": "assets/characters/san_diego/processed/ui/san_diego_ui_portrait.png",
+      "source": "assets/characters/san_diego/ui/san_diego_portrait_20261001_unframed_v1.png",
+      "sha256": "b304cb21596d08817e51437d6f957ab34c0dbbbbd552ab3130a8db64355213fa",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA",
+      "alpha_bbox": [
+        114,
+        56,
+        435,
+        454
+      ],
+      "alpha_pixel_count": 88524,
+      "edge_margins": {
+        "left": 114,
+        "top": 56,
+        "right": 77,
+        "bottom": 58
+      },
+      "output_padding": {
+        "left": 114,
+        "top": 56,
+        "right": 77,
+        "bottom": 58
+      },
+      "alpha_centroid": [
+        272.2665987995037,
+        268.06155264851606
+      ],
+      "centroid_offset_normalized": {
+        "x": 0.03177070078028066,
+        "y": 0.02355772001663292
+      },
+      "component_tags": [
+        "ui",
+        "portrait_revision"
+      ],
+      "crop": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          21,
+          1158,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              21,
+              1158,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 114,
+          "top": 56,
+          "right": 77,
+          "bottom": 58
+        },
+        "cleanup_tags": []
+      },
+      "source_crop_qa": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          21,
+          1158,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              21,
+              1158,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 114,
+          "top": 56,
+          "right": 77,
+          "bottom": 58
+        },
+        "cleanup_tags": []
+      }
+    },
+    {
+      "role": "ui_portrait_small",
+      "path": "assets/characters/san_diego/processed/ui/san_diego_ui_portrait_small.png",
+      "file": "assets/characters/san_diego/processed/ui/san_diego_ui_portrait_small.png",
+      "source": "assets/characters/san_diego/ui/san_diego_portrait_20261001_unframed_v1.png",
+      "sha256": "02e12b4ef8e3539e2c830b836284e4175c071292021a230e066e18d0e97b6959",
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_bbox": [
+        27,
+        12,
+        111,
+        116
+      ],
+      "alpha_pixel_count": 6070,
+      "edge_margins": {
+        "left": 27,
+        "top": 12,
+        "right": 17,
+        "bottom": 12
+      },
+      "output_padding": {
+        "left": 27,
+        "top": 12,
+        "right": 17,
+        "bottom": 12
+      },
+      "alpha_centroid": [
+        68.08827378446283,
+        66.97025317706283
+      ],
+      "centroid_offset_normalized": {
+        "x": 0.031939638941115844,
+        "y": 0.023205102945803358
+      },
+      "component_tags": [
+        "ui",
+        "portrait_revision"
+      ],
+      "crop": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          21,
+          1158,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              21,
+              1158,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 27,
+          "top": 12,
+          "right": 17,
+          "bottom": 12
+        },
+        "cleanup_tags": []
+      },
+      "source_crop_qa": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          21,
+          1158,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              21,
+              1158,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 27,
+          "top": 12,
+          "right": 17,
+          "bottom": 12
+        },
+        "cleanup_tags": []
+      }
     }
-  ]
+  ],
+  "portrait_revision": {
+    "path": "assets/characters/san_diego/meta/san_diego_portrait_revision.json",
+    "sha256": "5cb60c06e463f09e1663ed3f810f5a37269c697f2a5d02e03452660858b44141"
+  }
 }

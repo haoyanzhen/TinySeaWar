@@ -1,0 +1,1813 @@
+{
+  "schema_version": 1,
+  "character_id": "hosho",
+  "scope": "Visual evidence only; technical contract must pass separately. Not runtime acceptance.",
+  "checklist": [
+    "identity_and_inventory",
+    "no_truncation_or_neighbor_fragments",
+    "alpha_edges_and_small_scale_readability",
+    "animation_consistency",
+    "mechanical_binding_and_vfx_semantics"
+  ],
+  "package_sha256": {
+    "assets/characters/hosho/battle/hosho_anim_5x4_master.png": "beed065a04c81f1ddeb9e8de8f29b1a8519d56b29aa62546022f8478ed2e3e7e",
+    "assets/characters/hosho/battle/hosho_battle_asset_grid.png": "ca161a769f74dfc29563cf241b8580897170d487fe3af4f6d29b3038dadf42b7",
+    "assets/characters/hosho/concept/hosho_concept_full.png": "53c11ece06d96a484cc53f811bb49a640d34c9e642218c8b502ea05078230026",
+    "assets/characters/hosho/meta/hosho_portrait_revision.json": "e26e771753016938ecc0b5de8ef5b6b9666d4c868821767d38d59f754be68161",
+    "assets/characters/hosho/processed/anim/hosho_anim_attack_frame_01.png": "97e85953bf346607be7aa2059c6ac0159898298ae9e63b379d74db00013dc4a5",
+    "assets/characters/hosho/processed/anim/hosho_anim_attack_frame_02.png": "c129584c8ff9e809d2a7e3972469246ccd8247e20affda2449f1bffd066121e1",
+    "assets/characters/hosho/processed/anim/hosho_anim_attack_frame_03.png": "af06b91bc8f7af53897f1fede54a732db9b708e72e5e7a3ca5e0c3dbf9fc4bc5",
+    "assets/characters/hosho/processed/anim/hosho_anim_attack_frame_04.png": "87f82c1a6940cd741b54a8b2f0c1d7c133800efaf633563e5bb66279a5d84194",
+    "assets/characters/hosho/processed/anim/hosho_anim_attack_keyframe.png": "97e85953bf346607be7aa2059c6ac0159898298ae9e63b379d74db00013dc4a5",
+    "assets/characters/hosho/processed/anim/hosho_anim_firepower_frame_01.png": "94d831dba6c30c81a1a2ceb8a62ee498ae5f31d23f654e2d655fb79d7fa859e1",
+    "assets/characters/hosho/processed/anim/hosho_anim_firepower_frame_02.png": "227a3a4d8ad99bc02e594c6980752873a27b35dbc8d4df08a6e2713f1801f3ad",
+    "assets/characters/hosho/processed/anim/hosho_anim_firepower_frame_03.png": "c1355ad288d84cefb70beae67fa06e46c46ced7115f40392b0613f8093ad6699",
+    "assets/characters/hosho/processed/anim/hosho_anim_firepower_frame_04.png": "8e735c9d35db02efbd6abb3c92ac740cee786b4a9f059c8200472008f6247d8e",
+    "assets/characters/hosho/processed/anim/hosho_anim_firepower_keyframe.png": "94d831dba6c30c81a1a2ceb8a62ee498ae5f31d23f654e2d655fb79d7fa859e1",
+    "assets/characters/hosho/processed/anim/hosho_anim_hit_frame_01.png": "de3d1f910b09b41ce5f7459b4b824363101f758c95c2b769437d617015ddfa49",
+    "assets/characters/hosho/processed/anim/hosho_anim_hit_frame_02.png": "728b12d16748682fcccb377859b281edaa2e77038f476ca6e005d826a0ff69f8",
+    "assets/characters/hosho/processed/anim/hosho_anim_hit_frame_03.png": "144076039eebe596cef7b57632a6045ad4a1cc5837ec29d97145c7136e6b390a",
+    "assets/characters/hosho/processed/anim/hosho_anim_hit_frame_04.png": "278de389ba45168455c8eaa4024df9de961eb14f33b4ac4b89ffe102ac65eb6b",
+    "assets/characters/hosho/processed/anim/hosho_anim_hit_keyframe.png": "de3d1f910b09b41ce5f7459b4b824363101f758c95c2b769437d617015ddfa49",
+    "assets/characters/hosho/processed/anim/hosho_anim_idle_frame_01.png": "022ad352fe39a8f03864d24cea02466db7067029e60b7581fcf54206ad12f971",
+    "assets/characters/hosho/processed/anim/hosho_anim_idle_frame_02.png": "eb09277538016e1fec4601ea8e331407561d0a3b51008b53fe8aee396da996b4",
+    "assets/characters/hosho/processed/anim/hosho_anim_idle_frame_03.png": "776cc74eedb7cafdfa49e608e9c1ba8b286c4e2459519004facf26e0a2a861dd",
+    "assets/characters/hosho/processed/anim/hosho_anim_idle_frame_04.png": "e82b77e6ae358e36276d011537563f574ede03595ff3024ece2b5dfaf777369c",
+    "assets/characters/hosho/processed/anim/hosho_anim_idle_keyframe.png": "022ad352fe39a8f03864d24cea02466db7067029e60b7581fcf54206ad12f971",
+    "assets/characters/hosho/processed/anim/hosho_anim_move_frame_01.png": "cc9c6cb865f6fc31db32b1b876a68ac4ad94f94ca76f07bd6e264f7a612e08b1",
+    "assets/characters/hosho/processed/anim/hosho_anim_move_frame_02.png": "f63cd2fab9f161631d4275bb327c5e0fdef695ce4bf0844a6e1e135d5919e210",
+    "assets/characters/hosho/processed/anim/hosho_anim_move_frame_03.png": "27828547edad133ab91fac0ed5c78223d5447ecd57da960118c8e71c03b4f992",
+    "assets/characters/hosho/processed/anim/hosho_anim_move_frame_04.png": "8e924e5c51000435548e533936efdd9de800724716a8c194b566532f5195593c",
+    "assets/characters/hosho/processed/anim/hosho_anim_move_keyframe.png": "cc9c6cb865f6fc31db32b1b876a68ac4ad94f94ca76f07bd6e264f7a612e08b1",
+    "assets/characters/hosho/processed/battle/hosho_battle_aircraft_group_01.png": "26fa0dfd6df3ed5f4c9d810fa59ec066384300093f0762c5617a00c588fec496",
+    "assets/characters/hosho/processed/battle/hosho_battle_aircraft_launch_marker.png": "da61a2f54e4ad7052299c1155e31b8107810d107f4ed0e8f6c1d0ac74c8a49c9",
+    "assets/characters/hosho/processed/battle/hosho_battle_aircraft_recovery_marker.png": "eb67d8e917eb3e1b2210ac83d8b97360e30ea426b3e63fc742dcc2e030c5dc31",
+    "assets/characters/hosho/processed/battle/hosho_battle_body_r.png": "022ad352fe39a8f03864d24cea02466db7067029e60b7581fcf54206ad12f971",
+    "assets/characters/hosho/processed/battle/hosho_battle_flight_deck.png": "f1082d1c110299b57d6a5697b39fab067319ca9827e8bb017e9c51d0a143731b",
+    "assets/characters/hosho/processed/battle/hosho_battle_radar_node.png": "9b8747b33ec44d6e947cb8645feeed467920e165cd2656df321b4a0d35c90ec3",
+    "assets/characters/hosho/processed/battle/hosho_battle_rig_base.png": "eec3f2e2f1bd6dd6677c89c14ea253525a7e14233b9816a13866d92572c20f5d",
+    "assets/characters/hosho/processed/battle/hosho_battle_wake_origin_marker.png": "41eec14be9df06c362a3e24eecdec7249cee7360c60795b8d3928628b8043bb3",
+    "assets/characters/hosho/processed/config/hosho_anim_config.json": "f8a7daad775d0405a2abbf07cb85139d6a243a83ecad03e9df9a2976e0cc8ca7",
+    "assets/characters/hosho/processed/config/hosho_meta_bind_points.json": "8385e3ed13767971083b4631e449388e4a6bf83310d04bb1ac6e61cf098b159d",
+    "assets/characters/hosho/processed/config/hosho_postprocess_manifest.json": "2455956f857d8e3b5dc2b79b506a60448fa5c6cd8d83b2c94a29ddbbf595365a",
+    "assets/characters/hosho/processed/config/hosho_vfx_config.json": "8f4e9e42779def25e87a2b133a6e77fc44b74952497fa3b740849749734b0e5e",
+    "assets/characters/hosho/processed/source_alpha/hosho_anim_5x4_master_alpha_source.png": "2e03c7696cade411cb3f6f266ec82dc680b8dcc830dc49f233b1b430667e963e",
+    "assets/characters/hosho/processed/source_alpha/hosho_battle_asset_grid_alpha_source.png": "f7eacd77d1a3c1b9b3dc78bf8924b3dc997bf5b9d51ed7fda3869941226f4f0a",
+    "assets/characters/hosho/processed/source_alpha/hosho_concept_full_alpha_source.png": "aa24df2bb0f95a7511be9221894d79af12a19d4788d9877734abdf2c5cfae5ec",
+    "assets/characters/hosho/processed/source_alpha/hosho_ui_sheet_alpha_source.png": "1c86c3c7d16cfee405de52a5a34d0035246fce7ff2c277ba75ad32629307bcbc",
+    "assets/characters/hosho/processed/source_alpha/hosho_vfx_reference_sheet_alpha_source.png": "e49126003d77f84250674c70f7cf26209f74bfade9e73c4673a3101460478047",
+    "assets/characters/hosho/processed/ui/hosho_expr_default.png": "634859c52d6055347acfe095d76fd85c7152ecd4d004e08c8bc8ae75eee0d10b",
+    "assets/characters/hosho/processed/ui/hosho_expr_hit.png": "8d096f083dbfa291680960b32a303b8c0de63863ee85a71ada744785343525ed",
+    "assets/characters/hosho/processed/ui/hosho_expr_serious.png": "e68aba2b3c4206a16e7329e66b51da9c5321aeeca91afd60c5bd81455c27e37d",
+    "assets/characters/hosho/processed/ui/hosho_illust_full_alpha.png": "98d90c9cec704209d19c70db5d6abc72c3f6830a081526c1feae29ed402cfc31",
+    "assets/characters/hosho/processed/ui/hosho_illust_half_alpha.png": "bade80e6ef75a95b9c45ec971fd5c144be01ebd8062f6507d05fcab7148d6d36",
+    "assets/characters/hosho/processed/ui/hosho_illust_skill_cutin_alpha.png": "50b61f1912ae843eb0fe54f94952373d01adcc91883cee1c9bf4f8cba55e6e5a",
+    "assets/characters/hosho/processed/ui/hosho_ui_chibi_head.png": "d76a90ba55be6d7daa7486b8adb44a184848e6666f777283795768239277d5ad",
+    "assets/characters/hosho/processed/ui/hosho_ui_class_carrier.png": "18437dd14c5b41dd667e779bf4997cf07cee2fd9d8948476d4fd49e17273796a",
+    "assets/characters/hosho/processed/ui/hosho_ui_portrait.png": "1a84fe17f57b49343ac8313319249f91ebb6af8e49cbc75f35e2ec0321841a42",
+    "assets/characters/hosho/processed/ui/hosho_ui_portrait_small.png": "3cf1bab860322250eeab61a2ae8b8e8697f08445a764007a545654821fd70cad",
+    "assets/characters/hosho/processed/ui/hosho_ui_skill_airstrike.png": "7c0989f1222769b4805736408b0c3a67bc5ea6ef658c0e7a9d46e2668064a10d",
+    "assets/characters/hosho/ui/hosho_portrait_20261001_unframed_v1.png": "a1e9f40540f9d36d79bc42d731037ce9217a6336914b43d02b2f803ceff06bcd",
+    "assets/characters/hosho/ui/hosho_ui_sheet.png": "dba4374d2a3a13e87de8b5686613ffd87805a5ff974a999860357e5cb4058136",
+    "assets/characters/hosho/vfx/hosho_vfx_reference_sheet.png": "59d2beaf9fc0e352f387bfada37121a52484449cef414398d5ec5ad710a8acdf",
+    "assets/vfx/combat/character_templates/carrier/vfx_carrier_aa_burst.png": "7e2583a6fa6f387cda1f4ce52c98dd270bea595916c47ad1def14caaa5470ab3",
+    "assets/vfx/combat/character_templates/carrier/vfx_carrier_aircraft_explosion.png": "b04f40427c7c747cfc59279af7e9b69161cece35754d77af5204fe3d00d17487",
+    "assets/vfx/combat/character_templates/carrier/vfx_carrier_aircraft_formation.png": "5fc5bd4b4f9443a9643af9fa4dab33a5fad4308b093a2e2acd7846ea227e9d2f",
+    "assets/vfx/combat/character_templates/carrier/vfx_carrier_aircraft_launch_flash.png": "aba435ccb3f2c2a40db8f1b041b35d637fb0a5c8645e8018149ff7182ccbef20",
+    "assets/vfx/combat/character_templates/carrier/vfx_carrier_aircraft_path.png": "daedd061d887f81820d5ae61ef9acf1c30b8598817a170dae66068f105534867",
+    "assets/vfx/combat/character_templates/carrier/vfx_carrier_aircraft_recovery.png": "375357165731ac6e3b2b2c73ed0af9e53529b7bddfb4bb7f6854dda1da65827c",
+    "assets/vfx/combat/character_templates/carrier/vfx_carrier_airstrike_area.png": "9931821bf1c616266ce8c708f759b9f34802ab63fe3b7b2110450a81f04bd284",
+    "assets/vfx/combat/character_templates/carrier/vfx_carrier_wake_carrier.png": "e84a6a83c24bdbfaf8f43bec7851f5a958f97cc336bbd664d5b205c94b551e5d"
+  },
+  "assets": {
+    "assets/characters/hosho/processed/anim/hosho_anim_attack_frame_01.png": {
+      "sha256": "97e85953bf346607be7aa2059c6ac0159898298ae9e63b379d74db00013dc4a5",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 216,
+        "height": 270,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 38482,
+        "visible_pixel_count": 19838,
+        "transparent_canvas_ratio": 0.6598422496570645,
+        "visible_canvas_ratio": 0.34015775034293555,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hosho/processed/anim/hosho_anim_attack_frame_02.png": {
+      "sha256": "c129584c8ff9e809d2a7e3972469246ccd8247e20affda2449f1bffd066121e1",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 216,
+        "height": 270,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 36450,
+        "visible_pixel_count": 21870,
+        "transparent_canvas_ratio": 0.625,
+        "visible_canvas_ratio": 0.375,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hosho/processed/anim/hosho_anim_attack_frame_03.png": {
+      "sha256": "af06b91bc8f7af53897f1fede54a732db9b708e72e5e7a3ca5e0c3dbf9fc4bc5",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 216,
+        "height": 270,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 39821,
+        "visible_pixel_count": 18499,
+        "transparent_canvas_ratio": 0.6828017832647463,
+        "visible_canvas_ratio": 0.3171982167352538,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hosho/processed/anim/hosho_anim_attack_frame_04.png": {
+      "sha256": "87f82c1a6940cd741b54a8b2f0c1d7c133800efaf633563e5bb66279a5d84194",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 216,
+        "height": 270,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 40193,
+        "visible_pixel_count": 18127,
+        "transparent_canvas_ratio": 0.6891803840877915,
+        "visible_canvas_ratio": 0.3108196159122085,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hosho/processed/anim/hosho_anim_attack_keyframe.png": {
+      "sha256": "97e85953bf346607be7aa2059c6ac0159898298ae9e63b379d74db00013dc4a5",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 216,
+        "height": 270,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 38482,
+        "visible_pixel_count": 19838,
+        "transparent_canvas_ratio": 0.6598422496570645,
+        "visible_canvas_ratio": 0.34015775034293555,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hosho/processed/anim/hosho_anim_firepower_frame_01.png": {
+      "sha256": "94d831dba6c30c81a1a2ceb8a62ee498ae5f31d23f654e2d655fb79d7fa859e1",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 246,
+        "height": 268,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 45037,
+        "visible_pixel_count": 20891,
+        "transparent_canvas_ratio": 0.6831240140759617,
+        "visible_canvas_ratio": 0.3168759859240384,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hosho/processed/anim/hosho_anim_firepower_frame_02.png": {
+      "sha256": "227a3a4d8ad99bc02e594c6980752873a27b35dbc8d4df08a6e2713f1801f3ad",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 246,
+        "height": 268,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 45897,
+        "visible_pixel_count": 20031,
+        "transparent_canvas_ratio": 0.6961685475063706,
+        "visible_canvas_ratio": 0.3038314524936294,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hosho/processed/anim/hosho_anim_firepower_frame_03.png": {
+      "sha256": "c1355ad288d84cefb70beae67fa06e46c46ced7115f40392b0613f8093ad6699",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 246,
+        "height": 268,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 45541,
+        "visible_pixel_count": 20387,
+        "transparent_canvas_ratio": 0.6907687173886664,
+        "visible_canvas_ratio": 0.3092312826113336,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hosho/processed/anim/hosho_anim_firepower_frame_04.png": {
+      "sha256": "8e735c9d35db02efbd6abb3c92ac740cee786b4a9f059c8200472008f6247d8e",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 246,
+        "height": 268,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 46664,
+        "visible_pixel_count": 19264,
+        "transparent_canvas_ratio": 0.70780245115884,
+        "visible_canvas_ratio": 0.29219754884116006,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hosho/processed/anim/hosho_anim_firepower_keyframe.png": {
+      "sha256": "94d831dba6c30c81a1a2ceb8a62ee498ae5f31d23f654e2d655fb79d7fa859e1",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 246,
+        "height": 268,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 45037,
+        "visible_pixel_count": 20891,
+        "transparent_canvas_ratio": 0.6831240140759617,
+        "visible_canvas_ratio": 0.3168759859240384,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hosho/processed/anim/hosho_anim_hit_frame_01.png": {
+      "sha256": "de3d1f910b09b41ce5f7459b4b824363101f758c95c2b769437d617015ddfa49",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 256,
+        "height": 268,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 42512,
+        "visible_pixel_count": 26096,
+        "transparent_canvas_ratio": 0.6196361940298507,
+        "visible_canvas_ratio": 0.38036380597014924,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hosho/processed/anim/hosho_anim_hit_frame_02.png": {
+      "sha256": "728b12d16748682fcccb377859b281edaa2e77038f476ca6e005d826a0ff69f8",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 256,
+        "height": 268,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 46094,
+        "visible_pixel_count": 22514,
+        "transparent_canvas_ratio": 0.6718458488805971,
+        "visible_canvas_ratio": 0.328154151119403,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hosho/processed/anim/hosho_anim_hit_frame_03.png": {
+      "sha256": "144076039eebe596cef7b57632a6045ad4a1cc5837ec29d97145c7136e6b390a",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 256,
+        "height": 268,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 46276,
+        "visible_pixel_count": 22332,
+        "transparent_canvas_ratio": 0.6744986007462687,
+        "visible_canvas_ratio": 0.32550139925373134,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hosho/processed/anim/hosho_anim_hit_frame_04.png": {
+      "sha256": "278de389ba45168455c8eaa4024df9de961eb14f33b4ac4b89ffe102ac65eb6b",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 256,
+        "height": 268,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 49862,
+        "visible_pixel_count": 18746,
+        "transparent_canvas_ratio": 0.7267665578358209,
+        "visible_canvas_ratio": 0.2732334421641791,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hosho/processed/anim/hosho_anim_hit_keyframe.png": {
+      "sha256": "de3d1f910b09b41ce5f7459b4b824363101f758c95c2b769437d617015ddfa49",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 256,
+        "height": 268,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 42512,
+        "visible_pixel_count": 26096,
+        "transparent_canvas_ratio": 0.6196361940298507,
+        "visible_canvas_ratio": 0.38036380597014924,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hosho/processed/anim/hosho_anim_idle_frame_01.png": {
+      "sha256": "022ad352fe39a8f03864d24cea02466db7067029e60b7581fcf54206ad12f971",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 160,
+        "height": 288,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 30284,
+        "visible_pixel_count": 15796,
+        "transparent_canvas_ratio": 0.6572048611111111,
+        "visible_canvas_ratio": 0.3427951388888889,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hosho/processed/anim/hosho_anim_idle_frame_02.png": {
+      "sha256": "eb09277538016e1fec4601ea8e331407561d0a3b51008b53fe8aee396da996b4",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 160,
+        "height": 288,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 30335,
+        "visible_pixel_count": 15745,
+        "transparent_canvas_ratio": 0.6583116319444444,
+        "visible_canvas_ratio": 0.3416883680555556,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hosho/processed/anim/hosho_anim_idle_frame_03.png": {
+      "sha256": "776cc74eedb7cafdfa49e608e9c1ba8b286c4e2459519004facf26e0a2a861dd",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 160,
+        "height": 288,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 30647,
+        "visible_pixel_count": 15433,
+        "transparent_canvas_ratio": 0.6650824652777778,
+        "visible_canvas_ratio": 0.33491753472222224,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hosho/processed/anim/hosho_anim_idle_frame_04.png": {
+      "sha256": "e82b77e6ae358e36276d011537563f574ede03595ff3024ece2b5dfaf777369c",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 160,
+        "height": 288,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 30215,
+        "visible_pixel_count": 15865,
+        "transparent_canvas_ratio": 0.6557074652777778,
+        "visible_canvas_ratio": 0.3442925347222222,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hosho/processed/anim/hosho_anim_idle_keyframe.png": {
+      "sha256": "022ad352fe39a8f03864d24cea02466db7067029e60b7581fcf54206ad12f971",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 160,
+        "height": 288,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 30284,
+        "visible_pixel_count": 15796,
+        "transparent_canvas_ratio": 0.6572048611111111,
+        "visible_canvas_ratio": 0.3427951388888889,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hosho/processed/anim/hosho_anim_move_frame_01.png": {
+      "sha256": "cc9c6cb865f6fc31db32b1b876a68ac4ad94f94ca76f07bd6e264f7a612e08b1",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 298,
+        "height": 274,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 57476,
+        "visible_pixel_count": 24176,
+        "transparent_canvas_ratio": 0.7039141723411552,
+        "visible_canvas_ratio": 0.29608582765884484,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hosho/processed/anim/hosho_anim_move_frame_02.png": {
+      "sha256": "f63cd2fab9f161631d4275bb327c5e0fdef695ce4bf0844a6e1e135d5919e210",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 298,
+        "height": 274,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 56970,
+        "visible_pixel_count": 24682,
+        "transparent_canvas_ratio": 0.6977171410375741,
+        "visible_canvas_ratio": 0.3022828589624259,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hosho/processed/anim/hosho_anim_move_frame_03.png": {
+      "sha256": "27828547edad133ab91fac0ed5c78223d5447ecd57da960118c8e71c03b4f992",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 298,
+        "height": 274,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 56964,
+        "visible_pixel_count": 24688,
+        "transparent_canvas_ratio": 0.6976436584529466,
+        "visible_canvas_ratio": 0.3023563415470534,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hosho/processed/anim/hosho_anim_move_frame_04.png": {
+      "sha256": "8e924e5c51000435548e533936efdd9de800724716a8c194b566532f5195593c",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 298,
+        "height": 274,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 57246,
+        "visible_pixel_count": 24406,
+        "transparent_canvas_ratio": 0.7010973399304364,
+        "visible_canvas_ratio": 0.2989026600695635,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hosho/processed/anim/hosho_anim_move_keyframe.png": {
+      "sha256": "cc9c6cb865f6fc31db32b1b876a68ac4ad94f94ca76f07bd6e264f7a612e08b1",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 298,
+        "height": 274,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 57476,
+        "visible_pixel_count": 24176,
+        "transparent_canvas_ratio": 0.7039141723411552,
+        "visible_canvas_ratio": 0.29608582765884484,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hosho/processed/battle/hosho_battle_aircraft_group_01.png": {
+      "sha256": "26fa0dfd6df3ed5f4c9d810fa59ec066384300093f0762c5617a00c588fec496",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 194,
+        "height": 138,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 20838,
+        "visible_pixel_count": 5934,
+        "transparent_canvas_ratio": 0.7783505154639175,
+        "visible_canvas_ratio": 0.22164948453608246,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          100,
+          121,
+          248,
+          194
+        ],
+        "final_crop_box": [
+          82,
+          103,
+          266,
+          212
+        ],
+        "component_area": 5934,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 28,
+          "right": 27,
+          "bottom": 19
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hosho/processed/battle/hosho_battle_aircraft_launch_marker.png": {
+      "sha256": "da61a2f54e4ad7052299c1155e31b8107810d107f4ed0e8f6c1d0ac74c8a49c9",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 270,
+        "height": 258,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 40257,
+        "visible_pixel_count": 29403,
+        "transparent_canvas_ratio": 0.577906976744186,
+        "visible_canvas_ratio": 0.42209302325581394,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          145,
+          84,
+          377,
+          302
+        ],
+        "final_crop_box": [
+          127,
+          66,
+          395,
+          320
+        ],
+        "component_area": 29403,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 21,
+          "right": 19,
+          "bottom": 19
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hosho/processed/battle/hosho_battle_aircraft_recovery_marker.png": {
+      "sha256": "eb67d8e917eb3e1b2210ac83d8b97360e30ea426b3e63fc742dcc2e030c5dc31",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 274,
+        "height": 252,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 39016,
+        "visible_pixel_count": 30032,
+        "transparent_canvas_ratio": 0.5650561927934191,
+        "visible_canvas_ratio": 0.43494380720658093,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          117,
+          87,
+          354,
+          302
+        ],
+        "final_crop_box": [
+          99,
+          69,
+          372,
+          320
+        ],
+        "component_area": 30032,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 18,
+          "bottom": 18
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hosho/processed/battle/hosho_battle_body_r.png": {
+      "sha256": "022ad352fe39a8f03864d24cea02466db7067029e60b7581fcf54206ad12f971",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 160,
+        "height": 288,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 30284,
+        "visible_pixel_count": 15796,
+        "transparent_canvas_ratio": 0.6572048611111111,
+        "visible_canvas_ratio": 0.3427951388888889,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hosho/processed/battle/hosho_battle_flight_deck.png": {
+      "sha256": "f1082d1c110299b57d6a5697b39fab067319ca9827e8bb017e9c51d0a143731b",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 194,
+        "height": 366,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 30844,
+        "visible_pixel_count": 40160,
+        "transparent_canvas_ratio": 0.4343980620810095,
+        "visible_canvas_ratio": 0.5656019379189905,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          150,
+          88,
+          305,
+          401
+        ],
+        "final_crop_box": [
+          132,
+          70,
+          323,
+          419
+        ],
+        "component_area": 40160,
+        "output_edge_margins": {
+          "left": 20,
+          "top": 19,
+          "right": 19,
+          "bottom": 34
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hosho/processed/battle/hosho_battle_radar_node.png": {
+      "sha256": "9b8747b33ec44d6e947cb8645feeed467920e165cd2656df321b4a0d35c90ec3",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 192,
+        "height": 278,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 32924,
+        "visible_pixel_count": 20452,
+        "transparent_canvas_ratio": 0.6168315347721822,
+        "visible_canvas_ratio": 0.3831684652278177,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          150,
+          71,
+          304,
+          275
+        ],
+        "final_crop_box": [
+          132,
+          53,
+          322,
+          293
+        ],
+        "component_area": 20452,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 19,
+          "bottom": 56
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hosho/processed/battle/hosho_battle_rig_base.png": {
+      "sha256": "eec3f2e2f1bd6dd6677c89c14ea253525a7e14233b9816a13866d92572c20f5d",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 344,
+        "height": 290,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 60252,
+        "visible_pixel_count": 39508,
+        "transparent_canvas_ratio": 0.6039695268644747,
+        "visible_canvas_ratio": 0.39603047313552525,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          85,
+          135,
+          390,
+          368
+        ],
+        "final_crop_box": [
+          67,
+          117,
+          408,
+          386
+        ],
+        "component_area": 39508,
+        "output_edge_margins": {
+          "left": 20,
+          "top": 19,
+          "right": 19,
+          "bottom": 38
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hosho/processed/battle/hosho_battle_wake_origin_marker.png": {
+      "sha256": "41eec14be9df06c362a3e24eecdec7249cee7360c60795b8d3928628b8043bb3",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 206,
+        "height": 312,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 33771,
+        "visible_pixel_count": 30501,
+        "transparent_canvas_ratio": 0.5254387602688574,
+        "visible_canvas_ratio": 0.47456123973114267,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          111,
+          55,
+          278,
+          318
+        ],
+        "final_crop_box": [
+          93,
+          37,
+          296,
+          336
+        ],
+        "component_area": 30501,
+        "output_edge_margins": {
+          "left": 21,
+          "top": 18,
+          "right": 18,
+          "bottom": 30
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hosho/processed/ui/hosho_expr_default.png": {
+      "sha256": "634859c52d6055347acfe095d76fd85c7152ecd4d004e08c8bc8ae75eee0d10b",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 322,
+        "height": 438,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 72606,
+        "visible_pixel_count": 68430,
+        "transparent_canvas_ratio": 0.5148047307070536,
+        "visible_canvas_ratio": 0.4851952692929465,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          63,
+          51,
+          332,
+          410
+        ],
+        "final_crop_box": [
+          45,
+          33,
+          350,
+          428
+        ],
+        "output_edge_margins": {
+          "left": 35,
+          "top": 19,
+          "right": 18,
+          "bottom": 60
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hosho/processed/ui/hosho_expr_hit.png": {
+      "sha256": "8d096f083dbfa291680960b32a303b8c0de63863ee85a71ada744785343525ed",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 330,
+        "height": 438,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 75547,
+        "visible_pixel_count": 68993,
+        "transparent_canvas_ratio": 0.5226719247267192,
+        "visible_canvas_ratio": 0.47732807527328075,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          89,
+          34,
+          368,
+          394
+        ],
+        "final_crop_box": [
+          71,
+          16,
+          386,
+          412
+        ],
+        "output_edge_margins": {
+          "left": 32,
+          "top": 19,
+          "right": 19,
+          "bottom": 59
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hosho/processed/ui/hosho_expr_serious.png": {
+      "sha256": "e68aba2b3c4206a16e7329e66b51da9c5321aeeca91afd60c5bd81455c27e37d",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 320,
+        "height": 444,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 74180,
+        "visible_pixel_count": 67900,
+        "transparent_canvas_ratio": 0.5221002252252253,
+        "visible_canvas_ratio": 0.4778997747747748,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          98,
+          31,
+          367,
+          394
+        ],
+        "final_crop_box": [
+          80,
+          13,
+          385,
+          412
+        ],
+        "output_edge_margins": {
+          "left": 33,
+          "top": 19,
+          "right": 18,
+          "bottom": 62
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hosho/processed/ui/hosho_illust_full_alpha.png": {
+      "sha256": "98d90c9cec704209d19c70db5d6abc72c3f6830a081526c1feae29ed402cfc31",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 1058,
+        "height": 1658,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 1350671,
+        "visible_pixel_count": 403493,
+        "transparent_canvas_ratio": 0.7699798878554115,
+        "visible_canvas_ratio": 0.23002011214458853,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          22,
+          39,
+          1006,
+          1486
+        ],
+        "final_crop_box": [
+          10,
+          27,
+          1018,
+          1498
+        ],
+        "output_edge_margins": {
+          "left": 62,
+          "top": 199,
+          "right": 12,
+          "bottom": 12
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hosho/processed/ui/hosho_illust_half_alpha.png": {
+      "sha256": "bade80e6ef75a95b9c45ec971fd5c144be01ebd8062f6507d05fcab7148d6d36",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 1066,
+        "height": 1150,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 864766,
+        "visible_pixel_count": 361134,
+        "transparent_canvas_ratio": 0.705413165837344,
+        "visible_canvas_ratio": 0.294586834162656,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          66,
+          17,
+          1050,
+          1058
+        ],
+        "final_crop_box": [
+          50,
+          1,
+          1066,
+          1074
+        ],
+        "output_edge_margins": {
+          "left": 66,
+          "top": 17,
+          "right": 16,
+          "bottom": 92
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hosho/processed/ui/hosho_illust_skill_cutin_alpha.png": {
+      "sha256": "50b61f1912ae843eb0fe54f94952373d01adcc91883cee1c9bf4f8cba55e6e5a",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 1060,
+        "height": 1078,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 812747,
+        "visible_pixel_count": 329933,
+        "transparent_canvas_ratio": 0.7112638708999895,
+        "visible_canvas_ratio": 0.2887361291000105,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          500,
+          16,
+          1484,
+          855
+        ],
+        "final_crop_box": [
+          484,
+          0,
+          1500,
+          871
+        ],
+        "output_edge_margins": {
+          "left": 60,
+          "top": 16,
+          "right": 16,
+          "bottom": 223
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hosho/processed/ui/hosho_ui_chibi_head.png": {
+      "sha256": "d76a90ba55be6d7daa7486b8adb44a184848e6666f777283795768239277d5ad",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 366,
+        "height": 380,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 76333,
+        "visible_pixel_count": 62747,
+        "transparent_canvas_ratio": 0.5488423928674144,
+        "visible_canvas_ratio": 0.45115760713258557,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          62,
+          90,
+          368,
+          400
+        ],
+        "final_crop_box": [
+          44,
+          72,
+          386,
+          418
+        ],
+        "output_edge_margins": {
+          "left": 41,
+          "top": 18,
+          "right": 19,
+          "bottom": 52
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hosho/processed/ui/hosho_ui_class_carrier.png": {
+      "sha256": "18437dd14c5b41dd667e779bf4997cf07cee2fd9d8948476d4fd49e17273796a",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 176,
+        "height": 414,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 36543,
+        "visible_pixel_count": 36321,
+        "transparent_canvas_ratio": 0.5015233860342556,
+        "visible_canvas_ratio": 0.4984766139657444,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          110,
+          41,
+          248,
+          402
+        ],
+        "final_crop_box": [
+          92,
+          23,
+          266,
+          420
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 35,
+          "right": 19,
+          "bottom": 18
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hosho/processed/ui/hosho_ui_portrait.png": {
+      "sha256": "1a84fe17f57b49343ac8313319249f91ebb6af8e49cbc75f35e2ec0321841a42",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 512,
+        "height": 512,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 175124,
+        "visible_pixel_count": 87020,
+        "transparent_canvas_ratio": 0.6680450439453125,
+        "visible_canvas_ratio": 0.3319549560546875,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          20,
+          1176,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              20,
+              1176,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 114,
+          "top": 56,
+          "right": 66,
+          "bottom": 56
+        },
+        "cleanup_tags": []
+      },
+      "review": {
+        "verdict": "pass",
+        "reviewer": "Codex visual inspection",
+        "observation": "Black bob, brown eyes, navy-white hair knot and traditional navy-white neckline preserved; transparent unframed bust without rigging. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+      }
+    },
+    "assets/characters/hosho/processed/ui/hosho_ui_portrait_small.png": {
+      "sha256": "3cf1bab860322250eeab61a2ae8b8e8697f08445a764007a545654821fd70cad",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 128,
+        "height": 128,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 10464,
+        "visible_pixel_count": 5920,
+        "transparent_canvas_ratio": 0.638671875,
+        "visible_canvas_ratio": 0.361328125,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          20,
+          1176,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              20,
+              1176,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 26,
+          "top": 12,
+          "right": 15,
+          "bottom": 11
+        },
+        "cleanup_tags": []
+      },
+      "review": {
+        "verdict": "pass",
+        "reviewer": "Codex visual inspection",
+        "observation": "Black bob, brown eyes, navy-white hair knot and traditional navy-white neckline preserved; transparent unframed bust without rigging. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+      }
+    },
+    "assets/characters/hosho/processed/ui/hosho_ui_skill_airstrike.png": {
+      "sha256": "7c0989f1222769b4805736408b0c3a67bc5ea6ef658c0e7a9d46e2668064a10d",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 384,
+        "height": 382,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 83732,
+        "visible_pixel_count": 62956,
+        "transparent_canvas_ratio": 0.5708169720767888,
+        "visible_canvas_ratio": 0.42918302792321117,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          27,
+          45,
+          373,
+          360
+        ],
+        "final_crop_box": [
+          9,
+          27,
+          391,
+          378
+        ],
+        "output_edge_margins": {
+          "left": 20,
+          "top": 19,
+          "right": 18,
+          "bottom": 48
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/carrier/vfx_carrier_aa_burst.png": {
+      "sha256": "7e2583a6fa6f387cda1f4ce52c98dd270bea595916c47ad1def14caaa5470ab3",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 194,
+        "height": 236,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 38195,
+        "visible_pixel_count": 7589,
+        "transparent_canvas_ratio": 0.8342434038091909,
+        "visible_canvas_ratio": 0.165756596190809,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          153,
+          136,
+          268,
+          309
+        ],
+        "final_crop_box": [
+          135,
+          118,
+          286,
+          327
+        ],
+        "component_area": 7015,
+        "output_edge_margins": {
+          "left": 24,
+          "top": 26,
+          "right": 19,
+          "bottom": 19
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/carrier/vfx_carrier_aircraft_explosion.png": {
+      "sha256": "b04f40427c7c747cfc59279af7e9b69161cece35754d77af5204fe3d00d17487",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 316,
+        "height": 270,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 67324,
+        "visible_pixel_count": 17996,
+        "transparent_canvas_ratio": 0.7890764181903422,
+        "visible_canvas_ratio": 0.21092358180965776,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          106,
+          132,
+          342,
+          320
+        ],
+        "final_crop_box": [
+          88,
+          114,
+          360,
+          338
+        ],
+        "component_area": 17293,
+        "output_edge_margins": {
+          "left": 43,
+          "top": 30,
+          "right": 19,
+          "bottom": 19
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/carrier/vfx_carrier_aircraft_formation.png": {
+      "sha256": "5fc5bd4b4f9443a9643af9fa4dab33a5fad4308b093a2e2acd7846ea227e9d2f",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 140,
+        "height": 272,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 35473,
+        "visible_pixel_count": 2607,
+        "transparent_canvas_ratio": 0.9315388655462185,
+        "visible_canvas_ratio": 0.06846113445378152,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          187,
+          85,
+          253,
+          273
+        ],
+        "final_crop_box": [
+          169,
+          67,
+          271,
+          291
+        ],
+        "component_area": 2549,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 66,
+          "right": 19,
+          "bottom": 18
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/carrier/vfx_carrier_aircraft_launch_flash.png": {
+      "sha256": "aba435ccb3f2c2a40db8f1b041b35d637fb0a5c8645e8018149ff7182ccbef20",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 190,
+        "height": 298,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 47770,
+        "visible_pixel_count": 8850,
+        "transparent_canvas_ratio": 0.84369480748852,
+        "visible_canvas_ratio": 0.15630519251148003,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          156,
+          152,
+          277,
+          350
+        ],
+        "final_crop_box": [
+          138,
+          134,
+          295,
+          368
+        ],
+        "component_area": 8759,
+        "output_edge_margins": {
+          "left": 24,
+          "top": 18,
+          "right": 18,
+          "bottom": 82
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/carrier/vfx_carrier_aircraft_path.png": {
+      "sha256": "daedd061d887f81820d5ae61ef9acf1c30b8598817a170dae66068f105534867",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 298,
+        "height": 218,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 64126,
+        "visible_pixel_count": 838,
+        "transparent_canvas_ratio": 0.987100547995813,
+        "visible_canvas_ratio": 0.012899452004186934,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          115,
+          149,
+          283,
+          297
+        ],
+        "final_crop_box": [
+          97,
+          131,
+          301,
+          315
+        ],
+        "component_area": 785,
+        "output_edge_margins": {
+          "left": 91,
+          "top": 19,
+          "right": 19,
+          "bottom": 31
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/carrier/vfx_carrier_aircraft_recovery.png": {
+      "sha256": "375357165731ac6e3b2b2c73ed0af9e53529b7bddfb4bb7f6854dda1da65827c",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 120,
+        "height": 314,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 29340,
+        "visible_pixel_count": 8340,
+        "transparent_canvas_ratio": 0.7786624203821656,
+        "visible_canvas_ratio": 0.2213375796178344,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          178,
+          118,
+          261,
+          316
+        ],
+        "final_crop_box": [
+          160,
+          100,
+          279,
+          334
+        ],
+        "component_area": 8311,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 18,
+          "bottom": 84
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/carrier/vfx_carrier_airstrike_area.png": {
+      "sha256": "9931821bf1c616266ce8c708f759b9f34802ab63fe3b7b2110450a81f04bd284",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 364,
+        "height": 216,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 72406,
+        "visible_pixel_count": 6218,
+        "transparent_canvas_ratio": 0.9209147334147334,
+        "visible_canvas_ratio": 0.07908526658526659,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          67,
+          131,
+          393,
+          307
+        ],
+        "final_crop_box": [
+          49,
+          113,
+          411,
+          325
+        ],
+        "component_area": 5543,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 19,
+          "bottom": 22
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/carrier/vfx_carrier_wake_carrier.png": {
+      "sha256": "e84a6a83c24bdbfaf8f43bec7851f5a958f97cc336bbd664d5b205c94b551e5d",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 336,
+        "height": 262,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 45144,
+        "visible_pixel_count": 42888,
+        "transparent_canvas_ratio": 0.512813522355507,
+        "visible_canvas_ratio": 0.4871864776444929,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          58,
+          112,
+          340,
+          332
+        ],
+        "final_crop_box": [
+          40,
+          94,
+          358,
+          350
+        ],
+        "component_area": 42736,
+        "output_edge_margins": {
+          "left": 27,
+          "top": 21,
+          "right": 18,
+          "bottom": 19
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    }
+  }
+}

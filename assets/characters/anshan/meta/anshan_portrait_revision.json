@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "character_id": "anshan",
+  "revision": "20261001_unframed_v1",
+  "scope": "Portraits only; does not migrate or approve the full character package",
+  "generation_route": "codex_builtin_imagegen_native_alpha",
+  "model": "account-managed/not-exposed",
+  "request_id": "not-exposed",
+  "background_control": "transparent",
+  "prompt": "Create ONE independent head-and-shoulders transparent game portrait for TinySeaWar. Image 1 is ONLY the identity reference for this character; preserve face, hair, eyes, outfit colors and core accessories exactly. Image 2 is ONLY the approved rendering/composition style sample (a DIFFERENT character); do NOT copy its blonde hair, crown or outfit. Match the style sample's polished fine anime linework, restrained cel shading, soft neutral light and bust framing. Head upright, slight three-quarter face toward viewer, neutral character-appropriate expression, eye line around 42% of square canvas height, complete hair and hats visible, upper shoulders/chest, no hands. Isolated bust at most84% canvas width/height,8%EMPTY TRANSPARENT margin every side. NO FRAME, border, card, medallion, background, text, checkerboard, weapons, ship parts, rigging or effects. Real native Alpha PNG, one portrait not a sheet, readable at40px. Character ID: anshan. Preserve this character's hair color, eye color, head accessories and collar from image1; remove all hands, green/white/black source backdrop and external equipment.",
+  "raw_output_path": "/Users/qingyue/.codex/generated_images/01a0f530-85bc-7132-9cf0-51e103bf539a/exec-ee5f1e9e-0919-4305-bf30-339f812a2956.png",
+  "raw_sha256": "2fdb898d94024ea68068a9ce113f27609e61b6347912ecf5e646dae12940e65b",
+  "references": [
+    {
+      "path": "assets/characters/anshan/concept/anshan_concept_full.png",
+      "sha256": "c81ccbe821ff7e2dbbf7ad869ea4420d14d000e91df530e3ba5563376445186c"
+    },
+    {
+      "path": "assets/characters/warspite/ui/warspite_portrait_20261001_unframed_v1.png",
+      "sha256": "2de3b58ce65dc2a54b426434d5b7a477e93bb28b8e99ad51ad9bc9ca2af6cab9"
+    }
+  ],
+  "source": {
+    "path": "assets/characters/anshan/ui/anshan_portrait_20261001_unframed_v1.png",
+    "sha256": "2fdb898d94024ea68068a9ce113f27609e61b6347912ecf5e646dae12940e65b",
+    "alpha_facts": {
+      "format": "PNG",
+      "source_mode": "RGBA",
+      "width": 1254,
+      "height": 1254,
+      "has_alpha_channel": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixel_count": 715414,
+      "visible_pixel_count": 857102,
+      "transparent_canvas_ratio": 0.4549486300934299,
+      "visible_canvas_ratio": 0.5450513699065701,
+      "transparent_border_ratio": 0.9994014365522745
+    }
+  },
+  "source_review": {
+    "sha256": "2fdb898d94024ea68068a9ce113f27609e61b6347912ecf5e646dae12940e65b",
+    "verdict": "pass",
+    "reviewer": "Codex visual inspection",
+    "observation": "Black/teal bob, brown eyes and angular teal clips retained, blue/white collar with red abstract compass patch; single bust, no frame, hand or equipment."
+  },
+  "output_reviews": {
+    "ui_portrait": {
+      "sha256": "3b2aea3d454dd0fed9dc69642d99c0333a61b5e1d880e12b8d108d4a8a3b11c5",
+      "verdict": "pass",
+      "reviewer": "Codex visual inspection",
+      "observation": "Black/teal bob, brown eyes and angular teal clips retained, blue/white collar with red abstract compass patch; single bust, no frame, hand or equipment. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+    },
+    "ui_portrait_small": {
+      "sha256": "76913bcccd267602283acd89c902bfe4c5d5fdc05f657d46fe61b7b41f6d9c6d",
+      "verdict": "pass",
+      "reviewer": "Codex visual inspection",
+      "observation": "Black/teal bob, brown eyes and angular teal clips retained, blue/white collar with red abstract compass patch; single bust, no frame, hand or equipment. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+    }
+  }
+}

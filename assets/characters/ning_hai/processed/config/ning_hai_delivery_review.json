@@ -1,0 +1,1813 @@
+{
+  "schema_version": 1,
+  "character_id": "ning_hai",
+  "scope": "Visual evidence only; technical contract must pass separately. Not runtime acceptance.",
+  "checklist": [
+    "identity_and_inventory",
+    "no_truncation_or_neighbor_fragments",
+    "alpha_edges_and_small_scale_readability",
+    "animation_consistency",
+    "mechanical_binding_and_vfx_semantics"
+  ],
+  "package_sha256": {
+    "assets/characters/ning_hai/battle/ning_hai_anim_5x4_master.png": "9bf7a6750546e81e0502daf01880dd85c630d27e8c577a80204ccaa2b6f132d1",
+    "assets/characters/ning_hai/battle/ning_hai_battle_asset_grid.png": "d0178079c2d4ed00231a806943ab64d6b42dbfb65f194a41bd6218d467b67bd3",
+    "assets/characters/ning_hai/concept/ning_hai_concept_full.png": "4d998df25f0bcaa060758fe9a41e6afc282df7908bae74c5273c0d9f6e8aece0",
+    "assets/characters/ning_hai/meta/ning_hai_portrait_revision.json": "823baad0770304a1de990056788e7edbe50f87d3fedcaad1620856eede3325ca",
+    "assets/characters/ning_hai/processed/anim/ning_hai_anim_attack_frame_01.png": "63951d5ad23e7345fef87c618cb15c136d448bda97f3c298fe0173d0953353c4",
+    "assets/characters/ning_hai/processed/anim/ning_hai_anim_attack_frame_02.png": "772d30773d847ca4141164a1d4bef809d6bcad75ce3e7f3c538be285e381d0dc",
+    "assets/characters/ning_hai/processed/anim/ning_hai_anim_attack_frame_03.png": "7caf61ca1c5f4f0844619e240bab0a923b9d89a643f70f36c2fe967a8d0b715a",
+    "assets/characters/ning_hai/processed/anim/ning_hai_anim_attack_frame_04.png": "5938b4a9e5f824411fc32b6458c23c29df2f2809db7ab2cc495837f9523b76c7",
+    "assets/characters/ning_hai/processed/anim/ning_hai_anim_attack_keyframe.png": "63951d5ad23e7345fef87c618cb15c136d448bda97f3c298fe0173d0953353c4",
+    "assets/characters/ning_hai/processed/anim/ning_hai_anim_firepower_frame_01.png": "9ba863456910f53e1855dd321147d1897bcfc463bc9bb1a2016417d9b512ff78",
+    "assets/characters/ning_hai/processed/anim/ning_hai_anim_firepower_frame_02.png": "81a4307712c7ecb2b58a7efed722f3b910e254c1626a7106f1a9c5a4acd6438f",
+    "assets/characters/ning_hai/processed/anim/ning_hai_anim_firepower_frame_03.png": "0e2994189d2c384ef868d90634d64db6f2512424292c3b8ce585d80d8e16d074",
+    "assets/characters/ning_hai/processed/anim/ning_hai_anim_firepower_frame_04.png": "1ec6e736c9f8c5c3bd2a02af5a222501f14c83a5ffa465225d1362f9bc70323a",
+    "assets/characters/ning_hai/processed/anim/ning_hai_anim_firepower_keyframe.png": "9ba863456910f53e1855dd321147d1897bcfc463bc9bb1a2016417d9b512ff78",
+    "assets/characters/ning_hai/processed/anim/ning_hai_anim_hit_frame_01.png": "8eb289c6365da44d6e2394f535a5d7bd83ab40a573a27723db6e1bad84e6d42c",
+    "assets/characters/ning_hai/processed/anim/ning_hai_anim_hit_frame_02.png": "e5975da039ca54674a83a9ae3c60ec7cec1bf0efa5a243d984efaabb7c0b9664",
+    "assets/characters/ning_hai/processed/anim/ning_hai_anim_hit_frame_03.png": "18b308cd21f4592a6087c7d55295d0086e4fd4b3999e4a639d5e43a361443c9f",
+    "assets/characters/ning_hai/processed/anim/ning_hai_anim_hit_frame_04.png": "d353032bec1fb2428f9e04b8e684c6883c62ea85abc7f20beb44ce0185e936ba",
+    "assets/characters/ning_hai/processed/anim/ning_hai_anim_hit_keyframe.png": "8eb289c6365da44d6e2394f535a5d7bd83ab40a573a27723db6e1bad84e6d42c",
+    "assets/characters/ning_hai/processed/anim/ning_hai_anim_idle_frame_01.png": "7d7a402eb962ee71a889246c5be4c916a6be7bea769aadfe67c487be90e99c87",
+    "assets/characters/ning_hai/processed/anim/ning_hai_anim_idle_frame_02.png": "ab31abcac8151143c841ee1cda30b17e1e3d69417cd6516f4e1b42dc866c6c7a",
+    "assets/characters/ning_hai/processed/anim/ning_hai_anim_idle_frame_03.png": "38924c3304e63dd0f570b39ca8109d050d3931b9b40d3061a35b6531054a8393",
+    "assets/characters/ning_hai/processed/anim/ning_hai_anim_idle_frame_04.png": "dfd3d7d29d081fe726782cf5d22b4e60d83f0f08e491bde500aaedb59406ff10",
+    "assets/characters/ning_hai/processed/anim/ning_hai_anim_idle_keyframe.png": "7d7a402eb962ee71a889246c5be4c916a6be7bea769aadfe67c487be90e99c87",
+    "assets/characters/ning_hai/processed/anim/ning_hai_anim_move_frame_01.png": "973d19e1bb4d24871e66ab49c669654664ba3f3de0ffe0305fbf1844ffb03be2",
+    "assets/characters/ning_hai/processed/anim/ning_hai_anim_move_frame_02.png": "342f18a5921980378d67a292069382fe575ca4c971bd9981186f4714b9132319",
+    "assets/characters/ning_hai/processed/anim/ning_hai_anim_move_frame_03.png": "79f374888417466167541a98cfd3ad5f071d8ea1083386ecf8b1a3af2641a7a8",
+    "assets/characters/ning_hai/processed/anim/ning_hai_anim_move_frame_04.png": "543ec982c4b40126754a16958494a835d7028e00b2a20fcdfdb121bce051edee",
+    "assets/characters/ning_hai/processed/anim/ning_hai_anim_move_keyframe.png": "973d19e1bb4d24871e66ab49c669654664ba3f3de0ffe0305fbf1844ffb03be2",
+    "assets/characters/ning_hai/processed/battle/ning_hai_battle_aa_center.png": "e31d6d860b467be8e5b336f048634ac74a20c33f8f70c3c90e3f9b57d8a47be3",
+    "assets/characters/ning_hai/processed/battle/ning_hai_battle_body_r.png": "7d7a402eb962ee71a889246c5be4c916a6be7bea769aadfe67c487be90e99c87",
+    "assets/characters/ning_hai/processed/battle/ning_hai_battle_radar_node.png": "a2b90b999f6c46c2885eeadde167a27135ff173e622222f18f24a8d5e115ff90",
+    "assets/characters/ning_hai/processed/battle/ning_hai_battle_rig_base.png": "f23c43781ecf4c5fe5558cb118b5c8c1b85285101e50765f3907f565949c463a",
+    "assets/characters/ning_hai/processed/battle/ning_hai_battle_support_node.png": "49ec3d44efdc21b0be924d8e5b3603af0501e62af90c60e80d3303030b8c07ee",
+    "assets/characters/ning_hai/processed/battle/ning_hai_battle_turret_main_01.png": "cac13f936813f8e8d56e739ed539ba542717ada393ceedf87e39b084ca849093",
+    "assets/characters/ning_hai/processed/battle/ning_hai_battle_turret_main_02.png": "beb035d06e9ed8736ec81024e7cc2c077404d4b19677ff89a677c2c7171520cc",
+    "assets/characters/ning_hai/processed/battle/ning_hai_battle_wake_origin_marker.png": "dad154887252b9af9088cdd7a3dfc88ef80ed94cd81eeec48aaf9ee6377bb455",
+    "assets/characters/ning_hai/processed/config/ning_hai_anim_config.json": "e019327d72facfa4dfd383b3f67829b649fb1d535f2e652eb7500e20fe06a219",
+    "assets/characters/ning_hai/processed/config/ning_hai_meta_bind_points.json": "3fc139684e03f30925c8f741f67e6b08738be41748aaa9c6c0c8d95168f3fe79",
+    "assets/characters/ning_hai/processed/config/ning_hai_postprocess_manifest.json": "30ef266b1b1d1586077566202ca4ab5bd477e06352113aaa980e70f31ffb8971",
+    "assets/characters/ning_hai/processed/config/ning_hai_vfx_config.json": "74ffecf3f4bb96886e29b65693d9559ea20506e85c8c186f18a05b3e7046fb25",
+    "assets/characters/ning_hai/processed/source_alpha/ning_hai_anim_5x4_master_alpha_source.png": "b9bdee034fcd1c7e4d35f50c57577908d98ec430ea4c6fbf38d6bd6078784d8a",
+    "assets/characters/ning_hai/processed/source_alpha/ning_hai_battle_asset_grid_alpha_source.png": "8b0ed2819c4436404a19808578d044bcb6e0f8b3cc6d39ec4699a6307d1c5e65",
+    "assets/characters/ning_hai/processed/source_alpha/ning_hai_concept_full_alpha_source.png": "8807ccaf3e2e767380fd4e772a4d0afe3ae3685909fa57fe4ecc187381e564d1",
+    "assets/characters/ning_hai/processed/source_alpha/ning_hai_ui_sheet_alpha_source.png": "48ea0780e91ddb611ffd75f801b86f991f35837ee5e7b9767b45230316fb20be",
+    "assets/characters/ning_hai/processed/source_alpha/ning_hai_vfx_reference_sheet_alpha_source.png": "bc0b61aa19190144159b1ad620c72fcbd5f9eb64daa6e757f481ff0921eaf31f",
+    "assets/characters/ning_hai/processed/ui/ning_hai_expr_default.png": "1d886801fc652228ea22002461c8eb70e36615c01a7045eccbc3506d9bba609f",
+    "assets/characters/ning_hai/processed/ui/ning_hai_expr_hit.png": "6773908816319c6f0978eda133fd69f21c0546f58b68b005ded7c51d56a93600",
+    "assets/characters/ning_hai/processed/ui/ning_hai_expr_serious.png": "c61a4574b296344ec0732b2e79212b95bcc8a33a595a53ee2435e283182cd37f",
+    "assets/characters/ning_hai/processed/ui/ning_hai_illust_full_alpha.png": "16636a0831bb0d8ebc0aaedb10668d15786466f5d7c0c453e15e712eea07d697",
+    "assets/characters/ning_hai/processed/ui/ning_hai_illust_half_alpha.png": "a58c680af14d93cf17f652932b8cfef940be67d9a62c34c7c05020301b1f1f55",
+    "assets/characters/ning_hai/processed/ui/ning_hai_illust_skill_cutin_alpha.png": "d80bd59a885a9dece47cd148c66ebdd98a74c91af2c53bba5d3c9cd4b27c3733",
+    "assets/characters/ning_hai/processed/ui/ning_hai_ui_chibi_head.png": "2c0523792d9b10f18f084a002e374978561ed55ef017e230c60f48e730cb2cae",
+    "assets/characters/ning_hai/processed/ui/ning_hai_ui_class_light_cruiser.png": "9d64a9bed42572834c1801f3c673d5a6245cdd1a8519cc5000193c95e766a699",
+    "assets/characters/ning_hai/processed/ui/ning_hai_ui_portrait.png": "8c1a92818f1acc4337c260fc50b3260c5933b3b7cfcb57e805a05750c3ee60a1",
+    "assets/characters/ning_hai/processed/ui/ning_hai_ui_portrait_small.png": "79a00ec88dc0454f90d99df3698aa112fa928767f0a877ce4a50c9271214432c",
+    "assets/characters/ning_hai/processed/ui/ning_hai_ui_skill_escort_barrage.png": "e900ab4a486792bcd0616fa2ecf4646f93724c89e4009b387cb552d7f51607d0",
+    "assets/characters/ning_hai/ui/ning_hai_portrait_20261001_unframed_v1.png": "a978120cff8ee4947971c9cd9af87369828402c7457518b419bc918c6c7689fe",
+    "assets/characters/ning_hai/ui/ning_hai_ui_sheet.png": "7ca36716cb1b7d126a044a04d6cac4bb6d47b4b0a5026b73ee54bee119207e51",
+    "assets/characters/ning_hai/vfx/ning_hai_vfx_reference_sheet.png": "394ef3850d64ead0f76a891f8db47b454156a189e51233d48bdfc69fb4ad1857",
+    "assets/vfx/combat/character_templates/light_cruiser/vfx_light_cruiser_aa_burst.png": "af4e63708ecb19e95d24049adac8cc206e0d5a5fa4a319d2abb9e8d74459aec1",
+    "assets/vfx/combat/character_templates/light_cruiser/vfx_light_cruiser_aa_circle.png": "07618bafd94aeeb561b95fb9072fd9b718ff5c9350d1c938fd19f932a0b2c18f",
+    "assets/vfx/combat/character_templates/light_cruiser/vfx_light_cruiser_armor_sparks.png": "b550ddbf8a72541dc392782a216d640b6b572a6f4b0ccd4910787b811dc0c378",
+    "assets/vfx/combat/character_templates/light_cruiser/vfx_light_cruiser_escort_aura.png": "3e5ed52c42e6b393ed345ed9014365bb759969d112fb897cf2454c1c099ce649",
+    "assets/vfx/combat/character_templates/light_cruiser/vfx_light_cruiser_muzzle_flash_medium.png": "2d049e2cdc0672c7d8ae72e3ffe9098927f666d9ce96aa7653e91fcc6571225c",
+    "assets/vfx/combat/character_templates/light_cruiser/vfx_light_cruiser_shell_trail.png": "dbd11679f1b7531a2ba871176d3cada767d5e1bbd99be3971a5fbfc05ef8bb2d",
+    "assets/vfx/combat/character_templates/light_cruiser/vfx_light_cruiser_wake_medium.png": "88eec7e4cf4ec59cb45ee8d07040414e1b1a5dd72369a5e579c473eaba4b6b76",
+    "assets/vfx/combat/character_templates/light_cruiser/vfx_light_cruiser_water_splash.png": "381681bb7ae3817b0aaa874878bd2b3f79e4cdf2fa748ef313cf051e5bc29dcf"
+  },
+  "assets": {
+    "assets/characters/ning_hai/processed/anim/ning_hai_anim_attack_frame_01.png": {
+      "sha256": "63951d5ad23e7345fef87c618cb15c136d448bda97f3c298fe0173d0953353c4",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 302,
+        "height": 296,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 57663,
+        "visible_pixel_count": 31729,
+        "transparent_canvas_ratio": 0.6450577232862001,
+        "visible_canvas_ratio": 0.3549422767137999,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ning_hai/processed/anim/ning_hai_anim_attack_frame_02.png": {
+      "sha256": "772d30773d847ca4141164a1d4bef809d6bcad75ce3e7f3c538be285e381d0dc",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 302,
+        "height": 296,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 58354,
+        "visible_pixel_count": 31038,
+        "transparent_canvas_ratio": 0.6527877214963308,
+        "visible_canvas_ratio": 0.34721227850366926,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ning_hai/processed/anim/ning_hai_anim_attack_frame_03.png": {
+      "sha256": "7caf61ca1c5f4f0844619e240bab0a923b9d89a643f70f36c2fe967a8d0b715a",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 302,
+        "height": 296,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 57031,
+        "visible_pixel_count": 32361,
+        "transparent_canvas_ratio": 0.6379877393950242,
+        "visible_canvas_ratio": 0.3620122606049758,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ning_hai/processed/anim/ning_hai_anim_attack_frame_04.png": {
+      "sha256": "5938b4a9e5f824411fc32b6458c23c29df2f2809db7ab2cc495837f9523b76c7",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 302,
+        "height": 296,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 61933,
+        "visible_pixel_count": 27459,
+        "transparent_canvas_ratio": 0.6928248612851262,
+        "visible_canvas_ratio": 0.30717513871487384,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ning_hai/processed/anim/ning_hai_anim_attack_keyframe.png": {
+      "sha256": "63951d5ad23e7345fef87c618cb15c136d448bda97f3c298fe0173d0953353c4",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 302,
+        "height": 296,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 57663,
+        "visible_pixel_count": 31729,
+        "transparent_canvas_ratio": 0.6450577232862001,
+        "visible_canvas_ratio": 0.3549422767137999,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ning_hai/processed/anim/ning_hai_anim_firepower_frame_01.png": {
+      "sha256": "9ba863456910f53e1855dd321147d1897bcfc463bc9bb1a2016417d9b512ff78",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 254,
+        "height": 290,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 43226,
+        "visible_pixel_count": 30434,
+        "transparent_canvas_ratio": 0.5868313874558784,
+        "visible_canvas_ratio": 0.4131686125441216,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ning_hai/processed/anim/ning_hai_anim_firepower_frame_02.png": {
+      "sha256": "81a4307712c7ecb2b58a7efed722f3b910e254c1626a7106f1a9c5a4acd6438f",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 254,
+        "height": 290,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 49938,
+        "visible_pixel_count": 23722,
+        "transparent_canvas_ratio": 0.6779527559055119,
+        "visible_canvas_ratio": 0.3220472440944882,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ning_hai/processed/anim/ning_hai_anim_firepower_frame_03.png": {
+      "sha256": "0e2994189d2c384ef868d90634d64db6f2512424292c3b8ce585d80d8e16d074",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 254,
+        "height": 290,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 48678,
+        "visible_pixel_count": 24982,
+        "transparent_canvas_ratio": 0.6608471354873744,
+        "visible_canvas_ratio": 0.33915286451262555,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ning_hai/processed/anim/ning_hai_anim_firepower_frame_04.png": {
+      "sha256": "1ec6e736c9f8c5c3bd2a02af5a222501f14c83a5ffa465225d1362f9bc70323a",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 254,
+        "height": 290,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 47605,
+        "visible_pixel_count": 26055,
+        "transparent_canvas_ratio": 0.6462802063535161,
+        "visible_canvas_ratio": 0.35371979364648387,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ning_hai/processed/anim/ning_hai_anim_firepower_keyframe.png": {
+      "sha256": "9ba863456910f53e1855dd321147d1897bcfc463bc9bb1a2016417d9b512ff78",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 254,
+        "height": 290,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 43226,
+        "visible_pixel_count": 30434,
+        "transparent_canvas_ratio": 0.5868313874558784,
+        "visible_canvas_ratio": 0.4131686125441216,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ning_hai/processed/anim/ning_hai_anim_hit_frame_01.png": {
+      "sha256": "8eb289c6365da44d6e2394f535a5d7bd83ab40a573a27723db6e1bad84e6d42c",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 250,
+        "height": 282,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 45244,
+        "visible_pixel_count": 25256,
+        "transparent_canvas_ratio": 0.6417588652482269,
+        "visible_canvas_ratio": 0.35824113475177305,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ning_hai/processed/anim/ning_hai_anim_hit_frame_02.png": {
+      "sha256": "e5975da039ca54674a83a9ae3c60ec7cec1bf0efa5a243d984efaabb7c0b9664",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 250,
+        "height": 282,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 44621,
+        "visible_pixel_count": 25879,
+        "transparent_canvas_ratio": 0.6329219858156029,
+        "visible_canvas_ratio": 0.36707801418439717,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ning_hai/processed/anim/ning_hai_anim_hit_frame_03.png": {
+      "sha256": "18b308cd21f4592a6087c7d55295d0086e4fd4b3999e4a639d5e43a361443c9f",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 250,
+        "height": 282,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 43424,
+        "visible_pixel_count": 27076,
+        "transparent_canvas_ratio": 0.6159432624113476,
+        "visible_canvas_ratio": 0.3840567375886525,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ning_hai/processed/anim/ning_hai_anim_hit_frame_04.png": {
+      "sha256": "d353032bec1fb2428f9e04b8e684c6883c62ea85abc7f20beb44ce0185e936ba",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 250,
+        "height": 282,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 41432,
+        "visible_pixel_count": 29068,
+        "transparent_canvas_ratio": 0.5876879432624114,
+        "visible_canvas_ratio": 0.41231205673758864,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ning_hai/processed/anim/ning_hai_anim_hit_keyframe.png": {
+      "sha256": "8eb289c6365da44d6e2394f535a5d7bd83ab40a573a27723db6e1bad84e6d42c",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 250,
+        "height": 282,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 45244,
+        "visible_pixel_count": 25256,
+        "transparent_canvas_ratio": 0.6417588652482269,
+        "visible_canvas_ratio": 0.35824113475177305,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ning_hai/processed/anim/ning_hai_anim_idle_frame_01.png": {
+      "sha256": "7d7a402eb962ee71a889246c5be4c916a6be7bea769aadfe67c487be90e99c87",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 268,
+        "height": 312,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 51219,
+        "visible_pixel_count": 32397,
+        "transparent_canvas_ratio": 0.6125502296211252,
+        "visible_canvas_ratio": 0.38744977037887485,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ning_hai/processed/anim/ning_hai_anim_idle_frame_02.png": {
+      "sha256": "ab31abcac8151143c841ee1cda30b17e1e3d69417cd6516f4e1b42dc866c6c7a",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 268,
+        "height": 312,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 50889,
+        "visible_pixel_count": 32727,
+        "transparent_canvas_ratio": 0.608603616532721,
+        "visible_canvas_ratio": 0.391396383467279,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ning_hai/processed/anim/ning_hai_anim_idle_frame_03.png": {
+      "sha256": "38924c3304e63dd0f570b39ca8109d050d3931b9b40d3061a35b6531054a8393",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 268,
+        "height": 312,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 51561,
+        "visible_pixel_count": 32055,
+        "transparent_canvas_ratio": 0.616640355912744,
+        "visible_canvas_ratio": 0.38335964408725604,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ning_hai/processed/anim/ning_hai_anim_idle_frame_04.png": {
+      "sha256": "dfd3d7d29d081fe726782cf5d22b4e60d83f0f08e491bde500aaedb59406ff10",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 268,
+        "height": 312,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 51035,
+        "visible_pixel_count": 32581,
+        "transparent_canvas_ratio": 0.6103496938384998,
+        "visible_canvas_ratio": 0.3896503061615002,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ning_hai/processed/anim/ning_hai_anim_idle_keyframe.png": {
+      "sha256": "7d7a402eb962ee71a889246c5be4c916a6be7bea769aadfe67c487be90e99c87",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 268,
+        "height": 312,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 51219,
+        "visible_pixel_count": 32397,
+        "transparent_canvas_ratio": 0.6125502296211252,
+        "visible_canvas_ratio": 0.38744977037887485,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ning_hai/processed/anim/ning_hai_anim_move_frame_01.png": {
+      "sha256": "973d19e1bb4d24871e66ab49c669654664ba3f3de0ffe0305fbf1844ffb03be2",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 260,
+        "height": 264,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 42933,
+        "visible_pixel_count": 25707,
+        "transparent_canvas_ratio": 0.6254807692307692,
+        "visible_canvas_ratio": 0.37451923076923077,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ning_hai/processed/anim/ning_hai_anim_move_frame_02.png": {
+      "sha256": "342f18a5921980378d67a292069382fe575ca4c971bd9981186f4714b9132319",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 260,
+        "height": 264,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 44371,
+        "visible_pixel_count": 24269,
+        "transparent_canvas_ratio": 0.6464306526806527,
+        "visible_canvas_ratio": 0.3535693473193473,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ning_hai/processed/anim/ning_hai_anim_move_frame_03.png": {
+      "sha256": "79f374888417466167541a98cfd3ad5f071d8ea1083386ecf8b1a3af2641a7a8",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 260,
+        "height": 264,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 41213,
+        "visible_pixel_count": 27427,
+        "transparent_canvas_ratio": 0.6004224941724942,
+        "visible_canvas_ratio": 0.39957750582750584,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ning_hai/processed/anim/ning_hai_anim_move_frame_04.png": {
+      "sha256": "543ec982c4b40126754a16958494a835d7028e00b2a20fcdfdb121bce051edee",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 260,
+        "height": 264,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 41256,
+        "visible_pixel_count": 27384,
+        "transparent_canvas_ratio": 0.6010489510489511,
+        "visible_canvas_ratio": 0.39895104895104894,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ning_hai/processed/anim/ning_hai_anim_move_keyframe.png": {
+      "sha256": "973d19e1bb4d24871e66ab49c669654664ba3f3de0ffe0305fbf1844ffb03be2",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 260,
+        "height": 264,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 42933,
+        "visible_pixel_count": 25707,
+        "transparent_canvas_ratio": 0.6254807692307692,
+        "visible_canvas_ratio": 0.37451923076923077,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ning_hai/processed/battle/ning_hai_battle_aa_center.png": {
+      "sha256": "e31d6d860b467be8e5b336f048634ac74a20c33f8f70c3c90e3f9b57d8a47be3",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 288,
+        "height": 330,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 55009,
+        "visible_pixel_count": 40031,
+        "transparent_canvas_ratio": 0.5787984006734007,
+        "visible_canvas_ratio": 0.42120159932659934,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          105,
+          80,
+          353,
+          331
+        ],
+        "final_crop_box": [
+          87,
+          62,
+          371,
+          349
+        ],
+        "component_area": 40031,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 21,
+          "bottom": 59
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ning_hai/processed/battle/ning_hai_battle_body_r.png": {
+      "sha256": "7d7a402eb962ee71a889246c5be4c916a6be7bea769aadfe67c487be90e99c87",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 268,
+        "height": 312,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 51219,
+        "visible_pixel_count": 32397,
+        "transparent_canvas_ratio": 0.6125502296211252,
+        "visible_canvas_ratio": 0.38744977037887485,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ning_hai/processed/battle/ning_hai_battle_radar_node.png": {
+      "sha256": "a2b90b999f6c46c2885eeadde167a27135ff173e622222f18f24a8d5e115ff90",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 264,
+        "height": 338,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 52592,
+        "visible_pixel_count": 36640,
+        "transparent_canvas_ratio": 0.5893849740003586,
+        "visible_canvas_ratio": 0.4106150259996414,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          90,
+          77,
+          317,
+          332
+        ],
+        "final_crop_box": [
+          72,
+          59,
+          335,
+          350
+        ],
+        "component_area": 36640,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 18,
+          "bottom": 64
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ning_hai/processed/battle/ning_hai_battle_rig_base.png": {
+      "sha256": "f23c43781ecf4c5fe5558cb118b5c8c1b85285101e50765f3907f565949c463a",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 322,
+        "height": 260,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 41899,
+        "visible_pixel_count": 41821,
+        "transparent_canvas_ratio": 0.5004658385093168,
+        "visible_canvas_ratio": 0.49953416149068325,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          67,
+          124,
+          351,
+          333
+        ],
+        "final_crop_box": [
+          49,
+          106,
+          369,
+          351
+        ],
+        "component_area": 41821,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 19,
+          "bottom": 33
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ning_hai/processed/battle/ning_hai_battle_support_node.png": {
+      "sha256": "49ec3d44efdc21b0be924d8e5b3603af0501e62af90c60e80d3303030b8c07ee",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 326,
+        "height": 326,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 64208,
+        "visible_pixel_count": 42068,
+        "transparent_canvas_ratio": 0.6041627460574354,
+        "visible_canvas_ratio": 0.39583725394256464,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          45,
+          95,
+          320,
+          339
+        ],
+        "final_crop_box": [
+          27,
+          77,
+          338,
+          357
+        ],
+        "component_area": 42068,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 32,
+          "bottom": 64
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ning_hai/processed/battle/ning_hai_battle_turret_main_01.png": {
+      "sha256": "cac13f936813f8e8d56e739ed539ba542717ada393ceedf87e39b084ca849093",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 404,
+        "height": 298,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 76690,
+        "visible_pixel_count": 43702,
+        "transparent_canvas_ratio": 0.6370024586351253,
+        "visible_canvas_ratio": 0.3629975413648747,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          43,
+          104,
+          341,
+          345
+        ],
+        "final_crop_box": [
+          25,
+          86,
+          359,
+          363
+        ],
+        "component_area": 43702,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 19,
+          "right": 88,
+          "bottom": 38
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ning_hai/processed/battle/ning_hai_battle_turret_main_02.png": {
+      "sha256": "beb035d06e9ed8736ec81024e7cc2c077404d4b19677ff89a677c2c7171520cc",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 388,
+        "height": 292,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 70297,
+        "visible_pixel_count": 42999,
+        "transparent_canvas_ratio": 0.6204720378477616,
+        "visible_canvas_ratio": 0.3795279621522384,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          18,
+          108,
+          309,
+          344
+        ],
+        "final_crop_box": [
+          0,
+          90,
+          327,
+          362
+        ],
+        "component_area": 42999,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 78,
+          "bottom": 37
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ning_hai/processed/battle/ning_hai_battle_wake_origin_marker.png": {
+      "sha256": "dad154887252b9af9088cdd7a3dfc88ef80ed94cd81eeec48aaf9ee6377bb455",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 346,
+        "height": 302,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 81541,
+        "visible_pixel_count": 22951,
+        "transparent_canvas_ratio": 0.7803563909198791,
+        "visible_canvas_ratio": 0.21964360908012096,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          56,
+          104,
+          338,
+          344
+        ],
+        "final_crop_box": [
+          38,
+          86,
+          356,
+          362
+        ],
+        "component_area": 22951,
+        "output_edge_margins": {
+          "left": 45,
+          "top": 18,
+          "right": 18,
+          "bottom": 43
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ning_hai/processed/ui/ning_hai_expr_default.png": {
+      "sha256": "1d886801fc652228ea22002461c8eb70e36615c01a7045eccbc3506d9bba609f",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 350,
+        "height": 434,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 76332,
+        "visible_pixel_count": 75568,
+        "transparent_canvas_ratio": 0.5025148123765635,
+        "visible_canvas_ratio": 0.49748518762343646,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          0,
+          43,
+          307,
+          397
+        ],
+        "final_crop_box": [
+          0,
+          25,
+          325,
+          415
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 24,
+          "bottom": 62
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ning_hai/processed/ui/ning_hai_expr_hit.png": {
+      "sha256": "6773908816319c6f0978eda133fd69f21c0546f58b68b005ded7c51d56a93600",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 316,
+        "height": 402,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 59877,
+        "visible_pixel_count": 67155,
+        "transparent_canvas_ratio": 0.47135367466465145,
+        "visible_canvas_ratio": 0.5286463253353486,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          81,
+          21,
+          357,
+          360
+        ],
+        "final_crop_box": [
+          63,
+          3,
+          375,
+          378
+        ],
+        "output_edge_margins": {
+          "left": 22,
+          "top": 19,
+          "right": 18,
+          "bottom": 44
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ning_hai/processed/ui/ning_hai_expr_serious.png": {
+      "sha256": "c61a4574b296344ec0732b2e79212b95bcc8a33a595a53ee2435e283182cd37f",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 348,
+        "height": 412,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 72509,
+        "visible_pixel_count": 70867,
+        "transparent_canvas_ratio": 0.5057262024327642,
+        "visible_canvas_ratio": 0.4942737975672358,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          106,
+          15,
+          401,
+          362
+        ],
+        "final_crop_box": [
+          88,
+          0,
+          419,
+          380
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 34,
+          "bottom": 47
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ning_hai/processed/ui/ning_hai_illust_full_alpha.png": {
+      "sha256": "16636a0831bb0d8ebc0aaedb10668d15786466f5d7c0c453e15e712eea07d697",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 1012,
+        "height": 1720,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 1203119,
+        "visible_pixel_count": 537521,
+        "transparent_canvas_ratio": 0.6911934690688483,
+        "visible_canvas_ratio": 0.30880653093115173,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          29,
+          53,
+          1002,
+          1501
+        ],
+        "final_crop_box": [
+          17,
+          41,
+          1014,
+          1513
+        ],
+        "output_edge_margins": {
+          "left": 27,
+          "top": 259,
+          "right": 12,
+          "bottom": 13
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ning_hai/processed/ui/ning_hai_illust_half_alpha.png": {
+      "sha256": "a58c680af14d93cf17f652932b8cfef940be67d9a62c34c7c05020301b1f1f55",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 1010,
+        "height": 1122,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 640276,
+        "visible_pixel_count": 492944,
+        "transparent_canvas_ratio": 0.5650059123559414,
+        "visible_canvas_ratio": 0.4349940876440585,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          21,
+          17,
+          994,
+          1059
+        ],
+        "final_crop_box": [
+          5,
+          1,
+          1010,
+          1075
+        ],
+        "output_edge_margins": {
+          "left": 21,
+          "top": 17,
+          "right": 16,
+          "bottom": 63
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ning_hai/processed/ui/ning_hai_illust_skill_cutin_alpha.png": {
+      "sha256": "d80bd59a885a9dece47cd148c66ebdd98a74c91af2c53bba5d3c9cd4b27c3733",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 1010,
+        "height": 1056,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 613593,
+        "visible_pixel_count": 452967,
+        "transparent_canvas_ratio": 0.5753009675967596,
+        "visible_canvas_ratio": 0.4246990324032403,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          465,
+          16,
+          1438,
+          855
+        ],
+        "final_crop_box": [
+          449,
+          0,
+          1454,
+          871
+        ],
+        "output_edge_margins": {
+          "left": 20,
+          "top": 16,
+          "right": 17,
+          "bottom": 201
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ning_hai/processed/ui/ning_hai_ui_chibi_head.png": {
+      "sha256": "2c0523792d9b10f18f084a002e374978561ed55ef017e230c60f48e730cb2cae",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 530,
+        "height": 348,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 123589,
+        "visible_pixel_count": 60851,
+        "transparent_canvas_ratio": 0.6700769898069833,
+        "visible_canvas_ratio": 0.3299230101930167,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          47,
+          91,
+          443,
+          397
+        ],
+        "final_crop_box": [
+          29,
+          73,
+          443,
+          415
+        ],
+        "output_edge_margins": {
+          "left": 115,
+          "top": 24,
+          "right": 19,
+          "bottom": 18
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ning_hai/processed/ui/ning_hai_ui_class_light_cruiser.png": {
+      "sha256": "9d64a9bed42572834c1801f3c673d5a6245cdd1a8519cc5000193c95e766a699",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 164,
+        "height": 382,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 34560,
+        "visible_pixel_count": 28088,
+        "transparent_canvas_ratio": 0.5516536840761078,
+        "visible_canvas_ratio": 0.44834631592389224,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          71,
+          16,
+          196,
+          360
+        ],
+        "final_crop_box": [
+          53,
+          0,
+          214,
+          378
+        ],
+        "output_edge_margins": {
+          "left": 20,
+          "top": 19,
+          "right": 19,
+          "bottom": 19
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ning_hai/processed/ui/ning_hai_ui_portrait.png": {
+      "sha256": "8c1a92818f1acc4337c260fc50b3260c5933b3b7cfcb57e805a05750c3ee60a1",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 512,
+        "height": 512,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 171989,
+        "visible_pixel_count": 90155,
+        "transparent_canvas_ratio": 0.6560859680175781,
+        "visible_canvas_ratio": 0.3439140319824219,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          87,
+          27,
+          1224,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              87,
+              27,
+              1224,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 70,
+          "top": 57,
+          "right": 93,
+          "bottom": 56
+        },
+        "cleanup_tags": []
+      },
+      "review": {
+        "verdict": "pass",
+        "reviewer": "Codex visual inspection",
+        "observation": "Dark teal bob, brown eyes, geometric gold hair ornament, tassel earrings and white-teal-gold collar match identity; no baked frame. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+      }
+    },
+    "assets/characters/ning_hai/processed/ui/ning_hai_ui_portrait_small.png": {
+      "sha256": "79a00ec88dc0454f90d99df3698aa112fa928767f0a877ce4a50c9271214432c",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 128,
+        "height": 128,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 10302,
+        "visible_pixel_count": 6082,
+        "transparent_canvas_ratio": 0.6287841796875,
+        "visible_canvas_ratio": 0.3712158203125,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          87,
+          27,
+          1224,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              87,
+              27,
+              1224,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 18,
+          "top": 13,
+          "right": 21,
+          "bottom": 12
+        },
+        "cleanup_tags": []
+      },
+      "review": {
+        "verdict": "pass",
+        "reviewer": "Codex visual inspection",
+        "observation": "Dark teal bob, brown eyes, geometric gold hair ornament, tassel earrings and white-teal-gold collar match identity; no baked frame. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+      }
+    },
+    "assets/characters/ning_hai/processed/ui/ning_hai_ui_skill_escort_barrage.png": {
+      "sha256": "e900ab4a486792bcd0616fa2ecf4646f93724c89e4009b387cb552d7f51607d0",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 350,
+        "height": 356,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 74713,
+        "visible_pixel_count": 49887,
+        "transparent_canvas_ratio": 0.5996227929373997,
+        "visible_canvas_ratio": 0.4003772070626003,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          45,
+          33,
+          357,
+          351
+        ],
+        "final_crop_box": [
+          27,
+          15,
+          375,
+          369
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 20,
+          "right": 19,
+          "bottom": 18
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/light_cruiser/vfx_light_cruiser_aa_burst.png": {
+      "sha256": "af4e63708ecb19e95d24049adac8cc206e0d5a5fa4a319d2abb9e8d74459aec1",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 140,
+        "height": 152,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 18240,
+        "visible_pixel_count": 3040,
+        "transparent_canvas_ratio": 0.8571428571428571,
+        "visible_canvas_ratio": 0.14285714285714285,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          186,
+          205,
+          254,
+          301
+        ],
+        "final_crop_box": [
+          168,
+          187,
+          272,
+          319
+        ],
+        "component_area": 2727,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 19,
+          "right": 22,
+          "bottom": 31
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/light_cruiser/vfx_light_cruiser_aa_circle.png": {
+      "sha256": "07618bafd94aeeb561b95fb9072fd9b718ff5c9350d1c938fd19f932a0b2c18f",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 150,
+        "height": 138,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 20206,
+        "visible_pixel_count": 494,
+        "transparent_canvas_ratio": 0.9761352657004831,
+        "visible_canvas_ratio": 0.02386473429951691,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          257,
+          271,
+          319,
+          334
+        ],
+        "final_crop_box": [
+          239,
+          253,
+          337,
+          352
+        ],
+        "component_area": 455,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 19,
+          "right": 46,
+          "bottom": 33
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/light_cruiser/vfx_light_cruiser_armor_sparks.png": {
+      "sha256": "b550ddbf8a72541dc392782a216d640b6b572a6f4b0ccd4910787b811dc0c378",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 92,
+        "height": 96,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 8223,
+        "visible_pixel_count": 609,
+        "transparent_canvas_ratio": 0.931046195652174,
+        "visible_canvas_ratio": 0.06895380434782608,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          209,
+          227,
+          254,
+          261
+        ],
+        "final_crop_box": [
+          191,
+          209,
+          272,
+          279
+        ],
+        "component_area": 478,
+        "output_edge_margins": {
+          "left": 26,
+          "top": 19,
+          "right": 18,
+          "bottom": 25
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/light_cruiser/vfx_light_cruiser_escort_aura.png": {
+      "sha256": "3e5ed52c42e6b393ed345ed9014365bb759969d112fb897cf2454c1c099ce649",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 262,
+        "height": 272,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 54016,
+        "visible_pixel_count": 17248,
+        "transparent_canvas_ratio": 0.7579703637180063,
+        "visible_canvas_ratio": 0.24202963628199373,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          103,
+          130,
+          319,
+          297
+        ],
+        "final_crop_box": [
+          85,
+          112,
+          337,
+          315
+        ],
+        "component_area": 17005,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 18,
+          "bottom": 72
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/light_cruiser/vfx_light_cruiser_muzzle_flash_medium.png": {
+      "sha256": "2d049e2cdc0672c7d8ae72e3ffe9098927f666d9ce96aa7653e91fcc6571225c",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 284,
+        "height": 218,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 46711,
+        "visible_pixel_count": 15201,
+        "transparent_canvas_ratio": 0.7544740922599819,
+        "visible_canvas_ratio": 0.2455259077400181,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          127,
+          156,
+          339,
+          329
+        ],
+        "final_crop_box": [
+          109,
+          138,
+          357,
+          347
+        ],
+        "component_area": 14890,
+        "output_edge_margins": {
+          "left": 37,
+          "top": 18,
+          "right": 18,
+          "bottom": 26
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/light_cruiser/vfx_light_cruiser_shell_trail.png": {
+      "sha256": "dbd11679f1b7531a2ba871176d3cada767d5e1bbd99be3971a5fbfc05ef8bb2d",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 332,
+        "height": 106,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 29508,
+        "visible_pixel_count": 5684,
+        "transparent_canvas_ratio": 0.8384860195498977,
+        "visible_canvas_ratio": 0.1615139804501023,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          97,
+          222,
+          357,
+          270
+        ],
+        "final_crop_box": [
+          79,
+          204,
+          375,
+          288
+        ],
+        "component_area": 5626,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 19,
+          "right": 54,
+          "bottom": 18
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/light_cruiser/vfx_light_cruiser_wake_medium.png": {
+      "sha256": "88eec7e4cf4ec59cb45ee8d07040414e1b1a5dd72369a5e579c473eaba4b6b76",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 324,
+        "height": 202,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 47835,
+        "visible_pixel_count": 17613,
+        "transparent_canvas_ratio": 0.7308855885588559,
+        "visible_canvas_ratio": 0.2691144114411441,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          75,
+          164,
+          325,
+          310
+        ],
+        "final_crop_box": [
+          57,
+          146,
+          343,
+          328
+        ],
+        "component_area": 17428,
+        "output_edge_margins": {
+          "left": 32,
+          "top": 19,
+          "right": 18,
+          "bottom": 33
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/light_cruiser/vfx_light_cruiser_water_splash.png": {
+      "sha256": "381681bb7ae3817b0aaa874878bd2b3f79e4cdf2fa748ef313cf051e5bc29dcf",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 292,
+        "height": 254,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 58596,
+        "visible_pixel_count": 15572,
+        "transparent_canvas_ratio": 0.7900442239240643,
+        "visible_canvas_ratio": 0.2099557760759357,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          112,
+          147,
+          334,
+          292
+        ],
+        "final_crop_box": [
+          94,
+          129,
+          352,
+          310
+        ],
+        "component_area": 15102,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 18,
+          "right": 21,
+          "bottom": 73
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    }
+  }
+}

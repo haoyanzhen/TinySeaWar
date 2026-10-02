@@ -353,8 +353,10 @@ def validate_weapon_binding_rules(
 
 
 def validate_character_data(character_id: str) -> list[str]:
+    from portrait_revision import validate_revision
+    portrait_issues = validate_revision(ROOT, character_id)
     root = CHAR_ROOT / character_id / "processed"
-    issues: list[str] = []
+    issues: list[str] = [f"portrait revision: {issue}" for issue in portrait_issues]
     plan_path = CHAR_ROOT / character_id / "postprocess_plan.json"
     plan: dict[str, object] = {}
     if ROSTER[character_id].phase == "phase2":

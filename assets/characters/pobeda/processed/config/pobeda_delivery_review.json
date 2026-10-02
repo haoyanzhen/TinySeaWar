@@ -1,0 +1,1813 @@
+{
+  "schema_version": 1,
+  "character_id": "pobeda",
+  "scope": "Visual evidence only; technical contract must pass separately. Not runtime acceptance.",
+  "checklist": [
+    "identity_and_inventory",
+    "no_truncation_or_neighbor_fragments",
+    "alpha_edges_and_small_scale_readability",
+    "animation_consistency",
+    "mechanical_binding_and_vfx_semantics"
+  ],
+  "package_sha256": {
+    "assets/characters/pobeda/battle/pobeda_anim_5x4_master.png": "75f2795a3fb16b94f5cdb753016fb47624b870cde7dc4845f80fe1f0459077d1",
+    "assets/characters/pobeda/battle/pobeda_battle_asset_grid.png": "48f9bd86627eadafbbacb98b956ec55a481284162730bf0b1b5a318428fdfca9",
+    "assets/characters/pobeda/concept/pobeda_concept_full.png": "0d200397eaede50abc48da410fa0d50cf100dc5fba6c3b2ff3c1154a7d8a6351",
+    "assets/characters/pobeda/meta/pobeda_portrait_revision.json": "462d1531f2f321af54b7d30c844bad9c6148c600c488e2d7d7b80db334268a36",
+    "assets/characters/pobeda/processed/anim/pobeda_anim_attack_frame_01.png": "35df5cc09f65c145e1708346081d0ec512308e7caec389e76ea72ced1cee9c0c",
+    "assets/characters/pobeda/processed/anim/pobeda_anim_attack_frame_02.png": "4700cea1af883c53822d45f14e6f27284c82dafee0641ae50ec729caf7e175f0",
+    "assets/characters/pobeda/processed/anim/pobeda_anim_attack_frame_03.png": "28226988767ed95be50df3cd0e6de9bcd1c41c6cfde6c72d8d39e3b58244c9b9",
+    "assets/characters/pobeda/processed/anim/pobeda_anim_attack_frame_04.png": "669ed6599532f10302ebcd4d7d99cea633f47c5a25910b2f4b0d5f8575caeb76",
+    "assets/characters/pobeda/processed/anim/pobeda_anim_attack_keyframe.png": "35df5cc09f65c145e1708346081d0ec512308e7caec389e76ea72ced1cee9c0c",
+    "assets/characters/pobeda/processed/anim/pobeda_anim_firepower_frame_01.png": "5a72226afb13b15f59ea80df919c1ed7840361ccc5525ae42f6a74692f7e33bf",
+    "assets/characters/pobeda/processed/anim/pobeda_anim_firepower_frame_02.png": "2cb6e5a5fbfb55bf7323b3d6367aafb6e40cb5aa1bfa942bfb86d248c4b46616",
+    "assets/characters/pobeda/processed/anim/pobeda_anim_firepower_frame_03.png": "a97ab67db5d2b50c98775a64aa6c6b7a28f64e76108281579b804b19c7be5d5a",
+    "assets/characters/pobeda/processed/anim/pobeda_anim_firepower_frame_04.png": "7e551c85416521d0d0b1dafd8c971b202911c00a55c2cdfdb19147829becd24e",
+    "assets/characters/pobeda/processed/anim/pobeda_anim_firepower_keyframe.png": "5a72226afb13b15f59ea80df919c1ed7840361ccc5525ae42f6a74692f7e33bf",
+    "assets/characters/pobeda/processed/anim/pobeda_anim_hit_frame_01.png": "77d34490804facc98d4ffea9ee9f94ccb5d39e9f819f1db8c4fbffb9e9bc6066",
+    "assets/characters/pobeda/processed/anim/pobeda_anim_hit_frame_02.png": "c0a59688709232ecc718a24f7854e8e69a9d07ef1e9ed38463979ab41d3609bf",
+    "assets/characters/pobeda/processed/anim/pobeda_anim_hit_frame_03.png": "4cb6b64d92152778e25236f966a88d96d1db132bf1f2f80aed1f72dddbab3b31",
+    "assets/characters/pobeda/processed/anim/pobeda_anim_hit_frame_04.png": "5a22c8e872a49df7b04cd775abc761f3ce78221a4645875cd19de74b92112f00",
+    "assets/characters/pobeda/processed/anim/pobeda_anim_hit_keyframe.png": "77d34490804facc98d4ffea9ee9f94ccb5d39e9f819f1db8c4fbffb9e9bc6066",
+    "assets/characters/pobeda/processed/anim/pobeda_anim_idle_frame_01.png": "38a3457cf81ffe49b8488ad588be4590f0d899633813246bb6861f0396cee3e8",
+    "assets/characters/pobeda/processed/anim/pobeda_anim_idle_frame_02.png": "10ee4005967d2b018b93d715405ddeab59d0d9e6b7a5494a2c7c0b297714fe3a",
+    "assets/characters/pobeda/processed/anim/pobeda_anim_idle_frame_03.png": "8d3736b7f987b84082599f1de4d87bc55eaf33c21f77f73d88296f99c2fe8d02",
+    "assets/characters/pobeda/processed/anim/pobeda_anim_idle_frame_04.png": "72a647720ca2e3ce5a147534412f98387f589c433ea295421b1af167b1d4f6fc",
+    "assets/characters/pobeda/processed/anim/pobeda_anim_idle_keyframe.png": "38a3457cf81ffe49b8488ad588be4590f0d899633813246bb6861f0396cee3e8",
+    "assets/characters/pobeda/processed/anim/pobeda_anim_move_frame_01.png": "358ec4b2b308e01769e330994cbca918c98b36a22d229f01626b27230195f40e",
+    "assets/characters/pobeda/processed/anim/pobeda_anim_move_frame_02.png": "a555a9c411baa1c285d88f6413ef2c0a6208e203622210a8b4f5ddbe5ad40b46",
+    "assets/characters/pobeda/processed/anim/pobeda_anim_move_frame_03.png": "a461aaa967ceb48064c4790589547f9b4287044ac8f2208cb1cdfa049bf5b807",
+    "assets/characters/pobeda/processed/anim/pobeda_anim_move_frame_04.png": "adc9c82a63ed48c5df66c27ebdafd188d14beaea8886241264ce42de162361f7",
+    "assets/characters/pobeda/processed/anim/pobeda_anim_move_keyframe.png": "358ec4b2b308e01769e330994cbca918c98b36a22d229f01626b27230195f40e",
+    "assets/characters/pobeda/processed/battle/pobeda_battle_aircraft_group_01.png": "5e756e633c094d48056673b65903153ab45a19bfd265b21f4f5f411b52a0e724",
+    "assets/characters/pobeda/processed/battle/pobeda_battle_aircraft_launch_marker.png": "0eea612de772807698a0652743e72834bc6bb024f65d8260529d71a81ee5325b",
+    "assets/characters/pobeda/processed/battle/pobeda_battle_aircraft_recovery_marker.png": "0a8dd40e56a8cddbf8254fd8e52325295cb8ecc048226b8c4a28401ac2dcddc8",
+    "assets/characters/pobeda/processed/battle/pobeda_battle_body_r.png": "38a3457cf81ffe49b8488ad588be4590f0d899633813246bb6861f0396cee3e8",
+    "assets/characters/pobeda/processed/battle/pobeda_battle_flight_deck.png": "12b87eb532f8f74f8ed2aada461bca2175c4bb7441d901443123342a93330a1d",
+    "assets/characters/pobeda/processed/battle/pobeda_battle_radar_node.png": "ea1c67248eaca27435b6f5265fcbb558d64adb438b8214c214df5f79eda0b7f2",
+    "assets/characters/pobeda/processed/battle/pobeda_battle_rig_base.png": "f38036357ef7a6fdd2550a0fa9ee6d56e66120657a524a4b58c0582b6dae6735",
+    "assets/characters/pobeda/processed/battle/pobeda_battle_wake_origin_marker.png": "73855c5a81f508c693724f043e25dfa099f02c8bc6cd43d46f189019a25a8492",
+    "assets/characters/pobeda/processed/config/pobeda_anim_config.json": "f587b973344c78a7e29df721f799402ad1898e7dd03d9d96eb13f658bc1f7b80",
+    "assets/characters/pobeda/processed/config/pobeda_meta_bind_points.json": "0ba5937cc331cd5b67ff5979412d0e49c605fc48fbc05fae6be45366beeef65a",
+    "assets/characters/pobeda/processed/config/pobeda_postprocess_manifest.json": "7d34e0f32e5c5503cf5678cddbf3ce17cac305dce1a34345b64dd2627ffdf65b",
+    "assets/characters/pobeda/processed/config/pobeda_vfx_config.json": "b1a2341a02a5b3c877919738cae03c28885d66e285d62b395e5f0e579865b654",
+    "assets/characters/pobeda/processed/source_alpha/pobeda_anim_5x4_master_alpha_source.png": "a019f27b2447d4b61a36727f3be1c4ad79733712f1a220a99ea8fb3d5d5b9af2",
+    "assets/characters/pobeda/processed/source_alpha/pobeda_battle_asset_grid_alpha_source.png": "8811653d6e9078525b2da8348cf24408c3c88ba9fd4246d5d3c11b8527dc8af1",
+    "assets/characters/pobeda/processed/source_alpha/pobeda_concept_full_alpha_source.png": "a5e8449a54ab410aa2d63ad436271ced188daa45f045c5f70fd6f671945c85c8",
+    "assets/characters/pobeda/processed/source_alpha/pobeda_ui_sheet_alpha_source.png": "09931363cc642437cbeb6335f55be4a45adcf3ba5599599ee31be7dec87da8f8",
+    "assets/characters/pobeda/processed/source_alpha/pobeda_vfx_reference_sheet_alpha_source.png": "e49126003d77f84250674c70f7cf26209f74bfade9e73c4673a3101460478047",
+    "assets/characters/pobeda/processed/ui/pobeda_expr_default.png": "1b61422841b28ed96f42d038112f02e309a62887c6c89fd36b767350ce635da9",
+    "assets/characters/pobeda/processed/ui/pobeda_expr_hit.png": "e994ea584eb2490fda41c2c7a91b6dbf828d2b21cab7a74f269eff6312701e84",
+    "assets/characters/pobeda/processed/ui/pobeda_expr_serious.png": "0e46ac9561babc6c7354cc74573fe94aa8174fb9f7169e9320a9335ba01e61fa",
+    "assets/characters/pobeda/processed/ui/pobeda_illust_full_alpha.png": "28df96ad58c950797ef4f4d88e8f0ce8a0cd6d97f411cb67b76800e6d28c8358",
+    "assets/characters/pobeda/processed/ui/pobeda_illust_half_alpha.png": "f6226617e5c915f9fab4af0e9f215d808c3d861de3d71bcdbbcf9d0fa5794caa",
+    "assets/characters/pobeda/processed/ui/pobeda_illust_skill_cutin_alpha.png": "a5b164581c7891fccc5862ad4c07d210c56f4b455a70744d371896431fd544cf",
+    "assets/characters/pobeda/processed/ui/pobeda_ui_chibi_head.png": "a5288e044604dc1ba8e47dbdf2fadce94cc0f2de4b916944d2fbfefaf7a8a2c0",
+    "assets/characters/pobeda/processed/ui/pobeda_ui_class_carrier.png": "586b2b83b80eb44c2cde62d8fe60dfc4670a9d2272fe1f9759f04d6b070aaba5",
+    "assets/characters/pobeda/processed/ui/pobeda_ui_portrait.png": "792c76aad9b49d0f8547ca3a41d253ffd33054c4d87a53f4812066bb921964bd",
+    "assets/characters/pobeda/processed/ui/pobeda_ui_portrait_small.png": "8b324e6deb7fb1192e818b1d71bcc9aad4b300e2ab8627cbb3efbe829abeb092",
+    "assets/characters/pobeda/processed/ui/pobeda_ui_skill_airstrike.png": "9b430a564feebf131b6ebd2bedc43e6469dcd5b7d69b742ebda5364a8ae62609",
+    "assets/characters/pobeda/ui/pobeda_portrait_20261001_unframed_v1.png": "fd190ce2c6c8ba8433906412bf69436162e49d97032ec482a348be0509c9da8b",
+    "assets/characters/pobeda/ui/pobeda_ui_sheet.png": "29af54176e31d5003624d0cc33ecf3a7952f59a69fca757b2bc35de299b67e6a",
+    "assets/characters/pobeda/vfx/pobeda_vfx_reference_sheet.png": "59d2beaf9fc0e352f387bfada37121a52484449cef414398d5ec5ad710a8acdf",
+    "assets/vfx/combat/character_templates/carrier/vfx_carrier_aa_burst.png": "7e2583a6fa6f387cda1f4ce52c98dd270bea595916c47ad1def14caaa5470ab3",
+    "assets/vfx/combat/character_templates/carrier/vfx_carrier_aircraft_explosion.png": "b04f40427c7c747cfc59279af7e9b69161cece35754d77af5204fe3d00d17487",
+    "assets/vfx/combat/character_templates/carrier/vfx_carrier_aircraft_formation.png": "5fc5bd4b4f9443a9643af9fa4dab33a5fad4308b093a2e2acd7846ea227e9d2f",
+    "assets/vfx/combat/character_templates/carrier/vfx_carrier_aircraft_launch_flash.png": "aba435ccb3f2c2a40db8f1b041b35d637fb0a5c8645e8018149ff7182ccbef20",
+    "assets/vfx/combat/character_templates/carrier/vfx_carrier_aircraft_path.png": "daedd061d887f81820d5ae61ef9acf1c30b8598817a170dae66068f105534867",
+    "assets/vfx/combat/character_templates/carrier/vfx_carrier_aircraft_recovery.png": "375357165731ac6e3b2b2c73ed0af9e53529b7bddfb4bb7f6854dda1da65827c",
+    "assets/vfx/combat/character_templates/carrier/vfx_carrier_airstrike_area.png": "9931821bf1c616266ce8c708f759b9f34802ab63fe3b7b2110450a81f04bd284",
+    "assets/vfx/combat/character_templates/carrier/vfx_carrier_wake_carrier.png": "e84a6a83c24bdbfaf8f43bec7851f5a958f97cc336bbd664d5b205c94b551e5d"
+  },
+  "assets": {
+    "assets/characters/pobeda/processed/anim/pobeda_anim_attack_frame_01.png": {
+      "sha256": "35df5cc09f65c145e1708346081d0ec512308e7caec389e76ea72ced1cee9c0c",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 312,
+        "height": 232,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 47378,
+        "visible_pixel_count": 25006,
+        "transparent_canvas_ratio": 0.6545369142351901,
+        "visible_canvas_ratio": 0.3454630857648099,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/pobeda/processed/anim/pobeda_anim_attack_frame_02.png": {
+      "sha256": "4700cea1af883c53822d45f14e6f27284c82dafee0641ae50ec729caf7e175f0",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 312,
+        "height": 232,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 45319,
+        "visible_pixel_count": 27065,
+        "transparent_canvas_ratio": 0.6260914014146772,
+        "visible_canvas_ratio": 0.3739085985853227,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/pobeda/processed/anim/pobeda_anim_attack_frame_03.png": {
+      "sha256": "28226988767ed95be50df3cd0e6de9bcd1c41c6cfde6c72d8d39e3b58244c9b9",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 312,
+        "height": 232,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 46202,
+        "visible_pixel_count": 26182,
+        "transparent_canvas_ratio": 0.6382902298850575,
+        "visible_canvas_ratio": 0.36170977011494254,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/pobeda/processed/anim/pobeda_anim_attack_frame_04.png": {
+      "sha256": "669ed6599532f10302ebcd4d7d99cea633f47c5a25910b2f4b0d5f8575caeb76",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 312,
+        "height": 232,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 46189,
+        "visible_pixel_count": 26195,
+        "transparent_canvas_ratio": 0.6381106321839081,
+        "visible_canvas_ratio": 0.36188936781609193,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/pobeda/processed/anim/pobeda_anim_attack_keyframe.png": {
+      "sha256": "35df5cc09f65c145e1708346081d0ec512308e7caec389e76ea72ced1cee9c0c",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 312,
+        "height": 232,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 47378,
+        "visible_pixel_count": 25006,
+        "transparent_canvas_ratio": 0.6545369142351901,
+        "visible_canvas_ratio": 0.3454630857648099,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/pobeda/processed/anim/pobeda_anim_firepower_frame_01.png": {
+      "sha256": "5a72226afb13b15f59ea80df919c1ed7840361ccc5525ae42f6a74692f7e33bf",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 348,
+        "height": 200,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 51469,
+        "visible_pixel_count": 18131,
+        "transparent_canvas_ratio": 0.7394971264367816,
+        "visible_canvas_ratio": 0.2605028735632184,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/pobeda/processed/anim/pobeda_anim_firepower_frame_02.png": {
+      "sha256": "2cb6e5a5fbfb55bf7323b3d6367aafb6e40cb5aa1bfa942bfb86d248c4b46616",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 348,
+        "height": 200,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 48596,
+        "visible_pixel_count": 21004,
+        "transparent_canvas_ratio": 0.6982183908045977,
+        "visible_canvas_ratio": 0.3017816091954023,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/pobeda/processed/anim/pobeda_anim_firepower_frame_03.png": {
+      "sha256": "a97ab67db5d2b50c98775a64aa6c6b7a28f64e76108281579b804b19c7be5d5a",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 348,
+        "height": 200,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 48643,
+        "visible_pixel_count": 20957,
+        "transparent_canvas_ratio": 0.6988936781609195,
+        "visible_canvas_ratio": 0.3011063218390805,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/pobeda/processed/anim/pobeda_anim_firepower_frame_04.png": {
+      "sha256": "7e551c85416521d0d0b1dafd8c971b202911c00a55c2cdfdb19147829becd24e",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 348,
+        "height": 200,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 50492,
+        "visible_pixel_count": 19108,
+        "transparent_canvas_ratio": 0.7254597701149426,
+        "visible_canvas_ratio": 0.2745402298850575,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/pobeda/processed/anim/pobeda_anim_firepower_keyframe.png": {
+      "sha256": "5a72226afb13b15f59ea80df919c1ed7840361ccc5525ae42f6a74692f7e33bf",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 348,
+        "height": 200,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 51469,
+        "visible_pixel_count": 18131,
+        "transparent_canvas_ratio": 0.7394971264367816,
+        "visible_canvas_ratio": 0.2605028735632184,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/pobeda/processed/anim/pobeda_anim_hit_frame_01.png": {
+      "sha256": "77d34490804facc98d4ffea9ee9f94ccb5d39e9f819f1db8c4fbffb9e9bc6066",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 296,
+        "height": 226,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 43015,
+        "visible_pixel_count": 23881,
+        "transparent_canvas_ratio": 0.6430130351590528,
+        "visible_canvas_ratio": 0.35698696484094716,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/pobeda/processed/anim/pobeda_anim_hit_frame_02.png": {
+      "sha256": "c0a59688709232ecc718a24f7854e8e69a9d07ef1e9ed38463979ab41d3609bf",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 296,
+        "height": 226,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 42974,
+        "visible_pixel_count": 23922,
+        "transparent_canvas_ratio": 0.6424001435063382,
+        "visible_canvas_ratio": 0.3575998564936618,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/pobeda/processed/anim/pobeda_anim_hit_frame_03.png": {
+      "sha256": "4cb6b64d92152778e25236f966a88d96d1db132bf1f2f80aed1f72dddbab3b31",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 296,
+        "height": 226,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 42650,
+        "visible_pixel_count": 24246,
+        "transparent_canvas_ratio": 0.6375568045922029,
+        "visible_canvas_ratio": 0.3624431954077972,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/pobeda/processed/anim/pobeda_anim_hit_frame_04.png": {
+      "sha256": "5a22c8e872a49df7b04cd775abc761f3ce78221a4645875cd19de74b92112f00",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 296,
+        "height": 226,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 40006,
+        "visible_pixel_count": 26890,
+        "transparent_canvas_ratio": 0.5980327672805549,
+        "visible_canvas_ratio": 0.4019672327194451,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/pobeda/processed/anim/pobeda_anim_hit_keyframe.png": {
+      "sha256": "77d34490804facc98d4ffea9ee9f94ccb5d39e9f819f1db8c4fbffb9e9bc6066",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 296,
+        "height": 226,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 43015,
+        "visible_pixel_count": 23881,
+        "transparent_canvas_ratio": 0.6430130351590528,
+        "visible_canvas_ratio": 0.35698696484094716,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/pobeda/processed/anim/pobeda_anim_idle_frame_01.png": {
+      "sha256": "38a3457cf81ffe49b8488ad588be4590f0d899633813246bb6861f0396cee3e8",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 272,
+        "height": 246,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 39942,
+        "visible_pixel_count": 26970,
+        "transparent_canvas_ratio": 0.5969332855093257,
+        "visible_canvas_ratio": 0.4030667144906743,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/pobeda/processed/anim/pobeda_anim_idle_frame_02.png": {
+      "sha256": "10ee4005967d2b018b93d715405ddeab59d0d9e6b7a5494a2c7c0b297714fe3a",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 272,
+        "height": 246,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 40314,
+        "visible_pixel_count": 26598,
+        "transparent_canvas_ratio": 0.6024928263988523,
+        "visible_canvas_ratio": 0.3975071736011478,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/pobeda/processed/anim/pobeda_anim_idle_frame_03.png": {
+      "sha256": "8d3736b7f987b84082599f1de4d87bc55eaf33c21f77f73d88296f99c2fe8d02",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 272,
+        "height": 246,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 39776,
+        "visible_pixel_count": 27136,
+        "transparent_canvas_ratio": 0.5944524151123864,
+        "visible_canvas_ratio": 0.40554758488761355,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/pobeda/processed/anim/pobeda_anim_idle_frame_04.png": {
+      "sha256": "72a647720ca2e3ce5a147534412f98387f589c433ea295421b1af167b1d4f6fc",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 272,
+        "height": 246,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 39637,
+        "visible_pixel_count": 27275,
+        "transparent_canvas_ratio": 0.5923750597800096,
+        "visible_canvas_ratio": 0.40762494021999046,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/pobeda/processed/anim/pobeda_anim_idle_keyframe.png": {
+      "sha256": "38a3457cf81ffe49b8488ad588be4590f0d899633813246bb6861f0396cee3e8",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 272,
+        "height": 246,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 39942,
+        "visible_pixel_count": 26970,
+        "transparent_canvas_ratio": 0.5969332855093257,
+        "visible_canvas_ratio": 0.4030667144906743,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/pobeda/processed/anim/pobeda_anim_move_frame_01.png": {
+      "sha256": "358ec4b2b308e01769e330994cbca918c98b36a22d229f01626b27230195f40e",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 322,
+        "height": 208,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 45559,
+        "visible_pixel_count": 21417,
+        "transparent_canvas_ratio": 0.6802287386526517,
+        "visible_canvas_ratio": 0.3197712613473483,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/pobeda/processed/anim/pobeda_anim_move_frame_02.png": {
+      "sha256": "a555a9c411baa1c285d88f6413ef2c0a6208e203622210a8b4f5ddbe5ad40b46",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 322,
+        "height": 208,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 45315,
+        "visible_pixel_count": 21661,
+        "transparent_canvas_ratio": 0.6765856426182513,
+        "visible_canvas_ratio": 0.3234143573817487,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/pobeda/processed/anim/pobeda_anim_move_frame_03.png": {
+      "sha256": "a461aaa967ceb48064c4790589547f9b4287044ac8f2208cb1cdfa049bf5b807",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 322,
+        "height": 208,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 45535,
+        "visible_pixel_count": 21441,
+        "transparent_canvas_ratio": 0.6798704013377926,
+        "visible_canvas_ratio": 0.32012959866220736,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/pobeda/processed/anim/pobeda_anim_move_frame_04.png": {
+      "sha256": "adc9c82a63ed48c5df66c27ebdafd188d14beaea8886241264ce42de162361f7",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 322,
+        "height": 208,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 45001,
+        "visible_pixel_count": 21975,
+        "transparent_canvas_ratio": 0.6718973960821787,
+        "visible_canvas_ratio": 0.3281026039178213,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/pobeda/processed/anim/pobeda_anim_move_keyframe.png": {
+      "sha256": "358ec4b2b308e01769e330994cbca918c98b36a22d229f01626b27230195f40e",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 322,
+        "height": 208,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 45559,
+        "visible_pixel_count": 21417,
+        "transparent_canvas_ratio": 0.6802287386526517,
+        "visible_canvas_ratio": 0.3197712613473483,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/pobeda/processed/battle/pobeda_battle_aircraft_group_01.png": {
+      "sha256": "5e756e633c094d48056673b65903153ab45a19bfd265b21f4f5f411b52a0e724",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 192,
+        "height": 238,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 35280,
+        "visible_pixel_count": 10416,
+        "transparent_canvas_ratio": 0.7720588235294118,
+        "visible_canvas_ratio": 0.22794117647058823,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          41,
+          200,
+          177,
+          366
+        ],
+        "final_crop_box": [
+          23,
+          182,
+          195,
+          384
+        ],
+        "component_area": 10416,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 19,
+          "right": 20,
+          "bottom": 35
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/pobeda/processed/battle/pobeda_battle_aircraft_launch_marker.png": {
+      "sha256": "0eea612de772807698a0652743e72834bc6bb024f65d8260529d71a81ee5325b",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 288,
+        "height": 270,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 32836,
+        "visible_pixel_count": 44924,
+        "transparent_canvas_ratio": 0.42227366255144033,
+        "visible_canvas_ratio": 0.5777263374485597,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          97,
+          96,
+          347,
+          318
+        ],
+        "final_crop_box": [
+          79,
+          78,
+          365,
+          336
+        ],
+        "component_area": 44924,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 19,
+          "bottom": 29
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/pobeda/processed/battle/pobeda_battle_aircraft_recovery_marker.png": {
+      "sha256": "0a8dd40e56a8cddbf8254fd8e52325295cb8ecc048226b8c4a28401ac2dcddc8",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 280,
+        "height": 272,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 32430,
+        "visible_pixel_count": 43730,
+        "transparent_canvas_ratio": 0.4258140756302521,
+        "visible_canvas_ratio": 0.5741859243697479,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          96,
+          96,
+          339,
+          319
+        ],
+        "final_crop_box": [
+          78,
+          78,
+          357,
+          337
+        ],
+        "component_area": 43730,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 18,
+          "bottom": 30
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/pobeda/processed/battle/pobeda_battle_body_r.png": {
+      "sha256": "38a3457cf81ffe49b8488ad588be4590f0d899633813246bb6861f0396cee3e8",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 272,
+        "height": 246,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 39942,
+        "visible_pixel_count": 26970,
+        "transparent_canvas_ratio": 0.5969332855093257,
+        "visible_canvas_ratio": 0.4030667144906743,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/pobeda/processed/battle/pobeda_battle_flight_deck.png": {
+      "sha256": "12b87eb532f8f74f8ed2aada461bca2175c4bb7441d901443123342a93330a1d",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 342,
+        "height": 378,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 81355,
+        "visible_pixel_count": 47921,
+        "transparent_canvas_ratio": 0.6293124787276834,
+        "visible_canvas_ratio": 0.3706875212723166,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          56,
+          58,
+          358,
+          375
+        ],
+        "final_crop_box": [
+          38,
+          40,
+          376,
+          393
+        ],
+        "component_area": 47921,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 42,
+          "right": 22,
+          "bottom": 19
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/pobeda/processed/battle/pobeda_battle_radar_node.png": {
+      "sha256": "ea1c67248eaca27435b6f5265fcbb558d64adb438b8214c214df5f79eda0b7f2",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 266,
+        "height": 324,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 45779,
+        "visible_pixel_count": 40405,
+        "transparent_canvas_ratio": 0.5311774807388843,
+        "visible_canvas_ratio": 0.46882251926111573,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          84,
+          68,
+          312,
+          328
+        ],
+        "final_crop_box": [
+          66,
+          50,
+          330,
+          346
+        ],
+        "component_area": 40405,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 19,
+          "bottom": 46
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/pobeda/processed/battle/pobeda_battle_rig_base.png": {
+      "sha256": "f38036357ef7a6fdd2550a0fa9ee6d56e66120657a524a4b58c0582b6dae6735",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 306,
+        "height": 382,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 68559,
+        "visible_pixel_count": 48333,
+        "transparent_canvas_ratio": 0.586515758135715,
+        "visible_canvas_ratio": 0.413484241864285,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          85,
+          59,
+          352,
+          380
+        ],
+        "final_crop_box": [
+          67,
+          41,
+          370,
+          398
+        ],
+        "component_area": 48333,
+        "output_edge_margins": {
+          "left": 20,
+          "top": 18,
+          "right": 19,
+          "bottom": 43
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/pobeda/processed/battle/pobeda_battle_wake_origin_marker.png": {
+      "sha256": "73855c5a81f508c693724f043e25dfa099f02c8bc6cd43d46f189019a25a8492",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 380,
+        "height": 314,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 63549,
+        "visible_pixel_count": 55771,
+        "transparent_canvas_ratio": 0.5325930271538719,
+        "visible_canvas_ratio": 0.46740697284612803,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          39,
+          79,
+          345,
+          345
+        ],
+        "final_crop_box": [
+          21,
+          61,
+          363,
+          363
+        ],
+        "component_area": 55771,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 29,
+          "right": 20,
+          "bottom": 19
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/pobeda/processed/ui/pobeda_expr_default.png": {
+      "sha256": "1b61422841b28ed96f42d038112f02e309a62887c6c89fd36b767350ce635da9",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 420,
+        "height": 460,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 107152,
+        "visible_pixel_count": 86048,
+        "transparent_canvas_ratio": 0.5546169772256728,
+        "visible_canvas_ratio": 0.4453830227743271,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          17,
+          63,
+          390,
+          409
+        ],
+        "final_crop_box": [
+          0,
+          45,
+          408,
+          427
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 28,
+          "bottom": 95
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/pobeda/processed/ui/pobeda_expr_hit.png": {
+      "sha256": "e994ea584eb2490fda41c2c7a91b6dbf828d2b21cab7a74f269eff6312701e84",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 394,
+        "height": 454,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 85579,
+        "visible_pixel_count": 93297,
+        "transparent_canvas_ratio": 0.4784263959390863,
+        "visible_canvas_ratio": 0.5215736040609137,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          48,
+          41,
+          398,
+          395
+        ],
+        "final_crop_box": [
+          30,
+          23,
+          416,
+          413
+        ],
+        "output_edge_margins": {
+          "left": 26,
+          "top": 19,
+          "right": 18,
+          "bottom": 81
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/pobeda/processed/ui/pobeda_expr_serious.png": {
+      "sha256": "0e46ac9561babc6c7354cc74573fe94aa8174fb9f7169e9320a9335ba01e61fa",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 390,
+        "height": 458,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 88002,
+        "visible_pixel_count": 90618,
+        "transparent_canvas_ratio": 0.49267719180382935,
+        "visible_canvas_ratio": 0.5073228081961706,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          47,
+          41,
+          396,
+          395
+        ],
+        "final_crop_box": [
+          29,
+          23,
+          414,
+          413
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 22,
+          "bottom": 85
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/pobeda/processed/ui/pobeda_illust_full_alpha.png": {
+      "sha256": "28df96ad58c950797ef4f4d88e8f0ce8a0cd6d97f411cb67b76800e6d28c8358",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 1044,
+        "height": 1448,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 927237,
+        "visible_pixel_count": 584475,
+        "transparent_canvas_ratio": 0.6133688162824665,
+        "visible_canvas_ratio": 0.3866311837175335,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          17,
+          163,
+          1017,
+          1427
+        ],
+        "final_crop_box": [
+          5,
+          151,
+          1024,
+          1439
+        ],
+        "output_edge_margins": {
+          "left": 12,
+          "top": 171,
+          "right": 32,
+          "bottom": 13
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/pobeda/processed/ui/pobeda_illust_half_alpha.png": {
+      "sha256": "f6226617e5c915f9fab4af0e9f215d808c3d861de3d71bcdbbcf9d0fa5794caa",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 1058,
+        "height": 1060,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 580830,
+        "visible_pixel_count": 540650,
+        "transparent_canvas_ratio": 0.5179138281556515,
+        "visible_canvas_ratio": 0.48208617184434854,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          17,
+          16,
+          1017,
+          926
+        ],
+        "final_crop_box": [
+          1,
+          0,
+          1033,
+          942
+        ],
+        "output_edge_margins": {
+          "left": 17,
+          "top": 16,
+          "right": 41,
+          "bottom": 134
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/pobeda/processed/ui/pobeda_illust_skill_cutin_alpha.png": {
+      "sha256": "a5b164581c7891fccc5862ad4c07d210c56f4b455a70744d371896431fd544cf",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 1056,
+        "height": 916,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 531963,
+        "visible_pixel_count": 435333,
+        "transparent_canvas_ratio": 0.5499485162763001,
+        "visible_canvas_ratio": 0.4500514837236999,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          313,
+          16,
+          1313,
+          749
+        ],
+        "final_crop_box": [
+          297,
+          0,
+          1329,
+          765
+        ],
+        "output_edge_margins": {
+          "left": 17,
+          "top": 16,
+          "right": 39,
+          "bottom": 167
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/pobeda/processed/ui/pobeda_ui_chibi_head.png": {
+      "sha256": "a5288e044604dc1ba8e47dbdf2fadce94cc0f2de4b916944d2fbfefaf7a8a2c0",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 332,
+        "height": 320,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 46773,
+        "visible_pixel_count": 59467,
+        "transparent_canvas_ratio": 0.44025790662650605,
+        "visible_canvas_ratio": 0.559742093373494,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          62,
+          91,
+          352,
+          362
+        ],
+        "final_crop_box": [
+          44,
+          73,
+          370,
+          380
+        ],
+        "output_edge_margins": {
+          "left": 18,
+          "top": 19,
+          "right": 24,
+          "bottom": 30
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/pobeda/processed/ui/pobeda_ui_class_carrier.png": {
+      "sha256": "586b2b83b80eb44c2cde62d8fe60dfc4670a9d2272fe1f9759f04d6b070aaba5",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 410,
+        "height": 378,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 122066,
+        "visible_pixel_count": 32914,
+        "transparent_canvas_ratio": 0.7876242095754291,
+        "visible_canvas_ratio": 0.21237579042457091,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          18,
+          62,
+          388,
+          376
+        ],
+        "final_crop_box": [
+          0,
+          44,
+          406,
+          394
+        ],
+        "output_edge_margins": {
+          "left": 22,
+          "top": 19,
+          "right": 18,
+          "bottom": 45
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/pobeda/processed/ui/pobeda_ui_portrait.png": {
+      "sha256": "792c76aad9b49d0f8547ca3a41d253ffd33054c4d87a53f4812066bb921964bd",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 512,
+        "height": 512,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 161638,
+        "visible_pixel_count": 100506,
+        "transparent_canvas_ratio": 0.6166000366210938,
+        "visible_canvas_ratio": 0.38339996337890625,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          25,
+          57,
+          1254,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              25,
+              57,
+              1254,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 56,
+          "top": 64,
+          "right": 56,
+          "bottom": 61
+        },
+        "cleanup_tags": []
+      },
+      "review": {
+        "verdict": "pass",
+        "reviewer": "Codex visual inspection",
+        "observation": "Long dark auburn hair, gray eyes, black fur collar and charcoal-red-gold uniform retained; no frame or eyewear. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+      }
+    },
+    "assets/characters/pobeda/processed/ui/pobeda_ui_portrait_small.png": {
+      "sha256": "8b324e6deb7fb1192e818b1d71bcc9aad4b300e2ab8627cbb3efbe829abeb092",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 128,
+        "height": 128,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 9680,
+        "visible_pixel_count": 6704,
+        "transparent_canvas_ratio": 0.5908203125,
+        "visible_canvas_ratio": 0.4091796875,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          25,
+          57,
+          1254,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              25,
+              57,
+              1254,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 12,
+          "top": 14,
+          "right": 12,
+          "bottom": 14
+        },
+        "cleanup_tags": []
+      },
+      "review": {
+        "verdict": "pass",
+        "reviewer": "Codex visual inspection",
+        "observation": "Long dark auburn hair, gray eyes, black fur collar and charcoal-red-gold uniform retained; no frame or eyewear. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+      }
+    },
+    "assets/characters/pobeda/processed/ui/pobeda_ui_skill_airstrike.png": {
+      "sha256": "9b430a564feebf131b6ebd2bedc43e6469dcd5b7d69b742ebda5364a8ae62609",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 392,
+        "height": 452,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 139715,
+        "visible_pixel_count": 37469,
+        "transparent_canvas_ratio": 0.7885305670940943,
+        "visible_canvas_ratio": 0.21146943290590572,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          31,
+          39,
+          386,
+          399
+        ],
+        "final_crop_box": [
+          13,
+          21,
+          404,
+          417
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 18,
+          "bottom": 74
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/carrier/vfx_carrier_aa_burst.png": {
+      "sha256": "7e2583a6fa6f387cda1f4ce52c98dd270bea595916c47ad1def14caaa5470ab3",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 194,
+        "height": 236,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 38195,
+        "visible_pixel_count": 7589,
+        "transparent_canvas_ratio": 0.8342434038091909,
+        "visible_canvas_ratio": 0.165756596190809,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          153,
+          136,
+          268,
+          309
+        ],
+        "final_crop_box": [
+          135,
+          118,
+          286,
+          327
+        ],
+        "component_area": 7015,
+        "output_edge_margins": {
+          "left": 24,
+          "top": 26,
+          "right": 19,
+          "bottom": 19
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/carrier/vfx_carrier_aircraft_explosion.png": {
+      "sha256": "b04f40427c7c747cfc59279af7e9b69161cece35754d77af5204fe3d00d17487",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 316,
+        "height": 270,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 67324,
+        "visible_pixel_count": 17996,
+        "transparent_canvas_ratio": 0.7890764181903422,
+        "visible_canvas_ratio": 0.21092358180965776,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          106,
+          132,
+          342,
+          320
+        ],
+        "final_crop_box": [
+          88,
+          114,
+          360,
+          338
+        ],
+        "component_area": 17293,
+        "output_edge_margins": {
+          "left": 43,
+          "top": 30,
+          "right": 19,
+          "bottom": 19
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/carrier/vfx_carrier_aircraft_formation.png": {
+      "sha256": "5fc5bd4b4f9443a9643af9fa4dab33a5fad4308b093a2e2acd7846ea227e9d2f",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 140,
+        "height": 272,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 35473,
+        "visible_pixel_count": 2607,
+        "transparent_canvas_ratio": 0.9315388655462185,
+        "visible_canvas_ratio": 0.06846113445378152,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          187,
+          85,
+          253,
+          273
+        ],
+        "final_crop_box": [
+          169,
+          67,
+          271,
+          291
+        ],
+        "component_area": 2549,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 66,
+          "right": 19,
+          "bottom": 18
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/carrier/vfx_carrier_aircraft_launch_flash.png": {
+      "sha256": "aba435ccb3f2c2a40db8f1b041b35d637fb0a5c8645e8018149ff7182ccbef20",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 190,
+        "height": 298,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 47770,
+        "visible_pixel_count": 8850,
+        "transparent_canvas_ratio": 0.84369480748852,
+        "visible_canvas_ratio": 0.15630519251148003,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          156,
+          152,
+          277,
+          350
+        ],
+        "final_crop_box": [
+          138,
+          134,
+          295,
+          368
+        ],
+        "component_area": 8759,
+        "output_edge_margins": {
+          "left": 24,
+          "top": 18,
+          "right": 18,
+          "bottom": 82
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/carrier/vfx_carrier_aircraft_path.png": {
+      "sha256": "daedd061d887f81820d5ae61ef9acf1c30b8598817a170dae66068f105534867",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 298,
+        "height": 218,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 64126,
+        "visible_pixel_count": 838,
+        "transparent_canvas_ratio": 0.987100547995813,
+        "visible_canvas_ratio": 0.012899452004186934,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          115,
+          149,
+          283,
+          297
+        ],
+        "final_crop_box": [
+          97,
+          131,
+          301,
+          315
+        ],
+        "component_area": 785,
+        "output_edge_margins": {
+          "left": 91,
+          "top": 19,
+          "right": 19,
+          "bottom": 31
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/carrier/vfx_carrier_aircraft_recovery.png": {
+      "sha256": "375357165731ac6e3b2b2c73ed0af9e53529b7bddfb4bb7f6854dda1da65827c",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 120,
+        "height": 314,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 29340,
+        "visible_pixel_count": 8340,
+        "transparent_canvas_ratio": 0.7786624203821656,
+        "visible_canvas_ratio": 0.2213375796178344,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          178,
+          118,
+          261,
+          316
+        ],
+        "final_crop_box": [
+          160,
+          100,
+          279,
+          334
+        ],
+        "component_area": 8311,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 18,
+          "bottom": 84
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/carrier/vfx_carrier_airstrike_area.png": {
+      "sha256": "9931821bf1c616266ce8c708f759b9f34802ab63fe3b7b2110450a81f04bd284",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 364,
+        "height": 216,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 72406,
+        "visible_pixel_count": 6218,
+        "transparent_canvas_ratio": 0.9209147334147334,
+        "visible_canvas_ratio": 0.07908526658526659,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          67,
+          131,
+          393,
+          307
+        ],
+        "final_crop_box": [
+          49,
+          113,
+          411,
+          325
+        ],
+        "component_area": 5543,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 19,
+          "bottom": 22
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/carrier/vfx_carrier_wake_carrier.png": {
+      "sha256": "e84a6a83c24bdbfaf8f43bec7851f5a958f97cc336bbd664d5b205c94b551e5d",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 336,
+        "height": 262,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 45144,
+        "visible_pixel_count": 42888,
+        "transparent_canvas_ratio": 0.512813522355507,
+        "visible_canvas_ratio": 0.4871864776444929,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          58,
+          112,
+          340,
+          332
+        ],
+        "final_crop_box": [
+          40,
+          94,
+          358,
+          350
+        ],
+        "component_area": 42736,
+        "output_edge_margins": {
+          "left": 27,
+          "top": 21,
+          "right": 18,
+          "bottom": 19
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    }
+  }
+}

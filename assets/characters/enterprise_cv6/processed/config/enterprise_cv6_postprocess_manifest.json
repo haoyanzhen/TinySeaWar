@@ -654,174 +654,6 @@
       ]
     },
     {
-      "file": "assets/characters/enterprise_cv6/processed/ui/enterprise_cv6_ui_portrait.png",
-      "size": [
-        405,
-        458
-      ],
-      "mode": "RGBA",
-      "source_box": [
-        24,
-        89,
-        412,
-        519
-      ],
-      "source_crop_qa": {
-        "original_box": [
-          16,
-          16,
-          368,
-          496
-        ],
-        "final_box": [
-          24,
-          89,
-          412,
-          519
-        ],
-        "expanded": {
-          "left": -8,
-          "top": -73,
-          "right": 44,
-          "bottom": 23
-        },
-        "auto_crop_method": "connected_components_intersecting_initial_box",
-        "component_count": 4,
-        "selected_component_count": 1,
-        "selected_component_samples": [
-          {
-            "bbox": [
-              40,
-              105,
-              396,
-              503
-            ],
-            "pixel_count": 117151,
-            "overlap_pixels": 110254
-          }
-        ],
-        "source_edge_safe_margin": 16,
-        "final_edge_margins": {
-          "left": 16,
-          "top": 16,
-          "right": 16,
-          "bottom": 16
-        },
-        "edge_warnings": []
-      },
-      "output_layout": {
-        "content_bbox": [
-          0,
-          0,
-          356,
-          398
-        ],
-        "centroid_before_padding": [
-          177.37,
-          204.87
-        ],
-        "padding": {
-          "left": 25,
-          "top": 24,
-          "right": 24,
-          "bottom": 36
-        },
-        "centroid_offset_after_padding": {
-          "x": -0.13,
-          "y": -0.13
-        }
-      },
-      "source": "assets/characters/enterprise_cv6/ui/enterprise_cv6_ui_sheet.png",
-      "tags": [
-        "ui",
-        "portrait"
-      ]
-    },
-    {
-      "file": "assets/characters/enterprise_cv6/processed/ui/enterprise_cv6_ui_portrait_small.png",
-      "size": [
-        345,
-        354
-      ],
-      "mode": "RGBA",
-      "source_box": [
-        427,
-        133,
-        756,
-        470
-      ],
-      "source_crop_qa": {
-        "original_box": [
-          400,
-          16,
-          752,
-          496
-        ],
-        "final_box": [
-          427,
-          133,
-          756,
-          470
-        ],
-        "expanded": {
-          "left": -27,
-          "top": -117,
-          "right": 4,
-          "bottom": -26
-        },
-        "auto_crop_method": "connected_components_intersecting_initial_box",
-        "component_count": 7,
-        "selected_component_count": 1,
-        "selected_component_samples": [
-          {
-            "bbox": [
-              443,
-              149,
-              740,
-              454
-            ],
-            "pixel_count": 70852,
-            "overlap_pixels": 70852
-          }
-        ],
-        "source_edge_safe_margin": 16,
-        "final_edge_margins": {
-          "left": 16,
-          "top": 16,
-          "right": 16,
-          "bottom": 16
-        },
-        "edge_warnings": []
-      },
-      "output_layout": {
-        "content_bbox": [
-          0,
-          0,
-          297,
-          305
-        ],
-        "centroid_before_padding": [
-          148.34,
-          151.9
-        ],
-        "padding": {
-          "left": 24,
-          "top": 25,
-          "right": 24,
-          "bottom": 24
-        },
-        "centroid_offset_after_padding": {
-          "x": -0.16,
-          "y": -0.1
-        }
-      },
-      "source": "assets/characters/enterprise_cv6/ui/enterprise_cv6_ui_sheet.png",
-      "tags": [
-        "ui",
-        "portrait_small"
-      ]
-    },
-    {
       "file": "assets/characters/enterprise_cv6/processed/ui/enterprise_cv6_ui_chibi_head.png",
       "size": [
         583,
@@ -10384,11 +10216,229 @@
         "firepower",
         "frame_04"
       ]
+    },
+    {
+      "role": "ui_portrait",
+      "path": "assets/characters/enterprise_cv6/processed/ui/enterprise_cv6_ui_portrait.png",
+      "file": "assets/characters/enterprise_cv6/processed/ui/enterprise_cv6_ui_portrait.png",
+      "source": "assets/characters/enterprise_cv6/ui/enterprise_cv6_portrait_20261001_unframed_v1.png",
+      "sha256": "1a7d7f7ba12a9f9920ec499810d9ce1eebc95c7dc78299a306f2aeedaa32d895",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA",
+      "alpha_bbox": [
+        67,
+        59,
+        456,
+        449
+      ],
+      "alpha_pixel_count": 91001,
+      "edge_margins": {
+        "left": 67,
+        "top": 59,
+        "right": 56,
+        "bottom": 63
+      },
+      "output_padding": {
+        "left": 67,
+        "top": 59,
+        "right": 56,
+        "bottom": 63
+      },
+      "alpha_centroid": [
+        261.463168045032,
+        282.3278136585622
+      ],
+      "centroid_offset_normalized": {
+        "x": 0.010670250087953081,
+        "y": 0.05142151105187931
+      },
+      "component_tags": [
+        "ui",
+        "portrait_revision"
+      ],
+      "crop": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          33,
+          1240,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              33,
+              1240,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 67,
+          "top": 59,
+          "right": 56,
+          "bottom": 63
+        },
+        "cleanup_tags": []
+      },
+      "source_crop_qa": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          33,
+          1240,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              33,
+              1240,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 67,
+          "top": 59,
+          "right": 56,
+          "bottom": 63
+        },
+        "cleanup_tags": []
+      }
+    },
+    {
+      "role": "ui_portrait_small",
+      "path": "assets/characters/enterprise_cv6/processed/ui/enterprise_cv6_ui_portrait_small.png",
+      "file": "assets/characters/enterprise_cv6/processed/ui/enterprise_cv6_ui_portrait_small.png",
+      "source": "assets/characters/enterprise_cv6/ui/enterprise_cv6_portrait_20261001_unframed_v1.png",
+      "sha256": "9103cd326120f42bf42c312bf1b4fafa7d8b64602a43d90222615dddab1876d4",
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_bbox": [
+        15,
+        13,
+        116,
+        114
+      ],
+      "alpha_pixel_count": 6112,
+      "edge_margins": {
+        "left": 15,
+        "top": 13,
+        "right": 12,
+        "bottom": 14
+      },
+      "output_padding": {
+        "left": 15,
+        "top": 13,
+        "right": 12,
+        "bottom": 14
+      },
+      "alpha_centroid": [
+        65.35917700264183,
+        70.58041188867047
+      ],
+      "centroid_offset_normalized": {
+        "x": 0.010618570333139288,
+        "y": 0.051409467880238036
+      },
+      "component_tags": [
+        "ui",
+        "portrait_revision"
+      ],
+      "crop": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          33,
+          1240,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              33,
+              1240,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 15,
+          "top": 13,
+          "right": 12,
+          "bottom": 14
+        },
+        "cleanup_tags": []
+      },
+      "source_crop_qa": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          33,
+          1240,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              33,
+              1240,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 15,
+          "top": 13,
+          "right": 12,
+          "bottom": 14
+        },
+        "cleanup_tags": []
+      }
     }
   ],
   "config": {
     "bind_points": "assets/characters/enterprise_cv6/processed/config/enterprise_cv6_meta_bind_points.json",
     "animation": "assets/characters/enterprise_cv6/processed/config/enterprise_cv6_anim_config.json",
     "vfx": "assets/characters/enterprise_cv6/processed/config/enterprise_cv6_vfx_config.json"
+  },
+  "portrait_revision": {
+    "path": "assets/characters/enterprise_cv6/meta/enterprise_cv6_portrait_revision.json",
+    "sha256": "21df9c0d289e7c48eff2e0ff72d9baaa946b5000bb4a2659412898d228f69d47"
   }
 }

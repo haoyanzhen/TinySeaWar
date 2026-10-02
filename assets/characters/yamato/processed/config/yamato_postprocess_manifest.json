@@ -176,74 +176,6 @@
       }
     },
     {
-      "role": "ui_portrait",
-      "crop": {
-        "content_bbox": [
-          56,
-          38,
-          443,
-          418
-        ],
-        "final_crop_box": [
-          38,
-          20,
-          443,
-          436
-        ],
-        "output_edge_margins": {
-          "left": 18,
-          "top": 19,
-          "right": 39,
-          "bottom": 107
-        }
-      },
-      "path": "assets/characters/yamato/processed/ui/yamato_ui_portrait.png",
-      "size": [
-        444,
-        506
-      ],
-      "edge_margins": {
-        "left": 18,
-        "top": 21,
-        "right": 39,
-        "bottom": 107
-      }
-    },
-    {
-      "role": "ui_portrait_small",
-      "crop": {
-        "content_bbox": [
-          0,
-          77,
-          423,
-          417
-        ],
-        "final_crop_box": [
-          0,
-          59,
-          441,
-          435
-        ],
-        "output_edge_margins": {
-          "left": 19,
-          "top": 19,
-          "right": 120,
-          "bottom": 79
-        }
-      },
-      "path": "assets/characters/yamato/processed/ui/yamato_ui_portrait_small.png",
-      "size": [
-        562,
-        438
-      ],
-      "edge_margins": {
-        "left": 138,
-        "top": 19,
-        "right": 120,
-        "bottom": 81
-      }
-    },
-    {
       "role": "ui_chibi_head",
       "crop": {
         "content_bbox": [
@@ -1370,6 +1302,224 @@
         "right": 19,
         "bottom": 31
       }
+    },
+    {
+      "role": "ui_portrait",
+      "path": "assets/characters/yamato/processed/ui/yamato_ui_portrait.png",
+      "file": "assets/characters/yamato/processed/ui/yamato_ui_portrait.png",
+      "source": "assets/characters/yamato/ui/yamato_portrait_20261001_unframed_v1.png",
+      "sha256": "31f09f27ff5d1e110e8e8e4495a3cdefa9c40e7fe493ce479c4dafd88fc5a80f",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA",
+      "alpha_bbox": [
+        64,
+        64,
+        456,
+        447
+      ],
+      "alpha_pixel_count": 88477,
+      "edge_margins": {
+        "left": 64,
+        "top": 64,
+        "right": 56,
+        "bottom": 65
+      },
+      "output_padding": {
+        "left": 64,
+        "top": 64,
+        "right": 56,
+        "bottom": 65
+      },
+      "alpha_centroid": [
+        265.44745675570334,
+        294.7259120385327
+      ],
+      "centroid_offset_normalized": {
+        "x": 0.01845206397598309,
+        "y": 0.07563654695025923
+      },
+      "component_tags": [
+        "ui",
+        "portrait_revision"
+      ],
+      "crop": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          41,
+          1254,
+          1241
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              41,
+              1254,
+              1241
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 64,
+          "top": 64,
+          "right": 56,
+          "bottom": 65
+        },
+        "cleanup_tags": []
+      },
+      "source_crop_qa": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          41,
+          1254,
+          1241
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              41,
+              1254,
+              1241
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 64,
+          "top": 64,
+          "right": 56,
+          "bottom": 65
+        },
+        "cleanup_tags": []
+      }
+    },
+    {
+      "role": "ui_portrait_small",
+      "path": "assets/characters/yamato/processed/ui/yamato_ui_portrait_small.png",
+      "file": "assets/characters/yamato/processed/ui/yamato_ui_portrait_small.png",
+      "source": "assets/characters/yamato/ui/yamato_portrait_20261001_unframed_v1.png",
+      "sha256": "71134e7d636d583f73fc9a2f897b936a43d48491605e7408427398855fb2aca6",
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_bbox": [
+        14,
+        14,
+        117,
+        114
+      ],
+      "alpha_pixel_count": 5992,
+      "edge_margins": {
+        "left": 14,
+        "top": 14,
+        "right": 11,
+        "bottom": 14
+      },
+      "output_padding": {
+        "left": 14,
+        "top": 14,
+        "right": 11,
+        "bottom": 14
+      },
+      "alpha_centroid": [
+        66.35637224438142,
+        73.6672124232118
+      ],
+      "centroid_offset_normalized": {
+        "x": 0.018409158159229833,
+        "y": 0.07552509705634214
+      },
+      "component_tags": [
+        "ui",
+        "portrait_revision"
+      ],
+      "crop": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          41,
+          1254,
+          1241
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              41,
+              1254,
+              1241
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 14,
+          "top": 14,
+          "right": 11,
+          "bottom": 14
+        },
+        "cleanup_tags": []
+      },
+      "source_crop_qa": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          41,
+          1254,
+          1241
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              41,
+              1254,
+              1241
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 14,
+          "top": 14,
+          "right": 11,
+          "bottom": 14
+        },
+        "cleanup_tags": []
+      }
     }
-  ]
+  ],
+  "portrait_revision": {
+    "path": "assets/characters/yamato/meta/yamato_portrait_revision.json",
+    "sha256": "03d6285d3888a7dc9c6c2930ac7ae376419f95130b9c19ae182aa944cc5e2a50"
+  }
 }

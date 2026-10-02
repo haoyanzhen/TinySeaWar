@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "character_id": "enterprise_cv6",
+  "revision": "20261001_unframed_v1",
+  "scope": "Portraits only; does not migrate or approve the full character package",
+  "generation_route": "codex_builtin_imagegen_native_alpha",
+  "model": "account-managed/not-exposed",
+  "request_id": "not-exposed",
+  "background_control": "transparent",
+  "prompt": "Create ONE independent head-and-shoulders transparent game portrait for TinySeaWar. Image 1 is ONLY the identity reference for this character; preserve face, hair, eyes, outfit colors and core accessories exactly. Image 2 is ONLY the approved rendering/composition style sample (a DIFFERENT character); do NOT copy its blonde hair, crown or outfit. Match the style sample's polished fine anime linework, restrained cel shading, soft neutral light and bust framing. Head upright, slight three-quarter face toward viewer, neutral character-appropriate expression, eye line around 42% of square canvas height, complete hair and hats visible, upper shoulders/chest, no hands. Isolated bust at most84% canvas width/height,8%EMPTY TRANSPARENT margin every side. NO FRAME, border, card, medallion, background, text, checkerboard, weapons, ship parts, rigging or effects. Real native Alpha PNG, one portrait not a sheet, readable at40px. Character ID: enterprise_cv6. Keep this character's individual expression, hair, eyes, head ornaments/headset and uniform from image1. Small worn head ornaments are allowed, but no tall radar dish, guns, handheld optics, hands, source backdrop or external equipment.",
+  "raw_output_path": "/Users/qingyue/.codex/generated_images/01a0f530-85bc-7132-9cf0-51e103bf539a/exec-9a927a76-0dab-48a1-a2c4-2225646284ad.png",
+  "raw_sha256": "fa2fcebb71bb288b3328132c339a23028559754db9ce22346d0fe03702df9bf6",
+  "references": [
+    {
+      "path": "assets/characters/enterprise_cv6/concept/enterprise_cv6_concept_full.png",
+      "sha256": "311dcd898907f99e147daa9a316b48e2989b440932f3d6cd08e513bfec7710e1"
+    },
+    {
+      "path": "assets/characters/warspite/ui/warspite_portrait_20261001_unframed_v1.png",
+      "sha256": "2de3b58ce65dc2a54b426434d5b7a477e93bb28b8e99ad51ad9bc9ca2af6cab9"
+    }
+  ],
+  "source": {
+    "path": "assets/characters/enterprise_cv6/ui/enterprise_cv6_portrait_20261001_unframed_v1.png",
+    "sha256": "fa2fcebb71bb288b3328132c339a23028559754db9ce22346d0fe03702df9bf6",
+    "alpha_facts": {
+      "format": "PNG",
+      "source_mode": "RGBA",
+      "width": 1254,
+      "height": 1254,
+      "has_alpha_channel": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixel_count": 705133,
+      "visible_pixel_count": 867383,
+      "transparent_canvas_ratio": 0.44841069979574133,
+      "visible_canvas_ratio": 0.5515893002042587,
+      "transparent_border_ratio": 0.9970071827613727
+    }
+  },
+  "source_review": {
+    "sha256": "fa2fcebb71bb288b3328132c339a23028559754db9ce22346d0fe03702df9bf6",
+    "verdict": "pass",
+    "reviewer": "Codex visual inspection",
+    "observation": "Silver hair, blue eyes, white peaked cap, white scarf and navy/gold uniform retained. Generated pixels inspected: complete isolated bust, no decorative frame, external rigging, hands or backdrop."
+  },
+  "output_reviews": {
+    "ui_portrait": {
+      "sha256": "1a7d7f7ba12a9f9920ec499810d9ce1eebc95c7dc78299a306f2aeedaa32d895",
+      "verdict": "pass",
+      "reviewer": "Codex visual inspection",
+      "observation": "Silver hair, blue eyes, white peaked cap, white scarf and navy/gold uniform retained. Generated pixels inspected: complete isolated bust, no decorative frame, external rigging, hands or backdrop. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+    },
+    "ui_portrait_small": {
+      "sha256": "9103cd326120f42bf42c312bf1b4fafa7d8b64602a43d90222615dddab1876d4",
+      "verdict": "pass",
+      "reviewer": "Codex visual inspection",
+      "observation": "Silver hair, blue eyes, white peaked cap, white scarf and navy/gold uniform retained. Generated pixels inspected: complete isolated bust, no decorative frame, external rigging, hands or backdrop. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+    }
+  }
+}

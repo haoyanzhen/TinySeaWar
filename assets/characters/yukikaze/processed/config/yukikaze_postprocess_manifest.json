@@ -176,74 +176,6 @@
       }
     },
     {
-      "role": "ui_portrait",
-      "crop": {
-        "content_bbox": [
-          112,
-          35,
-          429,
-          425
-        ],
-        "final_crop_box": [
-          94,
-          17,
-          443,
-          443
-        ],
-        "output_edge_margins": {
-          "left": 38,
-          "top": 19,
-          "right": 19,
-          "bottom": 77
-        }
-      },
-      "path": "assets/characters/yukikaze/processed/ui/yukikaze_ui_portrait.png",
-      "size": [
-        374,
-        486
-      ],
-      "edge_margins": {
-        "left": 38,
-        "top": 20,
-        "right": 19,
-        "bottom": 77
-      }
-    },
-    {
-      "role": "ui_portrait_small",
-      "crop": {
-        "content_bbox": [
-          85,
-          36,
-          368,
-          425
-        ],
-        "final_crop_box": [
-          67,
-          18,
-          386,
-          443
-        ],
-        "output_edge_margins": {
-          "left": 18,
-          "top": 19,
-          "right": 27,
-          "bottom": 54
-        }
-      },
-      "path": "assets/characters/yukikaze/processed/ui/yukikaze_ui_portrait_small.png",
-      "size": [
-        328,
-        462
-      ],
-      "edge_margins": {
-        "left": 21,
-        "top": 19,
-        "right": 27,
-        "bottom": 54
-      }
-    },
-    {
       "role": "ui_chibi_head",
       "crop": {
         "content_bbox": [
@@ -1370,6 +1302,224 @@
         "right": 22,
         "bottom": 19
       }
+    },
+    {
+      "role": "ui_portrait",
+      "path": "assets/characters/yukikaze/processed/ui/yukikaze_ui_portrait.png",
+      "file": "assets/characters/yukikaze/processed/ui/yukikaze_ui_portrait.png",
+      "source": "assets/characters/yukikaze/ui/yukikaze_portrait_20261001_unframed_v1.png",
+      "sha256": "03def4e23635b83eaadf9c8cb614c3445a5e5312f02a854f1b3db22ac90aa0fd",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA",
+      "alpha_bbox": [
+        96,
+        56,
+        449,
+        456
+      ],
+      "alpha_pixel_count": 85664,
+      "edge_margins": {
+        "left": 96,
+        "top": 56,
+        "right": 63,
+        "bottom": 56
+      },
+      "output_padding": {
+        "left": 96,
+        "top": 56,
+        "right": 63,
+        "bottom": 56
+      },
+      "alpha_centroid": [
+        263.23781038102925,
+        283.3271517026445
+      ],
+      "centroid_offset_normalized": {
+        "x": 0.014136348400447751,
+        "y": 0.053373343169227594
+      },
+      "component_tags": [
+        "ui",
+        "portrait_revision"
+      ],
+      "crop": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          13,
+          1200,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              13,
+              1200,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 96,
+          "top": 56,
+          "right": 63,
+          "bottom": 56
+        },
+        "cleanup_tags": []
+      },
+      "source_crop_qa": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          13,
+          1200,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              13,
+              1200,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 96,
+          "top": 56,
+          "right": 63,
+          "bottom": 56
+        },
+        "cleanup_tags": []
+      }
+    },
+    {
+      "role": "ui_portrait_small",
+      "path": "assets/characters/yukikaze/processed/ui/yukikaze_ui_portrait_small.png",
+      "file": "assets/characters/yukikaze/processed/ui/yukikaze_ui_portrait_small.png",
+      "source": "assets/characters/yukikaze/ui/yukikaze_portrait_20261001_unframed_v1.png",
+      "sha256": "9fd0ddb2a3d84ce626087002ac8bea2eb033198834e64eeb4a49ceadca2b4ce7",
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_bbox": [
+        23,
+        12,
+        114,
+        116
+      ],
+      "alpha_pixel_count": 5854,
+      "edge_margins": {
+        "left": 23,
+        "top": 12,
+        "right": 14,
+        "bottom": 12
+      },
+      "output_padding": {
+        "left": 23,
+        "top": 12,
+        "right": 14,
+        "bottom": 12
+      },
+      "alpha_centroid": [
+        65.80575160944248,
+        70.82371862044894
+      ],
+      "centroid_offset_normalized": {
+        "x": 0.014107434448769385,
+        "y": 0.05331030172225737
+      },
+      "component_tags": [
+        "ui",
+        "portrait_revision"
+      ],
+      "crop": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          13,
+          1200,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              13,
+              1200,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 23,
+          "top": 12,
+          "right": 14,
+          "bottom": 12
+        },
+        "cleanup_tags": []
+      },
+      "source_crop_qa": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          13,
+          1200,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              13,
+              1200,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 23,
+          "top": 12,
+          "right": 14,
+          "bottom": 12
+        },
+        "cleanup_tags": []
+      }
     }
-  ]
+  ],
+  "portrait_revision": {
+    "path": "assets/characters/yukikaze/meta/yukikaze_portrait_revision.json",
+    "sha256": "c26be029b42bb11156efde984f47f22244aaef0a8ae372637675ed070874640c"
+  }
 }

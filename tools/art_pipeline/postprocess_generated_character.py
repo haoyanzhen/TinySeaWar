@@ -1018,6 +1018,8 @@ def process_character(character_id: str) -> None:
 
 
 def process_generated_sources(character_id: str) -> None:
+    from portrait_revision import load_revision, apply_revision
+    load_revision(ROOT, character_id)
     roster = character_roster.roster_by_id("all")
     if character_id not in roster:
         raise SystemExit(f"Unknown character id: {character_id}")
@@ -1194,6 +1196,7 @@ def process_generated_sources(character_id: str) -> None:
         encoding="utf-8",
     )
     finalize_manifest_outputs(manifest)
+    apply_revision(ROOT, character_id, manifest)
     (dirs["config"] / f"{character_id}_postprocess_manifest.json").write_text(
         json.dumps(manifest, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",

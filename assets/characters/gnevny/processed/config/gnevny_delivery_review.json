@@ -1,0 +1,1813 @@
+{
+  "schema_version": 1,
+  "character_id": "gnevny",
+  "scope": "Visual evidence only; technical contract must pass separately. Not runtime acceptance.",
+  "checklist": [
+    "identity_and_inventory",
+    "no_truncation_or_neighbor_fragments",
+    "alpha_edges_and_small_scale_readability",
+    "animation_consistency",
+    "mechanical_binding_and_vfx_semantics"
+  ],
+  "package_sha256": {
+    "assets/characters/gnevny/battle/gnevny_anim_5x4_master.png": "1a638b5f34726a3d5ff47aab752f398abb7a4ca17e0d0b9e929362c272d0ad5a",
+    "assets/characters/gnevny/battle/gnevny_battle_asset_grid.png": "9a88faa7e03b5989046e0b5e6ea854c46eb62781008ef3830d6920bc119aa926",
+    "assets/characters/gnevny/concept/gnevny_concept_full.png": "ab877207e1ac3c2675a93c540250818820c7186654dbbbb4bc47122e8f02972e",
+    "assets/characters/gnevny/meta/gnevny_portrait_revision.json": "14f70d6c05f8b46b02898a87dc29e47ebf0b3e0ba00d5df2000ee6d3227bee82",
+    "assets/characters/gnevny/processed/anim/gnevny_anim_attack_frame_01.png": "44b4168ae3563de9eac352569817b3dc165448471cb10b6259cadb0276ce04f6",
+    "assets/characters/gnevny/processed/anim/gnevny_anim_attack_frame_02.png": "b45e08088698f5d94c0a705dfe0ed04865052f17c3fcd2b21e69d8b9b348f4ea",
+    "assets/characters/gnevny/processed/anim/gnevny_anim_attack_frame_03.png": "44aad1ca8b996ec84452fefd8d151a3ecfc0efbcc9921c65720874a6a9f56ade",
+    "assets/characters/gnevny/processed/anim/gnevny_anim_attack_frame_04.png": "85896160c0b1a75d58b486651483d30e75105cbeed6589fa95a16b1aa2185b74",
+    "assets/characters/gnevny/processed/anim/gnevny_anim_attack_keyframe.png": "44b4168ae3563de9eac352569817b3dc165448471cb10b6259cadb0276ce04f6",
+    "assets/characters/gnevny/processed/anim/gnevny_anim_firepower_frame_01.png": "76191a47d0f341347a5a8180f51189a7f9b94b4b7e216de7bd42e7e4cfe6dbd6",
+    "assets/characters/gnevny/processed/anim/gnevny_anim_firepower_frame_02.png": "0d627e888832aa3df878725f7e1c70703798c05d33745e32f49ed1ea38eb988c",
+    "assets/characters/gnevny/processed/anim/gnevny_anim_firepower_frame_03.png": "a36b8877b3f4201becb92ff9b6d784509095ea36c3480e0feda473ade13b1309",
+    "assets/characters/gnevny/processed/anim/gnevny_anim_firepower_frame_04.png": "59438708ce5b4c8221e72ef32add86ae58e094f60ea066ef10d940afd954df46",
+    "assets/characters/gnevny/processed/anim/gnevny_anim_firepower_keyframe.png": "76191a47d0f341347a5a8180f51189a7f9b94b4b7e216de7bd42e7e4cfe6dbd6",
+    "assets/characters/gnevny/processed/anim/gnevny_anim_hit_frame_01.png": "65b2df76025659d1f6ca52bd68e5097405d5bb1e3fe9985e230eed9b95b8b352",
+    "assets/characters/gnevny/processed/anim/gnevny_anim_hit_frame_02.png": "a820f6f14f97cbb2d0fe8736defb4b236300c59a5f084b8837b7c4db21456cc8",
+    "assets/characters/gnevny/processed/anim/gnevny_anim_hit_frame_03.png": "cfe9137d4b99ab21a7df2b865ee3f55c563665d5b1ec730899de650e0e6ccd84",
+    "assets/characters/gnevny/processed/anim/gnevny_anim_hit_frame_04.png": "3351c9f8c1b68ff86895fe64b613d823d62c0faed227a0e58b9d03584c0d460c",
+    "assets/characters/gnevny/processed/anim/gnevny_anim_hit_keyframe.png": "65b2df76025659d1f6ca52bd68e5097405d5bb1e3fe9985e230eed9b95b8b352",
+    "assets/characters/gnevny/processed/anim/gnevny_anim_idle_frame_01.png": "5ef42bec740b9328431445b54caed6798e509dfe53842d10b76553940ed46cca",
+    "assets/characters/gnevny/processed/anim/gnevny_anim_idle_frame_02.png": "7897ae691740da9a6d7a9dd9bdb1c5f5ba305d33c2a141a98b3eb152011b5721",
+    "assets/characters/gnevny/processed/anim/gnevny_anim_idle_frame_03.png": "818bc43c3634f214dd3a466be70a30630b31de7c7dbdd99824020cab73f2ba6a",
+    "assets/characters/gnevny/processed/anim/gnevny_anim_idle_frame_04.png": "d7e0f90900937a3b5297f3aa6636c8565cd77c617aa287e7e2ebf36027a07aac",
+    "assets/characters/gnevny/processed/anim/gnevny_anim_idle_keyframe.png": "5ef42bec740b9328431445b54caed6798e509dfe53842d10b76553940ed46cca",
+    "assets/characters/gnevny/processed/anim/gnevny_anim_move_frame_01.png": "3f9c7562cf063e0416f1e0b63e568a3c740f5446e013fa207c877d8ffe555a7a",
+    "assets/characters/gnevny/processed/anim/gnevny_anim_move_frame_02.png": "31ad2b7a7240759140673826174863645a9c6dcc82c6269814bb12e38a01c81d",
+    "assets/characters/gnevny/processed/anim/gnevny_anim_move_frame_03.png": "54ff5bc9dac2d730a3d9beef426497b6a4f7c65a9f321d95ba1b999030b2d12b",
+    "assets/characters/gnevny/processed/anim/gnevny_anim_move_frame_04.png": "9e262bbc6b011e4ec503b9dfab665034aff33b50732c123046c835d94e4b4b0b",
+    "assets/characters/gnevny/processed/anim/gnevny_anim_move_keyframe.png": "3f9c7562cf063e0416f1e0b63e568a3c740f5446e013fa207c877d8ffe555a7a",
+    "assets/characters/gnevny/processed/battle/gnevny_battle_body_r.png": "5ef42bec740b9328431445b54caed6798e509dfe53842d10b76553940ed46cca",
+    "assets/characters/gnevny/processed/battle/gnevny_battle_propulsion_node.png": "9be5cf304766bb5e5f22b2309b28572f586271313004cc6016dc9202ae63f4db",
+    "assets/characters/gnevny/processed/battle/gnevny_battle_radar_node.png": "b0573d9e4202f6eb8d748f0968d2762ed4980c337f188839d9f6d44c06c29431",
+    "assets/characters/gnevny/processed/battle/gnevny_battle_rig_base.png": "8d97ac42610208b5f1749c3e798456ae6f4a81b904dafac590e3eae7ed5be80f",
+    "assets/characters/gnevny/processed/battle/gnevny_battle_torpedo_tube_01.png": "fc3bec42547edb6890130141a2fa692fc17911e241fd016830ed330d9ac94f14",
+    "assets/characters/gnevny/processed/battle/gnevny_battle_torpedo_tube_02.png": "05a3e02ea9dad8b85a2588e3924e46ac1f3920f85d67c4763a1066a83644c806",
+    "assets/characters/gnevny/processed/battle/gnevny_battle_turret_main_01.png": "868b7410d3e80916b04cfe369796e5d641fe11539e5e9726bff6599909e75be4",
+    "assets/characters/gnevny/processed/battle/gnevny_battle_wake_origin_marker.png": "c9ee0c5246112b6edb78a9097ed0ce6bf028015caf3fd580aa83c4194a1e7c25",
+    "assets/characters/gnevny/processed/config/gnevny_anim_config.json": "8c3d87baa67cbf26abfc29dbd179b6d43ea2628d761656131479476e70d313fc",
+    "assets/characters/gnevny/processed/config/gnevny_meta_bind_points.json": "2125a31fdda69ed11932ad6b211e3cf22aa00dcfc043ce43b027c111112961e1",
+    "assets/characters/gnevny/processed/config/gnevny_postprocess_manifest.json": "669126ac128cbef6cf52f17b3713bc2e2ad64050b78c26bf9eb3c5ad393ab194",
+    "assets/characters/gnevny/processed/config/gnevny_vfx_config.json": "19cf904dbbf46cc6f0ed5306c6c5ad7912bf0dc39a5bf6c9ee32e728df035a20",
+    "assets/characters/gnevny/processed/source_alpha/gnevny_anim_5x4_master_alpha_source.png": "798cf3c1d7d26a82fa04a751d2d48aa41213cffe9194216288bb5253875b8eaa",
+    "assets/characters/gnevny/processed/source_alpha/gnevny_battle_asset_grid_alpha_source.png": "b10141c83e3165d91e772dc8c06efb90375ec895bdb50fb6bbffd52f70007c9f",
+    "assets/characters/gnevny/processed/source_alpha/gnevny_concept_full_alpha_source.png": "94a78b69b1b74e7bea8f6d0fba6a3a840507ff13877116bd5308dd73f16e0d74",
+    "assets/characters/gnevny/processed/source_alpha/gnevny_ui_sheet_alpha_source.png": "8e68eb54e7e5191d69129cb79e594dafda39a85ad16e401de6ae9ddb1486946b",
+    "assets/characters/gnevny/processed/source_alpha/gnevny_vfx_reference_sheet_alpha_source.png": "cbc4c7bf9047193f4441ac7c2a016b38713ec0859ae9b12204b1c1222bd47b1f",
+    "assets/characters/gnevny/processed/ui/gnevny_expr_default.png": "61bfbd049d156d1f6b0545e4e5cbd60c06256f255d77003c8b0496ed6de241fb",
+    "assets/characters/gnevny/processed/ui/gnevny_expr_hit.png": "69f8739d6e4e0958f8fc1d0dfc17f808d4a02538f1231524a6548f24c1a3c741",
+    "assets/characters/gnevny/processed/ui/gnevny_expr_serious.png": "1bf5f7caa9bf1d94f3ac9530bd415a0f3d32b2874a7609cfd712c4acc39c2129",
+    "assets/characters/gnevny/processed/ui/gnevny_illust_full_alpha.png": "8b28f843ee413424eefbfd35ce0b79b5475f383064019a79b77f85f40ff29fcc",
+    "assets/characters/gnevny/processed/ui/gnevny_illust_half_alpha.png": "f386927357ac052ab15cded9c7aece9630fdf42aa5905ac8a93d892ca9171dde",
+    "assets/characters/gnevny/processed/ui/gnevny_illust_skill_cutin_alpha.png": "599674a10227b2ba24ef9dc6d4879c1f9dc2f2302f6c3de3be723768c9bcc97b",
+    "assets/characters/gnevny/processed/ui/gnevny_ui_chibi_head.png": "f75f219f7e0e12c37fc7c8854e9f448bf6d0f0149ba1737beab80f0544065c14",
+    "assets/characters/gnevny/processed/ui/gnevny_ui_class_destroyer.png": "d4b7112aa3d742fc6ba9bfe070df5cd056a33e250a2431b44152f7fe96ebc127",
+    "assets/characters/gnevny/processed/ui/gnevny_ui_portrait.png": "db1ee5ea3acc0fd69bfe9764777e61e1228b51a78e666f961cc9f8311fb30cc1",
+    "assets/characters/gnevny/processed/ui/gnevny_ui_portrait_small.png": "82a7fe9149e04903e2bda7ea68dd9d22f9c78de2365cc050d3f06411f6ff9efe",
+    "assets/characters/gnevny/processed/ui/gnevny_ui_skill_torpedo_rush.png": "262aa222242f69a81ad697621ad0220ade71049b0ff540a743dfd5eb592fe912",
+    "assets/characters/gnevny/ui/gnevny_portrait_20261001_unframed_v1.png": "5e844f36793e7f46a7faaf62cba5917c54d5cbc486eae46429dcc361056dce5e",
+    "assets/characters/gnevny/ui/gnevny_ui_sheet.png": "9a0fd4d24ddcf49c9d542bebdcc15d5d769d46afab3b8a5c3dc44e29cfcba0e3",
+    "assets/characters/gnevny/vfx/gnevny_vfx_reference_sheet.png": "0859db8f74cf4ae95e1a82e3576ed69f977e1c4d4aad2117473a97cfec60d09f",
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_range_reticle.png": "a2d15007b940b39cad3e844351f3a7899da095b40d11e720127f8b78d1c3e0d6",
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_skill_aura.png": "256fbd95e8fd7acbd0954d29470eedd5537c7cfc9fb526984ea665dc0393270f",
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_smoke_screen.png": "a1046ceb68e33eaca72b03ea66de05ade2da5ddc12662d5721f24cd6eb1208d9",
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_speed_lines.png": "c705bdf5eca024779dc64815b45122b142ce159f06d25005b55d7f77319c5655",
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_speed_wake.png": "19942879341d851b6068916f14e5bf908caba2c3e4dd4e3c5e4d72a77b2d81dd",
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_torpedo_launch_flash.png": "497430a66b4a6f91f22b3b935125ebc73f48a9a56b51ebb845eeb9ee0e5e239b",
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_torpedo_warning.png": "0e18fbe8047578b7c94d552f9acd46c3901d1b32a3471259ca64e80a4a43f361",
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_water_splash.png": "b60aeb30bdd91f5b354fbd9bc0c5354e80884954f5f8d2d915273f4f3135252a"
+  },
+  "assets": {
+    "assets/characters/gnevny/processed/anim/gnevny_anim_attack_frame_01.png": {
+      "sha256": "44b4168ae3563de9eac352569817b3dc165448471cb10b6259cadb0276ce04f6",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 296,
+        "height": 234,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 49744,
+        "visible_pixel_count": 19520,
+        "transparent_canvas_ratio": 0.7181797181797182,
+        "visible_canvas_ratio": 0.2818202818202818,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/gnevny/processed/anim/gnevny_anim_attack_frame_02.png": {
+      "sha256": "b45e08088698f5d94c0a705dfe0ed04865052f17c3fcd2b21e69d8b9b348f4ea",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 296,
+        "height": 234,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 49352,
+        "visible_pixel_count": 19912,
+        "transparent_canvas_ratio": 0.7125202125202125,
+        "visible_canvas_ratio": 0.2874797874797875,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/gnevny/processed/anim/gnevny_anim_attack_frame_03.png": {
+      "sha256": "44aad1ca8b996ec84452fefd8d151a3ecfc0efbcc9921c65720874a6a9f56ade",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 296,
+        "height": 234,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 48455,
+        "visible_pixel_count": 20809,
+        "transparent_canvas_ratio": 0.6995697620697621,
+        "visible_canvas_ratio": 0.30043023793023793,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/gnevny/processed/anim/gnevny_anim_attack_frame_04.png": {
+      "sha256": "85896160c0b1a75d58b486651483d30e75105cbeed6589fa95a16b1aa2185b74",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 296,
+        "height": 234,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 50825,
+        "visible_pixel_count": 18439,
+        "transparent_canvas_ratio": 0.7337866712866713,
+        "visible_canvas_ratio": 0.2662133287133287,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/gnevny/processed/anim/gnevny_anim_attack_keyframe.png": {
+      "sha256": "44b4168ae3563de9eac352569817b3dc165448471cb10b6259cadb0276ce04f6",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 296,
+        "height": 234,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 49744,
+        "visible_pixel_count": 19520,
+        "transparent_canvas_ratio": 0.7181797181797182,
+        "visible_canvas_ratio": 0.2818202818202818,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/gnevny/processed/anim/gnevny_anim_firepower_frame_01.png": {
+      "sha256": "76191a47d0f341347a5a8180f51189a7f9b94b4b7e216de7bd42e7e4cfe6dbd6",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 372,
+        "height": 234,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 65434,
+        "visible_pixel_count": 21614,
+        "transparent_canvas_ratio": 0.7517002113776308,
+        "visible_canvas_ratio": 0.24829978862236926,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/gnevny/processed/anim/gnevny_anim_firepower_frame_02.png": {
+      "sha256": "0d627e888832aa3df878725f7e1c70703798c05d33745e32f49ed1ea38eb988c",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 372,
+        "height": 234,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 65245,
+        "visible_pixel_count": 21803,
+        "transparent_canvas_ratio": 0.7495289954967375,
+        "visible_canvas_ratio": 0.2504710045032626,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/gnevny/processed/anim/gnevny_anim_firepower_frame_03.png": {
+      "sha256": "a36b8877b3f4201becb92ff9b6d784509095ea36c3480e0feda473ade13b1309",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 372,
+        "height": 234,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 64902,
+        "visible_pixel_count": 22146,
+        "transparent_canvas_ratio": 0.745588640749931,
+        "visible_canvas_ratio": 0.2544113592500689,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/gnevny/processed/anim/gnevny_anim_firepower_frame_04.png": {
+      "sha256": "59438708ce5b4c8221e72ef32add86ae58e094f60ea066ef10d940afd954df46",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 372,
+        "height": 234,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 71057,
+        "visible_pixel_count": 15991,
+        "transparent_canvas_ratio": 0.8162967558128849,
+        "visible_canvas_ratio": 0.18370324418711514,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/gnevny/processed/anim/gnevny_anim_firepower_keyframe.png": {
+      "sha256": "76191a47d0f341347a5a8180f51189a7f9b94b4b7e216de7bd42e7e4cfe6dbd6",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 372,
+        "height": 234,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 65434,
+        "visible_pixel_count": 21614,
+        "transparent_canvas_ratio": 0.7517002113776308,
+        "visible_canvas_ratio": 0.24829978862236926,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/gnevny/processed/anim/gnevny_anim_hit_frame_01.png": {
+      "sha256": "65b2df76025659d1f6ca52bd68e5097405d5bb1e3fe9985e230eed9b95b8b352",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 200,
+        "height": 242,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 28497,
+        "visible_pixel_count": 19903,
+        "transparent_canvas_ratio": 0.5887809917355372,
+        "visible_canvas_ratio": 0.41121900826446284,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/gnevny/processed/anim/gnevny_anim_hit_frame_02.png": {
+      "sha256": "a820f6f14f97cbb2d0fe8736defb4b236300c59a5f084b8837b7c4db21456cc8",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 200,
+        "height": 242,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 28830,
+        "visible_pixel_count": 19570,
+        "transparent_canvas_ratio": 0.5956611570247934,
+        "visible_canvas_ratio": 0.4043388429752066,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/gnevny/processed/anim/gnevny_anim_hit_frame_03.png": {
+      "sha256": "cfe9137d4b99ab21a7df2b865ee3f55c563665d5b1ec730899de650e0e6ccd84",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 200,
+        "height": 242,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 29576,
+        "visible_pixel_count": 18824,
+        "transparent_canvas_ratio": 0.6110743801652893,
+        "visible_canvas_ratio": 0.38892561983471075,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/gnevny/processed/anim/gnevny_anim_hit_frame_04.png": {
+      "sha256": "3351c9f8c1b68ff86895fe64b613d823d62c0faed227a0e58b9d03584c0d460c",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 200,
+        "height": 242,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 30172,
+        "visible_pixel_count": 18228,
+        "transparent_canvas_ratio": 0.6233884297520661,
+        "visible_canvas_ratio": 0.3766115702479339,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/gnevny/processed/anim/gnevny_anim_hit_keyframe.png": {
+      "sha256": "65b2df76025659d1f6ca52bd68e5097405d5bb1e3fe9985e230eed9b95b8b352",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 200,
+        "height": 242,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 28497,
+        "visible_pixel_count": 19903,
+        "transparent_canvas_ratio": 0.5887809917355372,
+        "visible_canvas_ratio": 0.41121900826446284,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/gnevny/processed/anim/gnevny_anim_idle_frame_01.png": {
+      "sha256": "5ef42bec740b9328431445b54caed6798e509dfe53842d10b76553940ed46cca",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 172,
+        "height": 238,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 23943,
+        "visible_pixel_count": 16993,
+        "transparent_canvas_ratio": 0.5848886066054328,
+        "visible_canvas_ratio": 0.41511139339456715,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/gnevny/processed/anim/gnevny_anim_idle_frame_02.png": {
+      "sha256": "7897ae691740da9a6d7a9dd9bdb1c5f5ba305d33c2a141a98b3eb152011b5721",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 172,
+        "height": 238,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 24004,
+        "visible_pixel_count": 16932,
+        "transparent_canvas_ratio": 0.5863787375415282,
+        "visible_canvas_ratio": 0.41362126245847175,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/gnevny/processed/anim/gnevny_anim_idle_frame_03.png": {
+      "sha256": "818bc43c3634f214dd3a466be70a30630b31de7c7dbdd99824020cab73f2ba6a",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 172,
+        "height": 238,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 24268,
+        "visible_pixel_count": 16668,
+        "transparent_canvas_ratio": 0.592827828805941,
+        "visible_canvas_ratio": 0.407172171194059,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/gnevny/processed/anim/gnevny_anim_idle_frame_04.png": {
+      "sha256": "d7e0f90900937a3b5297f3aa6636c8565cd77c617aa287e7e2ebf36027a07aac",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 172,
+        "height": 238,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 24465,
+        "visible_pixel_count": 16471,
+        "transparent_canvas_ratio": 0.5976402188782489,
+        "visible_canvas_ratio": 0.402359781121751,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/gnevny/processed/anim/gnevny_anim_idle_keyframe.png": {
+      "sha256": "5ef42bec740b9328431445b54caed6798e509dfe53842d10b76553940ed46cca",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 172,
+        "height": 238,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 23943,
+        "visible_pixel_count": 16993,
+        "transparent_canvas_ratio": 0.5848886066054328,
+        "visible_canvas_ratio": 0.41511139339456715,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/gnevny/processed/anim/gnevny_anim_move_frame_01.png": {
+      "sha256": "3f9c7562cf063e0416f1e0b63e568a3c740f5446e013fa207c877d8ffe555a7a",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 324,
+        "height": 228,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 54245,
+        "visible_pixel_count": 19627,
+        "transparent_canvas_ratio": 0.7343106995884774,
+        "visible_canvas_ratio": 0.2656893004115226,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/gnevny/processed/anim/gnevny_anim_move_frame_02.png": {
+      "sha256": "31ad2b7a7240759140673826174863645a9c6dcc82c6269814bb12e38a01c81d",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 324,
+        "height": 228,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 54173,
+        "visible_pixel_count": 19699,
+        "transparent_canvas_ratio": 0.7333360407190816,
+        "visible_canvas_ratio": 0.26666395928091835,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/gnevny/processed/anim/gnevny_anim_move_frame_03.png": {
+      "sha256": "54ff5bc9dac2d730a3d9beef426497b6a4f7c65a9f321d95ba1b999030b2d12b",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 324,
+        "height": 228,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 55069,
+        "visible_pixel_count": 18803,
+        "transparent_canvas_ratio": 0.7454651288715616,
+        "visible_canvas_ratio": 0.25453487112843837,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/gnevny/processed/anim/gnevny_anim_move_frame_04.png": {
+      "sha256": "9e262bbc6b011e4ec503b9dfab665034aff33b50732c123046c835d94e4b4b0b",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 324,
+        "height": 228,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 56471,
+        "visible_pixel_count": 17401,
+        "transparent_canvas_ratio": 0.7644439029672948,
+        "visible_canvas_ratio": 0.23555609703270522,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/gnevny/processed/anim/gnevny_anim_move_keyframe.png": {
+      "sha256": "3f9c7562cf063e0416f1e0b63e568a3c740f5446e013fa207c877d8ffe555a7a",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 324,
+        "height": 228,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 54245,
+        "visible_pixel_count": 19627,
+        "transparent_canvas_ratio": 0.7343106995884774,
+        "visible_canvas_ratio": 0.2656893004115226,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/gnevny/processed/battle/gnevny_battle_body_r.png": {
+      "sha256": "5ef42bec740b9328431445b54caed6798e509dfe53842d10b76553940ed46cca",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 172,
+        "height": 238,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 23943,
+        "visible_pixel_count": 16993,
+        "transparent_canvas_ratio": 0.5848886066054328,
+        "visible_canvas_ratio": 0.41511139339456715,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/gnevny/processed/battle/gnevny_battle_propulsion_node.png": {
+      "sha256": "9be5cf304766bb5e5f22b2309b28572f586271313004cc6016dc9202ae63f4db",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 336,
+        "height": 292,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 53035,
+        "visible_pixel_count": 45077,
+        "transparent_canvas_ratio": 0.5405556914546641,
+        "visible_canvas_ratio": 0.45944430854533597,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          68,
+          99,
+          356,
+          344
+        ],
+        "final_crop_box": [
+          50,
+          81,
+          374,
+          362
+        ],
+        "component_area": 45077,
+        "output_edge_margins": {
+          "left": 30,
+          "top": 29,
+          "right": 18,
+          "bottom": 18
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/gnevny/processed/battle/gnevny_battle_radar_node.png": {
+      "sha256": "b0573d9e4202f6eb8d748f0968d2762ed4980c337f188839d9f6d44c06c29431",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 264,
+        "height": 484,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 97646,
+        "visible_pixel_count": 30130,
+        "transparent_canvas_ratio": 0.7641967192587027,
+        "visible_canvas_ratio": 0.23580328074129728,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          59,
+          15,
+          280,
+          357
+        ],
+        "final_crop_box": [
+          41,
+          0,
+          298,
+          375
+        ],
+        "component_area": 30130,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 18,
+          "right": 25,
+          "bottom": 124
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/gnevny/processed/battle/gnevny_battle_rig_base.png": {
+      "sha256": "8d97ac42610208b5f1749c3e798456ae6f4a81b904dafac590e3eae7ed5be80f",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 384,
+        "height": 280,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 50812,
+        "visible_pixel_count": 56708,
+        "transparent_canvas_ratio": 0.4725818452380952,
+        "visible_canvas_ratio": 0.5274181547619048,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          44,
+          164,
+          382,
+          397
+        ],
+        "final_crop_box": [
+          26,
+          146,
+          400,
+          415
+        ],
+        "component_area": 56708,
+        "output_edge_margins": {
+          "left": 27,
+          "top": 18,
+          "right": 19,
+          "bottom": 29
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/gnevny/processed/battle/gnevny_battle_torpedo_tube_01.png": {
+      "sha256": "fc3bec42547edb6890130141a2fa692fc17911e241fd016830ed330d9ac94f14",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 306,
+        "height": 306,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 52835,
+        "visible_pixel_count": 40801,
+        "transparent_canvas_ratio": 0.5642594728523218,
+        "visible_canvas_ratio": 0.43574052714767825,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          49,
+          168,
+          298,
+          414
+        ],
+        "final_crop_box": [
+          31,
+          150,
+          316,
+          432
+        ],
+        "component_area": 40801,
+        "output_edge_margins": {
+          "left": 38,
+          "top": 18,
+          "right": 19,
+          "bottom": 42
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/gnevny/processed/battle/gnevny_battle_torpedo_tube_02.png": {
+      "sha256": "05a3e02ea9dad8b85a2588e3924e46ac1f3920f85d67c4763a1066a83644c806",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 302,
+        "height": 304,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 51190,
+        "visible_pixel_count": 40618,
+        "transparent_canvas_ratio": 0.5575766817706518,
+        "visible_canvas_ratio": 0.4424233182293482,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          118,
+          86,
+          365,
+          331
+        ],
+        "final_crop_box": [
+          100,
+          68,
+          383,
+          349
+        ],
+        "component_area": 40618,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 18,
+          "right": 37,
+          "bottom": 41
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/gnevny/processed/battle/gnevny_battle_turret_main_01.png": {
+      "sha256": "868b7410d3e80916b04cfe369796e5d641fe11539e5e9726bff6599909e75be4",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 496,
+        "height": 244,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 77685,
+        "visible_pixel_count": 43339,
+        "transparent_canvas_ratio": 0.6418974748810153,
+        "visible_canvas_ratio": 0.35810252511898466,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          33,
+          185,
+          396,
+          387
+        ],
+        "final_crop_box": [
+          15,
+          167,
+          414,
+          405
+        ],
+        "component_area": 43339,
+        "output_edge_margins": {
+          "left": 115,
+          "top": 19,
+          "right": 18,
+          "bottom": 23
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/gnevny/processed/battle/gnevny_battle_wake_origin_marker.png": {
+      "sha256": "c9ee0c5246112b6edb78a9097ed0ce6bf028015caf3fd580aa83c4194a1e7c25",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 452,
+        "height": 156,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 52731,
+        "visible_pixel_count": 17781,
+        "transparent_canvas_ratio": 0.7478301565690946,
+        "visible_canvas_ratio": 0.25216984343090537,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          0,
+          227,
+          355,
+          340
+        ],
+        "final_crop_box": [
+          0,
+          209,
+          373,
+          358
+        ],
+        "component_area": 17781,
+        "output_edge_margins": {
+          "left": 79,
+          "top": 19,
+          "right": 18,
+          "bottom": 23
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/gnevny/processed/ui/gnevny_expr_default.png": {
+      "sha256": "61bfbd049d156d1f6b0545e4e5cbd60c06256f255d77003c8b0496ed6de241fb",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 394,
+        "height": 476,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 90181,
+        "visible_pixel_count": 97363,
+        "transparent_canvas_ratio": 0.4808524932815766,
+        "visible_canvas_ratio": 0.5191475067184234,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          40,
+          43,
+          388,
+          434
+        ],
+        "final_crop_box": [
+          22,
+          25,
+          406,
+          443
+        ],
+        "output_edge_margins": {
+          "left": 18,
+          "top": 18,
+          "right": 28,
+          "bottom": 67
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/gnevny/processed/ui/gnevny_expr_hit.png": {
+      "sha256": "69f8739d6e4e0958f8fc1d0dfc17f808d4a02538f1231524a6548f24c1a3c741",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 410,
+        "height": 452,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 92354,
+        "visible_pixel_count": 92966,
+        "transparent_canvas_ratio": 0.49834880207209153,
+        "visible_canvas_ratio": 0.5016511979279085,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          41,
+          31,
+          405,
+          400
+        ],
+        "final_crop_box": [
+          23,
+          13,
+          423,
+          418
+        ],
+        "output_edge_margins": {
+          "left": 18,
+          "top": 18,
+          "right": 28,
+          "bottom": 65
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/gnevny/processed/ui/gnevny_expr_serious.png": {
+      "sha256": "1bf5f7caa9bf1d94f3ac9530bd415a0f3d32b2874a7609cfd712c4acc39c2129",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 376,
+        "height": 466,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 86376,
+        "visible_pixel_count": 88840,
+        "transparent_canvas_ratio": 0.49296867865948313,
+        "visible_canvas_ratio": 0.5070313213405169,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          64,
+          27,
+          401,
+          401
+        ],
+        "final_crop_box": [
+          46,
+          9,
+          419,
+          419
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 20,
+          "bottom": 74
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/gnevny/processed/ui/gnevny_illust_full_alpha.png": {
+      "sha256": "8b28f843ee413424eefbfd35ce0b79b5475f383064019a79b77f85f40ff29fcc",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 808,
+        "height": 1916,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 1011699,
+        "visible_pixel_count": 536429,
+        "transparent_canvas_ratio": 0.6534982895471175,
+        "visible_canvas_ratio": 0.34650171045288247,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          25,
+          9,
+          807,
+          1795
+        ],
+        "final_crop_box": [
+          13,
+          0,
+          819,
+          1807
+        ],
+        "output_edge_margins": {
+          "left": 12,
+          "top": 117,
+          "right": 14,
+          "bottom": 13
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/gnevny/processed/ui/gnevny_illust_half_alpha.png": {
+      "sha256": "f386927357ac052ab15cded9c7aece9630fdf42aa5905ac8a93d892ca9171dde",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 824,
+        "height": 1534,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 793269,
+        "visible_pixel_count": 470747,
+        "transparent_canvas_ratio": 0.627578290148226,
+        "visible_canvas_ratio": 0.37242170985177403,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          26,
+          17,
+          808,
+          1302
+        ],
+        "final_crop_box": [
+          10,
+          1,
+          824,
+          1318
+        ],
+        "output_edge_margins": {
+          "left": 26,
+          "top": 17,
+          "right": 16,
+          "bottom": 232
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/gnevny/processed/ui/gnevny_illust_skill_cutin_alpha.png": {
+      "sha256": "599674a10227b2ba24ef9dc6d4879c1f9dc2f2302f6c3de3be723768c9bcc97b",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 818,
+        "height": 1362,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 728108,
+        "visible_pixel_count": 386008,
+        "transparent_canvas_ratio": 0.6535297940250386,
+        "visible_canvas_ratio": 0.3464702059749613,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          845,
+          16,
+          1617,
+          1051
+        ],
+        "final_crop_box": [
+          829,
+          0,
+          1633,
+          1067
+        ],
+        "output_edge_margins": {
+          "left": 29,
+          "top": 16,
+          "right": 17,
+          "bottom": 311
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/gnevny/processed/ui/gnevny_ui_chibi_head.png": {
+      "sha256": "f75f219f7e0e12c37fc7c8854e9f448bf6d0f0149ba1737beab80f0544065c14",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 384,
+        "height": 440,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 94511,
+        "visible_pixel_count": 74449,
+        "transparent_canvas_ratio": 0.5593690814393939,
+        "visible_canvas_ratio": 0.44063091856060604,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          62,
+          46,
+          399,
+          433
+        ],
+        "final_crop_box": [
+          44,
+          28,
+          417,
+          443
+        ],
+        "output_edge_margins": {
+          "left": 28,
+          "top": 18,
+          "right": 19,
+          "bottom": 35
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/gnevny/processed/ui/gnevny_ui_class_destroyer.png": {
+      "sha256": "d4b7112aa3d742fc6ba9bfe070df5cd056a33e250a2431b44152f7fe96ebc127",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 332,
+        "height": 384,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 54780,
+        "visible_pixel_count": 72708,
+        "transparent_canvas_ratio": 0.4296875,
+        "visible_canvas_ratio": 0.5703125,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          51,
+          49,
+          345,
+          390
+        ],
+        "final_crop_box": [
+          33,
+          31,
+          363,
+          408
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 24,
+          "right": 19,
+          "bottom": 19
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/gnevny/processed/ui/gnevny_ui_portrait.png": {
+      "sha256": "db1ee5ea3acc0fd69bfe9764777e61e1228b51a78e666f961cc9f8311fb30cc1",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 512,
+        "height": 512,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 166537,
+        "visible_pixel_count": 95607,
+        "transparent_canvas_ratio": 0.6352882385253906,
+        "visible_canvas_ratio": 0.3647117614746094,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          12,
+          1224,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              12,
+              1224,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 59,
+          "top": 56,
+          "right": 74,
+          "bottom": 56
+        },
+        "cleanup_tags": []
+      },
+      "review": {
+        "verdict": "pass",
+        "reviewer": "Codex visual inspection",
+        "observation": "Red/brown spiky hair and ahoge, amber eyes, cheerful smile and white fur/black/red collar retained. Pixels inspected: one complete bust, no frame, hands, external machinery or backdrop. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+      }
+    },
+    "assets/characters/gnevny/processed/ui/gnevny_ui_portrait_small.png": {
+      "sha256": "82a7fe9149e04903e2bda7ea68dd9d22f9c78de2365cc050d3f06411f6ff9efe",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 128,
+        "height": 128,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 9948,
+        "visible_pixel_count": 6436,
+        "transparent_canvas_ratio": 0.607177734375,
+        "visible_canvas_ratio": 0.392822265625,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          12,
+          1224,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              12,
+              1224,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 22,
+          "top": 12,
+          "right": 17,
+          "bottom": 12
+        },
+        "cleanup_tags": []
+      },
+      "review": {
+        "verdict": "pass",
+        "reviewer": "Codex visual inspection",
+        "observation": "Red/brown spiky hair and ahoge, amber eyes, cheerful smile and white fur/black/red collar retained. Pixels inspected: one complete bust, no frame, hands, external machinery or backdrop. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+      }
+    },
+    "assets/characters/gnevny/processed/ui/gnevny_ui_skill_torpedo_rush.png": {
+      "sha256": "262aa222242f69a81ad697621ad0220ade71049b0ff540a743dfd5eb592fe912",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 350,
+        "height": 360,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 47041,
+        "visible_pixel_count": 78959,
+        "transparent_canvas_ratio": 0.37334126984126986,
+        "visible_canvas_ratio": 0.6266587301587302,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          59,
+          47,
+          372,
+          369
+        ],
+        "final_crop_box": [
+          41,
+          29,
+          390,
+          387
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 18,
+          "bottom": 19
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_range_reticle.png": {
+      "sha256": "a2d15007b940b39cad3e844351f3a7899da095b40d11e720127f8b78d1c3e0d6",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 266,
+        "height": 294,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 75329,
+        "visible_pixel_count": 2875,
+        "transparent_canvas_ratio": 0.9632371745690758,
+        "visible_canvas_ratio": 0.03676282543092425,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          39,
+          125,
+          246,
+          359
+        ],
+        "final_crop_box": [
+          21,
+          107,
+          264,
+          377
+        ],
+        "component_area": 1684,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 23,
+          "right": 22,
+          "bottom": 19
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_skill_aura.png": {
+      "sha256": "256fbd95e8fd7acbd0954d29470eedd5537c7cfc9fb526984ea665dc0393270f",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 198,
+        "height": 184,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 35009,
+        "visible_pixel_count": 1423,
+        "transparent_canvas_ratio": 0.9609409310496267,
+        "visible_canvas_ratio": 0.039059068950373296,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          24,
+          155,
+          144,
+          268
+        ],
+        "final_crop_box": [
+          6,
+          137,
+          162,
+          286
+        ],
+        "component_area": 1226,
+        "output_edge_margins": {
+          "left": 49,
+          "top": 21,
+          "right": 19,
+          "bottom": 18
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_smoke_screen.png": {
+      "sha256": "a1046ceb68e33eaca72b03ea66de05ade2da5ddc12662d5721f24cd6eb1208d9",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 246,
+        "height": 258,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 33863,
+        "visible_pixel_count": 29605,
+        "transparent_canvas_ratio": 0.5335444633516102,
+        "visible_canvas_ratio": 0.46645553664838973,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          68,
+          120,
+          265,
+          328
+        ],
+        "final_crop_box": [
+          50,
+          102,
+          283,
+          346
+        ],
+        "component_area": 29600,
+        "output_edge_margins": {
+          "left": 30,
+          "top": 19,
+          "right": 19,
+          "bottom": 31
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_speed_lines.png": {
+      "sha256": "c705bdf5eca024779dc64815b45122b142ce159f06d25005b55d7f77319c5655",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 274,
+        "height": 296,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 78203,
+        "visible_pixel_count": 2901,
+        "transparent_canvas_ratio": 0.9642311106727165,
+        "visible_canvas_ratio": 0.03576888932728349,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          50,
+          198,
+          239,
+          368
+        ],
+        "final_crop_box": [
+          32,
+          180,
+          257,
+          386
+        ],
+        "component_area": 1358,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 39,
+          "bottom": 78
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_speed_wake.png": {
+      "sha256": "19942879341d851b6068916f14e5bf908caba2c3e4dd4e3c5e4d72a77b2d81dd",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 320,
+        "height": 340,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 96006,
+        "visible_pixel_count": 12794,
+        "transparent_canvas_ratio": 0.8824080882352942,
+        "visible_canvas_ratio": 0.11759191176470589,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          104,
+          187,
+          347,
+          446
+        ],
+        "final_crop_box": [
+          86,
+          169,
+          365,
+          464
+        ],
+        "component_area": 11797,
+        "output_edge_margins": {
+          "left": 40,
+          "top": 18,
+          "right": 19,
+          "bottom": 46
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_torpedo_launch_flash.png": {
+      "sha256": "497430a66b4a6f91f22b3b935125ebc73f48a9a56b51ebb845eeb9ee0e5e239b",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 260,
+        "height": 190,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 42197,
+        "visible_pixel_count": 7203,
+        "transparent_canvas_ratio": 0.8541902834008097,
+        "visible_canvas_ratio": 0.1458097165991903,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          21,
+          297,
+          222,
+          412
+        ],
+        "final_crop_box": [
+          3,
+          279,
+          240,
+          430
+        ],
+        "component_area": 7049,
+        "output_edge_margins": {
+          "left": 22,
+          "top": 18,
+          "right": 19,
+          "bottom": 39
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_torpedo_warning.png": {
+      "sha256": "0e18fbe8047578b7c94d552f9acd46c3901d1b32a3471259ca64e80a4a43f361",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 296,
+        "height": 288,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 63760,
+        "visible_pixel_count": 21488,
+        "transparent_canvas_ratio": 0.7479354354354354,
+        "visible_canvas_ratio": 0.25206456456456455,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          84,
+          233,
+          306,
+          425
+        ],
+        "final_crop_box": [
+          66,
+          215,
+          324,
+          443
+        ],
+        "component_area": 21377,
+        "output_edge_margins": {
+          "left": 25,
+          "top": 60,
+          "right": 18,
+          "bottom": 18
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_water_splash.png": {
+      "sha256": "b60aeb30bdd91f5b354fbd9bc0c5354e80884954f5f8d2d915273f4f3135252a",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 290,
+        "height": 330,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 76726,
+        "visible_pixel_count": 18974,
+        "transparent_canvas_ratio": 0.8017345872518287,
+        "visible_canvas_ratio": 0.19826541274817136,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          91,
+          132,
+          319,
+          335
+        ],
+        "final_crop_box": [
+          73,
+          114,
+          337,
+          353
+        ],
+        "component_area": 18030,
+        "output_edge_margins": {
+          "left": 30,
+          "top": 19,
+          "right": 19,
+          "bottom": 81
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    }
+  }
+}

@@ -1,0 +1,1813 @@
+{
+  "schema_version": 1,
+  "character_id": "kirov",
+  "scope": "Visual evidence only; technical contract must pass separately. Not runtime acceptance.",
+  "checklist": [
+    "identity_and_inventory",
+    "no_truncation_or_neighbor_fragments",
+    "alpha_edges_and_small_scale_readability",
+    "animation_consistency",
+    "mechanical_binding_and_vfx_semantics"
+  ],
+  "package_sha256": {
+    "assets/characters/kirov/battle/kirov_anim_5x4_master.png": "d2f634a7a94e121e89479e4cc0a39666f3385c675e050fb060b9d38e3030bc8a",
+    "assets/characters/kirov/battle/kirov_battle_asset_grid.png": "db80c05047ebb3680adf467422938545e28d1767ca24c44ad29a03c8135c1aa2",
+    "assets/characters/kirov/concept/kirov_concept_full.png": "d5d8990cd0b31575a682928cde9d0ab04cf053663fb6831d8165aba8d7fdc369",
+    "assets/characters/kirov/meta/kirov_portrait_revision.json": "bc84d87c68696d3d0b51aa5c04d2aa9dbf3cae62dd46b9fcb9b258d7e5061c82",
+    "assets/characters/kirov/processed/anim/kirov_anim_attack_frame_01.png": "58e243c2ae1ba9231263e65eedc7399bf624d66e81d31367d01e49074561e930",
+    "assets/characters/kirov/processed/anim/kirov_anim_attack_frame_02.png": "c2f01e1010e51dbabc33416404a428c4afc9acf556753955fcbb928f247e7fd7",
+    "assets/characters/kirov/processed/anim/kirov_anim_attack_frame_03.png": "6cc01e1d915bd5ccfa48c2979537ad5eb41d836bfac55a4169482b6897ade70e",
+    "assets/characters/kirov/processed/anim/kirov_anim_attack_frame_04.png": "35b74fe7225d7d6b37802de3bf5a43d9c72a94c282fe83787a15a1f5fd629071",
+    "assets/characters/kirov/processed/anim/kirov_anim_attack_keyframe.png": "58e243c2ae1ba9231263e65eedc7399bf624d66e81d31367d01e49074561e930",
+    "assets/characters/kirov/processed/anim/kirov_anim_firepower_frame_01.png": "aebb417d9a8f3425b6e24765d08fcfb5febcd71c42dee2f095b289c80f01bfd5",
+    "assets/characters/kirov/processed/anim/kirov_anim_firepower_frame_02.png": "05530192fe2a65c653d39bb57cf5abc762982ea520e457b3c008d270a2a4e88b",
+    "assets/characters/kirov/processed/anim/kirov_anim_firepower_frame_03.png": "54faafc652d54bd003d6d2aa8567ed1560e6ccf7b6563f765f1ecffb32bedec1",
+    "assets/characters/kirov/processed/anim/kirov_anim_firepower_frame_04.png": "bb8525c1eec7daf4a63f4358d4bbd96e3a57d719ef44bc80aecd3ee57e426878",
+    "assets/characters/kirov/processed/anim/kirov_anim_firepower_keyframe.png": "aebb417d9a8f3425b6e24765d08fcfb5febcd71c42dee2f095b289c80f01bfd5",
+    "assets/characters/kirov/processed/anim/kirov_anim_hit_frame_01.png": "73933f09fc11143d1630edb92ef457458f4daffd666df49dbdb957e2ed37321b",
+    "assets/characters/kirov/processed/anim/kirov_anim_hit_frame_02.png": "4095f0a32e9f0f52d532effd2b0f926f371b10d41aa323f03c8549f9efa47da6",
+    "assets/characters/kirov/processed/anim/kirov_anim_hit_frame_03.png": "bf6b8dcb511676554c7df172594115911abac3e6b8e9427c15e62e6b76eaeb9a",
+    "assets/characters/kirov/processed/anim/kirov_anim_hit_frame_04.png": "cfcbb0e935e9baa618e2677dbf010464c285f9175f1a72efd48b13b1c4a007e3",
+    "assets/characters/kirov/processed/anim/kirov_anim_hit_keyframe.png": "73933f09fc11143d1630edb92ef457458f4daffd666df49dbdb957e2ed37321b",
+    "assets/characters/kirov/processed/anim/kirov_anim_idle_frame_01.png": "0166bed0c2cd6f28dd80a12f389593158e589436517ab1794aa6db1592199096",
+    "assets/characters/kirov/processed/anim/kirov_anim_idle_frame_02.png": "3b77d4eb549456efd7a91118f8621fcfe6f8b9d10aa359457baf2540c37c5128",
+    "assets/characters/kirov/processed/anim/kirov_anim_idle_frame_03.png": "4919febf19020a90409165ab073b7c5fc7cd5c8bc3acc362dbadb53b10ba2524",
+    "assets/characters/kirov/processed/anim/kirov_anim_idle_frame_04.png": "a5a49a92554bfdce8b06ed14e3ceb52e6b57dfc0c7988fbfd059a69f15512589",
+    "assets/characters/kirov/processed/anim/kirov_anim_idle_keyframe.png": "0166bed0c2cd6f28dd80a12f389593158e589436517ab1794aa6db1592199096",
+    "assets/characters/kirov/processed/anim/kirov_anim_move_frame_01.png": "a01d62a5c8bda12079e0f961cf43513e6c863636b9e4e9b864621ce3ad689820",
+    "assets/characters/kirov/processed/anim/kirov_anim_move_frame_02.png": "18cfe1744d19976218e50192fa190089571a3318892aa81a328e0867e47b311d",
+    "assets/characters/kirov/processed/anim/kirov_anim_move_frame_03.png": "de06a8f7cda1eb14616b7cf05c5c63bc0ff53b6be23cf4c1eeec8c8189e05d42",
+    "assets/characters/kirov/processed/anim/kirov_anim_move_frame_04.png": "5d10def479b0dd9b33b9ae53b94ab9192d52847a2de874d69ad07e30d499cb1f",
+    "assets/characters/kirov/processed/anim/kirov_anim_move_keyframe.png": "a01d62a5c8bda12079e0f961cf43513e6c863636b9e4e9b864621ce3ad689820",
+    "assets/characters/kirov/processed/battle/kirov_battle_body_r.png": "0166bed0c2cd6f28dd80a12f389593158e589436517ab1794aa6db1592199096",
+    "assets/characters/kirov/processed/battle/kirov_battle_fire_control_node.png": "b9e3725561eef92e48f99886edbdaaee7f89faf6e56591fe9c9c3fc073c40b15",
+    "assets/characters/kirov/processed/battle/kirov_battle_rig_base.png": "fdfbff96e1a4a35965303d6b6acdb9b18de9b834a638737bb8b46925084f6aba",
+    "assets/characters/kirov/processed/battle/kirov_battle_turret_main_01.png": "bc6169998ab2fc9156c23775c62abf0804925a47b3e84f51b79edf981080199c",
+    "assets/characters/kirov/processed/battle/kirov_battle_turret_main_02.png": "9f46532545d80217f0d51e526af9886b3413289fd4e5bf4c9aef075d141352d5",
+    "assets/characters/kirov/processed/battle/kirov_battle_turret_main_03.png": "33d7eb1f6759f02d89d19d86007cd4a5f81ffb68eca325a7053e03de6fcbd7bb",
+    "assets/characters/kirov/processed/battle/kirov_battle_turret_secondary_01.png": "df070a7b834fec781555d49e90799a4aa570764f5f3e2bff4f375e6de6610083",
+    "assets/characters/kirov/processed/battle/kirov_battle_wake_origin_marker.png": "69e1e755b7ff7c84ee524cbef97cab2ae9730d1fcaf68f77c420980c66962abb",
+    "assets/characters/kirov/processed/config/kirov_anim_config.json": "eee2b2324c5cf2f924f8494bb097b66934c15daa370a97ccb1369679fa50d412",
+    "assets/characters/kirov/processed/config/kirov_meta_bind_points.json": "daa752773667ea36a056fad1895b3871c957e0474fb908841c3e2f4a6ceb9692",
+    "assets/characters/kirov/processed/config/kirov_postprocess_manifest.json": "348ca2c646248fca104db84ffba7eb48889a0e57bd4a2e596a9b03c6590bead7",
+    "assets/characters/kirov/processed/config/kirov_vfx_config.json": "5849207117b36855fcc7623ed8014032bafcd85c10fff2b33eacfde3551ad4e1",
+    "assets/characters/kirov/processed/source_alpha/kirov_anim_5x4_master_alpha_source.png": "a9ce88c03d802dad6efd05b7e3ac36eb3cd2fb322f1698d5aaa2ac09e7030861",
+    "assets/characters/kirov/processed/source_alpha/kirov_battle_asset_grid_alpha_source.png": "e117c9b5ae887880607e2f2c33b86fe4ae14d928a987fa173c3aaa35b384c323",
+    "assets/characters/kirov/processed/source_alpha/kirov_concept_full_alpha_source.png": "14a9c3bd8e960c742c557a447581c8be193335674c3c68ea6b7a0d2968cb26d9",
+    "assets/characters/kirov/processed/source_alpha/kirov_ui_sheet_alpha_source.png": "8665da6e18cd196cdbd99c6f5c8590b0ef52e02a0f0c4b0e97ead7a43dab5aa2",
+    "assets/characters/kirov/processed/source_alpha/kirov_vfx_reference_sheet_alpha_source.png": "b9b40f20e4bf54b0102ecee244e01eb746344ecfc70ac9e69baba47f28a102e8",
+    "assets/characters/kirov/processed/ui/kirov_expr_default.png": "9bbda284e505f636a291a82e886c0e88854b8a37c0b2e1c344938e8f79351f78",
+    "assets/characters/kirov/processed/ui/kirov_expr_hit.png": "0df6e2c12a6f3d2f63bb38349c7aacbaa90208c3e7b04fb2f87053bfacef31d2",
+    "assets/characters/kirov/processed/ui/kirov_expr_serious.png": "4ca156cb7305a3c13543c5a5c97bb1297872cab7c9512e28fc1bf1e9efea12a5",
+    "assets/characters/kirov/processed/ui/kirov_illust_full_alpha.png": "1dc9c5ac0a7ba464d737eb1832e6bd69b0ae11f8952ba52c1e52740bcdce9bfb",
+    "assets/characters/kirov/processed/ui/kirov_illust_half_alpha.png": "8684d657598dd525b89b612f55c9ebc01fe651da8add31ab1dab11b439b5b66d",
+    "assets/characters/kirov/processed/ui/kirov_illust_skill_cutin_alpha.png": "b2d120faa61daf762b45d997259f57a067c249dd53a96841708c4315e8a7e8f5",
+    "assets/characters/kirov/processed/ui/kirov_ui_chibi_head.png": "fc94f9f76d32a72d82d0ac0cce42c05dec3c723c63995765c4da462cf04ea8c6",
+    "assets/characters/kirov/processed/ui/kirov_ui_class_heavy_cruiser.png": "598a4de3753a5ccec91c0e10e15b18a6d37683a0bc83b1f3bf0cbb9aba8c0e8f",
+    "assets/characters/kirov/processed/ui/kirov_ui_portrait.png": "400640f291f2575f9b37ae9ed1d6a5c40d9522fb43a701aa9ced9ca7186645a5",
+    "assets/characters/kirov/processed/ui/kirov_ui_portrait_small.png": "191f13d8bcab50f06c17c52b0393796cd5b1e7e9ce7d658993a3bd58a974b6b9",
+    "assets/characters/kirov/processed/ui/kirov_ui_skill_fire_control.png": "38ded7da72e57f2ecdd7cd0b1f86d61fcf42c2c7deaa124073aceabb865632f6",
+    "assets/characters/kirov/ui/kirov_portrait_20261001_unframed_v1.png": "aec60abd6a77ef627f555f145257899d3f52678682b624933e4cea16f9195aef",
+    "assets/characters/kirov/ui/kirov_ui_sheet.png": "0323471bddc862f7cca6968b2a36f3b7f560c4164562fa8884ae83efc328dc1b",
+    "assets/characters/kirov/vfx/kirov_vfx_reference_sheet.png": "b17361c36d6cfc34cf347a5f18abf69c63202c4e85846e876aa050169f62404f",
+    "assets/vfx/combat/character_templates/heavy_cruiser/vfx_heavy_cruiser_armor_sparks.png": "8e41852a991cb653489b9e71a9fa5aad3b7889e3953f9fb2f028896bd71d57be",
+    "assets/vfx/combat/character_templates/heavy_cruiser/vfx_heavy_cruiser_broadside_smoke.png": "8e5bb261d6c71b9a8c732df3ce42ac15ce808d917e20780b8c51c1c31aafb980",
+    "assets/vfx/combat/character_templates/heavy_cruiser/vfx_heavy_cruiser_fire_control_lock_line.png": "371cbd944be04150419c06641eb27a472c5c1507ed5839a156702df1530ed172",
+    "assets/vfx/combat/character_templates/heavy_cruiser/vfx_heavy_cruiser_muzzle_flash_large.png": "350970a3009bb1655fee673be864ada9708d7bf284e65ac5d138071302f9f07a",
+    "assets/vfx/combat/character_templates/heavy_cruiser/vfx_heavy_cruiser_shell_trail_heavy.png": "15300958b915209f380370754b2cb601feb74e380e69d0c67cf5b42309dcabd1",
+    "assets/vfx/combat/character_templates/heavy_cruiser/vfx_heavy_cruiser_suppression_aura.png": "20d0d72b328175839b4c97e35c04dc34476f1707d2d6ae15d1a798eacd98bb74",
+    "assets/vfx/combat/character_templates/heavy_cruiser/vfx_heavy_cruiser_wake_heavy.png": "f9ff3755eab5073a5cd47121c7395dd3e19bb87c80f2dc4e997450a7f783bceb",
+    "assets/vfx/combat/character_templates/heavy_cruiser/vfx_heavy_cruiser_water_splash_large.png": "d91ff14d7cefab59183d7ba387367d022f04816e35846176c1691c3a04a6b89a"
+  },
+  "assets": {
+    "assets/characters/kirov/processed/anim/kirov_anim_attack_frame_01.png": {
+      "sha256": "58e243c2ae1ba9231263e65eedc7399bf624d66e81d31367d01e49074561e930",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 290,
+        "height": 212,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 43937,
+        "visible_pixel_count": 17543,
+        "transparent_canvas_ratio": 0.7146551724137931,
+        "visible_canvas_ratio": 0.2853448275862069,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/kirov/processed/anim/kirov_anim_attack_frame_02.png": {
+      "sha256": "c2f01e1010e51dbabc33416404a428c4afc9acf556753955fcbb928f247e7fd7",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 290,
+        "height": 212,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 43927,
+        "visible_pixel_count": 17553,
+        "transparent_canvas_ratio": 0.7144925178919974,
+        "visible_canvas_ratio": 0.2855074821080026,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/kirov/processed/anim/kirov_anim_attack_frame_03.png": {
+      "sha256": "6cc01e1d915bd5ccfa48c2979537ad5eb41d836bfac55a4169482b6897ade70e",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 290,
+        "height": 212,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 42291,
+        "visible_pixel_count": 19189,
+        "transparent_canvas_ratio": 0.68788223812622,
+        "visible_canvas_ratio": 0.3121177618737801,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/kirov/processed/anim/kirov_anim_attack_frame_04.png": {
+      "sha256": "35b74fe7225d7d6b37802de3bf5a43d9c72a94c282fe83787a15a1f5fd629071",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 290,
+        "height": 212,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 45579,
+        "visible_pixel_count": 15901,
+        "transparent_canvas_ratio": 0.741363044892648,
+        "visible_canvas_ratio": 0.25863695510735196,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/kirov/processed/anim/kirov_anim_attack_keyframe.png": {
+      "sha256": "58e243c2ae1ba9231263e65eedc7399bf624d66e81d31367d01e49074561e930",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 290,
+        "height": 212,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 43937,
+        "visible_pixel_count": 17543,
+        "transparent_canvas_ratio": 0.7146551724137931,
+        "visible_canvas_ratio": 0.2853448275862069,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/kirov/processed/anim/kirov_anim_firepower_frame_01.png": {
+      "sha256": "aebb417d9a8f3425b6e24765d08fcfb5febcd71c42dee2f095b289c80f01bfd5",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 364,
+        "height": 206,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 58472,
+        "visible_pixel_count": 16512,
+        "transparent_canvas_ratio": 0.7797930225114691,
+        "visible_canvas_ratio": 0.22020697748853088,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/kirov/processed/anim/kirov_anim_firepower_frame_02.png": {
+      "sha256": "05530192fe2a65c653d39bb57cf5abc762982ea520e457b3c008d270a2a4e88b",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 364,
+        "height": 206,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 58945,
+        "visible_pixel_count": 16039,
+        "transparent_canvas_ratio": 0.7861010348874427,
+        "visible_canvas_ratio": 0.21389896511255735,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/kirov/processed/anim/kirov_anim_firepower_frame_03.png": {
+      "sha256": "54faafc652d54bd003d6d2aa8567ed1560e6ccf7b6563f765f1ecffb32bedec1",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 364,
+        "height": 206,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 59360,
+        "visible_pixel_count": 15624,
+        "transparent_canvas_ratio": 0.7916355489171023,
+        "visible_canvas_ratio": 0.2083644510828977,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/kirov/processed/anim/kirov_anim_firepower_frame_04.png": {
+      "sha256": "bb8525c1eec7daf4a63f4358d4bbd96e3a57d719ef44bc80aecd3ee57e426878",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 364,
+        "height": 206,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 57614,
+        "visible_pixel_count": 17370,
+        "transparent_canvas_ratio": 0.7683505814573776,
+        "visible_canvas_ratio": 0.23164941854262242,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/kirov/processed/anim/kirov_anim_firepower_keyframe.png": {
+      "sha256": "aebb417d9a8f3425b6e24765d08fcfb5febcd71c42dee2f095b289c80f01bfd5",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 364,
+        "height": 206,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 58472,
+        "visible_pixel_count": 16512,
+        "transparent_canvas_ratio": 0.7797930225114691,
+        "visible_canvas_ratio": 0.22020697748853088,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/kirov/processed/anim/kirov_anim_hit_frame_01.png": {
+      "sha256": "73933f09fc11143d1630edb92ef457458f4daffd666df49dbdb957e2ed37321b",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 208,
+        "height": 210,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 26252,
+        "visible_pixel_count": 17428,
+        "transparent_canvas_ratio": 0.601007326007326,
+        "visible_canvas_ratio": 0.398992673992674,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/kirov/processed/anim/kirov_anim_hit_frame_02.png": {
+      "sha256": "4095f0a32e9f0f52d532effd2b0f926f371b10d41aa323f03c8549f9efa47da6",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 208,
+        "height": 210,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 27183,
+        "visible_pixel_count": 16497,
+        "transparent_canvas_ratio": 0.6223214285714286,
+        "visible_canvas_ratio": 0.3776785714285714,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/kirov/processed/anim/kirov_anim_hit_frame_03.png": {
+      "sha256": "bf6b8dcb511676554c7df172594115911abac3e6b8e9427c15e62e6b76eaeb9a",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 208,
+        "height": 210,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 26700,
+        "visible_pixel_count": 16980,
+        "transparent_canvas_ratio": 0.6112637362637363,
+        "visible_canvas_ratio": 0.38873626373626374,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/kirov/processed/anim/kirov_anim_hit_frame_04.png": {
+      "sha256": "cfcbb0e935e9baa618e2677dbf010464c285f9175f1a72efd48b13b1c4a007e3",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 208,
+        "height": 210,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 27578,
+        "visible_pixel_count": 16102,
+        "transparent_canvas_ratio": 0.6313644688644688,
+        "visible_canvas_ratio": 0.36863553113553116,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/kirov/processed/anim/kirov_anim_hit_keyframe.png": {
+      "sha256": "73933f09fc11143d1630edb92ef457458f4daffd666df49dbdb957e2ed37321b",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 208,
+        "height": 210,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 26252,
+        "visible_pixel_count": 17428,
+        "transparent_canvas_ratio": 0.601007326007326,
+        "visible_canvas_ratio": 0.398992673992674,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/kirov/processed/anim/kirov_anim_idle_frame_01.png": {
+      "sha256": "0166bed0c2cd6f28dd80a12f389593158e589436517ab1794aa6db1592199096",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 198,
+        "height": 204,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 24542,
+        "visible_pixel_count": 15850,
+        "transparent_canvas_ratio": 0.6075955634779164,
+        "visible_canvas_ratio": 0.39240443652208357,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/kirov/processed/anim/kirov_anim_idle_frame_02.png": {
+      "sha256": "3b77d4eb549456efd7a91118f8621fcfe6f8b9d10aa359457baf2540c37c5128",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 198,
+        "height": 204,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 24534,
+        "visible_pixel_count": 15858,
+        "transparent_canvas_ratio": 0.607397504456328,
+        "visible_canvas_ratio": 0.392602495543672,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/kirov/processed/anim/kirov_anim_idle_frame_03.png": {
+      "sha256": "4919febf19020a90409165ab073b7c5fc7cd5c8bc3acc362dbadb53b10ba2524",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 198,
+        "height": 204,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 25314,
+        "visible_pixel_count": 15078,
+        "transparent_canvas_ratio": 0.6267082590612002,
+        "visible_canvas_ratio": 0.37329174093879974,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/kirov/processed/anim/kirov_anim_idle_frame_04.png": {
+      "sha256": "a5a49a92554bfdce8b06ed14e3ceb52e6b57dfc0c7988fbfd059a69f15512589",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 198,
+        "height": 204,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 25384,
+        "visible_pixel_count": 15008,
+        "transparent_canvas_ratio": 0.628441275500099,
+        "visible_canvas_ratio": 0.37155872449990096,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/kirov/processed/anim/kirov_anim_idle_keyframe.png": {
+      "sha256": "0166bed0c2cd6f28dd80a12f389593158e589436517ab1794aa6db1592199096",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 198,
+        "height": 204,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 24542,
+        "visible_pixel_count": 15850,
+        "transparent_canvas_ratio": 0.6075955634779164,
+        "visible_canvas_ratio": 0.39240443652208357,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/kirov/processed/anim/kirov_anim_move_frame_01.png": {
+      "sha256": "a01d62a5c8bda12079e0f961cf43513e6c863636b9e4e9b864621ce3ad689820",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 246,
+        "height": 202,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 33709,
+        "visible_pixel_count": 15983,
+        "transparent_canvas_ratio": 0.6783586895274893,
+        "visible_canvas_ratio": 0.32164131047251066,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/kirov/processed/anim/kirov_anim_move_frame_02.png": {
+      "sha256": "18cfe1744d19976218e50192fa190089571a3318892aa81a328e0867e47b311d",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 246,
+        "height": 202,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 34266,
+        "visible_pixel_count": 15426,
+        "transparent_canvas_ratio": 0.689567737261531,
+        "visible_canvas_ratio": 0.31043226273846897,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/kirov/processed/anim/kirov_anim_move_frame_03.png": {
+      "sha256": "de06a8f7cda1eb14616b7cf05c5c63bc0ff53b6be23cf4c1eeec8c8189e05d42",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 246,
+        "height": 202,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 34133,
+        "visible_pixel_count": 15559,
+        "transparent_canvas_ratio": 0.6868912501006198,
+        "visible_canvas_ratio": 0.3131087498993802,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/kirov/processed/anim/kirov_anim_move_frame_04.png": {
+      "sha256": "5d10def479b0dd9b33b9ae53b94ab9192d52847a2de874d69ad07e30d499cb1f",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 246,
+        "height": 202,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 34135,
+        "visible_pixel_count": 15557,
+        "transparent_canvas_ratio": 0.6869314980278516,
+        "visible_canvas_ratio": 0.3130685019721484,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/kirov/processed/anim/kirov_anim_move_keyframe.png": {
+      "sha256": "a01d62a5c8bda12079e0f961cf43513e6c863636b9e4e9b864621ce3ad689820",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 246,
+        "height": 202,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 33709,
+        "visible_pixel_count": 15983,
+        "transparent_canvas_ratio": 0.6783586895274893,
+        "visible_canvas_ratio": 0.32164131047251066,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/kirov/processed/battle/kirov_battle_body_r.png": {
+      "sha256": "0166bed0c2cd6f28dd80a12f389593158e589436517ab1794aa6db1592199096",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 198,
+        "height": 204,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 24542,
+        "visible_pixel_count": 15850,
+        "transparent_canvas_ratio": 0.6075955634779164,
+        "visible_canvas_ratio": 0.39240443652208357,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/kirov/processed/battle/kirov_battle_fire_control_node.png": {
+      "sha256": "b9e3725561eef92e48f99886edbdaaee7f89faf6e56591fe9c9c3fc073c40b15",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 190,
+        "height": 272,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 32808,
+        "visible_pixel_count": 18872,
+        "transparent_canvas_ratio": 0.6348297213622291,
+        "visible_canvas_ratio": 0.3651702786377709,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          166,
+          49,
+          317,
+          252
+        ],
+        "final_crop_box": [
+          148,
+          31,
+          335,
+          270
+        ],
+        "component_area": 18872,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 18,
+          "right": 21,
+          "bottom": 51
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/kirov/processed/battle/kirov_battle_rig_base.png": {
+      "sha256": "fdfbff96e1a4a35965303d6b6acdb9b18de9b834a638737bb8b46925084f6aba",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 488,
+        "height": 328,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 105681,
+        "visible_pixel_count": 54383,
+        "transparent_canvas_ratio": 0.6602421531387445,
+        "visible_canvas_ratio": 0.3397578468612555,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          41,
+          111,
+          443,
+          347
+        ],
+        "final_crop_box": [
+          23,
+          93,
+          443,
+          365
+        ],
+        "component_area": 54383,
+        "output_edge_margins": {
+          "left": 67,
+          "top": 18,
+          "right": 19,
+          "bottom": 74
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/kirov/processed/battle/kirov_battle_turret_main_01.png": {
+      "sha256": "bc6169998ab2fc9156c23775c62abf0804925a47b3e84f51b79edf981080199c",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 350,
+        "height": 174,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 38200,
+        "visible_pixel_count": 22700,
+        "transparent_canvas_ratio": 0.6272577996715928,
+        "visible_canvas_ratio": 0.3727422003284072,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          93,
+          196,
+          361,
+          328
+        ],
+        "final_crop_box": [
+          75,
+          178,
+          379,
+          346
+        ],
+        "component_area": 22700,
+        "output_edge_margins": {
+          "left": 63,
+          "top": 24,
+          "right": 19,
+          "bottom": 18
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/kirov/processed/battle/kirov_battle_turret_main_02.png": {
+      "sha256": "9f46532545d80217f0d51e526af9886b3413289fd4e5bf4c9aef075d141352d5",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 350,
+        "height": 174,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 37916,
+        "visible_pixel_count": 22984,
+        "transparent_canvas_ratio": 0.6225944170771757,
+        "visible_canvas_ratio": 0.3774055829228243,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          14,
+          196,
+          283,
+          328
+        ],
+        "final_crop_box": [
+          0,
+          178,
+          301,
+          346
+        ],
+        "component_area": 22984,
+        "output_edge_margins": {
+          "left": 63,
+          "top": 23,
+          "right": 18,
+          "bottom": 19
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/kirov/processed/battle/kirov_battle_turret_main_03.png": {
+      "sha256": "33d7eb1f6759f02d89d19d86007cd4a5f81ffb68eca325a7053e03de6fcbd7bb",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 370,
+        "height": 184,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 41956,
+        "visible_pixel_count": 26124,
+        "transparent_canvas_ratio": 0.6162749706227967,
+        "visible_canvas_ratio": 0.38372502937720326,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          153,
+          99,
+          438,
+          241
+        ],
+        "final_crop_box": [
+          135,
+          81,
+          443,
+          259
+        ],
+        "component_area": 26124,
+        "output_edge_margins": {
+          "left": 66,
+          "top": 23,
+          "right": 19,
+          "bottom": 19
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/kirov/processed/battle/kirov_battle_turret_secondary_01.png": {
+      "sha256": "df070a7b834fec781555d49e90799a4aa570764f5f3e2bff4f375e6de6610083",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 308,
+        "height": 172,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 37035,
+        "visible_pixel_count": 15941,
+        "transparent_canvas_ratio": 0.6990901540320145,
+        "visible_canvas_ratio": 0.3009098459679855,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          99,
+          103,
+          315,
+          233
+        ],
+        "final_crop_box": [
+          81,
+          85,
+          333,
+          251
+        ],
+        "component_area": 15941,
+        "output_edge_margins": {
+          "left": 73,
+          "top": 23,
+          "right": 19,
+          "bottom": 19
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/kirov/processed/battle/kirov_battle_wake_origin_marker.png": {
+      "sha256": "69e1e755b7ff7c84ee524cbef97cab2ae9730d1fcaf68f77c420980c66962abb",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 246,
+        "height": 80,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 15997,
+        "visible_pixel_count": 3683,
+        "transparent_canvas_ratio": 0.8128556910569106,
+        "visible_canvas_ratio": 0.18714430894308942,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          105,
+          155,
+          288,
+          194
+        ],
+        "final_crop_box": [
+          87,
+          137,
+          306,
+          212
+        ],
+        "component_area": 3683,
+        "output_edge_margins": {
+          "left": 36,
+          "top": 21,
+          "right": 19,
+          "bottom": 18
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/kirov/processed/ui/kirov_expr_default.png": {
+      "sha256": "9bbda284e505f636a291a82e886c0e88854b8a37c0b2e1c344938e8f79351f78",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 380,
+        "height": 424,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 80763,
+        "visible_pixel_count": 80357,
+        "transparent_canvas_ratio": 0.5012599304865939,
+        "visible_canvas_ratio": 0.49874006951340616,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          43,
+          61,
+          385,
+          423
+        ],
+        "final_crop_box": [
+          25,
+          43,
+          403,
+          441
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 19,
+          "bottom": 44
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/kirov/processed/ui/kirov_expr_hit.png": {
+      "sha256": "0df6e2c12a6f3d2f63bb38349c7aacbaa90208c3e7b04fb2f87053bfacef31d2",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 422,
+        "height": 448,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 96910,
+        "visible_pixel_count": 92146,
+        "transparent_canvas_ratio": 0.5125994414353419,
+        "visible_canvas_ratio": 0.4874005585646581,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          23,
+          25,
+          407,
+          391
+        ],
+        "final_crop_box": [
+          5,
+          7,
+          425,
+          409
+        ],
+        "output_edge_margins": {
+          "left": 18,
+          "top": 19,
+          "right": 20,
+          "bottom": 63
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/kirov/processed/ui/kirov_expr_serious.png": {
+      "sha256": "4ca156cb7305a3c13543c5a5c97bb1297872cab7c9512e28fc1bf1e9efea12a5",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 400,
+        "height": 436,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 89029,
+        "visible_pixel_count": 85371,
+        "transparent_canvas_ratio": 0.5104873853211009,
+        "visible_canvas_ratio": 0.48951261467889906,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          39,
+          23,
+          392,
+          385
+        ],
+        "final_crop_box": [
+          21,
+          5,
+          410,
+          403
+        ],
+        "output_edge_margins": {
+          "left": 28,
+          "top": 19,
+          "right": 19,
+          "bottom": 55
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/kirov/processed/ui/kirov_illust_full_alpha.png": {
+      "sha256": "1dc9c5ac0a7ba464d737eb1832e6bd69b0ae11f8952ba52c1e52740bcdce9bfb",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 1036,
+        "height": 1608,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 1038399,
+        "visible_pixel_count": 627489,
+        "transparent_canvas_ratio": 0.6233306200656947,
+        "visible_canvas_ratio": 0.3766693799343053,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          30,
+          58,
+          1024,
+          1507
+        ],
+        "final_crop_box": [
+          18,
+          46,
+          1024,
+          1519
+        ],
+        "output_edge_margins": {
+          "left": 13,
+          "top": 146,
+          "right": 29,
+          "bottom": 13
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/kirov/processed/ui/kirov_illust_half_alpha.png": {
+      "sha256": "8684d657598dd525b89b612f55c9ebc01fe651da8add31ab1dab11b439b5b66d",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 1046,
+        "height": 1238,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 726798,
+        "visible_pixel_count": 568150,
+        "transparent_canvas_ratio": 0.5612565137750705,
+        "visible_canvas_ratio": 0.4387434862249295,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          16,
+          17,
+          1010,
+          1060
+        ],
+        "final_crop_box": [
+          0,
+          1,
+          1026,
+          1076
+        ],
+        "output_edge_margins": {
+          "left": 16,
+          "top": 17,
+          "right": 36,
+          "bottom": 178
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/kirov/processed/ui/kirov_illust_skill_cutin_alpha.png": {
+      "sha256": "b2d120faa61daf762b45d997259f57a067c249dd53a96841708c4315e8a7e8f5",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 1036,
+        "height": 1080,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 660262,
+        "visible_pixel_count": 458618,
+        "transparent_canvas_ratio": 0.5901097526097526,
+        "visible_canvas_ratio": 0.4098902473902474,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          470,
+          17,
+          1464,
+          857
+        ],
+        "final_crop_box": [
+          454,
+          1,
+          1480,
+          873
+        ],
+        "output_edge_margins": {
+          "left": 16,
+          "top": 17,
+          "right": 26,
+          "bottom": 223
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/kirov/processed/ui/kirov_ui_chibi_head.png": {
+      "sha256": "fc94f9f76d32a72d82d0ac0cce42c05dec3c723c63995765c4da462cf04ea8c6",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 410,
+        "height": 354,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 66863,
+        "visible_pixel_count": 78277,
+        "transparent_canvas_ratio": 0.4606793440815764,
+        "visible_canvas_ratio": 0.5393206559184236,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          33,
+          75,
+          394,
+          390
+        ],
+        "final_crop_box": [
+          15,
+          57,
+          412,
+          408
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 21,
+          "right": 30,
+          "bottom": 18
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/kirov/processed/ui/kirov_ui_class_heavy_cruiser.png": {
+      "sha256": "598a4de3753a5ccec91c0e10e15b18a6d37683a0bc83b1f3bf0cbb9aba8c0e8f",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 354,
+        "height": 358,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 46417,
+        "visible_pixel_count": 80315,
+        "transparent_canvas_ratio": 0.36626108638702143,
+        "visible_canvas_ratio": 0.6337389136129785,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          54,
+          41,
+          371,
+          362
+        ],
+        "final_crop_box": [
+          36,
+          23,
+          389,
+          380
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 18,
+          "bottom": 18
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/kirov/processed/ui/kirov_ui_portrait.png": {
+      "sha256": "400640f291f2575f9b37ae9ed1d6a5c40d9522fb43a701aa9ced9ca7186645a5",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 512,
+        "height": 512,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 174172,
+        "visible_pixel_count": 87972,
+        "transparent_canvas_ratio": 0.6644134521484375,
+        "visible_canvas_ratio": 0.3355865478515625,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          49,
+          1242,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              49,
+              1242,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 67,
+          "top": 62,
+          "right": 61,
+          "bottom": 64
+        },
+        "cleanup_tags": []
+      },
+      "review": {
+        "verdict": "pass",
+        "reviewer": "Codex visual inspection",
+        "observation": "Ash short bob, gray eyes, stern face and black-burgundy angular military collar preserved; no frame or added eyewear. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+      }
+    },
+    "assets/characters/kirov/processed/ui/kirov_ui_portrait_small.png": {
+      "sha256": "191f13d8bcab50f06c17c52b0393796cd5b1e7e9ce7d658993a3bd58a974b6b9",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 128,
+        "height": 128,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 10435,
+        "visible_pixel_count": 5949,
+        "transparent_canvas_ratio": 0.63690185546875,
+        "visible_canvas_ratio": 0.36309814453125,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          49,
+          1242,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              49,
+              1242,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 15,
+          "top": 14,
+          "right": 14,
+          "bottom": 14
+        },
+        "cleanup_tags": []
+      },
+      "review": {
+        "verdict": "pass",
+        "reviewer": "Codex visual inspection",
+        "observation": "Ash short bob, gray eyes, stern face and black-burgundy angular military collar preserved; no frame or added eyewear. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+      }
+    },
+    "assets/characters/kirov/processed/ui/kirov_ui_skill_fire_control.png": {
+      "sha256": "38ded7da72e57f2ecdd7cd0b1f86d61fcf42c2c7deaa124073aceabb865632f6",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 370,
+        "height": 362,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 49844,
+        "visible_pixel_count": 84096,
+        "transparent_canvas_ratio": 0.37213677766163955,
+        "visible_canvas_ratio": 0.6278632223383604,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          50,
+          40,
+          381,
+          362
+        ],
+        "final_crop_box": [
+          32,
+          22,
+          399,
+          380
+        ],
+        "output_edge_margins": {
+          "left": 18,
+          "top": 19,
+          "right": 21,
+          "bottom": 21
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/heavy_cruiser/vfx_heavy_cruiser_armor_sparks.png": {
+      "sha256": "8e41852a991cb653489b9e71a9fa5aad3b7889e3953f9fb2f028896bd71d57be",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 310,
+        "height": 166,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 252,
+        "transparent_pixel_count": 41822,
+        "visible_pixel_count": 9638,
+        "transparent_canvas_ratio": 0.8127089001165955,
+        "visible_canvas_ratio": 0.1872910998834046,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          45,
+          216,
+          290,
+          301
+        ],
+        "final_crop_box": [
+          27,
+          198,
+          308,
+          319
+        ],
+        "component_area": 4793,
+        "output_edge_margins": {
+          "left": 34,
+          "top": 39,
+          "right": 18,
+          "bottom": 18
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/heavy_cruiser/vfx_heavy_cruiser_broadside_smoke.png": {
+      "sha256": "8e5bb261d6c71b9a8c732df3ce42ac15ce808d917e20780b8c51c1c31aafb980",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 310,
+        "height": 290,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 229,
+        "transparent_pixel_count": 60974,
+        "visible_pixel_count": 28926,
+        "transparent_canvas_ratio": 0.6782424916573971,
+        "visible_canvas_ratio": 0.3217575083426029,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          26,
+          170,
+          274,
+          408
+        ],
+        "final_crop_box": [
+          8,
+          152,
+          292,
+          418
+        ],
+        "component_area": 28871,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 43,
+          "bottom": 28
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/heavy_cruiser/vfx_heavy_cruiser_fire_control_lock_line.png": {
+      "sha256": "371cbd944be04150419c06641eb27a472c5c1507ed5839a156702df1530ed172",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 282,
+        "height": 306,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 129,
+        "transparent_pixel_count": 78342,
+        "visible_pixel_count": 7950,
+        "transparent_canvas_ratio": 0.907870949798359,
+        "visible_canvas_ratio": 0.09212905020164094,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          60,
+          163,
+          289,
+          411
+        ],
+        "final_crop_box": [
+          42,
+          145,
+          307,
+          418
+        ],
+        "component_area": 7400,
+        "output_edge_margins": {
+          "left": 35,
+          "top": 18,
+          "right": 18,
+          "bottom": 40
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/heavy_cruiser/vfx_heavy_cruiser_muzzle_flash_large.png": {
+      "sha256": "350970a3009bb1655fee673be864ada9708d7bf284e65ac5d138071302f9f07a",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 312,
+        "height": 320,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 76686,
+        "visible_pixel_count": 23154,
+        "transparent_canvas_ratio": 0.7680889423076923,
+        "visible_canvas_ratio": 0.2319110576923077,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          29,
+          148,
+          282,
+          418
+        ],
+        "final_crop_box": [
+          11,
+          130,
+          300,
+          418
+        ],
+        "component_area": 20440,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 19,
+          "right": 23,
+          "bottom": 31
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/heavy_cruiser/vfx_heavy_cruiser_shell_trail_heavy.png": {
+      "sha256": "15300958b915209f380370754b2cb601feb74e380e69d0c67cf5b42309dcabd1",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 222,
+        "height": 300,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 243,
+        "transparent_pixel_count": 61542,
+        "visible_pixel_count": 5058,
+        "transparent_canvas_ratio": 0.924054054054054,
+        "visible_canvas_ratio": 0.07594594594594595,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          85,
+          175,
+          198,
+          411
+        ],
+        "final_crop_box": [
+          67,
+          157,
+          216,
+          418
+        ],
+        "component_area": 3507,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 24,
+          "right": 56,
+          "bottom": 18
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/heavy_cruiser/vfx_heavy_cruiser_suppression_aura.png": {
+      "sha256": "20d0d72b328175839b4c97e35c04dc34476f1707d2d6ae15d1a798eacd98bb74",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 316,
+        "height": 358,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 254,
+        "transparent_pixel_count": 85627,
+        "visible_pixel_count": 27501,
+        "transparent_canvas_ratio": 0.7569036843221837,
+        "visible_canvas_ratio": 0.24309631567781628,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          24,
+          97,
+          287,
+          320
+        ],
+        "final_crop_box": [
+          6,
+          79,
+          305,
+          338
+        ],
+        "component_area": 26970,
+        "output_edge_margins": {
+          "left": 27,
+          "top": 18,
+          "right": 19,
+          "bottom": 117
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/heavy_cruiser/vfx_heavy_cruiser_wake_heavy.png": {
+      "sha256": "f9ff3755eab5073a5cd47121c7395dd3e19bb87c80f2dc4e997450a7f783bceb",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 254,
+        "height": 334,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 69225,
+        "visible_pixel_count": 15611,
+        "transparent_canvas_ratio": 0.8159861379602998,
+        "visible_canvas_ratio": 0.18401386203970013,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          49,
+          110,
+          220,
+          314
+        ],
+        "final_crop_box": [
+          31,
+          92,
+          238,
+          332
+        ],
+        "component_area": 13563,
+        "output_edge_margins": {
+          "left": 29,
+          "top": 19,
+          "right": 18,
+          "bottom": 88
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/heavy_cruiser/vfx_heavy_cruiser_water_splash_large.png": {
+      "sha256": "d91ff14d7cefab59183d7ba387367d022f04816e35846176c1691c3a04a6b89a",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 318,
+        "height": 264,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 56629,
+        "visible_pixel_count": 27323,
+        "transparent_canvas_ratio": 0.6745402134553078,
+        "visible_canvas_ratio": 0.3254597865446922,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          48,
+          99,
+          313,
+          304
+        ],
+        "final_crop_box": [
+          30,
+          81,
+          313,
+          322
+        ],
+        "component_area": 26919,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 18,
+          "right": 35,
+          "bottom": 35
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    }
+  }
+}

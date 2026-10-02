@@ -176,74 +176,6 @@
       }
     },
     {
-      "role": "ui_portrait",
-      "crop": {
-        "content_bbox": [
-          91,
-          27,
-          432,
-          412
-        ],
-        "final_crop_box": [
-          73,
-          9,
-          443,
-          430
-        ],
-        "output_edge_margins": {
-          "left": 32,
-          "top": 18,
-          "right": 19,
-          "bottom": 81
-        }
-      },
-      "path": "assets/characters/ward/processed/ui/ward_ui_portrait.png",
-      "size": [
-        392,
-        484
-      ],
-      "edge_margins": {
-        "left": 33,
-        "top": 18,
-        "right": 19,
-        "bottom": 81
-      }
-    },
-    {
-      "role": "ui_portrait_small",
-      "crop": {
-        "content_bbox": [
-          107,
-          79,
-          390,
-          387
-        ],
-        "final_crop_box": [
-          89,
-          61,
-          408,
-          405
-        ],
-        "output_edge_margins": {
-          "left": 36,
-          "top": 18,
-          "right": 19,
-          "bottom": 64
-        }
-      },
-      "path": "assets/characters/ward/processed/ui/ward_ui_portrait_small.png",
-      "size": [
-        338,
-        390
-      ],
-      "edge_margins": {
-        "left": 36,
-        "top": 18,
-        "right": 19,
-        "bottom": 64
-      }
-    },
-    {
       "role": "ui_chibi_head",
       "crop": {
         "content_bbox": [
@@ -1370,6 +1302,224 @@
         "right": 22,
         "bottom": 19
       }
+    },
+    {
+      "role": "ui_portrait",
+      "path": "assets/characters/ward/processed/ui/ward_ui_portrait.png",
+      "file": "assets/characters/ward/processed/ui/ward_ui_portrait.png",
+      "source": "assets/characters/ward/ui/ward_portrait_20261001_unframed_v1.png",
+      "sha256": "9f98ede84466ddc59b79de5697759240b4fcef6684d285243fe76c7e8cce2206",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA",
+      "alpha_bbox": [
+        99,
+        56,
+        444,
+        456
+      ],
+      "alpha_pixel_count": 81872,
+      "edge_margins": {
+        "left": 99,
+        "top": 56,
+        "right": 68,
+        "bottom": 56
+      },
+      "output_padding": {
+        "left": 99,
+        "top": 56,
+        "right": 68,
+        "bottom": 56
+      },
+      "alpha_centroid": [
+        261.9220314201713,
+        284.44801418178764
+      ],
+      "centroid_offset_normalized": {
+        "x": 0.011566467617522114,
+        "y": 0.05556252769880399
+      },
+      "component_tags": [
+        "ui",
+        "portrait_revision"
+      ],
+      "crop": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          31,
+          30,
+          1185,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              31,
+              30,
+              1185,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 99,
+          "top": 56,
+          "right": 68,
+          "bottom": 56
+        },
+        "cleanup_tags": []
+      },
+      "source_crop_qa": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          31,
+          30,
+          1185,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              31,
+              30,
+              1185,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 99,
+          "top": 56,
+          "right": 68,
+          "bottom": 56
+        },
+        "cleanup_tags": []
+      }
+    },
+    {
+      "role": "ui_portrait_small",
+      "path": "assets/characters/ward/processed/ui/ward_ui_portrait_small.png",
+      "file": "assets/characters/ward/processed/ui/ward_ui_portrait_small.png",
+      "source": "assets/characters/ward/ui/ward_portrait_20261001_unframed_v1.png",
+      "sha256": "80b5475a72e5bee6aaae6873aa3857d6aed8946b521fd316e78f425fea44de68",
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_bbox": [
+        24,
+        12,
+        113,
+        116
+      ],
+      "alpha_pixel_count": 5589,
+      "edge_margins": {
+        "left": 24,
+        "top": 12,
+        "right": 15,
+        "bottom": 12
+      },
+      "output_padding": {
+        "left": 24,
+        "top": 12,
+        "right": 15,
+        "bottom": 12
+      },
+      "alpha_centroid": [
+        65.4812635097529,
+        71.1050880803531
+      ],
+      "centroid_offset_normalized": {
+        "x": 0.011572371169944584,
+        "y": 0.055508500627758584
+      },
+      "component_tags": [
+        "ui",
+        "portrait_revision"
+      ],
+      "crop": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          31,
+          30,
+          1185,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              31,
+              30,
+              1185,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 24,
+          "top": 12,
+          "right": 15,
+          "bottom": 12
+        },
+        "cleanup_tags": []
+      },
+      "source_crop_qa": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          31,
+          30,
+          1185,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              31,
+              30,
+              1185,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 24,
+          "top": 12,
+          "right": 15,
+          "bottom": 12
+        },
+        "cleanup_tags": []
+      }
     }
-  ]
+  ],
+  "portrait_revision": {
+    "path": "assets/characters/ward/meta/ward_portrait_revision.json",
+    "sha256": "14f37f3bdb09af81dbf6cfadc449cd1d1418c321def7e57e7fec2b91ee0ac02d"
+  }
 }

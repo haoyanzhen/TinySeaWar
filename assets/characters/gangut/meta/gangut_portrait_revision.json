@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "character_id": "gangut",
+  "revision": "20261001_unframed_v1",
+  "scope": "Portraits only; does not migrate or approve the full character package",
+  "generation_route": "codex_builtin_imagegen_native_alpha",
+  "model": "account-managed/not-exposed",
+  "request_id": "not-exposed",
+  "background_control": "transparent",
+  "prompt": "Create ONE independent head-and-shoulders transparent game portrait for TinySeaWar. Image 1 is ONLY the identity reference for this character; preserve face, hair, eyes, outfit colors and core accessories exactly. Image 2 is ONLY the approved rendering/composition style sample (a DIFFERENT character); do NOT copy its blonde hair, crown or outfit. Match the style sample's polished fine anime linework, restrained cel shading, soft neutral light and bust framing. Head upright, slight three-quarter face toward viewer, neutral character-appropriate expression, eye line around 42% of square canvas height, complete hair and hats visible, upper shoulders/chest, no hands. Isolated bust at most84% canvas width/height,8%EMPTY TRANSPARENT margin every side. NO FRAME, border, card, medallion, background, text, checkerboard, weapons, ship parts, rigging or effects. Real native Alpha PNG, one portrait not a sheet, readable at40px. Character ID: gangut. Keep the individual expression, hair, eyes, headwear/headset, distinctive hair streak or facial scar and uniform of image1. No hands, binoculars, guns, periscope, source backdrop or external equipment.",
+  "raw_output_path": "/Users/qingyue/.codex/generated_images/01a0f530-85bc-7132-9cf0-51e103bf539a/exec-1738f325-7ab4-4df7-a60e-7543a77cec29.png",
+  "raw_sha256": "9d2a6b85d27514ca55c6f60094547031395bed9ca8a79a961b7888be42f30f1a",
+  "references": [
+    {
+      "path": "assets/characters/gangut/concept/gangut_concept_full.png",
+      "sha256": "1fc70e5b398238401404e94f63ff42abb888f6a1b144a9949647bf2eea0027bc"
+    },
+    {
+      "path": "assets/characters/warspite/ui/warspite_portrait_20261001_unframed_v1.png",
+      "sha256": "2de3b58ce65dc2a54b426434d5b7a477e93bb28b8e99ad51ad9bc9ca2af6cab9"
+    }
+  ],
+  "source": {
+    "path": "assets/characters/gangut/ui/gangut_portrait_20261001_unframed_v1.png",
+    "sha256": "9d2a6b85d27514ca55c6f60094547031395bed9ca8a79a961b7888be42f30f1a",
+    "alpha_facts": {
+      "format": "PNG",
+      "source_mode": "RGBA",
+      "width": 1254,
+      "height": 1254,
+      "has_alpha_channel": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixel_count": 634536,
+      "visible_pixel_count": 937980,
+      "transparent_canvas_ratio": 0.40351640301275155,
+      "visible_canvas_ratio": 0.5964835969872485,
+      "transparent_border_ratio": 0.9942138866719872
+    }
+  },
+  "source_review": {
+    "sha256": "9d2a6b85d27514ca55c6f60094547031395bed9ca8a79a961b7888be42f30f1a",
+    "verdict": "pass",
+    "reviewer": "Codex visual inspection",
+    "observation": "Silver braid, gray-blue eyes, cheek scar, red officer cap and worn red/brass uniform retained. Pixels inspected: one complete bust, no frame, hands, external machinery or backdrop."
+  },
+  "output_reviews": {
+    "ui_portrait": {
+      "sha256": "dfc53bcab14d4a1007241e7ce54da81b6a3404c1a284ca20c374d38cdbb1208c",
+      "verdict": "pass",
+      "reviewer": "Codex visual inspection",
+      "observation": "Silver braid, gray-blue eyes, cheek scar, red officer cap and worn red/brass uniform retained. Pixels inspected: one complete bust, no frame, hands, external machinery or backdrop. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+    },
+    "ui_portrait_small": {
+      "sha256": "fbc28284f5cc61d6acbba8557c560925b864d9fbe5f2f7ed35a66f5079bd602c",
+      "verdict": "pass",
+      "reviewer": "Codex visual inspection",
+      "observation": "Silver braid, gray-blue eyes, cheek scar, red officer cap and worn red/brass uniform retained. Pixels inspected: one complete bust, no frame, hands, external machinery or backdrop. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+    }
+  }
+}

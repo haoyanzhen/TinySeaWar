@@ -176,74 +176,6 @@
       }
     },
     {
-      "role": "ui_portrait",
-      "crop": {
-        "content_bbox": [
-          99,
-          45,
-          402,
-          397
-        ],
-        "final_crop_box": [
-          81,
-          27,
-          420,
-          415
-        ],
-        "output_edge_margins": {
-          "left": 18,
-          "top": 18,
-          "right": 37,
-          "bottom": 50
-        }
-      },
-      "path": "assets/characters/ning_hai/processed/ui/ning_hai_ui_portrait.png",
-      "size": [
-        358,
-        420
-      ],
-      "edge_margins": {
-        "left": 18,
-        "top": 18,
-        "right": 37,
-        "bottom": 50
-      }
-    },
-    {
-      "role": "ui_portrait_small",
-      "crop": {
-        "content_bbox": [
-          89,
-          69,
-          366,
-          397
-        ],
-        "final_crop_box": [
-          71,
-          51,
-          384,
-          415
-        ],
-        "output_edge_margins": {
-          "left": 19,
-          "top": 19,
-          "right": 32,
-          "bottom": 41
-        }
-      },
-      "path": "assets/characters/ning_hai/processed/ui/ning_hai_ui_portrait_small.png",
-      "size": [
-        328,
-        388
-      ],
-      "edge_margins": {
-        "left": 19,
-        "top": 19,
-        "right": 35,
-        "bottom": 41
-      }
-    },
-    {
       "role": "ui_chibi_head",
       "crop": {
         "content_bbox": [
@@ -1370,6 +1302,224 @@
         "right": 18,
         "bottom": 33
       }
+    },
+    {
+      "role": "ui_portrait",
+      "path": "assets/characters/ning_hai/processed/ui/ning_hai_ui_portrait.png",
+      "file": "assets/characters/ning_hai/processed/ui/ning_hai_ui_portrait.png",
+      "source": "assets/characters/ning_hai/ui/ning_hai_portrait_20261001_unframed_v1.png",
+      "sha256": "8c1a92818f1acc4337c260fc50b3260c5933b3b7cfcb57e805a05750c3ee60a1",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA",
+      "alpha_bbox": [
+        70,
+        57,
+        419,
+        456
+      ],
+      "alpha_pixel_count": 90155,
+      "edge_margins": {
+        "left": 70,
+        "top": 57,
+        "right": 93,
+        "bottom": 56
+      },
+      "output_padding": {
+        "left": 70,
+        "top": 57,
+        "right": 93,
+        "bottom": 56
+      },
+      "alpha_centroid": [
+        250.33289437862518,
+        274.3885584751965
+      ],
+      "centroid_offset_normalized": {
+        "x": -0.011068565666747687,
+        "y": 0.03591515327186812
+      },
+      "component_tags": [
+        "ui",
+        "portrait_revision"
+      ],
+      "crop": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          87,
+          27,
+          1224,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              87,
+              27,
+              1224,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 70,
+          "top": 57,
+          "right": 93,
+          "bottom": 56
+        },
+        "cleanup_tags": []
+      },
+      "source_crop_qa": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          87,
+          27,
+          1224,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              87,
+              27,
+              1224,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 70,
+          "top": 57,
+          "right": 93,
+          "bottom": 56
+        },
+        "cleanup_tags": []
+      }
+    },
+    {
+      "role": "ui_portrait_small",
+      "path": "assets/characters/ning_hai/processed/ui/ning_hai_ui_portrait_small.png",
+      "file": "assets/characters/ning_hai/processed/ui/ning_hai_ui_portrait_small.png",
+      "source": "assets/characters/ning_hai/ui/ning_hai_portrait_20261001_unframed_v1.png",
+      "sha256": "79a00ec88dc0454f90d99df3698aa112fa928767f0a877ce4a50c9271214432c",
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_bbox": [
+        18,
+        13,
+        107,
+        116
+      ],
+      "alpha_pixel_count": 6082,
+      "edge_margins": {
+        "left": 18,
+        "top": 13,
+        "right": 21,
+        "bottom": 12
+      },
+      "output_padding": {
+        "left": 18,
+        "top": 13,
+        "right": 21,
+        "bottom": 12
+      },
+      "alpha_centroid": [
+        62.5764205462432,
+        68.59694335501386
+      ],
+      "centroid_offset_normalized": {
+        "x": -0.01112171448247501,
+        "y": 0.035913619961045806
+      },
+      "component_tags": [
+        "ui",
+        "portrait_revision"
+      ],
+      "crop": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          87,
+          27,
+          1224,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              87,
+              27,
+              1224,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 18,
+          "top": 13,
+          "right": 21,
+          "bottom": 12
+        },
+        "cleanup_tags": []
+      },
+      "source_crop_qa": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          87,
+          27,
+          1224,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              87,
+              27,
+              1224,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 18,
+          "top": 13,
+          "right": 21,
+          "bottom": 12
+        },
+        "cleanup_tags": []
+      }
     }
-  ]
+  ],
+  "portrait_revision": {
+    "path": "assets/characters/ning_hai/meta/ning_hai_portrait_revision.json",
+    "sha256": "823baad0770304a1de990056788e7edbe50f87d3fedcaad1620856eede3325ca"
+  }
 }

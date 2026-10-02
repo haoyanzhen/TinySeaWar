@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "character_id": "iowa",
+  "revision": "20261001_unframed_v1",
+  "scope": "Portraits only; does not migrate or approve the full character package",
+  "generation_route": "codex_builtin_imagegen_native_alpha",
+  "model": "account-managed/not-exposed",
+  "request_id": "not-exposed",
+  "background_control": "transparent",
+  "prompt": "Create ONE independent head-and-shoulders transparent game portrait for TinySeaWar. Image 1 is ONLY the identity reference for this character; preserve face, hair, eyes, outfit colors and core accessories exactly. Image 2 is ONLY the approved rendering/composition style sample (a DIFFERENT character); do NOT copy its blonde hair, crown or outfit. Match the style sample's polished fine anime linework, restrained cel shading, soft neutral light and bust framing. Head upright, slight three-quarter face toward viewer, neutral character-appropriate expression, eye line around 42% of square canvas height, complete hair and hats visible, upper shoulders/chest, no hands. Isolated bust at most84% canvas width/height,8%EMPTY TRANSPARENT margin every side. NO FRAME, border, card, medallion, background, text, checkerboard, weapons, ship parts, rigging or effects. Real native Alpha PNG, one portrait not a sheet, readable at40px. Do NOT add any new accessory absent from identity reference. Character identity: Long blonde hair, blue eyes, white officer cap with navy band and gold badge, navy white gold coat. Keep whole cap, NO eyewear.",
+  "raw_output_path": "/Users/qingyue/.codex/generated_images/01a0f530-85bc-7132-9cf0-51e103bf539a/exec-1774dffe-1033-4c2d-b21e-38580529f55c.png",
+  "raw_sha256": "b0f9e78b421b4343979f12e2c2d9c6a2e89845ab30f2aa2cbed685657f9acf76",
+  "references": [
+    {
+      "path": "assets/characters/iowa/concept/iowa_concept_full.png",
+      "sha256": "1d63d0a1f7dedfba7ff419954e602cd7a66ea790863bd88eb28932b416840d66"
+    },
+    {
+      "path": "assets/characters/warspite/ui/warspite_portrait_20261001_unframed_v1.png",
+      "sha256": "2de3b58ce65dc2a54b426434d5b7a477e93bb28b8e99ad51ad9bc9ca2af6cab9"
+    }
+  ],
+  "source": {
+    "path": "assets/characters/iowa/ui/iowa_portrait_20261001_unframed_v1.png",
+    "sha256": "b0f9e78b421b4343979f12e2c2d9c6a2e89845ab30f2aa2cbed685657f9acf76",
+    "alpha_facts": {
+      "format": "PNG",
+      "source_mode": "RGBA",
+      "width": 1254,
+      "height": 1254,
+      "has_alpha_channel": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixel_count": 676088,
+      "visible_pixel_count": 896428,
+      "transparent_canvas_ratio": 0.42994029949456797,
+      "visible_canvas_ratio": 0.5700597005054321,
+      "transparent_border_ratio": 0.9910215482841181
+    }
+  },
+  "source_review": {
+    "sha256": "b0f9e78b421b4343979f12e2c2d9c6a2e89845ab30f2aa2cbed685657f9acf76",
+    "verdict": "pass",
+    "reviewer": "Codex visual inspection",
+    "observation": "Blonde hair, blue eyes, full white officer cap with dark band and gold badge retained; no eyewear or baked frame."
+  },
+  "output_reviews": {
+    "ui_portrait": {
+      "sha256": "16f6f748872b4a1c18aa94615d1e71462dabf1865c5c15019a8a60d06123f47b",
+      "verdict": "pass",
+      "reviewer": "Codex visual inspection",
+      "observation": "Blonde hair, blue eyes, full white officer cap with dark band and gold badge retained; no eyewear or baked frame. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+    },
+    "ui_portrait_small": {
+      "sha256": "ebfe9832db1be9e9700ae2ce6f43de666223b976fab40b21720d66f267a11234",
+      "verdict": "pass",
+      "reviewer": "Codex visual inspection",
+      "observation": "Blonde hair, blue eyes, full white officer cap with dark band and gold badge retained; no eyewear or baked frame. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+    }
+  }
+}

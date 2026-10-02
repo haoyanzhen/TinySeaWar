@@ -1,0 +1,1813 @@
+{
+  "schema_version": 1,
+  "character_id": "u_47",
+  "scope": "Visual evidence only; technical contract must pass separately. Not runtime acceptance.",
+  "checklist": [
+    "identity_and_inventory",
+    "no_truncation_or_neighbor_fragments",
+    "alpha_edges_and_small_scale_readability",
+    "animation_consistency",
+    "mechanical_binding_and_vfx_semantics"
+  ],
+  "package_sha256": {
+    "assets/characters/u_47/battle/u_47_anim_5x4_master.png": "32742b0abef487dcb7b7c8775919bc1428c6548b91b10086ea92e836947d9a1f",
+    "assets/characters/u_47/battle/u_47_battle_asset_grid.png": "a9d47d92f12c1258ee8e8be9d8ae9813d31dce2d448160e6fbf56cd27b89f7e2",
+    "assets/characters/u_47/concept/u_47_concept_full.png": "8eaea4157e92352274f4ab5074d6f178aaf995b1e0727368caf279da20a58c34",
+    "assets/characters/u_47/meta/u_47_portrait_revision.json": "5eb6b1b20057bbc833a5b56aa130d39822eae3fd3767da2866a15331814b7687",
+    "assets/characters/u_47/processed/anim/u_47_anim_attack_frame_01.png": "4302cd456675cbd41d7893162d7f8fdd98f19974bb7a3e4736a75534d0a395e8",
+    "assets/characters/u_47/processed/anim/u_47_anim_attack_frame_02.png": "74c3b7eaf3d1d2dada15cb5b9e95ddbb4be0a967dd03e067bb180bcc4426d8eb",
+    "assets/characters/u_47/processed/anim/u_47_anim_attack_frame_03.png": "fff9630f9fc55c88897c11f455db0efc78446c5865847402595cd73c4bb15a1d",
+    "assets/characters/u_47/processed/anim/u_47_anim_attack_frame_04.png": "808bfd09416ce5f09ca7e9decf54051c8c7d2651cc3815d230c93b147e55cf74",
+    "assets/characters/u_47/processed/anim/u_47_anim_attack_keyframe.png": "4302cd456675cbd41d7893162d7f8fdd98f19974bb7a3e4736a75534d0a395e8",
+    "assets/characters/u_47/processed/anim/u_47_anim_firepower_frame_01.png": "80519e5c5636b96ac28f2c0a9a84281b79f72b68f1c0b8722bd0530ea9d6bd9d",
+    "assets/characters/u_47/processed/anim/u_47_anim_firepower_frame_02.png": "8030dfaaa4ef3a8c3d05e4e4c55b1ea14dacc3cecd81a92197b772b7d4d24f74",
+    "assets/characters/u_47/processed/anim/u_47_anim_firepower_frame_03.png": "55e13ff2d82d30d8e3eb95b42b6750567a0e4047aee9ae5e624a4697c513cd06",
+    "assets/characters/u_47/processed/anim/u_47_anim_firepower_frame_04.png": "5a38d5eb56752e47e7e15ac95892fd436af89f293a74647e0c6e5dfb81da0c29",
+    "assets/characters/u_47/processed/anim/u_47_anim_firepower_keyframe.png": "80519e5c5636b96ac28f2c0a9a84281b79f72b68f1c0b8722bd0530ea9d6bd9d",
+    "assets/characters/u_47/processed/anim/u_47_anim_hit_frame_01.png": "d16c713a37d5919128643930dda9f8ae1b32c8dd418f9d6dc516c50fb8021c5d",
+    "assets/characters/u_47/processed/anim/u_47_anim_hit_frame_02.png": "2fbd1bc63bd4bb78242b8180945cf0d44abdea5348a1778dab94cbe0f65bdb91",
+    "assets/characters/u_47/processed/anim/u_47_anim_hit_frame_03.png": "c97438cf33762c8b7a4fa7cad98228e92b171dd561b9588af892ee0dd1ba3504",
+    "assets/characters/u_47/processed/anim/u_47_anim_hit_frame_04.png": "769bf9e0fc1b9c16df9fe5a8ec23d07766bcbd8d20bb9bd4521cfb4116ce2b0b",
+    "assets/characters/u_47/processed/anim/u_47_anim_hit_keyframe.png": "d16c713a37d5919128643930dda9f8ae1b32c8dd418f9d6dc516c50fb8021c5d",
+    "assets/characters/u_47/processed/anim/u_47_anim_idle_frame_01.png": "2d2d4ed1e711323fd969f801bfc18096ef59979e8b57dd3bd9a2c60ce52ace13",
+    "assets/characters/u_47/processed/anim/u_47_anim_idle_frame_02.png": "39b2e0f0cae4b90b13bd03205da15389b330728563d35a09455ea23dce5f71d9",
+    "assets/characters/u_47/processed/anim/u_47_anim_idle_frame_03.png": "440dd41d5c093d9c3a20994b2e7d57454537aa5ce71fc968a61528cb026803e9",
+    "assets/characters/u_47/processed/anim/u_47_anim_idle_frame_04.png": "886d1e9ae3c004d68f8694e56f3b689392d85a35dc3a769fd288ba51e797df36",
+    "assets/characters/u_47/processed/anim/u_47_anim_idle_keyframe.png": "2d2d4ed1e711323fd969f801bfc18096ef59979e8b57dd3bd9a2c60ce52ace13",
+    "assets/characters/u_47/processed/anim/u_47_anim_move_frame_01.png": "b80562bf9358f344a04ba38cedab036e869282e12f28b1a5d71c6737e6bd2f33",
+    "assets/characters/u_47/processed/anim/u_47_anim_move_frame_02.png": "f9c665b900281710dc8a437fcb09eb7fe751e18bbfdec2a684d142f4376dab3f",
+    "assets/characters/u_47/processed/anim/u_47_anim_move_frame_03.png": "cb1491a14445baf42add6e4c938ff5e17bb3c2c34600940bccc4b871d8406a6f",
+    "assets/characters/u_47/processed/anim/u_47_anim_move_frame_04.png": "e9231ecc4a3c863bcc56d50408d53a09cee09b6f0af1613e83d9f943597ec3fe",
+    "assets/characters/u_47/processed/anim/u_47_anim_move_keyframe.png": "b80562bf9358f344a04ba38cedab036e869282e12f28b1a5d71c6737e6bd2f33",
+    "assets/characters/u_47/processed/battle/u_47_battle_body_r.png": "2d2d4ed1e711323fd969f801bfc18096ef59979e8b57dd3bd9a2c60ce52ace13",
+    "assets/characters/u_47/processed/battle/u_47_battle_dive_plane.png": "63da36c66a68a6d5120f64bdf2e5cac0e7eb6fcc7ae0ebd9aec3add371ff0254",
+    "assets/characters/u_47/processed/battle/u_47_battle_periscope_node.png": "33597b2ba68c8eb604f54b71c4598e626b8661150e777d99c0f2614c1bb1cffb",
+    "assets/characters/u_47/processed/battle/u_47_battle_rig_base.png": "c31786651768a0c86f34104de79ec108fcc6b698322fa00a1110abcfa9cc3308",
+    "assets/characters/u_47/processed/battle/u_47_battle_sonar_node.png": "b51134b75243f68aaf1fc0d574054cb743894101a00b800199c16b525deb6c62",
+    "assets/characters/u_47/processed/battle/u_47_battle_submerged_shadow.png": "f62989d33b4e44b87c0812939d31a3aaa7279a6ec7fa917905953a27492a724f",
+    "assets/characters/u_47/processed/battle/u_47_battle_torpedo_tube_01.png": "cf6cf5154aa68951fdd8757c549763c7c0194e0f2d317a2d7d2fe5672f73670c",
+    "assets/characters/u_47/processed/battle/u_47_battle_wake_origin_marker.png": "0a7e4f83b1f76795cdbeeba41b42c1557a06d604b86116deabcb69f80d8c2453",
+    "assets/characters/u_47/processed/config/u_47_anim_config.json": "6db81f5ff9d5b177e8f15a3edb595b4187b230360e8830278c5160d8acb8f986",
+    "assets/characters/u_47/processed/config/u_47_meta_bind_points.json": "0d4df4841233eb1a4da546bf249121a9556a754ec4f4dc1d9606d89e69443e32",
+    "assets/characters/u_47/processed/config/u_47_postprocess_manifest.json": "bfd3636da685cf462da7aab4450eb9905fabbf6ab3c5d7f4fb26fd6a0cd70866",
+    "assets/characters/u_47/processed/config/u_47_vfx_config.json": "3e810e15394229ef0a4a34c7bbe9fc117ce65b9a516b564a15d442ba6e7584b6",
+    "assets/characters/u_47/processed/source_alpha/u_47_anim_5x4_master_alpha_source.png": "397697889bfa5411bb508cbc7e78ffa67c982d5cfea02562274d3c3bd4fb1ff2",
+    "assets/characters/u_47/processed/source_alpha/u_47_battle_asset_grid_alpha_source.png": "0c63825f5df471f2c6a17f6144792d0b367fcc5f903f56d8db9044025818f58d",
+    "assets/characters/u_47/processed/source_alpha/u_47_concept_full_alpha_source.png": "c0bd894db45c8215d719bbfaf494c82eb22d4b3759961e2d2c06dc6f16400673",
+    "assets/characters/u_47/processed/source_alpha/u_47_ui_sheet_alpha_source.png": "abe1a46395fffa1949911143badc01f5890296c30e2b09e8cba179355035e29a",
+    "assets/characters/u_47/processed/source_alpha/u_47_vfx_reference_sheet_alpha_source.png": "3abd745fdcca31c3094d031babb5f215038ae27e4c98fc427f4ba84d6f9b2e31",
+    "assets/characters/u_47/processed/ui/u_47_expr_default.png": "9587dc5d6b28114c26b7cfead3e38063d503c8d8f28e54ffd6519b3e27511e42",
+    "assets/characters/u_47/processed/ui/u_47_expr_hit.png": "9f4b23645f9dd6216aa1c2ce8c6816bc310da873443aa3b2c471321deaaee0c5",
+    "assets/characters/u_47/processed/ui/u_47_expr_serious.png": "9dd5dd72cba7907611295b352124feaf9f063d486fe4330bff222732620b8877",
+    "assets/characters/u_47/processed/ui/u_47_illust_full_alpha.png": "8dca71896e8b3c91780236f03b1d20727de7c69f242610155f2d2a50b680316c",
+    "assets/characters/u_47/processed/ui/u_47_illust_half_alpha.png": "69a27ada8aeec239363cbfbd10e41ecd57945c655e3f287416f952b92b8bf058",
+    "assets/characters/u_47/processed/ui/u_47_illust_skill_cutin_alpha.png": "8ac2bd185129ef675182b07710a5f3f9fadc167187b90a3c594294178752edaa",
+    "assets/characters/u_47/processed/ui/u_47_ui_chibi_head.png": "d63df54063f04d95bd103fe2f45714650957fcacf279dde377a845acd355d6ac",
+    "assets/characters/u_47/processed/ui/u_47_ui_class_submarine.png": "b834e6fc1397e54f458813e242f98c086a7ed6c2f187397c92c598e1f0a70bb6",
+    "assets/characters/u_47/processed/ui/u_47_ui_portrait.png": "39b233aa20bc7e3c509cec80e37e868cb946a9d04aaa2ba8fe0d691fb85b056f",
+    "assets/characters/u_47/processed/ui/u_47_ui_portrait_small.png": "4ec69738bfd95b42681d30b15481243fd0bbea8060ae886aaf692f1b31c2bce2",
+    "assets/characters/u_47/processed/ui/u_47_ui_skill_torpedo_ambush.png": "bfed77dbb07c9347807dfa9143d3703385499163441aa0efd7633241ed7111f2",
+    "assets/characters/u_47/processed/vfx/u_47_vfx_bubble_trail.png": "3eec988729f6f727c38859bd9cd265e6f2dcd201a0330ed1809331bd1a0b0678",
+    "assets/characters/u_47/processed/vfx/u_47_vfx_dive_ripple.png": "4c2c249b9a1945d28a6757668158f28fa70c94f9a6955d8bc26c32f170474791",
+    "assets/characters/u_47/processed/vfx/u_47_vfx_periscope_glint.png": "f7fc446ab832e281b0c4a8916fc5648e649b09496cbcff9a68390d525c64b881",
+    "assets/characters/u_47/processed/vfx/u_47_vfx_sonar_pulse.png": "50da549de27b422e09e158c64428603338c926d5dc1790b4feba1e48b239f48a",
+    "assets/characters/u_47/processed/vfx/u_47_vfx_torpedo_launch_flash.png": "1837dd917896d243dad6152d9fdc2b284055c6b3da9f7cb86fd6016cbcd54b36",
+    "assets/characters/u_47/processed/vfx/u_47_vfx_torpedo_trail.png": "523ebb8366ae30ff3ab7251d06d4293dcdab10138324e30e655af9e499c90909",
+    "assets/characters/u_47/processed/vfx/u_47_vfx_underwater_shadow.png": "4ebe4aff36fc00e8c1a6609c1df1f599065f48137290fd435a61e2342dd4c00b",
+    "assets/characters/u_47/processed/vfx/u_47_vfx_wake_subtle.png": "0a85b0cd3204d069a66561ee6d73e3041ca25f6fbcc9c5eab6ec5daf02205e3e",
+    "assets/characters/u_47/ui/u_47_portrait_20261001_unframed_v1.png": "2fb97fe5ebaa0e10c6609fcdd75f7b8d1374d882e4da21cb7dcf56cd0d8a82c4",
+    "assets/characters/u_47/ui/u_47_ui_sheet.png": "faf9ca90930119755fa5b25cc75c5ff628f0458b866aa860102745ba7b561396",
+    "assets/characters/u_47/vfx/u_47_vfx_reference_sheet.png": "a2f74a4608759a658bedc9c5a342f0f601968c2acdbb27f8d76c14144aa7d07a"
+  },
+  "assets": {
+    "assets/characters/u_47/processed/anim/u_47_anim_attack_frame_01.png": {
+      "sha256": "4302cd456675cbd41d7893162d7f8fdd98f19974bb7a3e4736a75534d0a395e8",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 286,
+        "height": 186,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 35198,
+        "visible_pixel_count": 17998,
+        "transparent_canvas_ratio": 0.6616662906985488,
+        "visible_canvas_ratio": 0.33833370930145124,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/u_47/processed/anim/u_47_anim_attack_frame_02.png": {
+      "sha256": "74c3b7eaf3d1d2dada15cb5b9e95ddbb4be0a967dd03e067bb180bcc4426d8eb",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 286,
+        "height": 186,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 36890,
+        "visible_pixel_count": 16306,
+        "transparent_canvas_ratio": 0.6934731934731935,
+        "visible_canvas_ratio": 0.30652680652680653,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/u_47/processed/anim/u_47_anim_attack_frame_03.png": {
+      "sha256": "fff9630f9fc55c88897c11f455db0efc78446c5865847402595cd73c4bb15a1d",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 286,
+        "height": 186,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 38365,
+        "visible_pixel_count": 14831,
+        "transparent_canvas_ratio": 0.7212008421685842,
+        "visible_canvas_ratio": 0.2787991578314159,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/u_47/processed/anim/u_47_anim_attack_frame_04.png": {
+      "sha256": "808bfd09416ce5f09ca7e9decf54051c8c7d2651cc3815d230c93b147e55cf74",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 286,
+        "height": 186,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 36697,
+        "visible_pixel_count": 16499,
+        "transparent_canvas_ratio": 0.6898451011354237,
+        "visible_canvas_ratio": 0.3101548988645763,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/u_47/processed/anim/u_47_anim_attack_keyframe.png": {
+      "sha256": "4302cd456675cbd41d7893162d7f8fdd98f19974bb7a3e4736a75534d0a395e8",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 286,
+        "height": 186,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 35198,
+        "visible_pixel_count": 17998,
+        "transparent_canvas_ratio": 0.6616662906985488,
+        "visible_canvas_ratio": 0.33833370930145124,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/u_47/processed/anim/u_47_anim_firepower_frame_01.png": {
+      "sha256": "80519e5c5636b96ac28f2c0a9a84281b79f72b68f1c0b8722bd0530ea9d6bd9d",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 310,
+        "height": 218,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 52814,
+        "visible_pixel_count": 14766,
+        "transparent_canvas_ratio": 0.7815034033737792,
+        "visible_canvas_ratio": 0.21849659662622078,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/u_47/processed/anim/u_47_anim_firepower_frame_02.png": {
+      "sha256": "8030dfaaa4ef3a8c3d05e4e4c55b1ea14dacc3cecd81a92197b772b7d4d24f74",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 310,
+        "height": 218,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 54216,
+        "visible_pixel_count": 13364,
+        "transparent_canvas_ratio": 0.8022491861497485,
+        "visible_canvas_ratio": 0.19775081385025156,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/u_47/processed/anim/u_47_anim_firepower_frame_03.png": {
+      "sha256": "55e13ff2d82d30d8e3eb95b42b6750567a0e4047aee9ae5e624a4697c513cd06",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 310,
+        "height": 218,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 47799,
+        "visible_pixel_count": 19781,
+        "transparent_canvas_ratio": 0.7072950577093815,
+        "visible_canvas_ratio": 0.29270494229061855,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/u_47/processed/anim/u_47_anim_firepower_frame_04.png": {
+      "sha256": "5a38d5eb56752e47e7e15ac95892fd436af89f293a74647e0c6e5dfb81da0c29",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 310,
+        "height": 218,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 54575,
+        "visible_pixel_count": 13005,
+        "transparent_canvas_ratio": 0.8075614087007991,
+        "visible_canvas_ratio": 0.19243859129920093,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/u_47/processed/anim/u_47_anim_firepower_keyframe.png": {
+      "sha256": "80519e5c5636b96ac28f2c0a9a84281b79f72b68f1c0b8722bd0530ea9d6bd9d",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 310,
+        "height": 218,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 52814,
+        "visible_pixel_count": 14766,
+        "transparent_canvas_ratio": 0.7815034033737792,
+        "visible_canvas_ratio": 0.21849659662622078,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/u_47/processed/anim/u_47_anim_hit_frame_01.png": {
+      "sha256": "d16c713a37d5919128643930dda9f8ae1b32c8dd418f9d6dc516c50fb8021c5d",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 254,
+        "height": 172,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 28084,
+        "visible_pixel_count": 15604,
+        "transparent_canvas_ratio": 0.6428309833363853,
+        "visible_canvas_ratio": 0.3571690166636147,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/u_47/processed/anim/u_47_anim_hit_frame_02.png": {
+      "sha256": "2fbd1bc63bd4bb78242b8180945cf0d44abdea5348a1778dab94cbe0f65bdb91",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 254,
+        "height": 172,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 29125,
+        "visible_pixel_count": 14563,
+        "transparent_canvas_ratio": 0.6666590368064457,
+        "visible_canvas_ratio": 0.3333409631935543,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/u_47/processed/anim/u_47_anim_hit_frame_03.png": {
+      "sha256": "c97438cf33762c8b7a4fa7cad98228e92b171dd561b9588af892ee0dd1ba3504",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 254,
+        "height": 172,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 30564,
+        "visible_pixel_count": 13124,
+        "transparent_canvas_ratio": 0.6995971433803333,
+        "visible_canvas_ratio": 0.3004028566196667,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/u_47/processed/anim/u_47_anim_hit_frame_04.png": {
+      "sha256": "769bf9e0fc1b9c16df9fe5a8ec23d07766bcbd8d20bb9bd4521cfb4116ce2b0b",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 254,
+        "height": 172,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 29856,
+        "visible_pixel_count": 13832,
+        "transparent_canvas_ratio": 0.6833913202710127,
+        "visible_canvas_ratio": 0.3166086797289874,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/u_47/processed/anim/u_47_anim_hit_keyframe.png": {
+      "sha256": "d16c713a37d5919128643930dda9f8ae1b32c8dd418f9d6dc516c50fb8021c5d",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 254,
+        "height": 172,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 28084,
+        "visible_pixel_count": 15604,
+        "transparent_canvas_ratio": 0.6428309833363853,
+        "visible_canvas_ratio": 0.3571690166636147,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/u_47/processed/anim/u_47_anim_idle_frame_01.png": {
+      "sha256": "2d2d4ed1e711323fd969f801bfc18096ef59979e8b57dd3bd9a2c60ce52ace13",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 212,
+        "height": 220,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 34398,
+        "visible_pixel_count": 12242,
+        "transparent_canvas_ratio": 0.7375214408233276,
+        "visible_canvas_ratio": 0.2624785591766724,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/u_47/processed/anim/u_47_anim_idle_frame_02.png": {
+      "sha256": "39b2e0f0cae4b90b13bd03205da15389b330728563d35a09455ea23dce5f71d9",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 212,
+        "height": 220,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 34040,
+        "visible_pixel_count": 12600,
+        "transparent_canvas_ratio": 0.7298456260720412,
+        "visible_canvas_ratio": 0.2701543739279588,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/u_47/processed/anim/u_47_anim_idle_frame_03.png": {
+      "sha256": "440dd41d5c093d9c3a20994b2e7d57454537aa5ce71fc968a61528cb026803e9",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 212,
+        "height": 220,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 33739,
+        "visible_pixel_count": 12901,
+        "transparent_canvas_ratio": 0.7233919382504288,
+        "visible_canvas_ratio": 0.2766080617495712,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/u_47/processed/anim/u_47_anim_idle_frame_04.png": {
+      "sha256": "886d1e9ae3c004d68f8694e56f3b689392d85a35dc3a769fd288ba51e797df36",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 212,
+        "height": 220,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 34446,
+        "visible_pixel_count": 12194,
+        "transparent_canvas_ratio": 0.7385506003430532,
+        "visible_canvas_ratio": 0.2614493996569468,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/u_47/processed/anim/u_47_anim_idle_keyframe.png": {
+      "sha256": "2d2d4ed1e711323fd969f801bfc18096ef59979e8b57dd3bd9a2c60ce52ace13",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 212,
+        "height": 220,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 34398,
+        "visible_pixel_count": 12242,
+        "transparent_canvas_ratio": 0.7375214408233276,
+        "visible_canvas_ratio": 0.2624785591766724,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/u_47/processed/anim/u_47_anim_move_frame_01.png": {
+      "sha256": "b80562bf9358f344a04ba38cedab036e869282e12f28b1a5d71c6737e6bd2f33",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 242,
+        "height": 204,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 31343,
+        "visible_pixel_count": 18025,
+        "transparent_canvas_ratio": 0.6348849457138227,
+        "visible_canvas_ratio": 0.3651150542861773,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/u_47/processed/anim/u_47_anim_move_frame_02.png": {
+      "sha256": "f9c665b900281710dc8a437fcb09eb7fe751e18bbfdec2a684d142f4376dab3f",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 242,
+        "height": 204,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 32738,
+        "visible_pixel_count": 16630,
+        "transparent_canvas_ratio": 0.6631421163506726,
+        "visible_canvas_ratio": 0.3368578836493275,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/u_47/processed/anim/u_47_anim_move_frame_03.png": {
+      "sha256": "cb1491a14445baf42add6e4c938ff5e17bb3c2c34600940bccc4b871d8406a6f",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 242,
+        "height": 204,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 34292,
+        "visible_pixel_count": 15076,
+        "transparent_canvas_ratio": 0.6946199967590342,
+        "visible_canvas_ratio": 0.3053800032409658,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/u_47/processed/anim/u_47_anim_move_frame_04.png": {
+      "sha256": "e9231ecc4a3c863bcc56d50408d53a09cee09b6f0af1613e83d9f943597ec3fe",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 242,
+        "height": 204,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 34196,
+        "visible_pixel_count": 15172,
+        "transparent_canvas_ratio": 0.6926754172743478,
+        "visible_canvas_ratio": 0.3073245827256522,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/u_47/processed/anim/u_47_anim_move_keyframe.png": {
+      "sha256": "b80562bf9358f344a04ba38cedab036e869282e12f28b1a5d71c6737e6bd2f33",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 242,
+        "height": 204,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 31343,
+        "visible_pixel_count": 18025,
+        "transparent_canvas_ratio": 0.6348849457138227,
+        "visible_canvas_ratio": 0.3651150542861773,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/u_47/processed/battle/u_47_battle_body_r.png": {
+      "sha256": "2d2d4ed1e711323fd969f801bfc18096ef59979e8b57dd3bd9a2c60ce52ace13",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 212,
+        "height": 220,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 34398,
+        "visible_pixel_count": 12242,
+        "transparent_canvas_ratio": 0.7375214408233276,
+        "visible_canvas_ratio": 0.2624785591766724,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/u_47/processed/battle/u_47_battle_dive_plane.png": {
+      "sha256": "63da36c66a68a6d5120f64bdf2e5cac0e7eb6fcc7ae0ebd9aec3add371ff0254",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 302,
+        "height": 226,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 47216,
+        "visible_pixel_count": 21036,
+        "transparent_canvas_ratio": 0.6917892515970228,
+        "visible_canvas_ratio": 0.3082107484029772,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          90,
+          139,
+          350,
+          302
+        ],
+        "final_crop_box": [
+          72,
+          121,
+          368,
+          320
+        ],
+        "component_area": 21036,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 18,
+          "right": 24,
+          "bottom": 45
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/u_47/processed/battle/u_47_battle_periscope_node.png": {
+      "sha256": "33597b2ba68c8eb604f54b71c4598e626b8661150e777d99c0f2614c1bb1cffb",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 174,
+        "height": 318,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 37979,
+        "visible_pixel_count": 17353,
+        "transparent_canvas_ratio": 0.6863840092532351,
+        "visible_canvas_ratio": 0.313615990746765,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          150,
+          108,
+          282,
+          353
+        ],
+        "final_crop_box": [
+          132,
+          90,
+          300,
+          371
+        ],
+        "component_area": 17353,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 19,
+          "right": 24,
+          "bottom": 54
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/u_47/processed/battle/u_47_battle_rig_base.png": {
+      "sha256": "c31786651768a0c86f34104de79ec108fcc6b698322fa00a1110abcfa9cc3308",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 296,
+        "height": 406,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 89914,
+        "visible_pixel_count": 30262,
+        "transparent_canvas_ratio": 0.7481859938756491,
+        "visible_canvas_ratio": 0.25181400612435095,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          93,
+          90,
+          352,
+          367
+        ],
+        "final_crop_box": [
+          75,
+          72,
+          370,
+          385
+        ],
+        "component_area": 30262,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 19,
+          "right": 19,
+          "bottom": 110
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/u_47/processed/battle/u_47_battle_sonar_node.png": {
+      "sha256": "b51134b75243f68aaf1fc0d574054cb743894101a00b800199c16b525deb6c62",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 276,
+        "height": 352,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 73693,
+        "visible_pixel_count": 23459,
+        "transparent_canvas_ratio": 0.7585330204216074,
+        "visible_canvas_ratio": 0.2414669795783926,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          97,
+          70,
+          324,
+          313
+        ],
+        "final_crop_box": [
+          79,
+          52,
+          342,
+          331
+        ],
+        "component_area": 23459,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 19,
+          "right": 31,
+          "bottom": 90
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/u_47/processed/battle/u_47_battle_submerged_shadow.png": {
+      "sha256": "f62989d33b4e44b87c0812939d31a3aaa7279a6ec7fa917905953a27492a724f",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 346,
+        "height": 272,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 71701,
+        "visible_pixel_count": 22411,
+        "transparent_canvas_ratio": 0.7618688371302278,
+        "visible_canvas_ratio": 0.23813116286977218,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          76,
+          129,
+          362,
+          319
+        ],
+        "final_crop_box": [
+          58,
+          111,
+          380,
+          337
+        ],
+        "component_area": 22411,
+        "output_edge_margins": {
+          "left": 42,
+          "top": 18,
+          "right": 18,
+          "bottom": 54
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/u_47/processed/battle/u_47_battle_torpedo_tube_01.png": {
+      "sha256": "cf6cf5154aa68951fdd8757c549763c7c0194e0f2d317a2d7d2fe5672f73670c",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 278,
+        "height": 194,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 28998,
+        "visible_pixel_count": 24934,
+        "transparent_canvas_ratio": 0.5376770748349774,
+        "visible_canvas_ratio": 0.4623229251650226,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          110,
+          198,
+          334,
+          351
+        ],
+        "final_crop_box": [
+          92,
+          180,
+          352,
+          369
+        ],
+        "component_area": 24934,
+        "output_edge_margins": {
+          "left": 36,
+          "top": 22,
+          "right": 18,
+          "bottom": 19
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/u_47/processed/battle/u_47_battle_wake_origin_marker.png": {
+      "sha256": "0a7e4f83b1f76795cdbeeba41b42c1557a06d604b86116deabcb69f80d8c2453",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 526,
+        "height": 506,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 261852,
+        "visible_pixel_count": 4304,
+        "transparent_canvas_ratio": 0.983829032597424,
+        "visible_canvas_ratio": 0.016170967402575932,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          0,
+          0,
+          445,
+          444
+        ],
+        "final_crop_box": [
+          0,
+          0,
+          445,
+          444
+        ],
+        "component_area": 4304,
+        "output_edge_margins": {
+          "left": 63,
+          "top": 19,
+          "right": 18,
+          "bottom": 43
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/u_47/processed/ui/u_47_expr_default.png": {
+      "sha256": "9587dc5d6b28114c26b7cfead3e38063d503c8d8f28e54ffd6519b3e27511e42",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 376,
+        "height": 450,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 81259,
+        "visible_pixel_count": 87941,
+        "transparent_canvas_ratio": 0.48025413711583925,
+        "visible_canvas_ratio": 0.5197458628841608,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          63,
+          34,
+          394,
+          408
+        ],
+        "final_crop_box": [
+          45,
+          16,
+          412,
+          426
+        ],
+        "output_edge_margins": {
+          "left": 27,
+          "top": 18,
+          "right": 18,
+          "bottom": 58
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/u_47/processed/ui/u_47_expr_hit.png": {
+      "sha256": "9f4b23645f9dd6216aa1c2ce8c6816bc310da873443aa3b2c471321deaaee0c5",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 476,
+        "height": 502,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 151821,
+        "visible_pixel_count": 87131,
+        "transparent_canvas_ratio": 0.6353619136897787,
+        "visible_canvas_ratio": 0.3646380863102213,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          75,
+          0,
+          442,
+          401
+        ],
+        "final_crop_box": [
+          57,
+          0,
+          443,
+          419
+        ],
+        "output_edge_margins": {
+          "left": 91,
+          "top": 18,
+          "right": 18,
+          "bottom": 83
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/u_47/processed/ui/u_47_expr_serious.png": {
+      "sha256": "9dd5dd72cba7907611295b352124feaf9f063d486fe4330bff222732620b8877",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 486,
+        "height": 500,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 156585,
+        "visible_pixel_count": 86415,
+        "transparent_canvas_ratio": 0.6443827160493827,
+        "visible_canvas_ratio": 0.35561728395061726,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          67,
+          0,
+          441,
+          400
+        ],
+        "final_crop_box": [
+          49,
+          0,
+          443,
+          418
+        ],
+        "output_edge_margins": {
+          "left": 94,
+          "top": 18,
+          "right": 18,
+          "bottom": 82
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/u_47/processed/ui/u_47_illust_full_alpha.png": {
+      "sha256": "8dca71896e8b3c91780236f03b1d20727de7c69f242610155f2d2a50b680316c",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 872,
+        "height": 1492,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 807977,
+        "visible_pixel_count": 493047,
+        "transparent_canvas_ratio": 0.6210315874265194,
+        "visible_canvas_ratio": 0.3789684125734806,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          112,
+          101,
+          921,
+          1461
+        ],
+        "final_crop_box": [
+          100,
+          89,
+          933,
+          1473
+        ],
+        "output_edge_margins": {
+          "left": 12,
+          "top": 120,
+          "right": 51,
+          "bottom": 12
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/u_47/processed/ui/u_47_illust_half_alpha.png": {
+      "sha256": "69a27ada8aeec239363cbfbd10e41ecd57945c655e3f287416f952b92b8bf058",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 872,
+        "height": 1186,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 585731,
+        "visible_pixel_count": 448461,
+        "transparent_canvas_ratio": 0.5663658198864427,
+        "visible_canvas_ratio": 0.43363418011355725,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          16,
+          16,
+          825,
+          995
+        ],
+        "final_crop_box": [
+          0,
+          0,
+          841,
+          1011
+        ],
+        "output_edge_margins": {
+          "left": 16,
+          "top": 16,
+          "right": 47,
+          "bottom": 191
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/u_47/processed/ui/u_47_illust_skill_cutin_alpha.png": {
+      "sha256": "8ac2bd185129ef675182b07710a5f3f9fadc167187b90a3c594294178752edaa",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 884,
+        "height": 1004,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 546808,
+        "visible_pixel_count": 340728,
+        "transparent_canvas_ratio": 0.6160966991761461,
+        "visible_canvas_ratio": 0.38390330082385393,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          478,
+          17,
+          1286,
+          805
+        ],
+        "final_crop_box": [
+          462,
+          1,
+          1302,
+          821
+        ],
+        "output_edge_margins": {
+          "left": 17,
+          "top": 17,
+          "right": 59,
+          "bottom": 199
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/u_47/processed/ui/u_47_ui_chibi_head.png": {
+      "sha256": "d63df54063f04d95bd103fe2f45714650957fcacf279dde377a845acd355d6ac",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 310,
+        "height": 290,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 41973,
+        "visible_pixel_count": 47927,
+        "transparent_canvas_ratio": 0.4668854282536151,
+        "visible_canvas_ratio": 0.5331145717463849,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          78,
+          76,
+          350,
+          317
+        ],
+        "final_crop_box": [
+          60,
+          58,
+          368,
+          335
+        ],
+        "output_edge_margins": {
+          "left": 20,
+          "top": 31,
+          "right": 18,
+          "bottom": 18
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/u_47/processed/ui/u_47_ui_class_submarine.png": {
+      "sha256": "b834e6fc1397e54f458813e242f98c086a7ed6c2f187397c92c598e1f0a70bb6",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 466,
+        "height": 320,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 120711,
+        "visible_pixel_count": 28409,
+        "transparent_canvas_ratio": 0.8094890021459228,
+        "visible_canvas_ratio": 0.19051099785407724,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          27,
+          90,
+          421,
+          281
+        ],
+        "final_crop_box": [
+          9,
+          72,
+          439,
+          299
+        ],
+        "output_edge_margins": {
+          "left": 53,
+          "top": 19,
+          "right": 19,
+          "bottom": 110
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/u_47/processed/ui/u_47_ui_portrait.png": {
+      "sha256": "39b233aa20bc7e3c509cec80e37e868cb946a9d04aaa2ba8fe0d691fb85b056f",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 512,
+        "height": 512,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 169929,
+        "visible_pixel_count": 92215,
+        "transparent_canvas_ratio": 0.6482276916503906,
+        "visible_canvas_ratio": 0.3517723083496094,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          25,
+          19,
+          1200,
+          1224
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              25,
+              19,
+              1200,
+              1224
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 64,
+          "top": 69,
+          "right": 73,
+          "bottom": 56
+        },
+        "cleanup_tags": []
+      },
+      "review": {
+        "verdict": "pass",
+        "reviewer": "Codex visual inspection",
+        "observation": "Black bob with blue tips, gray eyes and original black round headset/antenna retained; dark high collar with no frame. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+      }
+    },
+    "assets/characters/u_47/processed/ui/u_47_ui_portrait_small.png": {
+      "sha256": "4ec69738bfd95b42681d30b15481243fd0bbea8060ae886aaf692f1b31c2bce2",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 128,
+        "height": 128,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 10205,
+        "visible_pixel_count": 6179,
+        "transparent_canvas_ratio": 0.62286376953125,
+        "visible_canvas_ratio": 0.37713623046875,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          25,
+          19,
+          1200,
+          1224
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              25,
+              19,
+              1200,
+              1224
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 25,
+          "top": 15,
+          "right": 17,
+          "bottom": 12
+        },
+        "cleanup_tags": []
+      },
+      "review": {
+        "verdict": "pass",
+        "reviewer": "Codex visual inspection",
+        "observation": "Black bob with blue tips, gray eyes and original black round headset/antenna retained; dark high collar with no frame. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+      }
+    },
+    "assets/characters/u_47/processed/ui/u_47_ui_skill_torpedo_ambush.png": {
+      "sha256": "bfed77dbb07c9347807dfa9143d3703385499163441aa0efd7633241ed7111f2",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 486,
+        "height": 466,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 217004,
+        "visible_pixel_count": 9472,
+        "transparent_canvas_ratio": 0.9581765838322824,
+        "visible_canvas_ratio": 0.04182341616771755,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          0,
+          0,
+          442,
+          374
+        ],
+        "final_crop_box": [
+          0,
+          0,
+          443,
+          392
+        ],
+        "output_edge_margins": {
+          "left": 26,
+          "top": 19,
+          "right": 18,
+          "bottom": 73
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/u_47/processed/vfx/u_47_vfx_bubble_trail.png": {
+      "sha256": "3eec988729f6f727c38859bd9cd265e6f2dcd201a0330ed1809331bd1a0b0678",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 354,
+        "height": 188,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 57741,
+        "visible_pixel_count": 8811,
+        "transparent_canvas_ratio": 0.8676072845293905,
+        "visible_canvas_ratio": 0.13239271547060943,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          35,
+          195,
+          283,
+          321
+        ],
+        "final_crop_box": [
+          17,
+          177,
+          301,
+          339
+        ],
+        "component_area": 7986,
+        "output_edge_margins": {
+          "left": 81,
+          "top": 18,
+          "right": 19,
+          "bottom": 42
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/u_47/processed/vfx/u_47_vfx_dive_ripple.png": {
+      "sha256": "4c2c249b9a1945d28a6757668158f28fa70c94f9a6955d8bc26c32f170474791",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 110,
+        "height": 104,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 10291,
+        "visible_pixel_count": 1149,
+        "transparent_canvas_ratio": 0.8995629370629371,
+        "visible_canvas_ratio": 0.10043706293706293,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          124,
+          202,
+          152,
+          230
+        ],
+        "final_crop_box": [
+          106,
+          184,
+          170,
+          248
+        ],
+        "component_area": 537,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 27,
+          "bottom": 21
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/u_47/processed/vfx/u_47_vfx_periscope_glint.png": {
+      "sha256": "f7fc446ab832e281b0c4a8916fc5648e649b09496cbcff9a68390d525c64b881",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 274,
+        "height": 160,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 28356,
+        "visible_pixel_count": 15484,
+        "transparent_canvas_ratio": 0.6468065693430657,
+        "visible_canvas_ratio": 0.3531934306569343,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          27,
+          184,
+          262,
+          269
+        ],
+        "final_crop_box": [
+          9,
+          166,
+          280,
+          287
+        ],
+        "component_area": 15383,
+        "output_edge_margins": {
+          "left": 21,
+          "top": 19,
+          "right": 18,
+          "bottom": 38
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/u_47/processed/vfx/u_47_vfx_sonar_pulse.png": {
+      "sha256": "50da549de27b422e09e158c64428603338c926d5dc1790b4feba1e48b239f48a",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 236,
+        "height": 242,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 43353,
+        "visible_pixel_count": 13759,
+        "transparent_canvas_ratio": 0.759087407199888,
+        "visible_canvas_ratio": 0.24091259280011207,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          51,
+          172,
+          242,
+          339
+        ],
+        "final_crop_box": [
+          33,
+          154,
+          260,
+          357
+        ],
+        "component_area": 12910,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 22,
+          "bottom": 41
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/u_47/processed/vfx/u_47_vfx_torpedo_launch_flash.png": {
+      "sha256": "1837dd917896d243dad6152d9fdc2b284055c6b3da9f7cb86fd6016cbcd54b36",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 286,
+        "height": 226,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 37143,
+        "visible_pixel_count": 27493,
+        "transparent_canvas_ratio": 0.5746488025249087,
+        "visible_canvas_ratio": 0.42535119747509126,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          23,
+          193,
+          255,
+          343
+        ],
+        "final_crop_box": [
+          5,
+          175,
+          273,
+          361
+        ],
+        "component_area": 26758,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 19,
+          "bottom": 31
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/u_47/processed/vfx/u_47_vfx_torpedo_trail.png": {
+      "sha256": "523ebb8366ae30ff3ab7251d06d4293dcdab10138324e30e655af9e499c90909",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 272,
+        "height": 296,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 64154,
+        "visible_pixel_count": 16358,
+        "transparent_canvas_ratio": 0.7968253179650239,
+        "visible_canvas_ratio": 0.20317468203497616,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          29,
+          156,
+          240,
+          345
+        ],
+        "final_crop_box": [
+          11,
+          138,
+          258,
+          363
+        ],
+        "component_area": 15394,
+        "output_edge_margins": {
+          "left": 20,
+          "top": 18,
+          "right": 18,
+          "bottom": 89
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/u_47/processed/vfx/u_47_vfx_underwater_shadow.png": {
+      "sha256": "4ebe4aff36fc00e8c1a6609c1df1f599065f48137290fd435a61e2342dd4c00b",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 296,
+        "height": 212,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 41885,
+        "visible_pixel_count": 20867,
+        "transparent_canvas_ratio": 0.6674687659357471,
+        "visible_canvas_ratio": 0.33253123406425295,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          38,
+          130,
+          275,
+          272
+        ],
+        "final_crop_box": [
+          20,
+          112,
+          293,
+          290
+        ],
+        "component_area": 19954,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 19,
+          "right": 28,
+          "bottom": 29
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/u_47/processed/vfx/u_47_vfx_wake_subtle.png": {
+      "sha256": "0a85b0cd3204d069a66561ee6d73e3041ca25f6fbcc9c5eab6ec5daf02205e3e",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 184,
+        "height": 164,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 22675,
+        "visible_pixel_count": 7501,
+        "transparent_canvas_ratio": 0.7514249734888653,
+        "visible_canvas_ratio": 0.24857502651113467,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          79,
+          207,
+          195,
+          305
+        ],
+        "final_crop_box": [
+          61,
+          189,
+          213,
+          323
+        ],
+        "component_area": 4581,
+        "output_edge_margins": {
+          "left": 22,
+          "top": 18,
+          "right": 19,
+          "bottom": 30
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    }
+  }
+}

@@ -558,176 +558,6 @@
       ]
     },
     {
-      "file": "assets/characters/hai_shih/processed/ui/hai_shih_ui_portrait.png",
-      "size": [
-        370,
-        507
-      ],
-      "mode": "RGBA",
-      "source_box": [
-        14,
-        180,
-        368,
-        642
-      ],
-      "source_crop_qa": {
-        "original_box": [
-          45,
-          45,
-          268,
-          582
-        ],
-        "final_box": [
-          14,
-          180,
-          368,
-          642
-        ],
-        "expanded": {
-          "left": 31,
-          "top": -135,
-          "right": 100,
-          "bottom": 60
-        },
-        "auto_crop_method": "connected_components_intersecting_initial_box",
-        "component_count": 4,
-        "selected_component_count": 1,
-        "selected_component_samples": [
-          {
-            "bbox": [
-              30,
-              196,
-              352,
-              626
-            ],
-            "pixel_count": 107798,
-            "overlap_pixels": 74340
-          }
-        ],
-        "source_edge_safe_margin": 16,
-        "final_edge_margins": {
-          "left": 16,
-          "top": 16,
-          "right": 16,
-          "bottom": 16
-        },
-        "edge_warnings": []
-      },
-      "output_layout": {
-        "content_bbox": [
-          0,
-          0,
-          322,
-          430
-        ],
-        "centroid_before_padding": [
-          160.75,
-          229.26
-        ],
-        "padding": {
-          "left": 24,
-          "top": 24,
-          "right": 24,
-          "bottom": 53
-        },
-        "centroid_offset_after_padding": {
-          "x": -0.25,
-          "y": -0.24
-        }
-      },
-      "source": "assets/characters/hai_shih/ui/hai_shih_ui_sheet.png",
-      "tags": [
-        "ui",
-        "portrait"
-      ]
-    },
-    {
-      "file": "assets/characters/hai_shih/processed/ui/hai_shih_ui_portrait_small.png",
-      "size": [
-        351,
-        328
-      ],
-      "mode": "RGBA",
-      "source_box": [
-        365,
-        291,
-        668,
-        601
-      ],
-      "source_crop_qa": {
-        "original_box": [
-          358,
-          45,
-          581,
-          582
-        ],
-        "final_box": [
-          365,
-          291,
-          668,
-          601
-        ],
-        "expanded": {
-          "left": -7,
-          "top": -246,
-          "right": 87,
-          "bottom": 19
-        },
-        "auto_crop_method": "connected_components_intersecting_initial_box",
-        "component_count": 7,
-        "selected_component_count": 1,
-        "selected_component_samples": [
-          {
-            "bbox": [
-              381,
-              307,
-              652,
-              585
-            ],
-            "pixel_count": 59554,
-            "overlap_pixels": 46887
-          }
-        ],
-        "source_edge_safe_margin": 16,
-        "final_edge_margins": {
-          "left": 16,
-          "top": 16,
-          "right": 0,
-          "bottom": 16
-        },
-        "edge_warnings": [
-          "right"
-        ]
-      },
-      "output_layout": {
-        "content_bbox": [
-          0,
-          0,
-          287,
-          278
-        ],
-        "centroid_before_padding": [
-          135.3,
-          138.22
-        ],
-        "padding": {
-          "left": 40,
-          "top": 26,
-          "right": 24,
-          "bottom": 24
-        },
-        "centroid_offset_after_padding": {
-          "x": -0.2,
-          "y": 0.22
-        }
-      },
-      "source": "assets/characters/hai_shih/ui/hai_shih_ui_sheet.png",
-      "tags": [
-        "ui",
-        "portrait_small"
-      ]
-    },
-    {
       "file": "assets/characters/hai_shih/processed/ui/hai_shih_ui_chibi_head.png",
       "size": [
         332,
@@ -12691,11 +12521,229 @@
         "firepower",
         "frame_04"
       ]
+    },
+    {
+      "role": "ui_portrait",
+      "path": "assets/characters/hai_shih/processed/ui/hai_shih_ui_portrait.png",
+      "file": "assets/characters/hai_shih/processed/ui/hai_shih_ui_portrait.png",
+      "source": "assets/characters/hai_shih/ui/hai_shih_portrait_20261001_unframed_v1.png",
+      "sha256": "81af9e28833ddab2395ae6a032d800d62bb8489639f9d82c6052f62b1d9eaf6b",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA",
+      "alpha_bbox": [
+        92,
+        64,
+        453,
+        449
+      ],
+      "alpha_pixel_count": 85821,
+      "edge_margins": {
+        "left": 92,
+        "top": 64,
+        "right": 59,
+        "bottom": 63
+      },
+      "output_padding": {
+        "left": 92,
+        "top": 64,
+        "right": 59,
+        "bottom": 63
+      },
+      "alpha_centroid": [
+        266.12132679380954,
+        269.1677173601953
+      ],
+      "centroid_offset_normalized": {
+        "x": 0.019768216394159266,
+        "y": 0.02571819796913144
+      },
+      "component_tags": [
+        "ui",
+        "portrait_revision"
+      ],
+      "crop": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          53,
+          1218,
+          1227
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              53,
+              1218,
+              1227
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 92,
+          "top": 64,
+          "right": 59,
+          "bottom": 63
+        },
+        "cleanup_tags": []
+      },
+      "source_crop_qa": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          53,
+          1218,
+          1227
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              53,
+              1218,
+              1227
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 92,
+          "top": 64,
+          "right": 59,
+          "bottom": 63
+        },
+        "cleanup_tags": []
+      }
+    },
+    {
+      "role": "ui_portrait_small",
+      "path": "assets/characters/hai_shih/processed/ui/hai_shih_ui_portrait_small.png",
+      "file": "assets/characters/hai_shih/processed/ui/hai_shih_ui_portrait_small.png",
+      "source": "assets/characters/hai_shih/ui/hai_shih_portrait_20261001_unframed_v1.png",
+      "sha256": "2b00ce948d3900e29f08deacd8cc2a964c480bf21dcf9254e723063ae133d0a3",
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_bbox": [
+        27,
+        14,
+        113,
+        115
+      ],
+      "alpha_pixel_count": 5817,
+      "edge_margins": {
+        "left": 27,
+        "top": 14,
+        "right": 15,
+        "bottom": 13
+      },
+      "output_padding": {
+        "left": 27,
+        "top": 14,
+        "right": 15,
+        "bottom": 13
+      },
+      "alpha_centroid": [
+        66.532234539998,
+        67.288519251843
+      ],
+      "centroid_offset_normalized": {
+        "x": 0.01978308234373438,
+        "y": 0.02569155665502343
+      },
+      "component_tags": [
+        "ui",
+        "portrait_revision"
+      ],
+      "crop": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          53,
+          1218,
+          1227
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              53,
+              1218,
+              1227
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 27,
+          "top": 14,
+          "right": 15,
+          "bottom": 13
+        },
+        "cleanup_tags": []
+      },
+      "source_crop_qa": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          53,
+          1218,
+          1227
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              53,
+              1218,
+              1227
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 27,
+          "top": 14,
+          "right": 15,
+          "bottom": 13
+        },
+        "cleanup_tags": []
+      }
     }
   ],
   "config": {
     "bind_points": "assets/characters/hai_shih/processed/config/hai_shih_meta_bind_points.json",
     "animation": "assets/characters/hai_shih/processed/config/hai_shih_anim_config.json",
     "vfx": "assets/characters/hai_shih/processed/config/hai_shih_vfx_config.json"
+  },
+  "portrait_revision": {
+    "path": "assets/characters/hai_shih/meta/hai_shih_portrait_revision.json",
+    "sha256": "8286053598eb28ff60e3dbd5b5c6248d1ab45bab991a9973139017646e098443"
   }
 }

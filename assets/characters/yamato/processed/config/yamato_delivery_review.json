@@ -1,0 +1,1813 @@
+{
+  "schema_version": 1,
+  "character_id": "yamato",
+  "scope": "Visual evidence only; technical contract must pass separately. Not runtime acceptance.",
+  "checklist": [
+    "identity_and_inventory",
+    "no_truncation_or_neighbor_fragments",
+    "alpha_edges_and_small_scale_readability",
+    "animation_consistency",
+    "mechanical_binding_and_vfx_semantics"
+  ],
+  "package_sha256": {
+    "assets/characters/yamato/battle/yamato_anim_5x4_master.png": "cb3e9a2a001eaf84f7efe3e932023fe7d507beaee9dc5d08010bd08a43d7571f",
+    "assets/characters/yamato/battle/yamato_battle_asset_grid.png": "850894451b828805b81d4b78b017a8975944c4e33207838e40c87658ca4f50b8",
+    "assets/characters/yamato/concept/yamato_concept_full.png": "cb5b953e70bd48ecb42841162f57dfca31696efa5f9c42ba7de5d4caf7e12092",
+    "assets/characters/yamato/meta/yamato_portrait_revision.json": "03d6285d3888a7dc9c6c2930ac7ae376419f95130b9c19ae182aa944cc5e2a50",
+    "assets/characters/yamato/processed/anim/yamato_anim_attack_frame_01.png": "2c1270a822aa13af6bcdd5ce45c6769bdd7ba3d82195fc863d18963d6828becb",
+    "assets/characters/yamato/processed/anim/yamato_anim_attack_frame_02.png": "2da97bbcdbbca54f1f7ed5ea2c3619bea2fea17b7d15eca10b24de070e4eb518",
+    "assets/characters/yamato/processed/anim/yamato_anim_attack_frame_03.png": "7c88825203be7b516670be535745d82764892a683aef7d82c6271e1b44e06cc3",
+    "assets/characters/yamato/processed/anim/yamato_anim_attack_frame_04.png": "d12f4b79afcc99a97386d2cf058122aaba9f29c84068df9419dedb5c0eded182",
+    "assets/characters/yamato/processed/anim/yamato_anim_attack_keyframe.png": "2c1270a822aa13af6bcdd5ce45c6769bdd7ba3d82195fc863d18963d6828becb",
+    "assets/characters/yamato/processed/anim/yamato_anim_firepower_frame_01.png": "4199fbb6038febaa38a2359bfa180663adf458b0fbfbdb8cbb36d7ffbcbd0f07",
+    "assets/characters/yamato/processed/anim/yamato_anim_firepower_frame_02.png": "3a35c6a994a40e8d07c87c646361aa57ff20e6c86524dd542ffc706203f3a6d0",
+    "assets/characters/yamato/processed/anim/yamato_anim_firepower_frame_03.png": "677bdd41e383edfa9cc2cee241483d3b197ea9dc959e4929bf46d3dffbfc42ce",
+    "assets/characters/yamato/processed/anim/yamato_anim_firepower_frame_04.png": "540a3ecd99d8a249ac3eda8b00c4ce26d4cce2d16c837cb003a6b6c22e4a8972",
+    "assets/characters/yamato/processed/anim/yamato_anim_firepower_keyframe.png": "4199fbb6038febaa38a2359bfa180663adf458b0fbfbdb8cbb36d7ffbcbd0f07",
+    "assets/characters/yamato/processed/anim/yamato_anim_hit_frame_01.png": "7d5120bb1b5ab34e6532b148a973b43a2b0effc8ce347efa258ebe363beb9668",
+    "assets/characters/yamato/processed/anim/yamato_anim_hit_frame_02.png": "07eedecd7f298fba9fff260b4b244f4004cf811856c30b45253d83f88b2ac4d8",
+    "assets/characters/yamato/processed/anim/yamato_anim_hit_frame_03.png": "d6cc8c3fdcb27ece2a20a76fd59be3ac42bf4b2b305140a1b46a20c7f102d943",
+    "assets/characters/yamato/processed/anim/yamato_anim_hit_frame_04.png": "7d78e915e1cbfbd29bfd870164c36af35ec46ef307eeb4776e496aa8a64c4720",
+    "assets/characters/yamato/processed/anim/yamato_anim_hit_keyframe.png": "7d5120bb1b5ab34e6532b148a973b43a2b0effc8ce347efa258ebe363beb9668",
+    "assets/characters/yamato/processed/anim/yamato_anim_idle_frame_01.png": "fbc9dc6fcc386de55e0a85634bc10fe36421fe20f4beb648da4d550e9da47571",
+    "assets/characters/yamato/processed/anim/yamato_anim_idle_frame_02.png": "dcc594fd8bb15a76ccfae312f821fbab13f63de687443d3e49e8f158ce3efc4e",
+    "assets/characters/yamato/processed/anim/yamato_anim_idle_frame_03.png": "9d5f1be0bb2cb08b5c94bf85de3650c1bd1cf915fe269b40f5b65ba85fd5524f",
+    "assets/characters/yamato/processed/anim/yamato_anim_idle_frame_04.png": "01cfd445a6cd2c95a6906c317d506ce9a0c3f751703ccbefa8b1402c5f429dab",
+    "assets/characters/yamato/processed/anim/yamato_anim_idle_keyframe.png": "fbc9dc6fcc386de55e0a85634bc10fe36421fe20f4beb648da4d550e9da47571",
+    "assets/characters/yamato/processed/anim/yamato_anim_move_frame_01.png": "8d69e0dbe3e3b7bf9207034e459be0976264faf7aa6660f84996526693fbf179",
+    "assets/characters/yamato/processed/anim/yamato_anim_move_frame_02.png": "3076100905d935903f410feeed84737bb420ae99c1de7a4181624e97d828a9f6",
+    "assets/characters/yamato/processed/anim/yamato_anim_move_frame_03.png": "e10284f36ad1c609d4806f7c422ab1c04b4606fad2cfe5f0a252da262dda26af",
+    "assets/characters/yamato/processed/anim/yamato_anim_move_frame_04.png": "5ffc162f5e159cf5c148330b0fefb4ca2b971628d68563a65d9d14a559293ce9",
+    "assets/characters/yamato/processed/anim/yamato_anim_move_keyframe.png": "8d69e0dbe3e3b7bf9207034e459be0976264faf7aa6660f84996526693fbf179",
+    "assets/characters/yamato/processed/battle/yamato_battle_body_r.png": "fbc9dc6fcc386de55e0a85634bc10fe36421fe20f4beb648da4d550e9da47571",
+    "assets/characters/yamato/processed/battle/yamato_battle_fire_control_node.png": "7e475bc5d7c8f07a8d290b8a1b4933e009809411e303a116a11cbbd080f5a65e",
+    "assets/characters/yamato/processed/battle/yamato_battle_flagship_marker.png": "f898a225f7cd96851a80c64b08bfacd047d82d3c475056f6ee23fc4d44455bf1",
+    "assets/characters/yamato/processed/battle/yamato_battle_rig_base.png": "7d72b812ca963a4fee8dae26a2a7e1053630c5dfc285d11e6fec33014a500bb2",
+    "assets/characters/yamato/processed/battle/yamato_battle_turret_main_01.png": "103bfd44aa807b84bb0634c732c8b4482023971f4fc6bb55bc6af7ac4da49bd1",
+    "assets/characters/yamato/processed/battle/yamato_battle_turret_main_02.png": "582b3fe1da30dcf4d091eeeba7be29fba5d85a288ba35b4d8523b082bf46385d",
+    "assets/characters/yamato/processed/battle/yamato_battle_turret_main_03.png": "d1475fabfb939ad69576c91dcb169dd18bf6956264e527ea0b6452356b450005",
+    "assets/characters/yamato/processed/battle/yamato_battle_wake_origin_marker.png": "73f456fc6760114a00607381f490f413f77e3e0d1663582776c7e5bc9645974d",
+    "assets/characters/yamato/processed/config/yamato_anim_config.json": "502551a99e0aaadad6320ee21fb8d03104192e73ad906485e41a425b514fbd4d",
+    "assets/characters/yamato/processed/config/yamato_meta_bind_points.json": "f612474cc9aa41323e7353a7960f13023c6523e0b10d1e094ff07c4d41cd9098",
+    "assets/characters/yamato/processed/config/yamato_postprocess_manifest.json": "372728b8fcaa2065827e04ded1ced4f722533f1818d6ee8ae19902fc1d4f6cdc",
+    "assets/characters/yamato/processed/config/yamato_vfx_config.json": "79d28c86b7210ae0a117cfff607c48763a8e9532230cae9aca8926a1800a3b64",
+    "assets/characters/yamato/processed/source_alpha/yamato_anim_5x4_master_alpha_source.png": "fcd7d2fae575ae6e67f3a36206dddd96d19d22ba4223660e168ed831cafacf25",
+    "assets/characters/yamato/processed/source_alpha/yamato_battle_asset_grid_alpha_source.png": "25358ffffdd49385a5e81c8586577e841fc17d3c760125b5c961af7f0889319a",
+    "assets/characters/yamato/processed/source_alpha/yamato_concept_full_alpha_source.png": "1231f90431ed0a698394911ad1f4831498dbc9756d95dd45a3875dd039174916",
+    "assets/characters/yamato/processed/source_alpha/yamato_ui_sheet_alpha_source.png": "77cf6d50f5ff668873ee689f296ed7bd9ed8df298c353b94d2aa774766e14854",
+    "assets/characters/yamato/processed/source_alpha/yamato_vfx_reference_sheet_alpha_source.png": "b5c191ac0dbcb3ccb4079b432fa2a6b874827fb380f31a01a314ab6f7bb3087b",
+    "assets/characters/yamato/processed/ui/yamato_expr_default.png": "0245c4f088c06a6a496396bbd64c881ea78122a3815fc796894e8108407350f8",
+    "assets/characters/yamato/processed/ui/yamato_expr_hit.png": "c3f456f2b77c8081e929b77834e67c97350ff8e8159ca68c3b2ce81d3283e659",
+    "assets/characters/yamato/processed/ui/yamato_expr_serious.png": "df3a4c3b33428ca2cf9af6f9f8af812dfba4568b11e0bff494508ec5a642f8da",
+    "assets/characters/yamato/processed/ui/yamato_illust_full_alpha.png": "0a8107a8d7628aae6b83783f2b4c20b8bec5c1a99d2e4536c842c461fb50bdce",
+    "assets/characters/yamato/processed/ui/yamato_illust_half_alpha.png": "333eaf941c14505e2e81463ad6c3fef684f43ba807313b00553c969764e375bf",
+    "assets/characters/yamato/processed/ui/yamato_illust_skill_cutin_alpha.png": "8de965633c31b49efff9d35d012fd313d5268f3202bee82de72a1c917a9df8ae",
+    "assets/characters/yamato/processed/ui/yamato_ui_chibi_head.png": "284fda9b432075a4351a447f98ef298271968c607295a60f1e84efc1e2291b33",
+    "assets/characters/yamato/processed/ui/yamato_ui_class_battleship.png": "6fc94d14f0dbbee270d1c121cfee001f9b325d1f1d04ea959eaac0334d7e8f36",
+    "assets/characters/yamato/processed/ui/yamato_ui_portrait.png": "31f09f27ff5d1e110e8e8e4495a3cdefa9c40e7fe493ce479c4dafd88fc5a80f",
+    "assets/characters/yamato/processed/ui/yamato_ui_portrait_small.png": "71134e7d636d583f73fc9a2f897b936a43d48491605e7408427398855fb2aca6",
+    "assets/characters/yamato/processed/ui/yamato_ui_skill_main_gun_salvo.png": "b1d930205e59814e4e7a40774683e41fe4b3b51205f727299b49af1ba079a6f9",
+    "assets/characters/yamato/ui/yamato_portrait_20261001_unframed_v1.png": "b45e9c9a3507986fb0c2c8338b4f85ac945b2777d949096c4ce60184df238f5b",
+    "assets/characters/yamato/ui/yamato_ui_sheet.png": "b0ddf53ffaadf439f801930c56cd36ab5a95ac9f1d4afbb94c1945515f30ca84",
+    "assets/characters/yamato/vfx/yamato_vfx_reference_sheet.png": "0711c5a36f712215ff6b1f7d9ca8e8444c4826c420094eaad6ee42b02ab42b8f",
+    "assets/vfx/combat/character_templates/battleship/vfx_battleship_armor_sparks.png": "243f29b87462fdab1cb2f127d67a6f674aedb1bc954860e9d73c10961981fe71",
+    "assets/vfx/combat/character_templates/battleship/vfx_battleship_broadside_smoke.png": "9d19d26f4d163b88e95274ea87c03647c25f2c4bc77139764b95928bccfd67d2",
+    "assets/vfx/combat/character_templates/battleship/vfx_battleship_command_aura.png": "229dd2a5ed55a72d76d7c78bb392c63d37dd753a150592ed30e10aaf7aa2c3ef",
+    "assets/vfx/combat/character_templates/battleship/vfx_battleship_fire_control_lock_line.png": "d925046c956bd2b6f50b0ba67b8d51800b8b57681929c8aa87c4bdf958afa60a",
+    "assets/vfx/combat/character_templates/battleship/vfx_battleship_muzzle_flash_large.png": "cbe0b7c5bc32867c5a87ee1646e14691f66709cbf9d40f58d67b9d2deedf38a4",
+    "assets/vfx/combat/character_templates/battleship/vfx_battleship_shell_trail_heavy.png": "9527782ec96f5c8580c37cfec0414c13afeddcbe614aee71b3414deb877d90ce",
+    "assets/vfx/combat/character_templates/battleship/vfx_battleship_wake_heavy.png": "cf7e5cab2c5d28f7e1cb2e509a2a0d1cae476825063fa62fb728fe3ec77b4634",
+    "assets/vfx/combat/character_templates/battleship/vfx_battleship_water_splash_large.png": "9e8c45e5b012bf7517093a864c444b5655513a5e7cbaa95564791ae11610ac24"
+  },
+  "assets": {
+    "assets/characters/yamato/processed/anim/yamato_anim_attack_frame_01.png": {
+      "sha256": "2c1270a822aa13af6bcdd5ce45c6769bdd7ba3d82195fc863d18963d6828becb",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 332,
+        "height": 300,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 76062,
+        "visible_pixel_count": 23538,
+        "transparent_canvas_ratio": 0.7636746987951807,
+        "visible_canvas_ratio": 0.2363253012048193,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yamato/processed/anim/yamato_anim_attack_frame_02.png": {
+      "sha256": "2da97bbcdbbca54f1f7ed5ea2c3619bea2fea17b7d15eca10b24de070e4eb518",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 332,
+        "height": 300,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 76176,
+        "visible_pixel_count": 23424,
+        "transparent_canvas_ratio": 0.7648192771084338,
+        "visible_canvas_ratio": 0.23518072289156627,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yamato/processed/anim/yamato_anim_attack_frame_03.png": {
+      "sha256": "7c88825203be7b516670be535745d82764892a683aef7d82c6271e1b44e06cc3",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 332,
+        "height": 300,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 75310,
+        "visible_pixel_count": 24290,
+        "transparent_canvas_ratio": 0.7561244979919679,
+        "visible_canvas_ratio": 0.24387550200803212,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yamato/processed/anim/yamato_anim_attack_frame_04.png": {
+      "sha256": "d12f4b79afcc99a97386d2cf058122aaba9f29c84068df9419dedb5c0eded182",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 332,
+        "height": 300,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 75922,
+        "visible_pixel_count": 23678,
+        "transparent_canvas_ratio": 0.7622690763052209,
+        "visible_canvas_ratio": 0.2377309236947791,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yamato/processed/anim/yamato_anim_attack_keyframe.png": {
+      "sha256": "2c1270a822aa13af6bcdd5ce45c6769bdd7ba3d82195fc863d18963d6828becb",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 332,
+        "height": 300,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 76062,
+        "visible_pixel_count": 23538,
+        "transparent_canvas_ratio": 0.7636746987951807,
+        "visible_canvas_ratio": 0.2363253012048193,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yamato/processed/anim/yamato_anim_firepower_frame_01.png": {
+      "sha256": "4199fbb6038febaa38a2359bfa180663adf458b0fbfbdb8cbb36d7ffbcbd0f07",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 346,
+        "height": 244,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 61368,
+        "visible_pixel_count": 23056,
+        "transparent_canvas_ratio": 0.7269023026627499,
+        "visible_canvas_ratio": 0.2730976973372501,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yamato/processed/anim/yamato_anim_firepower_frame_02.png": {
+      "sha256": "3a35c6a994a40e8d07c87c646361aa57ff20e6c86524dd542ffc706203f3a6d0",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 346,
+        "height": 244,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 60773,
+        "visible_pixel_count": 23651,
+        "transparent_canvas_ratio": 0.7198545437316403,
+        "visible_canvas_ratio": 0.2801454562683597,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yamato/processed/anim/yamato_anim_firepower_frame_03.png": {
+      "sha256": "677bdd41e383edfa9cc2cee241483d3b197ea9dc959e4929bf46d3dffbfc42ce",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 346,
+        "height": 244,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 58196,
+        "visible_pixel_count": 26228,
+        "transparent_canvas_ratio": 0.6893300483274898,
+        "visible_canvas_ratio": 0.3106699516725102,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yamato/processed/anim/yamato_anim_firepower_frame_04.png": {
+      "sha256": "540a3ecd99d8a249ac3eda8b00c4ce26d4cce2d16c837cb003a6b6c22e4a8972",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 346,
+        "height": 244,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 58026,
+        "visible_pixel_count": 26398,
+        "transparent_canvas_ratio": 0.6873164029186013,
+        "visible_canvas_ratio": 0.31268359708139865,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yamato/processed/anim/yamato_anim_firepower_keyframe.png": {
+      "sha256": "4199fbb6038febaa38a2359bfa180663adf458b0fbfbdb8cbb36d7ffbcbd0f07",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 346,
+        "height": 244,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 61368,
+        "visible_pixel_count": 23056,
+        "transparent_canvas_ratio": 0.7269023026627499,
+        "visible_canvas_ratio": 0.2730976973372501,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yamato/processed/anim/yamato_anim_hit_frame_01.png": {
+      "sha256": "7d5120bb1b5ab34e6532b148a973b43a2b0effc8ce347efa258ebe363beb9668",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 314,
+        "height": 306,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 73581,
+        "visible_pixel_count": 22503,
+        "transparent_canvas_ratio": 0.7657986761583614,
+        "visible_canvas_ratio": 0.23420132384163855,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yamato/processed/anim/yamato_anim_hit_frame_02.png": {
+      "sha256": "07eedecd7f298fba9fff260b4b244f4004cf811856c30b45253d83f88b2ac4d8",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 314,
+        "height": 306,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 73053,
+        "visible_pixel_count": 23031,
+        "transparent_canvas_ratio": 0.7603034844511053,
+        "visible_canvas_ratio": 0.2396965155488947,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yamato/processed/anim/yamato_anim_hit_frame_03.png": {
+      "sha256": "d6cc8c3fdcb27ece2a20a76fd59be3ac42bf4b2b305140a1b46a20c7f102d943",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 314,
+        "height": 306,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 71568,
+        "visible_pixel_count": 24516,
+        "transparent_canvas_ratio": 0.7448482577744474,
+        "visible_canvas_ratio": 0.25515174222555265,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yamato/processed/anim/yamato_anim_hit_frame_04.png": {
+      "sha256": "7d78e915e1cbfbd29bfd870164c36af35ec46ef307eeb4776e496aa8a64c4720",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 314,
+        "height": 306,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 71387,
+        "visible_pixel_count": 24697,
+        "transparent_canvas_ratio": 0.7429644894051038,
+        "visible_canvas_ratio": 0.25703551059489615,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yamato/processed/anim/yamato_anim_hit_keyframe.png": {
+      "sha256": "7d5120bb1b5ab34e6532b148a973b43a2b0effc8ce347efa258ebe363beb9668",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 314,
+        "height": 306,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 73581,
+        "visible_pixel_count": 22503,
+        "transparent_canvas_ratio": 0.7657986761583614,
+        "visible_canvas_ratio": 0.23420132384163855,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yamato/processed/anim/yamato_anim_idle_frame_01.png": {
+      "sha256": "fbc9dc6fcc386de55e0a85634bc10fe36421fe20f4beb648da4d550e9da47571",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 328,
+        "height": 306,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 75655,
+        "visible_pixel_count": 24713,
+        "transparent_canvas_ratio": 0.7537761039375099,
+        "visible_canvas_ratio": 0.24622389606249004,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yamato/processed/anim/yamato_anim_idle_frame_02.png": {
+      "sha256": "dcc594fd8bb15a76ccfae312f821fbab13f63de687443d3e49e8f158ce3efc4e",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 328,
+        "height": 306,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 76301,
+        "visible_pixel_count": 24067,
+        "transparent_canvas_ratio": 0.7602124183006536,
+        "visible_canvas_ratio": 0.2397875816993464,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yamato/processed/anim/yamato_anim_idle_frame_03.png": {
+      "sha256": "9d5f1be0bb2cb08b5c94bf85de3650c1bd1cf915fe269b40f5b65ba85fd5524f",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 328,
+        "height": 306,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 76262,
+        "visible_pixel_count": 24106,
+        "transparent_canvas_ratio": 0.7598238482384824,
+        "visible_canvas_ratio": 0.2401761517615176,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yamato/processed/anim/yamato_anim_idle_frame_04.png": {
+      "sha256": "01cfd445a6cd2c95a6906c317d506ce9a0c3f751703ccbefa8b1402c5f429dab",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 328,
+        "height": 306,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 75718,
+        "visible_pixel_count": 24650,
+        "transparent_canvas_ratio": 0.7544037940379403,
+        "visible_canvas_ratio": 0.2455962059620596,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yamato/processed/anim/yamato_anim_idle_keyframe.png": {
+      "sha256": "fbc9dc6fcc386de55e0a85634bc10fe36421fe20f4beb648da4d550e9da47571",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 328,
+        "height": 306,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 75655,
+        "visible_pixel_count": 24713,
+        "transparent_canvas_ratio": 0.7537761039375099,
+        "visible_canvas_ratio": 0.24622389606249004,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yamato/processed/anim/yamato_anim_move_frame_01.png": {
+      "sha256": "8d69e0dbe3e3b7bf9207034e459be0976264faf7aa6660f84996526693fbf179",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 310,
+        "height": 256,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 55899,
+        "visible_pixel_count": 23461,
+        "transparent_canvas_ratio": 0.7043724798387097,
+        "visible_canvas_ratio": 0.29562752016129035,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yamato/processed/anim/yamato_anim_move_frame_02.png": {
+      "sha256": "3076100905d935903f410feeed84737bb420ae99c1de7a4181624e97d828a9f6",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 310,
+        "height": 256,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 55861,
+        "visible_pixel_count": 23499,
+        "transparent_canvas_ratio": 0.7038936491935484,
+        "visible_canvas_ratio": 0.2961063508064516,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yamato/processed/anim/yamato_anim_move_frame_03.png": {
+      "sha256": "e10284f36ad1c609d4806f7c422ab1c04b4606fad2cfe5f0a252da262dda26af",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 310,
+        "height": 256,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 55844,
+        "visible_pixel_count": 23516,
+        "transparent_canvas_ratio": 0.703679435483871,
+        "visible_canvas_ratio": 0.29632056451612904,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yamato/processed/anim/yamato_anim_move_frame_04.png": {
+      "sha256": "5ffc162f5e159cf5c148330b0fefb4ca2b971628d68563a65d9d14a559293ce9",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 310,
+        "height": 256,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 56927,
+        "visible_pixel_count": 22433,
+        "transparent_canvas_ratio": 0.7173261088709677,
+        "visible_canvas_ratio": 0.28267389112903224,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yamato/processed/anim/yamato_anim_move_keyframe.png": {
+      "sha256": "8d69e0dbe3e3b7bf9207034e459be0976264faf7aa6660f84996526693fbf179",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 310,
+        "height": 256,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 55899,
+        "visible_pixel_count": 23461,
+        "transparent_canvas_ratio": 0.7043724798387097,
+        "visible_canvas_ratio": 0.29562752016129035,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yamato/processed/battle/yamato_battle_body_r.png": {
+      "sha256": "fbc9dc6fcc386de55e0a85634bc10fe36421fe20f4beb648da4d550e9da47571",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 328,
+        "height": 306,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 75655,
+        "visible_pixel_count": 24713,
+        "transparent_canvas_ratio": 0.7537761039375099,
+        "visible_canvas_ratio": 0.24622389606249004,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yamato/processed/battle/yamato_battle_fire_control_node.png": {
+      "sha256": "7e475bc5d7c8f07a8d290b8a1b4933e009809411e303a116a11cbbd080f5a65e",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 238,
+        "height": 362,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 57554,
+        "visible_pixel_count": 28602,
+        "transparent_canvas_ratio": 0.668020799480013,
+        "visible_canvas_ratio": 0.331979200519987,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          92,
+          57,
+          293,
+          321
+        ],
+        "final_crop_box": [
+          74,
+          39,
+          311,
+          339
+        ],
+        "component_area": 28602,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 18,
+          "bottom": 79
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yamato/processed/battle/yamato_battle_flagship_marker.png": {
+      "sha256": "f898a225f7cd96851a80c64b08bfacd047d82d3c475056f6ee23fc4d44455bf1",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 298,
+        "height": 348,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 75525,
+        "visible_pixel_count": 28179,
+        "transparent_canvas_ratio": 0.7282747049294145,
+        "visible_canvas_ratio": 0.2717252950705855,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          61,
+          61,
+          303,
+          321
+        ],
+        "final_crop_box": [
+          43,
+          43,
+          321,
+          339
+        ],
+        "component_area": 28179,
+        "output_edge_margins": {
+          "left": 37,
+          "top": 18,
+          "right": 19,
+          "bottom": 70
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yamato/processed/battle/yamato_battle_rig_base.png": {
+      "sha256": "7d72b812ca963a4fee8dae26a2a7e1053630c5dfc285d11e6fec33014a500bb2",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 364,
+        "height": 390,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 89568,
+        "visible_pixel_count": 52392,
+        "transparent_canvas_ratio": 0.630938292476754,
+        "visible_canvas_ratio": 0.36906170752324596,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          32,
+          103,
+          357,
+          373
+        ],
+        "final_crop_box": [
+          14,
+          85,
+          375,
+          391
+        ],
+        "component_area": 52392,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 20,
+          "bottom": 89
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yamato/processed/battle/yamato_battle_turret_main_01.png": {
+      "sha256": "103bfd44aa807b84bb0634c732c8b4482023971f4fc6bb55bc6af7ac4da49bd1",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 414,
+        "height": 270,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 57810,
+        "visible_pixel_count": 53970,
+        "transparent_canvas_ratio": 0.5171765968867418,
+        "visible_canvas_ratio": 0.48282340311325816,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          27,
+          125,
+          377,
+          351
+        ],
+        "final_crop_box": [
+          9,
+          107,
+          395,
+          369
+        ],
+        "component_area": 53970,
+        "output_edge_margins": {
+          "left": 46,
+          "top": 18,
+          "right": 18,
+          "bottom": 26
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yamato/processed/battle/yamato_battle_turret_main_02.png": {
+      "sha256": "582b3fe1da30dcf4d091eeeba7be29fba5d85a288ba35b4d8523b082bf46385d",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 414,
+        "height": 270,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 57851,
+        "visible_pixel_count": 53929,
+        "transparent_canvas_ratio": 0.5175433887994274,
+        "visible_canvas_ratio": 0.48245661120057254,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          25,
+          126,
+          375,
+          352
+        ],
+        "final_crop_box": [
+          7,
+          108,
+          393,
+          370
+        ],
+        "component_area": 53929,
+        "output_edge_margins": {
+          "left": 45,
+          "top": 19,
+          "right": 19,
+          "bottom": 25
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yamato/processed/battle/yamato_battle_turret_main_03.png": {
+      "sha256": "d1475fabfb939ad69576c91dcb169dd18bf6956264e527ea0b6452356b450005",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 404,
+        "height": 264,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 55709,
+        "visible_pixel_count": 50947,
+        "transparent_canvas_ratio": 0.5223241074107411,
+        "visible_canvas_ratio": 0.4776758925892589,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          73,
+          83,
+          413,
+          303
+        ],
+        "final_crop_box": [
+          55,
+          65,
+          431,
+          321
+        ],
+        "component_area": 50947,
+        "output_edge_margins": {
+          "left": 45,
+          "top": 19,
+          "right": 19,
+          "bottom": 25
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yamato/processed/battle/yamato_battle_wake_origin_marker.png": {
+      "sha256": "73f456fc6760114a00607381f490f413f77e3e0d1663582776c7e5bc9645974d",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 428,
+        "height": 284,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 79654,
+        "visible_pixel_count": 41898,
+        "transparent_canvas_ratio": 0.6553080163222325,
+        "visible_canvas_ratio": 0.34469198367776754,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          38,
+          86,
+          370,
+          321
+        ],
+        "final_crop_box": [
+          20,
+          68,
+          388,
+          339
+        ],
+        "component_area": 41898,
+        "output_edge_margins": {
+          "left": 78,
+          "top": 19,
+          "right": 18,
+          "bottom": 30
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yamato/processed/ui/yamato_expr_default.png": {
+      "sha256": "0245c4f088c06a6a496396bbd64c881ea78122a3815fc796894e8108407350f8",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 420,
+        "height": 480,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 117104,
+        "visible_pixel_count": 84496,
+        "transparent_canvas_ratio": 0.5808730158730159,
+        "visible_canvas_ratio": 0.4191269841269841,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          31,
+          55,
+          408,
+          418
+        ],
+        "final_crop_box": [
+          13,
+          37,
+          426,
+          436
+        ],
+        "output_edge_margins": {
+          "left": 25,
+          "top": 19,
+          "right": 18,
+          "bottom": 98
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yamato/processed/ui/yamato_expr_hit.png": {
+      "sha256": "c3f456f2b77c8081e929b77834e67c97350ff8e8159ca68c3b2ce81d3283e659",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 378,
+        "height": 458,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 98120,
+        "visible_pixel_count": 75004,
+        "transparent_canvas_ratio": 0.5667613964557195,
+        "visible_canvas_ratio": 0.4332386035442804,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          91,
+          18,
+          423,
+          371
+        ],
+        "final_crop_box": [
+          73,
+          0,
+          441,
+          389
+        ],
+        "output_edge_margins": {
+          "left": 18,
+          "top": 19,
+          "right": 28,
+          "bottom": 86
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yamato/processed/ui/yamato_expr_serious.png": {
+      "sha256": "df3a4c3b33428ca2cf9af6f9f8af812dfba4568b11e0bff494508ec5a642f8da",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 380,
+        "height": 458,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 99233,
+        "visible_pixel_count": 74807,
+        "transparent_canvas_ratio": 0.5701735233279706,
+        "visible_canvas_ratio": 0.42982647667202944,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          82,
+          19,
+          419,
+          370
+        ],
+        "final_crop_box": [
+          64,
+          1,
+          437,
+          388
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 24,
+          "bottom": 89
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yamato/processed/ui/yamato_illust_full_alpha.png": {
+      "sha256": "0a8107a8d7628aae6b83783f2b4c20b8bec5c1a99d2e4536c842c461fb50bdce",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 1098,
+        "height": 1486,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 999381,
+        "visible_pixel_count": 632247,
+        "transparent_canvas_ratio": 0.6125054240304776,
+        "visible_canvas_ratio": 0.38749457596952247,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          4,
+          54,
+          1024,
+          1489
+        ],
+        "final_crop_box": [
+          0,
+          42,
+          1024,
+          1501
+        ],
+        "output_edge_margins": {
+          "left": 13,
+          "top": 12,
+          "right": 65,
+          "bottom": 39
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yamato/processed/ui/yamato_illust_half_alpha.png": {
+      "sha256": "333eaf941c14505e2e81463ad6c3fef684f43ba807313b00553c969764e375bf",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 1108,
+        "height": 1366,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 965970,
+        "visible_pixel_count": 547558,
+        "transparent_canvas_ratio": 0.6382240698553314,
+        "visible_canvas_ratio": 0.36177593014466863,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          17,
+          17,
+          1037,
+          1050
+        ],
+        "final_crop_box": [
+          1,
+          1,
+          1053,
+          1066
+        ],
+        "output_edge_margins": {
+          "left": 17,
+          "top": 17,
+          "right": 71,
+          "bottom": 316
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yamato/processed/ui/yamato_illust_skill_cutin_alpha.png": {
+      "sha256": "8de965633c31b49efff9d35d012fd313d5268f3202bee82de72a1c917a9df8ae",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 1108,
+        "height": 1190,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 911471,
+        "visible_pixel_count": 407049,
+        "transparent_canvas_ratio": 0.6912834086703273,
+        "visible_canvas_ratio": 0.30871659132967266,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          533,
+          16,
+          1553,
+          848
+        ],
+        "final_crop_box": [
+          517,
+          0,
+          1569,
+          864
+        ],
+        "output_edge_margins": {
+          "left": 16,
+          "top": 16,
+          "right": 72,
+          "bottom": 342
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yamato/processed/ui/yamato_ui_chibi_head.png": {
+      "sha256": "284fda9b432075a4351a447f98ef298271968c607295a60f1e84efc1e2291b33",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 354,
+        "height": 368,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 58303,
+        "visible_pixel_count": 71969,
+        "transparent_canvas_ratio": 0.447548206828789,
+        "visible_canvas_ratio": 0.552451793171211,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          75,
+          94,
+          386,
+          401
+        ],
+        "final_crop_box": [
+          57,
+          76,
+          404,
+          419
+        ],
+        "output_edge_margins": {
+          "left": 24,
+          "top": 19,
+          "right": 19,
+          "bottom": 42
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yamato/processed/ui/yamato_ui_class_battleship.png": {
+      "sha256": "6fc94d14f0dbbee270d1c121cfee001f9b325d1f1d04ea959eaac0334d7e8f36",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 186,
+        "height": 444,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 38499,
+        "visible_pixel_count": 44085,
+        "transparent_canvas_ratio": 0.46617988956698636,
+        "visible_canvas_ratio": 0.5338201104330137,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          130,
+          25,
+          278,
+          401
+        ],
+        "final_crop_box": [
+          112,
+          7,
+          296,
+          419
+        ],
+        "output_edge_margins": {
+          "left": 20,
+          "top": 19,
+          "right": 18,
+          "bottom": 49
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yamato/processed/ui/yamato_ui_portrait.png": {
+      "sha256": "31f09f27ff5d1e110e8e8e4495a3cdefa9c40e7fe493ce479c4dafd88fc5a80f",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 512,
+        "height": 512,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 173667,
+        "visible_pixel_count": 88477,
+        "transparent_canvas_ratio": 0.6624870300292969,
+        "visible_canvas_ratio": 0.3375129699707031,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          41,
+          1254,
+          1241
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              41,
+              1254,
+              1241
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 64,
+          "top": 64,
+          "right": 56,
+          "bottom": 65
+        },
+        "cleanup_tags": []
+      },
+      "review": {
+        "verdict": "pass",
+        "reviewer": "Codex visual inspection",
+        "observation": "Long navy hair, red eyes, original gold blade ornament/red tassel and navy-white-gold collar/segmented shoulder armor retained; no back turret or frame. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+      }
+    },
+    "assets/characters/yamato/processed/ui/yamato_ui_portrait_small.png": {
+      "sha256": "71134e7d636d583f73fc9a2f897b936a43d48491605e7408427398855fb2aca6",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 128,
+        "height": 128,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 10392,
+        "visible_pixel_count": 5992,
+        "transparent_canvas_ratio": 0.63427734375,
+        "visible_canvas_ratio": 0.36572265625,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          41,
+          1254,
+          1241
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              41,
+              1254,
+              1241
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 14,
+          "top": 14,
+          "right": 11,
+          "bottom": 14
+        },
+        "cleanup_tags": []
+      },
+      "review": {
+        "verdict": "pass",
+        "reviewer": "Codex visual inspection",
+        "observation": "Long navy hair, red eyes, original gold blade ornament/red tassel and navy-white-gold collar/segmented shoulder armor retained; no back turret or frame. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+      }
+    },
+    "assets/characters/yamato/processed/ui/yamato_ui_skill_main_gun_salvo.png": {
+      "sha256": "b1d930205e59814e4e7a40774683e41fe4b3b51205f727299b49af1ba079a6f9",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 332,
+        "height": 334,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 42315,
+        "visible_pixel_count": 68573,
+        "transparent_canvas_ratio": 0.38160125532068395,
+        "visible_canvas_ratio": 0.6183987446793161,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          80,
+          55,
+          374,
+          352
+        ],
+        "final_crop_box": [
+          62,
+          37,
+          392,
+          370
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 19,
+          "bottom": 18
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/battleship/vfx_battleship_armor_sparks.png": {
+      "sha256": "243f29b87462fdab1cb2f127d67a6f674aedb1bc954860e9d73c10961981fe71",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 306,
+        "height": 328,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 91671,
+        "visible_pixel_count": 8697,
+        "transparent_canvas_ratio": 0.9133488761358202,
+        "visible_canvas_ratio": 0.08665112386417982,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          115,
+          72,
+          305,
+          284
+        ],
+        "final_crop_box": [
+          97,
+          54,
+          323,
+          302
+        ],
+        "component_area": 5049,
+        "output_edge_margins": {
+          "left": 62,
+          "top": 19,
+          "right": 18,
+          "bottom": 68
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/battleship/vfx_battleship_broadside_smoke.png": {
+      "sha256": "9d19d26f4d163b88e95274ea87c03647c25f2c4bc77139764b95928bccfd67d2",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 372,
+        "height": 348,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 74556,
+        "visible_pixel_count": 54900,
+        "transparent_canvas_ratio": 0.5759176863181312,
+        "visible_canvas_ratio": 0.4240823136818687,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          40,
+          153,
+          361,
+          447
+        ],
+        "final_crop_box": [
+          22,
+          135,
+          379,
+          465
+        ],
+        "component_area": 53944,
+        "output_edge_margins": {
+          "left": 22,
+          "top": 18,
+          "right": 18,
+          "bottom": 22
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/battleship/vfx_battleship_command_aura.png": {
+      "sha256": "229dd2a5ed55a72d76d7c78bb392c63d37dd753a150592ed30e10aaf7aa2c3ef",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 354,
+        "height": 476,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 140885,
+        "visible_pixel_count": 27619,
+        "transparent_canvas_ratio": 0.8360929117409676,
+        "visible_canvas_ratio": 0.1639070882590324,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          40,
+          53,
+          331,
+          366
+        ],
+        "final_crop_box": [
+          22,
+          35,
+          349,
+          384
+        ],
+        "component_area": 26710,
+        "output_edge_margins": {
+          "left": 37,
+          "top": 19,
+          "right": 18,
+          "bottom": 144
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/battleship/vfx_battleship_fire_control_lock_line.png": {
+      "sha256": "d925046c956bd2b6f50b0ba67b8d51800b8b57681929c8aa87c4bdf958afa60a",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 338,
+        "height": 280,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 89737,
+        "visible_pixel_count": 4903,
+        "transparent_canvas_ratio": 0.9481931530008453,
+        "visible_canvas_ratio": 0.05180684699915469,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          57,
+          168,
+          294,
+          354
+        ],
+        "final_crop_box": [
+          39,
+          150,
+          312,
+          372
+        ],
+        "component_area": 4507,
+        "output_edge_margins": {
+          "left": 64,
+          "top": 45,
+          "right": 19,
+          "bottom": 18
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/battleship/vfx_battleship_muzzle_flash_large.png": {
+      "sha256": "cbe0b7c5bc32867c5a87ee1646e14691f66709cbf9d40f58d67b9d2deedf38a4",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 416,
+        "height": 390,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 128703,
+        "visible_pixel_count": 33537,
+        "transparent_canvas_ratio": 0.7932877218934912,
+        "visible_canvas_ratio": 0.20671227810650888,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          42,
+          141,
+          339,
+          425
+        ],
+        "final_crop_box": [
+          24,
+          123,
+          357,
+          443
+        ],
+        "component_area": 32688,
+        "output_edge_margins": {
+          "left": 67,
+          "top": 18,
+          "right": 19,
+          "bottom": 80
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/battleship/vfx_battleship_shell_trail_heavy.png": {
+      "sha256": "9527782ec96f5c8580c37cfec0414c13afeddcbe614aee71b3414deb877d90ce",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 362,
+        "height": 376,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 118432,
+        "visible_pixel_count": 17680,
+        "transparent_canvas_ratio": 0.8701069707299871,
+        "visible_canvas_ratio": 0.12989302927001292,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          46,
+          137,
+          346,
+          437
+        ],
+        "final_crop_box": [
+          28,
+          119,
+          364,
+          455
+        ],
+        "component_area": 17374,
+        "output_edge_margins": {
+          "left": 44,
+          "top": 19,
+          "right": 18,
+          "bottom": 57
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/battleship/vfx_battleship_wake_heavy.png": {
+      "sha256": "cf7e5cab2c5d28f7e1cb2e509a2a0d1cae476825063fa62fb728fe3ec77b4634",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 342,
+        "height": 318,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 81254,
+        "visible_pixel_count": 27502,
+        "transparent_canvas_ratio": 0.7471219978667843,
+        "visible_canvas_ratio": 0.25287800213321565,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          18,
+          100,
+          308,
+          362
+        ],
+        "final_crop_box": [
+          0,
+          82,
+          326,
+          380
+        ],
+        "component_area": 27203,
+        "output_edge_margins": {
+          "left": 29,
+          "top": 19,
+          "right": 19,
+          "bottom": 31
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/battleship/vfx_battleship_water_splash_large.png": {
+      "sha256": "9e8c45e5b012bf7517093a864c444b5655513a5e7cbaa95564791ae11610ac24",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 338,
+        "height": 504,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 134728,
+        "visible_pixel_count": 35624,
+        "transparent_canvas_ratio": 0.7908800601108293,
+        "visible_canvas_ratio": 0.20911993988917066,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          58,
+          33,
+          305,
+          368
+        ],
+        "final_crop_box": [
+          40,
+          15,
+          323,
+          386
+        ],
+        "component_area": 34789,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 38,
+          "bottom": 127
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    }
+  }
+}

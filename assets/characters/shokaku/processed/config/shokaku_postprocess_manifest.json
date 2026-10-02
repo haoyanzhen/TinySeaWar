@@ -1387,318 +1387,6 @@
       ]
     },
     {
-      "role": "ui_portrait",
-      "crop": {
-        "original_box": [
-          2,
-          10,
-          467,
-          520
-        ],
-        "final_box": [
-          36,
-          61,
-          431,
-          485
-        ],
-        "expanded": {
-          "left": -34,
-          "top": -51,
-          "right": -36,
-          "bottom": -35
-        },
-        "auto_crop_method": "connected_components_intersecting_initial_box",
-        "component_count": 9,
-        "selected_component_count": 5,
-        "selected_component_samples": [
-          {
-            "bbox": [
-              52,
-              77,
-              415,
-              469
-            ],
-            "pixel_count": 102062,
-            "overlap_pixels": 102062
-          },
-          {
-            "bbox": [
-              195,
-              119,
-              196,
-              120
-            ],
-            "pixel_count": 1,
-            "overlap_pixels": 1
-          },
-          {
-            "bbox": [
-              97,
-              159,
-              98,
-              160
-            ],
-            "pixel_count": 1,
-            "overlap_pixels": 1
-          },
-          {
-            "bbox": [
-              375,
-              385,
-              376,
-              386
-            ],
-            "pixel_count": 1,
-            "overlap_pixels": 1
-          },
-          {
-            "bbox": [
-              129,
-              424,
-              130,
-              425
-            ],
-            "pixel_count": 1,
-            "overlap_pixels": 1
-          }
-        ],
-        "source_edge_safe_margin": 16,
-        "final_edge_margins": {
-          "left": 1,
-          "top": 12,
-          "right": 13,
-          "bottom": 12
-        },
-        "edge_warnings": [
-          "left",
-          "top",
-          "right",
-          "bottom"
-        ],
-        "excluded_neighbor_components": 0,
-        "selected_source_alpha_pixel_count": 101932,
-        "original_crop_hint": [
-          2,
-          10,
-          467,
-          520
-        ],
-        "final_crop_box": [
-          36,
-          61,
-          431,
-          485
-        ],
-        "source_crop_rectangle_alpha_pixel_count": 101932,
-        "source_alpha_pixel_count": 101932,
-        "output_edge_margins": {
-          "left": 24,
-          "top": 24,
-          "right": 24,
-          "bottom": 40
-        },
-        "output_layout": {
-          "content_bbox": [
-            0,
-            0,
-            371,
-            398
-          ],
-          "centroid_before_padding": [
-            185.33,
-            206.85
-          ],
-          "padding": {
-            "left": 24,
-            "top": 24,
-            "right": 24,
-            "bottom": 40
-          },
-          "centroid_offset_after_padding": {
-            "x": -0.17,
-            "y": -0.15
-          }
-        },
-        "cleanup_tags": [
-          "keep_largest_component"
-        ],
-        "source_key": "ui_sheet"
-      },
-      "path": "assets/characters/shokaku/processed/ui/shokaku_ui_portrait.png",
-      "size": [
-        419,
-        462
-      ],
-      "mode": "RGBA",
-      "alpha_bbox": [
-        29,
-        26,
-        392,
-        418
-      ],
-      "alpha_pixel_count": 101932,
-      "edge_margins": {
-        "left": 29,
-        "top": 26,
-        "right": 27,
-        "bottom": 44
-      },
-      "output_padding": {
-        "left": 29,
-        "top": 26,
-        "right": 27,
-        "bottom": 44
-      },
-      "alpha_centroid": [
-        209.336,
-        230.854
-      ],
-      "centroid_offset_normalized": {
-        "x": 0.000803,
-        "y": 0.000766
-      },
-      "component_tags": [
-        "ui",
-        "ui_portrait"
-      ]
-    },
-    {
-      "role": "ui_portrait_small",
-      "crop": {
-        "original_box": [
-          473,
-          77,
-          791,
-          509
-        ],
-        "final_box": [
-          485,
-          110,
-          769,
-          467
-        ],
-        "expanded": {
-          "left": -12,
-          "top": -33,
-          "right": -22,
-          "bottom": -42
-        },
-        "auto_crop_method": "connected_components_intersecting_initial_box",
-        "component_count": 10,
-        "selected_component_count": 1,
-        "selected_component_samples": [
-          {
-            "bbox": [
-              501,
-              126,
-              753,
-              451
-            ],
-            "pixel_count": 65469,
-            "overlap_pixels": 65469
-          }
-        ],
-        "source_edge_safe_margin": 16,
-        "final_edge_margins": {
-          "left": 12,
-          "top": 14,
-          "right": 14,
-          "bottom": 11
-        },
-        "edge_warnings": [
-          "left",
-          "top",
-          "right",
-          "bottom"
-        ],
-        "excluded_neighbor_components": 0,
-        "selected_source_alpha_pixel_count": 65365,
-        "original_crop_hint": [
-          473,
-          77,
-          791,
-          509
-        ],
-        "final_crop_box": [
-          485,
-          110,
-          769,
-          467
-        ],
-        "source_crop_rectangle_alpha_pixel_count": 65365,
-        "source_alpha_pixel_count": 65365,
-        "output_edge_margins": {
-          "left": 24,
-          "top": 24,
-          "right": 29,
-          "bottom": 35
-        },
-        "output_layout": {
-          "content_bbox": [
-            0,
-            0,
-            258,
-            332
-          ],
-          "centroid_before_padding": [
-            131.55,
-            171.65
-          ],
-          "padding": {
-            "left": 24,
-            "top": 24,
-            "right": 29,
-            "bottom": 35
-          },
-          "centroid_offset_after_padding": {
-            "x": 0.05,
-            "y": 0.15
-          }
-        },
-        "cleanup_tags": [
-          "keep_largest_component"
-        ],
-        "source_key": "ui_sheet"
-      },
-      "path": "assets/characters/shokaku/processed/ui/shokaku_ui_portrait_small.png",
-      "size": [
-        311,
-        391
-      ],
-      "mode": "RGBA",
-      "alpha_bbox": [
-        28,
-        26,
-        280,
-        350
-      ],
-      "alpha_pixel_count": 65365,
-      "edge_margins": {
-        "left": 28,
-        "top": 26,
-        "right": 31,
-        "bottom": 41
-      },
-      "output_padding": {
-        "left": 28,
-        "top": 26,
-        "right": 31,
-        "bottom": 41
-      },
-      "alpha_centroid": [
-        155.569,
-        195.651
-      ],
-      "centroid_offset_normalized": {
-        "x": 0.001828,
-        "y": 0.001666
-      },
-      "component_tags": [
-        "ui",
-        "ui_portrait_small"
-      ]
-    },
-    {
       "role": "ui_chibi_head",
       "crop": {
         "original_box": [
@@ -13657,6 +13345,220 @@
         "vfx",
         "skill_aura"
       ]
+    },
+    {
+      "role": "ui_portrait",
+      "path": "assets/characters/shokaku/processed/ui/shokaku_ui_portrait.png",
+      "file": "assets/characters/shokaku/processed/ui/shokaku_ui_portrait.png",
+      "source": "assets/characters/shokaku/ui/shokaku_portrait_20261001_unframed_v1.png",
+      "sha256": "4e131932a256bdeb477538e0e5b3a02d78041d402724b250b06adf99e60abc01",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA",
+      "alpha_bbox": [
+        62,
+        56,
+        450,
+        456
+      ],
+      "alpha_pixel_count": 95153,
+      "edge_margins": {
+        "left": 62,
+        "top": 56,
+        "right": 62,
+        "bottom": 56
+      },
+      "output_padding": {
+        "left": 62,
+        "top": 56,
+        "right": 62,
+        "bottom": 56
+      },
+      "alpha_centroid": [
+        257.6900389726958,
+        293.0194010802867
+      ],
+      "centroid_offset_normalized": {
+        "x": 0.0033008573685464615,
+        "y": 0.07230351773493493
+      },
+      "component_tags": [
+        "ui",
+        "portrait_revision"
+      ],
+      "crop": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          27,
+          5,
+          1239,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              27,
+              5,
+              1239,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 62,
+          "top": 56,
+          "right": 62,
+          "bottom": 56
+        },
+        "cleanup_tags": []
+      },
+      "source_crop_qa": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          27,
+          5,
+          1239,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              27,
+              5,
+              1239,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 62,
+          "top": 56,
+          "right": 62,
+          "bottom": 56
+        },
+        "cleanup_tags": []
+      }
+    },
+    {
+      "role": "ui_portrait_small",
+      "path": "assets/characters/shokaku/processed/ui/shokaku_ui_portrait_small.png",
+      "file": "assets/characters/shokaku/processed/ui/shokaku_ui_portrait_small.png",
+      "source": "assets/characters/shokaku/ui/shokaku_portrait_20261001_unframed_v1.png",
+      "sha256": "37785e290ed07b3389e47c4196393053d01c2c45b42ff9484f3d24ae29d32d2f",
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_bbox": [
+        13,
+        12,
+        115,
+        116
+      ],
+      "alpha_pixel_count": 6383,
+      "edge_margins": {
+        "left": 13,
+        "top": 12,
+        "right": 13,
+        "bottom": 12
+      },
+      "output_padding": {
+        "left": 13,
+        "top": 12,
+        "right": 13,
+        "bottom": 12
+      },
+      "alpha_centroid": [
+        64.41359195949921,
+        73.24909270936043
+      ],
+      "centroid_offset_normalized": {
+        "x": 0.003231187183587614,
+        "y": 0.07225853679187833
+      },
+      "component_tags": [
+        "ui",
+        "portrait_revision"
+      ],
+      "crop": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          27,
+          5,
+          1239,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              27,
+              5,
+              1239,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 13,
+          "top": 12,
+          "right": 13,
+          "bottom": 12
+        },
+        "cleanup_tags": []
+      },
+      "source_crop_qa": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          27,
+          5,
+          1239,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              27,
+              5,
+              1239,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 13,
+          "top": 12,
+          "right": 13,
+          "bottom": 12
+        },
+        "cleanup_tags": []
+      }
     }
   ],
   "source_provenance": {
@@ -13985,5 +13887,9 @@
         "qa_observation": "anim_firepower: White hair, crane ornaments and white/navy dress consistent; twin wing decks, bomber versus torpedo bomber separately readable; no launched aircraft baked in frames. Native transparency measured separately; current displayed source examined. Fine line/scale polish remains; runtime assembly not accepted."
       }
     ]
+  },
+  "portrait_revision": {
+    "path": "assets/characters/shokaku/meta/shokaku_portrait_revision.json",
+    "sha256": "2367815b85dab5b6090ef0a7c609ccd05761d5c9958dff77bd62fb43364d382e"
   }
 }

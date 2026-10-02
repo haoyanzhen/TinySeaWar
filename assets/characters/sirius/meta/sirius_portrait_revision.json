@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "character_id": "sirius",
+  "revision": "20261001_unframed_v1",
+  "scope": "Portraits only; does not migrate or approve the full character package",
+  "generation_route": "codex_builtin_imagegen_native_alpha",
+  "model": "account-managed/not-exposed",
+  "request_id": "not-exposed",
+  "background_control": "transparent",
+  "prompt": "Create ONE independent head-and-shoulders transparent game portrait for TinySeaWar. Image 1 is ONLY the identity reference for this character; preserve face, hair, eyes, outfit colors and core accessories exactly. Image 2 is ONLY the approved rendering/composition style sample (a DIFFERENT character); do NOT copy its blonde hair, crown or outfit. Match the style sample's polished fine anime linework, restrained cel shading, soft neutral light and bust framing. Head upright, slight three-quarter face toward viewer, neutral character-appropriate expression, eye line around 42% of square canvas height, complete hair and hats visible, upper shoulders/chest, no hands. Isolated bust at most84% canvas width/height,8%EMPTY TRANSPARENT margin every side. NO FRAME, border, card, medallion, background, text, checkerboard, weapons, ship parts, rigging or effects. Real native Alpha PNG, one portrait not a sheet, readable at40px. No new accessories absent from identity reference; all hair and ornaments contained inside canvas with EMPTY alpha margins. Character identity: Silver blue wavy bob, violet blue eyes, original silver gold blue compass star hairclip, white navy gold cape and collar. NO eyewear.",
+  "raw_output_path": "/Users/qingyue/.codex/generated_images/01a0f530-85bc-7132-9cf0-51e103bf539a/exec-fc7094a2-91c8-4508-9a33-5c1a04d6c58f.png",
+  "raw_sha256": "da460738bffa0eb012cae625f6283d47ca772d619e0de81ad2060ee735a5ca4a",
+  "references": [
+    {
+      "path": "assets/characters/sirius/concept/sirius_concept_full.png",
+      "sha256": "1add93eb91bb9b0140a9b4942a6543b3b57a18f68826b47f896aadf62bfd8093"
+    },
+    {
+      "path": "assets/characters/warspite/ui/warspite_portrait_20261001_unframed_v1.png",
+      "sha256": "2de3b58ce65dc2a54b426434d5b7a477e93bb28b8e99ad51ad9bc9ca2af6cab9"
+    }
+  ],
+  "source": {
+    "path": "assets/characters/sirius/ui/sirius_portrait_20261001_unframed_v1.png",
+    "sha256": "da460738bffa0eb012cae625f6283d47ca772d619e0de81ad2060ee735a5ca4a",
+    "alpha_facts": {
+      "format": "PNG",
+      "source_mode": "RGBA",
+      "width": 1254,
+      "height": 1254,
+      "has_alpha_channel": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixel_count": 685665,
+      "visible_pixel_count": 886851,
+      "transparent_canvas_ratio": 0.4360305395938738,
+      "visible_canvas_ratio": 0.5639694604061263,
+      "transparent_border_ratio": 0.996608140462889
+    }
+  },
+  "source_review": {
+    "sha256": "da460738bffa0eb012cae625f6283d47ca772d619e0de81ad2060ee735a5ca4a",
+    "verdict": "pass",
+    "reviewer": "Codex visual inspection",
+    "observation": "Silver-blue wavy bob, violet-blue eyes, compass star hairclip and navy-white-gold cape retained; no frame or added accessory."
+  },
+  "output_reviews": {
+    "ui_portrait": {
+      "sha256": "888ee13c3677dbb2ba312553bbcfff307e2cbb6f70351655ebd15a83e016a173",
+      "verdict": "pass",
+      "reviewer": "Codex visual inspection",
+      "observation": "Silver-blue wavy bob, violet-blue eyes, compass star hairclip and navy-white-gold cape retained; no frame or added accessory. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+    },
+    "ui_portrait_small": {
+      "sha256": "a9e0480d5072754bfcd8edb0fecbeb870e9a62157fb954889c857323ec2b30ce",
+      "verdict": "pass",
+      "reviewer": "Codex visual inspection",
+      "observation": "Silver-blue wavy bob, violet-blue eyes, compass star hairclip and navy-white-gold cape retained; no frame or added accessory. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+    }
+  }
+}

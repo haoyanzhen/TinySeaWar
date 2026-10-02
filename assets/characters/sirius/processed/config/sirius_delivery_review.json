@@ -1,0 +1,1813 @@
+{
+  "schema_version": 1,
+  "character_id": "sirius",
+  "scope": "Visual evidence only; technical contract must pass separately. Not runtime acceptance.",
+  "checklist": [
+    "identity_and_inventory",
+    "no_truncation_or_neighbor_fragments",
+    "alpha_edges_and_small_scale_readability",
+    "animation_consistency",
+    "mechanical_binding_and_vfx_semantics"
+  ],
+  "package_sha256": {
+    "assets/characters/sirius/battle/sirius_anim_5x4_master.png": "5df53d0c50756c4fda47742d5347c62ea5c77451deb6db2461a0055fade845d2",
+    "assets/characters/sirius/battle/sirius_battle_asset_grid.png": "534dbaeb9d73e9316af1c73d8a0df4a5475138bdd3d86635f286f089d1594ac1",
+    "assets/characters/sirius/concept/sirius_concept_full.png": "1add93eb91bb9b0140a9b4942a6543b3b57a18f68826b47f896aadf62bfd8093",
+    "assets/characters/sirius/meta/sirius_portrait_revision.json": "ef4c0577832085d5597d5a763f36e0db86d41e6daafd94bd0386a8bdfced9259",
+    "assets/characters/sirius/processed/anim/sirius_anim_attack_frame_01.png": "f32833684017c47d3b4a67238a7a9b817c6a3705003adb83a0f4a48de2fffaee",
+    "assets/characters/sirius/processed/anim/sirius_anim_attack_frame_02.png": "2a7a1d5ff2a6f39b26be52d596b2a28cec239df85e0f1cf82915b850b8ec128f",
+    "assets/characters/sirius/processed/anim/sirius_anim_attack_frame_03.png": "9d29eb266b25d184f2e9cdd03b13a163e6aced30b98b4abc6dd0f8df323fae26",
+    "assets/characters/sirius/processed/anim/sirius_anim_attack_frame_04.png": "9fc8ff00e832e2473225272d669684e04f45626b5caa954b8903cd04cca5e2bd",
+    "assets/characters/sirius/processed/anim/sirius_anim_attack_keyframe.png": "f32833684017c47d3b4a67238a7a9b817c6a3705003adb83a0f4a48de2fffaee",
+    "assets/characters/sirius/processed/anim/sirius_anim_firepower_frame_01.png": "059c529faec1342580d2f8635af39688f90a2828dbb55c4775d19e1e62127eba",
+    "assets/characters/sirius/processed/anim/sirius_anim_firepower_frame_02.png": "db80f38cae93073ee7de3c1fb9a7e1758c8d4d09ff5b33f2eeda1c2805f05aea",
+    "assets/characters/sirius/processed/anim/sirius_anim_firepower_frame_03.png": "4c574387f6dded363bef5e3be2a272757e0b11d930e7747180c4456acb4ff10c",
+    "assets/characters/sirius/processed/anim/sirius_anim_firepower_frame_04.png": "54765a9adb12418cfecf49d6373bf9346434e96ba69eb6229ab2fbb475417a45",
+    "assets/characters/sirius/processed/anim/sirius_anim_firepower_keyframe.png": "059c529faec1342580d2f8635af39688f90a2828dbb55c4775d19e1e62127eba",
+    "assets/characters/sirius/processed/anim/sirius_anim_hit_frame_01.png": "d5a8c6152fe766c20dca180003dc8fb02392d807d0fb17bbf7f898e1cbbff47c",
+    "assets/characters/sirius/processed/anim/sirius_anim_hit_frame_02.png": "e207e794ffeba51e42a24f5040eff92fdfa516083418c58c649a0f0771b3a63a",
+    "assets/characters/sirius/processed/anim/sirius_anim_hit_frame_03.png": "a3b6309540584cfda1d9dd188cc121d0441aee4f06da6da323b3976894a478f8",
+    "assets/characters/sirius/processed/anim/sirius_anim_hit_frame_04.png": "d1a3b72c28696251e77a2bc492b31591b3d4029f727c6ea0f67531c240f5fd31",
+    "assets/characters/sirius/processed/anim/sirius_anim_hit_keyframe.png": "d5a8c6152fe766c20dca180003dc8fb02392d807d0fb17bbf7f898e1cbbff47c",
+    "assets/characters/sirius/processed/anim/sirius_anim_idle_frame_01.png": "b0336fb0b43a6a96a8a9e3183ae72561fb4d77038290f241e071f9bd2ecc11ad",
+    "assets/characters/sirius/processed/anim/sirius_anim_idle_frame_02.png": "fc77eec5619662516fa2a1013a14016f2f3ceccfcc9d17f1a18db16832ae61c6",
+    "assets/characters/sirius/processed/anim/sirius_anim_idle_frame_03.png": "da067a266f882fa1608cabddb5c3e7238f025f6332146f05c0c0be3f81848260",
+    "assets/characters/sirius/processed/anim/sirius_anim_idle_frame_04.png": "ef44adf37adea6db8cfa2bfbb462cd7ac865b34451543feacd0e6eb3d83dd4f4",
+    "assets/characters/sirius/processed/anim/sirius_anim_idle_keyframe.png": "b0336fb0b43a6a96a8a9e3183ae72561fb4d77038290f241e071f9bd2ecc11ad",
+    "assets/characters/sirius/processed/anim/sirius_anim_move_frame_01.png": "3aa692c0093c4be665eba822b8028fb055e9602fb306869b89ea45c2078899aa",
+    "assets/characters/sirius/processed/anim/sirius_anim_move_frame_02.png": "788dad1911e03f995631c22fba98a4a0f76edd97248a2448019bfb051eb5e9ea",
+    "assets/characters/sirius/processed/anim/sirius_anim_move_frame_03.png": "dbec267b74b3aae1ba0be05e63dbd6aab524660bbe56b69fb6696799aa2a8e76",
+    "assets/characters/sirius/processed/anim/sirius_anim_move_frame_04.png": "1cd5688ff1c5df741abb21d10eb447744bd6924dea3a305869896ee814759634",
+    "assets/characters/sirius/processed/anim/sirius_anim_move_keyframe.png": "3aa692c0093c4be665eba822b8028fb055e9602fb306869b89ea45c2078899aa",
+    "assets/characters/sirius/processed/battle/sirius_battle_aa_center.png": "18075e512f1a632348cc873770e3143e62d30cd080d0b6feb48829b644e57904",
+    "assets/characters/sirius/processed/battle/sirius_battle_body_r.png": "b0336fb0b43a6a96a8a9e3183ae72561fb4d77038290f241e071f9bd2ecc11ad",
+    "assets/characters/sirius/processed/battle/sirius_battle_radar_node.png": "2b94d30d1c11c1aa00ee86a4c5d95ca21ee1ae0f5a7e03bbe30d04b79c2d56fe",
+    "assets/characters/sirius/processed/battle/sirius_battle_rig_base.png": "79d8a909e4a572432a63283fd92911f4f9b55d9751bf5752e62a008e1c18176f",
+    "assets/characters/sirius/processed/battle/sirius_battle_support_node.png": "f9c4a9ecbc0fd8e2d1bfe505b293acbfee1fb4cc3567999f455b0c517539c54b",
+    "assets/characters/sirius/processed/battle/sirius_battle_turret_main_01.png": "1f1188ea73a6f02e753b3c7a8877e916d2cf5667ca839349aca017ca0e72cf3e",
+    "assets/characters/sirius/processed/battle/sirius_battle_turret_main_02.png": "2ec25f482c06c2aba76f96dc361d305da90a43a5e4a9fa2180dcfa88fbf5d491",
+    "assets/characters/sirius/processed/battle/sirius_battle_wake_origin_marker.png": "e4108d544734ee5c84f9b98a3a55fe3527c33baeee77c18f2ce9f7b4ee728964",
+    "assets/characters/sirius/processed/config/sirius_anim_config.json": "754c37caebd0762aefb2b7970ba4014cb888b7a947ce4fde13c41aa39bb311a4",
+    "assets/characters/sirius/processed/config/sirius_meta_bind_points.json": "fecc99136b7ff71ceb2326d440c4ea8e0577f2e31e90e641f41c2efd4c40045a",
+    "assets/characters/sirius/processed/config/sirius_postprocess_manifest.json": "1a8038f5f52b3d0d7fd2c8dbcfeab861cb473ce63d996c42df5252d30d01e3d5",
+    "assets/characters/sirius/processed/config/sirius_vfx_config.json": "63ffe35c067dfcde278dab126b07362e8576d5905b8863d20d6af14e6aadad63",
+    "assets/characters/sirius/processed/source_alpha/sirius_anim_5x4_master_alpha_source.png": "d89ae86feb8601ac0b1951d9e55c843bf16d0bd293b864b9f000e4a18ca9ab53",
+    "assets/characters/sirius/processed/source_alpha/sirius_battle_asset_grid_alpha_source.png": "df02d68d231dd1d86f000a71f25bdcdafe33a303edd7fc233cdf5378b43e4f6c",
+    "assets/characters/sirius/processed/source_alpha/sirius_concept_full_alpha_source.png": "87c0afea2fea7388a7f1db266be132cf85b95fa23bde77b8092202cc244e161e",
+    "assets/characters/sirius/processed/source_alpha/sirius_ui_sheet_alpha_source.png": "ece7ead53f3e2e2cd1098d79a5d40137bc3ca9a65d13910b52aad3c3cd167339",
+    "assets/characters/sirius/processed/source_alpha/sirius_vfx_reference_sheet_alpha_source.png": "bc0b61aa19190144159b1ad620c72fcbd5f9eb64daa6e757f481ff0921eaf31f",
+    "assets/characters/sirius/processed/ui/sirius_expr_default.png": "cc8b4a7ca5035d979d7f955a1e0334522d869631eb00f5862c05b55e5c061a41",
+    "assets/characters/sirius/processed/ui/sirius_expr_hit.png": "32e6c0d7e39e936864ace72ad2091699cd7afff703fa57ca3439e82c7b54be9e",
+    "assets/characters/sirius/processed/ui/sirius_expr_serious.png": "642f2826836e7e79945d3dc40ea81930c241bb9559538a9cf02d997eb2a8f89d",
+    "assets/characters/sirius/processed/ui/sirius_illust_full_alpha.png": "63c11fd9a1dec1cac86d2e31d52d8c89b59e8111e27c002afc8d83ac801c1bfd",
+    "assets/characters/sirius/processed/ui/sirius_illust_half_alpha.png": "00e6d9fc38d2dba230e2a6f78bbffbb24adde54f36508da9456d1a4e70e045b9",
+    "assets/characters/sirius/processed/ui/sirius_illust_skill_cutin_alpha.png": "46b540b9fa9b4abfb703c6660bfb149926f844dc17084860247e9596d365f680",
+    "assets/characters/sirius/processed/ui/sirius_ui_chibi_head.png": "2291fbe9b125627b75734cfc9cc1f4d8c10a2270193239d749f2d5384b7cb183",
+    "assets/characters/sirius/processed/ui/sirius_ui_class_light_cruiser.png": "f099efdc56ad256c0028227778b17d0cfd91c5c4deaec4764e8e3e2a7c0b2264",
+    "assets/characters/sirius/processed/ui/sirius_ui_portrait.png": "888ee13c3677dbb2ba312553bbcfff307e2cbb6f70351655ebd15a83e016a173",
+    "assets/characters/sirius/processed/ui/sirius_ui_portrait_small.png": "a9e0480d5072754bfcd8edb0fecbeb870e9a62157fb954889c857323ec2b30ce",
+    "assets/characters/sirius/processed/ui/sirius_ui_skill_escort_barrage.png": "4431874419546990745d085110bd7238d730e6b271ac08a84146949a7701b56d",
+    "assets/characters/sirius/ui/sirius_portrait_20261001_unframed_v1.png": "da460738bffa0eb012cae625f6283d47ca772d619e0de81ad2060ee735a5ca4a",
+    "assets/characters/sirius/ui/sirius_ui_sheet.png": "20080f1c709a89d376269b0d7d424adf4a26d555882c465d922138a7f0aa3b71",
+    "assets/characters/sirius/vfx/sirius_vfx_reference_sheet.png": "394ef3850d64ead0f76a891f8db47b454156a189e51233d48bdfc69fb4ad1857",
+    "assets/vfx/combat/character_templates/light_cruiser/vfx_light_cruiser_aa_burst.png": "af4e63708ecb19e95d24049adac8cc206e0d5a5fa4a319d2abb9e8d74459aec1",
+    "assets/vfx/combat/character_templates/light_cruiser/vfx_light_cruiser_aa_circle.png": "07618bafd94aeeb561b95fb9072fd9b718ff5c9350d1c938fd19f932a0b2c18f",
+    "assets/vfx/combat/character_templates/light_cruiser/vfx_light_cruiser_armor_sparks.png": "b550ddbf8a72541dc392782a216d640b6b572a6f4b0ccd4910787b811dc0c378",
+    "assets/vfx/combat/character_templates/light_cruiser/vfx_light_cruiser_escort_aura.png": "3e5ed52c42e6b393ed345ed9014365bb759969d112fb897cf2454c1c099ce649",
+    "assets/vfx/combat/character_templates/light_cruiser/vfx_light_cruiser_muzzle_flash_medium.png": "2d049e2cdc0672c7d8ae72e3ffe9098927f666d9ce96aa7653e91fcc6571225c",
+    "assets/vfx/combat/character_templates/light_cruiser/vfx_light_cruiser_shell_trail.png": "dbd11679f1b7531a2ba871176d3cada767d5e1bbd99be3971a5fbfc05ef8bb2d",
+    "assets/vfx/combat/character_templates/light_cruiser/vfx_light_cruiser_wake_medium.png": "88eec7e4cf4ec59cb45ee8d07040414e1b1a5dd72369a5e579c473eaba4b6b76",
+    "assets/vfx/combat/character_templates/light_cruiser/vfx_light_cruiser_water_splash.png": "381681bb7ae3817b0aaa874878bd2b3f79e4cdf2fa748ef313cf051e5bc29dcf"
+  },
+  "assets": {
+    "assets/characters/sirius/processed/anim/sirius_anim_attack_frame_01.png": {
+      "sha256": "f32833684017c47d3b4a67238a7a9b817c6a3705003adb83a0f4a48de2fffaee",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 336,
+        "height": 234,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 55237,
+        "visible_pixel_count": 23387,
+        "transparent_canvas_ratio": 0.7025462962962963,
+        "visible_canvas_ratio": 0.2974537037037037,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/sirius/processed/anim/sirius_anim_attack_frame_02.png": {
+      "sha256": "2a7a1d5ff2a6f39b26be52d596b2a28cec239df85e0f1cf82915b850b8ec128f",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 336,
+        "height": 234,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 55220,
+        "visible_pixel_count": 23404,
+        "transparent_canvas_ratio": 0.7023300773300774,
+        "visible_canvas_ratio": 0.29766992266992265,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/sirius/processed/anim/sirius_anim_attack_frame_03.png": {
+      "sha256": "9d29eb266b25d184f2e9cdd03b13a163e6aced30b98b4abc6dd0f8df323fae26",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 336,
+        "height": 234,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 55173,
+        "visible_pixel_count": 23451,
+        "transparent_canvas_ratio": 0.7017322954822954,
+        "visible_canvas_ratio": 0.2982677045177045,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/sirius/processed/anim/sirius_anim_attack_frame_04.png": {
+      "sha256": "9fc8ff00e832e2473225272d669684e04f45626b5caa954b8903cd04cca5e2bd",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 336,
+        "height": 234,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 55026,
+        "visible_pixel_count": 23598,
+        "transparent_canvas_ratio": 0.6998626373626373,
+        "visible_canvas_ratio": 0.3001373626373626,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/sirius/processed/anim/sirius_anim_attack_keyframe.png": {
+      "sha256": "f32833684017c47d3b4a67238a7a9b817c6a3705003adb83a0f4a48de2fffaee",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 336,
+        "height": 234,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 55237,
+        "visible_pixel_count": 23387,
+        "transparent_canvas_ratio": 0.7025462962962963,
+        "visible_canvas_ratio": 0.2974537037037037,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/sirius/processed/anim/sirius_anim_firepower_frame_01.png": {
+      "sha256": "059c529faec1342580d2f8635af39688f90a2828dbb55c4775d19e1e62127eba",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 304,
+        "height": 234,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 47995,
+        "visible_pixel_count": 23141,
+        "transparent_canvas_ratio": 0.6746935447593342,
+        "visible_canvas_ratio": 0.32530645524066576,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/sirius/processed/anim/sirius_anim_firepower_frame_02.png": {
+      "sha256": "db80f38cae93073ee7de3c1fb9a7e1758c8d4d09ff5b33f2eeda1c2805f05aea",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 304,
+        "height": 234,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 47535,
+        "visible_pixel_count": 23601,
+        "transparent_canvas_ratio": 0.6682270580296896,
+        "visible_canvas_ratio": 0.3317729419703104,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/sirius/processed/anim/sirius_anim_firepower_frame_03.png": {
+      "sha256": "4c574387f6dded363bef5e3be2a272757e0b11d930e7747180c4456acb4ff10c",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 304,
+        "height": 234,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 48307,
+        "visible_pixel_count": 22829,
+        "transparent_canvas_ratio": 0.6790795096716149,
+        "visible_canvas_ratio": 0.32092049032838504,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/sirius/processed/anim/sirius_anim_firepower_frame_04.png": {
+      "sha256": "54765a9adb12418cfecf49d6373bf9346434e96ba69eb6229ab2fbb475417a45",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 304,
+        "height": 234,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 48387,
+        "visible_pixel_count": 22749,
+        "transparent_canvas_ratio": 0.6802041160593792,
+        "visible_canvas_ratio": 0.3197958839406208,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/sirius/processed/anim/sirius_anim_firepower_keyframe.png": {
+      "sha256": "059c529faec1342580d2f8635af39688f90a2828dbb55c4775d19e1e62127eba",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 304,
+        "height": 234,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 47995,
+        "visible_pixel_count": 23141,
+        "transparent_canvas_ratio": 0.6746935447593342,
+        "visible_canvas_ratio": 0.32530645524066576,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/sirius/processed/anim/sirius_anim_hit_frame_01.png": {
+      "sha256": "d5a8c6152fe766c20dca180003dc8fb02392d807d0fb17bbf7f898e1cbbff47c",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 238,
+        "height": 228,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 31654,
+        "visible_pixel_count": 22610,
+        "transparent_canvas_ratio": 0.5833333333333334,
+        "visible_canvas_ratio": 0.4166666666666667,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/sirius/processed/anim/sirius_anim_hit_frame_02.png": {
+      "sha256": "e207e794ffeba51e42a24f5040eff92fdfa516083418c58c649a0f0771b3a63a",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 238,
+        "height": 228,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 31366,
+        "visible_pixel_count": 22898,
+        "transparent_canvas_ratio": 0.5780259472209937,
+        "visible_canvas_ratio": 0.42197405277900635,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/sirius/processed/anim/sirius_anim_hit_frame_03.png": {
+      "sha256": "a3b6309540584cfda1d9dd188cc121d0441aee4f06da6da323b3976894a478f8",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 238,
+        "height": 228,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 31873,
+        "visible_pixel_count": 22391,
+        "transparent_canvas_ratio": 0.5873691581895917,
+        "visible_canvas_ratio": 0.4126308418104084,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/sirius/processed/anim/sirius_anim_hit_frame_04.png": {
+      "sha256": "d1a3b72c28696251e77a2bc492b31591b3d4029f727c6ea0f67531c240f5fd31",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 238,
+        "height": 228,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 31413,
+        "visible_pixel_count": 22851,
+        "transparent_canvas_ratio": 0.578892083149049,
+        "visible_canvas_ratio": 0.4211079168509509,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/sirius/processed/anim/sirius_anim_hit_keyframe.png": {
+      "sha256": "d5a8c6152fe766c20dca180003dc8fb02392d807d0fb17bbf7f898e1cbbff47c",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 238,
+        "height": 228,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 31654,
+        "visible_pixel_count": 22610,
+        "transparent_canvas_ratio": 0.5833333333333334,
+        "visible_canvas_ratio": 0.4166666666666667,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/sirius/processed/anim/sirius_anim_idle_frame_01.png": {
+      "sha256": "b0336fb0b43a6a96a8a9e3183ae72561fb4d77038290f241e071f9bd2ecc11ad",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 246,
+        "height": 240,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 35443,
+        "visible_pixel_count": 23597,
+        "transparent_canvas_ratio": 0.6003218157181572,
+        "visible_canvas_ratio": 0.3996781842818428,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/sirius/processed/anim/sirius_anim_idle_frame_02.png": {
+      "sha256": "fc77eec5619662516fa2a1013a14016f2f3ceccfcc9d17f1a18db16832ae61c6",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 246,
+        "height": 240,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 35710,
+        "visible_pixel_count": 23330,
+        "transparent_canvas_ratio": 0.6048441734417345,
+        "visible_canvas_ratio": 0.3951558265582656,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/sirius/processed/anim/sirius_anim_idle_frame_03.png": {
+      "sha256": "da067a266f882fa1608cabddb5c3e7238f025f6332146f05c0c0be3f81848260",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 246,
+        "height": 240,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 36001,
+        "visible_pixel_count": 23039,
+        "transparent_canvas_ratio": 0.6097730352303523,
+        "visible_canvas_ratio": 0.3902269647696477,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/sirius/processed/anim/sirius_anim_idle_frame_04.png": {
+      "sha256": "ef44adf37adea6db8cfa2bfbb462cd7ac865b34451543feacd0e6eb3d83dd4f4",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 246,
+        "height": 240,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 35989,
+        "visible_pixel_count": 23051,
+        "transparent_canvas_ratio": 0.609569783197832,
+        "visible_canvas_ratio": 0.390430216802168,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/sirius/processed/anim/sirius_anim_idle_keyframe.png": {
+      "sha256": "b0336fb0b43a6a96a8a9e3183ae72561fb4d77038290f241e071f9bd2ecc11ad",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 246,
+        "height": 240,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 35443,
+        "visible_pixel_count": 23597,
+        "transparent_canvas_ratio": 0.6003218157181572,
+        "visible_canvas_ratio": 0.3996781842818428,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/sirius/processed/anim/sirius_anim_move_frame_01.png": {
+      "sha256": "3aa692c0093c4be665eba822b8028fb055e9602fb306869b89ea45c2078899aa",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 266,
+        "height": 238,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 40000,
+        "visible_pixel_count": 23308,
+        "transparent_canvas_ratio": 0.6318316800404372,
+        "visible_canvas_ratio": 0.3681683199595628,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/sirius/processed/anim/sirius_anim_move_frame_02.png": {
+      "sha256": "788dad1911e03f995631c22fba98a4a0f76edd97248a2448019bfb051eb5e9ea",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 266,
+        "height": 238,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 41238,
+        "visible_pixel_count": 22070,
+        "transparent_canvas_ratio": 0.6513868705376887,
+        "visible_canvas_ratio": 0.34861312946231127,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/sirius/processed/anim/sirius_anim_move_frame_03.png": {
+      "sha256": "dbec267b74b3aae1ba0be05e63dbd6aab524660bbe56b69fb6696799aa2a8e76",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 266,
+        "height": 238,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 40784,
+        "visible_pixel_count": 22524,
+        "transparent_canvas_ratio": 0.6442155809692298,
+        "visible_canvas_ratio": 0.3557844190307702,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/sirius/processed/anim/sirius_anim_move_frame_04.png": {
+      "sha256": "1cd5688ff1c5df741abb21d10eb447744bd6924dea3a305869896ee814759634",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 266,
+        "height": 238,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 40654,
+        "visible_pixel_count": 22654,
+        "transparent_canvas_ratio": 0.6421621280090983,
+        "visible_canvas_ratio": 0.3578378719909016,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/sirius/processed/anim/sirius_anim_move_keyframe.png": {
+      "sha256": "3aa692c0093c4be665eba822b8028fb055e9602fb306869b89ea45c2078899aa",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 266,
+        "height": 238,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 40000,
+        "visible_pixel_count": 23308,
+        "transparent_canvas_ratio": 0.6318316800404372,
+        "visible_canvas_ratio": 0.3681683199595628,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/sirius/processed/battle/sirius_battle_aa_center.png": {
+      "sha256": "18075e512f1a632348cc873770e3143e62d30cd080d0b6feb48829b644e57904",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 230,
+        "height": 192,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 25152,
+        "visible_pixel_count": 19008,
+        "transparent_canvas_ratio": 0.5695652173913044,
+        "visible_canvas_ratio": 0.43043478260869567,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          118,
+          136,
+          310,
+          285
+        ],
+        "final_crop_box": [
+          100,
+          118,
+          328,
+          303
+        ],
+        "component_area": 18896,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 21,
+          "bottom": 29
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/sirius/processed/battle/sirius_battle_body_r.png": {
+      "sha256": "b0336fb0b43a6a96a8a9e3183ae72561fb4d77038290f241e071f9bd2ecc11ad",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 246,
+        "height": 240,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 35443,
+        "visible_pixel_count": 23597,
+        "transparent_canvas_ratio": 0.6003218157181572,
+        "visible_canvas_ratio": 0.3996781842818428,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/sirius/processed/battle/sirius_battle_radar_node.png": {
+      "sha256": "2b94d30d1c11c1aa00ee86a4c5d95ca21ee1ae0f5a7e03bbe30d04b79c2d56fe",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 162,
+        "height": 226,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 23308,
+        "visible_pixel_count": 13304,
+        "transparent_canvas_ratio": 0.6366218726100732,
+        "visible_canvas_ratio": 0.3633781273899268,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          157,
+          120,
+          269,
+          300
+        ],
+        "final_crop_box": [
+          139,
+          102,
+          287,
+          318
+        ],
+        "component_area": 13043,
+        "output_edge_margins": {
+          "left": 34,
+          "top": 18,
+          "right": 18,
+          "bottom": 32
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/sirius/processed/battle/sirius_battle_rig_base.png": {
+      "sha256": "79d8a909e4a572432a63283fd92911f4f9b55d9751bf5752e62a008e1c18176f",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 296,
+        "height": 196,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 26292,
+        "visible_pixel_count": 31724,
+        "transparent_canvas_ratio": 0.4531853281853282,
+        "visible_canvas_ratio": 0.5468146718146718,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          92,
+          179,
+          350,
+          332
+        ],
+        "final_crop_box": [
+          74,
+          161,
+          368,
+          350
+        ],
+        "component_area": 31640,
+        "output_edge_margins": {
+          "left": 20,
+          "top": 21,
+          "right": 18,
+          "bottom": 18
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/sirius/processed/battle/sirius_battle_support_node.png": {
+      "sha256": "f9c4a9ecbc0fd8e2d1bfe505b293acbfee1fb4cc3567999f455b0c517539c54b",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 254,
+        "height": 222,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 35297,
+        "visible_pixel_count": 21091,
+        "transparent_canvas_ratio": 0.6259665176988012,
+        "visible_canvas_ratio": 0.3740334823011988,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          115,
+          115,
+          331,
+          298
+        ],
+        "final_crop_box": [
+          97,
+          97,
+          349,
+          316
+        ],
+        "component_area": 20186,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 19,
+          "right": 20,
+          "bottom": 28
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/sirius/processed/battle/sirius_battle_turret_main_01.png": {
+      "sha256": "1f1188ea73a6f02e753b3c7a8877e916d2cf5667ca839349aca017ca0e72cf3e",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 402,
+        "height": 216,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 56671,
+        "visible_pixel_count": 30161,
+        "transparent_canvas_ratio": 0.6526510963700018,
+        "visible_canvas_ratio": 0.34734890362999815,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          72,
+          156,
+          371,
+          329
+        ],
+        "final_crop_box": [
+          54,
+          138,
+          389,
+          347
+        ],
+        "component_area": 28818,
+        "output_edge_margins": {
+          "left": 88,
+          "top": 19,
+          "right": 19,
+          "bottom": 38
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/sirius/processed/battle/sirius_battle_turret_main_02.png": {
+      "sha256": "2ec25f482c06c2aba76f96dc361d305da90a43a5e4a9fa2180dcfa88fbf5d491",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 400,
+        "height": 216,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 56198,
+        "visible_pixel_count": 30202,
+        "transparent_canvas_ratio": 0.6504398148148148,
+        "visible_canvas_ratio": 0.34956018518518517,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          70,
+          156,
+          369,
+          329
+        ],
+        "final_crop_box": [
+          52,
+          138,
+          387,
+          347
+        ],
+        "component_area": 28876,
+        "output_edge_margins": {
+          "left": 87,
+          "top": 19,
+          "right": 18,
+          "bottom": 38
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/sirius/processed/battle/sirius_battle_wake_origin_marker.png": {
+      "sha256": "e4108d544734ee5c84f9b98a3a55fe3527c33baeee77c18f2ce9f7b4ee728964",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 102,
+        "height": 378,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 29167,
+        "visible_pixel_count": 9389,
+        "transparent_canvas_ratio": 0.756484075111526,
+        "visible_canvas_ratio": 0.2435159248884739,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          186,
+          96,
+          246,
+          351
+        ],
+        "final_crop_box": [
+          168,
+          78,
+          264,
+          369
+        ],
+        "component_area": 8627,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 18,
+          "bottom": 79
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/sirius/processed/ui/sirius_expr_default.png": {
+      "sha256": "cc8b4a7ca5035d979d7f955a1e0334522d869631eb00f5862c05b55e5c061a41",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 354,
+        "height": 380,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 67851,
+        "visible_pixel_count": 66669,
+        "transparent_canvas_ratio": 0.5043933987511151,
+        "visible_canvas_ratio": 0.49560660124888495,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          46,
+          77,
+          337,
+          398
+        ],
+        "final_crop_box": [
+          28,
+          59,
+          355,
+          416
+        ],
+        "output_edge_margins": {
+          "left": 18,
+          "top": 18,
+          "right": 45,
+          "bottom": 41
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/sirius/processed/ui/sirius_expr_hit.png": {
+      "sha256": "32e6c0d7e39e936864ace72ad2091699cd7afff703fa57ca3439e82c7b54be9e",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 354,
+        "height": 376,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 67842,
+        "visible_pixel_count": 65262,
+        "transparent_canvas_ratio": 0.5096916696718355,
+        "visible_canvas_ratio": 0.49030833032816445,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          53,
+          43,
+          345,
+          362
+        ],
+        "final_crop_box": [
+          35,
+          25,
+          363,
+          380
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 43,
+          "bottom": 38
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/sirius/processed/ui/sirius_expr_serious.png": {
+      "sha256": "642f2826836e7e79945d3dc40ea81930c241bb9559538a9cf02d997eb2a8f89d",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 346,
+        "height": 376,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 65035,
+        "visible_pixel_count": 65061,
+        "transparent_canvas_ratio": 0.49990007379166157,
+        "visible_canvas_ratio": 0.5000999262083384,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          73,
+          43,
+          361,
+          362
+        ],
+        "final_crop_box": [
+          55,
+          25,
+          379,
+          380
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 39,
+          "bottom": 38
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/sirius/processed/ui/sirius_illust_full_alpha.png": {
+      "sha256": "63c11fd9a1dec1cac86d2e31d52d8c89b59e8111e27c002afc8d83ac801c1bfd",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 1044,
+        "height": 1826,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 1427171,
+        "visible_pixel_count": 479173,
+        "transparent_canvas_ratio": 0.7486429521639326,
+        "visible_canvas_ratio": 0.2513570478360674,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          11,
+          27,
+          1015,
+          1512
+        ],
+        "final_crop_box": [
+          0,
+          15,
+          1024,
+          1524
+        ],
+        "output_edge_margins": {
+          "left": 13,
+          "top": 329,
+          "right": 27,
+          "bottom": 12
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/sirius/processed/ui/sirius_illust_half_alpha.png": {
+      "sha256": "00e6d9fc38d2dba230e2a6f78bbffbb24adde54f36508da9456d1a4e70e045b9",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 1052,
+        "height": 1156,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 784807,
+        "visible_pixel_count": 431305,
+        "transparent_canvas_ratio": 0.6453410541134369,
+        "visible_canvas_ratio": 0.3546589458865631,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          16,
+          70,
+          1020,
+          1139
+        ],
+        "final_crop_box": [
+          0,
+          54,
+          1036,
+          1155
+        ],
+        "output_edge_margins": {
+          "left": 16,
+          "top": 70,
+          "right": 32,
+          "bottom": 17
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/sirius/processed/ui/sirius_illust_skill_cutin_alpha.png": {
+      "sha256": "46b540b9fa9b4abfb703c6660bfb149926f844dc17084860247e9596d365f680",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 1052,
+        "height": 1000,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 642614,
+        "visible_pixel_count": 409386,
+        "transparent_canvas_ratio": 0.6108498098859315,
+        "visible_canvas_ratio": 0.38915019011406843,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          391,
+          17,
+          1395,
+          878
+        ],
+        "final_crop_box": [
+          375,
+          1,
+          1411,
+          894
+        ],
+        "output_edge_margins": {
+          "left": 17,
+          "top": 17,
+          "right": 31,
+          "bottom": 122
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/sirius/processed/ui/sirius_ui_chibi_head.png": {
+      "sha256": "2291fbe9b125627b75734cfc9cc1f4d8c10a2270193239d749f2d5384b7cb183",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 370,
+        "height": 326,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 55796,
+        "visible_pixel_count": 64824,
+        "transparent_canvas_ratio": 0.4625766871165644,
+        "visible_canvas_ratio": 0.5374233128834356,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          48,
+          96,
+          374,
+          379
+        ],
+        "final_crop_box": [
+          30,
+          78,
+          392,
+          397
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 25,
+          "bottom": 25
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/sirius/processed/ui/sirius_ui_class_light_cruiser.png": {
+      "sha256": "f099efdc56ad256c0028227778b17d0cfd91c5c4deaec4764e8e3e2a7c0b2264",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 326,
+        "height": 356,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 48629,
+        "visible_pixel_count": 67427,
+        "transparent_canvas_ratio": 0.4190132349900048,
+        "visible_canvas_ratio": 0.5809867650099951,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          55,
+          57,
+          344,
+          364
+        ],
+        "final_crop_box": [
+          37,
+          39,
+          362,
+          382
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 30,
+          "right": 18,
+          "bottom": 19
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/sirius/processed/ui/sirius_ui_portrait.png": {
+      "sha256": "888ee13c3677dbb2ba312553bbcfff307e2cbb6f70351655ebd15a83e016a173",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 512,
+        "height": 512,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 166378,
+        "visible_pixel_count": 95766,
+        "transparent_canvas_ratio": 0.6346817016601562,
+        "visible_canvas_ratio": 0.36531829833984375,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          35,
+          1156,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              35,
+              1156,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 95,
+          "top": 56,
+          "right": 67,
+          "bottom": 59
+        },
+        "cleanup_tags": []
+      },
+      "review": {
+        "verdict": "pass",
+        "reviewer": "Codex visual inspection",
+        "observation": "Silver-blue wavy bob, violet-blue eyes, compass star hairclip and navy-white-gold cape retained; no frame or added accessory. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+      }
+    },
+    "assets/characters/sirius/processed/ui/sirius_ui_portrait_small.png": {
+      "sha256": "a9e0480d5072754bfcd8edb0fecbeb870e9a62157fb954889c857323ec2b30ce",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 128,
+        "height": 128,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 9921,
+        "visible_pixel_count": 6463,
+        "transparent_canvas_ratio": 0.60552978515625,
+        "visible_canvas_ratio": 0.39447021484375,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          35,
+          1156,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              35,
+              1156,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 22,
+          "top": 12,
+          "right": 15,
+          "bottom": 13
+        },
+        "cleanup_tags": []
+      },
+      "review": {
+        "verdict": "pass",
+        "reviewer": "Codex visual inspection",
+        "observation": "Silver-blue wavy bob, violet-blue eyes, compass star hairclip and navy-white-gold cape retained; no frame or added accessory. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+      }
+    },
+    "assets/characters/sirius/processed/ui/sirius_ui_skill_escort_barrage.png": {
+      "sha256": "4431874419546990745d085110bd7238d730e6b271ac08a84146949a7701b56d",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 340,
+        "height": 342,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 44680,
+        "visible_pixel_count": 71600,
+        "transparent_canvas_ratio": 0.3842449260405917,
+        "visible_canvas_ratio": 0.6157550739594083,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          56,
+          53,
+          357,
+          356
+        ],
+        "final_crop_box": [
+          38,
+          35,
+          375,
+          374
+        ],
+        "output_edge_margins": {
+          "left": 20,
+          "top": 20,
+          "right": 19,
+          "bottom": 19
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/light_cruiser/vfx_light_cruiser_aa_burst.png": {
+      "sha256": "af4e63708ecb19e95d24049adac8cc206e0d5a5fa4a319d2abb9e8d74459aec1",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 140,
+        "height": 152,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 18240,
+        "visible_pixel_count": 3040,
+        "transparent_canvas_ratio": 0.8571428571428571,
+        "visible_canvas_ratio": 0.14285714285714285,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          186,
+          205,
+          254,
+          301
+        ],
+        "final_crop_box": [
+          168,
+          187,
+          272,
+          319
+        ],
+        "component_area": 2727,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 19,
+          "right": 22,
+          "bottom": 31
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/light_cruiser/vfx_light_cruiser_aa_circle.png": {
+      "sha256": "07618bafd94aeeb561b95fb9072fd9b718ff5c9350d1c938fd19f932a0b2c18f",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 150,
+        "height": 138,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 20206,
+        "visible_pixel_count": 494,
+        "transparent_canvas_ratio": 0.9761352657004831,
+        "visible_canvas_ratio": 0.02386473429951691,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          257,
+          271,
+          319,
+          334
+        ],
+        "final_crop_box": [
+          239,
+          253,
+          337,
+          352
+        ],
+        "component_area": 455,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 19,
+          "right": 46,
+          "bottom": 33
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/light_cruiser/vfx_light_cruiser_armor_sparks.png": {
+      "sha256": "b550ddbf8a72541dc392782a216d640b6b572a6f4b0ccd4910787b811dc0c378",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 92,
+        "height": 96,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 8223,
+        "visible_pixel_count": 609,
+        "transparent_canvas_ratio": 0.931046195652174,
+        "visible_canvas_ratio": 0.06895380434782608,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          209,
+          227,
+          254,
+          261
+        ],
+        "final_crop_box": [
+          191,
+          209,
+          272,
+          279
+        ],
+        "component_area": 478,
+        "output_edge_margins": {
+          "left": 26,
+          "top": 19,
+          "right": 18,
+          "bottom": 25
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/light_cruiser/vfx_light_cruiser_escort_aura.png": {
+      "sha256": "3e5ed52c42e6b393ed345ed9014365bb759969d112fb897cf2454c1c099ce649",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 262,
+        "height": 272,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 54016,
+        "visible_pixel_count": 17248,
+        "transparent_canvas_ratio": 0.7579703637180063,
+        "visible_canvas_ratio": 0.24202963628199373,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          103,
+          130,
+          319,
+          297
+        ],
+        "final_crop_box": [
+          85,
+          112,
+          337,
+          315
+        ],
+        "component_area": 17005,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 18,
+          "bottom": 72
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/light_cruiser/vfx_light_cruiser_muzzle_flash_medium.png": {
+      "sha256": "2d049e2cdc0672c7d8ae72e3ffe9098927f666d9ce96aa7653e91fcc6571225c",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 284,
+        "height": 218,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 46711,
+        "visible_pixel_count": 15201,
+        "transparent_canvas_ratio": 0.7544740922599819,
+        "visible_canvas_ratio": 0.2455259077400181,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          127,
+          156,
+          339,
+          329
+        ],
+        "final_crop_box": [
+          109,
+          138,
+          357,
+          347
+        ],
+        "component_area": 14890,
+        "output_edge_margins": {
+          "left": 37,
+          "top": 18,
+          "right": 18,
+          "bottom": 26
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/light_cruiser/vfx_light_cruiser_shell_trail.png": {
+      "sha256": "dbd11679f1b7531a2ba871176d3cada767d5e1bbd99be3971a5fbfc05ef8bb2d",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 332,
+        "height": 106,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 29508,
+        "visible_pixel_count": 5684,
+        "transparent_canvas_ratio": 0.8384860195498977,
+        "visible_canvas_ratio": 0.1615139804501023,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          97,
+          222,
+          357,
+          270
+        ],
+        "final_crop_box": [
+          79,
+          204,
+          375,
+          288
+        ],
+        "component_area": 5626,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 19,
+          "right": 54,
+          "bottom": 18
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/light_cruiser/vfx_light_cruiser_wake_medium.png": {
+      "sha256": "88eec7e4cf4ec59cb45ee8d07040414e1b1a5dd72369a5e579c473eaba4b6b76",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 324,
+        "height": 202,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 47835,
+        "visible_pixel_count": 17613,
+        "transparent_canvas_ratio": 0.7308855885588559,
+        "visible_canvas_ratio": 0.2691144114411441,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          75,
+          164,
+          325,
+          310
+        ],
+        "final_crop_box": [
+          57,
+          146,
+          343,
+          328
+        ],
+        "component_area": 17428,
+        "output_edge_margins": {
+          "left": 32,
+          "top": 19,
+          "right": 18,
+          "bottom": 33
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/light_cruiser/vfx_light_cruiser_water_splash.png": {
+      "sha256": "381681bb7ae3817b0aaa874878bd2b3f79e4cdf2fa748ef313cf051e5bc29dcf",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 292,
+        "height": 254,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 58596,
+        "visible_pixel_count": 15572,
+        "transparent_canvas_ratio": 0.7900442239240643,
+        "visible_canvas_ratio": 0.2099557760759357,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          112,
+          147,
+          334,
+          292
+        ],
+        "final_crop_box": [
+          94,
+          129,
+          352,
+          310
+        ],
+        "component_area": 15102,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 18,
+          "right": 21,
+          "bottom": 73
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    }
+  }
+}

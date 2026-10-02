@@ -1,0 +1,1813 @@
+{
+  "schema_version": 1,
+  "character_id": "argus",
+  "scope": "Visual evidence only; technical contract must pass separately. Not runtime acceptance.",
+  "checklist": [
+    "identity_and_inventory",
+    "no_truncation_or_neighbor_fragments",
+    "alpha_edges_and_small_scale_readability",
+    "animation_consistency",
+    "mechanical_binding_and_vfx_semantics"
+  ],
+  "package_sha256": {
+    "assets/characters/argus/battle/argus_anim_5x4_master.png": "e0cbda565c2ddccfc6a9d52cf076ff49e3b2629eec6a3510b8e3e6e110ab3519",
+    "assets/characters/argus/battle/argus_battle_asset_grid.png": "83530e82662ae941ffe62a1e7d406fa09ea4deb44bf4271f567375c32944a9bf",
+    "assets/characters/argus/concept/argus_concept_full.png": "d33cd497b094623f8e163d90ed8e839684189d9b7667395e7ddeb75dfe7f99d5",
+    "assets/characters/argus/meta/argus_portrait_revision.json": "fa5d813f272435bd8c6a8f0c32d8c9751eb5a5be0e348b9e08ec8566d424feb3",
+    "assets/characters/argus/processed/anim/argus_anim_attack_frame_01.png": "4f49523cd2dba69b7b6474495d19b145cc225c558f9f82560e54b1fbfb69f0bb",
+    "assets/characters/argus/processed/anim/argus_anim_attack_frame_02.png": "1c4e2be7d0035bab1ad196d4235faf049cd34cec920d541584be5a612b1c60d3",
+    "assets/characters/argus/processed/anim/argus_anim_attack_frame_03.png": "7235c044e78d0ee11be0e0b4a1a97c067ae93c9aa07d94b98be56ae4628f6265",
+    "assets/characters/argus/processed/anim/argus_anim_attack_frame_04.png": "92652de943aeb9f5945c44150f3e4410168abd02c2d33a8997dab72f22bb01ee",
+    "assets/characters/argus/processed/anim/argus_anim_attack_keyframe.png": "4f49523cd2dba69b7b6474495d19b145cc225c558f9f82560e54b1fbfb69f0bb",
+    "assets/characters/argus/processed/anim/argus_anim_firepower_frame_01.png": "807fad651bf8e8c4347c825158fcbac538ff267d69eabb16ace4e1695f76d71e",
+    "assets/characters/argus/processed/anim/argus_anim_firepower_frame_02.png": "be904ab7e8e9be6a3705a07cd2489764775ca8333f8d9976ee9d6abb2337a81f",
+    "assets/characters/argus/processed/anim/argus_anim_firepower_frame_03.png": "61570e243fd39e4a7b713be4bc144380fd710c5a942736eef13665ebb662fa82",
+    "assets/characters/argus/processed/anim/argus_anim_firepower_frame_04.png": "e33f749c4a89795765856f78b143f5e75047a23d3c169cae7662d6a15115f66a",
+    "assets/characters/argus/processed/anim/argus_anim_firepower_keyframe.png": "807fad651bf8e8c4347c825158fcbac538ff267d69eabb16ace4e1695f76d71e",
+    "assets/characters/argus/processed/anim/argus_anim_hit_frame_01.png": "588d3366f08d74662a0873c716876085183bb874ca0ab72ebd7dc952176311f4",
+    "assets/characters/argus/processed/anim/argus_anim_hit_frame_02.png": "05d989fd9ee0dd1eff7375a7dccdea78f795ae76cee0d453f92bbd36008527b4",
+    "assets/characters/argus/processed/anim/argus_anim_hit_frame_03.png": "cd6c392f212e14510bf069516a14f8cdefabc68c7539db07a5a191e0c905de2d",
+    "assets/characters/argus/processed/anim/argus_anim_hit_frame_04.png": "9e5ff7705c2dad284b77073c0f59c90cd12afb07f15deafc5d24a896f355e2e5",
+    "assets/characters/argus/processed/anim/argus_anim_hit_keyframe.png": "588d3366f08d74662a0873c716876085183bb874ca0ab72ebd7dc952176311f4",
+    "assets/characters/argus/processed/anim/argus_anim_idle_frame_01.png": "cfbb6fe6c193bb605fdf2db6293648a58116e55bba3aa69fe24aa532c3c8e6c1",
+    "assets/characters/argus/processed/anim/argus_anim_idle_frame_02.png": "e68e2904955f8854eecf2fad6038f200cd1b6cb07d2555fe30c864bf973bd45b",
+    "assets/characters/argus/processed/anim/argus_anim_idle_frame_03.png": "611d6803a550c2778a89f1f8ecdfbe3102df1f5e964c913d5d2d85b4a5dd8144",
+    "assets/characters/argus/processed/anim/argus_anim_idle_frame_04.png": "6d958c7c1c2ccdf89916846f698b0071ac8af899956cb99f157f27bf79f87d8b",
+    "assets/characters/argus/processed/anim/argus_anim_idle_keyframe.png": "cfbb6fe6c193bb605fdf2db6293648a58116e55bba3aa69fe24aa532c3c8e6c1",
+    "assets/characters/argus/processed/anim/argus_anim_move_frame_01.png": "616b790d3ab61aba3d6195b612b8f6f04becca5d200b9f3a72b3978677755858",
+    "assets/characters/argus/processed/anim/argus_anim_move_frame_02.png": "2ac31de94f5e6b2494b40a0f38a3b9af928b7a88e5207ddad974c91179113eb6",
+    "assets/characters/argus/processed/anim/argus_anim_move_frame_03.png": "ff7b717a72c388360307c2aff72cb7563ca72c6c74b0e56b38204345861b584d",
+    "assets/characters/argus/processed/anim/argus_anim_move_frame_04.png": "8d3e63c7c9b07e40481082160a236d2da0e361bbc2f1811db97c03a32d7941d5",
+    "assets/characters/argus/processed/anim/argus_anim_move_keyframe.png": "616b790d3ab61aba3d6195b612b8f6f04becca5d200b9f3a72b3978677755858",
+    "assets/characters/argus/processed/battle/argus_battle_aircraft_group_01.png": "3c78a8175f2df128a742a6d5d3ae31352cba89eaef68a5934f0df3ed7ef6f0b1",
+    "assets/characters/argus/processed/battle/argus_battle_aircraft_launch_marker.png": "4d68220ed11891f1d771b7033f7bff4a9601fdbaa40b6bcb3f8238cb55febfc2",
+    "assets/characters/argus/processed/battle/argus_battle_aircraft_recovery_marker.png": "62ce3f56a1db8428cb2486ebea2e7bccce76b37e245bec8080032aa4a3f1eef2",
+    "assets/characters/argus/processed/battle/argus_battle_body_r.png": "cfbb6fe6c193bb605fdf2db6293648a58116e55bba3aa69fe24aa532c3c8e6c1",
+    "assets/characters/argus/processed/battle/argus_battle_flight_deck.png": "7e2806f5ec1eabef1c39e576f66412db08fc60e7dd30f7c470638199c2934667",
+    "assets/characters/argus/processed/battle/argus_battle_radar_node.png": "955f16582ffed074761b9b8a477999027c038c9b9b134f5528052421f4a9725c",
+    "assets/characters/argus/processed/battle/argus_battle_rig_base.png": "a13bb2534f459ca286ea85d1c071adfc6cb5b88c05f309061ac91c068e6dbcd0",
+    "assets/characters/argus/processed/battle/argus_battle_wake_origin_marker.png": "c7ec00fec0183ead1aec46f0e9c864d2351b7f2aa5e06ae1631f4e7f66698594",
+    "assets/characters/argus/processed/config/argus_anim_config.json": "f8929f63221c6af58ea5ea12c8220a2cd0d78ccfda737fe04888676b5afcfd99",
+    "assets/characters/argus/processed/config/argus_meta_bind_points.json": "5d4c4d1977ee32c9415294550bbc09096bdc5f17f36053f7d84f1811eda8374d",
+    "assets/characters/argus/processed/config/argus_postprocess_manifest.json": "16c48ec9d62e4f36b102fa4581e3bb50dc2ace63a2661242c55324f0df42509b",
+    "assets/characters/argus/processed/config/argus_vfx_config.json": "bd24904476c4a6d7375ff2bfb849b774445b51a15005e5488db4341c03c8bdb0",
+    "assets/characters/argus/processed/source_alpha/argus_anim_5x4_master_alpha_source.png": "5a494c3a9a99c34efb17d46b9b9508dd6cb314cdbca432f1311b032cffbb94e8",
+    "assets/characters/argus/processed/source_alpha/argus_battle_asset_grid_alpha_source.png": "c14c285ba8808e4e4b6e4b128165b10051ab25daa63d5f9ae298b5144e9fc3db",
+    "assets/characters/argus/processed/source_alpha/argus_concept_full_alpha_source.png": "daae7bd31ab760e469f2a5557b012dca88354ff1efc5ad767be9eab65ef4825f",
+    "assets/characters/argus/processed/source_alpha/argus_ui_sheet_alpha_source.png": "db747b2400824e82b6973c65f9bba94b3f711a2210cad4bd6532c26d3a949eeb",
+    "assets/characters/argus/processed/source_alpha/argus_vfx_reference_sheet_alpha_source.png": "e49126003d77f84250674c70f7cf26209f74bfade9e73c4673a3101460478047",
+    "assets/characters/argus/processed/ui/argus_expr_default.png": "50dc8d590adfdb67e791b1bfa293985464a381d3e05d0b597e1f2d3b9b775b03",
+    "assets/characters/argus/processed/ui/argus_expr_hit.png": "1a5f8f1bd0696792d6a2893af3b9e6401f3eeb5b8a3495f8a807ea242b4ebc7a",
+    "assets/characters/argus/processed/ui/argus_expr_serious.png": "8764eae52147e13292b147a3256c15e0ee620ca9088c950fdb6ac2b4d749da18",
+    "assets/characters/argus/processed/ui/argus_illust_full_alpha.png": "51b034a62f9424dfa119508f4b0d91274d7a0981f06e56f5b365283fd631646c",
+    "assets/characters/argus/processed/ui/argus_illust_half_alpha.png": "57ad3840a22be4cd7935d893f3fe5cc4ceae6ca65880da1c8661f0a9b1770203",
+    "assets/characters/argus/processed/ui/argus_illust_skill_cutin_alpha.png": "08d65c717173963b166d9753da876be2f15fed74c3e66579abdab77f44b1410d",
+    "assets/characters/argus/processed/ui/argus_ui_chibi_head.png": "bbd011dec6a195929f0560370e4ae0172aa72bad916b545b35418eae25bb0e22",
+    "assets/characters/argus/processed/ui/argus_ui_class_carrier.png": "ca4b7cbd6aec591e4e137753bc6a4a4c9fbe7ef30151c23faa34bd887b84bdef",
+    "assets/characters/argus/processed/ui/argus_ui_portrait.png": "b4f5b47a056f97062dbb6f21639203ad32737e6a64421e9a9f95b6afcef73940",
+    "assets/characters/argus/processed/ui/argus_ui_portrait_small.png": "c6152ad219180507459d44fe1fd3a7559818ab50eddef56ac73899556ddb2386",
+    "assets/characters/argus/processed/ui/argus_ui_skill_airstrike.png": "2c370fbceef0befb90d07eac20f3c06fa8d556622b62ca0d1ae6e0cae34108e4",
+    "assets/characters/argus/ui/argus_portrait_20261001_unframed_v1.png": "98ba704c7b971c5842bb89e2126d45c5a5b36588d232d971ecbc249e9e1f76e8",
+    "assets/characters/argus/ui/argus_ui_sheet.png": "3e2bb5acc366517a39baacedad269e227e669f5b945a79246f2de5ce3a1595d5",
+    "assets/characters/argus/vfx/argus_vfx_reference_sheet.png": "59d2beaf9fc0e352f387bfada37121a52484449cef414398d5ec5ad710a8acdf",
+    "assets/vfx/combat/character_templates/carrier/vfx_carrier_aa_burst.png": "7e2583a6fa6f387cda1f4ce52c98dd270bea595916c47ad1def14caaa5470ab3",
+    "assets/vfx/combat/character_templates/carrier/vfx_carrier_aircraft_explosion.png": "b04f40427c7c747cfc59279af7e9b69161cece35754d77af5204fe3d00d17487",
+    "assets/vfx/combat/character_templates/carrier/vfx_carrier_aircraft_formation.png": "5fc5bd4b4f9443a9643af9fa4dab33a5fad4308b093a2e2acd7846ea227e9d2f",
+    "assets/vfx/combat/character_templates/carrier/vfx_carrier_aircraft_launch_flash.png": "aba435ccb3f2c2a40db8f1b041b35d637fb0a5c8645e8018149ff7182ccbef20",
+    "assets/vfx/combat/character_templates/carrier/vfx_carrier_aircraft_path.png": "daedd061d887f81820d5ae61ef9acf1c30b8598817a170dae66068f105534867",
+    "assets/vfx/combat/character_templates/carrier/vfx_carrier_aircraft_recovery.png": "375357165731ac6e3b2b2c73ed0af9e53529b7bddfb4bb7f6854dda1da65827c",
+    "assets/vfx/combat/character_templates/carrier/vfx_carrier_airstrike_area.png": "9931821bf1c616266ce8c708f759b9f34802ab63fe3b7b2110450a81f04bd284",
+    "assets/vfx/combat/character_templates/carrier/vfx_carrier_wake_carrier.png": "e84a6a83c24bdbfaf8f43bec7851f5a958f97cc336bbd664d5b205c94b551e5d"
+  },
+  "assets": {
+    "assets/characters/argus/processed/anim/argus_anim_attack_frame_01.png": {
+      "sha256": "4f49523cd2dba69b7b6474495d19b145cc225c558f9f82560e54b1fbfb69f0bb",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 216,
+        "height": 232,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 32027,
+        "visible_pixel_count": 18085,
+        "transparent_canvas_ratio": 0.6391083971902938,
+        "visible_canvas_ratio": 0.3608916028097063,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/argus/processed/anim/argus_anim_attack_frame_02.png": {
+      "sha256": "1c4e2be7d0035bab1ad196d4235faf049cd34cec920d541584be5a612b1c60d3",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 216,
+        "height": 232,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 32098,
+        "visible_pixel_count": 18014,
+        "transparent_canvas_ratio": 0.6405252234993615,
+        "visible_canvas_ratio": 0.3594747765006386,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/argus/processed/anim/argus_anim_attack_frame_03.png": {
+      "sha256": "7235c044e78d0ee11be0e0b4a1a97c067ae93c9aa07d94b98be56ae4628f6265",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 216,
+        "height": 232,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 32108,
+        "visible_pixel_count": 18004,
+        "transparent_canvas_ratio": 0.6407247765006385,
+        "visible_canvas_ratio": 0.3592752234993614,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/argus/processed/anim/argus_anim_attack_frame_04.png": {
+      "sha256": "92652de943aeb9f5945c44150f3e4410168abd02c2d33a8997dab72f22bb01ee",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 216,
+        "height": 232,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 32114,
+        "visible_pixel_count": 17998,
+        "transparent_canvas_ratio": 0.6408445083014048,
+        "visible_canvas_ratio": 0.3591554916985951,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/argus/processed/anim/argus_anim_attack_keyframe.png": {
+      "sha256": "4f49523cd2dba69b7b6474495d19b145cc225c558f9f82560e54b1fbfb69f0bb",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 216,
+        "height": 232,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 32027,
+        "visible_pixel_count": 18085,
+        "transparent_canvas_ratio": 0.6391083971902938,
+        "visible_canvas_ratio": 0.3608916028097063,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/argus/processed/anim/argus_anim_firepower_frame_01.png": {
+      "sha256": "807fad651bf8e8c4347c825158fcbac538ff267d69eabb16ace4e1695f76d71e",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 202,
+        "height": 234,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 29152,
+        "visible_pixel_count": 18116,
+        "transparent_canvas_ratio": 0.6167385969366167,
+        "visible_canvas_ratio": 0.38326140306338324,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/argus/processed/anim/argus_anim_firepower_frame_02.png": {
+      "sha256": "be904ab7e8e9be6a3705a07cd2489764775ca8333f8d9976ee9d6abb2337a81f",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 202,
+        "height": 234,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 29258,
+        "visible_pixel_count": 18010,
+        "transparent_canvas_ratio": 0.618981128882119,
+        "visible_canvas_ratio": 0.381018871117881,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/argus/processed/anim/argus_anim_firepower_frame_03.png": {
+      "sha256": "61570e243fd39e4a7b713be4bc144380fd710c5a942736eef13665ebb662fa82",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 202,
+        "height": 234,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 29348,
+        "visible_pixel_count": 17920,
+        "transparent_canvas_ratio": 0.6208851654396209,
+        "visible_canvas_ratio": 0.3791148345603791,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/argus/processed/anim/argus_anim_firepower_frame_04.png": {
+      "sha256": "e33f749c4a89795765856f78b143f5e75047a23d3c169cae7662d6a15115f66a",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 202,
+        "height": 234,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 29353,
+        "visible_pixel_count": 17915,
+        "transparent_canvas_ratio": 0.620990945248371,
+        "visible_canvas_ratio": 0.379009054751629,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/argus/processed/anim/argus_anim_firepower_keyframe.png": {
+      "sha256": "807fad651bf8e8c4347c825158fcbac538ff267d69eabb16ace4e1695f76d71e",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 202,
+        "height": 234,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 29152,
+        "visible_pixel_count": 18116,
+        "transparent_canvas_ratio": 0.6167385969366167,
+        "visible_canvas_ratio": 0.38326140306338324,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/argus/processed/anim/argus_anim_hit_frame_01.png": {
+      "sha256": "588d3366f08d74662a0873c716876085183bb874ca0ab72ebd7dc952176311f4",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 216,
+        "height": 234,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 31989,
+        "visible_pixel_count": 18555,
+        "transparent_canvas_ratio": 0.6328941120607787,
+        "visible_canvas_ratio": 0.3671058879392213,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/argus/processed/anim/argus_anim_hit_frame_02.png": {
+      "sha256": "05d989fd9ee0dd1eff7375a7dccdea78f795ae76cee0d453f92bbd36008527b4",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 216,
+        "height": 234,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 33757,
+        "visible_pixel_count": 16787,
+        "transparent_canvas_ratio": 0.6678735359290915,
+        "visible_canvas_ratio": 0.3321264640709085,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/argus/processed/anim/argus_anim_hit_frame_03.png": {
+      "sha256": "cd6c392f212e14510bf069516a14f8cdefabc68c7539db07a5a191e0c905de2d",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 216,
+        "height": 234,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 32766,
+        "visible_pixel_count": 17778,
+        "transparent_canvas_ratio": 0.6482668566001899,
+        "visible_canvas_ratio": 0.35173314339981004,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/argus/processed/anim/argus_anim_hit_frame_04.png": {
+      "sha256": "9e5ff7705c2dad284b77073c0f59c90cd12afb07f15deafc5d24a896f355e2e5",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 216,
+        "height": 234,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 32170,
+        "visible_pixel_count": 18374,
+        "transparent_canvas_ratio": 0.6364751503640392,
+        "visible_canvas_ratio": 0.36352484963596077,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/argus/processed/anim/argus_anim_hit_keyframe.png": {
+      "sha256": "588d3366f08d74662a0873c716876085183bb874ca0ab72ebd7dc952176311f4",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 216,
+        "height": 234,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 31989,
+        "visible_pixel_count": 18555,
+        "transparent_canvas_ratio": 0.6328941120607787,
+        "visible_canvas_ratio": 0.3671058879392213,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/argus/processed/anim/argus_anim_idle_frame_01.png": {
+      "sha256": "cfbb6fe6c193bb605fdf2db6293648a58116e55bba3aa69fe24aa532c3c8e6c1",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 214,
+        "height": 234,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 32372,
+        "visible_pixel_count": 17704,
+        "transparent_canvas_ratio": 0.6464573847751418,
+        "visible_canvas_ratio": 0.3535426152248582,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/argus/processed/anim/argus_anim_idle_frame_02.png": {
+      "sha256": "e68e2904955f8854eecf2fad6038f200cd1b6cb07d2555fe30c864bf973bd45b",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 214,
+        "height": 234,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 32275,
+        "visible_pixel_count": 17801,
+        "transparent_canvas_ratio": 0.6445203290997683,
+        "visible_canvas_ratio": 0.35547967090023164,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/argus/processed/anim/argus_anim_idle_frame_03.png": {
+      "sha256": "611d6803a550c2778a89f1f8ecdfbe3102df1f5e964c913d5d2d85b4a5dd8144",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 214,
+        "height": 234,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 32402,
+        "visible_pixel_count": 17674,
+        "transparent_canvas_ratio": 0.6470564741592779,
+        "visible_canvas_ratio": 0.3529435258407221,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/argus/processed/anim/argus_anim_idle_frame_04.png": {
+      "sha256": "6d958c7c1c2ccdf89916846f698b0071ac8af899956cb99f157f27bf79f87d8b",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 214,
+        "height": 234,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 32149,
+        "visible_pixel_count": 17927,
+        "transparent_canvas_ratio": 0.6420041536863966,
+        "visible_canvas_ratio": 0.3579958463136033,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/argus/processed/anim/argus_anim_idle_keyframe.png": {
+      "sha256": "cfbb6fe6c193bb605fdf2db6293648a58116e55bba3aa69fe24aa532c3c8e6c1",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 214,
+        "height": 234,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 32372,
+        "visible_pixel_count": 17704,
+        "transparent_canvas_ratio": 0.6464573847751418,
+        "visible_canvas_ratio": 0.3535426152248582,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/argus/processed/anim/argus_anim_move_frame_01.png": {
+      "sha256": "616b790d3ab61aba3d6195b612b8f6f04becca5d200b9f3a72b3978677755858",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 224,
+        "height": 236,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 35024,
+        "visible_pixel_count": 17840,
+        "transparent_canvas_ratio": 0.6625302663438256,
+        "visible_canvas_ratio": 0.33746973365617433,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/argus/processed/anim/argus_anim_move_frame_02.png": {
+      "sha256": "2ac31de94f5e6b2494b40a0f38a3b9af928b7a88e5207ddad974c91179113eb6",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 224,
+        "height": 236,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 34778,
+        "visible_pixel_count": 18086,
+        "transparent_canvas_ratio": 0.6578768159806295,
+        "visible_canvas_ratio": 0.3421231840193705,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/argus/processed/anim/argus_anim_move_frame_03.png": {
+      "sha256": "ff7b717a72c388360307c2aff72cb7563ca72c6c74b0e56b38204345861b584d",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 224,
+        "height": 236,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 35038,
+        "visible_pixel_count": 17826,
+        "transparent_canvas_ratio": 0.6627950968523002,
+        "visible_canvas_ratio": 0.33720490314769974,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/argus/processed/anim/argus_anim_move_frame_04.png": {
+      "sha256": "8d3e63c7c9b07e40481082160a236d2da0e361bbc2f1811db97c03a32d7941d5",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 224,
+        "height": 236,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 34786,
+        "visible_pixel_count": 18078,
+        "transparent_canvas_ratio": 0.6580281476997578,
+        "visible_canvas_ratio": 0.34197185230024213,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/argus/processed/anim/argus_anim_move_keyframe.png": {
+      "sha256": "616b790d3ab61aba3d6195b612b8f6f04becca5d200b9f3a72b3978677755858",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 224,
+        "height": 236,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 35024,
+        "visible_pixel_count": 17840,
+        "transparent_canvas_ratio": 0.6625302663438256,
+        "visible_canvas_ratio": 0.33746973365617433,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/argus/processed/battle/argus_battle_aircraft_group_01.png": {
+      "sha256": "3c78a8175f2df128a742a6d5d3ae31352cba89eaef68a5934f0df3ed7ef6f0b1",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 196,
+        "height": 126,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 18583,
+        "visible_pixel_count": 6113,
+        "transparent_canvas_ratio": 0.752470035633301,
+        "visible_canvas_ratio": 0.24752996436669905,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          42,
+          236,
+          197,
+          322
+        ],
+        "final_crop_box": [
+          24,
+          218,
+          215,
+          340
+        ],
+        "component_area": 6113,
+        "output_edge_margins": {
+          "left": 23,
+          "top": 19,
+          "right": 18,
+          "bottom": 21
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/argus/processed/battle/argus_battle_aircraft_launch_marker.png": {
+      "sha256": "4d68220ed11891f1d771b7033f7bff4a9601fdbaa40b6bcb3f8238cb55febfc2",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 332,
+        "height": 244,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 49202,
+        "visible_pixel_count": 31806,
+        "transparent_canvas_ratio": 0.6073721113964053,
+        "visible_canvas_ratio": 0.3926278886035947,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          91,
+          106,
+          385,
+          305
+        ],
+        "final_crop_box": [
+          73,
+          88,
+          403,
+          323
+        ],
+        "component_area": 31806,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 26,
+          "right": 19,
+          "bottom": 19
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/argus/processed/battle/argus_battle_aircraft_recovery_marker.png": {
+      "sha256": "62ce3f56a1db8428cb2486ebea2e7bccce76b37e245bec8080032aa4a3f1eef2",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 330,
+        "height": 240,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 48086,
+        "visible_pixel_count": 31114,
+        "transparent_canvas_ratio": 0.6071464646464646,
+        "visible_canvas_ratio": 0.39285353535353534,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          68,
+          106,
+          359,
+          303
+        ],
+        "final_crop_box": [
+          50,
+          88,
+          377,
+          321
+        ],
+        "component_area": 31114,
+        "output_edge_margins": {
+          "left": 21,
+          "top": 25,
+          "right": 18,
+          "bottom": 18
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/argus/processed/battle/argus_battle_body_r.png": {
+      "sha256": "cfbb6fe6c193bb605fdf2db6293648a58116e55bba3aa69fe24aa532c3c8e6c1",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 214,
+        "height": 234,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 32372,
+        "visible_pixel_count": 17704,
+        "transparent_canvas_ratio": 0.6464573847751418,
+        "visible_canvas_ratio": 0.3535426152248582,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/argus/processed/battle/argus_battle_flight_deck.png": {
+      "sha256": "7e2806f5ec1eabef1c39e576f66412db08fc60e7dd30f7c470638199c2934667",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 384,
+        "height": 232,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 58906,
+        "visible_pixel_count": 30182,
+        "transparent_canvas_ratio": 0.6612113864942529,
+        "visible_canvas_ratio": 0.3387886135057471,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          40,
+          139,
+          383,
+          328
+        ],
+        "final_crop_box": [
+          22,
+          121,
+          401,
+          346
+        ],
+        "component_area": 30182,
+        "output_edge_margins": {
+          "left": 22,
+          "top": 24,
+          "right": 19,
+          "bottom": 19
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/argus/processed/battle/argus_battle_radar_node.png": {
+      "sha256": "955f16582ffed074761b9b8a477999027c038c9b9b134f5528052421f4a9725c",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 198,
+        "height": 296,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 35293,
+        "visible_pixel_count": 23315,
+        "transparent_canvas_ratio": 0.6021874146874147,
+        "visible_canvas_ratio": 0.3978125853125853,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          123,
+          72,
+          281,
+          312
+        ],
+        "final_crop_box": [
+          105,
+          54,
+          299,
+          330
+        ],
+        "component_area": 23315,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 18,
+          "right": 22,
+          "bottom": 38
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/argus/processed/battle/argus_battle_rig_base.png": {
+      "sha256": "a13bb2534f459ca286ea85d1c071adfc6cb5b88c05f309061ac91c068e6dbcd0",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 400,
+        "height": 402,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 115544,
+        "visible_pixel_count": 45256,
+        "transparent_canvas_ratio": 0.7185572139303482,
+        "visible_canvas_ratio": 0.28144278606965173,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          46,
+          75,
+          386,
+          370
+        ],
+        "final_crop_box": [
+          28,
+          57,
+          404,
+          388
+        ],
+        "component_area": 45256,
+        "output_edge_margins": {
+          "left": 41,
+          "top": 18,
+          "right": 19,
+          "bottom": 89
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/argus/processed/battle/argus_battle_wake_origin_marker.png": {
+      "sha256": "c7ec00fec0183ead1aec46f0e9c864d2351b7f2aa5e06ae1631f4e7f66698594",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 238,
+        "height": 330,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 51178,
+        "visible_pixel_count": 27362,
+        "transparent_canvas_ratio": 0.6516170104405399,
+        "visible_canvas_ratio": 0.3483829895594601,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          126,
+          80,
+          294,
+          347
+        ],
+        "final_crop_box": [
+          108,
+          62,
+          312,
+          365
+        ],
+        "component_area": 27362,
+        "output_edge_margins": {
+          "left": 27,
+          "top": 18,
+          "right": 18,
+          "bottom": 41
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/argus/processed/ui/argus_expr_default.png": {
+      "sha256": "50dc8d590adfdb67e791b1bfa293985464a381d3e05d0b597e1f2d3b9b775b03",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 322,
+        "height": 436,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 66273,
+        "visible_pixel_count": 74119,
+        "transparent_canvas_ratio": 0.4720568123539803,
+        "visible_canvas_ratio": 0.5279431876460197,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          72,
+          45,
+          353,
+          411
+        ],
+        "final_crop_box": [
+          54,
+          27,
+          371,
+          429
+        ],
+        "output_edge_margins": {
+          "left": 22,
+          "top": 18,
+          "right": 19,
+          "bottom": 52
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/argus/processed/ui/argus_expr_hit.png": {
+      "sha256": "1a5f8f1bd0696792d6a2893af3b9e6401f3eeb5b8a3495f8a807ea242b4ebc7a",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 416,
+        "height": 462,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 106713,
+        "visible_pixel_count": 85479,
+        "transparent_canvas_ratio": 0.5552416333666333,
+        "visible_canvas_ratio": 0.44475836663336665,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          66,
+          18,
+          415,
+          391
+        ],
+        "final_crop_box": [
+          48,
+          0,
+          433,
+          409
+        ],
+        "output_edge_margins": {
+          "left": 18,
+          "top": 19,
+          "right": 49,
+          "bottom": 70
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/argus/processed/ui/argus_expr_serious.png": {
+      "sha256": "8764eae52147e13292b147a3256c15e0ee620ca9088c950fdb6ac2b4d749da18",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 336,
+        "height": 446,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 70482,
+        "visible_pixel_count": 79374,
+        "transparent_canvas_ratio": 0.4703315182575272,
+        "visible_canvas_ratio": 0.5296684817424727,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          118,
+          16,
+          414,
+          391
+        ],
+        "final_crop_box": [
+          100,
+          0,
+          432,
+          409
+        ],
+        "output_edge_margins": {
+          "left": 22,
+          "top": 18,
+          "right": 18,
+          "bottom": 53
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/argus/processed/ui/argus_illust_full_alpha.png": {
+      "sha256": "51b034a62f9424dfa119508f4b0d91274d7a0981f06e56f5b365283fd631646c",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 994,
+        "height": 1682,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 1227448,
+        "visible_pixel_count": 444460,
+        "transparent_canvas_ratio": 0.7341600135892645,
+        "visible_canvas_ratio": 0.26583998641073553,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          24,
+          45,
+          969,
+          1483
+        ],
+        "final_crop_box": [
+          12,
+          33,
+          981,
+          1495
+        ],
+        "output_edge_margins": {
+          "left": 36,
+          "top": 231,
+          "right": 13,
+          "bottom": 13
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/argus/processed/ui/argus_illust_half_alpha.png": {
+      "sha256": "57ad3840a22be4cd7935d893f3fe5cc4ceae6ca65880da1c8661f0a9b1770203",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 1014,
+        "height": 1090,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 712971,
+        "visible_pixel_count": 392289,
+        "transparent_canvas_ratio": 0.6450708430595516,
+        "visible_canvas_ratio": 0.3549291569404484,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          52,
+          16,
+          997,
+          1051
+        ],
+        "final_crop_box": [
+          36,
+          0,
+          1013,
+          1067
+        ],
+        "output_edge_margins": {
+          "left": 52,
+          "top": 16,
+          "right": 17,
+          "bottom": 39
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/argus/processed/ui/argus_illust_skill_cutin_alpha.png": {
+      "sha256": "08d65c717173963b166d9753da876be2f15fed74c3e66579abdab77f44b1410d",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 1008,
+        "height": 1008,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 661609,
+        "visible_pixel_count": 354455,
+        "transparent_canvas_ratio": 0.6511489433736457,
+        "visible_canvas_ratio": 0.34885105662635424,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          450,
+          17,
+          1395,
+          851
+        ],
+        "final_crop_box": [
+          434,
+          1,
+          1411,
+          867
+        ],
+        "output_edge_margins": {
+          "left": 47,
+          "top": 17,
+          "right": 16,
+          "bottom": 157
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/argus/processed/ui/argus_ui_chibi_head.png": {
+      "sha256": "bbd011dec6a195929f0560370e4ae0172aa72bad916b545b35418eae25bb0e22",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 352,
+        "height": 340,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 54841,
+        "visible_pixel_count": 64839,
+        "transparent_canvas_ratio": 0.4582302807486631,
+        "visible_canvas_ratio": 0.5417697192513369,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          80,
+          97,
+          394,
+          391
+        ],
+        "final_crop_box": [
+          62,
+          79,
+          412,
+          409
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 19,
+          "bottom": 28
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/argus/processed/ui/argus_ui_class_carrier.png": {
+      "sha256": "ca4b7cbd6aec591e4e137753bc6a4a4c9fbe7ef30151c23faa34bd887b84bdef",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 336,
+        "height": 342,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 43453,
+        "visible_pixel_count": 71459,
+        "transparent_canvas_ratio": 0.3781415343915344,
+        "visible_canvas_ratio": 0.6218584656084656,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          49,
+          60,
+          348,
+          364
+        ],
+        "final_crop_box": [
+          31,
+          42,
+          366,
+          382
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 20,
+          "right": 18,
+          "bottom": 18
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/argus/processed/ui/argus_ui_portrait.png": {
+      "sha256": "b4f5b47a056f97062dbb6f21639203ad32737e6a64421e9a9f95b6afcef73940",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 512,
+        "height": 512,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 166247,
+        "visible_pixel_count": 95897,
+        "transparent_canvas_ratio": 0.6341819763183594,
+        "visible_canvas_ratio": 0.3658180236816406,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          41,
+          47,
+          1141,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              41,
+              47,
+              1141,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 85,
+          "top": 56,
+          "right": 74,
+          "bottom": 58
+        },
+        "cleanup_tags": []
+      },
+      "review": {
+        "verdict": "pass",
+        "reviewer": "Codex visual inspection",
+        "observation": "Ash brown bob, aqua eyes and miniature deck head ornament retained; navy/ivory collar; complete hair/hat, no hands/aircraft/frame. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+      }
+    },
+    "assets/characters/argus/processed/ui/argus_ui_portrait_small.png": {
+      "sha256": "c6152ad219180507459d44fe1fd3a7559818ab50eddef56ac73899556ddb2386",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 128,
+        "height": 128,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 9856,
+        "visible_pixel_count": 6528,
+        "transparent_canvas_ratio": 0.6015625,
+        "visible_canvas_ratio": 0.3984375,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          41,
+          47,
+          1141,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              41,
+              47,
+              1141,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 23,
+          "top": 12,
+          "right": 16,
+          "bottom": 13
+        },
+        "cleanup_tags": []
+      },
+      "review": {
+        "verdict": "pass",
+        "reviewer": "Codex visual inspection",
+        "observation": "Ash brown bob, aqua eyes and miniature deck head ornament retained; navy/ivory collar; complete hair/hat, no hands/aircraft/frame. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+      }
+    },
+    "assets/characters/argus/processed/ui/argus_ui_skill_airstrike.png": {
+      "sha256": "2c370fbceef0befb90d07eac20f3c06fa8d556622b62ca0d1ae6e0cae34108e4",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 340,
+        "height": 344,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 44165,
+        "visible_pixel_count": 72795,
+        "transparent_canvas_ratio": 0.37760772913816687,
+        "visible_canvas_ratio": 0.6223922708618331,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          75,
+          59,
+          378,
+          365
+        ],
+        "final_crop_box": [
+          57,
+          41,
+          396,
+          383
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 18,
+          "bottom": 19
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/carrier/vfx_carrier_aa_burst.png": {
+      "sha256": "7e2583a6fa6f387cda1f4ce52c98dd270bea595916c47ad1def14caaa5470ab3",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 194,
+        "height": 236,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 38195,
+        "visible_pixel_count": 7589,
+        "transparent_canvas_ratio": 0.8342434038091909,
+        "visible_canvas_ratio": 0.165756596190809,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          153,
+          136,
+          268,
+          309
+        ],
+        "final_crop_box": [
+          135,
+          118,
+          286,
+          327
+        ],
+        "component_area": 7015,
+        "output_edge_margins": {
+          "left": 24,
+          "top": 26,
+          "right": 19,
+          "bottom": 19
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/carrier/vfx_carrier_aircraft_explosion.png": {
+      "sha256": "b04f40427c7c747cfc59279af7e9b69161cece35754d77af5204fe3d00d17487",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 316,
+        "height": 270,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 67324,
+        "visible_pixel_count": 17996,
+        "transparent_canvas_ratio": 0.7890764181903422,
+        "visible_canvas_ratio": 0.21092358180965776,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          106,
+          132,
+          342,
+          320
+        ],
+        "final_crop_box": [
+          88,
+          114,
+          360,
+          338
+        ],
+        "component_area": 17293,
+        "output_edge_margins": {
+          "left": 43,
+          "top": 30,
+          "right": 19,
+          "bottom": 19
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/carrier/vfx_carrier_aircraft_formation.png": {
+      "sha256": "5fc5bd4b4f9443a9643af9fa4dab33a5fad4308b093a2e2acd7846ea227e9d2f",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 140,
+        "height": 272,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 35473,
+        "visible_pixel_count": 2607,
+        "transparent_canvas_ratio": 0.9315388655462185,
+        "visible_canvas_ratio": 0.06846113445378152,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          187,
+          85,
+          253,
+          273
+        ],
+        "final_crop_box": [
+          169,
+          67,
+          271,
+          291
+        ],
+        "component_area": 2549,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 66,
+          "right": 19,
+          "bottom": 18
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/carrier/vfx_carrier_aircraft_launch_flash.png": {
+      "sha256": "aba435ccb3f2c2a40db8f1b041b35d637fb0a5c8645e8018149ff7182ccbef20",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 190,
+        "height": 298,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 47770,
+        "visible_pixel_count": 8850,
+        "transparent_canvas_ratio": 0.84369480748852,
+        "visible_canvas_ratio": 0.15630519251148003,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          156,
+          152,
+          277,
+          350
+        ],
+        "final_crop_box": [
+          138,
+          134,
+          295,
+          368
+        ],
+        "component_area": 8759,
+        "output_edge_margins": {
+          "left": 24,
+          "top": 18,
+          "right": 18,
+          "bottom": 82
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/carrier/vfx_carrier_aircraft_path.png": {
+      "sha256": "daedd061d887f81820d5ae61ef9acf1c30b8598817a170dae66068f105534867",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 298,
+        "height": 218,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 64126,
+        "visible_pixel_count": 838,
+        "transparent_canvas_ratio": 0.987100547995813,
+        "visible_canvas_ratio": 0.012899452004186934,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          115,
+          149,
+          283,
+          297
+        ],
+        "final_crop_box": [
+          97,
+          131,
+          301,
+          315
+        ],
+        "component_area": 785,
+        "output_edge_margins": {
+          "left": 91,
+          "top": 19,
+          "right": 19,
+          "bottom": 31
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/carrier/vfx_carrier_aircraft_recovery.png": {
+      "sha256": "375357165731ac6e3b2b2c73ed0af9e53529b7bddfb4bb7f6854dda1da65827c",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 120,
+        "height": 314,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 29340,
+        "visible_pixel_count": 8340,
+        "transparent_canvas_ratio": 0.7786624203821656,
+        "visible_canvas_ratio": 0.2213375796178344,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          178,
+          118,
+          261,
+          316
+        ],
+        "final_crop_box": [
+          160,
+          100,
+          279,
+          334
+        ],
+        "component_area": 8311,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 18,
+          "bottom": 84
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/carrier/vfx_carrier_airstrike_area.png": {
+      "sha256": "9931821bf1c616266ce8c708f759b9f34802ab63fe3b7b2110450a81f04bd284",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 364,
+        "height": 216,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 72406,
+        "visible_pixel_count": 6218,
+        "transparent_canvas_ratio": 0.9209147334147334,
+        "visible_canvas_ratio": 0.07908526658526659,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          67,
+          131,
+          393,
+          307
+        ],
+        "final_crop_box": [
+          49,
+          113,
+          411,
+          325
+        ],
+        "component_area": 5543,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 19,
+          "bottom": 22
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/carrier/vfx_carrier_wake_carrier.png": {
+      "sha256": "e84a6a83c24bdbfaf8f43bec7851f5a958f97cc336bbd664d5b205c94b551e5d",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 336,
+        "height": 262,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 45144,
+        "visible_pixel_count": 42888,
+        "transparent_canvas_ratio": 0.512813522355507,
+        "visible_canvas_ratio": 0.4871864776444929,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          58,
+          112,
+          340,
+          332
+        ],
+        "final_crop_box": [
+          40,
+          94,
+          358,
+          350
+        ],
+        "component_area": 42736,
+        "output_edge_margins": {
+          "left": 27,
+          "top": 21,
+          "right": 18,
+          "bottom": 19
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    }
+  }
+}

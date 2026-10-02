@@ -176,74 +176,6 @@
       }
     },
     {
-      "role": "ui_portrait",
-      "crop": {
-        "content_bbox": [
-          63,
-          28,
-          443,
-          442
-        ],
-        "final_crop_box": [
-          45,
-          10,
-          443,
-          443
-        ],
-        "output_edge_margins": {
-          "left": 25,
-          "top": 19,
-          "right": 19,
-          "bottom": 77
-        }
-      },
-      "path": "assets/characters/u_47/processed/ui/u_47_ui_portrait.png",
-      "size": [
-        424,
-        510
-      ],
-      "edge_margins": {
-        "left": 25,
-        "top": 19,
-        "right": 19,
-        "bottom": 77
-      }
-    },
-    {
-      "role": "ui_portrait_small",
-      "crop": {
-        "content_bbox": [
-          66,
-          36,
-          402,
-          412
-        ],
-        "final_crop_box": [
-          48,
-          18,
-          420,
-          430
-        ],
-        "output_edge_margins": {
-          "left": 47,
-          "top": 18,
-          "right": 19,
-          "bottom": 56
-        }
-      },
-      "path": "assets/characters/u_47/processed/ui/u_47_ui_portrait_small.png",
-      "size": [
-        402,
-        450
-      ],
-      "edge_margins": {
-        "left": 47,
-        "top": 18,
-        "right": 19,
-        "bottom": 56
-      }
-    },
-    {
       "role": "ui_chibi_head",
       "crop": {
         "content_bbox": [
@@ -1370,6 +1302,224 @@
         "right": 19,
         "bottom": 30
       }
+    },
+    {
+      "role": "ui_portrait",
+      "path": "assets/characters/u_47/processed/ui/u_47_ui_portrait.png",
+      "file": "assets/characters/u_47/processed/ui/u_47_ui_portrait.png",
+      "source": "assets/characters/u_47/ui/u_47_portrait_20261001_unframed_v1.png",
+      "sha256": "39b233aa20bc7e3c509cec80e37e868cb946a9d04aaa2ba8fe0d691fb85b056f",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA",
+      "alpha_bbox": [
+        64,
+        69,
+        439,
+        456
+      ],
+      "alpha_pixel_count": 92215,
+      "edge_margins": {
+        "left": 64,
+        "top": 69,
+        "right": 73,
+        "bottom": 56
+      },
+      "output_padding": {
+        "left": 64,
+        "top": 69,
+        "right": 73,
+        "bottom": 56
+      },
+      "alpha_centroid": [
+        259.97371726305136,
+        274.45992091579916
+      ],
+      "centroid_offset_normalized": {
+        "x": 0.007761166529397179,
+        "y": 0.03605453303867023
+      },
+      "component_tags": [
+        "ui",
+        "portrait_revision"
+      ],
+      "crop": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          25,
+          19,
+          1200,
+          1224
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              25,
+              19,
+              1200,
+              1224
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 64,
+          "top": 69,
+          "right": 73,
+          "bottom": 56
+        },
+        "cleanup_tags": []
+      },
+      "source_crop_qa": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          25,
+          19,
+          1200,
+          1224
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              25,
+              19,
+              1200,
+              1224
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 64,
+          "top": 69,
+          "right": 73,
+          "bottom": 56
+        },
+        "cleanup_tags": []
+      }
+    },
+    {
+      "role": "ui_portrait_small",
+      "path": "assets/characters/u_47/processed/ui/u_47_ui_portrait_small.png",
+      "file": "assets/characters/u_47/processed/ui/u_47_ui_portrait_small.png",
+      "source": "assets/characters/u_47/ui/u_47_portrait_20261001_unframed_v1.png",
+      "sha256": "4ec69738bfd95b42681d30b15481243fd0bbea8060ae886aaf692f1b31c2bce2",
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_bbox": [
+        25,
+        15,
+        111,
+        116
+      ],
+      "alpha_pixel_count": 6179,
+      "edge_margins": {
+        "left": 25,
+        "top": 15,
+        "right": 17,
+        "bottom": 12
+      },
+      "output_padding": {
+        "left": 25,
+        "top": 15,
+        "right": 17,
+        "bottom": 12
+      },
+      "alpha_centroid": [
+        64.99602479200323,
+        68.60797216962123
+      ],
+      "centroid_offset_normalized": {
+        "x": 0.0077814436875252024,
+        "y": 0.035999782575165895
+      },
+      "component_tags": [
+        "ui",
+        "portrait_revision"
+      ],
+      "crop": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          25,
+          19,
+          1200,
+          1224
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              25,
+              19,
+              1200,
+              1224
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 25,
+          "top": 15,
+          "right": 17,
+          "bottom": 12
+        },
+        "cleanup_tags": []
+      },
+      "source_crop_qa": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          25,
+          19,
+          1200,
+          1224
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              25,
+              19,
+              1200,
+              1224
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 25,
+          "top": 15,
+          "right": 17,
+          "bottom": 12
+        },
+        "cleanup_tags": []
+      }
     }
-  ]
+  ],
+  "portrait_revision": {
+    "path": "assets/characters/u_47/meta/u_47_portrait_revision.json",
+    "sha256": "5eb6b1b20057bbc833a5b56aa130d39822eae3fd3767da2866a15331814b7687"
+  }
 }

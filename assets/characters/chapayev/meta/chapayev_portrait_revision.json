@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "character_id": "chapayev",
+  "revision": "20261001_unframed_v1",
+  "scope": "Portraits only; does not migrate or approve the full character package",
+  "generation_route": "codex_builtin_imagegen_native_alpha",
+  "model": "account-managed/not-exposed",
+  "request_id": "not-exposed",
+  "background_control": "transparent",
+  "prompt": "Create ONE independent head-and-shoulders transparent game portrait for TinySeaWar. Image 1 is ONLY the identity reference for this character; preserve face, hair, eyes, outfit colors and core accessories exactly. Image 2 is ONLY the approved rendering/composition style sample (a DIFFERENT character); do NOT copy its blonde hair, crown or outfit. Match the style sample's polished fine anime linework, restrained cel shading, soft neutral light and bust framing. Head upright, slight three-quarter face toward viewer, neutral character-appropriate expression, eye line around 42% of square canvas height, complete hair and hats visible, upper shoulders/chest, no hands. Isolated bust at most84% canvas width/height,8%EMPTY TRANSPARENT margin every side. NO FRAME, border, card, medallion, background, text, checkerboard, weapons, ship parts, rigging or effects. Real native Alpha PNG, one portrait not a sheet, readable at40px. Character ID: chapayev. Preserve this character's own hair, eyes, headwear and uniform from image1. No hands, handheld optics, green/white/black backdrop or external equipment.",
+  "raw_output_path": "/Users/qingyue/.codex/generated_images/01a0f530-85bc-7132-9cf0-51e103bf539a/exec-eb50286e-4d1e-4b4d-9aed-fee8d3e5811b.png",
+  "raw_sha256": "f90a22ecbcab1a7d783e7768dcf643d3d7a23e9a6c4790780c5344c4afbee23a",
+  "references": [
+    {
+      "path": "assets/characters/chapayev/concept/chapayev_concept_full.png",
+      "sha256": "a7a1803638cd5cb7ce254385159656f5a26a5a4dcf11b44b8d543035fe899f19"
+    },
+    {
+      "path": "assets/characters/warspite/ui/warspite_portrait_20261001_unframed_v1.png",
+      "sha256": "2de3b58ce65dc2a54b426434d5b7a477e93bb28b8e99ad51ad9bc9ca2af6cab9"
+    }
+  ],
+  "source": {
+    "path": "assets/characters/chapayev/ui/chapayev_portrait_20261001_unframed_v1.png",
+    "sha256": "f90a22ecbcab1a7d783e7768dcf643d3d7a23e9a6c4790780c5344c4afbee23a",
+    "alpha_facts": {
+      "format": "PNG",
+      "source_mode": "RGBA",
+      "width": 1254,
+      "height": 1254,
+      "has_alpha_channel": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixel_count": 719831,
+      "visible_pixel_count": 852685,
+      "transparent_canvas_ratio": 0.4577575045341351,
+      "visible_canvas_ratio": 0.5422424954658649,
+      "transparent_border_ratio": 1.0
+    }
+  },
+  "source_review": {
+    "sha256": "f90a22ecbcab1a7d783e7768dcf643d3d7a23e9a6c4790780c5344c4afbee23a",
+    "verdict": "pass",
+    "reviewer": "Codex visual inspection",
+    "observation": "Silver long braided hair, blue eyes, red peaked cap and red/black collar retained. Inspected actual generated image: complete isolated bust, no border/frame, hands or external machinery."
+  },
+  "output_reviews": {
+    "ui_portrait": {
+      "sha256": "6448529a6b4f97c1504a9b5ff961abdfcf526be363cea51872af02f68313a74c",
+      "verdict": "pass",
+      "reviewer": "Codex visual inspection",
+      "observation": "Silver long braided hair, blue eyes, red peaked cap and red/black collar retained. Inspected actual generated image: complete isolated bust, no border/frame, hands or external machinery. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+    },
+    "ui_portrait_small": {
+      "sha256": "acd0338a1ecb166b16a58669aa1ab1114818ad0285183af458a78bf7feb594db",
+      "verdict": "pass",
+      "reviewer": "Codex visual inspection",
+      "observation": "Silver long braided hair, blue eyes, red peaked cap and red/black collar retained. Inspected actual generated image: complete isolated bust, no border/frame, hands or external machinery. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+    }
+  }
+}

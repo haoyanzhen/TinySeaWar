@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "character_id": "pobeda",
+  "revision": "20261001_unframed_v1",
+  "scope": "Portraits only; does not migrate or approve the full character package",
+  "generation_route": "codex_builtin_imagegen_native_alpha",
+  "model": "account-managed/not-exposed",
+  "request_id": "not-exposed",
+  "background_control": "transparent",
+  "prompt": "Create ONE independent head-and-shoulders transparent game portrait for TinySeaWar. Image 1 is ONLY the identity reference for this character; preserve face, hair, eyes, outfit colors and core accessories exactly. Image 2 is ONLY the approved rendering/composition style sample (a DIFFERENT character); do NOT copy its blonde hair, crown or outfit. Match the style sample's polished fine anime linework, restrained cel shading, soft neutral light and bust framing. Head upright, slight three-quarter face toward viewer, neutral character-appropriate expression, eye line around 42% of square canvas height, complete hair and hats visible, upper shoulders/chest, no hands. Isolated bust at most84% canvas width/height,8%EMPTY TRANSPARENT margin every side. NO FRAME, border, card, medallion, background, text, checkerboard, weapons, ship parts, rigging or effects. Real native Alpha PNG, one portrait not a sheet, readable at40px. No new accessories absent from identity reference; preserve exact hairstyle and core worn accessories. Character identity: Long dark auburn hair, gray hazel eyes, charcoal black and red uniform with dark fur collar and gold trim. NO eyewear.",
+  "raw_output_path": "/Users/qingyue/.codex/generated_images/01a0f530-85bc-7132-9cf0-51e103bf539a/exec-08706519-c82b-4d5b-ac74-74c3abe60522.png",
+  "raw_sha256": "fd190ce2c6c8ba8433906412bf69436162e49d97032ec482a348be0509c9da8b",
+  "references": [
+    {
+      "path": "assets/characters/pobeda/concept/pobeda_concept_full.png",
+      "sha256": "0d200397eaede50abc48da410fa0d50cf100dc5fba6c3b2ff3c1154a7d8a6351"
+    },
+    {
+      "path": "assets/characters/warspite/ui/warspite_portrait_20261001_unframed_v1.png",
+      "sha256": "2de3b58ce65dc2a54b426434d5b7a477e93bb28b8e99ad51ad9bc9ca2af6cab9"
+    }
+  ],
+  "source": {
+    "path": "assets/characters/pobeda/ui/pobeda_portrait_20261001_unframed_v1.png",
+    "sha256": "fd190ce2c6c8ba8433906412bf69436162e49d97032ec482a348be0509c9da8b",
+    "alpha_facts": {
+      "format": "PNG",
+      "source_mode": "RGBA",
+      "width": 1254,
+      "height": 1254,
+      "has_alpha_channel": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixel_count": 632075,
+      "visible_pixel_count": 940441,
+      "transparent_canvas_ratio": 0.4019513950891438,
+      "visible_canvas_ratio": 0.5980486049108562,
+      "transparent_border_ratio": 0.9798483639265763
+    }
+  },
+  "source_review": {
+    "sha256": "fd190ce2c6c8ba8433906412bf69436162e49d97032ec482a348be0509c9da8b",
+    "verdict": "pass",
+    "reviewer": "Codex visual inspection",
+    "observation": "Long dark auburn hair, gray eyes, black fur collar and charcoal-red-gold uniform retained; no frame or eyewear."
+  },
+  "output_reviews": {
+    "ui_portrait": {
+      "sha256": "792c76aad9b49d0f8547ca3a41d253ffd33054c4d87a53f4812066bb921964bd",
+      "verdict": "pass",
+      "reviewer": "Codex visual inspection",
+      "observation": "Long dark auburn hair, gray eyes, black fur collar and charcoal-red-gold uniform retained; no frame or eyewear. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+    },
+    "ui_portrait_small": {
+      "sha256": "8b324e6deb7fb1192e818b1d71bcc9aad4b300e2ab8627cbb3efbe829abeb092",
+      "verdict": "pass",
+      "reviewer": "Codex visual inspection",
+      "observation": "Long dark auburn hair, gray eyes, black fur collar and charcoal-red-gold uniform retained; no frame or eyewear. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+    }
+  }
+}

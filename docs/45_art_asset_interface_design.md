@@ -69,6 +69,7 @@ var water_column := DataRegistry.assets.combat_vfx_asset_path("impact.water.larg
 - `heading_offset_degrees(character_id, asset_name)` 返回该战斗部件相对“舰艏向右”零角度的纯表现校正；缺省为 `0`，只允许校正贴图母版方向，不得改变 Domain 航向或碰撞椭圆。
 - `battle_asset_path(character_id, semantic_name)` 返回战斗部件路径，例如 `rig_base`。
 - `character_ui_asset_path(character_id, semantic_name)` 返回角色 UI 路径；语义为文件名去掉角色前缀与扩展名，例如 `ui_portrait_small`、`ui_portrait`、`illust_full_alpha`。未知角色或语义返回空字符串；HUD 按小头像、普通头像顺序回退。
+- `ui_portrait` 和 `ui_portrait_small` 分别为 512×512、128×128 的同源透明无框头肩像；路径与查询语义保持兼容，状态框由公共 UI 语义独立读取。独立头像修订通过角色 `meta/{id}_portrait_revision.json` 登记来源、参考图、源图／输出哈希和审查；processed manifest 的 `portrait_revision` 引用该记录，不替代原完整角色包来源。
 - `minimap_asset_path(terrain_definition_id)` 从小地图 manifest 返回遮罩路径；未知地图返回空字符串。加载器拒绝重复地图 ID、不存在资源及不在小地图目录中的路径。
 
 通用战斗表现接口：
@@ -135,3 +136,15 @@ UI 接口：
 ### 技能闪回资产消费
 
 通过 `DataRegistry.assets.character_ui_asset_path(character_id, "illust_full_alpha")` 读取既有透明全身立绘；部分旧 `illust_skill_cutin_alpha` 带场景背景，不用于无底板闪回；头像优先 `ui_portrait_small`，其次 `ui_portrait`。调用方不得拼接角色物理路径；无有效 Texture2D 时按 `33` 降级。缓存以角色 ID 标识，生命周期限单场战斗；本次不改角色素材或 manifest。
+
+
+## 音效资产接口
+
+运行时音效由 `SoundManager.manifest` 的语义ID查找，`stream_for(id)` 缓存加载；BattleSoundDirector和UI不得拼接WAV路径。`data/audio/sfx_manifest.json` 是登记的独立音频入口，字段归25；物理资源只位于 `assets/audio/sfx/runtime/{category}/{id}.wav`。固定manifest入口是专用音频目录查询例外，不扩展角色/视觉AssetCatalog。
+
+`tools/sfx/build_runtime.py` 从 `.gdignore` 隔离的正式采用源包派生48kHz PCM16资源，空间点声单声道、环境与通知双声道；9项循环在首尾做0.5秒等增益交叉淡化，保存源与派生哈希及循环帧数。不读取reports、GPU或试听服务器。原始PCM24采用版、浮点生成版及来源不改写；运行时文件可重建，不能倒写为人工选材源。
+
+
+## 音乐资产引用边界
+
+音乐通过 `data/audio/music_manifest.json` 的稳定曲目ID查询运行时Ogg，不从中文曲名拼接路径。音乐独立清单的字段与校验归 `25`，播放策略归 `50`；不注册到角色或武器贴图语义表。`assets/audio/music/source/` 为 `.gdignore` 隔离的采用无损源包；`assets/audio/music/runtime/` 为可导出播放版本，两者以清单哈希对应，源包采用不能替代编码版或循环听审。

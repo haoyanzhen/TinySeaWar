@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "character_id": "hood",
+  "revision": "20261001_unframed_v1",
+  "scope": "Portraits only; does not migrate or approve the full character package",
+  "generation_route": "codex_builtin_imagegen_native_alpha",
+  "model": "account-managed/not-exposed",
+  "request_id": "not-exposed",
+  "background_control": "transparent",
+  "prompt": "Create ONE independent head-and-shoulders transparent game portrait for TinySeaWar. Image 1 is ONLY the identity reference for this character; preserve face, hair, eyes, outfit colors and core accessories exactly. Image 2 is ONLY the approved rendering/composition style sample (a DIFFERENT character); do NOT copy its blonde hair, crown or outfit. Match the style sample's polished fine anime linework, restrained cel shading, soft neutral light and bust framing. Head upright, slight three-quarter face toward viewer, neutral character-appropriate expression, eye line around 42% of square canvas height, complete hair and hats visible, upper shoulders/chest, no hands. Isolated bust at most84% canvas width/height,8%EMPTY TRANSPARENT margin every side. NO FRAME, border, card, medallion, background, text, checkerboard, weapons, ship parts, rigging or effects. Real native Alpha PNG, one portrait not a sheet, readable at40px. Do NOT add any new accessory absent from identity reference. Character identity: Long chestnut brown braid, blue eyes, gold star hair ornament, navy-white-gold uniform. NO glasses, NO spectacles, NO monocle: this character has bare face and no eyewear.",
+  "raw_output_path": "/Users/qingyue/.codex/generated_images/01a0f530-85bc-7132-9cf0-51e103bf539a/exec-641867d0-5301-46ac-a625-e3c76942050b.png",
+  "raw_sha256": "01757d7779b2be78d3c4e3f0fc1d13656c5815e475e326adf92ff3edfce209de",
+  "references": [
+    {
+      "path": "assets/characters/hood/concept/hood_concept_full.png",
+      "sha256": "eafd17c9116420dc63b3dcc6ab2b3ca6620df168a2e9e205a4f1fc3f76eccc8d"
+    },
+    {
+      "path": "assets/characters/warspite/ui/warspite_portrait_20261001_unframed_v1.png",
+      "sha256": "2de3b58ce65dc2a54b426434d5b7a477e93bb28b8e99ad51ad9bc9ca2af6cab9"
+    }
+  ],
+  "source": {
+    "path": "assets/characters/hood/ui/hood_portrait_20261001_unframed_v1.png",
+    "sha256": "01757d7779b2be78d3c4e3f0fc1d13656c5815e475e326adf92ff3edfce209de",
+    "alpha_facts": {
+      "format": "PNG",
+      "source_mode": "RGBA",
+      "width": 1254,
+      "height": 1254,
+      "has_alpha_channel": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixel_count": 647185,
+      "visible_pixel_count": 925331,
+      "transparent_canvas_ratio": 0.41156020034136376,
+      "visible_canvas_ratio": 0.5884397996586362,
+      "transparent_border_ratio": 1.0
+    }
+  },
+  "source_review": {
+    "sha256": "01757d7779b2be78d3c4e3f0fc1d13656c5815e475e326adf92ff3edfce209de",
+    "verdict": "pass",
+    "reviewer": "Codex visual inspection",
+    "observation": "Chestnut brown hair and braid, blue eyes, gold star ornament, navy-white-gold collar; bare face confirmed, unwanted glasses removed; complete contours and no frame."
+  },
+  "output_reviews": {
+    "ui_portrait": {
+      "sha256": "a4d6fa1596048f26c928d49853fc73ca1cd6d3317d1fd4301a6730b5cba8f127",
+      "verdict": "pass",
+      "reviewer": "Codex visual inspection",
+      "observation": "Chestnut brown hair and braid, blue eyes, gold star ornament, navy-white-gold collar; bare face confirmed, unwanted glasses removed; complete contours and no frame. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+    },
+    "ui_portrait_small": {
+      "sha256": "a554136480753efd7ba092b6d9bcf2531dd9097edce80dc82332002d4f4945c7",
+      "verdict": "pass",
+      "reviewer": "Codex visual inspection",
+      "observation": "Chestnut brown hair and braid, blue eyes, gold star ornament, navy-white-gold collar; bare face confirmed, unwanted glasses removed; complete contours and no frame. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+    }
+  }
+}

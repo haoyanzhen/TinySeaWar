@@ -588,174 +588,6 @@
       ]
     },
     {
-      "file": "assets/characters/bismarck/processed/ui/bismarck_ui_portrait.png",
-      "size": [
-        404,
-        449
-      ],
-      "mode": "RGBA",
-      "source_box": [
-        29,
-        60,
-        416,
-        482
-      ],
-      "source_crop_qa": {
-        "original_box": [
-          145,
-          150,
-          300,
-          335
-        ],
-        "final_box": [
-          29,
-          60,
-          416,
-          482
-        ],
-        "expanded": {
-          "left": 116,
-          "top": 90,
-          "right": 116,
-          "bottom": 147
-        },
-        "auto_crop_method": "connected_components_intersecting_initial_box",
-        "component_count": 2,
-        "selected_component_count": 1,
-        "selected_component_samples": [
-          {
-            "bbox": [
-              45,
-              76,
-              400,
-              466
-            ],
-            "pixel_count": 134692,
-            "overlap_pixels": 28675
-          }
-        ],
-        "source_edge_safe_margin": 16,
-        "final_edge_margins": {
-          "left": 16,
-          "top": 16,
-          "right": 16,
-          "bottom": 16
-        },
-        "edge_warnings": []
-      },
-      "output_layout": {
-        "content_bbox": [
-          0,
-          0,
-          355,
-          390
-        ],
-        "centroid_before_padding": [
-          177.02,
-          189.46
-        ],
-        "padding": {
-          "left": 25,
-          "top": 35,
-          "right": 24,
-          "bottom": 24
-        },
-        "centroid_offset_after_padding": {
-          "x": 0.02,
-          "y": -0.04
-        }
-      },
-      "source": "assets/characters/bismarck/ui/bismarck_ui_sheet.png",
-      "tags": [
-        "ui",
-        "portrait"
-      ]
-    },
-    {
-      "file": "assets/characters/bismarck/processed/ui/bismarck_ui_portrait_small.png",
-      "size": [
-        389,
-        408
-      ],
-      "mode": "RGBA",
-      "source_box": [
-        417,
-        72,
-        789,
-        463
-      ],
-      "source_crop_qa": {
-        "original_box": [
-          520,
-          175,
-          650,
-          335
-        ],
-        "final_box": [
-          417,
-          72,
-          789,
-          463
-        ],
-        "expanded": {
-          "left": 103,
-          "top": 103,
-          "right": 139,
-          "bottom": 128
-        },
-        "auto_crop_method": "connected_components_intersecting_initial_box",
-        "component_count": 2,
-        "selected_component_count": 1,
-        "selected_component_samples": [
-          {
-            "bbox": [
-              433,
-              88,
-              773,
-              447
-            ],
-            "pixel_count": 95810,
-            "overlap_pixels": 20800
-          }
-        ],
-        "source_edge_safe_margin": 16,
-        "final_edge_margins": {
-          "left": 16,
-          "top": 16,
-          "right": 16,
-          "bottom": 16
-        },
-        "edge_warnings": []
-      },
-      "output_layout": {
-        "content_bbox": [
-          0,
-          0,
-          340,
-          359
-        ],
-        "centroid_before_padding": [
-          169.51,
-          178.98
-        ],
-        "padding": {
-          "left": 25,
-          "top": 25,
-          "right": 24,
-          "bottom": 24
-        },
-        "centroid_offset_after_padding": {
-          "x": 0.01,
-          "y": -0.02
-        }
-      },
-      "source": "assets/characters/bismarck/ui/bismarck_ui_sheet.png",
-      "tags": [
-        "ui",
-        "portrait_small"
-      ]
-    },
-    {
       "file": "assets/characters/bismarck/processed/ui/bismarck_ui_chibi_head.png",
       "size": [
         342,
@@ -9335,11 +9167,229 @@
         "firepower",
         "frame_04"
       ]
+    },
+    {
+      "role": "ui_portrait",
+      "path": "assets/characters/bismarck/processed/ui/bismarck_ui_portrait.png",
+      "file": "assets/characters/bismarck/processed/ui/bismarck_ui_portrait.png",
+      "source": "assets/characters/bismarck/ui/bismarck_portrait_20261001_unframed_v1.png",
+      "sha256": "96353c32338be28cf185a72006015977ca33622cdd239101309f8619938a108a",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA",
+      "alpha_bbox": [
+        58,
+        56,
+        454,
+        456
+      ],
+      "alpha_pixel_count": 100204,
+      "edge_margins": {
+        "left": 58,
+        "top": 56,
+        "right": 58,
+        "bottom": 56
+      },
+      "output_padding": {
+        "left": 58,
+        "top": 56,
+        "right": 58,
+        "bottom": 56
+      },
+      "alpha_centroid": [
+        253.50259332394901,
+        287.6791271771844
+      ],
+      "centroid_offset_normalized": {
+        "x": -0.004877747414162081,
+        "y": 0.06187329526793828
+      },
+      "component_tags": [
+        "ui",
+        "portrait_revision"
+      ],
+      "crop": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          47,
+          37,
+          1237,
+          1240
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              47,
+              37,
+              1237,
+              1240
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 58,
+          "top": 56,
+          "right": 58,
+          "bottom": 56
+        },
+        "cleanup_tags": []
+      },
+      "source_crop_qa": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          47,
+          37,
+          1237,
+          1240
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              47,
+              37,
+              1237,
+              1240
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 58,
+          "top": 56,
+          "right": 58,
+          "bottom": 56
+        },
+        "cleanup_tags": []
+      }
+    },
+    {
+      "role": "ui_portrait_small",
+      "path": "assets/characters/bismarck/processed/ui/bismarck_ui_portrait_small.png",
+      "file": "assets/characters/bismarck/processed/ui/bismarck_ui_portrait_small.png",
+      "source": "assets/characters/bismarck/ui/bismarck_portrait_20261001_unframed_v1.png",
+      "sha256": "8f56960393ef0f0ca0e87ea3b12ffd9ba35dd2be6737d49bc7457bf1241cdeae",
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_bbox": [
+        13,
+        12,
+        116,
+        116
+      ],
+      "alpha_pixel_count": 6691,
+      "edge_margins": {
+        "left": 13,
+        "top": 12,
+        "right": 12,
+        "bottom": 12
+      },
+      "output_padding": {
+        "left": 13,
+        "top": 12,
+        "right": 12,
+        "bottom": 12
+      },
+      "alpha_centroid": [
+        63.3761657552324,
+        71.91659725710775
+      ],
+      "centroid_offset_normalized": {
+        "x": -0.004873705037246878,
+        "y": 0.06184841607115432
+      },
+      "component_tags": [
+        "ui",
+        "portrait_revision"
+      ],
+      "crop": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          47,
+          37,
+          1237,
+          1240
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              47,
+              37,
+              1237,
+              1240
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 13,
+          "top": 12,
+          "right": 12,
+          "bottom": 12
+        },
+        "cleanup_tags": []
+      },
+      "source_crop_qa": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          47,
+          37,
+          1237,
+          1240
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              47,
+              37,
+              1237,
+              1240
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 13,
+          "top": 12,
+          "right": 12,
+          "bottom": 12
+        },
+        "cleanup_tags": []
+      }
     }
   ],
   "config": {
     "bind_points": "assets/characters/bismarck/processed/config/bismarck_meta_bind_points.json",
     "animation": "assets/characters/bismarck/processed/config/bismarck_anim_config.json",
     "vfx": "assets/characters/bismarck/processed/config/bismarck_vfx_config.json"
+  },
+  "portrait_revision": {
+    "path": "assets/characters/bismarck/meta/bismarck_portrait_revision.json",
+    "sha256": "f64add2d7bed34382277a5d37a3b22cf25d4271e34962d02b210c7fd70be8514"
   }
 }

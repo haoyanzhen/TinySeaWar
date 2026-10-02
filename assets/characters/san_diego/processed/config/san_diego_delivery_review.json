@@ -1,0 +1,1813 @@
+{
+  "schema_version": 1,
+  "character_id": "san_diego",
+  "scope": "Visual evidence only; technical contract must pass separately. Not runtime acceptance.",
+  "checklist": [
+    "identity_and_inventory",
+    "no_truncation_or_neighbor_fragments",
+    "alpha_edges_and_small_scale_readability",
+    "animation_consistency",
+    "mechanical_binding_and_vfx_semantics"
+  ],
+  "package_sha256": {
+    "assets/characters/san_diego/battle/san_diego_anim_5x4_master.png": "0781f8606a911bc26374c7bc1c384ea774c0f340e66e10fe6db6c7c7e366bf85",
+    "assets/characters/san_diego/battle/san_diego_battle_asset_grid.png": "7f22a27a0d5709b07f07d15bc29338bf5bd342b9d51f3ad521f6d8764ce7d78d",
+    "assets/characters/san_diego/concept/san_diego_concept_full.png": "e7dfd3c18065543bd562c2adfb5f1691b9a43cbc6db2874a15fd4bbe0713acce",
+    "assets/characters/san_diego/meta/san_diego_portrait_revision.json": "5cb60c06e463f09e1663ed3f810f5a37269c697f2a5d02e03452660858b44141",
+    "assets/characters/san_diego/processed/anim/san_diego_anim_attack_frame_01.png": "7fb7248bd2dcbf53feec5f4732bd8b6665dd44fd640b8d240b50580b30cabff4",
+    "assets/characters/san_diego/processed/anim/san_diego_anim_attack_frame_02.png": "35ff01caae7395ad17b093e47c8ba599e2f1685ed95a0e017411ad9b850e4f97",
+    "assets/characters/san_diego/processed/anim/san_diego_anim_attack_frame_03.png": "74ef660fb17c75672cebc9aa18a547586a33a426d5af84a17ad328d92786b4cb",
+    "assets/characters/san_diego/processed/anim/san_diego_anim_attack_frame_04.png": "64cc1261bf740c902ab55d63b493fa4f846d2f80055385be7f6af689b0b73bcf",
+    "assets/characters/san_diego/processed/anim/san_diego_anim_attack_keyframe.png": "7fb7248bd2dcbf53feec5f4732bd8b6665dd44fd640b8d240b50580b30cabff4",
+    "assets/characters/san_diego/processed/anim/san_diego_anim_firepower_frame_01.png": "7ce7f6e045fe899cb12b50866dc58688dcc251cd2d3908c6de9261dc41d68b6e",
+    "assets/characters/san_diego/processed/anim/san_diego_anim_firepower_frame_02.png": "f73125b2ca1e5635ed37ba88d5d9b499ed84975b84994799b3c904dddc9c9338",
+    "assets/characters/san_diego/processed/anim/san_diego_anim_firepower_frame_03.png": "4e06c073f7f9e2ad2d6d3b684d80a35b46e047fb0c0b2366f48ad9d77d194ddf",
+    "assets/characters/san_diego/processed/anim/san_diego_anim_firepower_frame_04.png": "c626bcd0fe426b907d87c0fb60dd3170f502810098c9efaccb9e9e575acf1949",
+    "assets/characters/san_diego/processed/anim/san_diego_anim_firepower_keyframe.png": "7ce7f6e045fe899cb12b50866dc58688dcc251cd2d3908c6de9261dc41d68b6e",
+    "assets/characters/san_diego/processed/anim/san_diego_anim_hit_frame_01.png": "4b92ec53de604abbc1dec44110dee79a2ff6432682e85d09ea312447e7dd00a6",
+    "assets/characters/san_diego/processed/anim/san_diego_anim_hit_frame_02.png": "b42a134cfeb9591114172b2eadf0c99cf13819aa9a63ea45e055611949f5f4c5",
+    "assets/characters/san_diego/processed/anim/san_diego_anim_hit_frame_03.png": "2acf9f16dc4284ff5ced78139a4719e2281570d9a734df9e9e9eef8b55cab1de",
+    "assets/characters/san_diego/processed/anim/san_diego_anim_hit_frame_04.png": "63841b261ede87cb2f410680b69e4bae9828be2b7e8c8bfdfedb73333443e280",
+    "assets/characters/san_diego/processed/anim/san_diego_anim_hit_keyframe.png": "4b92ec53de604abbc1dec44110dee79a2ff6432682e85d09ea312447e7dd00a6",
+    "assets/characters/san_diego/processed/anim/san_diego_anim_idle_frame_01.png": "75cf1be3c87d878d4f0e2953d1684e60c98a6fc0b80e227c727ff499f3452778",
+    "assets/characters/san_diego/processed/anim/san_diego_anim_idle_frame_02.png": "c9d59871e6c58aeecca6f55b6fd823f356045c02592450c905632134e9baaf73",
+    "assets/characters/san_diego/processed/anim/san_diego_anim_idle_frame_03.png": "bae889b235a282f8bdf5eec09b5c76cc81f5fd696279153437d66b41b6f74349",
+    "assets/characters/san_diego/processed/anim/san_diego_anim_idle_frame_04.png": "45f3a66d42be5c38e3541cfbc35fcb45651cc739c298ed226310f4841ce2c424",
+    "assets/characters/san_diego/processed/anim/san_diego_anim_idle_keyframe.png": "75cf1be3c87d878d4f0e2953d1684e60c98a6fc0b80e227c727ff499f3452778",
+    "assets/characters/san_diego/processed/anim/san_diego_anim_move_frame_01.png": "08717fe839e13140ea693dc769ddfca2b9675d743eb1864636fe00ebc580876f",
+    "assets/characters/san_diego/processed/anim/san_diego_anim_move_frame_02.png": "30ffb184b79639d6ad49625aa61bf2c4963b60ce727d449c1d27ac4b6368fac7",
+    "assets/characters/san_diego/processed/anim/san_diego_anim_move_frame_03.png": "6f3fe364f345b11bda9bfc0615ccb2400fa7af22194b5e0287dca1f8b5893e94",
+    "assets/characters/san_diego/processed/anim/san_diego_anim_move_frame_04.png": "efe7a724dfcd8e83f1989ed4eed6ee99f9b34b80e67baff3be5815ab3535cf1e",
+    "assets/characters/san_diego/processed/anim/san_diego_anim_move_keyframe.png": "08717fe839e13140ea693dc769ddfca2b9675d743eb1864636fe00ebc580876f",
+    "assets/characters/san_diego/processed/battle/san_diego_battle_aa_center.png": "ab4d91ad717d73a7fff6eb1f182c040b5ae2d11415abc728e2fa0e7da071726b",
+    "assets/characters/san_diego/processed/battle/san_diego_battle_body_r.png": "75cf1be3c87d878d4f0e2953d1684e60c98a6fc0b80e227c727ff499f3452778",
+    "assets/characters/san_diego/processed/battle/san_diego_battle_radar_node.png": "b8b2ccae41b4a10afc0e146c6539753bd0086e52df944569a4fd5c63a934c11e",
+    "assets/characters/san_diego/processed/battle/san_diego_battle_rig_base.png": "47543ddcbff85d61f5b4ddb1f570fa92605567c2691421e367e7ae6b5253f139",
+    "assets/characters/san_diego/processed/battle/san_diego_battle_support_node.png": "b07c4b4c41a23dfbd459e42188f55456f69a46430a52e03b6f5c67d7e73087a4",
+    "assets/characters/san_diego/processed/battle/san_diego_battle_turret_main_01.png": "6b918ebbc200bca31e50a97da86071a6e5c3874b349ac7362195712e9a2f2455",
+    "assets/characters/san_diego/processed/battle/san_diego_battle_turret_main_02.png": "b8697a05911a54b47fba6b809cd4a52dd73f4f9f332c9dc43a20f6ac57d961b4",
+    "assets/characters/san_diego/processed/battle/san_diego_battle_wake_origin_marker.png": "baaefe2d171b379ce588f960dcd7af9f375222a1a1bb8316eff8e3a801eb90f3",
+    "assets/characters/san_diego/processed/config/san_diego_anim_config.json": "fbec74b98b515a712c2d235c1c3ba48452c36b5bb349f320616eb34aeab172e1",
+    "assets/characters/san_diego/processed/config/san_diego_meta_bind_points.json": "fc4d417a75b301b543dc162d686c8eb429f0a704489368c713fe700390d67e25",
+    "assets/characters/san_diego/processed/config/san_diego_postprocess_manifest.json": "3ac322a584ae5e07e4683e0cd21c9ae61269171f55bd5e99a97f9bd4ccf55bb9",
+    "assets/characters/san_diego/processed/config/san_diego_vfx_config.json": "10192a889091f99a09680424c3686f9567035d8fc31653e1f51951db0afabd3a",
+    "assets/characters/san_diego/processed/source_alpha/san_diego_anim_5x4_master_alpha_source.png": "3ab3d381b1afbc8011826885eee8f9a57cae8517dbced077b30e58ebf1ed2fe5",
+    "assets/characters/san_diego/processed/source_alpha/san_diego_battle_asset_grid_alpha_source.png": "93ad261b932e0b50aeb1f05b6a6845e8b82c43ed6a75d80d5da587f91615edb9",
+    "assets/characters/san_diego/processed/source_alpha/san_diego_concept_full_alpha_source.png": "2aa837ba4d9b126b22f3ef867db060df7786c7ae5401732461ccb1e05d274662",
+    "assets/characters/san_diego/processed/source_alpha/san_diego_ui_sheet_alpha_source.png": "0c4d7763aa5a7e67df12a653a8791ab33f3baa80a69839e308a79d9cc3b7e5e7",
+    "assets/characters/san_diego/processed/source_alpha/san_diego_vfx_reference_sheet_alpha_source.png": "bc0b61aa19190144159b1ad620c72fcbd5f9eb64daa6e757f481ff0921eaf31f",
+    "assets/characters/san_diego/processed/ui/san_diego_expr_default.png": "d4403b2bdda1834083d6e10f83988207496add3ceb71cccb95ccf0d4db9d65c4",
+    "assets/characters/san_diego/processed/ui/san_diego_expr_hit.png": "967f021a7e757bf08b737c93c7ccafc75ff04422d5aed932a9ba733b261ca04e",
+    "assets/characters/san_diego/processed/ui/san_diego_expr_serious.png": "2e428e98e75b2883e636c6ed21316a8b1e1c88af1e76a2a3f988929e95434d95",
+    "assets/characters/san_diego/processed/ui/san_diego_illust_full_alpha.png": "191d513198f03e8c25f1227a348e5e09e1acb6079270edfd1ec4506e5d85c929",
+    "assets/characters/san_diego/processed/ui/san_diego_illust_half_alpha.png": "2d145ed308bd8ab0f98fae3fce389ccd06c8b31953a8167ce3f1a6d88bc1584d",
+    "assets/characters/san_diego/processed/ui/san_diego_illust_skill_cutin_alpha.png": "d59de9750c8af10ba28add67ec957b7d85e9605008f0c28a332e1b486b406845",
+    "assets/characters/san_diego/processed/ui/san_diego_ui_chibi_head.png": "c1ac6c8f48188192e2dd1de2ddc51123d3ce544d408c96a05ead32be5664f127",
+    "assets/characters/san_diego/processed/ui/san_diego_ui_class_light_cruiser.png": "60cdc34784aa9d73781d25f8e21a87a7d46ad3e526560a1d1256cb46310425f5",
+    "assets/characters/san_diego/processed/ui/san_diego_ui_portrait.png": "b304cb21596d08817e51437d6f957ab34c0dbbbbd552ab3130a8db64355213fa",
+    "assets/characters/san_diego/processed/ui/san_diego_ui_portrait_small.png": "02e12b4ef8e3539e2c830b836284e4175c071292021a230e066e18d0e97b6959",
+    "assets/characters/san_diego/processed/ui/san_diego_ui_skill_escort_barrage.png": "b6b77197e24b70dd0e43f0c73f1725dce54616fb37dbc998f46d52184fd90e50",
+    "assets/characters/san_diego/ui/san_diego_portrait_20261001_unframed_v1.png": "460525a50a485bfbfdac442fd4507c04c9be10337b516d440ea56c48942f7879",
+    "assets/characters/san_diego/ui/san_diego_ui_sheet.png": "8b5d16020cbf19f182b8ec372a81bb0cb58eeab2d86816d9ce7d36e68e805150",
+    "assets/characters/san_diego/vfx/san_diego_vfx_reference_sheet.png": "394ef3850d64ead0f76a891f8db47b454156a189e51233d48bdfc69fb4ad1857",
+    "assets/vfx/combat/character_templates/light_cruiser/vfx_light_cruiser_aa_burst.png": "af4e63708ecb19e95d24049adac8cc206e0d5a5fa4a319d2abb9e8d74459aec1",
+    "assets/vfx/combat/character_templates/light_cruiser/vfx_light_cruiser_aa_circle.png": "07618bafd94aeeb561b95fb9072fd9b718ff5c9350d1c938fd19f932a0b2c18f",
+    "assets/vfx/combat/character_templates/light_cruiser/vfx_light_cruiser_armor_sparks.png": "b550ddbf8a72541dc392782a216d640b6b572a6f4b0ccd4910787b811dc0c378",
+    "assets/vfx/combat/character_templates/light_cruiser/vfx_light_cruiser_escort_aura.png": "3e5ed52c42e6b393ed345ed9014365bb759969d112fb897cf2454c1c099ce649",
+    "assets/vfx/combat/character_templates/light_cruiser/vfx_light_cruiser_muzzle_flash_medium.png": "2d049e2cdc0672c7d8ae72e3ffe9098927f666d9ce96aa7653e91fcc6571225c",
+    "assets/vfx/combat/character_templates/light_cruiser/vfx_light_cruiser_shell_trail.png": "dbd11679f1b7531a2ba871176d3cada767d5e1bbd99be3971a5fbfc05ef8bb2d",
+    "assets/vfx/combat/character_templates/light_cruiser/vfx_light_cruiser_wake_medium.png": "88eec7e4cf4ec59cb45ee8d07040414e1b1a5dd72369a5e579c473eaba4b6b76",
+    "assets/vfx/combat/character_templates/light_cruiser/vfx_light_cruiser_water_splash.png": "381681bb7ae3817b0aaa874878bd2b3f79e4cdf2fa748ef313cf051e5bc29dcf"
+  },
+  "assets": {
+    "assets/characters/san_diego/processed/anim/san_diego_anim_attack_frame_01.png": {
+      "sha256": "7fb7248bd2dcbf53feec5f4732bd8b6665dd44fd640b8d240b50580b30cabff4",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 392,
+        "height": 232,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 68644,
+        "visible_pixel_count": 22300,
+        "transparent_canvas_ratio": 0.7547941590429276,
+        "visible_canvas_ratio": 0.24520584095707249,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/san_diego/processed/anim/san_diego_anim_attack_frame_02.png": {
+      "sha256": "35ff01caae7395ad17b093e47c8ba599e2f1685ed95a0e017411ad9b850e4f97",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 392,
+        "height": 232,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 67606,
+        "visible_pixel_count": 23338,
+        "transparent_canvas_ratio": 0.7433805418719212,
+        "visible_canvas_ratio": 0.2566194581280788,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/san_diego/processed/anim/san_diego_anim_attack_frame_03.png": {
+      "sha256": "74ef660fb17c75672cebc9aa18a547586a33a426d5af84a17ad328d92786b4cb",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 392,
+        "height": 232,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 68621,
+        "visible_pixel_count": 22323,
+        "transparent_canvas_ratio": 0.7545412561576355,
+        "visible_canvas_ratio": 0.24545874384236452,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/san_diego/processed/anim/san_diego_anim_attack_frame_04.png": {
+      "sha256": "64cc1261bf740c902ab55d63b493fa4f846d2f80055385be7f6af689b0b73bcf",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 392,
+        "height": 232,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 69181,
+        "visible_pixel_count": 21763,
+        "transparent_canvas_ratio": 0.7606988916256158,
+        "visible_canvas_ratio": 0.23930110837438423,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/san_diego/processed/anim/san_diego_anim_attack_keyframe.png": {
+      "sha256": "7fb7248bd2dcbf53feec5f4732bd8b6665dd44fd640b8d240b50580b30cabff4",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 392,
+        "height": 232,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 68644,
+        "visible_pixel_count": 22300,
+        "transparent_canvas_ratio": 0.7547941590429276,
+        "visible_canvas_ratio": 0.24520584095707249,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/san_diego/processed/anim/san_diego_anim_firepower_frame_01.png": {
+      "sha256": "7ce7f6e045fe899cb12b50866dc58688dcc251cd2d3908c6de9261dc41d68b6e",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 284,
+        "height": 202,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 36036,
+        "visible_pixel_count": 21332,
+        "transparent_canvas_ratio": 0.6281550690280295,
+        "visible_canvas_ratio": 0.3718449309719704,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/san_diego/processed/anim/san_diego_anim_firepower_frame_02.png": {
+      "sha256": "f73125b2ca1e5635ed37ba88d5d9b499ed84975b84994799b3c904dddc9c9338",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 284,
+        "height": 202,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 36772,
+        "visible_pixel_count": 20596,
+        "transparent_canvas_ratio": 0.64098452098731,
+        "visible_canvas_ratio": 0.35901547901269,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/san_diego/processed/anim/san_diego_anim_firepower_frame_03.png": {
+      "sha256": "4e06c073f7f9e2ad2d6d3b684d80a35b46e047fb0c0b2366f48ad9d77d194ddf",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 284,
+        "height": 202,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 35957,
+        "visible_pixel_count": 21411,
+        "transparent_canvas_ratio": 0.6267779947008786,
+        "visible_canvas_ratio": 0.3732220052991215,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/san_diego/processed/anim/san_diego_anim_firepower_frame_04.png": {
+      "sha256": "c626bcd0fe426b907d87c0fb60dd3170f502810098c9efaccb9e9e575acf1949",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 284,
+        "height": 202,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 35918,
+        "visible_pixel_count": 21450,
+        "transparent_canvas_ratio": 0.6260981731976014,
+        "visible_canvas_ratio": 0.37390182680239853,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/san_diego/processed/anim/san_diego_anim_firepower_keyframe.png": {
+      "sha256": "7ce7f6e045fe899cb12b50866dc58688dcc251cd2d3908c6de9261dc41d68b6e",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 284,
+        "height": 202,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 36036,
+        "visible_pixel_count": 21332,
+        "transparent_canvas_ratio": 0.6281550690280295,
+        "visible_canvas_ratio": 0.3718449309719704,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/san_diego/processed/anim/san_diego_anim_hit_frame_01.png": {
+      "sha256": "4b92ec53de604abbc1dec44110dee79a2ff6432682e85d09ea312447e7dd00a6",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 306,
+        "height": 200,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 40259,
+        "visible_pixel_count": 20941,
+        "transparent_canvas_ratio": 0.6578267973856209,
+        "visible_canvas_ratio": 0.34217320261437906,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/san_diego/processed/anim/san_diego_anim_hit_frame_02.png": {
+      "sha256": "b42a134cfeb9591114172b2eadf0c99cf13819aa9a63ea45e055611949f5f4c5",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 306,
+        "height": 200,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 40543,
+        "visible_pixel_count": 20657,
+        "transparent_canvas_ratio": 0.662467320261438,
+        "visible_canvas_ratio": 0.3375326797385621,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/san_diego/processed/anim/san_diego_anim_hit_frame_03.png": {
+      "sha256": "2acf9f16dc4284ff5ced78139a4719e2281570d9a734df9e9e9eef8b55cab1de",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 306,
+        "height": 200,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 39848,
+        "visible_pixel_count": 21352,
+        "transparent_canvas_ratio": 0.6511111111111111,
+        "visible_canvas_ratio": 0.3488888888888889,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/san_diego/processed/anim/san_diego_anim_hit_frame_04.png": {
+      "sha256": "63841b261ede87cb2f410680b69e4bae9828be2b7e8c8bfdfedb73333443e280",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 306,
+        "height": 200,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 41373,
+        "visible_pixel_count": 19827,
+        "transparent_canvas_ratio": 0.6760294117647059,
+        "visible_canvas_ratio": 0.3239705882352941,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/san_diego/processed/anim/san_diego_anim_hit_keyframe.png": {
+      "sha256": "4b92ec53de604abbc1dec44110dee79a2ff6432682e85d09ea312447e7dd00a6",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 306,
+        "height": 200,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 40259,
+        "visible_pixel_count": 20941,
+        "transparent_canvas_ratio": 0.6578267973856209,
+        "visible_canvas_ratio": 0.34217320261437906,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/san_diego/processed/anim/san_diego_anim_idle_frame_01.png": {
+      "sha256": "75cf1be3c87d878d4f0e2953d1684e60c98a6fc0b80e227c727ff499f3452778",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 286,
+        "height": 246,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 47724,
+        "visible_pixel_count": 22632,
+        "transparent_canvas_ratio": 0.6783216783216783,
+        "visible_canvas_ratio": 0.32167832167832167,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/san_diego/processed/anim/san_diego_anim_idle_frame_02.png": {
+      "sha256": "c9d59871e6c58aeecca6f55b6fd823f356045c02592450c905632134e9baaf73",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 286,
+        "height": 246,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 47505,
+        "visible_pixel_count": 22851,
+        "transparent_canvas_ratio": 0.6752089374040594,
+        "visible_canvas_ratio": 0.32479106259594065,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/san_diego/processed/anim/san_diego_anim_idle_frame_03.png": {
+      "sha256": "bae889b235a282f8bdf5eec09b5c76cc81f5fd696279153437d66b41b6f74349",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 286,
+        "height": 246,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 47769,
+        "visible_pixel_count": 22587,
+        "transparent_canvas_ratio": 0.6789612826198193,
+        "visible_canvas_ratio": 0.3210387173801808,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/san_diego/processed/anim/san_diego_anim_idle_frame_04.png": {
+      "sha256": "45f3a66d42be5c38e3541cfbc35fcb45651cc739c298ed226310f4841ce2c424",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 286,
+        "height": 246,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 47786,
+        "visible_pixel_count": 22570,
+        "transparent_canvas_ratio": 0.679202910910228,
+        "visible_canvas_ratio": 0.320797089089772,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/san_diego/processed/anim/san_diego_anim_idle_keyframe.png": {
+      "sha256": "75cf1be3c87d878d4f0e2953d1684e60c98a6fc0b80e227c727ff499f3452778",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 286,
+        "height": 246,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 47724,
+        "visible_pixel_count": 22632,
+        "transparent_canvas_ratio": 0.6783216783216783,
+        "visible_canvas_ratio": 0.32167832167832167,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/san_diego/processed/anim/san_diego_anim_move_frame_01.png": {
+      "sha256": "08717fe839e13140ea693dc769ddfca2b9675d743eb1864636fe00ebc580876f",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 272,
+        "height": 236,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 41686,
+        "visible_pixel_count": 22506,
+        "transparent_canvas_ratio": 0.6493955633100698,
+        "visible_canvas_ratio": 0.3506044366899302,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/san_diego/processed/anim/san_diego_anim_move_frame_02.png": {
+      "sha256": "30ffb184b79639d6ad49625aa61bf2c4963b60ce727d449c1d27ac4b6368fac7",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 272,
+        "height": 236,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 44258,
+        "visible_pixel_count": 19934,
+        "transparent_canvas_ratio": 0.6894628614157527,
+        "visible_canvas_ratio": 0.31053713858424725,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/san_diego/processed/anim/san_diego_anim_move_frame_03.png": {
+      "sha256": "6f3fe364f345b11bda9bfc0615ccb2400fa7af22194b5e0287dca1f8b5893e94",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 272,
+        "height": 236,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 43555,
+        "visible_pixel_count": 20637,
+        "transparent_canvas_ratio": 0.6785113409770688,
+        "visible_canvas_ratio": 0.3214886590229312,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/san_diego/processed/anim/san_diego_anim_move_frame_04.png": {
+      "sha256": "efe7a724dfcd8e83f1989ed4eed6ee99f9b34b80e67baff3be5815ab3535cf1e",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 272,
+        "height": 236,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 42896,
+        "visible_pixel_count": 21296,
+        "transparent_canvas_ratio": 0.6682452642073778,
+        "visible_canvas_ratio": 0.33175473579262216,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/san_diego/processed/anim/san_diego_anim_move_keyframe.png": {
+      "sha256": "08717fe839e13140ea693dc769ddfca2b9675d743eb1864636fe00ebc580876f",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 272,
+        "height": 236,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 41686,
+        "visible_pixel_count": 22506,
+        "transparent_canvas_ratio": 0.6493955633100698,
+        "visible_canvas_ratio": 0.3506044366899302,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/san_diego/processed/battle/san_diego_battle_aa_center.png": {
+      "sha256": "ab4d91ad717d73a7fff6eb1f182c040b5ae2d11415abc728e2fa0e7da071726b",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 274,
+        "height": 220,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 29572,
+        "visible_pixel_count": 30708,
+        "transparent_canvas_ratio": 0.4905773059057731,
+        "visible_canvas_ratio": 0.5094226940942269,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          89,
+          162,
+          316,
+          336
+        ],
+        "final_crop_box": [
+          71,
+          144,
+          334,
+          354
+        ],
+        "component_area": 30708,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 27,
+          "right": 29,
+          "bottom": 19
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/san_diego/processed/battle/san_diego_battle_body_r.png": {
+      "sha256": "75cf1be3c87d878d4f0e2953d1684e60c98a6fc0b80e227c727ff499f3452778",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 286,
+        "height": 246,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 47724,
+        "visible_pixel_count": 22632,
+        "transparent_canvas_ratio": 0.6783216783216783,
+        "visible_canvas_ratio": 0.32167832167832167,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/san_diego/processed/battle/san_diego_battle_radar_node.png": {
+      "sha256": "b8b2ccae41b4a10afc0e146c6539753bd0086e52df944569a4fd5c63a934c11e",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 194,
+        "height": 262,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 30385,
+        "visible_pixel_count": 20443,
+        "transparent_canvas_ratio": 0.597800424962619,
+        "visible_canvas_ratio": 0.40219957503738096,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          115,
+          139,
+          270,
+          342
+        ],
+        "final_crop_box": [
+          97,
+          121,
+          288,
+          360
+        ],
+        "component_area": 20443,
+        "output_edge_margins": {
+          "left": 21,
+          "top": 18,
+          "right": 18,
+          "bottom": 41
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/san_diego/processed/battle/san_diego_battle_rig_base.png": {
+      "sha256": "47543ddcbff85d61f5b4ddb1f570fa92605567c2691421e367e7ae6b5253f139",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 322,
+        "height": 418,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 94015,
+        "visible_pixel_count": 40581,
+        "transparent_canvas_ratio": 0.6984977265297632,
+        "visible_canvas_ratio": 0.30150227347023684,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          64,
+          117,
+          316,
+          407
+        ],
+        "final_crop_box": [
+          46,
+          99,
+          334,
+          425
+        ],
+        "component_area": 40581,
+        "output_edge_margins": {
+          "left": 51,
+          "top": 19,
+          "right": 19,
+          "bottom": 98
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/san_diego/processed/battle/san_diego_battle_support_node.png": {
+      "sha256": "b07c4b4c41a23dfbd459e42188f55456f69a46430a52e03b6f5c67d7e73087a4",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 238,
+        "height": 232,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 35611,
+        "visible_pixel_count": 19605,
+        "transparent_canvas_ratio": 0.6449398725007244,
+        "visible_canvas_ratio": 0.35506012749927557,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          92,
+          156,
+          265,
+          340
+        ],
+        "final_crop_box": [
+          74,
+          138,
+          283,
+          358
+        ],
+        "component_area": 19605,
+        "output_edge_margins": {
+          "left": 47,
+          "top": 18,
+          "right": 18,
+          "bottom": 30
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/san_diego/processed/battle/san_diego_battle_turret_main_01.png": {
+      "sha256": "6b918ebbc200bca31e50a97da86071a6e5c3874b349ac7362195712e9a2f2455",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 382,
+        "height": 216,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 50116,
+        "visible_pixel_count": 32396,
+        "transparent_canvas_ratio": 0.607378320729106,
+        "visible_canvas_ratio": 0.3926216792708939,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          43,
+          215,
+          329,
+          392
+        ],
+        "final_crop_box": [
+          25,
+          197,
+          347,
+          410
+        ],
+        "component_area": 32396,
+        "output_edge_margins": {
+          "left": 77,
+          "top": 21,
+          "right": 19,
+          "bottom": 18
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/san_diego/processed/battle/san_diego_battle_turret_main_02.png": {
+      "sha256": "b8697a05911a54b47fba6b809cd4a52dd73f4f9f332c9dc43a20f6ac57d961b4",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 374,
+        "height": 218,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 49760,
+        "visible_pixel_count": 31772,
+        "transparent_canvas_ratio": 0.6103125153314036,
+        "visible_canvas_ratio": 0.3896874846685964,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          38,
+          215,
+          317,
+          393
+        ],
+        "final_crop_box": [
+          20,
+          197,
+          335,
+          411
+        ],
+        "component_area": 31772,
+        "output_edge_margins": {
+          "left": 77,
+          "top": 21,
+          "right": 18,
+          "bottom": 19
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/san_diego/processed/battle/san_diego_battle_wake_origin_marker.png": {
+      "sha256": "baaefe2d171b379ce588f960dcd7af9f375222a1a1bb8316eff8e3a801eb90f3",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 218,
+        "height": 168,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 24194,
+        "visible_pixel_count": 12430,
+        "transparent_canvas_ratio": 0.6606050677151595,
+        "visible_canvas_ratio": 0.3393949322848405,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          57,
+          181,
+          230,
+          312
+        ],
+        "final_crop_box": [
+          39,
+          163,
+          248,
+          330
+        ],
+        "component_area": 12430,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 19,
+          "right": 27,
+          "bottom": 18
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/san_diego/processed/ui/san_diego_expr_default.png": {
+      "sha256": "d4403b2bdda1834083d6e10f83988207496add3ceb71cccb95ccf0d4db9d65c4",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 330,
+        "height": 340,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 55391,
+        "visible_pixel_count": 56809,
+        "transparent_canvas_ratio": 0.493680926916221,
+        "visible_canvas_ratio": 0.506319073083779,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          32,
+          148,
+          316,
+          450
+        ],
+        "final_crop_box": [
+          14,
+          130,
+          334,
+          468
+        ],
+        "output_edge_margins": {
+          "left": 27,
+          "top": 18,
+          "right": 19,
+          "bottom": 20
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/san_diego/processed/ui/san_diego_expr_hit.png": {
+      "sha256": "967f021a7e757bf08b737c93c7ccafc75ff04422d5aed932a9ba733b261ca04e",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 320,
+        "height": 372,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 59362,
+        "visible_pixel_count": 59678,
+        "transparent_canvas_ratio": 0.4986727150537634,
+        "visible_canvas_ratio": 0.5013272849462366,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          59,
+          40,
+          340,
+          357
+        ],
+        "final_crop_box": [
+          41,
+          22,
+          358,
+          375
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 20,
+          "bottom": 37
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/san_diego/processed/ui/san_diego_expr_serious.png": {
+      "sha256": "2e428e98e75b2883e636c6ed21316a8b1e1c88af1e76a2a3f988929e95434d95",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 336,
+        "height": 388,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 67243,
+        "visible_pixel_count": 63125,
+        "transparent_canvas_ratio": 0.5157937530682376,
+        "visible_canvas_ratio": 0.4842062469317624,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          64,
+          29,
+          356,
+          359
+        ],
+        "final_crop_box": [
+          46,
+          11,
+          374,
+          377
+        ],
+        "output_edge_margins": {
+          "left": 18,
+          "top": 18,
+          "right": 26,
+          "bottom": 40
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/san_diego/processed/ui/san_diego_illust_full_alpha.png": {
+      "sha256": "191d513198f03e8c25f1227a348e5e09e1acb6079270edfd1ec4506e5d85c929",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 958,
+        "height": 1624,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 1158468,
+        "visible_pixel_count": 397324,
+        "transparent_canvas_ratio": 0.7446162469018995,
+        "visible_canvas_ratio": 0.2553837530981005,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          63,
+          51,
+          970,
+          1469
+        ],
+        "final_crop_box": [
+          51,
+          39,
+          982,
+          1481
+        ],
+        "output_edge_margins": {
+          "left": 13,
+          "top": 194,
+          "right": 38,
+          "bottom": 12
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/san_diego/processed/ui/san_diego_illust_half_alpha.png": {
+      "sha256": "2d145ed308bd8ab0f98fae3fce389ccd06c8b31953a8167ce3f1a6d88bc1584d",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 968,
+        "height": 1096,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 714875,
+        "visible_pixel_count": 346053,
+        "transparent_canvas_ratio": 0.6738204666103638,
+        "visible_canvas_ratio": 0.32617953338963623,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          16,
+          16,
+          923,
+          1036
+        ],
+        "final_crop_box": [
+          0,
+          0,
+          939,
+          1052
+        ],
+        "output_edge_margins": {
+          "left": 16,
+          "top": 16,
+          "right": 45,
+          "bottom": 60
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/san_diego/processed/ui/san_diego_illust_skill_cutin_alpha.png": {
+      "sha256": "d59de9750c8af10ba28add67ec957b7d85e9605008f0c28a332e1b486b406845",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 974,
+        "height": 1022,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 679264,
+        "visible_pixel_count": 316164,
+        "transparent_canvas_ratio": 0.6823838590033634,
+        "visible_canvas_ratio": 0.3176161409966366,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          449,
+          16,
+          1356,
+          838
+        ],
+        "final_crop_box": [
+          433,
+          0,
+          1372,
+          854
+        ],
+        "output_edge_margins": {
+          "left": 17,
+          "top": 16,
+          "right": 50,
+          "bottom": 184
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/san_diego/processed/ui/san_diego_ui_chibi_head.png": {
+      "sha256": "c1ac6c8f48188192e2dd1de2ddc51123d3ce544d408c96a05ead32be5664f127",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 338,
+        "height": 306,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 51585,
+        "visible_pixel_count": 51843,
+        "transparent_canvas_ratio": 0.49875275554008586,
+        "visible_canvas_ratio": 0.5012472444599142,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          45,
+          158,
+          346,
+          424
+        ],
+        "final_crop_box": [
+          27,
+          140,
+          364,
+          442
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 18,
+          "bottom": 22
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/san_diego/processed/ui/san_diego_ui_class_light_cruiser.png": {
+      "sha256": "60cdc34784aa9d73781d25f8e21a87a7d46ad3e526560a1d1256cb46310425f5",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 336,
+        "height": 382,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 88804,
+        "visible_pixel_count": 39548,
+        "transparent_canvas_ratio": 0.6918785838942907,
+        "visible_canvas_ratio": 0.3081214161057093,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          11,
+          81,
+          300,
+          350
+        ],
+        "final_crop_box": [
+          0,
+          63,
+          318,
+          368
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 28,
+          "bottom": 95
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/san_diego/processed/ui/san_diego_ui_portrait.png": {
+      "sha256": "b304cb21596d08817e51437d6f957ab34c0dbbbbd552ab3130a8db64355213fa",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 512,
+        "height": 512,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 173620,
+        "visible_pixel_count": 88524,
+        "transparent_canvas_ratio": 0.6623077392578125,
+        "visible_canvas_ratio": 0.3376922607421875,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          21,
+          1158,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              21,
+              1158,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 114,
+          "top": 56,
+          "right": 77,
+          "bottom": 58
+        },
+        "cleanup_tags": []
+      },
+      "review": {
+        "verdict": "pass",
+        "reviewer": "Codex visual inspection",
+        "observation": "Blonde bob, blue eyes, original star ornament and wearable radar headset with round aerial/microphone retained; no large ship rigging or baked frame. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+      }
+    },
+    "assets/characters/san_diego/processed/ui/san_diego_ui_portrait_small.png": {
+      "sha256": "02e12b4ef8e3539e2c830b836284e4175c071292021a230e066e18d0e97b6959",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 128,
+        "height": 128,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 10314,
+        "visible_pixel_count": 6070,
+        "transparent_canvas_ratio": 0.6295166015625,
+        "visible_canvas_ratio": 0.3704833984375,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          21,
+          1158,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              21,
+              1158,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 27,
+          "top": 12,
+          "right": 17,
+          "bottom": 12
+        },
+        "cleanup_tags": []
+      },
+      "review": {
+        "verdict": "pass",
+        "reviewer": "Codex visual inspection",
+        "observation": "Blonde bob, blue eyes, original star ornament and wearable radar headset with round aerial/microphone retained; no large ship rigging or baked frame. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+      }
+    },
+    "assets/characters/san_diego/processed/ui/san_diego_ui_skill_escort_barrage.png": {
+      "sha256": "b6b77197e24b70dd0e43f0c73f1725dce54616fb37dbc998f46d52184fd90e50",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 344,
+        "height": 362,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 62477,
+        "visible_pixel_count": 62051,
+        "transparent_canvas_ratio": 0.501710458692021,
+        "visible_canvas_ratio": 0.4982895413079789,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          39,
+          53,
+          344,
+          360
+        ],
+        "final_crop_box": [
+          21,
+          35,
+          362,
+          378
+        ],
+        "output_edge_margins": {
+          "left": 20,
+          "top": 18,
+          "right": 19,
+          "bottom": 37
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/light_cruiser/vfx_light_cruiser_aa_burst.png": {
+      "sha256": "af4e63708ecb19e95d24049adac8cc206e0d5a5fa4a319d2abb9e8d74459aec1",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 140,
+        "height": 152,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 18240,
+        "visible_pixel_count": 3040,
+        "transparent_canvas_ratio": 0.8571428571428571,
+        "visible_canvas_ratio": 0.14285714285714285,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          186,
+          205,
+          254,
+          301
+        ],
+        "final_crop_box": [
+          168,
+          187,
+          272,
+          319
+        ],
+        "component_area": 2727,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 19,
+          "right": 22,
+          "bottom": 31
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/light_cruiser/vfx_light_cruiser_aa_circle.png": {
+      "sha256": "07618bafd94aeeb561b95fb9072fd9b718ff5c9350d1c938fd19f932a0b2c18f",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 150,
+        "height": 138,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 20206,
+        "visible_pixel_count": 494,
+        "transparent_canvas_ratio": 0.9761352657004831,
+        "visible_canvas_ratio": 0.02386473429951691,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          257,
+          271,
+          319,
+          334
+        ],
+        "final_crop_box": [
+          239,
+          253,
+          337,
+          352
+        ],
+        "component_area": 455,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 19,
+          "right": 46,
+          "bottom": 33
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/light_cruiser/vfx_light_cruiser_armor_sparks.png": {
+      "sha256": "b550ddbf8a72541dc392782a216d640b6b572a6f4b0ccd4910787b811dc0c378",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 92,
+        "height": 96,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 8223,
+        "visible_pixel_count": 609,
+        "transparent_canvas_ratio": 0.931046195652174,
+        "visible_canvas_ratio": 0.06895380434782608,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          209,
+          227,
+          254,
+          261
+        ],
+        "final_crop_box": [
+          191,
+          209,
+          272,
+          279
+        ],
+        "component_area": 478,
+        "output_edge_margins": {
+          "left": 26,
+          "top": 19,
+          "right": 18,
+          "bottom": 25
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/light_cruiser/vfx_light_cruiser_escort_aura.png": {
+      "sha256": "3e5ed52c42e6b393ed345ed9014365bb759969d112fb897cf2454c1c099ce649",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 262,
+        "height": 272,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 54016,
+        "visible_pixel_count": 17248,
+        "transparent_canvas_ratio": 0.7579703637180063,
+        "visible_canvas_ratio": 0.24202963628199373,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          103,
+          130,
+          319,
+          297
+        ],
+        "final_crop_box": [
+          85,
+          112,
+          337,
+          315
+        ],
+        "component_area": 17005,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 18,
+          "bottom": 72
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/light_cruiser/vfx_light_cruiser_muzzle_flash_medium.png": {
+      "sha256": "2d049e2cdc0672c7d8ae72e3ffe9098927f666d9ce96aa7653e91fcc6571225c",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 284,
+        "height": 218,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 46711,
+        "visible_pixel_count": 15201,
+        "transparent_canvas_ratio": 0.7544740922599819,
+        "visible_canvas_ratio": 0.2455259077400181,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          127,
+          156,
+          339,
+          329
+        ],
+        "final_crop_box": [
+          109,
+          138,
+          357,
+          347
+        ],
+        "component_area": 14890,
+        "output_edge_margins": {
+          "left": 37,
+          "top": 18,
+          "right": 18,
+          "bottom": 26
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/light_cruiser/vfx_light_cruiser_shell_trail.png": {
+      "sha256": "dbd11679f1b7531a2ba871176d3cada767d5e1bbd99be3971a5fbfc05ef8bb2d",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 332,
+        "height": 106,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 29508,
+        "visible_pixel_count": 5684,
+        "transparent_canvas_ratio": 0.8384860195498977,
+        "visible_canvas_ratio": 0.1615139804501023,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          97,
+          222,
+          357,
+          270
+        ],
+        "final_crop_box": [
+          79,
+          204,
+          375,
+          288
+        ],
+        "component_area": 5626,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 19,
+          "right": 54,
+          "bottom": 18
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/light_cruiser/vfx_light_cruiser_wake_medium.png": {
+      "sha256": "88eec7e4cf4ec59cb45ee8d07040414e1b1a5dd72369a5e579c473eaba4b6b76",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 324,
+        "height": 202,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 47835,
+        "visible_pixel_count": 17613,
+        "transparent_canvas_ratio": 0.7308855885588559,
+        "visible_canvas_ratio": 0.2691144114411441,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          75,
+          164,
+          325,
+          310
+        ],
+        "final_crop_box": [
+          57,
+          146,
+          343,
+          328
+        ],
+        "component_area": 17428,
+        "output_edge_margins": {
+          "left": 32,
+          "top": 19,
+          "right": 18,
+          "bottom": 33
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/light_cruiser/vfx_light_cruiser_water_splash.png": {
+      "sha256": "381681bb7ae3817b0aaa874878bd2b3f79e4cdf2fa748ef313cf051e5bc29dcf",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 292,
+        "height": 254,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 58596,
+        "visible_pixel_count": 15572,
+        "transparent_canvas_ratio": 0.7900442239240643,
+        "visible_canvas_ratio": 0.2099557760759357,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          112,
+          147,
+          334,
+          292
+        ],
+        "final_crop_box": [
+          94,
+          129,
+          352,
+          310
+        ],
+        "component_area": 15102,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 18,
+          "right": 21,
+          "bottom": 73
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    }
+  }
+}

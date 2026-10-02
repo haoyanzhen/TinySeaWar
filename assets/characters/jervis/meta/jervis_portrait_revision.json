@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "character_id": "jervis",
+  "revision": "20261001_unframed_v1",
+  "scope": "Portraits only; does not migrate or approve the full character package",
+  "generation_route": "codex_builtin_imagegen_native_alpha",
+  "model": "account-managed/not-exposed",
+  "request_id": "not-exposed",
+  "background_control": "transparent",
+  "prompt": "Create ONE independent head-and-shoulders transparent game portrait for TinySeaWar. Image 1 is ONLY the identity reference for this character; preserve face, hair, eyes, outfit colors and core accessories exactly. Image 2 is ONLY the approved rendering/composition style sample (a DIFFERENT character); do NOT copy its blonde hair, crown or outfit. Match the style sample's polished fine anime linework, restrained cel shading, soft neutral light and bust framing. Head upright, slight three-quarter face toward viewer, neutral character-appropriate expression, eye line around 42% of square canvas height, complete hair and hats visible, upper shoulders/chest, no hands. Isolated bust at most84% canvas width/height,8%EMPTY TRANSPARENT margin every side. NO FRAME, border, card, medallion, background, text, checkerboard, weapons, ship parts, rigging or effects. Real native Alpha PNG, one portrait not a sheet, readable at40px. Do NOT add any new accessory absent from identity reference. Character identity: Ginger orange wavy bob, aqua eyes, gold laurel compass ornament with blue ribbon, navy white cape and gold cord. NO eyewear.",
+  "raw_output_path": "/Users/qingyue/.codex/generated_images/01a0f530-85bc-7132-9cf0-51e103bf539a/exec-2eb65e55-fc74-4411-b021-c0ec28dc4a98.png",
+  "raw_sha256": "d47c2f4466a1ae8aad87f8cf590e1d8ed2fe4ec723ffef8caf0f2f639e415aa8",
+  "references": [
+    {
+      "path": "assets/characters/jervis/concept/jervis_concept_full.png",
+      "sha256": "3ed2ebe081d311437b99dd8d7e69ac4b2fb78a056ecbb76f061a9d09871a51e8"
+    },
+    {
+      "path": "assets/characters/warspite/ui/warspite_portrait_20261001_unframed_v1.png",
+      "sha256": "2de3b58ce65dc2a54b426434d5b7a477e93bb28b8e99ad51ad9bc9ca2af6cab9"
+    }
+  ],
+  "source": {
+    "path": "assets/characters/jervis/ui/jervis_portrait_20261001_unframed_v1.png",
+    "sha256": "d47c2f4466a1ae8aad87f8cf590e1d8ed2fe4ec723ffef8caf0f2f639e415aa8",
+    "alpha_facts": {
+      "format": "PNG",
+      "source_mode": "RGBA",
+      "width": 1254,
+      "height": 1254,
+      "has_alpha_channel": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixel_count": 587850,
+      "visible_pixel_count": 984666,
+      "transparent_canvas_ratio": 0.37382767488534296,
+      "visible_canvas_ratio": 0.626172325114657,
+      "transparent_border_ratio": 0.9946129289704708
+    }
+  },
+  "source_review": {
+    "sha256": "d47c2f4466a1ae8aad87f8cf590e1d8ed2fe4ec723ffef8caf0f2f639e415aa8",
+    "verdict": "pass",
+    "reviewer": "Codex visual inspection",
+    "observation": "Orange wavy bob, aqua eyes, laurel compass accessory and blue ribbon retained with original uniform palette; no frame or hands."
+  },
+  "output_reviews": {
+    "ui_portrait": {
+      "sha256": "b0736ed221bf0dc5b1e5cbf45cf81de492241a6dee8e50673284d13303f81c84",
+      "verdict": "pass",
+      "reviewer": "Codex visual inspection",
+      "observation": "Orange wavy bob, aqua eyes, laurel compass accessory and blue ribbon retained with original uniform palette; no frame or hands. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+    },
+    "ui_portrait_small": {
+      "sha256": "4beef09dc0042b6b638dde9d00d65b99ad0374c538082ab667ff5ce15c267fe7",
+      "verdict": "pass",
+      "reviewer": "Codex visual inspection",
+      "observation": "Orange wavy bob, aqua eyes, laurel compass accessory and blue ribbon retained with original uniform palette; no frame or hands. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+    }
+  }
+}

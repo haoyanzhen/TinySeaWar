@@ -176,74 +176,6 @@
       }
     },
     {
-      "role": "ui_portrait",
-      "crop": {
-        "content_bbox": [
-          91,
-          42,
-          418,
-          418
-        ],
-        "final_crop_box": [
-          73,
-          24,
-          436,
-          436
-        ],
-        "output_edge_margins": {
-          "left": 27,
-          "top": 19,
-          "right": 18,
-          "bottom": 61
-        }
-      },
-      "path": "assets/characters/sirius/processed/ui/sirius_ui_portrait.png",
-      "size": [
-        372,
-        456
-      ],
-      "edge_margins": {
-        "left": 27,
-        "top": 19,
-        "right": 18,
-        "bottom": 61
-      }
-    },
-    {
-      "role": "ui_portrait_small",
-      "crop": {
-        "content_bbox": [
-          71,
-          74,
-          359,
-          392
-        ],
-        "final_crop_box": [
-          53,
-          56,
-          377,
-          410
-        ],
-        "output_edge_margins": {
-          "left": 18,
-          "top": 19,
-          "right": 44,
-          "bottom": 35
-        }
-      },
-      "path": "assets/characters/sirius/processed/ui/sirius_ui_portrait_small.png",
-      "size": [
-        350,
-        372
-      ],
-      "edge_margins": {
-        "left": 21,
-        "top": 19,
-        "right": 48,
-        "bottom": 35
-      }
-    },
-    {
       "role": "ui_chibi_head",
       "crop": {
         "content_bbox": [
@@ -1370,6 +1302,224 @@
         "right": 18,
         "bottom": 33
       }
+    },
+    {
+      "role": "ui_portrait",
+      "path": "assets/characters/sirius/processed/ui/sirius_ui_portrait.png",
+      "file": "assets/characters/sirius/processed/ui/sirius_ui_portrait.png",
+      "source": "assets/characters/sirius/ui/sirius_portrait_20261001_unframed_v1.png",
+      "sha256": "888ee13c3677dbb2ba312553bbcfff307e2cbb6f70351655ebd15a83e016a173",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA",
+      "alpha_bbox": [
+        95,
+        56,
+        445,
+        453
+      ],
+      "alpha_pixel_count": 95766,
+      "edge_margins": {
+        "left": 95,
+        "top": 56,
+        "right": 67,
+        "bottom": 59
+      },
+      "output_padding": {
+        "left": 95,
+        "top": 56,
+        "right": 67,
+        "bottom": 59
+      },
+      "alpha_centroid": [
+        269.16791998042993,
+        273.58143061227634
+      ],
+      "centroid_offset_normalized": {
+        "x": 0.025718593711777205,
+        "y": 0.03433873166460222
+      },
+      "component_tags": [
+        "ui",
+        "portrait_revision"
+      ],
+      "crop": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          35,
+          1156,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              35,
+              1156,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 95,
+          "top": 56,
+          "right": 67,
+          "bottom": 59
+        },
+        "cleanup_tags": []
+      },
+      "source_crop_qa": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          35,
+          1156,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              35,
+              1156,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 95,
+          "top": 56,
+          "right": 67,
+          "bottom": 59
+        },
+        "cleanup_tags": []
+      }
+    },
+    {
+      "role": "ui_portrait_small",
+      "path": "assets/characters/sirius/processed/ui/sirius_ui_portrait_small.png",
+      "file": "assets/characters/sirius/processed/ui/sirius_ui_portrait_small.png",
+      "source": "assets/characters/sirius/ui/sirius_portrait_20261001_unframed_v1.png",
+      "sha256": "a9e0480d5072754bfcd8edb0fecbeb870e9a62157fb954889c857323ec2b30ce",
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_bbox": [
+        22,
+        12,
+        113,
+        115
+      ],
+      "alpha_pixel_count": 6463,
+      "edge_margins": {
+        "left": 22,
+        "top": 12,
+        "right": 15,
+        "bottom": 13
+      },
+      "output_padding": {
+        "left": 22,
+        "top": 12,
+        "right": 15,
+        "bottom": 13
+      },
+      "alpha_centroid": [
+        67.29097606407099,
+        68.38675047613732
+      ],
+      "centroid_offset_normalized": {
+        "x": 0.025710750500554602,
+        "y": 0.03427148809482283
+      },
+      "component_tags": [
+        "ui",
+        "portrait_revision"
+      ],
+      "crop": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          35,
+          1156,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              35,
+              1156,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 22,
+          "top": 12,
+          "right": 15,
+          "bottom": 13
+        },
+        "cleanup_tags": []
+      },
+      "source_crop_qa": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          35,
+          1156,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              35,
+              1156,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 22,
+          "top": 12,
+          "right": 15,
+          "bottom": 13
+        },
+        "cleanup_tags": []
+      }
     }
-  ]
+  ],
+  "portrait_revision": {
+    "path": "assets/characters/sirius/meta/sirius_portrait_revision.json",
+    "sha256": "ef4c0577832085d5597d5a763f36e0db86d41e6daafd94bd0386a8bdfced9259"
+  }
 }

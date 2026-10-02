@@ -1,0 +1,1813 @@
+{
+  "schema_version": 1,
+  "character_id": "yukikaze",
+  "scope": "Visual evidence only; technical contract must pass separately. Not runtime acceptance.",
+  "checklist": [
+    "identity_and_inventory",
+    "no_truncation_or_neighbor_fragments",
+    "alpha_edges_and_small_scale_readability",
+    "animation_consistency",
+    "mechanical_binding_and_vfx_semantics"
+  ],
+  "package_sha256": {
+    "assets/characters/yukikaze/battle/yukikaze_anim_5x4_master.png": "e30ec96ca22e4ad03dc0d3ec6e6bc2b198a28d7832d1a10a0921628752a2950e",
+    "assets/characters/yukikaze/battle/yukikaze_battle_asset_grid.png": "6de16ce3f3852dd353a6f109721fb7dc8e274ad019e6bfddd4d4c4f43fbdfa72",
+    "assets/characters/yukikaze/concept/yukikaze_concept_full.png": "0e79072b72de852e25e360098499aafcc0bb487dfda0d97e6564fff297562656",
+    "assets/characters/yukikaze/meta/yukikaze_portrait_revision.json": "c26be029b42bb11156efde984f47f22244aaef0a8ae372637675ed070874640c",
+    "assets/characters/yukikaze/processed/anim/yukikaze_anim_attack_frame_01.png": "15a8585a777d7e26c92c26f89d5d17666b4417ff75b0583bcea6f24883e30336",
+    "assets/characters/yukikaze/processed/anim/yukikaze_anim_attack_frame_02.png": "dd67b0e47ef09d01fa96d033d8baa1882b8b1688abd266d951c777aeeb20f9a0",
+    "assets/characters/yukikaze/processed/anim/yukikaze_anim_attack_frame_03.png": "147e399554cb2ad8cff39be6f5fc30f3c129b5286fa9fd8ee2c1c11797383140",
+    "assets/characters/yukikaze/processed/anim/yukikaze_anim_attack_frame_04.png": "7fce93f548a5d57b36501d3ba246155934ddd32b31d88f2fb57114319a7db444",
+    "assets/characters/yukikaze/processed/anim/yukikaze_anim_attack_keyframe.png": "15a8585a777d7e26c92c26f89d5d17666b4417ff75b0583bcea6f24883e30336",
+    "assets/characters/yukikaze/processed/anim/yukikaze_anim_firepower_frame_01.png": "806101b84a6211636a52c5cbca7e60c209264aa0c393edd319fe8ef27f9f06b8",
+    "assets/characters/yukikaze/processed/anim/yukikaze_anim_firepower_frame_02.png": "b62d08fd0deceb553e4b9d9d8e48fd3218a7446e32b6476d6cd142615ab115af",
+    "assets/characters/yukikaze/processed/anim/yukikaze_anim_firepower_frame_03.png": "345ad803abc60672425b99368072adb14b5f560fd3a410ec8b236b7cbb577a01",
+    "assets/characters/yukikaze/processed/anim/yukikaze_anim_firepower_frame_04.png": "1a61f49a47fab2643b969fadff2b0af6cd464e204d02e4d7eb3af8526885b371",
+    "assets/characters/yukikaze/processed/anim/yukikaze_anim_firepower_keyframe.png": "806101b84a6211636a52c5cbca7e60c209264aa0c393edd319fe8ef27f9f06b8",
+    "assets/characters/yukikaze/processed/anim/yukikaze_anim_hit_frame_01.png": "03c81f5a670a909f0ba8da5b60aa8483aa696db096e2493ed5996242af5b976e",
+    "assets/characters/yukikaze/processed/anim/yukikaze_anim_hit_frame_02.png": "8f6e1fe06bb43dcad5c1755a0f4fc17ccff4f53a4982d0ea31a2d753c359c212",
+    "assets/characters/yukikaze/processed/anim/yukikaze_anim_hit_frame_03.png": "feb56695ce127e8b4bc1aad6c233259c57e1ad48e91d950aa2ff0b9447e650a8",
+    "assets/characters/yukikaze/processed/anim/yukikaze_anim_hit_frame_04.png": "da8a3e002af0a5e4f8f01640faad3c9dfb2495e3e46d1f8551c127821d94dd94",
+    "assets/characters/yukikaze/processed/anim/yukikaze_anim_hit_keyframe.png": "03c81f5a670a909f0ba8da5b60aa8483aa696db096e2493ed5996242af5b976e",
+    "assets/characters/yukikaze/processed/anim/yukikaze_anim_idle_frame_01.png": "7a955a555f519438bd70d02201ffbc7943615997b68e58f9d6ef6d68b8fe1203",
+    "assets/characters/yukikaze/processed/anim/yukikaze_anim_idle_frame_02.png": "95dbafd7742e03da8b673b82790350e20b7c0e64507db5a787994a80dde5626a",
+    "assets/characters/yukikaze/processed/anim/yukikaze_anim_idle_frame_03.png": "742361b1b0822bae2eb3859cd34e4da98d468eaf8462d7cbfc8de482780351fd",
+    "assets/characters/yukikaze/processed/anim/yukikaze_anim_idle_frame_04.png": "fbf3ff11a319780696a1f36112fe87708d266b807d652c8713fa3e7ba47629a5",
+    "assets/characters/yukikaze/processed/anim/yukikaze_anim_idle_keyframe.png": "7a955a555f519438bd70d02201ffbc7943615997b68e58f9d6ef6d68b8fe1203",
+    "assets/characters/yukikaze/processed/anim/yukikaze_anim_move_frame_01.png": "e61f93c7e6f94fdf9418b52094a0600b43e86c063f5844b713f2600dadec87e4",
+    "assets/characters/yukikaze/processed/anim/yukikaze_anim_move_frame_02.png": "1a3144ea699818ee105c1c1f55203c4408664c698f41074c9713a54dcab44197",
+    "assets/characters/yukikaze/processed/anim/yukikaze_anim_move_frame_03.png": "7966ed2c83f239e945f6f725e93e3905f8a9d7dca653949109b31fe5cbb8fda5",
+    "assets/characters/yukikaze/processed/anim/yukikaze_anim_move_frame_04.png": "06cb580b7b2644539f43826689f8120fe7db4cfb7db7d38f198327979ccdb1b0",
+    "assets/characters/yukikaze/processed/anim/yukikaze_anim_move_keyframe.png": "e61f93c7e6f94fdf9418b52094a0600b43e86c063f5844b713f2600dadec87e4",
+    "assets/characters/yukikaze/processed/battle/yukikaze_battle_body_r.png": "7a955a555f519438bd70d02201ffbc7943615997b68e58f9d6ef6d68b8fe1203",
+    "assets/characters/yukikaze/processed/battle/yukikaze_battle_propulsion_node.png": "e7ad4b404597e1c205e09598d459a6698c9686f722a0b69535c4d536514e65b6",
+    "assets/characters/yukikaze/processed/battle/yukikaze_battle_radar_node.png": "febd0d390e2a22095659474e050ded4e36bd8728590d01ff8005eb773874bd9f",
+    "assets/characters/yukikaze/processed/battle/yukikaze_battle_rig_base.png": "4e270691fc429c80f7ad143c0509d4f40daf5e0e863aa5725ec330983927e2b7",
+    "assets/characters/yukikaze/processed/battle/yukikaze_battle_torpedo_tube_01.png": "7e98abe089030604ae7c84969a9cf1711b583359a5e1aa30fb9bd8be0698eeaa",
+    "assets/characters/yukikaze/processed/battle/yukikaze_battle_torpedo_tube_02.png": "7a686ceff776835ff2c66841bac5956139e739d0fe73be84208f657aeece4aa9",
+    "assets/characters/yukikaze/processed/battle/yukikaze_battle_turret_main_01.png": "79934b769a26333947ec8dd148def2ee5166c2106b9794c57ed7108d44888c28",
+    "assets/characters/yukikaze/processed/battle/yukikaze_battle_wake_origin_marker.png": "1543f68d20ec8b3df25e08cf9b2fed4ce11f80925679451e3ddca7a02ddffaf7",
+    "assets/characters/yukikaze/processed/config/yukikaze_anim_config.json": "17f022481c673f267a7575cd9cd1ad8977bcee5bdbe99a74735f2c0a0b23fe71",
+    "assets/characters/yukikaze/processed/config/yukikaze_meta_bind_points.json": "f27a0c797c22ad175d0201e354f84674342e1ca78a237ad9f7a628c78d3e0c4a",
+    "assets/characters/yukikaze/processed/config/yukikaze_postprocess_manifest.json": "9e4a76199084726680f367b67cad48aeefaf72279c4e5aa30f6d8608d772af84",
+    "assets/characters/yukikaze/processed/config/yukikaze_vfx_config.json": "fcce6ca15b6f7fc2407f76f1befbb12bb5deb049e788d84b2435268f3eed69cb",
+    "assets/characters/yukikaze/processed/source_alpha/yukikaze_anim_5x4_master_alpha_source.png": "5f71e98d99d210be772a4dd9e9685207baae5366246bacae03b876dbfa390a4d",
+    "assets/characters/yukikaze/processed/source_alpha/yukikaze_battle_asset_grid_alpha_source.png": "f1581ba0173dc2644e6a0e1ee5431cc74b6ecab5682f7fb38c4fe9d8d524b1b9",
+    "assets/characters/yukikaze/processed/source_alpha/yukikaze_concept_full_alpha_source.png": "628e30aa9a2ce0e922029417d100f0f1a8e4f17ffb015e9ee73dd960c2f63581",
+    "assets/characters/yukikaze/processed/source_alpha/yukikaze_ui_sheet_alpha_source.png": "b9ef7bde8d0772c9739784cfaae80e6a611df165d05f53ce29ceefdfc9330505",
+    "assets/characters/yukikaze/processed/source_alpha/yukikaze_vfx_reference_sheet_alpha_source.png": "cbc4c7bf9047193f4441ac7c2a016b38713ec0859ae9b12204b1c1222bd47b1f",
+    "assets/characters/yukikaze/processed/ui/yukikaze_expr_default.png": "94bb74d79dffd34e3ec91679fdc77c1cbe6b1cb493ca3780212908016856d080",
+    "assets/characters/yukikaze/processed/ui/yukikaze_expr_hit.png": "cc8a859ed01aac3ce700d716e12601ce65bf092d88ba5fa45bb57147f2fc9fb7",
+    "assets/characters/yukikaze/processed/ui/yukikaze_expr_serious.png": "056139435c55fe98712924e8177d01677aebaf690ae7e806d0f44ab81c4c3340",
+    "assets/characters/yukikaze/processed/ui/yukikaze_illust_full_alpha.png": "eb996806f301c1b298226fb68f2d0349071a318a6b7c7fa3751cae6287f9f527",
+    "assets/characters/yukikaze/processed/ui/yukikaze_illust_half_alpha.png": "eac2f0dd1b6f6850fc6bd5c4eec15d9a343b5632ea8ec5a030735608252e4c78",
+    "assets/characters/yukikaze/processed/ui/yukikaze_illust_skill_cutin_alpha.png": "312b85a714722c957b9f8ecaf5d823caaf62d229f5f4519489185027f5bc608c",
+    "assets/characters/yukikaze/processed/ui/yukikaze_ui_chibi_head.png": "1fe18e06be3462ba500e823563d90c46f404583435ad790bd8457355130bc32e",
+    "assets/characters/yukikaze/processed/ui/yukikaze_ui_class_destroyer.png": "aec15b4f5390ce2facbc2587754a1a8d4c855caa3b04a866c915707deb7f2988",
+    "assets/characters/yukikaze/processed/ui/yukikaze_ui_portrait.png": "03def4e23635b83eaadf9c8cb614c3445a5e5312f02a854f1b3db22ac90aa0fd",
+    "assets/characters/yukikaze/processed/ui/yukikaze_ui_portrait_small.png": "9fd0ddb2a3d84ce626087002ac8bea2eb033198834e64eeb4a49ceadca2b4ce7",
+    "assets/characters/yukikaze/processed/ui/yukikaze_ui_skill_torpedo_rush.png": "5f724ef11ae58646d1df6fb2ea92905032a99780101d45cc45eb4004b4330657",
+    "assets/characters/yukikaze/ui/yukikaze_portrait_20261001_unframed_v1.png": "3b5e55a26945fceda23ea963ade6226b705b9f7d502885eee1240d6c16bbab90",
+    "assets/characters/yukikaze/ui/yukikaze_ui_sheet.png": "517b436a7f3856180cf63cb3265cda987009f2637eb49541de09140ebae0a65f",
+    "assets/characters/yukikaze/vfx/yukikaze_vfx_reference_sheet.png": "0859db8f74cf4ae95e1a82e3576ed69f977e1c4d4aad2117473a97cfec60d09f",
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_range_reticle.png": "a2d15007b940b39cad3e844351f3a7899da095b40d11e720127f8b78d1c3e0d6",
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_skill_aura.png": "256fbd95e8fd7acbd0954d29470eedd5537c7cfc9fb526984ea665dc0393270f",
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_smoke_screen.png": "a1046ceb68e33eaca72b03ea66de05ade2da5ddc12662d5721f24cd6eb1208d9",
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_speed_lines.png": "c705bdf5eca024779dc64815b45122b142ce159f06d25005b55d7f77319c5655",
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_speed_wake.png": "19942879341d851b6068916f14e5bf908caba2c3e4dd4e3c5e4d72a77b2d81dd",
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_torpedo_launch_flash.png": "497430a66b4a6f91f22b3b935125ebc73f48a9a56b51ebb845eeb9ee0e5e239b",
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_torpedo_warning.png": "0e18fbe8047578b7c94d552f9acd46c3901d1b32a3471259ca64e80a4a43f361",
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_water_splash.png": "b60aeb30bdd91f5b354fbd9bc0c5354e80884954f5f8d2d915273f4f3135252a"
+  },
+  "assets": {
+    "assets/characters/yukikaze/processed/anim/yukikaze_anim_attack_frame_01.png": {
+      "sha256": "15a8585a777d7e26c92c26f89d5d17666b4417ff75b0583bcea6f24883e30336",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 302,
+        "height": 226,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 51345,
+        "visible_pixel_count": 16907,
+        "transparent_canvas_ratio": 0.7522856473070386,
+        "visible_canvas_ratio": 0.24771435269296138,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yukikaze/processed/anim/yukikaze_anim_attack_frame_02.png": {
+      "sha256": "dd67b0e47ef09d01fa96d033d8baa1882b8b1688abd266d951c777aeeb20f9a0",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 302,
+        "height": 226,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 50007,
+        "visible_pixel_count": 18245,
+        "transparent_canvas_ratio": 0.732681826173592,
+        "visible_canvas_ratio": 0.267318173826408,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yukikaze/processed/anim/yukikaze_anim_attack_frame_03.png": {
+      "sha256": "147e399554cb2ad8cff39be6f5fc30f3c129b5286fa9fd8ee2c1c11797383140",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 302,
+        "height": 226,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 51607,
+        "visible_pixel_count": 16645,
+        "transparent_canvas_ratio": 0.7561243626560393,
+        "visible_canvas_ratio": 0.24387563734396062,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yukikaze/processed/anim/yukikaze_anim_attack_frame_04.png": {
+      "sha256": "7fce93f548a5d57b36501d3ba246155934ddd32b31d88f2fb57114319a7db444",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 302,
+        "height": 226,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 51685,
+        "visible_pixel_count": 16567,
+        "transparent_canvas_ratio": 0.7572671863095587,
+        "visible_canvas_ratio": 0.2427328136904413,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yukikaze/processed/anim/yukikaze_anim_attack_keyframe.png": {
+      "sha256": "15a8585a777d7e26c92c26f89d5d17666b4417ff75b0583bcea6f24883e30336",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 302,
+        "height": 226,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 51345,
+        "visible_pixel_count": 16907,
+        "transparent_canvas_ratio": 0.7522856473070386,
+        "visible_canvas_ratio": 0.24771435269296138,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yukikaze/processed/anim/yukikaze_anim_firepower_frame_01.png": {
+      "sha256": "806101b84a6211636a52c5cbca7e60c209264aa0c393edd319fe8ef27f9f06b8",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 268,
+        "height": 178,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 32604,
+        "visible_pixel_count": 15100,
+        "transparent_canvas_ratio": 0.683464698977025,
+        "visible_canvas_ratio": 0.316535301022975,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yukikaze/processed/anim/yukikaze_anim_firepower_frame_02.png": {
+      "sha256": "b62d08fd0deceb553e4b9d9d8e48fd3218a7446e32b6476d6cd142615ab115af",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 268,
+        "height": 178,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 33704,
+        "visible_pixel_count": 14000,
+        "transparent_canvas_ratio": 0.7065235619654536,
+        "visible_canvas_ratio": 0.29347643803454637,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yukikaze/processed/anim/yukikaze_anim_firepower_frame_03.png": {
+      "sha256": "345ad803abc60672425b99368072adb14b5f560fd3a410ec8b236b7cbb577a01",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 268,
+        "height": 178,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 37504,
+        "visible_pixel_count": 10200,
+        "transparent_canvas_ratio": 0.7861814522891162,
+        "visible_canvas_ratio": 0.2138185477108838,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yukikaze/processed/anim/yukikaze_anim_firepower_frame_04.png": {
+      "sha256": "1a61f49a47fab2643b969fadff2b0af6cd464e204d02e4d7eb3af8526885b371",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 268,
+        "height": 178,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 33661,
+        "visible_pixel_count": 14043,
+        "transparent_canvas_ratio": 0.7056221700486333,
+        "visible_canvas_ratio": 0.29437782995136674,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yukikaze/processed/anim/yukikaze_anim_firepower_keyframe.png": {
+      "sha256": "806101b84a6211636a52c5cbca7e60c209264aa0c393edd319fe8ef27f9f06b8",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 268,
+        "height": 178,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 32604,
+        "visible_pixel_count": 15100,
+        "transparent_canvas_ratio": 0.683464698977025,
+        "visible_canvas_ratio": 0.316535301022975,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yukikaze/processed/anim/yukikaze_anim_hit_frame_01.png": {
+      "sha256": "03c81f5a670a909f0ba8da5b60aa8483aa696db096e2493ed5996242af5b976e",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 208,
+        "height": 216,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 31261,
+        "visible_pixel_count": 13667,
+        "transparent_canvas_ratio": 0.6958021723646723,
+        "visible_canvas_ratio": 0.30419782763532766,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yukikaze/processed/anim/yukikaze_anim_hit_frame_02.png": {
+      "sha256": "8f6e1fe06bb43dcad5c1755a0f4fc17ccff4f53a4982d0ea31a2d753c359c212",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 208,
+        "height": 216,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 32236,
+        "visible_pixel_count": 12692,
+        "transparent_canvas_ratio": 0.7175035612535613,
+        "visible_canvas_ratio": 0.28249643874643876,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yukikaze/processed/anim/yukikaze_anim_hit_frame_03.png": {
+      "sha256": "feb56695ce127e8b4bc1aad6c233259c57e1ad48e91d950aa2ff0b9447e650a8",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 208,
+        "height": 216,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 32104,
+        "visible_pixel_count": 12824,
+        "transparent_canvas_ratio": 0.7145655270655271,
+        "visible_canvas_ratio": 0.28543447293447294,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yukikaze/processed/anim/yukikaze_anim_hit_frame_04.png": {
+      "sha256": "da8a3e002af0a5e4f8f01640faad3c9dfb2495e3e46d1f8551c127821d94dd94",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 208,
+        "height": 216,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 32738,
+        "visible_pixel_count": 12190,
+        "transparent_canvas_ratio": 0.7286769943019943,
+        "visible_canvas_ratio": 0.2713230056980057,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yukikaze/processed/anim/yukikaze_anim_hit_keyframe.png": {
+      "sha256": "03c81f5a670a909f0ba8da5b60aa8483aa696db096e2493ed5996242af5b976e",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 208,
+        "height": 216,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 31261,
+        "visible_pixel_count": 13667,
+        "transparent_canvas_ratio": 0.6958021723646723,
+        "visible_canvas_ratio": 0.30419782763532766,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yukikaze/processed/anim/yukikaze_anim_idle_frame_01.png": {
+      "sha256": "7a955a555f519438bd70d02201ffbc7943615997b68e58f9d6ef6d68b8fe1203",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 170,
+        "height": 244,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 27262,
+        "visible_pixel_count": 14218,
+        "transparent_canvas_ratio": 0.6572324011571842,
+        "visible_canvas_ratio": 0.3427675988428158,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yukikaze/processed/anim/yukikaze_anim_idle_frame_02.png": {
+      "sha256": "95dbafd7742e03da8b673b82790350e20b7c0e64507db5a787994a80dde5626a",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 170,
+        "height": 244,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 27183,
+        "visible_pixel_count": 14297,
+        "transparent_canvas_ratio": 0.655327868852459,
+        "visible_canvas_ratio": 0.34467213114754097,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yukikaze/processed/anim/yukikaze_anim_idle_frame_03.png": {
+      "sha256": "742361b1b0822bae2eb3859cd34e4da98d468eaf8462d7cbfc8de482780351fd",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 170,
+        "height": 244,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 27464,
+        "visible_pixel_count": 14016,
+        "transparent_canvas_ratio": 0.6621022179363548,
+        "visible_canvas_ratio": 0.3378977820636451,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yukikaze/processed/anim/yukikaze_anim_idle_frame_04.png": {
+      "sha256": "fbf3ff11a319780696a1f36112fe87708d266b807d652c8713fa3e7ba47629a5",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 170,
+        "height": 244,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 27360,
+        "visible_pixel_count": 14120,
+        "transparent_canvas_ratio": 0.6595949855351977,
+        "visible_canvas_ratio": 0.3404050144648023,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yukikaze/processed/anim/yukikaze_anim_idle_keyframe.png": {
+      "sha256": "7a955a555f519438bd70d02201ffbc7943615997b68e58f9d6ef6d68b8fe1203",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 170,
+        "height": 244,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 27262,
+        "visible_pixel_count": 14218,
+        "transparent_canvas_ratio": 0.6572324011571842,
+        "visible_canvas_ratio": 0.3427675988428158,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yukikaze/processed/anim/yukikaze_anim_move_frame_01.png": {
+      "sha256": "e61f93c7e6f94fdf9418b52094a0600b43e86c063f5844b713f2600dadec87e4",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 206,
+        "height": 212,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 28371,
+        "visible_pixel_count": 15301,
+        "transparent_canvas_ratio": 0.6496382121267631,
+        "visible_canvas_ratio": 0.35036178787323685,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yukikaze/processed/anim/yukikaze_anim_move_frame_02.png": {
+      "sha256": "1a3144ea699818ee105c1c1f55203c4408664c698f41074c9713a54dcab44197",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 206,
+        "height": 212,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 28807,
+        "visible_pixel_count": 14865,
+        "transparent_canvas_ratio": 0.6596217255907676,
+        "visible_canvas_ratio": 0.34037827440923246,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yukikaze/processed/anim/yukikaze_anim_move_frame_03.png": {
+      "sha256": "7966ed2c83f239e945f6f725e93e3905f8a9d7dca653949109b31fe5cbb8fda5",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 206,
+        "height": 212,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 28347,
+        "visible_pixel_count": 15325,
+        "transparent_canvas_ratio": 0.6490886609269096,
+        "visible_canvas_ratio": 0.3509113390730903,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yukikaze/processed/anim/yukikaze_anim_move_frame_04.png": {
+      "sha256": "06cb580b7b2644539f43826689f8120fe7db4cfb7db7d38f198327979ccdb1b0",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 206,
+        "height": 212,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 29238,
+        "visible_pixel_count": 14434,
+        "transparent_canvas_ratio": 0.6694907492214691,
+        "visible_canvas_ratio": 0.3305092507785309,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yukikaze/processed/anim/yukikaze_anim_move_keyframe.png": {
+      "sha256": "e61f93c7e6f94fdf9418b52094a0600b43e86c063f5844b713f2600dadec87e4",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 206,
+        "height": 212,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 28371,
+        "visible_pixel_count": 15301,
+        "transparent_canvas_ratio": 0.6496382121267631,
+        "visible_canvas_ratio": 0.35036178787323685,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yukikaze/processed/battle/yukikaze_battle_body_r.png": {
+      "sha256": "7a955a555f519438bd70d02201ffbc7943615997b68e58f9d6ef6d68b8fe1203",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 170,
+        "height": 244,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 27262,
+        "visible_pixel_count": 14218,
+        "transparent_canvas_ratio": 0.6572324011571842,
+        "visible_canvas_ratio": 0.3427675988428158,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yukikaze/processed/battle/yukikaze_battle_propulsion_node.png": {
+      "sha256": "e7ad4b404597e1c205e09598d459a6698c9686f722a0b69535c4d536514e65b6",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 278,
+        "height": 238,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 38316,
+        "visible_pixel_count": 27848,
+        "transparent_canvas_ratio": 0.5791064627289765,
+        "visible_canvas_ratio": 0.4208935372710235,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          83,
+          74,
+          309,
+          266
+        ],
+        "final_crop_box": [
+          65,
+          56,
+          327,
+          284
+        ],
+        "component_area": 27848,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 19,
+          "right": 34,
+          "bottom": 27
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yukikaze/processed/battle/yukikaze_battle_radar_node.png": {
+      "sha256": "febd0d390e2a22095659474e050ded4e36bd8728590d01ff8005eb773874bd9f",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 238,
+        "height": 278,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 37467,
+        "visible_pixel_count": 28697,
+        "transparent_canvas_ratio": 0.5662747113233783,
+        "visible_canvas_ratio": 0.43372528867662175,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          121,
+          60,
+          302,
+          290
+        ],
+        "final_crop_box": [
+          103,
+          42,
+          320,
+          308
+        ],
+        "component_area": 28697,
+        "output_edge_margins": {
+          "left": 38,
+          "top": 19,
+          "right": 19,
+          "bottom": 29
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yukikaze/processed/battle/yukikaze_battle_rig_base.png": {
+      "sha256": "4e270691fc429c80f7ad143c0509d4f40daf5e0e863aa5725ec330983927e2b7",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 244,
+        "height": 206,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 24654,
+        "visible_pixel_count": 25610,
+        "transparent_canvas_ratio": 0.4904902116823174,
+        "visible_canvas_ratio": 0.5095097883176827,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          97,
+          161,
+          304,
+          330
+        ],
+        "final_crop_box": [
+          79,
+          143,
+          322,
+          348
+        ],
+        "component_area": 25610,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 18,
+          "bottom": 19
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yukikaze/processed/battle/yukikaze_battle_torpedo_tube_01.png": {
+      "sha256": "7e98abe089030604ae7c84969a9cf1711b583359a5e1aa30fb9bd8be0698eeaa",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 358,
+        "height": 206,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 48419,
+        "visible_pixel_count": 25329,
+        "transparent_canvas_ratio": 0.6565466182133752,
+        "visible_canvas_ratio": 0.3434533817866247,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          47,
+          152,
+          330,
+          321
+        ],
+        "final_crop_box": [
+          29,
+          134,
+          348,
+          339
+        ],
+        "component_area": 25329,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 56,
+          "bottom": 18
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yukikaze/processed/battle/yukikaze_battle_torpedo_tube_02.png": {
+      "sha256": "7a686ceff776835ff2c66841bac5956139e739d0fe73be84208f657aeece4aa9",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 316,
+        "height": 262,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 53145,
+        "visible_pixel_count": 29647,
+        "transparent_canvas_ratio": 0.6419098463619674,
+        "visible_canvas_ratio": 0.35809015363803265,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          88,
+          73,
+          354,
+          294
+        ],
+        "final_crop_box": [
+          70,
+          55,
+          372,
+          312
+        ],
+        "component_area": 29647,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 23,
+          "right": 31,
+          "bottom": 18
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yukikaze/processed/battle/yukikaze_battle_turret_main_01.png": {
+      "sha256": "79934b769a26333947ec8dd148def2ee5166c2106b9794c57ed7108d44888c28",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 244,
+        "height": 208,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 25162,
+        "visible_pixel_count": 25590,
+        "transparent_canvas_ratio": 0.4957834174022699,
+        "visible_canvas_ratio": 0.5042165825977302,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          107,
+          163,
+          313,
+          333
+        ],
+        "final_crop_box": [
+          89,
+          145,
+          331,
+          351
+        ],
+        "component_area": 25590,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 19,
+          "bottom": 19
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yukikaze/processed/battle/yukikaze_battle_wake_origin_marker.png": {
+      "sha256": "1543f68d20ec8b3df25e08cf9b2fed4ce11f80925679451e3ddca7a02ddffaf7",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 288,
+        "height": 228,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 54078,
+        "visible_pixel_count": 11586,
+        "transparent_canvas_ratio": 0.8235562865497076,
+        "visible_canvas_ratio": 0.1764437134502924,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          66,
+          80,
+          304,
+          261
+        ],
+        "final_crop_box": [
+          48,
+          62,
+          322,
+          279
+        ],
+        "component_area": 11586,
+        "output_edge_margins": {
+          "left": 31,
+          "top": 19,
+          "right": 18,
+          "bottom": 27
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yukikaze/processed/ui/yukikaze_expr_default.png": {
+      "sha256": "94bb74d79dffd34e3ec91679fdc77c1cbe6b1cb493ca3780212908016856d080",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 398,
+        "height": 510,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 118695,
+        "visible_pixel_count": 84285,
+        "transparent_canvas_ratio": 0.5847620455217263,
+        "visible_canvas_ratio": 0.4152379544782737,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          46,
+          26,
+          393,
+          425
+        ],
+        "final_crop_box": [
+          28,
+          8,
+          411,
+          443
+        ],
+        "output_edge_margins": {
+          "left": 33,
+          "top": 19,
+          "right": 18,
+          "bottom": 92
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yukikaze/processed/ui/yukikaze_expr_hit.png": {
+      "sha256": "cc8a859ed01aac3ce700d716e12601ce65bf092d88ba5fa45bb57147f2fc9fb7",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 342,
+        "height": 484,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 90905,
+        "visible_pixel_count": 74623,
+        "transparent_canvas_ratio": 0.5491820115025857,
+        "visible_canvas_ratio": 0.45081798849741433,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          92,
+          14,
+          387,
+          407
+        ],
+        "final_crop_box": [
+          74,
+          0,
+          405,
+          425
+        ],
+        "output_edge_margins": {
+          "left": 28,
+          "top": 18,
+          "right": 19,
+          "bottom": 73
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yukikaze/processed/ui/yukikaze_expr_serious.png": {
+      "sha256": "056139435c55fe98712924e8177d01677aebaf690ae7e806d0f44ab81c4c3340",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 360,
+        "height": 486,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 100639,
+        "visible_pixel_count": 74321,
+        "transparent_canvas_ratio": 0.5752114769090078,
+        "visible_canvas_ratio": 0.42478852309099224,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          108,
+          14,
+          418,
+          407
+        ],
+        "final_crop_box": [
+          90,
+          0,
+          436,
+          425
+        ],
+        "output_edge_margins": {
+          "left": 32,
+          "top": 19,
+          "right": 18,
+          "bottom": 74
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yukikaze/processed/ui/yukikaze_illust_full_alpha.png": {
+      "sha256": "eb996806f301c1b298226fb68f2d0349071a318a6b7c7fa3751cae6287f9f527",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 1034,
+        "height": 1448,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 1144437,
+        "visible_pixel_count": 352795,
+        "transparent_canvas_ratio": 0.7643685146991248,
+        "visible_canvas_ratio": 0.23563148530087522,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          38,
+          101,
+          997,
+          1429
+        ],
+        "final_crop_box": [
+          26,
+          89,
+          1009,
+          1441
+        ],
+        "output_edge_margins": {
+          "left": 12,
+          "top": 108,
+          "right": 63,
+          "bottom": 12
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yukikaze/processed/ui/yukikaze_illust_half_alpha.png": {
+      "sha256": "eac2f0dd1b6f6850fc6bd5c4eec15d9a343b5632ea8ec5a030735608252e4c78",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 1054,
+        "height": 1122,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 873922,
+        "visible_pixel_count": 308666,
+        "transparent_canvas_ratio": 0.7389910941088528,
+        "visible_canvas_ratio": 0.2610089058911472,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          16,
+          17,
+          975,
+          973
+        ],
+        "final_crop_box": [
+          0,
+          1,
+          991,
+          989
+        ],
+        "output_edge_margins": {
+          "left": 16,
+          "top": 17,
+          "right": 79,
+          "bottom": 149
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yukikaze/processed/ui/yukikaze_illust_skill_cutin_alpha.png": {
+      "sha256": "312b85a714722c957b9f8ecaf5d823caaf62d229f5f4519489185027f5bc608c",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 1006,
+        "height": 980,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 734774,
+        "visible_pixel_count": 251106,
+        "transparent_canvas_ratio": 0.7452976021422485,
+        "visible_canvas_ratio": 0.25470239785775145,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          396,
+          17,
+          1355,
+          787
+        ],
+        "final_crop_box": [
+          380,
+          1,
+          1371,
+          803
+        ],
+        "output_edge_margins": {
+          "left": 17,
+          "top": 17,
+          "right": 30,
+          "bottom": 193
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yukikaze/processed/ui/yukikaze_ui_chibi_head.png": {
+      "sha256": "1fe18e06be3462ba500e823563d90c46f404583435ad790bd8457355130bc32e",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 386,
+        "height": 380,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 84604,
+        "visible_pixel_count": 62076,
+        "transparent_canvas_ratio": 0.5767930188164713,
+        "visible_canvas_ratio": 0.4232069811835288,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          20,
+          57,
+          363,
+          361
+        ],
+        "final_crop_box": [
+          2,
+          39,
+          381,
+          379
+        ],
+        "output_edge_margins": {
+          "left": 25,
+          "top": 18,
+          "right": 18,
+          "bottom": 58
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yukikaze/processed/ui/yukikaze_ui_class_destroyer.png": {
+      "sha256": "aec15b4f5390ce2facbc2587754a1a8d4c855caa3b04a866c915707deb7f2988",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 402,
+        "height": 138,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 25408,
+        "visible_pixel_count": 30068,
+        "transparent_canvas_ratio": 0.4579998557934963,
+        "visible_canvas_ratio": 0.5420001442065037,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          39,
+          159,
+          388,
+          260
+        ],
+        "final_crop_box": [
+          21,
+          141,
+          406,
+          278
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 34,
+          "bottom": 18
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yukikaze/processed/ui/yukikaze_ui_portrait.png": {
+      "sha256": "03def4e23635b83eaadf9c8cb614c3445a5e5312f02a854f1b3db22ac90aa0fd",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 512,
+        "height": 512,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 176480,
+        "visible_pixel_count": 85664,
+        "transparent_canvas_ratio": 0.6732177734375,
+        "visible_canvas_ratio": 0.3267822265625,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          13,
+          1200,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              13,
+              1200,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 96,
+          "top": 56,
+          "right": 63,
+          "bottom": 56
+        },
+        "cleanup_tags": []
+      },
+      "review": {
+        "verdict": "pass",
+        "reviewer": "Codex visual inspection",
+        "observation": "Chestnut bob/ahoge, amber eyes, red-white flower clip and dangling white tassels retained with sailor collar/red scarf; no frame. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+      }
+    },
+    "assets/characters/yukikaze/processed/ui/yukikaze_ui_portrait_small.png": {
+      "sha256": "9fd0ddb2a3d84ce626087002ac8bea2eb033198834e64eeb4a49ceadca2b4ce7",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 128,
+        "height": 128,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 10530,
+        "visible_pixel_count": 5854,
+        "transparent_canvas_ratio": 0.6427001953125,
+        "visible_canvas_ratio": 0.3572998046875,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          0,
+          13,
+          1200,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              0,
+              13,
+              1200,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 23,
+          "top": 12,
+          "right": 14,
+          "bottom": 12
+        },
+        "cleanup_tags": []
+      },
+      "review": {
+        "verdict": "pass",
+        "reviewer": "Codex visual inspection",
+        "observation": "Chestnut bob/ahoge, amber eyes, red-white flower clip and dangling white tassels retained with sailor collar/red scarf; no frame. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+      }
+    },
+    "assets/characters/yukikaze/processed/ui/yukikaze_ui_skill_torpedo_rush.png": {
+      "sha256": "5f724ef11ae58646d1df6fb2ea92905032a99780101d45cc45eb4004b4330657",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 348,
+        "height": 342,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 44327,
+        "visible_pixel_count": 74689,
+        "transparent_canvas_ratio": 0.37244572158365263,
+        "visible_canvas_ratio": 0.6275542784163474,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          52,
+          59,
+          360,
+          364
+        ],
+        "final_crop_box": [
+          34,
+          41,
+          378,
+          382
+        ],
+        "output_edge_margins": {
+          "left": 22,
+          "top": 18,
+          "right": 18,
+          "bottom": 19
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_range_reticle.png": {
+      "sha256": "a2d15007b940b39cad3e844351f3a7899da095b40d11e720127f8b78d1c3e0d6",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 266,
+        "height": 294,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 75329,
+        "visible_pixel_count": 2875,
+        "transparent_canvas_ratio": 0.9632371745690758,
+        "visible_canvas_ratio": 0.03676282543092425,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          39,
+          125,
+          246,
+          359
+        ],
+        "final_crop_box": [
+          21,
+          107,
+          264,
+          377
+        ],
+        "component_area": 1684,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 23,
+          "right": 22,
+          "bottom": 19
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_skill_aura.png": {
+      "sha256": "256fbd95e8fd7acbd0954d29470eedd5537c7cfc9fb526984ea665dc0393270f",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 198,
+        "height": 184,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 35009,
+        "visible_pixel_count": 1423,
+        "transparent_canvas_ratio": 0.9609409310496267,
+        "visible_canvas_ratio": 0.039059068950373296,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          24,
+          155,
+          144,
+          268
+        ],
+        "final_crop_box": [
+          6,
+          137,
+          162,
+          286
+        ],
+        "component_area": 1226,
+        "output_edge_margins": {
+          "left": 49,
+          "top": 21,
+          "right": 19,
+          "bottom": 18
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_smoke_screen.png": {
+      "sha256": "a1046ceb68e33eaca72b03ea66de05ade2da5ddc12662d5721f24cd6eb1208d9",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 246,
+        "height": 258,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 33863,
+        "visible_pixel_count": 29605,
+        "transparent_canvas_ratio": 0.5335444633516102,
+        "visible_canvas_ratio": 0.46645553664838973,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          68,
+          120,
+          265,
+          328
+        ],
+        "final_crop_box": [
+          50,
+          102,
+          283,
+          346
+        ],
+        "component_area": 29600,
+        "output_edge_margins": {
+          "left": 30,
+          "top": 19,
+          "right": 19,
+          "bottom": 31
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_speed_lines.png": {
+      "sha256": "c705bdf5eca024779dc64815b45122b142ce159f06d25005b55d7f77319c5655",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 274,
+        "height": 296,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 78203,
+        "visible_pixel_count": 2901,
+        "transparent_canvas_ratio": 0.9642311106727165,
+        "visible_canvas_ratio": 0.03576888932728349,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          50,
+          198,
+          239,
+          368
+        ],
+        "final_crop_box": [
+          32,
+          180,
+          257,
+          386
+        ],
+        "component_area": 1358,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 39,
+          "bottom": 78
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_speed_wake.png": {
+      "sha256": "19942879341d851b6068916f14e5bf908caba2c3e4dd4e3c5e4d72a77b2d81dd",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 320,
+        "height": 340,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 96006,
+        "visible_pixel_count": 12794,
+        "transparent_canvas_ratio": 0.8824080882352942,
+        "visible_canvas_ratio": 0.11759191176470589,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          104,
+          187,
+          347,
+          446
+        ],
+        "final_crop_box": [
+          86,
+          169,
+          365,
+          464
+        ],
+        "component_area": 11797,
+        "output_edge_margins": {
+          "left": 40,
+          "top": 18,
+          "right": 19,
+          "bottom": 46
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_torpedo_launch_flash.png": {
+      "sha256": "497430a66b4a6f91f22b3b935125ebc73f48a9a56b51ebb845eeb9ee0e5e239b",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 260,
+        "height": 190,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 42197,
+        "visible_pixel_count": 7203,
+        "transparent_canvas_ratio": 0.8541902834008097,
+        "visible_canvas_ratio": 0.1458097165991903,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          21,
+          297,
+          222,
+          412
+        ],
+        "final_crop_box": [
+          3,
+          279,
+          240,
+          430
+        ],
+        "component_area": 7049,
+        "output_edge_margins": {
+          "left": 22,
+          "top": 18,
+          "right": 19,
+          "bottom": 39
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_torpedo_warning.png": {
+      "sha256": "0e18fbe8047578b7c94d552f9acd46c3901d1b32a3471259ca64e80a4a43f361",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 296,
+        "height": 288,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 63760,
+        "visible_pixel_count": 21488,
+        "transparent_canvas_ratio": 0.7479354354354354,
+        "visible_canvas_ratio": 0.25206456456456455,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          84,
+          233,
+          306,
+          425
+        ],
+        "final_crop_box": [
+          66,
+          215,
+          324,
+          443
+        ],
+        "component_area": 21377,
+        "output_edge_margins": {
+          "left": 25,
+          "top": 60,
+          "right": 18,
+          "bottom": 18
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_water_splash.png": {
+      "sha256": "b60aeb30bdd91f5b354fbd9bc0c5354e80884954f5f8d2d915273f4f3135252a",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 290,
+        "height": 330,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 76726,
+        "visible_pixel_count": 18974,
+        "transparent_canvas_ratio": 0.8017345872518287,
+        "visible_canvas_ratio": 0.19826541274817136,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          91,
+          132,
+          319,
+          335
+        ],
+        "final_crop_box": [
+          73,
+          114,
+          337,
+          353
+        ],
+        "component_area": 18030,
+        "output_edge_margins": {
+          "left": 30,
+          "top": 19,
+          "right": 19,
+          "bottom": 81
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    }
+  }
+}

@@ -176,74 +176,6 @@
       }
     },
     {
-      "role": "ui_portrait",
-      "crop": {
-        "content_bbox": [
-          84,
-          55,
-          443,
-          402
-        ],
-        "final_crop_box": [
-          66,
-          37,
-          443,
-          420
-        ],
-        "output_edge_margins": {
-          "left": 24,
-          "top": 19,
-          "right": 19,
-          "bottom": 66
-        }
-      },
-      "path": "assets/characters/chongqing/processed/ui/chongqing_ui_portrait.png",
-      "size": [
-        402,
-        432
-      ],
-      "edge_margins": {
-        "left": 24,
-        "top": 19,
-        "right": 19,
-        "bottom": 66
-      }
-    },
-    {
-      "role": "ui_portrait_small",
-      "crop": {
-        "content_bbox": [
-          0,
-          62,
-          413,
-          402
-        ],
-        "final_crop_box": [
-          0,
-          44,
-          431,
-          420
-        ],
-        "output_edge_margins": {
-          "left": 19,
-          "top": 18,
-          "right": 76,
-          "bottom": 56
-        }
-      },
-      "path": "assets/characters/chongqing/processed/ui/chongqing_ui_portrait_small.png",
-      "size": [
-        508,
-        414
-      ],
-      "edge_margins": {
-        "left": 110,
-        "top": 18,
-        "right": 76,
-        "bottom": 56
-      }
-    },
-    {
       "role": "ui_chibi_head",
       "crop": {
         "content_bbox": [
@@ -1370,6 +1302,224 @@
         "right": 18,
         "bottom": 33
       }
+    },
+    {
+      "role": "ui_portrait",
+      "path": "assets/characters/chongqing/processed/ui/chongqing_ui_portrait.png",
+      "file": "assets/characters/chongqing/processed/ui/chongqing_ui_portrait.png",
+      "source": "assets/characters/chongqing/ui/chongqing_portrait_20261001_unframed_v1.png",
+      "sha256": "66e61e10b3fbff0a8f17d14f3b6ad3b7d54733df252b12043e3cf136b43e5ea3",
+      "size": [
+        512,
+        512
+      ],
+      "mode": "RGBA",
+      "alpha_bbox": [
+        56,
+        60,
+        456,
+        456
+      ],
+      "alpha_pixel_count": 99389,
+      "edge_margins": {
+        "left": 56,
+        "top": 60,
+        "right": 56,
+        "bottom": 56
+      },
+      "output_padding": {
+        "left": 56,
+        "top": 60,
+        "right": 56,
+        "bottom": 56
+      },
+      "alpha_centroid": [
+        257.9879981532587,
+        283.29691798269334
+      ],
+      "centroid_offset_normalized": {
+        "x": 0.003882808893083345,
+        "y": 0.05331429293494794
+      },
+      "component_tags": [
+        "ui",
+        "portrait_revision"
+      ],
+      "crop": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          34,
+          39,
+          1234,
+          1240
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              34,
+              39,
+              1234,
+              1240
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 56,
+          "top": 60,
+          "right": 56,
+          "bottom": 56
+        },
+        "cleanup_tags": []
+      },
+      "source_crop_qa": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          34,
+          39,
+          1234,
+          1240
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              34,
+              39,
+              1234,
+              1240
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 56,
+          "top": 60,
+          "right": 56,
+          "bottom": 56
+        },
+        "cleanup_tags": []
+      }
+    },
+    {
+      "role": "ui_portrait_small",
+      "path": "assets/characters/chongqing/processed/ui/chongqing_ui_portrait_small.png",
+      "file": "assets/characters/chongqing/processed/ui/chongqing_ui_portrait_small.png",
+      "source": "assets/characters/chongqing/ui/chongqing_portrait_20261001_unframed_v1.png",
+      "sha256": "7af49eea889431f55854c1625e657eb7880214b15b850cc113a648b3d61f4608",
+      "size": [
+        128,
+        128
+      ],
+      "mode": "RGBA",
+      "alpha_bbox": [
+        12,
+        13,
+        116,
+        116
+      ],
+      "alpha_pixel_count": 6678,
+      "edge_margins": {
+        "left": 12,
+        "top": 13,
+        "right": 12,
+        "bottom": 12
+      },
+      "output_padding": {
+        "left": 12,
+        "top": 13,
+        "right": 12,
+        "bottom": 12
+      },
+      "alpha_centroid": [
+        64.4886072002017,
+        70.8211295266657
+      ],
+      "centroid_offset_normalized": {
+        "x": 0.0038172437515757718,
+        "y": 0.053290074427075784
+      },
+      "component_tags": [
+        "ui",
+        "portrait_revision"
+      ],
+      "crop": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          34,
+          39,
+          1234,
+          1240
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              34,
+              39,
+              1234,
+              1240
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 12,
+          "top": 13,
+          "right": 12,
+          "bottom": 12
+        },
+        "cleanup_tags": []
+      },
+      "source_crop_qa": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          34,
+          39,
+          1234,
+          1240
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              34,
+              39,
+              1234,
+              1240
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 12,
+          "top": 13,
+          "right": 12,
+          "bottom": 12
+        },
+        "cleanup_tags": []
+      }
     }
-  ]
+  ],
+  "portrait_revision": {
+    "path": "assets/characters/chongqing/meta/chongqing_portrait_revision.json",
+    "sha256": "7d5e04f8f08ff75796f8a500272dcb96f02bebe8a60bc17f7e1c5d6561ea8097"
+  }
 }

@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "character_id": "yukikaze",
+  "revision": "20261001_unframed_v1",
+  "scope": "Portraits only; does not migrate or approve the full character package",
+  "generation_route": "codex_builtin_imagegen_native_alpha",
+  "model": "account-managed/not-exposed",
+  "request_id": "not-exposed",
+  "background_control": "transparent",
+  "prompt": "Create ONE independent head-and-shoulders transparent game portrait for TinySeaWar. Image 1 is ONLY the identity reference for this character; preserve face, hair, eyes, outfit colors and core accessories exactly. Image 2 is ONLY the approved rendering/composition style sample (a DIFFERENT character); do NOT copy its blonde hair, crown or outfit. Match the style sample's polished fine anime linework, restrained cel shading, soft neutral light and bust framing. Head upright, slight three-quarter face toward viewer, neutral character-appropriate expression, eye line around 42% of square canvas height, complete hair and hats visible, upper shoulders/chest, no hands. Isolated bust at most84% canvas width/height,8%EMPTY TRANSPARENT margin every side. NO FRAME, border, card, medallion, background, text, checkerboard, weapons, ship parts, rigging or effects. Real native Alpha PNG, one portrait not a sheet, readable at40px. No new accessories absent from identity reference; whole hair and shoulder contour intact. Character identity: Chestnut short bob with ahoge, warm amber eyes, original red white round flower/ribbon hairclip and tiny dangling white tassels; navy white sailor collar with red scarf. NO eyewear.",
+  "raw_output_path": "/Users/qingyue/.codex/generated_images/01a0f530-85bc-7132-9cf0-51e103bf539a/exec-a40db4fb-87ca-4fdf-a9bf-4287efc3936e.png",
+  "raw_sha256": "3b5e55a26945fceda23ea963ade6226b705b9f7d502885eee1240d6c16bbab90",
+  "references": [
+    {
+      "path": "assets/characters/yukikaze/concept/yukikaze_concept_full.png",
+      "sha256": "0e79072b72de852e25e360098499aafcc0bb487dfda0d97e6564fff297562656"
+    },
+    {
+      "path": "assets/characters/warspite/ui/warspite_portrait_20261001_unframed_v1.png",
+      "sha256": "2de3b58ce65dc2a54b426434d5b7a477e93bb28b8e99ad51ad9bc9ca2af6cab9"
+    }
+  ],
+  "source": {
+    "path": "assets/characters/yukikaze/ui/yukikaze_portrait_20261001_unframed_v1.png",
+    "sha256": "3b5e55a26945fceda23ea963ade6226b705b9f7d502885eee1240d6c16bbab90",
+    "alpha_facts": {
+      "format": "PNG",
+      "source_mode": "RGBA",
+      "width": 1254,
+      "height": 1254,
+      "has_alpha_channel": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixel_count": 756763,
+      "visible_pixel_count": 815753,
+      "transparent_canvas_ratio": 0.4812434340890649,
+      "visible_canvas_ratio": 0.5187565659109351,
+      "transparent_border_ratio": 0.9505187549880287
+    }
+  },
+  "source_review": {
+    "sha256": "3b5e55a26945fceda23ea963ade6226b705b9f7d502885eee1240d6c16bbab90",
+    "verdict": "pass",
+    "reviewer": "Codex visual inspection",
+    "observation": "Chestnut bob/ahoge, amber eyes, red-white flower clip and dangling white tassels retained with sailor collar/red scarf; no frame."
+  },
+  "output_reviews": {
+    "ui_portrait": {
+      "sha256": "03def4e23635b83eaadf9c8cb614c3445a5e5312f02a854f1b3db22ac90aa0fd",
+      "verdict": "pass",
+      "reviewer": "Codex visual inspection",
+      "observation": "Chestnut bob/ahoge, amber eyes, red-white flower clip and dangling white tassels retained with sailor collar/red scarf; no frame. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+    },
+    "ui_portrait_small": {
+      "sha256": "9fd0ddb2a3d84ce626087002ac8bea2eb033198834e64eeb4a49ceadca2b4ce7",
+      "verdict": "pass",
+      "reviewer": "Codex visual inspection",
+      "observation": "Chestnut bob/ahoge, amber eyes, red-white flower clip and dangling white tassels retained with sailor collar/red scarf; no frame. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+    }
+  }
+}

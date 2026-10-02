@@ -1,0 +1,1813 @@
+{
+  "schema_version": 1,
+  "character_id": "ward",
+  "scope": "Visual evidence only; technical contract must pass separately. Not runtime acceptance.",
+  "checklist": [
+    "identity_and_inventory",
+    "no_truncation_or_neighbor_fragments",
+    "alpha_edges_and_small_scale_readability",
+    "animation_consistency",
+    "mechanical_binding_and_vfx_semantics"
+  ],
+  "package_sha256": {
+    "assets/characters/ward/battle/ward_anim_5x4_master.png": "dac23f5c53a132c86a4eec333bca098f5f80249c0df649ec38a4e4ac700b93a7",
+    "assets/characters/ward/battle/ward_battle_asset_grid.png": "c54b39cfbb8adff23510aeb31b9746e5afab823c3c3c18db707ba9b635a3285f",
+    "assets/characters/ward/concept/ward_concept_full.png": "91d5bd2f21ad6ae5ca333082dfec093961c1b739cd1f9b7dcb8af7be97d95328",
+    "assets/characters/ward/meta/ward_portrait_revision.json": "14f37f3bdb09af81dbf6cfadc449cd1d1418c321def7e57e7fec2b91ee0ac02d",
+    "assets/characters/ward/processed/anim/ward_anim_attack_frame_01.png": "64be86eabe4822d025cdf34152cce8cd2ea06e85725170d3f28956d86a359739",
+    "assets/characters/ward/processed/anim/ward_anim_attack_frame_02.png": "93a919c298dad0cb5a3f5a7d7a81e28cd074fa1cf90c64a8eae0288922488474",
+    "assets/characters/ward/processed/anim/ward_anim_attack_frame_03.png": "6e4359123919ae893c24545901aef65e10c785f4c5c5e75f129bc8736491c0c4",
+    "assets/characters/ward/processed/anim/ward_anim_attack_frame_04.png": "76869ea3beec0a8cd828fbedd4fc98fcd6612bbef22243d4f0fdb0d020111426",
+    "assets/characters/ward/processed/anim/ward_anim_attack_keyframe.png": "64be86eabe4822d025cdf34152cce8cd2ea06e85725170d3f28956d86a359739",
+    "assets/characters/ward/processed/anim/ward_anim_firepower_frame_01.png": "2799f1571b9622e5bab79d241cee83536fcde497d46c674629a8fc6d9341cbea",
+    "assets/characters/ward/processed/anim/ward_anim_firepower_frame_02.png": "b582b7564267868d4c68faeca7875ae9c2377fe98796a935083f140e4d988fcd",
+    "assets/characters/ward/processed/anim/ward_anim_firepower_frame_03.png": "c144d9c01e6e4caca8d987851130325d21e48267db5966b986ec52b432a2249c",
+    "assets/characters/ward/processed/anim/ward_anim_firepower_frame_04.png": "b173c54d922aabb729f3bcb4e777eeb8ae7f18b46fc4b652b9a8720e80095bb4",
+    "assets/characters/ward/processed/anim/ward_anim_firepower_keyframe.png": "2799f1571b9622e5bab79d241cee83536fcde497d46c674629a8fc6d9341cbea",
+    "assets/characters/ward/processed/anim/ward_anim_hit_frame_01.png": "2cf92edce9566146f3e3199c5bfbfac29b7d4040e7be473fba652fbf79d81425",
+    "assets/characters/ward/processed/anim/ward_anim_hit_frame_02.png": "e85fd7fcb3bf2024091c51a8b11b760a5eb429048df1751be15455f25c9dede2",
+    "assets/characters/ward/processed/anim/ward_anim_hit_frame_03.png": "84bd7804882bf7729a3c6262e20f474bd78756fc89ac8f58560032f7ce7edaf3",
+    "assets/characters/ward/processed/anim/ward_anim_hit_frame_04.png": "b80f02e86e6f89ede62573f746e8c4b7cf55f8dce81bd172ed4246d5c80408d8",
+    "assets/characters/ward/processed/anim/ward_anim_hit_keyframe.png": "2cf92edce9566146f3e3199c5bfbfac29b7d4040e7be473fba652fbf79d81425",
+    "assets/characters/ward/processed/anim/ward_anim_idle_frame_01.png": "f2b1ec530a80f218c6bbd984c821c1af8744e8d19dd9f4e50eb76c425c0f8b83",
+    "assets/characters/ward/processed/anim/ward_anim_idle_frame_02.png": "2d877500b34fab3ca6a9c304539b8c1c9dc49b775dd57ebe4c1e9be3a53ac345",
+    "assets/characters/ward/processed/anim/ward_anim_idle_frame_03.png": "37496e162898d09fea3030da815878bea9dd0b6838bf7cfb9f8618b4cb9e042b",
+    "assets/characters/ward/processed/anim/ward_anim_idle_frame_04.png": "a043445a0575817d377563b18ab26d570a9b6e52f8fff4624757dc7335729994",
+    "assets/characters/ward/processed/anim/ward_anim_idle_keyframe.png": "f2b1ec530a80f218c6bbd984c821c1af8744e8d19dd9f4e50eb76c425c0f8b83",
+    "assets/characters/ward/processed/anim/ward_anim_move_frame_01.png": "8ab67584b9c11f1b0a9068eb589286d0f2eca564f66cb530961f7b35496fd4bf",
+    "assets/characters/ward/processed/anim/ward_anim_move_frame_02.png": "527cd50b1d75f333d3b868a667d1c69e08fd199712ea9f93d5a4e844bb66bfd6",
+    "assets/characters/ward/processed/anim/ward_anim_move_frame_03.png": "77cf72723d44a1282431d91b19362b11e705ebc8d29fface4484803410a1dcb7",
+    "assets/characters/ward/processed/anim/ward_anim_move_frame_04.png": "c50ae2bd913408ef7650476c55ced9e2df5905f2cd48450d1b3c3f65e8601287",
+    "assets/characters/ward/processed/anim/ward_anim_move_keyframe.png": "8ab67584b9c11f1b0a9068eb589286d0f2eca564f66cb530961f7b35496fd4bf",
+    "assets/characters/ward/processed/battle/ward_battle_body_r.png": "f2b1ec530a80f218c6bbd984c821c1af8744e8d19dd9f4e50eb76c425c0f8b83",
+    "assets/characters/ward/processed/battle/ward_battle_propulsion_node.png": "0d0ed714f26cfa4f8227f0580934057674d00bc1a3c1128fd7bb526e5b330bdb",
+    "assets/characters/ward/processed/battle/ward_battle_radar_node.png": "88206b0efba4104004b556f8782b75e5b2dbf8983926164e3a1ea1c93266cd87",
+    "assets/characters/ward/processed/battle/ward_battle_rig_base.png": "3234a55f39155f6f1adb904a71cda6fcc4bf62e2e0cac713d5a9e7c6ff0a5035",
+    "assets/characters/ward/processed/battle/ward_battle_torpedo_tube_01.png": "a6b1343a8ff6252f64f99c478772c7d5d46af8d8059564a5c0a05c04a5013191",
+    "assets/characters/ward/processed/battle/ward_battle_torpedo_tube_02.png": "efd4af6bfa4ec70e67e752c339ae04237ffe4b5707c38ec9b3649ad524e33cc7",
+    "assets/characters/ward/processed/battle/ward_battle_turret_main_01.png": "3632dff942431f848f4fe505d0ed8f912eb86e37a17f08341a6287c59fce4cb9",
+    "assets/characters/ward/processed/battle/ward_battle_wake_origin_marker.png": "48148561cb6c3bc040c0d2925fd05695e414ea17460a433d2493e544bb8cbecd",
+    "assets/characters/ward/processed/config/ward_anim_config.json": "60b7803c3242244c81e8ea0cff52288617dccdd721087c1239b9549f396a9ef3",
+    "assets/characters/ward/processed/config/ward_meta_bind_points.json": "b117eacf9d5dd65796942a812fbdfdb539d6a5cc5dbc52fb74cef6dd999babee",
+    "assets/characters/ward/processed/config/ward_postprocess_manifest.json": "6743657866a2cf080c0d753ad6fd270650a128f47eb4de24eb901b48b2e5984e",
+    "assets/characters/ward/processed/config/ward_vfx_config.json": "a24b390521b1c0179a325d58eff5aee8304c947ed5d1bfa4055ca3c6c0521832",
+    "assets/characters/ward/processed/source_alpha/ward_anim_5x4_master_alpha_source.png": "16b207ba80b3aab1150d3c7f02749a8aa183e1d94e0f14f9cd8023b35e005b5c",
+    "assets/characters/ward/processed/source_alpha/ward_battle_asset_grid_alpha_source.png": "65b4fa1ca4229dec72bc2d14bcd4a3dd8844722625c50339720d63b244c30b74",
+    "assets/characters/ward/processed/source_alpha/ward_concept_full_alpha_source.png": "edb67736f7eeb9d5b4a62b56fbad1932212a49c46cd8569d33669911410e3b1d",
+    "assets/characters/ward/processed/source_alpha/ward_ui_sheet_alpha_source.png": "6a37bdba3f88ff481665403c3c915d8e8534c2e9f330e8bc6690c37996d97595",
+    "assets/characters/ward/processed/source_alpha/ward_vfx_reference_sheet_alpha_source.png": "cbc4c7bf9047193f4441ac7c2a016b38713ec0859ae9b12204b1c1222bd47b1f",
+    "assets/characters/ward/processed/ui/ward_expr_default.png": "1fc6d847c4c655267e93f322824b7935cce6720cccd0819cb35753e95271dc13",
+    "assets/characters/ward/processed/ui/ward_expr_hit.png": "3d15d7bf7097f7ca968454c7d1af6f70911c7d1c95e541bd49e3591348d732ec",
+    "assets/characters/ward/processed/ui/ward_expr_serious.png": "a827a61226fedc1a198d06b668869cfdb4333c4d6e40be3d7fab4115c63b35f1",
+    "assets/characters/ward/processed/ui/ward_illust_full_alpha.png": "9d29f4fb178887ad56f71d3f7c13866ba35eb6c771a2e6cbfdfdbdf54b02f367",
+    "assets/characters/ward/processed/ui/ward_illust_half_alpha.png": "70fd5df7afcb3765a638ca282f21425b6c9b33a3471de77e4fa932c5aea4d601",
+    "assets/characters/ward/processed/ui/ward_illust_skill_cutin_alpha.png": "a1c96f169d60c8ddec6508aa38e9a17897fd0d0fe4956134fb2bf218a226a2b6",
+    "assets/characters/ward/processed/ui/ward_ui_chibi_head.png": "ef56a9a4d59155f6cf3daa58df5ca895015d06f54658e1e2ba00847f1eaba9cd",
+    "assets/characters/ward/processed/ui/ward_ui_class_destroyer.png": "108f1d2d6882c264d8797690c05ac0359defd6299bb17e513e59dca215260909",
+    "assets/characters/ward/processed/ui/ward_ui_portrait.png": "9f98ede84466ddc59b79de5697759240b4fcef6684d285243fe76c7e8cce2206",
+    "assets/characters/ward/processed/ui/ward_ui_portrait_small.png": "80b5475a72e5bee6aaae6873aa3857d6aed8946b521fd316e78f425fea44de68",
+    "assets/characters/ward/processed/ui/ward_ui_skill_torpedo_rush.png": "786396bcc09129ff08c808db2281418ce8c3e9769a84f6940a7ac679fa74fa0b",
+    "assets/characters/ward/ui/ward_portrait_20261001_unframed_v1.png": "4cc0c25371fdccd052271b928da58fadd7d9622848f766362d99b8d29a7d0908",
+    "assets/characters/ward/ui/ward_ui_sheet.png": "35bfa819a31f8782703c8ffa7c0397dc31964db7ef8892c6f61b0e4295284a0a",
+    "assets/characters/ward/vfx/ward_vfx_reference_sheet.png": "0859db8f74cf4ae95e1a82e3576ed69f977e1c4d4aad2117473a97cfec60d09f",
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_range_reticle.png": "a2d15007b940b39cad3e844351f3a7899da095b40d11e720127f8b78d1c3e0d6",
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_skill_aura.png": "256fbd95e8fd7acbd0954d29470eedd5537c7cfc9fb526984ea665dc0393270f",
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_smoke_screen.png": "a1046ceb68e33eaca72b03ea66de05ade2da5ddc12662d5721f24cd6eb1208d9",
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_speed_lines.png": "c705bdf5eca024779dc64815b45122b142ce159f06d25005b55d7f77319c5655",
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_speed_wake.png": "19942879341d851b6068916f14e5bf908caba2c3e4dd4e3c5e4d72a77b2d81dd",
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_torpedo_launch_flash.png": "497430a66b4a6f91f22b3b935125ebc73f48a9a56b51ebb845eeb9ee0e5e239b",
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_torpedo_warning.png": "0e18fbe8047578b7c94d552f9acd46c3901d1b32a3471259ca64e80a4a43f361",
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_water_splash.png": "b60aeb30bdd91f5b354fbd9bc0c5354e80884954f5f8d2d915273f4f3135252a"
+  },
+  "assets": {
+    "assets/characters/ward/processed/anim/ward_anim_attack_frame_01.png": {
+      "sha256": "64be86eabe4822d025cdf34152cce8cd2ea06e85725170d3f28956d86a359739",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 286,
+        "height": 232,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 47530,
+        "visible_pixel_count": 18822,
+        "transparent_canvas_ratio": 0.716331082710393,
+        "visible_canvas_ratio": 0.28366891728960697,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ward/processed/anim/ward_anim_attack_frame_02.png": {
+      "sha256": "93a919c298dad0cb5a3f5a7d7a81e28cd074fa1cf90c64a8eae0288922488474",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 286,
+        "height": 232,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 47251,
+        "visible_pixel_count": 19101,
+        "transparent_canvas_ratio": 0.7121262358331324,
+        "visible_canvas_ratio": 0.2878737641668676,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ward/processed/anim/ward_anim_attack_frame_03.png": {
+      "sha256": "6e4359123919ae893c24545901aef65e10c785f4c5c5e75f129bc8736491c0c4",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 286,
+        "height": 232,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 48270,
+        "visible_pixel_count": 18082,
+        "transparent_canvas_ratio": 0.7274837231733784,
+        "visible_canvas_ratio": 0.27251627682662166,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ward/processed/anim/ward_anim_attack_frame_04.png": {
+      "sha256": "76869ea3beec0a8cd828fbedd4fc98fcd6612bbef22243d4f0fdb0d020111426",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 286,
+        "height": 232,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 48228,
+        "visible_pixel_count": 18124,
+        "transparent_canvas_ratio": 0.7268507354714251,
+        "visible_canvas_ratio": 0.27314926452857485,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ward/processed/anim/ward_anim_attack_keyframe.png": {
+      "sha256": "64be86eabe4822d025cdf34152cce8cd2ea06e85725170d3f28956d86a359739",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 286,
+        "height": 232,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 47530,
+        "visible_pixel_count": 18822,
+        "transparent_canvas_ratio": 0.716331082710393,
+        "visible_canvas_ratio": 0.28366891728960697,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ward/processed/anim/ward_anim_firepower_frame_01.png": {
+      "sha256": "2799f1571b9622e5bab79d241cee83536fcde497d46c674629a8fc6d9341cbea",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 284,
+        "height": 200,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 40929,
+        "visible_pixel_count": 15871,
+        "transparent_canvas_ratio": 0.7205809859154929,
+        "visible_canvas_ratio": 0.27941901408450703,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ward/processed/anim/ward_anim_firepower_frame_02.png": {
+      "sha256": "b582b7564267868d4c68faeca7875ae9c2377fe98796a935083f140e4d988fcd",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 284,
+        "height": 200,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 42164,
+        "visible_pixel_count": 14636,
+        "transparent_canvas_ratio": 0.7423239436619719,
+        "visible_canvas_ratio": 0.25767605633802815,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ward/processed/anim/ward_anim_firepower_frame_03.png": {
+      "sha256": "c144d9c01e6e4caca8d987851130325d21e48267db5966b986ec52b432a2249c",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 284,
+        "height": 200,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 38320,
+        "visible_pixel_count": 18480,
+        "transparent_canvas_ratio": 0.6746478873239437,
+        "visible_canvas_ratio": 0.32535211267605635,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ward/processed/anim/ward_anim_firepower_frame_04.png": {
+      "sha256": "b173c54d922aabb729f3bcb4e777eeb8ae7f18b46fc4b652b9a8720e80095bb4",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 284,
+        "height": 200,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 40741,
+        "visible_pixel_count": 16059,
+        "transparent_canvas_ratio": 0.7172711267605634,
+        "visible_canvas_ratio": 0.28272887323943663,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ward/processed/anim/ward_anim_firepower_keyframe.png": {
+      "sha256": "2799f1571b9622e5bab79d241cee83536fcde497d46c674629a8fc6d9341cbea",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 284,
+        "height": 200,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 40929,
+        "visible_pixel_count": 15871,
+        "transparent_canvas_ratio": 0.7205809859154929,
+        "visible_canvas_ratio": 0.27941901408450703,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ward/processed/anim/ward_anim_hit_frame_01.png": {
+      "sha256": "2cf92edce9566146f3e3199c5bfbfac29b7d4040e7be473fba652fbf79d81425",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 212,
+        "height": 222,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 30114,
+        "visible_pixel_count": 16950,
+        "transparent_canvas_ratio": 0.6398521162672106,
+        "visible_canvas_ratio": 0.3601478837327894,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ward/processed/anim/ward_anim_hit_frame_02.png": {
+      "sha256": "e85fd7fcb3bf2024091c51a8b11b760a5eb429048df1751be15455f25c9dede2",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 212,
+        "height": 222,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 30247,
+        "visible_pixel_count": 16817,
+        "transparent_canvas_ratio": 0.6426780554139044,
+        "visible_canvas_ratio": 0.3573219445860955,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ward/processed/anim/ward_anim_hit_frame_03.png": {
+      "sha256": "84bd7804882bf7729a3c6262e20f474bd78756fc89ac8f58560032f7ce7edaf3",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 212,
+        "height": 222,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 30723,
+        "visible_pixel_count": 16341,
+        "transparent_canvas_ratio": 0.6527919428862825,
+        "visible_canvas_ratio": 0.3472080571137175,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ward/processed/anim/ward_anim_hit_frame_04.png": {
+      "sha256": "b80f02e86e6f89ede62573f746e8c4b7cf55f8dce81bd172ed4246d5c80408d8",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 212,
+        "height": 222,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 30711,
+        "visible_pixel_count": 16353,
+        "transparent_canvas_ratio": 0.6525369709331974,
+        "visible_canvas_ratio": 0.34746302906680265,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ward/processed/anim/ward_anim_hit_keyframe.png": {
+      "sha256": "2cf92edce9566146f3e3199c5bfbfac29b7d4040e7be473fba652fbf79d81425",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 212,
+        "height": 222,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 30114,
+        "visible_pixel_count": 16950,
+        "transparent_canvas_ratio": 0.6398521162672106,
+        "visible_canvas_ratio": 0.3601478837327894,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ward/processed/anim/ward_anim_idle_frame_01.png": {
+      "sha256": "f2b1ec530a80f218c6bbd984c821c1af8744e8d19dd9f4e50eb76c425c0f8b83",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 246,
+        "height": 250,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 40407,
+        "visible_pixel_count": 21093,
+        "transparent_canvas_ratio": 0.6570243902439025,
+        "visible_canvas_ratio": 0.3429756097560976,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ward/processed/anim/ward_anim_idle_frame_02.png": {
+      "sha256": "2d877500b34fab3ca6a9c304539b8c1c9dc49b775dd57ebe4c1e9be3a53ac345",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 246,
+        "height": 250,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 40358,
+        "visible_pixel_count": 21142,
+        "transparent_canvas_ratio": 0.6562276422764227,
+        "visible_canvas_ratio": 0.3437723577235772,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ward/processed/anim/ward_anim_idle_frame_03.png": {
+      "sha256": "37496e162898d09fea3030da815878bea9dd0b6838bf7cfb9f8618b4cb9e042b",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 246,
+        "height": 250,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 40974,
+        "visible_pixel_count": 20526,
+        "transparent_canvas_ratio": 0.6662439024390244,
+        "visible_canvas_ratio": 0.33375609756097563,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ward/processed/anim/ward_anim_idle_frame_04.png": {
+      "sha256": "a043445a0575817d377563b18ab26d570a9b6e52f8fff4624757dc7335729994",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 246,
+        "height": 250,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 41347,
+        "visible_pixel_count": 20153,
+        "transparent_canvas_ratio": 0.6723089430894309,
+        "visible_canvas_ratio": 0.3276910569105691,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ward/processed/anim/ward_anim_idle_keyframe.png": {
+      "sha256": "f2b1ec530a80f218c6bbd984c821c1af8744e8d19dd9f4e50eb76c425c0f8b83",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 246,
+        "height": 250,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 40407,
+        "visible_pixel_count": 21093,
+        "transparent_canvas_ratio": 0.6570243902439025,
+        "visible_canvas_ratio": 0.3429756097560976,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ward/processed/anim/ward_anim_move_frame_01.png": {
+      "sha256": "8ab67584b9c11f1b0a9068eb589286d0f2eca564f66cb530961f7b35496fd4bf",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 324,
+        "height": 256,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 62863,
+        "visible_pixel_count": 20081,
+        "transparent_canvas_ratio": 0.7578968942901234,
+        "visible_canvas_ratio": 0.24210310570987653,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ward/processed/anim/ward_anim_move_frame_02.png": {
+      "sha256": "527cd50b1d75f333d3b868a667d1c69e08fd199712ea9f93d5a4e844bb66bfd6",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 324,
+        "height": 256,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 63063,
+        "visible_pixel_count": 19881,
+        "transparent_canvas_ratio": 0.7603081597222222,
+        "visible_canvas_ratio": 0.2396918402777778,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ward/processed/anim/ward_anim_move_frame_03.png": {
+      "sha256": "77cf72723d44a1282431d91b19362b11e705ebc8d29fface4484803410a1dcb7",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 324,
+        "height": 256,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 63227,
+        "visible_pixel_count": 19717,
+        "transparent_canvas_ratio": 0.7622853973765432,
+        "visible_canvas_ratio": 0.23771460262345678,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ward/processed/anim/ward_anim_move_frame_04.png": {
+      "sha256": "c50ae2bd913408ef7650476c55ced9e2df5905f2cd48450d1b3c3f65e8601287",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 324,
+        "height": 256,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 60571,
+        "visible_pixel_count": 22373,
+        "transparent_canvas_ratio": 0.7302637924382716,
+        "visible_canvas_ratio": 0.2697362075617284,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ward/processed/anim/ward_anim_move_keyframe.png": {
+      "sha256": "8ab67584b9c11f1b0a9068eb589286d0f2eca564f66cb530961f7b35496fd4bf",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 324,
+        "height": 256,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 62863,
+        "visible_pixel_count": 20081,
+        "transparent_canvas_ratio": 0.7578968942901234,
+        "visible_canvas_ratio": 0.24210310570987653,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ward/processed/battle/ward_battle_body_r.png": {
+      "sha256": "f2b1ec530a80f218c6bbd984c821c1af8744e8d19dd9f4e50eb76c425c0f8b83",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 246,
+        "height": 250,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 40407,
+        "visible_pixel_count": 21093,
+        "transparent_canvas_ratio": 0.6570243902439025,
+        "visible_canvas_ratio": 0.3429756097560976,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ward/processed/battle/ward_battle_propulsion_node.png": {
+      "sha256": "0d0ed714f26cfa4f8227f0580934057674d00bc1a3c1128fd7bb526e5b330bdb",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 294,
+        "height": 220,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 35968,
+        "visible_pixel_count": 28712,
+        "transparent_canvas_ratio": 0.5560915275200989,
+        "visible_canvas_ratio": 0.44390847247990106,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          77,
+          134,
+          334,
+          308
+        ],
+        "final_crop_box": [
+          59,
+          116,
+          352,
+          326
+        ],
+        "component_area": 28712,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 18,
+          "bottom": 28
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ward/processed/battle/ward_battle_radar_node.png": {
+      "sha256": "88206b0efba4104004b556f8782b75e5b2dbf8983926164e3a1ea1c93266cd87",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 264,
+        "height": 248,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 45156,
+        "visible_pixel_count": 20316,
+        "transparent_canvas_ratio": 0.6896994134897361,
+        "visible_canvas_ratio": 0.31030058651026393,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          46,
+          124,
+          237,
+          320
+        ],
+        "final_crop_box": [
+          28,
+          106,
+          255,
+          338
+        ],
+        "component_area": 20316,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 54,
+          "bottom": 33
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ward/processed/battle/ward_battle_rig_base.png": {
+      "sha256": "3234a55f39155f6f1adb904a71cda6fcc4bf62e2e0cac713d5a9e7c6ff0a5035",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 356,
+        "height": 450,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 120341,
+        "visible_pixel_count": 39859,
+        "transparent_canvas_ratio": 0.7511922596754057,
+        "visible_canvas_ratio": 0.24880774032459427,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          94,
+          151,
+          380,
+          486
+        ],
+        "final_crop_box": [
+          76,
+          133,
+          384,
+          504
+        ],
+        "component_area": 39859,
+        "output_edge_margins": {
+          "left": 51,
+          "top": 18,
+          "right": 19,
+          "bottom": 97
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ward/processed/battle/ward_battle_torpedo_tube_01.png": {
+      "sha256": "a6b1343a8ff6252f64f99c478772c7d5d46af8d8059564a5c0a05c04a5013191",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 320,
+        "height": 270,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 48142,
+        "visible_pixel_count": 38258,
+        "transparent_canvas_ratio": 0.5571990740740741,
+        "visible_canvas_ratio": 0.4428009259259259,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          31,
+          268,
+          305,
+          483
+        ],
+        "final_crop_box": [
+          13,
+          250,
+          323,
+          501
+        ],
+        "component_area": 38258,
+        "output_edge_margins": {
+          "left": 28,
+          "top": 18,
+          "right": 18,
+          "bottom": 37
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ward/processed/battle/ward_battle_torpedo_tube_02.png": {
+      "sha256": "efd4af6bfa4ec70e67e752c339ae04237ffe4b5707c38ec9b3649ad524e33cc7",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 322,
+        "height": 268,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 48429,
+        "visible_pixel_count": 37867,
+        "transparent_canvas_ratio": 0.5611963474552703,
+        "visible_canvas_ratio": 0.43880365254472975,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          78,
+          122,
+          353,
+          334
+        ],
+        "final_crop_box": [
+          60,
+          104,
+          371,
+          352
+        ],
+        "component_area": 37867,
+        "output_edge_margins": {
+          "left": 28,
+          "top": 18,
+          "right": 19,
+          "bottom": 38
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ward/processed/battle/ward_battle_turret_main_01.png": {
+      "sha256": "3632dff942431f848f4fe505d0ed8f912eb86e37a17f08341a6287c59fce4cb9",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 344,
+        "height": 250,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 58206,
+        "visible_pixel_count": 27794,
+        "transparent_canvas_ratio": 0.6768139534883721,
+        "visible_canvas_ratio": 0.3231860465116279,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          92,
+          261,
+          342,
+          463
+        ],
+        "final_crop_box": [
+          74,
+          243,
+          360,
+          481
+        ],
+        "component_area": 27794,
+        "output_edge_margins": {
+          "left": 76,
+          "top": 18,
+          "right": 18,
+          "bottom": 30
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ward/processed/battle/ward_battle_wake_origin_marker.png": {
+      "sha256": "48148561cb6c3bc040c0d2925fd05695e414ea17460a433d2493e544bb8cbecd",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 300,
+        "height": 100,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 21708,
+        "visible_pixel_count": 8292,
+        "transparent_canvas_ratio": 0.7236,
+        "visible_canvas_ratio": 0.2764,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          20,
+          228,
+          281,
+          290
+        ],
+        "final_crop_box": [
+          2,
+          210,
+          299,
+          308
+        ],
+        "component_area": 8292,
+        "output_edge_margins": {
+          "left": 18,
+          "top": 20,
+          "right": 21,
+          "bottom": 18
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ward/processed/ui/ward_expr_default.png": {
+      "sha256": "1fc6d847c4c655267e93f322824b7935cce6720cccd0819cb35753e95271dc13",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 364,
+        "height": 432,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 96033,
+        "visible_pixel_count": 61215,
+        "transparent_canvas_ratio": 0.6107104700854701,
+        "visible_canvas_ratio": 0.3892895299145299,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          51,
+          61,
+          363,
+          405
+        ],
+        "final_crop_box": [
+          33,
+          43,
+          381,
+          423
+        ],
+        "output_edge_margins": {
+          "left": 34,
+          "top": 18,
+          "right": 18,
+          "bottom": 70
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ward/processed/ui/ward_expr_hit.png": {
+      "sha256": "3d15d7bf7097f7ca968454c7d1af6f70911c7d1c95e541bd49e3591348d732ec",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 368,
+        "height": 436,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 98589,
+        "visible_pixel_count": 61859,
+        "transparent_canvas_ratio": 0.6144607598723574,
+        "visible_canvas_ratio": 0.3855392401276426,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          93,
+          19,
+          409,
+          365
+        ],
+        "final_crop_box": [
+          75,
+          1,
+          427,
+          383
+        ],
+        "output_edge_margins": {
+          "left": 34,
+          "top": 19,
+          "right": 18,
+          "bottom": 71
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ward/processed/ui/ward_expr_serious.png": {
+      "sha256": "a827a61226fedc1a198d06b668869cfdb4333c4d6e40be3d7fab4115c63b35f1",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 376,
+        "height": 430,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 101050,
+        "visible_pixel_count": 60630,
+        "transparent_canvas_ratio": 0.625,
+        "visible_canvas_ratio": 0.375,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          94,
+          24,
+          413,
+          365
+        ],
+        "final_crop_box": [
+          76,
+          6,
+          431,
+          383
+        ],
+        "output_edge_margins": {
+          "left": 39,
+          "top": 19,
+          "right": 18,
+          "bottom": 70
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ward/processed/ui/ward_illust_full_alpha.png": {
+      "sha256": "9d29f4fb178887ad56f71d3f7c13866ba35eb6c771a2e6cbfdfdbdf54b02f367",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 996,
+        "height": 1612,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 1184227,
+        "visible_pixel_count": 421325,
+        "transparent_canvas_ratio": 0.737582463850439,
+        "visible_canvas_ratio": 0.26241753614956104,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          28,
+          57,
+          998,
+          1476
+        ],
+        "final_crop_box": [
+          16,
+          45,
+          1010,
+          1488
+        ],
+        "output_edge_margins": {
+          "left": 13,
+          "top": 181,
+          "right": 13,
+          "bottom": 12
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ward/processed/ui/ward_illust_half_alpha.png": {
+      "sha256": "70fd5df7afcb3765a638ca282f21425b6c9b33a3471de77e4fa932c5aea4d601",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 1040,
+        "height": 1150,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 818973,
+        "visible_pixel_count": 377027,
+        "transparent_canvas_ratio": 0.6847600334448161,
+        "visible_canvas_ratio": 0.31523996655518394,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          16,
+          17,
+          986,
+          1038
+        ],
+        "final_crop_box": [
+          0,
+          1,
+          1002,
+          1054
+        ],
+        "output_edge_margins": {
+          "left": 16,
+          "top": 17,
+          "right": 54,
+          "bottom": 112
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ward/processed/ui/ward_illust_skill_cutin_alpha.png": {
+      "sha256": "a1c96f169d60c8ddec6508aa38e9a17897fd0d0fe4956134fb2bf218a226a2b6",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 1036,
+        "height": 1048,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 758317,
+        "visible_pixel_count": 327411,
+        "transparent_canvas_ratio": 0.6984410460078398,
+        "visible_canvas_ratio": 0.3015589539921601,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          442,
+          17,
+          1411,
+          840
+        ],
+        "final_crop_box": [
+          426,
+          1,
+          1427,
+          856
+        ],
+        "output_edge_margins": {
+          "left": 17,
+          "top": 17,
+          "right": 50,
+          "bottom": 208
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ward/processed/ui/ward_ui_chibi_head.png": {
+      "sha256": "ef56a9a4d59155f6cf3daa58df5ca895015d06f54658e1e2ba00847f1eaba9cd",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 324,
+        "height": 352,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 67288,
+        "visible_pixel_count": 46760,
+        "transparent_canvas_ratio": 0.5899971941638609,
+        "visible_canvas_ratio": 0.4100028058361392,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          76,
+          88,
+          361,
+          382
+        ],
+        "final_crop_box": [
+          58,
+          70,
+          379,
+          400
+        ],
+        "output_edge_margins": {
+          "left": 21,
+          "top": 19,
+          "right": 18,
+          "bottom": 39
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ward/processed/ui/ward_ui_class_destroyer.png": {
+      "sha256": "108f1d2d6882c264d8797690c05ac0359defd6299bb17e513e59dca215260909",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 348,
+        "height": 426,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 109668,
+        "visible_pixel_count": 38580,
+        "transparent_canvas_ratio": 0.7397604014893961,
+        "visible_canvas_ratio": 0.26023959851060385,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          38,
+          66,
+          345,
+          365
+        ],
+        "final_crop_box": [
+          20,
+          48,
+          363,
+          383
+        ],
+        "output_edge_margins": {
+          "left": 23,
+          "top": 18,
+          "right": 18,
+          "bottom": 109
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ward/processed/ui/ward_ui_portrait.png": {
+      "sha256": "9f98ede84466ddc59b79de5697759240b4fcef6684d285243fe76c7e8cce2206",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 512,
+        "height": 512,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 180272,
+        "visible_pixel_count": 81872,
+        "transparent_canvas_ratio": 0.68768310546875,
+        "visible_canvas_ratio": 0.31231689453125,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          31,
+          30,
+          1185,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              31,
+              30,
+              1185,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 99,
+          "top": 56,
+          "right": 68,
+          "bottom": 56
+        },
+        "cleanup_tags": []
+      },
+      "review": {
+        "verdict": "pass",
+        "reviewer": "Codex visual inspection",
+        "observation": "Brown tousled short hair/ahoge, brown eyes and lively face retained with navy-white-orange uniform straps; no frame or rigging. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+      }
+    },
+    "assets/characters/ward/processed/ui/ward_ui_portrait_small.png": {
+      "sha256": "80b5475a72e5bee6aaae6873aa3857d6aed8946b521fd316e78f425fea44de68",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 128,
+        "height": 128,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 10795,
+        "visible_pixel_count": 5589,
+        "transparent_canvas_ratio": 0.65887451171875,
+        "visible_canvas_ratio": 0.34112548828125,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          31,
+          30,
+          1185,
+          1254
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              31,
+              30,
+              1185,
+              1254
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 24,
+          "top": 12,
+          "right": 15,
+          "bottom": 12
+        },
+        "cleanup_tags": []
+      },
+      "review": {
+        "verdict": "pass",
+        "reviewer": "Codex visual inspection",
+        "observation": "Brown tousled short hair/ahoge, brown eyes and lively face retained with navy-white-orange uniform straps; no frame or rigging. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+      }
+    },
+    "assets/characters/ward/processed/ui/ward_ui_skill_torpedo_rush.png": {
+      "sha256": "786396bcc09129ff08c808db2281418ce8c3e9769a84f6940a7ac679fa74fa0b",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 410,
+        "height": 278,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 79544,
+        "visible_pixel_count": 34436,
+        "transparent_canvas_ratio": 0.6978768204948237,
+        "visible_canvas_ratio": 0.30212317950517636,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          69,
+          118,
+          379,
+          349
+        ],
+        "final_crop_box": [
+          51,
+          100,
+          397,
+          367
+        ],
+        "output_edge_margins": {
+          "left": 18,
+          "top": 18,
+          "right": 82,
+          "bottom": 29
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_range_reticle.png": {
+      "sha256": "a2d15007b940b39cad3e844351f3a7899da095b40d11e720127f8b78d1c3e0d6",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 266,
+        "height": 294,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 75329,
+        "visible_pixel_count": 2875,
+        "transparent_canvas_ratio": 0.9632371745690758,
+        "visible_canvas_ratio": 0.03676282543092425,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          39,
+          125,
+          246,
+          359
+        ],
+        "final_crop_box": [
+          21,
+          107,
+          264,
+          377
+        ],
+        "component_area": 1684,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 23,
+          "right": 22,
+          "bottom": 19
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_skill_aura.png": {
+      "sha256": "256fbd95e8fd7acbd0954d29470eedd5537c7cfc9fb526984ea665dc0393270f",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 198,
+        "height": 184,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 35009,
+        "visible_pixel_count": 1423,
+        "transparent_canvas_ratio": 0.9609409310496267,
+        "visible_canvas_ratio": 0.039059068950373296,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          24,
+          155,
+          144,
+          268
+        ],
+        "final_crop_box": [
+          6,
+          137,
+          162,
+          286
+        ],
+        "component_area": 1226,
+        "output_edge_margins": {
+          "left": 49,
+          "top": 21,
+          "right": 19,
+          "bottom": 18
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_smoke_screen.png": {
+      "sha256": "a1046ceb68e33eaca72b03ea66de05ade2da5ddc12662d5721f24cd6eb1208d9",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 246,
+        "height": 258,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 33863,
+        "visible_pixel_count": 29605,
+        "transparent_canvas_ratio": 0.5335444633516102,
+        "visible_canvas_ratio": 0.46645553664838973,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          68,
+          120,
+          265,
+          328
+        ],
+        "final_crop_box": [
+          50,
+          102,
+          283,
+          346
+        ],
+        "component_area": 29600,
+        "output_edge_margins": {
+          "left": 30,
+          "top": 19,
+          "right": 19,
+          "bottom": 31
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_speed_lines.png": {
+      "sha256": "c705bdf5eca024779dc64815b45122b142ce159f06d25005b55d7f77319c5655",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 274,
+        "height": 296,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 78203,
+        "visible_pixel_count": 2901,
+        "transparent_canvas_ratio": 0.9642311106727165,
+        "visible_canvas_ratio": 0.03576888932728349,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          50,
+          198,
+          239,
+          368
+        ],
+        "final_crop_box": [
+          32,
+          180,
+          257,
+          386
+        ],
+        "component_area": 1358,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 39,
+          "bottom": 78
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_speed_wake.png": {
+      "sha256": "19942879341d851b6068916f14e5bf908caba2c3e4dd4e3c5e4d72a77b2d81dd",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 320,
+        "height": 340,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 96006,
+        "visible_pixel_count": 12794,
+        "transparent_canvas_ratio": 0.8824080882352942,
+        "visible_canvas_ratio": 0.11759191176470589,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          104,
+          187,
+          347,
+          446
+        ],
+        "final_crop_box": [
+          86,
+          169,
+          365,
+          464
+        ],
+        "component_area": 11797,
+        "output_edge_margins": {
+          "left": 40,
+          "top": 18,
+          "right": 19,
+          "bottom": 46
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_torpedo_launch_flash.png": {
+      "sha256": "497430a66b4a6f91f22b3b935125ebc73f48a9a56b51ebb845eeb9ee0e5e239b",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 260,
+        "height": 190,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 42197,
+        "visible_pixel_count": 7203,
+        "transparent_canvas_ratio": 0.8541902834008097,
+        "visible_canvas_ratio": 0.1458097165991903,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          21,
+          297,
+          222,
+          412
+        ],
+        "final_crop_box": [
+          3,
+          279,
+          240,
+          430
+        ],
+        "component_area": 7049,
+        "output_edge_margins": {
+          "left": 22,
+          "top": 18,
+          "right": 19,
+          "bottom": 39
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_torpedo_warning.png": {
+      "sha256": "0e18fbe8047578b7c94d552f9acd46c3901d1b32a3471259ca64e80a4a43f361",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 296,
+        "height": 288,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 63760,
+        "visible_pixel_count": 21488,
+        "transparent_canvas_ratio": 0.7479354354354354,
+        "visible_canvas_ratio": 0.25206456456456455,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          84,
+          233,
+          306,
+          425
+        ],
+        "final_crop_box": [
+          66,
+          215,
+          324,
+          443
+        ],
+        "component_area": 21377,
+        "output_edge_margins": {
+          "left": 25,
+          "top": 60,
+          "right": 18,
+          "bottom": 18
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/destroyer/vfx_destroyer_water_splash.png": {
+      "sha256": "b60aeb30bdd91f5b354fbd9bc0c5354e80884954f5f8d2d915273f4f3135252a",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 290,
+        "height": 330,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 76726,
+        "visible_pixel_count": 18974,
+        "transparent_canvas_ratio": 0.8017345872518287,
+        "visible_canvas_ratio": 0.19826541274817136,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          91,
+          132,
+          319,
+          335
+        ],
+        "final_crop_box": [
+          73,
+          114,
+          337,
+          353
+        ],
+        "component_area": 18030,
+        "output_edge_margins": {
+          "left": 30,
+          "top": 19,
+          "right": 19,
+          "bottom": 81
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    }
+  }
+}

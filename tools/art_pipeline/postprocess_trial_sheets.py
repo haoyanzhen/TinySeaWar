@@ -1402,6 +1402,8 @@ def write_source_alpha(character_id: str) -> list[dict[str, Any]]:
 
 
 def process_character(character_id: str) -> None:
+    from portrait_revision import load_revision, apply_revision
+    load_revision(ROOT, character_id)  # Reject stale overrides before touching outputs.
     if character_id not in SPECS:
         # Native-alpha generation changes source ingestion, not the splitter.
         # The adapter below also calls prepare_crop, using authored source hints.
@@ -1492,6 +1494,7 @@ def process_character(character_id: str) -> None:
         "animation": rel(anim_path),
         "vfx": rel(vfx_path),
     }
+    apply_revision(ROOT, character_id, manifest)
     manifest_path = config_dir / f"{character_id}_postprocess_manifest.json"
     manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n")
     from delivery_review import write_review

@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "character_id": "hindenburg",
+  "revision": "20261001_unframed_v1",
+  "scope": "Portraits only; does not migrate or approve the full character package",
+  "generation_route": "codex_builtin_imagegen_native_alpha",
+  "model": "account-managed/not-exposed",
+  "request_id": "not-exposed",
+  "background_control": "transparent",
+  "prompt": "Create ONE independent head-and-shoulders transparent game portrait for TinySeaWar. Image 1 is ONLY the identity reference for this character; preserve face, hair, eyes, outfit colors and core accessories exactly. Image 2 is ONLY the approved rendering/composition style sample (a DIFFERENT character); do NOT copy its blonde hair, crown or outfit. Match the style sample's polished fine anime linework, restrained cel shading, soft neutral light and bust framing. Head upright, slight three-quarter face toward viewer, neutral character-appropriate expression, eye line around 42% of square canvas height, complete hair and hats visible, upper shoulders/chest, no hands. Isolated bust at most84% canvas width/height,8%EMPTY TRANSPARENT margin every side. NO FRAME, border, card, medallion, background, text, checkerboard, weapons, ship parts, rigging or effects. Real native Alpha PNG, one portrait not a sheet, readable at40px. Character ID: hindenburg. Preserve hair, eyes, own expression, small head accessories and uniform from image1. Worn monocle/eye optics must be properly attached to the head, never floating or held by a hand. No hands, source backdrop, ship machinery or tall equipment.",
+  "raw_output_path": "/Users/qingyue/.codex/generated_images/01a0f530-85bc-7132-9cf0-51e103bf539a/exec-a53857b2-77b1-402f-b19c-955f03a11a69.png",
+  "raw_sha256": "802baba4ad2268773a79d59bbbb5792971df01c748a983e34ebac542ef1e3608",
+  "references": [
+    {
+      "path": "assets/characters/hindenburg/concept/hindenburg_concept_full.png",
+      "sha256": "1ca12ad86dbe6d9d11214a9f45a1dacd67d588770799ae7ae199100714aa2753"
+    },
+    {
+      "path": "assets/characters/warspite/ui/warspite_portrait_20261001_unframed_v1.png",
+      "sha256": "2de3b58ce65dc2a54b426434d5b7a477e93bb28b8e99ad51ad9bc9ca2af6cab9"
+    }
+  ],
+  "source": {
+    "path": "assets/characters/hindenburg/ui/hindenburg_portrait_20261001_unframed_v1.png",
+    "sha256": "802baba4ad2268773a79d59bbbb5792971df01c748a983e34ebac542ef1e3608",
+    "alpha_facts": {
+      "format": "PNG",
+      "source_mode": "RGBA",
+      "width": 1254,
+      "height": 1254,
+      "has_alpha_channel": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixel_count": 681555,
+      "visible_pixel_count": 890961,
+      "transparent_canvas_ratio": 0.43341689369138375,
+      "visible_canvas_ratio": 0.5665831063086163,
+      "transparent_border_ratio": 1.0
+    }
+  },
+  "source_review": {
+    "sha256": "802baba4ad2268773a79d59bbbb5792971df01c748a983e34ebac542ef1e3608",
+    "verdict": "pass",
+    "reviewer": "Codex visual inspection",
+    "observation": "Silver-white braids, gray eyes, angular red-black ornament and existing head-mounted optic preserved; full hair and shoulder contours, no baked frame or hands."
+  },
+  "output_reviews": {
+    "ui_portrait": {
+      "sha256": "98ecb38c2498a0901bc3b363f26248138c4a92d8342cca9926f4833f6752de22",
+      "verdict": "pass",
+      "reviewer": "Codex visual inspection",
+      "observation": "Silver-white braids, gray eyes, angular red-black ornament and existing head-mounted optic preserved; full hair and shoulder contours, no baked frame or hands. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+    },
+    "ui_portrait_small": {
+      "sha256": "ab79089fc14d578196031fc371da4fa658c4acedb09e550fdc219083e0791f54",
+      "verdict": "pass",
+      "reviewer": "Codex visual inspection",
+      "observation": "Silver-white braids, gray eyes, angular red-black ornament and existing head-mounted optic preserved; full hair and shoulder contours, no baked frame or hands. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+    }
+  }
+}

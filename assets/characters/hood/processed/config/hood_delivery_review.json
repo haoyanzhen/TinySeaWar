@@ -1,0 +1,1813 @@
+{
+  "schema_version": 1,
+  "character_id": "hood",
+  "scope": "Visual evidence only; technical contract must pass separately. Not runtime acceptance.",
+  "checklist": [
+    "identity_and_inventory",
+    "no_truncation_or_neighbor_fragments",
+    "alpha_edges_and_small_scale_readability",
+    "animation_consistency",
+    "mechanical_binding_and_vfx_semantics"
+  ],
+  "package_sha256": {
+    "assets/characters/hood/battle/hood_anim_5x4_master.png": "16d5b36e2815c60a4857ff7e0d9372cb204c06140f5074f6a769c3e944ca57da",
+    "assets/characters/hood/battle/hood_battle_asset_grid.png": "88f62762dfa9225495d53892d11430a069b71083f21116bd47e1fb8ea2973d9c",
+    "assets/characters/hood/concept/hood_concept_full.png": "eafd17c9116420dc63b3dcc6ab2b3ca6620df168a2e9e205a4f1fc3f76eccc8d",
+    "assets/characters/hood/meta/hood_portrait_revision.json": "a000d363da6e8385dab36dffdd86c26e92f6eadc911c63b4775ff430265a6c86",
+    "assets/characters/hood/processed/anim/hood_anim_attack_frame_01.png": "dd5489b0cb72f5b1d8d6a5ffc2683b6c32b81ad2ce5601e80ec4389f421fd214",
+    "assets/characters/hood/processed/anim/hood_anim_attack_frame_02.png": "220cc3ecf016ba55ed0e41d4718b15cfdb086e84fbfa2382ba2d362a12e25326",
+    "assets/characters/hood/processed/anim/hood_anim_attack_frame_03.png": "69c4a8153c958b5a776cba0851a14d2eaededa562dc42debdf1e2c22996c3d5f",
+    "assets/characters/hood/processed/anim/hood_anim_attack_frame_04.png": "2b7e57cb0fb6a343a0d76cd8d92095c5b710f802b38948cd504abb6eee860564",
+    "assets/characters/hood/processed/anim/hood_anim_attack_keyframe.png": "dd5489b0cb72f5b1d8d6a5ffc2683b6c32b81ad2ce5601e80ec4389f421fd214",
+    "assets/characters/hood/processed/anim/hood_anim_firepower_frame_01.png": "0242a236e54aa07b1e2fdc23a4a78d5e60de870b9ad5172ff3533b2dd07b7278",
+    "assets/characters/hood/processed/anim/hood_anim_firepower_frame_02.png": "afd157d79d00f1644852081bf5fd0b0c9553def3b47c803800c431df50bcbbe1",
+    "assets/characters/hood/processed/anim/hood_anim_firepower_frame_03.png": "cb74afa8b34b55174e9d95640aad531cf2830f031af950e258d0dcf3e600dc16",
+    "assets/characters/hood/processed/anim/hood_anim_firepower_frame_04.png": "ac85e0697dae307cf0a3b436d12cb2820ea6937895c1e9174af373aade1e0e91",
+    "assets/characters/hood/processed/anim/hood_anim_firepower_keyframe.png": "0242a236e54aa07b1e2fdc23a4a78d5e60de870b9ad5172ff3533b2dd07b7278",
+    "assets/characters/hood/processed/anim/hood_anim_hit_frame_01.png": "298481ce4f31a8c283545ae80128b893388f3ac96ef7ed7fb7772e891633f70d",
+    "assets/characters/hood/processed/anim/hood_anim_hit_frame_02.png": "58ff39111293b51d0aebb398781cf73f56822cfc41c9abd16b49c0210b23d546",
+    "assets/characters/hood/processed/anim/hood_anim_hit_frame_03.png": "e6bcf16b7a725affb10a52655ee6a52ea5e8d0ced0e0675b90f9104c2a59633f",
+    "assets/characters/hood/processed/anim/hood_anim_hit_frame_04.png": "c6e72f9f16ebb48387a73265b9004bb288e14add4748624bce88ee92918a1f17",
+    "assets/characters/hood/processed/anim/hood_anim_hit_keyframe.png": "298481ce4f31a8c283545ae80128b893388f3ac96ef7ed7fb7772e891633f70d",
+    "assets/characters/hood/processed/anim/hood_anim_idle_frame_01.png": "3fb566c4e6e8d612b51c269523723b8ec7c18eba75fc432cbe671833aff22ded",
+    "assets/characters/hood/processed/anim/hood_anim_idle_frame_02.png": "61fc56edfb7381dca41388f97fd3e6012b8e028e8e25a9d14acf6fcfa02a729b",
+    "assets/characters/hood/processed/anim/hood_anim_idle_frame_03.png": "6f305f846bc1eb0e448edd3bd02fbcbfc66a1a67269b90e0dbb67d001dcd728c",
+    "assets/characters/hood/processed/anim/hood_anim_idle_frame_04.png": "05e90f9544262ad23e7f3270d755eaa6317cbf5275b95c5540e8757b9d53b7bc",
+    "assets/characters/hood/processed/anim/hood_anim_idle_keyframe.png": "3fb566c4e6e8d612b51c269523723b8ec7c18eba75fc432cbe671833aff22ded",
+    "assets/characters/hood/processed/anim/hood_anim_move_frame_01.png": "81216e6d7c6d920c04c0bcccc20a8ff1365aac9022cdcdaca68e0e3fac0951f0",
+    "assets/characters/hood/processed/anim/hood_anim_move_frame_02.png": "c181be87509939945c4fb698b82dd9d94d46ff915e8cceb21e0dff0b348495cb",
+    "assets/characters/hood/processed/anim/hood_anim_move_frame_03.png": "86d3fe4aa366a1791756106f9b3116130903a28559db86561fa020ba65cc60cd",
+    "assets/characters/hood/processed/anim/hood_anim_move_frame_04.png": "0ee08852373c49ea139fc41393ee65ce476921f940d8badcc4bb33359f0db5fe",
+    "assets/characters/hood/processed/anim/hood_anim_move_keyframe.png": "81216e6d7c6d920c04c0bcccc20a8ff1365aac9022cdcdaca68e0e3fac0951f0",
+    "assets/characters/hood/processed/battle/hood_battle_body_r.png": "3fb566c4e6e8d612b51c269523723b8ec7c18eba75fc432cbe671833aff22ded",
+    "assets/characters/hood/processed/battle/hood_battle_fire_control_node.png": "0d2fa64535637d67684922c9de4f9085b79a9001339b7e13262e936408d93fb4",
+    "assets/characters/hood/processed/battle/hood_battle_flagship_marker.png": "dc4db748bb35ba41cf9e7f0caa412a4d59094f7e995d20c587f32875f6b24275",
+    "assets/characters/hood/processed/battle/hood_battle_rig_base.png": "26695a2f6b91f7adbeaa765cf2939f08c9378af978f8ab70aa785401448997d2",
+    "assets/characters/hood/processed/battle/hood_battle_turret_main_01.png": "37b963685f8f33006347e736fb33dd5c835903aeb87602d6c8814bfd735654e4",
+    "assets/characters/hood/processed/battle/hood_battle_turret_main_02.png": "78eccfead5348c336836283b181e6404a3fe8af4dddfc32265ce9554176afb64",
+    "assets/characters/hood/processed/battle/hood_battle_turret_main_03.png": "cfbc26e712b92d347ce63444edf135557ae346bb5ffb218be835db40ebf3cb06",
+    "assets/characters/hood/processed/battle/hood_battle_wake_origin_marker.png": "1dc6eb2f52669f06f5fe67352798e2ea4856c8a4ef22a50f87bce4993d3c3beb",
+    "assets/characters/hood/processed/config/hood_anim_config.json": "b36f3c99d30f6122a893c82d3d8b3ecdda9609e9ebdb7fbf3cb68441d22974ad",
+    "assets/characters/hood/processed/config/hood_meta_bind_points.json": "53b9a641bbbce1e435897eb5a16c6d6cfdc32fd4cbf6ec38a319f938e9e5c655",
+    "assets/characters/hood/processed/config/hood_postprocess_manifest.json": "10cfd4443e1bd622de4a12c9a690e48ff6aad8b52df6f6122432ab79cea44f47",
+    "assets/characters/hood/processed/config/hood_vfx_config.json": "ca0379ecd5a0e1c533a5aa6326a5d6142191fa5881f924afb12fe682274ac04c",
+    "assets/characters/hood/processed/source_alpha/hood_anim_5x4_master_alpha_source.png": "6978aaaba48b6c65ae48079a2bdf6bceb15c385215a066a95e2600088b0bedaa",
+    "assets/characters/hood/processed/source_alpha/hood_battle_asset_grid_alpha_source.png": "e41c31219e7a13e4ed56640b8c76e3e475505af8ee7a8c78facd3396e9556d10",
+    "assets/characters/hood/processed/source_alpha/hood_concept_full_alpha_source.png": "31eb2ee0b2866b54e2be4e1c1a1a67bc3b92f1e424554dde801655799c6cdc6a",
+    "assets/characters/hood/processed/source_alpha/hood_ui_sheet_alpha_source.png": "af0b4fd709c66eb7ef34af4eb799f0a75805f4007849c49b60af2c7811702b9a",
+    "assets/characters/hood/processed/source_alpha/hood_vfx_reference_sheet_alpha_source.png": "b5c191ac0dbcb3ccb4079b432fa2a6b874827fb380f31a01a314ab6f7bb3087b",
+    "assets/characters/hood/processed/ui/hood_expr_default.png": "144c64cb1badf9146a6e66c55e9e2c03128528ae7563cab432600c72ed24321a",
+    "assets/characters/hood/processed/ui/hood_expr_hit.png": "393ffc8984126d446bb84af500e958130d29f1c8075eb1c84773fadbce5a50b5",
+    "assets/characters/hood/processed/ui/hood_expr_serious.png": "28298f04c4105189953b356b3fe4927933fa95ed466e64e68029e817f7258452",
+    "assets/characters/hood/processed/ui/hood_illust_full_alpha.png": "56fc311eafded7806e5003f40125078e62438eb085efe440a1e0664047c457e7",
+    "assets/characters/hood/processed/ui/hood_illust_half_alpha.png": "7cc1a51af0bd8b875db8634800bab7f5d67c4f695a17abdbf3b86441d8851db1",
+    "assets/characters/hood/processed/ui/hood_illust_skill_cutin_alpha.png": "f226f0560a1ef85c82076cd6b5db4840a359758e1c25d20ff616ed706b8e83fd",
+    "assets/characters/hood/processed/ui/hood_ui_chibi_head.png": "722f403bdecf0cfd822190081774c2fe907d15e4843f356043c0da5365344417",
+    "assets/characters/hood/processed/ui/hood_ui_class_battleship.png": "d94ee200b715432d51407ecd4bf4139e0f04463b0fffb6f2fed1fbeee5decc32",
+    "assets/characters/hood/processed/ui/hood_ui_portrait.png": "a4d6fa1596048f26c928d49853fc73ca1cd6d3317d1fd4301a6730b5cba8f127",
+    "assets/characters/hood/processed/ui/hood_ui_portrait_small.png": "a554136480753efd7ba092b6d9bcf2531dd9097edce80dc82332002d4f4945c7",
+    "assets/characters/hood/processed/ui/hood_ui_skill_main_gun_salvo.png": "65178f1702b0d905df4e3899098786a2c3174fdfe84dba0e1d59328a70fa9f6d",
+    "assets/characters/hood/ui/hood_portrait_20261001_unframed_v1.png": "01757d7779b2be78d3c4e3f0fc1d13656c5815e475e326adf92ff3edfce209de",
+    "assets/characters/hood/ui/hood_ui_sheet.png": "9113e7cccef710ddc83a3757625ae0d690f469fe10e5d1020334564bb1d7562e",
+    "assets/characters/hood/vfx/hood_vfx_reference_sheet.png": "0711c5a36f712215ff6b1f7d9ca8e8444c4826c420094eaad6ee42b02ab42b8f",
+    "assets/vfx/combat/character_templates/battleship/vfx_battleship_armor_sparks.png": "243f29b87462fdab1cb2f127d67a6f674aedb1bc954860e9d73c10961981fe71",
+    "assets/vfx/combat/character_templates/battleship/vfx_battleship_broadside_smoke.png": "9d19d26f4d163b88e95274ea87c03647c25f2c4bc77139764b95928bccfd67d2",
+    "assets/vfx/combat/character_templates/battleship/vfx_battleship_command_aura.png": "229dd2a5ed55a72d76d7c78bb392c63d37dd753a150592ed30e10aaf7aa2c3ef",
+    "assets/vfx/combat/character_templates/battleship/vfx_battleship_fire_control_lock_line.png": "d925046c956bd2b6f50b0ba67b8d51800b8b57681929c8aa87c4bdf958afa60a",
+    "assets/vfx/combat/character_templates/battleship/vfx_battleship_muzzle_flash_large.png": "cbe0b7c5bc32867c5a87ee1646e14691f66709cbf9d40f58d67b9d2deedf38a4",
+    "assets/vfx/combat/character_templates/battleship/vfx_battleship_shell_trail_heavy.png": "9527782ec96f5c8580c37cfec0414c13afeddcbe614aee71b3414deb877d90ce",
+    "assets/vfx/combat/character_templates/battleship/vfx_battleship_wake_heavy.png": "cf7e5cab2c5d28f7e1cb2e509a2a0d1cae476825063fa62fb728fe3ec77b4634",
+    "assets/vfx/combat/character_templates/battleship/vfx_battleship_water_splash_large.png": "9e8c45e5b012bf7517093a864c444b5655513a5e7cbaa95564791ae11610ac24"
+  },
+  "assets": {
+    "assets/characters/hood/processed/anim/hood_anim_attack_frame_01.png": {
+      "sha256": "dd5489b0cb72f5b1d8d6a5ffc2683b6c32b81ad2ce5601e80ec4389f421fd214",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 470,
+        "height": 240,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 84848,
+        "visible_pixel_count": 27952,
+        "transparent_canvas_ratio": 0.7521985815602837,
+        "visible_canvas_ratio": 0.24780141843971631,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hood/processed/anim/hood_anim_attack_frame_02.png": {
+      "sha256": "220cc3ecf016ba55ed0e41d4718b15cfdb086e84fbfa2382ba2d362a12e25326",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 470,
+        "height": 240,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 84864,
+        "visible_pixel_count": 27936,
+        "transparent_canvas_ratio": 0.7523404255319149,
+        "visible_canvas_ratio": 0.24765957446808512,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hood/processed/anim/hood_anim_attack_frame_03.png": {
+      "sha256": "69c4a8153c958b5a776cba0851a14d2eaededa562dc42debdf1e2c22996c3d5f",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 470,
+        "height": 240,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 82934,
+        "visible_pixel_count": 29866,
+        "transparent_canvas_ratio": 0.7352304964539007,
+        "visible_canvas_ratio": 0.2647695035460993,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hood/processed/anim/hood_anim_attack_frame_04.png": {
+      "sha256": "2b7e57cb0fb6a343a0d76cd8d92095c5b710f802b38948cd504abb6eee860564",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 470,
+        "height": 240,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 87448,
+        "visible_pixel_count": 25352,
+        "transparent_canvas_ratio": 0.7752482269503546,
+        "visible_canvas_ratio": 0.2247517730496454,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hood/processed/anim/hood_anim_attack_keyframe.png": {
+      "sha256": "dd5489b0cb72f5b1d8d6a5ffc2683b6c32b81ad2ce5601e80ec4389f421fd214",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 470,
+        "height": 240,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 84848,
+        "visible_pixel_count": 27952,
+        "transparent_canvas_ratio": 0.7521985815602837,
+        "visible_canvas_ratio": 0.24780141843971631,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hood/processed/anim/hood_anim_firepower_frame_01.png": {
+      "sha256": "0242a236e54aa07b1e2fdc23a4a78d5e60de870b9ad5172ff3533b2dd07b7278",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 312,
+        "height": 234,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 43450,
+        "visible_pixel_count": 29558,
+        "transparent_canvas_ratio": 0.5951402586017971,
+        "visible_canvas_ratio": 0.4048597413982029,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hood/processed/anim/hood_anim_firepower_frame_02.png": {
+      "sha256": "afd157d79d00f1644852081bf5fd0b0c9553def3b47c803800c431df50bcbbe1",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 312,
+        "height": 234,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 36689,
+        "visible_pixel_count": 36319,
+        "transparent_canvas_ratio": 0.5025339688801227,
+        "visible_canvas_ratio": 0.49746603111987725,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hood/processed/anim/hood_anim_firepower_frame_03.png": {
+      "sha256": "cb74afa8b34b55174e9d95640aad531cf2830f031af950e258d0dcf3e600dc16",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 312,
+        "height": 234,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 48627,
+        "visible_pixel_count": 24381,
+        "transparent_canvas_ratio": 0.6660502958579881,
+        "visible_canvas_ratio": 0.33394970414201186,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hood/processed/anim/hood_anim_firepower_frame_04.png": {
+      "sha256": "ac85e0697dae307cf0a3b436d12cb2820ea6937895c1e9174af373aade1e0e91",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 312,
+        "height": 234,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 46454,
+        "visible_pixel_count": 26554,
+        "transparent_canvas_ratio": 0.6362864343633574,
+        "visible_canvas_ratio": 0.36371356563664253,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hood/processed/anim/hood_anim_firepower_keyframe.png": {
+      "sha256": "0242a236e54aa07b1e2fdc23a4a78d5e60de870b9ad5172ff3533b2dd07b7278",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 312,
+        "height": 234,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 43450,
+        "visible_pixel_count": 29558,
+        "transparent_canvas_ratio": 0.5951402586017971,
+        "visible_canvas_ratio": 0.4048597413982029,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hood/processed/anim/hood_anim_hit_frame_01.png": {
+      "sha256": "298481ce4f31a8c283545ae80128b893388f3ac96ef7ed7fb7772e891633f70d",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 292,
+        "height": 230,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 42212,
+        "visible_pixel_count": 24948,
+        "transparent_canvas_ratio": 0.6285288862418106,
+        "visible_canvas_ratio": 0.3714711137581894,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hood/processed/anim/hood_anim_hit_frame_02.png": {
+      "sha256": "58ff39111293b51d0aebb398781cf73f56822cfc41c9abd16b49c0210b23d546",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 292,
+        "height": 230,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 43171,
+        "visible_pixel_count": 23989,
+        "transparent_canvas_ratio": 0.6428082191780822,
+        "visible_canvas_ratio": 0.3571917808219178,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hood/processed/anim/hood_anim_hit_frame_03.png": {
+      "sha256": "e6bcf16b7a725affb10a52655ee6a52ea5e8d0ced0e0675b90f9104c2a59633f",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 292,
+        "height": 230,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 42022,
+        "visible_pixel_count": 25138,
+        "transparent_canvas_ratio": 0.6256998213222156,
+        "visible_canvas_ratio": 0.3743001786777844,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hood/processed/anim/hood_anim_hit_frame_04.png": {
+      "sha256": "c6e72f9f16ebb48387a73265b9004bb288e14add4748624bce88ee92918a1f17",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 292,
+        "height": 230,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 42151,
+        "visible_pixel_count": 25009,
+        "transparent_canvas_ratio": 0.6276206075044669,
+        "visible_canvas_ratio": 0.37237939249553303,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hood/processed/anim/hood_anim_hit_keyframe.png": {
+      "sha256": "298481ce4f31a8c283545ae80128b893388f3ac96ef7ed7fb7772e891633f70d",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 292,
+        "height": 230,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 42212,
+        "visible_pixel_count": 24948,
+        "transparent_canvas_ratio": 0.6285288862418106,
+        "visible_canvas_ratio": 0.3714711137581894,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hood/processed/anim/hood_anim_idle_frame_01.png": {
+      "sha256": "3fb566c4e6e8d612b51c269523723b8ec7c18eba75fc432cbe671833aff22ded",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 312,
+        "height": 254,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 52448,
+        "visible_pixel_count": 26800,
+        "transparent_canvas_ratio": 0.6618211185140319,
+        "visible_canvas_ratio": 0.3381788814859681,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hood/processed/anim/hood_anim_idle_frame_02.png": {
+      "sha256": "61fc56edfb7381dca41388f97fd3e6012b8e028e8e25a9d14acf6fcfa02a729b",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 312,
+        "height": 254,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 50714,
+        "visible_pixel_count": 28534,
+        "transparent_canvas_ratio": 0.6399404401372906,
+        "visible_canvas_ratio": 0.3600595598627095,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hood/processed/anim/hood_anim_idle_frame_03.png": {
+      "sha256": "6f305f846bc1eb0e448edd3bd02fbcbfc66a1a67269b90e0dbb67d001dcd728c",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 312,
+        "height": 254,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 52837,
+        "visible_pixel_count": 26411,
+        "transparent_canvas_ratio": 0.6667297597415708,
+        "visible_canvas_ratio": 0.3332702402584292,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hood/processed/anim/hood_anim_idle_frame_04.png": {
+      "sha256": "05e90f9544262ad23e7f3270d755eaa6317cbf5275b95c5540e8757b9d53b7bc",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 312,
+        "height": 254,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 53250,
+        "visible_pixel_count": 25998,
+        "transparent_canvas_ratio": 0.6719412477286493,
+        "visible_canvas_ratio": 0.3280587522713507,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hood/processed/anim/hood_anim_idle_keyframe.png": {
+      "sha256": "3fb566c4e6e8d612b51c269523723b8ec7c18eba75fc432cbe671833aff22ded",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 312,
+        "height": 254,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 52448,
+        "visible_pixel_count": 26800,
+        "transparent_canvas_ratio": 0.6618211185140319,
+        "visible_canvas_ratio": 0.3381788814859681,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hood/processed/anim/hood_anim_move_frame_01.png": {
+      "sha256": "81216e6d7c6d920c04c0bcccc20a8ff1365aac9022cdcdaca68e0e3fac0951f0",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 378,
+        "height": 218,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 51145,
+        "visible_pixel_count": 31259,
+        "transparent_canvas_ratio": 0.6206616183680403,
+        "visible_canvas_ratio": 0.3793383816319596,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hood/processed/anim/hood_anim_move_frame_02.png": {
+      "sha256": "c181be87509939945c4fb698b82dd9d94d46ff915e8cceb21e0dff0b348495cb",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 378,
+        "height": 218,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 52117,
+        "visible_pixel_count": 30287,
+        "transparent_canvas_ratio": 0.632457162273676,
+        "visible_canvas_ratio": 0.36754283772632396,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hood/processed/anim/hood_anim_move_frame_03.png": {
+      "sha256": "86d3fe4aa366a1791756106f9b3116130903a28559db86561fa020ba65cc60cd",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 378,
+        "height": 218,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 53885,
+        "visible_pixel_count": 28519,
+        "transparent_canvas_ratio": 0.6539124314353673,
+        "visible_canvas_ratio": 0.3460875685646328,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hood/processed/anim/hood_anim_move_frame_04.png": {
+      "sha256": "0ee08852373c49ea139fc41393ee65ce476921f940d8badcc4bb33359f0db5fe",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 378,
+        "height": 218,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 54032,
+        "visible_pixel_count": 28372,
+        "transparent_canvas_ratio": 0.655696325421096,
+        "visible_canvas_ratio": 0.34430367457890393,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hood/processed/anim/hood_anim_move_keyframe.png": {
+      "sha256": "81216e6d7c6d920c04c0bcccc20a8ff1365aac9022cdcdaca68e0e3fac0951f0",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 378,
+        "height": 218,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 51145,
+        "visible_pixel_count": 31259,
+        "transparent_canvas_ratio": 0.6206616183680403,
+        "visible_canvas_ratio": 0.3793383816319596,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hood/processed/battle/hood_battle_body_r.png": {
+      "sha256": "3fb566c4e6e8d612b51c269523723b8ec7c18eba75fc432cbe671833aff22ded",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 312,
+        "height": 254,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 52448,
+        "visible_pixel_count": 26800,
+        "transparent_canvas_ratio": 0.6618211185140319,
+        "visible_canvas_ratio": 0.3381788814859681,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hood/processed/battle/hood_battle_fire_control_node.png": {
+      "sha256": "0d2fa64535637d67684922c9de4f9085b79a9001339b7e13262e936408d93fb4",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 232,
+        "height": 258,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 30267,
+        "visible_pixel_count": 29589,
+        "transparent_canvas_ratio": 0.5056635926222935,
+        "visible_canvas_ratio": 0.4943364073777065,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          97,
+          81,
+          292,
+          288
+        ],
+        "final_crop_box": [
+          79,
+          63,
+          310,
+          306
+        ],
+        "component_area": 29589,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 18,
+          "bottom": 33
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hood/processed/battle/hood_battle_flagship_marker.png": {
+      "sha256": "dc4db748bb35ba41cf9e7f0caa412a4d59094f7e995d20c587f32875f6b24275",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 228,
+        "height": 278,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 37633,
+        "visible_pixel_count": 25751,
+        "transparent_canvas_ratio": 0.593730278934747,
+        "visible_canvas_ratio": 0.40626972106525305,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          80,
+          68,
+          270,
+          296
+        ],
+        "final_crop_box": [
+          62,
+          50,
+          288,
+          314
+        ],
+        "component_area": 25751,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 19,
+          "bottom": 32
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hood/processed/battle/hood_battle_rig_base.png": {
+      "sha256": "26695a2f6b91f7adbeaa765cf2939f08c9378af978f8ab70aa785401448997d2",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 338,
+        "height": 348,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 86612,
+        "visible_pixel_count": 31012,
+        "transparent_canvas_ratio": 0.7363463238794804,
+        "visible_canvas_ratio": 0.2636536761205196,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          78,
+          105,
+          375,
+          408
+        ],
+        "final_crop_box": [
+          60,
+          87,
+          384,
+          426
+        ],
+        "component_area": 31012,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 22,
+          "bottom": 26
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hood/processed/battle/hood_battle_turret_main_01.png": {
+      "sha256": "37b963685f8f33006347e736fb33dd5c835903aeb87602d6c8814bfd735654e4",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 340,
+        "height": 224,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 50001,
+        "visible_pixel_count": 26159,
+        "transparent_canvas_ratio": 0.6565257352941176,
+        "visible_canvas_ratio": 0.3434742647058823,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          103,
+          178,
+          344,
+          362
+        ],
+        "final_crop_box": [
+          85,
+          160,
+          362,
+          380
+        ],
+        "component_area": 26159,
+        "output_edge_margins": {
+          "left": 80,
+          "top": 22,
+          "right": 19,
+          "bottom": 18
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hood/processed/battle/hood_battle_turret_main_02.png": {
+      "sha256": "78eccfead5348c336836283b181e6404a3fe8af4dddfc32265ce9554176afb64",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 338,
+        "height": 224,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 49718,
+        "visible_pixel_count": 25994,
+        "transparent_canvas_ratio": 0.6566726542688082,
+        "visible_canvas_ratio": 0.3433273457311919,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          72,
+          179,
+          311,
+          363
+        ],
+        "final_crop_box": [
+          54,
+          161,
+          329,
+          381
+        ],
+        "component_area": 25994,
+        "output_edge_margins": {
+          "left": 80,
+          "top": 21,
+          "right": 19,
+          "bottom": 19
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hood/processed/battle/hood_battle_turret_main_03.png": {
+      "sha256": "cfbc26e712b92d347ce63444edf135557ae346bb5ffb218be835db40ebf3cb06",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 342,
+        "height": 228,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 50656,
+        "visible_pixel_count": 27320,
+        "transparent_canvas_ratio": 0.6496357853698574,
+        "visible_canvas_ratio": 0.3503642146301426,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          101,
+          88,
+          344,
+          276
+        ],
+        "final_crop_box": [
+          83,
+          70,
+          362,
+          294
+        ],
+        "component_area": 27320,
+        "output_edge_margins": {
+          "left": 81,
+          "top": 21,
+          "right": 18,
+          "bottom": 19
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hood/processed/battle/hood_battle_wake_origin_marker.png": {
+      "sha256": "1dc6eb2f52669f06f5fe67352798e2ea4856c8a4ef22a50f87bce4993d3c3beb",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 342,
+        "height": 170,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 42692,
+        "visible_pixel_count": 15448,
+        "transparent_canvas_ratio": 0.734296525627795,
+        "visible_canvas_ratio": 0.26570347437220504,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          25,
+          128,
+          313,
+          256
+        ],
+        "final_crop_box": [
+          7,
+          110,
+          331,
+          274
+        ],
+        "component_area": 15448,
+        "output_edge_margins": {
+          "left": 29,
+          "top": 24,
+          "right": 18,
+          "bottom": 18
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hood/processed/ui/hood_expr_default.png": {
+      "sha256": "144c64cb1badf9146a6e66c55e9e2c03128528ae7563cab432600c72ed24321a",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 384,
+        "height": 450,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 96433,
+        "visible_pixel_count": 76367,
+        "transparent_canvas_ratio": 0.5580613425925925,
+        "visible_canvas_ratio": 0.4419386574074074,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          25,
+          103,
+          360,
+          449
+        ],
+        "final_crop_box": [
+          7,
+          85,
+          378,
+          467
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 30,
+          "bottom": 85
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hood/processed/ui/hood_expr_hit.png": {
+      "sha256": "393ffc8984126d446bb84af500e958130d29f1c8075eb1c84773fadbce5a50b5",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 400,
+        "height": 448,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 95235,
+        "visible_pixel_count": 83965,
+        "transparent_canvas_ratio": 0.5314453125,
+        "visible_canvas_ratio": 0.4685546875,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          66,
+          47,
+          418,
+          396
+        ],
+        "final_crop_box": [
+          48,
+          29,
+          418,
+          414
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 19,
+          "right": 29,
+          "bottom": 80
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hood/processed/ui/hood_expr_serious.png": {
+      "sha256": "28298f04c4105189953b356b3fe4927933fa95ed466e64e68029e817f7258452",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 380,
+        "height": 452,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 93750,
+        "visible_pixel_count": 78010,
+        "transparent_canvas_ratio": 0.5458197484862599,
+        "visible_canvas_ratio": 0.4541802515137401,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          77,
+          47,
+          412,
+          396
+        ],
+        "final_crop_box": [
+          59,
+          29,
+          418,
+          414
+        ],
+        "output_edge_margins": {
+          "left": 18,
+          "top": 19,
+          "right": 27,
+          "bottom": 84
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hood/processed/ui/hood_illust_full_alpha.png": {
+      "sha256": "56fc311eafded7806e5003f40125078e62438eb085efe440a1e0664047c457e7",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 916,
+        "height": 1798,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 1001822,
+        "visible_pixel_count": 645146,
+        "transparent_canvas_ratio": 0.6082826138698505,
+        "visible_canvas_ratio": 0.39171738613014945,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          2,
+          127,
+          862,
+          1696
+        ],
+        "final_crop_box": [
+          0,
+          115,
+          864,
+          1708
+        ],
+        "output_edge_margins": {
+          "left": 12,
+          "top": 216,
+          "right": 44,
+          "bottom": 13
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hood/processed/ui/hood_illust_half_alpha.png": {
+      "sha256": "7cc1a51af0bd8b875db8634800bab7f5d67c4f695a17abdbf3b86441d8851db1",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 918,
+        "height": 1314,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 603413,
+        "visible_pixel_count": 602839,
+        "transparent_canvas_ratio": 0.5002379270666494,
+        "visible_canvas_ratio": 0.49976207293335057,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          17,
+          17,
+          877,
+          1146
+        ],
+        "final_crop_box": [
+          1,
+          1,
+          893,
+          1162
+        ],
+        "output_edge_margins": {
+          "left": 17,
+          "top": 17,
+          "right": 41,
+          "bottom": 168
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hood/processed/ui/hood_illust_skill_cutin_alpha.png": {
+      "sha256": "f226f0560a1ef85c82076cd6b5db4840a359758e1c25d20ff616ed706b8e83fd",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 922,
+        "height": 1126,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 557448,
+        "visible_pixel_count": 480724,
+        "transparent_canvas_ratio": 0.5369514878074153,
+        "visible_canvas_ratio": 0.46304851219258464,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          568,
+          17,
+          1428,
+          927
+        ],
+        "final_crop_box": [
+          552,
+          1,
+          1444,
+          943
+        ],
+        "output_edge_margins": {
+          "left": 16,
+          "top": 17,
+          "right": 46,
+          "bottom": 199
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hood/processed/ui/hood_ui_chibi_head.png": {
+      "sha256": "722f403bdecf0cfd822190081774c2fe907d15e4843f356043c0da5365344417",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 490,
+        "height": 350,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 112825,
+        "visible_pixel_count": 58675,
+        "transparent_canvas_ratio": 0.6578717201166181,
+        "visible_canvas_ratio": 0.3421282798833819,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          0,
+          156,
+          379,
+          447
+        ],
+        "final_crop_box": [
+          0,
+          138,
+          397,
+          465
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 92,
+          "bottom": 41
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hood/processed/ui/hood_ui_class_battleship.png": {
+      "sha256": "d94ee200b715432d51407ecd4bf4139e0f04463b0fffb6f2fed1fbeee5decc32",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 328,
+        "height": 334,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 42317,
+        "visible_pixel_count": 67235,
+        "transparent_canvas_ratio": 0.3862731853366438,
+        "visible_canvas_ratio": 0.6137268146633562,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          48,
+          64,
+          339,
+          359
+        ],
+        "final_crop_box": [
+          30,
+          46,
+          357,
+          377
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 20,
+          "right": 18,
+          "bottom": 19
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hood/processed/ui/hood_ui_portrait.png": {
+      "sha256": "a4d6fa1596048f26c928d49853fc73ca1cd6d3317d1fd4301a6730b5cba8f127",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 512,
+        "height": 512,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 160267,
+        "visible_pixel_count": 101877,
+        "transparent_canvas_ratio": 0.6113700866699219,
+        "visible_canvas_ratio": 0.3886299133300781,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          32,
+          31,
+          1243,
+          1238
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              32,
+              31,
+              1243,
+              1238
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 56,
+          "top": 56,
+          "right": 56,
+          "bottom": 57
+        },
+        "cleanup_tags": []
+      },
+      "review": {
+        "verdict": "pass",
+        "reviewer": "Codex visual inspection",
+        "observation": "Chestnut brown hair and braid, blue eyes, gold star ornament, navy-white-gold collar; bare face confirmed, unwanted glasses removed; complete contours and no frame. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+      }
+    },
+    "assets/characters/hood/processed/ui/hood_ui_portrait_small.png": {
+      "sha256": "a554136480753efd7ba092b6d9bcf2531dd9097edce80dc82332002d4f4945c7",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 128,
+        "height": 128,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 9545,
+        "visible_pixel_count": 6839,
+        "transparent_canvas_ratio": 0.58258056640625,
+        "visible_canvas_ratio": 0.41741943359375,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "original_crop_hint": [
+          0,
+          0,
+          1254,
+          1254
+        ],
+        "final_crop_box": [
+          32,
+          31,
+          1243,
+          1238
+        ],
+        "auto_crop_method": "independent_portrait_alpha_bbox_square_fit",
+        "selected_component_samples": [
+          {
+            "bbox": [
+              32,
+              31,
+              1243,
+              1238
+            ]
+          }
+        ],
+        "output_edge_margins": {
+          "left": 12,
+          "top": 12,
+          "right": 12,
+          "bottom": 12
+        },
+        "cleanup_tags": []
+      },
+      "review": {
+        "verdict": "pass",
+        "reviewer": "Codex visual inspection",
+        "observation": "Chestnut brown hair and braid, blue eyes, gold star ornament, navy-white-gold collar; bare face confirmed, unwanted glasses removed; complete contours and no frame. Actual normalized 512/128 outputs inspected in dark/light/checker contact pages and 40px view: identity retained, coherent anime shading, complete contour, no baked frame, no visible pale halo, aspect and face scale suitable."
+      }
+    },
+    "assets/characters/hood/processed/ui/hood_ui_skill_main_gun_salvo.png": {
+      "sha256": "65178f1702b0d905df4e3899098786a2c3174fdfe84dba0e1d59328a70fa9f6d",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 474,
+        "height": 378,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 107103,
+        "visible_pixel_count": 72069,
+        "transparent_canvas_ratio": 0.5977663920701896,
+        "visible_canvas_ratio": 0.40223360792981044,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "content_bbox": [
+          0,
+          57,
+          375,
+          382
+        ],
+        "final_crop_box": [
+          0,
+          39,
+          393,
+          400
+        ],
+        "output_edge_margins": {
+          "left": 19,
+          "top": 34,
+          "right": 80,
+          "bottom": 19
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/battleship/vfx_battleship_armor_sparks.png": {
+      "sha256": "243f29b87462fdab1cb2f127d67a6f674aedb1bc954860e9d73c10961981fe71",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 306,
+        "height": 328,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 91671,
+        "visible_pixel_count": 8697,
+        "transparent_canvas_ratio": 0.9133488761358202,
+        "visible_canvas_ratio": 0.08665112386417982,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          115,
+          72,
+          305,
+          284
+        ],
+        "final_crop_box": [
+          97,
+          54,
+          323,
+          302
+        ],
+        "component_area": 5049,
+        "output_edge_margins": {
+          "left": 62,
+          "top": 19,
+          "right": 18,
+          "bottom": 68
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/battleship/vfx_battleship_broadside_smoke.png": {
+      "sha256": "9d19d26f4d163b88e95274ea87c03647c25f2c4bc77139764b95928bccfd67d2",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 372,
+        "height": 348,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 74556,
+        "visible_pixel_count": 54900,
+        "transparent_canvas_ratio": 0.5759176863181312,
+        "visible_canvas_ratio": 0.4240823136818687,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          40,
+          153,
+          361,
+          447
+        ],
+        "final_crop_box": [
+          22,
+          135,
+          379,
+          465
+        ],
+        "component_area": 53944,
+        "output_edge_margins": {
+          "left": 22,
+          "top": 18,
+          "right": 18,
+          "bottom": 22
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/battleship/vfx_battleship_command_aura.png": {
+      "sha256": "229dd2a5ed55a72d76d7c78bb392c63d37dd753a150592ed30e10aaf7aa2c3ef",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 354,
+        "height": 476,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 140885,
+        "visible_pixel_count": 27619,
+        "transparent_canvas_ratio": 0.8360929117409676,
+        "visible_canvas_ratio": 0.1639070882590324,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          40,
+          53,
+          331,
+          366
+        ],
+        "final_crop_box": [
+          22,
+          35,
+          349,
+          384
+        ],
+        "component_area": 26710,
+        "output_edge_margins": {
+          "left": 37,
+          "top": 19,
+          "right": 18,
+          "bottom": 144
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/battleship/vfx_battleship_fire_control_lock_line.png": {
+      "sha256": "d925046c956bd2b6f50b0ba67b8d51800b8b57681929c8aa87c4bdf958afa60a",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 338,
+        "height": 280,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 89737,
+        "visible_pixel_count": 4903,
+        "transparent_canvas_ratio": 0.9481931530008453,
+        "visible_canvas_ratio": 0.05180684699915469,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          57,
+          168,
+          294,
+          354
+        ],
+        "final_crop_box": [
+          39,
+          150,
+          312,
+          372
+        ],
+        "component_area": 4507,
+        "output_edge_margins": {
+          "left": 64,
+          "top": 45,
+          "right": 19,
+          "bottom": 18
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/battleship/vfx_battleship_muzzle_flash_large.png": {
+      "sha256": "cbe0b7c5bc32867c5a87ee1646e14691f66709cbf9d40f58d67b9d2deedf38a4",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 416,
+        "height": 390,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 128703,
+        "visible_pixel_count": 33537,
+        "transparent_canvas_ratio": 0.7932877218934912,
+        "visible_canvas_ratio": 0.20671227810650888,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          42,
+          141,
+          339,
+          425
+        ],
+        "final_crop_box": [
+          24,
+          123,
+          357,
+          443
+        ],
+        "component_area": 32688,
+        "output_edge_margins": {
+          "left": 67,
+          "top": 18,
+          "right": 19,
+          "bottom": 80
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/battleship/vfx_battleship_shell_trail_heavy.png": {
+      "sha256": "9527782ec96f5c8580c37cfec0414c13afeddcbe614aee71b3414deb877d90ce",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 362,
+        "height": 376,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 118432,
+        "visible_pixel_count": 17680,
+        "transparent_canvas_ratio": 0.8701069707299871,
+        "visible_canvas_ratio": 0.12989302927001292,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          46,
+          137,
+          346,
+          437
+        ],
+        "final_crop_box": [
+          28,
+          119,
+          364,
+          455
+        ],
+        "component_area": 17374,
+        "output_edge_margins": {
+          "left": 44,
+          "top": 19,
+          "right": 18,
+          "bottom": 57
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/battleship/vfx_battleship_wake_heavy.png": {
+      "sha256": "cf7e5cab2c5d28f7e1cb2e509a2a0d1cae476825063fa62fb728fe3ec77b4634",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 342,
+        "height": 318,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 81254,
+        "visible_pixel_count": 27502,
+        "transparent_canvas_ratio": 0.7471219978667843,
+        "visible_canvas_ratio": 0.25287800213321565,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          18,
+          100,
+          308,
+          362
+        ],
+        "final_crop_box": [
+          0,
+          82,
+          326,
+          380
+        ],
+        "component_area": 27203,
+        "output_edge_margins": {
+          "left": 29,
+          "top": 19,
+          "right": 19,
+          "bottom": 31
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/vfx/combat/character_templates/battleship/vfx_battleship_water_splash_large.png": {
+      "sha256": "9e8c45e5b012bf7517093a864c444b5655513a5e7cbaa95564791ae11610ac24",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 338,
+        "height": 504,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 134728,
+        "visible_pixel_count": 35624,
+        "transparent_canvas_ratio": 0.7908800601108293,
+        "visible_canvas_ratio": 0.20911993988917066,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "component_bbox": [
+          58,
+          33,
+          305,
+          368
+        ],
+        "final_crop_box": [
+          40,
+          15,
+          323,
+          386
+        ],
+        "component_area": 34789,
+        "output_edge_margins": {
+          "left": 19,
+          "top": 18,
+          "right": 38,
+          "bottom": 127
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    }
+  }
+}

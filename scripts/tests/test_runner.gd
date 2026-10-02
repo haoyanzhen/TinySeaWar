@@ -620,11 +620,16 @@ func _test_full_roster_runtime_data() -> void:
 		_check(not str(ship.get("primary_weapon_group_id", "")).is_empty(), "%s has an explicit primary weapon group" % ship_id)
 	_check(produced_phase2_assets >= 4, "the accepted phase-two US batch is discoverable through the runtime art catalog")
 	var level_roster := {}
+	var original_level_roster := {}
 	for level in registry.all("levels"):
+		var level_id := str(level.get("id", ""))
+		var original_level := not level_id.begins_with("level.challenge.m") and not level_id.begins_with("level.challenge.l")
 		for fleet_name in ["player_fleet", "enemy_fleet"]:
 			for member in level.get(fleet_name, []):
-				level_roster[str(member.get("ship_id", ""))] = true
-	_check(level_roster.size() == 24, "existing playable levels retain the 24-character phase-one roster")
+				var ship_id := str(member.get("ship_id", ""))
+				level_roster[ship_id] = true
+				if original_level: original_level_roster[ship_id] = true
+	_check(original_level_roster.size() == 24, "tutorial, small challenge and prototype levels retain their original 24-character roster")
 	for ship_id in level_roster:
 		_check(roster_ids.has(ship_id), "%s in a playable level resolves to runtime data" % ship_id)
 	for ship in registry.all("ships"):

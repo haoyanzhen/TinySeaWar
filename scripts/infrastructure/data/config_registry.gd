@@ -1,5 +1,6 @@
 extends RefCounted
 
+const CustomBattleCatalog = preload("res://scripts/infrastructure/data/custom_battle_catalog.gd")
 const ShipAcquisitionCatalog = preload("res://scripts/infrastructure/data/ship_acquisition_catalog.gd")
 
 const CATEGORY_PATHS := {
@@ -17,6 +18,8 @@ const CATEGORY_PATHS := {
 	"ai_profiles": "res://data/ai",
 }
 const CATEGORY_FILES := {
+	"custom_rosters": ["res://data/custom_battles/rosters.json"],
+	"custom_matching": ["res://data/custom_battles/matching.json"],
 	"collision_fields": ["res://data/terrain/collision_field_manifest.json", "res://data/terrain/challenge_collision_fields.json"],
 	"terrain": ["res://data/terrain/terrain_templates.json", "res://data/terrain/terrain_definitions.json", "res://data/terrain/challenge_terrains.json"],
 	"navigation": ["res://data/terrain/navigation_definitions.json", "res://data/terrain/challenge_navigation.json"],
@@ -47,6 +50,7 @@ func load_all() -> bool:
 		for path in files:
 			_load_file(category, path, global_ids)
 	_validate_references()
+	errors.append_array(CustomBattleCatalog.validate(all("custom_rosters"), get_definition("custom_matching", CustomBattleCatalog.MATCHING_ID), definitions.get("ships", {}), definitions.get("ai_profiles", {})))
 	errors.append_array(ShipAcquisitionCatalog.validate(get_definition("progress", ShipAcquisitionCatalog.CATALOG_ID), definitions.get("ships", {}), definitions.get("levels", {})))
 	return errors.is_empty()
 
@@ -86,6 +90,9 @@ func _load_file(category: String, path: String, global_ids: Dictionary) -> void:
 	var parsed = JSON.parse_string(file.get_as_text())
 	if typeof(parsed) != TYPE_DICTIONARY or typeof(parsed.get("definitions")) != TYPE_ARRAY:
 		errors.append("Invalid definition document: %s" % path)
+		return
+	if category in ["custom_rosters", "custom_matching"] and parsed.get("schema_version", 0) != 1:
+		errors.append("Unsupported custom battle schema in %s" % path)
 		return
 	for raw_definition in parsed["definitions"]:
 		if typeof(raw_definition) != TYPE_DICTIONARY:
@@ -254,11 +261,14 @@ func _validate_weapon(weapon: Dictionary) -> void:
 	for field in ["mount_count", "shots_per_mount", "reload_time", "range"]:
 		if float(weapon.get(field, 0.0)) <= 0.0:
 			errors.append("%s must be positive in %s" % [field, weapon_id])
+	var range_multiplier := DISTANCE_BASELINE_MULTIPLIER
+	if weapon.get("mount_type", "") == "Aviation" and weapon.get("control_mode", "") == "ManualPrimary":
+		range_multiplier *= 2.0
 	var base_range := float(weapon.get("base_range", 0.0))
 	if base_range <= 0.0:
 		errors.append("base_range must be positive in %s" % weapon_id)
-	elif not is_equal_approx(float(weapon.get("range", 0.0)), base_range * DISTANCE_BASELINE_MULTIPLIER):
-		errors.append("Effective range must be %.1fx base_range in %s" % [DISTANCE_BASELINE_MULTIPLIER, weapon_id])
+	elif not is_equal_approx(float(weapon.get("range", 0.0)), base_range * range_multiplier):
+		errors.append("Effective range must be %.1fx base_range in %s" % [range_multiplier, weapon_id])
 	if float(weapon.get("minimum_range", 0.0)) > float(weapon.get("range", 0.0)):
 		errors.append("Invalid range band in %s" % weapon_id)
 	_validate_non_negative_scaled_field(weapon, "projectile_speed", "base_projectile_speed", ATTACK_SPEED_BASELINE_MULTIPLIER, weapon_id)
@@ -1149,6 +1159,17 @@ func _validate_facility_definition(definition: Dictionary) -> void:
 				seen_dependencies[str(dependency_id)] = true
 			if not all_dependencies.is_empty() and not placement.get("dependency_rules", {}).has("requires_matching_faction"):
 				errors.append("Facility dependency lacks faction rule in %s" % definition_id)
+		var activation_ids := {}
+		for scheduled in definition.get("activation_events", []):
+			var facility_id := str(scheduled.get("facility_id", ""))
+			var event_id := str(scheduled.get("event_id", ""))
+			var target_definition: Dictionary = {}
+			for placement in definition.get("placements", []):
+				if str(placement.get("id", "")) == facility_id: target_definition = get_definition("facilities", str(placement.get("definition_id", "")))
+			var activation: Dictionary = target_definition.get("activation_rules", {})
+			if not placement_ids.has(facility_id) or activation_ids.has(facility_id) or not is_finite(float(scheduled.get("at_seconds", -1))) or float(scheduled.get("at_seconds", -1)) < 0.0 or str(activation.get("type", "")) != "ScenarioEvent" or event_id.is_empty() or event_id != str(activation.get("event_id", "")):
+				errors.append("Facility layout has invalid scheduled activation in %s" % definition_id)
+			activation_ids[facility_id] = true
 		var handover_event_ids := {}
 		for rule in definition.get("system_handover_rules", []):
 			var event_id := str(rule.get("event_id", ""))
@@ -1156,6 +1177,8 @@ func _validate_facility_definition(definition: Dictionary) -> void:
 			var facility_ids: Array = rule.get("facility_ids", [])
 			if event_id.is_empty() or handover_event_ids.has(event_id) or not placement_ids.has(control_id) or facility_ids.is_empty():
 				errors.append("Facility layout has invalid system handover rule in %s" % definition_id)
+			if str(rule.get("trigger", "Manual")) not in ["Manual", "ControlCompleted"]:
+				errors.append("Facility layout has invalid handover trigger in %s" % definition_id)
 			handover_event_ids[event_id] = true
 			for facility_id in facility_ids:
 				if not placement_ids.has(str(facility_id)) or str(facility_id) == control_id:
@@ -1205,7 +1228,7 @@ func _resource_exists(path: String) -> bool:
 	var resource_path := path
 	if resource_path.begins_with("assets/") or resource_path.begins_with("data/"):
 		resource_path = "res://%s" % resource_path
-	return FileAccess.file_exists(resource_path)
+	return ResourceLoader.exists(resource_path) or FileAccess.file_exists(resource_path)
 
 
 func validate_environment_timeline(definition: Dictionary) -> Array[String]:

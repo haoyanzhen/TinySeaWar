@@ -19,7 +19,8 @@
 
 | 类别 | 设计字段 | 运行字段 | 当前倍率 |
 |---|---|---|---:|
-| 武器射程 | `base_range` | `range` | 1.5 |
+| 普通武器射程 | `base_range` | `range` | 1.5 |
+| 航母主要航空武器射程（`Aviation` + `ManualPrimary`） | `base_range` | `range` | 3.0 |
 | 侦查 | `base_detection_range` | `detection_range` | 1.5 |
 | 隐蔽距离 | `base_concealment_distance` | `concealment_distance` | 1.5 |
 | 技能释放距离 | `base_cast_range` | `cast_range` | 1.5 |

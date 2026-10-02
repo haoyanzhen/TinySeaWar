@@ -254,6 +254,8 @@ func create_battle_from_definition(level_definition: Dictionary, seed_value: int
 		"level_objective": level_objective_service.snapshot(),
 		"reinforcement_waves": [],
 	}
+	if level.has("custom_match"):
+		state["custom_match"] = level.custom_match.duplicate(true)
 	_configure_scene_combat(level)
 	_build_fleet("fleet.player", PLAYER_FACTION, level.get("player_fleet", []))
 	_build_fleet("fleet.enemy", ENEMY_FACTION, level.get("enemy_fleet", []))
@@ -830,7 +832,7 @@ func get_facility_action_status(unit_id: String, facility_id: String) -> Diction
 		"suppression_progress_ratio": clampf(float(facility.get("suppression_damage_accumulated", 0.0)) / suppression_threshold, 0.0, 1.0),
 		"destroyable": disposition.get("destroyable", true), "damage_floor_ratio": disposition.get("damage_floor_ratio", 0.0),
 		"inside_interaction_water": inside, "berth_speed_ok": speed_ok, "berth_heading_ok": heading_ok,
-		"control_ready": "AreaControl" in modes and bool(definition.get("area_control", {}).get("capturable", false)) and facility.get("life_state", "") == "Alive" and facility.get("operation_state", "") != "Suppressed" and control.is_empty(),
+		"control_ready": str(facility.get("control_policy", "")) != "LockedWhileActive" and (facility.get("faction_id") != unit.get("faction_id") or facility.get("operation_state") == "Dormant") and (str(facility.get("control_policy", "")) != "ActivateOwnerOnly" or facility.get("faction_id") == unit.get("faction_id")) and "AreaControl" in modes and bool(definition.get("area_control", {}).get("capturable", false)) and facility.get("life_state", "") == "Alive" and facility.get("operation_state", "") != "Suppressed" and control.is_empty(),
 		"service_ready": "BerthingService" in modes and facility_service.is_operational(facility_id) and facility.get("faction_id", "") == unit.get("faction_id", "") and inside and speed_ok and heading_ok and service.is_empty(),
 		"support_ready": "RemoteCommand" in modes and str(definition.get("remote_command", {}).get("command_type", "")) == "SupportMission" and facility_service.is_operational(facility_id) and facility.get("faction_id", "") == unit.get("faction_id", ""),
 		"mine_ready": "RemoteCommand" in modes and str(remote.get("command_type", "")) == "MineDeployment" and facility_service.is_operational(facility_id) and facility.get("faction_id", "") == unit.get("faction_id", "") and mine_status.is_empty() and float(facility.get("cooldown_remaining", 0.0)) <= 0.0 and int(facility.get("remote_charges_remaining", 0)) > 0,
@@ -1386,7 +1388,7 @@ func _apply_command(command: Dictionary) -> Dictionary:
 			if bool(cancel_result.get("accepted", false)) and cancel_result.has("event"):
 				if unit["faction_id"] == PLAYER_FACTION: unit["player_facility_target_id"] = ""
 				var cancel_event: Dictionary = cancel_result["event"]
-				_emit(str(cancel_event.get("event_type", "FacilityActionInterrupted")), cancel_event)
+				_handle_facility_event(cancel_event)
 			return cancel_result
 		"RequestSupportMission":
 			var support_target = command.get("target_position")
@@ -1848,6 +1850,7 @@ func _update_formation_transits() -> void:
 			for member_id in ai_group.member_ids:
 				var member: Dictionary = state.units_by_id.get(member_id, {})
 				if member.is_empty() or not _uses_full_ai(member) or str(member.navigation_state.get("transit_group_id", "")).begins_with("player."): continue
+				if str(member.ai_state.get("level_task", "")) in ["CaptureFacility", "ServiceFacility", "DefendFacility"]: continue
 				if str(member.movement_state.get("mode", "HoldPosition")) in ["HoldPosition", "Docked", "PlayerMoveOrder", "PlayerWaypointRoute"] and not bool(member.navigation_state.get("route_waiting", false)): continue
 				eligible.append(member_id)
 			if eligible.size() < 2: continue
@@ -2033,7 +2036,8 @@ func _plan_normal_trajectory(unit: Dictionary) -> void:
 	var navigation: Dictionary = unit["navigation_state"]
 	var movement: Dictionary = unit["movement_state"]
 	var goal: Vector2 = _current_corridor_goal(unit)
-	var hold: bool = str(movement.get("mode", "HoldPosition")) in ["HoldPosition", "Docked"] or goal == unit.get("position", Vector2.ZERO)
+	var berth_target := _navigation_berth_target(unit)
+	var hold: bool = berth_target.is_empty() and (str(movement.get("mode", "HoldPosition")) in ["HoldPosition", "Docked"] or goal == unit.get("position", Vector2.ZERO))
 	if hold:
 		_cancel_navigation_recovery(unit, "INTENT_FINISHED")
 		navigation["current_control"] = {"thrust_ratio": 0.0, "turn_ratio": 0.0}
@@ -2075,7 +2079,9 @@ func _plan_normal_trajectory(unit: Dictionary) -> void:
 		final_approach = bool(column.get("waiting", false))
 		next_goals = column.get("next_goals", [])
 	var result: Dictionary
-	if departing:
+	if not berth_target.is_empty():
+		result = trajectory_planner.plan_berthing(motion_state, deg_to_rad(float(berth_target.heading)), radius, _movement_tags(unit), terrain_query, terrain_context_service, nearby_units)
+	elif departing:
 		result = trajectory_planner.plan_recovery(motion_state, recovery, radius, _movement_tags(unit), terrain_query, terrain_context_service, nearby_units)
 	else:
 		result = trajectory_planner.plan_normal(motion_state, goal, radius, _movement_tags(unit), terrain_query, terrain_context_service, nearby_units, final_approach, next_goals, prioritize_direct_player_motion)
@@ -2102,6 +2108,18 @@ func _plan_normal_trajectory(unit: Dictionary) -> void:
 		_emit("TrajectoryPlanned", {"unit_id": unit["entity_id"], "mode": "NavigationRecovery" if not recovery.is_empty() else "NormalNavigation", "candidate_count": result.get("candidate_count", 0), "valid_candidate_count":result.get("valid_candidate_count", 0), "candidate_id":result.get("candidate_id", ""), "candidate_rank":result.get("candidate_rank", 0), "predicted_segment_count":maxi(0, result.get("predicted_samples", []).size() - 1), "committed_segment_count":NAVIGATION_NORMAL_INTERVAL_TICKS, "previous_candidate_id":prediction_reuse.get("previous_candidate_id", ""), "prediction_position_error":prediction_reuse.get("position_error", -1.0), "prediction_heading_error":prediction_reuse.get("heading_error", -1.0), "prediction_speed_error":prediction_reuse.get("speed_error", -1.0), "prediction_suffix_reusable":prediction_reuse.get("suffix_reusable", false), "goal": goal, "minimum_clearance":result.get("minimum_clearance", 0.0)})
 	navigation["trajectory_dirty"] = false
 	navigation["next_normal_plan_tick"] = int(state.get("tick_index", 0)) + NAVIGATION_NORMAL_INTERVAL_TICKS
+
+
+func _navigation_berth_target(unit: Dictionary) -> Dictionary:
+	var facility_id := str(unit.get("player_facility_target_id", "")) if bool(unit.get("movement_assist_enabled", false)) else ""
+	if _uses_full_ai(unit) and str(unit.ai_state.get("level_task", "")) == "ServiceFacility": facility_id = str(unit.ai_state.get("task_target_ref", {}).get("facility_id", ""))
+	if facility_id.is_empty() or str(unit.movement_state.get("mode", "")) in ["PlayerMoveOrder", "PlayerWaypointRoute", "Docked"]: return {}
+	var facility: Dictionary = facility_service.facilities_by_id.get(facility_id, {})
+	if facility.is_empty() or not facility_service.is_operational(facility_id) or facility.get("faction_id") != unit.get("faction_id"): return {}
+	if facility_service.definition_for(facility_id).get("berthing_service", {}).is_empty(): return {}
+	if not Geometry2D.is_point_in_polygon(unit.position, _polygon(facility.get("interaction_water_polygon", []))): return {}
+	if (unit.position as Vector2).distance_to(facility_service.interaction_center(facility_id)) > 90.0: return {}
+	return facility
 
 
 func _prediction_reuse_diagnostic(unit: Dictionary, previous_plan: Dictionary, next_plan: Dictionary) -> Dictionary:
@@ -3387,12 +3405,13 @@ func _update_enemy_ai_intent(unit: Dictionary) -> void:
 	var previous_target_id := str(unit.get("targeting_state", {}).get("current_target_id", ""))
 	var target := _select_target_with_hysteresis(unit)
 	var ai_state: Dictionary = unit["ai_state"]
-	if not str(ai_state.get("level_task", "")).is_empty() and float(state.get("elapsed_time", 0.0)) - float(ai_state.get("task_started_at", 0.0)) >= 12.0:
+	if not str(ai_state.get("level_task", "")).is_empty() and float(state.get("elapsed_time", 0.0)) - float(ai_state.get("task_started_at", 0.0)) >= float(ai_state.get("task_timeout", 12.0)):
 		var active_action := facility_service.active_action_for_unit(str(unit.get("entity_id", "")))
 		if not active_action.is_empty(): facility_service.cancel_action(str(active_action.get("facility_id", "")), str(unit.get("entity_id", "")))
+		_release_docked_unit({"unit_id":unit.entity_id, "service_type":"Repair"})
 		_record_ai_facility_failure(unit, str(ai_state.get("task_target_ref", {}).get("facility_id", "")))
 	if not target.is_empty(): ai_state["search_patrol"] = {}
-	var facility_plan := _scheduled_ai_facility_plan(unit, target.is_empty())
+	var facility_plan := _scheduled_ai_facility_plan(unit, target.is_empty() or (unit.position as Vector2).distance_to(target.position) >= 600.0)
 	if not facility_plan.is_empty():
 		ai_state["search_patrol"] = {}
 		if bool(facility_plan.get("hold_interaction", false)):
@@ -4148,6 +4167,8 @@ func _contact_search_position(unit: Dictionary, preferred_contact_id: String = "
 
 
 func _scheduled_ai_facility_plan(unit: Dictionary, allow_capture: bool) -> Dictionary:
+	# Readiness, ownership and service progress can change between scoring slots.
+	if not str(unit.ai_state.get("level_task", "")).is_empty(): return _ai_facility_plan(unit, allow_capture)
 	var unit_id := str(unit.get("entity_id", ""))
 	var now := float(state.get("elapsed_time", 0.0))
 	var cached: Dictionary = _ai_objective_plan_cache.get(unit_id, {})
@@ -4900,11 +4921,27 @@ func _power_stat_for_weapon(weapon: Dictionary) -> String:
 func _ai_facility_plan(unit: Dictionary, allow_capture: bool) -> Dictionary:
 	var observation = _ai_observation_for(str(unit.get("faction_id", "")))
 	var facilities: Dictionary = observation.known_facilities
+	var active := facility_service.active_action_for_unit(str(unit.entity_id))
+	if not active.is_empty():
+		var active_id := str(active.facility_id)
+		var active_facility: Dictionary = facility_service.facilities_by_id.get(active_id, {})
+		if Geometry2D.is_point_in_polygon(unit.position, _polygon(active_facility.get("interaction_water_polygon", []))): return {"hold_interaction":true, "facility_id":active_id}
+		return {"target_position":facility_service.interaction_center(active_id)}
+	var existing_id := str(unit.ai_state.get("task_target_ref", {}).get("facility_id", ""))
+	if str(unit.ai_state.get("level_task", "")) in ["CaptureFacility", "ServiceFacility"] and facilities.has(existing_id):
+		var existing: Dictionary = facility_service.facilities_by_id.get(existing_id, {})
+		if existing.get("life_state", "") == "Alive" and str(existing.get("operation_state", "")) != "Suppressed":
+			var task := str(unit.ai_state.level_task)
+			if (task == "CaptureFacility" and str(existing.faction_id) != str(unit.faction_id)) or (task == "ServiceFacility" and str(existing.faction_id) == str(unit.faction_id) and facility_service.is_operational(existing_id)):
+				return _facility_execution_plan(unit, existing_id, "Control" if task == "CaptureFacility" else "Service")
+		_clear_ai_facility_task(unit)
 	var candidates: Array = []
 	var hp_ratio := float(unit.get("current_hp", 0.0)) / maxf(1.0, float(unit.get("max_hp", 1.0)))
 	var capture_slot_available := _facility_capture_slot_available(unit)
 	for facility_id in facilities:
 		var facility: Dictionary = facilities[facility_id]
+		if float(unit.ai_state.get("facility_service_until", {}).get(facility_id, 0.0)) > float(state.elapsed_time): continue
+		if int(unit.ai_state.get("facility_failure_counts", {}).get(facility_id, 0)) >= 2: continue
 		if str(unit.get("ai_state", {}).get("task_blocked_facility_id", "")) == str(facility_id) and float(unit.get("ai_state", {}).get("task_blocked_until", 0.0)) > float(state.get("elapsed_time", 0.0)): continue
 		if str(facility.get("life_state", "")) != "Alive": continue
 		var definition := facility_service.definition_for(str(facility_id))
@@ -4915,18 +4952,20 @@ func _ai_facility_plan(unit: Dictionary, allow_capture: bool) -> Dictionary:
 		var center := facility_service.interaction_center(str(facility_id))
 		var contest_pressure := _facility_contest_pressure(unit, center)
 		var is_repair: bool = hp_ratio < 0.55 and facility_service.is_operational(str(facility_id)) and facility.get("faction_id") == unit.get("faction_id") and str(definition.get("berthing_service", {}).get("service_type", "")) == "Repair"
-		var is_control: bool = allow_capture and capture_slot_available and "AreaControl" in definition.get("operation_modes", []) and bool(definition.get("area_control", {}).get("enabled", false)) and bool(definition.get("area_control", {}).get("capturable", false)) and (facility.get("faction_id") != unit.get("faction_id") or facility.get("operation_state") == "Dormant")
+		var supply_need := _facility_supply_need(unit)
+		var is_supply: bool = supply_need > 0.0 and facility_service.is_operational(str(facility_id)) and facility.get("faction_id") == unit.get("faction_id") and str(definition.get("berthing_service", {}).get("service_type", "")) == "Supply" and (unit.position as Vector2).distance_to(center) < 650.0
+		var is_control: bool = allow_capture and hp_ratio >= 0.35 and capture_slot_available and str(facility.get("control_policy", "")) != "LockedWhileActive" and (str(facility.get("control_policy", "")) != "ActivateOwnerOnly" or facility.get("faction_id") == unit.get("faction_id")) and "AreaControl" in definition.get("operation_modes", []) and bool(definition.get("area_control", {}).get("enabled", false)) and bool(definition.get("area_control", {}).get("capturable", false)) and (facility.get("faction_id") != unit.get("faction_id") or facility.get("operation_state") == "Dormant")
 		var is_defense: bool = facility.get("faction_id") == unit.get("faction_id") and facility_service.is_operational(str(facility_id)) and contest_pressure > 0.0
-		if not is_repair and not is_control and not is_defense: continue
+		if not is_repair and not is_supply and not is_control and not is_defense: continue
 		var distance := (unit["position"] as Vector2).distance_to(center)
 		var path_quality := _facility_route_quality(unit, str(facility_id), center)
 		var saturation := _facility_assignment_saturation(unit, str(facility_id), 1)
 		var facility_value := _facility_value(definition)
 		var role_fit := _facility_role_fit(unit, definition)
-		if is_repair:
+		if is_repair or is_supply:
 			action_type = "Service"
 			task_type = "ServiceFacility"
-			score = 100.0 * (0.55 * (1.0 - hp_ratio) + 0.25 * path_quality + 0.20 * (1.0 - saturation))
+			score = 100.0 * (0.55 * ((1.0 - hp_ratio) if is_repair else supply_need) + 0.25 * path_quality + 0.20 * (1.0 - saturation))
 		elif is_control:
 			action_type = "Control"
 			task_type = "CaptureFacility"
@@ -4955,6 +4994,7 @@ func _ai_facility_plan(unit: Dictionary, allow_capture: bool) -> Dictionary:
 		if task_type.is_empty(): continue
 		var active_action := facility_service.active_action_for_unit(str(unit.get("entity_id", "")))
 		if not action_type.is_empty() and active_action.is_empty() and (not facility.get("control_state", {}).is_empty() or not facility.get("service_state", {}).is_empty()): continue
+		if task_type == "CaptureFacility": score *= clampf(1.15 - distance / 5000.0, 0.55, 1.0)
 		var threshold := 60.0 if task_type == "DefendFacility" else (35.0 if task_type == "ServiceFacility" else 42.0)
 		if score < threshold: continue
 		candidates.append({"facility_id": str(facility_id), "action_type": action_type, "task_type": task_type, "objective_role": objective_role, "target_position": center, "score": score})
@@ -4964,19 +5004,27 @@ func _ai_facility_plan(unit: Dictionary, allow_capture: bool) -> Dictionary:
 	candidates.sort_custom(func(a, b): return float(a["score"]) > float(b["score"]) if not is_equal_approx(float(a["score"]), float(b["score"])) else str(a["facility_id"]) < str(b["facility_id"]))
 	var selected: Dictionary = candidates[0]
 	_set_ai_facility_task(unit, selected)
-	var selected_facility: Dictionary = facilities[selected["facility_id"]]
 	if str(selected.get("task_type", "")) == "DefendFacility":
 		return {"target_position": selected["target_position"], "task_type": selected["task_type"], "score": selected["score"]}
-	var selected_action := facility_service.active_action_for_unit(str(unit.get("entity_id", "")))
-	if not selected_action.is_empty() and str(selected_action.get("facility_id", "")) == str(selected["facility_id"]):
-		if Geometry2D.is_point_in_polygon(unit["position"], _polygon(selected_facility.get("interaction_water_polygon", []))):
-			return {"hold_interaction": true, "facility_id": selected["facility_id"], "task_type": selected["task_type"], "score": selected["score"]}
-		return {"target_position": selected["target_position"], "task_type": selected["task_type"], "score": selected["score"]}
-	if str(selected.get("action_type", "")) == "Control":
-		return {"facility_id": selected["facility_id"], "action_type": "Control", "task_type": selected["task_type"], "score": selected["score"]}
-	if Geometry2D.is_point_in_polygon(unit["position"], _polygon(selected_facility.get("interaction_water_polygon", []))):
-		return {"facility_id": selected["facility_id"], "action_type": selected["action_type"], "task_type": selected["task_type"], "score": selected["score"]}
-	return {"target_position": selected["target_position"], "task_type": selected["task_type"], "score": selected["score"]}
+	return _facility_execution_plan(unit, str(selected.facility_id), str(selected.action_type))
+
+
+func _facility_supply_need(unit: Dictionary) -> float:
+	var remaining := float(unit.get("skill_state", {}).get("cooldown_remaining", 0.0))
+	for weapon in unit.get("weapon_states", []): remaining = maxf(remaining, float(weapon.get("reload_remaining", 0.0)))
+	return clampf((remaining - 10.0) / 20.0, 0.0, 1.0)
+
+
+func _facility_execution_plan(unit: Dictionary, facility_id: String, action_type: String) -> Dictionary:
+	var facility: Dictionary = facility_service.facilities_by_id[facility_id]
+	var center := facility_service.interaction_center(facility_id)
+	var inside := Geometry2D.is_point_in_polygon(unit.position, _polygon(facility.get("interaction_water_polygon", [])))
+	var profile: Dictionary = facility_service.definition_for(facility_id).get("berthing_service", {})
+	var speed_limit := float(profile.get("max_entry_speed", 10.0)) if action_type == "Service" else 10.0
+	var heading_ok := action_type != "Service" or absf(angle_difference(float(unit.heading), deg_to_rad(float(facility.heading)))) <= deg_to_rad(float(profile.get("heading_tolerance_degrees", 180.0)))
+	if inside and (unit.position as Vector2).distance_to(center) < 90.0 and absf(float(unit.current_speed)) <= speed_limit and heading_ok:
+		return {"facility_id":facility_id, "action_type":action_type}
+	return {"target_position":center}
 
 
 func _facility_value(definition: Dictionary) -> float:
@@ -4993,11 +5041,28 @@ func _facility_value(definition: Dictionary) -> float:
 
 func _facility_capture_slot_available(unit: Dictionary) -> bool:
 	if str(unit.get("ai_state", {}).get("level_task", "")) == "CaptureFacility": return true
+	var best_id := ""
+	var best_time := INF
+	var known: Dictionary = _ai_observation_for(str(unit.faction_id)).known_facilities
 	for ally_id in _sorted_unit_ids():
-		var ally: Dictionary = state["units_by_id"][ally_id]
-		if ally.get("entity_id", "") == unit.get("entity_id", "") or ally.get("life_state", "") != "Alive" or ally.get("faction_id", "") != unit.get("faction_id", ""): continue
-		if str(ally.get("ai_state", {}).get("level_task", "")) == "CaptureFacility": return false
-	return true
+		var ally: Dictionary = state.units_by_id[ally_id]
+		if ally.life_state != "Alive" or ally.faction_id != unit.faction_id or not _uses_full_ai(ally): continue
+		if str(ally.ai_state.get("level_task", "")) == "CaptureFacility": return false
+		if str(ally.stats.get("ship_class", "")) in ["Submarine", "Carrier"]: continue
+		if float(ally.current_hp) < float(ally.max_hp) * 0.35 or str(ally.ai_state.get("level_task", "")) == "ServiceFacility": continue
+		for fid in known:
+			var facility: Dictionary = known[fid]
+			var definition := facility_service.definition_for(str(fid))
+			if not bool(definition.get("area_control", {}).get("capturable", false)) or str(facility.get("control_policy", "")) == "LockedWhileActive" or str(facility.get("life_state", "")) != "Alive" or str(facility.get("operation_state", "")) == "Suppressed": continue
+			if facility.get("faction_id") == ally.faction_id and facility.get("operation_state") == "Active": continue
+			if str(facility.get("control_policy", "")) == "ActivateOwnerOnly" and facility.get("faction_id") != ally.faction_id: continue
+			if str(ally.ai_state.get("task_blocked_facility_id", "")) == str(fid) and float(ally.ai_state.get("task_blocked_until", 0.0)) > float(state.elapsed_time): continue
+			if int(ally.ai_state.get("facility_failure_counts", {}).get(fid, 0)) >= 2: continue
+			var travel_time := (ally.position as Vector2).distance_to(facility_service.interaction_center(str(fid))) / maxf(1.0, float(ally.stats.speed))
+			if travel_time < best_time:
+				best_time = travel_time
+				best_id = str(ally_id)
+	return best_id == str(unit.entity_id)
 
 
 func _facility_defense_role(unit: Dictionary) -> String:
@@ -5087,7 +5152,10 @@ func _set_ai_facility_task(unit: Dictionary, plan: Dictionary) -> void:
 	ai_state["objective_role"] = str(plan.get("objective_role", ""))
 	ai_state["group_role"] = "ObjectiveRunner" if ai_state["level_task"] in ["CaptureFacility", "ServiceFacility"] else ("Screen" if ai_state["level_task"] == "DefendFacility" else ai_state.get("group_role", ""))
 	if old_task != ai_state["level_task"] or old_facility != str(plan.get("facility_id", "")):
+		if ai_state.level_task in ["CaptureFacility", "ServiceFacility", "DefendFacility"]: _detach_formation_transit(unit)
 		ai_state["task_started_at"] = float(state.get("elapsed_time", 0.0))
+		var center := facility_service.interaction_center(str(plan.get("facility_id", "")))
+		ai_state["task_timeout"] = clampf((unit.position as Vector2).distance_to(center) / maxf(1.0, float(unit.stats.speed)) * 3.0 + 25.0, 30.0, 180.0) if ai_state.level_task in ["CaptureFacility", "ServiceFacility"] else 12.0
 		_emit("AILevelTaskChanged", {"unit_id": unit["entity_id"], "old_task": old_task, "level_task": ai_state["level_task"], "facility_id": plan.get("facility_id", ""), "score": plan.get("score", 0.0)})
 
 
@@ -5095,6 +5163,7 @@ func _clear_ai_facility_task(unit: Dictionary) -> void:
 	var ai_state: Dictionary = unit["ai_state"]
 	if str(ai_state.get("level_task", "")).is_empty(): return
 	var old_task := str(ai_state.get("level_task", ""))
+	_ai_objective_plan_cache.erase(str(unit.entity_id))
 	ai_state["level_task"] = ""
 	ai_state["task_target_ref"] = {}
 	ai_state["task_score"] = 0.0
@@ -5162,8 +5231,10 @@ func _update_ai_support_intents(faction_id: String = ENEMY_FACTION) -> void:
 			var maximum_range := float(mission_definition.get("max_range", INF))
 			var range_margin := maxf(20.0, float(target.get("stats", {}).get("speed", 0.0)) * 0.5)
 			if (facility.get("position", Vector2.ZERO) as Vector2).distance_to(target["position"]) > maximum_range - range_margin: continue
+			var support_context := terrain_context_service.context_at(target.position)
+			if str(support_context.get("aviation_condition", "Normal")) in mission_definition.get("blocked_aviation_conditions", []): continue
 			command_queue.append({"command_id":"ai.support.%s.%s.%s" % [state["tick_index"] + 1, faction_id, mission_id], "command_type":"RequestSupportMission", "issued_at_tick":state["tick_index"] + 1, "issuer_type":"AI", "issuer_id":faction_id, "unit_id":requester["entity_id"], "facility_id":facility_id, "mission_definition_id":mission_id, "target_position":target["position"]})
-			_set_ai_facility_task(requester, {"task_type":"AirportSupport", "facility_id":facility_id, "score":70.0, "objective_role":"RemoteSupport"})
+
 			return
 	for facility_id_key in facility_ids:
 		var facility: Dictionary = live_facilities.get(facility_id_key, facilities[facility_id_key])
@@ -5174,8 +5245,9 @@ func _update_ai_support_intents(faction_id: String = ENEMY_FACTION) -> void:
 		var rules: Dictionary = definition.get("remote_command", {})
 		var direction := (target.get("position", Vector2.ZERO) as Vector2) - (facility.get("position", Vector2.ZERO) as Vector2)
 		var mine_target := (facility.get("position", Vector2.ZERO) as Vector2) + direction.normalized() * minf(float(rules.get("control_radius", 0.0)) * 0.65, direction.length() * 0.5)
+		if not facility_service.validate_mine_deployment(facility_id, requester, mine_target, state.units_by_id).get("accepted", false): continue
 		command_queue.append({"command_id":"ai.mine.%s.%s" % [state["tick_index"] + 1, faction_id], "command_type":"RequestMineDeployment", "issued_at_tick":state["tick_index"] + 1, "issuer_type":"AI", "issuer_id":faction_id, "unit_id":requester["entity_id"], "facility_id":facility_id, "target_position":mine_target})
-		_set_ai_facility_task(requester, {"task_type":"MineDeployment", "facility_id":facility_id, "score":68.0, "objective_role":"RemoteSupport"})
+
 		return
 
 
@@ -6030,7 +6102,13 @@ func _handle_facility_event(event: Dictionary) -> void:
 	var event_type := str(event.get("event_type", "FacilityChanged"))
 	if event_type in ["FacilityControlCompleted", "FacilityServiceCompleted"]:
 		var task_unit: Dictionary = state.get("units_by_id", {}).get(str(event.get("unit_id", "")), {})
-		if not task_unit.is_empty(): _reset_ai_passive_memory(task_unit)
+		if not task_unit.is_empty():
+			_reset_ai_passive_memory(task_unit)
+			_clear_ai_facility_task(task_unit)
+			if event_type == "FacilityServiceCompleted":
+				var until: Dictionary = task_unit.ai_state.get("facility_service_until", {})
+				until[str(event.facility_id)] = float(state.elapsed_time) + 20.0
+				task_unit.ai_state["facility_service_until"] = until
 	match event_type:
 		"FacilityServiceCompleted":
 			_apply_facility_service(event)
@@ -6098,7 +6176,7 @@ func _apply_facility_service(event: Dictionary) -> void:
 		"Repair":
 			var hp_before := float(unit.get("current_hp", 0.0))
 			var repair_cap := float(unit.get("max_hp", 1.0)) * clampf(float(profile.get("repair_cap_ratio", 1.0)), 0.0, 1.0)
-			unit["current_hp"] = minf(repair_cap, hp_before + float(unit.get("max_hp", 1.0)) * maxf(0.0, float(profile.get("hp_restore_ratio", 0.0))))
+			unit["current_hp"] = maxf(hp_before, minf(repair_cap, hp_before + float(unit.get("max_hp", 1.0)) * maxf(0.0, float(profile.get("hp_restore_ratio", 0.0)))))
 			result["hp_restored"] = float(unit["current_hp"]) - hp_before
 	_emit("UnitServiced", result)
 

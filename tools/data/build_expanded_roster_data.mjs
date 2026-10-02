@@ -94,6 +94,7 @@ const aa = ({ id, name, group, mounts, shots, reload, range }) => ({
 
 const aviation = ({ id, name, group, mounts, shots, reload, range, speed, spread, accuracy, formula = "medium_he" }) => ({
   ...common(id, name, group, "ManualPrimary", "Aviation", mounts, shots, reload, range, speed, spread, accuracy),
+  range: range * DISTANCE_BASELINE_MULTIPLIER * 2,
   projectile_id: "projectile.aircraft_bomb", formula_id: `formula.${formula}`, impact_radius: 48,
   shared_cooldown_group: group, armor_damage_modifiers: armor.aviation, target_types: ["Surface"],
 });

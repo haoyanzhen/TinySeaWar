@@ -396,19 +396,24 @@ func _queue_t05_tutorial_commands(session) -> void:
 	if _queue_tutorial_route_move(session, objective): return
 	var target: Dictionary = session.state.get("units_by_id", {}).get("unit.enemy.t05.warspite", {})
 	if target.is_empty(): return
+	var route_zones: Array = objective.get("route_waypoint_zones", [])
+	var cover_pair: Array = route_zones[0]["position"]
+	var attack_pair: Array = route_zones[-1]["position"]
+	var cover := Vector2(float(cover_pair[0]), float(cover_pair[1]))
+	var attack_position := Vector2(float(attack_pair[0]), float(attack_pair[1]))
 	if not session.state.get("visible_by_faction", {}).get("player", {}).has("unit.enemy.t05.warspite"):
 		var contact: Dictionary = session.state.get("contacts_by_faction", {}).get("player", {}).get("unit.enemy.t05.warspite", {})
-		var search_position: Vector2 = contact.get("last_known_position", Vector2(2200.0, 700.0))
+		var search_position: Vector2 = contact.get("last_known_position", attack_position)
 		_queue_tutorial_move(session, "unit.player.t05.yukikaze", search_position, "simulation.t05.search")
 		var escort_search := search_position + Vector2(0.0, 220.0)
 		escort_search.y = clampf(escort_search.y, 80.0, float(session.state.get("map", {}).get("height", 2304.0)) - 80.0)
 		_queue_tutorial_move(session, "unit.player.t05.anshan", escort_search, "simulation.t05.escort_search")
 		return
 	var attack_plans: Array = [
-		{"unit_id":"unit.player.t05.yukikaze", "weapon_id":"weapon.yukikaze_torpedo", "cover":Vector2(1472.0, 1728.0)},
+		{"unit_id":"unit.player.t05.yukikaze", "weapon_id":"weapon.yukikaze_torpedo", "cover":cover},
 	]
 	if int(objective.get("action_counts", {}).get("TorpedoHit", 0)) > 0:
-		attack_plans.append({"unit_id":"unit.player.t05.anshan", "weapon_id":"weapon.anshan_torpedo", "cover":Vector2(1320.0, 1950.0)})
+		attack_plans.append({"unit_id":"unit.player.t05.anshan", "weapon_id":"weapon.anshan_torpedo", "cover":cover + Vector2(-152.0, 222.0)})
 	for attack_plan in attack_plans:
 		var unit_id := str(attack_plan["unit_id"])
 		var unit: Dictionary = session.state.get("units_by_id", {}).get(unit_id, {})

@@ -142,6 +142,16 @@ func _following_thrust_limit(motion: Dictionary, goal: Vector2, radius: float, n
 	return clampf(limit, 0.0, 1.0)
 
 
+func plan_berthing(motion_state: Dictionary, heading: float, radius: float, movement_tags: Array, terrain_query, terrain_context, nearby_units: Array) -> Dictionary:
+	# A normal six-second, collision-validated braking/heading maneuver. No position,
+	# velocity or heading snap; the authoritative motion service executes the controls.
+	var error := angle_difference(float(motion_state.get("heading", 0.0)), heading)
+	var rate := maxf(0.001, float(motion_state.get("turn_rate_limit", 0.0)))
+	var duration := clampf(absf(error) / rate, FIXED_TICK_DELTA, NORMAL_HORIZON)
+	var controls := [{"thrust_ratio":0.0, "turn_ratio":signf(error), "duration":duration}, {"thrust_ratio":0.0, "turn_ratio":0.0, "duration":NORMAL_HORIZON}]
+	return _select_plan([{"tag":"BerthAlign", "controls":controls}], motion_state, motion_state.position, NORMAL_HORIZON, radius, movement_tags, terrain_query, terrain_context, nearby_units, [], false, true, [], false)
+
+
 func plan_emergency(motion_state: Dictionary, threats: Array, radius: float, movement_tags: Array, terrain_query, terrain_context, nearby_units: Array = [], extended: bool = false) -> Dictionary:
 	var templates: Array = [
 		_constant_template(0.5, 0.0, "emergency_forward"),

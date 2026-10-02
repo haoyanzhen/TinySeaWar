@@ -275,6 +275,8 @@ def build_weapons() -> tuple[list[dict[str, Any]], dict[str, list[str]], dict[st
             "shared_cooldown_group": group if ammo in {"HE", "AP"} and group.endswith("_main") else "",
             "armor_damage_modifiers": ARMOR[key if key in ARMOR else "aviation"], "target_types": target_types,
         }
+        if mount_type == "Aviation" and control_mode == "ManualPrimary":
+            definition["range"] *= 2
         if mount_type == "Torpedo":
             definition["torpedo_lane_spacing"] = TORPEDO_LANE_SPACING
             definition["mount_launch_interval"] = TORPEDO_MOUNT_LAUNCH_INTERVAL

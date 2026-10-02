@@ -79,10 +79,10 @@ Use lowercase English file names with underscores:
 
 ### Music And Audio
 
-- [50_music_playback_and_asset_design.md](50_music_playback_and_asset_design.md)：标题与出击曲池、胜负结算音乐、播放切换和音乐资产验收；不负责战斗音效与语音。
+- [50_music_playback_and_asset_design.md](50_music_playback_and_asset_design.md)：标题与出击曲池、胜负结算音乐、播放切换和音乐资产验收；运行时字段见25、入口见34、完成度见00，不负责战斗音效与语音。
 - [51_music_generation_and_review_pipeline.md](51_music_generation_and_review_pipeline.md)：服务器音乐生成路径、确定性工具、端到端 skill 与人工评审交付入口。
 
-- [52_sound_effect_design_and_production.md](52_sound_effect_design_and_production.md)：音效分类、工单映射、每条三候选及试听生产标准。
+- [52_sound_effect_design_and_production.md](52_sound_effect_design_and_production.md)：音效声音语言、有效范围、制作与采用源包标准；运行时任务见音效工单。
 
 ### Audit
 
@@ -96,3 +96,5 @@ Use lowercase English file names with underscores:
 
 - [history/31_program_design_phase1.md](history/31_program_design_phase1.md)：第一阶段 3v3 原型实施范围的历史存档，不再作为当前真源。
 - [history/90_design_audit_round4.md](history/90_design_audit_round4.md)：2026-06-14 第四轮设计复核的历史存档；当前未闭环项见 `../workorder/20260717-design-audit-round4-unclosed-items.md`。
+
+- [history/52_sound_effect_production_iterations.md](history/52_sound_effect_production_iterations.md)：音效选材历轮记录；当前规范见52。

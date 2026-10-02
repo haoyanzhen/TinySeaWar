@@ -50,6 +50,7 @@
 | T-05 至 T-08 正式关卡 | `data/levels/formal_tutorial_levels_05_08.json` |
 | 声明式目标定义 | `data/objectives/level_objectives.json` |
 | T-05 至 T-08 三轮设计路线实验 | `data/simulations/experiments/level_t05_win_rate_20.json` 至 `level_t08_route_round3_20.json` |
+| T-08当前编队路线审计复现工具与证据索引 | `reports/levels/20261001-t08-audit/validation.md`、`probe.gd`、`group_probe.gd`、`manifest.json` |
 | 目标运行时服务 | `scripts/domain/services/level_objective_service.gd` |
 | 进度存档 | `scripts/infrastructure/persistence/progress_save_store.gd` |
 | 目标运行时测试 | `scripts/tests/level_objective_runtime_test.gd` |
@@ -207,9 +208,11 @@
 
 ## 12. 常见改动入口
 
+音乐采用源版：`assets/audio/music/source/<asset_id>/`；离线索引为 `assets/audio/music/catalog.json`，目录入口为 `assets/audio/music/README.md`。制作源包由 `.gdignore` 隔离，不是运行时播放资源。
+
 音乐生产与评审工具：`tools/music/music.py`（check/generate/fetch/review/e2e/serve）、`server.json`、`example_batch.json`、`review.html`、`test_music.py`；操作与容量门禁见 [tools/music/README.md](../tools/music/README.md)。端到端 skill 位于 `.agents/skills/tiny-sea-war-music-review/SKILL.md`。这些是离线生产工具，不是游戏运行时播放器。
 
-音乐评审台账：`tools/music/tracker.py`、`test_tracker.py`；持久记录位于 `tools/music/reviews/registry.json`，人工阅读表为同目录 `registry.md`，原始反馈快照位于 `reviews/sources/`。台账记录曲目版本、反馈历史、制作计划及改良来源关系。
+音乐评审台账：`tools/music/tracker.py`、`test_tracker.py`；持久记录位于 `tools/music/reviews/registry.json`，人工阅读表为同目录 `registry.md`，原始反馈快照位于 `reviews/sources/`。台账记录曲目版本、反馈历史、制作计划及改良来源关系；台账和原始反馈归档由 Git 忽略，本地及服务器备份保存。
 
 | 要修改的内容 | 先读的设计真源 | 再定位的实现 |
 |---|---|---|
@@ -245,7 +248,10 @@
 - 验证：`aviation_equivalence_test.gd`（388条排程事实）、`aviation_tick_equivalence_test.gd` 与 `fixtures/aviation_abstract_baseline.json`（旧版完整Tick指纹）、`aviation_runtime_test.gd`、`aviation_presentation_test.gd`、`aviation_performance_test.gd`、`aviation_domain_performance_test.gd`、`aviation_ai_smoke_test.gd`、`render_aviation_qa.gd`，均位于 `scripts/tests/`。
 - 可操作纵切：`godot --path . res://scenes/battle/prototype_battle.tscn -- --aviation-demo`；追加 `--aviation-physical` 可在创建时选择真实规则；演示模式不写入胜利奖励。普通主菜单/关卡默认仍由 `settings.combat.aviation_rules_mode` 决定。
 
-## 音效候选制作工具
+## 音效素材与制作工具
+
+- `assets/audio/sfx/source/selected_20261001_v1/`：按分类/ID整理的采用版、原始生成版、provenance、需求manifest、评审快照及只读试听；`.gdignore`隔离源资产，不是运行时入口。
+- `tools/sfx/package_selected.py`：核验当前采用映射并逐字节归档源包；`tools/sfx/reviews/current_disposition.json`：当前制作决策。
 
 - `tools/sfx/catalog_source.tsv` / `english_briefs.json` / `build_catalog.py`：分类、英文音色提示与三候选批次构建；`batch_20260930.json` 含工单逐项映射。
 - `tools/sfx/build_full_batch.py`：按人工反馈构建全量候选与请求；`prepare_review.py`：已部署ModelScope/ComfyUI离线CLI产物的后期；`review.py`：下载后文件校验、响度测量与试听页构建。服务器调用入口见工具README，父目录`generate_remote.py`是未用于当前打包权重的旧适配器。当前完成状态见00，以上均不是运行时播放入口。
@@ -253,6 +259,7 @@
 ## 中大型挑战实现入口
 
 - `tools/levels/build_challenge_levels.py`：十关、独立派生地图/环境、实验清单与碰撞场的可复现生成器；使用方式见同目录 README。
+- `tools/levels/challenge_balance_selection.json`：逐关作者候选选择与正式实验输出版本；`tune_challenge_difficulty.py` / `summarize_challenge_tuning.py`：隔离候选、配对复验和完整证据汇总；`test_challenge_tuning.py`：技术无效、选择及复验统计门禁回归。
 - `data/levels/formal_challenge_{m,l}_levels.json`、`data/objectives/challenge_ml_objectives.json`：正式编队、目标和增援。
 - `data/terrain/challenge_{terrains,navigation,collision_fields}.json`、`data/environments/challenge_environments.json`：独立空间/环境实例与四个雷雨时间线。
 - `scripts/tests/challenge_ml_runtime_test.gd`、`challenge_ml_progress_test.gd`：任务、地图、增援、旧存档/章内推进与调试存档隔离。
@@ -269,3 +276,22 @@
 - `data/settings/combat_settings.json`：炮弹速度、炮弹角弥散、飞机航速公共倍率。
 - `scripts/domain/services/combat_tuning_service.gd`：纯有效值查询，供会话与表现共享；配置不原地缩放。
 - `scripts/tests/combat_tuning_test.gd`：全武器类别、自动/手动/技能/岸炮、A/B航空、机场准备与飞行段、瞄准及非法倍率验证。
+
+
+## 音效运行时（2026-10-01）
+
+- `data/audio/sfx_manifest.json`：60素材、134武器、48角色/48技能的声音/静默引用和混音初值。
+- `assets/audio/sfx/runtime/`、`tools/sfx/build_runtime.py`：派生PCM16交付与可重建工具，原采用包不变。
+- `scripts/presentation/audio/sound_manager.gd`：Presentation autoload，资源/总线/设置/短声部/循环/诊断。
+- `scripts/presentation/audio/battle_sound_director.gd`、`scripts/application/battle_audio_public_signals.gd`：公开事实适配、去重、警示边沿与环境/航空生命周期。
+- `main_menu.gd`、`prototype_battle.gd`、`battle_hud.gd`、`weather_overlay.gd`（均在presentation对应目录）：操作、战斗、音量、暂停与雷声入口。
+- `scripts/tests/sound_runtime_test.gd`、`sound_device_test.gd`：资产/映射/取消/观察隔离/生命周期/同种子事实，及真实设备录音、声部保护/限幅；报告位于 `reports/audio/runtime_20261001/validation.md`。机器验证不替代人工听感。
+
+
+## 标题音乐运行时
+
+- `data/audio/music_manifest.json`：五首标题曲、主题ID、响度/哈希、完整曲目循环及恢复点元数据。
+- `assets/audio/music/runtime/`：48kHz双声道Ogg；原采用源包仍在 `source/` 且受 `.gdignore` 隔离。
+- `tools/music/build_runtime.py`：`uv run tools/music/build_runtime.py` 构建；`python3 tools/music/build_runtime.py --check` 只读核验源与派生哈希。
+- `scripts/presentation/audio/music_manager.gd`：Presentation autoload，硬切、独立轮播、标题暂停/循环与场景淡化；`main_menu.gd` 提供曲名和播放控件，SoundManager共用Music设置。
+- `scripts/tests/music_runtime_test.gd`、`music_modes_test.gd`、`music_device_test.gd`：无图形契约、模式持久化/设置同步与真实设备验证；画面复用 `render_menu_qa.gd`。本轮证据和设备限制见 `reports/audio/title_runtime_20261001/validation.md`。

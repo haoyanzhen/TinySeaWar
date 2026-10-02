@@ -1,0 +1,182 @@
+{
+  "selection": {
+    "id": "F05a",
+    "title": "补给开始",
+    "category": "facility",
+    "status": "adopt",
+    "feedback": {
+      "choice": "A",
+      "notes": "",
+      "reviewed_at": "2026-10-01T01:41:55.959Z"
+    },
+    "revision_brief": "补给开始：软管接头扣合后一次短促液流起动；只有开始事件，不把已取消的完成/维修条目恢复。",
+    "latest_revision": {
+      "batch_id": "sfx_design18_20261001_v3",
+      "candidate_ids": [
+        "F05a_d3_a",
+        "F05a_d3_b",
+        "F05a_d3_c"
+      ],
+      "human_review": "selected"
+    },
+    "revision_history": [
+      {
+        "batch_id": "sfx_rework27_20260930_v1",
+        "candidate_ids": [
+          "F05a_rw1_a",
+          "F05a_rw1_b",
+          "F05a_rw1_c"
+        ],
+        "human_review": "pending"
+      },
+      {
+        "batch_id": "sfx_rework27_naval_20260930_v2",
+        "candidate_ids": [
+          "F05a_nav2_a",
+          "F05a_nav2_b",
+          "F05a_nav2_c"
+        ],
+        "human_review": "pending"
+      }
+    ],
+    "feedback_history": [
+      {
+        "choice": "",
+        "notes": "意义不明",
+        "reviewed_at": "2026-09-30T12:43:07.094Z"
+      },
+      {
+        "batch_id": "sfx_design18_20261001_v3",
+        "choice": "全部返工",
+        "notes": "有点噪音",
+        "reviewed_at": "2026-10-01T01:15:50.133Z"
+      }
+    ],
+    "feedback_source": "tools/sfx/reviews/sfx_design18_20261001_v3.f189a37755a0.review.json",
+    "candidate_id": "F05a_d3_a",
+    "batch_id": "sfx_design18_20261001_v3",
+    "path": "reports/audio/sfx_design18_20261001_v3/facility/F05a_d3_a.wav",
+    "sha256": "ecb746334af7a718c26ef70e225025d4d10450e2614ae53014dd1b217c306b43"
+  },
+  "production": {
+    "id": "F05a_d3_a",
+    "asset_id": "F05a",
+    "seed": 202610011080,
+    "prompt": "A naval tender starts transferring fuel to a docked shipgirl rig. A soft connection thump followed by a smooth low liquid-pump onset and brief enclosed fluid movement, fading quickly. Warm clean low-mid texture, about one second. No hiss, static, rattling machinery, faucet, harsh coupling click or continuous ambience. Clear compact attack, dry and precisely separated stages. Isolated finished game sound effect, no speech or vocals, no background ambience.",
+    "status": "generated",
+    "human_review": "pending",
+    "raw": {
+      "path": "facility/F05a_d3_a_raw.wav",
+      "sha256": "f502b3242a093095bae34f27f08b04de43f8c29fceda3ceedc2b870f71e3d2d4"
+    },
+    "preview": {
+      "path": "facility/F05a_d3_a.wav",
+      "sha256": "ecb746334af7a718c26ef70e225025d4d10450e2614ae53014dd1b217c306b43"
+    },
+    "source_generation": {
+      "id": "F05a_d3_a",
+      "seed": 202610011080,
+      "prompt": "A naval tender starts transferring fuel to a docked shipgirl rig. A soft connection thump followed by a smooth low liquid-pump onset and brief enclosed fluid movement, fading quickly. Warm clean low-mid texture, about one second. No hiss, static, rattling machinery, faucet, harsh coupling click or continuous ambience. Clear compact attack, dry and precisely separated stages. Isolated finished game sound effect, no speech or vocals, no background ambience.",
+      "seconds": 2,
+      "status": "generated",
+      "before_gpu": {
+        "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+        "free_mib": 56191,
+        "utilization": 22
+      },
+      "model": "stable_audio_3_small_sfx",
+      "steps": 8,
+      "cfg": 1.0,
+      "sampler": "lcm",
+      "scheduler": "simple",
+      "sha256": "f502b3242a093095bae34f27f08b04de43f8c29fceda3ceedc2b870f71e3d2d4",
+      "sample_rate": 44100,
+      "channels": 2,
+      "frames": 90112,
+      "actual_seconds": 2.043356009070295,
+      "rms": 0.029762091115117073,
+      "peak": 0.3984375,
+      "seconds_elapsed": 0.3407175540924072,
+      "human_review": "pending",
+      "peak_vram_allocated_mib": 1660.2822265625
+    },
+    "source_peak": 0.3984375,
+    "source_clipped_samples": 0,
+    "duration_seconds": 1.2676875,
+    "channels": 1,
+    "sample_rate": 48000,
+    "sample_peak_dbfs": -2.9999995180030155,
+    "rms_dbfs": -23.460651112323635,
+    "true_peak_4x_dbfs": -2.9629229741999517,
+    "rms_windows_dbfs": [
+      -21.802750806274574,
+      -17.842690154878515,
+      -20.911641906755754,
+      -24.69653553807991,
+      -31.661379110078272,
+      -37.72386865534646,
+      -21.156961783969273,
+      -28.129036909238287,
+      -37.75631488605372,
+      -19.177522287262796,
+      -27.62162571579786,
+      -45.27757906088973,
+      -67.38859551620722
+    ],
+    "lowpass_hz": null,
+    "target_rms_dbfs": -23,
+    "crop_seconds": [
+      0.17308390022675738,
+      1.4407709750566893
+    ],
+    "gain_db": 4.990937964757791,
+    "loop_crossfade_seconds": 0,
+    "loop_points_frames": null,
+    "duration_review_required": false,
+    "loop_seam_review": "not_applicable"
+  },
+  "asset_design": {
+    "id": "F05a",
+    "category": "facility",
+    "title": "补给开始",
+    "target_seconds": 1.0,
+    "generation_seconds": 2,
+    "loop": false,
+    "direction": "0–150ms柔和接通；150–700ms低沉平滑的液泵启动；700–1000ms短稳定流动后收束，不留嘶声。 验收：只表达开始输送；不是长底噪。",
+    "english_brief": "A naval tender starts transferring fuel to a docked shipgirl rig. A soft connection thump followed by a smooth low liquid-pump onset and brief enclosed fluid movement, fading quickly. Warm clean low-mid texture, about one second. No hiss, static, rattling machinery, faucet, harsh coupling click or continuous ambience.",
+    "candidates": [
+      {
+        "id": "F05a_d3_a",
+        "seed": 202610011080,
+        "variation": "清楚轮廓",
+        "prompt": "A naval tender starts transferring fuel to a docked shipgirl rig. A soft connection thump followed by a smooth low liquid-pump onset and brief enclosed fluid movement, fading quickly. Warm clean low-mid texture, about one second. No hiss, static, rattling machinery, faucet, harsh coupling click or continuous ambience. Clear compact attack, dry and precisely separated stages. Isolated finished game sound effect, no speech or vocals, no background ambience.",
+        "status": "planned"
+      },
+      {
+        "id": "F05a_d3_b",
+        "seed": 202610011081,
+        "variation": "温暖主体",
+        "prompt": "A naval tender starts transferring fuel to a docked shipgirl rig. A soft connection thump followed by a smooth low liquid-pump onset and brief enclosed fluid movement, fading quickly. Warm clean low-mid texture, about one second. No hiss, static, rattling machinery, faucet, harsh coupling click or continuous ambience. Slightly warmer lower body; preserve all rhythmic and directional cues. Isolated finished game sound effect, no speech or vocals, no background ambience.",
+        "status": "planned"
+      },
+      {
+        "id": "F05a_d3_c",
+        "seed": 202610011082,
+        "variation": "圆润边缘",
+        "prompt": "A naval tender starts transferring fuel to a docked shipgirl rig. A soft connection thump followed by a smooth low liquid-pump onset and brief enclosed fluid movement, fading quickly. Warm clean low-mid texture, about one second. No hiss, static, rattling machinery, faucet, harsh coupling click or continuous ambience. Gentler upper frequencies and rounded attack; preserve the same sequence and direction. Isolated finished game sound effect, no speech or vocals, no background ambience.",
+        "status": "planned"
+      }
+    ],
+    "review_target_rms_dbfs": -23,
+    "previous_feedback": {
+      "choice": "",
+      "notes": "意义不明",
+      "reviewed_at": "2026-09-30T12:43:07.094Z"
+    }
+  },
+  "source_batch_sha256": "e7e3ab90c4f035bc32a07579b46c6af96e93c72e8487d88606aef8e7321a6b68",
+  "loudness": {
+    "sha256": "ecb746334af7a718c26ef70e225025d4d10450e2614ae53014dd1b217c306b43",
+    "ffmpeg_ebur128": "Integrated loudness:\n    I:         -23.6 LUFS\n    Threshold: -33.6 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:       -3.0 dBFS\n[out#0/null @ 0xc49024180] video:0KiB audio:119KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:01.26 bitrate=N/A speed= 288x elapsed=0:00:00.00"
+  }
+}

@@ -1,0 +1,126 @@
+{
+  "selection": {
+    "id": "S04",
+    "title": "低氧预警",
+    "category": "alert",
+    "status": "adopt",
+    "feedback": {
+      "choice": "B",
+      "notes": "",
+      "reviewed_at": "2026-09-30T12:33:40.610Z"
+    },
+    "candidate_id": "S04_full_b",
+    "batch_id": "sfx_full_20260930_v3",
+    "path": "reports/audio/sfx_full_20260930_v3/alert/S04_full_b.wav",
+    "sha256": "1f53fd8b51fe869528e244cbae578dbd14ed4b5ef85f408788da899a39c2100b"
+  },
+  "production": {
+    "id": "S04_full_b",
+    "asset_id": "S04",
+    "seed": 202609306371,
+    "prompt": "A restrained low oxygen warning, two medium low electronic pulses. A short readable naval tactical interface signal, rounded midrange frequencies and a distinctive rhythmic identity. Restrained and comfortable, not a loud siren or a melody. Warm lower midrange tones preserving the requested rhythm. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+    "status": "generated",
+    "human_review": "pending",
+    "raw": {
+      "path": "alert/S04_full_b_raw.wav",
+      "sha256": "0e5d7ffe32fc0fa5b4dc32063e3f9ca62d1a54c9d9c921fcda01c80252c57f2d"
+    },
+    "preview": {
+      "path": "alert/S04_full_b.wav",
+      "sha256": "1f53fd8b51fe869528e244cbae578dbd14ed4b5ef85f408788da899a39c2100b"
+    },
+    "source_generation": {
+      "id": "S04_full_b",
+      "prompt": "A restrained low oxygen warning, two medium low electronic pulses. A short readable naval tactical interface signal, rounded midrange frequencies and a distinctive rhythmic identity. Restrained and comfortable, not a loud siren or a melody. Warm lower midrange tones preserving the requested rhythm. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+      "seconds": 2,
+      "seed": 202609306371,
+      "status": "generated",
+      "before_gpu": {
+        "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+        "free_mib": 56153,
+        "utilization": 29
+      },
+      "model": "stable_audio_3_small_sfx",
+      "steps": 8,
+      "cfg": 1.0,
+      "sampler": "lcm",
+      "scheduler": "simple",
+      "sha256": "0e5d7ffe32fc0fa5b4dc32063e3f9ca62d1a54c9d9c921fcda01c80252c57f2d",
+      "sample_rate": 44100,
+      "channels": 2,
+      "frames": 90112,
+      "actual_seconds": 2.043356009070295,
+      "rms": 0.05445827543735504,
+      "peak": 0.37890625,
+      "seconds_elapsed": 0.3538370132446289,
+      "human_review": "pending",
+      "peak_vram_allocated_mib": 1682.39892578125
+    },
+    "source_peak": 0.37890625,
+    "source_clipped_samples": 0,
+    "duration_seconds": 0.6499583333333333,
+    "channels": 2,
+    "sample_rate": 48000,
+    "sample_peak_dbfs": -11.147427461382822,
+    "rms_dbfs": -23.000000432125564,
+    "true_peak_4x_dbfs": -11.133545268824403,
+    "rms_windows_dbfs": [
+      -21.12596428632051,
+      -19.622032286532065,
+      -20.32041373048349,
+      -26.844406641088266,
+      -40.668688218587505,
+      -58.95405755361138
+    ],
+    "lowpass_hz": null,
+    "target_rms_dbfs": -23,
+    "crop_seconds": [
+      0.3068480725623583,
+      0.9568027210884353
+    ],
+    "gain_db": -2.6959258293736514,
+    "loop_crossfade_seconds": 0,
+    "loop_points_frames": null,
+    "duration_review_required": false,
+    "loop_seam_review": "not_applicable"
+  },
+  "asset_design": {
+    "id": "S04",
+    "category": "alert",
+    "title": "低氧预警",
+    "target_seconds": 0.7,
+    "generation_seconds": 2,
+    "loop": false,
+    "direction": "中低音双脉冲、克制提醒",
+    "english_brief": "A restrained low oxygen warning, two medium low electronic pulses",
+    "candidates": [
+      {
+        "id": "S04_full_a",
+        "seed": 202609306370,
+        "variation": "清楚节奏",
+        "prompt": "A restrained low oxygen warning, two medium low electronic pulses. A short readable naval tactical interface signal, rounded midrange frequencies and a distinctive rhythmic identity. Restrained and comfortable, not a loud siren or a melody. Dry concise midrange tones with clearly separated pulses. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+        "status": "planned"
+      },
+      {
+        "id": "S04_full_b",
+        "seed": 202609306371,
+        "variation": "温暖提示",
+        "prompt": "A restrained low oxygen warning, two medium low electronic pulses. A short readable naval tactical interface signal, rounded midrange frequencies and a distinctive rhythmic identity. Restrained and comfortable, not a loud siren or a melody. Warm lower midrange tones preserving the requested rhythm. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+        "status": "planned"
+      },
+      {
+        "id": "S04_full_c",
+        "seed": 202609306372,
+        "variation": "柔亮提示",
+        "prompt": "A restrained low oxygen warning, two medium low electronic pulses. A short readable naval tactical interface signal, rounded midrange frequencies and a distinctive rhythmic identity. Restrained and comfortable, not a loud siren or a melody. Gently brighter rounded tones with a restrained finish. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+        "status": "planned"
+      }
+    ],
+    "review_target_rms_dbfs": -23
+  },
+  "source_batch_sha256": "4d1cd2f07e2abb4699a4cc6e3e71480b2237080da3a70b79baf18d1642ca8b4c",
+  "loudness": {
+    "sha256": "1f53fd8b51fe869528e244cbae578dbd14ed4b5ef85f408788da899a39c2100b",
+    "ffmpeg_ebur128": "Integrated loudness:\n    I:         -21.2 LUFS\n    Threshold: -31.2 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:      -11.1 dBFS\n[out#0/null @ 0xba9024180] video:0KiB audio:122KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:00.64 bitrate=N/A speed= 142x elapsed=0:00:00.00"
+  }
+}

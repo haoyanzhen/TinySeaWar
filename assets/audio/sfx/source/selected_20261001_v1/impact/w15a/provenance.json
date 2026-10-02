@@ -1,0 +1,145 @@
+{
+  "selection": {
+    "id": "W15a",
+    "title": "岸地爆炸",
+    "category": "impact",
+    "status": "adopt",
+    "feedback": {
+      "choice": "B",
+      "notes": "",
+      "reviewed_at": "2026-09-30T10:33:30.016Z"
+    },
+    "candidate_id": "W15a_full_b",
+    "batch_id": "sfx_full_20260930_v3",
+    "path": "reports/audio/sfx_full_20260930_v3/impact/W15a_full_b.wav",
+    "sha256": "b46fd3053d784b81e33426d624c8979551ba2b69c3153a962da6d6b735dce196"
+  },
+  "production": {
+    "id": "W15a_full_b",
+    "asset_id": "W15a",
+    "seed": 202609306191,
+    "prompt": "A single shell explosion on rocky shore, dry blast and scattering stone debris. Stylized anime naval battle game impact, believable material and water, controlled bass, concise natural decay. A deeper warmer body and a short restrained tail. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+    "status": "generated",
+    "human_review": "pending",
+    "raw": {
+      "path": "impact/W15a_full_b_raw.wav",
+      "sha256": "994ba96f8c82ad06ed0b740e3df3ca2c8c7a8bc9e6f0178aaf3c2bc881857941"
+    },
+    "preview": {
+      "path": "impact/W15a_full_b.wav",
+      "sha256": "b46fd3053d784b81e33426d624c8979551ba2b69c3153a962da6d6b735dce196"
+    },
+    "source_generation": {
+      "id": "W15a_full_b",
+      "prompt": "A single shell explosion on rocky shore, dry blast and scattering stone debris. Stylized anime naval battle game impact, believable material and water, controlled bass, concise natural decay. A deeper warmer body and a short restrained tail. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+      "seconds": 3,
+      "seed": 202609306191,
+      "status": "generated",
+      "before_gpu": {
+        "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+        "free_mib": 56153,
+        "utilization": 22
+      },
+      "model": "stable_audio_3_small_sfx",
+      "steps": 8,
+      "cfg": 1.0,
+      "sampler": "lcm",
+      "scheduler": "simple",
+      "sha256": "994ba96f8c82ad06ed0b740e3df3ca2c8c7a8bc9e6f0178aaf3c2bc881857941",
+      "sample_rate": 44100,
+      "channels": 2,
+      "frames": 131072,
+      "actual_seconds": 2.972154195011338,
+      "rms": 0.03765042498707771,
+      "peak": 0.84375,
+      "seconds_elapsed": 0.3539245128631592,
+      "human_review": "pending",
+      "peak_vram_allocated_mib": 1682.39892578125
+    },
+    "source_peak": 0.84375,
+    "source_clipped_samples": 0,
+    "duration_seconds": 2.5086666666666666,
+    "channels": 1,
+    "sample_rate": 48000,
+    "sample_peak_dbfs": -3.0000009805991428,
+    "rms_dbfs": -29.301041969036852,
+    "true_peak_4x_dbfs": -2.9821376602097316,
+    "rms_windows_dbfs": [
+      -17.368475777569202,
+      -20.069205941299554,
+      -36.576319674456634,
+      -38.60873232545367,
+      -43.46944884530123,
+      -43.44300297275694,
+      -40.97493724999317,
+      -41.8483194102387,
+      -41.59693065819371,
+      -41.708591228004686,
+      -39.6770833586464,
+      -40.983204074748365,
+      -43.432711348348825,
+      -45.12351830983616,
+      -42.377111086754525,
+      -44.98490942997763,
+      -44.80957756251119,
+      -46.73821506179664,
+      -49.01741589755771,
+      -49.14705525758977,
+      -49.87101014829696,
+      -51.06170622139225,
+      -51.49219158379148,
+      -54.8195521005015,
+      -59.147102692579274
+    ],
+    "lowpass_hz": null,
+    "target_rms_dbfs": -23,
+    "crop_seconds": [
+      0.0,
+      2.5086621315192743
+    ],
+    "gain_db": -1.5115490625054027,
+    "loop_crossfade_seconds": 0,
+    "loop_points_frames": null,
+    "duration_review_required": true,
+    "loop_seam_review": "not_applicable"
+  },
+  "asset_design": {
+    "id": "W15a",
+    "category": "impact",
+    "title": "岸地爆炸",
+    "target_seconds": 1.3,
+    "generation_seconds": 3,
+    "loop": false,
+    "direction": "岩石碎裂、干燥爆炸、无水柱",
+    "english_brief": "A single shell explosion on rocky shore, dry blast and scattering stone debris",
+    "candidates": [
+      {
+        "id": "W15a_full_a",
+        "seed": 202609306190,
+        "variation": "集中冲击",
+        "prompt": "A single shell explosion on rocky shore, dry blast and scattering stone debris. Stylized anime naval battle game impact, believable material and water, controlled bass, concise natural decay. A concentrated compact impact and clear material detail. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+        "status": "planned"
+      },
+      {
+        "id": "W15a_full_b",
+        "seed": 202609306191,
+        "variation": "低沉厚实",
+        "prompt": "A single shell explosion on rocky shore, dry blast and scattering stone debris. Stylized anime naval battle game impact, believable material and water, controlled bass, concise natural decay. A deeper warmer body and a short restrained tail. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+        "status": "planned"
+      },
+      {
+        "id": "W15a_full_c",
+        "seed": 202609306192,
+        "variation": "圆润克制",
+        "prompt": "A single shell explosion on rocky shore, dry blast and scattering stone debris. Stylized anime naval battle game impact, believable material and water, controlled bass, concise natural decay. A softer rounded impact retaining clear weight. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+        "status": "planned"
+      }
+    ],
+    "review_target_rms_dbfs": -23
+  },
+  "source_batch_sha256": "4d1cd2f07e2abb4699a4cc6e3e71480b2237080da3a70b79baf18d1642ca8b4c",
+  "loudness": {
+    "sha256": "b46fd3053d784b81e33426d624c8979551ba2b69c3153a962da6d6b735dce196",
+    "ffmpeg_ebur128": "Integrated loudness:\n    I:         -33.2 LUFS\n    Threshold: -46.2 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:       -3.0 dBFS\n[out#0/null @ 0x7eb020180] video:0KiB audio:235KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:02.50 bitrate=N/A speed= 334x elapsed=0:00:00.00"
+  }
+}

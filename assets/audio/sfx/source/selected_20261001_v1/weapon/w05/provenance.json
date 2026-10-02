@@ -1,0 +1,134 @@
+{
+  "selection": {
+    "id": "W05",
+    "title": "鱼雷管发射",
+    "category": "weapon",
+    "status": "adopt",
+    "feedback": {
+      "choice": "C",
+      "notes": "",
+      "reviewed_at": "2026-09-30T10:29:45.104Z"
+    },
+    "candidate_id": "W05_full_c",
+    "batch_id": "sfx_full_20260930_v3",
+    "path": "reports/audio/sfx_full_20260930_v3/weapon/W05_full_c.wav",
+    "sha256": "56a90987933f325c30e7b1e5733ec0bab43c1260a2464d73d8219256e848fd4e"
+  },
+  "production": {
+    "id": "W05_full_c",
+    "asset_id": "W05",
+    "seed": 202609306042,
+    "prompt": "A torpedo tube launching one torpedo, latch release, compressed air and a short splash. Compact stylized naval combat game effect, convincing weight, crisp readable mechanical action and a restrained decay. A rounded transient and gentler treble for repeated playback. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+    "status": "generated",
+    "human_review": "pending",
+    "raw": {
+      "path": "weapon/W05_full_c_raw.wav",
+      "sha256": "bb80a5a64a99d3b0147c55a1c88e5e09b5f341dac2ecd939b49957436921b98a"
+    },
+    "preview": {
+      "path": "weapon/W05_full_c.wav",
+      "sha256": "56a90987933f325c30e7b1e5733ec0bab43c1260a2464d73d8219256e848fd4e"
+    },
+    "source_generation": {
+      "id": "W05_full_c",
+      "prompt": "A torpedo tube launching one torpedo, latch release, compressed air and a short splash. Compact stylized naval combat game effect, convincing weight, crisp readable mechanical action and a restrained decay. A rounded transient and gentler treble for repeated playback. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+      "seconds": 2,
+      "seed": 202609306042,
+      "status": "generated",
+      "before_gpu": {
+        "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+        "free_mib": 56193,
+        "utilization": 29
+      },
+      "model": "stable_audio_3_small_sfx",
+      "steps": 8,
+      "cfg": 1.0,
+      "sampler": "lcm",
+      "scheduler": "simple",
+      "sha256": "bb80a5a64a99d3b0147c55a1c88e5e09b5f341dac2ecd939b49957436921b98a",
+      "sample_rate": 44100,
+      "channels": 2,
+      "frames": 90112,
+      "actual_seconds": 2.043356009070295,
+      "rms": 0.02342224307358265,
+      "peak": 0.6640625,
+      "seconds_elapsed": 0.33363986015319824,
+      "human_review": "pending",
+      "peak_vram_allocated_mib": 1666.16455078125
+    },
+    "source_peak": 0.6640625,
+    "source_clipped_samples": 0,
+    "duration_seconds": 1.4256875,
+    "channels": 1,
+    "sample_rate": 48000,
+    "sample_peak_dbfs": -2.9999995180030155,
+    "rms_dbfs": -29.64252658899418,
+    "true_peak_4x_dbfs": -2.5190384168629376,
+    "rms_windows_dbfs": [
+      -52.407498758606195,
+      -21.628091046248343,
+      -25.75316078674983,
+      -63.37019173797265,
+      -79.45421940207629,
+      -71.40626791312053,
+      -63.62861635251717,
+      -60.1905041606085,
+      -56.749641651597386,
+      -56.291344241806776,
+      -55.83098596978041,
+      -23.057063256282365,
+      -31.50362957935117,
+      -65.52032806046026
+    ],
+    "lowpass_hz": null,
+    "target_rms_dbfs": -23,
+    "crop_seconds": [
+      0.0864172335600907,
+      1.5120861678004536
+    ],
+    "gain_db": 1.7740360246946194,
+    "loop_crossfade_seconds": 0,
+    "loop_points_frames": null,
+    "duration_review_required": false,
+    "loop_seam_review": "not_applicable"
+  },
+  "asset_design": {
+    "id": "W05",
+    "category": "weapon",
+    "title": "鱼雷管发射",
+    "target_seconds": 0.9,
+    "generation_seconds": 2,
+    "loop": false,
+    "direction": "锁扣释放、压缩空气、短促破水",
+    "english_brief": "A torpedo tube launching one torpedo, latch release, compressed air and a short splash",
+    "candidates": [
+      {
+        "id": "W05_full_a",
+        "seed": 202609306040,
+        "variation": "清楚短促",
+        "prompt": "A torpedo tube launching one torpedo, latch release, compressed air and a short splash. Compact stylized naval combat game effect, convincing weight, crisp readable mechanical action and a restrained decay. A dry precise close transient with clean mechanical detail. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+        "status": "planned"
+      },
+      {
+        "id": "W05_full_b",
+        "seed": 202609306041,
+        "variation": "厚实紧凑",
+        "prompt": "A torpedo tube launching one torpedo, latch release, compressed air and a short splash. Compact stylized naval combat game effect, convincing weight, crisp readable mechanical action and a restrained decay. A warm fuller body, firm weight and compact low end. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+        "status": "planned"
+      },
+      {
+        "id": "W05_full_c",
+        "seed": 202609306042,
+        "variation": "圆润耐听",
+        "prompt": "A torpedo tube launching one torpedo, latch release, compressed air and a short splash. Compact stylized naval combat game effect, convincing weight, crisp readable mechanical action and a restrained decay. A rounded transient and gentler treble for repeated playback. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+        "status": "planned"
+      }
+    ],
+    "review_target_rms_dbfs": -23
+  },
+  "source_batch_sha256": "4d1cd2f07e2abb4699a4cc6e3e71480b2237080da3a70b79baf18d1642ca8b4c",
+  "loudness": {
+    "sha256": "56a90987933f325c30e7b1e5733ec0bab43c1260a2464d73d8219256e848fd4e",
+    "ffmpeg_ebur128": "Integrated loudness:\n    I:         -26.8 LUFS\n    Threshold: -39.4 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:       -2.5 dBFS\n[out#0/null @ 0x8eb024180] video:0KiB audio:134KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:01.42 bitrate=N/A speed= 272x elapsed=0:00:00.00"
+  }
+}

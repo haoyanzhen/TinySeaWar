@@ -1,0 +1,206 @@
+{
+  "selection": {
+    "id": "U06",
+    "title": "弹种切换",
+    "category": "ui",
+    "status": "adopt",
+    "feedback": {
+      "choice": "A",
+      "notes": "",
+      "reviewed_at": "2026-10-01T02:23:50.788Z"
+    },
+    "revision_brief": "保留粗重舰炮机构方向，压缩时间并重新设计；不是全盘否定音色路线。",
+    "latest_revision": {
+      "batch_id": "sfx_revision7_20261001_v5",
+      "candidate_ids": [
+        "U06_r5_a",
+        "U06_r5_b",
+        "U06_r5_c"
+      ],
+      "human_review": "selected"
+    },
+    "revision_history": [
+      {
+        "batch_id": "sfx_rework27_20260930_v1",
+        "candidate_ids": [
+          "U06_rw1_a",
+          "U06_rw1_b",
+          "U06_rw1_c"
+        ],
+        "human_review": "pending"
+      },
+      {
+        "batch_id": "sfx_rework27_naval_20260930_v2",
+        "candidate_ids": [
+          "U06_nav2_a",
+          "U06_nav2_b",
+          "U06_nav2_c"
+        ],
+        "human_review": "pending"
+      },
+      {
+        "batch_id": "sfx_design18_20261001_v3",
+        "candidate_ids": [
+          "U06_d3_a",
+          "U06_d3_b",
+          "U06_d3_c"
+        ],
+        "human_review": "revision_requested"
+      },
+      {
+        "batch_id": "sfx_revision15_20261001_v4",
+        "candidate_ids": [
+          "U06_r4_a",
+          "U06_r4_b",
+          "U06_r4_c"
+        ],
+        "human_review": "revision_requested"
+      }
+    ],
+    "feedback_history": [
+      {
+        "choice": "全部返工",
+        "notes": "意义不明",
+        "reviewed_at": "2026-09-30T12:47:12.143Z"
+      },
+      {
+        "batch_id": "sfx_design18_20261001_v3",
+        "choice": "全部返工",
+        "notes": "不是舰炮，是枪械",
+        "reviewed_at": "2026-10-01T01:17:40.804Z"
+      },
+      {
+        "batch_id": "sfx_design18_20261001_v3",
+        "choice": "全部返工",
+        "notes": "还是枪械装弹声，不是舰炮，舰炮要更粗重",
+        "reviewed_at": "2026-10-01T01:44:29.016Z"
+      },
+      {
+        "batch_id": "sfx_revision15_20261001_v4",
+        "choice": "全部返工",
+        "notes": "方向还可以，时间有点长，重新设计",
+        "reviewed_at": "2026-10-01T02:07:39.413Z"
+      }
+    ],
+    "feedback_source": "tools/sfx/reviews/sfx_revision7_20261001_v5.f52aa0cc8337.review.json",
+    "candidate_id": "U06_r5_a",
+    "batch_id": "sfx_revision7_20261001_v5",
+    "path": "reports/audio/sfx_revision7_20261001_v5/ui/U06_r5_a.wav",
+    "sha256": "5aa5da96a53006f7be54b864a4be14998c7a144ac02517ca910d188780f83521"
+  },
+  "production": {
+    "id": "U06_r5_a",
+    "asset_id": "U06",
+    "seed": 202610015040,
+    "prompt": "A short heavy naval artillery breech clunk. One deep solid steel mechanism seats firmly, immediate low thud and quick stop. Half a second, no extended loading sequence. Isolated sound effect, no speech or background ambience.",
+    "status": "generated",
+    "human_review": "pending",
+    "raw": {
+      "path": "ui/U06_r5_a_raw.wav",
+      "sha256": "5ccf384d9dd654e584ae5b7bae1824f748cec0e8a41708c2f5ca0cd8b151a3b4"
+    },
+    "preview": {
+      "path": "ui/U06_r5_a.wav",
+      "sha256": "5aa5da96a53006f7be54b864a4be14998c7a144ac02517ca910d188780f83521"
+    },
+    "source_generation": {
+      "id": "U06_r5_a",
+      "seed": 202610015040,
+      "prompt": "A short heavy naval artillery breech clunk. One deep solid steel mechanism seats firmly, immediate low thud and quick stop. Half a second, no extended loading sequence. Isolated sound effect, no speech or background ambience.",
+      "seconds": 1,
+      "status": "generated",
+      "before_gpu": {
+        "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+        "free_mib": 56197,
+        "utilization": 30
+      },
+      "model": "stable_audio_3_small_sfx",
+      "steps": 8,
+      "cfg": 1.0,
+      "sampler": "lcm",
+      "scheduler": "simple",
+      "sha256": "5ccf384d9dd654e584ae5b7bae1824f748cec0e8a41708c2f5ca0cd8b151a3b4",
+      "sample_rate": 44100,
+      "channels": 2,
+      "frames": 49152,
+      "actual_seconds": 1.1145578231292517,
+      "rms": 0.03293759748339653,
+      "peak": 0.65625,
+      "seconds_elapsed": 0.3455514907836914,
+      "human_review": "pending",
+      "peak_vram_allocated_mib": 1656.771484375
+    },
+    "source_peak": 0.65625,
+    "source_clipped_samples": 0,
+    "duration_seconds": 0.7017708333333333,
+    "channels": 2,
+    "sample_rate": 48000,
+    "sample_peak_dbfs": -2.9999995180030155,
+    "rms_dbfs": -27.021143498323017,
+    "true_peak_4x_dbfs": -2.9786039785859035,
+    "rms_windows_dbfs": [
+      -48.70284206037808,
+      -43.60311277151987,
+      -19.246558055071578,
+      -27.40434806195269,
+      -39.37004868498503,
+      -48.62130826355292,
+      -61.917863752613755
+    ],
+    "lowpass_hz": null,
+    "target_rms_dbfs": -24,
+    "crop_seconds": [
+      0.0,
+      0.7017687074829932
+    ],
+    "gain_db": 0.6149087778484117,
+    "loop_crossfade_seconds": 0,
+    "loop_points_frames": null,
+    "duration_review_required": false,
+    "loop_seam_review": "not_applicable"
+  },
+  "asset_design": {
+    "id": "U06",
+    "category": "ui",
+    "title": "弹种切换",
+    "target_seconds": 0.45,
+    "generation_seconds": 1,
+    "loop": false,
+    "direction": "舰炮弹种选择：短粗重落位，取消长液压铺垫，不表达完整装填。",
+    "english_brief": "A short heavy naval artillery breech clunk. One deep solid steel mechanism seats firmly, immediate low thud and quick stop. Half a second, no extended loading sequence.",
+    "candidates": [
+      {
+        "id": "U06_r5_a",
+        "seed": 202610015040,
+        "prompt": "A short heavy naval artillery breech clunk. One deep solid steel mechanism seats firmly, immediate low thud and quick stop. Half a second, no extended loading sequence. Isolated sound effect, no speech or background ambience.",
+        "variation": "方案A",
+        "status": "planned"
+      },
+      {
+        "id": "U06_r5_b",
+        "seed": 202610015041,
+        "prompt": "A battleship gun ammunition selector mechanism locks into position. A single thick low metal chunk, weighty and compact, rapid decay. No rifle rattling. Isolated sound effect, no speech or background ambience.",
+        "variation": "方案B",
+        "status": "planned"
+      },
+      {
+        "id": "U06_r5_c",
+        "seed": 202610015042,
+        "prompt": "A large naval gun mechanism makes one short heavy locking thump. Dense low steel impact with a very brief hydraulic finish. Under half a second. Isolated sound effect, no speech or background ambience.",
+        "variation": "方案C",
+        "status": "planned"
+      }
+    ],
+    "review_target_rms_dbfs": -24,
+    "previous_feedback": {
+      "choice": "全部返工",
+      "notes": "还是枪械装弹声，不是舰炮，舰炮要更粗重",
+      "reviewed_at": "2026-10-01T01:44:29.016Z"
+    }
+  },
+  "source_batch_sha256": "def6ad3caca11e5d1e224b8856ed971f9d869a415ad59c654bdd52a15c51fdf9",
+  "loudness": {
+    "sha256": "5aa5da96a53006f7be54b864a4be14998c7a144ac02517ca910d188780f83521",
+    "ffmpeg_ebur128": "Integrated loudness:\n    I:         -22.8 LUFS\n    Threshold: -32.8 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:       -3.0 dBFS\n[out#0/null @ 0x958c08900] video:0KiB audio:132KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:00.70 bitrate=N/A speed= 146x elapsed=0:00:00.00"
+  }
+}

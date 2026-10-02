@@ -465,7 +465,9 @@ func _create_pause_controls() -> void:
 	add_child(pause_panel)
 	var column := VBoxContainer.new()
 	pause_panel.add_child(column)
+	column.add_theme_constant_override("separation", 4)
 	var title := Label.new()
+	title.add_theme_font_size_override("font_size", 16)
 	title.text = "战术暂停 · 指令恢复后执行"
 	column.add_child(title)
 	var buttons := HBoxContainer.new()
@@ -475,10 +477,12 @@ func _create_pause_controls() -> void:
 		button.text = action
 		button.focus_mode = Control.FOCUS_NONE
 		button.custom_minimum_size = Vector2(104.0, 34.0)
+		button.add_theme_font_size_override("font_size", 14)
 		button.pressed.connect(_pause_action.bind(action))
 		buttons.add_child(button)
 	skill_cutin_selector = OptionButton.new()
 	skill_cutin_selector.name = "SkillCutinMode"
+	skill_cutin_selector.add_theme_font_size_override("font_size", 16)
 	skill_cutin_selector.focus_mode = Control.FOCUS_NONE
 	for label in ["技能立绘：完整", "技能立绘：简化", "技能立绘：关闭"]: skill_cutin_selector.add_item(label)
 	skill_cutin_selector.select(["full", "simple", "off"].find(GameFlow.skill_cutin_mode))
@@ -489,17 +493,47 @@ func _create_pause_controls() -> void:
 		skill_cutin_save_hint.visible = not saved
 		skill_cutin_mode_changed.emit(value))
 	column.add_child(skill_cutin_selector)
+	var sound_row := HBoxContainer.new()
+	column.add_child(sound_row)
+	var sound_label := Label.new()
+	sound_label.text = "音量"
+	sound_label.add_theme_font_size_override("font_size", 14)
+	sound_row.add_child(sound_label)
+	var sound_volume := HSlider.new()
+	sound_volume.name = "BattleMasterVolume"
+	sound_volume.focus_mode = Control.FOCUS_NONE
+	sound_volume.min_value = 0; sound_volume.max_value = 100; sound_volume.step = 1
+	sound_volume.value = float(SoundManager.preferences.Master) * 100
+	sound_volume.custom_minimum_size = Vector2(150, 24)
+	sound_volume.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	sound_row.add_child(sound_volume)
+	sound_volume.value_changed.connect(func(value):
+		var saved := SoundManager.save_preference("Master", value / 100.0)
+		skill_cutin_save_hint.text = "" if saved else "音量已生效，保存失败，请重试"
+		skill_cutin_save_hint.visible = not saved)
+	var sound_mute := CheckBox.new()
+	sound_mute.add_theme_font_size_override("font_size", 14)
+	sound_mute.flat = true
+	for state in ["normal", "hover", "pressed", "focus"]:
+		sound_mute.add_theme_stylebox_override(state, StyleBoxEmpty.new())
+	sound_mute.name = "BattleMute"
+	sound_mute.focus_mode = Control.FOCUS_NONE
+	sound_mute.custom_minimum_size = Vector2(72, 24)
+	sound_mute.text = "静音"
+	sound_mute.button_pressed = bool(SoundManager.preferences.muted)
+	sound_row.add_child(sound_mute)
+	sound_mute.toggled.connect(func(value):
+		var saved := SoundManager.save_preference("muted", value)
+		skill_cutin_save_hint.text = "" if saved else "静音设置已生效，保存失败，请重试"
+		skill_cutin_save_hint.visible = not saved)
 	skill_cutin_save_hint = Label.new()
 	skill_cutin_save_hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	skill_cutin_save_hint.add_theme_font_size_override("font_size", 12)
 	skill_cutin_save_hint.custom_minimum_size.x = 280.0
 	skill_cutin_save_hint.hide()
 	column.add_child(skill_cutin_save_hint)
-	var hint := Label.new()
-	hint.text = "可继续操作 · 待执行计划可逐条撤销"
-	column.add_child(hint)
 	var scroll := ScrollContainer.new()
-	scroll.custom_minimum_size = Vector2(310.0, 32.0)
+	scroll.custom_minimum_size = Vector2(310.0, 20.0)
 	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	column.add_child(scroll)

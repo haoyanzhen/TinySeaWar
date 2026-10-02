@@ -1,0 +1,131 @@
+{
+  "selection": {
+    "id": "N06",
+    "title": "旗舰危急",
+    "category": "alert",
+    "status": "adopt",
+    "feedback": {
+      "choice": "B",
+      "notes": "",
+      "reviewed_at": "2026-09-30T12:36:07.652Z"
+    },
+    "candidate_id": "N06_full_b",
+    "batch_id": "sfx_full_20260930_v3",
+    "path": "reports/audio/sfx_full_20260930_v3/alert/N06_full_b.wav",
+    "sha256": "8ff27b84c7a339a2971808edf5f98447569f1d05ca6479fabd94600c130970b4"
+  },
+  "production": {
+    "id": "N06_full_b",
+    "asset_id": "N06",
+    "seed": 202609306541,
+    "prompt": "A flagship critical health warning, three distinctive groups of alternating low and high electronic tones. A short readable naval tactical interface signal, rounded midrange frequencies and a distinctive rhythmic identity. Restrained and comfortable, not a loud siren or a melody. Warm lower midrange tones preserving the requested rhythm. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+    "status": "generated",
+    "human_review": "pending",
+    "raw": {
+      "path": "alert/N06_full_b_raw.wav",
+      "sha256": "ab3dcedeef7bf6113d9a6c9b81e286bc1e88e8fdd372ef6e2aa41186758f78f2"
+    },
+    "preview": {
+      "path": "alert/N06_full_b.wav",
+      "sha256": "8ff27b84c7a339a2971808edf5f98447569f1d05ca6479fabd94600c130970b4"
+    },
+    "source_generation": {
+      "id": "N06_full_b",
+      "prompt": "A flagship critical health warning, three distinctive groups of alternating low and high electronic tones. A short readable naval tactical interface signal, rounded midrange frequencies and a distinctive rhythmic identity. Restrained and comfortable, not a loud siren or a melody. Warm lower midrange tones preserving the requested rhythm. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+      "seconds": 2,
+      "seed": 202609306541,
+      "status": "generated",
+      "before_gpu": {
+        "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+        "free_mib": 56153,
+        "utilization": 23
+      },
+      "model": "stable_audio_3_small_sfx",
+      "steps": 8,
+      "cfg": 1.0,
+      "sampler": "lcm",
+      "scheduler": "simple",
+      "sha256": "ab3dcedeef7bf6113d9a6c9b81e286bc1e88e8fdd372ef6e2aa41186758f78f2",
+      "sample_rate": 44100,
+      "channels": 2,
+      "frames": 90112,
+      "actual_seconds": 2.043356009070295,
+      "rms": 0.07907874137163162,
+      "peak": 0.59375,
+      "seconds_elapsed": 0.35556793212890625,
+      "human_review": "pending",
+      "peak_vram_allocated_mib": 1682.39892578125
+    },
+    "source_peak": 0.59375,
+    "source_clipped_samples": 0,
+    "duration_seconds": 1.1025208333333334,
+    "channels": 2,
+    "sample_rate": 48000,
+    "sample_peak_dbfs": -8.16433279148987,
+    "rms_dbfs": -22.999999518003015,
+    "true_peak_4x_dbfs": -8.158805439025944,
+    "rms_windows_dbfs": [
+      -21.540317378351304,
+      -20.006191411729873,
+      -30.94857656494777,
+      -18.86139094120256,
+      -17.356396507843666,
+      -22.461969286145038,
+      -37.659511790125755,
+      -40.6577130874416,
+      -49.5654968420111,
+      -51.2342197317767,
+      -73.6505479412004
+    ],
+    "lowpass_hz": null,
+    "target_rms_dbfs": -23,
+    "crop_seconds": [
+      0.0,
+      1.102517006802721
+    ],
+    "gain_db": -3.6419839528425992,
+    "loop_crossfade_seconds": 0,
+    "loop_points_frames": null,
+    "duration_review_required": false,
+    "loop_seam_review": "not_applicable"
+  },
+  "asset_design": {
+    "id": "N06",
+    "category": "alert",
+    "title": "旗舰危急",
+    "target_seconds": 1.1,
+    "generation_seconds": 2,
+    "loop": false,
+    "direction": "低高交替三组、突出节奏而非音量",
+    "english_brief": "A flagship critical health warning, three distinctive groups of alternating low and high electronic tones",
+    "candidates": [
+      {
+        "id": "N06_full_a",
+        "seed": 202609306540,
+        "variation": "清楚节奏",
+        "prompt": "A flagship critical health warning, three distinctive groups of alternating low and high electronic tones. A short readable naval tactical interface signal, rounded midrange frequencies and a distinctive rhythmic identity. Restrained and comfortable, not a loud siren or a melody. Dry concise midrange tones with clearly separated pulses. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+        "status": "planned"
+      },
+      {
+        "id": "N06_full_b",
+        "seed": 202609306541,
+        "variation": "温暖提示",
+        "prompt": "A flagship critical health warning, three distinctive groups of alternating low and high electronic tones. A short readable naval tactical interface signal, rounded midrange frequencies and a distinctive rhythmic identity. Restrained and comfortable, not a loud siren or a melody. Warm lower midrange tones preserving the requested rhythm. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+        "status": "planned"
+      },
+      {
+        "id": "N06_full_c",
+        "seed": 202609306542,
+        "variation": "柔亮提示",
+        "prompt": "A flagship critical health warning, three distinctive groups of alternating low and high electronic tones. A short readable naval tactical interface signal, rounded midrange frequencies and a distinctive rhythmic identity. Restrained and comfortable, not a loud siren or a melody. Gently brighter rounded tones with a restrained finish. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+        "status": "planned"
+      }
+    ],
+    "review_target_rms_dbfs": -23
+  },
+  "source_batch_sha256": "4d1cd2f07e2abb4699a4cc6e3e71480b2237080da3a70b79baf18d1642ca8b4c",
+  "loudness": {
+    "sha256": "8ff27b84c7a339a2971808edf5f98447569f1d05ca6479fabd94600c130970b4",
+    "ffmpeg_ebur128": "Integrated loudness:\n    I:         -18.9 LUFS\n    Threshold: -30.2 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:       -8.2 dBFS\n[out#0/null @ 0x784c08900] video:0KiB audio:207KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:01.10 bitrate=N/A speed= 169x elapsed=0:00:00.00"
+  }
+}

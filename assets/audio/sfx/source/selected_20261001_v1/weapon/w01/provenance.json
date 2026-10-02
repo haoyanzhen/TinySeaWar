@@ -1,0 +1,169 @@
+{
+  "selection": {
+    "id": "W01",
+    "title": "轻炮发射",
+    "category": "weapon",
+    "status": "adopt",
+    "feedback": {
+      "choice": "C",
+      "notes": "",
+      "reviewed_at": "2026-10-01T01:13:37.282Z"
+    },
+    "revision_brief": "保留舰炮的膛压低中频体积和后坐机构，去除手枪式尖脆孤立枪响；轻炮相对重炮轻，不等于轻武器。",
+    "latest_revision": {
+      "batch_id": "sfx_rework27_naval_20260930_v2",
+      "candidate_ids": [
+        "W01_nav2_a",
+        "W01_nav2_b",
+        "W01_nav2_c"
+      ],
+      "human_review": "pending"
+    },
+    "revision_history": [
+      {
+        "batch_id": "sfx_rework27_20260930_v1",
+        "candidate_ids": [
+          "W01_rw1_a",
+          "W01_rw1_b",
+          "W01_rw1_c"
+        ],
+        "human_review": "pending"
+      }
+    ],
+    "feedback_history": [
+      {
+        "choice": "全部返工",
+        "notes": "都太轻了，像枪声不像战舰主炮",
+        "reviewed_at": "2026-09-30T10:28:12.273Z"
+      }
+    ],
+    "candidate_id": "W01_nav2_c",
+    "batch_id": "sfx_rework27_naval_20260930_v2",
+    "path": "reports/audio/sfx_rework27_naval_20260930_v2/weapon/W01_nav2_c.wav",
+    "sha256": "423badd668d9dd7a4c20408da65ad2c63af3b42dc323ed58a6c9eb87d6d52e10"
+  },
+  "production": {
+    "id": "W01_nav2_c",
+    "asset_id": "W01",
+    "seed": 202609312002,
+    "prompt": "Sound effect for Tiny Sea War, a 2D anime shipgirl naval battle game. An anime shipgirl fires her destroyer-mounted naval deck gun across open sea. Naval artillery pressure and recoiling steel gun rigging, with open-air decay over water. One small naval deck cannon fires. A compact deep gunpowder blast with a full chesty pressure body, followed by a heavy sliding recoil mechanism. Clearly a ship cannon, not a pistol or rifle. Short outdoor decay. Rounded gentle attack with clear action timing, comfortable for repeated playback. One isolated compact event with a complete ending. No voices, speech, music, seagulls, background surf, room ambience, or fantasy magic. Preserve the specific naval action; no unrelated generic notification.",
+    "status": "generated",
+    "human_review": "pending",
+    "raw": {
+      "path": "weapon/W01_nav2_c_raw.wav",
+      "sha256": "623f25150f43edaef0e0bece69dc48b6e7004042e6324b51d3bffc04f66f3267"
+    },
+    "preview": {
+      "path": "weapon/W01_nav2_c.wav",
+      "sha256": "423badd668d9dd7a4c20408da65ad2c63af3b42dc323ed58a6c9eb87d6d52e10"
+    },
+    "source_generation": {
+      "id": "W01_nav2_c",
+      "seed": 202609312002,
+      "prompt": "Sound effect for Tiny Sea War, a 2D anime shipgirl naval battle game. An anime shipgirl fires her destroyer-mounted naval deck gun across open sea. Naval artillery pressure and recoiling steel gun rigging, with open-air decay over water. One small naval deck cannon fires. A compact deep gunpowder blast with a full chesty pressure body, followed by a heavy sliding recoil mechanism. Clearly a ship cannon, not a pistol or rifle. Short outdoor decay. Rounded gentle attack with clear action timing, comfortable for repeated playback. One isolated compact event with a complete ending. No voices, speech, music, seagulls, background surf, room ambience, or fantasy magic. Preserve the specific naval action; no unrelated generic notification.",
+      "seconds": 2,
+      "status": "generated",
+      "before_gpu": {
+        "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+        "free_mib": 56195,
+        "utilization": 27
+      },
+      "model": "stable_audio_3_small_sfx",
+      "steps": 8,
+      "cfg": 1.0,
+      "sampler": "lcm",
+      "scheduler": "simple",
+      "sha256": "623f25150f43edaef0e0bece69dc48b6e7004042e6324b51d3bffc04f66f3267",
+      "sample_rate": 44100,
+      "channels": 2,
+      "frames": 90112,
+      "actual_seconds": 2.043356009070295,
+      "rms": 0.07526952773332596,
+      "peak": 0.83984375,
+      "seconds_elapsed": 0.35808587074279785,
+      "human_review": "pending",
+      "peak_vram_allocated_mib": 1657.40966796875
+    },
+    "source_peak": 0.83984375,
+    "source_clipped_samples": 0,
+    "duration_seconds": 1.45325,
+    "channels": 1,
+    "sample_rate": 48000,
+    "sample_peak_dbfs": -4.291997729052451,
+    "rms_dbfs": -22.999999518003015,
+    "true_peak_4x_dbfs": -4.286470121830062,
+    "rms_windows_dbfs": [
+      -16.51983153866509,
+      -16.362328135863812,
+      -16.93166299784723,
+      -22.2730259004242,
+      -29.413695561159592,
+      -31.91174278929453,
+      -32.481945691931855,
+      -34.28491448129235,
+      -34.42774211209444,
+      -37.97853075223732,
+      -37.80393504866007,
+      -44.15757120732688,
+      -39.048356429344054,
+      -51.94871978858551,
+      -75.87483868440049
+    ],
+    "lowpass_hz": null,
+    "target_rms_dbfs": -23,
+    "crop_seconds": [
+      0.0,
+      1.4532426303854875
+    ],
+    "gain_db": -1.5393518056403241,
+    "loop_crossfade_seconds": 0,
+    "loop_points_frames": null,
+    "duration_review_required": true,
+    "loop_seam_review": "not_applicable"
+  },
+  "asset_design": {
+    "id": "W01",
+    "category": "weapon",
+    "title": "轻炮发射",
+    "target_seconds": 0.7,
+    "generation_seconds": 2,
+    "loop": false,
+    "direction": "舰娘海战场景：保留舰炮的膛压低中频体积和后坐机构，去除手枪式尖脆孤立枪响；轻炮相对重炮轻，不等于轻武器。",
+    "english_brief": "One small naval deck cannon fires. A compact deep gunpowder blast with a full chesty pressure body, followed by a heavy sliding recoil mechanism. Clearly a ship cannon, not a pistol or rifle. Short outdoor decay.",
+    "candidates": [
+      {
+        "id": "W01_nav2_a",
+        "seed": 202609312000,
+        "variation": "干净动作",
+        "prompt": "Sound effect for Tiny Sea War, a 2D anime shipgirl naval battle game. An anime shipgirl fires her destroyer-mounted naval deck gun across open sea. Naval artillery pressure and recoiling steel gun rigging, with open-air decay over water. One small naval deck cannon fires. A compact deep gunpowder blast with a full chesty pressure body, followed by a heavy sliding recoil mechanism. Clearly a ship cannon, not a pistol or rifle. Short outdoor decay. Close, crisp material detail and short outdoor decay. One isolated compact event with a complete ending. No voices, speech, music, seagulls, background surf, room ambience, or fantasy magic. Preserve the specific naval action; no unrelated generic notification.",
+        "status": "planned"
+      },
+      {
+        "id": "W01_nav2_b",
+        "seed": 202609312001,
+        "variation": "温暖材质",
+        "prompt": "Sound effect for Tiny Sea War, a 2D anime shipgirl naval battle game. An anime shipgirl fires her destroyer-mounted naval deck gun across open sea. Naval artillery pressure and recoiling steel gun rigging, with open-air decay over water. One small naval deck cannon fires. A compact deep gunpowder blast with a full chesty pressure body, followed by a heavy sliding recoil mechanism. Clearly a ship cannon, not a pistol or rifle. Short outdoor decay. Warm full material body, controlled low frequencies and gentle treble. One isolated compact event with a complete ending. No voices, speech, music, seagulls, background surf, room ambience, or fantasy magic. Preserve the specific naval action; no unrelated generic notification.",
+        "status": "planned"
+      },
+      {
+        "id": "W01_nav2_c",
+        "seed": 202609312002,
+        "variation": "柔和耐听",
+        "prompt": "Sound effect for Tiny Sea War, a 2D anime shipgirl naval battle game. An anime shipgirl fires her destroyer-mounted naval deck gun across open sea. Naval artillery pressure and recoiling steel gun rigging, with open-air decay over water. One small naval deck cannon fires. A compact deep gunpowder blast with a full chesty pressure body, followed by a heavy sliding recoil mechanism. Clearly a ship cannon, not a pistol or rifle. Short outdoor decay. Rounded gentle attack with clear action timing, comfortable for repeated playback. One isolated compact event with a complete ending. No voices, speech, music, seagulls, background surf, room ambience, or fantasy magic. Preserve the specific naval action; no unrelated generic notification.",
+        "status": "planned"
+      }
+    ],
+    "review_target_rms_dbfs": -23,
+    "previous_feedback": {
+      "choice": "全部返工",
+      "notes": "都太轻了，像枪声不像战舰主炮",
+      "reviewed_at": "2026-09-30T10:28:12.273Z"
+    },
+    "naval_context": "An anime shipgirl fires her destroyer-mounted naval deck gun across open sea. Naval artillery pressure and recoiling steel gun rigging, with open-air decay over water."
+  },
+  "source_batch_sha256": "06e64691b5e2c24e9d6c4a2dc7c708f82bca46ae70c6c6e34337434f1c5faeae",
+  "loudness": {
+    "sha256": "423badd668d9dd7a4c20408da65ad2c63af3b42dc323ed58a6c9eb87d6d52e10",
+    "ffmpeg_ebur128": "Integrated loudness:\n    I:         -22.1 LUFS\n    Threshold: -35.4 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:       -4.3 dBFS\n[out#0/null @ 0x931408240] video:0KiB audio:136KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:01.45 bitrate=N/A speed= 217x elapsed=0:00:00.00"
+  }
+}

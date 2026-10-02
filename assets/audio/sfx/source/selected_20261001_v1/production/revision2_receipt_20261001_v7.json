@@ -1,0 +1,555 @@
+{
+  "batch_id": "sfx_revision2_20261001_v7",
+  "validation": {
+    "requirements": 105,
+    "assets": 2,
+    "expected": 6,
+    "generated": 6,
+    "missing": [],
+    "unique_preview_hashes": 6,
+    "categories": {
+      "skill": 1,
+      "alert": 1
+    },
+    "long_candidates": [],
+    "source_overrange": [],
+    "peak_warnings": [],
+    "human_review": "pending",
+    "runtime_integration": "not_started",
+    "batch_sha256": "085e2ef0d2a6ee2be74166776726b8f14665a88eb6b6b2f762a5eaba21bab0dd"
+  },
+  "candidates": [
+    {
+      "id": "K01_r7_a",
+      "asset_id": "K01",
+      "seed": 202610017000,
+      "prompt": "A successful skill activation sound in an anime action game. Punchy, bright and satisfying. A short one-shot.",
+      "status": "generated",
+      "human_review": "pending",
+      "raw": {
+        "path": "skill/K01_r7_a_raw.wav",
+        "sha256": "690fa6dfd5f91c455d538fb03b3903f9818d69cf4b64c3c4611c44e280360c70"
+      },
+      "preview": {
+        "path": "skill/K01_r7_a.wav",
+        "sha256": "54673d8f804eee0bebebefef2931b5ec05039707499d6968ef33fd8f51ea087f"
+      },
+      "source_generation": {
+        "id": "K01_r7_a",
+        "seed": 202610017000,
+        "prompt": "A successful skill activation sound in an anime action game. Punchy, bright and satisfying. A short one-shot.",
+        "seconds": 1,
+        "status": "generated",
+        "before_gpu": {
+          "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+          "free_mib": 57977,
+          "utilization": 0
+        },
+        "model": "stable_audio_3_small_sfx",
+        "steps": 8,
+        "cfg": 1.0,
+        "sampler": "lcm",
+        "scheduler": "simple",
+        "sha256": "690fa6dfd5f91c455d538fb03b3903f9818d69cf4b64c3c4611c44e280360c70",
+        "sample_rate": 44100,
+        "channels": 2,
+        "frames": 49152,
+        "actual_seconds": 1.1145578231292517,
+        "rms": 0.11184188723564148,
+        "peak": 0.890625,
+        "seconds_elapsed": 1.328131914138794,
+        "human_review": "pending",
+        "peak_vram_allocated_mib": 1652.556640625
+      },
+      "source_peak": 0.890625,
+      "source_clipped_samples": 0,
+      "duration_seconds": 0.801375,
+      "channels": 2,
+      "sample_rate": 48000,
+      "sample_peak_dbfs": -7.425809892948475,
+      "rms_dbfs": -24.000001152951754,
+      "true_peak_4x_dbfs": -7.3735023995915325,
+      "rms_windows_dbfs": [
+        -17.252409445908313,
+        -23.77920118637086,
+        -21.397532587725703,
+        -28.03884589142347,
+        -50.5081447906291,
+        -58.08346760743149,
+        -61.2377344581308,
+        -66.4130245140849
+      ],
+      "lowpass_hz": null,
+      "target_rms_dbfs": -24,
+      "crop_seconds": [
+        0.0,
+        0.8013605442176871
+      ],
+      "gain_db": -6.406350857594713,
+      "loop_crossfade_seconds": 0,
+      "loop_points_frames": null,
+      "duration_review_required": false,
+      "loop_seam_review": "not_applicable"
+    },
+    {
+      "id": "K01_r7_b",
+      "asset_id": "K01",
+      "seed": 202610017001,
+      "prompt": "A compact energy burst with a firm soft bass hit and a bright rising shimmer that stops quickly. Dry game sound effect.",
+      "status": "generated",
+      "human_review": "pending",
+      "raw": {
+        "path": "skill/K01_r7_b_raw.wav",
+        "sha256": "2515e079a37bc5d66ff6558b3de6ca0f6e8c9a45c7bdf4119faee64518e7bc77"
+      },
+      "preview": {
+        "path": "skill/K01_r7_b.wav",
+        "sha256": "6e4785fd1e3c2dbe1f3f0b58f86c0c92a3eb11899b23bf32b143c3285c6d14e2"
+      },
+      "source_generation": {
+        "id": "K01_r7_b",
+        "seed": 202610017001,
+        "prompt": "A compact energy burst with a firm soft bass hit and a bright rising shimmer that stops quickly. Dry game sound effect.",
+        "seconds": 1,
+        "status": "generated",
+        "before_gpu": {
+          "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+          "free_mib": 56197,
+          "utilization": 28
+        },
+        "model": "stable_audio_3_small_sfx",
+        "steps": 8,
+        "cfg": 1.0,
+        "sampler": "lcm",
+        "scheduler": "simple",
+        "sha256": "2515e079a37bc5d66ff6558b3de6ca0f6e8c9a45c7bdf4119faee64518e7bc77",
+        "sample_rate": 44100,
+        "channels": 2,
+        "frames": 49152,
+        "actual_seconds": 1.1145578231292517,
+        "rms": 0.059721529483795166,
+        "peak": 0.640625,
+        "seconds_elapsed": 0.32561230659484863,
+        "human_review": "pending",
+        "peak_vram_allocated_mib": 1653.66796875
+      },
+      "source_peak": 0.640625,
+      "source_clipped_samples": 0,
+      "duration_seconds": 0.5425,
+      "channels": 2,
+      "sample_rate": 48000,
+      "sample_peak_dbfs": -6.518060792637322,
+      "rms_dbfs": -24.000001152951754,
+      "true_peak_4x_dbfs": -6.492342782773667,
+      "rms_windows_dbfs": [
+        -17.353330642100595,
+        -28.74157330725433,
+        -37.696449890900944,
+        -52.79666340682812,
+        -63.76671821353955
+      ],
+      "lowpass_hz": null,
+      "target_rms_dbfs": -24,
+      "crop_seconds": [
+        0.0,
+        0.5424943310657596
+      ],
+      "gain_db": -2.6476814490112215,
+      "loop_crossfade_seconds": 0,
+      "loop_points_frames": null,
+      "duration_review_required": false,
+      "loop_seam_review": "not_applicable"
+    },
+    {
+      "id": "K01_r7_c",
+      "asset_id": "K01",
+      "seed": 202610017002,
+      "prompt": "A short bright major chord stab with a rounded percussive attack and a clean quick decay. Confident game ability confirmation.",
+      "status": "generated",
+      "human_review": "pending",
+      "raw": {
+        "path": "skill/K01_r7_c_raw.wav",
+        "sha256": "af4105a6e3ebfaaad608cc633aa1b915d10c72bfd6b8d6d70b53a112f3a787d8"
+      },
+      "preview": {
+        "path": "skill/K01_r7_c.wav",
+        "sha256": "dbea9cdb8796eab8edc9d1a674d1f748f7c9ee941b6df4f62abe414edfb8982f"
+      },
+      "source_generation": {
+        "id": "K01_r7_c",
+        "seed": 202610017002,
+        "prompt": "A short bright major chord stab with a rounded percussive attack and a clean quick decay. Confident game ability confirmation.",
+        "seconds": 1,
+        "status": "generated",
+        "before_gpu": {
+          "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+          "free_mib": 56197,
+          "utilization": 27
+        },
+        "model": "stable_audio_3_small_sfx",
+        "steps": 8,
+        "cfg": 1.0,
+        "sampler": "lcm",
+        "scheduler": "simple",
+        "sha256": "af4105a6e3ebfaaad608cc633aa1b915d10c72bfd6b8d6d70b53a112f3a787d8",
+        "sample_rate": 44100,
+        "channels": 2,
+        "frames": 49152,
+        "actual_seconds": 1.1145578231292517,
+        "rms": 0.03406443074345589,
+        "peak": 0.40625,
+        "seconds_elapsed": 0.3395867347717285,
+        "human_review": "pending",
+        "peak_vram_allocated_mib": 1653.66796875
+      },
+      "source_peak": 0.40625,
+      "source_clipped_samples": 0,
+      "duration_seconds": 0.5457916666666667,
+      "channels": 2,
+      "sample_rate": 48000,
+      "sample_peak_dbfs": -5.560301729315855,
+      "rms_dbfs": -24.000000127289304,
+      "true_peak_4x_dbfs": -5.538986197127695,
+      "rms_windows_dbfs": [
+        -17.57627149029429,
+        -26.228141241173585,
+        -43.91082338239083,
+        -51.91985605859708,
+        -66.52233757983198
+      ],
+      "lowpass_hz": null,
+      "target_rms_dbfs": -24,
+      "crop_seconds": [
+        0.0,
+        0.5457823129251701
+      ],
+      "gain_db": 2.279250574488853,
+      "loop_crossfade_seconds": 0,
+      "loop_points_frames": null,
+      "duration_review_required": false,
+      "loop_seam_review": "not_applicable"
+    },
+    {
+      "id": "N11a_r7_a",
+      "asset_id": "N11a",
+      "seed": 202610017010,
+      "prompt": "A piano mission complete jingle. Three clear ascending piano notes, short and cheerful.",
+      "status": "generated",
+      "human_review": "pending",
+      "raw": {
+        "path": "alert/N11a_r7_a_raw.wav",
+        "sha256": "c0904a937a1eec903802c2744167f8d83a7e252798c8682ae6b6dfa453bcdd0a"
+      },
+      "preview": {
+        "path": "alert/N11a_r7_a.wav",
+        "sha256": "64c7a6c83a3b9f9cfbaf09fe99556ca3d8499a7ab9f33767879fda9775d3944d"
+      },
+      "source_generation": {
+        "id": "N11a_r7_a",
+        "seed": 202610017010,
+        "prompt": "A piano mission complete jingle. Three clear ascending piano notes, short and cheerful.",
+        "seconds": 2,
+        "status": "generated",
+        "before_gpu": {
+          "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+          "free_mib": 56197,
+          "utilization": 29
+        },
+        "model": "stable_audio_3_small_sfx",
+        "steps": 8,
+        "cfg": 1.0,
+        "sampler": "lcm",
+        "scheduler": "simple",
+        "sha256": "c0904a937a1eec903802c2744167f8d83a7e252798c8682ae6b6dfa453bcdd0a",
+        "sample_rate": 44100,
+        "channels": 2,
+        "frames": 90112,
+        "actual_seconds": 2.043356009070295,
+        "rms": 0.04280781373381615,
+        "peak": 0.345703125,
+        "seconds_elapsed": 0.37815022468566895,
+        "human_review": "pending",
+        "peak_vram_allocated_mib": 1656.771484375
+      },
+      "source_peak": 0.345703125,
+      "source_clipped_samples": 0,
+      "duration_seconds": 1.697875,
+      "channels": 2,
+      "sample_rate": 48000,
+      "sample_peak_dbfs": -6.654359052371179,
+      "rms_dbfs": -24.000000127289304,
+      "true_peak_4x_dbfs": -6.648831842581346,
+      "rms_windows_dbfs": [
+        -24.461739645754864,
+        -21.31047240832549,
+        -18.225363894638516,
+        -17.44617805051878,
+        -18.76609325086865,
+        -22.337015144287918,
+        -25.739349861213476,
+        -29.639687179309668,
+        -33.29113884654816,
+        -37.54687783511955,
+        -42.07512625976299,
+        -46.18807186536457,
+        -47.92557867033506,
+        -49.76216521519659,
+        -51.069282378765195,
+        -53.027235263604524,
+        -55.024067769280094
+      ],
+      "lowpass_hz": null,
+      "target_rms_dbfs": -24,
+      "crop_seconds": [
+        0.0,
+        1.6978684807256237
+      ],
+      "gain_db": 2.564350313890111,
+      "loop_crossfade_seconds": 0,
+      "loop_points_frames": null,
+      "duration_review_required": false,
+      "loop_seam_review": "not_applicable"
+    },
+    {
+      "id": "N11a_r7_b",
+      "asset_id": "N11a",
+      "seed": 202610017011,
+      "prompt": "Solo acoustic piano, three warm notes ascending a major triad. Two short notes followed by one longer final note. Dry studio recording.",
+      "status": "generated",
+      "human_review": "pending",
+      "raw": {
+        "path": "alert/N11a_r7_b_raw.wav",
+        "sha256": "31b2e1318ab1dff6d8a4ccc3ddc4b9f5921aa1a14cc40fdfe918a67f6f2a6878"
+      },
+      "preview": {
+        "path": "alert/N11a_r7_b.wav",
+        "sha256": "21473c6b143e3b396529d41f614f676fd47ab737de7bb6d236ade0dfad6e21f0"
+      },
+      "source_generation": {
+        "id": "N11a_r7_b",
+        "seed": 202610017011,
+        "prompt": "Solo acoustic piano, three warm notes ascending a major triad. Two short notes followed by one longer final note. Dry studio recording.",
+        "seconds": 2,
+        "status": "generated",
+        "before_gpu": {
+          "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+          "free_mib": 56195,
+          "utilization": 24
+        },
+        "model": "stable_audio_3_small_sfx",
+        "steps": 8,
+        "cfg": 1.0,
+        "sampler": "lcm",
+        "scheduler": "simple",
+        "sha256": "31b2e1318ab1dff6d8a4ccc3ddc4b9f5921aa1a14cc40fdfe918a67f6f2a6878",
+        "sample_rate": 44100,
+        "channels": 2,
+        "frames": 90112,
+        "actual_seconds": 2.043356009070295,
+        "rms": 0.047871414572000504,
+        "peak": 0.44921875,
+        "seconds_elapsed": 0.3636507987976074,
+        "human_review": "pending",
+        "peak_vram_allocated_mib": 1656.771484375
+      },
+      "source_peak": 0.44921875,
+      "source_clipped_samples": 0,
+      "duration_seconds": 1.7626666666666666,
+      "channels": 2,
+      "sample_rate": 48000,
+      "sample_peak_dbfs": -5.184740123479012,
+      "rms_dbfs": -24.000000127289304,
+      "true_peak_4x_dbfs": -5.179213031489582,
+      "rms_windows_dbfs": [
+        -14.935236772452287,
+        -16.40944119423085,
+        -19.540976171425836,
+        -24.365281387080138,
+        -30.708600974264805,
+        -34.440321905277685,
+        -36.176359682497555,
+        -37.60707997652574,
+        -39.899908584144306,
+        -42.59368858000098,
+        -46.16592270382757,
+        -47.77206031502149,
+        -47.14118559688217,
+        -45.962905457169384,
+        -46.35214817189757,
+        -47.22260755933428,
+        -50.183513762141104,
+        -60.59156469590637
+      ],
+      "lowpass_hz": null,
+      "target_rms_dbfs": -24,
+      "crop_seconds": [
+        0.0,
+        1.7626530612244897
+      ],
+      "gain_db": 1.7576023037132313,
+      "loop_crossfade_seconds": 0,
+      "loop_points_frames": null,
+      "duration_review_required": false,
+      "loop_seam_review": "not_applicable"
+    },
+    {
+      "id": "N11a_r7_c",
+      "asset_id": "N11a",
+      "seed": 202610017012,
+      "prompt": "Solo piano plays G4, B4, C5, three notes only. A gentle resolving cadence, last note sustained briefly. Close dry recording.",
+      "status": "generated",
+      "human_review": "pending",
+      "raw": {
+        "path": "alert/N11a_r7_c_raw.wav",
+        "sha256": "731df6743d83cdddd3dffeab8ac36ddfb46e86e27f09c09e026e90ae93d891de"
+      },
+      "preview": {
+        "path": "alert/N11a_r7_c.wav",
+        "sha256": "8578fcc727871daf1616f4cb91ac4839efe1fe0b29190d207cf695470c93fc38"
+      },
+      "source_generation": {
+        "id": "N11a_r7_c",
+        "seed": 202610017012,
+        "prompt": "Solo piano plays G4, B4, C5, three notes only. A gentle resolving cadence, last note sustained briefly. Close dry recording.",
+        "seconds": 2,
+        "status": "generated",
+        "before_gpu": {
+          "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+          "free_mib": 56195,
+          "utilization": 20
+        },
+        "model": "stable_audio_3_small_sfx",
+        "steps": 8,
+        "cfg": 1.0,
+        "sampler": "lcm",
+        "scheduler": "simple",
+        "sha256": "731df6743d83cdddd3dffeab8ac36ddfb46e86e27f09c09e026e90ae93d891de",
+        "sample_rate": 44100,
+        "channels": 2,
+        "frames": 90112,
+        "actual_seconds": 2.043356009070295,
+        "rms": 0.03367704153060913,
+        "peak": 0.2734375,
+        "seconds_elapsed": 0.3621025085449219,
+        "human_review": "pending",
+        "peak_vram_allocated_mib": 1656.771484375
+      },
+      "source_peak": 0.2734375,
+      "source_clipped_samples": 0,
+      "duration_seconds": 1.0546875,
+      "channels": 2,
+      "sample_rate": 48000,
+      "sample_peak_dbfs": -8.673043175921226,
+      "rms_dbfs": -24.000000127289304,
+      "true_peak_4x_dbfs": -8.667515365962705,
+      "rms_windows_dbfs": [
+        -17.151636583118396,
+        -18.24415640972498,
+        -21.853073926104223,
+        -27.61840482848565,
+        -31.356121219635998,
+        -35.20753697717454,
+        -38.42809360920547,
+        -42.14094147833282,
+        -45.892875978924714,
+        -49.72008581660005,
+        -54.519645180076004
+      ],
+      "lowpass_hz": null,
+      "target_rms_dbfs": -24,
+      "crop_seconds": [
+        0.08632653061224489,
+        1.1409977324263039
+      ],
+      "gain_db": 2.5796572548979273,
+      "loop_crossfade_seconds": 0,
+      "loop_points_frames": null,
+      "duration_review_required": false,
+      "loop_seam_review": "not_applicable"
+    }
+  ],
+  "generation": {
+    "status": "generated",
+    "count": 6,
+    "load_seconds": 0.4136197566986084,
+    "torch": "2.10.0+cu128",
+    "gpu": {
+      "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+      "free_mib": 58399,
+      "utilization": 0
+    },
+    "peak_vram_allocated_mib": 1656.771484375,
+    "human_review": "pending",
+    "comfy_commit": "fb2315f11db0ebfaafa9099a5df5227dc6bb42bc"
+  },
+  "deployment": {
+    "status": "installed_and_smoke_passed",
+    "model": "Stable Audio 3 Small SFX",
+    "runtime_path": "/home/hyz/server/sfxGen/modelscope-runtime",
+    "entrypoint": "/home/hyz/server/sfxGen/modelscope-runtime/run.sh",
+    "model_files": [
+      {
+        "path": "/home/hyz/server/sfxGen/modelscope-runtime/models/checkpoints/stable_audio_3_small_sfx.safetensors",
+        "size": 2270384940,
+        "sha256": "ed9cf1b6172f1a8c2921a9560c21109ff3239524563ced9dce6dcdef41e2f515",
+        "source": "https://modelscope.cn/models/Comfy-Org/stable-audio-3/resolve/433aeb91732c448e30a8d28facf607cd6f2ec113/checkpoints/stable_audio_3_small_sfx.safetensors"
+      },
+      {
+        "path": "/home/hyz/server/sfxGen/modelscope-runtime/models/text_encoders/t5gemma_b_b_ul2.safetensors",
+        "size": 1187264003,
+        "sha256": "1e1eba25be8872edb0d3c6335c6658fd6388e7b14b60da6e454e404cfcd8150e",
+        "source": "https://modelscope.cn/models/Comfy-Org/stable-audio-3/resolve/433aeb91732c448e30a8d28facf607cd6f2ec113/text_encoders/t5gemma_b_b_ul2.safetensors"
+      }
+    ],
+    "smoke": {
+      "status": "smoke_passed",
+      "count": 4,
+      "load_seconds": 24.563406467437744,
+      "torch": "2.10.0+cu128",
+      "gpu": {
+        "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+        "free_mib": 59067,
+        "utilization": 0
+      },
+      "peak_vram_allocated_mib": 1682.39892578125,
+      "human_review": "pending",
+      "comfy_commit": "fb2315f11db0ebfaafa9099a5df5227dc6bb42bc"
+    },
+    "source_sha256": "f6868b5869d7074307831e8577c2475ffc1c668a9745ac3836d07006d673ca32",
+    "runner_sha256": "f36f1db110e870cff1de53115df1494407d9092f1d4bb676dd6550ba879a3eb8",
+    "http_service": false,
+    "production_batch_started": false,
+    "human_listening": "pending",
+    "notes": [
+      "ComfyUI repackaged model; use this CLI rather than the parent stable_audio_3 package runner",
+      "CUDA 12.8 tested successfully; newer optional optimized CUDA kernels unavailable"
+    ]
+  },
+  "loudness": {
+    "K01_r7_a": {
+      "sha256": "54673d8f804eee0bebebefef2931b5ec05039707499d6968ef33fd8f51ea087f",
+      "ffmpeg_ebur128": "Integrated loudness:\n    I:         -21.9 LUFS\n    Threshold: -32.9 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:       -7.4 dBFS\n[out#0/null @ 0xa82c08900] video:0KiB audio:150KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:00.80 bitrate=N/A speed=96.3x elapsed=0:00:00.00"
+    },
+    "K01_r7_b": {
+      "sha256": "6e4785fd1e3c2dbe1f3f0b58f86c0c92a3eb11899b23bf32b143c3285c6d14e2",
+      "ffmpeg_ebur128": "Integrated loudness:\n    I:         -25.8 LUFS\n    Threshold: -35.8 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:       -6.5 dBFS\n[out#0/null @ 0xa3a854180] video:0KiB audio:102KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:00.54 bitrate=N/A speed=79.5x elapsed=0:00:00.00"
+    },
+    "K01_r7_c": {
+      "sha256": "dbea9cdb8796eab8edc9d1a674d1f748f7c9ee941b6df4f62abe414edfb8982f",
+      "ffmpeg_ebur128": "Integrated loudness:\n    I:         -21.8 LUFS\n    Threshold: -31.8 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:       -5.5 dBFS\n[out#0/null @ 0x8c5408180] video:0KiB audio:102KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:00.54 bitrate=N/A speed=83.1x elapsed=0:00:00.00"
+    },
+    "N11a_r7_a": {
+      "sha256": "64c7a6c83a3b9f9cfbaf09fe99556ca3d8499a7ab9f33767879fda9775d3944d",
+      "ffmpeg_ebur128": "Integrated loudness:\n    I:         -18.5 LUFS\n    Threshold: -31.1 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:       -6.7 dBFS\n[out#0/null @ 0x852c08900] video:0KiB audio:318KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:01.69 bitrate=N/A speed= 132x elapsed=0:00:00.01"
+    },
+    "N11a_r7_b": {
+      "sha256": "21473c6b143e3b396529d41f614f676fd47ab737de7bb6d236ade0dfad6e21f0",
+      "ffmpeg_ebur128": "Integrated loudness:\n    I:         -19.5 LUFS\n    Threshold: -33.9 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:       -5.2 dBFS\n[out#0/null @ 0xa9b414180] video:0KiB audio:330KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:01.76 bitrate=N/A speed= 179x elapsed=0:00:00.00"
+    },
+    "N11a_r7_c": {
+      "sha256": "8578fcc727871daf1616f4cb91ac4839efe1fe0b29190d207cf695470c93fc38",
+      "ffmpeg_ebur128": "Integrated loudness:\n    I:         -20.9 LUFS\n    Threshold: -33.2 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:       -8.7 dBFS\n[out#0/null @ 0xc54c08900] video:0KiB audio:198KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:01.05 bitrate=N/A speed= 168x elapsed=0:00:00.00"
+    }
+  },
+  "human_review": "pending"
+}

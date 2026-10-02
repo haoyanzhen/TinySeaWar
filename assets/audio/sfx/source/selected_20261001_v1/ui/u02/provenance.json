@@ -1,0 +1,171 @@
+{
+  "selection": {
+    "id": "U02",
+    "title": "返回取消",
+    "category": "ui",
+    "status": "adopt",
+    "feedback": {
+      "choice": "B",
+      "notes": "",
+      "reviewed_at": "2026-10-01T01:42:50.882Z"
+    },
+    "revision_brief": "返回取消用柔和短回收动作和低落点；与已选确认C形成进退对照，避免刺耳拒绝蜂鸣。",
+    "latest_revision": {
+      "batch_id": "sfx_design18_20261001_v3",
+      "candidate_ids": [
+        "U02_d3_a",
+        "U02_d3_b",
+        "U02_d3_c"
+      ],
+      "human_review": "selected"
+    },
+    "revision_history": [
+      {
+        "batch_id": "sfx_rework27_20260930_v1",
+        "candidate_ids": [
+          "U02_rw1_a",
+          "U02_rw1_b",
+          "U02_rw1_c"
+        ],
+        "human_review": "pending"
+      },
+      {
+        "batch_id": "sfx_rework27_naval_20260930_v2",
+        "candidate_ids": [
+          "U02_nav2_a",
+          "U02_nav2_b",
+          "U02_nav2_c"
+        ],
+        "human_review": "pending"
+      }
+    ],
+    "feedback_history": [
+      {
+        "choice": "全部返工",
+        "notes": "不好听",
+        "reviewed_at": "2026-09-30T12:44:27.143Z"
+      },
+      {
+        "batch_id": "sfx_design18_20261001_v3",
+        "choice": "全部返工",
+        "notes": "意义不明",
+        "reviewed_at": "2026-10-01T01:16:45.383Z"
+      }
+    ],
+    "feedback_source": "tools/sfx/reviews/sfx_design18_20261001_v3.f189a37755a0.review.json",
+    "candidate_id": "U02_d3_b",
+    "batch_id": "sfx_design18_20261001_v3",
+    "path": "reports/audio/sfx_design18_20261001_v3/ui/U02_d3_b.wav",
+    "sha256": "7c57b8f0160345473ea9d8163ef1a555a603572eeb60f463365818bdcb561aad"
+  },
+  "production": {
+    "id": "U02_d3_b",
+    "asset_id": "U02",
+    "seed": 202610011111,
+    "prompt": "A naval tactical-menu back earcon. Two tiny clean rounded tones stepping downward, second softer, total about two tenths of a second. Gentle retreat and cancellation, quiet and dry. No mechanical slide, thump, gritty texture, static, error buzzer or music. Slightly warmer lower body; preserve all rhythmic and directional cues. Isolated finished game sound effect, no speech or vocals, no background ambience.",
+    "status": "generated",
+    "human_review": "pending",
+    "raw": {
+      "path": "ui/U02_d3_b_raw.wav",
+      "sha256": "a9df2b25a08e2883caf30fb3b1056ca1330ee7bb9c435280d34208e68b4a90a9"
+    },
+    "preview": {
+      "path": "ui/U02_d3_b.wav",
+      "sha256": "7c57b8f0160345473ea9d8163ef1a555a603572eeb60f463365818bdcb561aad"
+    },
+    "source_generation": {
+      "id": "U02_d3_b",
+      "seed": 202610011111,
+      "prompt": "A naval tactical-menu back earcon. Two tiny clean rounded tones stepping downward, second softer, total about two tenths of a second. Gentle retreat and cancellation, quiet and dry. No mechanical slide, thump, gritty texture, static, error buzzer or music. Slightly warmer lower body; preserve all rhythmic and directional cues. Isolated finished game sound effect, no speech or vocals, no background ambience.",
+      "seconds": 1,
+      "status": "generated",
+      "before_gpu": {
+        "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+        "free_mib": 56191,
+        "utilization": 26
+      },
+      "model": "stable_audio_3_small_sfx",
+      "steps": 8,
+      "cfg": 1.0,
+      "sampler": "lcm",
+      "scheduler": "simple",
+      "sha256": "a9df2b25a08e2883caf30fb3b1056ca1330ee7bb9c435280d34208e68b4a90a9",
+      "sample_rate": 44100,
+      "channels": 2,
+      "frames": 49152,
+      "actual_seconds": 1.1145578231292517,
+      "rms": 0.0054201711900532246,
+      "peak": 0.0732421875,
+      "seconds_elapsed": 0.3473210334777832,
+      "human_review": "pending",
+      "peak_vram_allocated_mib": 1660.2822265625
+    },
+    "source_peak": 0.0732421875,
+    "source_clipped_samples": 0,
+    "duration_seconds": 0.20345833333333332,
+    "channels": 2,
+    "sample_rate": 48000,
+    "sample_peak_dbfs": -10.658895888491063,
+    "rms_dbfs": -25.89895860306809,
+    "true_peak_4x_dbfs": -10.653368567030611,
+    "rms_windows_dbfs": [
+      -22.889219849010367,
+      -61.77330658700824
+    ],
+    "lowpass_hz": null,
+    "target_rms_dbfs": -24,
+    "crop_seconds": [
+      0.06800453514739228,
+      0.27145124716553287
+    ],
+    "gain_db": 12.041199826559248,
+    "loop_crossfade_seconds": 0,
+    "loop_points_frames": null,
+    "duration_review_required": false,
+    "loop_seam_review": "not_applicable"
+  },
+  "asset_design": {
+    "id": "U02",
+    "category": "ui",
+    "title": "返回取消",
+    "target_seconds": 0.22,
+    "generation_seconds": 1,
+    "loop": false,
+    "direction": "两枚柔和短音高→低，后一音更轻；极短回退，干净无摩擦尾层。 验收：与已采纳U01确认方向相反；不是拒绝报警。",
+    "english_brief": "A naval tactical-menu back earcon. Two tiny clean rounded tones stepping downward, second softer, total about two tenths of a second. Gentle retreat and cancellation, quiet and dry. No mechanical slide, thump, gritty texture, static, error buzzer or music.",
+    "candidates": [
+      {
+        "id": "U02_d3_a",
+        "seed": 202610011110,
+        "variation": "清楚轮廓",
+        "prompt": "A naval tactical-menu back earcon. Two tiny clean rounded tones stepping downward, second softer, total about two tenths of a second. Gentle retreat and cancellation, quiet and dry. No mechanical slide, thump, gritty texture, static, error buzzer or music. Clear compact attack, dry and precisely separated stages. Isolated finished game sound effect, no speech or vocals, no background ambience.",
+        "status": "planned"
+      },
+      {
+        "id": "U02_d3_b",
+        "seed": 202610011111,
+        "variation": "温暖主体",
+        "prompt": "A naval tactical-menu back earcon. Two tiny clean rounded tones stepping downward, second softer, total about two tenths of a second. Gentle retreat and cancellation, quiet and dry. No mechanical slide, thump, gritty texture, static, error buzzer or music. Slightly warmer lower body; preserve all rhythmic and directional cues. Isolated finished game sound effect, no speech or vocals, no background ambience.",
+        "status": "planned"
+      },
+      {
+        "id": "U02_d3_c",
+        "seed": 202610011112,
+        "variation": "圆润边缘",
+        "prompt": "A naval tactical-menu back earcon. Two tiny clean rounded tones stepping downward, second softer, total about two tenths of a second. Gentle retreat and cancellation, quiet and dry. No mechanical slide, thump, gritty texture, static, error buzzer or music. Gentler upper frequencies and rounded attack; preserve the same sequence and direction. Isolated finished game sound effect, no speech or vocals, no background ambience.",
+        "status": "planned"
+      }
+    ],
+    "review_target_rms_dbfs": -24,
+    "previous_feedback": {
+      "choice": "全部返工",
+      "notes": "不好听",
+      "reviewed_at": "2026-09-30T12:44:27.143Z"
+    }
+  },
+  "source_batch_sha256": "e7e3ab90c4f035bc32a07579b46c6af96e93c72e8487d88606aef8e7321a6b68",
+  "loudness": {
+    "sha256": "7c57b8f0160345473ea9d8163ef1a555a603572eeb60f463365818bdcb561aad",
+    "ffmpeg_ebur128": "Integrated loudness:\n    I:         -70.0 LUFS\n    Threshold:   0.0 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:      -10.7 dBFS\n[out#0/null @ 0xc02c68180] video:0KiB audio:38KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:00.20 bitrate=N/A speed=87.4x elapsed=0:00:00.00"
+  }
+}

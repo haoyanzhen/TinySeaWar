@@ -1,0 +1,183 @@
+{
+  "selection": {
+    "id": "W09",
+    "title": "近防机炮",
+    "category": "weapon",
+    "status": "adopt",
+    "feedback": {
+      "choice": "A",
+      "notes": "",
+      "reviewed_at": "2026-10-01T01:10:54.221Z"
+    },
+    "revision_brief": "降低尖锐高频，保留可辨短连射节奏及机械循环；A仅作修改参考，未采纳为最终版。",
+    "latest_revision": {
+      "batch_id": "sfx_rework27_naval_20260930_v2",
+      "candidate_ids": [
+        "W09_nav2_a",
+        "W09_nav2_b",
+        "W09_nav2_c"
+      ],
+      "human_review": "pending"
+    },
+    "revision_history": [
+      {
+        "batch_id": "sfx_rework27_20260930_v1",
+        "candidate_ids": [
+          "W09_rw1_a",
+          "W09_rw1_b",
+          "W09_rw1_c"
+        ],
+        "human_review": "pending"
+      }
+    ],
+    "feedback_history": [
+      {
+        "choice": "A",
+        "notes": "防空炮声音可以修低一点",
+        "reviewed_at": "2026-09-30T10:31:29.426Z"
+      }
+    ],
+    "candidate_id": "W09_nav2_a",
+    "batch_id": "sfx_rework27_naval_20260930_v2",
+    "path": "reports/audio/sfx_rework27_naval_20260930_v2/weapon/W09_nav2_a.wav",
+    "sha256": "921c019e8fb2bab3eadcd7eda87751a9185e28fb1be70809b00ccf89cce07bd6"
+  },
+  "production": {
+    "id": "W09_nav2_a",
+    "asset_id": "W09",
+    "seed": 202609312020,
+    "prompt": "Sound effect for Tiny Sea War, a 2D anime shipgirl naval battle game. An anime shipgirl naval anti-aircraft mount defends her fleet at sea. A compact burst from a ship-mounted automatic cannon, weighty steel breech cycling over an open deck. A short controlled burst of a naval close-in automatic cannon. Several clearly separated low-mid throaty reports with rhythmic mechanical cycling. Rounded edges, subdued treble, no shrill rattling. Close, crisp material detail and short outdoor decay. One isolated compact event with a complete ending. No voices, speech, music, seagulls, background surf, room ambience, or fantasy magic. Preserve the specific naval action; no unrelated generic notification.",
+    "status": "generated",
+    "human_review": "pending",
+    "raw": {
+      "path": "weapon/W09_nav2_a_raw.wav",
+      "sha256": "46352e2e43e9cd5c72dd2885638561b66b3fcce84102cbb8c579fef394ead0b8"
+    },
+    "preview": {
+      "path": "weapon/W09_nav2_a.wav",
+      "sha256": "921c019e8fb2bab3eadcd7eda87751a9185e28fb1be70809b00ccf89cce07bd6"
+    },
+    "source_generation": {
+      "id": "W09_nav2_a",
+      "seed": 202609312020,
+      "prompt": "Sound effect for Tiny Sea War, a 2D anime shipgirl naval battle game. An anime shipgirl naval anti-aircraft mount defends her fleet at sea. A compact burst from a ship-mounted automatic cannon, weighty steel breech cycling over an open deck. A short controlled burst of a naval close-in automatic cannon. Several clearly separated low-mid throaty reports with rhythmic mechanical cycling. Rounded edges, subdued treble, no shrill rattling. Close, crisp material detail and short outdoor decay. One isolated compact event with a complete ending. No voices, speech, music, seagulls, background surf, room ambience, or fantasy magic. Preserve the specific naval action; no unrelated generic notification.",
+      "seconds": 3,
+      "status": "generated",
+      "before_gpu": {
+        "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+        "free_mib": 56195,
+        "utilization": 28
+      },
+      "model": "stable_audio_3_small_sfx",
+      "steps": 8,
+      "cfg": 1.0,
+      "sampler": "lcm",
+      "scheduler": "simple",
+      "sha256": "46352e2e43e9cd5c72dd2885638561b66b3fcce84102cbb8c579fef394ead0b8",
+      "sample_rate": 44100,
+      "channels": 2,
+      "frames": 131072,
+      "actual_seconds": 2.972154195011338,
+      "rms": 0.0893976241350174,
+      "peak": 1.4140625,
+      "seconds_elapsed": 0.35096240043640137,
+      "human_review": "pending",
+      "peak_vram_allocated_mib": 1660.2822265625
+    },
+    "source_peak": 1.4140625,
+    "source_clipped_samples": 38,
+    "duration_seconds": 2.943020833333333,
+    "channels": 1,
+    "sample_rate": 48000,
+    "sample_peak_dbfs": -2.9999995180030155,
+    "rms_dbfs": -26.92604468890819,
+    "true_peak_4x_dbfs": -2.891836700349524,
+    "rms_windows_dbfs": [
+      -23.862437969127157,
+      -21.999494970355407,
+      -18.51483137456346,
+      -21.106801244202906,
+      -18.750048437349815,
+      -21.302390156233578,
+      -27.135351925968205,
+      -31.223300909404838,
+      -32.308065571574424,
+      -33.43644552011382,
+      -33.07133025452279,
+      -32.91671496441563,
+      -36.768227879978895,
+      -37.4008729641219,
+      -40.19416261069959,
+      -37.698049669336854,
+      -38.81220626517897,
+      -41.05704894828136,
+      -42.18544758545353,
+      -42.14338661158123,
+      -42.54462490916083,
+      -46.77564434231663,
+      -46.120074602651044,
+      -48.189155360794906,
+      -50.2786044086898,
+      -53.40539933855045,
+      -55.919350067732125,
+      -60.22520288404202,
+      -64.31715283102159
+    ],
+    "lowpass_hz": null,
+    "target_rms_dbfs": -23,
+    "crop_seconds": [
+      0.0,
+      2.943015873015873
+    ],
+    "gain_db": -5.93141053605295,
+    "loop_crossfade_seconds": 0,
+    "loop_points_frames": null,
+    "duration_review_required": true,
+    "loop_seam_review": "not_applicable"
+  },
+  "asset_design": {
+    "id": "W09",
+    "category": "weapon",
+    "title": "近防机炮",
+    "target_seconds": 0.7,
+    "generation_seconds": 3,
+    "loop": false,
+    "direction": "舰娘海战场景：降低尖锐高频，保留可辨短连射节奏及机械循环；A仅作修改参考，未采纳为最终版。",
+    "english_brief": "A short controlled burst of a naval close-in automatic cannon. Several clearly separated low-mid throaty reports with rhythmic mechanical cycling. Rounded edges, subdued treble, no shrill rattling.",
+    "candidates": [
+      {
+        "id": "W09_nav2_a",
+        "seed": 202609312020,
+        "variation": "干净动作",
+        "prompt": "Sound effect for Tiny Sea War, a 2D anime shipgirl naval battle game. An anime shipgirl naval anti-aircraft mount defends her fleet at sea. A compact burst from a ship-mounted automatic cannon, weighty steel breech cycling over an open deck. A short controlled burst of a naval close-in automatic cannon. Several clearly separated low-mid throaty reports with rhythmic mechanical cycling. Rounded edges, subdued treble, no shrill rattling. Close, crisp material detail and short outdoor decay. One isolated compact event with a complete ending. No voices, speech, music, seagulls, background surf, room ambience, or fantasy magic. Preserve the specific naval action; no unrelated generic notification.",
+        "status": "planned"
+      },
+      {
+        "id": "W09_nav2_b",
+        "seed": 202609312021,
+        "variation": "温暖材质",
+        "prompt": "Sound effect for Tiny Sea War, a 2D anime shipgirl naval battle game. An anime shipgirl naval anti-aircraft mount defends her fleet at sea. A compact burst from a ship-mounted automatic cannon, weighty steel breech cycling over an open deck. A short controlled burst of a naval close-in automatic cannon. Several clearly separated low-mid throaty reports with rhythmic mechanical cycling. Rounded edges, subdued treble, no shrill rattling. Warm full material body, controlled low frequencies and gentle treble. One isolated compact event with a complete ending. No voices, speech, music, seagulls, background surf, room ambience, or fantasy magic. Preserve the specific naval action; no unrelated generic notification.",
+        "status": "planned"
+      },
+      {
+        "id": "W09_nav2_c",
+        "seed": 202609312022,
+        "variation": "柔和耐听",
+        "prompt": "Sound effect for Tiny Sea War, a 2D anime shipgirl naval battle game. An anime shipgirl naval anti-aircraft mount defends her fleet at sea. A compact burst from a ship-mounted automatic cannon, weighty steel breech cycling over an open deck. A short controlled burst of a naval close-in automatic cannon. Several clearly separated low-mid throaty reports with rhythmic mechanical cycling. Rounded edges, subdued treble, no shrill rattling. Rounded gentle attack with clear action timing, comfortable for repeated playback. One isolated compact event with a complete ending. No voices, speech, music, seagulls, background surf, room ambience, or fantasy magic. Preserve the specific naval action; no unrelated generic notification.",
+        "status": "planned"
+      }
+    ],
+    "review_target_rms_dbfs": -23,
+    "previous_feedback": {
+      "choice": "A",
+      "notes": "防空炮声音可以修低一点",
+      "reviewed_at": "2026-09-30T10:31:29.426Z"
+    },
+    "naval_context": "An anime shipgirl naval anti-aircraft mount defends her fleet at sea. A compact burst from a ship-mounted automatic cannon, weighty steel breech cycling over an open deck."
+  },
+  "source_batch_sha256": "06e64691b5e2c24e9d6c4a2dc7c708f82bca46ae70c6c6e34337434f1c5faeae",
+  "loudness": {
+    "sha256": "921c019e8fb2bab3eadcd7eda87751a9185e28fb1be70809b00ccf89cce07bd6",
+    "ffmpeg_ebur128": "Integrated loudness:\n    I:         -22.7 LUFS\n    Threshold: -36.8 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:       -2.9 dBFS\n[out#0/null @ 0xb6f40c240] video:0KiB audio:276KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:02.94 bitrate=N/A speed= 332x elapsed=0:00:00.00"
+  }
+}

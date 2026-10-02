@@ -1,0 +1,208 @@
+{
+  "selection": {
+    "id": "S01",
+    "title": "下潜过程",
+    "category": "submarine",
+    "status": "adopt",
+    "feedback": {
+      "choice": "C",
+      "notes": "",
+      "reviewed_at": "2026-10-01T02:04:19.511Z"
+    },
+    "revision_brief": "重做具有大体积下潜感的声音，排除游泳起伏；当前方案未获通过。",
+    "latest_revision": {
+      "batch_id": "sfx_revision15_20261001_v4",
+      "candidate_ids": [
+        "S01_r4_a",
+        "S01_r4_b",
+        "S01_r4_c"
+      ],
+      "human_review": "selected"
+    },
+    "revision_history": [
+      {
+        "batch_id": "sfx_rework27_20260930_v1",
+        "candidate_ids": [
+          "S01_rw1_a",
+          "S01_rw1_b",
+          "S01_rw1_c"
+        ],
+        "human_review": "pending"
+      },
+      {
+        "batch_id": "sfx_rework27_naval_20260930_v2",
+        "candidate_ids": [
+          "S01_nav2_a",
+          "S01_nav2_b",
+          "S01_nav2_c"
+        ],
+        "human_review": "pending"
+      },
+      {
+        "batch_id": "sfx_design18_20261001_v3",
+        "candidate_ids": [
+          "S01_d3_a",
+          "S01_d3_b",
+          "S01_d3_c"
+        ],
+        "human_review": "revision_requested"
+      }
+    ],
+    "feedback_history": [
+      {
+        "choice": "全部返工",
+        "notes": "电话感严重",
+        "reviewed_at": "2026-09-30T12:32:50.336Z"
+      },
+      {
+        "batch_id": "sfx_design18_20261001_v3",
+        "choice": "全部返工",
+        "notes": "太浅了，不像大海，像洗手台",
+        "reviewed_at": "2026-10-01T01:14:25.106Z"
+      },
+      {
+        "batch_id": "sfx_design18_20261001_v3",
+        "choice": "全部返工",
+        "notes": "不像下潜，这声音跟游泳上下浮似的",
+        "reviewed_at": "2026-10-01T01:37:27.133Z"
+      }
+    ],
+    "feedback_source": "tools/sfx/reviews/sfx_revision15_20261001_v4.44dad23e7ebd.review.json",
+    "candidate_id": "S01_r4_c",
+    "batch_id": "sfx_revision15_20261001_v4",
+    "path": "reports/audio/sfx_revision15_20261001_v4/submarine/S01_r4_c.wav",
+    "sha256": "bd9b4b3b43d5262254ff7c1fda88859edcd2263835f5cf0caa9f02df912826d0"
+  },
+  "production": {
+    "id": "S01_r4_c",
+    "asset_id": "S01",
+    "seed": 202610014022,
+    "prompt": "A submarine diving into deep ocean. A large mass of seawater surges over the steel hull and sinks downward with deep rolling water and heavy bubbling. Powerful broad water movement. Full rounded sound, soft edges.",
+    "status": "generated",
+    "human_review": "pending",
+    "raw": {
+      "path": "submarine/S01_r4_c_raw.wav",
+      "sha256": "32c9deacf2ee18f462f86354d6ff21c6abd3cfeb0a1790425668cbb675d9408b"
+    },
+    "preview": {
+      "path": "submarine/S01_r4_c.wav",
+      "sha256": "bd9b4b3b43d5262254ff7c1fda88859edcd2263835f5cf0caa9f02df912826d0"
+    },
+    "source_generation": {
+      "id": "S01_r4_c",
+      "seed": 202610014022,
+      "prompt": "A submarine diving into deep ocean. A large mass of seawater surges over the steel hull and sinks downward with deep rolling water and heavy bubbling. Powerful broad water movement. Full rounded sound, soft edges.",
+      "seconds": 3,
+      "status": "generated",
+      "before_gpu": {
+        "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+        "free_mib": 56193,
+        "utilization": 29
+      },
+      "model": "stable_audio_3_small_sfx",
+      "steps": 8,
+      "cfg": 1.0,
+      "sampler": "lcm",
+      "scheduler": "simple",
+      "sha256": "32c9deacf2ee18f462f86354d6ff21c6abd3cfeb0a1790425668cbb675d9408b",
+      "sample_rate": 44100,
+      "channels": 2,
+      "frames": 131072,
+      "actual_seconds": 2.972154195011338,
+      "rms": 0.06808986514806747,
+      "peak": 0.67578125,
+      "seconds_elapsed": 0.3435811996459961,
+      "human_review": "pending",
+      "peak_vram_allocated_mib": 1660.2822265625
+    },
+    "source_peak": 0.67578125,
+    "source_clipped_samples": 0,
+    "duration_seconds": 2.359916666666667,
+    "channels": 1,
+    "sample_rate": 48000,
+    "sample_peak_dbfs": -4.8150181695354,
+    "rms_dbfs": -22.999999518003015,
+    "true_peak_4x_dbfs": -4.703715278168254,
+    "rms_windows_dbfs": [
+      -53.0404828913996,
+      -34.231400695398754,
+      -26.723820283871603,
+      -18.99246990941822,
+      -20.637228385384873,
+      -16.358797106773586,
+      -17.645595886636475,
+      -17.192967751047817,
+      -19.967501373011835,
+      -18.770019216868633,
+      -26.325523946339416,
+      -25.509334516130473,
+      -23.36910009958409,
+      -27.622497272256503,
+      -29.544312904338746,
+      -32.318402156011174,
+      -35.52158628823831,
+      -42.52159315363119,
+      -38.566073202128536,
+      -44.794365080824655,
+      -44.68908288758347,
+      -44.20474976495973,
+      -48.294011296229755,
+      -77.87948876387694
+    ],
+    "lowpass_hz": null,
+    "target_rms_dbfs": -23,
+    "crop_seconds": [
+      0.0,
+      2.359909297052154
+    ],
+    "gain_db": 0.19672489421655598,
+    "loop_crossfade_seconds": 0,
+    "loop_points_frames": null,
+    "duration_review_required": false,
+    "loop_seam_review": "not_applicable"
+  },
+  "asset_design": {
+    "id": "S01",
+    "category": "submarine",
+    "title": "下潜过程",
+    "target_seconds": 2,
+    "generation_seconds": 3,
+    "loop": false,
+    "direction": "重做具有大体积下潜感的声音，排除游泳起伏；当前方案未获通过。",
+    "english_brief": "A submarine diving into deep ocean. A large mass of seawater surges over the steel hull and sinks downward with deep rolling water and heavy bubbling. Powerful broad water movement.",
+    "candidates": [
+      {
+        "id": "S01_r4_a",
+        "seed": 202610014020,
+        "prompt": "A submarine diving into deep ocean. A large mass of seawater surges over the steel hull and sinks downward with deep rolling water and heavy bubbling. Powerful broad water movement. Clean close recording.",
+        "variation": "清楚自然",
+        "status": "planned"
+      },
+      {
+        "id": "S01_r4_b",
+        "seed": 202610014021,
+        "prompt": "A submarine diving into deep ocean. A large mass of seawater surges over the steel hull and sinks downward with deep rolling water and heavy bubbling. Powerful broad water movement. Warm tone, gentle treble.",
+        "variation": "柔和温暖",
+        "status": "planned"
+      },
+      {
+        "id": "S01_r4_c",
+        "seed": 202610014022,
+        "prompt": "A submarine diving into deep ocean. A large mass of seawater surges over the steel hull and sinks downward with deep rolling water and heavy bubbling. Powerful broad water movement. Full rounded sound, soft edges.",
+        "variation": "饱满圆润",
+        "status": "planned"
+      }
+    ],
+    "review_target_rms_dbfs": -23,
+    "previous_feedback": {
+      "choice": "全部返工",
+      "notes": "不像下潜，这声音跟游泳上下浮似的",
+      "reviewed_at": "2026-10-01T01:37:27.133Z"
+    }
+  },
+  "source_batch_sha256": "0bb4ef7407247ce6ed59492dd41bf1d2efd535b44b6e578652337c23b0381464",
+  "loudness": {
+    "sha256": "bd9b4b3b43d5262254ff7c1fda88859edcd2263835f5cf0caa9f02df912826d0",
+    "ffmpeg_ebur128": "Integrated loudness:\n    I:         -21.2 LUFS\n    Threshold: -32.7 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:       -4.7 dBFS\n[out#0/null @ 0x7df020180] video:0KiB audio:221KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:02.35 bitrate=N/A speed= 321x elapsed=0:00:00.00"
+  }
+}

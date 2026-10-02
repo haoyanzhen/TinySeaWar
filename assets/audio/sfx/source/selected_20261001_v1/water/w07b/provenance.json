@@ -1,0 +1,133 @@
+{
+  "selection": {
+    "id": "W07b",
+    "title": "深弹入水",
+    "category": "water",
+    "status": "adopt",
+    "feedback": {
+      "choice": "B",
+      "notes": "",
+      "reviewed_at": "2026-09-30T10:30:24.756Z"
+    },
+    "candidate_id": "W07b_full_b",
+    "batch_id": "sfx_full_20260930_v3",
+    "path": "reports/audio/sfx_full_20260930_v3/water/W07b_full_b.wav",
+    "sha256": "dbde4c40763fabb4aa100eb613a89ade78566b57f72836821f65c655cacd2ba1"
+  },
+  "production": {
+    "id": "W07b_full_b",
+    "asset_id": "W07b",
+    "seed": 202609306071,
+    "prompt": "One heavy depth charge splashing into water, deep splash and brief bubbles. A small agile ship rig gliding at the water surface, delicate believable water movement for a naval game. Warm flowing water with slow smooth motion. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+    "status": "generated",
+    "human_review": "pending",
+    "raw": {
+      "path": "water/W07b_full_b_raw.wav",
+      "sha256": "b911484d239b16758578f13daf8c7f64c6906951961c80df740353cc2a510091"
+    },
+    "preview": {
+      "path": "water/W07b_full_b.wav",
+      "sha256": "dbde4c40763fabb4aa100eb613a89ade78566b57f72836821f65c655cacd2ba1"
+    },
+    "source_generation": {
+      "id": "W07b_full_b",
+      "prompt": "One heavy depth charge splashing into water, deep splash and brief bubbles. A small agile ship rig gliding at the water surface, delicate believable water movement for a naval game. Warm flowing water with slow smooth motion. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+      "seconds": 2,
+      "seed": 202609306071,
+      "status": "generated",
+      "before_gpu": {
+        "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+        "free_mib": 56153,
+        "utilization": 10
+      },
+      "model": "stable_audio_3_small_sfx",
+      "steps": 8,
+      "cfg": 1.0,
+      "sampler": "lcm",
+      "scheduler": "simple",
+      "sha256": "b911484d239b16758578f13daf8c7f64c6906951961c80df740353cc2a510091",
+      "sample_rate": 44100,
+      "channels": 2,
+      "frames": 90112,
+      "actual_seconds": 2.043356009070295,
+      "rms": 0.0225529745221138,
+      "peak": 0.298828125,
+      "seconds_elapsed": 0.3832235336303711,
+      "human_review": "pending",
+      "peak_vram_allocated_mib": 1682.39892578125
+    },
+    "source_peak": 0.298828125,
+    "source_clipped_samples": 0,
+    "duration_seconds": 1.2693125,
+    "channels": 1,
+    "sample_rate": 48000,
+    "sample_peak_dbfs": -3.0000009805991428,
+    "rms_dbfs": -23.355709471605284,
+    "true_peak_4x_dbfs": -2.9944733946889333,
+    "rms_windows_dbfs": [
+      -29.49049889045594,
+      -15.385353542413842,
+      -25.79350770144259,
+      -19.37862076549476,
+      -19.027827520311593,
+      -28.924134971852453,
+      -38.16625902645537,
+      -33.62966470091999,
+      -33.88172400484416,
+      -37.93257860868663,
+      -30.827702631387098,
+      -48.44276441265485,
+      -52.737018599704165
+    ],
+    "lowpass_hz": null,
+    "target_rms_dbfs": -23,
+    "crop_seconds": [
+      0.0,
+      1.269297052154195
+    ],
+    "gain_db": 7.512161483585292,
+    "loop_crossfade_seconds": 0,
+    "loop_points_frames": null,
+    "duration_review_required": false,
+    "loop_seam_review": "not_applicable"
+  },
+  "asset_design": {
+    "id": "W07b",
+    "category": "water",
+    "title": "深弹入水",
+    "target_seconds": 0.8,
+    "generation_seconds": 2,
+    "loop": false,
+    "direction": "沉重入水、短气泡",
+    "english_brief": "One heavy depth charge splashing into water, deep splash and brief bubbles",
+    "candidates": [
+      {
+        "id": "W07b_full_a",
+        "seed": 202609306070,
+        "variation": "清晰水纹",
+        "prompt": "One heavy depth charge splashing into water, deep splash and brief bubbles. A small agile ship rig gliding at the water surface, delicate believable water movement for a naval game. Clean close water detail with restrained fine spray. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+        "status": "planned"
+      },
+      {
+        "id": "W07b_full_b",
+        "seed": 202609306071,
+        "variation": "柔和水流",
+        "prompt": "One heavy depth charge splashing into water, deep splash and brief bubbles. A small agile ship rig gliding at the water surface, delicate believable water movement for a naval game. Warm flowing water with slow smooth motion. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+        "status": "planned"
+      },
+      {
+        "id": "W07b_full_c",
+        "seed": 202609306072,
+        "variation": "轻盈破水",
+        "prompt": "One heavy depth charge splashing into water, deep splash and brief bubbles. A small agile ship rig gliding at the water surface, delicate believable water movement for a naval game. Airy rounded water movement, no harsh hiss. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+        "status": "planned"
+      }
+    ],
+    "review_target_rms_dbfs": -23
+  },
+  "source_batch_sha256": "4d1cd2f07e2abb4699a4cc6e3e71480b2237080da3a70b79baf18d1642ca8b4c",
+  "loudness": {
+    "sha256": "dbde4c40763fabb4aa100eb613a89ade78566b57f72836821f65c655cacd2ba1",
+    "ffmpeg_ebur128": "Integrated loudness:\n    I:         -23.5 LUFS\n    Threshold: -33.9 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:       -3.0 dBFS\n[out#0/null @ 0xaf3024180] video:0KiB audio:119KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:01.26 bitrate=N/A speed= 290x elapsed=0:00:00.00"
+  }
+}

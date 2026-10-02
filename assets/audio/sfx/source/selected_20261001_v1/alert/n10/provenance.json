@@ -1,0 +1,190 @@
+{
+  "selection": {
+    "id": "N10",
+    "title": "任务阶段更新",
+    "category": "alert",
+    "status": "adopt",
+    "feedback": {
+      "choice": "C",
+      "notes": "",
+      "reviewed_at": "2026-10-01T02:05:13.883Z"
+    },
+    "revision_brief": "当前电波式音色被否定；下一次设计前检查音效模型提示词实践，避免继续堆抽象音型描述。",
+    "latest_revision": {
+      "batch_id": "sfx_revision15_20261001_v4",
+      "candidate_ids": [
+        "N10_r4_a",
+        "N10_r4_b",
+        "N10_r4_c"
+      ],
+      "human_review": "selected"
+    },
+    "revision_history": [
+      {
+        "batch_id": "sfx_rework27_20260930_v1",
+        "candidate_ids": [
+          "N10_rw1_a",
+          "N10_rw1_b",
+          "N10_rw1_c"
+        ],
+        "human_review": "pending"
+      },
+      {
+        "batch_id": "sfx_rework27_naval_20260930_v2",
+        "candidate_ids": [
+          "N10_nav2_a",
+          "N10_nav2_b",
+          "N10_nav2_c"
+        ],
+        "human_review": "pending"
+      },
+      {
+        "batch_id": "sfx_design18_20261001_v3",
+        "candidate_ids": [
+          "N10_d3_a",
+          "N10_d3_b",
+          "N10_d3_c"
+        ],
+        "human_review": "revision_requested"
+      }
+    ],
+    "feedback_history": [
+      {
+        "choice": "全部返工",
+        "notes": "音高，可以低一点",
+        "reviewed_at": "2026-09-30T12:36:51.159Z"
+      },
+      {
+        "batch_id": "sfx_design18_20261001_v3",
+        "choice": "全部返工",
+        "notes": "意义不明",
+        "reviewed_at": "2026-10-01T01:14:59.349Z"
+      },
+      {
+        "batch_id": "sfx_design18_20261001_v3",
+        "choice": "",
+        "notes": "更外星人电波似的……你怎么做到的？可以参考一下音效生成的提示词实践",
+        "reviewed_at": "2026-10-01T01:39:39.665Z"
+      }
+    ],
+    "feedback_source": "tools/sfx/reviews/sfx_revision15_20261001_v4.44dad23e7ebd.review.json",
+    "candidate_id": "N10_r4_c",
+    "batch_id": "sfx_revision15_20261001_v4",
+    "path": "reports/audio/sfx_revision15_20261001_v4/alert/N10_r4_c.wav",
+    "sha256": "e26ab8a7610bbdbaf3007820dbb732647aa232645945a98a5f04d284e1ed5496"
+  },
+  "production": {
+    "id": "N10_r4_c",
+    "asset_id": "N10",
+    "seed": 202610014052,
+    "prompt": "A pleasant short video game notification chime. Two light marimba notes, warm natural wooden tone, clean gentle finish. Naval mission progress notification. Full rounded sound, soft edges.",
+    "status": "generated",
+    "human_review": "pending",
+    "raw": {
+      "path": "alert/N10_r4_c_raw.wav",
+      "sha256": "0ffdbb96d8f228fcb2578ffb78eab1836fd59d9f9a210d151b83a0f364702655"
+    },
+    "preview": {
+      "path": "alert/N10_r4_c.wav",
+      "sha256": "e26ab8a7610bbdbaf3007820dbb732647aa232645945a98a5f04d284e1ed5496"
+    },
+    "source_generation": {
+      "id": "N10_r4_c",
+      "seed": 202610014052,
+      "prompt": "A pleasant short video game notification chime. Two light marimba notes, warm natural wooden tone, clean gentle finish. Naval mission progress notification. Full rounded sound, soft edges.",
+      "seconds": 1,
+      "status": "generated",
+      "before_gpu": {
+        "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+        "free_mib": 56193,
+        "utilization": 24
+      },
+      "model": "stable_audio_3_small_sfx",
+      "steps": 8,
+      "cfg": 1.0,
+      "sampler": "lcm",
+      "scheduler": "simple",
+      "sha256": "0ffdbb96d8f228fcb2578ffb78eab1836fd59d9f9a210d151b83a0f364702655",
+      "sample_rate": 44100,
+      "channels": 2,
+      "frames": 49152,
+      "actual_seconds": 1.1145578231292517,
+      "rms": 0.03313172608613968,
+      "peak": 0.17578125,
+      "seconds_elapsed": 0.3440549373626709,
+      "human_review": "pending",
+      "peak_vram_allocated_mib": 1660.2822265625
+    },
+    "source_peak": 0.17578125,
+    "source_clipped_samples": 0,
+    "duration_seconds": 0.6126458333333333,
+    "channels": 2,
+    "sample_rate": 48000,
+    "sample_peak_dbfs": -12.086779108621355,
+    "rms_dbfs": -24.000000127289304,
+    "true_peak_4x_dbfs": -12.081251678713638,
+    "rms_windows_dbfs": [
+      -24.61717400456859,
+      -18.932167074762337,
+      -21.824581798793588,
+      -30.025696000249194,
+      -40.962375519713426,
+      -58.0811866848843
+    ],
+    "lowpass_hz": null,
+    "target_rms_dbfs": -24,
+    "crop_seconds": [
+      0.0,
+      0.6126303854875284
+    ],
+    "gain_db": 3.006659998554402,
+    "loop_crossfade_seconds": 0,
+    "loop_points_frames": null,
+    "duration_review_required": false,
+    "loop_seam_review": "not_applicable"
+  },
+  "asset_design": {
+    "id": "N10",
+    "category": "alert",
+    "title": "任务阶段更新",
+    "target_seconds": 0.45,
+    "generation_seconds": 1,
+    "loop": false,
+    "direction": "当前电波式音色被否定；下一次设计前检查音效模型提示词实践，避免继续堆抽象音型描述。",
+    "english_brief": "A pleasant short video game notification chime. Two light marimba notes, warm natural wooden tone, clean gentle finish. Naval mission progress notification.",
+    "candidates": [
+      {
+        "id": "N10_r4_a",
+        "seed": 202610014050,
+        "prompt": "A pleasant short video game notification chime. Two light marimba notes, warm natural wooden tone, clean gentle finish. Naval mission progress notification. Clean close recording.",
+        "variation": "清楚自然",
+        "status": "planned"
+      },
+      {
+        "id": "N10_r4_b",
+        "seed": 202610014051,
+        "prompt": "A pleasant short video game notification chime. Two light marimba notes, warm natural wooden tone, clean gentle finish. Naval mission progress notification. Warm tone, gentle treble.",
+        "variation": "柔和温暖",
+        "status": "planned"
+      },
+      {
+        "id": "N10_r4_c",
+        "seed": 202610014052,
+        "prompt": "A pleasant short video game notification chime. Two light marimba notes, warm natural wooden tone, clean gentle finish. Naval mission progress notification. Full rounded sound, soft edges.",
+        "variation": "饱满圆润",
+        "status": "planned"
+      }
+    ],
+    "review_target_rms_dbfs": -24,
+    "previous_feedback": {
+      "choice": "",
+      "notes": "更外星人电波似的……你怎么做到的？可以参考一下音效生成的提示词实践",
+      "reviewed_at": "2026-10-01T01:39:39.665Z"
+    }
+  },
+  "source_batch_sha256": "0bb4ef7407247ce6ed59492dd41bf1d2efd535b44b6e578652337c23b0381464",
+  "loudness": {
+    "sha256": "e26ab8a7610bbdbaf3007820dbb732647aa232645945a98a5f04d284e1ed5496",
+    "ffmpeg_ebur128": "Integrated loudness:\n    I:         -21.1 LUFS\n    Threshold: -31.1 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:      -12.1 dBFS\n[out#0/null @ 0xa62c08900] video:0KiB audio:115KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:00.61 bitrate=N/A speed= 134x elapsed=0:00:00.00"
+  }
+}

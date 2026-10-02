@@ -1,0 +1,181 @@
+{
+  "selection": {
+    "id": "W10a",
+    "title": "重防空炮",
+    "category": "weapon",
+    "status": "adopt",
+    "feedback": {
+      "choice": "B",
+      "notes": "",
+      "reviewed_at": "2026-10-01T01:14:00.759Z"
+    },
+    "revision_brief": "更低沉厚重的防空炮短连发，逐发节奏可辨；避免单发重炮和电影爆炸长尾。",
+    "latest_revision": {
+      "batch_id": "sfx_rework27_naval_20260930_v2",
+      "candidate_ids": [
+        "W10a_nav2_a",
+        "W10a_nav2_b",
+        "W10a_nav2_c"
+      ],
+      "human_review": "pending"
+    },
+    "revision_history": [
+      {
+        "batch_id": "sfx_rework27_20260930_v1",
+        "candidate_ids": [
+          "W10a_rw1_a",
+          "W10a_rw1_b",
+          "W10a_rw1_c"
+        ],
+        "human_review": "pending"
+      }
+    ],
+    "feedback_history": [
+      {
+        "choice": "",
+        "notes": "防空炮声音可以修低一点，重炮防空炮也是连发的",
+        "reviewed_at": "2026-09-30T10:31:24.425Z"
+      }
+    ],
+    "candidate_id": "W10a_nav2_b",
+    "batch_id": "sfx_rework27_naval_20260930_v2",
+    "path": "reports/audio/sfx_rework27_naval_20260930_v2/weapon/W10a_nav2_b.wav",
+    "sha256": "66dc4cf7ee569b1bc02224d20de63dea961149c54a0e74ba03d355fd5903135d"
+  },
+  "production": {
+    "id": "W10a_nav2_b",
+    "asset_id": "W10a",
+    "seed": 202609312031,
+    "prompt": "Sound effect for Tiny Sea War, a 2D anime shipgirl naval battle game. Heavy naval anti-aircraft artillery on a shipgirl gun rig fires a controlled burst over open sea. Large-caliber automatic deck guns, deep repeated muzzle pressure and heavy recoil mechanisms. A heavy naval anti-aircraft autocannon fires a short regular burst of three heavy low-pitched reports, each with a mechanical recoil. Slower and deeper than a light autocannon. Not a single cannon shot. Short decay. Warm full material body, controlled low frequencies and gentle treble. One isolated compact event with a complete ending. No voices, speech, music, seagulls, background surf, room ambience, or fantasy magic. Preserve the specific naval action; no unrelated generic notification.",
+    "status": "generated",
+    "human_review": "pending",
+    "raw": {
+      "path": "weapon/W10a_nav2_b_raw.wav",
+      "sha256": "bc14478b0472cfb9dac2dd74be007542a6798f7ebf2a0c9134d09e6c0217726f"
+    },
+    "preview": {
+      "path": "weapon/W10a_nav2_b.wav",
+      "sha256": "66dc4cf7ee569b1bc02224d20de63dea961149c54a0e74ba03d355fd5903135d"
+    },
+    "source_generation": {
+      "id": "W10a_nav2_b",
+      "seed": 202609312031,
+      "prompt": "Sound effect for Tiny Sea War, a 2D anime shipgirl naval battle game. Heavy naval anti-aircraft artillery on a shipgirl gun rig fires a controlled burst over open sea. Large-caliber automatic deck guns, deep repeated muzzle pressure and heavy recoil mechanisms. A heavy naval anti-aircraft autocannon fires a short regular burst of three heavy low-pitched reports, each with a mechanical recoil. Slower and deeper than a light autocannon. Not a single cannon shot. Short decay. Warm full material body, controlled low frequencies and gentle treble. One isolated compact event with a complete ending. No voices, speech, music, seagulls, background surf, room ambience, or fantasy magic. Preserve the specific naval action; no unrelated generic notification.",
+      "seconds": 3,
+      "status": "generated",
+      "before_gpu": {
+        "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+        "free_mib": 56191,
+        "utilization": 27
+      },
+      "model": "stable_audio_3_small_sfx",
+      "steps": 8,
+      "cfg": 1.0,
+      "sampler": "lcm",
+      "scheduler": "simple",
+      "sha256": "bc14478b0472cfb9dac2dd74be007542a6798f7ebf2a0c9134d09e6c0217726f",
+      "sample_rate": 44100,
+      "channels": 2,
+      "frames": 131072,
+      "actual_seconds": 2.972154195011338,
+      "rms": 0.08158436417579651,
+      "peak": 0.91015625,
+      "seconds_elapsed": 0.3464791774749756,
+      "human_review": "pending",
+      "peak_vram_allocated_mib": 1660.2822265625
+    },
+    "source_peak": 0.91015625,
+    "source_clipped_samples": 0,
+    "duration_seconds": 2.6601666666666666,
+    "channels": 1,
+    "sample_rate": 48000,
+    "sample_peak_dbfs": -2.9999995180030155,
+    "rms_dbfs": -23.407256806966355,
+    "true_peak_4x_dbfs": -2.976894201579828,
+    "rms_windows_dbfs": [
+      -15.057282304837564,
+      -15.604889119622056,
+      -14.735320079502255,
+      -18.306616790180545,
+      -21.786980094775622,
+      -24.285510508085085,
+      -27.327287131217144,
+      -28.87354320337805,
+      -30.28102723298592,
+      -31.391229887317998,
+      -32.594741685300185,
+      -38.08187795279054,
+      -42.062484010884454,
+      -42.75171945269126,
+      -46.53696392723341,
+      -46.97485299444161,
+      -49.581165371481674,
+      -49.66851413555699,
+      -50.2928496111508,
+      -50.93663313446251,
+      -51.005405950570704,
+      -54.042635342544585,
+      -53.99371953563279,
+      -55.63232076657964,
+      -56.086413623636616,
+      -56.79481088248106,
+      -64.64379699274618
+    ],
+    "lowpass_hz": null,
+    "target_rms_dbfs": -23,
+    "crop_seconds": [
+      0.09263038548752835,
+      2.7527891156462587
+    ],
+    "gain_db": -2.121496678198021,
+    "loop_crossfade_seconds": 0,
+    "loop_points_frames": null,
+    "duration_review_required": true,
+    "loop_seam_review": "not_applicable"
+  },
+  "asset_design": {
+    "id": "W10a",
+    "category": "weapon",
+    "title": "重防空炮",
+    "target_seconds": 0.9,
+    "generation_seconds": 3,
+    "loop": false,
+    "direction": "舰娘海战场景：更低沉厚重的防空炮短连发，逐发节奏可辨；避免单发重炮和电影爆炸长尾。",
+    "english_brief": "A heavy naval anti-aircraft autocannon fires a short regular burst of three heavy low-pitched reports, each with a mechanical recoil. Slower and deeper than a light autocannon. Not a single cannon shot. Short decay.",
+    "candidates": [
+      {
+        "id": "W10a_nav2_a",
+        "seed": 202609312030,
+        "variation": "干净动作",
+        "prompt": "Sound effect for Tiny Sea War, a 2D anime shipgirl naval battle game. Heavy naval anti-aircraft artillery on a shipgirl gun rig fires a controlled burst over open sea. Large-caliber automatic deck guns, deep repeated muzzle pressure and heavy recoil mechanisms. A heavy naval anti-aircraft autocannon fires a short regular burst of three heavy low-pitched reports, each with a mechanical recoil. Slower and deeper than a light autocannon. Not a single cannon shot. Short decay. Close, crisp material detail and short outdoor decay. One isolated compact event with a complete ending. No voices, speech, music, seagulls, background surf, room ambience, or fantasy magic. Preserve the specific naval action; no unrelated generic notification.",
+        "status": "planned"
+      },
+      {
+        "id": "W10a_nav2_b",
+        "seed": 202609312031,
+        "variation": "温暖材质",
+        "prompt": "Sound effect for Tiny Sea War, a 2D anime shipgirl naval battle game. Heavy naval anti-aircraft artillery on a shipgirl gun rig fires a controlled burst over open sea. Large-caliber automatic deck guns, deep repeated muzzle pressure and heavy recoil mechanisms. A heavy naval anti-aircraft autocannon fires a short regular burst of three heavy low-pitched reports, each with a mechanical recoil. Slower and deeper than a light autocannon. Not a single cannon shot. Short decay. Warm full material body, controlled low frequencies and gentle treble. One isolated compact event with a complete ending. No voices, speech, music, seagulls, background surf, room ambience, or fantasy magic. Preserve the specific naval action; no unrelated generic notification.",
+        "status": "planned"
+      },
+      {
+        "id": "W10a_nav2_c",
+        "seed": 202609312032,
+        "variation": "柔和耐听",
+        "prompt": "Sound effect for Tiny Sea War, a 2D anime shipgirl naval battle game. Heavy naval anti-aircraft artillery on a shipgirl gun rig fires a controlled burst over open sea. Large-caliber automatic deck guns, deep repeated muzzle pressure and heavy recoil mechanisms. A heavy naval anti-aircraft autocannon fires a short regular burst of three heavy low-pitched reports, each with a mechanical recoil. Slower and deeper than a light autocannon. Not a single cannon shot. Short decay. Rounded gentle attack with clear action timing, comfortable for repeated playback. One isolated compact event with a complete ending. No voices, speech, music, seagulls, background surf, room ambience, or fantasy magic. Preserve the specific naval action; no unrelated generic notification.",
+        "status": "planned"
+      }
+    ],
+    "review_target_rms_dbfs": -23,
+    "previous_feedback": {
+      "choice": "",
+      "notes": "防空炮声音可以修低一点，重炮防空炮也是连发的",
+      "reviewed_at": "2026-09-30T10:31:24.425Z"
+    },
+    "naval_context": "Heavy naval anti-aircraft artillery on a shipgirl gun rig fires a controlled burst over open sea. Large-caliber automatic deck guns, deep repeated muzzle pressure and heavy recoil mechanisms."
+  },
+  "source_batch_sha256": "06e64691b5e2c24e9d6c4a2dc7c708f82bca46ae70c6c6e34337434f1c5faeae",
+  "loudness": {
+    "sha256": "66dc4cf7ee569b1bc02224d20de63dea961149c54a0e74ba03d355fd5903135d",
+    "ffmpeg_ebur128": "Integrated loudness:\n    I:         -23.1 LUFS\n    Threshold: -37.1 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:       -3.0 dBFS\n[out#0/null @ 0x9b7018240] video:0KiB audio:249KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:02.66 bitrate=N/A speed= 323x elapsed=0:00:00.00"
+  }
+}

@@ -1,0 +1,133 @@
+{
+  "selection": {
+    "id": "F03a",
+    "title": "设施启用恢复",
+    "category": "facility",
+    "status": "adopt",
+    "feedback": {
+      "choice": "A",
+      "notes": "",
+      "reviewed_at": "2026-09-30T12:42:30.948Z"
+    },
+    "candidate_id": "F03a_full_a",
+    "batch_id": "sfx_full_20260930_v3",
+    "path": "reports/audio/sfx_full_20260930_v3/facility/F03a_full_a.wav",
+    "sha256": "59a76dad498d0b875a130133dc37a9184553719545f3f45df24932f2b0076bb2"
+  },
+  "production": {
+    "id": "F03a_full_a",
+    "asset_id": "F03a",
+    "seed": 202609306860,
+    "prompt": "A facility activated effect, a light switch and a short motor spinning up. A small naval support facility sound, precise light machinery, restrained tools and subtle tactical confirmation. Compact and readable. Clean dry fine mechanical detail. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+    "status": "generated",
+    "human_review": "pending",
+    "raw": {
+      "path": "facility/F03a_full_a_raw.wav",
+      "sha256": "1a6833e334769520b961469b3c184b1e337b1dfc1d24d9f56ecbd7e88cc68289"
+    },
+    "preview": {
+      "path": "facility/F03a_full_a.wav",
+      "sha256": "59a76dad498d0b875a130133dc37a9184553719545f3f45df24932f2b0076bb2"
+    },
+    "source_generation": {
+      "id": "F03a_full_a",
+      "prompt": "A facility activated effect, a light switch and a short motor spinning up. A small naval support facility sound, precise light machinery, restrained tools and subtle tactical confirmation. Compact and readable. Clean dry fine mechanical detail. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+      "seconds": 2,
+      "seed": 202609306860,
+      "status": "generated",
+      "before_gpu": {
+        "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+        "free_mib": 56153,
+        "utilization": 29
+      },
+      "model": "stable_audio_3_small_sfx",
+      "steps": 8,
+      "cfg": 1.0,
+      "sampler": "lcm",
+      "scheduler": "simple",
+      "sha256": "1a6833e334769520b961469b3c184b1e337b1dfc1d24d9f56ecbd7e88cc68289",
+      "sample_rate": 44100,
+      "channels": 2,
+      "frames": 90112,
+      "actual_seconds": 2.043356009070295,
+      "rms": 0.012340967543423176,
+      "peak": 0.326171875,
+      "seconds_elapsed": 0.3456292152404785,
+      "human_review": "pending",
+      "peak_vram_allocated_mib": 1700.376953125
+    },
+    "source_peak": 0.326171875,
+    "source_clipped_samples": 0,
+    "duration_seconds": 1.2654166666666666,
+    "channels": 1,
+    "sample_rate": 48000,
+    "sample_peak_dbfs": -2.9999995180030155,
+    "rms_dbfs": -29.504663177651295,
+    "true_peak_4x_dbfs": -2.994471933023287,
+    "rms_windows_dbfs": [
+      -31.570645969337242,
+      -29.18474389079938,
+      -26.494362896790406,
+      -24.99943094522324,
+      -22.343724692101592,
+      -37.19221769588834,
+      -35.40220494428798,
+      -35.17657735710573,
+      -35.32417437740156,
+      -37.90001982530585,
+      -41.38748830651133,
+      -39.14318034943453,
+      -65.28980645576694
+    ],
+    "lowpass_hz": null,
+    "target_rms_dbfs": -23,
+    "crop_seconds": [
+      0.07857142857142857,
+      1.343968253968254
+    ],
+    "gain_db": 6.582298809961119,
+    "loop_crossfade_seconds": 0,
+    "loop_points_frames": null,
+    "duration_review_required": true,
+    "loop_seam_review": "not_applicable"
+  },
+  "asset_design": {
+    "id": "F03a",
+    "category": "facility",
+    "title": "设施启用恢复",
+    "target_seconds": 0.55,
+    "generation_seconds": 2,
+    "loop": false,
+    "direction": "轻开关与上升电机",
+    "english_brief": "A facility activated effect, a light switch and a short motor spinning up",
+    "candidates": [
+      {
+        "id": "F03a_full_a",
+        "seed": 202609306860,
+        "variation": "精密机械",
+        "prompt": "A facility activated effect, a light switch and a short motor spinning up. A small naval support facility sound, precise light machinery, restrained tools and subtle tactical confirmation. Compact and readable. Clean dry fine mechanical detail. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+        "status": "planned"
+      },
+      {
+        "id": "F03a_full_b",
+        "seed": 202609306861,
+        "variation": "温暖金属",
+        "prompt": "A facility activated effect, a light switch and a short motor spinning up. A small naval support facility sound, precise light machinery, restrained tools and subtle tactical confirmation. Compact and readable. Warmer small metal and motor texture. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+        "status": "planned"
+      },
+      {
+        "id": "F03a_full_c",
+        "seed": 202609306862,
+        "variation": "轻柔设备",
+        "prompt": "A facility activated effect, a light switch and a short motor spinning up. A small naval support facility sound, precise light machinery, restrained tools and subtle tactical confirmation. Compact and readable. Softer rounded tool and mechanical detail. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+        "status": "planned"
+      }
+    ],
+    "review_target_rms_dbfs": -23
+  },
+  "source_batch_sha256": "4d1cd2f07e2abb4699a4cc6e3e71480b2237080da3a70b79baf18d1642ca8b4c",
+  "loudness": {
+    "sha256": "59a76dad498d0b875a130133dc37a9184553719545f3f45df24932f2b0076bb2",
+    "ffmpeg_ebur128": "Integrated loudness:\n    I:         -26.4 LUFS\n    Threshold: -36.4 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:       -3.0 dBFS\n[out#0/null @ 0xc64c68180] video:0KiB audio:119KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:01.26 bitrate=N/A speed= 262x elapsed=0:00:00.00"
+  }
+}

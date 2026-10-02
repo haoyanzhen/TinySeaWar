@@ -1,0 +1,128 @@
+{
+  "selection": {
+    "id": "F01b",
+    "title": "占领完成",
+    "category": "facility",
+    "status": "adopt",
+    "feedback": {
+      "choice": "C",
+      "notes": "",
+      "reviewed_at": "2026-09-30T12:42:04.716Z"
+    },
+    "candidate_id": "F01b_full_c",
+    "batch_id": "sfx_full_20260930_v3",
+    "path": "reports/audio/sfx_full_20260930_v3/facility/F01b_full_c.wav",
+    "sha256": "1bd585cc750fbc214afd2e2d5aec6b4d0c2e27b4ec749cf9004142002313cffc"
+  },
+  "production": {
+    "id": "F01b_full_c",
+    "asset_id": "F01b",
+    "seed": 202609306842,
+    "prompt": "A facility capture completed confirmation, a mechanical locking click and a warm settled tone. A small naval support facility sound, precise light machinery, restrained tools and subtle tactical confirmation. Compact and readable. Softer rounded tool and mechanical detail. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+    "status": "generated",
+    "human_review": "pending",
+    "raw": {
+      "path": "facility/F01b_full_c_raw.wav",
+      "sha256": "dd2b464dd98f951d829483232f094f97d08e9400eb937071acdb92dc3eb3f6d4"
+    },
+    "preview": {
+      "path": "facility/F01b_full_c.wav",
+      "sha256": "1bd585cc750fbc214afd2e2d5aec6b4d0c2e27b4ec749cf9004142002313cffc"
+    },
+    "source_generation": {
+      "id": "F01b_full_c",
+      "prompt": "A facility capture completed confirmation, a mechanical locking click and a warm settled tone. A small naval support facility sound, precise light machinery, restrained tools and subtle tactical confirmation. Compact and readable. Softer rounded tool and mechanical detail. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+      "seconds": 2,
+      "seed": 202609306842,
+      "status": "generated",
+      "before_gpu": {
+        "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+        "free_mib": 56153,
+        "utilization": 29
+      },
+      "model": "stable_audio_3_small_sfx",
+      "steps": 8,
+      "cfg": 1.0,
+      "sampler": "lcm",
+      "scheduler": "simple",
+      "sha256": "dd2b464dd98f951d829483232f094f97d08e9400eb937071acdb92dc3eb3f6d4",
+      "sample_rate": 44100,
+      "channels": 2,
+      "frames": 90112,
+      "actual_seconds": 2.043356009070295,
+      "rms": 0.004592312499880791,
+      "peak": 0.1669921875,
+      "seconds_elapsed": 0.3462064266204834,
+      "human_review": "pending",
+      "peak_vram_allocated_mib": 1700.376953125
+    },
+    "source_peak": 0.1669921875,
+    "source_clipped_samples": 0,
+    "duration_seconds": 0.7872291666666666,
+    "channels": 1,
+    "sample_rate": 48000,
+    "sample_peak_dbfs": -3.544702756413031,
+    "rms_dbfs": -30.569701375541886,
+    "true_peak_4x_dbfs": -3.4850008323380472,
+    "rms_windows_dbfs": [
+      -30.256649126326266,
+      -28.632914721495084,
+      -37.32128171017304,
+      -63.67824920989914,
+      -54.43926795319698,
+      -35.133445238644384,
+      -23.762112406745793,
+      -55.63242656744905
+    ],
+    "lowpass_hz": null,
+    "target_rms_dbfs": -23,
+    "crop_seconds": [
+      0.005442176870748299,
+      0.7926530612244898
+    ],
+    "gain_db": 12.041199826559248,
+    "loop_crossfade_seconds": 0,
+    "loop_points_frames": null,
+    "duration_review_required": false,
+    "loop_seam_review": "not_applicable"
+  },
+  "asset_design": {
+    "id": "F01b",
+    "category": "facility",
+    "title": "占领完成",
+    "target_seconds": 0.65,
+    "generation_seconds": 2,
+    "loop": false,
+    "direction": "机械闭锁加温暖落定音",
+    "english_brief": "A facility capture completed confirmation, a mechanical locking click and a warm settled tone",
+    "candidates": [
+      {
+        "id": "F01b_full_a",
+        "seed": 202609306840,
+        "variation": "精密机械",
+        "prompt": "A facility capture completed confirmation, a mechanical locking click and a warm settled tone. A small naval support facility sound, precise light machinery, restrained tools and subtle tactical confirmation. Compact and readable. Clean dry fine mechanical detail. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+        "status": "planned"
+      },
+      {
+        "id": "F01b_full_b",
+        "seed": 202609306841,
+        "variation": "温暖金属",
+        "prompt": "A facility capture completed confirmation, a mechanical locking click and a warm settled tone. A small naval support facility sound, precise light machinery, restrained tools and subtle tactical confirmation. Compact and readable. Warmer small metal and motor texture. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+        "status": "planned"
+      },
+      {
+        "id": "F01b_full_c",
+        "seed": 202609306842,
+        "variation": "轻柔设备",
+        "prompt": "A facility capture completed confirmation, a mechanical locking click and a warm settled tone. A small naval support facility sound, precise light machinery, restrained tools and subtle tactical confirmation. Compact and readable. Softer rounded tool and mechanical detail. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+        "status": "planned"
+      }
+    ],
+    "review_target_rms_dbfs": -23
+  },
+  "source_batch_sha256": "4d1cd2f07e2abb4699a4cc6e3e71480b2237080da3a70b79baf18d1642ca8b4c",
+  "loudness": {
+    "sha256": "1bd585cc750fbc214afd2e2d5aec6b4d0c2e27b4ec749cf9004142002313cffc",
+    "ffmpeg_ebur128": "Integrated loudness:\n    I:         -29.8 LUFS\n    Threshold: -39.8 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:       -3.5 dBFS\n[out#0/null @ 0xc41024180] video:0KiB audio:74KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:00.78 bitrate=N/A speed= 269x elapsed=0:00:00.00"
+  }
+}

@@ -1,0 +1,121 @@
+{
+  "selection": {
+    "id": "U01",
+    "title": "按钮确认",
+    "category": "ui",
+    "status": "adopt",
+    "feedback": {
+      "choice": "C",
+      "notes": "",
+      "reviewed_at": "2026-09-30T12:44:15.982Z"
+    },
+    "candidate_id": "U01_full_c",
+    "batch_id": "sfx_full_20260930_v3",
+    "path": "reports/audio/sfx_full_20260930_v3/ui/U01_full_c.wav",
+    "sha256": "3d943dedcf2c981e17a7575ad88c71093bfcdf6811a746377182e4a90fbce22c"
+  },
+  "production": {
+    "id": "U01_full_c",
+    "asset_id": "U01",
+    "seed": 202609306992,
+    "prompt": "A game interface confirm click, light enamel tap with a warm short tone. A refined anime naval strategy interface sound, light enamel and brushed metal touch with a subtle warm electronic accent. Very short, comfortable and readable on repeated clicks. A tiny rounded luminous electronic accent, light and brief. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+    "status": "generated",
+    "human_review": "pending",
+    "raw": {
+      "path": "ui/U01_full_c_raw.wav",
+      "sha256": "50b5c3c90fb19e5042995cb694b570a58add2937f30a3d2bf08aabcece74cc40"
+    },
+    "preview": {
+      "path": "ui/U01_full_c.wav",
+      "sha256": "3d943dedcf2c981e17a7575ad88c71093bfcdf6811a746377182e4a90fbce22c"
+    },
+    "source_generation": {
+      "id": "U01_full_c",
+      "prompt": "A game interface confirm click, light enamel tap with a warm short tone. A refined anime naval strategy interface sound, light enamel and brushed metal touch with a subtle warm electronic accent. Very short, comfortable and readable on repeated clicks. A tiny rounded luminous electronic accent, light and brief. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+      "seconds": 1,
+      "seed": 202609306992,
+      "status": "generated",
+      "before_gpu": {
+        "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+        "free_mib": 56153,
+        "utilization": 28
+      },
+      "model": "stable_audio_3_small_sfx",
+      "steps": 8,
+      "cfg": 1.0,
+      "sampler": "lcm",
+      "scheduler": "simple",
+      "sha256": "50b5c3c90fb19e5042995cb694b570a58add2937f30a3d2bf08aabcece74cc40",
+      "sample_rate": 44100,
+      "channels": 2,
+      "frames": 49152,
+      "actual_seconds": 1.1145578231292517,
+      "rms": 0.006219094153493643,
+      "peak": 0.2177734375,
+      "seconds_elapsed": 0.3218214511871338,
+      "human_review": "pending",
+      "peak_vram_allocated_mib": 1700.376953125
+    },
+    "source_peak": 0.2177734375,
+    "source_clipped_samples": 0,
+    "duration_seconds": 0.14225,
+    "channels": 2,
+    "sample_rate": 48000,
+    "sample_peak_dbfs": -2.9999995180030155,
+    "rms_dbfs": -25.038825862395413,
+    "true_peak_4x_dbfs": -2.994471933023287,
+    "rms_windows_dbfs": [
+      -25.038825862395413
+    ],
+    "lowpass_hz": null,
+    "target_rms_dbfs": -24,
+    "crop_seconds": [
+      0.0,
+      0.14224489795918369
+    ],
+    "gain_db": 10.184750325876538,
+    "loop_crossfade_seconds": 0,
+    "loop_points_frames": null,
+    "duration_review_required": false,
+    "loop_seam_review": "not_applicable"
+  },
+  "asset_design": {
+    "id": "U01",
+    "category": "ui",
+    "title": "按钮确认",
+    "target_seconds": 0.18,
+    "generation_seconds": 1,
+    "loop": false,
+    "direction": "轻珐琅触点与温暖短音",
+    "english_brief": "A game interface confirm click, light enamel tap with a warm short tone",
+    "candidates": [
+      {
+        "id": "U01_full_a",
+        "seed": 202609306990,
+        "variation": "珐琅轻点",
+        "prompt": "A game interface confirm click, light enamel tap with a warm short tone. A refined anime naval strategy interface sound, light enamel and brushed metal touch with a subtle warm electronic accent. Very short, comfortable and readable on repeated clicks. Dry delicate enamel tap with a precise finish. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+        "status": "planned"
+      },
+      {
+        "id": "U01_full_b",
+        "seed": 202609306991,
+        "variation": "舰装拨片",
+        "prompt": "A game interface confirm click, light enamel tap with a warm short tone. A refined anime naval strategy interface sound, light enamel and brushed metal touch with a subtle warm electronic accent. Very short, comfortable and readable on repeated clicks. Subtle warm brushed metal detail, compact and soft. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+        "status": "planned"
+      },
+      {
+        "id": "U01_full_c",
+        "seed": 202609306992,
+        "variation": "柔亮触点",
+        "prompt": "A game interface confirm click, light enamel tap with a warm short tone. A refined anime naval strategy interface sound, light enamel and brushed metal touch with a subtle warm electronic accent. Very short, comfortable and readable on repeated clicks. A tiny rounded luminous electronic accent, light and brief. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+        "status": "planned"
+      }
+    ],
+    "review_target_rms_dbfs": -24
+  },
+  "source_batch_sha256": "4d1cd2f07e2abb4699a4cc6e3e71480b2237080da3a70b79baf18d1642ca8b4c",
+  "loudness": {
+    "sha256": "3d943dedcf2c981e17a7575ad88c71093bfcdf6811a746377182e4a90fbce22c",
+    "ffmpeg_ebur128": "Integrated loudness:\n    I:         -70.0 LUFS\n    Threshold:   0.0 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:       -3.0 dBFS\n[out#0/null @ 0xbd3018180] video:0KiB audio:27KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:00.14 bitrate=N/A speed=75.3x elapsed=0:00:00.00"
+  }
+}

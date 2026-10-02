@@ -1,0 +1,206 @@
+{
+  "selection": {
+    "id": "U07a",
+    "title": "辅助开启",
+    "category": "ui",
+    "status": "adopt",
+    "feedback": {
+      "choice": "C",
+      "notes": "",
+      "reviewed_at": "2026-10-01T02:24:07.975Z"
+    },
+    "revision_brief": "本轮三连音听感被否定，重新设计开启提示及与关闭的对照。",
+    "latest_revision": {
+      "batch_id": "sfx_revision7_20261001_v5",
+      "candidate_ids": [
+        "U07a_r5_a",
+        "U07a_r5_b",
+        "U07a_r5_c"
+      ],
+      "human_review": "selected"
+    },
+    "revision_history": [
+      {
+        "batch_id": "sfx_rework27_20260930_v1",
+        "candidate_ids": [
+          "U07a_rw1_a",
+          "U07a_rw1_b",
+          "U07a_rw1_c"
+        ],
+        "human_review": "pending"
+      },
+      {
+        "batch_id": "sfx_rework27_naval_20260930_v2",
+        "candidate_ids": [
+          "U07a_nav2_a",
+          "U07a_nav2_b",
+          "U07a_nav2_c"
+        ],
+        "human_review": "pending"
+      },
+      {
+        "batch_id": "sfx_design18_20261001_v3",
+        "candidate_ids": [
+          "U07a_d3_a",
+          "U07a_d3_b",
+          "U07a_d3_c"
+        ],
+        "human_review": "revision_requested"
+      },
+      {
+        "batch_id": "sfx_revision15_20261001_v4",
+        "candidate_ids": [
+          "U07a_r4_a",
+          "U07a_r4_b",
+          "U07a_r4_c"
+        ],
+        "human_review": "revision_requested"
+      }
+    ],
+    "feedback_history": [
+      {
+        "choice": "全部返工",
+        "notes": "意义不明",
+        "reviewed_at": "2026-09-30T12:47:29.641Z"
+      },
+      {
+        "batch_id": "sfx_design18_20261001_v3",
+        "choice": "全部返工",
+        "notes": "意义不明",
+        "reviewed_at": "2026-10-01T01:17:52.157Z"
+      },
+      {
+        "batch_id": "sfx_design18_20261001_v3",
+        "choice": "全部返工",
+        "notes": "可以用提示音乐三连音来表示辅助开启。",
+        "reviewed_at": "2026-10-01T01:45:03.069Z"
+      },
+      {
+        "batch_id": "sfx_revision15_20261001_v4",
+        "choice": "全部返工",
+        "notes": "太怪了",
+        "reviewed_at": "2026-10-01T02:08:01.449Z"
+      }
+    ],
+    "feedback_source": "tools/sfx/reviews/sfx_revision7_20261001_v5.f52aa0cc8337.review.json",
+    "candidate_id": "U07a_r5_c",
+    "batch_id": "sfx_revision7_20261001_v5",
+    "path": "reports/audio/sfx_revision7_20261001_v5/ui/U07a_r5_c.wav",
+    "sha256": "fe63119bfe633a9f62938e8f3baf7f70642e5f6e11ff06f01d386675fea13f76"
+  },
+  "production": {
+    "id": "U07a_r5_c",
+    "asset_id": "U07a",
+    "seed": 202610015052,
+    "prompt": "A simple game assistance enabled jingle: three soft electric-piano notes stepping upward, evenly spaced, warm and consonant. Brief natural decay. Isolated sound effect, no speech or background ambience.",
+    "status": "generated",
+    "human_review": "pending",
+    "raw": {
+      "path": "ui/U07a_r5_c_raw.wav",
+      "sha256": "42bb4d1325c231c247ed18c027ccec9e181e72fc80156675e80fe26b9c5ca56e"
+    },
+    "preview": {
+      "path": "ui/U07a_r5_c.wav",
+      "sha256": "fe63119bfe633a9f62938e8f3baf7f70642e5f6e11ff06f01d386675fea13f76"
+    },
+    "source_generation": {
+      "id": "U07a_r5_c",
+      "seed": 202610015052,
+      "prompt": "A simple game assistance enabled jingle: three soft electric-piano notes stepping upward, evenly spaced, warm and consonant. Brief natural decay. Isolated sound effect, no speech or background ambience.",
+      "seconds": 1,
+      "status": "generated",
+      "before_gpu": {
+        "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+        "free_mib": 56197,
+        "utilization": 25
+      },
+      "model": "stable_audio_3_small_sfx",
+      "steps": 8,
+      "cfg": 1.0,
+      "sampler": "lcm",
+      "scheduler": "simple",
+      "sha256": "42bb4d1325c231c247ed18c027ccec9e181e72fc80156675e80fe26b9c5ca56e",
+      "sample_rate": 44100,
+      "channels": 2,
+      "frames": 49152,
+      "actual_seconds": 1.1145578231292517,
+      "rms": 0.01093656662851572,
+      "peak": 0.08984375,
+      "seconds_elapsed": 0.33759379386901855,
+      "human_review": "pending",
+      "peak_vram_allocated_mib": 1656.771484375
+    },
+    "source_peak": 0.08984375,
+    "source_clipped_samples": 0,
+    "duration_seconds": 0.7072916666666667,
+    "channels": 2,
+    "sample_rate": 48000,
+    "sample_peak_dbfs": -8.897575362597728,
+    "rms_dbfs": -25.279453770577796,
+    "true_peak_4x_dbfs": -8.882707105058618,
+    "rms_windows_dbfs": [
+      -24.579973469801676,
+      -20.71793391337874,
+      -22.13765540086982,
+      -27.790338226583668,
+      -31.418165162118818,
+      -35.497220580484154,
+      -47.62104096600012
+    ],
+    "lowpass_hz": null,
+    "target_rms_dbfs": -24,
+    "crop_seconds": [
+      0.0,
+      0.7072789115646259
+    ],
+    "gain_db": 12.041199826559248,
+    "loop_crossfade_seconds": 0,
+    "loop_points_frames": null,
+    "duration_review_required": false,
+    "loop_seam_review": "not_applicable"
+  },
+  "asset_design": {
+    "id": "U07a",
+    "category": "ui",
+    "title": "辅助开启",
+    "target_seconds": 0.6,
+    "generation_seconds": 1,
+    "loop": false,
+    "direction": "辅助开启：同乐器三音上行；候选用柔和真实键盘乐器，避免怪异合成器。",
+    "english_brief": "A simple game enable sound: three soft felt-piano notes ascending a major triad, evenly spaced. Warm natural piano tone, brief clean finish, half a second.",
+    "candidates": [
+      {
+        "id": "U07a_r5_a",
+        "seed": 202610015050,
+        "prompt": "A simple game enable sound: three soft felt-piano notes ascending a major triad, evenly spaced. Warm natural piano tone, brief clean finish, half a second. Isolated sound effect, no speech or background ambience.",
+        "variation": "方案A",
+        "status": "planned"
+      },
+      {
+        "id": "U07a_r5_b",
+        "seed": 202610015051,
+        "prompt": "A simple interface on jingle: three gentle marimba notes ascending a major triad, evenly spaced. Warm wooden musical tone, short and friendly. Isolated sound effect, no speech or background ambience.",
+        "variation": "方案B",
+        "status": "planned"
+      },
+      {
+        "id": "U07a_r5_c",
+        "seed": 202610015052,
+        "prompt": "A simple game assistance enabled jingle: three soft electric-piano notes stepping upward, evenly spaced, warm and consonant. Brief natural decay. Isolated sound effect, no speech or background ambience.",
+        "variation": "方案C",
+        "status": "planned"
+      }
+    ],
+    "review_target_rms_dbfs": -24,
+    "previous_feedback": {
+      "choice": "全部返工",
+      "notes": "可以用提示音乐三连音来表示辅助开启。",
+      "reviewed_at": "2026-10-01T01:45:03.069Z"
+    }
+  },
+  "source_batch_sha256": "def6ad3caca11e5d1e224b8856ed971f9d869a415ad59c654bdd52a15c51fdf9",
+  "loudness": {
+    "sha256": "fe63119bfe633a9f62938e8f3baf7f70642e5f6e11ff06f01d386675fea13f76",
+    "ffmpeg_ebur128": "Integrated loudness:\n    I:         -22.6 LUFS\n    Threshold: -32.6 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:       -8.9 dBFS\n[out#0/null @ 0x91d024180] video:0KiB audio:133KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:00.70 bitrate=N/A speed= 147x elapsed=0:00:00.00"
+  }
+}

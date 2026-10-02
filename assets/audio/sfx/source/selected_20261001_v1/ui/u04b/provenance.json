@@ -1,0 +1,156 @@
+{
+  "selection": {
+    "id": "U04b",
+    "title": "航点排队",
+    "category": "ui",
+    "status": "adopt",
+    "feedback": {
+      "choice": "B",
+      "notes": "",
+      "reviewed_at": "2026-10-01T01:17:13.423Z"
+    },
+    "revision_brief": "航点排队：两次轻触点，后一下更轻，表达追加一项；不包含移动滑动尾音。",
+    "latest_revision": {
+      "batch_id": "sfx_rework27_naval_20260930_v2",
+      "candidate_ids": [
+        "U04b_nav2_a",
+        "U04b_nav2_b",
+        "U04b_nav2_c"
+      ],
+      "human_review": "pending"
+    },
+    "revision_history": [
+      {
+        "batch_id": "sfx_rework27_20260930_v1",
+        "candidate_ids": [
+          "U04b_rw1_a",
+          "U04b_rw1_b",
+          "U04b_rw1_c"
+        ],
+        "human_review": "pending"
+      }
+    ],
+    "feedback_history": [
+      {
+        "choice": "",
+        "notes": "意义不明",
+        "reviewed_at": "2026-09-30T12:45:02.126Z"
+      }
+    ],
+    "candidate_id": "U04b_nav2_b",
+    "batch_id": "sfx_rework27_naval_20260930_v2",
+    "path": "reports/audio/sfx_rework27_naval_20260930_v2/ui/U04b_nav2_b.wav",
+    "sha256": "3ef01886e0a6af49f6e5e77c37eb00b7ca079e1558a0dc5848456382d5de11f6"
+  },
+  "production": {
+    "id": "U04b_nav2_b",
+    "asset_id": "U04b",
+    "seed": 202609312211,
+    "prompt": "Sound effect for Tiny Sea War, a 2D anime shipgirl naval battle game. The fleet commander appends a waypoint to a shipgirl sea route on a naval tactical chart. Two brief muted brass console contacts, the second lighter, conveying one additional plotted point. A queued waypoint interface acknowledgment: two separate soft rounded contact clicks, the second noticeably lighter. A concise add-one-item gesture, no glide or notification bell. Warm full material body, controlled low frequencies and gentle treble. One isolated compact event with a complete ending. No voices, speech, music, seagulls, background surf, room ambience, or fantasy magic. Preserve the specific naval action; no unrelated generic notification.",
+    "status": "generated",
+    "human_review": "pending",
+    "raw": {
+      "path": "ui/U04b_nav2_b_raw.wav",
+      "sha256": "8b4c94fcb966ab1a871c341fddc2ead57eead8df68bb1fe28b388c063a7423d1"
+    },
+    "preview": {
+      "path": "ui/U04b_nav2_b.wav",
+      "sha256": "3ef01886e0a6af49f6e5e77c37eb00b7ca079e1558a0dc5848456382d5de11f6"
+    },
+    "source_generation": {
+      "id": "U04b_nav2_b",
+      "seed": 202609312211,
+      "prompt": "Sound effect for Tiny Sea War, a 2D anime shipgirl naval battle game. The fleet commander appends a waypoint to a shipgirl sea route on a naval tactical chart. Two brief muted brass console contacts, the second lighter, conveying one additional plotted point. A queued waypoint interface acknowledgment: two separate soft rounded contact clicks, the second noticeably lighter. A concise add-one-item gesture, no glide or notification bell. Warm full material body, controlled low frequencies and gentle treble. One isolated compact event with a complete ending. No voices, speech, music, seagulls, background surf, room ambience, or fantasy magic. Preserve the specific naval action; no unrelated generic notification.",
+      "seconds": 1,
+      "status": "generated",
+      "before_gpu": {
+        "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+        "free_mib": 56191,
+        "utilization": 28
+      },
+      "model": "stable_audio_3_small_sfx",
+      "steps": 8,
+      "cfg": 1.0,
+      "sampler": "lcm",
+      "scheduler": "simple",
+      "sha256": "8b4c94fcb966ab1a871c341fddc2ead57eead8df68bb1fe28b388c063a7423d1",
+      "sample_rate": 44100,
+      "channels": 2,
+      "frames": 49152,
+      "actual_seconds": 1.1145578231292517,
+      "rms": 0.0034637178760021925,
+      "peak": 0.107421875,
+      "seconds_elapsed": 0.3335304260253906,
+      "human_review": "pending",
+      "peak_vram_allocated_mib": 1660.2822265625
+    },
+    "source_peak": 0.107421875,
+    "source_clipped_samples": 0,
+    "duration_seconds": 0.19491666666666665,
+    "channels": 2,
+    "sample_rate": 48000,
+    "sample_peak_dbfs": -7.687497594541764,
+    "rms_dbfs": -29.684141106856323,
+    "true_peak_4x_dbfs": -7.226562981710947,
+    "rms_windows_dbfs": [
+      -26.695885468988415,
+      -49.629851783426055
+    ],
+    "lowpass_hz": null,
+    "target_rms_dbfs": -24,
+    "crop_seconds": [
+      0.0,
+      0.19489795918367347
+    ],
+    "gain_db": 12.041199826559248,
+    "loop_crossfade_seconds": 0,
+    "loop_points_frames": null,
+    "duration_review_required": false,
+    "loop_seam_review": "not_applicable"
+  },
+  "asset_design": {
+    "id": "U04b",
+    "category": "ui",
+    "title": "航点排队",
+    "target_seconds": 0.2,
+    "generation_seconds": 1,
+    "loop": false,
+    "direction": "舰娘海战场景：航点排队：两次轻触点，后一下更轻，表达追加一项；不包含移动滑动尾音。",
+    "english_brief": "A queued waypoint interface acknowledgment: two separate soft rounded contact clicks, the second noticeably lighter. A concise add-one-item gesture, no glide or notification bell.",
+    "candidates": [
+      {
+        "id": "U04b_nav2_a",
+        "seed": 202609312210,
+        "variation": "干净动作",
+        "prompt": "Sound effect for Tiny Sea War, a 2D anime shipgirl naval battle game. The fleet commander appends a waypoint to a shipgirl sea route on a naval tactical chart. Two brief muted brass console contacts, the second lighter, conveying one additional plotted point. A queued waypoint interface acknowledgment: two separate soft rounded contact clicks, the second noticeably lighter. A concise add-one-item gesture, no glide or notification bell. Close, crisp material detail and short outdoor decay. One isolated compact event with a complete ending. No voices, speech, music, seagulls, background surf, room ambience, or fantasy magic. Preserve the specific naval action; no unrelated generic notification.",
+        "status": "planned"
+      },
+      {
+        "id": "U04b_nav2_b",
+        "seed": 202609312211,
+        "variation": "温暖材质",
+        "prompt": "Sound effect for Tiny Sea War, a 2D anime shipgirl naval battle game. The fleet commander appends a waypoint to a shipgirl sea route on a naval tactical chart. Two brief muted brass console contacts, the second lighter, conveying one additional plotted point. A queued waypoint interface acknowledgment: two separate soft rounded contact clicks, the second noticeably lighter. A concise add-one-item gesture, no glide or notification bell. Warm full material body, controlled low frequencies and gentle treble. One isolated compact event with a complete ending. No voices, speech, music, seagulls, background surf, room ambience, or fantasy magic. Preserve the specific naval action; no unrelated generic notification.",
+        "status": "planned"
+      },
+      {
+        "id": "U04b_nav2_c",
+        "seed": 202609312212,
+        "variation": "柔和耐听",
+        "prompt": "Sound effect for Tiny Sea War, a 2D anime shipgirl naval battle game. The fleet commander appends a waypoint to a shipgirl sea route on a naval tactical chart. Two brief muted brass console contacts, the second lighter, conveying one additional plotted point. A queued waypoint interface acknowledgment: two separate soft rounded contact clicks, the second noticeably lighter. A concise add-one-item gesture, no glide or notification bell. Rounded gentle attack with clear action timing, comfortable for repeated playback. One isolated compact event with a complete ending. No voices, speech, music, seagulls, background surf, room ambience, or fantasy magic. Preserve the specific naval action; no unrelated generic notification.",
+        "status": "planned"
+      }
+    ],
+    "review_target_rms_dbfs": -24,
+    "previous_feedback": {
+      "choice": "",
+      "notes": "意义不明",
+      "reviewed_at": "2026-09-30T12:45:02.126Z"
+    },
+    "naval_context": "The fleet commander appends a waypoint to a shipgirl sea route on a naval tactical chart. Two brief muted brass console contacts, the second lighter, conveying one additional plotted point."
+  },
+  "source_batch_sha256": "06e64691b5e2c24e9d6c4a2dc7c708f82bca46ae70c6c6e34337434f1c5faeae",
+  "loudness": {
+    "sha256": "3ef01886e0a6af49f6e5e77c37eb00b7ca079e1558a0dc5848456382d5de11f6",
+    "ffmpeg_ebur128": "Integrated loudness:\n    I:         -70.0 LUFS\n    Threshold:   0.0 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:       -7.2 dBFS\n[out#0/null @ 0xa11020180] video:0KiB audio:37KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:00.19 bitrate=N/A speed=95.6x elapsed=0:00:00.00"
+  }
+}

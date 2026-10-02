@@ -1,0 +1,167 @@
+{
+  "selection": {
+    "id": "W02",
+    "title": "中炮发射",
+    "category": "weapon",
+    "status": "adopt",
+    "feedback": {
+      "choice": "B",
+      "notes": "",
+      "reviewed_at": "2026-10-01T01:10:45.560Z"
+    },
+    "revision_brief": "单次清楚的炮口爆发与短后坐；去掉多层碎响、重复击发和复杂长尾。",
+    "latest_revision": {
+      "batch_id": "sfx_rework27_naval_20260930_v2",
+      "candidate_ids": [
+        "W02_nav2_a",
+        "W02_nav2_b",
+        "W02_nav2_c"
+      ],
+      "human_review": "pending"
+    },
+    "revision_history": [
+      {
+        "batch_id": "sfx_rework27_20260930_v1",
+        "candidate_ids": [
+          "W02_rw1_a",
+          "W02_rw1_b",
+          "W02_rw1_c"
+        ],
+        "human_review": "pending"
+      }
+    ],
+    "feedback_history": [
+      {
+        "choice": "全部返工",
+        "notes": "可以简单一点",
+        "reviewed_at": "2026-09-30T10:28:28.675Z"
+      }
+    ],
+    "candidate_id": "W02_nav2_b",
+    "batch_id": "sfx_rework27_naval_20260930_v2",
+    "path": "reports/audio/sfx_rework27_naval_20260930_v2/weapon/W02_nav2_b.wav",
+    "sha256": "f502eac701b2d1e36261388bce072d83b109d8eba3bcde13a06db7a11cdeaa1a"
+  },
+  "production": {
+    "id": "W02_nav2_b",
+    "asset_id": "W02",
+    "seed": 202609312011,
+    "prompt": "Sound effect for Tiny Sea War, a 2D anime shipgirl naval battle game. An anime shipgirl fires a cruiser naval turret across open water. A solid marine artillery blast and compact steel turret recoil, open-air decay without indoor echoes. One medium naval cannon fires once: a solid low boom followed by one short recoil clunk. Simple clean two-part action, no scattered debris, no layered explosions. Warm full material body, controlled low frequencies and gentle treble. One isolated compact event with a complete ending. No voices, speech, music, seagulls, background surf, room ambience, or fantasy magic. Preserve the specific naval action; no unrelated generic notification.",
+    "status": "generated",
+    "human_review": "pending",
+    "raw": {
+      "path": "weapon/W02_nav2_b_raw.wav",
+      "sha256": "36edac350708ff9b6c7ba35f70c0d8c623b432011809ac738ba45c301df6881d"
+    },
+    "preview": {
+      "path": "weapon/W02_nav2_b.wav",
+      "sha256": "f502eac701b2d1e36261388bce072d83b109d8eba3bcde13a06db7a11cdeaa1a"
+    },
+    "source_generation": {
+      "id": "W02_nav2_b",
+      "seed": 202609312011,
+      "prompt": "Sound effect for Tiny Sea War, a 2D anime shipgirl naval battle game. An anime shipgirl fires a cruiser naval turret across open water. A solid marine artillery blast and compact steel turret recoil, open-air decay without indoor echoes. One medium naval cannon fires once: a solid low boom followed by one short recoil clunk. Simple clean two-part action, no scattered debris, no layered explosions. Warm full material body, controlled low frequencies and gentle treble. One isolated compact event with a complete ending. No voices, speech, music, seagulls, background surf, room ambience, or fantasy magic. Preserve the specific naval action; no unrelated generic notification.",
+      "seconds": 2,
+      "status": "generated",
+      "before_gpu": {
+        "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+        "free_mib": 56195,
+        "utilization": 26
+      },
+      "model": "stable_audio_3_small_sfx",
+      "steps": 8,
+      "cfg": 1.0,
+      "sampler": "lcm",
+      "scheduler": "simple",
+      "sha256": "36edac350708ff9b6c7ba35f70c0d8c623b432011809ac738ba45c301df6881d",
+      "sample_rate": 44100,
+      "channels": 2,
+      "frames": 90112,
+      "actual_seconds": 2.043356009070295,
+      "rms": 0.06420417875051498,
+      "peak": 0.578125,
+      "seconds_elapsed": 0.34584999084472656,
+      "human_review": "pending",
+      "peak_vram_allocated_mib": 1657.40966796875
+    },
+    "source_peak": 0.578125,
+    "source_clipped_samples": 0,
+    "duration_seconds": 1.2805625,
+    "channels": 1,
+    "sample_rate": 48000,
+    "sample_peak_dbfs": -5.9180449089458715,
+    "rms_dbfs": -22.999999518003015,
+    "true_peak_4x_dbfs": -5.843946532137552,
+    "rms_windows_dbfs": [
+      -15.694154155056834,
+      -16.72474598704713,
+      -19.006288962631743,
+      -25.812922618774536,
+      -30.78604024258327,
+      -34.58634304207856,
+      -35.04823362244265,
+      -39.11567680385528,
+      -41.22494514062354,
+      -45.50841948230481,
+      -48.012378748072415,
+      -55.480994071059385,
+      -57.8154525991124
+    ],
+    "lowpass_hz": null,
+    "target_rms_dbfs": -23,
+    "crop_seconds": [
+      0.0,
+      1.280544217687075
+    ],
+    "gain_db": -1.1763602902843282,
+    "loop_crossfade_seconds": 0,
+    "loop_points_frames": null,
+    "duration_review_required": false,
+    "loop_seam_review": "not_applicable"
+  },
+  "asset_design": {
+    "id": "W02",
+    "category": "weapon",
+    "title": "中炮发射",
+    "target_seconds": 1.1,
+    "generation_seconds": 2,
+    "loop": false,
+    "direction": "舰娘海战场景：单次清楚的炮口爆发与短后坐；去掉多层碎响、重复击发和复杂长尾。",
+    "english_brief": "One medium naval cannon fires once: a solid low boom followed by one short recoil clunk. Simple clean two-part action, no scattered debris, no layered explosions.",
+    "candidates": [
+      {
+        "id": "W02_nav2_a",
+        "seed": 202609312010,
+        "variation": "干净动作",
+        "prompt": "Sound effect for Tiny Sea War, a 2D anime shipgirl naval battle game. An anime shipgirl fires a cruiser naval turret across open water. A solid marine artillery blast and compact steel turret recoil, open-air decay without indoor echoes. One medium naval cannon fires once: a solid low boom followed by one short recoil clunk. Simple clean two-part action, no scattered debris, no layered explosions. Close, crisp material detail and short outdoor decay. One isolated compact event with a complete ending. No voices, speech, music, seagulls, background surf, room ambience, or fantasy magic. Preserve the specific naval action; no unrelated generic notification.",
+        "status": "planned"
+      },
+      {
+        "id": "W02_nav2_b",
+        "seed": 202609312011,
+        "variation": "温暖材质",
+        "prompt": "Sound effect for Tiny Sea War, a 2D anime shipgirl naval battle game. An anime shipgirl fires a cruiser naval turret across open water. A solid marine artillery blast and compact steel turret recoil, open-air decay without indoor echoes. One medium naval cannon fires once: a solid low boom followed by one short recoil clunk. Simple clean two-part action, no scattered debris, no layered explosions. Warm full material body, controlled low frequencies and gentle treble. One isolated compact event with a complete ending. No voices, speech, music, seagulls, background surf, room ambience, or fantasy magic. Preserve the specific naval action; no unrelated generic notification.",
+        "status": "planned"
+      },
+      {
+        "id": "W02_nav2_c",
+        "seed": 202609312012,
+        "variation": "柔和耐听",
+        "prompt": "Sound effect for Tiny Sea War, a 2D anime shipgirl naval battle game. An anime shipgirl fires a cruiser naval turret across open water. A solid marine artillery blast and compact steel turret recoil, open-air decay without indoor echoes. One medium naval cannon fires once: a solid low boom followed by one short recoil clunk. Simple clean two-part action, no scattered debris, no layered explosions. Rounded gentle attack with clear action timing, comfortable for repeated playback. One isolated compact event with a complete ending. No voices, speech, music, seagulls, background surf, room ambience, or fantasy magic. Preserve the specific naval action; no unrelated generic notification.",
+        "status": "planned"
+      }
+    ],
+    "review_target_rms_dbfs": -23,
+    "previous_feedback": {
+      "choice": "全部返工",
+      "notes": "可以简单一点",
+      "reviewed_at": "2026-09-30T10:28:28.675Z"
+    },
+    "naval_context": "An anime shipgirl fires a cruiser naval turret across open water. A solid marine artillery blast and compact steel turret recoil, open-air decay without indoor echoes."
+  },
+  "source_batch_sha256": "06e64691b5e2c24e9d6c4a2dc7c708f82bca46ae70c6c6e34337434f1c5faeae",
+  "loudness": {
+    "sha256": "f502eac701b2d1e36261388bce072d83b109d8eba3bcde13a06db7a11cdeaa1a",
+    "ffmpeg_ebur128": "Integrated loudness:\n    I:         -22.7 LUFS\n    Threshold: -36.1 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:       -5.8 dBFS\n[out#0/null @ 0x9b5414240] video:0KiB audio:120KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:01.28 bitrate=N/A speed= 301x elapsed=0:00:00.00"
+  }
+}

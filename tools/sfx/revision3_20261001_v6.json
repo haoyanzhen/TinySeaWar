@@ -1,0 +1,1645 @@
+{
+  "id": "sfx_revision3_20261001_v6",
+  "version": 1,
+  "backend": "stabilityai/stable-audio-3-small-sfx",
+  "status": "planned",
+  "source": "workorder/20260929-sound-effects-inventory-and-integration.md",
+  "candidates_per_asset": 3,
+  "sample_rate_source": 44100,
+  "sample_rate_delivery": 48000,
+  "steps": 8,
+  "guidance_scale": 1.0,
+  "assets": [
+    {
+      "id": "K01",
+      "category": "skill",
+      "title": "技能施放确认",
+      "target_seconds": 0.7,
+      "generation_seconds": 1,
+      "loop": false,
+      "direction": "舰娘技能成功施放的短提示：A极简类别词；B短上扬气流与温暖落点；C加SFX标签。不是武器发射或命中。",
+      "english_brief": "Game skill activation sound effect.",
+      "candidates": [
+        {
+          "id": "K01_r6_a",
+          "seed": 202610016000,
+          "prompt": "Game skill activation sound effect.",
+          "variation": "极简类别描述",
+          "status": "planned"
+        },
+        {
+          "id": "K01_r6_b",
+          "seed": 202610016001,
+          "prompt": "A short rising whoosh ending in a warm soft impact. Anime naval game skill activation, dry, quick decay.",
+          "variation": "声源与动作",
+          "status": "planned"
+        },
+        {
+          "id": "K01_r6_c",
+          "seed": 202610016001,
+          "prompt": "TrackType: SFX. A short rising whoosh ending in a warm soft impact. Anime naval game skill activation, dry, quick decay.",
+          "variation": "同声源动作加官方标签",
+          "status": "planned"
+        }
+      ],
+      "review_target_rms_dbfs": -24,
+      "previous_feedback": {
+        "choice": "",
+        "notes": "意义不明，可以轻亮一点，不用这么沉闷，游戏提示音",
+        "reviewed_at": "2026-10-01T01:38:59.530Z"
+      }
+    },
+    {
+      "id": "N11a",
+      "category": "alert",
+      "title": "目标完成",
+      "target_seconds": 1.2,
+      "generation_seconds": 2,
+      "loop": false,
+      "direction": "海战战术目标完成：全部为钢琴三音，比较极简描述、明确声源音型、Instrument标签；与辅助开关的电钢琴作区分。",
+      "english_brief": "Three ascending piano notes, mission complete sound effect.",
+      "candidates": [
+        {
+          "id": "N11a_r6_a",
+          "seed": 202610016010,
+          "prompt": "Three ascending piano notes, mission complete sound effect.",
+          "variation": "极简类别描述",
+          "status": "planned"
+        },
+        {
+          "id": "N11a_r6_b",
+          "seed": 202610016011,
+          "prompt": "Acoustic piano plays three ascending notes of a major chord, evenly spaced, then stops. Warm soft attack, short dry decay.",
+          "variation": "声源与动作",
+          "status": "planned"
+        },
+        {
+          "id": "N11a_r6_c",
+          "seed": 202610016011,
+          "prompt": "TrackType: Instrument. Acoustic piano plays three ascending notes of a major chord, evenly spaced, then stops. Warm soft attack, short dry decay.",
+          "variation": "同声源动作加官方标签",
+          "status": "planned"
+        }
+      ],
+      "review_target_rms_dbfs": -24,
+      "previous_feedback": {
+        "choice": "全部返工",
+        "notes": "这是电报音啊，跟任务有什么关系吗",
+        "reviewed_at": "2026-10-01T01:40:18.708Z"
+      }
+    },
+    {
+      "id": "F09b",
+      "category": "facility",
+      "title": "布雷完成",
+      "target_seconds": 2,
+      "generation_seconds": 2,
+      "loop": false,
+      "direction": "布雷作业完成的舰桥非人声报告：改用中低音报告铃双击和自然余响，避开电报码、通信蜂鸣与音乐旋律。这是待听审的新设计假设。",
+      "english_brief": "A ship bridge bell ringing twice.",
+      "candidates": [
+        {
+          "id": "F09b_r6_a",
+          "seed": 202610016020,
+          "prompt": "A ship bridge bell ringing twice.",
+          "variation": "极简类别描述",
+          "status": "planned"
+        },
+        {
+          "id": "F09b_r6_b",
+          "seed": 202610016021,
+          "prompt": "A medium brass ship bell struck twice, two rounded low clongs followed by a short natural decay. Close dry recording.",
+          "variation": "声源与动作",
+          "status": "planned"
+        },
+        {
+          "id": "F09b_r6_c",
+          "seed": 202610016021,
+          "prompt": "TrackType: SFX. A medium brass ship bell struck twice, two rounded low clongs followed by a short natural decay. Close dry recording.",
+          "variation": "同声源动作加官方标签",
+          "status": "planned"
+        }
+      ],
+      "review_target_rms_dbfs": -23,
+      "previous_feedback": {
+        "choice": "全部返工",
+        "notes": "这是外星人声音。",
+        "reviewed_at": "2026-10-01T01:42:26.842Z"
+      }
+    }
+  ],
+  "requirements": [
+    {
+      "id": "W01",
+      "title": "轻口径炮发射：短、清楚的机械爆发",
+      "assets": [
+        "W01"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `WeaponFired`，按武器组映射",
+      "constraints": "P1；驱逐、副炮及部分轻巡共用；每轮受控合并",
+      "historical_assets": [
+        "W01"
+      ]
+    },
+    {
+      "id": "W02",
+      "title": "中口径炮发射：较厚炮口瞬态",
+      "assets": [
+        "W02"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `WeaponFired`",
+      "constraints": "P1；轻/重巡，HE/AP 共用发射底色",
+      "historical_assets": [
+        "W02"
+      ]
+    },
+    {
+      "id": "W03",
+      "title": "重口径炮发射：低频冲击与较长尾音",
+      "assets": [
+        "W03"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `WeaponFired`",
+      "constraints": "P1；战列和实际对应装备；多炮齐射不线性叠响",
+      "historical_assets": [
+        "W03"
+      ]
+    },
+    {
+      "id": "W04",
+      "title": "超重炮差异层",
+      "assets": [
+        "W04"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `WeaponFired`，显式武器映射",
+      "constraints": "P2；大和等适用武器；叠 W03 或独立变体二选一",
+      "historical_assets": [
+        "W04"
+      ]
+    },
+    {
+      "id": "W05",
+      "title": "鱼雷管组发射：机械开阀、短促破水",
+      "assets": [
+        "W05"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `WeaponFired` + `ProjectileSpawned` 对应关系",
+      "constraints": "P1；按一次实际管组发射触发，不两事件各播一次",
+      "historical_assets": [
+        "W05"
+      ]
+    },
+    {
+      "id": "W06",
+      "title": "已知鱼雷近场航行水声",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "S 合法可见投射物生命周期",
+      "constraints": "P3；稀疏/聚合循环；未发现敌雷绝不播放",
+      "historical_assets": [
+        "W06"
+      ]
+    },
+    {
+      "id": "W07",
+      "title": "深弹/反潜投放与入水",
+      "assets": [
+        "W07a",
+        "W07b"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `WeaponFired`；G 如需独立延迟入水则补同源表现时序",
+      "constraints": "P2；只对 AntiSubmarine 实际武器，不能当普通炮声",
+      "historical_assets": [
+        "W07a",
+        "W07b"
+      ]
+    },
+    {
+      "id": "W08",
+      "title": "反潜水下爆炸：低沉、短闷冲击",
+      "assets": [
+        "W08"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `AttackResolved` 的反潜事实",
+      "constraints": "P2；无合法目标信息时不能泄露潜艇位置或命中结果",
+      "historical_assets": [
+        "W08"
+      ]
+    },
+    {
+      "id": "W09",
+      "title": "近防机炮短连射",
+      "assets": [
+        "W09"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E B `AntiAirFired` 或现有合法防空事实",
+      "constraints": "P2；按发射单位/短时间窗合并，拒绝逐弹叠播",
+      "historical_assets": [
+        "W09"
+      ]
+    },
+    {
+      "id": "W10",
+      "title": "中重防空炮/空爆",
+      "assets": [
+        "W10a"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E 有据防空事件；G 独立空爆须有公开位置/时序",
+      "constraints": "P2；无口径元数据时显式映射；不从 A 装饰弹幕猜真实拦截",
+      "historical_assets": [
+        "W10a",
+        "W10b"
+      ]
+    },
+    {
+      "id": "W11",
+      "title": "炮弹掠过/飞行短层",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "S 已公开 `ShellFlightView` 生命周期",
+      "constraints": "P3；仅近镜头少量重炮，无每枚弹持续尖啸",
+      "historical_assets": [
+        "W11"
+      ]
+    },
+    {
+      "id": "W12",
+      "title": "炮弹落水：小/中/大水柱变体",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "E/S 权威落点及现有炮弹表现落点时序",
+      "constraints": "P1；尺寸复用；没有伤害也可落水，但不能暗示隐藏命中",
+      "historical_assets": [
+        "W12a",
+        "W12b",
+        "W12c"
+      ]
+    },
+    {
+      "id": "W13",
+      "title": "舰装受击：轻金属/重冲击变体",
+      "assets": [
+        "W13a",
+        "W13b"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `AttackResolved` 的已公开有效受击",
+      "constraints": "P1；按受击目标合并，不按每个伤害数字播放",
+      "historical_assets": [
+        "W13a",
+        "W13b"
+      ]
+    },
+    {
+      "id": "W14",
+      "title": "鱼雷命中：爆炸与破水",
+      "assets": [
+        "W14"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `ProjectileHit` + `AttackResolved`",
+      "constraints": "P1；同一命中只保留一个音频所有者",
+      "historical_assets": [
+        "W14"
+      ]
+    },
+    {
+      "id": "W15",
+      "title": "岸地爆炸、鱼雷撞岸",
+      "assets": [
+        "W15a"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `ShellBlockedByTerrain` / `ProjectileBlockedByTerrain`",
+      "constraints": "P2；与落水/命中互斥；大小复用 W12/W14 的尾部层",
+      "historical_assets": [
+        "W15a",
+        "W15b"
+      ]
+    },
+    {
+      "id": "W16",
+      "title": "舰体触岸摩擦/顿挫",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "E `UnitTerrainCollision`",
+      "constraints": "P2；限频，只表接触，不虚构碰撞伤害；持续贴岸不能每 Tick 响",
+      "historical_assets": [
+        "W16"
+      ]
+    },
+    {
+      "id": "W17",
+      "title": "水面航行起步/加速破水",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "S 己方或当前可见舰运动快照",
+      "constraints": "P2；轻/中/重层共享，不用舰种代替真实速度",
+      "historical_assets": [
+        "W17a",
+        "W17b",
+        "W17c"
+      ]
+    },
+    {
+      "id": "W18",
+      "title": "舰装低强度巡航/尾流循环",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "S 运动、可见性、距离与生命周期",
+      "constraints": "P3；只保留近场代表声源，停止/沉没/失去可见即淡出",
+      "historical_assets": [
+        "W18"
+      ]
+    },
+    {
+      "id": "W19",
+      "title": "沉没：受损收尾与入水",
+      "assets": [
+        "W19"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `UnitSunk`",
+      "constraints": "P1；与最后一击爆炸合并控制；不额外叠连续爆炸",
+      "historical_assets": [
+        "W19"
+      ]
+    },
+    {
+      "id": "W20",
+      "title": "跳弹、装甲未击穿、舰船互撞专属声",
+      "assets": [],
+      "status": "silent_deferred",
+      "reason": "无公开精确事实，暂缓专属跳弹/互撞声",
+      "trigger": "G/D 缺对应可公开且足够精确的事实时不用",
+      "constraints": "P3；不能凭 AP 名称、零伤害或视觉相交猜原因",
+      "historical_assets": []
+    },
+    {
+      "id": "A01",
+      "title": "舰载编队出击",
+      "assets": [
+        "A01"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `AviationWaveLaunched`",
+      "constraints": "P1；波次是所有者，不再响应旧 Aviation `WeaponFired`",
+      "historical_assets": [
+        "A01"
+      ]
+    },
+    {
+      "id": "A02",
+      "title": "飞机巡航/掠过循环",
+      "assets": [
+        "A02"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "S 合法航空快照与编队阶段",
+      "constraints": "P2；公共螺旋桨音色，按编队而非逐架；侦察机可弱化",
+      "historical_assets": [
+        "A02"
+      ]
+    },
+    {
+      "id": "A03",
+      "title": "炸弹释放/短下落声",
+      "assets": [
+        "A03"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E B `AviationPayloadReleased`；S/G A 读取投影公开投放阶段",
+      "constraints": "P2；不得假装 A 已有 B 的实体投放事实",
+      "historical_assets": [
+        "A03"
+      ]
+    },
+    {
+      "id": "A04",
+      "title": "航空炸弹爆炸/落水",
+      "assets": [
+        "W13b"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `AviationImpact` / `AviationArrival`",
+      "constraints": "P1；复用 W12/W13；Arrival 只能中性落点声，隐藏命中和落空听感一致",
+      "historical_assets": [
+        "W12b",
+        "W12c",
+        "W13b"
+      ]
+    },
+    {
+      "id": "A05",
+      "title": "航空鱼雷入水",
+      "assets": [
+        "A05"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E B `AviationPayloadReleased` 的鱼雷投放语义",
+      "constraints": "P2；后续实体命中归 W14；A 不伪造实体鱼雷接触",
+      "historical_assets": [
+        "A05"
+      ]
+    },
+    {
+      "id": "A06",
+      "title": "飞机受损、坠毁/落水",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "E B `AircraftDamaged` / `AircraftDestroyed`",
+      "constraints": "P2；只能播已发布的阵营合法事实；A 装饰减员不得触发",
+      "historical_assets": [
+        "A06a",
+        "A06b"
+      ]
+    },
+    {
+      "id": "A07",
+      "title": "侦察/巡逻编队建立与结束",
+      "assets": [
+        "N10",
+        "U02"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "S 公开波次/任务快照；G 需明确结束原因",
+      "constraints": "P2；启动提示复用任务族，正常结束、取消、被击落不能混成爆炸",
+      "historical_assets": [
+        "N10",
+        "K09",
+        "U02"
+      ]
+    },
+    {
+      "id": "A08",
+      "title": "航空波次结束/返航收尾",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "E `AviationWaveEnded` + S 公开 phase",
+      "constraints": "P2；按真实原因淡出飞行；没有降落事实不补轮胎着舰声",
+      "historical_assets": [
+        "K09"
+      ]
+    },
+    {
+      "id": "S01",
+      "title": "下潜开始与气泡过程",
+      "assets": [
+        "S01"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `SubmarineDepthTransitionStarted`，目标 Submerged",
+      "constraints": "P1；可见/己方舰；转换进度控制短层，不拖延规则",
+      "historical_assets": [
+        "S01"
+      ]
+    },
+    {
+      "id": "S02",
+      "title": "上浮开始与破水过程",
+      "assets": [
+        "S02"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E 同上，目标 Surface；强制上浮另看 S05",
+      "constraints": "P1；与下潜听感可辨，复用水层",
+      "historical_assets": [
+        "S02"
+      ]
+    },
+    {
+      "id": "S03",
+      "title": "深度转换完成",
+      "assets": [
+        "S03a",
+        "S03b"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `SubmarineDepthChanged`",
+      "constraints": "P1；己方状态提示与空间水声分开；请求被拒绝不播完成",
+      "historical_assets": [
+        "S03a",
+        "S03b"
+      ]
+    },
+    {
+      "id": "S04",
+      "title": "低氧预警",
+      "assets": [
+        "S04"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "S 己方 oxygen 状态；G 跨阈值/恢复迟滞配置待定",
+      "constraints": "P1；每次低氧区间一次，切换选中舰不重播",
+      "historical_assets": [
+        "S04"
+      ]
+    },
+    {
+      "id": "S05",
+      "title": "零氧强制上浮警告",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "E `SubmarineForcedSurface`",
+      "constraints": "P1；覆盖较低级低氧提示；不得与 S02 重复响两次报警",
+      "historical_assets": [
+        "S05"
+      ]
+    },
+    {
+      "id": "S06",
+      "title": "恢复至设定氧量提示",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "S 己方氧气恢复跨阈值",
+      "constraints": "P2；可选关闭；不能宣称任意固定百分比是允许下潜的规则门槛",
+      "historical_assets": [
+        "S06"
+      ]
+    },
+    {
+      "id": "S07",
+      "title": "潜航近场气泡/水声循环",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "S 己方或合法可见潜艇的深度状态",
+      "constraints": "P3；不因隐藏潜艇存在改变海面环境声，不模拟被动声呐定位",
+      "historical_assets": [
+        "S07"
+      ]
+    },
+    {
+      "id": "K01",
+      "title": "通用技能成功施放短提示",
+      "assets": [
+        "K01"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `SkillCast`",
+      "constraints": "P1；己方操作确认；技能拒绝统一走 U05",
+      "historical_assets": [
+        "K01"
+      ]
+    },
+    {
+      "id": "K02",
+      "title": "校射/锁定/集中火控",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "E 技能与已公开状态；厌战、衣阿华、巴尔的摩、恰巴耶夫等",
+      "constraints": "P2；短机械/电子收束，不提示隐藏目标坐标",
+      "historical_assets": [
+        "K02"
+      ]
+    },
+    {
+      "id": "K03",
+      "title": "鱼雷突击/伏击起势",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "E 岛风、愤怒、高雄、U-47、拥护者等实际技能施放",
+      "constraints": "P2；复用 W05，不能在仅加 Buff 时伪造实际发射",
+      "historical_assets": [
+        "K03"
+      ]
+    },
+    {
+      "id": "K04",
+      "title": "航空技能起势",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "E 企业、胜利、凤翔、翔鹤、齐柏林伯爵等",
+      "constraints": "P2；施放提示一次，逐波出击归 A01",
+      "historical_assets": [
+        "K04"
+      ]
+    },
+    {
+      "id": "K05",
+      "title": "防空/反潜警戒与护航圈建立",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "E 圣地亚哥、天狼星、弗莱彻、克利夫兰、秋月等",
+      "constraints": "P2；短提示，不用永久警笛代表持续 Buff",
+      "historical_assets": [
+        "K05"
+      ]
+    },
+    {
+      "id": "K06",
+      "title": "侦查/照明/区域标记",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "E 阿芙乐尔、贝尔法斯特、沃德等技能；航空侦察归 A07",
+      "constraints": "P2；可用抽象扫描声，不创造声呐/雷达探测规则",
+      "historical_assets": [
+        "K06"
+      ]
+    },
+    {
+      "id": "K07",
+      "title": "机动/规避/队伍鼓舞",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "E 胡德、杰维斯、塔什干、纽伦堡、雪风等",
+      "constraints": "P2；轻上扬/流动声，共用一族，不逐受益友舰播放",
+      "historical_assets": [
+        "K07"
+      ]
+    },
+    {
+      "id": "K08",
+      "title": "防护/隐蔽/续航起势",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "E 俾斯麦、甘古特、定远、光辉、海龙等按实际效果映射",
+      "constraints": "P2；护甲增强不等于护盾生成，隐蔽增强不等于已经脱离侦查",
+      "historical_assets": [
+        "K08"
+      ]
+    },
+    {
+      "id": "K09",
+      "title": "重要状态结束或被消耗",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "E `StatusExpired` / `StatusConsumed` 等，需识别玩家关注的状态",
+      "constraints": "P2；只对选中舰关键主动状态，一般属性 Buff 默认无声",
+      "historical_assets": [
+        "K09"
+      ]
+    },
+    {
+      "id": "K10",
+      "title": "角色专属技能签名、cut-in、喊招",
+      "assets": [],
+      "status": "silent_deferred",
+      "reason": "专属演出/语音另立制作，不制作喊招",
+      "trigger": "D 依专属表现与语音方案",
+      "constraints": "P3；不作为首期全舰种覆盖必需项",
+      "historical_assets": []
+    },
+    {
+      "id": "N01",
+      "title": "初次发现敌舰/新接触",
+      "assets": [
+        "N01"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `ContactAcquired`，核对 observer 阵营",
+      "constraints": "P1；首次/新一轮交战聚合，不逐舰雷达滴答；不等于旗舰已识别",
+      "historical_assets": [
+        "N01"
+      ]
+    },
+    {
+      "id": "N02",
+      "title": "当前集火目标丢失/转为残影",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "E `ContactLost` / `ContactTypeChanged`",
+      "constraints": "P2；仅与玩家操作有关时提示，不每次侦查抖动播放",
+      "historical_assets": [
+        "N02"
+      ]
+    },
+    {
+      "id": "N03",
+      "title": "敌雷被发现",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "E `ProjectileDetected`，只取本阵营",
+      "constraints": "P1；一次雷群提示；己方投射物不用敌袭音色",
+      "historical_assets": [
+        "N03"
+      ]
+    },
+    {
+      "id": "N04",
+      "title": "已发现鱼雷进入己舰危险窗",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "G 复用合法公共威胁输出；单靠 N03 不足以证明逼近",
+      "constraints": "P1；较强短警报，按受威胁舰/危险区间聚合；不报“必定命中”",
+      "historical_assets": []
+    },
+    {
+      "id": "N05",
+      "title": "已发现水雷/已知雷区风险",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "E `MineDetected` + S 已知区域与己方状态",
+      "constraints": "P1；未知雷点、失效雷区和安全航道不能错误报警",
+      "historical_assets": [
+        "N05"
+      ]
+    },
+    {
+      "id": "N06",
+      "title": "己方旗舰危急",
+      "assets": [
+        "N06"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "S 己方旗舰生命跨阈值，阈值待定",
+      "constraints": "P1；高于一般受击；恢复迟滞后方可再次触发",
+      "historical_assets": [
+        "N06"
+      ]
+    },
+    {
+      "id": "N07",
+      "title": "其他己舰危急/被击沉",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "S 生命阈值；E `UnitSunk`",
+      "constraints": "P2；按舰聚合，配头像；与 W19 物理声区分",
+      "historical_assets": [
+        "N07a",
+        "N07b"
+      ]
+    },
+    {
+      "id": "N08",
+      "title": "敌舰/敌旗舰击沉确认",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "E 已公开 `UnitSunk` / `FlagshipSunk`",
+      "constraints": "P1；不能从单位消失推断；同 Tick 结算优先，避免先庆祝再判平局",
+      "historical_assets": [
+        "N08"
+      ]
+    },
+    {
+      "id": "N09",
+      "title": "战斗开始/出击就绪",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "E `BattleStarted` + 场景可操作状态",
+      "constraints": "P1；每局一次；加载失败不播出击成功",
+      "historical_assets": [
+        "N09"
+      ]
+    },
+    {
+      "id": "N10",
+      "title": "教学阶段、任务步骤更新",
+      "assets": [
+        "N10"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `TutorialStageChanged` / `LevelObjectiveAdvanced`",
+      "constraints": "P1；一次阶段提示；`TutorialActionRecorded` 不逐操作发奖励声",
+      "historical_assets": [
+        "N10"
+      ]
+    },
+    {
+      "id": "N11",
+      "title": "单项目标达成/失败",
+      "assets": [
+        "N11a",
+        "N11b"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `LevelObjectiveCompleted` / `LevelObjectiveFailed`",
+      "constraints": "P1；主目标、可选精通区分；不能替代最终胜负判断",
+      "historical_assets": [
+        "N11a",
+        "N11b"
+      ]
+    },
+    {
+      "id": "N12",
+      "title": "接替增援实际抵达",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "E `ReinforcementWaveSpawned`",
+      "constraints": "P1；一波一次，敌方须有公开通知授权，不能只凭 raw faction 判断可播",
+      "historical_assets": [
+        "N12a",
+        "N12b"
+      ]
+    },
+    {
+      "id": "N13",
+      "title": "战斗时间即将耗尽",
+      "assets": [
+        "N13"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "S 正式战斗剩余时间跨阈值",
+      "constraints": "P2；一次或有限档位，不逐秒急促蜂鸣；技术保护计时不用此声",
+      "historical_assets": [
+        "N13"
+      ]
+    },
+    {
+      "id": "N14",
+      "title": "权威结算展示短提示",
+      "assets": [
+        "U11"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `BattleFinished` + 结果展示分类",
+      "constraints": "P1；可复用 U11；胜负乐句归 50，不另造一套重复胜负音乐",
+      "historical_assets": [
+        "U11"
+      ]
+    },
+    {
+      "id": "N15",
+      "title": "技术无效/加载失败/保存失败",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "S 现有错误/结果 UI 状态",
+      "constraints": "P1；复用 U05 的中性故障变体，不用战败声；保存失败不改已确认胜负",
+      "historical_assets": [
+        "U05c"
+      ]
+    },
+    {
+      "id": "N16",
+      "title": "奖励/新角色/关卡解锁确认",
+      "assets": [
+        "N16"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "S 真实进度结果与保存状态",
+      "constraints": "P2；一次结果呈现聚合，重开面板或重试保存不重播奖励；不得暗示未持久化已成功",
+      "historical_assets": [
+        "N16"
+      ]
+    },
+    {
+      "id": "E01",
+      "title": "平静海面底噪循环",
+      "assets": [
+        "E01"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "S 当前战场公开环境",
+      "constraints": "P1；晴朗/多云基础共用，不按时段复制",
+      "historical_assets": [
+        "E01"
+      ]
+    },
+    {
+      "id": "E02",
+      "title": "中/高海况浪声层",
+      "assets": [
+        "E02a",
+        "E02b"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "S 有效海况",
+      "constraints": "P2；按强度交叉淡化；不要同时叠三条完整浪声",
+      "historical_assets": [
+        "E02a",
+        "E02b"
+      ]
+    },
+    {
+      "id": "E03",
+      "title": "轻风/强风循环层",
+      "assets": [
+        "E03a",
+        "E03b"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "S 公开风力/天气与允许使用的局部上下文",
+      "constraints": "P2；多云/阴云/雨/雷雨共享强度层，不每舰播放",
+      "historical_assets": [
+        "E03a",
+        "E03b"
+      ]
+    },
+    {
+      "id": "E04",
+      "title": "雨循环：普通/强雨变体",
+      "assets": [
+        "E04a",
+        "E04b"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "S 全局雨、雷雨及公开局部飑线",
+      "constraints": "P1；雨滴与风分层，避免持续掩盖就绪提示",
+      "historical_assets": [
+        "E04a",
+        "E04b"
+      ]
+    },
+    {
+      "id": "E05",
+      "title": "雷声：远闷雷/较近雷鸣变体",
+      "assets": [
+        "E05a",
+        "E05b"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "G 当前闪电为着色器表现，需共享可同步的表现闪电时序",
+      "constraints": "P2；雷声与闪光关联、限峰；不从像素闪烁或任意每帧随机触发",
+      "historical_assets": [
+        "E05a",
+        "E05b"
+      ]
+    },
+    {
+      "id": "E06",
+      "title": "近岸浪拍/海湾水声",
+      "assets": [
+        "E06"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "S 已知岸线与镜头近场；需明确空间混合范围",
+      "constraints": "P3；十图共用，不为每岛录独占背景；远离岸线淡出",
+      "historical_assets": [
+        "E06"
+      ]
+    },
+    {
+      "id": "E07",
+      "title": "强流/局部浪涌增强",
+      "assets": [
+        "E02b"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "S 己舰/镜头可用环境上下文",
+      "constraints": "P2；复用 E02，避免不可见局部区通过空间音色泄露",
+      "historical_assets": [
+        "E02b"
+      ]
+    },
+    {
+      "id": "E08",
+      "title": "海雾、月光、背风、昼夜的专属底噪",
+      "assets": [],
+      "status": "silent_deferred",
+      "reason": "无独立物理声源，用混音变化表达",
+      "trigger": "D 不要求独立文件",
+      "constraints": "P3；海雾/月光不是物理发声体；背风降风浪；时段改变混音但不无据加虫鸣/海鸥",
+      "historical_assets": []
+    },
+    {
+      "id": "E09",
+      "title": "开局天气/时段摘要到达",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "S 首次环境 HUD 展示",
+      "constraints": "P2；与 N09 合并，先文字再一次中性信息声；无需二十句语音",
+      "historical_assets": [
+        "N09"
+      ]
+    },
+    {
+      "id": "E10",
+      "title": "天气恶化/改善提示",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "G 当前未证实有通用全局天气转场事件",
+      "constraints": "P2；仅未来真实公开转场时启用；不能把潮汐事件当风暴来临",
+      "historical_assets": [
+        "E10a",
+        "E10b"
+      ]
+    },
+    {
+      "id": "E11",
+      "title": "己舰进入/离开显著局部影响",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "S/G 对己舰有效上下文差分及通知适配；非 `EnvironmentZoneChanged` 直接等价",
+      "constraints": "P2；海雾/飑线/高海况/强流共享注意声，背风/月光改善共享恢复声；边界迟滞",
+      "historical_assets": [
+        "E10a",
+        "E10b"
+      ]
+    },
+    {
+      "id": "E12",
+      "title": "航空条件受限/恢复",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "S 己方航空条件等级变化",
+      "constraints": "P1；用 Normal/Restricted/Severe 的真实语义，不把 Severe 宣称绝对禁飞；被拒绝仍归 U05",
+      "historical_assets": [
+        "E12a",
+        "E12b"
+      ]
+    },
+    {
+      "id": "E13",
+      "title": "潮态切换与通行收紧/恢复",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "E `EnvironmentForecastChanged` + S 公开潮态/通行上下文",
+      "constraints": "P1；仅对当前战术有关时通知；阶段变化不等于每艘船都遭封锁",
+      "historical_assets": [
+        "E13a",
+        "E13b"
+      ]
+    },
+    {
+      "id": "E14",
+      "title": "己舰潮汐通行受限",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "E `UnitTideAccessRestricted`",
+      "constraints": "P1；按舰/同原因合并，避免每 Tick 报警；文字说明仍可撤离",
+      "historical_assets": [
+        "E14"
+      ]
+    },
+    {
+      "id": "E15",
+      "title": "局部区消散/已公开预报更新",
+      "assets": [
+        "N10"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `EnvironmentZoneChanged` 消散；G 其他预报待公开接口",
+      "constraints": "P2；只通知影响当前操作的变化；无未来精确数据不播倒计时预警",
+      "historical_assets": [
+        "N10"
+      ]
+    },
+    {
+      "id": "F01",
+      "title": "占领/控制开始与完成",
+      "assets": [
+        "F01a",
+        "F01b"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `FacilityControlDeclared` / `FacilityControlCompleted`",
+      "constraints": "P2；开始轻确认、完成任务提示；避免与 OwnershipChanged 重复",
+      "historical_assets": [
+        "F01a",
+        "F01b"
+      ]
+    },
+    {
+      "id": "F02",
+      "title": "设施易主/整套系统移交",
+      "assets": [
+        "F02"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `FacilityOwnershipChanged` / `FacilitySystemHandedOver`",
+      "constraints": "P2；按一次系统移交聚合；只对已知设施",
+      "historical_assets": [
+        "F02"
+      ]
+    },
+    {
+      "id": "F03",
+      "title": "设施启用、受压制、恢复/停用",
+      "assets": [
+        "F03a",
+        "F03b"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `FacilityActivated` / `FacilitySuppressed` / `FacilityRecovered` / `FacilityOperationStateChanged`",
+      "constraints": "P2；启用/恢复与异常两族，依赖连锁不逐建筑轰炸提示",
+      "historical_assets": [
+        "F03a",
+        "F03b"
+      ]
+    },
+    {
+      "id": "F04",
+      "title": "靠泊/进坞完成",
+      "assets": [
+        "F04"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `FacilityDockingCompleted`",
+      "constraints": "P2；短机械/水声；申请服务不等于已靠泊",
+      "historical_assets": [
+        "F04"
+      ]
+    },
+    {
+      "id": "F05",
+      "title": "补给/维修开始、工作、完成",
+      "assets": [
+        "F05a"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `FacilityServiceStarted` / `FacilityServiceCompleted`；S 工作循环",
+      "constraints": "P2；补给装填、维修轻工具变体，循环仅选中/近场；`UnitServiced` 不再重复报喜",
+      "historical_assets": [
+        "F05a",
+        "F05b",
+        "F05c",
+        "F05d",
+        "F05e"
+      ]
+    },
+    {
+      "id": "F06",
+      "title": "服务中断、取消/离泊",
+      "assets": [
+        "U02",
+        "U05a"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `FacilityActionInterrupted`，读取 reason_code",
+      "constraints": "P2；主动取消用取消声，受重击等异常用警示声",
+      "historical_assets": [
+        "U02",
+        "U05a"
+      ]
+    },
+    {
+      "id": "F07",
+      "title": "岸炮开火、设施受击/摧毁",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "E `FacilityWeaponFired` / `FacilityDamaged` / `FacilityDestroyed`",
+      "constraints": "P2；复用 W02/W03/W13，摧毁加短结构坍塌尾声；无敌情泄露",
+      "historical_assets": [
+        "F07",
+        "W02",
+        "W03",
+        "W13a",
+        "W13b"
+      ]
+    },
+    {
+      "id": "F08",
+      "title": "机场支援申请、发起、完成/取消",
+      "assets": [
+        "U04b",
+        "A01",
+        "N11a",
+        "U02"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E 服务已有任务事件；G 当前表现过滤器会抑制部分原始任务事件，需合法任务摘要",
+      "constraints": "P2；申请与实际出动分开；飞行/空袭只由 A 系列发声",
+      "historical_assets": [
+        "U04b",
+        "A01",
+        "N11a",
+        "U02"
+      ]
+    },
+    {
+      "id": "F09",
+      "title": "布雷开始、完成/取消",
+      "assets": [
+        "F09a",
+        "F09b",
+        "U02"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `MineDeploymentStarted` / `MineDeploymentCompleted` / `MineDeploymentCancelled`，结合 batch 结果",
+      "constraints": "P2；完成播一次并显示有效/失效数量，不能每个 MineDeployed 都响",
+      "historical_assets": [
+        "F09a",
+        "F09b",
+        "U02"
+      ]
+    },
+    {
+      "id": "F10",
+      "title": "水雷触发爆炸",
+      "assets": [
+        "W14"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `MineTriggered`",
+      "constraints": "P1；复用 W14；发现声 N05 与触发爆炸分离",
+      "historical_assets": [
+        "W14"
+      ]
+    },
+    {
+      "id": "F11",
+      "title": "雷场启停/控制站联动",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "本轮用户取消雷场启用/停用音效",
+      "trigger": "E `MineFieldStateChanged`，只取合法已知状态",
+      "constraints": "P2；按一次控制结果合并；不暴露隐藏雷点布局",
+      "historical_assets": [
+        "F11a",
+        "F11b"
+      ]
+    },
+    {
+      "id": "F12",
+      "title": "观察站/雷达/通信设备循环",
+      "assets": [],
+      "status": "silent_deferred",
+      "reason": "首轮设备持续工作静默",
+      "trigger": "D 首轮默认静默，P3 可补局部设备底噪",
+      "constraints": "P3；设备持续工作不等于每 Tick 探测；新接触已由 N01 覆盖",
+      "historical_assets": []
+    },
+    {
+      "id": "U01",
+      "title": "按钮确认/页面进入",
+      "assets": [
+        "U01"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "S 本地有效 UI 操作",
+      "constraints": "P1；鼠标/键盘同一入口；禁用按钮不能播成功声",
+      "historical_assets": [
+        "U01"
+      ]
+    },
+    {
+      "id": "U02",
+      "title": "返回/取消/关闭",
+      "assets": [
+        "U02"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "S 本地状态实际改变",
+      "constraints": "P1；取消瞄准、关闭面板共享；不等于命令已经撤回",
+      "historical_assets": [
+        "U02"
+      ]
+    },
+    {
+      "id": "U03",
+      "title": "选中舰/群体选择/设施选择",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "S 选择集合实际变化",
+      "constraints": "P1；一次拖框只响一次，不逐成员播放；重复点击同一对象可静默",
+      "historical_assets": [
+        "U03"
+      ]
+    },
+    {
+      "id": "U04",
+      "title": "移动、航点、集火确认",
+      "assets": [
+        "U04a",
+        "U04b",
+        "U04c"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `MoveOrderAccepted` / `MoveOrderQueued` / `MoveWaypointQueued` / `FocusTargetChanged` 等",
+      "constraints": "P1；排队音色不暗示路线已可达；连续布点短促限频",
+      "historical_assets": [
+        "U04a",
+        "U04b",
+        "U04c"
+      ]
+    },
+    {
+      "id": "U05",
+      "title": "命令拒绝/部分执行/异常",
+      "assets": [
+        "U05a"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `CommandRejected` + 现有 PlayerCommandFeedback",
+      "constraints": "P1；沿用玩家来源和合并 key，当前合并窗 1.5 秒内不重复发声；部分成功不播全成功",
+      "historical_assets": [
+        "U05a",
+        "U05b",
+        "U05c"
+      ]
+    },
+    {
+      "id": "U06",
+      "title": "HE/AP 弹种切换",
+      "assets": [
+        "U06"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `AmmoSwitched`",
+      "constraints": "P1；一次轻机械切换；不加装填完成声，不重置冷却",
+      "historical_assets": [
+        "U06"
+      ]
+    },
+    {
+      "id": "U07",
+      "title": "辅助/自动开火开关开、关",
+      "assets": [
+        "U07a",
+        "U07b"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "E `UnitControlStateChanged` + S 本地控件",
+      "constraints": "P1；高低两种短提示，舰队统一一次；潜艇深度操作归 S 系列",
+      "historical_assets": [
+        "U07a",
+        "U07b"
+      ]
+    },
+    {
+      "id": "U08",
+      "title": "主要武器装填完成",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "S 己舰实际 reload/可用状态跨边沿",
+      "constraints": "P1；首轮只选中舰，可选扩展；切换选中对象不重播，管组完成聚合",
+      "historical_assets": [
+        "U08"
+      ]
+    },
+    {
+      "id": "U09",
+      "title": "主动技能冷却完成",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "S 己方技能冷却边沿",
+      "constraints": "P1；与 U08 听感可辨；开局已经就绪不连发 48/多舰提示",
+      "historical_assets": [
+        "U09"
+      ]
+    },
+    {
+      "id": "U10",
+      "title": "战术暂停/继续",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "S 战斗阶段实际变化",
+      "constraints": "P1；暂停时 UI 可响，冻结战斗新触发，恢复不重放积压",
+      "historical_assets": [
+        "U10a",
+        "U10b"
+      ]
+    },
+    {
+      "id": "U11",
+      "title": "任务/结果面板出现",
+      "assets": [
+        "U11"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "S 面板首次正式显示",
+      "constraints": "P2；供 N10/N11/N14 复用，已有语义提示时不另响一层",
+      "historical_assets": [
+        "U11"
+      ]
+    },
+    {
+      "id": "U12",
+      "title": "暂停计划排入、撤销、恢复执行",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "S 计划队列变化 + 恢复后的命令结果",
+      "constraints": "P1；排入只表示计划记录，真正拒绝仍 U05；批量执行聚合",
+      "historical_assets": [
+        "U12a",
+        "U12b",
+        "U12c"
+      ]
+    },
+    {
+      "id": "U13",
+      "title": "编队加入/移除、合法配置切换",
+      "assets": [
+        "U01",
+        "U02",
+        "U05a"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "S 菜单实际变更",
+      "constraints": "P2；复用 U01/U02；Cost 超限/锁定复用拒绝声，筹备中不播解锁",
+      "historical_assets": [
+        "U01",
+        "U02",
+        "U05a"
+      ]
+    },
+    {
+      "id": "U14",
+      "title": "音量调节试听、设置保存",
+      "assets": [],
+      "status": "cancelled_by_user",
+      "reason": "用户取消音效需求；不排产、不安排播放、不列为未完成项",
+      "trigger": "S 未来音频设置 UI",
+      "constraints": "P1；拖动不逐像素出声，静音后无试听；保存状态与即时效果区分",
+      "historical_assets": [
+        "U14a",
+        "U14b"
+      ]
+    },
+    {
+      "id": "U15",
+      "title": "看板切换、观赏/退出观赏",
+      "assets": [
+        "U01",
+        "U02"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "S 当前封面流程",
+      "constraints": "P2；一次轻 UI 转场，可复用 U01/U02；不附送角色语音",
+      "historical_assets": [
+        "U01",
+        "U02"
+      ]
+    },
+    {
+      "id": "U16",
+      "title": "悬停、镜头缩放/拖动、持续瞄准、F9 调试",
+      "assets": [],
+      "status": "silent_deferred",
+      "reason": "高频悬停/镜头/调试默认静默",
+      "trigger": "D 默认静默",
+      "constraints": "P3；这些高频动作不应占用战斗提示预算；若加悬停需可关且限频",
+      "historical_assets": []
+    },
+    {
+      "id": "U17",
+      "title": "音乐播放/暂停/下一首/循环控件",
+      "assets": [
+        "U01"
+      ],
+      "status": "active_review_disposition",
+      "reason": "使用当前逐条采纳/返工状态；旧planned不再作为制作队列",
+      "trigger": "S/G 按 50 未来控件行为",
+      "constraints": "P2；最多复用 UI 点击，音乐播放本身由音乐系统负责",
+      "historical_assets": [
+        "U01"
+      ]
+    }
+  ],
+  "runtime": "modelscope-runtime/ComfyUI",
+  "parent_batches": [
+    "sfx_revision7_20261001_v5"
+  ],
+  "retained_preferences": {},
+  "cancelled": [
+    "A06a",
+    "A06b",
+    "E10a",
+    "E10b",
+    "E12a",
+    "E12b",
+    "E13a",
+    "E13b",
+    "E14",
+    "F05b",
+    "F05c",
+    "F05d",
+    "F05e",
+    "F07",
+    "F11a",
+    "F11b",
+    "K02",
+    "K03",
+    "K04",
+    "K05",
+    "K06",
+    "K07",
+    "K08",
+    "K09",
+    "N02",
+    "N03",
+    "N04",
+    "N05",
+    "N07a",
+    "N07b",
+    "N08",
+    "N09",
+    "N12a",
+    "N12b",
+    "S05",
+    "S06",
+    "S07",
+    "U03",
+    "U05b",
+    "U05c",
+    "U08",
+    "U09",
+    "U10a",
+    "U10b",
+    "U12a",
+    "U12b",
+    "U12c",
+    "U14a",
+    "U14b",
+    "W06",
+    "W10b",
+    "W11",
+    "W12a",
+    "W12b",
+    "W12c",
+    "W15b",
+    "W16",
+    "W17a",
+    "W17b",
+    "W17c",
+    "W18"
+  ],
+  "duration_note": "Integer source seconds; retain full source and natural decay.",
+  "review_source": "tools/sfx/reviews/sfx_full_20260930_v3.0f272739ee62.review.json",
+  "revision_reason": "官方与社区提示词调研后3项对照生成"
+}

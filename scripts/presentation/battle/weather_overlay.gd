@@ -1,5 +1,7 @@
 extends Node2D
 
+signal lightning_flashed
+
 const PALETTE_PATH := "res://data/environments/ocean_palettes.json"
 const WEATHER_TEXTURE_DEFAULTS := {
 	"weather_cloud_texture": "res://assets/environment/weather/ocean_weather_cloudy_shadow_master.png",
@@ -32,6 +34,9 @@ var map_size := Vector2(4096.0, 2304.0)
 var animation_time := 0.0
 var animation_paused := false
 var palettes := {}
+var lightning_speed := 1.0
+var lightning_enabled := false
+var lightning_above := false
 
 
 func _ready() -> void:
@@ -42,6 +47,9 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if not animation_paused:
 		animation_time += delta
+	var above := lightning_enabled and sin(animation_time * lightning_speed * 0.73) > 0.97
+	if above and not lightning_above and not animation_paused: lightning_flashed.emit()
+	lightning_above = above
 	if material is ShaderMaterial:
 		(material as ShaderMaterial).set_shader_parameter("animation_time", animation_time)
 
@@ -70,6 +78,8 @@ func set_palette(palette_id: String) -> void:
 	var palette: Dictionary = palettes.get(palette_id, palettes.get("day_clear", {}))
 	if palette.is_empty() or not material is ShaderMaterial:
 		return
+	lightning_speed = float(palette.get("animation_speed", 1.0))
+	lightning_enabled = float(palette.get("lightning_strength", 0)) > 0
 	var shader_material := material as ShaderMaterial
 	for parameter in WEATHER_TEXTURE_DEFAULTS.keys():
 		var texture_path := str(palette.get(parameter, WEATHER_TEXTURE_DEFAULTS[parameter]))

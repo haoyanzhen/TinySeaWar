@@ -1,0 +1,1661 @@
+{
+  "batch_id": "sfx_revision7_20261001_v5",
+  "validation": {
+    "requirements": 105,
+    "assets": 7,
+    "expected": 21,
+    "generated": 21,
+    "missing": [],
+    "unique_preview_hashes": 21,
+    "categories": {
+      "skill": 1,
+      "alert": 1,
+      "facility": 1,
+      "ui": 4
+    },
+    "long_candidates": [],
+    "source_overrange": [],
+    "peak_warnings": [],
+    "human_review": "pending",
+    "runtime_integration": "not_started",
+    "batch_sha256": "def6ad3caca11e5d1e224b8856ed971f9d869a415ad59c654bdd52a15c51fdf9"
+  },
+  "candidates": [
+    {
+      "id": "U04a_r5_a",
+      "asset_id": "U04a",
+      "seed": 202610015030,
+      "prompt": "A naval strategy game move order accepted sound. One soft wooden tap followed by a tiny warm upward tone. Brief clean positive confirmation, a third of a second. Isolated sound effect, no speech or background ambience.",
+      "status": "generated",
+      "human_review": "pending",
+      "raw": {
+        "path": "ui/U04a_r5_a_raw.wav",
+        "sha256": "173caa5d5a634becdee2a58a69ee617f51e82acbec081d19b41f660f510bba1e"
+      },
+      "preview": {
+        "path": "ui/U04a_r5_a.wav",
+        "sha256": "1f0b42e2351b779d99f207a33059ef457776417cc3c6219e39f8b4c66d9fd142"
+      },
+      "source_generation": {
+        "id": "U04a_r5_a",
+        "seed": 202610015030,
+        "prompt": "A naval strategy game move order accepted sound. One soft wooden tap followed by a tiny warm upward tone. Brief clean positive confirmation, a third of a second. Isolated sound effect, no speech or background ambience.",
+        "seconds": 1,
+        "status": "generated",
+        "before_gpu": {
+          "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+          "free_mib": 56197,
+          "utilization": 28
+        },
+        "model": "stable_audio_3_small_sfx",
+        "steps": 8,
+        "cfg": 1.0,
+        "sampler": "lcm",
+        "scheduler": "simple",
+        "sha256": "173caa5d5a634becdee2a58a69ee617f51e82acbec081d19b41f660f510bba1e",
+        "sample_rate": 44100,
+        "channels": 2,
+        "frames": 49152,
+        "actual_seconds": 1.1145578231292517,
+        "rms": 0.004235571250319481,
+        "peak": 0.1474609375,
+        "seconds_elapsed": 0.34248876571655273,
+        "human_review": "pending",
+        "peak_vram_allocated_mib": 1656.771484375
+      },
+      "source_peak": 0.1474609375,
+      "source_clipped_samples": 0,
+      "duration_seconds": 0.17175,
+      "channels": 2,
+      "sample_rate": 48000,
+      "sample_peak_dbfs": -4.6789942824598905,
+      "rms_dbfs": -27.30437648953586,
+      "true_peak_4x_dbfs": -4.5145734649633775,
+      "rms_windows_dbfs": [
+        -24.29483182195535,
+        -61.890019360459824
+      ],
+      "lowpass_hz": null,
+      "target_rms_dbfs": -24,
+      "crop_seconds": [
+        0.0,
+        0.17174603174603176
+      ],
+      "gain_db": 12.041199826559248,
+      "loop_crossfade_seconds": 0,
+      "loop_points_frames": null,
+      "duration_review_required": false,
+      "loop_seam_review": "not_applicable"
+    },
+    {
+      "id": "U06_r5_c",
+      "asset_id": "U06",
+      "seed": 202610015042,
+      "prompt": "A large naval gun mechanism makes one short heavy locking thump. Dense low steel impact with a very brief hydraulic finish. Under half a second. Isolated sound effect, no speech or background ambience.",
+      "status": "generated",
+      "human_review": "pending",
+      "raw": {
+        "path": "ui/U06_r5_c_raw.wav",
+        "sha256": "1b4eb11c3cf7966169d2587b70fbba7d5b34eff776ce804bf7357c36d1e005cf"
+      },
+      "preview": {
+        "path": "ui/U06_r5_c.wav",
+        "sha256": "706a38b37ad062cb5f65d09ab07f2ac462634d748d4f7ac616991a0b835159a9"
+      },
+      "source_generation": {
+        "id": "U06_r5_c",
+        "seed": 202610015042,
+        "prompt": "A large naval gun mechanism makes one short heavy locking thump. Dense low steel impact with a very brief hydraulic finish. Under half a second. Isolated sound effect, no speech or background ambience.",
+        "seconds": 1,
+        "status": "generated",
+        "before_gpu": {
+          "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+          "free_mib": 56197,
+          "utilization": 26
+        },
+        "model": "stable_audio_3_small_sfx",
+        "steps": 8,
+        "cfg": 1.0,
+        "sampler": "lcm",
+        "scheduler": "simple",
+        "sha256": "1b4eb11c3cf7966169d2587b70fbba7d5b34eff776ce804bf7357c36d1e005cf",
+        "sample_rate": 44100,
+        "channels": 2,
+        "frames": 49152,
+        "actual_seconds": 1.1145578231292517,
+        "rms": 0.04980174079537392,
+        "peak": 0.53515625,
+        "seconds_elapsed": 0.33591699600219727,
+        "human_review": "pending",
+        "peak_vram_allocated_mib": 1656.771484375
+      },
+      "source_peak": 0.53515625,
+      "source_clipped_samples": 0,
+      "duration_seconds": 0.433,
+      "channels": 2,
+      "sample_rate": 48000,
+      "sample_peak_dbfs": -7.488341335295173,
+      "rms_dbfs": -23.999999101626976,
+      "true_peak_4x_dbfs": -7.481603688137676,
+      "rms_windows_dbfs": [
+        -19.982838260254088,
+        -23.67536487076929,
+        -27.973428543746422,
+        -78.44200094680068
+      ],
+      "lowpass_hz": null,
+      "target_rms_dbfs": -24,
+      "crop_seconds": [
+        0.0,
+        0.43299319727891156
+      ],
+      "gain_db": -2.0513142557241753,
+      "loop_crossfade_seconds": 0,
+      "loop_points_frames": null,
+      "duration_review_required": false,
+      "loop_seam_review": "not_applicable"
+    },
+    {
+      "id": "U07a_r5_b",
+      "asset_id": "U07a",
+      "seed": 202610015051,
+      "prompt": "A simple interface on jingle: three gentle marimba notes ascending a major triad, evenly spaced. Warm wooden musical tone, short and friendly. Isolated sound effect, no speech or background ambience.",
+      "status": "generated",
+      "human_review": "pending",
+      "raw": {
+        "path": "ui/U07a_r5_b_raw.wav",
+        "sha256": "57f54758679655da95af89d0d974f22936875493e8f9dc9964be55079464d066"
+      },
+      "preview": {
+        "path": "ui/U07a_r5_b.wav",
+        "sha256": "d540a77c970a328a173e18d0ffc015cc33c145a98ad2286ea8bbb59ad7807b90"
+      },
+      "source_generation": {
+        "id": "U07a_r5_b",
+        "seed": 202610015051,
+        "prompt": "A simple interface on jingle: three gentle marimba notes ascending a major triad, evenly spaced. Warm wooden musical tone, short and friendly. Isolated sound effect, no speech or background ambience.",
+        "seconds": 1,
+        "status": "generated",
+        "before_gpu": {
+          "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+          "free_mib": 56197,
+          "utilization": 22
+        },
+        "model": "stable_audio_3_small_sfx",
+        "steps": 8,
+        "cfg": 1.0,
+        "sampler": "lcm",
+        "scheduler": "simple",
+        "sha256": "57f54758679655da95af89d0d974f22936875493e8f9dc9964be55079464d066",
+        "sample_rate": 44100,
+        "channels": 2,
+        "frames": 49152,
+        "actual_seconds": 1.1145578231292517,
+        "rms": 0.0846545621752739,
+        "peak": 0.373046875,
+        "seconds_elapsed": 0.34514617919921875,
+        "human_review": "pending",
+        "peak_vram_allocated_mib": 1656.771484375
+      },
+      "source_peak": 0.373046875,
+      "source_clipped_samples": 0,
+      "duration_seconds": 0.6806041666666667,
+      "channels": 2,
+      "sample_rate": 48000,
+      "sample_peak_dbfs": -13.246351585321491,
+      "rms_dbfs": -24.000000127289304,
+      "true_peak_4x_dbfs": -13.240824324925903,
+      "rms_windows_dbfs": [
+        -22.178958532334406,
+        -23.625623619040354,
+        -24.370610207070374,
+        -18.9866463230837,
+        -29.341107266408063,
+        -45.888717558929166,
+        -69.90663265233798
+      ],
+      "lowpass_hz": null,
+      "target_rms_dbfs": -24,
+      "crop_seconds": [
+        0.0,
+        0.6805895691609978
+      ],
+      "gain_db": -4.686991615458345,
+      "loop_crossfade_seconds": 0,
+      "loop_points_frames": null,
+      "duration_review_required": false,
+      "loop_seam_review": "not_applicable"
+    },
+    {
+      "id": "U07a_r5_c",
+      "asset_id": "U07a",
+      "seed": 202610015052,
+      "prompt": "A simple game assistance enabled jingle: three soft electric-piano notes stepping upward, evenly spaced, warm and consonant. Brief natural decay. Isolated sound effect, no speech or background ambience.",
+      "status": "generated",
+      "human_review": "pending",
+      "raw": {
+        "path": "ui/U07a_r5_c_raw.wav",
+        "sha256": "42bb4d1325c231c247ed18c027ccec9e181e72fc80156675e80fe26b9c5ca56e"
+      },
+      "preview": {
+        "path": "ui/U07a_r5_c.wav",
+        "sha256": "fe63119bfe633a9f62938e8f3baf7f70642e5f6e11ff06f01d386675fea13f76"
+      },
+      "source_generation": {
+        "id": "U07a_r5_c",
+        "seed": 202610015052,
+        "prompt": "A simple game assistance enabled jingle: three soft electric-piano notes stepping upward, evenly spaced, warm and consonant. Brief natural decay. Isolated sound effect, no speech or background ambience.",
+        "seconds": 1,
+        "status": "generated",
+        "before_gpu": {
+          "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+          "free_mib": 56197,
+          "utilization": 25
+        },
+        "model": "stable_audio_3_small_sfx",
+        "steps": 8,
+        "cfg": 1.0,
+        "sampler": "lcm",
+        "scheduler": "simple",
+        "sha256": "42bb4d1325c231c247ed18c027ccec9e181e72fc80156675e80fe26b9c5ca56e",
+        "sample_rate": 44100,
+        "channels": 2,
+        "frames": 49152,
+        "actual_seconds": 1.1145578231292517,
+        "rms": 0.01093656662851572,
+        "peak": 0.08984375,
+        "seconds_elapsed": 0.33759379386901855,
+        "human_review": "pending",
+        "peak_vram_allocated_mib": 1656.771484375
+      },
+      "source_peak": 0.08984375,
+      "source_clipped_samples": 0,
+      "duration_seconds": 0.7072916666666667,
+      "channels": 2,
+      "sample_rate": 48000,
+      "sample_peak_dbfs": -8.897575362597728,
+      "rms_dbfs": -25.279453770577796,
+      "true_peak_4x_dbfs": -8.882707105058618,
+      "rms_windows_dbfs": [
+        -24.579973469801676,
+        -20.71793391337874,
+        -22.13765540086982,
+        -27.790338226583668,
+        -31.418165162118818,
+        -35.497220580484154,
+        -47.62104096600012
+      ],
+      "lowpass_hz": null,
+      "target_rms_dbfs": -24,
+      "crop_seconds": [
+        0.0,
+        0.7072789115646259
+      ],
+      "gain_db": 12.041199826559248,
+      "loop_crossfade_seconds": 0,
+      "loop_points_frames": null,
+      "duration_review_required": false,
+      "loop_seam_review": "not_applicable"
+    },
+    {
+      "id": "U07b_r5_a",
+      "asset_id": "U07b",
+      "seed": 202610015060,
+      "prompt": "A simple game disable sound: three soft felt-piano notes descending a major triad, evenly spaced. Warm natural piano tone, brief clean finish, half a second. Isolated sound effect, no speech or background ambience.",
+      "status": "generated",
+      "human_review": "pending",
+      "raw": {
+        "path": "ui/U07b_r5_a_raw.wav",
+        "sha256": "ec669c22fcecc09f30e9d2a352f66f65caf1bd79891ff4ad9b93a9babb72dc74"
+      },
+      "preview": {
+        "path": "ui/U07b_r5_a.wav",
+        "sha256": "19a0f55d9130168aba4fb8fdff2a97c0982ccfa9de764430e4aede43ce631179"
+      },
+      "source_generation": {
+        "id": "U07b_r5_a",
+        "seed": 202610015060,
+        "prompt": "A simple game disable sound: three soft felt-piano notes descending a major triad, evenly spaced. Warm natural piano tone, brief clean finish, half a second. Isolated sound effect, no speech or background ambience.",
+        "seconds": 1,
+        "status": "generated",
+        "before_gpu": {
+          "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+          "free_mib": 56197,
+          "utilization": 30
+        },
+        "model": "stable_audio_3_small_sfx",
+        "steps": 8,
+        "cfg": 1.0,
+        "sampler": "lcm",
+        "scheduler": "simple",
+        "sha256": "ec669c22fcecc09f30e9d2a352f66f65caf1bd79891ff4ad9b93a9babb72dc74",
+        "sample_rate": 44100,
+        "channels": 2,
+        "frames": 49152,
+        "actual_seconds": 1.1145578231292517,
+        "rms": 0.012042640708386898,
+        "peak": 0.06787109375,
+        "seconds_elapsed": 0.3364694118499756,
+        "human_review": "pending",
+        "peak_vram_allocated_mib": 1656.771484375
+      },
+      "source_peak": 0.06787109375,
+      "source_clipped_samples": 0,
+      "duration_seconds": 0.5783958333333333,
+      "channels": 2,
+      "sample_rate": 48000,
+      "sample_peak_dbfs": -11.830427856186622,
+      "rms_dbfs": -24.000000127289304,
+      "true_peak_4x_dbfs": -11.814892432827488,
+      "rms_windows_dbfs": [
+        -19.410639539636424,
+        -21.454887736176214,
+        -23.780828205695187,
+        -30.192315977141,
+        -38.732553916228056,
+        -65.47056465826347
+      ],
+      "lowpass_hz": null,
+      "target_rms_dbfs": -24,
+      "crop_seconds": [
+        0.0,
+        0.5783900226757369
+      ],
+      "gain_db": 11.548695877692538,
+      "loop_crossfade_seconds": 0,
+      "loop_points_frames": null,
+      "duration_review_required": false,
+      "loop_seam_review": "not_applicable"
+    },
+    {
+      "id": "U06_r5_b",
+      "asset_id": "U06",
+      "seed": 202610015041,
+      "prompt": "A battleship gun ammunition selector mechanism locks into position. A single thick low metal chunk, weighty and compact, rapid decay. No rifle rattling. Isolated sound effect, no speech or background ambience.",
+      "status": "generated",
+      "human_review": "pending",
+      "raw": {
+        "path": "ui/U06_r5_b_raw.wav",
+        "sha256": "34966d994746b316f7e10d829fffd92f548f2766929b241249a351bcd5d09aa2"
+      },
+      "preview": {
+        "path": "ui/U06_r5_b.wav",
+        "sha256": "3c37f5ec8d9261274c8f86c4571fa4eeb6b9ef3f349d60ec85ec65ae12f933c7"
+      },
+      "source_generation": {
+        "id": "U06_r5_b",
+        "seed": 202610015041,
+        "prompt": "A battleship gun ammunition selector mechanism locks into position. A single thick low metal chunk, weighty and compact, rapid decay. No rifle rattling. Isolated sound effect, no speech or background ambience.",
+        "seconds": 1,
+        "status": "generated",
+        "before_gpu": {
+          "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+          "free_mib": 56197,
+          "utilization": 24
+        },
+        "model": "stable_audio_3_small_sfx",
+        "steps": 8,
+        "cfg": 1.0,
+        "sampler": "lcm",
+        "scheduler": "simple",
+        "sha256": "34966d994746b316f7e10d829fffd92f548f2766929b241249a351bcd5d09aa2",
+        "sample_rate": 44100,
+        "channels": 2,
+        "frames": 49152,
+        "actual_seconds": 1.1145578231292517,
+        "rms": 0.01861746795475483,
+        "peak": 0.8359375,
+        "seconds_elapsed": 0.3185901641845703,
+        "human_review": "pending",
+        "peak_vram_allocated_mib": 1656.771484375
+      },
+      "source_peak": 0.8359375,
+      "source_clipped_samples": 0,
+      "duration_seconds": 0.40458333333333335,
+      "channels": 2,
+      "sample_rate": 48000,
+      "sample_peak_dbfs": -2.9999995180030155,
+      "rms_dbfs": -31.749756474938373,
+      "true_peak_4x_dbfs": -2.994471933023287,
+      "rms_windows_dbfs": [
+        -53.50945743488001,
+        -54.356734656789286,
+        -25.742463020450465,
+        -72.58634614412938
+      ],
+      "lowpass_hz": null,
+      "target_rms_dbfs": -24,
+      "crop_seconds": [
+        0.0,
+        0.40458049886621317
+      ],
+      "gain_db": -1.5535248817202343,
+      "loop_crossfade_seconds": 0,
+      "loop_points_frames": null,
+      "duration_review_required": false,
+      "loop_seam_review": "not_applicable"
+    },
+    {
+      "id": "U04a_r5_c",
+      "asset_id": "U04a",
+      "seed": 202610015032,
+      "prompt": "A tactical map move-command cue. A small muted drum tap with a soft clean tonal finish. One brief confident gesture, no mechanical clatter. Isolated sound effect, no speech or background ambience.",
+      "status": "generated",
+      "human_review": "pending",
+      "raw": {
+        "path": "ui/U04a_r5_c_raw.wav",
+        "sha256": "4921b081b6e6dee7f2676b468436b0f304975c2509dee714bc93b71a04a45341"
+      },
+      "preview": {
+        "path": "ui/U04a_r5_c.wav",
+        "sha256": "82f6a029430d68b1eb53a3c8f4350c6648fbb1d22ae701ec708fd4e0df988dc0"
+      },
+      "source_generation": {
+        "id": "U04a_r5_c",
+        "seed": 202610015032,
+        "prompt": "A tactical map move-command cue. A small muted drum tap with a soft clean tonal finish. One brief confident gesture, no mechanical clatter. Isolated sound effect, no speech or background ambience.",
+        "seconds": 1,
+        "status": "generated",
+        "before_gpu": {
+          "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+          "free_mib": 56197,
+          "utilization": 28
+        },
+        "model": "stable_audio_3_small_sfx",
+        "steps": 8,
+        "cfg": 1.0,
+        "sampler": "lcm",
+        "scheduler": "simple",
+        "sha256": "4921b081b6e6dee7f2676b468436b0f304975c2509dee714bc93b71a04a45341",
+        "sample_rate": 44100,
+        "channels": 2,
+        "frames": 49152,
+        "actual_seconds": 1.1145578231292517,
+        "rms": 0.00658336142078042,
+        "peak": 0.1875,
+        "seconds_elapsed": 0.34301066398620605,
+        "human_review": "pending",
+        "peak_vram_allocated_mib": 1656.771484375
+      },
+      "source_peak": 0.1875,
+      "source_clipped_samples": 0,
+      "duration_seconds": 0.239125,
+      "channels": 2,
+      "sample_rate": 48000,
+      "sample_peak_dbfs": -3.0000009805991428,
+      "rms_dbfs": -25.39409035429886,
+      "true_peak_4x_dbfs": -2.9301119291853035,
+      "rms_windows_dbfs": [
+        -22.386264607072434,
+        -54.82984138209961
+      ],
+      "lowpass_hz": null,
+      "target_rms_dbfs": -24,
+      "crop_seconds": [
+        0.00798185941043084,
+        0.24709750566893424
+      ],
+      "gain_db": 11.552915443274319,
+      "loop_crossfade_seconds": 0,
+      "loop_points_frames": null,
+      "duration_review_required": false,
+      "loop_seam_review": "not_applicable"
+    },
+    {
+      "id": "U07b_r5_b",
+      "asset_id": "U07b",
+      "seed": 202610015061,
+      "prompt": "A simple interface off jingle: three gentle marimba notes descending a major triad, evenly spaced. Warm wooden musical tone, short and friendly. Isolated sound effect, no speech or background ambience.",
+      "status": "generated",
+      "human_review": "pending",
+      "raw": {
+        "path": "ui/U07b_r5_b_raw.wav",
+        "sha256": "7d2783fdb764d3253f98665deed535154e38b2774493913e9b519671b6e0a664"
+      },
+      "preview": {
+        "path": "ui/U07b_r5_b.wav",
+        "sha256": "dc7cff7cdbd9bacaf7457ece4175cb68e13206aabebdc7542f422ec3e5c408d0"
+      },
+      "source_generation": {
+        "id": "U07b_r5_b",
+        "seed": 202610015061,
+        "prompt": "A simple interface off jingle: three gentle marimba notes descending a major triad, evenly spaced. Warm wooden musical tone, short and friendly. Isolated sound effect, no speech or background ambience.",
+        "seconds": 1,
+        "status": "generated",
+        "before_gpu": {
+          "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+          "free_mib": 56197,
+          "utilization": 25
+        },
+        "model": "stable_audio_3_small_sfx",
+        "steps": 8,
+        "cfg": 1.0,
+        "sampler": "lcm",
+        "scheduler": "simple",
+        "sha256": "7d2783fdb764d3253f98665deed535154e38b2774493913e9b519671b6e0a664",
+        "sample_rate": 44100,
+        "channels": 2,
+        "frames": 49152,
+        "actual_seconds": 1.1145578231292517,
+        "rms": 0.06105324253439903,
+        "peak": 0.2734375,
+        "seconds_elapsed": 0.3440272808074951,
+        "human_review": "pending",
+        "peak_vram_allocated_mib": 1656.771484375
+      },
+      "source_peak": 0.2734375,
+      "source_clipped_samples": 0,
+      "duration_seconds": 0.6577708333333333,
+      "channels": 2,
+      "sample_rate": 48000,
+      "sample_peak_dbfs": -13.250006645900047,
+      "rms_dbfs": -24.000000127289304,
+      "true_peak_4x_dbfs": -13.244479438442944,
+      "rms_windows_dbfs": [
+        -19.339368897779018,
+        -26.358841263832886,
+        -30.329562946993374,
+        -19.628688018445473,
+        -26.85885849832769,
+        -45.168755475778504,
+        -69.52037983769705
+      ],
+      "lowpass_hz": null,
+      "target_rms_dbfs": -24,
+      "crop_seconds": [
+        0.0,
+        0.6577551020408163
+      ],
+      "gain_db": -1.988302553333063,
+      "loop_crossfade_seconds": 0,
+      "loop_points_frames": null,
+      "duration_review_required": false,
+      "loop_seam_review": "not_applicable"
+    },
+    {
+      "id": "U06_r5_a",
+      "asset_id": "U06",
+      "seed": 202610015040,
+      "prompt": "A short heavy naval artillery breech clunk. One deep solid steel mechanism seats firmly, immediate low thud and quick stop. Half a second, no extended loading sequence. Isolated sound effect, no speech or background ambience.",
+      "status": "generated",
+      "human_review": "pending",
+      "raw": {
+        "path": "ui/U06_r5_a_raw.wav",
+        "sha256": "5ccf384d9dd654e584ae5b7bae1824f748cec0e8a41708c2f5ca0cd8b151a3b4"
+      },
+      "preview": {
+        "path": "ui/U06_r5_a.wav",
+        "sha256": "5aa5da96a53006f7be54b864a4be14998c7a144ac02517ca910d188780f83521"
+      },
+      "source_generation": {
+        "id": "U06_r5_a",
+        "seed": 202610015040,
+        "prompt": "A short heavy naval artillery breech clunk. One deep solid steel mechanism seats firmly, immediate low thud and quick stop. Half a second, no extended loading sequence. Isolated sound effect, no speech or background ambience.",
+        "seconds": 1,
+        "status": "generated",
+        "before_gpu": {
+          "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+          "free_mib": 56197,
+          "utilization": 30
+        },
+        "model": "stable_audio_3_small_sfx",
+        "steps": 8,
+        "cfg": 1.0,
+        "sampler": "lcm",
+        "scheduler": "simple",
+        "sha256": "5ccf384d9dd654e584ae5b7bae1824f748cec0e8a41708c2f5ca0cd8b151a3b4",
+        "sample_rate": 44100,
+        "channels": 2,
+        "frames": 49152,
+        "actual_seconds": 1.1145578231292517,
+        "rms": 0.03293759748339653,
+        "peak": 0.65625,
+        "seconds_elapsed": 0.3455514907836914,
+        "human_review": "pending",
+        "peak_vram_allocated_mib": 1656.771484375
+      },
+      "source_peak": 0.65625,
+      "source_clipped_samples": 0,
+      "duration_seconds": 0.7017708333333333,
+      "channels": 2,
+      "sample_rate": 48000,
+      "sample_peak_dbfs": -2.9999995180030155,
+      "rms_dbfs": -27.021143498323017,
+      "true_peak_4x_dbfs": -2.9786039785859035,
+      "rms_windows_dbfs": [
+        -48.70284206037808,
+        -43.60311277151987,
+        -19.246558055071578,
+        -27.40434806195269,
+        -39.37004868498503,
+        -48.62130826355292,
+        -61.917863752613755
+      ],
+      "lowpass_hz": null,
+      "target_rms_dbfs": -24,
+      "crop_seconds": [
+        0.0,
+        0.7017687074829932
+      ],
+      "gain_db": 0.6149087778484117,
+      "loop_crossfade_seconds": 0,
+      "loop_points_frames": null,
+      "duration_review_required": false,
+      "loop_seam_review": "not_applicable"
+    },
+    {
+      "id": "U07b_r5_c",
+      "asset_id": "U07b",
+      "seed": 202610015062,
+      "prompt": "A simple game assistance disabled jingle: three soft electric-piano notes stepping downward, evenly spaced, warm and consonant. Brief natural decay. Isolated sound effect, no speech or background ambience.",
+      "status": "generated",
+      "human_review": "pending",
+      "raw": {
+        "path": "ui/U07b_r5_c_raw.wav",
+        "sha256": "193208f38b04622a4490d0b7ba4dcaaf6e331d476e42ff8c225d5a970b7665da"
+      },
+      "preview": {
+        "path": "ui/U07b_r5_c.wav",
+        "sha256": "e4626236711cc3a199d71da29bcfad6c0881aa2f386e17dad3908cdfb79b2605"
+      },
+      "source_generation": {
+        "id": "U07b_r5_c",
+        "seed": 202610015062,
+        "prompt": "A simple game assistance disabled jingle: three soft electric-piano notes stepping downward, evenly spaced, warm and consonant. Brief natural decay. Isolated sound effect, no speech or background ambience.",
+        "seconds": 1,
+        "status": "generated",
+        "before_gpu": {
+          "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+          "free_mib": 56197,
+          "utilization": 24
+        },
+        "model": "stable_audio_3_small_sfx",
+        "steps": 8,
+        "cfg": 1.0,
+        "sampler": "lcm",
+        "scheduler": "simple",
+        "sha256": "193208f38b04622a4490d0b7ba4dcaaf6e331d476e42ff8c225d5a970b7665da",
+        "sample_rate": 44100,
+        "channels": 2,
+        "frames": 49152,
+        "actual_seconds": 1.1145578231292517,
+        "rms": 0.004252584185451269,
+        "peak": 0.041259765625,
+        "seconds_elapsed": 0.3429403305053711,
+        "human_review": "pending",
+        "peak_vram_allocated_mib": 1656.771484375
+      },
+      "source_peak": 0.041259765625,
+      "source_clipped_samples": 0,
+      "duration_seconds": 0.29935416666666664,
+      "channels": 2,
+      "sample_rate": 48000,
+      "sample_peak_dbfs": -15.637311445123654,
+      "rms_dbfs": -29.685957796283446,
+      "true_peak_4x_dbfs": -15.631784247581068,
+      "rms_windows_dbfs": [
+        -25.45531728330935,
+        -34.32440366072494,
+        -51.09987827510906
+      ],
+      "lowpass_hz": null,
+      "target_rms_dbfs": -24,
+      "crop_seconds": [
+        0.04467120181405896,
+        0.34401360544217685
+      ],
+      "gain_db": 12.041199826559248,
+      "loop_crossfade_seconds": 0,
+      "loop_points_frames": null,
+      "duration_review_required": false,
+      "loop_seam_review": "not_applicable"
+    },
+    {
+      "id": "U07a_r5_a",
+      "asset_id": "U07a",
+      "seed": 202610015050,
+      "prompt": "A simple game enable sound: three soft felt-piano notes ascending a major triad, evenly spaced. Warm natural piano tone, brief clean finish, half a second. Isolated sound effect, no speech or background ambience.",
+      "status": "generated",
+      "human_review": "pending",
+      "raw": {
+        "path": "ui/U07a_r5_a_raw.wav",
+        "sha256": "5b79502f88902cf440ee024117d36a7930945523924aa79462d4de736bf5303c"
+      },
+      "preview": {
+        "path": "ui/U07a_r5_a.wav",
+        "sha256": "0e33ee498a94010cc246dbc3adb8398dd4fd3e64fdda2193a19b25fc110b2e33"
+      },
+      "source_generation": {
+        "id": "U07a_r5_a",
+        "seed": 202610015050,
+        "prompt": "A simple game enable sound: three soft felt-piano notes ascending a major triad, evenly spaced. Warm natural piano tone, brief clean finish, half a second. Isolated sound effect, no speech or background ambience.",
+        "seconds": 1,
+        "status": "generated",
+        "before_gpu": {
+          "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+          "free_mib": 56197,
+          "utilization": 30
+        },
+        "model": "stable_audio_3_small_sfx",
+        "steps": 8,
+        "cfg": 1.0,
+        "sampler": "lcm",
+        "scheduler": "simple",
+        "sha256": "5b79502f88902cf440ee024117d36a7930945523924aa79462d4de736bf5303c",
+        "sample_rate": 44100,
+        "channels": 2,
+        "frames": 49152,
+        "actual_seconds": 1.1145578231292517,
+        "rms": 0.016879728063941002,
+        "peak": 0.1025390625,
+        "seconds_elapsed": 0.34932732582092285,
+        "human_review": "pending",
+        "peak_vram_allocated_mib": 1656.771484375
+      },
+      "source_peak": 0.1025390625,
+      "source_clipped_samples": 0,
+      "duration_seconds": 0.8585833333333334,
+      "channels": 2,
+      "sample_rate": 48000,
+      "sample_peak_dbfs": -9.440242573827721,
+      "rms_dbfs": -24.000000127289304,
+      "true_peak_4x_dbfs": -9.43471528627889,
+      "rms_windows_dbfs": [
+        -21.369792336555765,
+        -20.479223236393548,
+        -20.218218279819805,
+        -22.29317629374058,
+        -25.541809095440552,
+        -29.84930788104194,
+        -35.77276776820349,
+        -41.22288873230541,
+        -53.68988060360606
+      ],
+      "lowpass_hz": null,
+      "target_rms_dbfs": -24,
+      "crop_seconds": [
+        0.0,
+        0.8585714285714285
+      ],
+      "gain_db": 10.326828135745753,
+      "loop_crossfade_seconds": 0,
+      "loop_points_frames": null,
+      "duration_review_required": false,
+      "loop_seam_review": "not_applicable"
+    },
+    {
+      "id": "U04a_r5_b",
+      "asset_id": "U04a",
+      "seed": 202610015031,
+      "prompt": "A game movement command acknowledgment. A single rounded warm pluck with a slight upward lift and quick decay. Calm precise UI sound, no noise. Isolated sound effect, no speech or background ambience.",
+      "status": "generated",
+      "human_review": "pending",
+      "raw": {
+        "path": "ui/U04a_r5_b_raw.wav",
+        "sha256": "6f224083b9042e8f8100c42e38dc1f9e61ab60a2c7cd104e571008696a90f957"
+      },
+      "preview": {
+        "path": "ui/U04a_r5_b.wav",
+        "sha256": "94e4c0f7f876cf84cf9b893c3d09178077851b5d7ea2f87bb562eb4f89d6fa3b"
+      },
+      "source_generation": {
+        "id": "U04a_r5_b",
+        "seed": 202610015031,
+        "prompt": "A game movement command acknowledgment. A single rounded warm pluck with a slight upward lift and quick decay. Calm precise UI sound, no noise. Isolated sound effect, no speech or background ambience.",
+        "seconds": 1,
+        "status": "generated",
+        "before_gpu": {
+          "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+          "free_mib": 56197,
+          "utilization": 20
+        },
+        "model": "stable_audio_3_small_sfx",
+        "steps": 8,
+        "cfg": 1.0,
+        "sampler": "lcm",
+        "scheduler": "simple",
+        "sha256": "6f224083b9042e8f8100c42e38dc1f9e61ab60a2c7cd104e571008696a90f957",
+        "sample_rate": 44100,
+        "channels": 2,
+        "frames": 49152,
+        "actual_seconds": 1.1145578231292517,
+        "rms": 0.009865811094641685,
+        "peak": 0.154296875,
+        "seconds_elapsed": 0.33824706077575684,
+        "human_review": "pending",
+        "peak_vram_allocated_mib": 1656.771484375
+      },
+      "source_peak": 0.154296875,
+      "source_clipped_samples": 0,
+      "duration_seconds": 0.31814583333333335,
+      "channels": 2,
+      "sample_rate": 48000,
+      "sample_peak_dbfs": -5.385538401009105,
+      "rms_dbfs": -24.000000127289304,
+      "true_peak_4x_dbfs": -5.241558898114718,
+      "rms_windows_dbfs": [
+        -19.32680834787441,
+        -35.902647487037676,
+        -50.88933468592237
+      ],
+      "lowpass_hz": null,
+      "target_rms_dbfs": -24,
+      "crop_seconds": [
+        0.0,
+        0.318140589569161
+      ],
+      "gain_db": 10.896483845385863,
+      "loop_crossfade_seconds": 0,
+      "loop_points_frames": null,
+      "duration_review_required": false,
+      "loop_seam_review": "not_applicable"
+    },
+    {
+      "id": "K01_r5_a",
+      "asset_id": "K01",
+      "seed": 202610015000,
+      "prompt": "A game ability activation sound: a short soft air swell into one clear warm orchestral hit. Rounded, confident and gently bright. Compact anime naval combat cue, no tinkling bells. Isolated sound effect, no speech or background ambience.",
+      "status": "generated",
+      "human_review": "pending",
+      "raw": {
+        "path": "skill/K01_r5_a_raw.wav",
+        "sha256": "07770e1ec9ef87aeaaa763b2b377d0084ee161a69325ee28ddb9e5e6d7440351"
+      },
+      "preview": {
+        "path": "skill/K01_r5_a.wav",
+        "sha256": "47ed0e6b23bf296f446c2776adc60c7b9115298690957447797963f0e5d4e304"
+      },
+      "source_generation": {
+        "id": "K01_r5_a",
+        "seed": 202610015000,
+        "prompt": "A game ability activation sound: a short soft air swell into one clear warm orchestral hit. Rounded, confident and gently bright. Compact anime naval combat cue, no tinkling bells. Isolated sound effect, no speech or background ambience.",
+        "seconds": 1,
+        "status": "generated",
+        "before_gpu": {
+          "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+          "free_mib": 57979,
+          "utilization": 0
+        },
+        "model": "stable_audio_3_small_sfx",
+        "steps": 8,
+        "cfg": 1.0,
+        "sampler": "lcm",
+        "scheduler": "simple",
+        "sha256": "07770e1ec9ef87aeaaa763b2b377d0084ee161a69325ee28ddb9e5e6d7440351",
+        "sample_rate": 44100,
+        "channels": 2,
+        "frames": 49152,
+        "actual_seconds": 1.1145578231292517,
+        "rms": 0.0175002608448267,
+        "peak": 0.19921875,
+        "seconds_elapsed": 1.2617530822753906,
+        "human_review": "pending",
+        "peak_vram_allocated_mib": 1652.556640625
+      },
+      "source_peak": 0.19921875,
+      "source_clipped_samples": 0,
+      "duration_seconds": 0.42735416666666665,
+      "channels": 2,
+      "sample_rate": 48000,
+      "sample_peak_dbfs": -6.887342575668405,
+      "rms_dbfs": -24.000000127289304,
+      "true_peak_4x_dbfs": -6.718894746228744,
+      "rms_windows_dbfs": [
+        -25.92697254162242,
+        -19.390428766435058,
+        -27.297428407094383,
+        -75.88612257889184
+      ],
+      "lowpass_hz": null,
+      "target_rms_dbfs": -24,
+      "crop_seconds": [
+        0.0,
+        0.4273469387755102
+      ],
+      "gain_db": 6.975119988853543,
+      "loop_crossfade_seconds": 0,
+      "loop_points_frames": null,
+      "duration_review_required": false,
+      "loop_seam_review": "not_applicable"
+    },
+    {
+      "id": "K01_r5_c",
+      "asset_id": "K01",
+      "seed": 202610015002,
+      "prompt": "A naval game ability activation cue: a soft low drum accent under a brief warm rising orchestral swell, ending firmly. Light energy with body, no metallic ringing. Isolated sound effect, no speech or background ambience.",
+      "status": "generated",
+      "human_review": "pending",
+      "raw": {
+        "path": "skill/K01_r5_c_raw.wav",
+        "sha256": "def741a384df9e8b21b1158943a326f0d6c2ae78d148c7e65131a488da964f24"
+      },
+      "preview": {
+        "path": "skill/K01_r5_c.wav",
+        "sha256": "30cd4b387e06416b3f6f2f1f59056b9cf6b11af88d793a75cb7cab5f7f195588"
+      },
+      "source_generation": {
+        "id": "K01_r5_c",
+        "seed": 202610015002,
+        "prompt": "A naval game ability activation cue: a soft low drum accent under a brief warm rising orchestral swell, ending firmly. Light energy with body, no metallic ringing. Isolated sound effect, no speech or background ambience.",
+        "seconds": 1,
+        "status": "generated",
+        "before_gpu": {
+          "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+          "free_mib": 56199,
+          "utilization": 28
+        },
+        "model": "stable_audio_3_small_sfx",
+        "steps": 8,
+        "cfg": 1.0,
+        "sampler": "lcm",
+        "scheduler": "simple",
+        "sha256": "def741a384df9e8b21b1158943a326f0d6c2ae78d148c7e65131a488da964f24",
+        "sample_rate": 44100,
+        "channels": 2,
+        "frames": 49152,
+        "actual_seconds": 1.1145578231292517,
+        "rms": 0.055850692093372345,
+        "peak": 0.388671875,
+        "seconds_elapsed": 0.3168184757232666,
+        "human_review": "pending",
+        "peak_vram_allocated_mib": 1653.66796875
+      },
+      "source_peak": 0.388671875,
+      "source_clipped_samples": 0,
+      "duration_seconds": 0.5665625,
+      "channels": 2,
+      "sample_rate": 48000,
+      "sample_peak_dbfs": -10.079585506434068,
+      "rms_dbfs": -24.000000127289304,
+      "true_peak_4x_dbfs": -10.069331138360141,
+      "rms_windows_dbfs": [
+        -18.24154130686495,
+        -23.826312878515225,
+        -25.155491053719178,
+        -28.406567260915793,
+        -35.93793003576153,
+        -79.43002497439241
+      ],
+      "lowpass_hz": null,
+      "target_rms_dbfs": -24,
+      "crop_seconds": [
+        0.0,
+        0.5665532879818594
+      ],
+      "gain_db": -1.8786900642951916,
+      "loop_crossfade_seconds": 0,
+      "loop_points_frames": null,
+      "duration_review_required": false,
+      "loop_seam_review": "not_applicable"
+    },
+    {
+      "id": "K01_r5_b",
+      "asset_id": "K01",
+      "seed": 202610015001,
+      "prompt": "A tactical game skill activation cue: a quick rounded whoosh ending in a warm solid synth chord stab. Clear upbeat release, smooth treble, short clean decay. Isolated sound effect, no speech or background ambience.",
+      "status": "generated",
+      "human_review": "pending",
+      "raw": {
+        "path": "skill/K01_r5_b_raw.wav",
+        "sha256": "e0fe283a0c3da4d73d8534a1b3a40f56e602a4e88a1a402c33ba8a138c28faa7"
+      },
+      "preview": {
+        "path": "skill/K01_r5_b.wav",
+        "sha256": "092c7a5f951462df3d663eb5ca87ef1e2bbb43faa75128d7226037c755a80a42"
+      },
+      "source_generation": {
+        "id": "K01_r5_b",
+        "seed": 202610015001,
+        "prompt": "A tactical game skill activation cue: a quick rounded whoosh ending in a warm solid synth chord stab. Clear upbeat release, smooth treble, short clean decay. Isolated sound effect, no speech or background ambience.",
+        "seconds": 1,
+        "status": "generated",
+        "before_gpu": {
+          "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+          "free_mib": 56199,
+          "utilization": 26
+        },
+        "model": "stable_audio_3_small_sfx",
+        "steps": 8,
+        "cfg": 1.0,
+        "sampler": "lcm",
+        "scheduler": "simple",
+        "sha256": "e0fe283a0c3da4d73d8534a1b3a40f56e602a4e88a1a402c33ba8a138c28faa7",
+        "sample_rate": 44100,
+        "channels": 2,
+        "frames": 49152,
+        "actual_seconds": 1.1145578231292517,
+        "rms": 0.05642244592308998,
+        "peak": 0.578125,
+        "seconds_elapsed": 0.328324556350708,
+        "human_review": "pending",
+        "peak_vram_allocated_mib": 1653.66796875
+      },
+      "source_peak": 0.578125,
+      "source_clipped_samples": 0,
+      "duration_seconds": 0.611125,
+      "channels": 2,
+      "sample_rate": 48000,
+      "sample_peak_dbfs": -6.434989299087998,
+      "rms_dbfs": -24.000000127289304,
+      "true_peak_4x_dbfs": -6.3775405597237524,
+      "rms_windows_dbfs": [
+        -23.285748678546113,
+        -20.211611864090678,
+        -20.297836795416803,
+        -34.96755172029425,
+        -48.708162797367876,
+        -77.03156029626246
+      ],
+      "lowpass_hz": null,
+      "target_rms_dbfs": -24,
+      "crop_seconds": [
+        0.0,
+        0.6111111111111112
+      ],
+      "gain_db": -1.6449134379657293,
+      "loop_crossfade_seconds": 0,
+      "loop_points_frames": null,
+      "duration_review_required": false,
+      "loop_seam_review": "not_applicable"
+    },
+    {
+      "id": "N11a_r5_a",
+      "asset_id": "N11a",
+      "seed": 202610015010,
+      "prompt": "A short mission accomplished game jingle. Three gentle felt-piano notes forming a simple rising major arpeggio, last note resolves warmly. About one second, clean and consonant. Isolated sound effect, no speech or background ambience.",
+      "status": "generated",
+      "human_review": "pending",
+      "raw": {
+        "path": "alert/N11a_r5_a_raw.wav",
+        "sha256": "ae2d4f0d74e7022dda8bca50667b1ec5e4b3fbd3e7ce5385c938153b549733e4"
+      },
+      "preview": {
+        "path": "alert/N11a_r5_a.wav",
+        "sha256": "45fd2c815bb5c5e8faa499fc550d1ed249be8c1a3163673bef6e548c880e7e3d"
+      },
+      "source_generation": {
+        "id": "N11a_r5_a",
+        "seed": 202610015010,
+        "prompt": "A short mission accomplished game jingle. Three gentle felt-piano notes forming a simple rising major arpeggio, last note resolves warmly. About one second, clean and consonant. Isolated sound effect, no speech or background ambience.",
+        "seconds": 2,
+        "status": "generated",
+        "before_gpu": {
+          "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+          "free_mib": 56199,
+          "utilization": 22
+        },
+        "model": "stable_audio_3_small_sfx",
+        "steps": 8,
+        "cfg": 1.0,
+        "sampler": "lcm",
+        "scheduler": "simple",
+        "sha256": "ae2d4f0d74e7022dda8bca50667b1ec5e4b3fbd3e7ce5385c938153b549733e4",
+        "sample_rate": 44100,
+        "channels": 2,
+        "frames": 90112,
+        "actual_seconds": 2.043356009070295,
+        "rms": 0.03065512143075466,
+        "peak": 0.1982421875,
+        "seconds_elapsed": 0.3586399555206299,
+        "human_review": "pending",
+        "peak_vram_allocated_mib": 1656.771484375
+      },
+      "source_peak": 0.1982421875,
+      "source_clipped_samples": 0,
+      "duration_seconds": 1.45725,
+      "channels": 2,
+      "sample_rate": 48000,
+      "sample_peak_dbfs": -9.250045478394537,
+      "rms_dbfs": -24.000000127289304,
+      "true_peak_4x_dbfs": -9.244517806331622,
+      "rms_windows_dbfs": [
+        -25.653611496723514,
+        -21.829343306789127,
+        -20.281053647984656,
+        -17.755118256434603,
+        -18.469592881457604,
+        -21.911597293611223,
+        -27.136770606211567,
+        -30.511009752866908,
+        -33.52817687396698,
+        -37.443970984424894,
+        -40.301992593542025,
+        -43.49067697050767,
+        -46.260944854046244,
+        -49.21046299058549,
+        -52.1044450642679
+      ],
+      "lowpass_hz": null,
+      "target_rms_dbfs": -24,
+      "crop_seconds": [
+        0.0,
+        1.457233560090703
+      ],
+      "gain_db": 4.802428248812334,
+      "loop_crossfade_seconds": 0,
+      "loop_points_frames": null,
+      "duration_review_required": false,
+      "loop_seam_review": "not_applicable"
+    },
+    {
+      "id": "N11a_r5_c",
+      "asset_id": "N11a",
+      "seed": 202610015012,
+      "prompt": "A brief task completed game jingle. Soft orchestral strings play a small uplifting consonant cadence, settled and satisfying. One second, restrained, no dramatic fanfare. Isolated sound effect, no speech or background ambience.",
+      "status": "generated",
+      "human_review": "pending",
+      "raw": {
+        "path": "alert/N11a_r5_c_raw.wav",
+        "sha256": "b23bfa0c3f65fde09f30783565fad3c5a9b27b1fbdf70d73c31726060e9b286d"
+      },
+      "preview": {
+        "path": "alert/N11a_r5_c.wav",
+        "sha256": "dcd6c3bf6c6f47d1bd1de1a7b0b2af5f4ed9dccfcb3cbddbb6ca3ca2b1f56618"
+      },
+      "source_generation": {
+        "id": "N11a_r5_c",
+        "seed": 202610015012,
+        "prompt": "A brief task completed game jingle. Soft orchestral strings play a small uplifting consonant cadence, settled and satisfying. One second, restrained, no dramatic fanfare. Isolated sound effect, no speech or background ambience.",
+        "seconds": 2,
+        "status": "generated",
+        "before_gpu": {
+          "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+          "free_mib": 56197,
+          "utilization": 29
+        },
+        "model": "stable_audio_3_small_sfx",
+        "steps": 8,
+        "cfg": 1.0,
+        "sampler": "lcm",
+        "scheduler": "simple",
+        "sha256": "b23bfa0c3f65fde09f30783565fad3c5a9b27b1fbdf70d73c31726060e9b286d",
+        "sample_rate": 44100,
+        "channels": 2,
+        "frames": 90112,
+        "actual_seconds": 2.043356009070295,
+        "rms": 0.048678018152713776,
+        "peak": 0.314453125,
+        "seconds_elapsed": 0.34090352058410645,
+        "human_review": "pending",
+        "peak_vram_allocated_mib": 1656.771484375
+      },
+      "source_peak": 0.314453125,
+      "source_clipped_samples": 0,
+      "duration_seconds": 1.2697708333333333,
+      "channels": 2,
+      "sample_rate": 48000,
+      "sample_peak_dbfs": -9.85347421493002,
+      "rms_dbfs": -24.000000127289304,
+      "true_peak_4x_dbfs": -9.840675387632057,
+      "rms_windows_dbfs": [
+        -29.361739453086884,
+        -21.621624132987655,
+        -21.905508215607764,
+        -21.91649955061571,
+        -18.83259969609214,
+        -20.46984577597677,
+        -21.887045397514715,
+        -27.26896000864243,
+        -35.21871174887447,
+        -41.72723065361001,
+        -43.79348050044857,
+        -51.126903113145836,
+        -59.84349942787121
+      ],
+      "lowpass_hz": null,
+      "target_rms_dbfs": -24,
+      "crop_seconds": [
+        0.0,
+        1.2697505668934241
+      ],
+      "gain_db": 0.18531869664974746,
+      "loop_crossfade_seconds": 0,
+      "loop_points_frames": null,
+      "duration_review_required": false,
+      "loop_seam_review": "not_applicable"
+    },
+    {
+      "id": "N11a_r5_b",
+      "asset_id": "N11a",
+      "seed": 202610015011,
+      "prompt": "A short naval strategy victory notification. A warm marimba rising major arpeggio with three evenly spaced notes and a soft resolved ending. About one second. Isolated sound effect, no speech or background ambience.",
+      "status": "generated",
+      "human_review": "pending",
+      "raw": {
+        "path": "alert/N11a_r5_b_raw.wav",
+        "sha256": "31198a9e609e9c42970b0699b82ffaca02b76f86959cf21550c55f264b51d7e9"
+      },
+      "preview": {
+        "path": "alert/N11a_r5_b.wav",
+        "sha256": "aa25702f22d52f53bc222faccc7828c2b3df40f38f9f0eb16a76ced631a09262"
+      },
+      "source_generation": {
+        "id": "N11a_r5_b",
+        "seed": 202610015011,
+        "prompt": "A short naval strategy victory notification. A warm marimba rising major arpeggio with three evenly spaced notes and a soft resolved ending. About one second. Isolated sound effect, no speech or background ambience.",
+        "seconds": 2,
+        "status": "generated",
+        "before_gpu": {
+          "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+          "free_mib": 56197,
+          "utilization": 28
+        },
+        "model": "stable_audio_3_small_sfx",
+        "steps": 8,
+        "cfg": 1.0,
+        "sampler": "lcm",
+        "scheduler": "simple",
+        "sha256": "31198a9e609e9c42970b0699b82ffaca02b76f86959cf21550c55f264b51d7e9",
+        "sample_rate": 44100,
+        "channels": 2,
+        "frames": 90112,
+        "actual_seconds": 2.043356009070295,
+        "rms": 0.05528051033616066,
+        "peak": 0.3359375,
+        "seconds_elapsed": 0.3461170196533203,
+        "human_review": "pending",
+        "peak_vram_allocated_mib": 1656.771484375
+      },
+      "source_peak": 0.3359375,
+      "source_clipped_samples": 0,
+      "duration_seconds": 1.0868333333333333,
+      "channels": 2,
+      "sample_rate": 48000,
+      "sample_peak_dbfs": -11.062699862137801,
+      "rms_dbfs": -23.999999101626976,
+      "true_peak_4x_dbfs": -11.057172162143484,
+      "rms_windows_dbfs": [
+        -24.296676696468733,
+        -22.419589714179303,
+        -18.706442637854476,
+        -19.268520654227903,
+        -20.941599135648378,
+        -31.245741021463076,
+        -38.16419936166193,
+        -42.37647189894501,
+        -47.270800869723644,
+        -52.1572427692632,
+        -68.93771221930723
+      ],
+      "lowpass_hz": null,
+      "target_rms_dbfs": -24,
+      "crop_seconds": [
+        0.0,
+        1.086825396825397
+      ],
+      "gain_db": -1.593866658764839,
+      "loop_crossfade_seconds": 0,
+      "loop_points_frames": null,
+      "duration_review_required": false,
+      "loop_seam_review": "not_applicable"
+    },
+    {
+      "id": "F09b_r5_c",
+      "asset_id": "F09b",
+      "seed": 202610015022,
+      "prompt": "A naval communications terminal report received signal. One short clear call tone, a pause, then a longer confirming tone at the same pitch. Two seconds, dry and calm, no melody or voice. Isolated sound effect, no speech or background ambience.",
+      "status": "generated",
+      "human_review": "pending",
+      "raw": {
+        "path": "facility/F09b_r5_c_raw.wav",
+        "sha256": "43c9a8433fa31d7d0066739b25a3d53cf7c8320d1edbf75b9ba159826a238f7a"
+      },
+      "preview": {
+        "path": "facility/F09b_r5_c.wav",
+        "sha256": "66e077d9766a0547fd548c24d1979ff4ea9e0f3c7190dc90321fa2ed62daca36"
+      },
+      "source_generation": {
+        "id": "F09b_r5_c",
+        "seed": 202610015022,
+        "prompt": "A naval communications terminal report received signal. One short clear call tone, a pause, then a longer confirming tone at the same pitch. Two seconds, dry and calm, no melody or voice. Isolated sound effect, no speech or background ambience.",
+        "seconds": 2,
+        "status": "generated",
+        "before_gpu": {
+          "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+          "free_mib": 56197,
+          "utilization": 29
+        },
+        "model": "stable_audio_3_small_sfx",
+        "steps": 8,
+        "cfg": 1.0,
+        "sampler": "lcm",
+        "scheduler": "simple",
+        "sha256": "43c9a8433fa31d7d0066739b25a3d53cf7c8320d1edbf75b9ba159826a238f7a",
+        "sample_rate": 44100,
+        "channels": 2,
+        "frames": 90112,
+        "actual_seconds": 2.043356009070295,
+        "rms": 0.004361756145954132,
+        "peak": 0.04833984375,
+        "seconds_elapsed": 0.3540358543395996,
+        "human_review": "pending",
+        "peak_vram_allocated_mib": 1656.771484375
+      },
+      "source_peak": 0.04833984375,
+      "source_clipped_samples": 0,
+      "duration_seconds": 0.9580208333333333,
+      "channels": 1,
+      "sample_rate": 48000,
+      "sample_peak_dbfs": -14.182929096799315,
+      "rms_dbfs": -31.871686531726194,
+      "true_peak_4x_dbfs": -14.086283789007286,
+      "rms_windows_dbfs": [
+        -25.520897350513316,
+        -36.53009751889358,
+        -32.753505939217284,
+        -31.416141484282328,
+        -68.83516688640984,
+        -31.02198387826663,
+        -35.59158550006656,
+        -31.175827947015087,
+        -34.09031003651017,
+        -74.80400117686304
+      ],
+      "lowpass_hz": null,
+      "target_rms_dbfs": -23,
+      "crop_seconds": [
+        0.0,
+        0.9580045351473923
+      ],
+      "gain_db": 12.041199826559248,
+      "loop_crossfade_seconds": 0,
+      "loop_points_frames": null,
+      "duration_review_required": false,
+      "loop_seam_review": "not_applicable"
+    },
+    {
+      "id": "F09b_r5_b",
+      "asset_id": "F09b",
+      "seed": 202610015021,
+      "prompt": "A ship bridge report acknowledgment buzzer. Two short low steady buzzer calls separated by a pause, ending cleanly. Two seconds, nonmusical and restrained, no speech. Isolated sound effect, no speech or background ambience.",
+      "status": "generated",
+      "human_review": "pending",
+      "raw": {
+        "path": "facility/F09b_r5_b_raw.wav",
+        "sha256": "09315892bc174ddd278d71e87ce2ed7dcb2e80ab442f9ef093835b5cb7737c9a"
+      },
+      "preview": {
+        "path": "facility/F09b_r5_b.wav",
+        "sha256": "de295a91ef1585fc5024f808585989b37f9e63473eb80a5b1f3ac2c2ed13ff15"
+      },
+      "source_generation": {
+        "id": "F09b_r5_b",
+        "seed": 202610015021,
+        "prompt": "A ship bridge report acknowledgment buzzer. Two short low steady buzzer calls separated by a pause, ending cleanly. Two seconds, nonmusical and restrained, no speech. Isolated sound effect, no speech or background ambience.",
+        "seconds": 2,
+        "status": "generated",
+        "before_gpu": {
+          "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+          "free_mib": 56197,
+          "utilization": 26
+        },
+        "model": "stable_audio_3_small_sfx",
+        "steps": 8,
+        "cfg": 1.0,
+        "sampler": "lcm",
+        "scheduler": "simple",
+        "sha256": "09315892bc174ddd278d71e87ce2ed7dcb2e80ab442f9ef093835b5cb7737c9a",
+        "sample_rate": 44100,
+        "channels": 2,
+        "frames": 90112,
+        "actual_seconds": 2.043356009070295,
+        "rms": 0.032403089106082916,
+        "peak": 0.2109375,
+        "seconds_elapsed": 0.3475656509399414,
+        "human_review": "pending",
+        "peak_vram_allocated_mib": 1656.771484375
+      },
+      "source_peak": 0.2109375,
+      "source_clipped_samples": 0,
+      "duration_seconds": 1.0963333333333334,
+      "channels": 1,
+      "sample_rate": 48000,
+      "sample_peak_dbfs": -9.42281946400522,
+      "rms_dbfs": -22.999999518003015,
+      "true_peak_4x_dbfs": -9.412909017844406,
+      "rms_windows_dbfs": [
+        -24.69025951829552,
+        -22.462488268749844,
+        -22.557240027849822,
+        -21.96445530069671,
+        -21.892205785529995,
+        -21.63934080348222,
+        -21.71610390006778,
+        -21.51732166092377,
+        -21.583636310786027,
+        -40.19899493661188,
+        -72.94730059276935
+      ],
+      "lowpass_hz": null,
+      "target_rms_dbfs": -23,
+      "crop_seconds": [
+        0.0,
+        1.096326530612245
+      ],
+      "gain_db": 4.076404596560879,
+      "loop_crossfade_seconds": 0,
+      "loop_points_frames": null,
+      "duration_review_required": false,
+      "loop_seam_review": "not_applicable"
+    },
+    {
+      "id": "F09b_r5_a",
+      "asset_id": "F09b",
+      "seed": 202610015020,
+      "prompt": "A naval radio message received signal. A short squelch opening, two clear rounded communication beeps, then a soft squelch closing. Two seconds, clean restrained military radio acknowledgment, no voice or music. Isolated sound effect, no speech or background ambience.",
+      "status": "generated",
+      "human_review": "pending",
+      "raw": {
+        "path": "facility/F09b_r5_a_raw.wav",
+        "sha256": "b01e462fe19b60e51534489393021a65435aef8b1c0eb75a3ce5394c60631b7b"
+      },
+      "preview": {
+        "path": "facility/F09b_r5_a.wav",
+        "sha256": "59479f10dfd6ce717689ad15e98b4a34b351cf67da85f2740c4b477fb7b7e541"
+      },
+      "source_generation": {
+        "id": "F09b_r5_a",
+        "seed": 202610015020,
+        "prompt": "A naval radio message received signal. A short squelch opening, two clear rounded communication beeps, then a soft squelch closing. Two seconds, clean restrained military radio acknowledgment, no voice or music. Isolated sound effect, no speech or background ambience.",
+        "seconds": 2,
+        "status": "generated",
+        "before_gpu": {
+          "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+          "free_mib": 56197,
+          "utilization": 20
+        },
+        "model": "stable_audio_3_small_sfx",
+        "steps": 8,
+        "cfg": 1.0,
+        "sampler": "lcm",
+        "scheduler": "simple",
+        "sha256": "b01e462fe19b60e51534489393021a65435aef8b1c0eb75a3ce5394c60631b7b",
+        "sample_rate": 44100,
+        "channels": 2,
+        "frames": 90112,
+        "actual_seconds": 2.043356009070295,
+        "rms": 0.07107583433389664,
+        "peak": 0.6953125,
+        "seconds_elapsed": 0.3548240661621094,
+        "human_review": "pending",
+        "peak_vram_allocated_mib": 1656.771484375
+      },
+      "source_peak": 0.6953125,
+      "source_clipped_samples": 0,
+      "duration_seconds": 1.1235833333333334,
+      "channels": 1,
+      "sample_rate": 48000,
+      "sample_peak_dbfs": -5.807608915495449,
+      "rms_dbfs": -22.999999518003015,
+      "true_peak_4x_dbfs": -5.780307565090883,
+      "rms_windows_dbfs": [
+        -32.62861356705422,
+        -25.54364784058487,
+        -38.68406747626676,
+        -19.040491235587037,
+        -26.006056286562842,
+        -17.479348006425276,
+        -17.926781382675927,
+        -40.50388974745015,
+        -39.06869881279852,
+        -26.058425060654955,
+        -91.18595324879658
+      ],
+      "lowpass_hz": null,
+      "target_rms_dbfs": -23,
+      "crop_seconds": [
+        0.0,
+        1.1235827664399094
+      ],
+      "gain_db": -2.6403782032252177,
+      "loop_crossfade_seconds": 0,
+      "loop_points_frames": null,
+      "duration_review_required": false,
+      "loop_seam_review": "not_applicable"
+    }
+  ],
+  "generation": {
+    "status": "generated",
+    "count": 21,
+    "load_seconds": 0.4087698459625244,
+    "torch": "2.10.0+cu128",
+    "gpu": {
+      "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+      "free_mib": 58401,
+      "utilization": 0
+    },
+    "peak_vram_allocated_mib": 1656.771484375,
+    "human_review": "pending",
+    "comfy_commit": "fb2315f11db0ebfaafa9099a5df5227dc6bb42bc"
+  },
+  "deployment": {
+    "status": "installed_and_smoke_passed",
+    "model": "Stable Audio 3 Small SFX",
+    "runtime_path": "/home/hyz/server/sfxGen/modelscope-runtime",
+    "entrypoint": "/home/hyz/server/sfxGen/modelscope-runtime/run.sh",
+    "model_files": [
+      {
+        "path": "/home/hyz/server/sfxGen/modelscope-runtime/models/checkpoints/stable_audio_3_small_sfx.safetensors",
+        "size": 2270384940,
+        "sha256": "ed9cf1b6172f1a8c2921a9560c21109ff3239524563ced9dce6dcdef41e2f515",
+        "source": "https://modelscope.cn/models/Comfy-Org/stable-audio-3/resolve/433aeb91732c448e30a8d28facf607cd6f2ec113/checkpoints/stable_audio_3_small_sfx.safetensors"
+      },
+      {
+        "path": "/home/hyz/server/sfxGen/modelscope-runtime/models/text_encoders/t5gemma_b_b_ul2.safetensors",
+        "size": 1187264003,
+        "sha256": "1e1eba25be8872edb0d3c6335c6658fd6388e7b14b60da6e454e404cfcd8150e",
+        "source": "https://modelscope.cn/models/Comfy-Org/stable-audio-3/resolve/433aeb91732c448e30a8d28facf607cd6f2ec113/text_encoders/t5gemma_b_b_ul2.safetensors"
+      }
+    ],
+    "smoke": {
+      "status": "smoke_passed",
+      "count": 4,
+      "load_seconds": 24.563406467437744,
+      "torch": "2.10.0+cu128",
+      "gpu": {
+        "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+        "free_mib": 59067,
+        "utilization": 0
+      },
+      "peak_vram_allocated_mib": 1682.39892578125,
+      "human_review": "pending",
+      "comfy_commit": "fb2315f11db0ebfaafa9099a5df5227dc6bb42bc"
+    },
+    "source_sha256": "f6868b5869d7074307831e8577c2475ffc1c668a9745ac3836d07006d673ca32",
+    "runner_sha256": "f36f1db110e870cff1de53115df1494407d9092f1d4bb676dd6550ba879a3eb8",
+    "http_service": false,
+    "production_batch_started": false,
+    "human_listening": "pending",
+    "notes": [
+      "ComfyUI repackaged model; use this CLI rather than the parent stable_audio_3 package runner",
+      "CUDA 12.8 tested successfully; newer optional optimized CUDA kernels unavailable"
+    ]
+  },
+  "loudness": {
+    "K01_r5_a": {
+      "sha256": "47ed0e6b23bf296f446c2776adc60c7b9115298690957447797963f0e5d4e304",
+      "ffmpeg_ebur128": "Integrated loudness:\n    I:         -17.4 LUFS\n    Threshold: -27.4 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:       -6.7 dBFS\n[out#0/null @ 0xc27408180] video:0KiB audio:80KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:00.42 bitrate=N/A speed=67.7x elapsed=0:00:00.00"
+    },
+    "K01_r5_b": {
+      "sha256": "092c7a5f951462df3d663eb5ca87ef1e2bbb43faa75128d7226037c755a80a42",
+      "ffmpeg_ebur128": "Integrated loudness:\n    I:         -19.2 LUFS\n    Threshold: -29.2 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:       -6.4 dBFS\n[out#0/null @ 0x7a4c08900] video:0KiB audio:115KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:00.61 bitrate=N/A speed=86.6x elapsed=0:00:00.00"
+    },
+    "K01_r5_c": {
+      "sha256": "30cd4b387e06416b3f6f2f1f59056b9cf6b11af88d793a75cb7cab5f7f195588",
+      "ffmpeg_ebur128": "Integrated loudness:\n    I:         -22.9 LUFS\n    Threshold: -32.9 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:      -10.1 dBFS\n[out#0/null @ 0x7d9404180] video:0KiB audio:106KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:00.56 bitrate=N/A speed=77.7x elapsed=0:00:00.00"
+    },
+    "N11a_r5_a": {
+      "sha256": "45fd2c815bb5c5e8faa499fc550d1ed249be8c1a3163673bef6e548c880e7e3d",
+      "ffmpeg_ebur128": "Integrated loudness:\n    I:         -19.1 LUFS\n    Threshold: -31.0 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:       -9.3 dBFS\n[out#0/null @ 0x882c44180] video:0KiB audio:273KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:01.45 bitrate=N/A speed= 125x elapsed=0:00:00.01"
+    },
+    "N11a_r5_b": {
+      "sha256": "aa25702f22d52f53bc222faccc7828c2b3df40f38f9f0eb16a76ced631a09262",
+      "ffmpeg_ebur128": "Integrated loudness:\n    I:         -19.3 LUFS\n    Threshold: -30.7 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:      -11.1 dBFS\n[out#0/null @ 0xa8a858180] video:0KiB audio:204KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:01.08 bitrate=N/A speed= 165x elapsed=0:00:00.00"
+    },
+    "N11a_r5_c": {
+      "sha256": "dcd6c3bf6c6f47d1bd1de1a7b0b2af5f4ed9dccfcb3cbddbb6ca3ca2b1f56618",
+      "ffmpeg_ebur128": "Integrated loudness:\n    I:         -19.5 LUFS\n    Threshold: -30.5 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:       -9.8 dBFS\n[out#0/null @ 0x85b410180] video:0KiB audio:238KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:01.26 bitrate=N/A speed= 164x elapsed=0:00:00.00"
+    },
+    "F09b_r5_a": {
+      "sha256": "59479f10dfd6ce717689ad15e98b4a34b351cf67da85f2740c4b477fb7b7e541",
+      "ffmpeg_ebur128": "Integrated loudness:\n    I:         -20.3 LUFS\n    Threshold: -30.3 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:       -5.8 dBFS\n[out#0/null @ 0xa34858180] video:0KiB audio:105KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:01.12 bitrate=N/A speed= 276x elapsed=0:00:00.00"
+    },
+    "F09b_r5_b": {
+      "sha256": "de295a91ef1585fc5024f808585989b37f9e63473eb80a5b1f3ac2c2ed13ff15",
+      "ffmpeg_ebur128": "Integrated loudness:\n    I:         -19.8 LUFS\n    Threshold: -29.8 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:       -9.4 dBFS\n[out#0/null @ 0x9cac08900] video:0KiB audio:103KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:01.09 bitrate=N/A speed= 271x elapsed=0:00:00.00"
+    },
+    "F09b_r5_c": {
+      "sha256": "66e077d9766a0547fd548c24d1979ff4ea9e0f3c7190dc90321fa2ed62daca36",
+      "ffmpeg_ebur128": "Integrated loudness:\n    I:         -29.4 LUFS\n    Threshold: -39.4 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:      -14.1 dBFS\n[out#0/null @ 0x852c08900] video:0KiB audio:90KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:00.95 bitrate=N/A speed= 261x elapsed=0:00:00.00"
+    },
+    "U04a_r5_a": {
+      "sha256": "1f0b42e2351b779d99f207a33059ef457776417cc3c6219e39f8b4c66d9fd142",
+      "ffmpeg_ebur128": "Integrated loudness:\n    I:         -70.0 LUFS\n    Threshold:   0.0 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:       -4.5 dBFS\n[out#0/null @ 0xbe3410180] video:0KiB audio:32KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:00.17 bitrate=N/A speed=83.3x elapsed=0:00:00.00"
+    },
+    "U04a_r5_b": {
+      "sha256": "94e4c0f7f876cf84cf9b893c3d09178077851b5d7ea2f87bb562eb4f89d6fa3b",
+      "ffmpeg_ebur128": "Integrated loudness:\n    I:         -70.0 LUFS\n    Threshold:   0.0 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:       -5.2 dBFS\n[out#0/null @ 0xaa6854180] video:0KiB audio:60KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:00.31 bitrate=N/A speed= 108x elapsed=0:00:00.00"
+    },
+    "U04a_r5_c": {
+      "sha256": "82f6a029430d68b1eb53a3c8f4350c6648fbb1d22ae701ec708fd4e0df988dc0",
+      "ffmpeg_ebur128": "Integrated loudness:\n    I:         -70.0 LUFS\n    Threshold:   0.0 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:       -2.9 dBFS\n[out#0/null @ 0xc21020180] video:0KiB audio:45KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:00.23 bitrate=N/A speed=97.2x elapsed=0:00:00.00"
+    },
+    "U06_r5_a": {
+      "sha256": "5aa5da96a53006f7be54b864a4be14998c7a144ac02517ca910d188780f83521",
+      "ffmpeg_ebur128": "Integrated loudness:\n    I:         -22.8 LUFS\n    Threshold: -32.8 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:       -3.0 dBFS\n[out#0/null @ 0x958c08900] video:0KiB audio:132KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:00.70 bitrate=N/A speed= 146x elapsed=0:00:00.00"
+    },
+    "U06_r5_b": {
+      "sha256": "3c37f5ec8d9261274c8f86c4571fa4eeb6b9ef3f349d60ec85ec65ae12f933c7",
+      "ffmpeg_ebur128": "Integrated loudness:\n    I:         -25.8 LUFS\n    Threshold: -35.8 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:       -3.0 dBFS\n[out#0/null @ 0x861020180] video:0KiB audio:76KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:00.40 bitrate=N/A speed= 121x elapsed=0:00:00.00"
+    },
+    "U06_r5_c": {
+      "sha256": "706a38b37ad062cb5f65d09ab07f2ac462634d748d4f7ac616991a0b835159a9",
+      "ffmpeg_ebur128": "Integrated loudness:\n    I:         -21.5 LUFS\n    Threshold: -31.5 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:       -7.5 dBFS\n[out#0/null @ 0x7e0c68180] video:0KiB audio:81KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:00.43 bitrate=N/A speed= 123x elapsed=0:00:00.00"
+    },
+    "U07a_r5_a": {
+      "sha256": "0e33ee498a94010cc246dbc3adb8398dd4fd3e64fdda2193a19b25fc110b2e33",
+      "ffmpeg_ebur128": "Integrated loudness:\n    I:         -21.2 LUFS\n    Threshold: -31.2 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:       -9.4 dBFS\n[out#0/null @ 0xc2ec08900] video:0KiB audio:161KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:00.85 bitrate=N/A speed= 153x elapsed=0:00:00.00"
+    },
+    "U07a_r5_b": {
+      "sha256": "d540a77c970a328a173e18d0ffc015cc33c145a98ad2286ea8bbb59ad7807b90",
+      "ffmpeg_ebur128": "Integrated loudness:\n    I:         -20.4 LUFS\n    Threshold: -30.4 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:      -13.2 dBFS\n[out#0/null @ 0x923020180] video:0KiB audio:128KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:00.68 bitrate=N/A speed= 153x elapsed=0:00:00.00"
+    },
+    "U07a_r5_c": {
+      "sha256": "fe63119bfe633a9f62938e8f3baf7f70642e5f6e11ff06f01d386675fea13f76",
+      "ffmpeg_ebur128": "Integrated loudness:\n    I:         -22.6 LUFS\n    Threshold: -32.6 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:       -8.9 dBFS\n[out#0/null @ 0x91d024180] video:0KiB audio:133KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:00.70 bitrate=N/A speed= 147x elapsed=0:00:00.00"
+    },
+    "U07b_r5_a": {
+      "sha256": "19a0f55d9130168aba4fb8fdff2a97c0982ccfa9de764430e4aede43ce631179",
+      "ffmpeg_ebur128": "Integrated loudness:\n    I:         -21.0 LUFS\n    Threshold: -31.0 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:      -11.8 dBFS\n[out#0/null @ 0x90b024180] video:0KiB audio:108KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:00.57 bitrate=N/A speed= 145x elapsed=0:00:00.00"
+    },
+    "U07b_r5_b": {
+      "sha256": "dc7cff7cdbd9bacaf7457ece4175cb68e13206aabebdc7542f422ec3e5c408d0",
+      "ffmpeg_ebur128": "Integrated loudness:\n    I:         -21.2 LUFS\n    Threshold: -31.2 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:      -13.2 dBFS\n[out#0/null @ 0x844c08900] video:0KiB audio:123KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:00.65 bitrate=N/A speed= 150x elapsed=0:00:00.00"
+    },
+    "U07b_r5_c": {
+      "sha256": "e4626236711cc3a199d71da29bcfad6c0881aa2f386e17dad3908cdfb79b2605",
+      "ffmpeg_ebur128": "Integrated loudness:\n    I:         -70.0 LUFS\n    Threshold:   0.0 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:      -15.6 dBFS\n[out#0/null @ 0xc53410180] video:0KiB audio:56KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:00.29 bitrate=N/A speed= 119x elapsed=0:00:00.00"
+    }
+  },
+  "human_review": "pending"
+}

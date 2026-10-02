@@ -1,0 +1,206 @@
+{
+  "selection": {
+    "id": "S02",
+    "title": "上浮过程",
+    "category": "submarine",
+    "status": "adopt",
+    "feedback": {
+      "choice": "A",
+      "notes": "",
+      "reviewed_at": "2026-10-01T02:04:28.423Z"
+    },
+    "revision_brief": "先只做明确出水声，删除其他过程和提示层。",
+    "latest_revision": {
+      "batch_id": "sfx_revision15_20261001_v4",
+      "candidate_ids": [
+        "S02_r4_a",
+        "S02_r4_b",
+        "S02_r4_c"
+      ],
+      "human_review": "selected"
+    },
+    "revision_history": [
+      {
+        "batch_id": "sfx_rework27_20260930_v1",
+        "candidate_ids": [
+          "S02_rw1_a",
+          "S02_rw1_b",
+          "S02_rw1_c"
+        ],
+        "human_review": "pending"
+      },
+      {
+        "batch_id": "sfx_rework27_naval_20260930_v2",
+        "candidate_ids": [
+          "S02_nav2_a",
+          "S02_nav2_b",
+          "S02_nav2_c"
+        ],
+        "human_review": "pending"
+      },
+      {
+        "batch_id": "sfx_design18_20261001_v3",
+        "candidate_ids": [
+          "S02_d3_a",
+          "S02_d3_b",
+          "S02_d3_c"
+        ],
+        "human_review": "revision_requested"
+      }
+    ],
+    "feedback_history": [
+      {
+        "choice": "全部返工",
+        "notes": "水声不对",
+        "reviewed_at": "2026-09-30T12:33:09.807Z"
+      },
+      {
+        "batch_id": "sfx_design18_20261001_v3",
+        "choice": "全部返工",
+        "notes": "同上",
+        "reviewed_at": "2026-10-01T01:14:33.683Z"
+      },
+      {
+        "batch_id": "sfx_design18_20261001_v3",
+        "choice": "全部返工",
+        "notes": "意义不明，只要出水声试试看，现在根本不像出水",
+        "reviewed_at": "2026-10-01T01:38:11.940Z"
+      }
+    ],
+    "feedback_source": "tools/sfx/reviews/sfx_revision15_20261001_v4.44dad23e7ebd.review.json",
+    "candidate_id": "S02_r4_a",
+    "batch_id": "sfx_revision15_20261001_v4",
+    "path": "reports/audio/sfx_revision15_20261001_v4/submarine/S02_r4_a.wav",
+    "sha256": "dae57d4560436d7e9a1d8695b2ba37a787086082ff726f33f0a1638ee525411a"
+  },
+  "production": {
+    "id": "S02_r4_a",
+    "asset_id": "S02",
+    "seed": 202610014030,
+    "prompt": "A submarine breaking out of the ocean surface. One large deep splash of seawater rising and falling off the hull. Broad heavy ocean water displacement, isolated surfacing sound. Clean close recording.",
+    "status": "generated",
+    "human_review": "pending",
+    "raw": {
+      "path": "submarine/S02_r4_a_raw.wav",
+      "sha256": "466adb8860523fa6cf83cad5751806c075551390369ce6916f73aa7367fac43c"
+    },
+    "preview": {
+      "path": "submarine/S02_r4_a.wav",
+      "sha256": "dae57d4560436d7e9a1d8695b2ba37a787086082ff726f33f0a1638ee525411a"
+    },
+    "source_generation": {
+      "id": "S02_r4_a",
+      "seed": 202610014030,
+      "prompt": "A submarine breaking out of the ocean surface. One large deep splash of seawater rising and falling off the hull. Broad heavy ocean water displacement, isolated surfacing sound. Clean close recording.",
+      "seconds": 3,
+      "status": "generated",
+      "before_gpu": {
+        "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+        "free_mib": 56193,
+        "utilization": 29
+      },
+      "model": "stable_audio_3_small_sfx",
+      "steps": 8,
+      "cfg": 1.0,
+      "sampler": "lcm",
+      "scheduler": "simple",
+      "sha256": "466adb8860523fa6cf83cad5751806c075551390369ce6916f73aa7367fac43c",
+      "sample_rate": 44100,
+      "channels": 2,
+      "frames": 131072,
+      "actual_seconds": 2.972154195011338,
+      "rms": 0.08619429916143417,
+      "peak": 1.015625,
+      "seconds_elapsed": 0.3510916233062744,
+      "human_review": "pending",
+      "peak_vram_allocated_mib": 1660.2822265625
+    },
+    "source_peak": 1.015625,
+    "source_clipped_samples": 1,
+    "duration_seconds": 2.172083333333333,
+    "channels": 1,
+    "sample_rate": 48000,
+    "sample_peak_dbfs": -3.569259520976508,
+    "rms_dbfs": -22.999999518003015,
+    "true_peak_4x_dbfs": -3.5267195255248747,
+    "rms_windows_dbfs": [
+      -37.95460921200452,
+      -26.032183709722162,
+      -23.32203359720465,
+      -15.303703849628864,
+      -14.8589302523864,
+      -18.333091883182213,
+      -21.632129066001955,
+      -24.39392689322943,
+      -26.031882388976342,
+      -23.530370328896694,
+      -25.42347440777919,
+      -26.770705881627833,
+      -27.57849892402458,
+      -31.429963673184357,
+      -34.03788302775289,
+      -34.39548354708675,
+      -35.90820820532922,
+      -38.22990474311001,
+      -41.97776592670522,
+      -46.78385986271911,
+      -54.688459940180294,
+      -74.34058052105159
+    ],
+    "lowpass_hz": null,
+    "target_rms_dbfs": -23,
+    "crop_seconds": [
+      0.0,
+      2.1720634920634923
+    ],
+    "gain_db": -2.7331896440989083,
+    "loop_crossfade_seconds": 0,
+    "loop_points_frames": null,
+    "duration_review_required": false,
+    "loop_seam_review": "not_applicable"
+  },
+  "asset_design": {
+    "id": "S02",
+    "category": "submarine",
+    "title": "上浮过程",
+    "target_seconds": 2,
+    "generation_seconds": 3,
+    "loop": false,
+    "direction": "先只做明确出水声，删除其他过程和提示层。",
+    "english_brief": "A submarine breaking out of the ocean surface. One large deep splash of seawater rising and falling off the hull. Broad heavy ocean water displacement, isolated surfacing sound.",
+    "candidates": [
+      {
+        "id": "S02_r4_a",
+        "seed": 202610014030,
+        "prompt": "A submarine breaking out of the ocean surface. One large deep splash of seawater rising and falling off the hull. Broad heavy ocean water displacement, isolated surfacing sound. Clean close recording.",
+        "variation": "清楚自然",
+        "status": "planned"
+      },
+      {
+        "id": "S02_r4_b",
+        "seed": 202610014031,
+        "prompt": "A submarine breaking out of the ocean surface. One large deep splash of seawater rising and falling off the hull. Broad heavy ocean water displacement, isolated surfacing sound. Warm tone, gentle treble.",
+        "variation": "柔和温暖",
+        "status": "planned"
+      },
+      {
+        "id": "S02_r4_c",
+        "seed": 202610014032,
+        "prompt": "A submarine breaking out of the ocean surface. One large deep splash of seawater rising and falling off the hull. Broad heavy ocean water displacement, isolated surfacing sound. Full rounded sound, soft edges.",
+        "variation": "饱满圆润",
+        "status": "planned"
+      }
+    ],
+    "review_target_rms_dbfs": -23,
+    "previous_feedback": {
+      "choice": "全部返工",
+      "notes": "意义不明，只要出水声试试看，现在根本不像出水",
+      "reviewed_at": "2026-10-01T01:38:11.940Z"
+    }
+  },
+  "source_batch_sha256": "0bb4ef7407247ce6ed59492dd41bf1d2efd535b44b6e578652337c23b0381464",
+  "loudness": {
+    "sha256": "dae57d4560436d7e9a1d8695b2ba37a787086082ff726f33f0a1638ee525411a",
+    "ffmpeg_ebur128": "Integrated loudness:\n    I:         -20.8 LUFS\n    Threshold: -32.2 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:       -3.5 dBFS\n[out#0/null @ 0xc79414180] video:0KiB audio:204KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:02.17 bitrate=N/A speed= 304x elapsed=0:00:00.00"
+  }
+}

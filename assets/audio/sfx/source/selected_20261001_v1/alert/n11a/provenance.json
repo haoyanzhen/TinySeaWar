@@ -1,0 +1,246 @@
+{
+  "selection": {
+    "id": "N11a",
+    "title": "目标完成",
+    "category": "alert",
+    "status": "adopt",
+    "feedback": {
+      "choice": "A",
+      "notes": "",
+      "reviewed_at": "2026-10-01T02:56:05.290Z"
+    },
+    "revision_brief": "第七轮A已采用，无待返工意见。",
+    "latest_revision": {
+      "batch_id": "sfx_revision2_20261001_v7",
+      "candidate_ids": [
+        "N11a_r7_a",
+        "N11a_r7_b",
+        "N11a_r7_c"
+      ],
+      "human_review": "selected"
+    },
+    "revision_history": [
+      {
+        "batch_id": "sfx_rework27_20260930_v1",
+        "candidate_ids": [
+          "N11a_rw1_a",
+          "N11a_rw1_b",
+          "N11a_rw1_c"
+        ],
+        "human_review": "pending"
+      },
+      {
+        "batch_id": "sfx_rework27_naval_20260930_v2",
+        "candidate_ids": [
+          "N11a_nav2_a",
+          "N11a_nav2_b",
+          "N11a_nav2_c"
+        ],
+        "human_review": "pending"
+      },
+      {
+        "batch_id": "sfx_design18_20261001_v3",
+        "candidate_ids": [
+          "N11a_d3_a",
+          "N11a_d3_b",
+          "N11a_d3_c"
+        ],
+        "human_review": "revision_requested"
+      },
+      {
+        "batch_id": "sfx_revision15_20261001_v4",
+        "candidate_ids": [
+          "N11a_r4_a",
+          "N11a_r4_b",
+          "N11a_r4_c"
+        ],
+        "human_review": "revision_requested"
+      },
+      {
+        "batch_id": "sfx_revision7_20261001_v5",
+        "candidate_ids": [
+          "N11a_r5_a",
+          "N11a_r5_b",
+          "N11a_r5_c"
+        ],
+        "human_review": "revision_requested"
+      },
+      {
+        "batch_id": "sfx_revision3_20261001_v6",
+        "candidate_ids": [
+          "N11a_r6_a",
+          "N11a_r6_b",
+          "N11a_r6_c"
+        ],
+        "human_review": "revision_requested"
+      }
+    ],
+    "feedback_history": [
+      {
+        "choice": "全部返工",
+        "notes": "风格不对",
+        "reviewed_at": "2026-09-30T12:37:03.060Z"
+      },
+      {
+        "batch_id": "sfx_design18_20261001_v3",
+        "choice": "全部返工",
+        "notes": "噪音",
+        "reviewed_at": "2026-10-01T01:15:09.453Z"
+      },
+      {
+        "batch_id": "sfx_design18_20261001_v3",
+        "choice": "全部返工",
+        "notes": "这是电报音啊，跟任务有什么关系吗",
+        "reviewed_at": "2026-10-01T01:40:18.708Z"
+      },
+      {
+        "batch_id": "sfx_revision15_20261001_v4",
+        "choice": "全部返工",
+        "notes": "走音感的路线是对的，但现在的音乐不对，重新设计提示词",
+        "reviewed_at": "2026-10-01T02:05:42.211Z"
+      },
+      {
+        "batch_id": "sfx_revision7_20261001_v5",
+        "choice": "全部返工",
+        "notes": "还是用钢琴三连音表示任务完成",
+        "reviewed_at": "2026-10-01T02:22:54.977Z"
+      },
+      {
+        "batch_id": "sfx_revision3_20261001_v6",
+        "choice": "全部返工",
+        "notes": "",
+        "reviewed_at": "2026-10-01T02:47:12.877Z"
+      }
+    ],
+    "feedback_source": "tools/sfx/reviews/sfx_revision2_20261001_v7.21ef843edb92.review.json",
+    "candidate_id": "N11a_r7_a",
+    "batch_id": "sfx_revision2_20261001_v7",
+    "path": "reports/audio/sfx_revision2_20261001_v7/alert/N11a_r7_a.wav",
+    "sha256": "64c7a6c83a3b9f9cfbaf09fe99556ca3d8499a7ab9f33767879fda9775d3944d"
+  },
+  "production": {
+    "id": "N11a_r7_a",
+    "asset_id": "N11a",
+    "seed": 202610017010,
+    "prompt": "A piano mission complete jingle. Three clear ascending piano notes, short and cheerful.",
+    "status": "generated",
+    "human_review": "pending",
+    "raw": {
+      "path": "alert/N11a_r7_a_raw.wav",
+      "sha256": "c0904a937a1eec903802c2744167f8d83a7e252798c8682ae6b6dfa453bcdd0a"
+    },
+    "preview": {
+      "path": "alert/N11a_r7_a.wav",
+      "sha256": "64c7a6c83a3b9f9cfbaf09fe99556ca3d8499a7ab9f33767879fda9775d3944d"
+    },
+    "source_generation": {
+      "id": "N11a_r7_a",
+      "seed": 202610017010,
+      "prompt": "A piano mission complete jingle. Three clear ascending piano notes, short and cheerful.",
+      "seconds": 2,
+      "status": "generated",
+      "before_gpu": {
+        "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+        "free_mib": 56197,
+        "utilization": 29
+      },
+      "model": "stable_audio_3_small_sfx",
+      "steps": 8,
+      "cfg": 1.0,
+      "sampler": "lcm",
+      "scheduler": "simple",
+      "sha256": "c0904a937a1eec903802c2744167f8d83a7e252798c8682ae6b6dfa453bcdd0a",
+      "sample_rate": 44100,
+      "channels": 2,
+      "frames": 90112,
+      "actual_seconds": 2.043356009070295,
+      "rms": 0.04280781373381615,
+      "peak": 0.345703125,
+      "seconds_elapsed": 0.37815022468566895,
+      "human_review": "pending",
+      "peak_vram_allocated_mib": 1656.771484375
+    },
+    "source_peak": 0.345703125,
+    "source_clipped_samples": 0,
+    "duration_seconds": 1.697875,
+    "channels": 2,
+    "sample_rate": 48000,
+    "sample_peak_dbfs": -6.654359052371179,
+    "rms_dbfs": -24.000000127289304,
+    "true_peak_4x_dbfs": -6.648831842581346,
+    "rms_windows_dbfs": [
+      -24.461739645754864,
+      -21.31047240832549,
+      -18.225363894638516,
+      -17.44617805051878,
+      -18.76609325086865,
+      -22.337015144287918,
+      -25.739349861213476,
+      -29.639687179309668,
+      -33.29113884654816,
+      -37.54687783511955,
+      -42.07512625976299,
+      -46.18807186536457,
+      -47.92557867033506,
+      -49.76216521519659,
+      -51.069282378765195,
+      -53.027235263604524,
+      -55.024067769280094
+    ],
+    "lowpass_hz": null,
+    "target_rms_dbfs": -24,
+    "crop_seconds": [
+      0.0,
+      1.6978684807256237
+    ],
+    "gain_db": 2.564350313890111,
+    "loop_crossfade_seconds": 0,
+    "loop_points_frames": null,
+    "duration_review_required": false,
+    "loop_seam_review": "not_applicable"
+  },
+  "asset_design": {
+    "id": "N11a",
+    "category": "alert",
+    "title": "目标完成",
+    "target_seconds": 1.4,
+    "generation_seconds": 2,
+    "loop": false,
+    "direction": "任务完成：温暖原声钢琴三音；A简短上行，B三音末音延长，C属音导音主音收束。",
+    "english_brief": "A piano mission complete jingle. Three clear ascending piano notes, short and cheerful.",
+    "candidates": [
+      {
+        "id": "N11a_r7_a",
+        "seed": 202610017010,
+        "prompt": "A piano mission complete jingle. Three clear ascending piano notes, short and cheerful.",
+        "variation": "方案A",
+        "status": "planned"
+      },
+      {
+        "id": "N11a_r7_b",
+        "seed": 202610017011,
+        "prompt": "Solo acoustic piano, three warm notes ascending a major triad. Two short notes followed by one longer final note. Dry studio recording.",
+        "variation": "方案B",
+        "status": "planned"
+      },
+      {
+        "id": "N11a_r7_c",
+        "seed": 202610017012,
+        "prompt": "Solo piano plays G4, B4, C5, three notes only. A gentle resolving cadence, last note sustained briefly. Close dry recording.",
+        "variation": "方案C",
+        "status": "planned"
+      }
+    ],
+    "review_target_rms_dbfs": -24,
+    "previous_feedback": {
+      "choice": "全部返工",
+      "notes": "这是电报音啊，跟任务有什么关系吗",
+      "reviewed_at": "2026-10-01T01:40:18.708Z"
+    }
+  },
+  "source_batch_sha256": "085e2ef0d2a6ee2be74166776726b8f14665a88eb6b6b2f762a5eaba21bab0dd",
+  "loudness": {
+    "sha256": "64c7a6c83a3b9f9cfbaf09fe99556ca3d8499a7ab9f33767879fda9775d3944d",
+    "ffmpeg_ebur128": "Integrated loudness:\n    I:         -18.5 LUFS\n    Threshold: -31.1 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:       -6.7 dBFS\n[out#0/null @ 0x852c08900] video:0KiB audio:318KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:01.69 bitrate=N/A speed= 132x elapsed=0:00:00.01"
+  }
+}

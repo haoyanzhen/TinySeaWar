@@ -1,0 +1,146 @@
+{
+  "selection": {
+    "id": "W03",
+    "title": "重炮发射",
+    "category": "weapon",
+    "status": "adopt_previous",
+    "feedback": {
+      "choice": "A",
+      "notes": "重炮是不是选过了？可以用之前选的那一版",
+      "reviewed_at": "2026-09-30T10:29:17.441Z"
+    },
+    "candidate_id": "W03_c",
+    "batch_id": "sfx_pilot5_20260930_v1",
+    "path": "reports/audio/sfx_full_20260930_v3/references/W03_c.wav",
+    "sha256": "b114519dbea82f8b3a94cea6cbec08d37c64553448d6285d5f7a92247fe4c2d4"
+  },
+  "production": {
+    "id": "W03_c",
+    "asset_id": "W03",
+    "seed": 2026093022,
+    "prompt": "A single heavy naval cannon shot, deep pressure impact and a restrained bass decay. Softer rounded high frequencies, restrained tail, suitable for repeated game playback. One isolated effect, followed by silence. No voices or background music.",
+    "status": "generated",
+    "human_review": "pending",
+    "raw": {
+      "path": "weapon/W03_c_raw.wav",
+      "sha256": "9450e947f6b1d027473592ea529784048ffe1f3ad5c6e816726bc5d7b61ebd24"
+    },
+    "preview": {
+      "path": "weapon/W03_c.wav",
+      "sha256": "b114519dbea82f8b3a94cea6cbec08d37c64553448d6285d5f7a92247fe4c2d4"
+    },
+    "source_generation": {
+      "id": "W03_c",
+      "prompt": "A single heavy naval cannon shot, deep pressure impact and a restrained bass decay. Softer rounded high frequencies, restrained tail, suitable for repeated game playback. One isolated effect, followed by silence. No voices or background music.",
+      "seconds": 4,
+      "seed": 2026093022,
+      "status": "generated",
+      "before_gpu": {
+        "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+        "free_mib": 56865,
+        "utilization": 28
+      },
+      "model": "stable_audio_3_small_sfx",
+      "steps": 8,
+      "cfg": 1.0,
+      "sampler": "lcm",
+      "scheduler": "simple",
+      "sha256": "9450e947f6b1d027473592ea529784048ffe1f3ad5c6e816726bc5d7b61ebd24",
+      "sample_rate": 44100,
+      "channels": 2,
+      "frames": 180224,
+      "actual_seconds": 4.08671201814059,
+      "rms": 0.09582684934139252,
+      "peak": 0.765625,
+      "seconds_elapsed": 0.35640954971313477,
+      "human_review": "pending",
+      "peak_vram_allocated_mib": 1666.16455078125
+    },
+    "source_peak": 0.765625,
+    "source_clipped_samples": 0,
+    "duration_seconds": 2.947125,
+    "channels": 1,
+    "sample_rate": 48000,
+    "sample_peak_dbfs": -4.316709641179962,
+    "rms_dbfs": -20.99999970913206,
+    "true_peak_4x_dbfs": -4.262410570555501,
+    "rms_windows_dbfs": [
+      -13.597458597541408,
+      -14.842100034400028,
+      -14.78856372893958,
+      -15.019649882252226,
+      -14.581309448953645,
+      -17.024544568573646,
+      -20.203112974840344,
+      -20.43185667114967,
+      -22.962587470343905,
+      -25.06271728651724,
+      -25.932472413604728,
+      -29.201920229147767,
+      -30.812503749174397,
+      -29.607099530412412,
+      -32.03706281046257,
+      -34.49291010746378,
+      -33.88005239419912,
+      -37.30039592259977,
+      -36.49715559064645,
+      -39.93381263079365,
+      -42.074775978931484,
+      -42.76235800295382,
+      -45.06730134721052,
+      -47.69926277419461,
+      -49.062232663287226,
+      -51.659985746188745,
+      -53.032065659019295,
+      -54.24393679077596,
+      -57.60009370324215
+    ],
+    "crop_seconds": [
+      0.0,
+      2.9471201814058956
+    ],
+    "gain_db": -2.0482667803722663,
+    "loop_crossfade_seconds": 0,
+    "loop_points_frames": null,
+    "duration_review_required": false,
+    "loop_seam_review": "not_applicable"
+  },
+  "asset_design": {
+    "id": "W03",
+    "category": "weapon",
+    "title": "重炮发射",
+    "target_seconds": 1.8,
+    "generation_seconds": 4,
+    "loop": false,
+    "direction": "深厚冲击、空气压缩、克制低频尾音",
+    "english_brief": "A single heavy naval cannon shot, deep pressure impact and a restrained bass decay",
+    "candidates": [
+      {
+        "id": "W03_a",
+        "seed": 2026093020,
+        "variation": "干净短促",
+        "prompt": "A single heavy naval cannon shot, deep pressure impact and a restrained bass decay. Clean dry close sound, controlled transient, minimal reverberation.",
+        "status": "planned"
+      },
+      {
+        "id": "W03_b",
+        "seed": 2026093021,
+        "variation": "厚实机械",
+        "prompt": "A single heavy naval cannon shot, deep pressure impact and a restrained bass decay. Fuller warm body and detailed texture, controlled low end, clear separation.",
+        "status": "planned"
+      },
+      {
+        "id": "W03_c",
+        "seed": 2026093022,
+        "variation": "柔和耐听",
+        "prompt": "A single heavy naval cannon shot, deep pressure impact and a restrained bass decay. Softer rounded high frequencies, restrained tail, suitable for repeated game playback.",
+        "status": "planned"
+      }
+    ]
+  },
+  "source_batch_sha256": "911f1e8b13ca6a716b6d28a71230884158fcda7d89e5074d4410556f5f66f34b",
+  "loudness": {
+    "sha256": "b114519dbea82f8b3a94cea6cbec08d37c64553448d6285d5f7a92247fe4c2d4",
+    "ffmpeg_ebur128": "Integrated loudness:\n    I:         -22.1 LUFS\n    Threshold: -35.1 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:       -4.3 dBFS\n[out#0/null @ 0xbad014180] video:0KiB audio:276KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:02.94 bitrate=N/A speed= 246x elapsed=0:00:00.01"
+  }
+}

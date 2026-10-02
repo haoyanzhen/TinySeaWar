@@ -1,0 +1,194 @@
+{
+  "selection": {
+    "id": "U04c",
+    "title": "集火确认",
+    "category": "ui",
+    "status": "adopt",
+    "feedback": {
+      "choice": "C",
+      "notes": "",
+      "reviewed_at": "2026-10-01T02:07:14.312Z"
+    },
+    "revision_brief": "探索瞄准镜缩放的声音或号令感表达集火锁定；号令的具体形式尚未确定，不据此引入人声。",
+    "latest_revision": {
+      "batch_id": "sfx_revision15_20261001_v4",
+      "candidate_ids": [
+        "U04c_r4_a",
+        "U04c_r4_b",
+        "U04c_r4_c"
+      ],
+      "human_review": "selected"
+    },
+    "revision_history": [
+      {
+        "batch_id": "sfx_rework27_20260930_v1",
+        "candidate_ids": [
+          "U04c_rw1_a",
+          "U04c_rw1_b",
+          "U04c_rw1_c"
+        ],
+        "human_review": "pending"
+      },
+      {
+        "batch_id": "sfx_rework27_naval_20260930_v2",
+        "candidate_ids": [
+          "U04c_nav2_a",
+          "U04c_nav2_b",
+          "U04c_nav2_c"
+        ],
+        "human_review": "pending"
+      },
+      {
+        "batch_id": "sfx_design18_20261001_v3",
+        "candidate_ids": [
+          "U04c_d3_a",
+          "U04c_d3_b",
+          "U04c_d3_c"
+        ],
+        "human_review": "revision_requested"
+      }
+    ],
+    "feedback_history": [
+      {
+        "choice": "全部返工",
+        "notes": "意义不明",
+        "reviewed_at": "2026-09-30T12:45:09.676Z"
+      },
+      {
+        "batch_id": "sfx_design18_20261001_v3",
+        "choice": "全部返工",
+        "notes": "意义不明",
+        "reviewed_at": "2026-10-01T01:17:25.454Z"
+      },
+      {
+        "batch_id": "sfx_design18_20261001_v3",
+        "choice": "全部返工",
+        "notes": "可以用瞄准镜缩放的声音，或者号令来表示集火目标锁定",
+        "reviewed_at": "2026-10-01T01:43:46.470Z"
+      }
+    ],
+    "feedback_source": "tools/sfx/reviews/sfx_revision15_20261001_v4.44dad23e7ebd.review.json",
+    "candidate_id": "U04c_r4_c",
+    "batch_id": "sfx_revision15_20261001_v4",
+    "path": "reports/audio/sfx_revision15_20261001_v4/ui/U04c_r4_c.wav",
+    "sha256": "c6e670325c30d3f11cea30b3582a8629ea5c83ff5ad8f8b9d0e3804e9c83d0de"
+  },
+  "production": {
+    "id": "U04c_r4_c",
+    "asset_id": "U04c",
+    "seed": 202610014102,
+    "prompt": "An optical naval gunsight zooming in and locking onto a target. A short smooth lens motor whirr tightening into a firm click. Clean focused targeting sound effect. Full rounded sound, soft edges.",
+    "status": "generated",
+    "human_review": "pending",
+    "raw": {
+      "path": "ui/U04c_r4_c_raw.wav",
+      "sha256": "cf0713e67a6adff6a11cb98277fdd8f95c186ff8a706ef3549fafd1a0056a784"
+    },
+    "preview": {
+      "path": "ui/U04c_r4_c.wav",
+      "sha256": "c6e670325c30d3f11cea30b3582a8629ea5c83ff5ad8f8b9d0e3804e9c83d0de"
+    },
+    "source_generation": {
+      "id": "U04c_r4_c",
+      "seed": 202610014102,
+      "prompt": "An optical naval gunsight zooming in and locking onto a target. A short smooth lens motor whirr tightening into a firm click. Clean focused targeting sound effect. Full rounded sound, soft edges.",
+      "seconds": 1,
+      "status": "generated",
+      "before_gpu": {
+        "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+        "free_mib": 56193,
+        "utilization": 25
+      },
+      "model": "stable_audio_3_small_sfx",
+      "steps": 8,
+      "cfg": 1.0,
+      "sampler": "lcm",
+      "scheduler": "simple",
+      "sha256": "cf0713e67a6adff6a11cb98277fdd8f95c186ff8a706ef3549fafd1a0056a784",
+      "sample_rate": 44100,
+      "channels": 2,
+      "frames": 49152,
+      "actual_seconds": 1.1145578231292517,
+      "rms": 0.011816740036010742,
+      "peak": 0.3671875,
+      "seconds_elapsed": 0.3270142078399658,
+      "human_review": "pending",
+      "peak_vram_allocated_mib": 1660.2822265625
+    },
+    "source_peak": 0.3671875,
+    "source_clipped_samples": 0,
+    "duration_seconds": 0.9513958333333333,
+    "channels": 2,
+    "sample_rate": 48000,
+    "sample_peak_dbfs": -3.0000009805991428,
+    "rms_dbfs": -32.393895190460775,
+    "true_peak_4x_dbfs": -2.8379023574950213,
+    "rms_windows_dbfs": [
+      -35.88488553575222,
+      -50.666513110722455,
+      -86.0085408181516,
+      -85.99142634924783,
+      -86.96653806493893,
+      -51.48366783444789,
+      -46.70333941417664,
+      -38.85332524072528,
+      -22.726515777786524,
+      -63.216328524768585
+    ],
+    "lowpass_hz": null,
+    "target_rms_dbfs": -24,
+    "crop_seconds": [
+      0.0,
+      0.9513832199546485
+    ],
+    "gain_db": 5.463263613426105,
+    "loop_crossfade_seconds": 0,
+    "loop_points_frames": null,
+    "duration_review_required": true,
+    "loop_seam_review": "not_applicable"
+  },
+  "asset_design": {
+    "id": "U04c",
+    "category": "ui",
+    "title": "集火确认",
+    "target_seconds": 0.5,
+    "generation_seconds": 1,
+    "loop": false,
+    "direction": "探索瞄准镜缩放的声音或号令感表达集火锁定；号令的具体形式尚未确定，不据此引入人声。",
+    "english_brief": "An optical naval gunsight zooming in and locking onto a target. A short smooth lens motor whirr tightening into a firm click. Clean focused targeting sound effect.",
+    "candidates": [
+      {
+        "id": "U04c_r4_a",
+        "seed": 202610014100,
+        "prompt": "An optical naval gunsight zooming in and locking onto a target. A short smooth lens motor whirr tightening into a firm click. Clean focused targeting sound effect. Clean close recording.",
+        "variation": "清楚自然",
+        "status": "planned"
+      },
+      {
+        "id": "U04c_r4_b",
+        "seed": 202610014101,
+        "prompt": "An optical naval gunsight zooming in and locking onto a target. A short smooth lens motor whirr tightening into a firm click. Clean focused targeting sound effect. Warm tone, gentle treble.",
+        "variation": "柔和温暖",
+        "status": "planned"
+      },
+      {
+        "id": "U04c_r4_c",
+        "seed": 202610014102,
+        "prompt": "An optical naval gunsight zooming in and locking onto a target. A short smooth lens motor whirr tightening into a firm click. Clean focused targeting sound effect. Full rounded sound, soft edges.",
+        "variation": "饱满圆润",
+        "status": "planned"
+      }
+    ],
+    "review_target_rms_dbfs": -24,
+    "previous_feedback": {
+      "choice": "全部返工",
+      "notes": "可以用瞄准镜缩放的声音，或者号令来表示集火目标锁定",
+      "reviewed_at": "2026-10-01T01:43:46.470Z"
+    }
+  },
+  "source_batch_sha256": "0bb4ef7407247ce6ed59492dd41bf1d2efd535b44b6e578652337c23b0381464",
+  "loudness": {
+    "sha256": "c6e670325c30d3f11cea30b3582a8629ea5c83ff5ad8f8b9d0e3804e9c83d0de",
+    "ffmpeg_ebur128": "Integrated loudness:\n    I:         -25.0 LUFS\n    Threshold: -38.0 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:       -2.8 dBFS\n[out#0/null @ 0x7f8c08900] video:0KiB audio:178KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:00.95 bitrate=N/A speed= 164x elapsed=0:00:00.00"
+  }
+}

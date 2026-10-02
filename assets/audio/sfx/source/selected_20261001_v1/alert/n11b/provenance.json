@@ -1,0 +1,128 @@
+{
+  "selection": {
+    "id": "N11b",
+    "title": "目标失败",
+    "category": "alert",
+    "status": "adopt",
+    "feedback": {
+      "choice": "B",
+      "notes": "",
+      "reviewed_at": "2026-09-30T12:37:11.099Z"
+    },
+    "candidate_id": "N11b_full_b",
+    "batch_id": "sfx_full_20260930_v3",
+    "path": "reports/audio/sfx_full_20260930_v3/alert/N11b_full_b.wav",
+    "sha256": "7435818f11f0685d00e5a3b87239c91ce7f92d687973580b8a4f46a50157fbf9"
+  },
+  "production": {
+    "id": "N11b_full_b",
+    "asset_id": "N11b",
+    "seed": 202609306611,
+    "prompt": "An objective failed signal, two restrained descending notes, concise and subdued. A short readable naval tactical interface signal, rounded midrange frequencies and a distinctive rhythmic identity. Restrained and comfortable, not a loud siren or a melody. Warm lower midrange tones preserving the requested rhythm. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+    "status": "generated",
+    "human_review": "pending",
+    "raw": {
+      "path": "alert/N11b_full_b_raw.wav",
+      "sha256": "4d256ffdbf8b5bfa53851d299712dea9478ddac412edb84154ebf9a9c3b0bd49"
+    },
+    "preview": {
+      "path": "alert/N11b_full_b.wav",
+      "sha256": "7435818f11f0685d00e5a3b87239c91ce7f92d687973580b8a4f46a50157fbf9"
+    },
+    "source_generation": {
+      "id": "N11b_full_b",
+      "prompt": "An objective failed signal, two restrained descending notes, concise and subdued. A short readable naval tactical interface signal, rounded midrange frequencies and a distinctive rhythmic identity. Restrained and comfortable, not a loud siren or a melody. Warm lower midrange tones preserving the requested rhythm. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+      "seconds": 2,
+      "seed": 202609306611,
+      "status": "generated",
+      "before_gpu": {
+        "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+        "free_mib": 56153,
+        "utilization": 23
+      },
+      "model": "stable_audio_3_small_sfx",
+      "steps": 8,
+      "cfg": 1.0,
+      "sampler": "lcm",
+      "scheduler": "simple",
+      "sha256": "4d256ffdbf8b5bfa53851d299712dea9478ddac412edb84154ebf9a9c3b0bd49",
+      "sample_rate": 44100,
+      "channels": 2,
+      "frames": 90112,
+      "actual_seconds": 2.043356009070295,
+      "rms": 0.03746063634753227,
+      "peak": 0.416015625,
+      "seconds_elapsed": 0.3609168529510498,
+      "human_review": "pending",
+      "peak_vram_allocated_mib": 1682.39892578125
+    },
+    "source_peak": 0.416015625,
+    "source_clipped_samples": 0,
+    "duration_seconds": 0.79375,
+    "channels": 2,
+    "sample_rate": 48000,
+    "sample_peak_dbfs": -6.223410281375834,
+    "rms_dbfs": -22.999999518003015,
+    "true_peak_4x_dbfs": -6.195413144954811,
+    "rms_windows_dbfs": [
+      -16.401685289528384,
+      -18.995507973184655,
+      -25.593077566049768,
+      -28.822697547946184,
+      -33.92616665110104,
+      -40.176724069576906,
+      -47.64563207438046,
+      -61.8117370508288
+    ],
+    "lowpass_hz": null,
+    "target_rms_dbfs": -23,
+    "crop_seconds": [
+      0.2788888888888889,
+      1.0726303854875283
+    ],
+    "gain_db": 1.4212044642473256,
+    "loop_crossfade_seconds": 0,
+    "loop_points_frames": null,
+    "duration_review_required": false,
+    "loop_seam_review": "not_applicable"
+  },
+  "asset_design": {
+    "id": "N11b",
+    "category": "alert",
+    "title": "目标失败",
+    "target_seconds": 0.65,
+    "generation_seconds": 2,
+    "loop": false,
+    "direction": "克制下行两音、非战败音乐",
+    "english_brief": "An objective failed signal, two restrained descending notes, concise and subdued",
+    "candidates": [
+      {
+        "id": "N11b_full_a",
+        "seed": 202609306610,
+        "variation": "清楚节奏",
+        "prompt": "An objective failed signal, two restrained descending notes, concise and subdued. A short readable naval tactical interface signal, rounded midrange frequencies and a distinctive rhythmic identity. Restrained and comfortable, not a loud siren or a melody. Dry concise midrange tones with clearly separated pulses. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+        "status": "planned"
+      },
+      {
+        "id": "N11b_full_b",
+        "seed": 202609306611,
+        "variation": "温暖提示",
+        "prompt": "An objective failed signal, two restrained descending notes, concise and subdued. A short readable naval tactical interface signal, rounded midrange frequencies and a distinctive rhythmic identity. Restrained and comfortable, not a loud siren or a melody. Warm lower midrange tones preserving the requested rhythm. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+        "status": "planned"
+      },
+      {
+        "id": "N11b_full_c",
+        "seed": 202609306612,
+        "variation": "柔亮提示",
+        "prompt": "An objective failed signal, two restrained descending notes, concise and subdued. A short readable naval tactical interface signal, rounded midrange frequencies and a distinctive rhythmic identity. Restrained and comfortable, not a loud siren or a melody. Gently brighter rounded tones with a restrained finish. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+        "status": "planned"
+      }
+    ],
+    "review_target_rms_dbfs": -23
+  },
+  "source_batch_sha256": "4d1cd2f07e2abb4699a4cc6e3e71480b2237080da3a70b79baf18d1642ca8b4c",
+  "loudness": {
+    "sha256": "7435818f11f0685d00e5a3b87239c91ce7f92d687973580b8a4f46a50157fbf9",
+    "ffmpeg_ebur128": "Integrated loudness:\n    I:         -22.0 LUFS\n    Threshold: -32.0 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:       -6.2 dBFS\n[out#0/null @ 0xb89020180] video:0KiB audio:149KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:00.79 bitrate=N/A speed= 156x elapsed=0:00:00.00"
+  }
+}

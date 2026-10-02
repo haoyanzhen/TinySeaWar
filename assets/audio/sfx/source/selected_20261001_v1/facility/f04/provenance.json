@@ -1,0 +1,195 @@
+{
+  "selection": {
+    "id": "F04",
+    "title": "靠泊完成",
+    "category": "facility",
+    "status": "adopt",
+    "feedback": {
+      "choice": "B",
+      "notes": "",
+      "reviewed_at": "2026-10-01T02:05:55.940Z"
+    },
+    "revision_brief": "船锚锁盘连续三声，去掉靠泊冲击感。",
+    "latest_revision": {
+      "batch_id": "sfx_revision15_20261001_v4",
+      "candidate_ids": [
+        "F04_r4_a",
+        "F04_r4_b",
+        "F04_r4_c"
+      ],
+      "human_review": "selected"
+    },
+    "revision_history": [
+      {
+        "batch_id": "sfx_rework27_20260930_v1",
+        "candidate_ids": [
+          "F04_rw1_a",
+          "F04_rw1_b",
+          "F04_rw1_c"
+        ],
+        "human_review": "pending"
+      },
+      {
+        "batch_id": "sfx_rework27_naval_20260930_v2",
+        "candidate_ids": [
+          "F04_nav2_a",
+          "F04_nav2_b",
+          "F04_nav2_c"
+        ],
+        "human_review": "pending"
+      },
+      {
+        "batch_id": "sfx_design18_20261001_v3",
+        "candidate_ids": [
+          "F04_d3_a",
+          "F04_d3_b",
+          "F04_d3_c"
+        ],
+        "human_review": "revision_requested"
+      }
+    ],
+    "feedback_history": [
+      {
+        "choice": "全部返工",
+        "notes": "意义不明",
+        "reviewed_at": "2026-09-30T12:42:54.349Z"
+      },
+      {
+        "batch_id": "sfx_design18_20261001_v3",
+        "choice": "全部返工",
+        "notes": "意义不明",
+        "reviewed_at": "2026-10-01T01:15:38.589Z"
+      },
+      {
+        "batch_id": "sfx_design18_20261001_v3",
+        "choice": "全部返工",
+        "notes": "怎么感觉是被打了一下，有船锚锁盘的连续三声响就可以",
+        "reviewed_at": "2026-10-01T01:41:02.352Z"
+      }
+    ],
+    "feedback_source": "tools/sfx/reviews/sfx_revision15_20261001_v4.44dad23e7ebd.review.json",
+    "candidate_id": "F04_r4_b",
+    "batch_id": "sfx_revision15_20261001_v4",
+    "path": "reports/audio/sfx_revision15_20261001_v4/facility/F04_r4_b.wav",
+    "sha256": "bc5fac9c624e8f406c4f67abeb21d773c44fdff0143a7670f9ffc340bee5854c"
+  },
+  "production": {
+    "id": "F04_r4_b",
+    "asset_id": "F04",
+    "seed": 202610014071,
+    "prompt": "A ship anchor windlass ratchet locking with three consecutive heavy clanks. Clank, clank, clank, then stops. Solid low steel anchor mechanism on a naval deck. Warm tone, gentle treble.",
+    "status": "generated",
+    "human_review": "pending",
+    "raw": {
+      "path": "facility/F04_r4_b_raw.wav",
+      "sha256": "658c6a36b4b20688b3a67df7dcb30a40b88dd5f6c1441be631496e947fff6056"
+    },
+    "preview": {
+      "path": "facility/F04_r4_b.wav",
+      "sha256": "bc5fac9c624e8f406c4f67abeb21d773c44fdff0143a7670f9ffc340bee5854c"
+    },
+    "source_generation": {
+      "id": "F04_r4_b",
+      "seed": 202610014071,
+      "prompt": "A ship anchor windlass ratchet locking with three consecutive heavy clanks. Clank, clank, clank, then stops. Solid low steel anchor mechanism on a naval deck. Warm tone, gentle treble.",
+      "seconds": 2,
+      "status": "generated",
+      "before_gpu": {
+        "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+        "free_mib": 56193,
+        "utilization": 21
+      },
+      "model": "stable_audio_3_small_sfx",
+      "steps": 8,
+      "cfg": 1.0,
+      "sampler": "lcm",
+      "scheduler": "simple",
+      "sha256": "658c6a36b4b20688b3a67df7dcb30a40b88dd5f6c1441be631496e947fff6056",
+      "sample_rate": 44100,
+      "channels": 2,
+      "frames": 90112,
+      "actual_seconds": 2.043356009070295,
+      "rms": 0.024405857548117638,
+      "peak": 0.61328125,
+      "seconds_elapsed": 0.3580508232116699,
+      "human_review": "pending",
+      "peak_vram_allocated_mib": 1660.2822265625
+    },
+    "source_peak": 0.61328125,
+    "source_clipped_samples": 0,
+    "duration_seconds": 1.0669166666666667,
+    "channels": 1,
+    "sample_rate": 48000,
+    "sample_peak_dbfs": -2.9999995180030155,
+    "rms_dbfs": -27.450122377262502,
+    "true_peak_4x_dbfs": -2.8460191820970335,
+    "rms_windows_dbfs": [
+      -30.939781526543957,
+      -35.78978354757342,
+      -19.045238950131733,
+      -27.12015171933466,
+      -46.70913354955974,
+      -44.39229986495026,
+      -34.896945953183206,
+      -24.06239938305891,
+      -50.80449948365941,
+      -54.85498834638982,
+      -65.96972109198204
+    ],
+    "lowpass_hz": null,
+    "target_rms_dbfs": -23,
+    "crop_seconds": [
+      0.0,
+      1.0669160997732425
+    ],
+    "gain_db": 2.595032568260856,
+    "loop_crossfade_seconds": 0,
+    "loop_points_frames": null,
+    "duration_review_required": false,
+    "loop_seam_review": "not_applicable"
+  },
+  "asset_design": {
+    "id": "F04",
+    "category": "facility",
+    "title": "靠泊完成",
+    "target_seconds": 1.2,
+    "generation_seconds": 2,
+    "loop": false,
+    "direction": "船锚锁盘连续三声，去掉靠泊冲击感。",
+    "english_brief": "A ship anchor windlass ratchet locking with three consecutive heavy clanks. Clank, clank, clank, then stops. Solid low steel anchor mechanism on a naval deck.",
+    "candidates": [
+      {
+        "id": "F04_r4_a",
+        "seed": 202610014070,
+        "prompt": "A ship anchor windlass ratchet locking with three consecutive heavy clanks. Clank, clank, clank, then stops. Solid low steel anchor mechanism on a naval deck. Clean close recording.",
+        "variation": "清楚自然",
+        "status": "planned"
+      },
+      {
+        "id": "F04_r4_b",
+        "seed": 202610014071,
+        "prompt": "A ship anchor windlass ratchet locking with three consecutive heavy clanks. Clank, clank, clank, then stops. Solid low steel anchor mechanism on a naval deck. Warm tone, gentle treble.",
+        "variation": "柔和温暖",
+        "status": "planned"
+      },
+      {
+        "id": "F04_r4_c",
+        "seed": 202610014072,
+        "prompt": "A ship anchor windlass ratchet locking with three consecutive heavy clanks. Clank, clank, clank, then stops. Solid low steel anchor mechanism on a naval deck. Full rounded sound, soft edges.",
+        "variation": "饱满圆润",
+        "status": "planned"
+      }
+    ],
+    "review_target_rms_dbfs": -23,
+    "previous_feedback": {
+      "choice": "全部返工",
+      "notes": "怎么感觉是被打了一下，有船锚锁盘的连续三声响就可以",
+      "reviewed_at": "2026-10-01T01:41:02.352Z"
+    }
+  },
+  "source_batch_sha256": "0bb4ef7407247ce6ed59492dd41bf1d2efd535b44b6e578652337c23b0381464",
+  "loudness": {
+    "sha256": "bc5fac9c624e8f406c4f67abeb21d773c44fdff0143a7670f9ffc340bee5854c",
+    "ffmpeg_ebur128": "Integrated loudness:\n    I:         -24.7 LUFS\n    Threshold: -34.7 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:       -2.9 dBFS\n[out#0/null @ 0xacec08900] video:0KiB audio:100KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:01.06 bitrate=N/A speed= 265x elapsed=0:00:00.00"
+  }
+}

@@ -1,0 +1,231 @@
+{
+  "selection": {
+    "id": "F09b",
+    "title": "布雷完成",
+    "category": "facility",
+    "status": "adopt",
+    "feedback": {
+      "choice": "A",
+      "notes": "",
+      "reviewed_at": "2026-10-01T02:47:23.502Z"
+    },
+    "revision_brief": "第六轮A舰桥报告铃已采用，无后续返工。",
+    "latest_revision": {
+      "batch_id": "sfx_revision3_20261001_v6",
+      "candidate_ids": [
+        "F09b_r6_a",
+        "F09b_r6_b",
+        "F09b_r6_c"
+      ],
+      "human_review": "selected"
+    },
+    "revision_history": [
+      {
+        "batch_id": "sfx_rework27_20260930_v1",
+        "candidate_ids": [
+          "F09b_rw1_a",
+          "F09b_rw1_b",
+          "F09b_rw1_c"
+        ],
+        "human_review": "pending"
+      },
+      {
+        "batch_id": "sfx_rework27_naval_20260930_v2",
+        "candidate_ids": [
+          "F09b_nav2_a",
+          "F09b_nav2_b",
+          "F09b_nav2_c"
+        ],
+        "human_review": "pending"
+      },
+      {
+        "batch_id": "sfx_design18_20261001_v3",
+        "candidate_ids": [
+          "F09b_d3_a",
+          "F09b_d3_b",
+          "F09b_d3_c"
+        ],
+        "human_review": "revision_requested"
+      },
+      {
+        "batch_id": "sfx_revision15_20261001_v4",
+        "candidate_ids": [
+          "F09b_r4_a",
+          "F09b_r4_b",
+          "F09b_r4_c"
+        ],
+        "human_review": "revision_requested"
+      },
+      {
+        "batch_id": "sfx_revision7_20261001_v5",
+        "candidate_ids": [
+          "F09b_r5_a",
+          "F09b_r5_b",
+          "F09b_r5_c"
+        ],
+        "human_review": "revision_requested"
+      }
+    ],
+    "feedback_history": [
+      {
+        "choice": "全部返工",
+        "notes": "意义不明",
+        "reviewed_at": "2026-09-30T12:43:51.384Z"
+      },
+      {
+        "batch_id": "sfx_design18_20261001_v3",
+        "choice": "全部返工",
+        "notes": "意义不明",
+        "reviewed_at": "2026-10-01T01:16:25.327Z"
+      },
+      {
+        "batch_id": "sfx_design18_20261001_v3",
+        "choice": "全部返工",
+        "notes": "这是外星人声音。",
+        "reviewed_at": "2026-10-01T01:42:26.842Z"
+      },
+      {
+        "batch_id": "sfx_revision15_20261001_v4",
+        "choice": "全部返工",
+        "notes": "不太对，这里不能用音乐，需要用报告声，可以延长到2s",
+        "reviewed_at": "2026-10-01T02:06:38.925Z"
+      },
+      {
+        "batch_id": "sfx_revision7_20261001_v5",
+        "choice": "全部返工",
+        "notes": "海军通信确认……搞成电报了，不对，重来",
+        "reviewed_at": "2026-10-01T02:23:25.349Z"
+      }
+    ],
+    "feedback_source": "tools/sfx/reviews/sfx_revision3_20261001_v6.d0322e8e5e6d.review.json",
+    "candidate_id": "F09b_r6_a",
+    "batch_id": "sfx_revision3_20261001_v6",
+    "path": "reports/audio/sfx_revision3_20261001_v6/facility/F09b_r6_a.wav",
+    "sha256": "7e28cf762b69dc20516510f904a89a36f43f33a3671834ead38a66f9497097aa"
+  },
+  "production": {
+    "id": "F09b_r6_a",
+    "asset_id": "F09b",
+    "seed": 202610016020,
+    "prompt": "A ship bridge bell ringing twice.",
+    "status": "generated",
+    "human_review": "pending",
+    "raw": {
+      "path": "facility/F09b_r6_a_raw.wav",
+      "sha256": "9a15ee161bdb98a26e45ff4399c41917e1276f2c070b0f57b7939443b4243361"
+    },
+    "preview": {
+      "path": "facility/F09b_r6_a.wav",
+      "sha256": "7e28cf762b69dc20516510f904a89a36f43f33a3671834ead38a66f9497097aa"
+    },
+    "source_generation": {
+      "id": "F09b_r6_a",
+      "seed": 202610016020,
+      "prompt": "A ship bridge bell ringing twice.",
+      "seconds": 2,
+      "status": "generated",
+      "before_gpu": {
+        "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+        "free_mib": 56197,
+        "utilization": 30
+      },
+      "model": "stable_audio_3_small_sfx",
+      "steps": 8,
+      "cfg": 1.0,
+      "sampler": "lcm",
+      "scheduler": "simple",
+      "sha256": "9a15ee161bdb98a26e45ff4399c41917e1276f2c070b0f57b7939443b4243361",
+      "sample_rate": 44100,
+      "channels": 2,
+      "frames": 90112,
+      "actual_seconds": 2.043356009070295,
+      "rms": 0.037704236805438995,
+      "peak": 0.34765625,
+      "seconds_elapsed": 0.34598708152770996,
+      "human_review": "pending",
+      "peak_vram_allocated_mib": 1656.771484375
+    },
+    "source_peak": 0.34765625,
+    "source_clipped_samples": 0,
+    "duration_seconds": 1.7275416666666668,
+    "channels": 1,
+    "sample_rate": 48000,
+    "sample_peak_dbfs": -4.274078878689237,
+    "rms_dbfs": -23.000000432125564,
+    "true_peak_4x_dbfs": -4.208335376711979,
+    "rms_windows_dbfs": [
+      -21.08472056498506,
+      -17.589540252442564,
+      -19.241939232808292,
+      -19.402930681067144,
+      -18.25314161441289,
+      -23.150206891716714,
+      -23.95899876038837,
+      -24.110227593066092,
+      -25.804781765273916,
+      -26.61404333871067,
+      -28.20719822151436,
+      -29.865535857742643,
+      -31.67710346405446,
+      -33.702457086898804,
+      -35.610316651730926,
+      -37.38210541250208,
+      -75.32987342060653
+    ],
+    "lowpass_hz": null,
+    "target_rms_dbfs": -23,
+    "crop_seconds": [
+      0.0,
+      1.7275283446712018
+    ],
+    "gain_db": 4.737635098756235,
+    "loop_crossfade_seconds": 0,
+    "loop_points_frames": null,
+    "duration_review_required": false,
+    "loop_seam_review": "not_applicable"
+  },
+  "asset_design": {
+    "id": "F09b",
+    "category": "facility",
+    "title": "布雷完成",
+    "target_seconds": 2,
+    "generation_seconds": 2,
+    "loop": false,
+    "direction": "布雷作业完成的舰桥非人声报告：改用中低音报告铃双击和自然余响，避开电报码、通信蜂鸣与音乐旋律。这是待听审的新设计假设。",
+    "english_brief": "A ship bridge bell ringing twice.",
+    "candidates": [
+      {
+        "id": "F09b_r6_a",
+        "seed": 202610016020,
+        "prompt": "A ship bridge bell ringing twice.",
+        "variation": "极简类别描述",
+        "status": "planned"
+      },
+      {
+        "id": "F09b_r6_b",
+        "seed": 202610016021,
+        "prompt": "A medium brass ship bell struck twice, two rounded low clongs followed by a short natural decay. Close dry recording.",
+        "variation": "声源与动作",
+        "status": "planned"
+      },
+      {
+        "id": "F09b_r6_c",
+        "seed": 202610016021,
+        "prompt": "TrackType: SFX. A medium brass ship bell struck twice, two rounded low clongs followed by a short natural decay. Close dry recording.",
+        "variation": "同声源动作加官方标签",
+        "status": "planned"
+      }
+    ],
+    "review_target_rms_dbfs": -23,
+    "previous_feedback": {
+      "choice": "全部返工",
+      "notes": "这是外星人声音。",
+      "reviewed_at": "2026-10-01T01:42:26.842Z"
+    }
+  },
+  "source_batch_sha256": "81b917478d9d5190d7bbdac25c51b5e402fe8596004bf0a3284c3e03f8e6c866",
+  "loudness": {
+    "sha256": "7e28cf762b69dc20516510f904a89a36f43f33a3671834ead38a66f9497097aa",
+    "ffmpeg_ebur128": "Integrated loudness:\n    I:         -20.6 LUFS\n    Threshold: -31.6 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:       -4.2 dBFS\n[out#0/null @ 0x7c5020180] video:0KiB audio:162KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:01.72 bitrate=N/A speed= 308x elapsed=0:00:00.00"
+  }
+}

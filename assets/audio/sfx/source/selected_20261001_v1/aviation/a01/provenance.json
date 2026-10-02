@@ -1,0 +1,146 @@
+{
+  "selection": {
+    "id": "A01",
+    "title": "编队出击",
+    "category": "aviation",
+    "status": "adopt",
+    "feedback": {
+      "choice": "C",
+      "notes": "",
+      "reviewed_at": "2026-09-30T10:34:48.991Z"
+    },
+    "candidate_id": "A01_full_c",
+    "batch_id": "sfx_full_20260930_v3",
+    "path": "reports/audio/sfx_full_20260930_v3/aviation/A01_full_c.wav",
+    "sha256": "076ed9843d65c346871555ee7f4e6122fc3012ad8bfe01c7611f23f597262d79"
+  },
+  "production": {
+    "id": "A01_full_c",
+    "asset_id": "A01",
+    "seed": 202609306272,
+    "prompt": "A group of propeller aircraft launching and flying away, rising engines and a short collective flyby. Compact propeller aircraft sound for an anime naval tactics game, clear mechanical detail without an overwhelming engine wall. Rounded smoother engine and airflow texture. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+    "status": "generated",
+    "human_review": "pending",
+    "raw": {
+      "path": "aviation/A01_full_c_raw.wav",
+      "sha256": "13d9086c1dd3a2a149705d04262bf4fcb389cb0c8e783e7ca0afa9b34d5e30f0"
+    },
+    "preview": {
+      "path": "aviation/A01_full_c.wav",
+      "sha256": "076ed9843d65c346871555ee7f4e6122fc3012ad8bfe01c7611f23f597262d79"
+    },
+    "source_generation": {
+      "id": "A01_full_c",
+      "prompt": "A group of propeller aircraft launching and flying away, rising engines and a short collective flyby. Compact propeller aircraft sound for an anime naval tactics game, clear mechanical detail without an overwhelming engine wall. Rounded smoother engine and airflow texture. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+      "seconds": 3,
+      "seed": 202609306272,
+      "status": "generated",
+      "before_gpu": {
+        "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+        "free_mib": 56153,
+        "utilization": 29
+      },
+      "model": "stable_audio_3_small_sfx",
+      "steps": 8,
+      "cfg": 1.0,
+      "sampler": "lcm",
+      "scheduler": "simple",
+      "sha256": "13d9086c1dd3a2a149705d04262bf4fcb389cb0c8e783e7ca0afa9b34d5e30f0",
+      "sample_rate": 44100,
+      "channels": 2,
+      "frames": 131072,
+      "actual_seconds": 2.972154195011338,
+      "rms": 0.05249989405274391,
+      "peak": 0.365234375,
+      "seconds_elapsed": 0.3475534915924072,
+      "human_review": "pending",
+      "peak_vram_allocated_mib": 1682.39892578125
+    },
+    "source_peak": 0.365234375,
+    "source_clipped_samples": 0,
+    "duration_seconds": 2.615875,
+    "channels": 1,
+    "sample_rate": 48000,
+    "sample_peak_dbfs": -6.704973110886423,
+    "rms_dbfs": -22.99999860388056,
+    "true_peak_4x_dbfs": -6.69944551830014,
+    "rms_windows_dbfs": [
+      -42.02067906368058,
+      -32.71399283110298,
+      -29.052569296819488,
+      -30.29363915358237,
+      -25.844106458785802,
+      -22.86195549947015,
+      -20.39757538394673,
+      -20.32606664154265,
+      -19.725329125195636,
+      -17.57788919213299,
+      -18.152241348115496,
+      -17.74298559685612,
+      -19.038923338403205,
+      -20.252016764036934,
+      -21.9894771088263,
+      -23.212341378253573,
+      -24.877653455320512,
+      -26.124792627526055,
+      -29.72049675373365,
+      -31.635642777400147,
+      -34.41223468181851,
+      -37.906752454473065,
+      -40.39966695253512,
+      -45.07340747403436,
+      -49.33215760143867,
+      -55.63665231692981
+    ],
+    "lowpass_hz": null,
+    "target_rms_dbfs": -23,
+    "crop_seconds": [
+      0.020113378684807257,
+      2.6359863945578232
+    ],
+    "gain_db": 2.041909953830605,
+    "loop_crossfade_seconds": 0,
+    "loop_points_frames": null,
+    "duration_review_required": false,
+    "loop_seam_review": "not_applicable"
+  },
+  "asset_design": {
+    "id": "A01",
+    "category": "aviation",
+    "title": "编队出击",
+    "target_seconds": 1.5,
+    "generation_seconds": 3,
+    "loop": false,
+    "direction": "螺旋桨加速、短集体掠离",
+    "english_brief": "A group of propeller aircraft launching and flying away, rising engines and a short collective flyby",
+    "candidates": [
+      {
+        "id": "A01_full_a",
+        "seed": 202609306270,
+        "variation": "清晰机体",
+        "prompt": "A group of propeller aircraft launching and flying away, rising engines and a short collective flyby. Compact propeller aircraft sound for an anime naval tactics game, clear mechanical detail without an overwhelming engine wall. Clear controlled mechanical detail. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+        "status": "planned"
+      },
+      {
+        "id": "A01_full_b",
+        "seed": 202609306271,
+        "variation": "温暖机声",
+        "prompt": "A group of propeller aircraft launching and flying away, rising engines and a short collective flyby. Compact propeller aircraft sound for an anime naval tactics game, clear mechanical detail without an overwhelming engine wall. Warmer fuller engine texture at restrained intensity. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+        "status": "planned"
+      },
+      {
+        "id": "A01_full_c",
+        "seed": 202609306272,
+        "variation": "柔和航行",
+        "prompt": "A group of propeller aircraft launching and flying away, rising engines and a short collective flyby. Compact propeller aircraft sound for an anime naval tactics game, clear mechanical detail without an overwhelming engine wall. Rounded smoother engine and airflow texture. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+        "status": "planned"
+      }
+    ],
+    "review_target_rms_dbfs": -23
+  },
+  "source_batch_sha256": "4d1cd2f07e2abb4699a4cc6e3e71480b2237080da3a70b79baf18d1642ca8b4c",
+  "loudness": {
+    "sha256": "076ed9843d65c346871555ee7f4e6122fc3012ad8bfe01c7611f23f597262d79",
+    "ffmpeg_ebur128": "Integrated loudness:\n    I:         -22.7 LUFS\n    Threshold: -33.7 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:       -6.7 dBFS\n[out#0/null @ 0xcb1024180] video:0KiB audio:245KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:02.61 bitrate=N/A speed= 327x elapsed=0:00:00.00"
+  }
+}

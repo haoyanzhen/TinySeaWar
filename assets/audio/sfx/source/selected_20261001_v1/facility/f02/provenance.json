@@ -1,0 +1,168 @@
+{
+  "selection": {
+    "id": "F02",
+    "title": "设施易主",
+    "category": "facility",
+    "status": "adopt",
+    "feedback": {
+      "choice": "A",
+      "notes": "",
+      "reviewed_at": "2026-10-01T01:15:27.957Z"
+    },
+    "revision_brief": "易主：机械锁扣释放后重新咬合的一次双阶段动作，末尾短促落定；区别于设施启停的电机声。",
+    "latest_revision": {
+      "batch_id": "sfx_rework27_naval_20260930_v2",
+      "candidate_ids": [
+        "F02_nav2_a",
+        "F02_nav2_b",
+        "F02_nav2_c"
+      ],
+      "human_review": "pending"
+    },
+    "revision_history": [
+      {
+        "batch_id": "sfx_rework27_20260930_v1",
+        "candidate_ids": [
+          "F02_rw1_a",
+          "F02_rw1_b",
+          "F02_rw1_c"
+        ],
+        "human_review": "pending"
+      }
+    ],
+    "feedback_history": [
+      {
+        "choice": "全部返工",
+        "notes": "无明显意义",
+        "reviewed_at": "2026-09-30T12:42:22.258Z"
+      }
+    ],
+    "candidate_id": "F02_nav2_a",
+    "batch_id": "sfx_rework27_naval_20260930_v2",
+    "path": "reports/audio/sfx_rework27_naval_20260930_v2/facility/F02_nav2_a.wav",
+    "sha256": "201abb5958fec34cd79eeba24390474244c2051d1fa21dd60baec659ab13c9fa"
+  },
+  "production": {
+    "id": "F02_nav2_a",
+    "asset_id": "F02",
+    "seed": 202609312120,
+    "prompt": "Sound effect for Tiny Sea War, a 2D anime shipgirl naval battle game. A coastal naval station changes fleet control. Its marine control interlock releases and a shipboard-style command relay secures into the new position, short decisive two-stage mechanical confirmation. A precision mechanical lock changes ownership: one latch disengages, a tiny pause, then a second latch firmly clicks into place. Clear release then secure sequence, dry intimate mechanism, no motor hum or electronic notification. Close, crisp material detail and short outdoor decay. One isolated compact event with a complete ending. No voices, speech, music, seagulls, background surf, room ambience, or fantasy magic. Preserve the specific naval action; no unrelated generic notification.",
+    "status": "generated",
+    "human_review": "pending",
+    "raw": {
+      "path": "facility/F02_nav2_a_raw.wav",
+      "sha256": "2013b8f3eceb0d38fc71a9e562c89f0bf7d1eb6c7166ddcc18c298f13c1124eb"
+    },
+    "preview": {
+      "path": "facility/F02_nav2_a.wav",
+      "sha256": "201abb5958fec34cd79eeba24390474244c2051d1fa21dd60baec659ab13c9fa"
+    },
+    "source_generation": {
+      "id": "F02_nav2_a",
+      "seed": 202609312120,
+      "prompt": "Sound effect for Tiny Sea War, a 2D anime shipgirl naval battle game. A coastal naval station changes fleet control. Its marine control interlock releases and a shipboard-style command relay secures into the new position, short decisive two-stage mechanical confirmation. A precision mechanical lock changes ownership: one latch disengages, a tiny pause, then a second latch firmly clicks into place. Clear release then secure sequence, dry intimate mechanism, no motor hum or electronic notification. Close, crisp material detail and short outdoor decay. One isolated compact event with a complete ending. No voices, speech, music, seagulls, background surf, room ambience, or fantasy magic. Preserve the specific naval action; no unrelated generic notification.",
+      "seconds": 2,
+      "status": "generated",
+      "before_gpu": {
+        "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+        "free_mib": 56191,
+        "utilization": 22
+      },
+      "model": "stable_audio_3_small_sfx",
+      "steps": 8,
+      "cfg": 1.0,
+      "sampler": "lcm",
+      "scheduler": "simple",
+      "sha256": "2013b8f3eceb0d38fc71a9e562c89f0bf7d1eb6c7166ddcc18c298f13c1124eb",
+      "sample_rate": 44100,
+      "channels": 2,
+      "frames": 90112,
+      "actual_seconds": 2.043356009070295,
+      "rms": 0.026279298588633537,
+      "peak": 0.6875,
+      "seconds_elapsed": 0.35732412338256836,
+      "human_review": "pending",
+      "peak_vram_allocated_mib": 1660.2822265625
+    },
+    "source_peak": 0.6875,
+    "source_clipped_samples": 0,
+    "duration_seconds": 1.4120833333333334,
+    "channels": 1,
+    "sample_rate": 48000,
+    "sample_peak_dbfs": -2.9999995180030155,
+    "rms_dbfs": -29.4344761746687,
+    "true_peak_4x_dbfs": -2.497541957268452,
+    "rms_windows_dbfs": [
+      -28.134171249334994,
+      -20.71573688752992,
+      -23.993298983535748,
+      -33.66874137255308,
+      -34.82817601451581,
+      -37.19797914886425,
+      -34.63661407867506,
+      -33.41829561770651,
+      -40.930671358141524,
+      -43.78550670906442,
+      -45.25847034744839,
+      -45.62963250721123,
+      -48.990553859273675,
+      -65.25609767504494
+    ],
+    "lowpass_hz": null,
+    "target_rms_dbfs": -23,
+    "crop_seconds": [
+      0.0,
+      1.412063492063492
+    ],
+    "gain_db": 0.5637345523803214,
+    "loop_crossfade_seconds": 0,
+    "loop_points_frames": null,
+    "duration_review_required": true,
+    "loop_seam_review": "not_applicable"
+  },
+  "asset_design": {
+    "id": "F02",
+    "category": "facility",
+    "title": "设施易主",
+    "target_seconds": 0.6,
+    "generation_seconds": 2,
+    "loop": false,
+    "direction": "舰娘海战场景：易主：机械锁扣释放后重新咬合的一次双阶段动作，末尾短促落定；区别于设施启停的电机声。",
+    "english_brief": "A precision mechanical lock changes ownership: one latch disengages, a tiny pause, then a second latch firmly clicks into place. Clear release then secure sequence, dry intimate mechanism, no motor hum or electronic notification.",
+    "candidates": [
+      {
+        "id": "F02_nav2_a",
+        "seed": 202609312120,
+        "variation": "干净动作",
+        "prompt": "Sound effect for Tiny Sea War, a 2D anime shipgirl naval battle game. A coastal naval station changes fleet control. Its marine control interlock releases and a shipboard-style command relay secures into the new position, short decisive two-stage mechanical confirmation. A precision mechanical lock changes ownership: one latch disengages, a tiny pause, then a second latch firmly clicks into place. Clear release then secure sequence, dry intimate mechanism, no motor hum or electronic notification. Close, crisp material detail and short outdoor decay. One isolated compact event with a complete ending. No voices, speech, music, seagulls, background surf, room ambience, or fantasy magic. Preserve the specific naval action; no unrelated generic notification.",
+        "status": "planned"
+      },
+      {
+        "id": "F02_nav2_b",
+        "seed": 202609312121,
+        "variation": "温暖材质",
+        "prompt": "Sound effect for Tiny Sea War, a 2D anime shipgirl naval battle game. A coastal naval station changes fleet control. Its marine control interlock releases and a shipboard-style command relay secures into the new position, short decisive two-stage mechanical confirmation. A precision mechanical lock changes ownership: one latch disengages, a tiny pause, then a second latch firmly clicks into place. Clear release then secure sequence, dry intimate mechanism, no motor hum or electronic notification. Warm full material body, controlled low frequencies and gentle treble. One isolated compact event with a complete ending. No voices, speech, music, seagulls, background surf, room ambience, or fantasy magic. Preserve the specific naval action; no unrelated generic notification.",
+        "status": "planned"
+      },
+      {
+        "id": "F02_nav2_c",
+        "seed": 202609312122,
+        "variation": "柔和耐听",
+        "prompt": "Sound effect for Tiny Sea War, a 2D anime shipgirl naval battle game. A coastal naval station changes fleet control. Its marine control interlock releases and a shipboard-style command relay secures into the new position, short decisive two-stage mechanical confirmation. A precision mechanical lock changes ownership: one latch disengages, a tiny pause, then a second latch firmly clicks into place. Clear release then secure sequence, dry intimate mechanism, no motor hum or electronic notification. Rounded gentle attack with clear action timing, comfortable for repeated playback. One isolated compact event with a complete ending. No voices, speech, music, seagulls, background surf, room ambience, or fantasy magic. Preserve the specific naval action; no unrelated generic notification.",
+        "status": "planned"
+      }
+    ],
+    "review_target_rms_dbfs": -23,
+    "previous_feedback": {
+      "choice": "全部返工",
+      "notes": "无明显意义",
+      "reviewed_at": "2026-09-30T12:42:22.258Z"
+    },
+    "naval_context": "A coastal naval station changes fleet control. Its marine control interlock releases and a shipboard-style command relay secures into the new position, short decisive two-stage mechanical confirmation."
+  },
+  "source_batch_sha256": "06e64691b5e2c24e9d6c4a2dc7c708f82bca46ae70c6c6e34337434f1c5faeae",
+  "loudness": {
+    "sha256": "201abb5958fec34cd79eeba24390474244c2051d1fa21dd60baec659ab13c9fa",
+    "ffmpeg_ebur128": "Integrated loudness:\n    I:         -27.8 LUFS\n    Threshold: -39.2 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:       -2.5 dBFS\n[out#0/null @ 0xa7f018240] video:0KiB audio:132KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:01.41 bitrate=N/A speed= 271x elapsed=0:00:00.00"
+  }
+}

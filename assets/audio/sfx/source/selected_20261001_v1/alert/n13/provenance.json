@@ -1,0 +1,177 @@
+{
+  "selection": {
+    "id": "N13",
+    "title": "时间即将耗尽",
+    "category": "alert",
+    "status": "adopt",
+    "feedback": {
+      "choice": "C",
+      "notes": "",
+      "reviewed_at": "2026-10-01T01:15:18.784Z"
+    },
+    "revision_brief": "倒计时：低中频干燥钟表滴答，末段间隔缩短；不使用发现敌人的上扬提示音，不做持续警笛。",
+    "latest_revision": {
+      "batch_id": "sfx_rework27_naval_20260930_v2",
+      "candidate_ids": [
+        "N13_nav2_a",
+        "N13_nav2_b",
+        "N13_nav2_c"
+      ],
+      "human_review": "pending"
+    },
+    "revision_history": [
+      {
+        "batch_id": "sfx_rework27_20260930_v1",
+        "candidate_ids": [
+          "N13_rw1_a",
+          "N13_rw1_b",
+          "N13_rw1_c"
+        ],
+        "human_review": "pending"
+      }
+    ],
+    "feedback_history": [
+      {
+        "choice": "全部返工",
+        "notes": "音效体现的意义不明确",
+        "reviewed_at": "2026-09-30T12:37:43.501Z"
+      }
+    ],
+    "candidate_id": "N13_nav2_c",
+    "batch_id": "sfx_rework27_naval_20260930_v2",
+    "path": "reports/audio/sfx_rework27_naval_20260930_v2/alert/N13_nav2_c.wav",
+    "sha256": "d92f039a6e553f0883b7e59238de13b4140ef2e2ac361f1cbe314654cd618848"
+  },
+  "production": {
+    "id": "N13_nav2_c",
+    "asset_id": "N13",
+    "seed": 202609312112,
+    "prompt": "Sound effect for Tiny Sea War, a 2D anime shipgirl naval battle game. A naval battle time-limit warning on a fleet command bridge chronometer. Muted low-mid instrument ticks accelerate slightly to convey time running out, short restrained urgency. Three dry chronometer ticks followed by two closer ticks, then silence. No siren or notification melody. Rounded gentle attack with clear action timing, comfortable for repeated playback. One isolated compact event with a complete ending. No voices, speech, music, seagulls, background surf, room ambience, or fantasy magic. Preserve the specific naval action; no unrelated generic notification.",
+    "status": "generated",
+    "human_review": "pending",
+    "raw": {
+      "path": "alert/N13_nav2_c_raw.wav",
+      "sha256": "848efe3a361f8270a05a773a1a9b50c801a792a5d2b8b8d93b9db22506e354e7"
+    },
+    "preview": {
+      "path": "alert/N13_nav2_c.wav",
+      "sha256": "d92f039a6e553f0883b7e59238de13b4140ef2e2ac361f1cbe314654cd618848"
+    },
+    "source_generation": {
+      "id": "N13_nav2_c",
+      "seed": 202609312112,
+      "prompt": "Sound effect for Tiny Sea War, a 2D anime shipgirl naval battle game. A naval battle time-limit warning on a fleet command bridge chronometer. Muted low-mid instrument ticks accelerate slightly to convey time running out, short restrained urgency. Three dry chronometer ticks followed by two closer ticks, then silence. No siren or notification melody. Rounded gentle attack with clear action timing, comfortable for repeated playback. One isolated compact event with a complete ending. No voices, speech, music, seagulls, background surf, room ambience, or fantasy magic. Preserve the specific naval action; no unrelated generic notification.",
+      "seconds": 3,
+      "status": "generated",
+      "before_gpu": {
+        "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+        "free_mib": 56191,
+        "utilization": 25
+      },
+      "model": "stable_audio_3_small_sfx",
+      "steps": 8,
+      "cfg": 1.0,
+      "sampler": "lcm",
+      "scheduler": "simple",
+      "sha256": "848efe3a361f8270a05a773a1a9b50c801a792a5d2b8b8d93b9db22506e354e7",
+      "sample_rate": 44100,
+      "channels": 2,
+      "frames": 131072,
+      "actual_seconds": 2.972154195011338,
+      "rms": 0.002900114981457591,
+      "peak": 0.0751953125,
+      "seconds_elapsed": 0.3600592613220215,
+      "human_review": "pending",
+      "peak_vram_allocated_mib": 1660.2822265625
+    },
+    "source_peak": 0.0751953125,
+    "source_clipped_samples": 0,
+    "duration_seconds": 2.32675,
+    "channels": 2,
+    "sample_rate": 48000,
+    "sample_peak_dbfs": -10.528714991526993,
+    "rms_dbfs": -37.644703197051676,
+    "true_peak_4x_dbfs": -10.426620979874981,
+    "rms_windows_dbfs": [
+      -28.2704249792036,
+      -32.12287479338555,
+      -48.021944777982355,
+      -79.59714644690453,
+      -79.08678360244627,
+      -31.589805047438432,
+      -60.235342238393024,
+      -34.62934990227828,
+      -79.1105259194652,
+      -76.73219601735525,
+      -45.09967988501814,
+      -39.42429248651651,
+      -33.99283982821369,
+      -80.86679119153182,
+      -80.59396330184984,
+      -78.09337179318942,
+      -38.64075196886254,
+      -43.06597877154752,
+      -58.06203048395388,
+      -77.76855381563198,
+      -78.57586020785826,
+      -41.73347211787723,
+      -80.11449431955286
+    ],
+    "lowpass_hz": null,
+    "target_rms_dbfs": -23,
+    "crop_seconds": [
+      0.005714285714285714,
+      2.332448979591837
+    ],
+    "gain_db": 12.041199826559248,
+    "loop_crossfade_seconds": 0,
+    "loop_points_frames": null,
+    "duration_review_required": true,
+    "loop_seam_review": "not_applicable"
+  },
+  "asset_design": {
+    "id": "N13",
+    "category": "alert",
+    "title": "时间即将耗尽",
+    "target_seconds": 0.7,
+    "generation_seconds": 3,
+    "loop": false,
+    "direction": "舰娘海战场景：倒计时：低中频干燥钟表滴答，末段间隔缩短；不使用发现敌人的上扬提示音，不做持续警笛。",
+    "english_brief": "A short countdown warning made of dry low-mid clock ticks. Three evenly distinct ticks followed by two ticks closer together, then silence. Subtle urgency through accelerating spacing, no rising notification chime, no siren.",
+    "candidates": [
+      {
+        "id": "N13_nav2_a",
+        "seed": 202609312110,
+        "variation": "干净动作",
+        "prompt": "Sound effect for Tiny Sea War, a 2D anime shipgirl naval battle game. A naval battle time-limit warning on a fleet command bridge chronometer. Muted low-mid instrument ticks accelerate slightly to convey time running out, short restrained urgency. Three dry chronometer ticks followed by two closer ticks, then silence. No siren or notification melody. Close, crisp material detail and short outdoor decay. One isolated compact event with a complete ending. No voices, speech, music, seagulls, background surf, room ambience, or fantasy magic. Preserve the specific naval action; no unrelated generic notification.",
+        "status": "planned"
+      },
+      {
+        "id": "N13_nav2_b",
+        "seed": 202609312111,
+        "variation": "温暖材质",
+        "prompt": "Sound effect for Tiny Sea War, a 2D anime shipgirl naval battle game. A naval battle time-limit warning on a fleet command bridge chronometer. Muted low-mid instrument ticks accelerate slightly to convey time running out, short restrained urgency. Three dry chronometer ticks followed by two closer ticks, then silence. No siren or notification melody. Warm full material body, controlled low frequencies and gentle treble. One isolated compact event with a complete ending. No voices, speech, music, seagulls, background surf, room ambience, or fantasy magic. Preserve the specific naval action; no unrelated generic notification.",
+        "status": "planned"
+      },
+      {
+        "id": "N13_nav2_c",
+        "seed": 202609312112,
+        "variation": "柔和耐听",
+        "prompt": "Sound effect for Tiny Sea War, a 2D anime shipgirl naval battle game. A naval battle time-limit warning on a fleet command bridge chronometer. Muted low-mid instrument ticks accelerate slightly to convey time running out, short restrained urgency. Three dry chronometer ticks followed by two closer ticks, then silence. No siren or notification melody. Rounded gentle attack with clear action timing, comfortable for repeated playback. One isolated compact event with a complete ending. No voices, speech, music, seagulls, background surf, room ambience, or fantasy magic. Preserve the specific naval action; no unrelated generic notification.",
+        "status": "planned"
+      }
+    ],
+    "review_target_rms_dbfs": -23,
+    "previous_feedback": {
+      "choice": "全部返工",
+      "notes": "音效体现的意义不明确",
+      "reviewed_at": "2026-09-30T12:37:43.501Z"
+    },
+    "naval_context": "A naval battle time-limit warning on a fleet command bridge chronometer. Muted low-mid instrument ticks accelerate slightly to convey time running out, short restrained urgency."
+  },
+  "source_batch_sha256": "06e64691b5e2c24e9d6c4a2dc7c708f82bca46ae70c6c6e34337434f1c5faeae",
+  "loudness": {
+    "sha256": "d92f039a6e553f0883b7e59238de13b4140ef2e2ac361f1cbe314654cd618848",
+    "ffmpeg_ebur128": "Integrated loudness:\n    I:         -32.8 LUFS\n    Threshold: -42.8 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:      -10.4 dBFS\n[out#0/null @ 0x701020240] video:0KiB audio:436KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:02.32 bitrate=N/A speed= 188x elapsed=0:00:00.01"
+  }
+}

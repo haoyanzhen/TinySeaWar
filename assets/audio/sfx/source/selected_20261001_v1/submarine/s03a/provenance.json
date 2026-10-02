@@ -1,0 +1,135 @@
+{
+  "selection": {
+    "id": "S03a",
+    "title": "下潜完成提示",
+    "category": "submarine",
+    "status": "adopt",
+    "feedback": {
+      "choice": "B",
+      "notes": "",
+      "reviewed_at": "2026-09-30T12:33:21.176Z"
+    },
+    "candidate_id": "S03a_full_b",
+    "batch_id": "sfx_full_20260930_v3",
+    "path": "reports/audio/sfx_full_20260930_v3/submarine/S03a_full_b.wav",
+    "sha256": "d1838f92d81febeeba8360d6684390864e53505694a93f05e858849745feb38b"
+  },
+  "production": {
+    "id": "S03a_full_b",
+    "asset_id": "S03a",
+    "seed": 202609306351,
+    "prompt": "A subtle submarine submerged status notification, two soft descending electronic notes. Readable submarine equipment and water sound for a naval game, distinct short phases, restrained intensity. Warmer softer submerged water texture. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+    "status": "generated",
+    "human_review": "pending",
+    "raw": {
+      "path": "submarine/S03a_full_b_raw.wav",
+      "sha256": "f13bf3ae7b1d64250f9b944d2d5a331f38f2ca79d1ce2c8b72a8f4154a1e1fe1"
+    },
+    "preview": {
+      "path": "submarine/S03a_full_b.wav",
+      "sha256": "d1838f92d81febeeba8360d6684390864e53505694a93f05e858849745feb38b"
+    },
+    "source_generation": {
+      "id": "S03a_full_b",
+      "prompt": "A subtle submarine submerged status notification, two soft descending electronic notes. Readable submarine equipment and water sound for a naval game, distinct short phases, restrained intensity. Warmer softer submerged water texture. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+      "seconds": 2,
+      "seed": 202609306351,
+      "status": "generated",
+      "before_gpu": {
+        "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+        "free_mib": 56153,
+        "utilization": 19
+      },
+      "model": "stable_audio_3_small_sfx",
+      "steps": 8,
+      "cfg": 1.0,
+      "sampler": "lcm",
+      "scheduler": "simple",
+      "sha256": "f13bf3ae7b1d64250f9b944d2d5a331f38f2ca79d1ce2c8b72a8f4154a1e1fe1",
+      "sample_rate": 44100,
+      "channels": 2,
+      "frames": 90112,
+      "actual_seconds": 2.043356009070295,
+      "rms": 0.05169239640235901,
+      "peak": 0.39453125,
+      "seconds_elapsed": 0.36437320709228516,
+      "human_review": "pending",
+      "peak_vram_allocated_mib": 1682.39892578125
+    },
+    "source_peak": 0.39453125,
+    "source_clipped_samples": 0,
+    "duration_seconds": 1.519125,
+    "channels": 2,
+    "sample_rate": 48000,
+    "sample_peak_dbfs": -6.625150572530886,
+    "rms_dbfs": -22.999999518003015,
+    "true_peak_4x_dbfs": -6.608417903103778,
+    "rms_windows_dbfs": [
+      -16.499562748631423,
+      -17.2015762985096,
+      -16.427579580738087,
+      -23.725073630209145,
+      -29.018307114558475,
+      -26.520862181453552,
+      -27.158317680024318,
+      -31.920326243991962,
+      -36.47867171426104,
+      -34.67349338771382,
+      -47.19588242322373,
+      -41.09147569297889,
+      -50.73001899193808,
+      -51.95398220997447,
+      -65.92914901113016
+    ],
+    "lowpass_hz": null,
+    "target_rms_dbfs": -23,
+    "crop_seconds": [
+      0.0,
+      1.5191156462585034
+    ],
+    "gain_db": 1.443847393369742,
+    "loop_crossfade_seconds": 0,
+    "loop_points_frames": null,
+    "duration_review_required": true,
+    "loop_seam_review": "not_applicable"
+  },
+  "asset_design": {
+    "id": "S03a",
+    "category": "submarine",
+    "title": "下潜完成提示",
+    "target_seconds": 0.4,
+    "generation_seconds": 2,
+    "loop": false,
+    "direction": "柔和下降双音、短结束",
+    "english_brief": "A subtle submarine submerged status notification, two soft descending electronic notes",
+    "candidates": [
+      {
+        "id": "S03a_full_a",
+        "seed": 202609306350,
+        "variation": "清晰过程",
+        "prompt": "A subtle submarine submerged status notification, two soft descending electronic notes. Readable submarine equipment and water sound for a naval game, distinct short phases, restrained intensity. Clean precise mechanical and water detail. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+        "status": "planned"
+      },
+      {
+        "id": "S03a_full_b",
+        "seed": 202609306351,
+        "variation": "沉稳水感",
+        "prompt": "A subtle submarine submerged status notification, two soft descending electronic notes. Readable submarine equipment and water sound for a naval game, distinct short phases, restrained intensity. Warmer softer submerged water texture. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+        "status": "planned"
+      },
+      {
+        "id": "S03a_full_c",
+        "seed": 202609306352,
+        "variation": "轻柔收束",
+        "prompt": "A subtle submarine submerged status notification, two soft descending electronic notes. Readable submarine equipment and water sound for a naval game, distinct short phases, restrained intensity. Gentler rounded edges and a short finish. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+        "status": "planned"
+      }
+    ],
+    "review_target_rms_dbfs": -23
+  },
+  "source_batch_sha256": "4d1cd2f07e2abb4699a4cc6e3e71480b2237080da3a70b79baf18d1642ca8b4c",
+  "loudness": {
+    "sha256": "d1838f92d81febeeba8360d6684390864e53505694a93f05e858849745feb38b",
+    "ffmpeg_ebur128": "Integrated loudness:\n    I:         -20.1 LUFS\n    Threshold: -32.4 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:       -6.6 dBFS\n[out#0/null @ 0xc43020180] video:0KiB audio:285KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:01.51 bitrate=N/A speed= 179x elapsed=0:00:00.00"
+  }
+}

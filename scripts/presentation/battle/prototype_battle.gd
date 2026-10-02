@@ -1,5 +1,7 @@
 extends Node2D
 
+const AudioPublicSignals = preload("res://scripts/application/battle_audio_public_signals.gd")
+const BattleSoundDirector = preload("res://scripts/presentation/audio/battle_sound_director.gd")
 const SkillCutinOverlay = preload("res://scripts/presentation/battle/skill_cutin_overlay.gd")
 const PlayerCommandFeedback = preload("res://scripts/presentation/battle/player_command_feedback.gd")
 const BattleSession = preload("res://scripts/application/battle_session.gd")
@@ -42,6 +44,8 @@ enum OperationMode { NORMAL, AIMING_PRIMARY, TARGETING_SKILL, PLACING_ROUTE }
 @onready var battle_camera: Camera2D = $BattleCamera
 @onready var battle_hud: Control = $HUD/BattleHud
 
+var sound_director = BattleSoundDirector.new()
+var audio_public_signals = AudioPublicSignals.new()
 var command_feedback = PlayerCommandFeedback.new()
 var player_command_sequence := 0
 
@@ -1030,6 +1034,7 @@ func _cancel_operation_mode() -> void:
 	skill_target_unit_ids.clear()
 	operation_mode = OperationMode.NORMAL
 	skill_target_type = ""
+	SoundManager.ui("U02")
 	_push_message("已取消当前操作")
 
 
@@ -1144,8 +1149,14 @@ func _unit_at(world_position: Vector2, snapshot: Dictionary) -> Dictionary:
 
 func _consume_events(events: Array) -> void:
 	terrain_debug_overlay.record_events(events)
+	var raw_audio_events: Array = events
 	events = session.presentation_events(events)
 	_sync_skill_cutin()
+	if sound_director.audio != null and not events.is_empty():
+		var sound_view: Dictionary = session.snapshot("player", false)
+		var sound_events: Array = events + audio_public_signals.events(raw_audio_events, sound_view, selected_unit_id, session.facility_service.support_missions)
+		sound_events.sort_custom(func(a, b): return int(str(a.get("event_id", "")).get_slice(".", 1)) < int(str(b.get("event_id", "")).get_slice(".", 1)))
+		sound_director.consume(sound_events, sound_view)
 	if effect_director != null:
 		effect_director.consume_events(events, session.presentation_context("player"))
 	for event in events:
@@ -1181,7 +1192,10 @@ func _consume_events(events: Array) -> void:
 				result_character_id = _random_player_character_id()
 				if str(event.get("result", {}).get("winner_faction", "")) == "player":
 					var flow := get_node_or_null("/root/GameFlow")
-					if flow != null and progress_recording_enabled and not aviation_demo_active: flow.record_level_victory(level_id)
+					if flow != null and progress_recording_enabled and not aviation_demo_active:
+						var before: Array = flow.unlocked_ship_ids.duplicate()
+						var saved: bool = flow.record_level_victory(level_id)
+						if saved and before != flow.unlocked_ship_ids: SoundManager.play("N16", "reward", Vector2.INF, 0)
 				var result_view := preload("res://scripts/presentation/battle/battle_result_presentation.gd").describe(event.get("result", {}))
 				_push_message("%s：%s" % [result_view.get("title", "本局无效"), result_view.get("subtitle", "")])
 
@@ -1202,6 +1216,8 @@ func _push_message(message: String) -> void:
 
 
 func _start_battle(new_level_id: String) -> void:
+	audio_public_signals.own_missions.clear()
+	SoundManager.clear_battle()
 	if battle_hud.weather_details != null: battle_hud.weather_details.hide()
 	if skill_cutin != null: skill_cutin.clear(true)
 	command_feedback.clear()
@@ -1228,6 +1244,7 @@ func _start_battle(new_level_id: String) -> void:
 		push_error("Battle creation failed: %s" % result.get("errors", []))
 		session = null
 		return
+	sound_director.setup(SoundManager, session.get_player_slots().size() >= 11, float(session.state.get("time_limit", 1200)), session.aviation_rules_mode == "Physical")
 	accumulator = 0.0
 	selected_unit_id = ""
 	selected_facility_id = ""
@@ -1250,6 +1267,8 @@ func _start_battle(new_level_id: String) -> void:
 	var map_size := Vector2(float(map_data.get("width", 4096.0)), float(map_data.get("height", 2304.0)))
 	ocean_surface.configure(map_size, current_palette_id)
 	weather_overlay.configure(map_size, current_palette_id)
+	weather_overlay.animation_time = 0
+	if not weather_overlay.lightning_flashed.is_connected(_sound_thunder): weather_overlay.lightning_flashed.connect(_sound_thunder)
 	terrain_view.configure(session.state.get("terrain_map", {}), DataRegistry.assets)
 	terrain_debug_overlay.configure(session.state.get("terrain_map", {}), session.terrain_query.debug_spatial_cells())
 	_configure_camera_limits(map_data)
@@ -1267,6 +1286,8 @@ func _sync_visuals() -> void:
 	if effect_director == null or session == null or session.state.is_empty():
 		return
 	var snapshot: Dictionary = session.snapshot("player", terrain_debug_overlay.visible)
+	var sound_view: Dictionary = session.snapshot("player", false) if terrain_debug_overlay.visible else snapshot
+	sound_director.update(sound_view, battle_camera.position, selected_unit_id, _sound_near_coast())
 	_sync_environment_visuals(snapshot.get("global_environment", {}))
 	effect_director.sync_snapshot(snapshot, selected_unit_id, focused_target_id, _selected_live_ids())
 	if skill_cutin != null: skill_cutin.cache_units(snapshot.get("units", {}))
@@ -1361,7 +1382,12 @@ func _restart_battle() -> void:
 	_start_battle(level_id)
 
 
+func _exit_tree() -> void:
+	SoundManager.clear_battle()
+
+
 func _return_to_main_menu() -> void:
+	SoundManager.ui("U02")
 	var error := get_tree().change_scene_to_file(MAIN_MENU_SCENE)
 	if error != OK:
 		push_error("Could not return to main menu: %s" % error)
@@ -1376,10 +1402,12 @@ func _submit_player_command(command: Dictionary) -> Dictionary:
 	var result: Dictionary = session.queue_command(submitted)
 	if not bool(result.get("accepted", false)):
 		command_feedback.reject(submitted, str(result.get("reason_code", "UNKNOWN")), Time.get_ticks_msec() / 1000.0)
+		sound_director.reject(submitted, str(result.get("reason_code", "UNKNOWN")))
 	return result
 
 
 func _reject_player_action(command_type: String, reason: String) -> void:
+	sound_director.reject({"command_type":command_type}, reason)
 	command_feedback.reject({"command_type": command_type, "issuer_id": "player", "issuer_type": "Player", "unit_id": selected_unit_id}, reason, Time.get_ticks_msec() / 1000.0)
 
 
@@ -1455,3 +1483,16 @@ func _sync_skill_cutin() -> void:
 func _pointer_event_world_position(screen_position: Vector2) -> Vector2:
 	# Button intent belongs to its event, even when native/remote pointer polling lags.
 	return get_global_transform_with_canvas().affine_inverse() * screen_position
+
+
+func _sound_near_coast() -> bool:
+	for obstacle in session.terrain_query.obstacles:
+		var polygon: PackedVector2Array = obstacle.get("_polygon", PackedVector2Array())
+		for index in range(polygon.size()):
+			var nearest := Geometry2D.get_closest_point_to_segment(battle_camera.position, polygon[index], polygon[(index + 1) % polygon.size()])
+			if nearest.distance_squared_to(battle_camera.position) < 250.0 * 250.0: return true
+	return false
+
+func _sound_thunder() -> void:
+	if session != null and session.state.get("phase", "") != "Finished":
+		SoundManager.play("E05a" if int(weather_overlay.animation_time / 8) % 2 == 0 else "E05b", "thunder", Vector2.INF, 8)

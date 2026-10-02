@@ -1,0 +1,141 @@
+{
+  "selection": {
+    "id": "W08",
+    "title": "水下反潜爆炸",
+    "category": "impact",
+    "status": "adopt",
+    "feedback": {
+      "choice": "A",
+      "notes": "",
+      "reviewed_at": "2026-09-30T10:30:39.019Z"
+    },
+    "candidate_id": "W08_full_a",
+    "batch_id": "sfx_full_20260930_v3",
+    "path": "reports/audio/sfx_full_20260930_v3/impact/W08_full_a.wav",
+    "sha256": "471688bbf60106cbd44d50178f4d3d44fe6b4a8f985afdbd78dad0ff8f1ec42d"
+  },
+  "production": {
+    "id": "W08_full_a",
+    "asset_id": "W08",
+    "seed": 202609306080,
+    "prompt": "One muffled underwater depth charge explosion, deep pressure thump and short watery decay. Stylized anime naval battle game impact, believable material and water, controlled bass, concise natural decay. A concentrated compact impact and clear material detail. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+    "status": "generated",
+    "human_review": "pending",
+    "raw": {
+      "path": "impact/W08_full_a_raw.wav",
+      "sha256": "7423f639488a9e8e4155237bbb79e51f9adee53ca4998190ad06e00dd8e56023"
+    },
+    "preview": {
+      "path": "impact/W08_full_a.wav",
+      "sha256": "471688bbf60106cbd44d50178f4d3d44fe6b4a8f985afdbd78dad0ff8f1ec42d"
+    },
+    "source_generation": {
+      "id": "W08_full_a",
+      "prompt": "One muffled underwater depth charge explosion, deep pressure thump and short watery decay. Stylized anime naval battle game impact, believable material and water, controlled bass, concise natural decay. A concentrated compact impact and clear material detail. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+      "seconds": 3,
+      "seed": 202609306080,
+      "status": "generated",
+      "before_gpu": {
+        "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+        "free_mib": 56153,
+        "utilization": 28
+      },
+      "model": "stable_audio_3_small_sfx",
+      "steps": 8,
+      "cfg": 1.0,
+      "sampler": "lcm",
+      "scheduler": "simple",
+      "sha256": "7423f639488a9e8e4155237bbb79e51f9adee53ca4998190ad06e00dd8e56023",
+      "sample_rate": 44100,
+      "channels": 2,
+      "frames": 131072,
+      "actual_seconds": 2.972154195011338,
+      "rms": 0.07602254301309586,
+      "peak": 0.7421875,
+      "seconds_elapsed": 0.349928617477417,
+      "human_review": "pending",
+      "peak_vram_allocated_mib": 1682.39892578125
+    },
+    "source_peak": 0.7421875,
+    "source_clipped_samples": 0,
+    "duration_seconds": 2.0850416666666667,
+    "channels": 1,
+    "sample_rate": 48000,
+    "sample_peak_dbfs": -5.579003330481848,
+    "rms_dbfs": -22.999999518003015,
+    "true_peak_4x_dbfs": -5.573475363973609,
+    "rms_windows_dbfs": [
+      -13.236983594993362,
+      -16.247635156724975,
+      -19.340774834014397,
+      -19.454166125580123,
+      -22.91237460631332,
+      -25.951760993330844,
+      -28.661637411961948,
+      -29.869566850181286,
+      -35.12791756174299,
+      -37.639004532586256,
+      -37.18086879655125,
+      -38.42488243938534,
+      -40.39487663612937,
+      -43.09150633760829,
+      -45.89652121441336,
+      -47.85189405963781,
+      -48.42784923374346,
+      -49.69759816074443,
+      -50.73991944703178,
+      -53.20108125618491,
+      -56.290993911729444
+    ],
+    "lowpass_hz": null,
+    "target_rms_dbfs": -23,
+    "crop_seconds": [
+      0.0,
+      2.0850340136054424
+    ],
+    "gain_db": -1.585562669537544,
+    "loop_crossfade_seconds": 0,
+    "loop_points_frames": null,
+    "duration_review_required": false,
+    "loop_seam_review": "not_applicable"
+  },
+  "asset_design": {
+    "id": "W08",
+    "category": "impact",
+    "title": "水下反潜爆炸",
+    "target_seconds": 1.4,
+    "generation_seconds": 3,
+    "loop": false,
+    "direction": "低通闷爆、短压力波、无地上碎片",
+    "english_brief": "One muffled underwater depth charge explosion, deep pressure thump and short watery decay",
+    "candidates": [
+      {
+        "id": "W08_full_a",
+        "seed": 202609306080,
+        "variation": "集中冲击",
+        "prompt": "One muffled underwater depth charge explosion, deep pressure thump and short watery decay. Stylized anime naval battle game impact, believable material and water, controlled bass, concise natural decay. A concentrated compact impact and clear material detail. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+        "status": "planned"
+      },
+      {
+        "id": "W08_full_b",
+        "seed": 202609306081,
+        "variation": "低沉厚实",
+        "prompt": "One muffled underwater depth charge explosion, deep pressure thump and short watery decay. Stylized anime naval battle game impact, believable material and water, controlled bass, concise natural decay. A deeper warmer body and a short restrained tail. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+        "status": "planned"
+      },
+      {
+        "id": "W08_full_c",
+        "seed": 202609306082,
+        "variation": "圆润克制",
+        "prompt": "One muffled underwater depth charge explosion, deep pressure thump and short watery decay. Stylized anime naval battle game impact, believable material and water, controlled bass, concise natural decay. A softer rounded impact retaining clear weight. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+        "status": "planned"
+      }
+    ],
+    "review_target_rms_dbfs": -23
+  },
+  "source_batch_sha256": "4d1cd2f07e2abb4699a4cc6e3e71480b2237080da3a70b79baf18d1642ca8b4c",
+  "loudness": {
+    "sha256": "471688bbf60106cbd44d50178f4d3d44fe6b4a8f985afdbd78dad0ff8f1ec42d",
+    "ffmpeg_ebur128": "Integrated loudness:\n    I:         -26.8 LUFS\n    Threshold: -40.6 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:       -5.6 dBFS\n[out#0/null @ 0x913024180] video:0KiB audio:195KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:02.08 bitrate=N/A speed= 309x elapsed=0:00:00.00"
+  }
+}

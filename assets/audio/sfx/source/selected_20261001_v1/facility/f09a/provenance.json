@@ -1,0 +1,184 @@
+{
+  "selection": {
+    "id": "F09a",
+    "title": "布雷开始",
+    "category": "facility",
+    "status": "adopt",
+    "feedback": {
+      "choice": "A",
+      "notes": "",
+      "reviewed_at": "2026-10-01T01:42:08.640Z"
+    },
+    "revision_brief": "布雷开始：机械保险拨开、投放滑轨拉动的准备动作；不包含实际爆炸。",
+    "latest_revision": {
+      "batch_id": "sfx_design18_20261001_v3",
+      "candidate_ids": [
+        "F09a_d3_a",
+        "F09a_d3_b",
+        "F09a_d3_c"
+      ],
+      "human_review": "selected"
+    },
+    "revision_history": [
+      {
+        "batch_id": "sfx_rework27_20260930_v1",
+        "candidate_ids": [
+          "F09a_rw1_a",
+          "F09a_rw1_b",
+          "F09a_rw1_c"
+        ],
+        "human_review": "pending"
+      },
+      {
+        "batch_id": "sfx_rework27_naval_20260930_v2",
+        "candidate_ids": [
+          "F09a_nav2_a",
+          "F09a_nav2_b",
+          "F09a_nav2_c"
+        ],
+        "human_review": "pending"
+      }
+    ],
+    "feedback_history": [
+      {
+        "choice": "",
+        "notes": "意义不明",
+        "reviewed_at": "2026-09-30T12:43:44.335Z"
+      },
+      {
+        "batch_id": "sfx_design18_20261001_v3",
+        "choice": "全部返工",
+        "notes": "不是海军布雷，是机械厂开关",
+        "reviewed_at": "2026-10-01T01:16:12.765Z"
+      }
+    ],
+    "feedback_source": "tools/sfx/reviews/sfx_design18_20261001_v3.f189a37755a0.review.json",
+    "candidate_id": "F09a_d3_a",
+    "batch_id": "sfx_design18_20261001_v3",
+    "path": "reports/audio/sfx_design18_20261001_v3/facility/F09a_d3_a.wav",
+    "sha256": "807b3212133834d4f6ae3bfc3c859dcf97c0c74fdded7ed014de908d24e518f0"
+  },
+  "production": {
+    "id": "F09a_d3_a",
+    "asset_id": "F09a",
+    "seed": 202610011090,
+    "prompt": "A heavy spherical naval sea mine starts rolling from a shipboard deployment cradle toward the stern chute over the ocean. A short weighty rounded metal roll, low chain payout and a brief downward air movement. About one second, marine equipment carrying a heavy object. No factory switch, door latch, motor drone, explosion or impact in water yet. Clear compact attack, dry and precisely separated stages. Isolated finished game sound effect, no speech or vocals, no background ambience.",
+    "status": "generated",
+    "human_review": "pending",
+    "raw": {
+      "path": "facility/F09a_d3_a_raw.wav",
+      "sha256": "df3bbbaebed88cb926d9c74ebf9be0ba1085de49b1640d675d4ae027461d060f"
+    },
+    "preview": {
+      "path": "facility/F09a_d3_a.wav",
+      "sha256": "807b3212133834d4f6ae3bfc3c859dcf97c0c74fdded7ed014de908d24e518f0"
+    },
+    "source_generation": {
+      "id": "F09a_d3_a",
+      "seed": 202610011090,
+      "prompt": "A heavy spherical naval sea mine starts rolling from a shipboard deployment cradle toward the stern chute over the ocean. A short weighty rounded metal roll, low chain payout and a brief downward air movement. About one second, marine equipment carrying a heavy object. No factory switch, door latch, motor drone, explosion or impact in water yet. Clear compact attack, dry and precisely separated stages. Isolated finished game sound effect, no speech or vocals, no background ambience.",
+      "seconds": 2,
+      "status": "generated",
+      "before_gpu": {
+        "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+        "free_mib": 56191,
+        "utilization": 25
+      },
+      "model": "stable_audio_3_small_sfx",
+      "steps": 8,
+      "cfg": 1.0,
+      "sampler": "lcm",
+      "scheduler": "simple",
+      "sha256": "df3bbbaebed88cb926d9c74ebf9be0ba1085de49b1640d675d4ae027461d060f",
+      "sample_rate": 44100,
+      "channels": 2,
+      "frames": 90112,
+      "actual_seconds": 2.043356009070295,
+      "rms": 0.05489620193839073,
+      "peak": 0.74609375,
+      "seconds_elapsed": 0.3526949882507324,
+      "human_review": "pending",
+      "peak_vram_allocated_mib": 1660.2822265625
+    },
+    "source_peak": 0.74609375,
+    "source_clipped_samples": 0,
+    "duration_seconds": 1.4934583333333333,
+    "channels": 1,
+    "sample_rate": 48000,
+    "sample_peak_dbfs": -2.9999995180030155,
+    "rms_dbfs": -24.302084643025918,
+    "true_peak_4x_dbfs": -2.994471933023287,
+    "rms_windows_dbfs": [
+      -36.30232471525331,
+      -29.476191965949276,
+      -26.333756767582614,
+      -23.837680842251974,
+      -24.89565279837016,
+      -29.112669789482183,
+      -26.19433612097601,
+      -26.17805969595853,
+      -27.204301632749733,
+      -29.956512635555814,
+      -18.074047774844004,
+      -17.543787413935025,
+      -26.13776132147906,
+      -41.44387077076688,
+      -82.37378800308468
+    ],
+    "lowpass_hz": null,
+    "target_rms_dbfs": -23,
+    "crop_seconds": [
+      0.01693877551020408,
+      1.5103854875283447
+    ],
+    "gain_db": -0.45789678462969324,
+    "loop_crossfade_seconds": 0,
+    "loop_points_frames": null,
+    "duration_review_required": false,
+    "loop_seam_review": "not_applicable"
+  },
+  "asset_design": {
+    "id": "F09a",
+    "category": "facility",
+    "title": "布雷开始",
+    "target_seconds": 0.9,
+    "generation_seconds": 2,
+    "loop": false,
+    "direction": "低沉重物滚向投放口＋短链条放出，随向下空气感结束；重物和方向主导，保险开关不作主体。 验收：应是有重量的布雷准备/投放动作；开始事件不提前伪造水雷完成。",
+    "english_brief": "A heavy spherical naval sea mine starts rolling from a shipboard deployment cradle toward the stern chute over the ocean. A short weighty rounded metal roll, low chain payout and a brief downward air movement. About one second, marine equipment carrying a heavy object. No factory switch, door latch, motor drone, explosion or impact in water yet.",
+    "candidates": [
+      {
+        "id": "F09a_d3_a",
+        "seed": 202610011090,
+        "variation": "清楚轮廓",
+        "prompt": "A heavy spherical naval sea mine starts rolling from a shipboard deployment cradle toward the stern chute over the ocean. A short weighty rounded metal roll, low chain payout and a brief downward air movement. About one second, marine equipment carrying a heavy object. No factory switch, door latch, motor drone, explosion or impact in water yet. Clear compact attack, dry and precisely separated stages. Isolated finished game sound effect, no speech or vocals, no background ambience.",
+        "status": "planned"
+      },
+      {
+        "id": "F09a_d3_b",
+        "seed": 202610011091,
+        "variation": "温暖主体",
+        "prompt": "A heavy spherical naval sea mine starts rolling from a shipboard deployment cradle toward the stern chute over the ocean. A short weighty rounded metal roll, low chain payout and a brief downward air movement. About one second, marine equipment carrying a heavy object. No factory switch, door latch, motor drone, explosion or impact in water yet. Slightly warmer lower body; preserve all rhythmic and directional cues. Isolated finished game sound effect, no speech or vocals, no background ambience.",
+        "status": "planned"
+      },
+      {
+        "id": "F09a_d3_c",
+        "seed": 202610011092,
+        "variation": "圆润边缘",
+        "prompt": "A heavy spherical naval sea mine starts rolling from a shipboard deployment cradle toward the stern chute over the ocean. A short weighty rounded metal roll, low chain payout and a brief downward air movement. About one second, marine equipment carrying a heavy object. No factory switch, door latch, motor drone, explosion or impact in water yet. Gentler upper frequencies and rounded attack; preserve the same sequence and direction. Isolated finished game sound effect, no speech or vocals, no background ambience.",
+        "status": "planned"
+      }
+    ],
+    "review_target_rms_dbfs": -23,
+    "previous_feedback": {
+      "choice": "",
+      "notes": "意义不明",
+      "reviewed_at": "2026-09-30T12:43:44.335Z"
+    }
+  },
+  "source_batch_sha256": "e7e3ab90c4f035bc32a07579b46c6af96e93c72e8487d88606aef8e7321a6b68",
+  "loudness": {
+    "sha256": "807b3212133834d4f6ae3bfc3c859dcf97c0c74fdded7ed014de908d24e518f0",
+    "ffmpeg_ebur128": "Integrated loudness:\n    I:         -22.8 LUFS\n    Threshold: -32.8 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:       -3.0 dBFS\n[out#0/null @ 0xb90c60180] video:0KiB audio:140KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:01.49 bitrate=N/A speed= 300x elapsed=0:00:00.00"
+  }
+}

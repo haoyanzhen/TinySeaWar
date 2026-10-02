@@ -1,0 +1,132 @@
+{
+  "selection": {
+    "id": "A05",
+    "title": "航空鱼雷入水",
+    "category": "water",
+    "status": "adopt",
+    "feedback": {
+      "choice": "B",
+      "notes": "",
+      "reviewed_at": "2026-09-30T10:35:24.522Z"
+    },
+    "candidate_id": "A05_full_b",
+    "batch_id": "sfx_full_20260930_v3",
+    "path": "reports/audio/sfx_full_20260930_v3/water/A05_full_b.wav",
+    "sha256": "6102c010440ec6a2bb7715dfebd9e985658169e258c12fa5da2d9df7e2e1b0f5"
+  },
+  "production": {
+    "id": "A05_full_b",
+    "asset_id": "A05",
+    "seed": 202609306301,
+    "prompt": "An aerial torpedo entering water at an angle, elongated splash followed by bubbles. A small agile ship rig gliding at the water surface, delicate believable water movement for a naval game. Warm flowing water with slow smooth motion. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+    "status": "generated",
+    "human_review": "pending",
+    "raw": {
+      "path": "water/A05_full_b_raw.wav",
+      "sha256": "92ad5b47cfb9ba189086f39521fc5d3501f7e4db6148d6914de0eae9a658c9f8"
+    },
+    "preview": {
+      "path": "water/A05_full_b.wav",
+      "sha256": "6102c010440ec6a2bb7715dfebd9e985658169e258c12fa5da2d9df7e2e1b0f5"
+    },
+    "source_generation": {
+      "id": "A05_full_b",
+      "prompt": "An aerial torpedo entering water at an angle, elongated splash followed by bubbles. A small agile ship rig gliding at the water surface, delicate believable water movement for a naval game. Warm flowing water with slow smooth motion. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+      "seconds": 2,
+      "seed": 202609306301,
+      "status": "generated",
+      "before_gpu": {
+        "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+        "free_mib": 56153,
+        "utilization": 21
+      },
+      "model": "stable_audio_3_small_sfx",
+      "steps": 8,
+      "cfg": 1.0,
+      "sampler": "lcm",
+      "scheduler": "simple",
+      "sha256": "92ad5b47cfb9ba189086f39521fc5d3501f7e4db6148d6914de0eae9a658c9f8",
+      "sample_rate": 44100,
+      "channels": 2,
+      "frames": 90112,
+      "actual_seconds": 2.043356009070295,
+      "rms": 0.01155184768140316,
+      "peak": 0.126953125,
+      "seconds_elapsed": 0.34823179244995117,
+      "human_review": "pending",
+      "peak_vram_allocated_mib": 1682.39892578125
+    },
+    "source_peak": 0.126953125,
+    "source_clipped_samples": 0,
+    "duration_seconds": 1.1588333333333334,
+    "channels": 1,
+    "sample_rate": 48000,
+    "sample_peak_dbfs": -5.914707594121191,
+    "rms_dbfs": -24.242013802462374,
+    "true_peak_4x_dbfs": -5.909179599333177,
+    "rms_windows_dbfs": [
+      -35.79755096642867,
+      -27.310692704110533,
+      -15.236260468865622,
+      -19.88568390386931,
+      -28.621665567210727,
+      -36.1929084891045,
+      -35.22281977081894,
+      -39.2613423605881,
+      -35.448790025271286,
+      -32.90761070815324,
+      -49.41013282349509,
+      -63.48347621832551
+    ],
+    "lowpass_hz": null,
+    "target_rms_dbfs": -23,
+    "crop_seconds": [
+      0.09095238095238095,
+      1.2497732426303856
+    ],
+    "gain_db": 12.041199826559248,
+    "loop_crossfade_seconds": 0,
+    "loop_points_frames": null,
+    "duration_review_required": false,
+    "loop_seam_review": "not_applicable"
+  },
+  "asset_design": {
+    "id": "A05",
+    "category": "water",
+    "title": "航空鱼雷入水",
+    "target_seconds": 1.0,
+    "generation_seconds": 2,
+    "loop": false,
+    "direction": "斜向细长入水、破水后气泡",
+    "english_brief": "An aerial torpedo entering water at an angle, elongated splash followed by bubbles",
+    "candidates": [
+      {
+        "id": "A05_full_a",
+        "seed": 202609306300,
+        "variation": "清晰水纹",
+        "prompt": "An aerial torpedo entering water at an angle, elongated splash followed by bubbles. A small agile ship rig gliding at the water surface, delicate believable water movement for a naval game. Clean close water detail with restrained fine spray. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+        "status": "planned"
+      },
+      {
+        "id": "A05_full_b",
+        "seed": 202609306301,
+        "variation": "柔和水流",
+        "prompt": "An aerial torpedo entering water at an angle, elongated splash followed by bubbles. A small agile ship rig gliding at the water surface, delicate believable water movement for a naval game. Warm flowing water with slow smooth motion. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+        "status": "planned"
+      },
+      {
+        "id": "A05_full_c",
+        "seed": 202609306302,
+        "variation": "轻盈破水",
+        "prompt": "An aerial torpedo entering water at an angle, elongated splash followed by bubbles. A small agile ship rig gliding at the water surface, delicate believable water movement for a naval game. Airy rounded water movement, no harsh hiss. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+        "status": "planned"
+      }
+    ],
+    "review_target_rms_dbfs": -23
+  },
+  "source_batch_sha256": "4d1cd2f07e2abb4699a4cc6e3e71480b2237080da3a70b79baf18d1642ca8b4c",
+  "loudness": {
+    "sha256": "6102c010440ec6a2bb7715dfebd9e985658169e258c12fa5da2d9df7e2e1b0f5",
+    "ffmpeg_ebur128": "Integrated loudness:\n    I:         -22.4 LUFS\n    Threshold: -34.4 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:       -5.9 dBFS\n[out#0/null @ 0x9f1024180] video:0KiB audio:109KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:01.15 bitrate=N/A speed= 297x elapsed=0:00:00.00"
+  }
+}

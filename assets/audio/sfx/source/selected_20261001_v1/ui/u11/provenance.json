@@ -1,0 +1,207 @@
+{
+  "selection": {
+    "id": "U11",
+    "title": "面板出现",
+    "category": "ui",
+    "status": "adopt",
+    "feedback": {
+      "choice": "C",
+      "notes": "",
+      "reviewed_at": "2026-10-01T02:08:28.707Z"
+    },
+    "revision_brief": "约3秒卷轴展开或面板打开，撤销上一轮极短/无滑动描述。",
+    "latest_revision": {
+      "batch_id": "sfx_revision15_20261001_v4",
+      "candidate_ids": [
+        "U11_r4_a",
+        "U11_r4_b",
+        "U11_r4_c"
+      ],
+      "human_review": "selected"
+    },
+    "revision_history": [
+      {
+        "batch_id": "sfx_rework27_20260930_v1",
+        "candidate_ids": [
+          "U11_rw1_a",
+          "U11_rw1_b",
+          "U11_rw1_c"
+        ],
+        "human_review": "pending"
+      },
+      {
+        "batch_id": "sfx_rework27_naval_20260930_v2",
+        "candidate_ids": [
+          "U11_nav2_a",
+          "U11_nav2_b",
+          "U11_nav2_c"
+        ],
+        "human_review": "pending"
+      },
+      {
+        "batch_id": "sfx_design18_20261001_v3",
+        "candidate_ids": [
+          "U11_d3_a",
+          "U11_d3_b",
+          "U11_d3_c"
+        ],
+        "human_review": "revision_requested"
+      }
+    ],
+    "feedback_history": [
+      {
+        "choice": "全部返工",
+        "notes": "意义不明",
+        "reviewed_at": "2026-09-30T12:48:17.687Z"
+      },
+      {
+        "batch_id": "sfx_design18_20261001_v3",
+        "choice": "全部返工",
+        "notes": "有点吵",
+        "reviewed_at": "2026-10-01T01:18:10.956Z"
+      },
+      {
+        "batch_id": "sfx_design18_20261001_v3",
+        "choice": "全部返工",
+        "notes": "这个可以做长一点，做成卷轴展开或者面板打开的音效，大概3s左右",
+        "reviewed_at": "2026-10-01T01:45:38.896Z"
+      }
+    ],
+    "feedback_source": "tools/sfx/reviews/sfx_revision15_20261001_v4.44dad23e7ebd.review.json",
+    "candidate_id": "U11_r4_c",
+    "batch_id": "sfx_revision15_20261001_v4",
+    "path": "reports/audio/sfx_revision15_20261001_v4/ui/U11_r4_c.wav",
+    "sha256": "cf253df04f9a85895175c6c16682533b202cff83fd4b05a207dbd93ac216b522"
+  },
+  "production": {
+    "id": "U11_r4_c",
+    "asset_id": "U11",
+    "seed": 202610014142,
+    "prompt": "A large nautical parchment chart unrolling across a wooden table for three seconds. Continuous soft thick paper rolling and unfolding, gently settling flat at the end. Naval tactical map panel opening sound. Full rounded sound, soft edges.",
+    "status": "generated",
+    "human_review": "pending",
+    "raw": {
+      "path": "ui/U11_r4_c_raw.wav",
+      "sha256": "2aac4f8e511abd8b3a65ac197f130ff6f58067fa5ec5880918e8517b4da45540"
+    },
+    "preview": {
+      "path": "ui/U11_r4_c.wav",
+      "sha256": "cf253df04f9a85895175c6c16682533b202cff83fd4b05a207dbd93ac216b522"
+    },
+    "source_generation": {
+      "id": "U11_r4_c",
+      "seed": 202610014142,
+      "prompt": "A large nautical parchment chart unrolling across a wooden table for three seconds. Continuous soft thick paper rolling and unfolding, gently settling flat at the end. Naval tactical map panel opening sound. Full rounded sound, soft edges.",
+      "seconds": 3,
+      "status": "generated",
+      "before_gpu": {
+        "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+        "free_mib": 56193,
+        "utilization": 28
+      },
+      "model": "stable_audio_3_small_sfx",
+      "steps": 8,
+      "cfg": 1.0,
+      "sampler": "lcm",
+      "scheduler": "simple",
+      "sha256": "2aac4f8e511abd8b3a65ac197f130ff6f58067fa5ec5880918e8517b4da45540",
+      "sample_rate": 44100,
+      "channels": 2,
+      "frames": 131072,
+      "actual_seconds": 2.972154195011338,
+      "rms": 0.006369178183376789,
+      "peak": 0.2265625,
+      "seconds_elapsed": 0.355100154876709,
+      "human_review": "pending",
+      "peak_vram_allocated_mib": 1660.2822265625
+    },
+    "source_peak": 0.2265625,
+    "source_clipped_samples": 0,
+    "duration_seconds": 2.290875,
+    "channels": 2,
+    "sample_rate": 48000,
+    "sample_peak_dbfs": -3.0000009805991428,
+    "rms_dbfs": -33.294030674148615,
+    "true_peak_4x_dbfs": -2.9860772608412804,
+    "rms_windows_dbfs": [
+      -39.69176122078395,
+      -46.12429372689868,
+      -33.07603050306384,
+      -33.657026714417675,
+      -36.458550826561066,
+      -31.67562350060539,
+      -35.04115363855739,
+      -45.718995993740165,
+      -51.10552433857112,
+      -26.803428108189596,
+      -23.16298426063277,
+      -32.52990513330076,
+      -33.85448409213917,
+      -47.60157470954749,
+      -59.3010171698564,
+      -50.416530794826386,
+      -40.8495564419784,
+      -33.85982343515386,
+      -47.09595887350025,
+      -79.57902957066666,
+      -46.67271465340774,
+      -48.20348493121369,
+      -58.06950361605687
+    ],
+    "lowpass_hz": null,
+    "target_rms_dbfs": -30,
+    "crop_seconds": [
+      0.231859410430839,
+      2.5227210884353743
+    ],
+    "gain_db": 9.489369690240686,
+    "loop_crossfade_seconds": 0,
+    "loop_points_frames": null,
+    "duration_review_required": false,
+    "loop_seam_review": "not_applicable"
+  },
+  "asset_design": {
+    "id": "U11",
+    "category": "ui",
+    "title": "面板出现",
+    "target_seconds": 3,
+    "generation_seconds": 3,
+    "loop": false,
+    "direction": "约3秒卷轴展开或面板打开，撤销上一轮极短/无滑动描述。",
+    "english_brief": "A large nautical parchment chart unrolling across a wooden table for three seconds. Continuous soft thick paper rolling and unfolding, gently settling flat at the end. Naval tactical map panel opening sound.",
+    "candidates": [
+      {
+        "id": "U11_r4_a",
+        "seed": 202610014140,
+        "prompt": "A large nautical parchment chart unrolling across a wooden table for three seconds. Continuous soft thick paper rolling and unfolding, gently settling flat at the end. Naval tactical map panel opening sound. Clean close recording.",
+        "variation": "清楚自然",
+        "status": "planned"
+      },
+      {
+        "id": "U11_r4_b",
+        "seed": 202610014141,
+        "prompt": "A large nautical parchment chart unrolling across a wooden table for three seconds. Continuous soft thick paper rolling and unfolding, gently settling flat at the end. Naval tactical map panel opening sound. Warm tone, gentle treble.",
+        "variation": "柔和温暖",
+        "status": "planned"
+      },
+      {
+        "id": "U11_r4_c",
+        "seed": 202610014142,
+        "prompt": "A large nautical parchment chart unrolling across a wooden table for three seconds. Continuous soft thick paper rolling and unfolding, gently settling flat at the end. Naval tactical map panel opening sound. Full rounded sound, soft edges.",
+        "variation": "饱满圆润",
+        "status": "planned"
+      }
+    ],
+    "review_target_rms_dbfs": -30,
+    "previous_feedback": {
+      "choice": "全部返工",
+      "notes": "这个可以做长一点，做成卷轴展开或者面板打开的音效，大概3s左右",
+      "reviewed_at": "2026-10-01T01:45:38.896Z"
+    }
+  },
+  "source_batch_sha256": "0bb4ef7407247ce6ed59492dd41bf1d2efd535b44b6e578652337c23b0381464",
+  "loudness": {
+    "sha256": "cf253df04f9a85895175c6c16682533b202cff83fd4b05a207dbd93ac216b522",
+    "ffmpeg_ebur128": "Integrated loudness:\n    I:         -26.6 LUFS\n    Threshold: -37.1 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:       -3.0 dBFS\n[out#0/null @ 0xaa1418180] video:0KiB audio:430KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:02.29 bitrate=N/A speed= 185x elapsed=0:00:00.01"
+  }
+}

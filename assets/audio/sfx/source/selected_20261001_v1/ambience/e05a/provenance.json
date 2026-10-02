@@ -1,0 +1,160 @@
+{
+  "selection": {
+    "id": "E05a",
+    "title": "远闷雷",
+    "category": "ambience",
+    "status": "adopt",
+    "feedback": {
+      "choice": "C",
+      "notes": "",
+      "reviewed_at": "2026-09-30T12:40:42.377Z"
+    },
+    "candidate_id": "E05a_full_c",
+    "batch_id": "sfx_full_20260930_v3",
+    "path": "reports/audio/sfx_full_20260930_v3/ambience/E05a_full_c.wav",
+    "sha256": "106b9b809b906f45b23039250eef4b2ad154cf5c92210d3ad3b42523f2e65787"
+  },
+  "production": {
+    "id": "E05a_full_c",
+    "asset_id": "E05a",
+    "seed": 202609306732,
+    "prompt": "A single distant rumble of thunder, soft deep rolling decay. Natural wide-band maritime ambience with open spacious air and gentle dynamics, clean water and weather texture, no telephone or radio filtering. Delicate full bandwidth detail and stable restrained energy. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+    "status": "generated",
+    "human_review": "pending",
+    "raw": {
+      "path": "ambience/E05a_full_c_raw.wav",
+      "sha256": "f89b5d2eb11e684712b40acc31079c582515f1de786836ef0b4f80576af5790c"
+    },
+    "preview": {
+      "path": "ambience/E05a_full_c.wav",
+      "sha256": "106b9b809b906f45b23039250eef4b2ad154cf5c92210d3ad3b42523f2e65787"
+    },
+    "source_generation": {
+      "id": "E05a_full_c",
+      "prompt": "A single distant rumble of thunder, soft deep rolling decay. Natural wide-band maritime ambience with open spacious air and gentle dynamics, clean water and weather texture, no telephone or radio filtering. Delicate full bandwidth detail and stable restrained energy. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+      "seconds": 4,
+      "seed": 202609306732,
+      "status": "generated",
+      "before_gpu": {
+        "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+        "free_mib": 56153,
+        "utilization": 22
+      },
+      "model": "stable_audio_3_small_sfx",
+      "steps": 8,
+      "cfg": 1.0,
+      "sampler": "lcm",
+      "scheduler": "simple",
+      "sha256": "f89b5d2eb11e684712b40acc31079c582515f1de786836ef0b4f80576af5790c",
+      "sample_rate": 44100,
+      "channels": 2,
+      "frames": 180224,
+      "actual_seconds": 4.08671201814059,
+      "rms": 0.04561566188931465,
+      "peak": 0.87109375,
+      "seconds_elapsed": 0.34793782234191895,
+      "human_review": "pending",
+      "peak_vram_allocated_mib": 1700.376953125
+    },
+    "source_peak": 0.87109375,
+    "source_clipped_samples": 0,
+    "duration_seconds": 3.968395833333333,
+    "channels": 2,
+    "sample_rate": 48000,
+    "sample_peak_dbfs": -2.9999995180030155,
+    "rms_dbfs": -28.492486787175956,
+    "true_peak_4x_dbfs": -2.994471933023287,
+    "rms_windows_dbfs": [
+      -50.9243931111188,
+      -51.29279817166518,
+      -48.638447884705286,
+      -42.44307633298412,
+      -37.37277119462414,
+      -30.6067328837616,
+      -37.538224013159585,
+      -15.807931787961705,
+      -36.06647619565016,
+      -22.355123056593275,
+      -24.961506177275275,
+      -24.899603876806076,
+      -28.381087640243074,
+      -26.52033297929414,
+      -27.669654107025323,
+      -29.65783040733202,
+      -25.783415668400345,
+      -29.744665983596484,
+      -26.384160366197523,
+      -28.36025538622873,
+      -32.37074628822172,
+      -29.981159666366622,
+      -33.637140440495095,
+      -37.02565247119616,
+      -38.10706572071864,
+      -42.158782321756156,
+      -42.03416228151725,
+      -44.40898905234125,
+      -45.575810965454124,
+      -46.099523118317535,
+      -50.5053598079803,
+      -53.21617486210572,
+      -52.21076095668736,
+      -54.38977414103131,
+      -55.55990993926888,
+      -56.028951671809864,
+      -62.94648830266653,
+      -66.76293282565126,
+      -72.46880312518903,
+      -63.65428821130812
+    ],
+    "lowpass_hz": null,
+    "target_rms_dbfs": -23,
+    "crop_seconds": [
+      0.11832199546485261,
+      4.08671201814059
+    ],
+    "gain_db": -1.8025376439464216,
+    "loop_crossfade_seconds": 0,
+    "loop_points_frames": null,
+    "duration_review_required": false,
+    "loop_seam_review": "not_applicable"
+  },
+  "asset_design": {
+    "id": "E05a",
+    "category": "ambience",
+    "title": "远闷雷",
+    "target_seconds": 4.0,
+    "generation_seconds": 4,
+    "loop": false,
+    "direction": "远方柔闷低沉滚雷、自然衰减",
+    "english_brief": "A single distant rumble of thunder, soft deep rolling decay",
+    "candidates": [
+      {
+        "id": "E05a_full_a",
+        "seed": 202609306730,
+        "variation": "宽阔自然",
+        "prompt": "A single distant rumble of thunder, soft deep rolling decay. Natural wide-band maritime ambience with open spacious air and gentle dynamics, clean water and weather texture, no telephone or radio filtering. Open spacious natural texture with slow smooth variation. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+        "status": "planned"
+      },
+      {
+        "id": "E05a_full_b",
+        "seed": 202609306731,
+        "variation": "柔和背景",
+        "prompt": "A single distant rumble of thunder, soft deep rolling decay. Natural wide-band maritime ambience with open spacious air and gentle dynamics, clean water and weather texture, no telephone or radio filtering. Soft distant even texture, subtle movement, no sharp foreground sounds. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+        "status": "planned"
+      },
+      {
+        "id": "E05a_full_c",
+        "seed": 202609306732,
+        "variation": "细腻平稳",
+        "prompt": "A single distant rumble of thunder, soft deep rolling decay. Natural wide-band maritime ambience with open spacious air and gentle dynamics, clean water and weather texture, no telephone or radio filtering. Delicate full bandwidth detail and stable restrained energy. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+        "status": "planned"
+      }
+    ],
+    "review_target_rms_dbfs": -23
+  },
+  "source_batch_sha256": "4d1cd2f07e2abb4699a4cc6e3e71480b2237080da3a70b79baf18d1642ca8b4c",
+  "loudness": {
+    "sha256": "106b9b809b906f45b23039250eef4b2ad154cf5c92210d3ad3b42523f2e65787",
+    "ffmpeg_ebur128": "Integrated loudness:\n    I:         -24.7 LUFS\n    Threshold: -37.0 LUFS\n\n  Loudness range:\n    LRA:         3.0 LU\n    Threshold: -46.7 LUFS\n    LRA low:   -29.2 LUFS\n    LRA high:  -26.2 LUFS\n\n  True peak:\n    Peak:       -3.0 dBFS\n[out#0/null @ 0x84f020180] video:0KiB audio:744KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:03.96 bitrate=N/A speed= 192x elapsed=0:00:00.02"
+  }
+}

@@ -116,6 +116,8 @@ func run():
 	picked_source.skill_state.cooldown_remaining = 0.0
 	battle.operation_mode = battle.OperationMode.TARGETING_SKILL
 	battle.skill_target_type = "Enemy"
+	# Targeting now carries the selected casters from the multi-selection entry path.
+	battle.skill_target_unit_ids.assign([player])
 	var click := InputEventMouseButton.new()
 	click.button_index = MOUSE_BUTTON_LEFT
 	click.pressed = true

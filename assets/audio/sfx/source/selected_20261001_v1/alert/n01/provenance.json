@@ -1,0 +1,128 @@
+{
+  "selection": {
+    "id": "N01",
+    "title": "新接触",
+    "category": "alert",
+    "status": "adopt",
+    "feedback": {
+      "choice": "A",
+      "notes": "",
+      "reviewed_at": "2026-09-30T12:35:38.420Z"
+    },
+    "candidate_id": "N01_full_a",
+    "batch_id": "sfx_full_20260930_v3",
+    "path": "reports/audio/sfx_full_20260930_v3/alert/N01_full_a.wav",
+    "sha256": "4cd22012f8dc3efd6ae651cdd446684998c1a3ab8484512bd159c38d99900593"
+  },
+  "production": {
+    "id": "N01_full_a",
+    "asset_id": "N01",
+    "seed": 202609306500,
+    "prompt": "A new enemy contact notification, two distinct restrained mid high electronic pips. A short readable naval tactical interface signal, rounded midrange frequencies and a distinctive rhythmic identity. Restrained and comfortable, not a loud siren or a melody. Dry concise midrange tones with clearly separated pulses. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+    "status": "generated",
+    "human_review": "pending",
+    "raw": {
+      "path": "alert/N01_full_a_raw.wav",
+      "sha256": "ab81373f4c01ba28d4e514bcf457d06bbe2a0496e39071fbbca12cb354c0388a"
+    },
+    "preview": {
+      "path": "alert/N01_full_a.wav",
+      "sha256": "4cd22012f8dc3efd6ae651cdd446684998c1a3ab8484512bd159c38d99900593"
+    },
+    "source_generation": {
+      "id": "N01_full_a",
+      "prompt": "A new enemy contact notification, two distinct restrained mid high electronic pips. A short readable naval tactical interface signal, rounded midrange frequencies and a distinctive rhythmic identity. Restrained and comfortable, not a loud siren or a melody. Dry concise midrange tones with clearly separated pulses. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+      "seconds": 2,
+      "seed": 202609306500,
+      "status": "generated",
+      "before_gpu": {
+        "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+        "free_mib": 56153,
+        "utilization": 23
+      },
+      "model": "stable_audio_3_small_sfx",
+      "steps": 8,
+      "cfg": 1.0,
+      "sampler": "lcm",
+      "scheduler": "simple",
+      "sha256": "ab81373f4c01ba28d4e514bcf457d06bbe2a0496e39071fbbca12cb354c0388a",
+      "sample_rate": 44100,
+      "channels": 2,
+      "frames": 90112,
+      "actual_seconds": 2.043356009070295,
+      "rms": 0.024507183581590652,
+      "peak": 0.23046875,
+      "seconds_elapsed": 0.3520851135253906,
+      "human_review": "pending",
+      "peak_vram_allocated_mib": 1682.39892578125
+    },
+    "source_peak": 0.23046875,
+    "source_clipped_samples": 0,
+    "duration_seconds": 0.7650833333333333,
+    "channels": 2,
+    "sample_rate": 48000,
+    "sample_peak_dbfs": -7.80492583335925,
+    "rms_dbfs": -22.999999518003015,
+    "true_peak_4x_dbfs": -7.788555801876514,
+    "rms_windows_dbfs": [
+      -19.07499568630873,
+      -17.93328292218863,
+      -21.850205048779152,
+      -24.30995681091874,
+      -29.02599168510642,
+      -39.475895880709125,
+      -47.496574085973435,
+      -55.19741424532011
+    ],
+    "lowpass_hz": null,
+    "target_rms_dbfs": -23,
+    "crop_seconds": [
+      0.22231292517006804,
+      0.9873922902494331
+    ],
+    "gain_db": 4.940751535497658,
+    "loop_crossfade_seconds": 0,
+    "loop_points_frames": null,
+    "duration_review_required": false,
+    "loop_seam_review": "not_applicable"
+  },
+  "asset_design": {
+    "id": "N01",
+    "category": "alert",
+    "title": "新接触",
+    "target_seconds": 0.55,
+    "generation_seconds": 2,
+    "loop": false,
+    "direction": "清楚中高双点、克制注意声",
+    "english_brief": "A new enemy contact notification, two distinct restrained mid high electronic pips",
+    "candidates": [
+      {
+        "id": "N01_full_a",
+        "seed": 202609306500,
+        "variation": "清楚节奏",
+        "prompt": "A new enemy contact notification, two distinct restrained mid high electronic pips. A short readable naval tactical interface signal, rounded midrange frequencies and a distinctive rhythmic identity. Restrained and comfortable, not a loud siren or a melody. Dry concise midrange tones with clearly separated pulses. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+        "status": "planned"
+      },
+      {
+        "id": "N01_full_b",
+        "seed": 202609306501,
+        "variation": "温暖提示",
+        "prompt": "A new enemy contact notification, two distinct restrained mid high electronic pips. A short readable naval tactical interface signal, rounded midrange frequencies and a distinctive rhythmic identity. Restrained and comfortable, not a loud siren or a melody. Warm lower midrange tones preserving the requested rhythm. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+        "status": "planned"
+      },
+      {
+        "id": "N01_full_c",
+        "seed": 202609306502,
+        "variation": "柔亮提示",
+        "prompt": "A new enemy contact notification, two distinct restrained mid high electronic pips. A short readable naval tactical interface signal, rounded midrange frequencies and a distinctive rhythmic identity. Restrained and comfortable, not a loud siren or a melody. Gently brighter rounded tones with a restrained finish. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+        "status": "planned"
+      }
+    ],
+    "review_target_rms_dbfs": -23
+  },
+  "source_batch_sha256": "4d1cd2f07e2abb4699a4cc6e3e71480b2237080da3a70b79baf18d1642ca8b4c",
+  "loudness": {
+    "sha256": "4cd22012f8dc3efd6ae651cdd446684998c1a3ab8484512bd159c38d99900593",
+    "ffmpeg_ebur128": "Integrated loudness:\n    I:         -19.3 LUFS\n    Threshold: -29.3 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:       -7.8 dBFS\n[out#0/null @ 0x708828180] video:0KiB audio:143KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:00.76 bitrate=N/A speed= 160x elapsed=0:00:00.00"
+  }
+}

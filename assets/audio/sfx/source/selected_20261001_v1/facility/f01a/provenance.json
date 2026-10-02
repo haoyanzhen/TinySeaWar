@@ -1,0 +1,130 @@
+{
+  "selection": {
+    "id": "F01a",
+    "title": "占领开始",
+    "category": "facility",
+    "status": "adopt",
+    "feedback": {
+      "choice": "C",
+      "notes": "",
+      "reviewed_at": "2026-09-30T12:41:56.007Z"
+    },
+    "candidate_id": "F01a_full_c",
+    "batch_id": "sfx_full_20260930_v3",
+    "path": "reports/audio/sfx_full_20260930_v3/facility/F01a_full_c.wav",
+    "sha256": "3a454989488a2a050153b8adcfc6f9cc83511270ba125833ae1cf66663007974"
+  },
+  "production": {
+    "id": "F01a_full_c",
+    "asset_id": "F01a",
+    "seed": 202609306832,
+    "prompt": "A facility capture starting confirmation, a short mechanical click with an open electronic tail. A small naval support facility sound, precise light machinery, restrained tools and subtle tactical confirmation. Compact and readable. Softer rounded tool and mechanical detail. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+    "status": "generated",
+    "human_review": "pending",
+    "raw": {
+      "path": "facility/F01a_full_c_raw.wav",
+      "sha256": "e37121a04bb04172d13282fdace425346b35724e8246083a7768fd4d2fb0f698"
+    },
+    "preview": {
+      "path": "facility/F01a_full_c.wav",
+      "sha256": "3a454989488a2a050153b8adcfc6f9cc83511270ba125833ae1cf66663007974"
+    },
+    "source_generation": {
+      "id": "F01a_full_c",
+      "prompt": "A facility capture starting confirmation, a short mechanical click with an open electronic tail. A small naval support facility sound, precise light machinery, restrained tools and subtle tactical confirmation. Compact and readable. Softer rounded tool and mechanical detail. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+      "seconds": 2,
+      "seed": 202609306832,
+      "status": "generated",
+      "before_gpu": {
+        "uuid": "GPU-cd641bb8-b10b-1ca8-d651-9333561255ad",
+        "free_mib": 56153,
+        "utilization": 29
+      },
+      "model": "stable_audio_3_small_sfx",
+      "steps": 8,
+      "cfg": 1.0,
+      "sampler": "lcm",
+      "scheduler": "simple",
+      "sha256": "e37121a04bb04172d13282fdace425346b35724e8246083a7768fd4d2fb0f698",
+      "sample_rate": 44100,
+      "channels": 2,
+      "frames": 90112,
+      "actual_seconds": 2.043356009070295,
+      "rms": 0.005792579613626003,
+      "peak": 0.126953125,
+      "seconds_elapsed": 0.3306398391723633,
+      "human_review": "pending",
+      "peak_vram_allocated_mib": 1700.376953125
+    },
+    "source_peak": 0.126953125,
+    "source_clipped_samples": 0,
+    "duration_seconds": 0.9933958333333334,
+    "channels": 1,
+    "sample_rate": 48000,
+    "sample_peak_dbfs": -5.928474350105297,
+    "rms_dbfs": -29.5774977149919,
+    "true_peak_4x_dbfs": -5.914146044554624,
+    "rms_windows_dbfs": [
+      -29.611505463836135,
+      -22.861180884323296,
+      -27.271769841700085,
+      -37.73793319976443,
+      -32.34107885240548,
+      -31.54027602227992,
+      -31.996392956632036,
+      -33.84715840700274,
+      -35.7315988086484,
+      -39.42520327484837
+    ],
+    "lowpass_hz": null,
+    "target_rms_dbfs": -23,
+    "crop_seconds": [
+      0.0,
+      0.9933786848072562
+    ],
+    "gain_db": 12.041199826559248,
+    "loop_crossfade_seconds": 0,
+    "loop_points_frames": null,
+    "duration_review_required": true,
+    "loop_seam_review": "not_applicable"
+  },
+  "asset_design": {
+    "id": "F01a",
+    "category": "facility",
+    "title": "占领开始",
+    "target_seconds": 0.4,
+    "generation_seconds": 2,
+    "loop": false,
+    "direction": "短机械确认、未完成感",
+    "english_brief": "A facility capture starting confirmation, a short mechanical click with an open electronic tail",
+    "candidates": [
+      {
+        "id": "F01a_full_a",
+        "seed": 202609306830,
+        "variation": "精密机械",
+        "prompt": "A facility capture starting confirmation, a short mechanical click with an open electronic tail. A small naval support facility sound, precise light machinery, restrained tools and subtle tactical confirmation. Compact and readable. Clean dry fine mechanical detail. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+        "status": "planned"
+      },
+      {
+        "id": "F01a_full_b",
+        "seed": 202609306831,
+        "variation": "温暖金属",
+        "prompt": "A facility capture starting confirmation, a short mechanical click with an open electronic tail. A small naval support facility sound, precise light machinery, restrained tools and subtle tactical confirmation. Compact and readable. Warmer small metal and motor texture. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+        "status": "planned"
+      },
+      {
+        "id": "F01a_full_c",
+        "seed": 202609306832,
+        "variation": "轻柔设备",
+        "prompt": "A facility capture starting confirmation, a short mechanical click with an open electronic tail. A small naval support facility sound, precise light machinery, restrained tools and subtle tactical confirmation. Compact and readable. Softer rounded tool and mechanical detail. One compact isolated effect, complete decay then silence, no repetition. No speech, no vocals, no music.",
+        "status": "planned"
+      }
+    ],
+    "review_target_rms_dbfs": -23
+  },
+  "source_batch_sha256": "4d1cd2f07e2abb4699a4cc6e3e71480b2237080da3a70b79baf18d1642ca8b4c",
+  "loudness": {
+    "sha256": "3a454989488a2a050153b8adcfc6f9cc83511270ba125833ae1cf66663007974",
+    "ffmpeg_ebur128": "Integrated loudness:\n    I:         -27.7 LUFS\n    Threshold: -40.7 LUFS\n\n  Loudness range:\n    LRA:         0.0 LU\n    Threshold:   0.0 LUFS\n    LRA low:     0.0 LUFS\n    LRA high:    0.0 LUFS\n\n  True peak:\n    Peak:       -5.9 dBFS\n[out#0/null @ 0x7c0c08900] video:0KiB audio:93KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown\nsize=N/A time=00:00:00.99 bitrate=N/A speed= 264x elapsed=0:00:00.00"
+  }
+}

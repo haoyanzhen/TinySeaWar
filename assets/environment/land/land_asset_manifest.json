@@ -1,11 +1,11 @@
 {
-  "generated_by": "imagegen built-in tool + chroma-key postprocess + reviewed alpha-mask finalization",
+  "generated_by": "built-in imagegen + canvas registration",
   "asset_family": "TinySeaWar land and island layer master assets",
   "runtime_target_size": [
     1024,
     1024
   ],
-  "background_policy": "runtime textures are transparent PNG; reviewed source masters and reference masks are retained, while raw and keyed intermediates are discarded",
+  "background_policy": "transparent PNG; raw generation and original alpha retained",
   "collision_policy": "land_collision_manifest.json is candidate-only; reviewed gameplay geometry is authored in data/terrain/terrain_templates.json and baked into terrain_definitions.json",
   "reviewed_terrain_templates": "res://data/terrain/terrain_templates.json",
   "runtime_harbor_texture": "res://assets/environment/land/land_harbor_mouth_runtime.png",
@@ -41,12 +41,13 @@
         4.86,
         3.0375
       ],
-      "generation_method": "gpt-image-2 edit reference + reviewed alpha mask",
+      "generation_method": "built-in imagegen; transparent alpha retained; canvas registration",
       "runtime_status_16x9": "runtime_asset_ready",
       "runtime_display_scale": [
         2.6,
         3.2
-      ]
+      ],
+      "revision_16x9": "open_coasts_v1"
     },
     {
       "id": "land_scattered_islands",
@@ -79,12 +80,13 @@
         4.86,
         3.0375
       ],
-      "generation_method": "gpt-image-2 edit reference + reviewed alpha mask",
+      "generation_method": "built-in imagegen; transparent alpha retained; canvas registration",
       "runtime_status_16x9": "runtime_asset_ready",
       "runtime_display_scale": [
         2.6,
         3.2
-      ]
+      ],
+      "revision_16x9": "open_coasts_v1"
     },
     {
       "id": "land_ring_lagoon",
@@ -117,14 +119,9 @@
         4.86,
         3.0375
       ],
-      "generation_method": "reviewed source edit + deterministic irregular alpha mask; built-in gpt-image-2 candidate rejected for composition drift",
+      "generation_method": "built-in imagegen; transparent alpha retained; canvas registration",
       "runtime_status_16x9": "runtime_asset_ready",
-      "revision_16x9": "ring_passages_v3",
-      "reviewed_primary_gap_world": 728,
-      "reviewed_entrance_count": 6,
-      "reviewed_secondary_gap_world": 520,
-      "primary_navigation_channel_world_width": 624,
-      "secondary_navigation_channel_world_width": 416,
+      "revision_16x9": "open_coasts_v1",
       "runtime_display_scale": [
         2.6,
         3.2
@@ -161,12 +158,13 @@
         4.86,
         3.0375
       ],
-      "generation_method": "gpt-image-2 edit reference + reviewed alpha mask",
+      "generation_method": "built-in imagegen; transparent alpha retained; canvas registration",
       "runtime_status_16x9": "runtime_asset_ready",
       "runtime_display_scale": [
         2.6,
         3.2
-      ]
+      ],
+      "revision_16x9": "open_coasts_v1"
     },
     {
       "id": "land_central_sandbar",
@@ -199,12 +197,13 @@
         4.86,
         3.0375
       ],
-      "generation_method": "gpt-image-2 edit reference + reviewed alpha mask",
+      "generation_method": "built-in imagegen; transparent alpha retained; canvas registration",
       "runtime_status_16x9": "runtime_asset_ready",
       "runtime_display_scale": [
         2.6,
         3.2
-      ]
+      ],
+      "revision_16x9": "open_coasts_v1"
     },
     {
       "id": "land_dual_channel_reef_line",
@@ -237,12 +236,13 @@
         4.86,
         3.0375
       ],
-      "generation_method": "gpt-image-2 edit reference + reviewed alpha mask",
+      "generation_method": "built-in imagegen; transparent alpha retained; canvas registration",
       "runtime_status_16x9": "runtime_asset_ready",
       "runtime_display_scale": [
         2.6,
         3.2
-      ]
+      ],
+      "revision_16x9": "open_coasts_v1"
     },
     {
       "id": "land_harbor_mouth",
@@ -275,12 +275,13 @@
         4.86,
         3.0375
       ],
-      "generation_method": "gpt-image-2 edit reference + reviewed alpha mask",
+      "generation_method": "built-in imagegen; transparent alpha retained; canvas registration",
       "runtime_status_16x9": "runtime_asset_ready",
       "runtime_display_scale": [
         2.6,
         3.2
-      ]
+      ],
+      "revision_16x9": "open_coasts_v1"
     },
     {
       "id": "land_broken_atoll",
@@ -313,12 +314,13 @@
         4.86,
         3.0375
       ],
-      "generation_method": "gpt-image-2 edit reference + reviewed alpha mask",
+      "generation_method": "built-in imagegen; transparent alpha retained; canvas registration",
       "runtime_status_16x9": "runtime_asset_ready",
       "runtime_display_scale": [
         2.6,
         3.2
-      ]
+      ],
+      "revision_16x9": "open_coasts_v1"
     },
     {
       "id": "land_offset_large_island",
@@ -351,12 +353,13 @@
         4.86,
         3.0375
       ],
-      "generation_method": "gpt-image-2 edit reference + reviewed alpha mask",
+      "generation_method": "built-in imagegen; transparent alpha retained; canvas registration",
       "runtime_status_16x9": "runtime_asset_ready",
       "runtime_display_scale": [
         2.6,
         3.2
-      ]
+      ],
+      "revision_16x9": "open_coasts_v1"
     },
     {
       "id": "land_long_archipelago",
@@ -389,12 +392,13 @@
         4.86,
         3.0375
       ],
-      "generation_method": "gpt-image-2 edit reference + reviewed alpha mask",
+      "generation_method": "built-in imagegen; transparent alpha retained; canvas registration",
       "runtime_status_16x9": "runtime_asset_ready",
       "runtime_display_scale": [
         2.6,
         3.2
-      ]
+      ],
+      "revision_16x9": "open_coasts_v1"
     }
   ],
   "source_master_size_16x9": [
@@ -417,7 +421,7 @@
     4.86,
     3.0375
   ],
-  "generation_manifest_16x9": "res://assets/environment/land/source/coastal_16x9_generation_manifest.json",
+  "generation_manifest_16x9": "res://assets/environment/land/source/open_coasts_v1/manifest.json",
   "runtime_display_scale_16x9": [
     2.6,
     3.2

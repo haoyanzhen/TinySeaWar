@@ -89,7 +89,7 @@ assets/environment/weather/zones/environment_zone_asset_manifest.json
 7. 在运行时场景验证缩放、层级、混合模式、边缘、Shader 采样和性能降级。
 8. 记录自动检查与人工 QA 结论；失败资产不得进入正式 manifest。
 
-普通陆地透明化和 manifest 生成优先复用 `tools/art_pipeline/process_land_art.py`。十张 16:9 大型海岸母版、运行时贴图、遮罩一致性与接触表由 `tools/art_pipeline/process_coastal_map_art.py` 处理；生成来源与逐图路径记录在 `assets/environment/land/source/coastal_16x9_generation_manifest.json`。新增工具或路径时更新 `docs/34_implementation_map.md`，不要在多个设计文档复制命令清单。
+普通陆地透明化和 manifest 生成优先复用 `tools/art_pipeline/process_land_art.py`。新版开放海岸由 `tools/art_pipeline/export_open_coastal_art.py` 导出母版、运行时贴图与接触表；原生透明源图和来源记录在 `assets/environment/land/source/open_coasts_v1/`。`process_coastal_map_art.py` 与原 `coastal_16x9_generation_manifest.json` 只保留旧六入口/密集岛群生产历史，不再作为新版重建入口。新增工具或路径时更新 `docs/34_implementation_map.md`，不要在多个设计文档复制命令清单。
 
 ## 5. 自动检查
 
@@ -130,3 +130,13 @@ assets/environment/weather/zones/environment_zone_asset_manifest.json
 - 典型战斗场景完成运行时缩放、层级和混合检查。
 
 资产完成不等于关卡完成。地图规则数据、出生、导航、设施配置、关卡目标、动态平衡和当前接入状态只由各自设计与 `docs/00_project_status.md` 判断。
+
+## 新版开放海岸重制（2026-10-02）
+
+十张新版的独立作者几何保存在 `data/terrain/authoring/coastal_open_layouts.json`。`build_coastal_maps_16x9.py` 必须从此读取，不能再次由旧版模板复制密集岛群或内部浅水。十图布局见 `15` 第3.3节、视觉表达见 `43` 第7节。旧版资产和教学/S关地形保留。
+
+重制次序为作者岸线与贴岸浅水 → 透明海岸美术 → 正式地形 → 导航与合法出生槽 → 碰撞场、小地图 → M/L派生实例。重制派生实例时保留 `challenge_balance_selection.json` 的阵容与关卡选择，重新记录几何变动导致的部署投影；旧胜率不能作为新地图平衡结论。
+
+美术使用内置 imagegen，以作者轮廓为构图、现有低饱和岩岸为风格参考；源图保留生成记录。发布前核对透明背景、岛体数量、位置、轮廓、外海空白及规则叠加，不以生成成功代替验收。局部可占位、内外连通与实航分别保存证据，禁止仅报告面积比例。
+
+生成轮廓只用于一次性候选：经十图叠加审查、岛数/入口/合法性校验后，固定为作者JSON，再独立烘焙；运行时从不从alpha推导碰撞。`open_coasts_v1/layout_reference.json`保留最初构图及美术登记尺寸，避免重复导出随规则修边发生缩放漂移。

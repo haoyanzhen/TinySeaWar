@@ -27,4 +27,4 @@
 - 建立正式 `export_presets.cfg` 时，应排除 `addons/terrain_authoring/**`、作者工作场景、`scripts/tests/**` 和 QA 中间产物，或使用仅导出运行时依赖资源的策略。
 - 每次发布前应检查导出包，确认不存在本插件、作者快照和测试入口。
 
-当前仓库尚未建立正式导出预设，因此发布排除规则仍需在创建目标平台预设时落地。
+Windows正式导出预设已按运行资源白名单排除此插件、作者数据与测试；包内检查入口见 `tools/release/inspect_windows_pack.py`，当前交付状态见 `docs/00_project_status.md`。

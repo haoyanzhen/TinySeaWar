@@ -121,7 +121,7 @@ warning_profile?, fall_profile?, hit_profile?, landing_profile?
 vfx_role_mappings?
 ```
 
-角色、武器或武器组、投射物表现和 VFX Profile 引用必须存在；`weapon_group_id` 与 `weapon_id` 至少有一个。公共表现优先按武器类别复用；角色覆盖只声明差异。音频尚无正式设计和运行时资产，不在本契约预留字段。
+角色、武器或武器组、投射物表现和 VFX Profile 引用必须存在；`weapon_group_id` 与 `weapon_id` 至少有一个。公共表现优先按武器类别复用；角色覆盖只声明差异。音频采用独立 SoundManifest，不在武器表现配置中复制声音路径。
 
 新航空链按具体 `weapon_id` 优先查询，缺省才按 `weapon_group_id` 查询；同组多种载荷必须有具体武器覆盖，不能以次级贴图字段推断实际武器。机体映射统一指向公共机型，旧角色飞机和回收字段仅保留兼容。`launch_bind=unit_center` 使用单位中心回退；逐波表现生成位置与权威时间线仍服从 Application 投影，不从绑定点重算航程。
 
@@ -162,3 +162,29 @@ GameFlow 的本机 ConfigFile `menu` 节保存 `cover_id`、`reduce_motion`、`a
 `PresentationSettings.skill_cutin` 仅供表现层使用：`enter_seconds`、`hold_seconds`、`exit_seconds`、`compact_seconds` 为正有限秒数；`width_ratio`、`height_ratio` 为海域比例，上限分别 0.25 / 0.45；`compact_limit` 为 1–3 的整数。正式默认值由 `data/settings/presentation_settings.json` 维护；缺失或非法数值回退默认，上限在控件边界限制。播放行为真源见 `33`。
 
 GameFlow 本机 ConfigFile 新增 `battle.skill_cutin_mode = full | simple | off`；旧配置缺字段或未知值回退 `full`，保存保留 `menu` 与 `display` 等其他节。写入失败保留本次会话选择并向 UI 返回失败，不进入进度存档、Domain 或模拟清单。
+
+
+## 音效运行时 manifest 与本机设置
+
+`data/audio/sfx_manifest.json` 为 `schema_version: 1` 的独立表现清单，不进入 ConfigRegistry 战斗 Definition、BattleState 或战斗随机源。
+
+- `assets: Dictionary<工单素材ID, SoundAsset>`：`path` 只能位于 `res://assets/audio/sfx/runtime/`；`bus` 为 Combat/Alerts/UI/Ambience；`loop` 为布尔值；`gain_db`、`priority`、`duration` 为混音和播放元数据；`channels`、`crossfade_frames`、`source_sha256`、`sha256` 保存派生验收信息。资产ID复用采用清单中的稳定ID，不从文件名猜语义。
+- `weapons` 逐武器ID记录 `fire/mount_type/caliber_mm/aviation_payload`。口径仅用于离线选择声音；胡德未标定口径的“护航副炮”显式使用轻炮族，不虚构武器规则口径。Aviation 的 fire 登记为 A01，但运行时出击由波次独占，旧 WeaponFired 不播放。
+- `ships` 逐角色ID记录装备引用和技能ID，`skills` 逐技能ID记录 `sound: null` 与取消原因；实际技能武器事实正常映射。
+- `requirements` 和 `cancelled_asset_ids` 是采用范围快照；不因有共享素材恢复已取消触发。
+- `mix` 拥有短声部/预留提示声部、环境/飞机循环上限、普通/11v11聚合窗和可听距离、重声部上限、区域受击聚合格、循环淡化、背景压低与恢复，以及低氧/旗舰危急/时间提示的表现阈值。不得改变允许下潜、伤害、侦查或胜负规则。当前精确初值见JSON，人工混音验收后可调整。
+
+本机 `tiny_sea_war_settings.cfg` 的 `audio` 节保存 `Master/Music/Combat/Alerts/UI/Ambience` 的0–1线性音量、`muted`、`music_muted` 和 `frequent_ui`；`music_muted` 只静音 Music 总线。菜单提供总音量、音乐与四类音效音量；战术暂停提供总音量/静音。频繁操作确认可关闭，命令拒绝仍保留。保存保留其他节，写入失败保持会话选择并显示失败。缺字段使用默认；坏资源静默并诊断，不阻塞出击。Headless默认只调度，不自动加载音频或创建播放节点。
+
+
+## 标题音乐运行时清单
+
+`data/audio/music_manifest.json` 是独立 Presentation 清单，`schema_version: 1`，不进入战斗注册表、状态或随机源。
+
+- `main_theme_id` 引用冷启动主题；缺失时从可用曲目中选首曲。`scene_fade_seconds` 为 `(0,10]` 有限秒数，只用于场景进入/退出。
+- `tracks[]` 的 `id/title/path/duration` 为稳定ID、显示名、`res://assets/audio/music/runtime/*.ogg` 路径和实测正时长。ID唯一、路径不允许上级跳转；失效项逐项跳过，耗尽时保持安静。
+- `loop_start/loop_end` 定义合法循环范围，当前为完整已采用曲目；`resume_points[]` 为递增有限乐句秒数，均小于实测曲目时长。尚无人工验收点时保持空数组，返回菜单按 `50` 进入下一首。
+- `source_sha256/sha256/gain_db/integrated_lufs/true_peak_dbfs/loudness_range_lu` 记录源到编码版对应关系、恒定响度调整和编码后测量。`human_loop_status/human_mix_status` 记录人工验收，不能由自动检测改为通过。
+- 加载时校验类型、路径、时长、循环与恢复点；真实设备加载后还检查资源类型和引擎时长。Ogg自身关闭循环；自动轮播在完整曲尾、单曲循环在循环终点、手动下一首在点击时硬切。切歌先立即停止所有旧声部，再以完整曲目增益播放新流，保持标题暂停状态；同一时刻最多播放一路。旧 `crossfade_seconds` 元数据退出正式清单及构建工具，加载不再消费。
+
+会话内保存队列、标题暂停和离开位置，不跨重启保存。播放模式另存于本机 `tiny_sea_war_settings.cfg` 的 `music.playback_mode = sequence | shuffle | single`；`music.rotation_mode = sequence | shuffle` 保存解除单曲循环时的返回方式。缺字段或非法类型/枚举回退shuffle，保存保留audio/menu/display等其他节。模式立即生效，写入失败保留会话选择并向UI显示失败；冷启动仍先播主主题，使用保存的播放模式。标题暂停只冻结标题播放器；Music音量及音乐静音经SoundManager共享本机设置即时生效。无图形进程不加载音频流、不创建音乐播放器、不自动推进音乐时钟。

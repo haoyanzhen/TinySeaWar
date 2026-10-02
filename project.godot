@@ -18,6 +18,8 @@ config/features=PackedStringArray("4.6")
 
 DataRegistry="*res://scripts/infrastructure/bootstrap/data_registry.gd"
 GameFlow="*res://scripts/application/game_flow.gd"
+SoundManager="*res://scripts/presentation/audio/sound_manager.gd"
+MusicManager="*res://scripts/presentation/audio/music_manager.gd"
 
 [display]
 
@@ -33,3 +35,9 @@ enabled=PackedStringArray("res://addons/terrain_authoring/plugin.cfg")
 
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+
+[importer_defaults]
+
+wav={
+"compress/mode": 0
+}

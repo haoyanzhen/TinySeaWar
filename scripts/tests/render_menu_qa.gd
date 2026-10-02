@@ -8,10 +8,14 @@ func _run() -> void:
 	var output := "/tmp/tsw_menu_home.png"
 	var page := "home"
 	var chapter := 0
+	var level_id := ""
+	var scroll_bottom := false
 	for arg in OS.get_cmdline_user_args():
 		if arg.begins_with("--page="): page = arg.trim_prefix("--page=")
 		elif arg.begins_with("--output="): output = arg.trim_prefix("--output=")
 		elif arg.begins_with("--chapter="): chapter = int(arg.trim_prefix("--chapter="))
+		elif arg.begins_with("--level="): level_id = arg.trim_prefix("--level=")
+		elif arg == "--scroll-bottom": scroll_bottom = true
 		elif arg == "--1440": target = Vector2i(2560, 1440)
 	var viewport := SubViewport.new()
 	viewport.size = target
@@ -25,7 +29,11 @@ func _run() -> void:
 	if page == "gallery": menu._show_home(); menu._show_gallery()
 	elif page == "view": menu._show_home(); menu.set_viewing(true)
 	else: menu.call("_show_" + page)
+	if not level_id.is_empty() and page in ["tutorial", "challenge"]:
+		menu._show_level_detail(level_id, "", true)
 	await create_timer(0.7).timeout
+	if scroll_bottom:
+		menu.detail_column.get_node("LevelDetailScroll").scroll_vertical = 10000
 	await process_frame
 	var result := viewport.get_texture().get_image().save_png(output)
 	print("MENU_QA %s %s" % [page, result])

@@ -59,6 +59,11 @@ var page_tween: Tween
 var cover_tween: Tween
 var settings_status: Label
 var launching := false
+var music_label: Label
+var music_pause: Button
+var music_next: Button
+var music_repeat: Button
+var music_mode_selector: OptionButton
 
 
 func _ready() -> void:
@@ -69,6 +74,9 @@ func _ready() -> void:
 	for index in range(covers.size()):
 		if str(covers[index].get("id", "")) == preferred: cover_index = index
 	_build_shell()
+	MusicManager.playback_changed.connect(_update_music_controls)
+	MusicManager.enter_title()
+	_update_music_controls()
 	GameFlow.progress_save_status_changed.connect(_on_progress_save_status_changed)
 	_on_progress_save_status_changed(GameFlow.progress_save_state())
 	_switch_cover(cover_index, false)
@@ -98,6 +106,7 @@ func _button(parent: Node, text: String, callback: Callable, minimum := Vector2(
 	var button := Button.new()
 	button.text = text
 	button.custom_minimum_size = minimum
+	button.pressed.connect(func(): SoundManager.ui("U02" if text in ["返回", "关闭", "取消"] else "U01"))
 	button.pressed.connect(callback)
 	if primary:
 		Kit.primary(button)
@@ -210,9 +219,23 @@ func _build_shell() -> void:
 	_button(footer, "观赏", func(): set_viewing(true), Vector2(100, 54))
 	for child in footer.get_children():
 		if child is Button: Kit.cover_button(child)
-	var music := Kit.label("♪  音乐曲库筹备中", 18, Color("#d5e8eb"))
-	music.tooltip_text = "正式音乐尚未接入；切换看板不影响未来的标题音乐队列。"
-	_box(music, Rect2(880, 1002, 550, 32), chrome)
+	var music_row := HBoxContainer.new()
+	music_row.add_theme_constant_override("separation", 10)
+	_box(music_row, Rect2(940, 992, 700, 54), chrome)
+	music_label = _label(music_row, "", 19, Color.WHITE)
+	music_label.custom_minimum_size.x = 220
+	music_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	music_pause = _button(music_row, "暂停", func(): MusicManager.toggle_pause(), Vector2(90, 54))
+	music_pause.name = "MusicPause"
+	music_next = _button(music_row, "下一首", func(): MusicManager.next_track(), Vector2(100, 54))
+	music_next.name = "MusicNext"
+	music_repeat = _button(music_row, "单曲循环", func(): _save_music_mode(MusicManager.rotation_mode if MusicManager.repeat_one else "single"), Vector2(140, 54))
+	music_repeat.name = "MusicRepeat"
+	for button in [music_pause, music_next, music_repeat]: Kit.cover_button(button)
+	var quit_button := _button(chrome, "退出游戏", func(): get_tree().quit(), Vector2(156, 54))
+	quit_button.name = "QuitGame"
+	quit_button.position = Vector2(1700, 992)
+	Kit.cover_button(quit_button)
 	progress_failure_banner = HBoxContainer.new()
 	progress_failure_banner.add_theme_constant_override("separation", 16)
 	_box(progress_failure_banner, Rect2(64, 118, 1792, 44), chrome)
@@ -286,6 +309,7 @@ func _motion_seconds(value: float) -> float:
 
 func set_viewing(value: bool) -> void:
 	if value and progress_failure_banner.visible: return
+	if viewing != value: SoundManager.ui("U02" if not value else "U01")
 	viewing = value
 	idle_seconds = 0.0
 	if gallery != null: _close_gallery()
@@ -312,6 +336,7 @@ func _switch_cover(index: int, persist := true) -> void:
 	cover_tween = create_tween()
 	cover_tween.tween_property(cover_front, "modulate:a", 1.0, _motion_seconds(0.55))
 	cover_label.text = "%s · %s" % [covers[cover_index].get("display_name", ""), covers[cover_index].get("title", "")]
+	if persist: SoundManager.ui("U01")
 	if persist and not GameFlow.save_menu_preference("cover_id", covers[cover_index]["id"]):
 		cover_label.text += "（偏好保存失败）"
 
@@ -358,6 +383,7 @@ func _begin_page(next_page: String, title: String, subtitle: String) -> void:
 	nav_row.size.x = 440 if next_page == "home" else 1156
 	idle_seconds = 0.0
 	set_viewing(false)
+	music_mode_selector = null
 	_clear(content)
 	ship_buttons.clear()
 	level_buttons.clear()
@@ -452,16 +478,19 @@ func _show_level_detail(id: String, summary: String, unlocked: bool) -> void:
 		_label(detail_column, "新的航程，正在准备", 32)
 		_label(detail_column, "本关内容正在制作，暂时无法出击。三个板块独立推进，无需先通关其他板块。", 21, Kit.MUTED)
 		return
-	_label(detail_column, str(level.get("display_name", "作战任务")), 30)
+	# Keep departure accessible while large fleets and long objectives scroll together.
+	var detail_scroll := _scroll(detail_column)
+	detail_scroll.name = "LevelDetailScroll"
+	var body := _column(detail_scroll, 14)
+	_label(body, str(level.get("display_name", "作战任务")), 30)
 	var objective: Dictionary = DataRegistry.registry.get_definition("objectives", str(level.get("objective_set_id", "")))
 	var description := summary
 	if description.is_empty(): description = str(objective.get("description", objective.get("title", "完成关卡指定任务")))
-	_label(detail_column, description, 21, Kit.MUTED)
-	var fleets := _row(detail_column, 30)
+	_label(body, description, 21, Kit.MUTED)
+	var fleets := _row(body, 18)
 	_fleet_preview(fleets, "出击舰队", level.get("player_fleet", []))
-	_fleet_preview(fleets, "敌方舰队", level.get("enemy_fleet", []))
-	var objective_scroll := _scroll(detail_column)
-	var instructions := _column(objective_scroll, 10)
+	_fleet_preview(fleets, "敌方舰队", level.get("enemy_fleet", []), false)
+	var instructions := _column(body, 10)
 	_label(instructions, "作战目标", 22)
 	var facts: Array[String] = []
 	for action in objective.get("required_actions", []):
@@ -487,31 +516,88 @@ func _show_level_detail(id: String, summary: String, unlocked: bool) -> void:
 	for ship in DataRegistry.registry.all("ships"):
 		if str(GameFlow.ship_acquisition(str(ship["id"])).get("source_level_id", "")) == id:
 			rewards.append(str(ship.get("display_name", "")))
-	if not rewards.is_empty(): _label(detail_column, "首胜可获得：" + "、".join(rewards), 18, Kit.TEAL)
+	if not rewards.is_empty(): _label(body, "首胜可获得：" + "、".join(rewards), 18, Kit.TEAL)
 	var start := _button(detail_column, "准备好了 · 出击" if unlocked else "完成本板块前一关后开放", _start_level.bind(id), Vector2(0, 58), true)
 	start.custom_minimum_size.x = 380
 	start.size_flags_horizontal = Control.SIZE_SHRINK_END
 	start.disabled = not unlocked
 
 
-func _fleet_preview(parent: Node, title: String, fleet: Array) -> void:
+func _fleet_preview(parent: Node, title: String, fleet: Array, friendly := true) -> void:
 	var column := _column(parent, 8)
+	column.custom_minimum_size.x = 606
 	_label(column, "%s  /  %d 艘" % [title, fleet.size()], 18, Kit.MUTED)
 	var row := GridContainer.new()
 	row.columns = mini(6, maxi(1, fleet.size()))
-	row.add_theme_constant_override("h_separation", 10)
-	row.add_theme_constant_override("v_separation", 8)
+	row.add_theme_constant_override("h_separation", 6)
+	row.add_theme_constant_override("v_separation", 12)
 	column.add_child(row)
 	for member in fleet:
 		var id := str(member.get("ship_id", ""))
 		var ship: Dictionary = DataRegistry.registry.get_definition("ships", id)
+		var ship_name := str(ship.get("display_name", "未知舰娘"))
+		var ship_class := UiText.ship_class_name(str(ship.get("ship_class", "")))
+		var card := _column(row, 4)
+		card.custom_minimum_size.x = 96
+		card.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+		var slot := Control.new()
+		slot.custom_minimum_size = Vector2(96, 96)
+		slot.mouse_filter = Control.MOUSE_FILTER_PASS
+		slot.tooltip_text = "%s · %s%s" % [ship_name, ship_class, " · 旗舰" if member.get("is_flagship", false) else ""]
+		slot.set_meta("portrait_slot", true)
+		card.add_child(slot)
+		var frame := TextureRect.new()
+		frame.name = "PortraitFrame"
+		frame.texture = _texture(DataRegistry.assets.ui_asset_path("ui_frame_portrait_player" if friendly else "ui_frame_portrait_enemy"))
+		frame.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		frame.stretch_mode = TextureRect.STRETCH_SCALE
+		frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		slot.add_child(frame)
+		frame.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		if frame.texture == null:
+			var fallback := Panel.new()
+			var style := Kit.panel(Kit.PAPER, 7, 0)
+			style.border_color = Color("#2fbae6") if friendly else Color("#ff7180")
+			style.shadow_size = 0
+			fallback.add_theme_stylebox_override("panel", style)
+			fallback.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			slot.add_child(fallback)
+			fallback.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 		var image := TextureRect.new()
+		image.name = "PortraitImage"
 		image.texture = _portrait(id)
 		image.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		image.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-		image.custom_minimum_size = Vector2(74, 78)
-		image.tooltip_text = str(ship.get("display_name", "")) + (" · 旗舰" if member.get("is_flagship", false) else "")
-		row.add_child(image)
+		image.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		slot.add_child(image)
+		image.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		image.offset_left = 5
+		image.offset_top = 5
+		image.offset_right = -5
+		image.offset_bottom = -5
+		if member.get("is_flagship", false):
+			var badge := PanelContainer.new()
+			badge.name = "FlagshipBadge"
+			var badge_style := Kit.panel(Kit.GOLD, 5, 3)
+			badge_style.shadow_size = 0
+			badge.add_theme_stylebox_override("panel", badge_style)
+			badge.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			slot.add_child(badge)
+			badge.position = Vector2(3, 3)
+			badge.size = Vector2(38, 24)
+			var badge_label := _label(badge, "旗舰", 14)
+			badge_label.autowrap_mode = TextServer.AUTOWRAP_OFF
+			badge_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		var name_label := _label(card, ship_name, 16 if ship_name.length() > 5 else 18)
+		name_label.name = "ShipName"
+		name_label.custom_minimum_size.y = 26
+		name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		name_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		name_label.tooltip_text = slot.tooltip_text
+		var class_label := _label(card, ship_class, 17, Kit.TEAL if friendly else Color("#a7424e"))
+		class_label.name = "ShipClass"
+		class_label.autowrap_mode = TextServer.AUTOWRAP_OFF
+		class_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 
 
 func _show_custom() -> void:
@@ -645,10 +731,14 @@ func _toggle_ship(pressed: bool, id: String) -> void:
 	if pressed and id not in selected_ship_ids:
 		if selected_ship_ids.size() >= int(CUSTOM_SIZES[custom_size_index]["count"]):
 			ship_buttons[id].set_pressed_no_signal(false)
+			SoundManager.ui("U05a")
 			custom_status.text = "舰队已满，请先移除一位舰娘。"
 			return
 		selected_ship_ids.append(id)
-	elif not pressed: selected_ship_ids.erase(id)
+		SoundManager.ui("U01")
+	elif not pressed:
+		selected_ship_ids.erase(id)
+		SoundManager.ui("U02")
 	_refresh_fleet_state()
 
 
@@ -688,9 +778,11 @@ func _start_level(id: String) -> void:
 	launching = true
 	GameFlow.menu_return_page = page
 	GameFlow.select_level(id)
+	MusicManager.leave_title()
 	var error := get_tree().change_scene_to_file(BATTLE_SCENE)
 	if error != OK:
 		launching = false
+		MusicManager.enter_title()
 		_label(content, "暂时无法进入战场，请重新尝试。", 22, Color("#a7424e"))
 
 
@@ -740,12 +832,25 @@ func _show_settings() -> void:
 		toggle.toggled.connect(func(enabled): settings_status.text = "偏好已保存" if GameFlow.save_menu_preference(entry[0], enabled) else "偏好保存失败，请重试。")
 		column.add_child(toggle)
 		_label(column, entry[2], 18, Kit.MUTED)
+	var music_options := _column(column, 10)
+	_label(music_options, "音乐播放", 24)
+	music_mode_selector = OptionButton.new()
+	music_mode_selector.name = "MusicPlaybackMode"
+	music_mode_selector.custom_minimum_size.y = 52
+	for entry in [["顺序轮播", "sequence"], ["随机轮播", "shuffle"], ["单曲循环", "single"]]:
+		music_mode_selector.add_item(entry[0])
+		music_mode_selector.set_item_metadata(music_mode_selector.item_count - 1, entry[1])
+	music_mode_selector.item_selected.connect(func(index): _save_music_mode(str(music_mode_selector.get_item_metadata(index))))
+	music_options.add_child(music_mode_selector)
+	_label(music_options, "立即生效，下次启动保留选择。", 18, Kit.MUTED)
 	settings_status = _label(column, "", 18, Kit.TEAL)
-	var companion := _column(row, 20)
-	_label(companion, "看板与音乐", 26)
-	_label(companion, "七幅相伴的风景\n海港 · 日常 · 出游", 27, Kit.TEAL)
-	_label(companion, "底部“看板”可选择角色与场景，左右箭头快速切换。观赏时按 Esc 或点击返回菜单。", 21, Kit.MUTED)
-	_label(companion, "音乐曲库筹备中。正式曲目接入后提供播放、暂停、下一首与单曲循环。", 21, Kit.MUTED)
+	var companion := _column(row, 12)
+	_build_audio_settings(companion)
+	_label(companion, "看板与音乐", 24)
+	_label(companion, "七幅相伴的风景 · 海港／日常／出游", 20, Kit.TEAL)
+	_label(companion, "底部“看板”可选择场景；观赏时按 Esc 返回。", 18, Kit.MUTED)
+	_label(companion, "左侧可选播放模式；底部可暂停、切歌或单曲循环。", 18, Kit.MUTED)
+	_update_music_controls()
 
 
 func _on_progress_save_status_changed(state: Dictionary) -> void:
@@ -774,3 +879,48 @@ func _refresh_environment_schedule() -> void:
 	for stage in definition.get("stages", []):
 		segments.append("%d秒 %s" % [int(stage.start_seconds), preload("res://scripts/presentation/ui_text.gd").palette_name(str(stage.ocean_palette))])
 	custom_environment_schedule.text = " → ".join(segments) + ("；240秒循环" if definition.has("loop_seconds") else "；结束后保持晴朗") + "。切换前10秒预告。"
+
+
+func _build_audio_settings(parent: Node) -> void:
+	_label(parent, "声音", 26)
+	for entry in [["Master", "总音量"], ["Music", "音乐"], ["Combat", "战斗音效"], ["Alerts", "战术提示"], ["UI", "操作音效"], ["Ambience", "海面环境"]]:
+		var line := _row(parent, 12)
+		_label(line, entry[1], 18).custom_minimum_size.x = 110
+		var slider := HSlider.new()
+		slider.name = "Audio" + str(entry[0])
+		slider.min_value = 0; slider.max_value = 100; slider.step = 1
+		slider.value = float(SoundManager.preferences[entry[0]]) * 100
+		slider.custom_minimum_size = Vector2(250, 26)
+		line.add_child(slider)
+		var key: String = entry[0]
+		slider.value_changed.connect(func(value):
+			settings_status.text = "音量已保存" if SoundManager.save_preference(key, value / 100.0) else "本次音量已生效，保存失败，请重试。")
+	for entry in [["muted", "全部静音"], ["music_muted", "音乐静音"], ["frequent_ui", "操作确认音效"]]:
+		var toggle := CheckButton.new()
+		toggle.text = entry[1]; toggle.button_pressed = bool(SoundManager.preferences[entry[0]])
+		var key: String = entry[0]
+		toggle.toggled.connect(func(value): settings_status.text = "声音设置已保存" if SoundManager.save_preference(key, value) else "本次设置已生效，保存失败，请重试。")
+		parent.add_child(toggle)
+
+
+func _update_music_controls() -> void:
+	var state: Dictionary = MusicManager.playback_state()
+	music_label.text = "♪  " + str(state.title)
+	music_pause.text = "播放" if state.paused else "暂停"
+	music_repeat.text = "循环：开" if state.repeat else "单曲循环"
+	for button in [music_pause, music_next, music_repeat]: button.disabled = str(state.id).is_empty()
+	if is_instance_valid(music_mode_selector):
+		for index in range(music_mode_selector.item_count):
+			if str(music_mode_selector.get_item_metadata(index)) == str(state.mode): music_mode_selector.select(index)
+
+
+func _exit_tree() -> void:
+	MusicManager.leave_title()
+
+
+func _save_music_mode(mode: String) -> void:
+	var saved := MusicManager.save_playback_mode(mode)
+	if page == "settings" and is_instance_valid(settings_status):
+		settings_status.text = "播放模式已保存" if saved else "本次模式已生效，保存失败，请重试。"
+	music_label.tooltip_text = "" if saved else "本次模式已生效，保存失败，请在设置中重试。"
+	if not saved: music_label.text += "（偏好未保存）"

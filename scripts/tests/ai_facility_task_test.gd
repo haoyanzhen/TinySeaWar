@@ -54,20 +54,21 @@ func _run() -> void:
 		var start_result: Dictionary = session._apply_command({"command_id": "test.facility.start", "command_type": "DeclareFacilityControl", "issuer_id": "enemy", "issuer_type": "AI", "unit_id": runner["entity_id"], "facility_id": runner_facility_id})
 		_check(bool(start_result.get("accepted", false)), "capture runner can start its assigned facility interaction")
 		_check(runner["movement_state"] == movement_before and is_equal_approx(float(runner["current_speed"]), speed_before), "ordinary facility work preserves navigation and speed")
-		session._update_movement(0.5)
+		runner["navigation_state"]["current_control"] = {"thrust_ratio":1.0, "turn_ratio":0.0}
+		session._update_movement(0.1)
 		_check((runner["position"] as Vector2).distance_to(position_before) > 1.0, "ordinary facility work does not hold station or cancel propulsion")
 		session._ai_observations_by_faction.clear()
 		session._ai_objective_plan_cache.clear()
 		var active_plan: Dictionary = session._ai_facility_plan(runner, true)
 		_check(bool(active_plan.get("hold_interaction", false)) and not active_plan.has("action_type"), "active facility action is held without duplicate declarations")
-		for index in range(20):
-			session._update_movement(0.5)
+		runner["position"] = Vector2(6000.0, 3000.0) # Explicitly leave; this test is not a navigation fixture.
 		var interaction_events: Array = session.facility_service.advance(0.5, 0.5, session.state["units_by_id"])
 		_check(_has_event(interaction_events, "FacilityActionInterrupted") and session.facility_service.active_action_for_unit(str(runner["entity_id"])).is_empty(), "leaving the interaction water interrupts ordinary facility work")
 	var defender: Dictionary = session.state["units_by_id"]["unit.enemy.anshan"]
 	var battery: Dictionary = session.state["facilities_by_id"]["facility.harbor.battery_west"]
 	var intruder: Dictionary = session.state["units_by_id"]["unit.player.shimakaze"]
-	intruder["position"] = battery["position"]
+	defender["position"] = session.facility_service.interaction_center("facility.harbor.battery_west")
+	intruder["position"] = defender["position"] + Vector2(50.0, 0.0)
 	session.state["visible_by_faction"]["enemy"] = {intruder["entity_id"]: true}
 	for unit_id in ["unit.enemy.kirov", "unit.enemy.anshan", "unit.enemy.ning_hai"]:
 		session._clear_ai_facility_task(session.state["units_by_id"][unit_id])
@@ -130,8 +131,9 @@ func _run() -> void:
 	assisted["movement_assist_enabled"] = true
 	var assisted_facility_id := "facility.harbor.observation_west"
 	_check(player_assist_session._apply_command({"command_id":"player.approach", "command_type":"ApproachFacility", "issuer_id":"player", "issuer_type":"Player", "unit_id":assisted["entity_id"], "facility_id":assisted_facility_id})["accepted"], "player can explicitly assign a known facility approach")
+	assisted["ai_state"]["decision_cooldown"] = 0.0
 	player_assist_session._update_player_assist_intent(assisted)
-	var assist_command: Dictionary = player_assist_session.command_queue.back()
+	var assist_command: Dictionary = {} if player_assist_session.command_queue.is_empty() else player_assist_session.command_queue.back()
 	_check((assist_command.get("target_position", Vector2.ZERO) as Vector2).distance_to(player_assist_session.facility_service.interaction_center(assisted_facility_id)) < 1.0 and assisted["player_facility_target_id"] == assisted_facility_id, "limited assist approaches only the player-assigned facility")
 	player_assist_session.facility_service.facilities_by_id["facility.harbor.supply_west"]["faction_id"] = "enemy"
 	player_assist_session._ai_observations_by_faction.clear()
@@ -156,7 +158,8 @@ func _run() -> void:
 	_check(ai_executor["ai_state"]["level_task"].is_empty() and ai_executor["ai_state"]["task_blocked_facility_id"] == symmetry_id and float(ai_executor["ai_state"]["task_blocked_until"]) > 0.0, "interrupted full AI task is abandoned and temporarily blocked before rescoring")
 	ai_rule_session._record_ai_facility_failure(ai_executor, symmetry_id)
 	_check(is_inf(float(ai_executor["ai_state"]["task_blocked_until"])), "two failures make the unit abandon the same facility for the battle")
-	ai_executor["ai_state"]["level_task"] = "ServiceFacility"; ai_executor["ai_state"]["task_started_at"] = -20.0
+	ai_executor["ai_state"]["level_task"] = "ServiceFacility"; ai_executor["ai_state"]["task_started_at"] = -20.0; ai_executor["ai_state"]["task_timeout"] = 12.0
+	ai_executor["ai_state"]["decision_cooldown"] = 0.0
 	var visible_target: Dictionary = ai_rule_session.state["units_by_id"]["unit.player.shimakaze"]
 	ai_rule_session.state["visible_by_faction"]["enemy"] = {visible_target["entity_id"]: true}
 	ai_rule_session._ai_observations_by_faction.clear()
@@ -167,7 +170,7 @@ func _run() -> void:
 	mine_session.create_battle("level.prototype_harbor_3v3", 20260707)
 	var mine_facility_id := "facility.harbor.mine_control_west"
 	var mine_facility: Dictionary = mine_session.facility_service.facilities_by_id[mine_facility_id]
-	mine_facility["faction_id"] = "player"; mine_facility["operation_state"] = "Active"; mine_facility["previous_operation_state"] = "Active"
+	mine_facility["faction_id"] = "player"; mine_facility["operation_state"] = "Active"; mine_facility["previous_operation_state"] = "Active"; mine_facility["desired_operation_state"] = "Active"
 	var mine_requester: Dictionary = mine_session.state["units_by_id"]["unit.player.shimakaze"]
 	var mine_target: Vector2 = mine_facility["position"] + Vector2(450.0, 0.0)
 	for enemy_id in ["unit.enemy.kirov", "unit.enemy.anshan", "unit.enemy.ning_hai"]: mine_session.state["units_by_id"][enemy_id]["position"] = Vector2(3900.0, 2000.0)
@@ -183,6 +186,7 @@ func _run() -> void:
 	var remote_ai_session = BattleSession.new(registry)
 	remote_ai_session.create_battle("level.prototype_harbor_3v3", 20260708)
 	var remote_target: Dictionary = remote_ai_session.state["units_by_id"]["unit.player.shimakaze"]
+	remote_target["position"] = (remote_ai_session.facility_service.facilities_by_id["facility.harbor.airfield_east"].position as Vector2) + Vector2(-400.0, 0.0)
 	remote_ai_session.state["visible_by_faction"]["enemy"] = {remote_target["entity_id"]: true}
 	remote_ai_session._ai_observations_by_faction.clear()
 	remote_ai_session._update_ai_support_intents("enemy")

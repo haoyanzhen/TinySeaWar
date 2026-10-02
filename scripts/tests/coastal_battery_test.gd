@@ -28,7 +28,7 @@ func _run() -> void:
 	_check(not session.facility_service.declare_control(battery_id, player_controller).get("accepted", false), "active enemy battery cannot be seized by ordinary surface interaction")
 
 	var light_target: Dictionary = session.state["units_by_id"]["unit.player.shimakaze"]
-	light_target["position"] = Vector2(2200.0, 995.0)
+	light_target["position"] = (battery.get("muzzle_position", battery.position) as Vector2) + Vector2(500.0, 0.0)
 	session.state["visible_by_faction"]["enemy"] = {light_target["entity_id"]:true}
 	session._event_buffer.clear()
 	session.delayed_attacks.clear()

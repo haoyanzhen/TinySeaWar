@@ -37,6 +37,7 @@ func _run() -> void:
 	session.facility_service.advance(6.1, 6.1, session.state["units_by_id"])
 	_check(facility.get("faction_id") == "player" and facility.get("operation_state") == "Active", "capture activates the mine controller")
 	var enemy: Dictionary = session.state["units_by_id"]["unit.enemy.kirov"]
+	enemy["position"] = (facility.position as Vector2) + Vector2(300.0, 0.0)
 	_check(session.facility_service.validate_mine_deployment(facility_id, controller, enemy["position"], session.state["units_by_id"]).get("reason_code") == "MINE_AREA_CONTAINS_ENEMY", "square selection rejects an area containing an enemy")
 	_check(session.facility_service.validate_mine_deployment(facility_id, controller, facility["position"] + Vector2(1300.0, 0.0), session.state["units_by_id"]).get("reason_code") == "TARGET_OUT_OF_RANGE", "selection rejects targets outside the control radius")
 

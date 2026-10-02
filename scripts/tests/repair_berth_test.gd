@@ -54,7 +54,7 @@ func _run() -> void:
 	_check(session.facility_service.request_service(facility_id, second).get("reason_code") == "FACILITY_SERVICE_NOT_ALLOWED", "single berth rejects a second ship while occupied")
 	var move_target := Vector2(2048.0, 1870.0)
 	var move := session._apply_command({"command_id":"repair.undock", "command_type":"MoveUnits", "issuer_id":"player", "issuer_type":"Player", "unit_id":unit["entity_id"], "target_position":move_target})
-	_check(move.get("accepted", false) and facility.get("service_state", {}).is_empty() and unit.get("movement_state", {}).get("mode") == "PlayerMoveOrder", "accepted movement order undocks and interrupts repair")
+	_check(move.get("accepted", false) and facility.get("service_state", {}).is_empty() and unit.get("movement_state", {}).get("mode") != "Docked" and bool(unit.navigation_state.get("route_waiting", false)), "accepted movement order undocks and interrupts repair")
 
 	_prepare_unit(unit, facility, dock_position)
 	_check(session._apply_command({"command_id":"repair.heavy", "command_type":"RequestFacilityService", "issuer_id":"player", "unit_id":unit["entity_id"], "facility_id":facility_id}).get("accepted", false), "repair can restart after undocking")

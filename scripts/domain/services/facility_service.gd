@@ -6,6 +6,7 @@ var mine_deployments: Array = []
 var definitions_by_id: Dictionary = {}
 var system_handover_rules_by_event: Dictionary = {}
 var mission_sequence := 0
+var activation_events: Array = []
 
 
 func configure(layout: Dictionary, anchors: Array, definitions: Array) -> void:
@@ -15,6 +16,7 @@ func configure(layout: Dictionary, anchors: Array, definitions: Array) -> void:
 	definitions_by_id.clear()
 	system_handover_rules_by_event.clear()
 	mission_sequence = 0
+	activation_events = layout.get("activation_events", []).duplicate(true)
 	for definition in definitions:
 		definitions_by_id[str(definition.get("id", ""))] = definition.duplicate(true)
 	for rule in layout.get("system_handover_rules", []):
@@ -213,6 +215,8 @@ func apply_system_handover(event_id: String, faction_id: String) -> Dictionary:
 		if facility.is_empty() or facility.get("life_state", "") != "Alive": continue
 		var old_faction := str(facility.get("faction_id", "neutral"))
 		if old_faction == faction_id: continue
+		var action := _facility_action(facility)
+		if not action.is_empty(): _interrupt_action(str(facility_id), facility, str(action.get("unit_id", "")), "FACILITY_OWNER_CHANGED", events)
 		facility["faction_id"] = faction_id
 		events.append({"event_type":"FacilityOwnershipChanged", "facility_id":str(facility_id), "old_faction_id":old_faction, "faction_id":faction_id, "source_event_id":event_id})
 	for facility_id in _sorted_ids():
@@ -308,6 +312,13 @@ func record_mine_deployment_result(facility_id: String, result: Dictionary) -> v
 
 func advance(delta: float, elapsed_time: float, units_by_id: Dictionary) -> Array:
 	var events: Array = []
+	for scheduled in activation_events.duplicate():
+		if elapsed_time + 0.000001 < float(scheduled.at_seconds): continue
+		activation_events.erase(scheduled)
+		var result := activate_from_scenario(str(scheduled.facility_id), "", str(scheduled.event_id))
+		if result.get("accepted", false):
+			if not result.get("state_change", {}).is_empty(): events.append(result.state_change)
+			events.append(result.event)
 	for facility_id in _sorted_ids():
 		var facility: Dictionary = facilities_by_id[facility_id]
 		facility["cooldown_remaining"] = maxf(0.0, float(facility.get("cooldown_remaining", 0.0)) - delta)
@@ -332,7 +343,7 @@ func advance(delta: float, elapsed_time: float, units_by_id: Dictionary) -> Arra
 	var remaining: Array = []
 	for mission in support_missions:
 		var mission_state := str(mission.get("state", "Preparing"))
-		var facility_available := is_operational(str(mission.get("facility_id", "")))
+		var facility_available: bool = is_operational(str(mission.get("facility_id", ""))) and facilities_by_id.get(str(mission.get("facility_id", "")), {}).get("faction_id") == mission.get("faction_id")
 		var policy: Dictionary = mission.get("facility_state_policy", {})
 		if mission_state == "Preparing":
 			if not facility_available and str(policy.get("Preparing", "Cancel")) == "Cancel":
@@ -353,7 +364,7 @@ func advance(delta: float, elapsed_time: float, units_by_id: Dictionary) -> Arra
 	var remaining_mines: Array = []
 	for deployment in mine_deployments:
 		var deployment_facility_id := str(deployment.get("facility_id", ""))
-		if not is_operational(deployment_facility_id):
+		if not is_operational(deployment_facility_id) or facilities_by_id.get(deployment_facility_id, {}).get("faction_id") != deployment.get("faction_id"):
 			var cancelled_facility: Dictionary = facilities_by_id.get(deployment_facility_id, {})
 			cancelled_facility["last_mine_deployment_result"] = {"result":"Cancelled", "mission_id":deployment.get("mission_id", ""), "reason_code":"FACILITY_NOT_ACTIVE"}
 			events.append({"event_type":"MineDeploymentCancelled", "facility_id":deployment_facility_id, "mission_id":deployment.get("mission_id", ""), "reason_code":"FACILITY_NOT_ACTIVE"})
@@ -403,6 +414,10 @@ func _advance_control(facility_id: String, facility: Dictionary, delta: float, u
 		events.append({"event_type": "FacilityOwnershipChanged", "facility_id": facility_id, "old_faction_id": old_faction, "faction_id": facility["faction_id"]})
 	if not state_change.is_empty(): events.append(state_change)
 	events.append({"event_type": "FacilityControlCompleted", "facility_id": facility_id, "unit_id": unit.get("entity_id", ""), "faction_id": facility["faction_id"]})
+	for rule in system_handover_rules_by_event.values():
+		if str(rule.get("trigger", "")) == "ControlCompleted" and str(rule.control_facility_id) == facility_id:
+			var handover := apply_system_handover(str(rule.event_id), str(facility.faction_id))
+			events.append_array(handover.get("events", []))
 
 
 func _advance_service(facility_id: String, facility: Dictionary, delta: float, units_by_id: Dictionary, events: Array) -> void:

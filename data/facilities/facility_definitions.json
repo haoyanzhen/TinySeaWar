@@ -498,7 +498,15 @@
             "facility.harbor.battery_west",
             "facility.harbor.airfield_east",
             "facility.harbor.radar_east"
-          ]
+          ],
+          "trigger": "ControlCompleted"
+        }
+      ],
+      "activation_events": [
+        {
+          "at_seconds": 30.0,
+          "facility_id": "facility.harbor.radar_east",
+          "event_id": "facility.radar.activate"
         }
       ]
     },
@@ -583,7 +591,15 @@
             "facility.harbor.battery_west",
             "facility.harbor.airfield_east",
             "facility.harbor.radar_east"
-          ]
+          ],
+          "trigger": "ControlCompleted"
+        }
+      ],
+      "activation_events": [
+        {
+          "at_seconds": 30.0,
+          "facility_id": "facility.harbor.radar_east",
+          "event_id": "facility.radar.activate"
         }
       ]
     }

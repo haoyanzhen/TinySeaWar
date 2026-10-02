@@ -16,6 +16,10 @@ func _run() -> void:
 	_check(registry.load_all(), "communication and handover configuration loads")
 	var session = BattleSession.new(registry)
 	_check(session.create_battle("level.prototype_harbor_3v3", 3401).get("ok", false), "communication fixture starts")
+	# This fixture checks generic/manual handover; the authored automatic harbor
+	# trigger is covered separately by facility_gameplay_test.
+	for rule in session.facility_service.system_handover_rules_by_event.values(): rule.erase("trigger")
+	session.facility_service.activation_events.clear()
 	var communication_id := "facility.harbor.communication_east"
 	var battery_id := "facility.harbor.battery_west"
 	var airfield_id := "facility.harbor.airfield_east"

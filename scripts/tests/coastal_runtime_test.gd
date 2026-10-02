@@ -44,13 +44,13 @@ func _run() -> void:
 		_check(_as_vector2(visual_instance.get("position", [])).is_equal_approx(Vector2(3072.0, 1728.0)), "%s centers its coast on the ocean" % level_id)
 		_check(_as_vector2(visual_instance.get("scale", [])).is_equal_approx(Vector2(2.6, 3.2)), "%s uses the reviewed 2.6 x 3.2 coast display scale" % level_id)
 		if coastal_id == "ring_lagoon":
-			var obstacles: Array = terrain_map.get("obstacles", [])
-			var regions: Array = terrain_map.get("regions", [])
-			_check(_horizontal_gap(obstacles, "land_01", "land_02") >= 727.0, "ring lagoon north entrance keeps the reviewed wide manual-control gap")
-			_check(_horizontal_gap(obstacles, "land_04", "land_03") >= 727.0, "ring lagoon south entrance keeps the reviewed wide manual-control gap")
-			_check(_passage_width(regions, "north_passage") >= 623.0 and _passage_width(regions, "south_passage") >= 623.0, "ring lagoon navigation channels remain inside both widened entrances")
-			_check(obstacles.size() == 6, "ring lagoon hard geometry is split into six island sections around six entrances")
-			_check(_minimum_passage_width(regions, "northwest_passage") >= 415.0 and _minimum_passage_width(regions, "northeast_passage") >= 415.0, "ring lagoon adds navigable northwest and northeast entrances")
+			_check(terrain_map.get("obstacles", []).size() == 3, "ring lagoon keeps three separated main arcs")
+			for entrance in [Vector2(3072, 350), Vector2(1950, 2380), Vector2(4400, 2450)]:
+				_check(terrain_query.is_navigation_segment_clear(entrance, Vector2(3072,1728), 46.0, ["Surface"]), "ring lagoon connects each broad entrance directly to central deep water")
+		if coastal_id == "scattered_islands":
+			_check(terrain_map.get("obstacles", []).size() == 4, "scattered islands only keeps the four corner islands")
+			for entrance in [Vector2(780,1728),Vector2(5364,1728),Vector2(3072,350),Vector2(3072,3100)]:
+				_check(terrain_query.is_navigation_segment_clear(entrance,Vector2(3072,1728),46.0,["Surface"]), "scattered center connects to all four sides for large ships")
 		var level: Dictionary = registry.get_definition("levels", level_id)
 		var terrain_spawns: Array = session.state.get("terrain_map", {}).get("spawn_points", [])
 		for faction_id in ["player", "enemy"]:

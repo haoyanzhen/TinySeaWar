@@ -28,6 +28,28 @@ ROWS=[
 ('l04','风暴群岛合围','long_archipelago','thunderstorm_dusk','WE',BASE,'iowa bismarck hood hindenburg prinz_eugen san_diego chongqing yukikaze shimakaze u_47 enterprise_cv6','encirclement'),
 ('l05','雷夜环礁终局','broken_atoll','thunderstorm_night','WE','iowa enterprise_cv6 pobeda bismarck yamato hood hindenburg san_diego shimakaze u_47 chongqing','yamato bismarck iowa enterprise_cv6 pobeda hindenburg prinz_eugen san_diego shimakaze u_47 yukikaze','finale')]
 WAVES={'m04':[(150,'ward','RN')],'m05':[(120,'pobeda','RS')],'l04':[(210,'gnevny','RN')],'l05':[(180,'hood','RN'),(300,'hai_shih','RS')]}
+# Author-only cumulative candidates; the shipped selection is reviewed separately.
+SELECTION_PATH=ROOT/'tools/levels/challenge_balance_selection.json'
+SUPPORT={
+ 'm01':[('player','san_diego','hood',256,256),('player','chongqing','hood',256,-256)],
+ 'm02':[('player','kirov','warspite',256,256),('player','san_diego','hosho',256,256)],
+ 'm03':[('enemy','hindenburg','iowa',256,256)],
+ 'm04':[('enemy','bismarck','bismarck',-256,0),('enemy','san_diego','bismarck',256,256),('enemy','shimakaze','bismarck',512,-384)],
+ 'm05':[('player','san_diego','hood',256,256),('player','chongqing','hood',256,-256)],
+ 'l01':[('enemy','iowa','warspite',256,256),('enemy','kirov','warspite',256,-256)],
+ 'l03':[('enemy','bismarck','yamato',256,256),('enemy','iowa','yamato',256,-256)],
+ 'l04':[('player','warspite','hood',256,256),('player','hindenburg','hood',256,-256)],
+ 'l05':[('enemy','bismarck','yamato',256,256),('enemy','iowa','yamato',256,-256)]}
+REPLACEMENTS={
+ 'm01':{2:{'kirov':'nurnberg'},3:{'sirius':'yat_sen'}},
+ 'm02':{2:{'prinz_eugen':'nurnberg'},3:{'yukikaze':'gnevny'}},
+ 'm03':{2:{'gnevny':'shimakaze'},3:{'hosho':'pobeda'}},
+ 'm04':{2:{'san_diego':'hindenburg'}},
+ 'm05':{2:{'hindenburg':'kirov'},3:{'shimakaze':'anshan'}},
+ 'l01':{2:{'ning_hai':'hindenburg'},3:{'gnevny':'shimakaze','ward':'yukikaze'}},
+ 'l03':{2:{'ward':'shimakaze'},3:{'prinz_eugen':'baltimore'}},
+ 'l04':{2:{'hindenburg':'kirov'},3:{'hood':'gangut'}},
+ 'l05':{2:{'prinz_eugen':'warspite'},3:{'san_diego':'baltimore'}}}
 PROTECT={'m02':['hosho'],'l02':['argus'],'l04':['argus']}
 MASTERY={'m02':[['argus'],['bismarck']],'m03':[['gnevny','anshan'],['iowa']],'l02':[['pobeda','argus'],['enterprise_cv6']],'l03':[['yukikaze','hai_shih'],['yamato']]}
 # Rectangles are author coordinates normalized to the approved coastline.
@@ -62,12 +84,46 @@ def candidates(count,axis):
  if count==5:
   return [(W*x,H*y) for x,y in ([(.5,.8),(.4,.84),(.6,.84),(.3,.88),(.7,.88)] if axis=='SN' else [(.2,.5),(.17,.34),(.17,.66),(.22,.2),(.22,.8)])]
  return [(W*x,H*y) for x,y in [(.18,.5),(.18,.38),(.18,.62),(.15,.26),(.15,.74),(.21,.3),(.21,.7),(.24,.42),(.24,.58),(.12,.36),(.12,.64)]]
+def candidate_config(code,stage,axis,player,enemy):
+ """Return per-slot positions and enemy substitutions without changing public rules."""
+ if not 0<=stage<=3 or (code=='l02' and stage!=0): raise ValueError(f'Invalid candidate {code}/{stage}')
+ points={}
+ n=len(player.split())
+ for faction,roster in [('player',player),('enemy',enemy)]:
+  for ship,point in zip(roster.split(),candidates(n,axis)):
+   if faction=='enemy': point=(point[0],H-point[1]) if axis=='SN' else (W-point[0],point[1])
+   points[faction,ship]=point
+ replacements={old:new for group,items in REPLACEMENTS.get(code,{}).items() if group<=stage for old,new in items.items()}
+ if stage:
+  original=points.copy()
+  for faction,ship,anchor,forward,lateral in SUPPORT.get(code,[]):
+   direction=(0,-1 if faction=='player' else 1) if axis=='SN' else (1 if faction=='player' else -1,0)
+   dx,dy=direction; x,y=original[faction,anchor]
+   points[faction,ship]=(x+forward*dx-lateral*dy,y+forward*dy+lateral*dx)
+ waves=copy.deepcopy(WAVES.get(code,[]))
+ if stage and code=='m04': waves=[(60,'hood' if stage>=3 else 'ward','RN')]
+ if stage and code=='l05': waves=[(120,'hood','RN'),(240,'hai_shih','RS')]
+ return points,replacements,waves
 def main():
- parser=argparse.ArgumentParser();parser.add_argument('--check',action='store_true');parser.add_argument('--bake-fields',action='store_true');args=parser.parse_args()
+ global ROOT
+ parser=argparse.ArgumentParser();parser.add_argument('--check',action='store_true');parser.add_argument('--bake-fields',action='store_true')
+ parser.add_argument('--output-root',type=Path,help='Isolated project containing baseline inputs; never mutate the shared baseline')
+ group=parser.add_mutually_exclusive_group();group.add_argument('--candidate-stage',type=int,choices=range(4));group.add_argument('--selection',type=Path)
+ args=parser.parse_args()
+ if args.output_root: ROOT=args.output_root.resolve()
+ codes={r[0] for r in ROWS}
+ experiment_revision='20260930/v4'
+ if args.candidate_stage is not None:selection={c:(0 if c=='l02' else args.candidate_stage) for c in codes}
+ else:
+  selection_document=json.loads((args.selection or SELECTION_PATH).read_text())
+  selection=selection_document['selected_stages']
+  experiment_revision=selection_document.get('experiment_revision',experiment_revision)
+  if set(selection)!=codes:raise ValueError('Selection must contain exactly ten challenge IDs')
  terrains={d['id']:d for d in read('data/terrain/terrain_definitions.json')['definitions']};navs={d['id']:d for d in read('data/terrain/navigation_definitions.json')['definitions']}
  ships={d['id']:d for f in (ROOT/'data/ships').glob('*.json') for d in json.loads(f.read_text())['definitions']}
  levels=[];maps=[];graphs=[];envs=[];objectives=[];evidence=[];fields=[]
  for code,title,template,palette,axis,player,enemy,suffix in ROWS:
+  stage=selection[code];points,replacements,waves=candidate_config(code,stage,axis,player,enemy)
   n=5 if code[0]=='m' else 11;terrain=copy.deepcopy(terrains[f'terrain.map.{template}_16x9']);nav=copy.deepcopy(navs[terrain['navigation_definition_id']]);source_id=terrain['id']
   terrain.update(id=f'terrain.map.challenge_{code}',display_name=f'{code.upper()} {title}',facility_layout_id='',facility_anchors=[],environment_zone_set_id=f'environment.zone_set.challenge_{code}',navigation_definition_id=f'navigation.challenge_{code}',collision_field_id=f'collision_field.terrain.map.challenge_{code}',source_document='res://tools/levels/build_challenge_levels.py',spawn_points=[])
   nav.update(id=terrain['navigation_definition_id'],terrain_definition_id=terrain['id'])
@@ -85,8 +141,8 @@ def main():
   for faction,roster in [('player',player),('enemy',enemy)]:
    level[faction+'_fleet']=[];cost[faction]=0
    flagship='enterprise_cv6' if code=='l02' and faction=='enemy' else roster.split()[0]
-   for i,(ship,point) in enumerate(zip(roster.split(),candidates(n,axis))):
-    if faction=='enemy':point=(point[0],H-point[1]) if axis=='SN' else (W-point[0],point[1])
+   for i,original_ship in enumerate(roster.split()):
+    point=points[faction,original_ship];ship=replacements.get(original_ship,original_ship) if faction=='enemy' else original_ship
     pos,node=project(point,faction);heading=(270 if faction=='player' else 90) if axis=='SN' else (0 if faction=='player' else 180)
     member={'entity_id':f'unit.{faction}.{code}.{ship}','ship_id':'ship.'+ship,'position':pos,'heading':heading,'is_flagship':ship==flagship}
     level[faction+'_fleet'].append(member);cost[faction]+=ships['ship.'+ship]['cost'];positions.append({'unit_id':member['entity_id'],'node_id':node,'position':pos,'candidate':point})
@@ -98,7 +154,7 @@ def main():
      if faction=='enemy':point=(point[0],H-point[1]) if axis=='SN' else (W-point[0],point[1])
      pos,_=project(point,faction)
      terrain['spawn_points'].append({'id':f'{faction}_{i+1}','faction_id':faction,'position':pos,'heading':(270 if faction=='player' else 90) if axis=='SN' else (0 if faction=='player' else 180),'radius':46,'movement_tags':['Surface']})
-  for index,(time,ship,point_id) in enumerate(WAVES.get(code,[])):
+  for index,(time,ship,point_id) in enumerate(waves):
    candidate=(W*(.32 if point_id=='RN' else .68),H*.08) if axis=='SN' else (W*.92,H*(.18 if point_id=='RN' else .82))
    pos,node=project(candidate,'enemy');member={'entity_id':f'unit.enemy.{code}.{ship}_reserve','ship_id':'ship.'+ship,'position':pos,'heading':90 if axis=='SN' else 180,'is_flagship':False}
    level.setdefault('reinforcement_waves',[]).append({'wave_id':f'wave.{code}.{index+1:02}','faction_id':'enemy','earliest_time':time,'concurrent_unit_cap':n,'spawn_point_id':point_id,'spawn_display_name':('北侧西口' if point_id=='RN' else '北侧东口') if axis=='SN' else ('东侧北口' if point_id=='RN' else '东侧南口'),'members':[member]})
@@ -110,7 +166,9 @@ def main():
   obj['completion_text']='击沉'+target_name+('，累计击沉至少'+('4' if code=='m05' else '8')+'艘敌舰（含旗舰）' if code in ['m05','l05'] else '')
   obj['failure_text']='、'.join(protected_names)+'任一沉没'+('，或己方第3艘舰沉没' if code=='m04' else '')
   obj['description']={'m01':'前卫侦查，主力推进；涨潮捷径与外侧深水路线均可选择。','m02':'保护凤翔；选择直接击沉敌旗舰，或先削弱敌方航空支援。','m03':'分路观察并利用流向雷击；拆除两翼仅为可选精通。','m04':'争取背风水域，集中突破；旗舰须存活，最多损失两舰。','m05':'突破封锁，累计击沉四舰；敌旗舰沉没后可能仍需继续交战。','l01':'前卫、主力、后卫分组展开；集中一翼或保持双翼观察。','l02':'保护己方百眼巨人；快速斩首或先拆敌方两艘护航航母。','l03':'主力牵制一条航道，雷击侧翼争取另一条；无需强制追杀潜艇。','l04':'打穿一翼并保持后卫支援；胡德与百眼巨人都必须存活。','l05':'保护衣阿华并分配火力；击沉大和且累计八舰即可结束。'}[code]
-  if code in MASTERY:obj['optional_enemy_sunk_stages']=[[f'unit.enemy.{code}.{s}' for s in stage] for stage in MASTERY[code]]
+  reserve_cost=sum(ships['ship.'+s]['cost'] for _,s,_ in waves)
+  obj['description']+='\n编成 Cost：我方初始%d / 预备0 / 全部%d；敌方初始%d / 预备%d / 全部%d。' % (cost['player'],cost['player'],cost['enemy'],reserve_cost,cost['enemy']+reserve_cost)
+  if code in MASTERY:obj['optional_enemy_sunk_stages']=[[f'unit.enemy.{code}.{replacements.get(s,s)}' for s in group] for group in MASTERY[code]]
   if code in ['m05','l05']:obj['minimum_enemy_sunk']=4 if code=='m05' else 8
   if code=='m04':obj.update(required_any_player_unit_ids=[m['entity_id'] for m in level['player_fleet']],minimum_required_any_player_alive=3)
   env={'id':terrain['environment_zone_set_id'],'definition_type':'EnvironmentZoneSet','global_environment':{'seed_offset':91000+len(levels)},'zones':[]}
@@ -123,9 +181,14 @@ def main():
    timeline='environment.timeline.challenge_'+code;rain=palette.replace('thunderstorm','rain');level['map']['environment_timeline_id']=timeline
    envs.append({'id':timeline,'definition_type':'EnvironmentTimeline','display_name':title+'·雷雨过境','forecast_seconds':10,'stages':[{'start_seconds':t,'ocean_palette':p} for t,p in [(0,palette),(60,rain),(240,palette),(300,rain)]]})
   envs.append(env);levels.append(level);maps.append(terrain);graphs.append(nav);objectives.append(obj)
-  evidence.append({'level':level['id'],'source_terrain':source_id,'geometry_sha256':hashlib.sha256(json.dumps({k:terrain[k] for k in ['obstacles','regions','visual_instances']},sort_keys=True).encode()).hexdigest(),'spawn_projection':'nearest connected 46-radius deep-water node; separation >=180','positions':positions,'initial_cost':cost,'enemy_total_cost':cost['enemy']+sum(ships['ship.'+s]['cost'] for _,s,_ in WAVES.get(code,[]))})
+  evidence.append({'level':level['id'],'source_terrain':source_id,'geometry_sha256':hashlib.sha256(json.dumps({k:terrain[k] for k in ['obstacles','regions','visual_instances']},sort_keys=True).encode()).hexdigest(),'spawn_projection':'nearest connected 46-radius deep-water node; separation >=180','positions':positions,'initial_cost':cost,'enemy_total_cost':cost['enemy']+sum(ships['ship.'+s]['cost'] for _,s,_ in waves)})
+  if stage:evidence[-1]['balance_candidate_stage']=stage
   base_seed=(91001 if code[0]=='m' else 92001)+(int(code[1:])-1)*100
   experiment={'schema_version':1,'experiment_id':f'sim.level.{code}.win_rate_20','description':title+'正式二十种子验收','authorization':'用户2026-09-30授权十关实现、20种子验收及设计范围内调参','simulation_kind':'LevelWinRateEvaluation','player_policy_id':'LatestRuntimeAI','enemy_policy_id':'LatestRuntimeAI','ai_profile_id':level['enemy_ai_profile_id'],'side_swap':False,'tick_seconds':.1,'maximum_ticks':12000,'seed_plan':{'type':'SequentialRange','start':base_seed,'count':20},'win_rate_evaluation':{'settlement_source':'BattleStatisticsReport','target_player_win_rate':[.6,.45,.3,.2,.1][int(code[1:])-1],'tolerance':.03 if code.endswith('5') else .05},'scenarios':[{'scenario_id':'challenge_'+code,'level_definition_id':level['id']}],'output_directory':f'res://artifacts/simulations/challenge_ml_20260930/v4/{code}'}
+  if experiment_revision!='20260930/v4':
+   experiment.update(experiment_id=experiment['experiment_id']+'.'+experiment_revision.replace('/','.'),
+                     output_directory=f'res://artifacts/simulations/challenge_ml_{experiment_revision}/{code}',
+                     authorization='用户2026-10-01授权关卡候选调参与复验；本正式清单仅在公共行为门禁通过后使用')
   write(f'data/simulations/experiments/level_{code}_win_rate_20.json',experiment,args.check)
   if args.bake_fields:
    path=f'data/terrain/collision_fields/challenge_{code}.tscf';fields.append(bake_field(terrain,ROOT/path,8,path));print('baked',code,flush=True)

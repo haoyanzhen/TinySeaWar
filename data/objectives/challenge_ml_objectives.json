@@ -13,7 +13,7 @@
       "protected_player_unit_ids": [
         "unit.player.m01.hood"
       ],
-      "description": "前卫侦查，主力推进；涨潮捷径与外侧深水路线均可选择。"
+      "description": "前卫侦查，主力推进；涨潮捷径与外侧深水路线均可选择。\n编成 Cost：我方初始26 / 预备0 / 全部26；敌方初始18 / 预备0 / 全部18。"
     },
     {
       "id": "objective.m02_carrier_escort",
@@ -28,7 +28,7 @@
         "unit.player.m02.warspite",
         "unit.player.m02.hosho"
       ],
-      "description": "保护凤翔；选择直接击沉敌旗舰，或先削弱敌方航空支援。",
+      "description": "保护凤翔；选择直接击沉敌旗舰，或先削弱敌方航空支援。\n编成 Cost：我方初始28 / 预备0 / 全部28；敌方初始22 / 预备0 / 全部22。",
       "optional_enemy_sunk_stages": [
         [
           "unit.enemy.m02.argus"
@@ -50,7 +50,7 @@
       "protected_player_unit_ids": [
         "unit.player.m03.hood"
       ],
-      "description": "分路观察并利用流向雷击；拆除两翼仅为可选精通。",
+      "description": "分路观察并利用流向雷击；拆除两翼仅为可选精通。\n编成 Cost：我方初始26 / 预备0 / 全部26；敌方初始28 / 预备0 / 全部28。",
       "optional_enemy_sunk_stages": [
         [
           "unit.enemy.m03.gnevny",
@@ -73,7 +73,7 @@
       "protected_player_unit_ids": [
         "unit.player.m04.warspite"
       ],
-      "description": "争取背风水域，集中突破；旗舰须存活，最多损失两舰。",
+      "description": "争取背风水域，集中突破；旗舰须存活，最多损失两舰。\n编成 Cost：我方初始29 / 预备0 / 全部29；敌方初始33 / 预备1 / 全部34。",
       "required_any_player_unit_ids": [
         "unit.player.m04.warspite",
         "unit.player.m04.san_diego",
@@ -95,7 +95,7 @@
       "protected_player_unit_ids": [
         "unit.player.m05.hood"
       ],
-      "description": "突破封锁，累计击沉四舰；敌旗舰沉没后可能仍需继续交战。",
+      "description": "突破封锁，累计击沉四舰；敌旗舰沉没后可能仍需继续交战。\n编成 Cost：我方初始26 / 预备0 / 全部26；敌方初始31 / 预备9 / 全部40。",
       "minimum_enemy_sunk": 4
     },
     {
@@ -110,7 +110,7 @@
       "protected_player_unit_ids": [
         "unit.player.l01.hood"
       ],
-      "description": "前卫、主力、后卫分组展开；集中一翼或保持双翼观察。"
+      "description": "前卫、主力、后卫分组展开；集中一翼或保持双翼观察。\n编成 Cost：我方初始63 / 预备0 / 全部63；敌方初始55 / 预备0 / 全部55。"
     },
     {
       "id": "objective.l02_air_corridor",
@@ -125,7 +125,7 @@
         "unit.player.l02.hood",
         "unit.player.l02.argus"
       ],
-      "description": "保护己方百眼巨人；快速斩首或先拆敌方两艘护航航母。",
+      "description": "保护己方百眼巨人；快速斩首或先拆敌方两艘护航航母。\n编成 Cost：我方初始63 / 预备0 / 全部63；敌方初始56 / 预备0 / 全部56。",
       "optional_enemy_sunk_stages": [
         [
           "unit.enemy.l02.pobeda",
@@ -148,7 +148,7 @@
       "protected_player_unit_ids": [
         "unit.player.l03.hood"
       ],
-      "description": "主力牵制一条航道，雷击侧翼争取另一条；无需强制追杀潜艇。",
+      "description": "主力牵制一条航道，雷击侧翼争取另一条；无需强制追杀潜艇。\n编成 Cost：我方初始63 / 预备0 / 全部63；敌方初始66 / 预备0 / 全部66。",
       "optional_enemy_sunk_stages": [
         [
           "unit.enemy.l03.yukikaze",
@@ -172,7 +172,7 @@
         "unit.player.l04.hood",
         "unit.player.l04.argus"
       ],
-      "description": "打穿一翼并保持后卫支援；胡德与百眼巨人都必须存活。"
+      "description": "打穿一翼并保持后卫支援；胡德与百眼巨人都必须存活。\n编成 Cost：我方初始63 / 预备0 / 全部63；敌方初始78 / 预备2 / 全部80。"
     },
     {
       "id": "objective.l05_finale",
@@ -186,7 +186,7 @@
       "protected_player_unit_ids": [
         "unit.player.l05.iowa"
       ],
-      "description": "保护衣阿华并分配火力；击沉大和且累计八舰即可结束。",
+      "description": "保护衣阿华并分配火力；击沉大和且累计八舰即可结束。\n编成 Cost：我方初始90 / 预备0 / 全部90；敌方初始85 / 预备14 / 全部99。",
       "minimum_enemy_sunk": 8
     }
   ]

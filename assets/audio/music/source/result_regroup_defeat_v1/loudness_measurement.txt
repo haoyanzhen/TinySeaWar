@@ -1,0 +1,28 @@
+[aist#0:0/pcm_s16le @ 0xb08c10180] Guessed Channel Layout: stereo
+Input #0, wav, from 'assets/audio/music/source/result_regroup_defeat_v1/source.wav':
+  Duration: 00:00:30.00, bitrate: 1536 kb/s
+  Stream #0:0: Audio: pcm_s16le ([1][0][0][0] / 0x0001), 48000 Hz, stereo, s16, 1536 kb/s
+Stream mapping:
+  Stream #0:0 -> #0:0 (pcm_s16le (native) -> pcm_s16le (native))
+Press [q] to stop, [?] for help
+Output #0, null, to 'pipe:':
+  Metadata:
+    encoder         : Lavf62.12.101
+  Stream #0:0: Audio: pcm_s16le, 192000 Hz, stereo, s16, 6144 kb/s
+    Metadata:
+      encoder         : Lavc62.28.101 pcm_s16le
+[Parsed_loudnorm_0 @ 0xb09020900]
+{
+	"input_i" : "-15.27",
+	"input_tp" : "-0.99",
+	"input_lra" : "13.50",
+	"input_thresh" : "-26.40",
+	"output_i" : "-20.42",
+	"output_tp" : "-3.14",
+	"output_lra" : "10.00",
+	"output_thresh" : "-31.07",
+	"normalization_type" : "dynamic",
+	"target_offset" : "0.42"
+}
+[out#0/null @ 0xb09020180] video:0KiB audio:22500KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown
+size=N/A time=00:00:30.00 bitrate=N/A speed=31.9x elapsed=0:00:00.94

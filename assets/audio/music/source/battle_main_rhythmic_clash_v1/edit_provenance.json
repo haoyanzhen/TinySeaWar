@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "method": "user_requested_trim_and_half_cosine_fade",
+  "source_record": "battle_review03_20261002/battle_main_a",
+  "input_sha256": "f327bc11d63f6e048e92e734df990aea2d5ecdc38c0783a711803a27a4bfa019",
+  "output_sha256": "778ac440c93e5379a5cac23143627cb3c4352b754acda3ee75a0204b59710783",
+  "original_duration_seconds": 120.0,
+  "output_duration_seconds": 114,
+  "removed_seconds": [
+    114,
+    120.0
+  ],
+  "fade_out_seconds": [
+    110,
+    114
+  ],
+  "gain_function": "0.5 + 0.5*cos(pi * frame_index/(fade_frame_count-1))",
+  "unchanged_pcm_seconds": [
+    0,
+    110
+  ],
+  "unchanged_pcm_verified": true,
+  "last_frame_zero_verified": true,
+  "no_normalization": true,
+  "no_inference": true
+}

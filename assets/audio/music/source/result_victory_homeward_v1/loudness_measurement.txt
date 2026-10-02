@@ -1,0 +1,28 @@
+[aist#0:0/pcm_s16le @ 0x982c10180] Guessed Channel Layout: stereo
+Input #0, wav, from 'reports/audio/battle_review04_20261002/result_victory.wav':
+  Duration: 00:00:25.00, bitrate: 1536 kb/s
+  Stream #0:0: Audio: pcm_s16le ([1][0][0][0] / 0x0001), 48000 Hz, stereo, s16, 1536 kb/s
+Stream mapping:
+  Stream #0:0 -> #0:0 (pcm_s16le (native) -> pcm_s16le (native))
+Output #0, null, to 'pipe:':
+  Metadata:
+    encoder         : Lavf62.12.101
+  Stream #0:0: Audio: pcm_s16le, 192000 Hz, stereo, s16, 6144 kb/s
+    Metadata:
+      encoder         : Lavc62.28.101 pcm_s16le
+size=N/A time=00:00:11.00 bitrate=N/A speed=  22x elapsed=0:00:00.50
+[Parsed_loudnorm_0 @ 0x982c68900]
+{
+	"input_i" : "-13.32",
+	"input_tp" : "-0.96",
+	"input_lra" : "6.90",
+	"input_thresh" : "-24.47",
+	"output_i" : "-18.38",
+	"output_tp" : "-3.49",
+	"output_lra" : "4.50",
+	"output_thresh" : "-29.04",
+	"normalization_type" : "dynamic",
+	"target_offset" : "-1.62"
+}
+[out#0/null @ 0x982c68180] video:0KiB audio:18750KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown
+size=N/A time=00:00:25.00 bitrate=N/A speed=27.7x elapsed=0:00:00.90

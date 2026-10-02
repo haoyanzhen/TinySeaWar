@@ -10,7 +10,8 @@
       "sha256": "721d61876543f821945ccc759533570ce758c74b6265a6bfb299a41c950d972e",
       "duration_seconds": 80.0,
       "status": "human_accepted_source",
-      "runtime_ready": false
+      "runtime_ready": false,
+      "category": "title"
     },
     {
       "id": "title_harbor_promise_v1",
@@ -20,7 +21,8 @@
       "sha256": "5333786167986101f8fe09c191044833d849819b411aa3519d78b340832bffa5",
       "duration_seconds": 87.0,
       "status": "human_accepted_source",
-      "runtime_ready": false
+      "runtime_ready": false,
+      "category": "title"
     },
     {
       "id": "title_sea_letters_v1",
@@ -30,7 +32,8 @@
       "sha256": "06cf46870d5ce09143daac95da0cc6572fd0cf3dc714f2430c2f50ac13f73ef2",
       "duration_seconds": 90.0,
       "status": "human_accepted_source",
-      "runtime_ready": false
+      "runtime_ready": false,
+      "category": "title"
     },
     {
       "id": "title_sunny_companions_v1",
@@ -40,7 +43,8 @@
       "sha256": "47cffd8f73f1a7cf590f9308c5dca645ef58bb1857b394a36e598dd844be66a0",
       "duration_seconds": 84.0,
       "status": "human_accepted_source",
-      "runtime_ready": false
+      "runtime_ready": false,
+      "category": "title"
     },
     {
       "id": "title_woodland_discovery_v1",
@@ -50,7 +54,158 @@
       "sha256": "fd49d002a6c3bc131ba155f4907732431b29ca949962acc65c9abf76fa5d459f",
       "duration_seconds": 90.0,
       "status": "human_accepted_source",
-      "runtime_ready": false
+      "runtime_ready": false,
+      "category": "title"
+    },
+    {
+      "id": "battle_finale_distant_decisive_v1",
+      "title": "万帆凌涛",
+      "category": "battle",
+      "intended_use": "终局关卡音乐；具体关卡ID待运行时接入确认",
+      "source_record": "source/battle_finale_distant_decisive_v1/source_record.json",
+      "audio": "source/battle_finale_distant_decisive_v1/source.wav",
+      "sha256": "b7e6e2177b3e8069f01b6cd691ae783852d84dab17d5fb670ab22f926dff64d4",
+      "duration_seconds": 180.0,
+      "status": "human_accepted_source",
+      "runtime_ready": false,
+      "original_title": "远海决战",
+      "previous_titles": [
+        "远海决战",
+        "激昂管弦·远海决战"
+      ],
+      "style_description": "宏阔舰队决战管弦；圆号主题、中低弦、低铜管与稀疏打击乐，规模与战略张力并存。",
+      "naming_basis": "提示词为broad ocean scale、coordinated fleet maneuvers、brave companions与strategic tension；“万帆”是舰队规模的文学意象，“凌涛”是勇气与海上交锋。"
+    },
+    {
+      "id": "battle_watchful_route_v1",
+      "title": "静海相守",
+      "category": "battle",
+      "intended_use": "克制战斗／教学与护航候选；正式关卡映射待接入",
+      "source_record": "source/battle_watchful_route_v1/source_record.json",
+      "audio": "source/battle_watchful_route_v1/source.wav",
+      "sha256": "377428f3632ec573c15407bc1b59cadfc86f9ce3db77160894761204647868a3",
+      "duration_seconds": 120.0,
+      "status": "human_accepted_source",
+      "runtime_ready": false,
+      "original_title": "守望航线",
+      "previous_titles": [
+        "守望航线",
+        "克制木管·守望航线"
+      ],
+      "style_description": "温柔克制护航；单簧管、钢琴与轻弦，安静而坚定地保护同伴。",
+      "naming_basis": "提示词为gentle escort、protecting companions与reassuring answer；标题对应克制护航和相守。"
+    },
+    {
+      "id": "result_regroup_defeat_v1",
+      "title": "余潮再航",
+      "category": "defeat",
+      "intended_use": "失败结算；一次性开头与余韵边界待实听标定",
+      "source_record": "source/result_regroup_defeat_v1/source_record.json",
+      "audio": "source/result_regroup_defeat_v1/source.wav",
+      "sha256": "ab9d5cbff6e6db1cd563460a081bb303f492b79204e21a64f0946a49280434c7",
+      "duration_seconds": 30.0,
+      "status": "human_accepted_source",
+      "runtime_ready": false,
+      "original_title": "再整航装",
+      "previous_titles": [
+        "再整航装"
+      ],
+      "style_description": "克制钢琴与单簧管；承认失落、温柔反思，保留重整与再出发的希望。",
+      "naming_basis": "提示词为tender reflection、readiness to regroup、never despair；“余潮”对应战后余绪，“再航”对应重新出发。"
+    },
+    {
+      "id": "battle_main_same_heading_v1",
+      "title": "同心逐浪",
+      "category": "battle",
+      "intended_use": "通用战斗曲池之一，非唯一曲目；正式模式与关卡映射待接入",
+      "source_record": "source/battle_main_same_heading_v1/source_record.json",
+      "audio": "source/battle_main_same_heading_v1/source.wav",
+      "sha256": "fd082d65c5c279d29551e173dd3bde588d6ba84973fb5533b555432d02a36621",
+      "duration_seconds": 120.0,
+      "status": "human_accepted_source",
+      "runtime_ready": false,
+      "original_title": "同航迎敌",
+      "previous_titles": [
+        "同航迎敌",
+        "明朗冒险·同航迎敌"
+      ],
+      "style_description": "明朗动漫海战；单簧管、钢琴与圆号问答，突出同伴互信和协同迎敌。",
+      "naming_basis": "提示词以companions、mutual trust和melodic dialogue表达友谊，“同心”对应协同，“逐浪”对应海上冒险。"
+    },
+    {
+      "id": "battle_main_rhythmic_clash_v1",
+      "title": "破浪争锋",
+      "original_title": "舰队交锋",
+      "previous_titles": [
+        "舰队交锋",
+        "明快海战·舰队交锋"
+      ],
+      "category": "battle",
+      "intended_use": "通用战斗：欢快明晰、紧张律动与海战带动感；曲池可并存其他曲目",
+      "source_record": "source/battle_main_rhythmic_clash_v1/source_record.json",
+      "audio": "source/battle_main_rhythmic_clash_v1/source.wav",
+      "sha256": "778ac440c93e5379a5cac23143627cb3c4352b754acda3ee75a0204b59710783",
+      "duration_seconds": 114.0,
+      "status": "human_accepted_source",
+      "runtime_ready": false,
+      "style_description": "明快管弦海战；圆号、中低弦与克制定音鼓，紧张律动中保留坚定与希望。",
+      "naming_basis": "提示词为舰队机动、勇气及战术交锋；“破浪争锋”表达直接迎敌与明晰推进。"
+    },
+    {
+      "id": "result_victory_homeward_v1",
+      "title": "凯旋余晖",
+      "original_title": "同伴归航",
+      "previous_titles": [
+        "同伴归航",
+        "欢庆归航·凯旋余韵"
+      ],
+      "category": "victory",
+      "intended_use": "胜利结算：前段开心庆功，尾部安静淡出；结果开头／余韵边界待标定",
+      "source_record": "source/result_victory_homeward_v1/source_record.json",
+      "audio": "source/result_victory_homeward_v1/source.wav",
+      "sha256": "8c692d857f7ee38a5c597544faf7620dab431064cdea2586d9c607d917eed4bf",
+      "duration_seconds": 25.0,
+      "status": "human_accepted_source",
+      "runtime_ready": false,
+      "style_description": "明亮胜利短句后转温暖余韵；圆号庆功，单簧管与钢琴安静归航。",
+      "naming_basis": "提示词为earned victory、celebration to calm、homecoming phrase；“余晖”喻凯旋后的温暖回响，不新增黄昏场景限制。"
+    },
+    {
+      "id": "battle_gentle_companions_v1",
+      "title": "海风相伴",
+      "original_title": "海风相伴",
+      "previous_titles": [
+        "海风相伴 · 尾段修订"
+      ],
+      "category": "battle",
+      "intended_use": "温柔战斗曲池；正式模式／关卡映射待接入",
+      "status": "human_accepted_source",
+      "runtime_ready": false,
+      "style_description": "温柔动漫战斗；单簧管主旋律、柔和钢琴和轻中提琴伴奏，温暖同伴感与安静勇气。",
+      "naming_basis": "提示词为warm companionship、quiet bravery与连贯温柔旋律；“海风相伴”对应海上同伴与柔和气质，海风为文学意象，不要求环境声。",
+      "source_record": "source/battle_gentle_companions_v1/source_record.json",
+      "audio": "source/battle_gentle_companions_v1/source.wav",
+      "sha256": "ceb0b00acf72e72c4ea560bea39539d5eb54893189e9279c1c4fadea7ed34d7d",
+      "duration_seconds": 109.0
+    },
+    {
+      "id": "battle_light_concerto_v1",
+      "title": "乘风协奏",
+      "original_title": "乘风协奏",
+      "previous_titles": [
+        "乘风协奏 · 尾段修订"
+      ],
+      "category": "battle",
+      "intended_use": "轻快战斗曲池；正式模式／关卡映射待接入",
+      "status": "human_accepted_source",
+      "runtime_ready": false,
+      "style_description": "轻快动漫海上冒险；单簧管、中提琴断奏、柔和原声吉他与短长笛回应，弹性节奏和同伴协作。",
+      "naming_basis": "提示词为playful anime naval adventure、clever coordinated companions与question-and-answer phrases；“乘风”表达轻盈冒险，“协奏”表达伙伴协作与旋律问答，不新增乐曲体裁约束。",
+      "source_record": "source/battle_light_concerto_v1/source_record.json",
+      "audio": "source/battle_light_concerto_v1/source.wav",
+      "sha256": "dd4452bda2f16395a53605a0e9268340aa9430427cd139660265800ff289e083",
+      "duration_seconds": 81.0
     }
-  ]
+  ],
+  "naming_rule": "Use literary titles grounded in original generation prompts and musical style; keep style descriptions separately, previous names, stable IDs, audio hashes, and historical manifests."
 }

@@ -1,0 +1,46 @@
+{
+  "date": "2026-10-02",
+  "review_batch": "battle_review06_20261002",
+  "batch_sha256": "97bc469d44c941cdc2ae2dbdb78f193efe31ae707708cb8f54967eb7256fe369",
+  "adopted": [
+    {
+      "id": "battle_gentle_companions_v1",
+      "title": "海风相伴",
+      "original_title": "海风相伴",
+      "previous_titles": [
+        "海风相伴 · 尾段修订"
+      ],
+      "category": "battle",
+      "intended_use": "温柔战斗曲池；正式模式／关卡映射待接入",
+      "status": "human_accepted_source",
+      "runtime_ready": false,
+      "style_description": "温柔动漫战斗；单簧管主旋律、柔和钢琴和轻中提琴伴奏，温暖同伴感与安静勇气。",
+      "naming_basis": "提示词为warm companionship、quiet bravery与连贯温柔旋律；“海风相伴”对应海上同伴与柔和气质，海风为文学意象，不要求环境声。",
+      "source_record": "source/battle_gentle_companions_v1/source_record.json",
+      "audio": "source/battle_gentle_companions_v1/source.wav",
+      "sha256": "ceb0b00acf72e72c4ea560bea39539d5eb54893189e9279c1c4fadea7ed34d7d",
+      "duration_seconds": 109.0
+    },
+    {
+      "id": "battle_light_concerto_v1",
+      "title": "乘风协奏",
+      "original_title": "乘风协奏",
+      "previous_titles": [
+        "乘风协奏 · 尾段修订"
+      ],
+      "category": "battle",
+      "intended_use": "轻快战斗曲池；正式模式／关卡映射待接入",
+      "status": "human_accepted_source",
+      "runtime_ready": false,
+      "style_description": "轻快动漫海上冒险；单簧管、中提琴断奏、柔和原声吉他与短长笛回应，弹性节奏和同伴协作。",
+      "naming_basis": "提示词为playful anime naval adventure、clever coordinated companions与question-and-answer phrases；“乘风”表达轻盈冒险，“协奏”表达伙伴协作与旋律问答，不新增乐曲体裁约束。",
+      "source_record": "source/battle_light_concerto_v1/source_record.json",
+      "audio": "source/battle_light_concerto_v1/source.wav",
+      "sha256": "dd4452bda2f16395a53605a0e9268340aa9430427cd139660265800ff289e083",
+      "duration_seconds": 81.0
+    }
+  ],
+  "commander_cancel_quote": "开头20s单簧管高音部音乐旋律依然嘈杂，可能是模型能力问题，取消指挥官音乐吧",
+  "commander_disposition": "cancelled_by_user_no_further_generation",
+  "no_audio_changes": true
+}

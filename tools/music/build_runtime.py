@@ -3,7 +3,7 @@
 # requires-python = ">=3.12"
 # dependencies = ["soundfile==0.13.1"]
 # ///
-"""Build title Oggs from adopted WAVs without changing the source packages."""
+"""Build runtime Oggs from adopted WAVs without changing the source packages."""
 import argparse
 import hashlib
 import json
@@ -27,13 +27,15 @@ def measure(path):
     return json.loads(result.stderr[result.stderr.rfind('{'):result.stderr.rfind('}') + 1])
 
 
-def build():
+def build(battle=False):
     import soundfile as sf
     catalog = json.loads((ROOT / 'assets/audio/music/catalog.json').read_text())
     out = ROOT / 'assets/audio/music/runtime'
     out.mkdir(parents=True, exist_ok=True)
     tracks = []
     for track in catalog['tracks']:
+        if (track.get('category', 'title') != 'title') != battle:
+            continue
         source = ROOT / 'assets/audio/music' / track['audio']
         assert sha(source) == track['sha256'], track['id'] + ': source hash changed'
         original = measure(source)
@@ -56,7 +58,7 @@ def build():
         duration = float(probe['format']['duration'])
         assert abs(duration - track['duration_seconds']) < 0.1
         assert probe['streams'][0]['channels'] == 2 and probe['streams'][0]['sample_rate'] == '48000'
-        tracks.append({'id': track['id'], 'title': track['title'],
+        tracks.append({'category': track.get('category', 'title'), 'id': track['id'], 'title': track['title'],
                        'path': 'res://' + target.relative_to(ROOT).as_posix(), 'duration': duration,
                        'source_sha256': track['sha256'], 'sha256': sha(target), 'gain_db': round(gain, 5),
                        'integrated_lufs': float(encoded['input_i']), 'true_peak_dbfs': peak,
@@ -70,13 +72,16 @@ def build():
                                'true_peak_ceiling_dbfs': PEAK_CEILING, 'method': 'constant gain; no compression, trim or new music',
                                'loop_policy': 'whole accepted song with hard cuts at the end; human three-cycle review pending',
                                'resume_policy': 'no verified phrase markers yet; advance queue on return'}}
-    destination = ROOT / 'data/audio/music_manifest.json'
+    if battle:
+        manifest.pop('main_theme_id')
+        manifest['processing']['loop_policy'] = 'battle: whole accepted song; result: play once then silence; human loop markers pending'
+    destination = ROOT / ('data/audio/battle_music_manifest.json' if battle else 'data/audio/music_manifest.json')
     destination.parent.mkdir(parents=True, exist_ok=True)
     destination.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + '\n')
 
 
-def check():
-    data = json.loads((ROOT / 'data/audio/music_manifest.json').read_text())
+def check(battle=False):
+    data = json.loads((ROOT / ('data/audio/battle_music_manifest.json' if battle else 'data/audio/music_manifest.json')).read_text())
     for track in data['tracks']:
         path = ROOT / track['path'].removeprefix('res://')
         assert sha(path) == track['sha256']
@@ -90,5 +95,6 @@ def check():
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--check', action='store_true')
+    parser.add_argument('--battle', action='store_true')
     args = parser.parse_args()
-    check() if args.check else build()
+    check(args.battle) if args.check else build(args.battle)

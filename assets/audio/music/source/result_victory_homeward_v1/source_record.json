@@ -1,0 +1,154 @@
+{
+  "id": "result_victory_homeward_v1",
+  "title": "凯旋余晖",
+  "original_title": "同伴归航",
+  "previous_titles": [
+    "同伴归航",
+    "欢庆归航·凯旋余韵"
+  ],
+  "name_history": [
+    {
+      "date": "2026-10-02",
+      "from": "同伴归航",
+      "to": "欢庆归航·凯旋余韵",
+      "reason": "用户要求入库战斗音乐名称带风格和特点；结算新增名同样体现情绪与余韵"
+    },
+    {
+      "date": "2026-10-02",
+      "from": "欢庆归航·凯旋余韵",
+      "to": "凯旋余晖",
+      "reason": "用户要求用更加文学的方式命名，不能偏离提示词与对应风格",
+      "basis": "提示词为earned victory、celebration to calm、homecoming phrase；“余晖”喻凯旋后的温暖回响，不新增黄昏场景限制。"
+    }
+  ],
+  "category": "victory",
+  "intended_use": "胜利结算：前段开心庆功，尾部安静淡出；结果开头／余韵边界待标定",
+  "status": "human_accepted_source",
+  "approval_quote": "收入正式素材",
+  "approval_date": "2026-10-02",
+  "approval_source": "acceptance.review.json",
+  "source_record": "battle_review04_20261002/result_victory",
+  "postprocess_record": "battle_revision04_edit_20261002_03/result_victory",
+  "generation_record": "battle_revision03_20261002_07/result_victory",
+  "source_file": "source.wav",
+  "source_sha256": "8c692d857f7ee38a5c597544faf7620dab431064cdea2586d9c607d917eed4bf",
+  "audio": {
+    "channels": 2,
+    "duration_seconds": 25.0,
+    "human_status": "pending",
+    "issues": [],
+    "peak": 0.8912353515625,
+    "quiet_regions_seconds": [],
+    "quiet_threshold_dbfs": -55,
+    "rms": 0.16209389288104215,
+    "rms_dbfs": [
+      -20.01,
+      -22.36,
+      -20.25,
+      -21.09,
+      -19.76,
+      -18.5,
+      -18.09,
+      -18.74,
+      -13.97,
+      -13.22,
+      -14.86,
+      -14.58,
+      -13.78,
+      -12.74,
+      -13.38,
+      -12.53,
+      -12.35,
+      -12.08,
+      -13.43,
+      -15.22,
+      -16.8,
+      -28.91,
+      -34.98,
+      -42.47,
+      -52.66
+    ],
+    "sample_rate": 48000,
+    "sha256": "8c692d857f7ee38a5c597544faf7620dab431064cdea2586d9c607d917eed4bf",
+    "technical_status": "basic_checks_passed",
+    "trailing_quiet_seconds": 0.0,
+    "window_seconds": 1
+  },
+  "regions": {
+    "start": 0,
+    "end": 25.0,
+    "loop": null,
+    "result_intro_end": null,
+    "resume_points": null
+  },
+  "loudness": {
+    "integrated_lufs": -13.32,
+    "loudness_range_lu": 6.9,
+    "true_peak_dbtp": -0.96,
+    "processing": "measurement only; adopted edited WAV unchanged"
+  },
+  "production": {
+    "category": "victory",
+    "comparison_audio": "result_victory_before.wav",
+    "id": "result_victory",
+    "postprocess": {
+      "fade_out_seconds": [
+        20,
+        25
+      ],
+      "gain_function": "0.5 + 0.5*cos(pi * frame_index/(fade_frame_count-1))",
+      "input_sha256": "c2a9e61d74113cb985b3ec80907be59e494676e58db77f3c63a15a46a3b659ca",
+      "last_frame_zero_verified": true,
+      "method": "user_requested_trim_and_half_cosine_fade",
+      "no_inference": true,
+      "no_normalization": true,
+      "original_duration_seconds": 30,
+      "output_duration_seconds": 25,
+      "output_sha256": "8c692d857f7ee38a5c597544faf7620dab431064cdea2586d9c607d917eed4bf",
+      "removed_seconds": [
+        25,
+        30
+      ],
+      "source_record": "battle_review03_20261002/result_victory",
+      "unchanged_pcm_seconds": [
+        0,
+        20
+      ],
+      "unchanged_pcm_verified": true,
+      "version": 1
+    },
+    "request": {
+      "audio_duration": 25,
+      "audio_format": "wav",
+      "batch_size": 1,
+      "bpm": 104,
+      "guidance_scale": 7.0,
+      "inference_steps": 50,
+      "key_scale": "D Major",
+      "lm_backend": "pt",
+      "lm_model_path": "acestep-5Hz-lm-4B",
+      "lyrics": "[Instrumental]",
+      "model": "acestep-v15-xl-sft",
+      "prompt": "Instrumental thirty-second victory results cue for an anime shipgirl naval game. Open immediately with a genuinely joyful short rising French horn melody, buoyant rhythmic phrasing and a bright clear major resolution, gently supported by viola chords and one restrained timpani accent. Explicit earned victory and happy companions, not just cozy contentment. This four-to-six-second celebration happens once. Then gradually settle into a tender clarinet and piano homecoming phrase, quieter and slower in gesture, with a complete gentle peaceful ending. Simple memorable melody, one lead at a time, transparent small ensemble and well-shaped emotional descent from celebration to calm. No repeated fanfare, busy countermelodies, dense drums or sudden loudness spikes. Music only, entirely instrumental: no voices, choir, speech, ocean ambience or weapon sounds. Clear melodic lead and quiet supporting parts, natural acoustic tone, comfortable midrange, restrained dynamics and coherent connected phrases.",
+      "seed": 20261002307,
+      "thinking": true,
+      "time_signature": "4",
+      "use_cot_caption": false,
+      "use_cot_language": false,
+      "use_random_seed": false,
+      "vocal_language": "unknown"
+    },
+    "source_record": "battle_revision04_edit_20261002_03/result_victory",
+    "title": "胜利修订 · 同伴归航",
+    "version_note": "按第三轮反馈裁至25秒，20–25秒半余弦淡出；0–20秒PCM原样保留，无新生成。原旋律及此版收尾待听审。"
+  },
+  "pending": [
+    "loop and section boundary verification",
+    "in-game mixing",
+    "runtime encoding and integration",
+    "model/weights usage terms verification"
+  ],
+  "runtime_ready": false,
+  "style_description": "明亮胜利短句后转温暖余韵；圆号庆功，单簧管与钢琴安静归航。",
+  "naming_basis": "提示词为earned victory、celebration to calm、homecoming phrase；“余晖”喻凯旋后的温暖回响，不新增黄昏场景限制。"
+}

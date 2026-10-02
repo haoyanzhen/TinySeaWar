@@ -188,3 +188,11 @@ GameFlow 本机 ConfigFile 新增 `battle.skill_cutin_mode = full | simple | off
 - 加载时校验类型、路径、时长、循环与恢复点；真实设备加载后还检查资源类型和引擎时长。Ogg自身关闭循环；自动轮播在完整曲尾、单曲循环在循环终点、手动下一首在点击时硬切。切歌先立即停止所有旧声部，再以完整曲目增益播放新流，保持标题暂停状态；同一时刻最多播放一路。旧 `crossfade_seconds` 元数据退出正式清单及构建工具，加载不再消费。
 
 会话内保存队列、标题暂停和离开位置，不跨重启保存。播放模式另存于本机 `tiny_sea_war_settings.cfg` 的 `music.playback_mode = sequence | shuffle | single`；`music.rotation_mode = sequence | shuffle` 保存解除单曲循环时的返回方式。缺字段或非法类型/枚举回退shuffle，保存保留audio/menu/display等其他节。模式立即生效，写入失败保留会话选择并向UI显示失败；冷启动仍先播主主题，使用保存的播放模式。标题暂停只冻结标题播放器；Music音量及音乐静音经SoundManager共享本机设置即时生效。无图形进程不加载音频流、不创建音乐播放器、不自动推进音乐时钟。
+
+## 战斗音乐运行时清单
+
+`data/audio/battle_music_manifest.json` 复用标题清单的schema版本、scene_fade_seconds、资源/时长/循环/响度/哈希校验；无main_theme_id。`tracks[].category` 必须为 `battle | victory | defeat`，其他类别不进入战斗池。曲库与标题队列分离，播放器及Music总线共用。
+
+当前Presentation映射：`level.tutorial.*`优先watchful_route/gentle_companions，`level.challenge.l05`优先finale_distant_decisive，其余使用排除finale的五首battle曲；专用资源缺失回退常规池，多候选排除上一局曲目。ID均为catalog中的稳定ID；资源加载失败跳过候选，胜负类别不能互相替代。
+
+每次成功创建场景战斗开始新音乐会话，公开快照phase/result驱动暂停及结算；结果复用BattleResultPresentation分类且每局一次。战斗暂停不停止音乐，线性音量平滑降至0.35；标题暂停与标题播放模式不影响局内。无验收区段时battle按完整时长循环，result播完后安静；human_loop_status/human_mix_status保持pending，不将完整循环视为主体或余韵验收。无图形仅显式advance推进测试时钟，不加载流或创建声部。

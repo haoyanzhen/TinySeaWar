@@ -14,6 +14,14 @@ var content: VBoxContainer
 var custom_size_selector: OptionButton
 var custom_map_selector: OptionButton
 var custom_weather_selector: OptionButton
+var custom_difficulty_selector: OptionButton
+var custom_difficulty := "Standard"
+var custom_enemy_summary: Label
+var custom_fleet_tabs: TabContainer
+var custom_enemy_column: VBoxContainer
+var custom_reroll_button: Button
+var custom_preview: Dictionary = {}
+var custom_preview_key := ""
 var custom_environment_selector: OptionButton
 var custom_environment_schedule: Label
 var custom_environment_id := ""
@@ -528,8 +536,8 @@ func _fleet_preview(parent: Node, title: String, fleet: Array, friendly := true)
 	column.custom_minimum_size.x = 606
 	_label(column, "%s  /  %d 艘" % [title, fleet.size()], 18, Kit.MUTED)
 	var row := GridContainer.new()
-	row.columns = mini(6, maxi(1, fleet.size()))
-	row.add_theme_constant_override("h_separation", 6)
+	row.columns = mini(4, maxi(1, fleet.size()))
+	row.add_theme_constant_override("h_separation", 10)
 	row.add_theme_constant_override("v_separation", 12)
 	column.add_child(row)
 	for member in fleet:
@@ -538,10 +546,10 @@ func _fleet_preview(parent: Node, title: String, fleet: Array, friendly := true)
 		var ship_name := str(ship.get("display_name", "未知舰娘"))
 		var ship_class := UiText.ship_class_name(str(ship.get("ship_class", "")))
 		var card := _column(row, 4)
-		card.custom_minimum_size.x = 96
+		card.custom_minimum_size.x = 144
 		card.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 		var slot := Control.new()
-		slot.custom_minimum_size = Vector2(96, 96)
+		slot.custom_minimum_size = Vector2(144, 144)
 		slot.mouse_filter = Control.MOUSE_FILTER_PASS
 		slot.tooltip_text = "%s · %s%s" % [ship_name, ship_class, " · 旗舰" if member.get("is_flagship", false) else ""]
 		slot.set_meta("portrait_slot", true)
@@ -571,10 +579,10 @@ func _fleet_preview(parent: Node, title: String, fleet: Array, friendly := true)
 		image.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		slot.add_child(image)
 		image.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-		image.offset_left = 5
-		image.offset_top = 5
-		image.offset_right = -5
-		image.offset_bottom = -5
+		image.offset_left = 7
+		image.offset_top = 7
+		image.offset_right = -7
+		image.offset_bottom = -7
 		if member.get("is_flagship", false):
 			var badge := PanelContainer.new()
 			badge.name = "FlagshipBadge"
@@ -584,17 +592,17 @@ func _fleet_preview(parent: Node, title: String, fleet: Array, friendly := true)
 			badge.mouse_filter = Control.MOUSE_FILTER_IGNORE
 			slot.add_child(badge)
 			badge.position = Vector2(3, 3)
-			badge.size = Vector2(38, 24)
-			var badge_label := _label(badge, "旗舰", 14)
+			badge.size = Vector2(44, 28)
+			var badge_label := _label(badge, "旗舰", 16)
 			badge_label.autowrap_mode = TextServer.AUTOWRAP_OFF
 			badge_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		var name_label := _label(card, ship_name, 16 if ship_name.length() > 5 else 18)
+		var name_label := _label(card, ship_name, 20)
 		name_label.name = "ShipName"
-		name_label.custom_minimum_size.y = 26
+		name_label.custom_minimum_size.y = 28
 		name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		name_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 		name_label.tooltip_text = slot.tooltip_text
-		var class_label := _label(card, ship_class, 17, Kit.TEAL if friendly else Color("#a7424e"))
+		var class_label := _label(card, ship_class, 18, Kit.TEAL if friendly else Color("#a7424e"))
 		class_label.name = "ShipClass"
 		class_label.autowrap_mode = TextServer.AUTOWRAP_OFF
 		class_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -619,13 +627,22 @@ func _show_custom() -> void:
 		if id == custom_environment_id: custom_environment_selector.select(index)
 	custom_environment_schedule = _label(content, "", 14, Kit.MUTED)
 	custom_environment_schedule.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	custom_environment_selector.item_selected.connect(func(index): custom_environment_id = str(custom_environment_selector.get_item_metadata(index)); _refresh_environment_schedule())
+	custom_environment_selector.item_selected.connect(func(index): custom_environment_id = str(custom_environment_selector.get_item_metadata(index)); _refresh_environment_schedule(); _refresh_fleet_state())
+	custom_difficulty_selector = _selector_with_label(selectors, "敌军难度")
+	for difficulty in ["Easy", "Standard", "Hard"]:
+		custom_difficulty_selector.add_item({"Easy":"简单", "Standard":"标准", "Hard":"困难"}[difficulty])
+		var index := custom_difficulty_selector.item_count - 1
+		custom_difficulty_selector.set_item_metadata(index, difficulty)
+		if difficulty == custom_difficulty: custom_difficulty_selector.select(index)
+	custom_difficulty_selector.item_selected.connect(func(index): custom_difficulty = str(custom_difficulty_selector.get_item_metadata(index)); _refresh_fleet_state())
+	for selector in [custom_size_selector, custom_map_selector, custom_weather_selector, custom_environment_selector, custom_difficulty_selector]:
+		selector.custom_minimum_size.x = 310
 	_refresh_custom_maps()
 	_load_weather_options()
 	_refresh_environment_schedule()
 	custom_size_selector.item_selected.connect(func(index): custom_size_index = index; custom_map_index = 0; _refresh_custom_maps(); _refresh_fleet_state())
-	custom_map_selector.item_selected.connect(func(index): custom_map_index = index)
-	custom_weather_selector.item_selected.connect(func(index): custom_weather_id = str(custom_weather_selector.get_item_metadata(index)))
+	custom_map_selector.item_selected.connect(func(index): custom_map_index = index; _refresh_fleet_state())
+	custom_weather_selector.item_selected.connect(func(index): custom_weather_id = str(custom_weather_selector.get_item_metadata(index)); _refresh_fleet_state())
 	var body := _row(content, 24)
 	body.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	var roster := _column(body, 12)
@@ -654,10 +671,33 @@ func _show_custom() -> void:
 	var summary := PanelContainer.new()
 	summary.custom_minimum_size.x = 380
 	body.add_child(summary)
-	var summary_column := _column(summary, 12)
-	_label(summary_column, "你的出击舰队", 25)
+	var summary_column := _column(summary, 8)
+	_label(summary_column, "对战编成", 25)
 	custom_status = _label(summary_column, "", 19)
-	fleet_column = _column(_scroll(summary_column), 10)
+	custom_enemy_summary = _label(summary_column, "选满舰队后生成敌军。", 17, Kit.MUTED)
+	custom_fleet_tabs = TabContainer.new()
+	custom_fleet_tabs.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	custom_fleet_tabs.add_theme_stylebox_override("panel", StyleBoxEmpty.new())
+	for state in ["tab_selected", "tab_unselected", "tab_hovered"]:
+		var style := StyleBoxFlat.new()
+		style.bg_color = Kit.TEAL if state == "tab_selected" else Color("#e7f1f4")
+		style.content_margin_left = 12
+		style.content_margin_right = 12
+		style.content_margin_top = 6
+		style.content_margin_bottom = 6
+		custom_fleet_tabs.add_theme_stylebox_override(state, style)
+	custom_fleet_tabs.add_theme_color_override("font_selected_color", Color.WHITE)
+	custom_fleet_tabs.add_theme_color_override("font_unselected_color", Kit.INK)
+	custom_fleet_tabs.add_theme_color_override("font_hovered_color", Kit.INK)
+	custom_fleet_tabs.add_theme_font_size_override("font_size", 17)
+	summary_column.add_child(custom_fleet_tabs)
+	var player_scroll := _scroll(custom_fleet_tabs)
+	player_scroll.name = "己方编成"
+	fleet_column = _column(player_scroll, 10)
+	var enemy_scroll := _scroll(custom_fleet_tabs)
+	enemy_scroll.name = "敌军预览"
+	custom_enemy_column = _column(enemy_scroll, 5)
+	custom_reroll_button = _button(summary_column, "重抽敌军", _reroll_custom_enemy, Vector2(340, 42))
 	custom_start_button = _button(summary_column, "确认编成 · 出击", _start_custom_battle, Vector2(340, 58), true)
 	_refresh_fleet_state()
 	_filter_ships()
@@ -749,7 +789,7 @@ func _refresh_fleet_state() -> void:
 	while selected_ship_ids.size() > required: selected_ship_ids.pop_back()
 	var used := 0
 	for id in selected_ship_ids: used += int(DataRegistry.registry.get_definition("ships", id).get("cost", 0))
-	custom_status.text = "已选 %d / %d 艘\nCost %d / %d%s" % [selected_ship_ids.size(), required, used, int(option["cost"]), " · 超出预算" if used > int(option["cost"]) else ""]
+	custom_status.text = "己方 %d/%d 艘 · Cost %d/%d%s" % [selected_ship_ids.size(), required, used, int(option["cost"]), " · 超出预算" if used > int(option["cost"]) else ""]
 	custom_status.add_theme_color_override("font_color", Color("#a7424e") if used > int(option["cost"]) else Kit.INK)
 	for id in ship_buttons: ship_buttons[id].set_pressed_no_signal(id in selected_ship_ids)
 	_clear(fleet_column)
@@ -763,10 +803,44 @@ func _refresh_fleet_state() -> void:
 		_button(row, "移除", func(): selected_ship_ids.erase(id); _refresh_fleet_state(), Vector2(64, 38)).add_theme_font_size_override("font_size", 15)
 	if selected_ship_ids.is_empty(): _label(fleet_column, "从左侧选择已拥有的舰娘。\n第一位加入的舰娘成为旗舰。", 19, Kit.MUTED)
 	custom_start_button.disabled = selected_ship_ids.size() != required or used > int(option["cost"]) or custom_map_selector.item_count == 0 or custom_weather_selector.item_count == 0
+	_refresh_custom_enemy()
+
+
+func _reroll_custom_enemy() -> void:
+	custom_preview_key = ""
+	_refresh_custom_enemy(true)
+	custom_fleet_tabs.current_tab = 1
+
+
+func _refresh_custom_enemy(preserve_battle_seed: bool = false) -> void:
+	_clear(custom_enemy_column)
+	custom_reroll_button.disabled = true
+	if selected_ship_ids.size() != int(CUSTOM_SIZES[custom_size_index]["count"]) or custom_map_selector.item_count == 0:
+		custom_preview.clear()
+		custom_preview_key = ""
+		custom_enemy_summary.text = "选满舰队后生成敌军。"
+		return
+	var map_id := str(custom_map_selector.get_item_metadata(custom_map_selector.selected))
+	var key := JSON.stringify([custom_size_index, map_id, custom_weather_id, selected_ship_ids, custom_environment_id, custom_difficulty])
+	if key != custom_preview_key:
+		custom_preview = GameFlow.configure_custom_battle(str(CUSTOM_SIZES[custom_size_index]["base"]), map_id, custom_weather_id, selected_ship_ids, custom_environment_id, custom_difficulty, -1, int(custom_preview.get("battle_seed", -1)) if preserve_battle_seed else -1, true)
+		custom_preview_key = key
+	if not custom_preview.get("ok", false):
+		custom_enemy_summary.text = "当前海域与预算暂无可用敌方阵容。" if custom_preview.get("error", "") == "CUSTOM_NO_ENEMY_ROSTER" else "编成暂不可用，请检查预算、角色与出生位置。"
+		custom_start_button.disabled = true
+		return
+	var labels := {"Easy":"简单", "Standard":"标准", "Hard":"困难"}
+	custom_enemy_summary.text = "%s · Cost %d～%d · %d套\n%s · Cost %d" % [labels[custom_difficulty], custom_preview.lower, custom_preview.upper, custom_preview.candidate_count, custom_preview.roster.display_name, custom_preview.enemy_cost]
+	for member in custom_preview.level.enemy_fleet:
+		var ship: Dictionary = DataRegistry.registry.get_definition("ships", str(member.ship_id))
+		_label(custom_enemy_column, ("★ " if member.is_flagship else "") + str(ship.display_name) + " · " + UiText.ship_class_name(str(ship.ship_class)), 17)
+	custom_reroll_button.disabled = false
 
 
 func _start_custom_battle() -> void:
-	var result: Dictionary = GameFlow.configure_custom_battle(str(CUSTOM_SIZES[custom_size_index]["base"]), str(custom_map_selector.get_item_metadata(custom_map_selector.selected)), str(custom_weather_selector.get_item_metadata(custom_weather_selector.selected)), selected_ship_ids, custom_environment_id)
+	_refresh_custom_enemy()
+	if not custom_preview.get("ok", false): return
+	var result: Dictionary = GameFlow.configure_custom_battle(str(CUSTOM_SIZES[custom_size_index]["base"]), str(custom_map_selector.get_item_metadata(custom_map_selector.selected)), custom_weather_id, selected_ship_ids, custom_environment_id, custom_difficulty, int(custom_preview.roster_seed), int(custom_preview.battle_seed))
 	if not result.get("ok", false):
 		custom_status.text = "编成或地图暂不可用，请检查舰队人数与角色解锁状态。"
 		return

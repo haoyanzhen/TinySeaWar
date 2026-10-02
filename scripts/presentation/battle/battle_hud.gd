@@ -437,6 +437,9 @@ func _draw_facility_panel(rect: Rect2, facility: Dictionary) -> void:
 	var mine_result: Dictionary = status.get("last_mine_deployment_result", {})
 	if not mine_result.is_empty():
 		interruption = "布雷结果：有效 %d / 失效 %d" % [int(mine_result.get("active_count", 0)), int(mine_result.get("invalid_count", 0))] if mine_result.get("result", "") == "Completed" else "布雷已取消"
+	if interruption.is_empty():
+		var hints := {"coastal_observation_post":"占领后提供岸基光学侦查", "coastal_battery":"自动炮击；受通信站控制", "forward_supply_point":"服务7秒：完成装填、技能冷却−12秒", "coastal_airfield":"己方可K空袭、⇧K巡逻、⌘K侦察", "radar_station":"开战30秒启动；范围1400、穿透岸线", "communication_station":"港湾占领：接管岸炮、机场与雷达", "mine_control_station":"占领后L布雷；友舰也会触雷", "repair_berth":"服务9秒：恢复28%耐久，上限80%"}
+		draw_string(ThemeDB.fallback_font, rect.position + Vector2(18.0, 151.0), str(hints.get(str(facility.get("asset_semantic", "")), "")), HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 36.0, 12, TEXT_SOFT)
 	if not interruption.is_empty(): draw_string(ThemeDB.fallback_font, rect.position + Vector2(18.0, 151.0), "上次中断：%s" % interruption, HORIZONTAL_ALIGNMENT_LEFT, rect.size.x - 36.0, 12, Color("#a14b4b"))
 	var actions := [
 		{"key":"H", "icon":"ui_icon_facility_seize", "text":"控制/占领", "ready":status.get("control_ready", false)},
@@ -980,8 +983,12 @@ func _sync_interaction_controls() -> void:
 	var objective: Dictionary = snapshot.get("level_objective", {})
 	var lines: Array[String] = ["%s：%s" % [objective.get("title", "任务"), objective.get("summary", "")]]
 	if bool(objective.get("is_tutorial", false)):
+		var prioritize_instruction: bool = objective.get("objective_set_id", "") == "objective.t08_command"
+		if prioritize_instruction: lines = [str(objective.get("title", "任务"))]
 		lines.append("当前操作：%s" % objective.get("instruction", ""))
 		if not str(objective.get("ability_limit_text", "")).is_empty(): lines.append(str(objective["ability_limit_text"]))
+		if prioritize_instruction and objective.get("summary", "") != objective.get("instruction", ""):
+			lines.append("任务说明：%s" % objective.get("summary", ""))
 	else:
 		var steps: Array = objective.get("mission_steps", [])
 		var completed: int = steps.filter(func(step): return bool(step.get("completed", false))).size()

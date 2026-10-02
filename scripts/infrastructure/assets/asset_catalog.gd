@@ -176,7 +176,7 @@ func _load_menu_covers() -> void:
 		var cover: Dictionary = _normalize_paths(raw)
 		var cover_id := str(cover.get("id", ""))
 		var path := str(cover.get("image", ""))
-		if cover_id.is_empty() or seen.has(cover_id) or not path.begins_with("res://assets/ui/processed/menu/") or not FileAccess.file_exists(path):
+		if cover_id.is_empty() or seen.has(cover_id) or not path.begins_with("res://assets/ui/processed/menu/") or not ResourceLoader.exists(path):
 			errors.append("Invalid or missing menu cover: %s" % cover_id)
 			continue
 		seen[cover_id] = true
@@ -336,16 +336,13 @@ func _scan_named_assets(directory_path: String, prefix: String, required := true
 		if required:
 			errors.append("Missing runtime asset directory: %s" % directory_path)
 		return result
-	directory.list_dir_begin()
-	var file_name := directory.get_next()
-	while not file_name.is_empty():
-		if not directory.current_is_dir() and file_name.ends_with(".png"):
+	# ResourceLoader lists logical resource names in both source and exported PCKs.
+	for file_name in ResourceLoader.list_directory(directory_path):
+		if file_name.ends_with(".png"):
 			var semantic := file_name.get_basename()
 			if semantic.begins_with(prefix):
 				semantic = semantic.trim_prefix(prefix)
-			result[semantic] = "%s/%s" % [directory_path, file_name]
-		file_name = directory.get_next()
-	directory.list_dir_end()
+				result[semantic] = "%s/%s" % [directory_path, file_name]
 	return result
 
 

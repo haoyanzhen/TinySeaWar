@@ -95,20 +95,59 @@ func _draw() -> void:
 	if str(unit.get("life_state", "Alive")) == "Sunk":
 		fallback_color = Color("#6c7780")
 	var visual_style := _unit_visual_style()
-	draw_colored_polygon(_ellipse_points(collision_half_extents + Vector2(12.0, 12.0), heading), visual_style["underlay_color"])
-	_draw_unit_art(fallback_color, visual_style["body_tint"], visual_style["rig_tint"])
-	draw_polyline(_ellipse_points(collision_half_extents, heading, true), visual_style["outline_color"], 1.5, true)
-	var heading_vector := Vector2.RIGHT.rotated(heading)
-	draw_line(Vector2.ZERO, heading_vector * (collision_half_extents.x + 34.0), visual_style["heading_color"], 2.5)
+	# Keep sea contact and selection underneath the authored character art.
+	_draw_soft_contact(collision_half_extents, heading, visual_style["underlay_color"])
 	if selected:
-		_draw_ui_icon("ui_marker_selected", Vector2.ZERO, 0.85)
-		draw_polyline(_ellipse_points(collision_half_extents + Vector2(19.0, 19.0), heading, true), Color("#f8ef9a") if primary_selected else Color("#66e6ff"), 3.0, true)
+		_draw_selection_arcs(collision_half_extents + Vector2(19.0, 19.0), heading)
+	_draw_unit_art(fallback_color, visual_style["body_tint"], visual_style["rig_tint"])
+	if str(unit.get("life_state", "Alive")) != "Sunk":
+		_draw_heading_pointer(collision_half_extents, heading, visual_style["heading_color"])
 	if focused:
-		_draw_ui_icon("ui_marker_target", Vector2.ZERO, 0.9)
-		draw_polyline(_ellipse_points(collision_half_extents + Vector2(25.0, 25.0), heading, true), Color("#ffb35c"), 3.0, true)
+		_draw_target_corners(collision_half_extents, heading)
 	if bool(unit.get("is_flagship", false)):
 		_draw_ui_icon("ui_marker_flagship", Vector2(0.0, -radius - 34.0), 0.42)
 	_draw_health_bar(radius, friendly)
+
+
+func _draw_soft_contact(extents: Vector2, heading: float, color: Color) -> void:
+	# Nested low-alpha fills approximate a feathered patch, with no hard rim.
+	for layer in range(6):
+		var fraction := float(layer) / 5.0
+		var patch := extents * lerpf(1.12, 0.55, fraction)
+		draw_colored_polygon(_ellipse_points(patch, heading), Color(color, color.a * 0.07))
+
+
+func _draw_selection_arcs(extents: Vector2, heading: float) -> void:
+	var color := Color("#ffc857") if primary_selected else Color("#66d9ed")
+	color.a = 0.85 if primary_selected else 0.55
+	var half_span := deg_to_rad(48.0 if primary_selected else 30.0)
+	for center in [PI * 0.5, PI * 1.5]:
+		var points := PackedVector2Array()
+		for step in range(25):
+			var angle := float(center) - half_span + 2.0 * half_span * float(step) / 24.0
+			points.append(Vector2(cos(angle) * extents.x, sin(angle) * extents.y).rotated(heading))
+		draw_polyline(points, color, 1.8 if primary_selected else 1.3, true)
+
+
+func _draw_heading_pointer(extents: Vector2, heading: float, color: Color) -> void:
+	var tip := extents.x + 31.0
+	var points := PackedVector2Array([
+		Vector2(tip - 7.0, -4.0).rotated(heading),
+		Vector2(tip, 0.0).rotated(heading),
+		Vector2(tip - 7.0, 4.0).rotated(heading),
+	])
+	draw_polyline(points, Color(color, color.a * (0.9 if selected else 0.65)), 1.5, true)
+
+
+func _draw_target_corners(extents: Vector2, heading: float) -> void:
+	# Screen-aligned corners remain distinct from heading-aligned friendly arcs.
+	var c := cos(heading)
+	var s := sin(heading)
+	var bounds := Vector2(sqrt(pow(extents.x * c, 2) + pow(extents.y * s, 2)), sqrt(pow(extents.x * s, 2) + pow(extents.y * c, 2))) + Vector2(26.0, 26.0)
+	for x in [-1.0, 1.0]:
+		for y in [-1.0, 1.0]:
+			var corner := Vector2(x * bounds.x, y * bounds.y)
+			draw_polyline(PackedVector2Array([corner - Vector2(x * 9.0, 0.0), corner, corner - Vector2(0.0, y * 9.0)]), Color(1.0, 0.65, 0.30, 0.85), 1.8, true)
 
 
 func _draw_unit_art(fallback_color: Color, body_tint: Color, rig_tint: Color) -> void:

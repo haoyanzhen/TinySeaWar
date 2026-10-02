@@ -189,9 +189,20 @@ func _draw_level_objective_markers(snapshot: Dictionary) -> void:
 		if center.is_equal_approx(Vector2.INF): continue
 		var radius := float(marker.get("radius", 72.0))
 		var marker_color := Color("#a7d7ff") if marker_type == "Area" else Color("#ffe072")
+		var marker_label := str(marker.get("label", "教学标记"))
+		if objective.get("objective_set_id", "") == "objective.t08_command" and marker_type == "Area":
+			var route_zones: Array = objective.get("route_waypoint_zones", [])
+			for index in range(route_zones.size()):
+				if route_zones[index].get("position", []) != marker.get("position", []): continue
+				var route_step := int(objective.get("route_step", 0))
+				var completed := index < route_step
+				var active := index == route_step
+				marker_color = Color("#67e6a3") if completed else (Color("#ffe072") if active else Color(0.76, 0.9, 0.96, 0.6))
+				marker_label += "（已完成）" if completed else ("（当前目标）" if active else "（下一目标）")
+				break
 		draw_circle(center, radius, Color(marker_color, 0.08))
 		draw_arc(center, radius, 0.0, TAU, 64, marker_color, 3.0)
-		draw_string(ThemeDB.fallback_font, center + Vector2(-120.0, -radius - 16.0), str(marker.get("label", "教学标记")), HORIZONTAL_ALIGNMENT_CENTER, 240.0, 18, marker_color)
+		draw_string(ThemeDB.fallback_font, center + Vector2(-120.0, -radius - 16.0), marker_label, HORIZONTAL_ALIGNMENT_CENTER, 240.0, 18, marker_color)
 
 
 func _draw_mine_deployment_overlay(snapshot: Dictionary) -> void:
@@ -1172,6 +1183,9 @@ func _consume_events(events: Array) -> void:
 			"UnitSunk": _push_message("%s 已沉没" % _unit_display_name(str(event.get("unit_id", ""))))
 			"SkillCast": _push_message("%s 释放了 %s" % [_unit_display_name(str(event.get("unit_id", ""))), _skill_display_name(str(event.get("skill_id", "")))])
 			"MineTriggered": _push_message("%s 触发水雷，受到 %.0f 伤害" % [_unit_display_name(str(event.get("unit_id", ""))), float(event.get("damage", 0.0))])
+			"FacilityActivated": _push_message("%s 已启动" % session.facility_service.facilities_by_id.get(str(event.get("facility_id", "")), {}).get("display_name", "岸基设施"))
+			"FacilityControlCompleted": _push_message("%s 已完成占领" % session.facility_service.facilities_by_id.get(str(event.get("facility_id", "")), {}).get("display_name", "岸基设施"))
+			"FacilitySystemHandedOver": _push_message("%s已接管岸炮、机场与雷达" % ("我方" if event.get("faction_id", "") == "player" else "敌方"))
 			"FacilitySuppressed": _push_message("岸基设施已被压制")
 			"FacilityRecovered": _push_message("岸基设施恢复运行")
 			"FacilityDestroyed": _push_message("岸基设施已被摧毁")
@@ -1239,11 +1253,14 @@ func _start_battle(new_level_id: String) -> void:
 		if runtime_level.is_empty(): runtime_level = DataRegistry.registry.get_definition("levels", new_level_id).duplicate(true)
 		runtime_level["map"]["ocean_palette"] = palette_override
 		runtime_level["map"].erase("environment_timeline_id")
-	var result: Dictionary = session.create_battle_from_definition(runtime_level, 20260614) if not runtime_level.is_empty() else session.create_battle(new_level_id, 20260614)
+	var result: Dictionary = session.create_battle_from_definition(runtime_level, int(runtime_level.get("custom_match", {}).get("battle_seed", 20260614))) if not runtime_level.is_empty() else session.create_battle(new_level_id, 20260614)
 	if not result.get("ok", false):
 		push_error("Battle creation failed: %s" % result.get("errors", []))
 		session = null
+		MusicManager.leave_battle()
+		MusicManager.enter_title()
 		return
+	MusicManager.enter_battle(new_level_id)
 	sound_director.setup(SoundManager, session.get_player_slots().size() >= 11, float(session.state.get("time_limit", 1200)), session.aviation_rules_mode == "Physical")
 	accumulator = 0.0
 	selected_unit_id = ""
@@ -1287,6 +1304,7 @@ func _sync_visuals() -> void:
 		return
 	var snapshot: Dictionary = session.snapshot("player", terrain_debug_overlay.visible)
 	var sound_view: Dictionary = session.snapshot("player", false) if terrain_debug_overlay.visible else snapshot
+	MusicManager.sync_battle(str(sound_view.get("phase", "")), sound_view.get("result", {}))
 	sound_director.update(sound_view, battle_camera.position, selected_unit_id, _sound_near_coast())
 	_sync_environment_visuals(snapshot.get("global_environment", {}))
 	effect_director.sync_snapshot(snapshot, selected_unit_id, focused_target_id, _selected_live_ids())
@@ -1383,6 +1401,7 @@ func _restart_battle() -> void:
 
 
 func _exit_tree() -> void:
+	MusicManager.leave_battle()
 	SoundManager.clear_battle()
 
 

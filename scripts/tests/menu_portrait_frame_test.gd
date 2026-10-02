@@ -16,7 +16,7 @@ func run() -> void:
 		menu._fleet_preview(parent, "fixture", [{"ship_id":"ship.warspite","is_flagship":true}], friendly)
 		var grid = parent.get_child(0).get_child(1)
 		var slot = grid.get_child(0).get_child(0)
-		check(slot.custom_minimum_size == Vector2(96,96), "square consistent slot")
+		check(slot.custom_minimum_size == Vector2(144,144), "square consistent slot")
 		check("旗舰" in slot.tooltip_text, "flagship identity retained in tooltip")
 		check(slot.get_node("PortraitImage").texture == menu._portrait("ship.warspite"), "unframed character semantic")
 		var expected := "ui_frame_portrait_player" if friendly else "ui_frame_portrait_enemy"

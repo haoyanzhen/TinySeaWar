@@ -1,0 +1,28 @@
+[aist#0:0/pcm_s16le @ 0x79900c180] Guessed Channel Layout: stereo
+Input #0, wav, from 'assets/music/source/title_harbor_promise_v1/source.wav':
+  Duration: 00:01:27.00, bitrate: 1536 kb/s
+  Stream #0:0: Audio: pcm_s16le ([1][0][0][0] / 0x0001), 48000 Hz, stereo, s16, 1536 kb/s
+Stream mapping:
+  Stream #0:0 -> #0:0 (pcm_s16le (native) -> pcm_s16le (native))
+Press [q] to stop, [?] for help
+Output #0, null, to 'pipe:':
+  Metadata:
+    encoder         : Lavf62.12.101
+  Stream #0:0: Audio: pcm_s16le, 192000 Hz, stereo, s16, 6144 kb/s
+    Metadata:
+      encoder         : Lavc62.28.101 pcm_s16le
+[Parsed_loudnorm_0 @ 0x798c09080]
+{
+	"input_i" : "-14.90",
+	"input_tp" : "-1.00",
+	"input_lra" : "2.90",
+	"input_thresh" : "-25.11",
+	"output_i" : "-17.77",
+	"output_tp" : "-3.94",
+	"output_lra" : "2.80",
+	"output_thresh" : "-27.92",
+	"normalization_type" : "dynamic",
+	"target_offset" : "-0.23"
+}
+[out#0/null @ 0x798c08900] video:0KiB audio:65250KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown
+size=N/A time=00:01:27.00 bitrate=N/A speed=31.3x elapsed=0:00:02.77

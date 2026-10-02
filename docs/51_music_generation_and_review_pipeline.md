@@ -73,6 +73,6 @@ uv run --locked python tools/music/music.py serve --output reports/audio/my_batc
 
 ## 5. 长期评审跟踪
 
-[音乐评审跟踪表](../tools/music/reviews/registry.md) 按一个音频版本一条记录汇总用途、人工结论、改良优先级、反馈、计划与后继版本；[JSON 台账](../tools/music/reviews/registry.json) 保存原始请求、哈希、文件位置和历次评审，二者纳入 Git。`tracker.py` 提供登记、导入评审 JSON、更新制作计划和重建表格，具体命令见工具说明。
+[音乐评审跟踪表](../tools/music/reviews/registry.md) 按一个音频版本一条记录汇总用途、人工结论、改良优先级、反馈、计划与后继版本；[JSON 台账](../tools/music/reviews/registry.json) 保存原始请求、哈希、文件位置和历次评审，二者及 `reviews/sources/` 历史反馈均由 Git 忽略，仅保留本地及服务器备份；新检出环境需先恢复备份后继续既有批次。`tracker.py` 提供登记、导入评审 JSON、更新制作计划和重建表格，具体命令见工具说明。
 
 改良版通过父版本标识关联原曲，新版从待复查开始；原有问题与意见不被覆盖，也不因生成新版而自动关闭。用户原话、制作方计划、自动信号提示分开记录。评审 JSON 必须与登记的批次和音频哈希匹配，重复导入去重，较早意见不覆盖较新结论。偏好候选不等于正式资产验收。此台账用于内容制作，不属于游戏运行时配置；清理试听目录前仍须确认原音频可恢复。

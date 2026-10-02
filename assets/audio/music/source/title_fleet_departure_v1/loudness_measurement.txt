@@ -1,0 +1,28 @@
+[aist#0:0/pcm_s16le @ 0xb38c04180] Guessed Channel Layout: stereo
+Input #0, wav, from 'assets/music/source/title_fleet_departure_v1/source.wav':
+  Duration: 00:01:20.00, bitrate: 1536 kb/s
+  Stream #0:0: Audio: pcm_s16le ([1][0][0][0] / 0x0001), 48000 Hz, stereo, s16, 1536 kb/s
+Stream mapping:
+  Stream #0:0 -> #0:0 (pcm_s16le (native) -> pcm_s16le (native))
+Press [q] to stop, [?] for help
+Output #0, null, to 'pipe:':
+  Metadata:
+    encoder         : Lavf62.12.101
+  Stream #0:0: Audio: pcm_s16le, 192000 Hz, stereo, s16, 6144 kb/s
+    Metadata:
+      encoder         : Lavc62.28.101 pcm_s16le
+[Parsed_loudnorm_0 @ 0xb39408900]
+{
+	"input_i" : "-16.71",
+	"input_tp" : "-0.93",
+	"input_lra" : "9.10",
+	"input_thresh" : "-26.83",
+	"output_i" : "-17.00",
+	"output_tp" : "-1.00",
+	"output_lra" : "8.30",
+	"output_thresh" : "-27.10",
+	"normalization_type" : "dynamic",
+	"target_offset" : "-1.00"
+}
+[out#0/null @ 0xb39408180] video:0KiB audio:60000KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown
+size=N/A time=00:01:20.00 bitrate=N/A speed=30.5x elapsed=0:00:02.62

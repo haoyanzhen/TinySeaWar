@@ -56,7 +56,7 @@ uv run --locked python tools/music/music.py serve --output reports/audio/my_batc
 
 ## 评审跟踪与改良版本
 
-长期台账是 [reviews/registry.json](reviews/registry.json)，可读数据表是 [reviews/registry.md](reviews/registry.md)。两者纳入 Git；WAV 和临时评审页仍放在被忽略的 reports 中。台账保存提示词、音频哈希、本地／远端位置、技术检测快照、全部人工意见、独立制作计划及父子版本关系，不依赖浏览器暂存作为长期记录。
+长期台账是 [reviews/registry.json](reviews/registry.json)，可读数据表是 [reviews/registry.md](reviews/registry.md)。台账和 `reviews/sources/` 历史归档均由 Git 忽略，仅保留本地及服务器备份；WAV 和临时评审页仍放在被忽略的 reports 中。台账保存提示词、音频哈希、本地／远端位置、技术检测快照、全部人工意见、独立制作计划及父子版本关系，不依赖浏览器暂存作为长期记录。
 
 ```sh
 # 先运行 music.py review 取得校验报告，再登记整批；旧批次可指定实际远端归档目录。
@@ -76,7 +76,7 @@ uv run --locked python tools/music/tracker.py render
 
 导入先验证整份反馈的批次哈希、音频哈希、曲目唯一性和问题时间范围，失败不写入任何意见。相同来源/评审人/内容重复导入不会新增事件；按评审日期排序保留历史，全页导出中未填写的待评审行不覆盖已有结论。为识别音乐版本，修改过音频后必须重新生成清单版本与技术报告。
 
-台账登记不等于音频备份。清理 reports 前确认远端或正式源资产中仍有对应哈希的 WAV；Git 保存的来源、参数和评审记录不能代替原音频。首批用户聊天反馈原文快照位于 `reviews/sources/20260929_chat_feedback.json`，实际时间点未给出的不自行补造。
+台账登记不等于音频备份。清理 reports 前确认远端或正式源资产中仍有对应哈希的 WAV；台账保存的来源、参数和评审记录不能代替原音频。首批用户聊天反馈原文快照位于 `reviews/sources/20260929_chat_feedback.json`，实际时间点未给出的不自行补造。
 
 ## 信号检查范围
 
@@ -101,3 +101,17 @@ uv run --locked python -m unittest discover -s tools/music -p 'test_*.py' -v
 当前新提交的重绘必须显式传 `chunk_mask_mode=explicit`。部署版本 `ca1e85fe9430179831e6bc6be790c332190a3866` 的 CPU 复现显示：`auto` 将值 2 写入 bool 遮罩，条件遮罩覆盖整曲；`explicit` 才准确表示指定区间。独立的源音频注入遮罩仍正确，不能据此声称整曲都被替换。已提交旧任务可以继续查询，旧清单也可评审，不静默改写历史请求。
 
 该部署的 `repaint_strength` 越高越偏离原曲；balanced + 0.7 实际只在前 30% 步骤注入原曲。保守修补可从 0.2–0.3 开始，同时提供整曲风格与局部意图。部署代码使用模式解析出的交叉淡化值，不能假设请求中的 `repaint_wav_crossfade_sec` 已生效；最终局部拼接须独立记录实际淡化。显式遮罩单变量试验仍出现片段电平偏高，因此遮罩修正不等于听感问题已解决，音乐性与接缝必须人工确认。
+
+## 文件存放约定
+
+- 候选、生成中间产物和历史试听页：`reports/audio/<batch_id>/`，保留批次位置以维持台账及对照链接。
+- 正式采用源版：`assets/audio/music/source/<asset_id>/`；统一索引 `assets/audio/music/catalog.json` 仅供离线制作，不是运行时 manifest。源包由 `.gdignore` 隔离。
+- 长期评审：`tools/music/reviews/`；收到的原始反馈及 attributed 副本另按批次归档到 `reviews/sources/`，索引记录原位置与哈希。不得改写原始决定或历史日志中的路径。
+- 生成工具、服务器配置和模板继续位于 `tools/music/`，不要把每轮脚本或临时 WAV 放入工具目录。
+
+
+## 已采用标题曲的运行时构建
+
+`uv run tools/music/build_runtime.py` 使用脚本内固定的 SoundFile 0.13.1，将 `assets/audio/music/catalog.json` 中的采用 WAV 按恒定增益派生为48kHz双声道Ogg，不压缩动态、不裁剪或修改源包。逐曲测量编码后综合响度、响度范围、真峰值并写入 `data/audio/music_manifest.json`；只读校验使用 `python3 tools/music/build_runtime.py --check`。构建依赖ffmpeg/ffprobe作测量，Vorbis由libsndfile编码，分块写入避免大缓冲编码失败。
+
+完整曲目循环、播完再硬切与手动立即硬切是当前播放实现，切歌不加播放器淡入淡出；清单中的人工循环与混音状态保持pending，恢复点空数组按播放设计进入下一首。此工具不提交GPU生成任务，也不改变采用源包或历史评审。

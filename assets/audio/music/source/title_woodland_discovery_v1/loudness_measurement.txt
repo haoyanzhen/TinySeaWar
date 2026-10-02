@@ -1,0 +1,28 @@
+[aist#0:0/pcm_s16le @ 0xbe0c10180] Guessed Channel Layout: stereo
+Input #0, wav, from 'assets/music/source/title_woodland_discovery_v1/source.wav':
+  Duration: 00:01:30.00, bitrate: 1536 kb/s
+  Stream #0:0: Audio: pcm_s16le ([1][0][0][0] / 0x0001), 48000 Hz, stereo, s16, 1536 kb/s
+Stream mapping:
+  Stream #0:0 -> #0:0 (pcm_s16le (native) -> pcm_s16le (native))
+Press [q] to stop, [?] for help
+Output #0, null, to 'pipe:':
+  Metadata:
+    encoder         : Lavf62.12.101
+  Stream #0:0: Audio: pcm_s16le, 192000 Hz, stereo, s16, 6144 kb/s
+    Metadata:
+      encoder         : Lavc62.28.101 pcm_s16le
+[Parsed_loudnorm_0 @ 0xbe1020900]
+{
+	"input_i" : "-14.95",
+	"input_tp" : "-1.00",
+	"input_lra" : "2.20",
+	"input_thresh" : "-25.02",
+	"output_i" : "-18.11",
+	"output_tp" : "-4.09",
+	"output_lra" : "2.00",
+	"output_thresh" : "-28.14",
+	"normalization_type" : "dynamic",
+	"target_offset" : "0.11"
+}
+[out#0/null @ 0xbe1020180] video:0KiB audio:67500KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: unknown
+size=N/A time=00:01:30.00 bitrate=N/A speed=  30x elapsed=0:00:02.99

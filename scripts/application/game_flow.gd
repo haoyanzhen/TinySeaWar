@@ -2,6 +2,7 @@ extends Node
 
 signal progress_save_status_changed(state: Dictionary)
 
+const CustomBattleMatcher = preload("res://scripts/application/custom_battle_matcher.gd")
 const UiText = preload("res://scripts/presentation/ui_text.gd")
 const ProgressSaveStore = preload("res://scripts/infrastructure/persistence/progress_save_store.gd")
 const ShipAcquisitionCatalog = preload("res://scripts/infrastructure/data/ship_acquisition_catalog.gd")
@@ -171,18 +172,23 @@ func _save_pending_progress() -> bool:
 	return saved
 
 
-func configure_custom_battle(base_level_id: String, map_level_id: String, ocean_palette: String, player_ship_ids: Array[String], environment_timeline_id: String = "") -> Dictionary:
+func configure_custom_battle(base_level_id: String, map_level_id: String, ocean_palette: String, player_ship_ids: Array[String], environment_timeline_id: String = "", difficulty: String = "Standard", roster_seed: int = -1, battle_seed: int = -1, preview_only: bool = false) -> Dictionary:
 	var base_level: Dictionary = DataRegistry.registry.get_definition("levels", base_level_id)
 	var map_level: Dictionary = DataRegistry.registry.get_definition("levels", map_level_id)
 	if base_level.is_empty() or map_level.is_empty():
 		return {"ok": false, "error": "CUSTOM_LEVEL_SOURCE_MISSING"}
 	var base_player_fleet: Array = base_level.get("player_fleet", [])
-	var base_enemy_fleet: Array = base_level.get("enemy_fleet", [])
+	if base_level_id not in ["level.prototype_1v1", "level.prototype_3v3", "level.prototype_5v5", "level.prototype_11v11"]:
+		return {"ok":false, "error":"CUSTOM_SCALE_INVALID"}
+	var unique_players := {}
+	for ship_id in player_ship_ids:
+		if unique_players.has(ship_id): return {"ok":false, "error":"CUSTOM_DUPLICATE_PLAYER_SHIP"}
+		unique_players[ship_id] = true
 	var player_spawn_slots := _custom_spawn_slots(map_level, "player")
 	var enemy_spawn_slots := _custom_spawn_slots(map_level, "enemy")
 	if player_ship_ids.size() != base_player_fleet.size():
 		return {"ok": false, "error": "CUSTOM_FLEET_SIZE_MISMATCH"}
-	if player_spawn_slots.size() < base_player_fleet.size() or enemy_spawn_slots.size() < base_enemy_fleet.size():
+	if player_spawn_slots.size() < base_player_fleet.size() or enemy_spawn_slots.size() < base_player_fleet.size():
 		return {"ok": false, "error": "CUSTOM_MAP_SPAWN_COUNT_MISMATCH"}
 	var custom_level := base_level.duplicate(true)
 	custom_level["id"] = CUSTOM_LEVEL_ID
@@ -212,17 +218,34 @@ func configure_custom_battle(base_level_id: String, map_level_id: String, ocean_
 			"is_flagship": index == 0,
 		})
 	custom_level["player_fleet"] = custom_fleet
+	var matcher = CustomBattleMatcher.new(DataRegistry.registry)
+	if not matcher.spawns_legal(player_ship_ids, player_spawn_slots, custom_level["map"]):
+		return {"ok":false, "error":"CUSTOM_PLAYER_SPAWN_INVALID"}
+	if roster_seed < 0: roster_seed = new_custom_seed()
+	if battle_seed < 0: battle_seed = new_custom_seed()
+	var matched: Dictionary = matcher.choose(player_ship_ids.size(), matcher.fleet_cost(player_ship_ids), difficulty, enemy_spawn_slots, custom_level["map"], roster_seed)
+	if not matched.ok: return matched
+	custom_level["enemy_ai_profile_id"] = matched.enemy_ai_profile_id
 	var custom_enemy_fleet: Array = []
-	for index in range(base_enemy_fleet.size()):
-		var member: Dictionary = base_enemy_fleet[index].duplicate(true)
+	for index in range(matched.roster.ship_ids.size()):
 		var slot: Dictionary = enemy_spawn_slots[index]
-		member["position"] = slot.get("position", []).duplicate()
-		member["heading"] = float(slot.get("heading", 0.0))
-		custom_enemy_fleet.append(member)
+		var ship_id := str(matched.roster.ship_ids[index])
+		custom_enemy_fleet.append({"entity_id":"unit.enemy.custom.%02d" % (index + 1), "ship_id":ship_id, "position":slot.position.duplicate(), "heading":float(slot.get("heading", 0.0)), "is_flagship":ship_id == matched.roster.flagship_ship_id})
 	custom_level["enemy_fleet"] = custom_enemy_fleet
-	_custom_level_definition = custom_level.duplicate(true)
-	select_level(CUSTOM_LEVEL_ID)
-	return {"ok": true, "level_id": CUSTOM_LEVEL_ID}
+	custom_level["custom_match"] = {"roster_id":matched.roster.id, "pool_version":matched.pool_version, "roster_seed":roster_seed, "battle_seed":battle_seed, "difficulty":difficulty, "player_cost":matched.player_cost, "enemy_cost":matched.enemy_cost, "lower":matched.lower, "upper":matched.upper, "candidate_count":matched.candidate_count}
+	if not preview_only:
+		_custom_level_definition = custom_level.duplicate(true)
+		select_level(CUSTOM_LEVEL_ID)
+	matched["level_id"] = CUSTOM_LEVEL_ID
+	matched["level"] = custom_level
+	matched["battle_seed"] = battle_seed
+	return matched
+
+
+func new_custom_seed() -> int:
+	var rng := RandomNumberGenerator.new()
+	rng.randomize()
+	return rng.randi_range(1, 2147483647)
 
 
 func _custom_spawn_slots(map_level: Dictionary, faction_id: String) -> Array:

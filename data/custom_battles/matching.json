@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "definitions": [
+    {
+      "id": "custom.matching.default",
+      "pool_version": 1,
+      "cost_caps": {
+        "1": 12,
+        "3": 22,
+        "5": 34,
+        "11": 64
+      },
+      "difficulties": {
+        "Easy": {
+          "lower_percent": 75,
+          "upper_percent": 100,
+          "enemy_ai_profile_id": "ai.profile.easy"
+        },
+        "Standard": {
+          "lower_percent": 90,
+          "upper_percent": 110,
+          "enemy_ai_profile_id": "ai.profile.standard"
+        },
+        "Hard": {
+          "lower_percent": 100,
+          "upper_percent": 125,
+          "enemy_ai_profile_id": "ai.profile.hard"
+        }
+      }
+    }
+  ]
+}

@@ -6,7 +6,7 @@
 
 - 引擎：Godot 4.x，主要使用 GDScript。
 - 开发平台：macOS。
-- 目标运行平台：Windows 11 与 macOS。
+- 目标运行平台：Windows 10/11 64位与 macOS；Windows 使用 Compatibility 渲染器，实际设备验收状态见 `00`。
 - 战斗模型：固定 Tick、命令驱动、事件输出；Domain 规则可脱离场景树运行。
 - 配置模型：设计定义从 `data/` 加载，运行时状态由战斗会话创建，不回写定义对象。
 - 表现模型：Presentation 消费快照与事件，不自行结算命中、伤害、侦查、装填或设施规则。

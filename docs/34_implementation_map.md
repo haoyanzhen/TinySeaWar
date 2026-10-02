@@ -12,6 +12,8 @@
 | 玩家拒绝反馈与权威结算文案 | `scripts/presentation/battle/player_command_feedback.gd`、`battle_result_presentation.gd`（同目录） |
 | 单局战斗协调 | `scripts/application/battle_session.gd` |
 | 自定义关卡运行定义 | `scripts/application/game_flow.gd` 持有，调用 `BattleSession.create_battle_from_definition()` |
+| 自定义敌军匹配与难度 | `scripts/application/custom_battle_matcher.gd`、`scripts/infrastructure/data/custom_battle_catalog.gd`、`data/custom_battles/rosters.json`与`matching.json`；由ConfigRegistry注册 |
+| 自定义匹配与菜单验证 | `scripts/tests/custom_battle_matching_test.gd`、`custom_battle_smoke_test.gd`、`render_custom_matching_qa.gd`（同目录） |
 | 主菜单场景与脚本 | `scenes/menu/main_menu.tscn`、`scripts/presentation/menu/main_menu.gd` |
 | 战斗场景与协调脚本 | `scenes/battle/prototype_battle.tscn`、`scripts/presentation/battle/prototype_battle.gd` |
 
@@ -51,8 +53,10 @@
 | 声明式目标定义 | `data/objectives/level_objectives.json` |
 | T-05 至 T-08 三轮设计路线实验 | `data/simulations/experiments/level_t05_win_rate_20.json` 至 `level_t08_route_round3_20.json` |
 | T-08当前编队路线审计复现工具与证据索引 | `reports/levels/20261001-t08-audit/validation.md`、`probe.gd`、`group_probe.gd`、`manifest.json` |
+| T-08半径300、阶段提示与三轮路线验证 | `reports/levels/20261002-t08-guidance/validation.md`、`round1.json`/`round2.json`/`round3.json`、`render.py`、`group_probe.gd` |
 | 目标运行时服务 | `scripts/domain/services/level_objective_service.gd` |
 | 进度存档 | `scripts/infrastructure/persistence/progress_save_store.gd` |
+| 正式关卡新版地图引用、全舰初始/待机/增援与连续路线检查 | `scripts/tests/formal_map_integration_test.gd` |
 | 目标运行时测试 | `scripts/tests/level_objective_runtime_test.gd` |
 | 进度存档测试 | `scripts/tests/progress_save_store_test.gd` |
 
@@ -154,6 +158,7 @@
 | 补给维修 | `scripts/tests/supply_point_test.gd`、`repair_berth_test.gd` |
 | 通信/机场/水雷 | `scripts/tests/communication_station_test.gd`、`airfield_mission_test.gd`、`mine_control_station_test.gd` |
 | AI 设施任务 | `scripts/tests/ai_facility_task_test.gd` |
+| 设施玩法闭环、实际接近与战斗探针 | `scripts/tests/facility_gameplay_test.gd`、`facility_execution_test.gd`、`facility_battle_probe.gd`、`render_facility_qa.gd`（同目录） |
 
 ## 10. 战斗表现与 HUD
 
@@ -295,3 +300,24 @@
 - `tools/music/build_runtime.py`：`uv run tools/music/build_runtime.py` 构建；`python3 tools/music/build_runtime.py --check` 只读核验源与派生哈希。
 - `scripts/presentation/audio/music_manager.gd`：Presentation autoload，硬切、独立轮播、标题暂停/循环与场景淡化；`main_menu.gd` 提供曲名和播放控件，SoundManager共用Music设置。
 - `scripts/tests/music_runtime_test.gd`、`music_modes_test.gd`、`music_device_test.gd`：无图形契约、模式持久化/设置同步与真实设备验证；画面复用 `render_menu_qa.gd`。本轮证据和设备限制见 `reports/audio/title_runtime_20261001/validation.md`。
+
+### 新版开放海岸作者与美术入口
+
+- `data/terrain/authoring/coastal_open_layouts.json`：十张16:9新版独立规则轮廓。
+- `tools/terrain/build_coastal_maps_16x9.py`：应用新版作者布局、重设出生与资源绑定。
+- `tools/art_pipeline/export_open_coastal_art.py`：将内置ImageGen透明源图按作者尺寸/位置登记导出，保留原生alpha。
+- `assets/environment/land/source/open_coasts_v1/input_manifest.json`：可复现导出输入；同目录`manifest.json`记录源图哈希和变换。
+
+## 战斗音乐运行时
+
+- `data/audio/battle_music_manifest.json`：6首战斗/2首结果清单，字段契约见25。
+- `tools/music/build_runtime.py --battle`：构建采用源的战斗/结算Ogg；使用 `uv run --locked python tools/music/build_runtime.py --battle`，追加`--check`只读核验。依赖统一在pyproject/uv.lock。
+- `scripts/presentation/audio/music_manager.gd`：标题/战斗/结算统一声部与独立队列，关卡曲池、暂停降音、结算去重与失效回退。
+- `scripts/presentation/battle/prototype_battle.gd`：成功创建、公开快照同步、失败与退出入口。
+- `scripts/tests/battle_music_runtime_test.gd`：资产、曲池、生命周期、实际声部与场景回归；证据见00及reports/audio/battle_runtime_20261002/validation.md。
+
+## Windows 发布入口
+
+- `export_presets.cfg`：Windows 10 x64正式资源白名单预设，保留动态读取JSON/TSCF，排除制作/测试/编辑器数据。
+- `tools/release/build_windows.py`：生成预设与逐项源文件哈希清单；`inspect_windows_pack.py`：检查PCK文件MD5、必需数据、发布边界与PE架构。
+- `build/windows-20261002/`：免安装应用、交付ZIP、素材清单、包内清单与校验值；本地构建产物不入Git。模板需匹配Godot 4.6.3，使用方式见tools/release/README.md。

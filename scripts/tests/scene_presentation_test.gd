@@ -196,7 +196,7 @@ func _run() -> void:
 	await process_frame
 	var harbor_snapshot: Dictionary = battle.session.snapshot("player", true)
 	_check(not harbor_snapshot.get("terrain_map", {}).is_empty(), "harbor scene receives reviewed runtime terrain geometry")
-	_check(battle.terrain_view.static_root.get_child_count() >= 9, "harbor scene renders water regions, six visual-only shore layers, and the land runtime asset")
+	_check(battle.terrain_view.static_root.get_child_count() >= 3, "open harbor renders its two shore shelves and the land runtime asset")
 	_check(battle.terrain_view.zone_root.get_child_count() >= 17, "soft-terrain presentation consumes fog detail and squall edge layers plus program boundaries")
 	_check(harbor_snapshot.get("facilities", {}).size() == 8 and battle.terrain_view.facility_root.get_child_count() == 8, "harbor facilities share runtime state and presentation placement")
 	var world_facility: Dictionary = harbor_snapshot["facilities"]["facility.harbor.observation_west"]
@@ -386,7 +386,9 @@ func _test_custom_map_spawns(flow, registry) -> void:
 	for base_level_id in ["level.prototype_1v1", "level.prototype_3v3", "level.prototype_5v5", "level.prototype_11v11"]:
 		var base_level: Dictionary = registry.get_definition("levels", base_level_id)
 		var selected_ship_ids: Array[String] = []
-		for member in base_level.get("player_fleet", []): selected_ship_ids.append(str(member.get("ship_id", "")))
+		var affordable_ships: Array = registry.all("ships")
+		affordable_ships.sort_custom(func(a, b): return int(a.cost) < int(b.cost) if int(a.cost) != int(b.cost) else str(a.id) < str(b.id))
+		for ship in affordable_ships.slice(0, base_level.get("player_fleet", []).size()): selected_ship_ids.append(str(ship.id))
 		for map_level_id in coastal_level_ids:
 			var configured: Dictionary = flow.configure_custom_battle(base_level_id, map_level_id, "clear_day", selected_ship_ids)
 			var custom_level: Dictionary = flow.runtime_level_definition("level.custom_runtime")
@@ -417,11 +419,14 @@ func _test_custom_map_spawns(flow, registry) -> void:
 
 
 func _test_custom_open_sea_spawns(flow, registry) -> void:
+	var original_unlocks: Array[String] = flow.unlocked_ship_ids.duplicate()
+	flow.unlocked_ship_ids.assign(registry.all("ships").map(func(ship): return str(ship.id)))
 	for level_id in ["level.prototype_1v1", "level.prototype_3v3", "level.prototype_5v5", "level.prototype_11v11"]:
 		var base_level: Dictionary = registry.get_definition("levels", level_id)
 		var selected_ship_ids: Array[String] = []
-		for _index in range(base_level.get("player_fleet", []).size()):
-			selected_ship_ids.append("ship.ward")
+		var affordable_ships: Array = registry.all("ships")
+		affordable_ships.sort_custom(func(a, b): return int(a.cost) < int(b.cost) if int(a.cost) != int(b.cost) else str(a.id) < str(b.id))
+		for ship in affordable_ships.slice(0, base_level.get("player_fleet", []).size()): selected_ship_ids.append(str(ship.id))
 		var configured: Dictionary = flow.configure_custom_battle(level_id, level_id, "clear_day", selected_ship_ids)
 		var custom_level: Dictionary = flow.runtime_level_definition("level.custom_runtime")
 		var slots_match := bool(configured.get("ok", false))
@@ -432,6 +437,8 @@ func _test_custom_open_sea_spawns(flow, registry) -> void:
 			for index in range(mini(actual.size(), expected.size())):
 				slots_match = slots_match and actual[index].get("position", []) == expected[index].get("position", []) and is_equal_approx(float(actual[index].get("heading", 0.0)), float(expected[index].get("heading", 0.0)))
 		_check(slots_match, "%s custom open-sea battle preserves both reviewed formations" % level_id)
+
+	flow.unlocked_ship_ids.assign(original_unlocks)
 
 
 func _check(condition: bool, message: String) -> void:

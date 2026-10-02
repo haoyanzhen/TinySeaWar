@@ -575,6 +575,8 @@ func _next_instruction(counts: Dictionary) -> String:
 	for requirement in definition.get("required_actions", []):
 		var action_id := str(requirement.get("action_id", ""))
 		if int(counts.get(action_id, 0)) < int(requirement.get("required_count", 1)):
+			if definition.get("id", "") == "objective.t08_command" and action_id == "ReachTutorialRouteZone" and int(counts.get(action_id, 0)) == 1:
+				return "航点1已完成。让厌战继续驶入航点2；仅厌战进圈即完成，无需全队入圈或停在圆心。"
 			return str(requirement.get("instruction", ""))
 	return "驶入依次标记的教学航点" if definition.get("objective_kind", "") == "TutorialNavigation" else str(definition.get("engagement_instruction", "等待交战阶段开启"))
 

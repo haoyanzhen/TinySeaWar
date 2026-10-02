@@ -53,10 +53,11 @@ func _run() -> void:
 	_test_t05_to_t08_routes_and_locks(registry)
 	_test_tutorial_definition_validation(registry)
 	_test_learning_evidence(registry)
+	_test_t08_expanded_route(registry)
 
 	var challenge = BattleSession.new(registry)
 	_check(challenge.create_battle("level.challenge.s01", 102).get("ok", false), "S-01 creates from formal runtime data")
-	_check(challenge.state.get("terrain_map", {}).get("id", "") == "terrain.map.central_sandbar" and challenge.state.get("level_objective", {}).get("objective_set_id", "") == "objective.s01_flagship", "S-01 loads K-S01 central sandbar and its mission")
+	_check(challenge.state.get("terrain_map", {}).get("id", "") == "terrain.map.central_sandbar_16x9" and challenge.state.get("level_objective", {}).get("objective_set_id", "") == "objective.s01_flagship", "S-01 loads K-S01 central sandbar and its mission")
 	var enemy_flagship: Dictionary = challenge.state["units_by_id"]["unit.enemy.s01.hindenburg"]
 	enemy_flagship["life_state"] = "Sunk"
 	enemy_flagship["current_hp"] = 0.0
@@ -144,6 +145,13 @@ func _test_s_challenges(registry) -> void:
 	s04_wave.advance_tick(0.1)
 	_check(s04_wave.state.get("reinforcement_waves", [])[0].get("status", "") == "Spawned" and s04_wave.state["units_by_id"].has("unit.enemy.s04.ward"), "S-04 deterministically spawns Ward after the authored replacement time")
 	_check(s04_wave.get_unit_damage_statistics("unit.enemy.s04.ward").get("definition_id", "") == "ship.ward", "S-04 replacement registers ship metadata for battle reports")
+	var s05_wave = BattleSession.new(registry)
+	s05_wave.create_battle("level.challenge.s05", 8502)
+	var replaced_s05: Dictionary = s05_wave.state["units_by_id"]["unit.enemy.s05.hindenburg"]
+	replaced_s05["life_state"] = "Sunk"; replaced_s05["current_hp"] = 0.0
+	s05_wave.state["elapsed_time"] = 90.0
+	s05_wave.advance_tick(0.1)
+	_check(s05_wave.state["reinforcement_waves"][0].get("status", "") == "Spawned" and s05_wave.state["units_by_id"].has("unit.enemy.s05.gnevny"), "S-05 spawns its replacement through the rebuilt southern entry")
 	var s05 = BattleSession.new(registry)
 	s05.create_battle("level.challenge.s05", 8501)
 	for unit_id in ["unit.enemy.s05.bismarck", "unit.enemy.s05.hindenburg", "unit.enemy.s05.u47"]:
@@ -287,7 +295,7 @@ func _test_t05_to_t08_routes_and_locks(registry) -> void:
 	var ward: Dictionary = t07.state["units_by_id"]["unit.player.t07.ward"]
 	var iowa: Dictionary = t07.state["units_by_id"]["unit.player.t07.iowa"]
 	var enemy_hindenburg: Dictionary = t07.state["units_by_id"]["unit.enemy.t07.hindenburg"]
-	var scout_move: Dictionary = t07._apply_command({"command_id":"test.t07.forward.scout","command_type":"MoveUnits","issued_at_tick":0,"issuer_type":"Player","issuer_id":"player","unit_id":"unit.player.t07.ward","target_position":Vector2(1600.0,1856.0)})
+	var scout_move: Dictionary = t07._apply_command({"command_id":"test.t07.forward.scout","command_type":"MoveUnits","issued_at_tick":0,"issuer_type":"Player","issuer_id":"player","unit_id":"unit.player.t07.ward","target_position":_pair(registry.get_definition("objectives", "objective.t07_shared_contact")["route_waypoint_zones"][0]["position"])})
 	_check(bool(scout_move.get("accepted", false)), "T-07 accepts Ward's normal player move into the forward scout area")
 	for tick in range(400):
 		t07.advance_tick(0.1)
@@ -403,3 +411,35 @@ func _fire_training_gun(session, unit_id: String, target: Dictionary) -> bool:
 			return bool(result.get("accepted", false))
 		session.advance_tick(0.1)
 	return false
+
+
+func _test_t08_expanded_route(registry) -> void:
+	var objective: Dictionary = registry.get_definition("objectives", "objective.t08_command")
+	var session = BattleSession.new(registry)
+	session.create_battle("level.tutorial.t08", 9908)
+	var service = session.level_objective_service
+	var zones: Array = objective["route_waypoint_zones"]
+	var warspite: Dictionary = session.state["units_by_id"]["unit.player.t08.warspite"]
+	var san_diego: Dictionary = session.state["units_by_id"]["unit.player.t08.san_diego"]
+	_check(zones.all(func(zone): return float(zone["radius"]) == 300.0), "T-08 both arrival radii are 300")
+	for zone in zones:
+		_check(objective["world_markers"].any(func(marker): return marker.get("position", []) == zone["position"] and float(marker.get("radius", 0)) == float(zone["radius"])), "T-08 visual circle matches its arrival radius")
+	_check(service.snapshot()["instruction"].contains("航点1") and service.snapshot()["instruction"].contains("仅厌战"), "T-08 initial instruction names the arriving ship and first waypoint")
+	warspite["position"] = _pair(zones[1]["position"])
+	service.advance(session.state)
+	_check(service.snapshot()["route_step"] == 0, "T-08 second circle cannot bypass the first")
+	warspite["position"] = _pair(zones[0]["position"]) + Vector2(300.1, 0)
+	san_diego["position"] = _pair(zones[0]["position"])
+	service.advance(session.state)
+	_check(service.snapshot()["route_step"] == 0, "T-08 other ship arrival and Warspite outside the boundary do not complete the waypoint")
+	warspite["position"] = _pair(zones[0]["position"]) + Vector2(300, 0)
+	service.advance(session.state)
+	_check(service.snapshot()["route_step"] == 1 and service.snapshot()["instruction"].contains("航点1已完成") and service.snapshot()["instruction"].contains("航点2"), "T-08 circle boundary counts and instruction immediately advances")
+	service.advance(session.state)
+	_check(service.snapshot()["route_step"] == 1, "T-08 first circle cannot count twice")
+	warspite["position"] = _pair(zones[1]["position"]) + Vector2(0, 299)
+	service.advance(session.state)
+	_check(service.snapshot()["route_step"] == 2 and service.snapshot()["instruction"].contains("左键") and not service.snapshot()["engagement_unlocked"], "T-08 second circle switches to explicit group-focus instruction without unlocking combat")
+	service.record_action("GroupFocusTarget", "", 1, {"target_unit_id":"unit.enemy.t08.hindenburg", "group_order_id":"test.expanded.focus", "group_unit_ids":["unit.player.t08.warspite", "unit.player.t08.san_diego"]})
+	service.advance(session.state)
+	_check(service.snapshot()["engagement_unlocked"] and service.snapshot()["instruction"].contains("自动开火已开启") and service.snapshot()["instruction"].contains("至少两艘"), "T-08 successful group focus explains enabled assistance and survival requirement")

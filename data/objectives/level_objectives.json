@@ -17,8 +17,8 @@
   ],
   "enemy_staging_positions": {
     "unit.enemy.t05.warspite": [
-      2500,
-      1152
+      4440,
+      2360
     ]
   },
   "route_player_unit_id": "unit.player.t05.yukikaze",
@@ -26,8 +26,8 @@
     {
       "id": "route.t05.southwest_cover",
       "position": [
-        1472,
-        1728
+        2496,
+        2304
       ],
       "radius": 150,
       "label": "沙洲西南遮蔽位"
@@ -35,8 +35,8 @@
     {
       "id": "route.t05.southeast_attack",
       "position": [
-        2900,
-        1550
+        3924,
+        2450
       ],
       "radius": 180,
       "label": "沙洲东南雷击位"
@@ -91,8 +91,8 @@
       "id": "marker.t05.sandbar",
       "marker_type": "Area",
       "position": [
-        2048,
-        1152
+        3072,
+        1728
       ],
       "radius": 360,
       "label": "中央沙洲遮挡"
@@ -101,8 +101,8 @@
       "id": "marker.t05.route.southwest",
       "marker_type": "Area",
       "position": [
-        1472,
-        1728
+        2496,
+        2304
       ],
       "radius": 150,
       "label": "遮蔽航点 1"
@@ -111,8 +111,8 @@
       "id": "marker.t05.route.southeast",
       "marker_type": "Area",
       "position": [
-        2900,
-        1550
+        3924,
+        2450
       ],
       "radius": 180,
       "label": "雷击航点 2"
@@ -121,8 +121,8 @@
       "id": "marker.t05.retreat",
       "marker_type": "Area",
       "position": [
-        2350,
-        1850
+        3374,
+        2426
       ],
       "radius": 200,
       "label": "命中后脱离区"
@@ -134,8 +134,8 @@
     "id": "retreat.t05",
     "unit_id": "unit.player.t05.yukikaze",
     "position": [
-      2350,
-      1850
+      3374,
+      2426
     ],
     "radius": 200
   },
@@ -159,12 +159,12 @@
   ],
   "enemy_staging_positions": {
     "unit.enemy.t06.argus": [
-      2350,
-      1152
+      3400,
+      1780
     ],
     "unit.enemy.t06.aurora": [
-      2450,
-      900
+      4500,
+      1350
     ]
   },
   "route_player_unit_id": "unit.player.t06.shimakaze",
@@ -172,17 +172,17 @@
     {
       "id": "route.t06.fog_entry",
       "position": [
-        1472,
-        1600
+        4250,
+        2400
       ],
       "radius": 200,
-      "label": "内湾海雾西南入口"
+      "label": "内湾海雾东南入口"
     },
     {
       "id": "route.t06.fog_hunt",
       "position": [
-        1984,
-        1344
+        3600,
+        2100
       ],
       "radius": 220,
       "label": "海雾猎杀位"
@@ -228,8 +228,8 @@
       "id": "marker.t06.fog",
       "marker_type": "Area",
       "position": [
-        2050,
-        1152
+        3750,
+        2050
       ],
       "radius": 440,
       "label": "内湾海雾"
@@ -238,18 +238,18 @@
       "id": "marker.t06.route.entry",
       "marker_type": "Area",
       "position": [
-        1472,
-        1600
+        4250,
+        2400
       ],
       "radius": 200,
-      "label": "海雾西南入口"
+      "label": "海雾东南入口"
     },
     {
       "id": "marker.t06.route.hunt",
       "marker_type": "Area",
       "position": [
-        1984,
-        1344
+        3600,
+        2100
       ],
       "radius": 220,
       "label": "航母接近位"
@@ -271,16 +271,16 @@
   ],
   "enemy_staging_positions": {
     "unit.enemy.t07.hindenburg": [
-      1850,
-      1700
+      2874,
+      3050
     ],
     "unit.enemy.t07.eugen": [
-      1950,
-      1800
+      3100,
+      3150
     ],
     "unit.enemy.t07.gnevny": [
-      1950,
-      1600
+      3300,
+      3000
     ]
   },
   "scout_player_unit_id": "unit.player.t07.ward",
@@ -295,8 +295,8 @@
     {
       "id": "route.t07.forward_scout",
       "position": [
-        1600,
-        1856
+        2624,
+        3040
       ],
       "radius": 220,
       "label": "前出侦查区"
@@ -355,8 +355,8 @@
       "id": "marker.t07.forward_scout",
       "marker_type": "Area",
       "position": [
-        1600,
-        1856
+        2624,
+        3040
       ],
       "radius": 220,
       "label": "前出侦查区"
@@ -386,16 +386,16 @@
   ],
   "enemy_staging_positions": {
     "unit.enemy.t08.hindenburg": [
-      2300,
-      1152
+      3324,
+      1728
     ],
     "unit.enemy.t08.argus": [
-      2400,
-      900
+      3424,
+      1476
     ],
     "unit.enemy.t08.gnevny": [
-      2400,
-      1404
+      3424,
+      1980
     ]
   },
   "command_target_unit_id": "unit.enemy.t08.hindenburg",
@@ -409,19 +409,19 @@
     {
       "id": "route.t08.west_channel",
       "position": [
-        1344,
-        1088
+        2368,
+        1664
       ],
-      "radius": 180,
+      "radius": 300,
       "label": "西侧编队航点"
     },
     {
       "id": "route.t08.central_channel",
       "position": [
-        2240,
-        1088
+        3264,
+        1664
       ],
-      "radius": 190,
+      "radius": 300,
       "label": "中央接敌航点"
     }
   ],
@@ -430,13 +430,13 @@
       "action_id": "ReachTutorialRouteZone",
       "unit_id": "unit.player.t08.warspite",
       "required_count": 2,
-      "instruction": "让厌战沿散岛间的两个标记航点带队前进"
+      "instruction": "选中厌战，右键圈内让她驶入航点1；可框选舰队一起移动。仅厌战进圈即完成，无需全队入圈或停在圆心。"
     },
     {
       "action_id": "GroupFocusTarget",
       "target_unit_id": "unit.enemy.t08.hindenburg",
       "required_count": 1,
-      "instruction": "框选厌战与圣地亚哥，再对兴登堡一次下达编队集火；分别点选集火不计入考核。",
+      "instruction": "框选厌战和圣地亚哥，再左键点击已发现的兴登堡，下达一次双舰集火；分别点选两舰集火不计入。",
       "prerequisite_action_id": "ReachTutorialRouteZone"
     }
   ],
@@ -456,10 +456,10 @@
   },
   "lock_enemy_primary_and_skill": true,
   "lock_enemy_automatic_weapons": true,
-  "intro_text": "沿散岛路线接近后，框选厌战与圣地亚哥，用一次编队集火指令指定兴登堡。",
-  "engagement_instruction": "集火已确认；开启受限辅助，保护厌战并击沉兴登堡",
-  "ability_limit_text": "首次有效双舰集火前双方不交火；移动与集火始终可用",
-  "engagement_ability_text": "集火指令已确认：自动航行与主副武器能力已开放",
+  "intro_text": "厌战依次进入航点1、航点2 → 框选厌战和圣地亚哥，左键点击兴登堡集火 → 击沉兴登堡。全程保护厌战，至少两艘己方舰船存活。",
+  "engagement_instruction": "集火已确认，辅助航行与主副武器自动开火已开启。击沉兴登堡，保护厌战，并保持至少两艘己方舰船存活。",
+  "ability_limit_text": "厌战依次进两圈后，再双舰集火开启交战；此前双方不交火，移动与集火可用。",
+  "engagement_ability_text": "辅助航行与主副武器自动开火已自动开启，可按 X / C / V 调整。",
   "world_markers": [
     {
       "id": "marker.t08.flagship",
@@ -472,20 +472,20 @@
       "id": "marker.t08.route.west",
       "marker_type": "Area",
       "position": [
-        1344,
-        1088
+        2368,
+        1664
       ],
-      "radius": 180,
+      "radius": 300,
       "label": "编队航点 1"
     },
     {
       "id": "marker.t08.route.center",
       "marker_type": "Area",
       "position": [
-        2240,
-        1088
+        3264,
+        1664
       ],
-      "radius": 190,
+      "radius": 300,
       "label": "接敌航点 2"
     }
   ],

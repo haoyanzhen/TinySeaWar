@@ -278,10 +278,14 @@ placements[]
   operation_state, initial_state_profile
   requires_all_active[]?, requires_any_active[]?
   dependency_rules.requires_matching_faction?
+activation_events[]?
+  at_seconds, facility_id, event_id
 system_handover_rules[]?
-  event_id, control_facility_id, facility_ids[]
+  event_id, control_facility_id, facility_ids[], trigger? # Manual | ControlCompleted
 ```
 
+- `activation_events` 为本布局的单次公开时间事件：非负有限战斗秒数、已放置设施、与目标 `activation_rules` 匹配的事件 ID；同设施不得重复排程。暂停不推进，重开重建；失效设施不被复活。
+- `trigger` 缺省 `Manual`；显式 `ControlCompleted` 才由指定控制设施的占领完成触发整套易手，未声明布局仍保持普通占领只改自身。
 - 放置 ID、锚点和设施引用唯一且存在。
 - 依赖与整套易手必须显式列出，不允许通过通信站占领隐式转移全部设施。
 

@@ -16,6 +16,8 @@ Use lowercase English file names with underscores:
 
 `NN_domain_topic_kind.md`
 
+同一主题的独立分册可使用 `NN-N_topic_kind.md`，放在对应主文档之后；分册必须明确职责边界并由主文档链接。`15-1` 为自定义敌方阵容池分册，`15-2` 为特别行动设计分册，两者均不占用 `16` 的 AI 决策设计职责。
+
 ## Reading Order
 
 ### Project Status
@@ -30,6 +32,8 @@ Use lowercase English file names with underscores:
 - [13_balance_baseline.md](13_balance_baseline.md)
 - [14_character_balance_design.md](14_character_balance_design.md)
 - [15_battle_level_design.md](15_battle_level_design.md)：教学与三规模挑战真源；中型 M-01～M-05、大型 L-01～L-05 的逐关战术设计见第 7、8 节，地图制作与实施门禁见第 3.7、10.3 节。
+- [15-1_custom_battle_roster_design.md](15-1_custom_battle_roster_design.md)：自定义敌方完整阵容、玩家Cost与三档难度区间、随机抽取/预览/重开和实施交接；运行时已接入，真人/平衡验收见00。
+- [15-2_special_operations_design.md](15-2_special_operations_design.md)：特别行动的规则化战术难题、六个关卡候选与用户试玩迭代；难度依据人的反馈，不采用程序代打调平。
 - [16_enemy_ai_behavior_design.md](16_enemy_ai_behavior_design.md)
 - [17_play_design.md](17_play_design.md)
 - [18_facility_weather_effect_design.md](18_facility_weather_effect_design.md)

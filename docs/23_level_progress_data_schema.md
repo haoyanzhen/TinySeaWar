@@ -170,3 +170,27 @@ checksum
 - 教学目标引用隐藏脚本、未知动作/命令、错误阵营单位或非法世界标识。
 
 关卡可选 `aviation_rules_mode: Abstract | Physical`，不配置时使用CombatSettings。该覆盖用于航空迁移实验和可操作演示，创建后固定，不进入进度存档或奖励判定。
+
+## 8. 自定义敌方阵容与匹配配置
+
+`CustomRosterDefinition` 注册类别为 `custom_rosters`：
+
+```text
+id, display_name, unit_count, ship_ids[], flagship_ship_id
+```
+
+`unit_count`为正整数且只允许1/3/5/11，必须等于成员数；成员必须是唯一有效舰船引用。旗舰引用必须属于成员，每套只声明一个旗舰。Cost从正式ShipDefinition实时求和，不保存第二份总Cost；必须分别不超过12/22/34/64。同规模不得重复整套成员集合（换旗舰也不建立同名单重复候选）。
+
+`CustomMatchingDefinition` 注册类别为 `custom_matching`，当前唯一ID为`custom.matching.default`：
+
+```text
+id, pool_version, cost_caps, difficulties
+cost_caps: {"1": 12, "3": 22, "5": 34, "11": 64}
+difficulties: {Easy|Standard|Hard: {lower_percent, upper_percent, enemy_ai_profile_id}}
+```
+
+`pool_version`、百分比均为正整数；上下百分比必须有序，档位引用的Profile必须存在且difficulty一致。两类文件的`schema_version`固定为1，不兼容版本拒绝加载。匹配参数属于关卡内容，不加入AIDifficultyProfile。
+
+GameFlow生成的隔离`level.custom_runtime`附带`custom_match`：`roster_id, pool_version, roster_seed, battle_seed, difficulty, player_cost, enemy_cost, lower, upper, candidate_count`。区间为整数闭区间，种子为独立正整数；这些是创建结果与重试诊断，不是进度字段，不写回注册表。BattleSession仅在自定义定义携带该字段时保存到单局State；实际菜单启动/重开使用冻结`battle_seed`。名单转换为FleetMemberDefinition后仍按所选地图槽位部署。
+
+Application同时拒绝玩家人数不符、重复角色、未解锁/缺失角色、超预算、非法难度、出生不足/非法和空候选池；空池不得回退固定模板。匹配规则、随机抽取与重试语义见[15-1](15-1_custom_battle_roster_design.md)，实施证据见00。

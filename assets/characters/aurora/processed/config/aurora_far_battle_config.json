@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "character_id": "aurora",
+  "body_basis": "upright",
+  "rig_heading_degrees": 0,
+  "rig_width": 60,
+  "roles": {
+    "body": {
+      "path": "assets/characters/aurora/processed/battle/aurora_battle_far_body.png",
+      "sha256": "bd2ffb7dcaadc1537c3ece64dc7bdd6293f5418419737b56fc3eb96e36b44eff",
+      "alpha_rect": [
+        58,
+        42,
+        670,
+        799
+      ],
+      "size": [
+        763,
+        863
+      ]
+    },
+    "rig": {
+      "path": "assets/characters/aurora/processed/battle/aurora_battle_far_rig.png",
+      "sha256": "30ca6ad2a7d9b5207b1bfafa2384e72513d016d5afbf25b345091015baac925b",
+      "alpha_rect": [
+        61,
+        36,
+        859,
+        412
+      ],
+      "size": [
+        944,
+        484
+      ]
+    }
+  },
+  "anchors": {
+    "muzzle_01": [
+      0.42,
+      0
+    ]
+  },
+  "animation": "procedural_far_view"
+}

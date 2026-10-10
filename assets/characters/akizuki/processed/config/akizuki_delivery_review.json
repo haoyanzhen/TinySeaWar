@@ -16,8 +16,11 @@
     "assets/characters/akizuki/battle/akizuki_anim_idle_4f_sheet.png": "80711549d5ff61cb9e88a57ff84cf138e81820116ab6808cacb40e19f485bdde",
     "assets/characters/akizuki/battle/akizuki_anim_move_4f_sheet.png": "53cd7bcd2f837c29c0fa5faf113424b005e3e839aa832c2453dfbad4d35184a1",
     "assets/characters/akizuki/battle/akizuki_battle_asset_grid.png": "1af1803d7f3f4cf04ebda27b7dcf57eb6c2e4aca40c15b75affa28f71236c087",
+    "assets/characters/akizuki/battle/akizuki_far_battle_sheet.png": "5a97e3297fc48ce6ec77fb851ada8c8564a1fceec889750e65bf20bc1f3477ad",
     "assets/characters/akizuki/concept/akizuki_concept_full.png": "a0257df5166e12825f66b28e27fe48d5d8a93bf578553d809dd79eea87ce7391",
     "assets/characters/akizuki/meta/akizuki_crop_specs.json": "6598ed769bb46871cdfad0e75053ea4b048dbe02bac79f2b1a36b10f46481a0d",
+    "assets/characters/akizuki/meta/akizuki_far_battle_crop_specs.json": "f622a988f127edd9d8f6bfde40fe553534fc5e3192cf9b4d3409b5055c958c7d",
+    "assets/characters/akizuki/meta/akizuki_far_battle_revision.json": "30b882228fe2e7e0317f7eebb2a25d94b7c1d141092a0246e8e3de8d6f31e5a3",
     "assets/characters/akizuki/meta/akizuki_generation_requests.json": "6af7bd2227529b9681953c9b5e3e34f8828d74a4782afa0dc8a46e420e2b5d40",
     "assets/characters/akizuki/meta/akizuki_portrait_revision.json": "0faf7a8bc3bccd54984b82cb7034ac0adb2d128f0e025bb3b508b534e3722a27",
     "assets/characters/akizuki/meta/akizuki_source_provenance_v2.json": "00a82e9267f9c65f7c2faa71b5e501e3a75a340cf4272a26c0c4f1da5f782188",
@@ -50,6 +53,8 @@
     "assets/characters/akizuki/processed/anim/akizuki_anim_move_keyframe.png": "f8c8b8b0fbee5091152555e71d3712cf2afcb48187587bff4a0ce65221273d76",
     "assets/characters/akizuki/processed/battle/akizuki_battle_aa_center.png": "f24573280aecc0b088698495fdd33244857660a08e043c9358b6b33bd1fcb33a",
     "assets/characters/akizuki/processed/battle/akizuki_battle_body_r.png": "81cfc4fd928ddbaf60a0fd8bdd5fb9a8b1a4bdb0db8932a6489225e81e2fa01a",
+    "assets/characters/akizuki/processed/battle/akizuki_battle_far_body.png": "1748e32e0dcf1019bdd37e6d18276a8f804e75c1279d12a12a064739f28b0295",
+    "assets/characters/akizuki/processed/battle/akizuki_battle_far_rig.png": "2852b9736ba6eadaf9a2f87f923001fc7810b121608c6e9a22270777b85a45f4",
     "assets/characters/akizuki/processed/battle/akizuki_battle_radar_node.png": "25ccfcfebc9d2451f1f1c8d7b75412e346fc6cbce11f9a8a838e43171b161f8a",
     "assets/characters/akizuki/processed/battle/akizuki_battle_rig_base.png": "33e9a58fd1b63f5068399a2416d5118b75748736aaace4247917a55bae2e1f93",
     "assets/characters/akizuki/processed/battle/akizuki_battle_support_node.png": "7afbe4974e5a06363ed1af8caa28dad461b41b62f1069f47a9597673db3e51fc",
@@ -57,6 +62,7 @@
     "assets/characters/akizuki/processed/battle/akizuki_battle_turret_main_01.png": "07a065b55aa2ac86fbe24a6b6cb7425290ca5a3cc64e6294e6e7d267b702021e",
     "assets/characters/akizuki/processed/battle/akizuki_battle_wake_origin_marker.png": "96b290d7f2ef9bd847f08a603d2a6d91925f7ee245967b3ee0ece9768ac2ca53",
     "assets/characters/akizuki/processed/config/akizuki_anim_config.json": "5f7de3129f9a1d7fbb857f20ebbd80155927bdf183636cf5058a8dbf1eacc478",
+    "assets/characters/akizuki/processed/config/akizuki_far_battle_config.json": "3bea546328024f1c9453a8207bf8a48d1fd9247ffefbff236ea58070df65bfd3",
     "assets/characters/akizuki/processed/config/akizuki_meta_bind_points.json": "987ef9921fa8f29983fa658afa5c7e45ee60eff750f86db0acff8f126f0c8552",
     "assets/characters/akizuki/processed/config/akizuki_postprocess_manifest.json": "b2b3bdfe6695d435fd3f796fc6b186f6122813e3a74cf3517c85c13336b7d12a",
     "assets/characters/akizuki/processed/config/akizuki_vfx_config.json": "1bb38a67105c797635bd87537160ffc9de6687178332684c2899b5cfd9fa1cf2",
@@ -7788,6 +7794,500 @@
         },
         "cleanup_tags": [],
         "source_key": "battle_grid"
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/akizuki/processed/battle/akizuki_battle_far_body.png": {
+      "sha256": "1748e32e0dcf1019bdd37e6d18276a8f804e75c1279d12a12a064739f28b0295",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 670,
+        "height": 909,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 350975,
+        "visible_pixel_count": 258055,
+        "transparent_canvas_ratio": 0.5762852404643449,
+        "visible_canvas_ratio": 0.42371475953565507,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "size": [
+          670,
+          909
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          68,
+          98,
+          701,
+          876
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            0,
+            0,
+            790,
+            887
+          ],
+          "final_box": [
+            68,
+            98,
+            701,
+            876
+          ],
+          "expanded": {
+            "left": -68,
+            "top": -98,
+            "right": -89,
+            "bottom": -11
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 25,
+          "selected_component_count": 23,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                84,
+                114,
+                685,
+                860
+              ],
+              "pixel_count": 251323,
+              "overlap_pixels": 251323
+            },
+            {
+              "bbox": [
+                324,
+                134,
+                325,
+                135
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                321,
+                135,
+                322,
+                136
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                255,
+                177,
+                256,
+                178
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                244,
+                187,
+                245,
+                188
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                243,
+                188,
+                244,
+                189
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                176,
+                276,
+                177,
+                277
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                109,
+                352,
+                110,
+                353
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                110,
+                358,
+                111,
+                359
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                130,
+                394,
+                131,
+                395
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                129,
+                396,
+                130,
+                397
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                128,
+                398,
+                129,
+                400
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                126,
+                404,
+                127,
+                405
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                195,
+                493,
+                196,
+                494
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                526,
+                564,
+                527,
+                565
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                265,
+                643,
+                266,
+                644
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                586,
+                643,
+                587,
+                644
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                417,
+                705,
+                418,
+                706
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                423,
+                716,
+                424,
+                717
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                319,
+                717,
+                320,
+                718
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 14,
+            "top": 5,
+            "right": 1,
+            "bottom": 9
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 251137
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            618,
+            764
+          ],
+          "centroid_before_padding": [
+            306.83,
+            333.59
+          ],
+          "padding": {
+            "left": 28,
+            "top": 121,
+            "right": 24,
+            "bottom": 24
+          },
+          "centroid_offset_after_padding": {
+            "x": -0.17,
+            "y": 0.09
+          }
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/akizuki/processed/battle/akizuki_battle_far_rig.png": {
+      "sha256": "2852b9736ba6eadaf9a2f87f923001fc7810b121608c6e9a22270777b85a45f4",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 939,
+        "height": 468,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 193189,
+        "visible_pixel_count": 246263,
+        "transparent_canvas_ratio": 0.439613427632597,
+        "visible_canvas_ratio": 0.5603865723674031,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "size": [
+          939,
+          468
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          881,
+          325,
+          1746,
+          770
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            790,
+            0,
+            1774,
+            887
+          ],
+          "final_box": [
+            881,
+            325,
+            1746,
+            770
+          ],
+          "expanded": {
+            "left": -91,
+            "top": -325,
+            "right": -28,
+            "bottom": -117
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 11,
+          "selected_component_count": 10,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                897,
+                341,
+                1730,
+                754
+              ],
+              "pixel_count": 242690,
+              "overlap_pixels": 242690
+            },
+            {
+              "bbox": [
+                1051,
+                387,
+                1052,
+                388
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1050,
+                397,
+                1051,
+                398
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1489,
+                400,
+                1490,
+                401
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1570,
+                433,
+                1572,
+                435
+              ],
+              "pixel_count": 3,
+              "overlap_pixels": 3
+            },
+            {
+              "bbox": [
+                1572,
+                435,
+                1574,
+                436
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                906,
+                589,
+                907,
+                590
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1571,
+                665,
+                1572,
+                666
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1488,
+                698,
+                1489,
+                699
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1049,
+                700,
+                1050,
+                701
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 9,
+            "top": 13,
+            "right": 13,
+            "bottom": 12
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 242598
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            843,
+            420
+          ],
+          "centroid_before_padding": [
+            397.53,
+            209.85
+          ],
+          "padding": {
+            "left": 72,
+            "top": 24,
+            "right": 24,
+            "bottom": 24
+          },
+          "centroid_offset_after_padding": {
+            "x": 0.03,
+            "y": -0.15
+          }
+        }
       },
       "review": {
         "verdict": "pending",

@@ -16,8 +16,11 @@
     "assets/characters/baltimore/battle/baltimore_anim_idle_4f_sheet.png": "8728b163032cda2ee2e5ebf1572f68e85c9b4077f49c62403c058f80ce553ba5",
     "assets/characters/baltimore/battle/baltimore_anim_move_4f_sheet.png": "33ef6f4a9d7325145b7715436ba7f27023e53981e188ccd65b172d38e66d8452",
     "assets/characters/baltimore/battle/baltimore_battle_asset_grid.png": "e49ced8b635d99eebf4adc2de6a2b8a5cf9bc4a258c2e31ce117822c46c2399b",
+    "assets/characters/baltimore/battle/baltimore_far_battle_sheet.png": "eb369e10ba90a2207fa3c2f0927a8bb057e2a3a8cab23f7d6691193e0ca00ca0",
     "assets/characters/baltimore/concept/baltimore_concept_full.png": "65619611e22193b43156d118d0aeb3fa034c12bd4c2f2008c9df4744ef5d222b",
     "assets/characters/baltimore/meta/baltimore_crop_specs.json": "082605eceaff4fc8c25efc1b6ac2175c2b0e5648337f003808b168d67ba21d24",
+    "assets/characters/baltimore/meta/baltimore_far_battle_crop_specs.json": "5a84a5d0293d2027ac372116eabea7095da97660791f89cfc1588657576554e3",
+    "assets/characters/baltimore/meta/baltimore_far_battle_revision.json": "4c6f87385216ea84e687d22a2fd52c6a469091e9c3012adf7d0c206fb6a01e89",
     "assets/characters/baltimore/meta/baltimore_generation_requests_repair_20260921.json": "1475e9f35bc21010181661ea95bfef833adce2d8c5756d91af5628422eb7c7fd",
     "assets/characters/baltimore/meta/baltimore_portrait_revision.json": "90639d106a1e76f88b9de542a7a9ba51994affd650a6d1443a8abe08d66c31de",
     "assets/characters/baltimore/meta/baltimore_source_provenance_v2.json": "8be11c3141aeda4c77cfc38ff951eaac89e3fbe57c66504f3a62e112aa43af66",
@@ -50,6 +53,8 @@
     "assets/characters/baltimore/processed/anim/baltimore_anim_move_keyframe.png": "d00567ddb51c4abca460a60462d9bcb61718741a92b721332aba70f0ad792a69",
     "assets/characters/baltimore/processed/battle/baltimore_battle_aa_center.png": "85bcfc580348c3b244722432842e267e4dd0de78c4178ff9d2f90112fc28b878",
     "assets/characters/baltimore/processed/battle/baltimore_battle_body_r.png": "2e0a41316c2bd1643aee0139dfd27aae756718cbe7751f8920a74bc4393083fe",
+    "assets/characters/baltimore/processed/battle/baltimore_battle_far_body.png": "db1bd653543931a9721e8054520508293fa0b95d0a234ddea2792df054ab1a8b",
+    "assets/characters/baltimore/processed/battle/baltimore_battle_far_rig.png": "7c9ec8e7e16392a75cc72ad065da2b9bec235df141422f9c53c241204ee43d42",
     "assets/characters/baltimore/processed/battle/baltimore_battle_fire_control_node.png": "1b613fa077f262be5c275d244a39ac9c6a5ceb2c0de286d3318cfe778fd7c290",
     "assets/characters/baltimore/processed/battle/baltimore_battle_rig_base.png": "172d03539fa4f0cb670086aef8b37c9b7802effbfadf878da37578e645df3fa8",
     "assets/characters/baltimore/processed/battle/baltimore_battle_turret_main_01.png": "c1b37ef68f6f4e75a94dab4924ea49f9cdfb370702e1aca88b6b54b07a5c8861",
@@ -57,6 +62,7 @@
     "assets/characters/baltimore/processed/battle/baltimore_battle_turret_main_03.png": "ef88f7963c21ebdb3c3a9ff9997f9e10b5ee50c6c934c880248e907bef6d127a",
     "assets/characters/baltimore/processed/battle/baltimore_battle_wake_origin_marker.png": "2e45cf39325bbbdc64b28a663ee26667f68fafee129cb947e0495f5d9a04bb8f",
     "assets/characters/baltimore/processed/config/baltimore_anim_config.json": "ee39ca2c61214512282aac5d8c937cbeae130132b74e316cb89adf69a4b8de4c",
+    "assets/characters/baltimore/processed/config/baltimore_far_battle_config.json": "c53875194691a50c43346ec64fb6f8008675381fe5611e19644b512792da459e",
     "assets/characters/baltimore/processed/config/baltimore_meta_bind_points.json": "5d73e5c6111e536f509b88fff4f76daaa848169a2cbe8452efc3d21fcd193bed",
     "assets/characters/baltimore/processed/config/baltimore_postprocess_manifest.json": "2735a0980de765bf33f1b6a58921ac1e7f1c107219ac2d48ce646e1fd7ac4436",
     "assets/characters/baltimore/processed/config/baltimore_vfx_config.json": "d7fc5f46e451c635a7afd2521333fce73d5ec274c778521293a301868059b8da",
@@ -7888,6 +7894,350 @@
         },
         "cleanup_tags": [],
         "source_key": "battle_grid"
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/baltimore/processed/battle/baltimore_battle_far_body.png": {
+      "sha256": "db1bd653543931a9721e8054520508293fa0b95d0a234ddea2792df054ab1a8b",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 614,
+        "height": 865,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 252143,
+        "visible_pixel_count": 278967,
+        "transparent_canvas_ratio": 0.47474722750466003,
+        "visible_canvas_ratio": 0.52525277249534,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "size": [
+          614,
+          865
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          75,
+          51,
+          642,
+          876
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            0,
+            0,
+            769,
+            887
+          ],
+          "final_box": [
+            75,
+            51,
+            642,
+            876
+          ],
+          "expanded": {
+            "left": -75,
+            "top": -51,
+            "right": -127,
+            "bottom": -11
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 15,
+          "selected_component_count": 14,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                91,
+                67,
+                626,
+                860
+              ],
+              "pixel_count": 272362,
+              "overlap_pixels": 272362
+            },
+            {
+              "bbox": [
+                217,
+                153,
+                218,
+                154
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                598,
+                414,
+                599,
+                415
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                141,
+                426,
+                142,
+                427
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                132,
+                455,
+                133,
+                456
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                133,
+                456,
+                134,
+                457
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                566,
+                476,
+                567,
+                477
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                565,
+                477,
+                566,
+                478
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                172,
+                497,
+                173,
+                501
+              ],
+              "pixel_count": 4,
+              "overlap_pixels": 4
+            },
+            {
+              "bbox": [
+                173,
+                503,
+                174,
+                504
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                187,
+                533,
+                188,
+                534
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                148,
+                680,
+                149,
+                681
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                190,
+                736,
+                191,
+                737
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                446,
+                754,
+                447,
+                755
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 7,
+            "top": 13,
+            "right": 13,
+            "bottom": 12
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 272157
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            547,
+            800
+          ],
+          "centroid_before_padding": [
+            263.99,
+            391.33
+          ],
+          "padding": {
+            "left": 43,
+            "top": 41,
+            "right": 24,
+            "bottom": 24
+          },
+          "centroid_offset_after_padding": {
+            "x": -0.01,
+            "y": -0.17
+          }
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/baltimore/processed/battle/baltimore_battle_far_rig.png": {
+      "sha256": "7c9ec8e7e16392a75cc72ad065da2b9bec235df141422f9c53c241204ee43d42",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 953,
+        "height": 465,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 212450,
+        "visible_pixel_count": 230695,
+        "transparent_canvas_ratio": 0.47941418722991347,
+        "visible_canvas_ratio": 0.5205858127700865,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "size": [
+          953,
+          465
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          897,
+          328,
+          1760,
+          771
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            769,
+            0,
+            1774,
+            887
+          ],
+          "final_box": [
+            897,
+            328,
+            1760,
+            771
+          ],
+          "expanded": {
+            "left": -128,
+            "top": -328,
+            "right": -14,
+            "bottom": -116
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 2,
+          "selected_component_count": 1,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                913,
+                344,
+                1744,
+                755
+              ],
+              "pixel_count": 227059,
+              "overlap_pixels": 227059
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 11,
+            "top": 13,
+            "right": 14,
+            "bottom": 14
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 226984
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            838,
+            416
+          ],
+          "centroid_before_padding": [
+            385.39,
+            207.65
+          ],
+          "padding": {
+            "left": 91,
+            "top": 25,
+            "right": 24,
+            "bottom": 24
+          },
+          "centroid_offset_after_padding": {
+            "x": -0.11,
+            "y": 0.15
+          }
+        }
       },
       "review": {
         "verdict": "pending",

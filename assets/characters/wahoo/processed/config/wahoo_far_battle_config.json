@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "character_id": "wahoo",
+  "body_basis": "upright",
+  "rig_heading_degrees": 0,
+  "rig_width": 50,
+  "roles": {
+    "body": {
+      "path": "assets/characters/wahoo/processed/battle/wahoo_battle_far_body.png",
+      "sha256": "91362484c88e0de2bb7f07c505b2a141963c6a777e28ed3e171e57a4b3f85b49",
+      "alpha_rect": [
+        30,
+        84,
+        512,
+        771
+      ],
+      "size": [
+        574,
+        889
+      ]
+    },
+    "rig": {
+      "path": "assets/characters/wahoo/processed/battle/wahoo_battle_far_rig.png",
+      "sha256": "909b8b793ae91ef786efbc2e9323b8c9fbefc1b6f702acef07855ec5db6c1cbb",
+      "alpha_rect": [
+        70,
+        36,
+        858,
+        262
+      ],
+      "size": [
+        959,
+        396
+      ]
+    }
+  },
+  "anchors": {
+    "torpedo_port_01": [
+      0.2,
+      0.12
+    ]
+  },
+  "animation": "procedural_far_view"
+}

@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "character_id": "chang_chun",
+  "body_basis": "upright",
+  "rig_heading_degrees": 0,
+  "rig_width": 52,
+  "roles": {
+    "body": {
+      "path": "assets/characters/chang_chun/processed/battle/chang_chun_battle_far_body.png",
+      "sha256": "712a66932e3e48e1961d43501750ff00b1cc47fd58a94a7f7fc91b6053347c69",
+      "alpha_rect": [
+        25,
+        98,
+        553,
+        781
+      ],
+      "size": [
+        605,
+        907
+      ]
+    },
+    "rig": {
+      "path": "assets/characters/chang_chun/processed/battle/chang_chun_battle_far_rig.png",
+      "sha256": "1b16495cd0965e4c2ccc813e9c09d93edafe4355f9e9526245b261d6fe2c8b5c",
+      "alpha_rect": [
+        96,
+        31,
+        921,
+        375
+      ],
+      "size": [
+        1049,
+        438
+      ]
+    }
+  },
+  "anchors": {
+    "muzzle_01": [
+      0.42,
+      0
+    ],
+    "torpedo_port_01": [
+      0.2,
+      0.12
+    ]
+  },
+  "animation": "procedural_far_view"
+}

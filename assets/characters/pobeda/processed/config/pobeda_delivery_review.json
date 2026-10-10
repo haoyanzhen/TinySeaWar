@@ -12,7 +12,10 @@
   "package_sha256": {
     "assets/characters/pobeda/battle/pobeda_anim_5x4_master.png": "75f2795a3fb16b94f5cdb753016fb47624b870cde7dc4845f80fe1f0459077d1",
     "assets/characters/pobeda/battle/pobeda_battle_asset_grid.png": "48f9bd86627eadafbbacb98b956ec55a481284162730bf0b1b5a318428fdfca9",
+    "assets/characters/pobeda/battle/pobeda_far_battle_sheet.png": "a0fe8d24cbbed5e27b19b34aac71e30b0d38d324bb1e119aeec0edb94ee653da",
     "assets/characters/pobeda/concept/pobeda_concept_full.png": "0d200397eaede50abc48da410fa0d50cf100dc5fba6c3b2ff3c1154a7d8a6351",
+    "assets/characters/pobeda/meta/pobeda_far_battle_crop_specs.json": "523d8611fdb0f1e78cb10506d7a41954746acf803afaabf05977e98492d64cef",
+    "assets/characters/pobeda/meta/pobeda_far_battle_revision.json": "625ea5fae8582dda046bbfde708679bae9250fd6e722a2bb106a66aadc915f71",
     "assets/characters/pobeda/meta/pobeda_portrait_revision.json": "462d1531f2f321af54b7d30c844bad9c6148c600c488e2d7d7b80db334268a36",
     "assets/characters/pobeda/processed/anim/pobeda_anim_attack_frame_01.png": "35df5cc09f65c145e1708346081d0ec512308e7caec389e76ea72ced1cee9c0c",
     "assets/characters/pobeda/processed/anim/pobeda_anim_attack_frame_02.png": "4700cea1af883c53822d45f14e6f27284c82dafee0641ae50ec729caf7e175f0",
@@ -43,11 +46,14 @@
     "assets/characters/pobeda/processed/battle/pobeda_battle_aircraft_launch_marker.png": "0eea612de772807698a0652743e72834bc6bb024f65d8260529d71a81ee5325b",
     "assets/characters/pobeda/processed/battle/pobeda_battle_aircraft_recovery_marker.png": "0a8dd40e56a8cddbf8254fd8e52325295cb8ecc048226b8c4a28401ac2dcddc8",
     "assets/characters/pobeda/processed/battle/pobeda_battle_body_r.png": "38a3457cf81ffe49b8488ad588be4590f0d899633813246bb6861f0396cee3e8",
+    "assets/characters/pobeda/processed/battle/pobeda_battle_far_body.png": "0b901041911544ca3236c89e97bafac6484e71bf205f518c55389e5eb83afdc9",
+    "assets/characters/pobeda/processed/battle/pobeda_battle_far_rig.png": "385fbc87cc4292954e09b1aa61f2d4ada94868ea78a9d270cd6d7f011e758ccf",
     "assets/characters/pobeda/processed/battle/pobeda_battle_flight_deck.png": "12b87eb532f8f74f8ed2aada461bca2175c4bb7441d901443123342a93330a1d",
     "assets/characters/pobeda/processed/battle/pobeda_battle_radar_node.png": "ea1c67248eaca27435b6f5265fcbb558d64adb438b8214c214df5f79eda0b7f2",
     "assets/characters/pobeda/processed/battle/pobeda_battle_rig_base.png": "f38036357ef7a6fdd2550a0fa9ee6d56e66120657a524a4b58c0582b6dae6735",
     "assets/characters/pobeda/processed/battle/pobeda_battle_wake_origin_marker.png": "73855c5a81f508c693724f043e25dfa099f02c8bc6cd43d46f189019a25a8492",
     "assets/characters/pobeda/processed/config/pobeda_anim_config.json": "f587b973344c78a7e29df721f799402ad1898e7dd03d9d96eb13f658bc1f7b80",
+    "assets/characters/pobeda/processed/config/pobeda_far_battle_config.json": "55f572a8a38baf97dc0c449216d3f8f26732ad1c511cec5d4a1c4b3717392258",
     "assets/characters/pobeda/processed/config/pobeda_meta_bind_points.json": "0ba5937cc331cd5b67ff5979412d0e49c605fc48fbc05fae6be45366beeef65a",
     "assets/characters/pobeda/processed/config/pobeda_postprocess_manifest.json": "7d34e0f32e5c5503cf5678cddbf3ce17cac305dce1a34345b64dd2627ffdf65b",
     "assets/characters/pobeda/processed/config/pobeda_vfx_config.json": "b1a2341a02a5b3c877919738cae03c28885d66e285d62b395e5f0e579865b654",
@@ -801,6 +807,480 @@
         "transparent_border_ratio": 1.0
       },
       "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/pobeda/processed/battle/pobeda_battle_far_body.png": {
+      "sha256": "0b901041911544ca3236c89e97bafac6484e71bf205f518c55389e5eb83afdc9",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 772,
+        "height": 813,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 293994,
+        "visible_pixel_count": 333642,
+        "transparent_canvas_ratio": 0.4684148136818156,
+        "visible_canvas_ratio": 0.5315851863181844,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "size": [
+          772,
+          813
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          48,
+          85,
+          744,
+          864
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            0,
+            0,
+            806,
+            887
+          ],
+          "final_box": [
+            48,
+            85,
+            744,
+            864
+          ],
+          "expanded": {
+            "left": -48,
+            "top": -85,
+            "right": -62,
+            "bottom": -23
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 50,
+          "selected_component_count": 46,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                64,
+                101,
+                728,
+                848
+              ],
+              "pixel_count": 326813,
+              "overlap_pixels": 326813
+            },
+            {
+              "bbox": [
+                488,
+                148,
+                489,
+                149
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                489,
+                149,
+                490,
+                150
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                492,
+                152,
+                493,
+                153
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                493,
+                153,
+                494,
+                154
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                494,
+                154,
+                495,
+                155
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                495,
+                155,
+                496,
+                156
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                167,
+                276,
+                168,
+                278
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                165,
+                283,
+                166,
+                284
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                162,
+                290,
+                163,
+                291
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                161,
+                292,
+                162,
+                293
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                160,
+                294,
+                161,
+                295
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                149,
+                318,
+                150,
+                319
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                148,
+                320,
+                149,
+                322
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                587,
+                377,
+                588,
+                379
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                593,
+                398,
+                594,
+                399
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                172,
+                408,
+                173,
+                409
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                171,
+                409,
+                172,
+                411
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                165,
+                417,
+                166,
+                418
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                166,
+                418,
+                167,
+                419
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 1,
+            "top": 12,
+            "right": 0,
+            "bottom": 13
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 326654
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            695,
+            754
+          ],
+          "centroid_before_padding": [
+            332.75,
+            382.3
+          ],
+          "padding": {
+            "left": 53,
+            "top": 24,
+            "right": 24,
+            "bottom": 35
+          },
+          "centroid_offset_after_padding": {
+            "x": -0.25,
+            "y": -0.2
+          }
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/pobeda/processed/battle/pobeda_battle_far_rig.png": {
+      "sha256": "385fbc87cc4292954e09b1aa61f2d4ada94868ea78a9d270cd6d7f011e758ccf",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 958,
+        "height": 565,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 324637,
+        "visible_pixel_count": 216633,
+        "transparent_canvas_ratio": 0.5997690616513016,
+        "visible_canvas_ratio": 0.40023093834869844,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "size": [
+          958,
+          565
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          870,
+          291,
+          1774,
+          725
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            806,
+            0,
+            1774,
+            887
+          ],
+          "final_box": [
+            870,
+            291,
+            1774,
+            725
+          ],
+          "expanded": {
+            "left": -64,
+            "top": -291,
+            "right": 0,
+            "bottom": -162
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 17,
+          "selected_component_count": 8,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                886,
+                307,
+                1759,
+                709
+              ],
+              "pixel_count": 210833,
+              "overlap_pixels": 210833
+            },
+            {
+              "bbox": [
+                1370,
+                362,
+                1371,
+                363
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1370,
+                364,
+                1371,
+                365
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1183,
+                411,
+                1184,
+                412
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                928,
+                488,
+                929,
+                489
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                909,
+                611,
+                910,
+                612
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                928,
+                634,
+                929,
+                635
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1327,
+                690,
+                1328,
+                691
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 14,
+            "top": 0,
+            "right": 12,
+            "bottom": 13
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 210727
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            878,
+            421
+          ],
+          "centroid_before_padding": [
+            422.99,
+            258.64
+          ],
+          "padding": {
+            "left": 56,
+            "top": 24,
+            "right": 24,
+            "bottom": 120
+          },
+          "centroid_offset_after_padding": {
+            "x": -0.01,
+            "y": 0.14
+          }
+        }
+      },
       "review": {
         "verdict": "pending",
         "reviewer": "",

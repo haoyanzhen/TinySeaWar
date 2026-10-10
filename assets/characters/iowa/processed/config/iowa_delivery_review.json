@@ -16,7 +16,10 @@
     "assets/characters/iowa/battle/iowa_anim_idle_4f_sheet.png": "28dd2dcde2e889e52f49b4d35e2ef1433e5a5118e9636af8a62577ef3068f4a7",
     "assets/characters/iowa/battle/iowa_anim_move_4f_sheet.png": "b03c11f630dfcb3e0ebf5cb6a4934c2ee38a04533e4dd0813a16324067d27da0",
     "assets/characters/iowa/battle/iowa_battle_asset_sheet.png": "8fc51da2e01dac1a709fce4740687d72ed50ba76f2781dac50a2c5dfe1d48ec1",
+    "assets/characters/iowa/battle/iowa_far_battle_sheet.png": "54717d4f1eee974b4551cf486c9f531dfa493b55588cdd8d03771f7fc257e38c",
     "assets/characters/iowa/concept/iowa_concept_full.png": "1d63d0a1f7dedfba7ff419954e602cd7a66ea790863bd88eb28932b416840d66",
+    "assets/characters/iowa/meta/iowa_far_battle_crop_specs.json": "201ebd087580758bfca61ffe49fec06124432e9afbb3636daafc6150329258d8",
+    "assets/characters/iowa/meta/iowa_far_battle_revision.json": "b64ea3562573e815bbd40fa253a1cfdb17d6047c064cdef6396deeeaf3e0f645",
     "assets/characters/iowa/meta/iowa_portrait_revision.json": "f2dba283f142b3562efee8fa4f2df23567b5f6f4fa685fcec0a72e6fb8ebd43d",
     "assets/characters/iowa/processed/anim/iowa_anim_attack_frame_01.png": "6c766b06da1484e0ab6e77455a41e5ef12eb39a21fd2658f72ed5ea0fe9ffbea",
     "assets/characters/iowa/processed/anim/iowa_anim_attack_frame_02.png": "49befa2a903872c3a9d39b6523b0b70792f8fdc2b7461e3fef1e3cccdc9cabc9",
@@ -44,6 +47,8 @@
     "assets/characters/iowa/processed/anim/iowa_anim_move_frame_04.png": "b8c1ec2ec1eeb377aacea76316a6a303a1f253a3ba53734602bf5103c04b2e9a",
     "assets/characters/iowa/processed/anim/iowa_anim_move_keyframe.png": "27e6567a968cf014194fe19073453a58bcdc88ada72b57a909848ec2de3a898a",
     "assets/characters/iowa/processed/battle/iowa_battle_body_r.png": "ef1cb5f54334dd5ce02dbc15a3e2cb5d14330c0508302f95860257834851d54a",
+    "assets/characters/iowa/processed/battle/iowa_battle_far_body.png": "22350534380886e3f7c0e51ad74b0e08227321b7d0f871530fc78463fcb8a282",
+    "assets/characters/iowa/processed/battle/iowa_battle_far_rig.png": "70e028f21041c4cfa8c86533f2413aa2290b4d08bb11f061bada9a60aa2f4e1f",
     "assets/characters/iowa/processed/battle/iowa_battle_fire_control_node.png": "59ec414517edd9b0d4637ab8f4ae52ccddac9b758379a08553f781b597ca33ba",
     "assets/characters/iowa/processed/battle/iowa_battle_flagship_marker.png": "106759840a3bb129727307f9e5a1b73710cbd5a9ebf86c94a392a54574a313ae",
     "assets/characters/iowa/processed/battle/iowa_battle_rig_base.png": "66f2672b89b7647c1680af4c39ac38ed6746e1f56133b3f85626d647d39e9761",
@@ -53,6 +58,7 @@
     "assets/characters/iowa/processed/battle/iowa_battle_turret_secondary_01.png": "9a7358e5b658961a9e0c9a4d691dbf7eee10c0c1529e0a099d31d30c409d9d32",
     "assets/characters/iowa/processed/battle/iowa_battle_wake_origin_marker.png": "18e8f543bd63b812bbc602113a9b488ec47eb1dd3cdf8526d11f4a0df9f1fc48",
     "assets/characters/iowa/processed/config/iowa_anim_config.json": "1c301b637e9b0d411dce1214d91d233027c002a3890b707bec9c142d5807fa64",
+    "assets/characters/iowa/processed/config/iowa_far_battle_config.json": "bd4cebc7e62e49986a27c6e2281c4fdb465a1cc4d546e4f77f5358ee471df3c7",
     "assets/characters/iowa/processed/config/iowa_meta_bind_points.json": "c85a7d2728d8816ea29d24aaa19af2b25c35b6660138db69349086a734b54329",
     "assets/characters/iowa/processed/config/iowa_postprocess_manifest.json": "2d90ff9a17c739c7a5420ac6f592dae1829281f2245b4c5f25796561f17a3219",
     "assets/characters/iowa/processed/config/iowa_vfx_config.json": "b6f8471c566be576a5dfc965f94eccb1c22b9e099122fb9e67b00d0930ebcb1d",
@@ -705,6 +711,430 @@
           "top": 19,
           "right": 19,
           "bottom": 47
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/iowa/processed/battle/iowa_battle_far_body.png": {
+      "sha256": "22350534380886e3f7c0e51ad74b0e08227321b7d0f871530fc78463fcb8a282",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 735,
+        "height": 823,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 292592,
+        "visible_pixel_count": 312313,
+        "transparent_canvas_ratio": 0.4836990932460469,
+        "visible_canvas_ratio": 0.5163009067539531,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "size": [
+          735,
+          823
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          59,
+          88,
+          750,
+          883
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            0,
+            0,
+            796,
+            887
+          ],
+          "final_box": [
+            59,
+            88,
+            750,
+            883
+          ],
+          "expanded": {
+            "left": -59,
+            "top": -88,
+            "right": -46,
+            "bottom": -4
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 22,
+          "selected_component_count": 21,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                75,
+                104,
+                734,
+                866
+              ],
+              "pixel_count": 306552,
+              "overlap_pixels": 306552
+            },
+            {
+              "bbox": [
+                198,
+                312,
+                199,
+                313
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                185,
+                518,
+                186,
+                519
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                184,
+                519,
+                185,
+                520
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                177,
+                530,
+                178,
+                531
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                176,
+                531,
+                177,
+                532
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                654,
+                541,
+                655,
+                542
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                701,
+                572,
+                702,
+                573
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                159,
+                656,
+                160,
+                657
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                160,
+                658,
+                161,
+                659
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                161,
+                660,
+                162,
+                661
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                162,
+                670,
+                163,
+                671
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                163,
+                671,
+                164,
+                672
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                164,
+                672,
+                166,
+                673
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                170,
+                672,
+                171,
+                674
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                167,
+                673,
+                169,
+                674
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                257,
+                737,
+                258,
+                738
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                558,
+                737,
+                562,
+                738
+              ],
+              "pixel_count": 4,
+              "overlap_pixels": 4
+            },
+            {
+              "bbox": [
+                563,
+                737,
+                564,
+                738
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                569,
+                737,
+                570,
+                738
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 11,
+            "top": 13,
+            "right": 13,
+            "bottom": 14
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 306431
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            667,
+            768
+          ],
+          "centroid_before_padding": [
+            323.26,
+            387.61
+          ],
+          "padding": {
+            "left": 44,
+            "top": 24,
+            "right": 24,
+            "bottom": 31
+          },
+          "centroid_offset_after_padding": {
+            "x": -0.24,
+            "y": 0.11
+          }
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/iowa/processed/battle/iowa_battle_far_rig.png": {
+      "sha256": "70e028f21041c4cfa8c86533f2413aa2290b4d08bb11f061bada9a60aa2f4e1f",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 987,
+        "height": 456,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 201469,
+        "visible_pixel_count": 248603,
+        "transparent_canvas_ratio": 0.4476372669261807,
+        "visible_canvas_ratio": 0.5523627330738193,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "size": [
+          987,
+          456
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          843,
+          325,
+          1758,
+          755
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            796,
+            0,
+            1774,
+            887
+          ],
+          "final_box": [
+            843,
+            325,
+            1758,
+            755
+          ],
+          "expanded": {
+            "left": -47,
+            "top": -325,
+            "right": -16,
+            "bottom": -132
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 6,
+          "selected_component_count": 3,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                859,
+                341,
+                1742,
+                739
+              ],
+              "pixel_count": 244958,
+              "overlap_pixels": 244958
+            },
+            {
+              "bbox": [
+                1464,
+                386,
+                1465,
+                387
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1067,
+                713,
+                1068,
+                714
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 12,
+            "top": 13,
+            "right": 13,
+            "bottom": 13
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 244865
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            890,
+            404
+          ],
+          "centroid_before_padding": [
+            420.73,
+            200.02
+          ],
+          "padding": {
+            "left": 73,
+            "top": 28,
+            "right": 24,
+            "bottom": 24
+          },
+          "centroid_offset_after_padding": {
+            "x": 0.23,
+            "y": 0.02
+          }
         }
       },
       "review": {

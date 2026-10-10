@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "character_id": "warspite",
+  "body_basis": "upright",
+  "rig_heading_degrees": 0,
+  "rig_width": 72,
+  "roles": {
+    "body": {
+      "path": "assets/characters/warspite/processed/battle/warspite_battle_far_body.png",
+      "sha256": "c5ac524120f03a067faccfebb4810d8eabb53c5a5f1e8289369ea8d11e457965",
+      "alpha_rect": [
+        52,
+        28,
+        649,
+        820
+      ],
+      "size": [
+        737,
+        936
+      ]
+    },
+    "rig": {
+      "path": "assets/characters/warspite/processed/battle/warspite_battle_far_rig.png",
+      "sha256": "cefcea161bc7bf39d50d8214c15a3fb3244ded8f7d31b37a7f6780723381acd8",
+      "alpha_rect": [
+        73,
+        36,
+        822,
+        431
+      ],
+      "size": [
+        928,
+        503
+      ]
+    }
+  },
+  "anchors": {
+    "muzzle_group": [
+      0.42,
+      0
+    ],
+    "muzzle_01": [
+      0.42,
+      0
+    ]
+  },
+  "animation": "procedural_far_view"
+}

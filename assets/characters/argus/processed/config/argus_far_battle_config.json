@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "character_id": "argus",
+  "body_basis": "upright",
+  "rig_heading_degrees": 0,
+  "rig_width": 76,
+  "roles": {
+    "body": {
+      "path": "assets/characters/argus/processed/battle/argus_battle_far_body.png",
+      "sha256": "7dd55b1e9d197e36a79077f25cac7f0766ae0369577375df68a4223a0ca4beeb",
+      "alpha_rect": [
+        27,
+        97,
+        532,
+        777
+      ],
+      "size": [
+        591,
+        899
+      ]
+    },
+    "rig": {
+      "path": "assets/characters/argus/processed/battle/argus_battle_far_rig.png",
+      "sha256": "3e8caa6592061409f20600444b46a397ce0e3f63d0c1a1a4e8488e0a46b0da1c",
+      "alpha_rect": [
+        69,
+        35,
+        927,
+        406
+      ],
+      "size": [
+        1019,
+        536
+      ]
+    }
+  },
+  "anchors": {
+    "unit_center": [
+      0,
+      0
+    ]
+  },
+  "animation": "procedural_far_view"
+}

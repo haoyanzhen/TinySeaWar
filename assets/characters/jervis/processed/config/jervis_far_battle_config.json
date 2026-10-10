@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "character_id": "jervis",
+  "body_basis": "upright",
+  "rig_heading_degrees": 0,
+  "rig_width": 52,
+  "roles": {
+    "body": {
+      "path": "assets/characters/jervis/processed/battle/jervis_battle_far_body.png",
+      "sha256": "960bc26a85555136af0da25df725158cdc0d72da3b2ba8f025eee7ab8c11b48b",
+      "alpha_rect": [
+        61,
+        85,
+        683,
+        780
+      ],
+      "size": [
+        780,
+        891
+      ]
+    },
+    "rig": {
+      "path": "assets/characters/jervis/processed/battle/jervis_battle_far_rig.png",
+      "sha256": "50403a3b979c4863ee05a79deed19b4191b65e62fda1b4347a37cc5186e6f38b",
+      "alpha_rect": [
+        75,
+        29,
+        919,
+        362
+      ],
+      "size": [
+        1016,
+        418
+      ]
+    }
+  },
+  "anchors": {
+    "asw_launch_01": [
+      0,
+      0
+    ],
+    "muzzle_01": [
+      0.42,
+      0
+    ],
+    "torpedo_port_01": [
+      0.2,
+      0.12
+    ]
+  },
+  "animation": "procedural_far_view"
+}

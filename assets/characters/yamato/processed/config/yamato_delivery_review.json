@@ -12,7 +12,10 @@
   "package_sha256": {
     "assets/characters/yamato/battle/yamato_anim_5x4_master.png": "cb3e9a2a001eaf84f7efe3e932023fe7d507beaee9dc5d08010bd08a43d7571f",
     "assets/characters/yamato/battle/yamato_battle_asset_grid.png": "850894451b828805b81d4b78b017a8975944c4e33207838e40c87658ca4f50b8",
+    "assets/characters/yamato/battle/yamato_far_battle_sheet.png": "3d79b1fce604d4dad91a0014e32f79ed5156a378ac77b2320b61863f08f9875c",
     "assets/characters/yamato/concept/yamato_concept_full.png": "cb5b953e70bd48ecb42841162f57dfca31696efa5f9c42ba7de5d4caf7e12092",
+    "assets/characters/yamato/meta/yamato_far_battle_crop_specs.json": "93f728545575e3113c6dcc39cc58c63607c0a2048995fc348663ca45151bab99",
+    "assets/characters/yamato/meta/yamato_far_battle_revision.json": "620e3d6c60e2b019e5aef60c3ea219a1ca14bcfaad20c05c23b237dfcb77d95d",
     "assets/characters/yamato/meta/yamato_portrait_revision.json": "03d6285d3888a7dc9c6c2930ac7ae376419f95130b9c19ae182aa944cc5e2a50",
     "assets/characters/yamato/processed/anim/yamato_anim_attack_frame_01.png": "2c1270a822aa13af6bcdd5ce45c6769bdd7ba3d82195fc863d18963d6828becb",
     "assets/characters/yamato/processed/anim/yamato_anim_attack_frame_02.png": "2da97bbcdbbca54f1f7ed5ea2c3619bea2fea17b7d15eca10b24de070e4eb518",
@@ -40,6 +43,8 @@
     "assets/characters/yamato/processed/anim/yamato_anim_move_frame_04.png": "5ffc162f5e159cf5c148330b0fefb4ca2b971628d68563a65d9d14a559293ce9",
     "assets/characters/yamato/processed/anim/yamato_anim_move_keyframe.png": "8d69e0dbe3e3b7bf9207034e459be0976264faf7aa6660f84996526693fbf179",
     "assets/characters/yamato/processed/battle/yamato_battle_body_r.png": "fbc9dc6fcc386de55e0a85634bc10fe36421fe20f4beb648da4d550e9da47571",
+    "assets/characters/yamato/processed/battle/yamato_battle_far_body.png": "c5967374300639838c3f2425ec1d729fa66094c262b3889c4b248bfcc31a1b18",
+    "assets/characters/yamato/processed/battle/yamato_battle_far_rig.png": "26f3c95dbd6b69530633a83fb4c0a7c8d882277fe684b89be510973226218d74",
     "assets/characters/yamato/processed/battle/yamato_battle_fire_control_node.png": "7e475bc5d7c8f07a8d290b8a1b4933e009809411e303a116a11cbbd080f5a65e",
     "assets/characters/yamato/processed/battle/yamato_battle_flagship_marker.png": "f898a225f7cd96851a80c64b08bfacd047d82d3c475056f6ee23fc4d44455bf1",
     "assets/characters/yamato/processed/battle/yamato_battle_rig_base.png": "7d72b812ca963a4fee8dae26a2a7e1053630c5dfc285d11e6fec33014a500bb2",
@@ -48,6 +53,7 @@
     "assets/characters/yamato/processed/battle/yamato_battle_turret_main_03.png": "d1475fabfb939ad69576c91dcb169dd18bf6956264e527ea0b6452356b450005",
     "assets/characters/yamato/processed/battle/yamato_battle_wake_origin_marker.png": "73f456fc6760114a00607381f490f413f77e3e0d1663582776c7e5bc9645974d",
     "assets/characters/yamato/processed/config/yamato_anim_config.json": "502551a99e0aaadad6320ee21fb8d03104192e73ad906485e41a425b514fbd4d",
+    "assets/characters/yamato/processed/config/yamato_far_battle_config.json": "885c1f7685dc0cafb531fe6d4612e05111cbede00c45506d5ac9d63326743ca4",
     "assets/characters/yamato/processed/config/yamato_meta_bind_points.json": "f612474cc9aa41323e7353a7960f13023c6523e0b10d1e094ff07c4d41cd9098",
     "assets/characters/yamato/processed/config/yamato_postprocess_manifest.json": "372728b8fcaa2065827e04ded1ced4f722533f1818d6ee8ae19902fc1d4f6cdc",
     "assets/characters/yamato/processed/config/yamato_vfx_config.json": "79d28c86b7210ae0a117cfff607c48763a8e9532230cae9aca8926a1800a3b64",
@@ -672,6 +678,450 @@
         "transparent_border_ratio": 1.0
       },
       "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yamato/processed/battle/yamato_battle_far_body.png": {
+      "sha256": "c5967374300639838c3f2425ec1d729fa66094c262b3889c4b248bfcc31a1b18",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 739,
+        "height": 839,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 291448,
+        "visible_pixel_count": 328573,
+        "transparent_canvas_ratio": 0.470061497917006,
+        "visible_canvas_ratio": 0.529938502082994,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "size": [
+          739,
+          839
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          44,
+          77,
+          738,
+          876
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            0,
+            0,
+            811,
+            887
+          ],
+          "final_box": [
+            44,
+            77,
+            738,
+            876
+          ],
+          "expanded": {
+            "left": -44,
+            "top": -77,
+            "right": -73,
+            "bottom": -11
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 55,
+          "selected_component_count": 53,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                60,
+                93,
+                722,
+                860
+              ],
+              "pixel_count": 320233,
+              "overlap_pixels": 320233
+            },
+            {
+              "bbox": [
+                490,
+                155,
+                491,
+                156
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                238,
+                173,
+                239,
+                174
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                237,
+                174,
+                238,
+                175
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                234,
+                175,
+                237,
+                178
+              ],
+              "pixel_count": 5,
+              "overlap_pixels": 5
+            },
+            {
+              "bbox": [
+                232,
+                178,
+                234,
+                180
+              ],
+              "pixel_count": 3,
+              "overlap_pixels": 3
+            },
+            {
+              "bbox": [
+                231,
+                180,
+                232,
+                181
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                230,
+                181,
+                231,
+                182
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                226,
+                182,
+                229,
+                186
+              ],
+              "pixel_count": 6,
+              "overlap_pixels": 6
+            },
+            {
+              "bbox": [
+                223,
+                185,
+                226,
+                189
+              ],
+              "pixel_count": 8,
+              "overlap_pixels": 8
+            },
+            {
+              "bbox": [
+                222,
+                189,
+                223,
+                190
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                221,
+                190,
+                222,
+                191
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                220,
+                191,
+                221,
+                192
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                218,
+                192,
+                220,
+                194
+              ],
+              "pixel_count": 4,
+              "overlap_pixels": 4
+            },
+            {
+              "bbox": [
+                217,
+                194,
+                218,
+                195
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                216,
+                195,
+                217,
+                196
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                215,
+                196,
+                216,
+                197
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                214,
+                197,
+                215,
+                198
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                210,
+                202,
+                211,
+                203
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                208,
+                205,
+                209,
+                206
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 1,
+            "top": 11,
+            "right": 10,
+            "bottom": 9
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 320043
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            683,
+            779
+          ],
+          "centroid_before_padding": [
+            337.63,
+            395.52
+          ],
+          "padding": {
+            "left": 32,
+            "top": 24,
+            "right": 24,
+            "bottom": 36
+          },
+          "centroid_offset_after_padding": {
+            "x": 0.13,
+            "y": 0.02
+          }
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/yamato/processed/battle/yamato_battle_far_rig.png": {
+      "sha256": "26f3c95dbd6b69530633a83fb4c0a7c8d882277fe684b89be510973226218d74",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 974,
+        "height": 494,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 241468,
+        "visible_pixel_count": 239688,
+        "transparent_canvas_ratio": 0.5018497119437355,
+        "visible_canvas_ratio": 0.4981502880562645,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "size": [
+          974,
+          494
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          885,
+          303,
+          1753,
+          752
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            811,
+            0,
+            1774,
+            887
+          ],
+          "final_box": [
+            885,
+            303,
+            1753,
+            752
+          ],
+          "expanded": {
+            "left": -74,
+            "top": -303,
+            "right": -21,
+            "bottom": -135
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 13,
+          "selected_component_count": 5,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                901,
+                319,
+                1737,
+                736
+              ],
+              "pixel_count": 236101,
+              "overlap_pixels": 236101
+            },
+            {
+              "bbox": [
+                1302,
+                334,
+                1303,
+                335
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                911,
+                580,
+                912,
+                581
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1087,
+                697,
+                1088,
+                698
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1301,
+                722,
+                1302,
+                723
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 13,
+            "top": 11,
+            "right": 13,
+            "bottom": 2
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 236013
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            842,
+            436
+          ],
+          "centroid_before_padding": [
+            379.12,
+            213.2
+          ],
+          "padding": {
+            "left": 108,
+            "top": 34,
+            "right": 24,
+            "bottom": 24
+          },
+          "centroid_offset_after_padding": {
+            "x": 0.12,
+            "y": 0.2
+          }
+        }
+      },
       "review": {
         "verdict": "pending",
         "reviewer": "",

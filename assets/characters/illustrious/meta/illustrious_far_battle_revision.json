@@ -1,0 +1,406 @@
+{
+  "schema_version": 2,
+  "scope": "battle_far_body_and_rig_only",
+  "character_id": "illustrious",
+  "route": "codex_builtin_imagegen",
+  "requested_model": null,
+  "actual_model": null,
+  "request_id": null,
+  "endpoint": "Codex managed; not exposed",
+  "background": "transparent",
+  "output_format": "png",
+  "quality": "tool-managed",
+  "source": "assets/characters/illustrious/battle/illustrious_far_battle_sheet.png",
+  "source_sha256": "044c7f01cfdd63d102a214d51c1b8c2f4e0bfd6c4073d82f1db3bb2e56f10031",
+  "alpha_facts": {
+    "format": "PNG",
+    "source_mode": "RGBA",
+    "width": 1774,
+    "height": 887,
+    "has_alpha_channel": true,
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "transparent_pixel_count": 1096783,
+    "visible_pixel_count": 476755,
+    "transparent_canvas_ratio": 0.6970171676820007,
+    "visible_canvas_ratio": 0.30298283231799933,
+    "transparent_border_ratio": 0.9966152688980819
+  },
+  "reference": "assets/characters/illustrious/processed/ui/illustrious_ui_portrait.png",
+  "reference_sha256": "5c867bba07212a4be62b1f819f7075159ca81eb8d133a108a5cf697c61150980",
+  "prompt": "Create a transparent PNG TinySeaWar production game-art sheet matching the APPROVED second reference STYLE. First reference is this character's identity: preserve hairstyle, hair and eye colors, main clothing colors, signature head accessory. Exactly TWO independent cutouts in two widely separated columns, never overlapping: LEFT one upright full-body 2-head-tall chibi shipgirl WITHOUT ship or weapons; RIGHT one separate simplified top-down naval rig WITHOUT a person. Chibi head is HALF total height, expressive eyes, large clean color blocks, bold navy outer contour, restrained cel shading. The person will display at 56px tall; no fine fabric texture, little jewelry. Full legs and boots, no flippers. Use the portrait's uniform translated to a compact skirt/coat and boots consistent with this identity. Right rig is subdued gray, with simple chunky hardware and pointed bow exactly RIGHT; all required barrels/tubes clearly separated. Ship-class silhouette must read at 60px wide. No water, shadow, wake, effects, text, logos, numbers, actual flags, or political symbols. WIDE transparent outer padding and a clean middle gutter. Left entirely left of 43% canvas, right entirely right of 55%; BOTH cutouts fully inside edges. Do not copy the second reference person's identity or crown unless present in first portrait. Keep right rig top-down as a flat navigable base, not side-view boat.\nCharacter: 光辉号 (illustrious), Royal Navy, Carrier. Right cutout expected inventory: one aircraft-carrier deck with a single offset island and a simple runway line, NO planes or gun turrets. Keep the two roles absolutely separate.",
+  "source_review": {
+    "source": "artifacts/art_pipeline/raw/far56_20261009/illustrious.png",
+    "sha256": "044c7f01cfdd63d102a214d51c1b8c2f4e0bfd6c4073d82f1db3bb2e56f10031",
+    "verdict": "pass",
+    "reviewer": "Codex",
+    "observation": "深蓝长辫金叶饰；完整甲板与舰桥。 全身、双手双脚、独立人物和舰装，无截边。"
+  },
+  "human_review": "56px style adopted; new per-character full-roster review pending",
+  "outputs": [
+    {
+      "path": "assets/characters/illustrious/processed/battle/illustrious_battle_far_body.png",
+      "crop": {
+        "size": [
+          560,
+          831
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          147,
+          78,
+          682,
+          854
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            0,
+            0,
+            747,
+            887
+          ],
+          "final_box": [
+            147,
+            78,
+            682,
+            854
+          ],
+          "expanded": {
+            "left": -147,
+            "top": -78,
+            "right": -65,
+            "bottom": -33
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 17,
+          "selected_component_count": 13,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                163,
+                94,
+                666,
+                838
+              ],
+              "pixel_count": 274391,
+              "overlap_pixels": 274391
+            },
+            {
+              "bbox": [
+                638,
+                291,
+                639,
+                292
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                597,
+                434,
+                598,
+                435
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                596,
+                437,
+                597,
+                438
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                596,
+                440,
+                597,
+                442
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                597,
+                443,
+                598,
+                445
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                181,
+                454,
+                182,
+                455
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                246,
+                720,
+                247,
+                721
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                249,
+                722,
+                250,
+                723
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                567,
+                723,
+                568,
+                724
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                569,
+                723,
+                570,
+                724
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                316,
+                728,
+                317,
+                729
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                277,
+                752,
+                278,
+                753
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 13,
+            "top": 14,
+            "right": 13,
+            "bottom": 13
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 274236
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            509,
+            749
+          ],
+          "centroid_before_padding": [
+            255.86,
+            357.34
+          ],
+          "padding": {
+            "left": 24,
+            "top": 58,
+            "right": 27,
+            "bottom": 24
+          },
+          "centroid_offset_after_padding": {
+            "x": -0.14,
+            "y": -0.16
+          }
+        }
+      },
+      "sha256": "6ec05430c84c6406f152c9bfd0b25eb8333eb4ee56fbcfbd6b3a49bb97517021"
+    },
+    {
+      "path": "assets/characters/illustrious/processed/battle/illustrious_battle_far_rig.png",
+      "crop": {
+        "size": [
+          997,
+          493
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          813,
+          285,
+          1709,
+          666
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            747,
+            0,
+            1774,
+            887
+          ],
+          "final_box": [
+            813,
+            285,
+            1709,
+            666
+          ],
+          "expanded": {
+            "left": -66,
+            "top": -285,
+            "right": -65,
+            "bottom": -221
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 14,
+          "selected_component_count": 7,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                829,
+                301,
+                1693,
+                650
+              ],
+              "pixel_count": 189811,
+              "overlap_pixels": 189811
+            },
+            {
+              "bbox": [
+                1029,
+                316,
+                1030,
+                317
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1323,
+                396,
+                1324,
+                397
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                843,
+                560,
+                844,
+                561
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                876,
+                591,
+                877,
+                592
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                879,
+                592,
+                880,
+                593
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1537,
+                609,
+                1538,
+                610
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 12,
+            "top": 0,
+            "right": 7,
+            "bottom": 12
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 189658
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            877,
+            369
+          ],
+          "centroid_before_padding": [
+            402.36,
+            222.53
+          ],
+          "padding": {
+            "left": 96,
+            "top": 24,
+            "right": 24,
+            "bottom": 100
+          },
+          "centroid_offset_after_padding": {
+            "x": -0.14,
+            "y": 0.03
+          }
+        }
+      },
+      "sha256": "0bca0a0cda5bdb06ed6a9f6fe511a6784aed5ecadf6ea1773e123311e43f28ec"
+    }
+  ],
+  "legacy_package_migrated": false,
+  "correction_history": [],
+  "style_reference": {
+    "path": "assets/characters/warspite/battle/warspite_far_battle_sheet.png",
+    "sha256": "6afead7ddb35f0d9571f73fe3b4316c7df8bf8667750acfc45ebe8cc819b8755"
+  }
+}

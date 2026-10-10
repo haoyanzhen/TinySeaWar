@@ -12,7 +12,10 @@
   "package_sha256": {
     "assets/characters/sirius/battle/sirius_anim_5x4_master.png": "5df53d0c50756c4fda47742d5347c62ea5c77451deb6db2461a0055fade845d2",
     "assets/characters/sirius/battle/sirius_battle_asset_grid.png": "534dbaeb9d73e9316af1c73d8a0df4a5475138bdd3d86635f286f089d1594ac1",
+    "assets/characters/sirius/battle/sirius_far_battle_sheet.png": "3e4ea449bf566e425a254345159a28b40e020e3455875f95e66da5079497a08c",
     "assets/characters/sirius/concept/sirius_concept_full.png": "1add93eb91bb9b0140a9b4942a6543b3b57a18f68826b47f896aadf62bfd8093",
+    "assets/characters/sirius/meta/sirius_far_battle_crop_specs.json": "aa035a79ce6b9a786960f5796fabe6e76b3635a49aa1ae3ce60241d1f3dfe9eb",
+    "assets/characters/sirius/meta/sirius_far_battle_revision.json": "775db852198323cb91e377d149e2498461b6461848ee53c574ba89f5eee30764",
     "assets/characters/sirius/meta/sirius_portrait_revision.json": "ef4c0577832085d5597d5a763f36e0db86d41e6daafd94bd0386a8bdfced9259",
     "assets/characters/sirius/processed/anim/sirius_anim_attack_frame_01.png": "f32833684017c47d3b4a67238a7a9b817c6a3705003adb83a0f4a48de2fffaee",
     "assets/characters/sirius/processed/anim/sirius_anim_attack_frame_02.png": "2a7a1d5ff2a6f39b26be52d596b2a28cec239df85e0f1cf82915b850b8ec128f",
@@ -41,6 +44,8 @@
     "assets/characters/sirius/processed/anim/sirius_anim_move_keyframe.png": "3aa692c0093c4be665eba822b8028fb055e9602fb306869b89ea45c2078899aa",
     "assets/characters/sirius/processed/battle/sirius_battle_aa_center.png": "18075e512f1a632348cc873770e3143e62d30cd080d0b6feb48829b644e57904",
     "assets/characters/sirius/processed/battle/sirius_battle_body_r.png": "b0336fb0b43a6a96a8a9e3183ae72561fb4d77038290f241e071f9bd2ecc11ad",
+    "assets/characters/sirius/processed/battle/sirius_battle_far_body.png": "ef0428cc931db5a75f836db8689fd8d84e84af934cd449004c7403cd2df786fa",
+    "assets/characters/sirius/processed/battle/sirius_battle_far_rig.png": "4e8fe00e0c4ff08b60c7c8fd0b4dd06c3920a42eab8a55ce07e604f324c96d67",
     "assets/characters/sirius/processed/battle/sirius_battle_radar_node.png": "2b94d30d1c11c1aa00ee86a4c5d95ca21ee1ae0f5a7e03bbe30d04b79c2d56fe",
     "assets/characters/sirius/processed/battle/sirius_battle_rig_base.png": "79d8a909e4a572432a63283fd92911f4f9b55d9751bf5752e62a008e1c18176f",
     "assets/characters/sirius/processed/battle/sirius_battle_support_node.png": "f9c4a9ecbc0fd8e2d1bfe505b293acbfee1fb4cc3567999f455b0c517539c54b",
@@ -48,6 +53,7 @@
     "assets/characters/sirius/processed/battle/sirius_battle_turret_main_02.png": "2ec25f482c06c2aba76f96dc361d305da90a43a5e4a9fa2180dcfa88fbf5d491",
     "assets/characters/sirius/processed/battle/sirius_battle_wake_origin_marker.png": "e4108d544734ee5c84f9b98a3a55fe3527c33baeee77c18f2ce9f7b4ee728964",
     "assets/characters/sirius/processed/config/sirius_anim_config.json": "754c37caebd0762aefb2b7970ba4014cb888b7a947ce4fde13c41aa39bb311a4",
+    "assets/characters/sirius/processed/config/sirius_far_battle_config.json": "c91476571f1968dfab2267f1dcdda7a7c96e686a5f589eaf83c765bf1719149d",
     "assets/characters/sirius/processed/config/sirius_meta_bind_points.json": "fecc99136b7ff71ceb2326d440c4ea8e0577f2e31e90e641f41c2efd4c40045a",
     "assets/characters/sirius/processed/config/sirius_postprocess_manifest.json": "1a8038f5f52b3d0d7fd2c8dbcfeab861cb473ce63d996c42df5252d30d01e3d5",
     "assets/characters/sirius/processed/config/sirius_vfx_config.json": "63ffe35c067dfcde278dab126b07362e8576d5905b8863d20d6af14e6aadad63",
@@ -715,6 +721,460 @@
         "transparent_border_ratio": 1.0
       },
       "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/sirius/processed/battle/sirius_battle_far_body.png": {
+      "sha256": "ef0428cc931db5a75f836db8689fd8d84e84af934cd449004c7403cd2df786fa",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 607,
+        "height": 902,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 265812,
+        "visible_pixel_count": 281702,
+        "transparent_canvas_ratio": 0.48548895553355714,
+        "visible_canvas_ratio": 0.5145110444664429,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "size": [
+          607,
+          902
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          74,
+          76,
+          642,
+          886
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            0,
+            0,
+            730,
+            887
+          ],
+          "final_box": [
+            74,
+            76,
+            642,
+            886
+          ],
+          "expanded": {
+            "left": -74,
+            "top": -76,
+            "right": -88,
+            "bottom": -1
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 29,
+          "selected_component_count": 28,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                90,
+                92,
+                626,
+                870
+              ],
+              "pixel_count": 273943,
+              "overlap_pixels": 273943
+            },
+            {
+              "bbox": [
+                169,
+                281,
+                170,
+                283
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                168,
+                283,
+                169,
+                285
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                586,
+                299,
+                587,
+                301
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                587,
+                301,
+                588,
+                305
+              ],
+              "pixel_count": 4,
+              "overlap_pixels": 4
+            },
+            {
+              "bbox": [
+                160,
+                302,
+                161,
+                303
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                151,
+                318,
+                152,
+                319
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                150,
+                319,
+                151,
+                320
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                592,
+                323,
+                593,
+                326
+              ],
+              "pixel_count": 3,
+              "overlap_pixels": 3
+            },
+            {
+              "bbox": [
+                141,
+                469,
+                142,
+                470
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                552,
+                473,
+                553,
+                474
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                554,
+                474,
+                555,
+                475
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                553,
+                477,
+                554,
+                478
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                559,
+                477,
+                560,
+                478
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                560,
+                478,
+                561,
+                479
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                143,
+                479,
+                144,
+                480
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                561,
+                479,
+                562,
+                480
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                562,
+                481,
+                563,
+                482
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                557,
+                484,
+                558,
+                485
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                583,
+                513,
+                584,
+                514
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 8,
+            "top": 13,
+            "right": 13,
+            "bottom": 14
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 273710
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            547,
+            783
+          ],
+          "centroid_before_padding": [
+            279.5,
+            356.2
+          ],
+          "padding": {
+            "left": 24,
+            "top": 95,
+            "right": 36,
+            "bottom": 24
+          },
+          "centroid_offset_after_padding": {
+            "x": -0.0,
+            "y": 0.2
+          }
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/sirius/processed/battle/sirius_battle_far_rig.png": {
+      "sha256": "4e8fe00e0c4ff08b60c7c8fd0b4dd06c3920a42eab8a55ce07e604f324c96d67",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 1011,
+        "height": 459,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 214867,
+        "visible_pixel_count": 249182,
+        "transparent_canvas_ratio": 0.46302653383586645,
+        "visible_canvas_ratio": 0.5369734661641336,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "size": [
+          1011,
+          459
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          819,
+          333,
+          1738,
+          743
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            730,
+            0,
+            1774,
+            887
+          ],
+          "final_box": [
+            819,
+            333,
+            1738,
+            743
+          ],
+          "expanded": {
+            "left": -89,
+            "top": -333,
+            "right": -36,
+            "bottom": -144
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 11,
+          "selected_component_count": 6,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                835,
+                349,
+                1722,
+                727
+              ],
+              "pixel_count": 244590,
+              "overlap_pixels": 244590
+            },
+            {
+              "bbox": [
+                925,
+                423,
+                926,
+                424
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1576,
+                442,
+                1577,
+                443
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1577,
+                443,
+                1578,
+                444
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1448,
+                703,
+                1449,
+                704
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1446,
+                704,
+                1448,
+                705
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 0,
+            "top": 13,
+            "right": 0,
+            "bottom": 1
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 244466
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            919,
+            396
+          ],
+          "centroid_before_padding": [
+            437.43,
+            190.47
+          ],
+          "padding": {
+            "left": 68,
+            "top": 39,
+            "right": 24,
+            "bottom": 24
+          },
+          "centroid_offset_after_padding": {
+            "x": -0.07,
+            "y": -0.03
+          }
+        }
+      },
       "review": {
         "verdict": "pending",
         "reviewer": "",

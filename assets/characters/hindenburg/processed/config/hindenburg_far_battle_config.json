@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "character_id": "hindenburg",
+  "body_basis": "upright",
+  "rig_heading_degrees": 0,
+  "rig_width": 66,
+  "roles": {
+    "body": {
+      "path": "assets/characters/hindenburg/processed/battle/hindenburg_battle_far_body.png",
+      "sha256": "faf6f7f9e3eb3df5726e3734db91a8edf2ff229724b459b73b8a3a0b418ecc03",
+      "alpha_rect": [
+        71,
+        44,
+        664,
+        727
+      ],
+      "size": [
+        769,
+        801
+      ]
+    },
+    "rig": {
+      "path": "assets/characters/hindenburg/processed/battle/hindenburg_battle_far_rig.png",
+      "sha256": "4278c5cd30ea8eb4053ce775b0ff26808025c8359b91137c9c48cabf41ac0d77",
+      "alpha_rect": [
+        77,
+        32,
+        867,
+        425
+      ],
+      "size": [
+        979,
+        491
+      ]
+    }
+  },
+  "anchors": {
+    "muzzle_01": [
+      0.42,
+      0
+    ]
+  },
+  "animation": "procedural_far_view"
+}

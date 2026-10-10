@@ -16,8 +16,11 @@
     "assets/characters/fletcher/battle/fletcher_anim_idle_4f_sheet.png": "cea96fe2bd4aca4b8fc184428832be27071d30b08d1ebb6ff1e6ed3d40d5db44",
     "assets/characters/fletcher/battle/fletcher_anim_move_4f_sheet.png": "0342137586b2209c061f9a84273acbf583afb22faa2413cd21ee27fb94da1b9c",
     "assets/characters/fletcher/battle/fletcher_battle_asset_grid.png": "084c184cf4af65cb46209c2d170235f035dfcfa496f3d34b9f87a5768ce32dca",
+    "assets/characters/fletcher/battle/fletcher_far_battle_sheet.png": "7f3a75a8dcd67020e52c29eb6d9b73b0cabb3d57da5d995780f4cf8e2e59a443",
     "assets/characters/fletcher/concept/fletcher_concept_full.png": "37308cc2b0b79707b7b47f72e409e43d6cc266c7b9ccb789d414fa259618e9a9",
     "assets/characters/fletcher/meta/fletcher_crop_specs.json": "b6db0f7f241063c14f46aaf901b5e49beb1b96ca902f869914bd1ad7e5b59efa",
+    "assets/characters/fletcher/meta/fletcher_far_battle_crop_specs.json": "df9ea20ad2b418255202e33770ab6523914610ca918b2934d3755803576bd628",
+    "assets/characters/fletcher/meta/fletcher_far_battle_revision.json": "01c76435938609c46531c6b463c901d59f7e769afa649f179f2cc3698b06105c",
     "assets/characters/fletcher/meta/fletcher_generation_requests_repair_20260921.json": "5bd769998455619e717bd154327b302a5fffd53265badc493ab928dc8bb9324b",
     "assets/characters/fletcher/meta/fletcher_portrait_revision.json": "d2d9664ff82180139b65a031e3c30be7e10360124c0ba2ca462a7b81f67f5dbb",
     "assets/characters/fletcher/meta/fletcher_source_provenance_v2.json": "be42b4203d0ab8805cc3b005ccca43a83edd17436700de195fffaade3c8173df",
@@ -51,12 +54,15 @@
     "assets/characters/fletcher/processed/battle/fletcher_battle_aa_center.png": "3d445701ac6044d43e00b97bb00c9fae0a9e7ff2ec572a4d459c7ce21255d330",
     "assets/characters/fletcher/processed/battle/fletcher_battle_body_r.png": "09b3975e4bf0649b7589bb2fe32f8d8d165646ff600e6719c0f8e5e5a88f5653",
     "assets/characters/fletcher/processed/battle/fletcher_battle_depth_charge_rack.png": "63694e23e8ed9f3895ea7801cec135b09dedd67c8678ef2a9139301f89d0154b",
+    "assets/characters/fletcher/processed/battle/fletcher_battle_far_body.png": "07fabc6b662fa113bfd050c1d99617f062179c4276799f63ada49dfc7660dde8",
+    "assets/characters/fletcher/processed/battle/fletcher_battle_far_rig.png": "9ee53afe893b104e91db1b9d923ab979dccbf3521c44487ea600a16890ff4760",
     "assets/characters/fletcher/processed/battle/fletcher_battle_rig_base.png": "c178de278c4af7b2c0f55f007bceaa14d292f451ce1d2023260d8cb82b894266",
     "assets/characters/fletcher/processed/battle/fletcher_battle_sonar_node.png": "8032cb1cc27299b10194ea30955374bffbb8f7efbd663e88b320bd64e5d9d692",
     "assets/characters/fletcher/processed/battle/fletcher_battle_torpedo_tube_01.png": "c88d6a5571cdd6a8b8e023a7493426caf3a71d71704c51ab589c3e9aaeff2b07",
     "assets/characters/fletcher/processed/battle/fletcher_battle_turret_main_01.png": "5ecafb7a056a10bfd44f90c90928bf1674f50c4f8b8e577dad81fbef773ec108",
     "assets/characters/fletcher/processed/battle/fletcher_battle_wake_origin_marker.png": "7e0bd9c1ab79dbc63dd6c52e1885afe928137716a04c85929a7ee8a54d0a8efb",
     "assets/characters/fletcher/processed/config/fletcher_anim_config.json": "d8f1dad9b00efe496130f335bbfe354cd7f21fbd9e0d372ac2393e2147916366",
+    "assets/characters/fletcher/processed/config/fletcher_far_battle_config.json": "d041f5035bbc648205ffafa75628a2ff1e7898df1498856bb6fb740654e5e277",
     "assets/characters/fletcher/processed/config/fletcher_meta_bind_points.json": "06dd1b00bc9a89900231d21efab58eba3223ac01f6584d54db4968560a5ea733",
     "assets/characters/fletcher/processed/config/fletcher_postprocess_manifest.json": "ccf74fd8e6567f5e59a40ddf66a5e023266e4e99e7726eba860e5eaa57e30bfb",
     "assets/characters/fletcher/processed/config/fletcher_vfx_config.json": "0b46cb1a0fd73e7f61140dd88a36d0f725908de85a880a09793ff940f9a5084d",
@@ -7414,6 +7420,430 @@
         },
         "cleanup_tags": [],
         "source_key": "battle_grid"
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/fletcher/processed/battle/fletcher_battle_far_body.png": {
+      "sha256": "07fabc6b662fa113bfd050c1d99617f062179c4276799f63ada49dfc7660dde8",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 670,
+        "height": 940,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 340284,
+        "visible_pixel_count": 289516,
+        "transparent_canvas_ratio": 0.5403048586852969,
+        "visible_canvas_ratio": 0.45969514131470307,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "size": [
+          670,
+          940
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          90,
+          68,
+          713,
+          878
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            0,
+            0,
+            795,
+            887
+          ],
+          "final_box": [
+            90,
+            68,
+            713,
+            878
+          ],
+          "expanded": {
+            "left": -90,
+            "top": -68,
+            "right": -82,
+            "bottom": -9
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 30,
+          "selected_component_count": 29,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                106,
+                84,
+                697,
+                862
+              ],
+              "pixel_count": 282415,
+              "overlap_pixels": 282415
+            },
+            {
+              "bbox": [
+                450,
+                141,
+                451,
+                142
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                651,
+                370,
+                652,
+                371
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                652,
+                374,
+                653,
+                375
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                652,
+                385,
+                653,
+                387
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                176,
+                418,
+                177,
+                419
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                168,
+                428,
+                169,
+                429
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                657,
+                429,
+                658,
+                430
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                656,
+                430,
+                657,
+                431
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                653,
+                432,
+                654,
+                433
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                650,
+                434,
+                651,
+                435
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                287,
+                454,
+                289,
+                455
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                180,
+                459,
+                181,
+                460
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                179,
+                461,
+                180,
+                462
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                178,
+                463,
+                179,
+                464
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                177,
+                464,
+                178,
+                465
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                268,
+                475,
+                269,
+                476
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                153,
+                498,
+                154,
+                499
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                231,
+                591,
+                232,
+                592
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                233,
+                592,
+                234,
+                593
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 0,
+            "top": 13,
+            "right": 13,
+            "bottom": 9
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 282234
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            610,
+            788
+          ],
+          "centroid_before_padding": [
+            298.94,
+            341.78
+          ],
+          "padding": {
+            "left": 36,
+            "top": 128,
+            "right": 24,
+            "bottom": 24
+          },
+          "centroid_offset_after_padding": {
+            "x": -0.06,
+            "y": -0.22
+          }
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/fletcher/processed/battle/fletcher_battle_far_rig.png": {
+      "sha256": "9ee53afe893b104e91db1b9d923ab979dccbf3521c44487ea600a16890ff4760",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 954,
+        "height": 461,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 210384,
+        "visible_pixel_count": 229410,
+        "transparent_canvas_ratio": 0.4783694184095281,
+        "visible_canvas_ratio": 0.5216305815904719,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "size": [
+          954,
+          461
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          878,
+          305,
+          1748,
+          731
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            795,
+            0,
+            1774,
+            887
+          ],
+          "final_box": [
+            878,
+            305,
+            1748,
+            731
+          ],
+          "expanded": {
+            "left": -83,
+            "top": -305,
+            "right": -26,
+            "bottom": -156
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 12,
+          "selected_component_count": 3,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                894,
+                321,
+                1732,
+                715
+              ],
+              "pixel_count": 225543,
+              "overlap_pixels": 225543
+            },
+            {
+              "bbox": [
+                1574,
+                429,
+                1575,
+                430
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1418,
+                705,
+                1419,
+                706
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 12,
+            "top": 13,
+            "right": 8,
+            "bottom": 5
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 225444
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            850,
+            408
+          ],
+          "centroid_before_padding": [
+            396.77,
+            201.41
+          ],
+          "padding": {
+            "left": 80,
+            "top": 29,
+            "right": 24,
+            "bottom": 24
+          },
+          "centroid_offset_after_padding": {
+            "x": -0.23,
+            "y": -0.09
+          }
+        }
       },
       "review": {
         "verdict": "pending",

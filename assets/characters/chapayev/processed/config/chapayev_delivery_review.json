@@ -16,8 +16,11 @@
     "assets/characters/chapayev/battle/chapayev_anim_idle_4f_sheet.png": "419b47940c65d8e5a373ecc46f9725914d6e4790e5060a19c6ba2deef57fcdb5",
     "assets/characters/chapayev/battle/chapayev_anim_move_4f_sheet.png": "695e52e193b1780e7b53bc623afb573779bbfd3b2b15f420d897fa16e099e46b",
     "assets/characters/chapayev/battle/chapayev_battle_asset_grid.png": "d2d881aeb1114f9e77705a984cb40159fd9302a709ae881645ee7875861f1d6a",
+    "assets/characters/chapayev/battle/chapayev_far_battle_sheet.png": "9e583c0bd6d31ae446088d721240999a4b4010e7de18623d2da1b90a19fc0d60",
     "assets/characters/chapayev/concept/chapayev_concept_full.png": "a7a1803638cd5cb7ce254385159656f5a26a5a4dcf11b44b8d543035fe899f19",
     "assets/characters/chapayev/meta/chapayev_crop_specs.json": "5490a110aec6083f1699f1b86b46783435cf774bce6f811a87e9299fcb8e0bf6",
+    "assets/characters/chapayev/meta/chapayev_far_battle_crop_specs.json": "f8a5d190b1855db123ff20247abcf1f4c3c0e0832778fbe1af2c439c4ba96704",
+    "assets/characters/chapayev/meta/chapayev_far_battle_revision.json": "b6b6df625377cefe7eab081bd96495688a025b5ef660f3b96efc9d65c3216159",
     "assets/characters/chapayev/meta/chapayev_generation_requests_repair_20260921.json": "4f47c7bcc342452a11002293e2ed8eef9099accce8de7f1d1dc96055e806c69e",
     "assets/characters/chapayev/meta/chapayev_portrait_revision.json": "ee58167969213e2076ea30068eaa624c9c724542714d79a74f054fdd0cf492ff",
     "assets/characters/chapayev/meta/chapayev_source_provenance.json": "529a8a0bc87f647694c4c60bf797fc446ce9141f0fcbc99857f711ea951b4fac",
@@ -51,6 +54,8 @@
     "assets/characters/chapayev/processed/anim/chapayev_anim_move_keyframe.png": "b1df2e8c68079911ef7e6edaf5ad1b384069f0a63891226a2520b5aa821b9754",
     "assets/characters/chapayev/processed/battle/chapayev_battle_aa_center.png": "91d599e6408b1ea8126cf6745b3d89b526eb8bbd0f8c147da5c28a41f11d2b30",
     "assets/characters/chapayev/processed/battle/chapayev_battle_body_r.png": "6fcbb2eb6ea676a9aae23230f6e128d5bc3d56c7af1a1e609b182f52afc8ab87",
+    "assets/characters/chapayev/processed/battle/chapayev_battle_far_body.png": "174a4a743fef3bb142a715619ec09a24b83a00f17272458684328af443963b1e",
+    "assets/characters/chapayev/processed/battle/chapayev_battle_far_rig.png": "21cfdcd9ee857e1a5e816917eeba6c8e40600f3ca738e496e0bcd7c5e91a8579",
     "assets/characters/chapayev/processed/battle/chapayev_battle_fire_control_node.png": "d92703aefeb9c0362409047915ffe492759977d6ae490f5ae34c924c9603666c",
     "assets/characters/chapayev/processed/battle/chapayev_battle_rangefinder_node.png": "c8cda7a458f6702a686dfe8c8c77e7c58d0233574299bab751a81cc772ee4b2b",
     "assets/characters/chapayev/processed/battle/chapayev_battle_rig_base.png": "4bd2d2af954adaa7e8244a0119c8ec8a2b279638d289a1ee2c103af355414081",
@@ -58,6 +63,7 @@
     "assets/characters/chapayev/processed/battle/chapayev_battle_turret_main_01.png": "36ea6c12317c1558b49bbf228b7e6b95537cc634951791d9dfebb2e68abf5934",
     "assets/characters/chapayev/processed/battle/chapayev_battle_wake_origin_marker.png": "4ec2b6e1a978c6824f7f1a622ad27d22e644168f87d977291b6a4cafc73b1421",
     "assets/characters/chapayev/processed/config/chapayev_anim_config.json": "35132052a58b566f1e153426578c15701021548b09bf7bee4d8cc3916ff4715f",
+    "assets/characters/chapayev/processed/config/chapayev_far_battle_config.json": "dcd940d75214b4f0a46adf7efcf4a49a6a89260243dfd05f496cedbaf1e9c683",
     "assets/characters/chapayev/processed/config/chapayev_meta_bind_points.json": "2c37cc354879e157b45a61bdd2c55421336ec24a4e95f609571c168a2fe87718",
     "assets/characters/chapayev/processed/config/chapayev_postprocess_manifest.json": "d9afb135d25bc483e9ef3b32beeb3b1fb4e8c4dd89eb00000f6bc7107f2ea9e8",
     "assets/characters/chapayev/processed/config/chapayev_vfx_config.json": "91100c906ab7e500e67928ff2f2878c78046683e5939a59f02177c3b42cdbe8d",
@@ -8143,6 +8149,390 @@
           "keep_largest_component"
         ],
         "source_key": "battle_grid"
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/chapayev/processed/battle/chapayev_battle_far_body.png": {
+      "sha256": "174a4a743fef3bb142a715619ec09a24b83a00f17272458684328af443963b1e",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 725,
+        "height": 867,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 300863,
+        "visible_pixel_count": 327712,
+        "transparent_canvas_ratio": 0.47864296225589625,
+        "visible_canvas_ratio": 0.5213570377441037,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "size": [
+          725,
+          867
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          17,
+          35,
+          680,
+          877
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            0,
+            0,
+            753,
+            887
+          ],
+          "final_box": [
+            17,
+            35,
+            680,
+            877
+          ],
+          "expanded": {
+            "left": -17,
+            "top": -35,
+            "right": -73,
+            "bottom": -10
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 17,
+          "selected_component_count": 16,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                33,
+                51,
+                664,
+                861
+              ],
+              "pixel_count": 320185,
+              "overlap_pixels": 320185
+            },
+            {
+              "bbox": [
+                580,
+                275,
+                581,
+                276
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                153,
+                455,
+                155,
+                457
+              ],
+              "pixel_count": 3,
+              "overlap_pixels": 3
+            },
+            {
+              "bbox": [
+                552,
+                483,
+                553,
+                484
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                573,
+                557,
+                574,
+                558
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                574,
+                558,
+                575,
+                559
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                578,
+                561,
+                579,
+                562
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                77,
+                577,
+                78,
+                578
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                76,
+                578,
+                77,
+                579
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                70,
+                602,
+                71,
+                604
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                632,
+                606,
+                633,
+                607
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                35,
+                608,
+                36,
+                609
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                116,
+                689,
+                117,
+                690
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                397,
+                726,
+                398,
+                727
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                283,
+                749,
+                284,
+                750
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                283,
+                751,
+                284,
+                752
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 10,
+            "top": 13,
+            "right": 14,
+            "bottom": 12
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 320046
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            639,
+            817
+          ],
+          "centroid_before_padding": [
+            338.36,
+            409.65
+          ],
+          "padding": {
+            "left": 24,
+            "top": 24,
+            "right": 62,
+            "bottom": 26
+          },
+          "centroid_offset_after_padding": {
+            "x": -0.14,
+            "y": 0.15
+          }
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/chapayev/processed/battle/chapayev_battle_far_rig.png": {
+      "sha256": "21cfdcd9ee857e1a5e816917eeba6c8e40600f3ca738e496e0bcd7c5e91a8579",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 999,
+        "height": 479,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 204061,
+        "visible_pixel_count": 274460,
+        "transparent_canvas_ratio": 0.42644105483353917,
+        "visible_canvas_ratio": 0.5735589451664608,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "size": [
+          999,
+          479
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          828,
+          304,
+          1757,
+          736
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            753,
+            0,
+            1774,
+            887
+          ],
+          "final_box": [
+            828,
+            304,
+            1757,
+            736
+          ],
+          "expanded": {
+            "left": -75,
+            "top": -304,
+            "right": -17,
+            "bottom": -151
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 6,
+          "selected_component_count": 3,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                844,
+                320,
+                1741,
+                719
+              ],
+              "pixel_count": 268961,
+              "overlap_pixels": 268961
+            },
+            {
+              "bbox": [
+                1005,
+                689,
+                1006,
+                690
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1070,
+                719,
+                1071,
+                720
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 0,
+            "top": 13,
+            "right": 13,
+            "bottom": 2
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 268874
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            916,
+            417
+          ],
+          "centroid_before_padding": [
+            440.38,
+            201.67
+          ],
+          "padding": {
+            "left": 59,
+            "top": 38,
+            "right": 24,
+            "bottom": 24
+          },
+          "centroid_offset_after_padding": {
+            "x": -0.12,
+            "y": 0.17
+          }
+        }
       },
       "review": {
         "verdict": "pending",

@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "character_id": "belfast",
+  "body_basis": "upright",
+  "rig_heading_degrees": 0,
+  "rig_width": 60,
+  "roles": {
+    "body": {
+      "path": "assets/characters/belfast/processed/battle/belfast_battle_far_body.png",
+      "sha256": "b80930d528a028fe0096381db421faf30bd50a92c9253495213d0fa862e270f4",
+      "alpha_rect": [
+        26,
+        94,
+        577,
+        766
+      ],
+      "size": [
+        627,
+        888
+      ]
+    },
+    "rig": {
+      "path": "assets/characters/belfast/processed/battle/belfast_battle_far_rig.png",
+      "sha256": "7c01f95ebcfc17b196e3d2aeb6f6d517cf42fc4e0abc0244bf337681f5d98c3a",
+      "alpha_rect": [
+        64,
+        36,
+        991,
+        559
+      ],
+      "size": [
+        1077,
+        635
+      ]
+    }
+  },
+  "anchors": {
+    "muzzle_01": [
+      0.42,
+      0
+    ],
+    "torpedo_port_01": [
+      0.2,
+      0.12
+    ]
+  },
+  "animation": "procedural_far_view"
+}

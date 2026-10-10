@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "character_id": "bismarck",
+  "body_basis": "upright",
+  "rig_heading_degrees": 0,
+  "rig_width": 72,
+  "roles": {
+    "body": {
+      "path": "assets/characters/bismarck/processed/battle/bismarck_battle_far_body.png",
+      "sha256": "cb4e5790889e959ea80f91d4fa390b4f84ed92f3bf0b9fa28d1342df6963ff21",
+      "alpha_rect": [
+        63,
+        23,
+        643,
+        784
+      ],
+      "size": [
+        729,
+        852
+      ]
+    },
+    "rig": {
+      "path": "assets/characters/bismarck/processed/battle/bismarck_battle_far_rig.png",
+      "sha256": "c119972f8f5f75d70dcf5f38413a26562b669d5ba1c745891218c74001a445b8",
+      "alpha_rect": [
+        66,
+        32,
+        862,
+        425
+      ],
+      "size": [
+        951,
+        488
+      ]
+    }
+  },
+  "anchors": {
+    "muzzle_01": [
+      0.42,
+      0
+    ]
+  },
+  "animation": "procedural_far_view"
+}

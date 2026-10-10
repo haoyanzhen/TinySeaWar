@@ -16,8 +16,11 @@
     "assets/characters/tashkent/battle/tashkent_anim_idle_4f_sheet.png": "562228037ba22860d15a0135ffd10e94ebef61c1c23d42bea151933b9bffd5f8",
     "assets/characters/tashkent/battle/tashkent_anim_move_4f_sheet.png": "7d94c686858a57de6ba1a5fa6b5ce2054570701ec5d98f34c158e481cc7f1e87",
     "assets/characters/tashkent/battle/tashkent_battle_asset_grid.png": "16013bf15c517dc5fe52dbd7a8d7c5f1731411e12f8d3954222067d8a0098490",
+    "assets/characters/tashkent/battle/tashkent_far_battle_sheet.png": "86ab78875a2004f02dde5eb367ded115007caa15dc7cc6646002bdff7c34b8cd",
     "assets/characters/tashkent/concept/tashkent_concept_full.png": "1d72b3beff0677a2238ec7ee034eda10f22a669254121901b3e138283492311e",
     "assets/characters/tashkent/meta/tashkent_crop_specs.json": "83cf904b6e8422f8c560dc5c4273c54e376144311d8a497d70bfe705bd059b7e",
+    "assets/characters/tashkent/meta/tashkent_far_battle_crop_specs.json": "2d0af1bc58f70504d4118a5645147c627b830bd007def65fe39d3734c2e6e8df",
+    "assets/characters/tashkent/meta/tashkent_far_battle_revision.json": "9e06d5acadfebd11c1738c7b798761d68a7e9955229cc2a863bafb6600fe6f3b",
     "assets/characters/tashkent/meta/tashkent_generation_requests_repair_20260921.json": "ae32a8a0e4700f938a5c61db0fcba287ab6426f18027dca34d2ae643cd258e3d",
     "assets/characters/tashkent/meta/tashkent_portrait_revision.json": "9de703f17d744ccea950f29c4c7bfb72625608961a1f15e0b1edace35c8401f0",
     "assets/characters/tashkent/meta/tashkent_source_provenance.json": "6c6794d81a560303a49cb56ee5b27893f6d436c4a2f465e26a41490ebb40d220",
@@ -52,12 +55,15 @@
     "assets/characters/tashkent/processed/battle/tashkent_battle_aa_center.png": "007a43b65835f0e5d1be66a7ee2a19a51d0d02ed3109a58ed0bc2387c10cadf7",
     "assets/characters/tashkent/processed/battle/tashkent_battle_body_r.png": "2ec81ffe06cb15e224e7d3fe4d76ef021f30a37367758166ccf3d7baece6cd23",
     "assets/characters/tashkent/processed/battle/tashkent_battle_command_node.png": "3062e3845b5cfd9c9a95c4c69cd7d56008bf8f019a6dcea0ce2b920371eacfe9",
+    "assets/characters/tashkent/processed/battle/tashkent_battle_far_body.png": "4c116254009060cd55cc778e1d3b5d0cea121068f7b3202193f5f2a07f6ab401",
+    "assets/characters/tashkent/processed/battle/tashkent_battle_far_rig.png": "9aa616818d657ae5c6e78cacee6526b1242859f7b7a55d914c8efecd5b939c6c",
     "assets/characters/tashkent/processed/battle/tashkent_battle_propulsion_node.png": "a75a3ff13b0c51e43ffb3ef6f959df511cf999390092e43de810c7e617f2c86e",
     "assets/characters/tashkent/processed/battle/tashkent_battle_rig_base.png": "dda208b5225b7dac0268c86bccc1e912aecbba2e3890ceb215e3dde491816e72",
     "assets/characters/tashkent/processed/battle/tashkent_battle_torpedo_tube_01.png": "bb8966fbb3fe01a38fcfa7e6f786143542a13e85bd5ca80ad81c9ac8dd125256",
     "assets/characters/tashkent/processed/battle/tashkent_battle_turret_main_01.png": "122c3e0e070c8efe597979ff163ec961ab4c6e11c728762aa7eefe28f596b94c",
     "assets/characters/tashkent/processed/battle/tashkent_battle_wake_origin_marker.png": "b044c3d0ad78b24b62dea62c48c5cbdb738818e7bf6484ca87b4c0268486258b",
     "assets/characters/tashkent/processed/config/tashkent_anim_config.json": "01f3d2c5032f8f12c60cf8219aeee6aee39b6f6792455cb814d72d58f554fb11",
+    "assets/characters/tashkent/processed/config/tashkent_far_battle_config.json": "dc90108298100366f95974e70d86faadf89fdd9930a9eea0a17212ad681cde63",
     "assets/characters/tashkent/processed/config/tashkent_meta_bind_points.json": "468a655d9e66a45a9e8c32805f199906a260d73545ff7a8fe41c529a24b4fe6a",
     "assets/characters/tashkent/processed/config/tashkent_postprocess_manifest.json": "94780ed39c3dcc527d68797ad8d88ce1e8c1d31af9493efce188bd5489da30aa",
     "assets/characters/tashkent/processed/config/tashkent_vfx_config.json": "163a74821de01fd40b8d1254de15b3f153104af8f47b36db822efeec3aaf7841",
@@ -8351,6 +8357,400 @@
           "keep_largest_component"
         ],
         "source_key": "battle_grid"
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/tashkent/processed/battle/tashkent_battle_far_body.png": {
+      "sha256": "4c116254009060cd55cc778e1d3b5d0cea121068f7b3202193f5f2a07f6ab401",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 714,
+        "height": 838,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 281445,
+        "visible_pixel_count": 316887,
+        "transparent_canvas_ratio": 0.47038266380537896,
+        "visible_canvas_ratio": 0.529617336194621,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "size": [
+          714,
+          838
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          51,
+          71,
+          712,
+          883
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            0,
+            0,
+            749,
+            887
+          ],
+          "final_box": [
+            51,
+            71,
+            712,
+            883
+          ],
+          "expanded": {
+            "left": -51,
+            "top": -71,
+            "right": -37,
+            "bottom": -4
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 17,
+          "selected_component_count": 15,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                67,
+                87,
+                696,
+                867
+              ],
+              "pixel_count": 311231,
+              "overlap_pixels": 311231
+            },
+            {
+              "bbox": [
+                484,
+                148,
+                485,
+                149
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                508,
+                165,
+                509,
+                166
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                510,
+                166,
+                511,
+                167
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                511,
+                167,
+                512,
+                168
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                169,
+                286,
+                170,
+                287
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                170,
+                326,
+                171,
+                327
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                590,
+                396,
+                591,
+                397
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                606,
+                407,
+                607,
+                408
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                613,
+                413,
+                614,
+                414
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                596,
+                496,
+                597,
+                497
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                598,
+                497,
+                599,
+                498
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                561,
+                713,
+                562,
+                714
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                406,
+                850,
+                407,
+                851
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                459,
+                866,
+                460,
+                867
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 14,
+            "top": 14,
+            "right": 6,
+            "bottom": 12
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 311075
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            641,
+            786
+          ],
+          "centroid_before_padding": [
+            308.13,
+            391.2
+          ],
+          "padding": {
+            "left": 49,
+            "top": 28,
+            "right": 24,
+            "bottom": 24
+          },
+          "centroid_offset_after_padding": {
+            "x": 0.13,
+            "y": 0.2
+          }
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/tashkent/processed/battle/tashkent_battle_far_rig.png": {
+      "sha256": "9aa616818d657ae5c6e78cacee6526b1242859f7b7a55d914c8efecd5b939c6c",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 1042,
+        "height": 465,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 254932,
+        "visible_pixel_count": 229598,
+        "transparent_canvas_ratio": 0.5261428600912225,
+        "visible_canvas_ratio": 0.4738571399087776,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "size": [
+          1042,
+          465
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          788,
+          349,
+          1736,
+          748
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            749,
+            0,
+            1774,
+            887
+          ],
+          "final_box": [
+            788,
+            349,
+            1736,
+            748
+          ],
+          "expanded": {
+            "left": -39,
+            "top": -349,
+            "right": -38,
+            "bottom": -139
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 12,
+          "selected_component_count": 5,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                804,
+                365,
+                1720,
+                732
+              ],
+              "pixel_count": 225826,
+              "overlap_pixels": 225826
+            },
+            {
+              "bbox": [
+                1330,
+                414,
+                1333,
+                415
+              ],
+              "pixel_count": 3,
+              "overlap_pixels": 3
+            },
+            {
+              "bbox": [
+                1475,
+                435,
+                1476,
+                436
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                817,
+                589,
+                819,
+                590
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                1304,
+                725,
+                1305,
+                726
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 1,
+            "top": 1,
+            "right": 0,
+            "bottom": 10
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 225754
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            947,
+            388
+          ],
+          "centroid_before_padding": [
+            450.12,
+            208.32
+          ],
+          "padding": {
+            "left": 71,
+            "top": 24,
+            "right": 24,
+            "bottom": 53
+          },
+          "centroid_offset_after_padding": {
+            "x": 0.12,
+            "y": -0.18
+          }
+        }
       },
       "review": {
         "verdict": "pending",

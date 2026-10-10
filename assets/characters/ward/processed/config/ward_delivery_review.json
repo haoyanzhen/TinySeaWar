@@ -12,7 +12,10 @@
   "package_sha256": {
     "assets/characters/ward/battle/ward_anim_5x4_master.png": "dac23f5c53a132c86a4eec333bca098f5f80249c0df649ec38a4e4ac700b93a7",
     "assets/characters/ward/battle/ward_battle_asset_grid.png": "c54b39cfbb8adff23510aeb31b9746e5afab823c3c3c18db707ba9b635a3285f",
+    "assets/characters/ward/battle/ward_far_battle_sheet.png": "b174813beb2833e0b845c91c04d57b34586c54c69dc7edf058ac75813a449ae1",
     "assets/characters/ward/concept/ward_concept_full.png": "91d5bd2f21ad6ae5ca333082dfec093961c1b739cd1f9b7dcb8af7be97d95328",
+    "assets/characters/ward/meta/ward_far_battle_crop_specs.json": "dced6ddb9f054a551c52518d8050f32a336f308d3ce2f57dcc829eec3919ba3b",
+    "assets/characters/ward/meta/ward_far_battle_revision.json": "613c6d66b45edaa2227ebf54d8eb7dd5b2e6af76e13f11eccb0a9ecb78bac154",
     "assets/characters/ward/meta/ward_portrait_revision.json": "14f37f3bdb09af81dbf6cfadc449cd1d1418c321def7e57e7fec2b91ee0ac02d",
     "assets/characters/ward/processed/anim/ward_anim_attack_frame_01.png": "64be86eabe4822d025cdf34152cce8cd2ea06e85725170d3f28956d86a359739",
     "assets/characters/ward/processed/anim/ward_anim_attack_frame_02.png": "93a919c298dad0cb5a3f5a7d7a81e28cd074fa1cf90c64a8eae0288922488474",
@@ -40,6 +43,8 @@
     "assets/characters/ward/processed/anim/ward_anim_move_frame_04.png": "c50ae2bd913408ef7650476c55ced9e2df5905f2cd48450d1b3c3f65e8601287",
     "assets/characters/ward/processed/anim/ward_anim_move_keyframe.png": "8ab67584b9c11f1b0a9068eb589286d0f2eca564f66cb530961f7b35496fd4bf",
     "assets/characters/ward/processed/battle/ward_battle_body_r.png": "f2b1ec530a80f218c6bbd984c821c1af8744e8d19dd9f4e50eb76c425c0f8b83",
+    "assets/characters/ward/processed/battle/ward_battle_far_body.png": "c3d30d51031948546127c1f82371febf447f3955cb4ff86cc3722742f4bc5ca1",
+    "assets/characters/ward/processed/battle/ward_battle_far_rig.png": "82b291c03a3d85408441eade1bd530247e187d09e06beb2cb4b6a60439e06049",
     "assets/characters/ward/processed/battle/ward_battle_propulsion_node.png": "0d0ed714f26cfa4f8227f0580934057674d00bc1a3c1128fd7bb526e5b330bdb",
     "assets/characters/ward/processed/battle/ward_battle_radar_node.png": "88206b0efba4104004b556f8782b75e5b2dbf8983926164e3a1ea1c93266cd87",
     "assets/characters/ward/processed/battle/ward_battle_rig_base.png": "3234a55f39155f6f1adb904a71cda6fcc4bf62e2e0cac713d5a9e7c6ff0a5035",
@@ -48,6 +53,7 @@
     "assets/characters/ward/processed/battle/ward_battle_turret_main_01.png": "3632dff942431f848f4fe505d0ed8f912eb86e37a17f08341a6287c59fce4cb9",
     "assets/characters/ward/processed/battle/ward_battle_wake_origin_marker.png": "48148561cb6c3bc040c0d2925fd05695e414ea17460a433d2493e544bb8cbecd",
     "assets/characters/ward/processed/config/ward_anim_config.json": "60b7803c3242244c81e8ea0cff52288617dccdd721087c1239b9549f396a9ef3",
+    "assets/characters/ward/processed/config/ward_far_battle_config.json": "19ab7a2a1bcdd6091a2669c7974cebacbd395a64401ae5c37c1d477dde5cc3e5",
     "assets/characters/ward/processed/config/ward_meta_bind_points.json": "b117eacf9d5dd65796942a812fbdfdb539d6a5cc5dbc52fb74cef6dd999babee",
     "assets/characters/ward/processed/config/ward_postprocess_manifest.json": "6743657866a2cf080c0d753ad6fd270650a128f47eb4de24eb901b48b2e5984e",
     "assets/characters/ward/processed/config/ward_vfx_config.json": "a24b390521b1c0179a325d58eff5aee8304c947ed5d1bfa4055ca3c6c0521832",
@@ -672,6 +678,430 @@
         "transparent_border_ratio": 1.0
       },
       "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ward/processed/battle/ward_battle_far_body.png": {
+      "sha256": "c3d30d51031948546127c1f82371febf447f3955cb4ff86cc3722742f4bc5ca1",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 586,
+        "height": 876,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 297562,
+        "visible_pixel_count": 215774,
+        "transparent_canvas_ratio": 0.5796632225287142,
+        "visible_canvas_ratio": 0.42033677747128584,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "size": [
+          586,
+          876
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          92,
+          66,
+          637,
+          863
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            0,
+            0,
+            759,
+            887
+          ],
+          "final_box": [
+            92,
+            66,
+            637,
+            863
+          ],
+          "expanded": {
+            "left": -92,
+            "top": -66,
+            "right": -122,
+            "bottom": -24
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 36,
+          "selected_component_count": 34,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                108,
+                82,
+                621,
+                847
+              ],
+              "pixel_count": 207348,
+              "overlap_pixels": 207348
+            },
+            {
+              "bbox": [
+                313,
+                158,
+                314,
+                159
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                564,
+                267,
+                565,
+                268
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                582,
+                326,
+                583,
+                327
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                143,
+                344,
+                144,
+                345
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                169,
+                413,
+                170,
+                415
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                548,
+                426,
+                549,
+                427
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                208,
+                456,
+                209,
+                459
+              ],
+              "pixel_count": 3,
+              "overlap_pixels": 3
+            },
+            {
+              "bbox": [
+                228,
+                472,
+                229,
+                473
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                472,
+                487,
+                473,
+                490
+              ],
+              "pixel_count": 3,
+              "overlap_pixels": 3
+            },
+            {
+              "bbox": [
+                277,
+                497,
+                278,
+                498
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                298,
+                503,
+                299,
+                504
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                279,
+                505,
+                280,
+                506
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                278,
+                509,
+                279,
+                510
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                286,
+                519,
+                287,
+                520
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                468,
+                601,
+                469,
+                602
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                297,
+                610,
+                298,
+                611
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                296,
+                611,
+                297,
+                612
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                295,
+                612,
+                296,
+                613
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                294,
+                613,
+                295,
+                614
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 14,
+            "top": 14,
+            "right": 0,
+            "bottom": 12
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 207186
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            531,
+            771
+          ],
+          "centroid_before_padding": [
+            261.84,
+            356.94
+          ],
+          "padding": {
+            "left": 31,
+            "top": 81,
+            "right": 24,
+            "bottom": 24
+          },
+          "centroid_offset_after_padding": {
+            "x": -0.16,
+            "y": -0.06
+          }
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ward/processed/battle/ward_battle_far_rig.png": {
+      "sha256": "82b291c03a3d85408441eade1bd530247e187d09e06beb2cb4b6a60439e06049",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 926,
+        "height": 390,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 145417,
+        "visible_pixel_count": 215723,
+        "transparent_canvas_ratio": 0.40266101788779973,
+        "visible_canvas_ratio": 0.5973389821122003,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "size": [
+          926,
+          390
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          882,
+          358,
+          1740,
+          723
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            759,
+            0,
+            1774,
+            887
+          ],
+          "final_box": [
+            882,
+            358,
+            1740,
+            723
+          ],
+          "expanded": {
+            "left": -123,
+            "top": -358,
+            "right": -34,
+            "bottom": -164
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 6,
+          "selected_component_count": 3,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                898,
+                374,
+                1724,
+                707
+              ],
+              "pixel_count": 211731,
+              "overlap_pixels": 211731
+            },
+            {
+              "bbox": [
+                1045,
+                400,
+                1046,
+                401
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                912,
+                591,
+                913,
+                592
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 0,
+            "top": 11,
+            "right": 13,
+            "bottom": 13
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 211637
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            845,
+            341
+          ],
+          "centroid_before_padding": [
+            405.93,
+            171.13
+          ],
+          "padding": {
+            "left": 57,
+            "top": 24,
+            "right": 24,
+            "bottom": 25
+          },
+          "centroid_offset_after_padding": {
+            "x": -0.07,
+            "y": 0.13
+          }
+        }
+      },
       "review": {
         "verdict": "pending",
         "reviewer": "",

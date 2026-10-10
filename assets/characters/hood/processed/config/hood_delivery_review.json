@@ -12,7 +12,10 @@
   "package_sha256": {
     "assets/characters/hood/battle/hood_anim_5x4_master.png": "16d5b36e2815c60a4857ff7e0d9372cb204c06140f5074f6a769c3e944ca57da",
     "assets/characters/hood/battle/hood_battle_asset_grid.png": "88f62762dfa9225495d53892d11430a069b71083f21116bd47e1fb8ea2973d9c",
+    "assets/characters/hood/battle/hood_far_battle_sheet.png": "cfe2f3b6acf5e2d4637ffb39d08b1111acb36827bf025904fdefec97415b9f0f",
     "assets/characters/hood/concept/hood_concept_full.png": "eafd17c9116420dc63b3dcc6ab2b3ca6620df168a2e9e205a4f1fc3f76eccc8d",
+    "assets/characters/hood/meta/hood_far_battle_crop_specs.json": "24f18f51daae3edd2c9aee3229d13dbcedbd59abd4f7edc78c0db9fce1c496c8",
+    "assets/characters/hood/meta/hood_far_battle_revision.json": "44c2c43e34e42cb85f6b59598741df45f851bf798d808d12008ed90d8c12437e",
     "assets/characters/hood/meta/hood_portrait_revision.json": "a000d363da6e8385dab36dffdd86c26e92f6eadc911c63b4775ff430265a6c86",
     "assets/characters/hood/processed/anim/hood_anim_attack_frame_01.png": "dd5489b0cb72f5b1d8d6a5ffc2683b6c32b81ad2ce5601e80ec4389f421fd214",
     "assets/characters/hood/processed/anim/hood_anim_attack_frame_02.png": "220cc3ecf016ba55ed0e41d4718b15cfdb086e84fbfa2382ba2d362a12e25326",
@@ -40,6 +43,8 @@
     "assets/characters/hood/processed/anim/hood_anim_move_frame_04.png": "0ee08852373c49ea139fc41393ee65ce476921f940d8badcc4bb33359f0db5fe",
     "assets/characters/hood/processed/anim/hood_anim_move_keyframe.png": "81216e6d7c6d920c04c0bcccc20a8ff1365aac9022cdcdaca68e0e3fac0951f0",
     "assets/characters/hood/processed/battle/hood_battle_body_r.png": "3fb566c4e6e8d612b51c269523723b8ec7c18eba75fc432cbe671833aff22ded",
+    "assets/characters/hood/processed/battle/hood_battle_far_body.png": "28613052efcc6866839736339a62cfb947775dee550c4ead035ff590c0aef3b7",
+    "assets/characters/hood/processed/battle/hood_battle_far_rig.png": "61df9cda8e2b3b5a6adb7eb16c87a7972a325262917d5491678e1df7c193b280",
     "assets/characters/hood/processed/battle/hood_battle_fire_control_node.png": "0d2fa64535637d67684922c9de4f9085b79a9001339b7e13262e936408d93fb4",
     "assets/characters/hood/processed/battle/hood_battle_flagship_marker.png": "dc4db748bb35ba41cf9e7f0caa412a4d59094f7e995d20c587f32875f6b24275",
     "assets/characters/hood/processed/battle/hood_battle_rig_base.png": "26695a2f6b91f7adbeaa765cf2939f08c9378af978f8ab70aa785401448997d2",
@@ -48,6 +53,7 @@
     "assets/characters/hood/processed/battle/hood_battle_turret_main_03.png": "cfbc26e712b92d347ce63444edf135557ae346bb5ffb218be835db40ebf3cb06",
     "assets/characters/hood/processed/battle/hood_battle_wake_origin_marker.png": "1dc6eb2f52669f06f5fe67352798e2ea4856c8a4ef22a50f87bce4993d3c3beb",
     "assets/characters/hood/processed/config/hood_anim_config.json": "b36f3c99d30f6122a893c82d3d8b3ecdda9609e9ebdb7fbf3cb68441d22974ad",
+    "assets/characters/hood/processed/config/hood_far_battle_config.json": "1ba419402d2364c83d38102cf136a4cc49b974f867a81f6f51b1a5f8c57d58d4",
     "assets/characters/hood/processed/config/hood_meta_bind_points.json": "53b9a641bbbce1e435897eb5a16c6d6cfdc32fd4cbf6ec38a319f938e9e5c655",
     "assets/characters/hood/processed/config/hood_postprocess_manifest.json": "10cfd4443e1bd622de4a12c9a690e48ff6aad8b52df6f6122432ab79cea44f47",
     "assets/characters/hood/processed/config/hood_vfx_config.json": "ca0379ecd5a0e1c533a5aa6326a5d6142191fa5881f924afb12fe682274ac04c",
@@ -672,6 +678,450 @@
         "transparent_border_ratio": 1.0
       },
       "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hood/processed/battle/hood_battle_far_body.png": {
+      "sha256": "28613052efcc6866839736339a62cfb947775dee550c4ead035ff590c0aef3b7",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 722,
+        "height": 836,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 280257,
+        "visible_pixel_count": 323335,
+        "transparent_canvas_ratio": 0.4643152990761972,
+        "visible_canvas_ratio": 0.5356847009238028,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "size": [
+          722,
+          836
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          60,
+          67,
+          731,
+          871
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            0,
+            0,
+            824,
+            887
+          ],
+          "final_box": [
+            60,
+            67,
+            731,
+            871
+          ],
+          "expanded": {
+            "left": -60,
+            "top": -67,
+            "right": -93,
+            "bottom": -16
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 23,
+          "selected_component_count": 22,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                76,
+                83,
+                715,
+                855
+              ],
+              "pixel_count": 316246,
+              "overlap_pixels": 316246
+            },
+            {
+              "bbox": [
+                559,
+                214,
+                560,
+                215
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                557,
+                216,
+                559,
+                218
+              ],
+              "pixel_count": 3,
+              "overlap_pixels": 3
+            },
+            {
+              "bbox": [
+                591,
+                273,
+                592,
+                277
+              ],
+              "pixel_count": 4,
+              "overlap_pixels": 4
+            },
+            {
+              "bbox": [
+                586,
+                327,
+                587,
+                329
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                170,
+                331,
+                171,
+                333
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                170,
+                390,
+                171,
+                391
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                607,
+                415,
+                608,
+                417
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                608,
+                417,
+                609,
+                418
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                168,
+                422,
+                169,
+                423
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                177,
+                449,
+                178,
+                450
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                171,
+                493,
+                172,
+                494
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                152,
+                520,
+                153,
+                521
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                151,
+                521,
+                152,
+                522
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                150,
+                522,
+                151,
+                523
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                149,
+                523,
+                150,
+                524
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                138,
+                531,
+                139,
+                532
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                136,
+                532,
+                137,
+                534
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                162,
+                665,
+                163,
+                666
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                160,
+                668,
+                161,
+                669
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 14,
+            "top": 13,
+            "right": 3,
+            "bottom": 12
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 316087
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            654,
+            779
+          ],
+          "centroid_before_padding": [
+            317.17,
+            394.05
+          ],
+          "padding": {
+            "left": 44,
+            "top": 24,
+            "right": 24,
+            "bottom": 33
+          },
+          "centroid_offset_after_padding": {
+            "x": 0.17,
+            "y": 0.05
+          }
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hood/processed/battle/hood_battle_far_rig.png": {
+      "sha256": "61df9cda8e2b3b5a6adb7eb16c87a7972a325262917d5491678e1df7c193b280",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 897,
+        "height": 479,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 194294,
+        "visible_pixel_count": 235369,
+        "transparent_canvas_ratio": 0.45220091094648596,
+        "visible_canvas_ratio": 0.547799089053514,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "size": [
+          897,
+          479
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          918,
+          320,
+          1738,
+          764
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            824,
+            0,
+            1774,
+            887
+          ],
+          "final_box": [
+            918,
+            320,
+            1738,
+            764
+          ],
+          "expanded": {
+            "left": -94,
+            "top": -320,
+            "right": -36,
+            "bottom": -123
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 6,
+          "selected_component_count": 5,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                934,
+                336,
+                1721,
+                748
+              ],
+              "pixel_count": 231385,
+              "overlap_pixels": 231385
+            },
+            {
+              "bbox": [
+                1572,
+                423,
+                1574,
+                424
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                1721,
+                537,
+                1722,
+                538
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1060,
+                697,
+                1061,
+                698
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1328,
+                722,
+                1329,
+                723
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 12,
+            "top": 14,
+            "right": 13,
+            "bottom": 6
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 231288
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            795,
+            424
+          ],
+          "centroid_before_padding": [
+            370.29,
+            208.69
+          ],
+          "padding": {
+            "left": 78,
+            "top": 31,
+            "right": 24,
+            "bottom": 24
+          },
+          "centroid_offset_after_padding": {
+            "x": -0.21,
+            "y": 0.19
+          }
+        }
+      },
       "review": {
         "verdict": "pending",
         "reviewer": "",

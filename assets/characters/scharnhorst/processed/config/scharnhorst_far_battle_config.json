@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "character_id": "scharnhorst",
+  "body_basis": "upright",
+  "rig_heading_degrees": 0,
+  "rig_width": 72,
+  "roles": {
+    "body": {
+      "path": "assets/characters/scharnhorst/processed/battle/scharnhorst_battle_far_body.png",
+      "sha256": "85cec7969ce02873ea6fc3abde975e462d2128abffcf65936aeb7c15d1121a76",
+      "alpha_rect": [
+        28,
+        33,
+        626,
+        792
+      ],
+      "size": [
+        689,
+        853
+      ]
+    },
+    "rig": {
+      "path": "assets/characters/scharnhorst/processed/battle/scharnhorst_battle_far_rig.png",
+      "sha256": "029a3b59da046dde375b5eabb19022f35aab983cd3362f5a123983bdc69e0a23",
+      "alpha_rect": [
+        81,
+        37,
+        897,
+        362
+      ],
+      "size": [
+        1001,
+        433
+      ]
+    }
+  },
+  "anchors": {
+    "muzzle_01": [
+      0.42,
+      0
+    ]
+  },
+  "animation": "procedural_far_view"
+}

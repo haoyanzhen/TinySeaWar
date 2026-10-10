@@ -1,0 +1,1409 @@
+[
+  {
+    "id": "akizuki",
+    "name": "秋月号",
+    "class": "Destroyer",
+    "weapons": [
+      {
+        "id": "weapon.akizuki_main_he",
+        "display_name": "100mm 两用炮高爆",
+        "mount_type": "Gun",
+        "mount_count": 4,
+        "shots_per_mount": 2,
+        "control_mode": "Automatic",
+        "weapon_group_id": "akizuki_main"
+      },
+      {
+        "id": "weapon.akizuki_aa_02",
+        "display_name": "100mm 两用炮防空",
+        "mount_type": "AntiAir",
+        "mount_count": 4,
+        "shots_per_mount": 2,
+        "control_mode": "Automatic",
+        "weapon_group_id": "akizuki_aa_02"
+      },
+      {
+        "id": "weapon.akizuki_torpedo",
+        "display_name": "610mm 鱼雷",
+        "mount_type": "Torpedo",
+        "mount_count": 1,
+        "shots_per_mount": 4,
+        "control_mode": "ManualPrimary",
+        "weapon_group_id": "akizuki_torpedo"
+      }
+    ],
+    "portrait": "assets/characters/akizuki/processed/ui/akizuki_ui_portrait.png",
+    "faction": "Imperial Japanese Navy",
+    "primary": "akizuki_torpedo"
+  },
+  {
+    "id": "anshan",
+    "name": "鞍山号",
+    "class": "Destroyer",
+    "weapons": [
+      {
+        "id": "weapon.anshan_130_he",
+        "display_name": "130毫米主炮高爆",
+        "mount_type": "Gun",
+        "mount_count": 4,
+        "shots_per_mount": 1,
+        "control_mode": "Automatic",
+        "weapon_group_id": "anshan_gun"
+      },
+      {
+        "id": "weapon.anshan_torpedo",
+        "display_name": "533毫米鱼雷",
+        "mount_type": "Torpedo",
+        "mount_count": 2,
+        "shots_per_mount": 3,
+        "control_mode": "ManualPrimary",
+        "weapon_group_id": "anshan_torpedo"
+      },
+      {
+        "id": "weapon.anshan_aa",
+        "display_name": "鞍山号轻防空",
+        "mount_type": "AntiAir",
+        "mount_count": 4,
+        "shots_per_mount": 2,
+        "control_mode": "Automatic",
+        "weapon_group_id": "anshan_aa"
+      }
+    ],
+    "portrait": "assets/characters/anshan/processed/ui/anshan_ui_portrait.png",
+    "faction": "People's Liberation Army Navy",
+    "primary": "anshan_torpedo"
+  },
+  {
+    "id": "argus",
+    "name": "百眼巨人号",
+    "class": "Carrier",
+    "weapons": [
+      {
+        "id": "weapon.argus_airstrike",
+        "display_name": "基础空袭队",
+        "mount_type": "Aviation",
+        "mount_count": 1,
+        "shots_per_mount": 4,
+        "control_mode": "ManualPrimary",
+        "weapon_group_id": "argus_airstrike"
+      },
+      {
+        "id": "weapon.argus_aa",
+        "display_name": "百眼巨人号轻防空",
+        "mount_type": "AntiAir",
+        "mount_count": 4,
+        "shots_per_mount": 1,
+        "control_mode": "Automatic",
+        "weapon_group_id": "argus_aa"
+      }
+    ],
+    "portrait": "assets/characters/argus/processed/ui/argus_ui_portrait.png",
+    "faction": "Royal Navy",
+    "primary": "argus_airstrike"
+  },
+  {
+    "id": "aurora",
+    "name": "阿芙乐尔号",
+    "class": "LightCruiser",
+    "weapons": [
+      {
+        "id": "weapon.aurora_152_he",
+        "display_name": "152毫米旧式高爆弹主炮",
+        "mount_type": "Gun",
+        "mount_count": 6,
+        "shots_per_mount": 1,
+        "control_mode": "ManualPrimary",
+        "weapon_group_id": "aurora_main"
+      }
+    ],
+    "portrait": "assets/characters/aurora/processed/ui/aurora_ui_portrait.png",
+    "faction": "Soviet Navy",
+    "primary": "aurora_main"
+  },
+  {
+    "id": "baltimore",
+    "name": "巴尔的摩号",
+    "class": "HeavyCruiser",
+    "weapons": [
+      {
+        "id": "weapon.baltimore_main_ap",
+        "display_name": "203mm 主炮穿甲",
+        "mount_type": "Gun",
+        "mount_count": 3,
+        "shots_per_mount": 3,
+        "control_mode": "ManualPrimary",
+        "weapon_group_id": "baltimore_main"
+      },
+      {
+        "id": "weapon.baltimore_aa_03",
+        "display_name": "127mm 两用防空",
+        "mount_type": "AntiAir",
+        "mount_count": 6,
+        "shots_per_mount": 2,
+        "control_mode": "Automatic",
+        "weapon_group_id": "baltimore_aa_03"
+      }
+    ],
+    "portrait": "assets/characters/baltimore/processed/ui/baltimore_ui_portrait.png",
+    "faction": "United States Navy",
+    "primary": "baltimore_main"
+  },
+  {
+    "id": "belfast",
+    "name": "贝尔法斯特号",
+    "class": "LightCruiser",
+    "weapons": [
+      {
+        "id": "weapon.belfast_main_he",
+        "display_name": "152mm 主炮高爆",
+        "mount_type": "Gun",
+        "mount_count": 4,
+        "shots_per_mount": 3,
+        "control_mode": "Automatic",
+        "weapon_group_id": "belfast_main"
+      },
+      {
+        "id": "weapon.belfast_torpedo",
+        "display_name": "533mm 鱼雷",
+        "mount_type": "Torpedo",
+        "mount_count": 2,
+        "shots_per_mount": 3,
+        "control_mode": "ManualPrimary",
+        "weapon_group_id": "belfast_torpedo"
+      },
+      {
+        "id": "weapon.belfast_aa_04",
+        "display_name": "防空炮阵",
+        "mount_type": "AntiAir",
+        "mount_count": 7,
+        "shots_per_mount": 4,
+        "control_mode": "Automatic",
+        "weapon_group_id": "belfast_aa_04"
+      }
+    ],
+    "portrait": "assets/characters/belfast/processed/ui/belfast_ui_portrait.png",
+    "faction": "Royal Navy",
+    "primary": "belfast_torpedo"
+  },
+  {
+    "id": "bismarck",
+    "name": "俾斯麦号",
+    "class": "Battleship",
+    "weapons": [
+      {
+        "id": "weapon.bismarck_380_ap",
+        "display_name": "380毫米主炮（穿甲弹）",
+        "mount_type": "Gun",
+        "mount_count": 4,
+        "shots_per_mount": 2,
+        "control_mode": "ManualPrimary",
+        "weapon_group_id": "bismarck_main"
+      },
+      {
+        "id": "weapon.bismarck_150_he",
+        "display_name": "150毫米副炮",
+        "mount_type": "Gun",
+        "mount_count": 6,
+        "shots_per_mount": 2,
+        "control_mode": "Automatic",
+        "weapon_group_id": "bismarck_secondary"
+      }
+    ],
+    "portrait": "assets/characters/bismarck/processed/ui/bismarck_ui_portrait.png",
+    "faction": "Kriegsmarine",
+    "primary": "bismarck_main"
+  },
+  {
+    "id": "chang_chun",
+    "name": "长春号",
+    "class": "Destroyer",
+    "weapons": [
+      {
+        "id": "weapon.chang_chun_main_he",
+        "display_name": "130mm 主炮高爆",
+        "mount_type": "Gun",
+        "mount_count": 4,
+        "shots_per_mount": 1,
+        "control_mode": "Automatic",
+        "weapon_group_id": "chang_chun_main"
+      },
+      {
+        "id": "weapon.chang_chun_torpedo",
+        "display_name": "533mm 鱼雷",
+        "mount_type": "Torpedo",
+        "mount_count": 2,
+        "shots_per_mount": 3,
+        "control_mode": "ManualPrimary",
+        "weapon_group_id": "chang_chun_torpedo"
+      },
+      {
+        "id": "weapon.chang_chun_aa_03",
+        "display_name": "轻防空",
+        "mount_type": "AntiAir",
+        "mount_count": 5,
+        "shots_per_mount": 2,
+        "control_mode": "Automatic",
+        "weapon_group_id": "chang_chun_aa_03"
+      }
+    ],
+    "portrait": "assets/characters/chang_chun/processed/ui/chang_chun_ui_portrait.png",
+    "faction": "Chinese Navy",
+    "primary": "chang_chun_torpedo"
+  },
+  {
+    "id": "chapayev",
+    "name": "恰巴耶夫号",
+    "class": "LightCruiser",
+    "weapons": [
+      {
+        "id": "weapon.chapayev_main_he",
+        "display_name": "152mm 主炮高爆",
+        "mount_type": "Gun",
+        "mount_count": 4,
+        "shots_per_mount": 3,
+        "control_mode": "Automatic",
+        "weapon_group_id": "chapayev_main"
+      },
+      {
+        "id": "weapon.chapayev_torpedo",
+        "display_name": "533mm 鱼雷",
+        "mount_type": "Torpedo",
+        "mount_count": 2,
+        "shots_per_mount": 3,
+        "control_mode": "ManualPrimary",
+        "weapon_group_id": "chapayev_torpedo"
+      },
+      {
+        "id": "weapon.chapayev_aa_04",
+        "display_name": "防空炮阵",
+        "mount_type": "AntiAir",
+        "mount_count": 8,
+        "shots_per_mount": 2,
+        "control_mode": "Automatic",
+        "weapon_group_id": "chapayev_aa_04"
+      }
+    ],
+    "portrait": "assets/characters/chapayev/processed/ui/chapayev_ui_portrait.png",
+    "faction": "Soviet Navy",
+    "primary": "chapayev_torpedo"
+  },
+  {
+    "id": "chongqing",
+    "name": "重庆号",
+    "class": "LightCruiser",
+    "weapons": [
+      {
+        "id": "weapon.chongqing_152_he",
+        "display_name": "152毫米主炮（高爆弹）",
+        "mount_type": "Gun",
+        "mount_count": 4,
+        "shots_per_mount": 3,
+        "control_mode": "Automatic",
+        "weapon_group_id": "chongqing_main"
+      },
+      {
+        "id": "weapon.chongqing_torpedo",
+        "display_name": "533毫米鱼雷",
+        "mount_type": "Torpedo",
+        "mount_count": 2,
+        "shots_per_mount": 3,
+        "control_mode": "ManualPrimary",
+        "weapon_group_id": "chongqing_torpedo"
+      },
+      {
+        "id": "weapon.chongqing_aa",
+        "display_name": "重庆号防空节点",
+        "mount_type": "AntiAir",
+        "mount_count": 6,
+        "shots_per_mount": 2,
+        "control_mode": "Automatic",
+        "weapon_group_id": "chongqing_aa"
+      }
+    ],
+    "portrait": "assets/characters/chongqing/processed/ui/chongqing_ui_portrait.png",
+    "faction": "Republic of China Navy",
+    "primary": "chongqing_torpedo"
+  },
+  {
+    "id": "cleveland",
+    "name": "克利夫兰号",
+    "class": "LightCruiser",
+    "weapons": [
+      {
+        "id": "weapon.cleveland_main_he",
+        "display_name": "152mm 主炮高爆",
+        "mount_type": "Gun",
+        "mount_count": 4,
+        "shots_per_mount": 3,
+        "control_mode": "ManualPrimary",
+        "weapon_group_id": "cleveland_main"
+      },
+      {
+        "id": "weapon.cleveland_aa_03",
+        "display_name": "127mm 两用防空",
+        "mount_type": "AntiAir",
+        "mount_count": 6,
+        "shots_per_mount": 2,
+        "control_mode": "Automatic",
+        "weapon_group_id": "cleveland_aa_03"
+      },
+      {
+        "id": "weapon.cleveland_aa_04",
+        "display_name": "近程防空阵",
+        "mount_type": "AntiAir",
+        "mount_count": 8,
+        "shots_per_mount": 4,
+        "control_mode": "Automatic",
+        "weapon_group_id": "cleveland_aa_04"
+      }
+    ],
+    "portrait": "assets/characters/cleveland/processed/ui/cleveland_ui_portrait.png",
+    "faction": "United States Navy",
+    "primary": "cleveland_main"
+  },
+  {
+    "id": "dingyuan",
+    "name": "定远号",
+    "class": "Battleship",
+    "weapons": [
+      {
+        "id": "weapon.dingyuan_main_ap",
+        "display_name": "305mm 主炮穿甲",
+        "mount_type": "Gun",
+        "mount_count": 2,
+        "shots_per_mount": 2,
+        "control_mode": "ManualPrimary",
+        "weapon_group_id": "dingyuan_main"
+      },
+      {
+        "id": "weapon.dingyuan_secondary_03",
+        "display_name": "150mm 副炮",
+        "mount_type": "Gun",
+        "mount_count": 2,
+        "shots_per_mount": 1,
+        "control_mode": "Automatic",
+        "weapon_group_id": "dingyuan_secondary"
+      }
+    ],
+    "portrait": "assets/characters/dingyuan/processed/ui/dingyuan_ui_portrait.png",
+    "faction": "Chinese Navy",
+    "primary": "dingyuan_main"
+  },
+  {
+    "id": "enterprise_cv6",
+    "name": "企业号",
+    "class": "Carrier",
+    "weapons": [
+      {
+        "id": "weapon.enterprise_airstrike",
+        "display_name": "舰载机攻击队",
+        "mount_type": "Aviation",
+        "mount_count": 2,
+        "shots_per_mount": 8,
+        "control_mode": "ManualPrimary",
+        "weapon_group_id": "enterprise_airstrike"
+      },
+      {
+        "id": "weapon.enterprise_aa",
+        "display_name": "企业号防空炮阵",
+        "mount_type": "AntiAir",
+        "mount_count": 8,
+        "shots_per_mount": 4,
+        "control_mode": "Automatic",
+        "weapon_group_id": "enterprise_aa"
+      }
+    ],
+    "portrait": "assets/characters/enterprise_cv6/processed/ui/enterprise_cv6_ui_portrait.png",
+    "faction": "United States Navy",
+    "primary": "enterprise_airstrike"
+  },
+  {
+    "id": "fletcher",
+    "name": "弗莱彻号",
+    "class": "Destroyer",
+    "weapons": [
+      {
+        "id": "weapon.fletcher_main_he",
+        "display_name": "127mm 两用炮高爆",
+        "mount_type": "Gun",
+        "mount_count": 5,
+        "shots_per_mount": 1,
+        "control_mode": "Automatic",
+        "weapon_group_id": "fletcher_main"
+      },
+      {
+        "id": "weapon.fletcher_torpedo",
+        "display_name": "533mm 鱼雷",
+        "mount_type": "Torpedo",
+        "mount_count": 2,
+        "shots_per_mount": 5,
+        "control_mode": "ManualPrimary",
+        "weapon_group_id": "fletcher_torpedo"
+      },
+      {
+        "id": "weapon.fletcher_depth_charge",
+        "display_name": "深水炸弹",
+        "mount_type": "AntiSubmarine",
+        "mount_count": 2,
+        "shots_per_mount": 6,
+        "control_mode": "Automatic",
+        "weapon_group_id": "fletcher_asw"
+      }
+    ],
+    "portrait": "assets/characters/fletcher/processed/ui/fletcher_ui_portrait.png",
+    "faction": "United States Navy",
+    "primary": "fletcher_torpedo"
+  },
+  {
+    "id": "gangut",
+    "name": "甘古特号",
+    "class": "Battleship",
+    "weapons": [
+      {
+        "id": "weapon.gangut_main_ap",
+        "display_name": "305mm 主炮穿甲",
+        "mount_type": "Gun",
+        "mount_count": 4,
+        "shots_per_mount": 3,
+        "control_mode": "ManualPrimary",
+        "weapon_group_id": "gangut_main"
+      },
+      {
+        "id": "weapon.gangut_secondary_03",
+        "display_name": "120mm 副炮",
+        "mount_type": "Gun",
+        "mount_count": 8,
+        "shots_per_mount": 1,
+        "control_mode": "Automatic",
+        "weapon_group_id": "gangut_secondary"
+      }
+    ],
+    "portrait": "assets/characters/gangut/processed/ui/gangut_ui_portrait.png",
+    "faction": "Soviet Navy",
+    "primary": "gangut_main"
+  },
+  {
+    "id": "gnevny",
+    "name": "愤怒号",
+    "class": "Destroyer",
+    "weapons": [
+      {
+        "id": "weapon.gnevny_130_he",
+        "display_name": "130毫米主炮高爆",
+        "mount_type": "Gun",
+        "mount_count": 4,
+        "shots_per_mount": 1,
+        "control_mode": "Automatic",
+        "weapon_group_id": "gnevny_gun"
+      },
+      {
+        "id": "weapon.gnevny_torpedo",
+        "display_name": "533毫米鱼雷",
+        "mount_type": "Torpedo",
+        "mount_count": 2,
+        "shots_per_mount": 3,
+        "control_mode": "ManualPrimary",
+        "weapon_group_id": "gnevny_torpedo"
+      }
+    ],
+    "portrait": "assets/characters/gnevny/processed/ui/gnevny_ui_portrait.png",
+    "faction": "Soviet Navy",
+    "primary": "gnevny_torpedo"
+  },
+  {
+    "id": "graf_zeppelin",
+    "name": "齐柏林伯爵号",
+    "class": "Carrier",
+    "weapons": [
+      {
+        "id": "weapon.graf_zeppelin_bomber",
+        "display_name": "舰载俯冲轰炸队",
+        "mount_type": "Aviation",
+        "mount_count": 2,
+        "shots_per_mount": 6,
+        "control_mode": "ManualPrimary",
+        "weapon_group_id": "graf_zeppelin_airstrike"
+      },
+      {
+        "id": "weapon.graf_zeppelin_secondary_02",
+        "display_name": "150mm 舰炮",
+        "mount_type": "Gun",
+        "mount_count": 8,
+        "shots_per_mount": 2,
+        "control_mode": "Automatic",
+        "weapon_group_id": "graf_zeppelin_secondary"
+      },
+      {
+        "id": "weapon.graf_zeppelin_aa_03",
+        "display_name": "防空炮阵",
+        "mount_type": "AntiAir",
+        "mount_count": 8,
+        "shots_per_mount": 2,
+        "control_mode": "Automatic",
+        "weapon_group_id": "graf_zeppelin_aa_03"
+      }
+    ],
+    "portrait": "assets/characters/graf_zeppelin/processed/ui/graf_zeppelin_ui_portrait.png",
+    "faction": "Kriegsmarine",
+    "primary": "graf_zeppelin_airstrike"
+  },
+  {
+    "id": "hai_lung",
+    "name": "海龙号",
+    "class": "Submarine",
+    "weapons": [
+      {
+        "id": "weapon.hai_lung_fore_torpedo",
+        "display_name": "前部鱼雷",
+        "mount_type": "Torpedo",
+        "mount_count": 1,
+        "shots_per_mount": 6,
+        "control_mode": "ManualPrimary",
+        "weapon_group_id": "hai_lung_torpedo"
+      }
+    ],
+    "portrait": "assets/characters/hai_lung/processed/ui/hai_lung_ui_portrait.png",
+    "faction": "Chinese Navy",
+    "primary": "hai_lung_torpedo"
+  },
+  {
+    "id": "hai_shih",
+    "name": "海狮号",
+    "class": "Submarine",
+    "weapons": [
+      {
+        "id": "weapon.hai_shih_fore_torpedo",
+        "display_name": "前部鱼雷发射管",
+        "mount_type": "Torpedo",
+        "mount_count": 1,
+        "shots_per_mount": 4,
+        "control_mode": "ManualPrimary",
+        "weapon_group_id": "hai_shih_torpedo"
+      }
+    ],
+    "portrait": "assets/characters/hai_shih/processed/ui/hai_shih_ui_portrait.png",
+    "faction": "Republic of China Navy",
+    "primary": "hai_shih_torpedo"
+  },
+  {
+    "id": "hindenburg",
+    "name": "兴登堡号",
+    "class": "HeavyCruiser",
+    "weapons": [
+      {
+        "id": "weapon.hindenburg_203_ap",
+        "display_name": "203毫米精密穿甲弹主炮",
+        "mount_type": "Gun",
+        "mount_count": 4,
+        "shots_per_mount": 3,
+        "control_mode": "ManualPrimary",
+        "weapon_group_id": "hindenburg_main"
+      }
+    ],
+    "portrait": "assets/characters/hindenburg/processed/ui/hindenburg_ui_portrait.png",
+    "faction": "Kriegsmarine",
+    "primary": "hindenburg_main"
+  },
+  {
+    "id": "hood",
+    "name": "胡德号",
+    "class": "Battleship",
+    "weapons": [
+      {
+        "id": "weapon.hood_381_ap",
+        "display_name": "381毫米主炮（穿甲弹）",
+        "mount_type": "Gun",
+        "mount_count": 4,
+        "shots_per_mount": 2,
+        "control_mode": "ManualPrimary",
+        "weapon_group_id": "hood_main"
+      },
+      {
+        "id": "weapon.hood_secondary",
+        "display_name": "护航副炮",
+        "mount_type": "Gun",
+        "mount_count": 6,
+        "shots_per_mount": 1,
+        "control_mode": "Automatic",
+        "weapon_group_id": "hood_secondary"
+      }
+    ],
+    "portrait": "assets/characters/hood/processed/ui/hood_ui_portrait.png",
+    "faction": "Royal Navy",
+    "primary": "hood_main"
+  },
+  {
+    "id": "hosho",
+    "name": "凤翔号",
+    "class": "Carrier",
+    "weapons": [
+      {
+        "id": "weapon.hosho_airstrike",
+        "display_name": "轻空袭队",
+        "mount_type": "Aviation",
+        "mount_count": 1,
+        "shots_per_mount": 4,
+        "control_mode": "ManualPrimary",
+        "weapon_group_id": "hosho_airstrike"
+      }
+    ],
+    "portrait": "assets/characters/hosho/processed/ui/hosho_ui_portrait.png",
+    "faction": "Imperial Japanese Navy",
+    "primary": "hosho_airstrike"
+  },
+  {
+    "id": "i_19",
+    "name": "伊-19号",
+    "class": "Submarine",
+    "weapons": [
+      {
+        "id": "weapon.i_19_fore_torpedo",
+        "display_name": "前部鱼雷",
+        "mount_type": "Torpedo",
+        "mount_count": 1,
+        "shots_per_mount": 6,
+        "control_mode": "ManualPrimary",
+        "weapon_group_id": "i_19_torpedo"
+      },
+      {
+        "id": "weapon.i_19_scout",
+        "display_name": "舰载侦察机",
+        "mount_type": "Aviation",
+        "mount_count": 1,
+        "shots_per_mount": 1,
+        "control_mode": "Automatic",
+        "weapon_group_id": "i_19_scout"
+      }
+    ],
+    "portrait": "assets/characters/i_19/processed/ui/i_19_ui_portrait.png",
+    "faction": "Imperial Japanese Navy",
+    "primary": "i_19_torpedo"
+  },
+  {
+    "id": "illustrious",
+    "name": "光辉号",
+    "class": "Carrier",
+    "weapons": [
+      {
+        "id": "weapon.illustrious_bomber",
+        "display_name": "装甲航母攻击队",
+        "mount_type": "Aviation",
+        "mount_count": 2,
+        "shots_per_mount": 6,
+        "control_mode": "ManualPrimary",
+        "weapon_group_id": "illustrious_airstrike"
+      },
+      {
+        "id": "weapon.illustrious_scout",
+        "display_name": "舰载侦查机",
+        "mount_type": "Aviation",
+        "mount_count": 1,
+        "shots_per_mount": 2,
+        "control_mode": "Automatic",
+        "weapon_group_id": "illustrious_scout"
+      },
+      {
+        "id": "weapon.illustrious_aa_03",
+        "display_name": "重型防空阵",
+        "mount_type": "AntiAir",
+        "mount_count": 8,
+        "shots_per_mount": 4,
+        "control_mode": "Automatic",
+        "weapon_group_id": "illustrious_aa_03"
+      }
+    ],
+    "portrait": "assets/characters/illustrious/processed/ui/illustrious_ui_portrait.png",
+    "faction": "Royal Navy",
+    "primary": "illustrious_airstrike"
+  },
+  {
+    "id": "iowa",
+    "name": "衣阿华号",
+    "class": "Battleship",
+    "weapons": [
+      {
+        "id": "weapon.iowa_406_ap",
+        "display_name": "406毫米主炮（穿甲弹）",
+        "mount_type": "Gun",
+        "mount_count": 3,
+        "shots_per_mount": 3,
+        "control_mode": "ManualPrimary",
+        "weapon_group_id": "iowa_main"
+      },
+      {
+        "id": "weapon.iowa_127_he",
+        "display_name": "127毫米副炮",
+        "mount_type": "Gun",
+        "mount_count": 10,
+        "shots_per_mount": 2,
+        "control_mode": "Automatic",
+        "weapon_group_id": "iowa_secondary"
+      },
+      {
+        "id": "weapon.iowa_aa",
+        "display_name": "衣阿华号防空炮阵",
+        "mount_type": "AntiAir",
+        "mount_count": 10,
+        "shots_per_mount": 4,
+        "control_mode": "Automatic",
+        "weapon_group_id": "iowa_aa"
+      }
+    ],
+    "portrait": "assets/characters/iowa/processed/ui/iowa_ui_portrait.png",
+    "faction": "United States Navy",
+    "primary": "iowa_main"
+  },
+  {
+    "id": "jervis",
+    "name": "杰维斯号",
+    "class": "Destroyer",
+    "weapons": [
+      {
+        "id": "weapon.jervis_main_he",
+        "display_name": "120mm 主炮高爆",
+        "mount_type": "Gun",
+        "mount_count": 3,
+        "shots_per_mount": 2,
+        "control_mode": "Automatic",
+        "weapon_group_id": "jervis_main"
+      },
+      {
+        "id": "weapon.jervis_torpedo",
+        "display_name": "533mm 鱼雷",
+        "mount_type": "Torpedo",
+        "mount_count": 2,
+        "shots_per_mount": 5,
+        "control_mode": "ManualPrimary",
+        "weapon_group_id": "jervis_torpedo"
+      },
+      {
+        "id": "weapon.jervis_depth_charge",
+        "display_name": "深水炸弹",
+        "mount_type": "AntiSubmarine",
+        "mount_count": 2,
+        "shots_per_mount": 5,
+        "control_mode": "Automatic",
+        "weapon_group_id": "jervis_asw"
+      }
+    ],
+    "portrait": "assets/characters/jervis/processed/ui/jervis_ui_portrait.png",
+    "faction": "Royal Navy",
+    "primary": "jervis_torpedo"
+  },
+  {
+    "id": "k_21",
+    "name": "K-21号",
+    "class": "Submarine",
+    "weapons": [
+      {
+        "id": "weapon.k_21_fore_torpedo",
+        "display_name": "前部鱼雷",
+        "mount_type": "Torpedo",
+        "mount_count": 1,
+        "shots_per_mount": 6,
+        "control_mode": "ManualPrimary",
+        "weapon_group_id": "k_21_torpedo"
+      }
+    ],
+    "portrait": "assets/characters/k_21/processed/ui/k_21_ui_portrait.png",
+    "faction": "Soviet Navy",
+    "primary": "k_21_torpedo"
+  },
+  {
+    "id": "kirov",
+    "name": "基洛夫号",
+    "class": "HeavyCruiser",
+    "weapons": [
+      {
+        "id": "weapon.kirov_180_ap",
+        "display_name": "180毫米主炮（穿甲弹）",
+        "mount_type": "Gun",
+        "mount_count": 3,
+        "shots_per_mount": 3,
+        "control_mode": "Automatic",
+        "weapon_group_id": "kirov_main"
+      },
+      {
+        "id": "weapon.kirov_torpedo",
+        "display_name": "533毫米鱼雷",
+        "mount_type": "Torpedo",
+        "mount_count": 2,
+        "shots_per_mount": 3,
+        "control_mode": "ManualPrimary",
+        "weapon_group_id": "kirov_torpedo"
+      }
+    ],
+    "portrait": "assets/characters/kirov/processed/ui/kirov_ui_portrait.png",
+    "faction": "Soviet Navy",
+    "primary": "kirov_torpedo"
+  },
+  {
+    "id": "ning_hai",
+    "name": "宁海号",
+    "class": "LightCruiser",
+    "weapons": [
+      {
+        "id": "weapon.ning_140_he",
+        "display_name": "140毫米主炮（高爆弹）",
+        "mount_type": "Gun",
+        "mount_count": 3,
+        "shots_per_mount": 2,
+        "control_mode": "Automatic",
+        "weapon_group_id": "ning_main"
+      },
+      {
+        "id": "weapon.ning_torpedo",
+        "display_name": "533毫米鱼雷",
+        "mount_type": "Torpedo",
+        "mount_count": 2,
+        "shots_per_mount": 2,
+        "control_mode": "ManualPrimary",
+        "weapon_group_id": "ning_torpedo"
+      },
+      {
+        "id": "weapon.ning_aa",
+        "display_name": "宁海号防空节点",
+        "mount_type": "AntiAir",
+        "mount_count": 5,
+        "shots_per_mount": 2,
+        "control_mode": "Automatic",
+        "weapon_group_id": "ning_aa"
+      }
+    ],
+    "portrait": "assets/characters/ning_hai/processed/ui/ning_hai_ui_portrait.png",
+    "faction": "Republic of China Navy",
+    "primary": "ning_torpedo"
+  },
+  {
+    "id": "nurnberg",
+    "name": "纽伦堡号",
+    "class": "LightCruiser",
+    "weapons": [
+      {
+        "id": "weapon.nurnberg_main_he",
+        "display_name": "150mm 主炮高爆",
+        "mount_type": "Gun",
+        "mount_count": 3,
+        "shots_per_mount": 3,
+        "control_mode": "Automatic",
+        "weapon_group_id": "nurnberg_main"
+      },
+      {
+        "id": "weapon.nurnberg_torpedo",
+        "display_name": "533mm 鱼雷",
+        "mount_type": "Torpedo",
+        "mount_count": 4,
+        "shots_per_mount": 3,
+        "control_mode": "ManualPrimary",
+        "weapon_group_id": "nurnberg_torpedo"
+      },
+      {
+        "id": "weapon.nurnberg_aa_04",
+        "display_name": "防空炮阵",
+        "mount_type": "AntiAir",
+        "mount_count": 6,
+        "shots_per_mount": 2,
+        "control_mode": "Automatic",
+        "weapon_group_id": "nurnberg_aa_04"
+      }
+    ],
+    "portrait": "assets/characters/nurnberg/processed/ui/nurnberg_ui_portrait.png",
+    "faction": "Kriegsmarine",
+    "primary": "nurnberg_torpedo"
+  },
+  {
+    "id": "pobeda",
+    "name": "胜利号",
+    "class": "Carrier",
+    "weapons": [
+      {
+        "id": "weapon.pobeda_bomber",
+        "display_name": "攻击机编队",
+        "mount_type": "Aviation",
+        "mount_count": 2,
+        "shots_per_mount": 6,
+        "control_mode": "ManualPrimary",
+        "weapon_group_id": "pobeda_airstrike"
+      }
+    ],
+    "portrait": "assets/characters/pobeda/processed/ui/pobeda_ui_portrait.png",
+    "faction": "Soviet Navy",
+    "primary": "pobeda_airstrike"
+  },
+  {
+    "id": "prinz_eugen",
+    "name": "欧根亲王号",
+    "class": "HeavyCruiser",
+    "weapons": [
+      {
+        "id": "weapon.prinz_203_ap",
+        "display_name": "203毫米主炮（穿甲弹）",
+        "mount_type": "Gun",
+        "mount_count": 4,
+        "shots_per_mount": 2,
+        "control_mode": "Automatic",
+        "weapon_group_id": "prinz_main"
+      },
+      {
+        "id": "weapon.prinz_torpedo",
+        "display_name": "533毫米鱼雷",
+        "mount_type": "Torpedo",
+        "mount_count": 2,
+        "shots_per_mount": 3,
+        "control_mode": "ManualPrimary",
+        "weapon_group_id": "prinz_torpedo"
+      }
+    ],
+    "portrait": "assets/characters/prinz_eugen/processed/ui/prinz_eugen_ui_portrait.png",
+    "faction": "Kriegsmarine",
+    "primary": "prinz_torpedo"
+  },
+  {
+    "id": "san_diego",
+    "name": "圣地亚哥号",
+    "class": "LightCruiser",
+    "weapons": [
+      {
+        "id": "weapon.san_diego_127_he",
+        "display_name": "127毫米两用炮高爆",
+        "mount_type": "Gun",
+        "mount_count": 8,
+        "shots_per_mount": 2,
+        "control_mode": "Automatic",
+        "weapon_group_id": "san_diego_gun"
+      },
+      {
+        "id": "weapon.san_diego_torpedo",
+        "display_name": "533毫米鱼雷",
+        "mount_type": "Torpedo",
+        "mount_count": 2,
+        "shots_per_mount": 4,
+        "control_mode": "ManualPrimary",
+        "weapon_group_id": "san_diego_torpedo"
+      },
+      {
+        "id": "weapon.san_diego_aa_heavy",
+        "display_name": "127毫米两用炮防空",
+        "mount_type": "AntiAir",
+        "mount_count": 8,
+        "shots_per_mount": 2,
+        "control_mode": "Automatic",
+        "weapon_group_id": "san_diego_aa_heavy"
+      },
+      {
+        "id": "weapon.san_diego_aa_rapid",
+        "display_name": "防空炮阵",
+        "mount_type": "AntiAir",
+        "mount_count": 8,
+        "shots_per_mount": 4,
+        "control_mode": "Automatic",
+        "weapon_group_id": "san_diego_aa_rapid"
+      }
+    ],
+    "portrait": "assets/characters/san_diego/processed/ui/san_diego_ui_portrait.png",
+    "faction": "United States Navy",
+    "primary": "san_diego_torpedo"
+  },
+  {
+    "id": "scharnhorst",
+    "name": "沙恩霍斯特号",
+    "class": "Battleship",
+    "weapons": [
+      {
+        "id": "weapon.scharnhorst_main_ap",
+        "display_name": "283mm 主炮穿甲",
+        "mount_type": "Gun",
+        "mount_count": 3,
+        "shots_per_mount": 3,
+        "control_mode": "ManualPrimary",
+        "weapon_group_id": "scharnhorst_main"
+      },
+      {
+        "id": "weapon.scharnhorst_secondary_03",
+        "display_name": "150mm 副炮",
+        "mount_type": "Gun",
+        "mount_count": 6,
+        "shots_per_mount": 2,
+        "control_mode": "Automatic",
+        "weapon_group_id": "scharnhorst_secondary"
+      }
+    ],
+    "portrait": "assets/characters/scharnhorst/processed/ui/scharnhorst_ui_portrait.png",
+    "faction": "Kriegsmarine",
+    "primary": "scharnhorst_main"
+  },
+  {
+    "id": "shimakaze",
+    "name": "岛风号",
+    "class": "Destroyer",
+    "weapons": [
+      {
+        "id": "weapon.shimakaze_127_he",
+        "display_name": "127毫米高爆弹主炮",
+        "mount_type": "Gun",
+        "mount_count": 3,
+        "shots_per_mount": 2,
+        "control_mode": "Automatic",
+        "weapon_group_id": "shimakaze_gun"
+      },
+      {
+        "id": "weapon.shimakaze_610_torpedo",
+        "display_name": "五联装610毫米鱼雷",
+        "mount_type": "Torpedo",
+        "mount_count": 3,
+        "shots_per_mount": 5,
+        "control_mode": "ManualPrimary",
+        "weapon_group_id": "shimakaze_torpedo"
+      }
+    ],
+    "portrait": "assets/characters/shimakaze/processed/ui/shimakaze_ui_portrait.png",
+    "faction": "Imperial Japanese Navy",
+    "primary": "shimakaze_torpedo"
+  },
+  {
+    "id": "shokaku",
+    "name": "翔鹤号",
+    "class": "Carrier",
+    "weapons": [
+      {
+        "id": "weapon.shokaku_bomber",
+        "display_name": "舰载机攻击队",
+        "mount_type": "Aviation",
+        "mount_count": 2,
+        "shots_per_mount": 8,
+        "control_mode": "ManualPrimary",
+        "weapon_group_id": "shokaku_airstrike"
+      },
+      {
+        "id": "weapon.shokaku_scout",
+        "display_name": "舰载侦查机",
+        "mount_type": "Aviation",
+        "mount_count": 1,
+        "shots_per_mount": 3,
+        "control_mode": "Automatic",
+        "weapon_group_id": "shokaku_scout"
+      }
+    ],
+    "portrait": "assets/characters/shokaku/processed/ui/shokaku_ui_portrait.png",
+    "faction": "Imperial Japanese Navy",
+    "primary": "shokaku_airstrike"
+  },
+  {
+    "id": "sirius",
+    "name": "天狼星号",
+    "class": "LightCruiser",
+    "weapons": [
+      {
+        "id": "weapon.sirius_133_he",
+        "display_name": "133毫米两用炮高爆",
+        "mount_type": "Gun",
+        "mount_count": 5,
+        "shots_per_mount": 2,
+        "control_mode": "ManualPrimary",
+        "weapon_group_id": "sirius_main"
+      },
+      {
+        "id": "weapon.sirius_aa",
+        "display_name": "天狼星号防空炮阵",
+        "mount_type": "AntiAir",
+        "mount_count": 7,
+        "shots_per_mount": 4,
+        "control_mode": "Automatic",
+        "weapon_group_id": "sirius_aa"
+      }
+    ],
+    "portrait": "assets/characters/sirius/processed/ui/sirius_ui_portrait.png",
+    "faction": "Royal Navy",
+    "primary": "sirius_main"
+  },
+  {
+    "id": "takao",
+    "name": "高雄号",
+    "class": "HeavyCruiser",
+    "weapons": [
+      {
+        "id": "weapon.takao_main_ap",
+        "display_name": "203mm 主炮穿甲",
+        "mount_type": "Gun",
+        "mount_count": 5,
+        "shots_per_mount": 2,
+        "control_mode": "Automatic",
+        "weapon_group_id": "takao_main"
+      },
+      {
+        "id": "weapon.takao_torpedo",
+        "display_name": "610mm 鱼雷",
+        "mount_type": "Torpedo",
+        "mount_count": 4,
+        "shots_per_mount": 4,
+        "control_mode": "ManualPrimary",
+        "weapon_group_id": "takao_torpedo"
+      }
+    ],
+    "portrait": "assets/characters/takao/processed/ui/takao_ui_portrait.png",
+    "faction": "Imperial Japanese Navy",
+    "primary": "takao_torpedo"
+  },
+  {
+    "id": "tashkent",
+    "name": "塔什干号",
+    "class": "Destroyer",
+    "weapons": [
+      {
+        "id": "weapon.tashkent_main_he",
+        "display_name": "130mm 主炮高爆",
+        "mount_type": "Gun",
+        "mount_count": 3,
+        "shots_per_mount": 2,
+        "control_mode": "Automatic",
+        "weapon_group_id": "tashkent_main"
+      },
+      {
+        "id": "weapon.tashkent_torpedo",
+        "display_name": "533mm 鱼雷",
+        "mount_type": "Torpedo",
+        "mount_count": 3,
+        "shots_per_mount": 3,
+        "control_mode": "ManualPrimary",
+        "weapon_group_id": "tashkent_torpedo"
+      }
+    ],
+    "portrait": "assets/characters/tashkent/processed/ui/tashkent_ui_portrait.png",
+    "faction": "Soviet Navy",
+    "primary": "tashkent_torpedo"
+  },
+  {
+    "id": "u_47",
+    "name": "U-47",
+    "class": "Submarine",
+    "weapons": [
+      {
+        "id": "weapon.u47_fore_torpedo",
+        "display_name": "前部鱼雷发射管",
+        "mount_type": "Torpedo",
+        "mount_count": 1,
+        "shots_per_mount": 4,
+        "control_mode": "ManualPrimary",
+        "weapon_group_id": "u47_torpedo"
+      }
+    ],
+    "portrait": "assets/characters/u_47/processed/ui/u_47_ui_portrait.png",
+    "faction": "Kriegsmarine",
+    "primary": "u47_torpedo"
+  },
+  {
+    "id": "upholder",
+    "name": "拥护者号",
+    "class": "Submarine",
+    "weapons": [
+      {
+        "id": "weapon.upholder_fore_torpedo",
+        "display_name": "前部鱼雷",
+        "mount_type": "Torpedo",
+        "mount_count": 1,
+        "shots_per_mount": 6,
+        "control_mode": "ManualPrimary",
+        "weapon_group_id": "upholder_torpedo"
+      }
+    ],
+    "portrait": "assets/characters/upholder/processed/ui/upholder_ui_portrait.png",
+    "faction": "Royal Navy",
+    "primary": "upholder_torpedo"
+  },
+  {
+    "id": "wahoo",
+    "name": "刺尾鱼号",
+    "class": "Submarine",
+    "weapons": [
+      {
+        "id": "weapon.wahoo_fore_torpedo",
+        "display_name": "前部鱼雷",
+        "mount_type": "Torpedo",
+        "mount_count": 1,
+        "shots_per_mount": 6,
+        "control_mode": "ManualPrimary",
+        "weapon_group_id": "wahoo_torpedo"
+      }
+    ],
+    "portrait": "assets/characters/wahoo/processed/ui/wahoo_ui_portrait.png",
+    "faction": "United States Navy",
+    "primary": "wahoo_torpedo"
+  },
+  {
+    "id": "ward",
+    "name": "沃德号",
+    "class": "Destroyer",
+    "weapons": [
+      {
+        "id": "weapon.ward_102_he",
+        "display_name": "102毫米主炮高爆",
+        "mount_type": "Gun",
+        "mount_count": 4,
+        "shots_per_mount": 1,
+        "control_mode": "Automatic",
+        "weapon_group_id": "ward_gun"
+      },
+      {
+        "id": "weapon.ward_torpedo",
+        "display_name": "533毫米鱼雷",
+        "mount_type": "Torpedo",
+        "mount_count": 4,
+        "shots_per_mount": 3,
+        "control_mode": "ManualPrimary",
+        "weapon_group_id": "ward_torpedo"
+      }
+    ],
+    "portrait": "assets/characters/ward/processed/ui/ward_ui_portrait.png",
+    "faction": "United States Navy",
+    "primary": "ward_torpedo"
+  },
+  {
+    "id": "warspite",
+    "name": "厌战号",
+    "class": "Battleship",
+    "weapons": [
+      {
+        "id": "weapon.warspite_381_ap",
+        "display_name": "381毫米主炮（穿甲弹）",
+        "mount_type": "Gun",
+        "mount_count": 4,
+        "shots_per_mount": 2,
+        "control_mode": "ManualPrimary",
+        "weapon_group_id": "warspite_main"
+      },
+      {
+        "id": "weapon.warspite_152_he",
+        "display_name": "152毫米副炮",
+        "mount_type": "Gun",
+        "mount_count": 6,
+        "shots_per_mount": 1,
+        "control_mode": "Automatic",
+        "weapon_group_id": "warspite_secondary"
+      }
+    ],
+    "portrait": "assets/characters/warspite/processed/ui/warspite_ui_portrait.png",
+    "faction": "Royal Navy",
+    "primary": "warspite_main"
+  },
+  {
+    "id": "yamato",
+    "name": "大和号",
+    "class": "Battleship",
+    "weapons": [
+      {
+        "id": "weapon.yamato_460_ap",
+        "display_name": "460毫米主炮（穿甲弹）",
+        "mount_type": "Gun",
+        "mount_count": 3,
+        "shots_per_mount": 3,
+        "control_mode": "ManualPrimary",
+        "weapon_group_id": "yamato_main"
+      },
+      {
+        "id": "weapon.yamato_155_he",
+        "display_name": "155毫米副炮",
+        "mount_type": "Gun",
+        "mount_count": 4,
+        "shots_per_mount": 3,
+        "control_mode": "Automatic",
+        "weapon_group_id": "yamato_secondary"
+      }
+    ],
+    "portrait": "assets/characters/yamato/processed/ui/yamato_ui_portrait.png",
+    "faction": "Imperial Japanese Navy",
+    "primary": "yamato_main"
+  },
+  {
+    "id": "yat_sen",
+    "name": "逸仙号",
+    "class": "LightCruiser",
+    "weapons": [
+      {
+        "id": "weapon.yat_sen_main_he",
+        "display_name": "152mm 主炮高爆",
+        "mount_type": "Gun",
+        "mount_count": 1,
+        "shots_per_mount": 1,
+        "control_mode": "ManualPrimary",
+        "weapon_group_id": "yat_sen_main"
+      },
+      {
+        "id": "weapon.yat_sen_secondary_02",
+        "display_name": "140mm 副炮高爆",
+        "mount_type": "Gun",
+        "mount_count": 1,
+        "shots_per_mount": 1,
+        "control_mode": "Automatic",
+        "weapon_group_id": "yat_sen_secondary"
+      },
+      {
+        "id": "weapon.yat_sen_aa_03",
+        "display_name": "轻防空",
+        "mount_type": "AntiAir",
+        "mount_count": 4,
+        "shots_per_mount": 1,
+        "control_mode": "Automatic",
+        "weapon_group_id": "yat_sen_aa_03"
+      }
+    ],
+    "portrait": "assets/characters/yat_sen/processed/ui/yat_sen_ui_portrait.png",
+    "faction": "Chinese Navy",
+    "primary": "yat_sen_main"
+  },
+  {
+    "id": "yukikaze",
+    "name": "雪风号",
+    "class": "Destroyer",
+    "weapons": [
+      {
+        "id": "weapon.yukikaze_127_he",
+        "display_name": "127毫米主炮高爆",
+        "mount_type": "Gun",
+        "mount_count": 3,
+        "shots_per_mount": 2,
+        "control_mode": "Automatic",
+        "weapon_group_id": "yukikaze_gun"
+      },
+      {
+        "id": "weapon.yukikaze_torpedo",
+        "display_name": "610毫米鱼雷",
+        "mount_type": "Torpedo",
+        "mount_count": 2,
+        "shots_per_mount": 4,
+        "control_mode": "ManualPrimary",
+        "weapon_group_id": "yukikaze_torpedo"
+      }
+    ],
+    "portrait": "assets/characters/yukikaze/processed/ui/yukikaze_ui_portrait.png",
+    "faction": "Imperial Japanese Navy",
+    "primary": "yukikaze_torpedo"
+  },
+  {
+    "id": "z23",
+    "name": "Z23号",
+    "class": "Destroyer",
+    "weapons": [
+      {
+        "id": "weapon.z23_main_he",
+        "display_name": "150mm 主炮高爆",
+        "mount_type": "Gun",
+        "mount_count": 4,
+        "shots_per_mount": 2,
+        "control_mode": "Automatic",
+        "weapon_group_id": "z23_main"
+      },
+      {
+        "id": "weapon.z23_torpedo",
+        "display_name": "533mm 鱼雷",
+        "mount_type": "Torpedo",
+        "mount_count": 2,
+        "shots_per_mount": 4,
+        "control_mode": "ManualPrimary",
+        "weapon_group_id": "z23_torpedo"
+      }
+    ],
+    "portrait": "assets/characters/z23/processed/ui/z23_ui_portrait.png",
+    "faction": "Kriegsmarine",
+    "primary": "z23_torpedo"
+  }
+]

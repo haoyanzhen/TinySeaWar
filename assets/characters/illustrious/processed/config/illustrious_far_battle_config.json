@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "character_id": "illustrious",
+  "body_basis": "upright",
+  "rig_heading_degrees": 0,
+  "rig_width": 76,
+  "roles": {
+    "body": {
+      "path": "assets/characters/illustrious/processed/battle/illustrious_battle_far_body.png",
+      "sha256": "6ec05430c84c6406f152c9bfd0b25eb8333eb4ee56fbcfbd6b3a49bb97517021",
+      "alpha_rect": [
+        23,
+        56,
+        511,
+        752
+      ],
+      "size": [
+        560,
+        831
+      ]
+    },
+    "rig": {
+      "path": "assets/characters/illustrious/processed/battle/illustrious_battle_far_rig.png",
+      "sha256": "0bca0a0cda5bdb06ed6a9f6fe511a6784aed5ecadf6ea1773e123311e43f28ec",
+      "alpha_rect": [
+        96,
+        36,
+        872,
+        357
+      ],
+      "size": [
+        997,
+        493
+      ]
+    }
+  },
+  "anchors": {
+    "muzzle_01": [
+      0.42,
+      0
+    ],
+    "aircraft_launch_01": [
+      0,
+      0
+    ]
+  },
+  "animation": "procedural_far_view"
+}

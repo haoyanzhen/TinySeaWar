@@ -1,0 +1,513 @@
+{
+  "schema_version": 2,
+  "scope": "battle_far_body_and_rig_only",
+  "character_id": "akizuki",
+  "route": "codex_builtin_imagegen",
+  "requested_model": null,
+  "actual_model": null,
+  "request_id": null,
+  "endpoint": "Codex managed; not exposed",
+  "background": "transparent",
+  "output_format": "png",
+  "quality": "tool-managed",
+  "source": "assets/characters/akizuki/battle/akizuki_far_battle_sheet.png",
+  "source_sha256": "5a97e3297fc48ce6ec77fb851ada8c8564a1fceec889750e65bf20bc1f3477ad",
+  "alpha_facts": {
+    "format": "PNG",
+    "source_mode": "RGBA",
+    "width": 1774,
+    "height": 887,
+    "has_alpha_channel": true,
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "transparent_pixel_count": 1069140,
+    "visible_pixel_count": 504398,
+    "transparent_canvas_ratio": 0.6794497495452922,
+    "visible_canvas_ratio": 0.3205502504547078,
+    "transparent_border_ratio": 1.0
+  },
+  "reference": "assets/characters/akizuki/processed/ui/akizuki_ui_portrait.png",
+  "reference_sha256": "a5ddb8e0ccbc5a991ce25f5ca40f7b23719fa4ffcd3547adc7e0b438f3a2c11b",
+  "prompt": "Create a transparent PNG TinySeaWar production game-art sheet matching the APPROVED second reference STYLE. First reference is this character's identity: preserve hairstyle, hair and eye colors, main clothing colors, signature head accessory. Exactly TWO independent cutouts in two widely separated columns, never overlapping: LEFT one upright full-body 2-head-tall chibi shipgirl WITHOUT ship or weapons; RIGHT one separate simplified top-down naval rig WITHOUT a person. Chibi head is HALF total height, expressive eyes, large clean color blocks, bold navy outer contour, restrained cel shading. The person will display at 56px tall; no fine fabric texture, little jewelry. Full legs and boots, no flippers. Use the portrait's uniform translated to a compact skirt/coat and boots consistent with this identity. Right rig is subdued gray, with simple chunky hardware and pointed bow exactly RIGHT; all required barrels/tubes clearly separated. Ship-class silhouette must read at 60px wide. No water, shadow, wake, effects, text, logos, numbers, actual flags, or political symbols. WIDE transparent outer padding and a clean middle gutter. Left entirely left of 43% canvas, right entirely right of 55%; BOTH cutouts fully inside edges. Do not copy the second reference person's identity or crown unless present in first portrait. Keep right rig top-down as a flat navigable base, not side-view boat.\nCharacter: 秋月号 (akizuki), Imperial Japanese Navy, Destroyer. Right cutout expected inventory: Destroyer hull with exactly 4 clearly separate main gun turret blocks, exactly 2 parallel barrels on EACH turret, plus exactly 1 torpedo racks each with 4 parallel tubes; no secondary guns or anti-air clutter. Keep the two roles absolutely separate.",
+  "source_review": {
+    "source": "artifacts/art_pipeline/raw/far56_20261009/akizuki_v2.png",
+    "sha256": "5a97e3297fc48ce6ec77fb851ada8c8564a1fceec889750e65bf20bc1f3477ad",
+    "verdict": "pass",
+    "reviewer": "Codex",
+    "observation": "四双联炮、一组四管已修正。 人物身份保持，完整双部件。"
+  },
+  "human_review": "56px style adopted; new per-character full-roster review pending",
+  "outputs": [
+    {
+      "path": "assets/characters/akizuki/processed/battle/akizuki_battle_far_body.png",
+      "crop": {
+        "size": [
+          670,
+          909
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          68,
+          98,
+          701,
+          876
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            0,
+            0,
+            790,
+            887
+          ],
+          "final_box": [
+            68,
+            98,
+            701,
+            876
+          ],
+          "expanded": {
+            "left": -68,
+            "top": -98,
+            "right": -89,
+            "bottom": -11
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 25,
+          "selected_component_count": 23,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                84,
+                114,
+                685,
+                860
+              ],
+              "pixel_count": 251323,
+              "overlap_pixels": 251323
+            },
+            {
+              "bbox": [
+                324,
+                134,
+                325,
+                135
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                321,
+                135,
+                322,
+                136
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                255,
+                177,
+                256,
+                178
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                244,
+                187,
+                245,
+                188
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                243,
+                188,
+                244,
+                189
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                176,
+                276,
+                177,
+                277
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                109,
+                352,
+                110,
+                353
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                110,
+                358,
+                111,
+                359
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                130,
+                394,
+                131,
+                395
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                129,
+                396,
+                130,
+                397
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                128,
+                398,
+                129,
+                400
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                126,
+                404,
+                127,
+                405
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                195,
+                493,
+                196,
+                494
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                526,
+                564,
+                527,
+                565
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                265,
+                643,
+                266,
+                644
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                586,
+                643,
+                587,
+                644
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                417,
+                705,
+                418,
+                706
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                423,
+                716,
+                424,
+                717
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                319,
+                717,
+                320,
+                718
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 14,
+            "top": 5,
+            "right": 1,
+            "bottom": 9
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 251137
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            618,
+            764
+          ],
+          "centroid_before_padding": [
+            306.83,
+            333.59
+          ],
+          "padding": {
+            "left": 28,
+            "top": 121,
+            "right": 24,
+            "bottom": 24
+          },
+          "centroid_offset_after_padding": {
+            "x": -0.17,
+            "y": 0.09
+          }
+        }
+      },
+      "sha256": "1748e32e0dcf1019bdd37e6d18276a8f804e75c1279d12a12a064739f28b0295"
+    },
+    {
+      "path": "assets/characters/akizuki/processed/battle/akizuki_battle_far_rig.png",
+      "crop": {
+        "size": [
+          939,
+          468
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          881,
+          325,
+          1746,
+          770
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            790,
+            0,
+            1774,
+            887
+          ],
+          "final_box": [
+            881,
+            325,
+            1746,
+            770
+          ],
+          "expanded": {
+            "left": -91,
+            "top": -325,
+            "right": -28,
+            "bottom": -117
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 11,
+          "selected_component_count": 10,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                897,
+                341,
+                1730,
+                754
+              ],
+              "pixel_count": 242690,
+              "overlap_pixels": 242690
+            },
+            {
+              "bbox": [
+                1051,
+                387,
+                1052,
+                388
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1050,
+                397,
+                1051,
+                398
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1489,
+                400,
+                1490,
+                401
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1570,
+                433,
+                1572,
+                435
+              ],
+              "pixel_count": 3,
+              "overlap_pixels": 3
+            },
+            {
+              "bbox": [
+                1572,
+                435,
+                1574,
+                436
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                906,
+                589,
+                907,
+                590
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1571,
+                665,
+                1572,
+                666
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1488,
+                698,
+                1489,
+                699
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1049,
+                700,
+                1050,
+                701
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 9,
+            "top": 13,
+            "right": 13,
+            "bottom": 12
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 242598
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            843,
+            420
+          ],
+          "centroid_before_padding": [
+            397.53,
+            209.85
+          ],
+          "padding": {
+            "left": 72,
+            "top": 24,
+            "right": 24,
+            "bottom": 24
+          },
+          "centroid_offset_after_padding": {
+            "x": 0.03,
+            "y": -0.15
+          }
+        }
+      },
+      "sha256": "2852b9736ba6eadaf9a2f87f923001fc7810b121608c6e9a22270777b85a45f4"
+    }
+  ],
+  "legacy_package_migrated": false,
+  "correction_history": [
+    {
+      "id": "akizuki",
+      "why": "The center torpedo rack has only THREE tubes; change it to exactly FOUR parallel tubes in one rack. Keep four twin gun turrets.",
+      "path": "/Users/qingyue/.codex/generated_images/01a11e5d-d575-7393-b101-51f1fff8bd5b/exec-b40818fb-0d16-405c-a9ec-d44bf1fe58f4.png",
+      "prompt": "Edit only the RIGHT mechanical ship rigging in this transparent image. Leave the LEFT character absolutely unchanged. Native transparent PNG. Correct this equipment error: The center torpedo rack has only THREE tubes; change it to exactly FOUR parallel tubes in one rack. Keep four twin gun turrets. Retain same design, flat top-down hull bow RIGHT, colors, thick outlines, scale and clear gutter. No text."
+    }
+  ],
+  "style_reference": {
+    "path": "assets/characters/warspite/battle/warspite_far_battle_sheet.png",
+    "sha256": "6afead7ddb35f0d9571f73fe3b4316c7df8bf8667750acfc45ebe8cc819b8755"
+  }
+}

@@ -1,0 +1,568 @@
+{
+  "schema_version": 2,
+  "scope": "battle_far_body_and_rig_only",
+  "character_id": "belfast",
+  "route": "codex_builtin_imagegen",
+  "requested_model": null,
+  "actual_model": null,
+  "request_id": null,
+  "endpoint": "Codex managed; not exposed",
+  "background": "transparent",
+  "output_format": "png",
+  "quality": "tool-managed",
+  "source": "assets/characters/belfast/battle/belfast_far_battle_sheet.png",
+  "source_sha256": "dd193dd0dd068eb30fd355b382a1f45d713cfad67af62b306260ec1c52f52f32",
+  "alpha_facts": {
+    "format": "PNG",
+    "source_mode": "RGBA",
+    "width": 1774,
+    "height": 887,
+    "has_alpha_channel": true,
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "transparent_pixel_count": 939452,
+    "visible_pixel_count": 634086,
+    "transparent_canvas_ratio": 0.5970316573225433,
+    "visible_canvas_ratio": 0.4029683426774568,
+    "transparent_border_ratio": 0.9941707408800301
+  },
+  "reference": "assets/characters/belfast/processed/ui/belfast_ui_portrait.png",
+  "reference_sha256": "4d6fbd581752be900c218e12e50a47da4bdf038821382c63b13d58e7c48b612c",
+  "prompt": "Create a transparent PNG TinySeaWar production game-art sheet matching the APPROVED second reference STYLE. First reference is this character's identity: preserve hairstyle, hair and eye colors, main clothing colors, signature head accessory. Exactly TWO independent cutouts in two widely separated columns, never overlapping: LEFT one upright full-body 2-head-tall chibi shipgirl WITHOUT ship or weapons; RIGHT one separate simplified top-down naval rig WITHOUT a person. Chibi head is HALF total height, expressive eyes, large clean color blocks, bold navy outer contour, restrained cel shading. The person will display at 56px tall; no fine fabric texture, little jewelry. Full legs and boots, no flippers. Use the portrait's uniform translated to a compact skirt/coat and boots consistent with this identity. Right rig is subdued gray, with simple chunky hardware and pointed bow exactly RIGHT; all required barrels/tubes clearly separated. Ship-class silhouette must read at 60px wide. No water, shadow, wake, effects, text, logos, numbers, actual flags, or political symbols. WIDE transparent outer padding and a clean middle gutter. Left entirely left of 43% canvas, right entirely right of 55%; BOTH cutouts fully inside edges. Do not copy the second reference person's identity or crown unless present in first portrait. Keep right rig top-down as a flat navigable base, not side-view boat.\nCharacter: 贝尔法斯特号 (belfast), Royal Navy, LightCruiser. Right cutout expected inventory: LightCruiser hull with exactly 4 clearly separate main gun turret blocks, exactly 3 parallel barrels on EACH turret, plus exactly 2 torpedo racks each with 3 parallel tubes; no secondary guns or anti-air clutter. Keep the two roles absolutely separate.",
+  "source_review": {
+    "source": "artifacts/art_pipeline/raw/far56_20261009/belfast_v5.png",
+    "sha256": "dd193dd0dd068eb30fd355b382a1f45d713cfad67af62b306260ec1c52f52f32",
+    "verdict": "pass",
+    "reviewer": "Codex",
+    "observation": "四座三联主炮，两座三管，银短发绿眼金叶饰。 全身、双手双脚、独立人物和舰装，无截边。"
+  },
+  "human_review": "56px style adopted; new per-character full-roster review pending",
+  "outputs": [
+    {
+      "path": "assets/characters/belfast/processed/battle/belfast_battle_far_body.png",
+      "crop": {
+        "size": [
+          627,
+          888
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          77,
+          89,
+          678,
+          879
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            0,
+            0,
+            708,
+            887
+          ],
+          "final_box": [
+            77,
+            89,
+            678,
+            879
+          ],
+          "expanded": {
+            "left": -77,
+            "top": -89,
+            "right": -30,
+            "bottom": -8
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 28,
+          "selected_component_count": 26,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                93,
+                105,
+                662,
+                863
+              ],
+              "pixel_count": 284322,
+              "overlap_pixels": 284322
+            },
+            {
+              "bbox": [
+                149,
+                250,
+                150,
+                251
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                600,
+                468,
+                601,
+                469
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                126,
+                472,
+                127,
+                473
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                247,
+                551,
+                248,
+                552
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                245,
+                552,
+                247,
+                553
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                605,
+                666,
+                606,
+                667
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                622,
+                680,
+                623,
+                681
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                623,
+                681,
+                624,
+                682
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                152,
+                682,
+                153,
+                683
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                624,
+                682,
+                625,
+                683
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                149,
+                685,
+                150,
+                686
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                216,
+                716,
+                217,
+                717
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                230,
+                720,
+                232,
+                721
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                233,
+                721,
+                234,
+                722
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                235,
+                722,
+                236,
+                723
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                551,
+                723,
+                553,
+                724
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                280,
+                744,
+                281,
+                745
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                204,
+                751,
+                205,
+                752
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                458,
+                752,
+                459,
+                753
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 13,
+            "top": 10,
+            "right": 12,
+            "bottom": 8
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 284168
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            576,
+            772
+          ],
+          "centroid_before_padding": [
+            286.52,
+            351.92
+          ],
+          "padding": {
+            "left": 27,
+            "top": 92,
+            "right": 24,
+            "bottom": 24
+          },
+          "centroid_offset_after_padding": {
+            "x": 0.02,
+            "y": -0.08
+          }
+        }
+      },
+      "sha256": "b80930d528a028fe0096381db421faf30bd50a92c9253495213d0fa862e270f4"
+    },
+    {
+      "path": "assets/characters/belfast/processed/battle/belfast_battle_far_rig.png",
+      "crop": {
+        "size": [
+          1077,
+          635
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          740,
+          258,
+          1755,
+          841
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            708,
+            0,
+            1774,
+            887
+          ],
+          "final_box": [
+            740,
+            258,
+            1755,
+            841
+          ],
+          "expanded": {
+            "left": -32,
+            "top": -258,
+            "right": -19,
+            "bottom": -46
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 23,
+          "selected_component_count": 14,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                756,
+                274,
+                1739,
+                825
+              ],
+              "pixel_count": 335893,
+              "overlap_pixels": 335893
+            },
+            {
+              "bbox": [
+                906,
+                385,
+                907,
+                386
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1604,
+                436,
+                1605,
+                438
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                1735,
+                540,
+                1736,
+                541
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1737,
+                543,
+                1738,
+                544
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                777,
+                606,
+                778,
+                607
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                873,
+                690,
+                874,
+                691
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                891,
+                718,
+                892,
+                719
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                896,
+                719,
+                897,
+                720
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                898,
+                719,
+                900,
+                720
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                907,
+                722,
+                908,
+                723
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1500,
+                723,
+                1501,
+                724
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                933,
+                731,
+                934,
+                732
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1334,
+                742,
+                1335,
+                743
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 11,
+            "top": 0,
+            "right": 14,
+            "bottom": 6
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 335757
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            990,
+            577
+          ],
+          "centroid_before_padding": [
+            475.42,
+            293.27
+          ],
+          "padding": {
+            "left": 63,
+            "top": 24,
+            "right": 24,
+            "bottom": 34
+          },
+          "centroid_offset_after_padding": {
+            "x": -0.08,
+            "y": -0.23
+          }
+        }
+      },
+      "sha256": "7c01f95ebcfc17b196e3d2aeb6f6d517cf42fc4e0abc0244bf337681f5d98c3a"
+    }
+  ],
+  "legacy_package_migrated": false,
+  "correction_history": [
+    {
+      "id": "belfast",
+      "why": "Only ONE triple torpedo rack is present in middle. Replace it with TWO separated triple racks, one above bridge and one below bridge. Keep four triple gun turrets.",
+      "path": "/Users/qingyue/.codex/generated_images/01a11e5d-d575-7393-b101-51f1fff8bd5b/exec-a8ecda4f-b428-4a49-9f2a-97eed0234585.png",
+      "prompt": "Edit only the RIGHT mechanical ship rigging in this transparent image. Leave the LEFT character absolutely unchanged. Native transparent PNG. Correct this equipment error: Only ONE triple torpedo rack is present in middle. Replace it with TWO separated triple racks, one above bridge and one below bridge. Keep four triple gun turrets. Retain same design, flat top-down hull bow RIGHT, colors, thick outlines, scale and clear gutter. No text."
+    },
+    {
+      "id": "belfast",
+      "why": "Both torpedo racks each have only TWO tubes. Each rack must have THREE. Add one parallel tube to the TOP rack and one parallel tube to BOTTOM rack. Six torpedo tubes total. Leave the four triple gun turrets unchanged.",
+      "prompt": "Precise mechanical edit ONLY the right rig, transparent PNG. Both torpedo racks each have only TWO tubes. Each rack must have THREE. Add one parallel tube to the TOP rack and one parallel tube to BOTTOM rack. Six torpedo tubes total. Leave the four triple gun turrets unchanged. Preserve left character and all other pixels, no text, no extra objects."
+    },
+    {
+      "id": "belfast",
+      "from": "v3",
+      "to": "v5",
+      "prompt": "Edit only RIGHT ship rig. Preserve LEFT chibi girl exactly. Native transparent PNG. Keep FOUR triple gun turrets. Replace the two small central horizontal torpedo racks with exactly TWO BIG racks at upper and lower edge, each has THREE VERTICAL cylinders side by side. Each rack shows exactly three rounded caps at top and three at bottom. Six tubes total. Enlarge racks; make counts unmistakable. No labels, no additional equipment. Preserve rightward bow."
+    },
+    {
+      "id": "belfast",
+      "prompt": "Rebuild ONLY the RIGHT gray cruiser rigging into a clear spaced inventory diagram. Keep LEFT white-haired chibi unchanged. Transparent background. Bow right, thick navy outline. On hull place FOUR triple-barrel gun turrets at the four corners. Put the bridge at center. Put exactly TWO torpedo racks vertically on centerline: one ABOVE bridge, one BELOW bridge. Each rack MUST have exactly THREE LONG parallel cylindrical torpedo tubes laid HORIZONTALLY pointing RIGHT, stacked in THREE rows, visibly distinct top, middle and bottom cylinders. The two existing two-tube racks are wrong: replace them entirely with new THREE-tube racks. Six torpedo cylinders total. No labels. Keep margins."
+    }
+  ],
+  "style_reference": {
+    "path": "assets/characters/warspite/battle/warspite_far_battle_sheet.png",
+    "sha256": "6afead7ddb35f0d9571f73fe3b4316c7df8bf8667750acfc45ebe8cc819b8755"
+  }
+}

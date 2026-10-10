@@ -1,0 +1,448 @@
+{
+  "schema_version": 1,
+  "scope": "battle_far_only",
+  "components": [
+    {
+      "role": "body",
+      "source": "assets/characters/chang_chun/battle/chang_chun_far_battle_sheet.png",
+      "source_sha256": "324a452efd689f5a9ebe90b4abc6a1f215e960ce7d786d4f2d27381a09d62917",
+      "hint": [
+        0,
+        0,
+        727,
+        887
+      ],
+      "crop": {
+        "size": [
+          605,
+          907
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          54,
+          74,
+          631,
+          879
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            0,
+            0,
+            727,
+            887
+          ],
+          "final_box": [
+            54,
+            74,
+            631,
+            879
+          ],
+          "expanded": {
+            "left": -54,
+            "top": -74,
+            "right": -96,
+            "bottom": -8
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 8,
+          "selected_component_count": 7,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                70,
+                90,
+                615,
+                863
+              ],
+              "pixel_count": 277040,
+              "overlap_pixels": 277040
+            },
+            {
+              "bbox": [
+                592,
+                296,
+                593,
+                297
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                425,
+                518,
+                426,
+                519
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                427,
+                521,
+                428,
+                522
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                172,
+                602,
+                173,
+                603
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                329,
+                730,
+                331,
+                731
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                346,
+                730,
+                347,
+                731
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 11,
+            "top": 13,
+            "right": 14,
+            "bottom": 8
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 276887
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            552,
+            784
+          ],
+          "centroid_before_padding": [
+            278.42,
+            354.59
+          ],
+          "padding": {
+            "left": 24,
+            "top": 99,
+            "right": 29,
+            "bottom": 24
+          },
+          "centroid_offset_after_padding": {
+            "x": -0.08,
+            "y": 0.09
+          }
+        }
+      }
+    },
+    {
+      "role": "rig",
+      "source": "assets/characters/chang_chun/battle/chang_chun_far_battle_sheet.png",
+      "source_sha256": "324a452efd689f5a9ebe90b4abc6a1f215e960ce7d786d4f2d27381a09d62917",
+      "hint": [
+        727,
+        0,
+        1774,
+        887
+      ],
+      "crop": {
+        "size": [
+          1049,
+          438
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          819,
+          341,
+          1764,
+          740
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            727,
+            0,
+            1774,
+            887
+          ],
+          "final_box": [
+            819,
+            341,
+            1764,
+            740
+          ],
+          "expanded": {
+            "left": -92,
+            "top": -341,
+            "right": -10,
+            "bottom": -147
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 31,
+          "selected_component_count": 28,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                835,
+                357,
+                1748,
+                724
+              ],
+              "pixel_count": 250518,
+              "overlap_pixels": 250518
+            },
+            {
+              "bbox": [
+                1360,
+                375,
+                1361,
+                376
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                929,
+                428,
+                930,
+                429
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1583,
+                436,
+                1584,
+                437
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                929,
+                655,
+                930,
+                656
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                955,
+                696,
+                956,
+                699
+              ],
+              "pixel_count": 3,
+              "overlap_pixels": 3
+            },
+            {
+              "bbox": [
+                1152,
+                707,
+                1161,
+                708
+              ],
+              "pixel_count": 9,
+              "overlap_pixels": 9
+            },
+            {
+              "bbox": [
+                1162,
+                707,
+                1163,
+                708
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1169,
+                707,
+                1170,
+                708
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1173,
+                707,
+                1174,
+                708
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1176,
+                707,
+                1179,
+                708
+              ],
+              "pixel_count": 3,
+              "overlap_pixels": 3
+            },
+            {
+              "bbox": [
+                1180,
+                707,
+                1187,
+                708
+              ],
+              "pixel_count": 7,
+              "overlap_pixels": 7
+            },
+            {
+              "bbox": [
+                1188,
+                707,
+                1189,
+                708
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1195,
+                707,
+                1196,
+                708
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1210,
+                707,
+                1211,
+                708
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1213,
+                707,
+                1214,
+                708
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1219,
+                707,
+                1220,
+                708
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1229,
+                707,
+                1230,
+                708
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1247,
+                707,
+                1248,
+                708
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1249,
+                707,
+                1251,
+                708
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 4,
+            "top": 5,
+            "right": 4,
+            "bottom": 12
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 250353
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            937,
+            382
+          ],
+          "centroid_before_padding": [
+            436.4,
+            195.2
+          ],
+          "padding": {
+            "left": 88,
+            "top": 24,
+            "right": 24,
+            "bottom": 32
+          },
+          "centroid_offset_after_padding": {
+            "x": -0.1,
+            "y": 0.2
+          }
+        }
+      }
+    }
+  ]
+}

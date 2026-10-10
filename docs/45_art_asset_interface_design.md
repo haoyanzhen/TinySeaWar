@@ -148,3 +148,9 @@ UI 接口：
 ## 音乐资产引用边界
 
 音乐通过 `data/audio/music_manifest.json` 的稳定曲目ID查询运行时Ogg，不从中文曲名拼接路径。音乐独立清单的字段与校验归 `25`，播放策略归 `50`；不注册到角色或武器贴图语义表。`assets/audio/music/source/` 为 `.gdignore` 隔离的采用无损源包；`assets/audio/music/runtime/` 为可导出播放版本，两者以清单哈希对应，源包采用不能替代编码版或循环听审。
+
+## 独立远景战斗修订接口
+
+`far_battle_config(character_id)` 返回已校验的远景配置，`far_battle_texture(character_id, "body"/"rig")` 返回裁出有效区域并生成mipmap的缓存Texture2D。通过ResourceLoader读取导入资源，兼容导出PCK。源图存于 `battle/{id}_far_battle_sheet.png`，两个运行部件为 `processed/battle/{id}_battle_far_body.png` 与 `{id}_battle_far_rig.png`；配置见25。
+
+`meta/{id}_far_battle_revision.json` 记录本次battle-only来源、身份/风格参考、源与输出哈希及审查，`meta/{id}_far_battle_crop_specs.json` 保存共享裁切流程证据。该修订不覆盖原始完整包provenance，也不证明旧整包完成迁移。舰装零角度舰艏向右，人物足底与单位中心固定联系；归一化挂点仅驱动表现层VFX，未标注的语义回到单位中心，不替代Domain发射位置。

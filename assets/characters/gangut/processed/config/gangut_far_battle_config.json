@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "character_id": "gangut",
+  "body_basis": "upright",
+  "rig_heading_degrees": 0,
+  "rig_width": 72,
+  "roles": {
+    "body": {
+      "path": "assets/characters/gangut/processed/battle/gangut_battle_far_body.png",
+      "sha256": "b6285e2be17367e06b56e1251e1a02eb24dd30729b20ed9f256b5b2e66eefafc",
+      "alpha_rect": [
+        58,
+        47,
+        617,
+        811
+      ],
+      "size": [
+        702,
+        882
+      ]
+    },
+    "rig": {
+      "path": "assets/characters/gangut/processed/battle/gangut_battle_far_rig.png",
+      "sha256": "c8297e41c44e64a75aae4d0acf288d0df36dd0013b608c3b1de158e30854055d",
+      "alpha_rect": [
+        49,
+        31,
+        865,
+        461
+      ],
+      "size": [
+        937,
+        522
+      ]
+    }
+  },
+  "anchors": {
+    "muzzle_01": [
+      0.42,
+      0
+    ]
+  },
+  "animation": "procedural_far_view"
+}

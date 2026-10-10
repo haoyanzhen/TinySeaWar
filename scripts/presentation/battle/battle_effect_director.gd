@@ -111,7 +111,7 @@ func _sync_units(units: Dictionary, selected_unit_id: String, focused_target_id:
 		var unit: Dictionary = units[unit_id]
 		var view: ShipUnitView = unit_views.get(unit_id, null)
 		if view == null:
-			view = ShipUnitView.new()
+			view = preload("res://scripts/presentation/battle/far_ship_unit_view.gd").new()
 			unit_layer.add_child(view)
 			view.configure(unit)
 			unit_views[unit_id] = view

@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "character_id": "nurnberg",
+  "body_basis": "upright",
+  "rig_heading_degrees": 0,
+  "rig_width": 60,
+  "roles": {
+    "body": {
+      "path": "assets/characters/nurnberg/processed/battle/nurnberg_battle_far_body.png",
+      "sha256": "20526c2a14d4b2864ec246d67384bf7d185f5d5f1d243d24792f5378a503f6bb",
+      "alpha_rect": [
+        25,
+        100,
+        581,
+        799
+      ],
+      "size": [
+        636,
+        921
+      ]
+    },
+    "rig": {
+      "path": "assets/characters/nurnberg/processed/battle/nurnberg_battle_far_rig.png",
+      "sha256": "c23885409f2f052932ca24e054e198504f24e498bdc5e2b1f254c8513e45dab1",
+      "alpha_rect": [
+        82,
+        35,
+        964,
+        346
+      ],
+      "size": [
+        1072,
+        417
+      ]
+    }
+  },
+  "anchors": {
+    "muzzle_01": [
+      0.42,
+      0
+    ],
+    "torpedo_port_01": [
+      0.2,
+      0.12
+    ]
+  },
+  "animation": "procedural_far_view"
+}

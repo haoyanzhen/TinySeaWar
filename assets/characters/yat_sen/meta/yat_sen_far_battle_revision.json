@@ -1,0 +1,456 @@
+{
+  "schema_version": 2,
+  "scope": "battle_far_body_and_rig_only",
+  "character_id": "yat_sen",
+  "route": "codex_builtin_imagegen",
+  "requested_model": null,
+  "actual_model": null,
+  "request_id": null,
+  "endpoint": "Codex managed; not exposed",
+  "background": "transparent",
+  "output_format": "png",
+  "quality": "tool-managed",
+  "source": "assets/characters/yat_sen/battle/yat_sen_far_battle_sheet.png",
+  "source_sha256": "4be5c512f9fab9db4d8973f4592dce384e7777d9d0c01440610bd92ce878ba79",
+  "alpha_facts": {
+    "format": "PNG",
+    "source_mode": "RGBA",
+    "width": 1774,
+    "height": 887,
+    "has_alpha_channel": true,
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "transparent_pixel_count": 1081700,
+    "visible_pixel_count": 491838,
+    "transparent_canvas_ratio": 0.6874317620546818,
+    "visible_canvas_ratio": 0.31256823794531813,
+    "transparent_border_ratio": 1.0
+  },
+  "reference": "assets/characters/yat_sen/processed/ui/yat_sen_ui_portrait.png",
+  "reference_sha256": "7065dc4ccb44abb907249082d14b63d115ce988f180e18011178b24b7eaf053c",
+  "prompt": "Create a transparent PNG TinySeaWar production game-art sheet matching the APPROVED second reference STYLE. First reference is this character's identity: preserve hairstyle, hair and eye colors, main clothing colors, signature head accessory. Exactly TWO independent cutouts in two widely separated columns, never overlapping: LEFT one upright full-body 2-head-tall chibi shipgirl WITHOUT ship or weapons; RIGHT one separate simplified top-down naval rig WITHOUT a person. Chibi head is HALF total height, expressive eyes, large clean color blocks, bold navy outer contour, restrained cel shading. The person will display at 56px tall; no fine fabric texture, little jewelry. Full legs and boots, no flippers. Use the portrait's uniform translated to a compact skirt/coat and boots consistent with this identity. Right rig is subdued gray, with simple chunky hardware and pointed bow exactly RIGHT; all required barrels/tubes clearly separated. Ship-class silhouette must read at 60px wide. No water, shadow, wake, effects, text, logos, numbers, actual flags, or political symbols. WIDE transparent outer padding and a clean middle gutter. Left entirely left of 43% canvas, right entirely right of 55%; BOTH cutouts fully inside edges. Do not copy the second reference person's identity or crown unless present in first portrait. Keep right rig top-down as a flat navigable base, not side-view boat.\nCharacter: 逸仙号 (yat_sen), Chinese Navy, LightCruiser. Right cutout expected inventory: LightCruiser hull with exactly 1 clearly separate main gun turret blocks, exactly 1 parallel barrels on EACH turret; NO torpedo racks; no secondary guns or anti-air clutter. Keep the two roles absolutely separate.",
+  "source_review": {
+    "source": "artifacts/art_pipeline/raw/far56_20261009/yat_sen.png",
+    "sha256": "4be5c512f9fab9db4d8973f4592dce384e7777d9d0c01440610bd92ce878ba79",
+    "verdict": "pass",
+    "reviewer": "Codex",
+    "observation": "黑青长发玉花簪；一座主炮，次要武器按远景简化。 人体完整，人物与舰装独立，无截边。"
+  },
+  "human_review": "56px style adopted; new per-character full-roster review pending",
+  "outputs": [
+    {
+      "path": "assets/characters/yat_sen/processed/battle/yat_sen_battle_far_body.png",
+      "crop": {
+        "size": [
+          708,
+          857
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          81,
+          73,
+          740,
+          886
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            0,
+            0,
+            827,
+            887
+          ],
+          "final_box": [
+            81,
+            73,
+            740,
+            886
+          ],
+          "expanded": {
+            "left": -81,
+            "top": -73,
+            "right": -87,
+            "bottom": -1
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 35,
+          "selected_component_count": 33,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                97,
+                89,
+                723,
+                870
+              ],
+              "pixel_count": 308569,
+              "overlap_pixels": 308569
+            },
+            {
+              "bbox": [
+                572,
+                165,
+                573,
+                166
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                594,
+                209,
+                595,
+                210
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                594,
+                213,
+                595,
+                214
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                592,
+                228,
+                593,
+                239
+              ],
+              "pixel_count": 11,
+              "overlap_pixels": 11
+            },
+            {
+              "bbox": [
+                155,
+                324,
+                156,
+                325
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                154,
+                326,
+                155,
+                328
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                153,
+                329,
+                154,
+                331
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                152,
+                331,
+                153,
+                333
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                151,
+                334,
+                152,
+                335
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                584,
+                354,
+                585,
+                355
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                593,
+                410,
+                594,
+                411
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                621,
+                501,
+                622,
+                502
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                152,
+                520,
+                153,
+                521
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                163,
+                551,
+                164,
+                552
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                162,
+                552,
+                163,
+                553
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                160,
+                553,
+                162,
+                556
+              ],
+              "pixel_count": 4,
+              "overlap_pixels": 4
+            },
+            {
+              "bbox": [
+                159,
+                556,
+                160,
+                557
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                723,
+                632,
+                724,
+                634
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                156,
+                668,
+                157,
+                669
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 14,
+            "top": 13,
+            "right": 13,
+            "bottom": 14
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 308394
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            632,
+            786
+          ],
+          "centroid_before_padding": [
+            301.91,
+            381.37
+          ],
+          "padding": {
+            "left": 52,
+            "top": 47,
+            "right": 24,
+            "bottom": 24
+          },
+          "centroid_offset_after_padding": {
+            "x": -0.09,
+            "y": -0.13
+          }
+        }
+      },
+      "sha256": "5f1b6c21c99b427b3e15071109f0fe0eaf337eec95ef851e84738e784194efdc"
+    },
+    {
+      "path": "assets/characters/yat_sen/processed/battle/yat_sen_battle_far_rig.png",
+      "crop": {
+        "size": [
+          892,
+          383
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          916,
+          364,
+          1737,
+          709
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            827,
+            0,
+            1774,
+            887
+          ],
+          "final_box": [
+            916,
+            364,
+            1737,
+            709
+          ],
+          "expanded": {
+            "left": -89,
+            "top": -364,
+            "right": -37,
+            "bottom": -178
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 7,
+          "selected_component_count": 5,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                932,
+                380,
+                1721,
+                693
+              ],
+              "pixel_count": 172460,
+              "overlap_pixels": 172460
+            },
+            {
+              "bbox": [
+                1168,
+                390,
+                1169,
+                391
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1152,
+                406,
+                1153,
+                407
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1074,
+                426,
+                1075,
+                427
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                948,
+                587,
+                949,
+                588
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 11,
+            "top": 13,
+            "right": 11,
+            "bottom": 5
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 172371
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            799,
+            327
+          ],
+          "centroid_before_padding": [
+            376.94,
+            159.66
+          ],
+          "padding": {
+            "left": 69,
+            "top": 32,
+            "right": 24,
+            "bottom": 24
+          },
+          "centroid_offset_after_padding": {
+            "x": -0.06,
+            "y": 0.16
+          }
+        }
+      },
+      "sha256": "d35ee981ff7d2b3170d93c54cab3759af35970033aa9e207fd3ebbbd5e23d910"
+    }
+  ],
+  "legacy_package_migrated": false,
+  "correction_history": [],
+  "style_reference": {
+    "path": "assets/characters/warspite/battle/warspite_far_battle_sheet.png",
+    "sha256": "6afead7ddb35f0d9571f73fe3b4316c7df8bf8667750acfc45ebe8cc819b8755"
+  }
+}

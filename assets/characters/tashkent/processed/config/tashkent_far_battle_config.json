@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "character_id": "tashkent",
+  "body_basis": "upright",
+  "rig_heading_degrees": 0,
+  "rig_width": 52,
+  "roles": {
+    "body": {
+      "path": "assets/characters/tashkent/processed/battle/tashkent_battle_far_body.png",
+      "sha256": "4c116254009060cd55cc778e1d3b5d0cea121068f7b3202193f5f2a07f6ab401",
+      "alpha_rect": [
+        47,
+        26,
+        637,
+        788
+      ],
+      "size": [
+        714,
+        838
+      ]
+    },
+    "rig": {
+      "path": "assets/characters/tashkent/processed/battle/tashkent_battle_far_rig.png",
+      "sha256": "9aa616818d657ae5c6e78cacee6526b1242859f7b7a55d914c8efecd5b939c6c",
+      "alpha_rect": [
+        82,
+        35,
+        924,
+        375
+      ],
+      "size": [
+        1042,
+        465
+      ]
+    }
+  },
+  "anchors": {
+    "muzzle_01": [
+      0.42,
+      0
+    ],
+    "torpedo_port_01": [
+      0.2,
+      0.12
+    ]
+  },
+  "animation": "procedural_far_view"
+}

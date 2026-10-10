@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "character_id": "akizuki",
+  "body_basis": "upright",
+  "rig_heading_degrees": 0,
+  "rig_width": 52,
+  "roles": {
+    "body": {
+      "path": "assets/characters/akizuki/processed/battle/akizuki_battle_far_body.png",
+      "sha256": "1748e32e0dcf1019bdd37e6d18276a8f804e75c1279d12a12a064739f28b0295",
+      "alpha_rect": [
+        26,
+        128,
+        609,
+        754
+      ],
+      "size": [
+        670,
+        909
+      ]
+    },
+    "rig": {
+      "path": "assets/characters/akizuki/processed/battle/akizuki_battle_far_rig.png",
+      "sha256": "2852b9736ba6eadaf9a2f87f923001fc7810b121608c6e9a22270777b85a45f4",
+      "alpha_rect": [
+        75,
+        23,
+        841,
+        421
+      ],
+      "size": [
+        939,
+        468
+      ]
+    }
+  },
+  "anchors": {
+    "muzzle_01": [
+      0.42,
+      0
+    ],
+    "torpedo_port_01": [
+      0.2,
+      0.12
+    ]
+  },
+  "animation": "procedural_far_view"
+}

@@ -1,0 +1,563 @@
+{
+  "schema_version": 2,
+  "scope": "battle_far_body_and_rig_only",
+  "character_id": "cleveland",
+  "route": "codex_builtin_imagegen",
+  "requested_model": null,
+  "actual_model": null,
+  "request_id": null,
+  "endpoint": "Codex managed; not exposed",
+  "background": "transparent",
+  "output_format": "png",
+  "quality": "tool-managed",
+  "source": "assets/characters/cleveland/battle/cleveland_far_battle_sheet.png",
+  "source_sha256": "7a401041745021ea271e1987393eaa24e5c0f5eb6608d46a513d6c3e80ced7e8",
+  "alpha_facts": {
+    "format": "PNG",
+    "source_mode": "RGBA",
+    "width": 1774,
+    "height": 887,
+    "has_alpha_channel": true,
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "transparent_pixel_count": 1013445,
+    "visible_pixel_count": 560093,
+    "transparent_canvas_ratio": 0.64405498945688,
+    "visible_canvas_ratio": 0.35594501054312,
+    "transparent_border_ratio": 1.0
+  },
+  "reference": "assets/characters/cleveland/processed/ui/cleveland_ui_portrait.png",
+  "reference_sha256": "c40acd4ea9aed0b45739e6e2d70abdf79662e1c63d8c366e16260a86f7737d2f",
+  "prompt": "Create a transparent PNG TinySeaWar production game-art sheet matching the APPROVED second reference STYLE. First reference is this character's identity: preserve hairstyle, hair and eye colors, main clothing colors, signature head accessory. Exactly TWO independent cutouts in two widely separated columns, never overlapping: LEFT one upright full-body 2-head-tall chibi shipgirl WITHOUT ship or weapons; RIGHT one separate simplified top-down naval rig WITHOUT a person. Chibi head is HALF total height, expressive eyes, large clean color blocks, bold navy outer contour, restrained cel shading. The person will display at 56px tall; no fine fabric texture, little jewelry. Full legs and boots, no flippers. Use the portrait's uniform translated to a compact skirt/coat and boots consistent with this identity. Right rig is subdued gray, with simple chunky hardware and pointed bow exactly RIGHT; all required barrels/tubes clearly separated. Ship-class silhouette must read at 60px wide. No water, shadow, wake, effects, text, logos, numbers, actual flags, or political symbols. WIDE transparent outer padding and a clean middle gutter. Left entirely left of 43% canvas, right entirely right of 55%; BOTH cutouts fully inside edges. Do not copy the second reference person's identity or crown unless present in first portrait. Keep right rig top-down as a flat navigable base, not side-view boat.\nCharacter: 克利夫兰号 (cleveland), United States Navy, LightCruiser. Right cutout expected inventory: LightCruiser hull with exactly 4 clearly separate main gun turret blocks, exactly 3 parallel barrels on EACH turret; NO torpedo racks; no secondary guns or anti-air clutter. Keep the two roles absolutely separate.",
+  "source_review": {
+    "source": "artifacts/art_pipeline/raw/far56_20261009/cleveland_v2.png",
+    "sha256": "7a401041745021ea271e1987393eaa24e5c0f5eb6608d46a513d6c3e80ced7e8",
+    "verdict": "pass",
+    "reviewer": "Codex",
+    "observation": "修正为四三联炮。 人物身份保持，完整双部件。"
+  },
+  "human_review": "56px style adopted; new per-character full-roster review pending",
+  "outputs": [
+    {
+      "path": "assets/characters/cleveland/processed/battle/cleveland_battle_far_body.png",
+      "crop": {
+        "size": [
+          735,
+          864
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          22,
+          49,
+          688,
+          882
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            0,
+            0,
+            781,
+            887
+          ],
+          "final_box": [
+            22,
+            49,
+            688,
+            882
+          ],
+          "expanded": {
+            "left": -22,
+            "top": -49,
+            "right": -93,
+            "bottom": -5
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 38,
+          "selected_component_count": 37,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                38,
+                65,
+                672,
+                866
+              ],
+              "pixel_count": 301800,
+              "overlap_pixels": 301800
+            },
+            {
+              "bbox": [
+                291,
+                94,
+                292,
+                95
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                295,
+                95,
+                296,
+                96
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                398,
+                95,
+                399,
+                96
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                319,
+                98,
+                320,
+                99
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                318,
+                100,
+                319,
+                101
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                317,
+                102,
+                318,
+                103
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                316,
+                103,
+                317,
+                104
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                462,
+                148,
+                463,
+                149
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                464,
+                151,
+                465,
+                152
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                465,
+                152,
+                466,
+                153
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                480,
+                183,
+                481,
+                184
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                482,
+                212,
+                483,
+                213
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                102,
+                343,
+                103,
+                344
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                554,
+                435,
+                555,
+                436
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                605,
+                438,
+                606,
+                439
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                606,
+                439,
+                607,
+                440
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                153,
+                446,
+                154,
+                447
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                152,
+                448,
+                153,
+                449
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                138,
+                474,
+                139,
+                475
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 5,
+            "top": 14,
+            "right": 0,
+            "bottom": 12
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 301610
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            661,
+            807
+          ],
+          "centroid_before_padding": [
+            317.61,
+            408.05
+          ],
+          "padding": {
+            "left": 50,
+            "top": 24,
+            "right": 24,
+            "bottom": 33
+          },
+          "centroid_offset_after_padding": {
+            "x": 0.11,
+            "y": 0.05
+          }
+        }
+      },
+      "sha256": "99842bed95c5da613f75dc005e0edaf29afe6693d811864fd8cc743c96748a24"
+    },
+    {
+      "path": "assets/characters/cleveland/processed/battle/cleveland_battle_far_rig.png",
+      "crop": {
+        "size": [
+          947,
+          465
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          876,
+          346,
+          1740,
+          785
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            781,
+            0,
+            1774,
+            887
+          ],
+          "final_box": [
+            876,
+            346,
+            1740,
+            785
+          ],
+          "expanded": {
+            "left": -95,
+            "top": -346,
+            "right": -34,
+            "bottom": -102
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 16,
+          "selected_component_count": 15,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                892,
+                362,
+                1724,
+                769
+              ],
+              "pixel_count": 247385,
+              "overlap_pixels": 247385
+            },
+            {
+              "bbox": [
+                1053,
+                384,
+                1054,
+                385
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1488,
+                390,
+                1489,
+                391
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1489,
+                391,
+                1490,
+                392
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1493,
+                394,
+                1494,
+                395
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1494,
+                395,
+                1495,
+                396
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1594,
+                428,
+                1595,
+                429
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1717,
+                551,
+                1718,
+                552
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1718,
+                552,
+                1719,
+                553
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1719,
+                553,
+                1720,
+                554
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1721,
+                556,
+                1722,
+                557
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1722,
+                557,
+                1723,
+                558
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1702,
+                593,
+                1703,
+                594
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1052,
+                739,
+                1053,
+                740
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1348,
+                739,
+                1349,
+                740
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 4,
+            "top": 13,
+            "right": 2,
+            "bottom": 13
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 247286
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            858,
+            413
+          ],
+          "centroid_before_padding": [
+            408.54,
+            204.6
+          ],
+          "padding": {
+            "left": 65,
+            "top": 28,
+            "right": 24,
+            "bottom": 24
+          },
+          "centroid_offset_after_padding": {
+            "x": 0.04,
+            "y": 0.1
+          }
+        }
+      },
+      "sha256": "99232eee6636c979567fbd4a755ed8bda56197164c70e56d2e8677693dc87a8d"
+    }
+  ],
+  "legacy_package_migrated": false,
+  "correction_history": [
+    {
+      "id": "cleveland",
+      "why": "All four main turrets have TWO barrels but must have THREE each. Add a third clearly separated parallel barrel to EACH of the four turrets. Exactly four triple turrets, twelve gun barrels total, no torpedoes.",
+      "path": "/Users/qingyue/.codex/generated_images/01a11e5d-d575-7393-b101-51f1fff8bd5b/exec-e43a946b-a8b4-4f1b-9543-4d1836e770fd.png",
+      "prompt": "Edit only the RIGHT mechanical ship rigging in this transparent image. Leave the LEFT character absolutely unchanged. Native transparent PNG. Correct this equipment error: All four main turrets have TWO barrels but must have THREE each. Add a third clearly separated parallel barrel to EACH of the four turrets. Exactly four triple turrets, twelve gun barrels total, no torpedoes. Retain same design, flat top-down hull bow RIGHT, colors, thick outlines, scale and clear gutter. No text."
+    }
+  ],
+  "style_reference": {
+    "path": "assets/characters/warspite/battle/warspite_far_battle_sheet.png",
+    "sha256": "6afead7ddb35f0d9571f73fe3b4316c7df8bf8667750acfc45ebe8cc819b8755"
+  }
+}

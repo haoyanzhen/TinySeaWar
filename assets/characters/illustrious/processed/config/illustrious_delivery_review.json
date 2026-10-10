@@ -16,8 +16,11 @@
     "assets/characters/illustrious/battle/illustrious_anim_idle_4f_sheet.png": "12b76518422a6d6c5ca46bec1c28642d61a06ee3f0f678fec1da6c1f031b283e",
     "assets/characters/illustrious/battle/illustrious_anim_move_4f_sheet.png": "eb70879761b6a2e47f20dac051ff2949075f0e15e23b0e9b437832aecb766ded",
     "assets/characters/illustrious/battle/illustrious_battle_asset_grid.png": "949a6cf4110ec317a999c9b8ad2bed324aa58690cce7209d15e85eacfe21529b",
+    "assets/characters/illustrious/battle/illustrious_far_battle_sheet.png": "044c7f01cfdd63d102a214d51c1b8c2f4e0bfd6c4073d82f1db3bb2e56f10031",
     "assets/characters/illustrious/concept/illustrious_concept_full.png": "e6705a06b180a9b75ea138efc6803806a22cfd2fff94aa1534b4c39eb0803d82",
     "assets/characters/illustrious/meta/illustrious_crop_specs.json": "5a931a684a0f3b1315e6298ac70b5fc6c4a7cfda41fc9c2559101f32da4c094e",
+    "assets/characters/illustrious/meta/illustrious_far_battle_crop_specs.json": "1916afa05f2c8f5bfd34a934d4d75992d10fd5608493b39d75133a7986bf6914",
+    "assets/characters/illustrious/meta/illustrious_far_battle_revision.json": "41a710f9c0159b0b88b885bdf85512f97bf7f395c1e54702e935483250df180b",
     "assets/characters/illustrious/meta/illustrious_portrait_revision.json": "ff931508aa799c71c678d1c5b6a385440714b10a325a1ff6c0c5bc090c7bf20d",
     "assets/characters/illustrious/meta/illustrious_source_provenance_v2.json": "06af79fe1210a10c6ffa37430f3a2fb67a043301cbea20d1ea69be27bdeb918f",
     "assets/characters/illustrious/meta/illustrious_source_review.json": "2d1067a2465a38a783b76b98e3d795c9e152aa6e92a43d6542bc5af58dcd95b1",
@@ -52,10 +55,13 @@
     "assets/characters/illustrious/processed/battle/illustrious_battle_aircraft_launch_marker.png": "2fafb95aead68ab42bbdd06d400da3caaefd8d0819a1e05b41a02a284b8d3818",
     "assets/characters/illustrious/processed/battle/illustrious_battle_aircraft_recovery_marker.png": "42eb7a1eb43a4f90e9592051cc29233caef9598d463d06883b845e8e5dc70be4",
     "assets/characters/illustrious/processed/battle/illustrious_battle_body_r.png": "64179d3493441ee326d5f98cc6507159c87525a53c4b1b806c685faca75af8c9",
+    "assets/characters/illustrious/processed/battle/illustrious_battle_far_body.png": "6ec05430c84c6406f152c9bfd0b25eb8333eb4ee56fbcfbd6b3a49bb97517021",
+    "assets/characters/illustrious/processed/battle/illustrious_battle_far_rig.png": "0bca0a0cda5bdb06ed6a9f6fe511a6784aed5ecadf6ea1773e123311e43f28ec",
     "assets/characters/illustrious/processed/battle/illustrious_battle_flight_deck.png": "e15564e6e2fe0f55d631084c6a0436614a8365ec2ba1cf8ff9ee7d03f6abd44d",
     "assets/characters/illustrious/processed/battle/illustrious_battle_hangar.png": "d59d2aae57acf55e37a6e947519b3e5529248ffb7fa8d7162a44943f5e2b919b",
     "assets/characters/illustrious/processed/battle/illustrious_battle_rig_base.png": "9487ebb3b4f10bc8928f7eb71e455e00a3bf2cd39d1fd562ffce3d43c5cb7abc",
     "assets/characters/illustrious/processed/config/illustrious_anim_config.json": "f91f5b01591565f536a9f41eb079a332ba2f29111c5b54efc950df9b13424580",
+    "assets/characters/illustrious/processed/config/illustrious_far_battle_config.json": "8efb5afb4406400a69eae2fa302dcec955b40d363a10ec8cab592061ab4eaaf7",
     "assets/characters/illustrious/processed/config/illustrious_meta_bind_points.json": "6c3118110eaed791c24c2da32701ca1f24dfc2af8328b80b8a55523b715d3766",
     "assets/characters/illustrious/processed/config/illustrious_postprocess_manifest.json": "1bb27c213a5ce85f44dd638fb6c2c37e21162d7965fed091dc060aa1ebabb77f",
     "assets/characters/illustrious/processed/config/illustrious_vfx_config.json": "76fa4616ff09b142da2a227ad9806591512599debf396e59d0f6bfb1ef725b39",
@@ -8095,6 +8101,400 @@
           "keep_largest_component"
         ],
         "source_key": "battle_grid"
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/illustrious/processed/battle/illustrious_battle_far_body.png": {
+      "sha256": "6ec05430c84c6406f152c9bfd0b25eb8333eb4ee56fbcfbd6b3a49bb97517021",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 560,
+        "height": 831,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 184980,
+        "visible_pixel_count": 280380,
+        "transparent_canvas_ratio": 0.397498710675606,
+        "visible_canvas_ratio": 0.6025012893243941,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "size": [
+          560,
+          831
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          147,
+          78,
+          682,
+          854
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            0,
+            0,
+            747,
+            887
+          ],
+          "final_box": [
+            147,
+            78,
+            682,
+            854
+          ],
+          "expanded": {
+            "left": -147,
+            "top": -78,
+            "right": -65,
+            "bottom": -33
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 17,
+          "selected_component_count": 13,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                163,
+                94,
+                666,
+                838
+              ],
+              "pixel_count": 274391,
+              "overlap_pixels": 274391
+            },
+            {
+              "bbox": [
+                638,
+                291,
+                639,
+                292
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                597,
+                434,
+                598,
+                435
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                596,
+                437,
+                597,
+                438
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                596,
+                440,
+                597,
+                442
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                597,
+                443,
+                598,
+                445
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                181,
+                454,
+                182,
+                455
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                246,
+                720,
+                247,
+                721
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                249,
+                722,
+                250,
+                723
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                567,
+                723,
+                568,
+                724
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                569,
+                723,
+                570,
+                724
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                316,
+                728,
+                317,
+                729
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                277,
+                752,
+                278,
+                753
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 13,
+            "top": 14,
+            "right": 13,
+            "bottom": 13
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 274236
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            509,
+            749
+          ],
+          "centroid_before_padding": [
+            255.86,
+            357.34
+          ],
+          "padding": {
+            "left": 24,
+            "top": 58,
+            "right": 27,
+            "bottom": 24
+          },
+          "centroid_offset_after_padding": {
+            "x": -0.14,
+            "y": -0.16
+          }
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/illustrious/processed/battle/illustrious_battle_far_rig.png": {
+      "sha256": "0bca0a0cda5bdb06ed6a9f6fe511a6784aed5ecadf6ea1773e123311e43f28ec",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 997,
+        "height": 493,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 296794,
+        "visible_pixel_count": 194727,
+        "transparent_canvas_ratio": 0.6038277103114618,
+        "visible_canvas_ratio": 0.39617228968853824,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "size": [
+          997,
+          493
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          813,
+          285,
+          1709,
+          666
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            747,
+            0,
+            1774,
+            887
+          ],
+          "final_box": [
+            813,
+            285,
+            1709,
+            666
+          ],
+          "expanded": {
+            "left": -66,
+            "top": -285,
+            "right": -65,
+            "bottom": -221
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 14,
+          "selected_component_count": 7,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                829,
+                301,
+                1693,
+                650
+              ],
+              "pixel_count": 189811,
+              "overlap_pixels": 189811
+            },
+            {
+              "bbox": [
+                1029,
+                316,
+                1030,
+                317
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1323,
+                396,
+                1324,
+                397
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                843,
+                560,
+                844,
+                561
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                876,
+                591,
+                877,
+                592
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                879,
+                592,
+                880,
+                593
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1537,
+                609,
+                1538,
+                610
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 12,
+            "top": 0,
+            "right": 7,
+            "bottom": 12
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 189658
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            877,
+            369
+          ],
+          "centroid_before_padding": [
+            402.36,
+            222.53
+          ],
+          "padding": {
+            "left": 96,
+            "top": 24,
+            "right": 24,
+            "bottom": 100
+          },
+          "centroid_offset_after_padding": {
+            "x": -0.14,
+            "y": 0.03
+          }
+        }
       },
       "review": {
         "verdict": "pending",

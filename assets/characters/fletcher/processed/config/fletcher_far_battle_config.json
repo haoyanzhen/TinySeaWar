@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "character_id": "fletcher",
+  "body_basis": "upright",
+  "rig_heading_degrees": 0,
+  "rig_width": 52,
+  "roles": {
+    "body": {
+      "path": "assets/characters/fletcher/processed/battle/fletcher_battle_far_body.png",
+      "sha256": "07fabc6b662fa113bfd050c1d99617f062179c4276799f63ada49dfc7660dde8",
+      "alpha_rect": [
+        48,
+        127,
+        599,
+        786
+      ],
+      "size": [
+        670,
+        940
+      ]
+    },
+    "rig": {
+      "path": "assets/characters/fletcher/processed/battle/fletcher_battle_far_rig.png",
+      "sha256": "9ee53afe893b104e91db1b9d923ab979dccbf3521c44487ea600a16890ff4760",
+      "alpha_rect": [
+        80,
+        28,
+        846,
+        402
+      ],
+      "size": [
+        954,
+        461
+      ]
+    }
+  },
+  "anchors": {
+    "muzzle_01": [
+      0.42,
+      0
+    ],
+    "torpedo_port_01": [
+      0.2,
+      0.12
+    ]
+  },
+  "animation": "procedural_far_view"
+}

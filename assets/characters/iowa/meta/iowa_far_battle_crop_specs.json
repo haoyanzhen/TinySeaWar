@@ -1,0 +1,408 @@
+{
+  "schema_version": 1,
+  "scope": "battle_far_only",
+  "components": [
+    {
+      "role": "body",
+      "source": "assets/characters/iowa/battle/iowa_far_battle_sheet.png",
+      "source_sha256": "54717d4f1eee974b4551cf486c9f531dfa493b55588cdd8d03771f7fc257e38c",
+      "hint": [
+        0,
+        0,
+        796,
+        887
+      ],
+      "crop": {
+        "size": [
+          735,
+          823
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          59,
+          88,
+          750,
+          883
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            0,
+            0,
+            796,
+            887
+          ],
+          "final_box": [
+            59,
+            88,
+            750,
+            883
+          ],
+          "expanded": {
+            "left": -59,
+            "top": -88,
+            "right": -46,
+            "bottom": -4
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 22,
+          "selected_component_count": 21,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                75,
+                104,
+                734,
+                866
+              ],
+              "pixel_count": 306552,
+              "overlap_pixels": 306552
+            },
+            {
+              "bbox": [
+                198,
+                312,
+                199,
+                313
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                185,
+                518,
+                186,
+                519
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                184,
+                519,
+                185,
+                520
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                177,
+                530,
+                178,
+                531
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                176,
+                531,
+                177,
+                532
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                654,
+                541,
+                655,
+                542
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                701,
+                572,
+                702,
+                573
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                159,
+                656,
+                160,
+                657
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                160,
+                658,
+                161,
+                659
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                161,
+                660,
+                162,
+                661
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                162,
+                670,
+                163,
+                671
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                163,
+                671,
+                164,
+                672
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                164,
+                672,
+                166,
+                673
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                170,
+                672,
+                171,
+                674
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                167,
+                673,
+                169,
+                674
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                257,
+                737,
+                258,
+                738
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                558,
+                737,
+                562,
+                738
+              ],
+              "pixel_count": 4,
+              "overlap_pixels": 4
+            },
+            {
+              "bbox": [
+                563,
+                737,
+                564,
+                738
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                569,
+                737,
+                570,
+                738
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 11,
+            "top": 13,
+            "right": 13,
+            "bottom": 14
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 306431
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            667,
+            768
+          ],
+          "centroid_before_padding": [
+            323.26,
+            387.61
+          ],
+          "padding": {
+            "left": 44,
+            "top": 24,
+            "right": 24,
+            "bottom": 31
+          },
+          "centroid_offset_after_padding": {
+            "x": -0.24,
+            "y": 0.11
+          }
+        }
+      }
+    },
+    {
+      "role": "rig",
+      "source": "assets/characters/iowa/battle/iowa_far_battle_sheet.png",
+      "source_sha256": "54717d4f1eee974b4551cf486c9f531dfa493b55588cdd8d03771f7fc257e38c",
+      "hint": [
+        796,
+        0,
+        1774,
+        887
+      ],
+      "crop": {
+        "size": [
+          987,
+          456
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          843,
+          325,
+          1758,
+          755
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            796,
+            0,
+            1774,
+            887
+          ],
+          "final_box": [
+            843,
+            325,
+            1758,
+            755
+          ],
+          "expanded": {
+            "left": -47,
+            "top": -325,
+            "right": -16,
+            "bottom": -132
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 6,
+          "selected_component_count": 3,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                859,
+                341,
+                1742,
+                739
+              ],
+              "pixel_count": 244958,
+              "overlap_pixels": 244958
+            },
+            {
+              "bbox": [
+                1464,
+                386,
+                1465,
+                387
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1067,
+                713,
+                1068,
+                714
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 12,
+            "top": 13,
+            "right": 13,
+            "bottom": 13
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 244865
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            890,
+            404
+          ],
+          "centroid_before_padding": [
+            420.73,
+            200.02
+          ],
+          "padding": {
+            "left": 73,
+            "top": 28,
+            "right": 24,
+            "bottom": 24
+          },
+          "centroid_offset_after_padding": {
+            "x": 0.23,
+            "y": 0.02
+          }
+        }
+      }
+    }
+  ]
+}

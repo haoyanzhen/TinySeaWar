@@ -17,7 +17,10 @@
     "assets/characters/enterprise_cv6/battle/enterprise_cv6_anim_keyframes_sheet.png": "3bc76ca80d923065c42e69f35cd29c6846ea53fa917d18aac016680d97e45fc7",
     "assets/characters/enterprise_cv6/battle/enterprise_cv6_anim_move_4f_sheet.png": "bc00c802f181d98fc37bc499042622a3e12bfae2b60aa7005f778561dd06c28e",
     "assets/characters/enterprise_cv6/battle/enterprise_cv6_battle_asset_sheet.png": "6e1093117958cc82e6001d996913db12a9b8537813cdacc3f3eeb34f8cbf04b8",
+    "assets/characters/enterprise_cv6/battle/enterprise_cv6_far_battle_sheet.png": "ae89c7119ea515c869cbdfd2dfc63a44309ceb69b2d6010bccde14301d187487",
     "assets/characters/enterprise_cv6/concept/enterprise_cv6_concept_full.png": "311dcd898907f99e147daa9a316b48e2989b440932f3d6cd08e513bfec7710e1",
+    "assets/characters/enterprise_cv6/meta/enterprise_cv6_far_battle_crop_specs.json": "b4216ac0b0c8e3cb65d8a1131f6240bef41bb6ddb7d3d939f712b80999473d60",
+    "assets/characters/enterprise_cv6/meta/enterprise_cv6_far_battle_revision.json": "8490b8615bdd8a2f85b478c3fabe001021c8478df44811af1a613e8ffa3bc2b8",
     "assets/characters/enterprise_cv6/meta/enterprise_cv6_portrait_revision.json": "21df9c0d289e7c48eff2e0ff72d9baaa946b5000bb4a2659412898d228f69d47",
     "assets/characters/enterprise_cv6/processed/anim/enterprise_cv6_anim_attack_frame_01.png": "084c99c5ae6afcc7c0ce519de89089f3c47dac354204f8231b92a89dedf2fc84",
     "assets/characters/enterprise_cv6/processed/anim/enterprise_cv6_anim_attack_frame_02.png": "09fb7fa38a12934709ab5d3d016373d662f54bf7f44ac3f9bc2096d50474ecec",
@@ -50,9 +53,12 @@
     "assets/characters/enterprise_cv6/processed/battle/enterprise_cv6_battle_aircraft_03.png": "6460f07138c03cc6e03c417856d9a2519698e314361b516701d84dd4b27d11e7",
     "assets/characters/enterprise_cv6/processed/battle/enterprise_cv6_battle_aircraft_04.png": "611eebcc5f6d1d892c752dd5766b8c5c57766e5a5435920e7dde90b596fbb87d",
     "assets/characters/enterprise_cv6/processed/battle/enterprise_cv6_battle_body_r.png": "ab755f3afa35fb12cccb6ea73aa658adbd95c6e3ed6080a8d8df555c95e61869",
+    "assets/characters/enterprise_cv6/processed/battle/enterprise_cv6_battle_far_body.png": "9aa7301759d7c0733333eb53bede363ca16f889ed6684e8b8bf4ca0e22d664fe",
+    "assets/characters/enterprise_cv6/processed/battle/enterprise_cv6_battle_far_rig.png": "e00f3d7b3d9d906a17065f7fd828198dc2c30fabb23a242db119abd4cbbe684b",
     "assets/characters/enterprise_cv6/processed/battle/enterprise_cv6_battle_launch_marker.png": "def2d4efefef4cdde699ebc1ce43757c10d4c3a2876036bd2badd6993f5c861c",
     "assets/characters/enterprise_cv6/processed/battle/enterprise_cv6_battle_rig_base.png": "b0f408b56565cf8315b3b40bbe95d78c0d7224fcb7535921674148a8d6e90707",
     "assets/characters/enterprise_cv6/processed/config/enterprise_cv6_anim_config.json": "ee7fd2aad42ec88e7810a8df4b18edb74f121c3eeb13e8b2232a1a6eea119158",
+    "assets/characters/enterprise_cv6/processed/config/enterprise_cv6_far_battle_config.json": "3a9795bb4abdfa76a6577d67f5a259b61ed0a7e9e9f22d4fff8a0360f2b66682",
     "assets/characters/enterprise_cv6/processed/config/enterprise_cv6_meta_bind_points.json": "44a909a0bdebc7eeb0e1c36aa054d06a1f2df579a62afb0e4998797f303c1f69",
     "assets/characters/enterprise_cv6/processed/config/enterprise_cv6_postprocess_manifest.json": "b590af810b24bd285f82576fcef6b22a5663bb56a9467fd5b2c3b060faa83309",
     "assets/characters/enterprise_cv6/processed/config/enterprise_cv6_vfx_config.json": "6098f3579cf13c68a4641dc02dc4b3c5621e7c3fd1cf5bfecb25c9c386513b1b",
@@ -3723,6 +3729,450 @@
           "bottom": 16
         },
         "edge_warnings": []
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/enterprise_cv6/processed/battle/enterprise_cv6_battle_far_body.png": {
+      "sha256": "9aa7301759d7c0733333eb53bede363ca16f889ed6684e8b8bf4ca0e22d664fe",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 768,
+        "height": 839,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 331804,
+        "visible_pixel_count": 312548,
+        "transparent_canvas_ratio": 0.514942143424712,
+        "visible_canvas_ratio": 0.48505785657528805,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "size": [
+          768,
+          839
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          61,
+          76,
+          773,
+          873
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            0,
+            0,
+            834,
+            887
+          ],
+          "final_box": [
+            61,
+            76,
+            773,
+            873
+          ],
+          "expanded": {
+            "left": -61,
+            "top": -76,
+            "right": -61,
+            "bottom": -14
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 32,
+          "selected_component_count": 31,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                77,
+                92,
+                757,
+                857
+              ],
+              "pixel_count": 305571,
+              "overlap_pixels": 305571
+            },
+            {
+              "bbox": [
+                592,
+                386,
+                593,
+                387
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                592,
+                388,
+                593,
+                389
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                593,
+                390,
+                594,
+                391
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                594,
+                392,
+                595,
+                394
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                595,
+                394,
+                596,
+                395
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                596,
+                396,
+                597,
+                397
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                597,
+                398,
+                598,
+                399
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                598,
+                400,
+                599,
+                401
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                600,
+                404,
+                601,
+                405
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                221,
+                421,
+                222,
+                423
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                221,
+                424,
+                222,
+                425
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                679,
+                522,
+                680,
+                523
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                737,
+                543,
+                738,
+                544
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                737,
+                573,
+                738,
+                574
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                738,
+                575,
+                739,
+                576
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                103,
+                612,
+                104,
+                613
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                101,
+                622,
+                102,
+                624
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                102,
+                628,
+                103,
+                629
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                732,
+                634,
+                733,
+                635
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 4,
+            "top": 14,
+            "right": 1,
+            "bottom": 4
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 305348
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            707,
+            779
+          ],
+          "centroid_before_padding": [
+            347.04,
+            395.6
+          ],
+          "padding": {
+            "left": 37,
+            "top": 24,
+            "right": 24,
+            "bottom": 36
+          },
+          "centroid_offset_after_padding": {
+            "x": 0.04,
+            "y": 0.1
+          }
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/enterprise_cv6/processed/battle/enterprise_cv6_battle_far_rig.png": {
+      "sha256": "e00f3d7b3d9d906a17065f7fd828198dc2c30fabb23a242db119abd4cbbe684b",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 911,
+        "height": 485,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 261652,
+        "visible_pixel_count": 180183,
+        "transparent_canvas_ratio": 0.592193918544253,
+        "visible_canvas_ratio": 0.40780608145574704,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "size": [
+          911,
+          485
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          897,
+          352,
+          1729,
+          722
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            834,
+            0,
+            1774,
+            887
+          ],
+          "final_box": [
+            897,
+            352,
+            1729,
+            722
+          ],
+          "expanded": {
+            "left": -63,
+            "top": -352,
+            "right": -45,
+            "bottom": -165
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 13,
+          "selected_component_count": 5,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                913,
+                368,
+                1713,
+                706
+              ],
+              "pixel_count": 175244,
+              "overlap_pixels": 175244
+            },
+            {
+              "bbox": [
+                1367,
+                441,
+                1368,
+                443
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                1367,
+                444,
+                1368,
+                451
+              ],
+              "pixel_count": 7,
+              "overlap_pixels": 7
+            },
+            {
+              "bbox": [
+                1243,
+                699,
+                1244,
+                700
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1245,
+                699,
+                1247,
+                700
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 11,
+            "top": 0,
+            "right": 7,
+            "bottom": 12
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 175127
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            814,
+            358
+          ],
+          "centroid_before_padding": [
+            382.47,
+            218.73
+          ],
+          "padding": {
+            "left": 73,
+            "top": 24,
+            "right": 24,
+            "bottom": 103
+          },
+          "centroid_offset_after_padding": {
+            "x": -0.03,
+            "y": 0.23
+          }
+        }
       },
       "review": {
         "verdict": "pending",

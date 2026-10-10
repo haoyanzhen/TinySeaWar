@@ -17,7 +17,10 @@
     "assets/characters/bismarck/battle/bismarck_anim_keyframes_sheet.png": "8f489aa6d381a219847ad5660d5e7f1f212d38454ec6d5f643762fc0cc44595a",
     "assets/characters/bismarck/battle/bismarck_anim_move_4f_sheet.png": "afab738e595469e833ab16925b38511ed7fce202926e6e0f6cfbf5d82dee80c0",
     "assets/characters/bismarck/battle/bismarck_battle_asset_sheet.png": "7b4949fe3a4fe100782e04bbfd3bd079bad00fffcd3e19c94218455f2dfcb9ab",
+    "assets/characters/bismarck/battle/bismarck_far_battle_sheet.png": "51239fb57c430063dea7f1acd42f51dd4292506ae666e5bb8300289ba6d002fd",
     "assets/characters/bismarck/concept/bismarck_concept_full.png": "4cf062c6b14cd564f558264ddff0d4bd724eec929978865d54e3b8452fc96080",
+    "assets/characters/bismarck/meta/bismarck_far_battle_crop_specs.json": "3a01dae4c70de01d121ec29f4b757824cf344dfabc10c1e5e80837fbc2c5c995",
+    "assets/characters/bismarck/meta/bismarck_far_battle_revision.json": "2abc24870639834390477dcd5e08f2e6f1b451dcf294cf0ab316d894db230436",
     "assets/characters/bismarck/meta/bismarck_portrait_revision.json": "f64add2d7bed34382277a5d37a3b22cf25d4271e34962d02b210c7fd70be8514",
     "assets/characters/bismarck/processed/anim/bismarck_anim_attack_frame_01.png": "967fe8b8b0ef0620b5ca647c053f61d6a1928a23f2cffb3eb3155b0298389342",
     "assets/characters/bismarck/processed/anim/bismarck_anim_attack_frame_02.png": "d3c7df143e6e966ace5f73563faf6804dfbe83ef4e73d8c0bc80a92b4351a48a",
@@ -45,12 +48,15 @@
     "assets/characters/bismarck/processed/anim/bismarck_anim_move_frame_04.png": "fd932457449dc872223a6d5b7b9e2100c6dd66293f31957028a079211a5c4bc3",
     "assets/characters/bismarck/processed/anim/bismarck_anim_move_keyframe.png": "64be87c0f475f8a0407e25469d8175b4ea40741815e335ceeb3b76f03d9cb8fd",
     "assets/characters/bismarck/processed/battle/bismarck_battle_body_r.png": "2420aa8be7704a1e5f2ff03ed655b10af1b9e84e8855f4234ea42940381f9826",
+    "assets/characters/bismarck/processed/battle/bismarck_battle_far_body.png": "cb4e5790889e959ea80f91d4fa390b4f84ed92f3bf0b9fa28d1342df6963ff21",
+    "assets/characters/bismarck/processed/battle/bismarck_battle_far_rig.png": "c119972f8f5f75d70dcf5f38413a26562b669d5ba1c745891218c74001a445b8",
     "assets/characters/bismarck/processed/battle/bismarck_battle_flagship_marker_node.png": "1bf629d0f52b06131b8f039e6a3fc81293e935ee3825ca97f9c66692c56e0f41",
     "assets/characters/bismarck/processed/battle/bismarck_battle_rangefinder_node.png": "367c8731d81782059901ae54ca3a2926ba427c1e0078f5d5a824b1a3214fb00d",
     "assets/characters/bismarck/processed/battle/bismarck_battle_rig_base.png": "8b06da7ad119e8e45d740e8e73388f8577337aea83394fe2ba40867544a9f26d",
     "assets/characters/bismarck/processed/battle/bismarck_battle_turret_main_01.png": "d08c7d3a5f7b3c4fd05f5f450dc48cd61095ffe4a36b23683c47f07207c39e24",
     "assets/characters/bismarck/processed/battle/bismarck_battle_turret_main_02.png": "330f198f631c17211ec5712fadc41ddda057b520669564d94fbb2c8b8d9247a6",
     "assets/characters/bismarck/processed/config/bismarck_anim_config.json": "20ea34f18e3217ab15ff5ec1438cab8e0a04fabb754ff0ef05b5f8ec9aabd38e",
+    "assets/characters/bismarck/processed/config/bismarck_far_battle_config.json": "3f7e8f90d4fa10fcac5fd394ef1580dd5e7a4578430e2faa6c736efbb360cdcf",
     "assets/characters/bismarck/processed/config/bismarck_meta_bind_points.json": "834728a327431454751fd7cad2428b127593fabf56316f06591f97d42ceba103",
     "assets/characters/bismarck/processed/config/bismarck_postprocess_manifest.json": "f35d5bcdcea43c36408121d6cd329dd10de708a3b31fd96b0999fdb15f28a04c",
     "assets/characters/bismarck/processed/config/bismarck_vfx_config.json": "e4c097e5d6c993ea8d4ea3cd9b597126ea11723cc0a585c96e6325ee3c226370",
@@ -3615,6 +3621,510 @@
           "bottom": 16
         },
         "edge_warnings": []
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/bismarck/processed/battle/bismarck_battle_far_body.png": {
+      "sha256": "cb4e5790889e959ea80f91d4fa390b4f84ed92f3bf0b9fa28d1342df6963ff21",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 729,
+        "height": 852,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 295577,
+        "visible_pixel_count": 325531,
+        "transparent_canvas_ratio": 0.4758866412926576,
+        "visible_canvas_ratio": 0.5241133587073423,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "size": [
+          729,
+          852
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          72,
+          73,
+          739,
+          881
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            0,
+            0,
+            804,
+            887
+          ],
+          "final_box": [
+            72,
+            73,
+            739,
+            881
+          ],
+          "expanded": {
+            "left": -72,
+            "top": -73,
+            "right": -65,
+            "bottom": -6
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 32,
+          "selected_component_count": 28,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                88,
+                89,
+                722,
+                865
+              ],
+              "pixel_count": 319466,
+              "overlap_pixels": 319466
+            },
+            {
+              "bbox": [
+                492,
+                148,
+                493,
+                149
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                494,
+                149,
+                495,
+                150
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                165,
+                216,
+                166,
+                218
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                164,
+                219,
+                165,
+                220
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                179,
+                347,
+                180,
+                348
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                575,
+                360,
+                576,
+                361
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                607,
+                407,
+                608,
+                408
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                609,
+                410,
+                610,
+                411
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                588,
+                428,
+                589,
+                429
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                589,
+                430,
+                590,
+                431
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                593,
+                439,
+                594,
+                441
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                594,
+                441,
+                595,
+                443
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                595,
+                444,
+                596,
+                445
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                596,
+                446,
+                597,
+                447
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                164,
+                472,
+                165,
+                473
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                166,
+                481,
+                167,
+                482
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                167,
+                483,
+                168,
+                484
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                718,
+                566,
+                719,
+                567
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                722,
+                594,
+                723,
+                595
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 13,
+            "top": 13,
+            "right": 13,
+            "bottom": 14
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 319315
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            641,
+            781
+          ],
+          "centroid_before_padding": [
+            300.62,
+            402.22
+          ],
+          "padding": {
+            "left": 64,
+            "top": 24,
+            "right": 24,
+            "bottom": 47
+          },
+          "centroid_offset_after_padding": {
+            "x": 0.12,
+            "y": 0.22
+          }
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/bismarck/processed/battle/bismarck_battle_far_rig.png": {
+      "sha256": "c119972f8f5f75d70dcf5f38413a26562b669d5ba1c745891218c74001a445b8",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 951,
+        "height": 488,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 202290,
+        "visible_pixel_count": 261798,
+        "transparent_canvas_ratio": 0.43588715933185085,
+        "visible_canvas_ratio": 0.5641128406681492,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "size": [
+          951,
+          488
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          870,
+          291,
+          1756,
+          740
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            804,
+            0,
+            1774,
+            887
+          ],
+          "final_box": [
+            870,
+            291,
+            1756,
+            740
+          ],
+          "expanded": {
+            "left": -66,
+            "top": -291,
+            "right": -18,
+            "bottom": -147
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 19,
+          "selected_component_count": 11,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                886,
+                307,
+                1740,
+                724
+              ],
+              "pixel_count": 257087,
+              "overlap_pixels": 257087
+            },
+            {
+              "bbox": [
+                923,
+                594,
+                924,
+                595
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                924,
+                595,
+                925,
+                596
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                939,
+                609,
+                940,
+                610
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1041,
+                671,
+                1042,
+                672
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1451,
+                706,
+                1452,
+                707
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1366,
+                718,
+                1367,
+                719
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1368,
+                719,
+                1369,
+                720
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1370,
+                720,
+                1371,
+                721
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1116,
+                721,
+                1117,
+                722
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1377,
+                723,
+                1378,
+                724
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 13,
+            "top": 4,
+            "right": 13,
+            "bottom": 8
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 256969
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            860,
+            437
+          ],
+          "centroid_before_padding": [
+            408.4,
+            219.86
+          ],
+          "padding": {
+            "left": 67,
+            "top": 24,
+            "right": 24,
+            "bottom": 27
+          },
+          "centroid_offset_after_padding": {
+            "x": -0.1,
+            "y": -0.14
+          }
+        }
       },
       "review": {
         "verdict": "pending",

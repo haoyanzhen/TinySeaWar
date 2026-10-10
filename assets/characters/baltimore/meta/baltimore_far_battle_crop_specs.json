@@ -1,0 +1,328 @@
+{
+  "schema_version": 1,
+  "scope": "battle_far_only",
+  "components": [
+    {
+      "role": "body",
+      "source": "assets/characters/baltimore/battle/baltimore_far_battle_sheet.png",
+      "source_sha256": "eb369e10ba90a2207fa3c2f0927a8bb057e2a3a8cab23f7d6691193e0ca00ca0",
+      "hint": [
+        0,
+        0,
+        769,
+        887
+      ],
+      "crop": {
+        "size": [
+          614,
+          865
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          75,
+          51,
+          642,
+          876
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            0,
+            0,
+            769,
+            887
+          ],
+          "final_box": [
+            75,
+            51,
+            642,
+            876
+          ],
+          "expanded": {
+            "left": -75,
+            "top": -51,
+            "right": -127,
+            "bottom": -11
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 15,
+          "selected_component_count": 14,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                91,
+                67,
+                626,
+                860
+              ],
+              "pixel_count": 272362,
+              "overlap_pixels": 272362
+            },
+            {
+              "bbox": [
+                217,
+                153,
+                218,
+                154
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                598,
+                414,
+                599,
+                415
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                141,
+                426,
+                142,
+                427
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                132,
+                455,
+                133,
+                456
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                133,
+                456,
+                134,
+                457
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                566,
+                476,
+                567,
+                477
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                565,
+                477,
+                566,
+                478
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                172,
+                497,
+                173,
+                501
+              ],
+              "pixel_count": 4,
+              "overlap_pixels": 4
+            },
+            {
+              "bbox": [
+                173,
+                503,
+                174,
+                504
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                187,
+                533,
+                188,
+                534
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                148,
+                680,
+                149,
+                681
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                190,
+                736,
+                191,
+                737
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                446,
+                754,
+                447,
+                755
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 7,
+            "top": 13,
+            "right": 13,
+            "bottom": 12
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 272157
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            547,
+            800
+          ],
+          "centroid_before_padding": [
+            263.99,
+            391.33
+          ],
+          "padding": {
+            "left": 43,
+            "top": 41,
+            "right": 24,
+            "bottom": 24
+          },
+          "centroid_offset_after_padding": {
+            "x": -0.01,
+            "y": -0.17
+          }
+        }
+      }
+    },
+    {
+      "role": "rig",
+      "source": "assets/characters/baltimore/battle/baltimore_far_battle_sheet.png",
+      "source_sha256": "eb369e10ba90a2207fa3c2f0927a8bb057e2a3a8cab23f7d6691193e0ca00ca0",
+      "hint": [
+        769,
+        0,
+        1774,
+        887
+      ],
+      "crop": {
+        "size": [
+          953,
+          465
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          897,
+          328,
+          1760,
+          771
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            769,
+            0,
+            1774,
+            887
+          ],
+          "final_box": [
+            897,
+            328,
+            1760,
+            771
+          ],
+          "expanded": {
+            "left": -128,
+            "top": -328,
+            "right": -14,
+            "bottom": -116
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 2,
+          "selected_component_count": 1,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                913,
+                344,
+                1744,
+                755
+              ],
+              "pixel_count": 227059,
+              "overlap_pixels": 227059
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 11,
+            "top": 13,
+            "right": 14,
+            "bottom": 14
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 226984
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            838,
+            416
+          ],
+          "centroid_before_padding": [
+            385.39,
+            207.65
+          ],
+          "padding": {
+            "left": 91,
+            "top": 25,
+            "right": 24,
+            "bottom": 24
+          },
+          "centroid_offset_after_padding": {
+            "x": -0.11,
+            "y": 0.15
+          }
+        }
+      }
+    }
+  ]
+}

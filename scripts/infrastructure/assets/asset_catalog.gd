@@ -34,6 +34,7 @@ const UI_SEMANTIC_PREFIXES := {
 	"ui_badge_": "ui.badge.",
 }
 
+var far_battle_textures := {}
 var characters := {}
 var ui_assets := {}
 var ui_aliases := {}
@@ -49,6 +50,7 @@ var errors: Array[String] = []
 
 func load_all() -> bool:
 	characters.clear()
+	far_battle_textures.clear()
 	ui_assets.clear()
 	ui_aliases.clear()
 	cover_assets.clear()
@@ -276,6 +278,13 @@ func _load_character(character_id: String) -> void:
 			errors.append("Missing or invalid %s config for %s" % [config_name, character_id])
 		else:
 			configs[config_name] = _normalize_paths(parsed)
+	var far_path := "%s/config/%s_far_battle_config.json" % [root, character_id]
+	if FileAccess.file_exists(far_path):
+		var far_config := _read_json(far_path)
+		if _valid_far_battle_config(far_config):
+			configs["far_battle"] = far_config
+		else:
+			errors.append("Invalid far battle config for %s" % character_id)
 	var battle_assets := _scan_named_assets("%s/battle" % root, "%s_battle_" % character_id)
 	if configs.has("bind_points"):
 		_validate_heading_offsets(character_id, configs["bind_points"], battle_assets)
@@ -517,3 +526,45 @@ func _to_res_path(value: String) -> String:
 	if value.begins_with("assets/") or value.begins_with("data/"):
 		return "res://%s" % value
 	return value
+
+
+func far_battle_config(character_id: String) -> Dictionary:
+	return characters.get(character_id, {}).get("configs", {}).get("far_battle", {})
+
+
+func _valid_far_battle_config(config: Dictionary) -> bool:
+	var width = config.get("rig_width",0)
+	if not (width is float or width is int) or not is_finite(float(width)) or float(width) <= 0: return false
+	if not config.get("roles", {}) is Dictionary or not config.get("anchors", {}) is Dictionary: return false
+	for role in ["body", "rig"]:
+		if not config.roles.get(role, {}) is Dictionary: return false
+		var entry: Dictionary = config.get("roles", {}).get(role, {})
+		if not entry.get("alpha_rect", []) is Array: return false
+		var rect: Array = entry.get("alpha_rect", [])
+		for value in rect:
+			if not (value is float or value is int) or not is_finite(float(value)): return false
+		if rect.size() != 4 or float(rect[0]) < 0 or float(rect[1]) < 0 or float(rect[2]) <= 0 or float(rect[3]) <= 0: return false
+		if not ResourceLoader.exists(_to_res_path(str(entry.get("path", "")))): return false
+	for point in config.get("anchors", {}).values():
+		if not point is Array or point.size() != 2: return false
+		for value in point:
+			if not (value is float or value is int) or not is_finite(float(value)) or absf(float(value)) > 0.5: return false
+	return true
+
+
+func far_battle_texture(character_id: String, role: String) -> Texture2D:
+	var key := character_id + ":" + role
+	if far_battle_textures.has(key): return far_battle_textures[key]
+	var entry: Dictionary = far_battle_config(character_id).get("roles", {}).get(role, {})
+	if entry.is_empty(): return null
+	var source := load(_to_res_path(str(entry.get("path", "")))) as Texture2D
+	if source == null: return null
+	var image := source.get_image()
+	var a: Array = entry.alpha_rect
+	var region := Rect2i(int(a[0]),int(a[1]),int(a[2]),int(a[3]))
+	if image == null or not Rect2i(Vector2i.ZERO,image.get_size()).encloses(region): return null
+	var cropped := image.get_region(region)
+	cropped.generate_mipmaps()
+	var result := ImageTexture.create_from_image(cropped)
+	far_battle_textures[key] = result
+	return result

@@ -1,0 +1,448 @@
+{
+  "schema_version": 1,
+  "scope": "battle_far_only",
+  "components": [
+    {
+      "role": "body",
+      "source": "assets/characters/hindenburg/battle/hindenburg_far_battle_sheet.png",
+      "source_sha256": "8c229d2fb4fa6f67c541e05af61c998223cf2ba3b2102a8895f2aaef51e16dc4",
+      "hint": [
+        0,
+        0,
+        802,
+        887
+      ],
+      "crop": {
+        "size": [
+          769,
+          801
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          56,
+          126,
+          744,
+          877
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            0,
+            0,
+            802,
+            887
+          ],
+          "final_box": [
+            56,
+            126,
+            744,
+            877
+          ],
+          "expanded": {
+            "left": -56,
+            "top": -126,
+            "right": -58,
+            "bottom": -10
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 52,
+          "selected_component_count": 51,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                72,
+                142,
+                728,
+                861
+              ],
+              "pixel_count": 305266,
+              "overlap_pixels": 305266
+            },
+            {
+              "bbox": [
+                349,
+                149,
+                350,
+                150
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                293,
+                161,
+                294,
+                162
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                284,
+                164,
+                286,
+                165
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                447,
+                165,
+                448,
+                166
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                476,
+                181,
+                477,
+                182
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                477,
+                182,
+                478,
+                183
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                480,
+                184,
+                481,
+                185
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                490,
+                192,
+                491,
+                193
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                590,
+                309,
+                591,
+                310
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                147,
+                328,
+                148,
+                329
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                146,
+                330,
+                147,
+                331
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                144,
+                332,
+                146,
+                337
+              ],
+              "pixel_count": 6,
+              "overlap_pixels": 6
+            },
+            {
+              "bbox": [
+                590,
+                370,
+                591,
+                371
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                593,
+                384,
+                594,
+                385
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                609,
+                417,
+                610,
+                418
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                155,
+                443,
+                156,
+                444
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                159,
+                448,
+                160,
+                449
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                160,
+                449,
+                161,
+                450
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                166,
+                454,
+                167,
+                455
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 11,
+            "top": 12,
+            "right": 2,
+            "bottom": 6
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 305110
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            675,
+            733
+          ],
+          "centroid_before_padding": [
+            314.38,
+            356.62
+          ],
+          "padding": {
+            "left": 70,
+            "top": 44,
+            "right": 24,
+            "bottom": 24
+          },
+          "centroid_offset_after_padding": {
+            "x": -0.12,
+            "y": 0.12
+          }
+        }
+      }
+    },
+    {
+      "role": "rig",
+      "source": "assets/characters/hindenburg/battle/hindenburg_far_battle_sheet.png",
+      "source_sha256": "8c229d2fb4fa6f67c541e05af61c998223cf2ba3b2102a8895f2aaef51e16dc4",
+      "hint": [
+        802,
+        0,
+        1774,
+        887
+      ],
+      "crop": {
+        "size": [
+          979,
+          491
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          862,
+          327,
+          1753,
+          776
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            802,
+            0,
+            1774,
+            887
+          ],
+          "final_box": [
+            862,
+            327,
+            1753,
+            776
+          ],
+          "expanded": {
+            "left": -60,
+            "top": -327,
+            "right": -21,
+            "bottom": -111
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 14,
+          "selected_component_count": 7,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                878,
+                343,
+                1737,
+                760
+              ],
+              "pixel_count": 255843,
+              "overlap_pixels": 255843
+            },
+            {
+              "bbox": [
+                1502,
+                399,
+                1503,
+                400
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1585,
+                427,
+                1586,
+                428
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1590,
+                459,
+                1591,
+                460
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1586,
+                686,
+                1587,
+                687
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1092,
+                736,
+                1093,
+                737
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1096,
+                737,
+                1097,
+                738
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 0,
+            "top": 5,
+            "right": 1,
+            "bottom": 2
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 255721
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            890,
+            442
+          ],
+          "centroid_before_padding": [
+            424.29,
+            220.53
+          ],
+          "padding": {
+            "left": 65,
+            "top": 25,
+            "right": 24,
+            "bottom": 24
+          },
+          "centroid_offset_after_padding": {
+            "x": -0.21,
+            "y": 0.03
+          }
+        }
+      }
+    }
+  ]
+}

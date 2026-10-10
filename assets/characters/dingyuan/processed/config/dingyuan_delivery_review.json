@@ -16,8 +16,11 @@
     "assets/characters/dingyuan/battle/dingyuan_anim_idle_4f_sheet.png": "b0196494fe480232ad473bcd0e4880e6d2bb63f1a7447296beaf8f1d1d51f1e0",
     "assets/characters/dingyuan/battle/dingyuan_anim_move_4f_sheet.png": "c56f7b9c8fb3f5a54b2ef2c5a0859ebdb4734f09dff7072a23d690cab751bc91",
     "assets/characters/dingyuan/battle/dingyuan_battle_asset_grid.png": "04f153afa88cff063c6a704e6f526c214f2a8e0f6abef98879b8a7ebf9d80ccf",
+    "assets/characters/dingyuan/battle/dingyuan_far_battle_sheet.png": "a8cfb66248803544f89effd64f4e4277598ee57f0af23aff9bf504c9525972fe",
     "assets/characters/dingyuan/concept/dingyuan_concept_full.png": "bceafea8d139ad84fdbffc54febb2e0908354c442c6b90d40277774b8d715ebb",
     "assets/characters/dingyuan/meta/dingyuan_crop_specs.json": "defaff017c924be9e75b8897f83575854338ace0331bbbd630f248c74c6c0261",
+    "assets/characters/dingyuan/meta/dingyuan_far_battle_crop_specs.json": "a6e914c84f518ae54de4bb4a73511eb6d7a0e2bde40431dbbeb3147ea74070d4",
+    "assets/characters/dingyuan/meta/dingyuan_far_battle_revision.json": "8950d1939edc7edec4331975af8bf1a57d72ef9f0cfa3e3aba476d5ba7efc6d5",
     "assets/characters/dingyuan/meta/dingyuan_portrait_revision.json": "ed964b1c94f8738d05392e5fbd89a85b922b3bdbd8d28a41c174123907d4e9c2",
     "assets/characters/dingyuan/meta/dingyuan_source_provenance_v2.json": "7c45790aa14c5024383ef4dbb097ad9a2157efc8c31c89dab03c7e6397cbe364",
     "assets/characters/dingyuan/meta/dingyuan_source_review.json": "78b48858cc082566f09767de1323f97906790f23b99e783da01faf72028187c7",
@@ -49,6 +52,8 @@
     "assets/characters/dingyuan/processed/anim/dingyuan_anim_move_keyframe.png": "47b8c7fa755222a196bc389a72b5dcd973fb610c38979c0c1731f1625c2366d2",
     "assets/characters/dingyuan/processed/battle/dingyuan_battle_armor_plate.png": "bdeba0abf45212c47a28e087bfb1e09a38ed940cff38a894b0f738126d3f8056",
     "assets/characters/dingyuan/processed/battle/dingyuan_battle_body_r.png": "3af04fbf08e8a111921d77ffcfd6bff5747c0564cfb4ac08b32bd0e7e6f8b1c0",
+    "assets/characters/dingyuan/processed/battle/dingyuan_battle_far_body.png": "4870acb6a6b520c8e3b28aca031193d24fd9e0d882906d29ab8420ff096b258d",
+    "assets/characters/dingyuan/processed/battle/dingyuan_battle_far_rig.png": "e078ac16019f65a6eb315f80e552dc29c5023710cee66d5297864c92769a286d",
     "assets/characters/dingyuan/processed/battle/dingyuan_battle_flagship_marker.png": "e4414f4a649c065ca2192dbe2639b9b5fc864314d2bc451fcbc041186d0599bd",
     "assets/characters/dingyuan/processed/battle/dingyuan_battle_rig_base.png": "dd7c706ff0c086d598c86da98a7b0f28d05499309af3b3e0771a8969e19082b1",
     "assets/characters/dingyuan/processed/battle/dingyuan_battle_smokestack_node.png": "86e70a53684b95a2674dd38e8b3125b3d5baebe3b0f54cb23b85a32565431905",
@@ -56,6 +61,7 @@
     "assets/characters/dingyuan/processed/battle/dingyuan_battle_turret_secondary_01.png": "97f98fb1973bc1df80304506ff79c3b9694ac233454f8defe7732b5c0f0c93b1",
     "assets/characters/dingyuan/processed/battle/dingyuan_battle_wake_origin_marker.png": "776f37d402c96d790796d1876c7c1468a7e3337932809daebb8e1a4c2c838d3f",
     "assets/characters/dingyuan/processed/config/dingyuan_anim_config.json": "a070a2ec917cf112c26c663f0e316418ef3546066d0dba8798f54fee72e664d9",
+    "assets/characters/dingyuan/processed/config/dingyuan_far_battle_config.json": "19e86c362cb016cddf619d02f5637065ac1f07ca5d2e13972e52d3e02953adbf",
     "assets/characters/dingyuan/processed/config/dingyuan_meta_bind_points.json": "9b77dfe6634d64e347915e9f60baf6e7b44df2431821a9dc4795dd30d4940843",
     "assets/characters/dingyuan/processed/config/dingyuan_postprocess_manifest.json": "80703abb170188e82b77cf4dbdc2095a762c7c394611453ce87010ccfc9d4e75",
     "assets/characters/dingyuan/processed/config/dingyuan_vfx_config.json": "e9f822839e16fa7eba066e5fc64b071e181b8056ca9ba145e8526eefa7652c15",
@@ -6432,6 +6438,440 @@
           "keep_largest_component"
         ],
         "source_key": "battle_grid"
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/dingyuan/processed/battle/dingyuan_battle_far_body.png": {
+      "sha256": "4870acb6a6b520c8e3b28aca031193d24fd9e0d882906d29ab8420ff096b258d",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 592,
+        "height": 896,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 261981,
+        "visible_pixel_count": 268451,
+        "transparent_canvas_ratio": 0.49390119751447875,
+        "visible_canvas_ratio": 0.5060988024855212,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "size": [
+          592,
+          896
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          62,
+          86,
+          612,
+          864
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            0,
+            0,
+            748,
+            887
+          ],
+          "final_box": [
+            62,
+            86,
+            612,
+            864
+          ],
+          "expanded": {
+            "left": -62,
+            "top": -86,
+            "right": -136,
+            "bottom": -23
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 26,
+          "selected_component_count": 25,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                78,
+                102,
+                596,
+                848
+              ],
+              "pixel_count": 261051,
+              "overlap_pixels": 261051
+            },
+            {
+              "bbox": [
+                167,
+                199,
+                168,
+                200
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                154,
+                226,
+                155,
+                227
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                592,
+                271,
+                593,
+                272
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                593,
+                275,
+                594,
+                276
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                100,
+                311,
+                101,
+                312
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                592,
+                332,
+                593,
+                333
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                593,
+                344,
+                594,
+                345
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                593,
+                346,
+                594,
+                349
+              ],
+              "pixel_count": 3,
+              "overlap_pixels": 3
+            },
+            {
+              "bbox": [
+                593,
+                350,
+                594,
+                359
+              ],
+              "pixel_count": 9,
+              "overlap_pixels": 9
+            },
+            {
+              "bbox": [
+                592,
+                364,
+                593,
+                365
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                152,
+                457,
+                153,
+                458
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                238,
+                484,
+                241,
+                485
+              ],
+              "pixel_count": 3,
+              "overlap_pixels": 3
+            },
+            {
+              "bbox": [
+                449,
+                506,
+                450,
+                507
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                450,
+                507,
+                451,
+                508
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                457,
+                515,
+                458,
+                516
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                473,
+                533,
+                474,
+                534
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                539,
+                606,
+                540,
+                607
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                522,
+                609,
+                524,
+                610
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                527,
+                615,
+                528,
+                616
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 13,
+            "top": 12,
+            "right": 13,
+            "bottom": 0
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 260878
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            524,
+            766
+          ],
+          "centroid_before_padding": [
+            271.89,
+            342.11
+          ],
+          "padding": {
+            "left": 24,
+            "top": 106,
+            "right": 44,
+            "bottom": 24
+          },
+          "centroid_offset_after_padding": {
+            "x": -0.11,
+            "y": 0.11
+          }
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/dingyuan/processed/battle/dingyuan_battle_far_rig.png": {
+      "sha256": "e078ac16019f65a6eb315f80e552dc29c5023710cee66d5297864c92769a286d",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 957,
+        "height": 484,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 207885,
+        "visible_pixel_count": 255303,
+        "transparent_canvas_ratio": 0.44881344076271407,
+        "visible_canvas_ratio": 0.551186559237286,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "size": [
+          957,
+          484
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          862,
+          344,
+          1738,
+          769
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            748,
+            0,
+            1774,
+            887
+          ],
+          "final_box": [
+            862,
+            344,
+            1738,
+            769
+          ],
+          "expanded": {
+            "left": -114,
+            "top": -344,
+            "right": -36,
+            "bottom": -118
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 12,
+          "selected_component_count": 4,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                878,
+                360,
+                1722,
+                753
+              ],
+              "pixel_count": 249026,
+              "overlap_pixels": 249026
+            },
+            {
+              "bbox": [
+                1255,
+                748,
+                1269,
+                749
+              ],
+              "pixel_count": 14,
+              "overlap_pixels": 14
+            },
+            {
+              "bbox": [
+                1271,
+                748,
+                1278,
+                749
+              ],
+              "pixel_count": 7,
+              "overlap_pixels": 7
+            },
+            {
+              "bbox": [
+                1279,
+                748,
+                1281,
+                749
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 12,
+            "top": 0,
+            "right": 6,
+            "bottom": 7
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 248930
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            858,
+            418
+          ],
+          "centroid_before_padding": [
+            403.44,
+            218.12
+          ],
+          "padding": {
+            "left": 75,
+            "top": 24,
+            "right": 24,
+            "bottom": 42
+          },
+          "centroid_offset_after_padding": {
+            "x": -0.06,
+            "y": 0.12
+          }
+        }
       },
       "review": {
         "verdict": "pending",

@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "character_id": "chapayev",
+  "body_basis": "upright",
+  "rig_heading_degrees": 0,
+  "rig_width": 60,
+  "roles": {
+    "body": {
+      "path": "assets/characters/chapayev/processed/battle/chapayev_battle_far_body.png",
+      "sha256": "174a4a743fef3bb142a715619ec09a24b83a00f17272458684328af443963b1e",
+      "alpha_rect": [
+        26,
+        23,
+        639,
+        818
+      ],
+      "size": [
+        725,
+        867
+      ]
+    },
+    "rig": {
+      "path": "assets/characters/chapayev/processed/battle/chapayev_battle_far_rig.png",
+      "sha256": "21cfdcd9ee857e1a5e816917eeba6c8e40600f3ca738e496e0bcd7c5e91a8579",
+      "alpha_rect": [
+        71,
+        37,
+        905,
+        408
+      ],
+      "size": [
+        999,
+        479
+      ]
+    }
+  },
+  "anchors": {
+    "muzzle_01": [
+      0.42,
+      0
+    ],
+    "torpedo_port_01": [
+      0.2,
+      0.12
+    ]
+  },
+  "animation": "procedural_far_view"
+}

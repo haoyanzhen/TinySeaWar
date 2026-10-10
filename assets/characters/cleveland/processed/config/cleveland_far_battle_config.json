@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "character_id": "cleveland",
+  "body_basis": "upright",
+  "rig_heading_degrees": 0,
+  "rig_width": 60,
+  "roles": {
+    "body": {
+      "path": "assets/characters/cleveland/processed/battle/cleveland_battle_far_body.png",
+      "sha256": "99842bed95c5da613f75dc005e0edaf29afe6693d811864fd8cc743c96748a24",
+      "alpha_rect": [
+        57,
+        22,
+        642,
+        809
+      ],
+      "size": [
+        735,
+        864
+      ]
+    },
+    "rig": {
+      "path": "assets/characters/cleveland/processed/battle/cleveland_battle_far_rig.png",
+      "sha256": "99232eee6636c979567fbd4a755ed8bda56197164c70e56d2e8677693dc87a8d",
+      "alpha_rect": [
+        73,
+        27,
+        840,
+        415
+      ],
+      "size": [
+        947,
+        465
+      ]
+    }
+  },
+  "anchors": {
+    "muzzle_01": [
+      0.42,
+      0
+    ]
+  },
+  "animation": "procedural_far_view"
+}

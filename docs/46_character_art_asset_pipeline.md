@@ -306,3 +306,11 @@ assets/characters/qa/character_art_batch_report.md
 `tools/art_pipeline/build_anchor_derived_mvp_sheets.py` 和 `tools/art_pipeline/build_procedural_animation_master.py` 只能用于 smoke test / placeholder 检查。它们不得写入 `assets/characters/{id}/ui`、`battle`、`vfx` 或 `processed` 等运行时源目录；显式使用 `--allow-placeholder` 时也只能输出到 `assets/characters/qa/*_placeholders/`，并写入 `batch_ready_allowed=false` 的 provenance。缺少真实 GPT Image 2.5 / reference-image 产物时应保持资产缺失，不生成虚假的正式资产面板。
 
 其中 `--preview` 负责生成视觉检查页，人工确认后再将结果写入 QA 报告。默认后处理应优先保持快路径，不自动生成大体积嵌入式预览页。
+
+## 56px战斗部件专项修订
+
+本专项沿用用户采用的厌战风格锚点与逐角色已有头像；提示词及从当前武器配置提取的库存保存在 `tools/art_review/far_view/full_roster_*`。内置ImageGen请求原生透明PNG，模型、请求ID及质量未暴露时如实记null/托管，不推测。错误版本留在ignored raw目录，只有技术Alpha与逐图对象核验通过的源字节进入正式battle目录。
+
+`prepare_full_roster.py` 从实际透明中缝确定人物/舰装提示框，统一调用 `postprocess_trial_sheets.prepare_crop` 完成连通域边界、安全边距与质心留白；禁止裁掉正文对象或另造固定网格裁切器。Alpha有效区域另登记给运行尺寸归一化。修订独立登记，原整包delivery review增加输出并使整包审批失效，但保留历史裁切证据；新源核验与人工审美分别记录。正式战斗两部件程序动画契约见40，不宣称完成旧五态四帧重制。
+
+`render_full_roster.gd` 输出全48远/近景及L-01公开开局、受控22单位多分辨率截图；`build_full_review.py` 提供带SHA绑定的逐角色人工意见。构建报告不能自动填写人工通过。

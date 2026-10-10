@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "character_id": "takao",
+  "body_basis": "upright",
+  "rig_heading_degrees": 0,
+  "rig_width": 66,
+  "roles": {
+    "body": {
+      "path": "assets/characters/takao/processed/battle/takao_battle_far_body.png",
+      "sha256": "c58029168adbd4d9f029358e4e71aed849f673960ba640d5acfbfd82e8662705",
+      "alpha_rect": [
+        24,
+        42,
+        611,
+        758
+      ],
+      "size": [
+        676,
+        822
+      ]
+    },
+    "rig": {
+      "path": "assets/characters/takao/processed/battle/takao_battle_far_rig.png",
+      "sha256": "5be9d4c538362fcd445bb6ada867e10a6814f88ba7d96175d22f7ee4987fb582",
+      "alpha_rect": [
+        53,
+        39,
+        1045,
+        536
+      ],
+      "size": [
+        1120,
+        611
+      ]
+    }
+  },
+  "anchors": {
+    "muzzle_01": [
+      0.42,
+      0
+    ],
+    "torpedo_port_01": [
+      0.2,
+      0.12
+    ]
+  },
+  "animation": "procedural_far_view"
+}

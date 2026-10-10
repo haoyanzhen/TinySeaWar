@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "character_id": "shimakaze",
+  "body_basis": "upright",
+  "rig_heading_degrees": 0,
+  "rig_width": 52,
+  "roles": {
+    "body": {
+      "path": "assets/characters/shimakaze/processed/battle/shimakaze_battle_far_body.png",
+      "sha256": "2879ecda93ced3330e5300a0dbef4317e7968c576a8177a94c8c43c77ad0f78f",
+      "alpha_rect": [
+        47,
+        23,
+        638,
+        818
+      ],
+      "size": [
+        720,
+        878
+      ]
+    },
+    "rig": {
+      "path": "assets/characters/shimakaze/processed/battle/shimakaze_battle_far_rig.png",
+      "sha256": "d62fcfb8f88c0139c3cd0c01b7f1c0874136091111d45f4eaaf97fed5e88a109",
+      "alpha_rect": [
+        72,
+        29,
+        1005,
+        341
+      ],
+      "size": [
+        1102,
+        400
+      ]
+    }
+  },
+  "anchors": {
+    "muzzle_01": [
+      0.42,
+      0
+    ],
+    "torpedo_port_01": [
+      0.2,
+      0.12
+    ]
+  },
+  "animation": "procedural_far_view"
+}

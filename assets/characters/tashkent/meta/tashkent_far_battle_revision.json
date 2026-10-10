@@ -1,0 +1,412 @@
+{
+  "schema_version": 2,
+  "scope": "battle_far_body_and_rig_only",
+  "character_id": "tashkent",
+  "route": "codex_builtin_imagegen",
+  "requested_model": null,
+  "actual_model": null,
+  "request_id": null,
+  "endpoint": "Codex managed; not exposed",
+  "background": "transparent",
+  "output_format": "png",
+  "quality": "tool-managed",
+  "source": "assets/characters/tashkent/battle/tashkent_far_battle_sheet.png",
+  "source_sha256": "86ab78875a2004f02dde5eb367ded115007caa15dc7cc6646002bdff7c34b8cd",
+  "alpha_facts": {
+    "format": "PNG",
+    "source_mode": "RGBA",
+    "width": 1774,
+    "height": 887,
+    "has_alpha_channel": true,
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "transparent_pixel_count": 1026973,
+    "visible_pixel_count": 546565,
+    "transparent_canvas_ratio": 0.6526521761787767,
+    "visible_canvas_ratio": 0.34734782382122326,
+    "transparent_border_ratio": 0.9984956750658143
+  },
+  "reference": "assets/characters/tashkent/processed/ui/tashkent_ui_portrait.png",
+  "reference_sha256": "f96f33fd7e558982929801944ce146a5eeec426143cdbc1c6cd8a4ff7c7eb3e5",
+  "prompt": "Create a transparent PNG TinySeaWar production game-art sheet matching the APPROVED second reference STYLE. First reference is this character's identity: preserve hairstyle, hair and eye colors, main clothing colors, signature head accessory. Exactly TWO independent cutouts in two widely separated columns, never overlapping: LEFT one upright full-body 2-head-tall chibi shipgirl WITHOUT ship or weapons; RIGHT one separate simplified top-down naval rig WITHOUT a person. Chibi head is HALF total height, expressive eyes, large clean color blocks, bold navy outer contour, restrained cel shading. The person will display at 56px tall; no fine fabric texture, little jewelry. Full legs and boots, no flippers. Use the portrait's uniform translated to a compact skirt/coat and boots consistent with this identity. Right rig is subdued gray, with simple chunky hardware and pointed bow exactly RIGHT; all required barrels/tubes clearly separated. Ship-class silhouette must read at 60px wide. No water, shadow, wake, effects, text, logos, numbers, actual flags, or political symbols. WIDE transparent outer padding and a clean middle gutter. Left entirely left of 43% canvas, right entirely right of 55%; BOTH cutouts fully inside edges. Do not copy the second reference person's identity or crown unless present in first portrait. Keep right rig top-down as a flat navigable base, not side-view boat.\nCharacter: 塔什干号 (tashkent), Soviet Navy, Destroyer. Right cutout expected inventory: Destroyer hull with exactly 3 clearly separate main gun turret blocks, exactly 2 parallel barrels on EACH turret, plus exactly 3 torpedo racks each with 3 parallel tubes; no secondary guns or anti-air clutter. Keep the two roles absolutely separate.",
+  "source_review": {
+    "source": "artifacts/art_pipeline/raw/far56_20261009/tashkent_v2.png",
+    "sha256": "86ab78875a2004f02dde5eb367ded115007caa15dc7cc6646002bdff7c34b8cd",
+    "verdict": "pass",
+    "reviewer": "Codex",
+    "observation": "三座双联炮，三座三管；银发蓝白帽。 全身、双手双脚、独立人物和舰装，无截边。"
+  },
+  "human_review": "56px style adopted; new per-character full-roster review pending",
+  "outputs": [
+    {
+      "path": "assets/characters/tashkent/processed/battle/tashkent_battle_far_body.png",
+      "crop": {
+        "size": [
+          714,
+          838
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          51,
+          71,
+          712,
+          883
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            0,
+            0,
+            749,
+            887
+          ],
+          "final_box": [
+            51,
+            71,
+            712,
+            883
+          ],
+          "expanded": {
+            "left": -51,
+            "top": -71,
+            "right": -37,
+            "bottom": -4
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 17,
+          "selected_component_count": 15,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                67,
+                87,
+                696,
+                867
+              ],
+              "pixel_count": 311231,
+              "overlap_pixels": 311231
+            },
+            {
+              "bbox": [
+                484,
+                148,
+                485,
+                149
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                508,
+                165,
+                509,
+                166
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                510,
+                166,
+                511,
+                167
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                511,
+                167,
+                512,
+                168
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                169,
+                286,
+                170,
+                287
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                170,
+                326,
+                171,
+                327
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                590,
+                396,
+                591,
+                397
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                606,
+                407,
+                607,
+                408
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                613,
+                413,
+                614,
+                414
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                596,
+                496,
+                597,
+                497
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                598,
+                497,
+                599,
+                498
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                561,
+                713,
+                562,
+                714
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                406,
+                850,
+                407,
+                851
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                459,
+                866,
+                460,
+                867
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 14,
+            "top": 14,
+            "right": 6,
+            "bottom": 12
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 311075
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            641,
+            786
+          ],
+          "centroid_before_padding": [
+            308.13,
+            391.2
+          ],
+          "padding": {
+            "left": 49,
+            "top": 28,
+            "right": 24,
+            "bottom": 24
+          },
+          "centroid_offset_after_padding": {
+            "x": 0.13,
+            "y": 0.2
+          }
+        }
+      },
+      "sha256": "4c116254009060cd55cc778e1d3b5d0cea121068f7b3202193f5f2a07f6ab401"
+    },
+    {
+      "path": "assets/characters/tashkent/processed/battle/tashkent_battle_far_rig.png",
+      "crop": {
+        "size": [
+          1042,
+          465
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          788,
+          349,
+          1736,
+          748
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            749,
+            0,
+            1774,
+            887
+          ],
+          "final_box": [
+            788,
+            349,
+            1736,
+            748
+          ],
+          "expanded": {
+            "left": -39,
+            "top": -349,
+            "right": -38,
+            "bottom": -139
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 12,
+          "selected_component_count": 5,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                804,
+                365,
+                1720,
+                732
+              ],
+              "pixel_count": 225826,
+              "overlap_pixels": 225826
+            },
+            {
+              "bbox": [
+                1330,
+                414,
+                1333,
+                415
+              ],
+              "pixel_count": 3,
+              "overlap_pixels": 3
+            },
+            {
+              "bbox": [
+                1475,
+                435,
+                1476,
+                436
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                817,
+                589,
+                819,
+                590
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                1304,
+                725,
+                1305,
+                726
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 1,
+            "top": 1,
+            "right": 0,
+            "bottom": 10
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 225754
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            947,
+            388
+          ],
+          "centroid_before_padding": [
+            450.12,
+            208.32
+          ],
+          "padding": {
+            "left": 71,
+            "top": 24,
+            "right": 24,
+            "bottom": 53
+          },
+          "centroid_offset_after_padding": {
+            "x": 0.12,
+            "y": -0.18
+          }
+        }
+      },
+      "sha256": "9aa616818d657ae5c6e78cacee6526b1242859f7b7a55d914c8efecd5b939c6c"
+    }
+  ],
+  "legacy_package_migrated": false,
+  "correction_history": [
+    {
+      "id": "tashkent",
+      "why": "Keep THREE twin gun turrets. Current TWO triple racks is wrong; add THIRD triple rack. Re-layout the racks into exactly THREE separated racks each THREE tubes, nine tubes total. Make space around each, no fusing.",
+      "prompt": "Correct ONLY RIGHT ship rig mechanical equipment count. Preserve LEFT character exactly. Transparent PNG, same gray colors thick line style and horizontal bow right. Keep THREE twin gun turrets. Current TWO triple racks is wrong; add THIRD triple rack. Re-layout the racks into exactly THREE separated racks each THREE tubes, nine tubes total. Make space around each, no fusing. Keep clean gap between the separate left person and right rig, margin from canvas edge. No text."
+    }
+  ],
+  "style_reference": {
+    "path": "assets/characters/warspite/battle/warspite_far_battle_sheet.png",
+    "sha256": "6afead7ddb35f0d9571f73fe3b4316c7df8bf8667750acfc45ebe8cc819b8755"
+  }
+}

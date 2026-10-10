@@ -17,7 +17,10 @@
     "assets/characters/hindenburg/battle/hindenburg_anim_keyframes_sheet.png": "cfeebe9b181c1ecbf73cba9c0aac47428f0a55e19ad624d7e05d0126ce36ac19",
     "assets/characters/hindenburg/battle/hindenburg_anim_move_4f_sheet.png": "139c05f5708e4f69d688db5c0a80bf806cdd540be713005c4b2261c9489afa94",
     "assets/characters/hindenburg/battle/hindenburg_battle_asset_sheet.png": "00b549c27f6bb00db3b4037c484dc288094699c879d8ab2954a77477c887ea80",
+    "assets/characters/hindenburg/battle/hindenburg_far_battle_sheet.png": "8c229d2fb4fa6f67c541e05af61c998223cf2ba3b2102a8895f2aaef51e16dc4",
     "assets/characters/hindenburg/concept/hindenburg_concept_full.png": "1ca12ad86dbe6d9d11214a9f45a1dacd67d588770799ae7ae199100714aa2753",
+    "assets/characters/hindenburg/meta/hindenburg_far_battle_crop_specs.json": "7274eab0c13f56ba0418dd431595ce81600f741efd1de167384ebc29fa75c5ce",
+    "assets/characters/hindenburg/meta/hindenburg_far_battle_revision.json": "953e38026ba7416be5257ef90db7a2898f4ec1454c5a14b1d012a48470f0e243",
     "assets/characters/hindenburg/meta/hindenburg_portrait_revision.json": "c78dfe230dc753d7200d28a19e7f9f40edce3503fcc0154cf26e1393a6fe29f7",
     "assets/characters/hindenburg/processed/anim/hindenburg_anim_attack_frame_01.png": "c85dd566b048186e7ccee53c6bfadca142d5e0bfd70f4b72cbd45c2a319af642",
     "assets/characters/hindenburg/processed/anim/hindenburg_anim_attack_frame_02.png": "1196d1e2ad1d2200504cc1dd02883435909cd1a2d64974fb16d94219f18eb596",
@@ -46,12 +49,15 @@
     "assets/characters/hindenburg/processed/anim/hindenburg_anim_move_keyframe.png": "12a0e8ec5b6c54bfe700e1b43f3a08bf4c3c8f802f94d6a9a414969115822e41",
     "assets/characters/hindenburg/processed/battle/hindenburg_battle_armor_plate_01.png": "5589312977aeb070a296756b203a4d4d18ce48a3f731e3792b1f1a875e01371b",
     "assets/characters/hindenburg/processed/battle/hindenburg_battle_body_r.png": "a0c104bbf52ddc0e6d7962fcc6772bc98da3918a28c864aa46177039e8d1fbc1",
+    "assets/characters/hindenburg/processed/battle/hindenburg_battle_far_body.png": "faf6f7f9e3eb3df5726e3734db91a8edf2ff229724b459b73b8a3a0b418ecc03",
+    "assets/characters/hindenburg/processed/battle/hindenburg_battle_far_rig.png": "4278c5cd30ea8eb4053ce775b0ff26808025c8359b91137c9c48cabf41ac0d77",
     "assets/characters/hindenburg/processed/battle/hindenburg_battle_fire_control_node.png": "9ba75861993ca14e2a0b5e8d4f3c7ae214b20cf168ef482294a8d1f2729676a0",
     "assets/characters/hindenburg/processed/battle/hindenburg_battle_lock_emitter_node.png": "259964871e2d79a40bef935dc7ed3d6440a7e1ede7ee353867d84af82ca2065d",
     "assets/characters/hindenburg/processed/battle/hindenburg_battle_rig_base.png": "faf2f603d35d95d192082a3cfaa20a1fb262e0467f7cc8721b309b6dca81eb7e",
     "assets/characters/hindenburg/processed/battle/hindenburg_battle_turret_main_01.png": "0f0f5233ee3a7bc0b5499c663913b5dfe4e34c9bd3bc0061b93ff5752472bd9f",
     "assets/characters/hindenburg/processed/battle/hindenburg_battle_turret_main_02.png": "df8b66adfa34c34ef21a2df8f7ea684878233eb89087752a81e12eb7ed92a56a",
     "assets/characters/hindenburg/processed/config/hindenburg_anim_config.json": "73467f9307954c51fad47fac17fc3ece1e35caa1e9115b57607202ea0faedee2",
+    "assets/characters/hindenburg/processed/config/hindenburg_far_battle_config.json": "97f8b465e16cd1ce17e0104a8a9f79012e022dd7a3b38c3df1ec0cea807ecb07",
     "assets/characters/hindenburg/processed/config/hindenburg_meta_bind_points.json": "3b2d29c1a0a37046af899d57bed9a8b3503810e60517e16f1abac526fd6d3652",
     "assets/characters/hindenburg/processed/config/hindenburg_postprocess_manifest.json": "b31cde9794daab52a45d9dc28471adb0527614a79caa35485219c03df8c805c5",
     "assets/characters/hindenburg/processed/config/hindenburg_vfx_config.json": "a52e22945dceb4f8930e4d1e674c258d74d3abf7963d847346a8b6d44cc9ad30",
@@ -5723,6 +5729,470 @@
           "bottom": 16
         },
         "edge_warnings": []
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hindenburg/processed/battle/hindenburg_battle_far_body.png": {
+      "sha256": "faf6f7f9e3eb3df5726e3734db91a8edf2ff229724b459b73b8a3a0b418ecc03",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 769,
+        "height": 801,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 302817,
+        "visible_pixel_count": 313152,
+        "transparent_canvas_ratio": 0.49161077911388396,
+        "visible_canvas_ratio": 0.508389220886116,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "size": [
+          769,
+          801
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          56,
+          126,
+          744,
+          877
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            0,
+            0,
+            802,
+            887
+          ],
+          "final_box": [
+            56,
+            126,
+            744,
+            877
+          ],
+          "expanded": {
+            "left": -56,
+            "top": -126,
+            "right": -58,
+            "bottom": -10
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 52,
+          "selected_component_count": 51,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                72,
+                142,
+                728,
+                861
+              ],
+              "pixel_count": 305266,
+              "overlap_pixels": 305266
+            },
+            {
+              "bbox": [
+                349,
+                149,
+                350,
+                150
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                293,
+                161,
+                294,
+                162
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                284,
+                164,
+                286,
+                165
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                447,
+                165,
+                448,
+                166
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                476,
+                181,
+                477,
+                182
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                477,
+                182,
+                478,
+                183
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                480,
+                184,
+                481,
+                185
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                490,
+                192,
+                491,
+                193
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                590,
+                309,
+                591,
+                310
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                147,
+                328,
+                148,
+                329
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                146,
+                330,
+                147,
+                331
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                144,
+                332,
+                146,
+                337
+              ],
+              "pixel_count": 6,
+              "overlap_pixels": 6
+            },
+            {
+              "bbox": [
+                590,
+                370,
+                591,
+                371
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                593,
+                384,
+                594,
+                385
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                609,
+                417,
+                610,
+                418
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                155,
+                443,
+                156,
+                444
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                159,
+                448,
+                160,
+                449
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                160,
+                449,
+                161,
+                450
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                166,
+                454,
+                167,
+                455
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 11,
+            "top": 12,
+            "right": 2,
+            "bottom": 6
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 305110
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            675,
+            733
+          ],
+          "centroid_before_padding": [
+            314.38,
+            356.62
+          ],
+          "padding": {
+            "left": 70,
+            "top": 44,
+            "right": 24,
+            "bottom": 24
+          },
+          "centroid_offset_after_padding": {
+            "x": -0.12,
+            "y": 0.12
+          }
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/hindenburg/processed/battle/hindenburg_battle_far_rig.png": {
+      "sha256": "4278c5cd30ea8eb4053ce775b0ff26808025c8359b91137c9c48cabf41ac0d77",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 979,
+        "height": 491,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 219380,
+        "visible_pixel_count": 261309,
+        "transparent_canvas_ratio": 0.45638656178943143,
+        "visible_canvas_ratio": 0.5436134382105686,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "size": [
+          979,
+          491
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          862,
+          327,
+          1753,
+          776
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            802,
+            0,
+            1774,
+            887
+          ],
+          "final_box": [
+            862,
+            327,
+            1753,
+            776
+          ],
+          "expanded": {
+            "left": -60,
+            "top": -327,
+            "right": -21,
+            "bottom": -111
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 14,
+          "selected_component_count": 7,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                878,
+                343,
+                1737,
+                760
+              ],
+              "pixel_count": 255843,
+              "overlap_pixels": 255843
+            },
+            {
+              "bbox": [
+                1502,
+                399,
+                1503,
+                400
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1585,
+                427,
+                1586,
+                428
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1590,
+                459,
+                1591,
+                460
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1586,
+                686,
+                1587,
+                687
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1092,
+                736,
+                1093,
+                737
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1096,
+                737,
+                1097,
+                738
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 0,
+            "top": 5,
+            "right": 1,
+            "bottom": 2
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 255721
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            890,
+            442
+          ],
+          "centroid_before_padding": [
+            424.29,
+            220.53
+          ],
+          "padding": {
+            "left": 65,
+            "top": 25,
+            "right": 24,
+            "bottom": 24
+          },
+          "centroid_offset_after_padding": {
+            "x": -0.21,
+            "y": 0.03
+          }
+        }
       },
       "review": {
         "verdict": "pending",

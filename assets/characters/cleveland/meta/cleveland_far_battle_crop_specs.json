@@ -1,0 +1,528 @@
+{
+  "schema_version": 1,
+  "scope": "battle_far_only",
+  "components": [
+    {
+      "role": "body",
+      "source": "assets/characters/cleveland/battle/cleveland_far_battle_sheet.png",
+      "source_sha256": "7a401041745021ea271e1987393eaa24e5c0f5eb6608d46a513d6c3e80ced7e8",
+      "hint": [
+        0,
+        0,
+        781,
+        887
+      ],
+      "crop": {
+        "size": [
+          735,
+          864
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          22,
+          49,
+          688,
+          882
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            0,
+            0,
+            781,
+            887
+          ],
+          "final_box": [
+            22,
+            49,
+            688,
+            882
+          ],
+          "expanded": {
+            "left": -22,
+            "top": -49,
+            "right": -93,
+            "bottom": -5
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 38,
+          "selected_component_count": 37,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                38,
+                65,
+                672,
+                866
+              ],
+              "pixel_count": 301800,
+              "overlap_pixels": 301800
+            },
+            {
+              "bbox": [
+                291,
+                94,
+                292,
+                95
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                295,
+                95,
+                296,
+                96
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                398,
+                95,
+                399,
+                96
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                319,
+                98,
+                320,
+                99
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                318,
+                100,
+                319,
+                101
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                317,
+                102,
+                318,
+                103
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                316,
+                103,
+                317,
+                104
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                462,
+                148,
+                463,
+                149
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                464,
+                151,
+                465,
+                152
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                465,
+                152,
+                466,
+                153
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                480,
+                183,
+                481,
+                184
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                482,
+                212,
+                483,
+                213
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                102,
+                343,
+                103,
+                344
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                554,
+                435,
+                555,
+                436
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                605,
+                438,
+                606,
+                439
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                606,
+                439,
+                607,
+                440
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                153,
+                446,
+                154,
+                447
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                152,
+                448,
+                153,
+                449
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                138,
+                474,
+                139,
+                475
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 5,
+            "top": 14,
+            "right": 0,
+            "bottom": 12
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 301610
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            661,
+            807
+          ],
+          "centroid_before_padding": [
+            317.61,
+            408.05
+          ],
+          "padding": {
+            "left": 50,
+            "top": 24,
+            "right": 24,
+            "bottom": 33
+          },
+          "centroid_offset_after_padding": {
+            "x": 0.11,
+            "y": 0.05
+          }
+        }
+      }
+    },
+    {
+      "role": "rig",
+      "source": "assets/characters/cleveland/battle/cleveland_far_battle_sheet.png",
+      "source_sha256": "7a401041745021ea271e1987393eaa24e5c0f5eb6608d46a513d6c3e80ced7e8",
+      "hint": [
+        781,
+        0,
+        1774,
+        887
+      ],
+      "crop": {
+        "size": [
+          947,
+          465
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          876,
+          346,
+          1740,
+          785
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            781,
+            0,
+            1774,
+            887
+          ],
+          "final_box": [
+            876,
+            346,
+            1740,
+            785
+          ],
+          "expanded": {
+            "left": -95,
+            "top": -346,
+            "right": -34,
+            "bottom": -102
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 16,
+          "selected_component_count": 15,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                892,
+                362,
+                1724,
+                769
+              ],
+              "pixel_count": 247385,
+              "overlap_pixels": 247385
+            },
+            {
+              "bbox": [
+                1053,
+                384,
+                1054,
+                385
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1488,
+                390,
+                1489,
+                391
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1489,
+                391,
+                1490,
+                392
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1493,
+                394,
+                1494,
+                395
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1494,
+                395,
+                1495,
+                396
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1594,
+                428,
+                1595,
+                429
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1717,
+                551,
+                1718,
+                552
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1718,
+                552,
+                1719,
+                553
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1719,
+                553,
+                1720,
+                554
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1721,
+                556,
+                1722,
+                557
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1722,
+                557,
+                1723,
+                558
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1702,
+                593,
+                1703,
+                594
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1052,
+                739,
+                1053,
+                740
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1348,
+                739,
+                1349,
+                740
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 4,
+            "top": 13,
+            "right": 2,
+            "bottom": 13
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 247286
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            858,
+            413
+          ],
+          "centroid_before_padding": [
+            408.54,
+            204.6
+          ],
+          "padding": {
+            "left": 65,
+            "top": 28,
+            "right": 24,
+            "bottom": 24
+          },
+          "centroid_offset_after_padding": {
+            "x": 0.04,
+            "y": 0.1
+          }
+        }
+      }
+    }
+  ]
+}

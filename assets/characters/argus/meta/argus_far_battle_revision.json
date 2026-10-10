@@ -1,0 +1,526 @@
+{
+  "schema_version": 2,
+  "scope": "battle_far_body_and_rig_only",
+  "character_id": "argus",
+  "route": "codex_builtin_imagegen",
+  "requested_model": null,
+  "actual_model": null,
+  "request_id": null,
+  "endpoint": "Codex managed; not exposed",
+  "background": "transparent",
+  "output_format": "png",
+  "quality": "tool-managed",
+  "source": "assets/characters/argus/battle/argus_far_battle_sheet.png",
+  "source_sha256": "b1b19721a5a22f602d5e3f66dc889fdf7f2a2d6234650d4750e6279fab679b37",
+  "alpha_facts": {
+    "format": "PNG",
+    "source_mode": "RGBA",
+    "width": 1774,
+    "height": 887,
+    "has_alpha_channel": true,
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "transparent_pixel_count": 1088711,
+    "visible_pixel_count": 484827,
+    "transparent_canvas_ratio": 0.6918873265215075,
+    "visible_canvas_ratio": 0.3081126734784924,
+    "transparent_border_ratio": 0.9943587814968033
+  },
+  "reference": "assets/characters/argus/processed/ui/argus_ui_portrait.png",
+  "reference_sha256": "b4f5b47a056f97062dbb6f21639203ad32737e6a64421e9a9f95b6afcef73940",
+  "prompt": "Create a transparent PNG TinySeaWar production game-art sheet matching the APPROVED second reference STYLE. First reference is this character's identity: preserve hairstyle, hair and eye colors, main clothing colors, signature head accessory. Exactly TWO independent cutouts in two widely separated columns, never overlapping: LEFT one upright full-body 2-head-tall chibi shipgirl WITHOUT ship or weapons; RIGHT one separate simplified top-down naval rig WITHOUT a person. Chibi head is HALF total height, expressive eyes, large clean color blocks, bold navy outer contour, restrained cel shading. The person will display at 56px tall; no fine fabric texture, little jewelry. Full legs and boots, no flippers. Use the portrait's uniform translated to a compact skirt/coat and boots consistent with this identity. Right rig is subdued gray, with simple chunky hardware and pointed bow exactly RIGHT; all required barrels/tubes clearly separated. Ship-class silhouette must read at 60px wide. No water, shadow, wake, effects, text, logos, numbers, actual flags, or political symbols. WIDE transparent outer padding and a clean middle gutter. Left entirely left of 43% canvas, right entirely right of 55%; BOTH cutouts fully inside edges. Do not copy the second reference person's identity or crown unless present in first portrait. Keep right rig top-down as a flat navigable base, not side-view boat.\nCharacter: 百眼巨人号 (argus), Royal Navy, Carrier. Right cutout expected inventory: one aircraft-carrier deck with a single offset island and a simple runway line, NO planes or gun turrets. Keep the two roles absolutely separate.",
+  "source_review": {
+    "source": "artifacts/art_pipeline/raw/far56_20261009/argus.png",
+    "sha256": "b1b19721a5a22f602d5e3f66dc889fdf7f2a2d6234650d4750e6279fab679b37",
+    "verdict": "pass",
+    "reviewer": "Codex",
+    "observation": "灰棕短发与圆帽保持；完整平甲板、无炮塔。 全身、双手双脚、独立人物和舰装，无截边。"
+  },
+  "human_review": "56px style adopted; new per-character full-roster review pending",
+  "outputs": [
+    {
+      "path": "assets/characters/argus/processed/battle/argus_battle_far_body.png",
+      "crop": {
+        "size": [
+          591,
+          899
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          76,
+          79,
+          632,
+          880
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            0,
+            0,
+            730,
+            887
+          ],
+          "final_box": [
+            76,
+            79,
+            632,
+            880
+          ],
+          "expanded": {
+            "left": -76,
+            "top": -79,
+            "right": -98,
+            "bottom": -7
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 26,
+          "selected_component_count": 25,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                92,
+                95,
+                616,
+                864
+              ],
+              "pixel_count": 238482,
+              "overlap_pixels": 238482
+            },
+            {
+              "bbox": [
+                147,
+                280,
+                148,
+                281
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                591,
+                327,
+                592,
+                328
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                592,
+                328,
+                593,
+                329
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                593,
+                329,
+                594,
+                330
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                594,
+                330,
+                595,
+                331
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                609,
+                350,
+                610,
+                351
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                584,
+                370,
+                585,
+                373
+              ],
+              "pixel_count": 3,
+              "overlap_pixels": 3
+            },
+            {
+              "bbox": [
+                582,
+                376,
+                583,
+                379
+              ],
+              "pixel_count": 3,
+              "overlap_pixels": 3
+            },
+            {
+              "bbox": [
+                584,
+                380,
+                585,
+                381
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                582,
+                382,
+                584,
+                385
+              ],
+              "pixel_count": 4,
+              "overlap_pixels": 4
+            },
+            {
+              "bbox": [
+                456,
+                489,
+                457,
+                490
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                457,
+                490,
+                459,
+                492
+              ],
+              "pixel_count": 3,
+              "overlap_pixels": 3
+            },
+            {
+              "bbox": [
+                230,
+                610,
+                232,
+                611
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                231,
+                612,
+                232,
+                613
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                466,
+                702,
+                468,
+                703
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                464,
+                703,
+                465,
+                704
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                259,
+                705,
+                260,
+                706
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                336,
+                712,
+                337,
+                713
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                361,
+                712,
+                362,
+                713
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 9,
+            "top": 6,
+            "right": 7,
+            "bottom": 11
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 238269
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            540,
+            784
+          ],
+          "centroid_before_padding": [
+            271.5,
+            358.27
+          ],
+          "padding": {
+            "left": 24,
+            "top": 91,
+            "right": 27,
+            "bottom": 24
+          },
+          "centroid_offset_after_padding": {
+            "x": -0.0,
+            "y": -0.23
+          }
+        }
+      },
+      "sha256": "7dd55b1e9d197e36a79077f25cac7f0766ae0369577375df68a4223a0ca4beeb"
+    },
+    {
+      "path": "assets/characters/argus/processed/battle/argus_battle_far_rig.png",
+      "crop": {
+        "size": [
+          1019,
+          536
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          825,
+          294,
+          1774,
+          724
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            730,
+            0,
+            1774,
+            887
+          ],
+          "final_box": [
+            825,
+            294,
+            1774,
+            724
+          ],
+          "expanded": {
+            "left": -95,
+            "top": -294,
+            "right": 0,
+            "bottom": -163
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 22,
+          "selected_component_count": 12,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                841,
+                310,
+                1760,
+                706
+              ],
+              "pixel_count": 225678,
+              "overlap_pixels": 225678
+            },
+            {
+              "bbox": [
+                1086,
+                400,
+                1087,
+                401
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1448,
+                408,
+                1449,
+                409
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1459,
+                417,
+                1460,
+                418
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1671,
+                607,
+                1672,
+                608
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1175,
+                688,
+                1176,
+                689
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1376,
+                689,
+                1377,
+                690
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1262,
+                707,
+                1265,
+                708
+              ],
+              "pixel_count": 3,
+              "overlap_pixels": 3
+            },
+            {
+              "bbox": [
+                1272,
+                707,
+                1273,
+                708
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1274,
+                707,
+                1283,
+                708
+              ],
+              "pixel_count": 9,
+              "overlap_pixels": 9
+            },
+            {
+              "bbox": [
+                1288,
+                707,
+                1290,
+                708
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                1304,
+                707,
+                1305,
+                708
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 2,
+            "top": 1,
+            "right": 11,
+            "bottom": 0
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 225543
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            936,
+            429
+          ],
+          "centroid_before_padding": [
+            450.31,
+            243.95
+          ],
+          "padding": {
+            "left": 59,
+            "top": 24,
+            "right": 24,
+            "bottom": 83
+          },
+          "centroid_offset_after_padding": {
+            "x": -0.19,
+            "y": -0.05
+          }
+        }
+      },
+      "sha256": "3e8caa6592061409f20600444b46a397ce0e3f63d0c1a1a4e8488e0a46b0da1c"
+    }
+  ],
+  "legacy_package_migrated": false,
+  "correction_history": [],
+  "style_reference": {
+    "path": "assets/characters/warspite/battle/warspite_far_battle_sheet.png",
+    "sha256": "6afead7ddb35f0d9571f73fe3b4316c7df8bf8667750acfc45ebe8cc819b8755"
+  }
+}

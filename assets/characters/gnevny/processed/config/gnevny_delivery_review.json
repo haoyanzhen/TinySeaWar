@@ -12,7 +12,10 @@
   "package_sha256": {
     "assets/characters/gnevny/battle/gnevny_anim_5x4_master.png": "1a638b5f34726a3d5ff47aab752f398abb7a4ca17e0d0b9e929362c272d0ad5a",
     "assets/characters/gnevny/battle/gnevny_battle_asset_grid.png": "9a88faa7e03b5989046e0b5e6ea854c46eb62781008ef3830d6920bc119aa926",
+    "assets/characters/gnevny/battle/gnevny_far_battle_sheet.png": "bdf84a714b7025c1f898b0bd9f9feccf6eee54550a111b09fd7233867100bb56",
     "assets/characters/gnevny/concept/gnevny_concept_full.png": "ab877207e1ac3c2675a93c540250818820c7186654dbbbb4bc47122e8f02972e",
+    "assets/characters/gnevny/meta/gnevny_far_battle_crop_specs.json": "91689aa40a0475e2c4ecd700c08f91a72e67a420b78d77394bc6b828a70a85de",
+    "assets/characters/gnevny/meta/gnevny_far_battle_revision.json": "6ab163edaa6fb9b518cc4a76f29aa52952dff506a7cc665a642b18d50625a5d3",
     "assets/characters/gnevny/meta/gnevny_portrait_revision.json": "14f70d6c05f8b46b02898a87dc29e47ebf0b3e0ba00d5df2000ee6d3227bee82",
     "assets/characters/gnevny/processed/anim/gnevny_anim_attack_frame_01.png": "44b4168ae3563de9eac352569817b3dc165448471cb10b6259cadb0276ce04f6",
     "assets/characters/gnevny/processed/anim/gnevny_anim_attack_frame_02.png": "b45e08088698f5d94c0a705dfe0ed04865052f17c3fcd2b21e69d8b9b348f4ea",
@@ -40,6 +43,8 @@
     "assets/characters/gnevny/processed/anim/gnevny_anim_move_frame_04.png": "9e262bbc6b011e4ec503b9dfab665034aff33b50732c123046c835d94e4b4b0b",
     "assets/characters/gnevny/processed/anim/gnevny_anim_move_keyframe.png": "3f9c7562cf063e0416f1e0b63e568a3c740f5446e013fa207c877d8ffe555a7a",
     "assets/characters/gnevny/processed/battle/gnevny_battle_body_r.png": "5ef42bec740b9328431445b54caed6798e509dfe53842d10b76553940ed46cca",
+    "assets/characters/gnevny/processed/battle/gnevny_battle_far_body.png": "de15be57dc601383994bd798c478463198e0ab7660917777f9618bbf3747d9ee",
+    "assets/characters/gnevny/processed/battle/gnevny_battle_far_rig.png": "dc180f17e0b2e0116cc5dcbbdd5bbb2786b997c84559985bc9d8d0b39d9319b9",
     "assets/characters/gnevny/processed/battle/gnevny_battle_propulsion_node.png": "9be5cf304766bb5e5f22b2309b28572f586271313004cc6016dc9202ae63f4db",
     "assets/characters/gnevny/processed/battle/gnevny_battle_radar_node.png": "b0573d9e4202f6eb8d748f0968d2762ed4980c337f188839d9f6d44c06c29431",
     "assets/characters/gnevny/processed/battle/gnevny_battle_rig_base.png": "8d97ac42610208b5f1749c3e798456ae6f4a81b904dafac590e3eae7ed5be80f",
@@ -48,6 +53,7 @@
     "assets/characters/gnevny/processed/battle/gnevny_battle_turret_main_01.png": "868b7410d3e80916b04cfe369796e5d641fe11539e5e9726bff6599909e75be4",
     "assets/characters/gnevny/processed/battle/gnevny_battle_wake_origin_marker.png": "c9ee0c5246112b6edb78a9097ed0ce6bf028015caf3fd580aa83c4194a1e7c25",
     "assets/characters/gnevny/processed/config/gnevny_anim_config.json": "8c3d87baa67cbf26abfc29dbd179b6d43ea2628d761656131479476e70d313fc",
+    "assets/characters/gnevny/processed/config/gnevny_far_battle_config.json": "2f92fcbc731f5a64d69f6a6d3b3357224e6a44960d6e9732f4fa9ef12a1b7f6c",
     "assets/characters/gnevny/processed/config/gnevny_meta_bind_points.json": "2125a31fdda69ed11932ad6b211e3cf22aa00dcfc043ce43b027c111112961e1",
     "assets/characters/gnevny/processed/config/gnevny_postprocess_manifest.json": "669126ac128cbef6cf52f17b3713bc2e2ad64050b78c26bf9eb3c5ad393ab194",
     "assets/characters/gnevny/processed/config/gnevny_vfx_config.json": "19cf904dbbf46cc6f0ed5306c6c5ad7912bf0dc39a5bf6c9ee32e728df035a20",
@@ -672,6 +678,520 @@
         "transparent_border_ratio": 1.0
       },
       "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/gnevny/processed/battle/gnevny_battle_far_body.png": {
+      "sha256": "de15be57dc601383994bd798c478463198e0ab7660917777f9618bbf3747d9ee",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 626,
+        "height": 887,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 310786,
+        "visible_pixel_count": 244476,
+        "transparent_canvas_ratio": 0.5597105510551775,
+        "visible_canvas_ratio": 0.44028944894482247,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "size": [
+          626,
+          887
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          72,
+          86,
+          646,
+          882
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            0,
+            0,
+            731,
+            887
+          ],
+          "final_box": [
+            72,
+            86,
+            646,
+            882
+          ],
+          "expanded": {
+            "left": -72,
+            "top": -86,
+            "right": -85,
+            "bottom": -5
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 23,
+          "selected_component_count": 21,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                88,
+                102,
+                630,
+                866
+              ],
+              "pixel_count": 235308,
+              "overlap_pixels": 235308
+            },
+            {
+              "bbox": [
+                593,
+                253,
+                594,
+                254
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                576,
+                297,
+                577,
+                298
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                577,
+                298,
+                578,
+                299
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                120,
+                310,
+                121,
+                311
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                591,
+                374,
+                592,
+                375
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                592,
+                375,
+                593,
+                376
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                119,
+                422,
+                122,
+                423
+              ],
+              "pixel_count": 3,
+              "overlap_pixels": 3
+            },
+            {
+              "bbox": [
+                118,
+                423,
+                119,
+                424
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                552,
+                429,
+                553,
+                431
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                150,
+                445,
+                151,
+                446
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                196,
+                485,
+                197,
+                487
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                195,
+                487,
+                196,
+                488
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                217,
+                606,
+                218,
+                607
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                247,
+                624,
+                248,
+                625
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                553,
+                646,
+                554,
+                647
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                463,
+                720,
+                464,
+                721
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                461,
+                721,
+                462,
+                722
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                459,
+                724,
+                460,
+                728
+              ],
+              "pixel_count": 4,
+              "overlap_pixels": 4
+            },
+            {
+              "bbox": [
+                460,
+                729,
+                461,
+                730
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 0,
+            "top": 2,
+            "right": 1,
+            "bottom": 10
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 235101
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            573,
+            784
+          ],
+          "centroid_before_padding": [
+            288.93,
+            364.68
+          ],
+          "padding": {
+            "left": 24,
+            "top": 79,
+            "right": 29,
+            "bottom": 24
+          },
+          "centroid_offset_after_padding": {
+            "x": -0.07,
+            "y": 0.18
+          }
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/gnevny/processed/battle/gnevny_battle_far_rig.png": {
+      "sha256": "dc180f17e0b2e0116cc5dcbbdd5bbb2786b997c84559985bc9d8d0b39d9319b9",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 1041,
+        "height": 441,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 210630,
+        "visible_pixel_count": 248451,
+        "transparent_canvas_ratio": 0.45880792278486804,
+        "visible_canvas_ratio": 0.541192077215132,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "size": [
+          1041,
+          441
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          818,
+          347,
+          1749,
+          741
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            731,
+            0,
+            1774,
+            887
+          ],
+          "final_box": [
+            818,
+            347,
+            1749,
+            741
+          ],
+          "expanded": {
+            "left": -87,
+            "top": -347,
+            "right": -25,
+            "bottom": -146
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 19,
+          "selected_component_count": 12,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                834,
+                363,
+                1733,
+                725
+              ],
+              "pixel_count": 239135,
+              "overlap_pixels": 239135
+            },
+            {
+              "bbox": [
+                1448,
+                393,
+                1449,
+                394
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                852,
+                590,
+                853,
+                591
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                959,
+                703,
+                960,
+                704
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1191,
+                715,
+                1193,
+                716
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                1283,
+                715,
+                1289,
+                716
+              ],
+              "pixel_count": 6,
+              "overlap_pixels": 6
+            },
+            {
+              "bbox": [
+                1417,
+                715,
+                1418,
+                716
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1208,
+                716,
+                1209,
+                717
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1210,
+                716,
+                1217,
+                717
+              ],
+              "pixel_count": 7,
+              "overlap_pixels": 7
+            },
+            {
+              "bbox": [
+                1258,
+                716,
+                1266,
+                717
+              ],
+              "pixel_count": 8,
+              "overlap_pixels": 8
+            },
+            {
+              "bbox": [
+                1340,
+                717,
+                1341,
+                718
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1346,
+                721,
+                1347,
+                722
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 7,
+            "top": 0,
+            "right": 1,
+            "bottom": 7
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 238988
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            923,
+            387
+          ],
+          "centroid_before_padding": [
+            426.61,
+            196.71
+          ],
+          "padding": {
+            "left": 94,
+            "top": 24,
+            "right": 24,
+            "bottom": 30
+          },
+          "centroid_offset_after_padding": {
+            "x": 0.11,
+            "y": 0.21
+          }
+        }
+      },
       "review": {
         "verdict": "pending",
         "reviewer": "",

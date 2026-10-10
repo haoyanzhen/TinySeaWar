@@ -1,0 +1,418 @@
+{
+  "schema_version": 1,
+  "scope": "battle_far_only",
+  "components": [
+    {
+      "role": "body",
+      "source": "assets/characters/dingyuan/battle/dingyuan_far_battle_sheet.png",
+      "source_sha256": "a8cfb66248803544f89effd64f4e4277598ee57f0af23aff9bf504c9525972fe",
+      "hint": [
+        0,
+        0,
+        748,
+        887
+      ],
+      "crop": {
+        "size": [
+          592,
+          896
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          62,
+          86,
+          612,
+          864
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            0,
+            0,
+            748,
+            887
+          ],
+          "final_box": [
+            62,
+            86,
+            612,
+            864
+          ],
+          "expanded": {
+            "left": -62,
+            "top": -86,
+            "right": -136,
+            "bottom": -23
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 26,
+          "selected_component_count": 25,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                78,
+                102,
+                596,
+                848
+              ],
+              "pixel_count": 261051,
+              "overlap_pixels": 261051
+            },
+            {
+              "bbox": [
+                167,
+                199,
+                168,
+                200
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                154,
+                226,
+                155,
+                227
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                592,
+                271,
+                593,
+                272
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                593,
+                275,
+                594,
+                276
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                100,
+                311,
+                101,
+                312
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                592,
+                332,
+                593,
+                333
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                593,
+                344,
+                594,
+                345
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                593,
+                346,
+                594,
+                349
+              ],
+              "pixel_count": 3,
+              "overlap_pixels": 3
+            },
+            {
+              "bbox": [
+                593,
+                350,
+                594,
+                359
+              ],
+              "pixel_count": 9,
+              "overlap_pixels": 9
+            },
+            {
+              "bbox": [
+                592,
+                364,
+                593,
+                365
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                152,
+                457,
+                153,
+                458
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                238,
+                484,
+                241,
+                485
+              ],
+              "pixel_count": 3,
+              "overlap_pixels": 3
+            },
+            {
+              "bbox": [
+                449,
+                506,
+                450,
+                507
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                450,
+                507,
+                451,
+                508
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                457,
+                515,
+                458,
+                516
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                473,
+                533,
+                474,
+                534
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                539,
+                606,
+                540,
+                607
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                522,
+                609,
+                524,
+                610
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                527,
+                615,
+                528,
+                616
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 13,
+            "top": 12,
+            "right": 13,
+            "bottom": 0
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 260878
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            524,
+            766
+          ],
+          "centroid_before_padding": [
+            271.89,
+            342.11
+          ],
+          "padding": {
+            "left": 24,
+            "top": 106,
+            "right": 44,
+            "bottom": 24
+          },
+          "centroid_offset_after_padding": {
+            "x": -0.11,
+            "y": 0.11
+          }
+        }
+      }
+    },
+    {
+      "role": "rig",
+      "source": "assets/characters/dingyuan/battle/dingyuan_far_battle_sheet.png",
+      "source_sha256": "a8cfb66248803544f89effd64f4e4277598ee57f0af23aff9bf504c9525972fe",
+      "hint": [
+        748,
+        0,
+        1774,
+        887
+      ],
+      "crop": {
+        "size": [
+          957,
+          484
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          862,
+          344,
+          1738,
+          769
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            748,
+            0,
+            1774,
+            887
+          ],
+          "final_box": [
+            862,
+            344,
+            1738,
+            769
+          ],
+          "expanded": {
+            "left": -114,
+            "top": -344,
+            "right": -36,
+            "bottom": -118
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 12,
+          "selected_component_count": 4,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                878,
+                360,
+                1722,
+                753
+              ],
+              "pixel_count": 249026,
+              "overlap_pixels": 249026
+            },
+            {
+              "bbox": [
+                1255,
+                748,
+                1269,
+                749
+              ],
+              "pixel_count": 14,
+              "overlap_pixels": 14
+            },
+            {
+              "bbox": [
+                1271,
+                748,
+                1278,
+                749
+              ],
+              "pixel_count": 7,
+              "overlap_pixels": 7
+            },
+            {
+              "bbox": [
+                1279,
+                748,
+                1281,
+                749
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 12,
+            "top": 0,
+            "right": 6,
+            "bottom": 7
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 248930
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            858,
+            418
+          ],
+          "centroid_before_padding": [
+            403.44,
+            218.12
+          ],
+          "padding": {
+            "left": 75,
+            "top": 24,
+            "right": 24,
+            "bottom": 42
+          },
+          "centroid_offset_after_padding": {
+            "x": -0.06,
+            "y": 0.12
+          }
+        }
+      }
+    }
+  ]
+}

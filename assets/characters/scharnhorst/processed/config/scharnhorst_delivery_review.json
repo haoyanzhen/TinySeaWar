@@ -16,8 +16,11 @@
     "assets/characters/scharnhorst/battle/scharnhorst_anim_idle_4f_sheet.png": "7d501b354421f9e3731b2f84aecbd35b30c6d069c9ac387e7f5b239c9253bc86",
     "assets/characters/scharnhorst/battle/scharnhorst_anim_move_4f_sheet.png": "90624002d3b95003daf864f9b6d55902b82cedfd7065cff43f31c0ef28c91d75",
     "assets/characters/scharnhorst/battle/scharnhorst_battle_asset_grid.png": "41886cb741d07f5196cbc7226eb2c56d8be7125df07ab83a1b48a8e1ede729fa",
+    "assets/characters/scharnhorst/battle/scharnhorst_far_battle_sheet.png": "cdc44822ba22bcb3fa837ac983876291f28da275c61abf65f42ba18e6635713f",
     "assets/characters/scharnhorst/concept/scharnhorst_concept_full.png": "ed0a0630c1d5f25ba46a24eadfafb02d97e7d55d5aa6c0f42145558d95e5c3e2",
     "assets/characters/scharnhorst/meta/scharnhorst_crop_specs.json": "d71f0936a67b5bd46d9260a9766a103c009e35d46325ca0c72f4cc5b9d4ef022",
+    "assets/characters/scharnhorst/meta/scharnhorst_far_battle_crop_specs.json": "203b0d53e43ec03677a05b0d3c42a7aa15514b57fc965d4ada2f558e332f8444",
+    "assets/characters/scharnhorst/meta/scharnhorst_far_battle_revision.json": "220080a2618ee71b88e72abd6443c09d25060ee4b5d6009889d571185a1bd817",
     "assets/characters/scharnhorst/meta/scharnhorst_generation_requests.json": "5026aeaf065e8063fe5dff3b7c538df6400f6bd9f9e52267e5e261d433cdcbc1",
     "assets/characters/scharnhorst/meta/scharnhorst_portrait_revision.json": "78c696ab4745ccbc390753f00959dd52b08a2bf1e4d838467c713035eda1c174",
     "assets/characters/scharnhorst/meta/scharnhorst_source_provenance_v2.json": "085d9c95d3ecf23219e46a4967bdc2b71f29c9aabf430aaf3a888f0b39683b6b",
@@ -49,6 +52,8 @@
     "assets/characters/scharnhorst/processed/anim/scharnhorst_anim_move_frame_04.png": "1dabe67c3e965b583e550341bc4f3089606b8fc3b96d9d2752b82da5b743ac59",
     "assets/characters/scharnhorst/processed/anim/scharnhorst_anim_move_keyframe.png": "520a64474a00d7c3f57e8739fff4c35512d1fa45dce7b2f8185fc561a73db000",
     "assets/characters/scharnhorst/processed/battle/scharnhorst_battle_body_r.png": "780222273acaec9ac671f0c964465b59514218c0b91168e220d2b0c7b0c3f6ca",
+    "assets/characters/scharnhorst/processed/battle/scharnhorst_battle_far_body.png": "85cec7969ce02873ea6fc3abde975e462d2128abffcf65936aeb7c15d1121a76",
+    "assets/characters/scharnhorst/processed/battle/scharnhorst_battle_far_rig.png": "029a3b59da046dde375b5eabb19022f35aab983cd3362f5a123983bdc69e0a23",
     "assets/characters/scharnhorst/processed/battle/scharnhorst_battle_fire_control_node.png": "afc186ad23e6b981ccb6aee7f7929514fc08b53c03770d9310b9ccdc7f4d8e22",
     "assets/characters/scharnhorst/processed/battle/scharnhorst_battle_flagship_marker.png": "d3cc20ccfe720bec3b426be1883c6a2f091fa73b7f7d6563794f030e1c1167ee",
     "assets/characters/scharnhorst/processed/battle/scharnhorst_battle_propulsion_node.png": "737c5c60fa614d5169ec3b6149a420ca50a147321801e828389069a222143f5f",
@@ -57,6 +62,7 @@
     "assets/characters/scharnhorst/processed/battle/scharnhorst_battle_turret_secondary_01.png": "745336da01d7e3eaeac08149bd2a7cb93e62fb93cd10848aab4b5f3674190337",
     "assets/characters/scharnhorst/processed/battle/scharnhorst_battle_wake_origin_marker.png": "41610a581c13d91197787b9547c5974169be46008eeaeb358e2b1be70891b690",
     "assets/characters/scharnhorst/processed/config/scharnhorst_anim_config.json": "a913326373f3de9b8c3f3fd6c0b4521bcfda26687bef99643162f22cc4e34dde",
+    "assets/characters/scharnhorst/processed/config/scharnhorst_far_battle_config.json": "f55ae17f2bc4c2937356719cb9dc945db7ad484fc90f2ff4ca9e141b902b1db8",
     "assets/characters/scharnhorst/processed/config/scharnhorst_meta_bind_points.json": "2da757fa0a9d1a163242a71413771a72df11d0bff9e97d470495710c2b81bac8",
     "assets/characters/scharnhorst/processed/config/scharnhorst_postprocess_manifest.json": "235c7b6a30d85245ac73973603403b2ddc29f6dd61925db6d015035ac8277805",
     "assets/characters/scharnhorst/processed/config/scharnhorst_vfx_config.json": "1794bcc6a5255691c7065829c5521f3df8a0afc62ec06351bda4efc6159e6614",
@@ -7446,6 +7452,580 @@
           "keep_largest_component"
         ],
         "source_key": "battle_grid"
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/scharnhorst/processed/battle/scharnhorst_battle_far_body.png": {
+      "sha256": "85cec7969ce02873ea6fc3abde975e462d2128abffcf65936aeb7c15d1121a76",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 689,
+        "height": 853,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 253135,
+        "visible_pixel_count": 334582,
+        "transparent_canvas_ratio": 0.4307089976978716,
+        "visible_canvas_ratio": 0.5692910023021284,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "size": [
+          689,
+          853
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          95,
+          58,
+          745,
+          874
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            0,
+            0,
+            799,
+            887
+          ],
+          "final_box": [
+            95,
+            58,
+            745,
+            874
+          ],
+          "expanded": {
+            "left": -95,
+            "top": -58,
+            "right": -54,
+            "bottom": -13
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 71,
+          "selected_component_count": 66,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                111,
+                74,
+                729,
+                858
+              ],
+              "pixel_count": 325251,
+              "overlap_pixels": 325251
+            },
+            {
+              "bbox": [
+                409,
+                111,
+                410,
+                112
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                328,
+                160,
+                329,
+                161
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                277,
+                164,
+                278,
+                166
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                316,
+                164,
+                318,
+                165
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                593,
+                170,
+                594,
+                172
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                279,
+                171,
+                280,
+                172
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                283,
+                179,
+                284,
+                180
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                593,
+                179,
+                594,
+                180
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                614,
+                243,
+                615,
+                246
+              ],
+              "pixel_count": 3,
+              "overlap_pixels": 3
+            },
+            {
+              "bbox": [
+                615,
+                249,
+                616,
+                250
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                615,
+                251,
+                616,
+                252
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                616,
+                255,
+                617,
+                257
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                156,
+                330,
+                157,
+                331
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                158,
+                330,
+                159,
+                332
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                157,
+                334,
+                158,
+                335
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                156,
+                336,
+                157,
+                338
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                155,
+                339,
+                156,
+                341
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                154,
+                342,
+                155,
+                343
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                152,
+                346,
+                153,
+                347
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 11,
+            "top": 3,
+            "right": 1,
+            "bottom": 11
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 324996
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            638,
+            802
+          ],
+          "centroid_before_padding": [
+            317.43,
+            402.72
+          ],
+          "padding": {
+            "left": 27,
+            "top": 24,
+            "right": 24,
+            "bottom": 27
+          },
+          "centroid_offset_after_padding": {
+            "x": -0.07,
+            "y": 0.22
+          }
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/scharnhorst/processed/battle/scharnhorst_battle_far_rig.png": {
+      "sha256": "029a3b59da046dde375b5eabb19022f35aab983cd3362f5a123983bdc69e0a23",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 1001,
+        "height": 433,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 202162,
+        "visible_pixel_count": 231271,
+        "transparent_canvas_ratio": 0.4664204156121015,
+        "visible_canvas_ratio": 0.5335795843878984,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "size": [
+          1001,
+          433
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          854,
+          358,
+          1774,
+          744
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            799,
+            0,
+            1774,
+            887
+          ],
+          "final_box": [
+            854,
+            358,
+            1774,
+            744
+          ],
+          "expanded": {
+            "left": -55,
+            "top": -358,
+            "right": 0,
+            "bottom": -143
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 36,
+          "selected_component_count": 18,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                870,
+                374,
+                1759,
+                728
+              ],
+              "pixel_count": 225798,
+              "overlap_pixels": 225798
+            },
+            {
+              "bbox": [
+                1476,
+                407,
+                1477,
+                408
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1477,
+                408,
+                1478,
+                409
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1008,
+                424,
+                1009,
+                425
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                909,
+                491,
+                910,
+                492
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                908,
+                492,
+                909,
+                493
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1752,
+                536,
+                1753,
+                537
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1753,
+                537,
+                1754,
+                538
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1754,
+                538,
+                1755,
+                539
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1755,
+                539,
+                1756,
+                540
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                900,
+                608,
+                901,
+                609
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                922,
+                636,
+                923,
+                637
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1061,
+                703,
+                1063,
+                704
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                1064,
+                704,
+                1065,
+                705
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1065,
+                705,
+                1066,
+                706
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1067,
+                706,
+                1068,
+                707
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1110,
+                720,
+                1111,
+                721
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1119,
+                723,
+                1121,
+                724
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 0,
+            "top": 6,
+            "right": 12,
+            "bottom": 2
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 225698
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            908,
+            378
+          ],
+          "centroid_before_padding": [
+            431.65,
+            185.54
+          ],
+          "padding": {
+            "left": 69,
+            "top": 31,
+            "right": 24,
+            "bottom": 24
+          },
+          "centroid_offset_after_padding": {
+            "x": 0.15,
+            "y": 0.04
+          }
+        }
       },
       "review": {
         "verdict": "pending",

@@ -1,0 +1,586 @@
+{
+  "schema_version": 2,
+  "scope": "battle_far_body_and_rig_only",
+  "character_id": "scharnhorst",
+  "route": "codex_builtin_imagegen",
+  "requested_model": null,
+  "actual_model": null,
+  "request_id": null,
+  "endpoint": "Codex managed; not exposed",
+  "background": "transparent",
+  "output_format": "png",
+  "quality": "tool-managed",
+  "source": "assets/characters/scharnhorst/battle/scharnhorst_far_battle_sheet.png",
+  "source_sha256": "cdc44822ba22bcb3fa837ac983876291f28da275c61abf65f42ba18e6635713f",
+  "alpha_facts": {
+    "format": "PNG",
+    "source_mode": "RGBA",
+    "width": 1774,
+    "height": 887,
+    "has_alpha_channel": true,
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "transparent_pixel_count": 1006510,
+    "visible_pixel_count": 567028,
+    "transparent_canvas_ratio": 0.6396477237918626,
+    "visible_canvas_ratio": 0.3603522762081373,
+    "transparent_border_ratio": 0.9860849943587815
+  },
+  "reference": "assets/characters/scharnhorst/processed/ui/scharnhorst_ui_portrait.png",
+  "reference_sha256": "f8e4bd07c871d75741bab225e40c9d59fa46b4cf57ef864d1a78c9a2a935c9dd",
+  "prompt": "Create a transparent PNG TinySeaWar production game-art sheet matching the APPROVED second reference STYLE. First reference is this character's identity: preserve hairstyle, hair and eye colors, main clothing colors, signature head accessory. Exactly TWO independent cutouts in two widely separated columns, never overlapping: LEFT one upright full-body 2-head-tall chibi shipgirl WITHOUT ship or weapons; RIGHT one separate simplified top-down naval rig WITHOUT a person. Chibi head is HALF total height, expressive eyes, large clean color blocks, bold navy outer contour, restrained cel shading. The person will display at 56px tall; no fine fabric texture, little jewelry. Full legs and boots, no flippers. Use the portrait's uniform translated to a compact skirt/coat and boots consistent with this identity. Right rig is subdued gray, with simple chunky hardware and pointed bow exactly RIGHT; all required barrels/tubes clearly separated. Ship-class silhouette must read at 60px wide. No water, shadow, wake, effects, text, logos, numbers, actual flags, or political symbols. WIDE transparent outer padding and a clean middle gutter. Left entirely left of 43% canvas, right entirely right of 55%; BOTH cutouts fully inside edges. Do not copy the second reference person's identity or crown unless present in first portrait. Keep right rig top-down as a flat navigable base, not side-view boat.\nCharacter: 沙恩霍斯特号 (scharnhorst), Kriegsmarine, Battleship. Right cutout expected inventory: Battleship hull with exactly 3 clearly separate main gun turret blocks, exactly 3 parallel barrels on EACH turret; NO torpedo racks; no secondary guns or anti-air clutter. Keep the two roles absolutely separate.",
+  "source_review": {
+    "source": "artifacts/art_pipeline/raw/far56_20261009/scharnhorst.png",
+    "sha256": "cdc44822ba22bcb3fa837ac983876291f28da275c61abf65f42ba18e6635713f",
+    "verdict": "pass",
+    "reviewer": "Codex",
+    "observation": "银发高马尾黑红饰；三三联炮。 人体完整，人物与舰装独立，无截边。"
+  },
+  "human_review": "56px style adopted; new per-character full-roster review pending",
+  "outputs": [
+    {
+      "path": "assets/characters/scharnhorst/processed/battle/scharnhorst_battle_far_body.png",
+      "crop": {
+        "size": [
+          689,
+          853
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          95,
+          58,
+          745,
+          874
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            0,
+            0,
+            799,
+            887
+          ],
+          "final_box": [
+            95,
+            58,
+            745,
+            874
+          ],
+          "expanded": {
+            "left": -95,
+            "top": -58,
+            "right": -54,
+            "bottom": -13
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 71,
+          "selected_component_count": 66,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                111,
+                74,
+                729,
+                858
+              ],
+              "pixel_count": 325251,
+              "overlap_pixels": 325251
+            },
+            {
+              "bbox": [
+                409,
+                111,
+                410,
+                112
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                328,
+                160,
+                329,
+                161
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                277,
+                164,
+                278,
+                166
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                316,
+                164,
+                318,
+                165
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                593,
+                170,
+                594,
+                172
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                279,
+                171,
+                280,
+                172
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                283,
+                179,
+                284,
+                180
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                593,
+                179,
+                594,
+                180
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                614,
+                243,
+                615,
+                246
+              ],
+              "pixel_count": 3,
+              "overlap_pixels": 3
+            },
+            {
+              "bbox": [
+                615,
+                249,
+                616,
+                250
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                615,
+                251,
+                616,
+                252
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                616,
+                255,
+                617,
+                257
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                156,
+                330,
+                157,
+                331
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                158,
+                330,
+                159,
+                332
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                157,
+                334,
+                158,
+                335
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                156,
+                336,
+                157,
+                338
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                155,
+                339,
+                156,
+                341
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                154,
+                342,
+                155,
+                343
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                152,
+                346,
+                153,
+                347
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 11,
+            "top": 3,
+            "right": 1,
+            "bottom": 11
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 324996
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            638,
+            802
+          ],
+          "centroid_before_padding": [
+            317.43,
+            402.72
+          ],
+          "padding": {
+            "left": 27,
+            "top": 24,
+            "right": 24,
+            "bottom": 27
+          },
+          "centroid_offset_after_padding": {
+            "x": -0.07,
+            "y": 0.22
+          }
+        }
+      },
+      "sha256": "85cec7969ce02873ea6fc3abde975e462d2128abffcf65936aeb7c15d1121a76"
+    },
+    {
+      "path": "assets/characters/scharnhorst/processed/battle/scharnhorst_battle_far_rig.png",
+      "crop": {
+        "size": [
+          1001,
+          433
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          854,
+          358,
+          1774,
+          744
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            799,
+            0,
+            1774,
+            887
+          ],
+          "final_box": [
+            854,
+            358,
+            1774,
+            744
+          ],
+          "expanded": {
+            "left": -55,
+            "top": -358,
+            "right": 0,
+            "bottom": -143
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 36,
+          "selected_component_count": 18,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                870,
+                374,
+                1759,
+                728
+              ],
+              "pixel_count": 225798,
+              "overlap_pixels": 225798
+            },
+            {
+              "bbox": [
+                1476,
+                407,
+                1477,
+                408
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1477,
+                408,
+                1478,
+                409
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1008,
+                424,
+                1009,
+                425
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                909,
+                491,
+                910,
+                492
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                908,
+                492,
+                909,
+                493
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1752,
+                536,
+                1753,
+                537
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1753,
+                537,
+                1754,
+                538
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1754,
+                538,
+                1755,
+                539
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1755,
+                539,
+                1756,
+                540
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                900,
+                608,
+                901,
+                609
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                922,
+                636,
+                923,
+                637
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1061,
+                703,
+                1063,
+                704
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                1064,
+                704,
+                1065,
+                705
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1065,
+                705,
+                1066,
+                706
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1067,
+                706,
+                1068,
+                707
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1110,
+                720,
+                1111,
+                721
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1119,
+                723,
+                1121,
+                724
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 0,
+            "top": 6,
+            "right": 12,
+            "bottom": 2
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 225698
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            908,
+            378
+          ],
+          "centroid_before_padding": [
+            431.65,
+            185.54
+          ],
+          "padding": {
+            "left": 69,
+            "top": 31,
+            "right": 24,
+            "bottom": 24
+          },
+          "centroid_offset_after_padding": {
+            "x": 0.15,
+            "y": 0.04
+          }
+        }
+      },
+      "sha256": "029a3b59da046dde375b5eabb19022f35aab983cd3362f5a123983bdc69e0a23"
+    }
+  ],
+  "legacy_package_migrated": false,
+  "correction_history": [],
+  "style_reference": {
+    "path": "assets/characters/warspite/battle/warspite_far_battle_sheet.png",
+    "sha256": "6afead7ddb35f0d9571f73fe3b4316c7df8bf8667750acfc45ebe8cc819b8755"
+  }
+}

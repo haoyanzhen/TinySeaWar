@@ -12,7 +12,10 @@
   "package_sha256": {
     "assets/characters/u_47/battle/u_47_anim_5x4_master.png": "32742b0abef487dcb7b7c8775919bc1428c6548b91b10086ea92e836947d9a1f",
     "assets/characters/u_47/battle/u_47_battle_asset_grid.png": "a9d47d92f12c1258ee8e8be9d8ae9813d31dce2d448160e6fbf56cd27b89f7e2",
+    "assets/characters/u_47/battle/u_47_far_battle_sheet.png": "718bf2127f5b042a7742eb75e1ce72d4fdac80348b4cedd9d78f6fc8b7a65b21",
     "assets/characters/u_47/concept/u_47_concept_full.png": "8eaea4157e92352274f4ab5074d6f178aaf995b1e0727368caf279da20a58c34",
+    "assets/characters/u_47/meta/u_47_far_battle_crop_specs.json": "897495c4b6b25648f993ceb37abcb4ad4cab3bb410f9cdd85b1e917903f18d51",
+    "assets/characters/u_47/meta/u_47_far_battle_revision.json": "7b0248e91180efb9a37b64532f2fd832da34d8eb5ecf4c90baafae53cb191f9d",
     "assets/characters/u_47/meta/u_47_portrait_revision.json": "5eb6b1b20057bbc833a5b56aa130d39822eae3fd3767da2866a15331814b7687",
     "assets/characters/u_47/processed/anim/u_47_anim_attack_frame_01.png": "4302cd456675cbd41d7893162d7f8fdd98f19974bb7a3e4736a75534d0a395e8",
     "assets/characters/u_47/processed/anim/u_47_anim_attack_frame_02.png": "74c3b7eaf3d1d2dada15cb5b9e95ddbb4be0a967dd03e067bb180bcc4426d8eb",
@@ -41,6 +44,8 @@
     "assets/characters/u_47/processed/anim/u_47_anim_move_keyframe.png": "b80562bf9358f344a04ba38cedab036e869282e12f28b1a5d71c6737e6bd2f33",
     "assets/characters/u_47/processed/battle/u_47_battle_body_r.png": "2d2d4ed1e711323fd969f801bfc18096ef59979e8b57dd3bd9a2c60ce52ace13",
     "assets/characters/u_47/processed/battle/u_47_battle_dive_plane.png": "63da36c66a68a6d5120f64bdf2e5cac0e7eb6fcc7ae0ebd9aec3add371ff0254",
+    "assets/characters/u_47/processed/battle/u_47_battle_far_body.png": "283c9937701c92fc505837e145175ef8dabfad1b24be06fb2f3b1333f6e32da1",
+    "assets/characters/u_47/processed/battle/u_47_battle_far_rig.png": "0902d57d9be1b325a1d6be2faf88fded3dabc56410f2eb37055ad3fa15d5abad",
     "assets/characters/u_47/processed/battle/u_47_battle_periscope_node.png": "33597b2ba68c8eb604f54b71c4598e626b8661150e777d99c0f2614c1bb1cffb",
     "assets/characters/u_47/processed/battle/u_47_battle_rig_base.png": "c31786651768a0c86f34104de79ec108fcc6b698322fa00a1110abcfa9cc3308",
     "assets/characters/u_47/processed/battle/u_47_battle_sonar_node.png": "b51134b75243f68aaf1fc0d574054cb743894101a00b800199c16b525deb6c62",
@@ -48,6 +53,7 @@
     "assets/characters/u_47/processed/battle/u_47_battle_torpedo_tube_01.png": "cf6cf5154aa68951fdd8757c549763c7c0194e0f2d317a2d7d2fe5672f73670c",
     "assets/characters/u_47/processed/battle/u_47_battle_wake_origin_marker.png": "0a7e4f83b1f76795cdbeeba41b42c1557a06d604b86116deabcb69f80d8c2453",
     "assets/characters/u_47/processed/config/u_47_anim_config.json": "6db81f5ff9d5b177e8f15a3edb595b4187b230360e8830278c5160d8acb8f986",
+    "assets/characters/u_47/processed/config/u_47_far_battle_config.json": "c9aac2476c3dde1b047af741a62b89bb21836a3cc2b867068d674a81b118e6e2",
     "assets/characters/u_47/processed/config/u_47_meta_bind_points.json": "0d4df4841233eb1a4da546bf249121a9556a754ec4f4dc1d9606d89e69443e32",
     "assets/characters/u_47/processed/config/u_47_postprocess_manifest.json": "bfd3636da685cf462da7aab4450eb9905fabbf6ab3c5d7f4fb26fd6a0cd70866",
     "assets/characters/u_47/processed/config/u_47_vfx_config.json": "3e810e15394229ef0a4a34c7bbe9fc117ce65b9a516b564a15d442ba6e7584b6",
@@ -713,6 +719,520 @@
           "top": 18,
           "right": 24,
           "bottom": 45
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/u_47/processed/battle/u_47_battle_far_body.png": {
+      "sha256": "283c9937701c92fc505837e145175ef8dabfad1b24be06fb2f3b1333f6e32da1",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 598,
+        "height": 882,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 275489,
+        "visible_pixel_count": 251947,
+        "transparent_canvas_ratio": 0.5223173996465922,
+        "visible_canvas_ratio": 0.4776826003534078,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "size": [
+          598,
+          882
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          99,
+          97,
+          646,
+          853
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            0,
+            0,
+            779,
+            887
+          ],
+          "final_box": [
+            99,
+            97,
+            646,
+            853
+          ],
+          "expanded": {
+            "left": -99,
+            "top": -97,
+            "right": -133,
+            "bottom": -34
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 43,
+          "selected_component_count": 42,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                115,
+                113,
+                630,
+                837
+              ],
+              "pixel_count": 243687,
+              "overlap_pixels": 243687
+            },
+            {
+              "bbox": [
+                557,
+                209,
+                558,
+                210
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                580,
+                234,
+                581,
+                235
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                164,
+                244,
+                165,
+                245
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                608,
+                263,
+                609,
+                264
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                609,
+                264,
+                610,
+                265
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                586,
+                267,
+                587,
+                268
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                587,
+                269,
+                588,
+                270
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                588,
+                271,
+                589,
+                272
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                590,
+                271,
+                591,
+                272
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                592,
+                273,
+                593,
+                274
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                592,
+                277,
+                593,
+                278
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                593,
+                279,
+                594,
+                280
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                594,
+                281,
+                595,
+                282
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                608,
+                308,
+                609,
+                309
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                148,
+                314,
+                149,
+                315
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                610,
+                384,
+                611,
+                390
+              ],
+              "pixel_count": 6,
+              "overlap_pixels": 6
+            },
+            {
+              "bbox": [
+                609,
+                390,
+                610,
+                393
+              ],
+              "pixel_count": 3,
+              "overlap_pixels": 3
+            },
+            {
+              "bbox": [
+                156,
+                402,
+                157,
+                403
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                160,
+                423,
+                161,
+                430
+              ],
+              "pixel_count": 7,
+              "overlap_pixels": 7
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 7,
+            "top": 14,
+            "right": 1,
+            "bottom": 0
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 243468
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            539,
+            742
+          ],
+          "centroid_before_padding": [
+            275.15,
+            325.02
+          ],
+          "padding": {
+            "left": 24,
+            "top": 116,
+            "right": 35,
+            "bottom": 24
+          },
+          "centroid_offset_after_padding": {
+            "x": 0.15,
+            "y": 0.02
+          }
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/u_47/processed/battle/u_47_battle_far_rig.png": {
+      "sha256": "0902d57d9be1b325a1d6be2faf88fded3dabc56410f2eb37055ad3fa15d5abad",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 874,
+        "height": 359,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 202815,
+        "visible_pixel_count": 110951,
+        "transparent_canvas_ratio": 0.6463893474755072,
+        "visible_canvas_ratio": 0.35361065252449275,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "size": [
+          874,
+          359
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          913,
+          363,
+          1732,
+          624
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            779,
+            0,
+            1774,
+            887
+          ],
+          "final_box": [
+            913,
+            363,
+            1732,
+            624
+          ],
+          "expanded": {
+            "left": -134,
+            "top": -363,
+            "right": -42,
+            "bottom": -263
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 13,
+          "selected_component_count": 12,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                929,
+                379,
+                1716,
+                606
+              ],
+              "pixel_count": 106108,
+              "overlap_pixels": 106108
+            },
+            {
+              "bbox": [
+                1382,
+                392,
+                1383,
+                393
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1382,
+                394,
+                1383,
+                399
+              ],
+              "pixel_count": 5,
+              "overlap_pixels": 5
+            },
+            {
+              "bbox": [
+                1704,
+                505,
+                1705,
+                506
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1513,
+                600,
+                1514,
+                601
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1412,
+                606,
+                1413,
+                607
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1316,
+                607,
+                1318,
+                608
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                1325,
+                607,
+                1326,
+                608
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1356,
+                607,
+                1357,
+                608
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1358,
+                607,
+                1359,
+                608
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1360,
+                607,
+                1361,
+                608
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1362,
+                607,
+                1363,
+                608
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 12,
+            "top": 5,
+            "right": 4,
+            "bottom": 7
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 106037
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            803,
+            249
+          ],
+          "centroid_before_padding": [
+            389.8,
+            155.25
+          ],
+          "padding": {
+            "left": 47,
+            "top": 24,
+            "right": 24,
+            "bottom": 86
+          },
+          "centroid_offset_after_padding": {
+            "x": -0.2,
+            "y": -0.25
+          }
         }
       },
       "review": {

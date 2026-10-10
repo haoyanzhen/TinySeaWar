@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "character_id": "graf_zeppelin",
+  "body_basis": "upright",
+  "rig_heading_degrees": 0,
+  "rig_width": 76,
+  "roles": {
+    "body": {
+      "path": "assets/characters/graf_zeppelin/processed/battle/graf_zeppelin_battle_far_body.png",
+      "sha256": "5c05afaddd880c694c3d4a48b1c17198eb99436cead2ed7f94b131237f22b015",
+      "alpha_rect": [
+        45,
+        93,
+        596,
+        769
+      ],
+      "size": [
+        677,
+        884
+      ]
+    },
+    "rig": {
+      "path": "assets/characters/graf_zeppelin/processed/battle/graf_zeppelin_battle_far_rig.png",
+      "sha256": "6a5f70c8c977baeaba136c8a17dc75186c0ff512170e3f210f931475cccc2ef0",
+      "alpha_rect": [
+        69,
+        36,
+        946,
+        411
+      ],
+      "size": [
+        1038,
+        559
+      ]
+    }
+  },
+  "anchors": {
+    "muzzle_01": [
+      0.42,
+      0
+    ],
+    "aircraft_launch_01": [
+      0,
+      0
+    ]
+  },
+  "animation": "procedural_far_view"
+}

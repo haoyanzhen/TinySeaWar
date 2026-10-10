@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "character_id": "yat_sen",
+  "body_basis": "upright",
+  "rig_heading_degrees": 0,
+  "rig_width": 60,
+  "roles": {
+    "body": {
+      "path": "assets/characters/yat_sen/processed/battle/yat_sen_battle_far_body.png",
+      "sha256": "5f1b6c21c99b427b3e15071109f0fe0eaf337eec95ef851e84738e784194efdc",
+      "alpha_rect": [
+        50,
+        46,
+        635,
+        789
+      ],
+      "size": [
+        708,
+        857
+      ]
+    },
+    "rig": {
+      "path": "assets/characters/yat_sen/processed/battle/yat_sen_battle_far_rig.png",
+      "sha256": "d35ee981ff7d2b3170d93c54cab3759af35970033aa9e207fd3ebbbd5e23d910",
+      "alpha_rect": [
+        70,
+        31,
+        797,
+        321
+      ],
+      "size": [
+        892,
+        383
+      ]
+    }
+  },
+  "anchors": {
+    "muzzle_01": [
+      0.42,
+      0
+    ]
+  },
+  "animation": "procedural_far_view"
+}

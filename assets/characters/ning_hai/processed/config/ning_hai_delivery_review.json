@@ -12,7 +12,10 @@
   "package_sha256": {
     "assets/characters/ning_hai/battle/ning_hai_anim_5x4_master.png": "9bf7a6750546e81e0502daf01880dd85c630d27e8c577a80204ccaa2b6f132d1",
     "assets/characters/ning_hai/battle/ning_hai_battle_asset_grid.png": "d0178079c2d4ed00231a806943ab64d6b42dbfb65f194a41bd6218d467b67bd3",
+    "assets/characters/ning_hai/battle/ning_hai_far_battle_sheet.png": "18b347308adfc70ca567dafe171ebe8bb3333706ef4433e20ec5e03810dd9598",
     "assets/characters/ning_hai/concept/ning_hai_concept_full.png": "4d998df25f0bcaa060758fe9a41e6afc282df7908bae74c5273c0d9f6e8aece0",
+    "assets/characters/ning_hai/meta/ning_hai_far_battle_crop_specs.json": "f5826b62dbb9f048ed5392af96e9b222e9c684bcf22d614667b8ba874186aef0",
+    "assets/characters/ning_hai/meta/ning_hai_far_battle_revision.json": "8cb0734b9c7c3b461ce9dc018b0a81cf870caac0591507b70702304c2f7dd59a",
     "assets/characters/ning_hai/meta/ning_hai_portrait_revision.json": "823baad0770304a1de990056788e7edbe50f87d3fedcaad1620856eede3325ca",
     "assets/characters/ning_hai/processed/anim/ning_hai_anim_attack_frame_01.png": "63951d5ad23e7345fef87c618cb15c136d448bda97f3c298fe0173d0953353c4",
     "assets/characters/ning_hai/processed/anim/ning_hai_anim_attack_frame_02.png": "772d30773d847ca4141164a1d4bef809d6bcad75ce3e7f3c538be285e381d0dc",
@@ -41,6 +44,8 @@
     "assets/characters/ning_hai/processed/anim/ning_hai_anim_move_keyframe.png": "973d19e1bb4d24871e66ab49c669654664ba3f3de0ffe0305fbf1844ffb03be2",
     "assets/characters/ning_hai/processed/battle/ning_hai_battle_aa_center.png": "e31d6d860b467be8e5b336f048634ac74a20c33f8f70c3c90e3f9b57d8a47be3",
     "assets/characters/ning_hai/processed/battle/ning_hai_battle_body_r.png": "7d7a402eb962ee71a889246c5be4c916a6be7bea769aadfe67c487be90e99c87",
+    "assets/characters/ning_hai/processed/battle/ning_hai_battle_far_body.png": "1d41261128e09ea082318dff33a78d13f6dc7ddb4eb7106971ef2ceec87be1a6",
+    "assets/characters/ning_hai/processed/battle/ning_hai_battle_far_rig.png": "c89ead8b79ee3618059ab42e64e708c869ab22dab97032f68a15f94ecd6e0840",
     "assets/characters/ning_hai/processed/battle/ning_hai_battle_radar_node.png": "a2b90b999f6c46c2885eeadde167a27135ff173e622222f18f24a8d5e115ff90",
     "assets/characters/ning_hai/processed/battle/ning_hai_battle_rig_base.png": "f23c43781ecf4c5fe5558cb118b5c8c1b85285101e50765f3907f565949c463a",
     "assets/characters/ning_hai/processed/battle/ning_hai_battle_support_node.png": "49ec3d44efdc21b0be924d8e5b3603af0501e62af90c60e80d3303030b8c07ee",
@@ -48,6 +53,7 @@
     "assets/characters/ning_hai/processed/battle/ning_hai_battle_turret_main_02.png": "beb035d06e9ed8736ec81024e7cc2c077404d4b19677ff89a677c2c7171520cc",
     "assets/characters/ning_hai/processed/battle/ning_hai_battle_wake_origin_marker.png": "dad154887252b9af9088cdd7a3dfc88ef80ed94cd81eeec48aaf9ee6377bb455",
     "assets/characters/ning_hai/processed/config/ning_hai_anim_config.json": "e019327d72facfa4dfd383b3f67829b649fb1d535f2e652eb7500e20fe06a219",
+    "assets/characters/ning_hai/processed/config/ning_hai_far_battle_config.json": "d57dfdcef929b300f8d361001218a9db71d12a1763172febed1d98797df59ae1",
     "assets/characters/ning_hai/processed/config/ning_hai_meta_bind_points.json": "3fc139684e03f30925c8f741f67e6b08738be41748aaa9c6c0c8d95168f3fe79",
     "assets/characters/ning_hai/processed/config/ning_hai_postprocess_manifest.json": "30ef266b1b1d1586077566202ca4ab5bd477e06352113aaa980e70f31ffb8971",
     "assets/characters/ning_hai/processed/config/ning_hai_vfx_config.json": "74ffecf3f4bb96886e29b65693d9559ea20506e85c8c186f18a05b3e7046fb25",
@@ -715,6 +721,460 @@
         "transparent_border_ratio": 1.0
       },
       "crop_evidence": {},
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ning_hai/processed/battle/ning_hai_battle_far_body.png": {
+      "sha256": "1d41261128e09ea082318dff33a78d13f6dc7ddb4eb7106971ef2ceec87be1a6",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 704,
+        "height": 902,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 314676,
+        "visible_pixel_count": 320332,
+        "transparent_canvas_ratio": 0.49554651279983875,
+        "visible_canvas_ratio": 0.5044534872001613,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "size": [
+          704,
+          902
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          52,
+          69,
+          702,
+          877
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            0,
+            0,
+            807,
+            887
+          ],
+          "final_box": [
+            52,
+            69,
+            702,
+            877
+          ],
+          "expanded": {
+            "left": -52,
+            "top": -69,
+            "right": -105,
+            "bottom": -10
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 62,
+          "selected_component_count": 60,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                68,
+                85,
+                686,
+                861
+              ],
+              "pixel_count": 312491,
+              "overlap_pixels": 312491
+            },
+            {
+              "bbox": [
+                162,
+                173,
+                163,
+                174
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                624,
+                299,
+                625,
+                300
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                621,
+                308,
+                622,
+                309
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                103,
+                309,
+                104,
+                311
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                622,
+                310,
+                623,
+                311
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                101,
+                315,
+                102,
+                316
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                100,
+                317,
+                101,
+                320
+              ],
+              "pixel_count": 3,
+              "overlap_pixels": 3
+            },
+            {
+              "bbox": [
+                99,
+                321,
+                100,
+                323
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                98,
+                324,
+                99,
+                325
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                98,
+                326,
+                99,
+                327
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                97,
+                329,
+                98,
+                330
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                96,
+                331,
+                97,
+                333
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                95,
+                336,
+                96,
+                339
+              ],
+              "pixel_count": 3,
+              "overlap_pixels": 3
+            },
+            {
+              "bbox": [
+                94,
+                341,
+                95,
+                344
+              ],
+              "pixel_count": 3,
+              "overlap_pixels": 3
+            },
+            {
+              "bbox": [
+                95,
+                344,
+                96,
+                345
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                629,
+                403,
+                630,
+                406
+              ],
+              "pixel_count": 3,
+              "overlap_pixels": 3
+            },
+            {
+              "bbox": [
+                630,
+                408,
+                631,
+                409
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                666,
+                416,
+                667,
+                417
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                667,
+                418,
+                668,
+                419
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 13,
+            "top": 4,
+            "right": 12,
+            "bottom": 10
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 312276
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            625,
+            794
+          ],
+          "centroid_before_padding": [
+            297.16,
+            366.88
+          ],
+          "padding": {
+            "left": 55,
+            "top": 84,
+            "right": 24,
+            "bottom": 24
+          },
+          "centroid_offset_after_padding": {
+            "x": 0.16,
+            "y": -0.12
+          }
+        }
+      },
+      "review": {
+        "verdict": "pending",
+        "reviewer": "",
+        "observation": ""
+      }
+    },
+    "assets/characters/ning_hai/processed/battle/ning_hai_battle_far_rig.png": {
+      "sha256": "c89ead8b79ee3618059ab42e64e708c869ab22dab97032f68a15f94ecd6e0840",
+      "alpha_facts": {
+        "format": "PNG",
+        "source_mode": "RGBA",
+        "width": 952,
+        "height": 418,
+        "has_alpha_channel": true,
+        "alpha_min": 0,
+        "alpha_max": 255,
+        "transparent_pixel_count": 197076,
+        "visible_pixel_count": 200860,
+        "transparent_canvas_ratio": 0.4952454666076957,
+        "visible_canvas_ratio": 0.5047545333923042,
+        "transparent_border_ratio": 1.0
+      },
+      "crop_evidence": {
+        "size": [
+          952,
+          418
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          914,
+          316,
+          1759,
+          686
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            807,
+            0,
+            1774,
+            887
+          ],
+          "final_box": [
+            914,
+            316,
+            1759,
+            686
+          ],
+          "expanded": {
+            "left": -107,
+            "top": -316,
+            "right": -15,
+            "bottom": -201
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 14,
+          "selected_component_count": 6,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                930,
+                332,
+                1743,
+                670
+              ],
+              "pixel_count": 196738,
+              "overlap_pixels": 196738
+            },
+            {
+              "bbox": [
+                1050,
+                377,
+                1051,
+                378
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                942,
+                540,
+                943,
+                541
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1050,
+                632,
+                1051,
+                633
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1051,
+                636,
+                1052,
+                637
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1052,
+                638,
+                1053,
+                639
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 11,
+            "top": 0,
+            "right": 5,
+            "bottom": 7
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 196638
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            829,
+            363
+          ],
+          "centroid_before_padding": [
+            377.17,
+            185.23
+          ],
+          "padding": {
+            "left": 99,
+            "top": 24,
+            "right": 24,
+            "bottom": 31
+          },
+          "centroid_offset_after_padding": {
+            "x": 0.17,
+            "y": 0.23
+          }
+        }
+      },
       "review": {
         "verdict": "pending",
         "reviewer": "",

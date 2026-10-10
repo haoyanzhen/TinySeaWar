@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "character_id": "shokaku",
+  "body_basis": "upright",
+  "rig_heading_degrees": 0,
+  "rig_width": 76,
+  "roles": {
+    "body": {
+      "path": "assets/characters/shokaku/processed/battle/shokaku_battle_far_body.png",
+      "sha256": "9fd9925327a9aa319e19a214297a1aa4d24ecd2edb5538d60124aeb6145d288d",
+      "alpha_rect": [
+        24,
+        30,
+        639,
+        778
+      ],
+      "size": [
+        701,
+        831
+      ]
+    },
+    "rig": {
+      "path": "assets/characters/shokaku/processed/battle/shokaku_battle_far_rig.png",
+      "sha256": "2058acb89e1c2525393c0ebabde98a110996576e5ce7980dcc57788f50f87e53",
+      "alpha_rect": [
+        70,
+        22,
+        874,
+        387
+      ],
+      "size": [
+        966,
+        518
+      ]
+    }
+  },
+  "anchors": {
+    "aircraft_launch_01": [
+      0,
+      0
+    ],
+    "unit_center": [
+      0,
+      0
+    ]
+  },
+  "animation": "procedural_far_view"
+}

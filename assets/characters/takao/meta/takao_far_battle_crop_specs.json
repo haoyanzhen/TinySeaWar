@@ -1,0 +1,378 @@
+{
+  "schema_version": 1,
+  "scope": "battle_far_only",
+  "components": [
+    {
+      "role": "body",
+      "source": "assets/characters/takao/battle/takao_far_battle_sheet.png",
+      "source_sha256": "e16a162f6d355422d0faf5e852fa65810afeb1ed8cc8e08892c36efea5782c9e",
+      "hint": [
+        0,
+        0,
+        689,
+        887
+      ],
+      "crop": {
+        "size": [
+          676,
+          822
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          46,
+          104,
+          681,
+          886
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            0,
+            0,
+            689,
+            887
+          ],
+          "final_box": [
+            46,
+            104,
+            681,
+            886
+          ],
+          "expanded": {
+            "left": -46,
+            "top": -104,
+            "right": -8,
+            "bottom": -1
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 18,
+          "selected_component_count": 17,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                62,
+                120,
+                665,
+                870
+              ],
+              "pixel_count": 315684,
+              "overlap_pixels": 315684
+            },
+            {
+              "bbox": [
+                610,
+                307,
+                611,
+                308
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                611,
+                309,
+                612,
+                311
+              ],
+              "pixel_count": 2,
+              "overlap_pixels": 2
+            },
+            {
+              "bbox": [
+                564,
+                458,
+                565,
+                459
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                563,
+                459,
+                564,
+                460
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                562,
+                460,
+                563,
+                461
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                561,
+                469,
+                562,
+                470
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                561,
+                471,
+                562,
+                472
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                608,
+                566,
+                609,
+                567
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                609,
+                567,
+                610,
+                568
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                610,
+                568,
+                611,
+                569
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                94,
+                581,
+                95,
+                582
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                168,
+                684,
+                170,
+                686
+              ],
+              "pixel_count": 3,
+              "overlap_pixels": 3
+            },
+            {
+              "bbox": [
+                157,
+                700,
+                158,
+                701
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                588,
+                711,
+                589,
+                712
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                592,
+                719,
+                593,
+                720
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                279,
+                866,
+                280,
+                867
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 12,
+            "top": 14,
+            "right": 2,
+            "bottom": 14
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 315566
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            621,
+            754
+          ],
+          "centroid_before_padding": [
+            313.79,
+            367.23
+          ],
+          "padding": {
+            "left": 24,
+            "top": 44,
+            "right": 31,
+            "bottom": 24
+          },
+          "centroid_offset_after_padding": {
+            "x": -0.21,
+            "y": 0.23
+          }
+        }
+      }
+    },
+    {
+      "role": "rig",
+      "source": "assets/characters/takao/battle/takao_far_battle_sheet.png",
+      "source_sha256": "e16a162f6d355422d0faf5e852fa65810afeb1ed8cc8e08892c36efea5782c9e",
+      "hint": [
+        689,
+        0,
+        1774,
+        887
+      ],
+      "crop": {
+        "size": [
+          1120,
+          611
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          699,
+          280,
+          1768,
+          840
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            689,
+            0,
+            1774,
+            887
+          ],
+          "final_box": [
+            699,
+            280,
+            1768,
+            840
+          ],
+          "expanded": {
+            "left": -10,
+            "top": -280,
+            "right": -6,
+            "bottom": -47
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 16,
+          "selected_component_count": 3,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                715,
+                296,
+                1752,
+                824
+              ],
+              "pixel_count": 369964,
+              "overlap_pixels": 369964
+            },
+            {
+              "bbox": [
+                1301,
+                816,
+                1302,
+                817
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1340,
+                816,
+                1341,
+                817
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 5,
+            "top": 12,
+            "right": 14,
+            "bottom": 0
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 369855
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            1050,
+            548
+          ],
+          "centroid_before_padding": [
+            514.01,
+            266.43
+          ],
+          "padding": {
+            "left": 46,
+            "top": 39,
+            "right": 24,
+            "bottom": 24
+          },
+          "centroid_offset_after_padding": {
+            "x": 0.01,
+            "y": -0.07
+          }
+        }
+      }
+    }
+  ]
+}

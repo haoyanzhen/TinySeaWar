@@ -1,0 +1,428 @@
+{
+  "schema_version": 1,
+  "scope": "battle_far_only",
+  "components": [
+    {
+      "role": "body",
+      "source": "assets/characters/yamato/battle/yamato_far_battle_sheet.png",
+      "source_sha256": "3d79b1fce604d4dad91a0014e32f79ed5156a378ac77b2320b61863f08f9875c",
+      "hint": [
+        0,
+        0,
+        811,
+        887
+      ],
+      "crop": {
+        "size": [
+          739,
+          839
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          44,
+          77,
+          738,
+          876
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            0,
+            0,
+            811,
+            887
+          ],
+          "final_box": [
+            44,
+            77,
+            738,
+            876
+          ],
+          "expanded": {
+            "left": -44,
+            "top": -77,
+            "right": -73,
+            "bottom": -11
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 55,
+          "selected_component_count": 53,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                60,
+                93,
+                722,
+                860
+              ],
+              "pixel_count": 320233,
+              "overlap_pixels": 320233
+            },
+            {
+              "bbox": [
+                490,
+                155,
+                491,
+                156
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                238,
+                173,
+                239,
+                174
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                237,
+                174,
+                238,
+                175
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                234,
+                175,
+                237,
+                178
+              ],
+              "pixel_count": 5,
+              "overlap_pixels": 5
+            },
+            {
+              "bbox": [
+                232,
+                178,
+                234,
+                180
+              ],
+              "pixel_count": 3,
+              "overlap_pixels": 3
+            },
+            {
+              "bbox": [
+                231,
+                180,
+                232,
+                181
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                230,
+                181,
+                231,
+                182
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                226,
+                182,
+                229,
+                186
+              ],
+              "pixel_count": 6,
+              "overlap_pixels": 6
+            },
+            {
+              "bbox": [
+                223,
+                185,
+                226,
+                189
+              ],
+              "pixel_count": 8,
+              "overlap_pixels": 8
+            },
+            {
+              "bbox": [
+                222,
+                189,
+                223,
+                190
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                221,
+                190,
+                222,
+                191
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                220,
+                191,
+                221,
+                192
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                218,
+                192,
+                220,
+                194
+              ],
+              "pixel_count": 4,
+              "overlap_pixels": 4
+            },
+            {
+              "bbox": [
+                217,
+                194,
+                218,
+                195
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                216,
+                195,
+                217,
+                196
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                215,
+                196,
+                216,
+                197
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                214,
+                197,
+                215,
+                198
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                210,
+                202,
+                211,
+                203
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                208,
+                205,
+                209,
+                206
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 1,
+            "top": 11,
+            "right": 10,
+            "bottom": 9
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 320043
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            683,
+            779
+          ],
+          "centroid_before_padding": [
+            337.63,
+            395.52
+          ],
+          "padding": {
+            "left": 32,
+            "top": 24,
+            "right": 24,
+            "bottom": 36
+          },
+          "centroid_offset_after_padding": {
+            "x": 0.13,
+            "y": 0.02
+          }
+        }
+      }
+    },
+    {
+      "role": "rig",
+      "source": "assets/characters/yamato/battle/yamato_far_battle_sheet.png",
+      "source_sha256": "3d79b1fce604d4dad91a0014e32f79ed5156a378ac77b2320b61863f08f9875c",
+      "hint": [
+        811,
+        0,
+        1774,
+        887
+      ],
+      "crop": {
+        "size": [
+          974,
+          494
+        ],
+        "mode": "RGBA",
+        "source_box": [
+          885,
+          303,
+          1753,
+          752
+        ],
+        "source_crop_qa": {
+          "original_box": [
+            811,
+            0,
+            1774,
+            887
+          ],
+          "final_box": [
+            885,
+            303,
+            1753,
+            752
+          ],
+          "expanded": {
+            "left": -74,
+            "top": -303,
+            "right": -21,
+            "bottom": -135
+          },
+          "auto_crop_method": "connected_components_intersecting_initial_box",
+          "component_count": 13,
+          "selected_component_count": 5,
+          "selected_component_samples": [
+            {
+              "bbox": [
+                901,
+                319,
+                1737,
+                736
+              ],
+              "pixel_count": 236101,
+              "overlap_pixels": 236101
+            },
+            {
+              "bbox": [
+                1302,
+                334,
+                1303,
+                335
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                911,
+                580,
+                912,
+                581
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1087,
+                697,
+                1088,
+                698
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            },
+            {
+              "bbox": [
+                1301,
+                722,
+                1302,
+                723
+              ],
+              "pixel_count": 1,
+              "overlap_pixels": 1
+            }
+          ],
+          "source_edge_safe_margin": 16,
+          "final_edge_margins": {
+            "left": 13,
+            "top": 11,
+            "right": 13,
+            "bottom": 2
+          },
+          "edge_warnings": [
+            "left",
+            "top",
+            "right",
+            "bottom"
+          ],
+          "excluded_neighbor_components": 0,
+          "selected_source_alpha_pixel_count": 236013
+        },
+        "output_layout": {
+          "content_bbox": [
+            0,
+            0,
+            842,
+            436
+          ],
+          "centroid_before_padding": [
+            379.12,
+            213.2
+          ],
+          "padding": {
+            "left": 108,
+            "top": 34,
+            "right": 24,
+            "bottom": 24
+          },
+          "centroid_offset_after_padding": {
+            "x": 0.12,
+            "y": 0.2
+          }
+        }
+      }
+    }
+  ]
+}

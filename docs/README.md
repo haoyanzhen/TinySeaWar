@@ -23,11 +23,12 @@ Use lowercase English file names with underscores:
 ### Project Status
 
 - [00_project_status.md](00_project_status.md)
+- [工单状态跟踪清单](../workorder/00_workorder_status.md)：全部日期工单的逐份审计、完成证据和关闭记录；2026-10-10用户确认W09/W10已验收并关闭后，现有14份全部原范围完成或验收关闭，未关闭0份，项目完成度仍以00为准。
 
 ### Gameplay And Balance
 
 - [10_game_core_mechanics.md](10_game_core_mechanics.md)
-- [11_game_operation_design.md](11_game_operation_design.md)
+- [11_game_operation_design.md](11_game_operation_design.md)：键鼠、设施、暂停计划与菜单/GUI输入的操作真源；说明界面视觉归44。
 - [12_combat_formula_design.md](12_combat_formula_design.md)
 - [13_balance_baseline.md](13_balance_baseline.md)
 - [14_character_balance_design.md](14_character_balance_design.md)
@@ -73,7 +74,7 @@ Use lowercase English file names with underscores:
 美术目录入口：[assets/README.md](../assets/README.md)；统一路径、命名与兼容例外由 `45` 维护。
 
 - [40_art_direction_design.md](40_art_direction_design.md)
-- [41_character_art_design.md](41_character_art_design.md)
+- [41_character_art_design.md](41_character_art_design.md)：全48角色的个体视觉方向、56px战斗身份特征与舰装简化重点。
 - [42_combat_art_design.md](42_combat_art_design.md)
 - [43_scene_art_design.md](43_scene_art_design.md)
 - [44_ui_art_design.md](44_ui_art_design.md)
@@ -91,8 +92,8 @@ Use lowercase English file names with underscores:
 ### Audit
 
 - [实际关卡慢恢复调研与实施](../workorder/20260930-slow-recovery-investigation.md)：S-03/S-04逐Tick原因、分舰站位/动态椭圆/恢复修复及CPU前后测量；剩余慢例、无安全航迹与潜艇循环仍待关闭。
-- [潜艇战斗 AI 闭环工单](../workorder/20260810-submarine-combat-ai-runtime-closure.md)：潜艇执行、独立深度意图、反潜受击自卫、等级续航与雷击预算；当前状态见 `00`。
-- [玩家战斗反馈与角色表现工单](../workorder/20260927-player-feedback-character-presentation.md)：反馈事实、威胁识别、角色装配、音频与可访问性；含修改价值和验收条件。
+- [潜艇战斗 AI 闭环工单](../workorder/20260810-submarine-combat-ai-runtime-closure.md)：2026-10-10按用户确认关闭W07，保留实现与旧验证历史。
+- [玩家战斗反馈与角色表现工单](../workorder/20260927-player-feedback-character-presentation.md)：2026-10-10按用户确认关闭W08，保留原调研与方案历史；W09/W14独立跟踪。
 - [91_character_phase2_historical_validation.md](91_character_phase2_historical_validation.md)
 - [92_character_phase2_static_balance_review.md](92_character_phase2_static_balance_review.md)
 
@@ -102,3 +103,7 @@ Use lowercase English file names with underscores:
 - [history/90_design_audit_round4.md](history/90_design_audit_round4.md)：2026-06-14 第四轮设计复核的历史存档；当前未闭环项见 `../workorder/20260717-design-audit-round4-unclosed-items.md`。
 
 - [history/52_sound_effect_production_iterations.md](history/52_sound_effect_production_iterations.md)：音效选材历轮记录；当前规范见52。
+
+## 临时设计试验
+
+- [最远视角美术临时设计](../workorder/20261009-far-view-art-design.md)：三角色试验及56px全48角色战斗修订记录；W14于2026-10-10按用户指令关闭，原证据边界留档。

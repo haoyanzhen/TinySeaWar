@@ -101,6 +101,8 @@
 | 潜艇六阶段、装填 ETA 发射器规划、AttackRun 超时重规划、长期诊断与 S-04/S-05 `1 -> 3` 固定种子门禁 | `scripts/tests/test_runner.gd`、`scripts/tests/submarine_ai_fixed_seed_test.gd`、`scripts/tests/battle_simulator_test.gd` |
 | 潜艇低氧、接触保持、尾管、真实可见性、独立深度意图、反潜受击自卫、追踪和2倍雷击预算回归 | `scripts/tests/submarine_review_regression_test.gd` |
 | 航迹、碰撞场与恢复测试 | `scripts/tests/trajectory_navigation_test.gd`、`navigation_collision_field_test.gd`、`ai_route_recovery_test.gd`、`navigation_progress_recovery_test.gd` |
+| 水流下接回失败的合法退路及L-02固定种子复现 | `scripts/tests/navigation_current_rejoin_test.gd`；默认1000Tick，`-- --full-battle`扩展至结算或600秒上限 |
+| 静止/低速前舰绕行、移动前舰跟随、L-02双舰占位及接回转向/目标刷新 | `scripts/tests/navigation_traffic_test.gd`；同时检查动态碰撞与六候选预算 |
 | 岬角、凹湾、双岸水道和水流下的持续到达回归 | `scripts/tests/coastal_navigation_progress_test.gd` |
 | Tick 分阶段、导航/侦查性能、投影路线、失败/等待与大编队碰撞测试 | `scripts/tests/ai_navigation_performance_test.gd` |
 
@@ -138,9 +140,9 @@
 | 局部环境区 | `data/environments/environment_zone_definitions.json` |
 | 海面调色板 | `data/environments/ocean_palettes.json` |
 | 环境上下文服务 | `scripts/domain/services/terrain_context_service.gd` |
-| 海面表现 | `scripts/presentation/battle/ocean_surface.gd` |
+| 海面表现 | `scripts/presentation/battle/ocean_surface.gd`；`ship_wake_layer.gd`公开航迹尾流；`terrain_view.gd`与`shore_water.gdshader`岸线动画；`scripts/tests/ocean_motion_test.gd`生命周期验证 |
 | 环境时间线与专项验证 | `data/environments/environment_timelines.json`、`scripts/tests/weather_runtime_test.gd`、`weather_transition_performance_test.gd`、`render_weather_qa.gd`（后三者同目录） |
-| 天气叠层 | `scripts/presentation/battle/weather_overlay.gd` |
+| 天气叠层 | `scripts/presentation/battle/weather_overlay.gd`；`assets/environment/weather/weather_overlay.gdshader`；`scripts/tests/weather_atmosphere_test.gd`候选闪电/公开降噪验证 |
 
 ## 9. 设施与水雷
 
@@ -240,6 +242,7 @@
 
 - `scripts/presentation/menu/main_menu.gd`：封面、看板、观赏、教学/挑战详情、编队、帮助与设置。
 - `scripts/presentation/menu/menu_content.gd`：现有菜单章节、规模和地图选项。
+- `scripts/presentation/menu/operation_guide.gd`：操作说明六分类、键鼠动作与适用条件；`scripts/tests/operation_guide_test.gd` 核对实际快捷键覆盖、页签和文本/滚动边界，`render_menu_qa.gd --page=help --help-section=0` 渲染分类（支持 `--1440`、`--4k`）。
 - `scripts/presentation/ui_theme.gd`：菜单与战斗共享主题；`menu_button_texture_style.gd` 提供原生透明图集分段缩放，`naval_button_style.gd` 保留窄控件和缺图回退。
 - `assets/ui/processed/menu/cover_manifest.json`：正式菜单封面清单。
 - `assets/ui/processed/menu/button_manifest.json`：12个珐琅按钮区域的补充语义清单；`tools/art_pipeline/build_menu_button_atlas.py` 无损复制母版并重建 AtlasTexture 与清单。
@@ -321,3 +324,9 @@
 - `export_presets.cfg`：Windows 10 x64正式资源白名单预设，保留动态读取JSON/TSCF，排除制作/测试/编辑器数据。
 - `tools/release/build_windows.py`：生成预设与逐项源文件哈希清单；`inspect_windows_pack.py`：检查PCK文件MD5、必需数据、发布边界与PE架构。
 - `build/windows-20261002/`：免安装应用、交付ZIP、素材清单、包内清单与校验值；本地构建产物不入Git。模板需匹配Godot 4.6.3，使用方式见tools/release/README.md。
+
+## 远景战斗角色修订
+
+- `scripts/presentation/battle/far_ship_unit_view.gd`：正式56px角色、分层航向、程序动画与显示范围点选；由 `BattleEffectDirector` 使用。
+- `tools/art_review/far_view/prepare_full_roster.py`：48角色独立battle修订与共享裁切；`render_full_roster.gd`、`build_full_review.py`：全量图像评审产物。
+- `scripts/tests/far_battle_art_test.gd`：全量资源、尺度、状态、缓存和公开范围点选回归。

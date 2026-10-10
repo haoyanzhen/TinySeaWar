@@ -3,6 +3,7 @@ extends Control
 const Kit = preload("res://scripts/presentation/ui_theme.gd")
 const Content = preload("res://scripts/presentation/menu/menu_content.gd")
 const UiText = preload("res://scripts/presentation/ui_text.gd")
+const OperationGuide = preload("res://scripts/presentation/menu/operation_guide.gd")
 const BATTLE_SCENE := "res://scenes/battle/prototype_battle.tscn"
 const CUSTOM_SIZES = Content.CUSTOM_SIZES
 const MAP_OPTIONS = Content.MAP_OPTIONS
@@ -72,6 +73,9 @@ var music_pause: Button
 var music_next: Button
 var music_repeat: Button
 var music_mode_selector: OptionButton
+var help_buttons: Array[Button] = []
+var help_body: ScrollContainer
+var help_hint: Label
 
 
 func _ready() -> void:
@@ -861,27 +865,60 @@ func _start_level(id: String) -> void:
 
 
 func _show_help() -> void:
-	_begin_page("help", "操作说明 · 把战术变成行动", "从基础指挥开始。主要武器与技能由你把握时机，自动辅助可以逐舰开启。")
+	_begin_page("help", "操作说明 · 从选舰到协同", "按分类查找键鼠操作与使用条件。Windows 使用 Alt 切全队开关、Ctrl + K 侦察；macOS 也支持 Cmd。")
+	help_buttons.clear()
+	var tabs := _row(content, 12)
+	var group := ButtonGroup.new()
+	for index in range(OperationGuide.SECTIONS.size()):
+		var button := _button(tabs, OperationGuide.SECTIONS[index].title, _select_help_section.bind(index), Vector2(0, 52))
+		button.name = "HelpTab%d" % index
+		button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		button.toggle_mode = true
+		button.button_group = group
+		button.add_theme_font_size_override("font_size", 22)
+		help_buttons.append(button)
+	help_body = _scroll(content)
+	help_body.name = "OperationGuideScroll"
+	help_body.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	help_hint = _label(content, "", 19, Kit.TEAL)
+	help_hint.name = "OperationGuideHint"
+	_select_help_section(0)
+
+
+func _select_help_section(index: int) -> void:
+	var section: Dictionary = OperationGuide.SECTIONS[index]
+	for tab_index in range(help_buttons.size()):
+		help_buttons[tab_index].set_pressed_no_signal(tab_index == index)
+	_clear(help_body)
+	help_body.scroll_vertical = 0
 	var grid := GridContainer.new()
+	grid.name = "OperationGuideCards"
 	grid.columns = 2
+	grid.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	grid.add_theme_constant_override("h_separation", 24)
-	grid.add_theme_constant_override("v_separation", 20)
-	content.add_child(grid)
-	var groups := [
-		["选择与航行", "左键 / 拖框    选择舰娘，Shift 增选\n左键敌舰    集火；右键海面    移动\n1–9 / 0 / -    切换舰娘\nZ    连续航点；Esc 退出布置"],
-		["武器与技能", "E    主要武器瞄准，左键确认\nQ    切换 HE / AP 弹药\nF    主动技能\n右键 / Esc    取消当前瞄准"],
-		["辅助与潜航", "X    辅助航行；V    主武器自动\nC    水面舰副武器 / 潜艇上下潜\nCmd / Alt + X / C / V    舰队开关\n舰队 C 不改变潜艇深度"],
-		["镜头与战术暂停", "WASD    移动镜头；滚轮    缩放\nT    全选存活己方舰队；G    跟踪主焦点舰娘\nSpace    暂停 / 继续并执行计划\n暂停时可布置航点、集火与攻击指令"],
-	]
-	for group in groups:
+	help_body.add_child(grid)
+	for card in section.cards:
 		var panel := PanelContainer.new()
-		panel.custom_minimum_size = Vector2(850, 230)
+		panel.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		panel.add_theme_stylebox_override("panel", Kit.panel(Color("#edf6f8"), 16, 18))
 		grid.add_child(panel)
-		var column := _column(panel, 14)
-		_label(column, group[0], 27)
-		var text := _label(column, group[1], 21, Kit.MUTED)
-		text.add_theme_constant_override("line_spacing", 9)
-	_label(content, "港湾设施：H 控制 · J 补给维修 · K 空袭（Shift 巡逻 / Cmd 侦察）· L 布雷 · U / Backspace 取消或离泊", 18, Kit.MUTED)
+		var column := _column(panel, 6)
+		_label(column, card.title, 27, Kit.TEAL)
+		for entry in card.rows:
+			var line := HSeparator.new()
+			var separator := StyleBoxLine.new()
+			separator.color = Color("#cbdde1")
+			separator.thickness = 1
+			line.add_theme_stylebox_override("separator", separator)
+			column.add_child(line)
+			var row := _row(column, 20)
+			var key := _label(row, entry[0], 20, Kit.TEAL)
+			key.custom_minimum_size.x = 224
+			key.size_flags_horizontal = Control.SIZE_FILL
+			var description := _column(row, 4)
+			_label(description, entry[1], 22)
+			_label(description, entry[2], 18, Color("#486773"))
+	help_hint.text = "%02d / %02d   ·   %s" % [index + 1, OperationGuide.SECTIONS.size(), section.hint]
 
 
 func _show_settings() -> void:

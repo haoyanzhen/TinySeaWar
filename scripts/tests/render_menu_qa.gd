@@ -10,6 +10,7 @@ func _run() -> void:
 	var chapter := 0
 	var level_id := ""
 	var scroll_bottom := false
+	var help_section := 0
 	for arg in OS.get_cmdline_user_args():
 		if arg.begins_with("--page="): page = arg.trim_prefix("--page=")
 		elif arg.begins_with("--output="): output = arg.trim_prefix("--output=")
@@ -17,6 +18,8 @@ func _run() -> void:
 		elif arg.begins_with("--level="): level_id = arg.trim_prefix("--level=")
 		elif arg == "--scroll-bottom": scroll_bottom = true
 		elif arg == "--1440": target = Vector2i(2560, 1440)
+		elif arg == "--4k": target = Vector2i(3840, 2160)
+		elif arg.begins_with("--help-section="): help_section = int(arg.trim_prefix("--help-section="))
 	var viewport := SubViewport.new()
 	viewport.size = target
 	viewport.size_2d_override = Vector2i(1920, 1080)
@@ -29,6 +32,7 @@ func _run() -> void:
 	if page == "gallery": menu._show_home(); menu._show_gallery()
 	elif page == "view": menu._show_home(); menu.set_viewing(true)
 	else: menu.call("_show_" + page)
+	if page == "help": menu._select_help_section(clampi(help_section, 0, menu.OperationGuide.SECTIONS.size() - 1))
 	if not level_id.is_empty() and page in ["tutorial", "challenge"]:
 		menu._show_level_detail(level_id, "", true)
 	await create_timer(0.7).timeout

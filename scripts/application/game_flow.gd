@@ -90,6 +90,22 @@ func _apply_loaded_progress(parsed: Dictionary) -> void:
 		var level_id := str(value)
 		if not level_id.is_empty() and level_id not in completed_challenge_level_ids:
 			completed_challenge_level_ids.append(level_id)
+	# Completed challenges are durable facts; reconcile their current reward catalog.
+	# Keep legacy ownership and unknown IDs, and never infer tutorial completion.
+	var backfill_levels: Array[String] = []
+	for level_id in completed_challenge_level_ids:
+		var level: Dictionary = DataRegistry.registry.get_definition("levels", level_id)
+		if level.get("battle_mode") != "ChallengeBattle":
+			continue
+		for ship_id in ShipAcquisitionCatalog.rewards(ship_acquisition_catalog(), level_id):
+			if ship_id not in unlocked_ship_ids:
+				unlocked_ship_ids.append(ship_id)
+				if level_id not in backfill_levels:
+					backfill_levels.append(level_id)
+	if not backfill_levels.is_empty():
+		# Reuse the verified save/retry transaction; a failed write retains all facts.
+		_pending_progress_level_ids.assign(backfill_levels)
+		record_level_victory(backfill_levels[0])
 
 
 func runtime_level_definition(level_id: String) -> Dictionary:

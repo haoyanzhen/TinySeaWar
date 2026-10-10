@@ -26,7 +26,11 @@ func _run() -> void:
 	var counts := {}
 	for item in catalog.get("ships", []):
 		counts[item["category"]] = int(counts.get(item["category"], 0)) + 1
-	_check(counts == {"DefaultOwned": 3, "TutorialReward": 6, "ChallengeReward": 18, "Pending": 21}, "all 48 ships partitioned")
+	_check(counts == {"DefaultOwned": 3, "TutorialReward": 6, "ChallengeReward": 39}, "all 48 ships obtainable without pending entries")
+	for prefix in ["s", "m", "l"]:
+		for index in range(1, 6):
+			var rewards := Catalog.rewards(catalog, "level.challenge.%s%02d" % [prefix, index])
+			_check(rewards.size() >= 2 and rewards.size() <= 4, "every challenge grants 2-4 ships")
 	var broken := catalog.duplicate(true)
 	broken["ships"].remove_at(0)
 	_check(not _validate(broken, registry).is_empty(), "missing ship rejected")
@@ -55,6 +59,11 @@ func _run() -> void:
 	_check(flow.is_ship_unlocked("ship.ward") and flow.is_ship_unlocked("ship.hosho"), "defaults merged into old save")
 	_check(flow.is_ship_unlocked("ship.argus") and flow.is_ship_unlocked("ship.akizuki"), "legacy reward and pending ownership preserved")
 	_check(not flow.is_ship_unlocked("ship.future"), "unknown future ship not playable")
+	_check(flow.is_ship_unlocked("ship.yat_sen") and flow.is_ship_unlocked("ship.anshan"), "completed challenge backfills current rewards")
+	_check(not flow.is_ship_unlocked("ship.chang_chun") and not flow.is_ship_unlocked("ship.fletcher"), "backfill does not infer next challenge or tutorial completion")
+	var migration_writes := store.writes
+	flow._apply_loaded_progress(store.document)
+	_check(store.writes == migration_writes, "reconciled save loads without another write")
 	_check(flow.record_level_victory("level.tutorial.t01") and flow.is_ship_unlocked("ship.fletcher"), "tutorial reward follows catalog")
 	_check("ship.future" in store.document.get("unlocked_ship_ids", []), "unknown ID preserved on next save")
 	var before: int = flow.unlocked_ship_ids.size()
@@ -70,13 +79,24 @@ func _run() -> void:
 	_check(flow.record_level_victory("level.tutorial.t08"), "reward-free tutorial succeeds without save")
 	_check(store.writes == writes_before, "unimplemented and reward-free results do not write")
 	_check(not flow.ship_acquisition_label("ship.kirov").contains("尚未开放"), "implemented source label truthful")
-	_check(flow.ship_acquisition_label("ship.akizuki").contains("暂无获取途径"), "pending source label truthful")
+	_check(flow.ship_acquisition_label("ship.akizuki").contains("S-03"), "new reward source label truthful")
+	flow._apply_loaded_progress({})
+	_check(flow.unlocked_ship_ids.size() == 3, "fresh profile begins with only default ships")
+	for prefix in ["s", "m", "l"]:
+		for index in range(1, 6):
+			var id := "level.challenge.%s%02d" % [prefix, index]
+			_check(flow.record_level_victory(id), "challenge reward saves: " + id)
+			for ship_id in Catalog.rewards(catalog, id):
+				_check(flow.is_ship_unlocked(ship_id), "challenge grants " + ship_id)
+	for index in range(1, 7):
+		flow.record_level_victory("level.tutorial.t%02d" % index)
+	_check(flow.unlocked_ship_ids.size() == registry.all("ships").size(), "fresh progression reaches every loaded character")
 	flow.free()
 	var menu = load("res://scripts/presentation/menu/main_menu.gd").new()
 	root.add_child(menu)
 	menu._show_custom()
 	_check(menu.ship_buttons.size() == 48, "menu lists complete roster")
-	_check(menu.ship_buttons["ship.akizuki"].tooltip_text.contains("暂无获取途径"), "menu renders pending source")
+	_check(menu.ship_buttons["ship.akizuki"].tooltip_text.contains("S-03"), "menu renders new challenge source")
 	_check(not menu.ship_buttons["ship.kirov"].tooltip_text.contains("尚未开放"), "menu renders implemented reward source")
 	menu.free()
 	for failure in failures:

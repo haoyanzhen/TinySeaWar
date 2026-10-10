@@ -67,6 +67,23 @@ func _run() -> void:
 	menu._on_progress_save_status_changed({"status": "Saved", "message": "进度已保存", "can_retry": false})
 	_check(not menu.progress_failure_banner.visible, "successful save removes failure banner")
 	menu.free()
+	var migrated = load("res://scripts/application/game_flow.gd").new()
+	var migration_store := InterruptedStore.new()
+	migration_store.fail_writes = 1
+	migrated._progress_store = migration_store
+	migrated._progress_path = path + ".migration"
+	migrated._apply_loaded_progress({"schema_version": 1, "unlocked_ship_ids": ["ship.future", "ship.hood"], "completed_challenge_level_ids": ["level.challenge.s01", "level.challenge.m04", "level.challenge.missing", "level.tutorial.t01"]})
+	_check(migrated.progress_save_state()["can_retry"] and migrated.is_ship_unlocked("ship.yat_sen") and migrated.is_ship_unlocked("ship.wahoo"), "failed migration preserves multi-level rewards and offers retry")
+	_check(migrated.is_ship_unlocked("ship.hood") and not migrated.is_ship_unlocked("ship.fletcher"), "migration retains legacy ownership without inferring tutorial rewards")
+	_check(migrated.retry_progress_save(), "migration retry persists all backfilled rewards")
+	var migration_writes := migration_store.writes
+	migrated._load_unlocked_ships()
+	_check(migration_store.writes == migration_writes and migrated.unlocked_ship_ids.count("ship.wahoo") == 1, "migration reload idempotent")
+	_check("ship.future" in migration_store.load_best(path + ".migration").get("unlocked_ship_ids", []), "migration preserves unknown ownership facts")
+	migrated.free()
+	for suffix in ["", ".next", ".backup"]:
+		if FileAccess.file_exists(path + ".migration" + suffix):
+			DirAccess.remove_absolute(path + ".migration" + suffix)
 	flow.free()
 	reloaded.free()
 	for suffix in ["", ".next", ".backup"]:

@@ -13,6 +13,9 @@ const WEATHER_TEXTURE_DEFAULTS := {
 	"lightning_mask_texture": "res://assets/environment/weather/ocean_weather_lightning_flash_master.png",
 }
 const NUMERIC_PARAMETER_DEFAULTS := {
+	"atmosphere_strength": 0.0,
+	"depth_variation": 0.32,
+	"ripple_strength": 0.12,
 	"wave_strength": 0.0,
 	"sparkle_strength": 0.0,
 	"cloud_opacity": 0.0,
@@ -84,7 +87,7 @@ func set_palette(palette_id: String) -> void:
 		if not texture_path.is_empty():
 			shader_material.set_shader_parameter(parameter, load(texture_path))
 	for parameter in ["deep_color", "surface_color", "shallow_color", "highlight_color", "cloud_color", "warm_reflection_color"]:
-		shader_material.set_shader_parameter(parameter, Color(str(palette.get(parameter, "#ffffff"))))
+		shader_material.set_shader_parameter(parameter, Color(str(palette.get("water_highlight_color", palette.get(parameter, "#ffffff")) if parameter == "highlight_color" else palette.get(parameter, "#ffffff"))))
 	for parameter in NUMERIC_PARAMETER_DEFAULTS.keys():
 		shader_material.set_shader_parameter(parameter, float(palette.get(parameter, NUMERIC_PARAMETER_DEFAULTS[parameter])))
 

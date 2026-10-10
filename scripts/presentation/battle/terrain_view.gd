@@ -1,5 +1,12 @@
 extends Node2D
 
+const SHORE_SHADER = preload("res://assets/environments/ocean/common/shore_water.gdshader")
+var shore_materials: Array[ShaderMaterial] = []
+
+func set_animation_time(seconds: float) -> void:
+	for material in shore_materials:
+		material.set_shader_parameter("animation_time", seconds)
+
 var asset_catalog
 var static_root := Node2D.new()
 var zone_root := Node2D.new()
@@ -19,6 +26,7 @@ func _ready() -> void:
 
 
 func configure(terrain_map: Dictionary, assets) -> void:
+	shore_materials.clear()
 	asset_catalog = assets
 	_clear(static_root)
 	for region in terrain_map.get("regions", []):
@@ -77,6 +85,10 @@ func _create_land_instance(instance: Dictionary) -> void:
 	if path.is_empty():
 		path = str(instance.get("texture", ""))
 	sprite.texture = _texture(path)
+	var water_material := ShaderMaterial.new()
+	water_material.shader = SHORE_SHADER
+	sprite.material = water_material
+	shore_materials.append(water_material)
 	sprite.position = _vector2(instance.get("position", []))
 	sprite.scale = _vector2(instance.get("scale", [1.0, 1.0]))
 	sprite.rotation = deg_to_rad(float(instance.get("rotation_degrees", 0.0)))

@@ -4,6 +4,7 @@ render_mode unshaded;
 uniform vec2 map_size = vec2(4096.0, 2304.0);
 uniform float animation_time = 0.0;
 uniform float animation_speed = 1.0;
+uniform float atmosphere_strength = 0.0;
 uniform sampler2D base_texture : filter_linear;
 uniform sampler2D cloud_texture : filter_linear;
 uniform sampler2D wave_texture : filter_linear;
@@ -20,6 +21,8 @@ uniform vec4 shallow_color : source_color = vec4(0.302, 0.659, 0.710, 1.0);
 uniform vec4 highlight_color : source_color = vec4(0.718, 0.894, 0.898, 1.0);
 uniform vec4 cloud_color : source_color = vec4(0.051, 0.169, 0.251, 1.0);
 uniform vec4 warm_reflection_color : source_color = vec4(0.576, 0.420, 0.408, 1.0);
+uniform float depth_variation = 0.32;
+uniform float ripple_strength = 0.12;
 uniform float wave_strength : hint_range(0.0, 1.0) = 0.22;
 uniform float sparkle_strength : hint_range(0.0, 1.0) = 0.25;
 uniform float cloud_opacity : hint_range(0.0, 1.0) = 0.1;
@@ -79,13 +82,25 @@ void fragment() {
 	float time = animation_time * animation_speed;
 	float broad_a = fbm(world * 0.00115 + vec2(time * 0.012, -time * 0.007));
 	float broad_b = fbm(world * 0.00185 + vec2(-time * 0.008, time * 0.011) + 31.7);
-	float depth = 0.5;
-	depth += sin(world.x * 0.00072 + world.y * 0.00021 + time * 0.018) * 0.17;
-	depth += sin(world.x * -0.00031 + world.y * 0.00091 - time * 0.013) * 0.13;
-	depth += (broad_a - 0.5) * 0.0;
+	// Continuous directional swell, crossed by shorter wind waves. World-space
+	// phases avoid cell boundaries and repeated isolated wave stamps.
+	float swell_a = dot(world, vec2(0.0038, 0.0102)) - time * 0.85;
+	float swell_b = dot(world, vec2(-0.0061, 0.0137)) - time * 1.12 + 1.8;
+	float swell_c = dot(world, vec2(0.0108, 0.0064)) - time * 0.94 + 3.1;
+	float swell = sin(swell_a) * 0.52 + sin(swell_b) * 0.30 + sin(swell_c) * 0.18;
+	// Slow, elongated water volumes under the finer wave field. Phase bending
+	// keeps them connected without circular noise blobs or rigid colour bands.
+	float volume_a = dot(world, vec2(0.0012, 0.0038)) - time * 0.24;
+	float volume_b = dot(world, vec2(-0.0024, 0.0029)) - time * 0.19 + 2.1;
+	float volume_bend = sin(dot(world, vec2(0.0017, -0.0011)) - time * 0.11) * 0.65;
+	float volume = sin(volume_a + volume_bend) * 0.62;
+	volume += sin(volume_b + sin(volume_a * 0.53) * 0.40) * 0.38;
+	float depth = 0.57 + volume * depth_variation * 0.43;
+	depth += swell * depth_variation * 0.17;
 	depth = clamp(depth, 0.0, 1.0);
-	vec3 water = mix(deep_color.rgb, surface_color.rgb, smoothstep(0.2, 0.82, depth));
-	water = mix(water, shallow_color.rgb, smoothstep(0.66, 0.96, depth) * 0.3);
+	// Broad, soft tonal transitions; avoid clipping bright islands out of noise.
+	vec3 water = mix(deep_color.rgb, surface_color.rgb, smoothstep(0.08, 0.95, depth));
+	water = mix(water, shallow_color.rgb, smoothstep(0.50, 1.0, depth) * 0.18);
 	vec2 texture_uv = fract(world / 1024.0);
 	mat2 texture_rotation = mat2(vec2(0.819, -0.574), vec2(0.574, 0.819));
 	vec3 ai_base_a = texture(base_texture, texture_uv).rgb;
@@ -93,6 +108,22 @@ void fragment() {
 	vec3 ai_base = mix(ai_base_a, ai_base_b, 0.42);
 	water = mix(water, ai_base, ai_texture_strength);
 
+	// A broad face rolls continuously; interference breaks up its reflections.
+	// The finer field crosses the swell rather than sharing a translated mask.
+	float bend = sin(swell_b) * 0.75 + sin(swell_c) * 0.45;
+	float wind_a = dot(world, vec2(0.027, 0.085)) - time * 1.9 + bend;
+	float wind_b = dot(world, vec2(0.018, 0.111)) - time * 2.3 + sin(swell_a) * 0.65;
+	float wind_c = dot(world, vec2(-0.042, 0.069)) - time * 2.1 + 2.7;
+	float wind_face = cos(wind_a) * 0.50 + cos(wind_b) * 0.30 + cos(wind_c) * 0.20;
+	float swell_face = cos(swell_a) * 0.52 + cos(swell_b) * 0.30 + cos(swell_c) * 0.18;
+	float slope_light = swell_face * 0.55 + wind_face * 0.45;
+	float reflection = smoothstep(0.12, 0.82, slope_light);
+	float trough = smoothstep(0.10, 0.85, -slope_light);
+	water = mix(water, deep_color.rgb * 0.85, trough * ripple_strength * 0.85);
+	water = mix(water, shallow_color.rgb, reflection * ripple_strength * 0.70);
+	// Short, tapered glints emerge only where the crossing slopes agree.
+	float fine_glint = smoothstep(0.60, 0.94, wind_face) * smoothstep(-0.2, 0.65, swell_face);
+	water = mix(water, highlight_color.rgb, fine_glint * ripple_strength * 0.32);
 	float wave_scale_safe = max(0.4, wave_scale);
 	float wave_a = sin((world.x * 0.028 + world.y * 0.014) * wave_scale_safe + time * 1.15 + broad_a * 5.5);
 	float wave_b = sin((world.x * -0.019 + world.y * 0.031) * wave_scale_safe - time * 0.86 + broad_b * 4.2);
@@ -107,7 +138,7 @@ void fragment() {
 	float authored_wave = authored_wave_a * 0.58 + authored_wave_b * 0.42;
 	float clear_glint = texture(clear_glint_texture, fract(texture_rotation * world / 1024.0 + vec2(time * 0.0008, -time * 0.0004))).r;
 	float sparkle_mask = crest_a * crest_b * (0.45 + crest_c * 0.55) + authored_wave * 0.24 + clear_glint * 0.42;
-	water = mix(water, highlight_color.rgb, wave_line * 0.62 + sparkle_mask * sparkle_strength);
+	water = mix(water, highlight_color.rgb, sparkle_mask * sparkle_strength * 0.35);
 	float foam_noise = fbm(world * 0.0048 * wave_scale_safe + vec2(-time * 0.045, time * 0.026));
 	float foam_authored = texture(foam_texture, fract(texture_rotation * world / 1024.0 + vec2(-time * 0.0014, time * 0.0007))).r;
 	float foam = smoothstep(foam_coverage, 0.99, foam_noise + authored_wave * 0.2 + foam_authored * 0.58 + wave_line * 0.18) * foam_strength;
@@ -121,10 +152,10 @@ void fragment() {
 	cloud_field += (broad_b - 0.5) * 0.12 + (cloud_authored - 0.5) * 0.58;
 	float cloud = smoothstep(cloud_cutoff, cloud_cutoff + cloud_softness, cloud_field) * cloud_opacity;
 	vec3 cloud_tint = mix(water * 0.68, cloud_color.rgb, 0.12);
-	water = mix(water, cloud_tint, cloud);
+	water = mix(water, cloud_tint, cloud * (1.0 - atmosphere_strength));
 	float storm_authored = texture(storm_shadow_texture, fract(texture_rotation * world / 1536.0 + vec2(-time * 0.0007, time * 0.0005))).r;
 	float squall = smoothstep(0.46, 0.84, fbm(world * 0.00135 * max(0.55, cloud_scale) + vec2(-time * 0.035, time * 0.019) + 93.0) * 0.45 + storm_authored * 0.55) * squall_strength;
-	water = mix(water, cloud_color.rgb * 0.82, squall * 0.36);
+	water = mix(water, cloud_color.rgb * 0.82, squall * 0.36 * (1.0 - atmosphere_strength));
 
 	float warm_pattern = smoothstep(0.69, 0.94, broad_b + wave_line * 0.25);
 	water = mix(water, warm_reflection_color.rgb, warm_pattern * warm_reflection_strength);
@@ -141,13 +172,13 @@ void fragment() {
 	float rain_ripple_authored = texture(rain_ripple_texture, fract(world / 1024.0 + vec2(time * 0.0004, -time * 0.0003))).r;
 	float rain_ripple = (smoothstep(0.965, 1.0, fbm(world * 0.021 + vec2(time * 1.4, time * 0.9))) * 0.35 + rain_ripple_authored * 0.65) * rain_strength;
 	vec3 rain_tint = mix(water, highlight_color.rgb, 0.36);
-	water = mix(water, rain_tint, rain_lines * rain_line_strength * 0.36 + rain_ripple * rain_ripple_strength * 0.14);
+	water = mix(water, rain_tint, (rain_lines * rain_line_strength * 0.36 + rain_ripple * rain_ripple_strength * 0.14) * (1.0 - atmosphere_strength));
 	float lightning_pulse = pow(smoothstep(0.935, 1.0, sin(time * 0.73) * 0.5 + 0.5), 8.0);
 	lightning_pulse = max(lightning_pulse, squall * 0.08);
 	lightning_pulse *= lightning_strength;
 	lightning_pulse *= smoothstep(0.38, 0.86, cloud_field);
 	float lightning_authored = texture(lightning_mask_texture, fract(texture_rotation * world / 1536.0 + vec2(0.19, 0.41))).r;
-	water = mix(water, highlight_color.rgb, lightning_pulse * (0.18 + lightning_authored * 0.32));
+	water = mix(water, highlight_color.rgb, lightning_pulse * (0.18 + lightning_authored * 0.32) * (1.0 - atmosphere_strength));
 	float map_edge_distance = min(min(world.x, map_size.x - world.x), min(world.y, map_size.y - world.y));
 	float map_edge = 1.0 - smoothstep(0.0, 150.0, map_edge_distance);
 	water = mix(water, deep_color.rgb * 0.58, map_edge * 0.72);

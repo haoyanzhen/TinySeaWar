@@ -41,7 +41,9 @@
       "snow_flake_texture": "res://assets/environment/weather/ocean_weather_snow_flakes_master.png",
       "snow_haze_texture": "res://assets/environment/weather/ocean_weather_snow_haze_master.png",
       "snow_strength": 0,
-      "snow_haze_strength": 0
+      "snow_haze_strength": 0,
+      "depth_variation": 0.42,
+      "ripple_strength": 0.16
     },
     "clear_dawn": {
       "display_name": "晴朗凌晨海域",
@@ -84,23 +86,25 @@
       "snow_flake_texture": "res://assets/environment/weather/ocean_weather_snow_flakes_master.png",
       "snow_haze_texture": "res://assets/environment/weather/ocean_weather_snow_haze_master.png",
       "snow_strength": 0,
-      "snow_haze_strength": 0
+      "snow_haze_strength": 0,
+      "depth_variation": 0.42,
+      "ripple_strength": 0.13
     },
     "clear_dusk": {
       "display_name": "晴朗黄昏海域",
       "time_of_day": "dusk",
       "weather": "clear",
       "base_texture": "res://assets/environments/ocean/common/ocean_base_dusk_tile.png",
-      "deep_color": "#2A1F2E",
-      "surface_color": "#5A3B3A",
-      "shallow_color": "#A6664B",
+      "deep_color": "#172D46",
+      "surface_color": "#315A70",
+      "shallow_color": "#638D9A",
       "highlight_color": "#D29A63",
       "cloud_color": "#0D2B40",
-      "warm_reflection_color": "#C65F3B",
+      "warm_reflection_color": "#B38B87",
       "wave_strength": 0.04,
       "sparkle_strength": 0.018,
       "cloud_opacity": 0.2,
-      "warm_reflection_strength": 0.36,
+      "warm_reflection_strength": 0.12,
       "animation_speed": 0.534,
       "ai_texture_strength": 0.14,
       "foam_strength": 0.02,
@@ -127,7 +131,10 @@
       "snow_flake_texture": "res://assets/environment/weather/ocean_weather_snow_flakes_master.png",
       "snow_haze_texture": "res://assets/environment/weather/ocean_weather_snow_haze_master.png",
       "snow_strength": 0,
-      "snow_haze_strength": 0
+      "snow_haze_strength": 0,
+      "depth_variation": 0.42,
+      "ripple_strength": 0.13,
+      "water_highlight_color": "#A2BDC4"
     },
     "clear_night": {
       "display_name": "晴朗夜间海域",
@@ -170,7 +177,9 @@
       "snow_flake_texture": "res://assets/environment/weather/ocean_weather_snow_flakes_master.png",
       "snow_haze_texture": "res://assets/environment/weather/ocean_weather_snow_haze_master.png",
       "snow_strength": 0,
-      "snow_haze_strength": 0
+      "snow_haze_strength": 0,
+      "depth_variation": 0.42,
+      "ripple_strength": 0.13
     },
     "cloudy_day": {
       "display_name": "多云白天海域",
@@ -213,7 +222,11 @@
       "snow_flake_texture": "res://assets/environment/weather/ocean_weather_snow_flakes_master.png",
       "snow_haze_texture": "res://assets/environment/weather/ocean_weather_snow_haze_master.png",
       "snow_strength": 0,
-      "snow_haze_strength": 0
+      "snow_haze_strength": 0,
+      "depth_variation": 0.42,
+      "ripple_strength": 0.16,
+      "atmosphere_strength": 1.0,
+      "weather_detail_scale": 1.0
     },
     "cloudy_dawn": {
       "display_name": "多云凌晨海域",
@@ -256,23 +269,25 @@
       "snow_flake_texture": "res://assets/environment/weather/ocean_weather_snow_flakes_master.png",
       "snow_haze_texture": "res://assets/environment/weather/ocean_weather_snow_haze_master.png",
       "snow_strength": 0,
-      "snow_haze_strength": 0
+      "snow_haze_strength": 0,
+      "depth_variation": 0.42,
+      "ripple_strength": 0.13
     },
     "cloudy_dusk": {
       "display_name": "多云黄昏海域",
       "time_of_day": "dusk",
       "weather": "cloudy",
       "base_texture": "res://assets/environments/ocean/common/ocean_base_dusk_tile.png",
-      "deep_color": "#2A1F2E",
-      "surface_color": "#5A3B3A",
-      "shallow_color": "#A6664B",
+      "deep_color": "#172D46",
+      "surface_color": "#315A70",
+      "shallow_color": "#638D9A",
       "highlight_color": "#D29A63",
       "cloud_color": "#10263A",
-      "warm_reflection_color": "#C65F3B",
+      "warm_reflection_color": "#B38B87",
       "wave_strength": 0.045,
       "sparkle_strength": 0.016,
       "cloud_opacity": 0.34,
-      "warm_reflection_strength": 0.281,
+      "warm_reflection_strength": 0.12,
       "animation_speed": 0.51,
       "ai_texture_strength": 0.17,
       "foam_strength": 0.04,
@@ -299,7 +314,10 @@
       "snow_flake_texture": "res://assets/environment/weather/ocean_weather_snow_flakes_master.png",
       "snow_haze_texture": "res://assets/environment/weather/ocean_weather_snow_haze_master.png",
       "snow_strength": 0,
-      "snow_haze_strength": 0
+      "snow_haze_strength": 0,
+      "depth_variation": 0.42,
+      "ripple_strength": 0.13,
+      "water_highlight_color": "#A2BDC4"
     },
     "cloudy_night": {
       "display_name": "多云夜间海域",
@@ -342,7 +360,9 @@
       "snow_flake_texture": "res://assets/environment/weather/ocean_weather_snow_flakes_master.png",
       "snow_haze_texture": "res://assets/environment/weather/ocean_weather_snow_haze_master.png",
       "snow_strength": 0,
-      "snow_haze_strength": 0
+      "snow_haze_strength": 0,
+      "depth_variation": 0.42,
+      "ripple_strength": 0.13
     },
     "overcast_day": {
       "display_name": "阴云白天海域",
@@ -385,7 +405,9 @@
       "snow_flake_texture": "res://assets/environment/weather/ocean_weather_snow_flakes_master.png",
       "snow_haze_texture": "res://assets/environment/weather/ocean_weather_snow_haze_master.png",
       "snow_strength": 0,
-      "snow_haze_strength": 0
+      "snow_haze_strength": 0,
+      "depth_variation": 0.42,
+      "ripple_strength": 0.16
     },
     "overcast_dawn": {
       "display_name": "阴云凌晨海域",
@@ -428,23 +450,25 @@
       "snow_flake_texture": "res://assets/environment/weather/ocean_weather_snow_flakes_master.png",
       "snow_haze_texture": "res://assets/environment/weather/ocean_weather_snow_haze_master.png",
       "snow_strength": 0,
-      "snow_haze_strength": 0
+      "snow_haze_strength": 0,
+      "depth_variation": 0.42,
+      "ripple_strength": 0.13
     },
     "overcast_dusk": {
       "display_name": "阴云黄昏海域",
       "time_of_day": "dusk",
       "weather": "overcast",
       "base_texture": "res://assets/environments/ocean/common/ocean_base_dusk_tile.png",
-      "deep_color": "#2A1F2E",
-      "surface_color": "#5A3B3A",
-      "shallow_color": "#A6664B",
+      "deep_color": "#172D46",
+      "surface_color": "#315A70",
+      "shallow_color": "#638D9A",
       "highlight_color": "#D29A63",
       "cloud_color": "#0B1B2C",
-      "warm_reflection_color": "#C65F3B",
+      "warm_reflection_color": "#B38B87",
       "wave_strength": 0.052,
       "sparkle_strength": 0.011,
       "cloud_opacity": 0.48,
-      "warm_reflection_strength": 0.173,
+      "warm_reflection_strength": 0.12,
       "animation_speed": 0.557,
       "ai_texture_strength": 0.17,
       "foam_strength": 0.09,
@@ -471,7 +495,10 @@
       "snow_flake_texture": "res://assets/environment/weather/ocean_weather_snow_flakes_master.png",
       "snow_haze_texture": "res://assets/environment/weather/ocean_weather_snow_haze_master.png",
       "snow_strength": 0,
-      "snow_haze_strength": 0
+      "snow_haze_strength": 0,
+      "depth_variation": 0.42,
+      "ripple_strength": 0.13,
+      "water_highlight_color": "#A2BDC4"
     },
     "overcast_night": {
       "display_name": "阴云夜间海域",
@@ -514,7 +541,9 @@
       "snow_flake_texture": "res://assets/environment/weather/ocean_weather_snow_flakes_master.png",
       "snow_haze_texture": "res://assets/environment/weather/ocean_weather_snow_haze_master.png",
       "snow_strength": 0,
-      "snow_haze_strength": 0
+      "snow_haze_strength": 0,
+      "depth_variation": 0.42,
+      "ripple_strength": 0.13
     },
     "rain_day": {
       "display_name": "雨白天海域",
@@ -557,7 +586,11 @@
       "snow_flake_texture": "res://assets/environment/weather/ocean_weather_snow_flakes_master.png",
       "snow_haze_texture": "res://assets/environment/weather/ocean_weather_snow_haze_master.png",
       "snow_strength": 0,
-      "snow_haze_strength": 0
+      "snow_haze_strength": 0,
+      "depth_variation": 0.42,
+      "ripple_strength": 0.16,
+      "atmosphere_strength": 1.0,
+      "weather_detail_scale": 1.0
     },
     "rain_dawn": {
       "display_name": "雨凌晨海域",
@@ -600,23 +633,25 @@
       "snow_flake_texture": "res://assets/environment/weather/ocean_weather_snow_flakes_master.png",
       "snow_haze_texture": "res://assets/environment/weather/ocean_weather_snow_haze_master.png",
       "snow_strength": 0,
-      "snow_haze_strength": 0
+      "snow_haze_strength": 0,
+      "depth_variation": 0.42,
+      "ripple_strength": 0.13
     },
     "rain_dusk": {
       "display_name": "雨黄昏海域",
       "time_of_day": "dusk",
       "weather": "rain",
       "base_texture": "res://assets/environments/ocean/common/ocean_base_dusk_tile.png",
-      "deep_color": "#2A1F2E",
-      "surface_color": "#5A3B3A",
-      "shallow_color": "#A6664B",
+      "deep_color": "#172D46",
+      "surface_color": "#315A70",
+      "shallow_color": "#638D9A",
       "highlight_color": "#D29A63",
       "cloud_color": "#081827",
-      "warm_reflection_color": "#C65F3B",
+      "warm_reflection_color": "#B38B87",
       "wave_strength": 0.058,
       "sparkle_strength": 0.008,
       "cloud_opacity": 0.54,
-      "warm_reflection_strength": 0.122,
+      "warm_reflection_strength": 0.12,
       "animation_speed": 0.626,
       "ai_texture_strength": 0.17,
       "foam_strength": 0.16,
@@ -643,7 +678,10 @@
       "snow_flake_texture": "res://assets/environment/weather/ocean_weather_snow_flakes_master.png",
       "snow_haze_texture": "res://assets/environment/weather/ocean_weather_snow_haze_master.png",
       "snow_strength": 0,
-      "snow_haze_strength": 0
+      "snow_haze_strength": 0,
+      "depth_variation": 0.42,
+      "ripple_strength": 0.13,
+      "water_highlight_color": "#A2BDC4"
     },
     "rain_night": {
       "display_name": "雨夜间海域",
@@ -686,7 +724,9 @@
       "snow_flake_texture": "res://assets/environment/weather/ocean_weather_snow_flakes_master.png",
       "snow_haze_texture": "res://assets/environment/weather/ocean_weather_snow_haze_master.png",
       "snow_strength": 0,
-      "snow_haze_strength": 0
+      "snow_haze_strength": 0,
+      "depth_variation": 0.42,
+      "ripple_strength": 0.13
     },
     "thunderstorm_day": {
       "display_name": "雷雨白天海域",
@@ -729,7 +769,9 @@
       "snow_flake_texture": "res://assets/environment/weather/ocean_weather_snow_flakes_master.png",
       "snow_haze_texture": "res://assets/environment/weather/ocean_weather_snow_haze_master.png",
       "snow_strength": 0,
-      "snow_haze_strength": 0
+      "snow_haze_strength": 0,
+      "depth_variation": 0.42,
+      "ripple_strength": 0.16
     },
     "thunderstorm_dawn": {
       "display_name": "雷雨凌晨海域",
@@ -772,23 +814,25 @@
       "snow_flake_texture": "res://assets/environment/weather/ocean_weather_snow_flakes_master.png",
       "snow_haze_texture": "res://assets/environment/weather/ocean_weather_snow_haze_master.png",
       "snow_strength": 0,
-      "snow_haze_strength": 0
+      "snow_haze_strength": 0,
+      "depth_variation": 0.42,
+      "ripple_strength": 0.13
     },
     "thunderstorm_dusk": {
       "display_name": "雷雨黄昏海域",
       "time_of_day": "dusk",
       "weather": "thunderstorm",
       "base_texture": "res://assets/environments/ocean/common/ocean_base_dusk_tile.png",
-      "deep_color": "#2A1F2E",
-      "surface_color": "#5A3B3A",
-      "shallow_color": "#A6664B",
+      "deep_color": "#172D46",
+      "surface_color": "#315A70",
+      "shallow_color": "#638D9A",
       "highlight_color": "#D29A63",
       "cloud_color": "#06111D",
-      "warm_reflection_color": "#C65F3B",
+      "warm_reflection_color": "#B38B87",
       "wave_strength": 0.067,
       "sparkle_strength": 0.008,
       "cloud_opacity": 0.66,
-      "warm_reflection_strength": 0.079,
+      "warm_reflection_strength": 0.12,
       "animation_speed": 0.708,
       "ai_texture_strength": 0.17,
       "foam_strength": 0.25,
@@ -815,7 +859,10 @@
       "snow_flake_texture": "res://assets/environment/weather/ocean_weather_snow_flakes_master.png",
       "snow_haze_texture": "res://assets/environment/weather/ocean_weather_snow_haze_master.png",
       "snow_strength": 0,
-      "snow_haze_strength": 0
+      "snow_haze_strength": 0,
+      "depth_variation": 0.42,
+      "ripple_strength": 0.13,
+      "water_highlight_color": "#A2BDC4"
     },
     "thunderstorm_night": {
       "display_name": "雷雨夜间海域",
@@ -858,7 +905,11 @@
       "snow_flake_texture": "res://assets/environment/weather/ocean_weather_snow_flakes_master.png",
       "snow_haze_texture": "res://assets/environment/weather/ocean_weather_snow_haze_master.png",
       "snow_strength": 0,
-      "snow_haze_strength": 0
+      "snow_haze_strength": 0,
+      "depth_variation": 0.42,
+      "ripple_strength": 0.13,
+      "atmosphere_strength": 1.0,
+      "weather_detail_scale": 0.65
     },
     "day_clear": {
       "display_name": "晴昼训练海域",
@@ -901,7 +952,9 @@
       "snow_flake_texture": "res://assets/environment/weather/ocean_weather_snow_flakes_master.png",
       "snow_haze_texture": "res://assets/environment/weather/ocean_weather_snow_haze_master.png",
       "snow_strength": 0,
-      "snow_haze_strength": 0
+      "snow_haze_strength": 0,
+      "depth_variation": 0.42,
+      "ripple_strength": 0.16
     },
     "cloudy": {
       "display_name": "多云标准海域",
@@ -944,23 +997,27 @@
       "snow_flake_texture": "res://assets/environment/weather/ocean_weather_snow_flakes_master.png",
       "snow_haze_texture": "res://assets/environment/weather/ocean_weather_snow_haze_master.png",
       "snow_strength": 0,
-      "snow_haze_strength": 0
+      "snow_haze_strength": 0,
+      "depth_variation": 0.42,
+      "ripple_strength": 0.16,
+      "atmosphere_strength": 1.0,
+      "weather_detail_scale": 1.0
     },
     "dusk": {
       "display_name": "黄昏决战海域",
       "time_of_day": "dusk",
       "weather": "cloudy",
       "base_texture": "res://assets/environments/ocean/common/ocean_base_dusk_tile.png",
-      "deep_color": "#2A1F2E",
-      "surface_color": "#5A3B3A",
-      "shallow_color": "#A6664B",
+      "deep_color": "#172D46",
+      "surface_color": "#315A70",
+      "shallow_color": "#638D9A",
       "highlight_color": "#D29A63",
       "cloud_color": "#10263A",
-      "warm_reflection_color": "#C65F3B",
+      "warm_reflection_color": "#B38B87",
       "wave_strength": 0.045,
       "sparkle_strength": 0.016,
       "cloud_opacity": 0.34,
-      "warm_reflection_strength": 0.281,
+      "warm_reflection_strength": 0.12,
       "animation_speed": 0.51,
       "ai_texture_strength": 0.17,
       "foam_strength": 0.04,
@@ -987,7 +1044,10 @@
       "snow_flake_texture": "res://assets/environment/weather/ocean_weather_snow_flakes_master.png",
       "snow_haze_texture": "res://assets/environment/weather/ocean_weather_snow_haze_master.png",
       "snow_strength": 0,
-      "snow_haze_strength": 0
+      "snow_haze_strength": 0,
+      "depth_variation": 0.42,
+      "ripple_strength": 0.13,
+      "water_highlight_color": "#A2BDC4"
     }
   }
 }

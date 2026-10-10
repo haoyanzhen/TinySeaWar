@@ -303,7 +303,14 @@ func resolve_circle_motion(start: Vector2, displacement: Vector2, radius: float,
 	if water_fraction >= 0.0 and (not bool(first_hit.get("hit", false)) or water_fraction <= float(first_hit.get("fraction", 1.0)) + EPSILON):
 		var safe_fraction := maxf(0.0, water_fraction - EPSILON / maxf(displacement.length(), EPSILON))
 		var safe_position := start + displacement * safe_fraction
-		return {"position": safe_position, "collided": true, "hit": {"hit": true, "obstacle_id": "water_access", "position": safe_position, "normal": Vector2.ZERO, "fraction": water_fraction, "distance": displacement.length() * water_fraction, "block_mask": "ShipMovement"}}
+		var hit := {"hit": true, "obstacle_id": "water_access", "position": safe_position, "normal": Vector2.ZERO, "fraction": water_fraction, "distance": displacement.length() * water_fraction, "block_mask": "ShipMovement"}
+		# Occupancy includes an epsilon skin around hard shores. Preserve that
+		# conservative stop, but do not mislabel its nearby geometric contact as
+		# a water-depth restriction or discard the recovery normal.
+		if bool(first_hit.get("hit", false)) and absf(float(first_hit.get("fraction", 1.0)) - water_fraction) * displacement.length() <= EPSILON * 4.0:
+			hit["obstacle_id"] = first_hit["obstacle_id"]
+			hit["normal"] = first_hit.get("normal", Vector2.ZERO)
+		return {"position": safe_position, "collided": true, "hit": hit}
 	if not bool(first_hit.get("hit", false)):
 		var desired := start + displacement
 		if can_occupy_circle(desired, radius, movement_tags):

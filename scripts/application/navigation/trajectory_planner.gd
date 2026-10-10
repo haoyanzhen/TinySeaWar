@@ -13,6 +13,9 @@ const EMERGENCY_TOTAL_LIMIT := 7
 const FIXED_TICK_DELTA := 0.1
 const NAVIGATION_MARGIN := 4.0
 const CLEARANCE_COMFORT_BAND := 96.0
+# Less than one progress interval across the prediction horizon is an obstacle,
+# not a useful moving leader. Collision validation still includes that vessel.
+const MIN_FOLLOW_SPEED := 18.0 / NORMAL_HORIZON
 
 var diagnostics_enabled := false
 var _diagnostics := {}
@@ -40,7 +43,7 @@ func arrival_tolerance(radius: float) -> float:
 	return maxf(12.0, radius * 0.5)
 
 
-func plan_normal(motion_state: Dictionary, goal: Vector2, radius: float, movement_tags: Array, terrain_query, terrain_context, nearby_units: Array = [], final_approach: bool = false, next_goals: Array = [], prioritize_direct_player_motion: bool = false) -> Dictionary:
+func plan_normal(motion_state: Dictionary, goal: Vector2, radius: float, movement_tags: Array, terrain_query, terrain_context, nearby_units: Array = [], final_approach: bool = false, next_goals: Array = [], prioritize_direct_player_motion: bool = false, recovery_fallback: Dictionary = {}) -> Dictionary:
 	var desired_direction := goal - (motion_state.get("position", Vector2.ZERO) as Vector2)
 	var desired_angle := 0.0 if desired_direction == Vector2.ZERO else wrapf(desired_direction.angle() - float(motion_state.get("heading", 0.0)), -PI, PI)
 	var preferred_turn := clampf(desired_angle / maxf(0.01, float(motion_state.get("turn_rate_limit", 0.01)) * NORMAL_HORIZON), -1.0, 1.0)
@@ -93,8 +96,25 @@ func plan_normal(motion_state: Dictionary, goal: Vector2, radius: float, movemen
 			_constant_template(0.75, clampf(preferred_turn - 0.35, -1.0, 1.0), "outer_left"),
 			_constant_template(0.75, clampf(preferred_turn + 0.35, -1.0, 1.0), "outer_right"),
 		]
+	if not recovery_fallback.is_empty():
+		# Rejoining needs to finish the turn, not restart a six-second gradual
+		# turn each second. Retain cruise/braking and both lateral alternatives.
+		var rejoin_thrust := approach_thrust if use_arrival_control else 0.75
+		var rate := float(motion_state.get("turn_rate_limit", 0.0))
+		templates[1] = {"controls":_turn_then_straight_controls(desired_angle, rate, rejoin_thrust), "tag":"rejoin_align"}
+		var aligned_controls := _turn_then_straight_controls(desired_angle, rate, rejoin_thrust)
+		for control in aligned_controls:
+			if not is_zero_approx(float(control.get("turn_ratio", 0.0))): control["thrust_ratio"] = 0.0
+		templates[2] = {"controls":aligned_controls, "tag":"rejoin_brake_align"}
 	var following := _following_thrust_limit(motion_state, goal, radius, nearby_units)
-	if following < 1.0:
+	if _stationary_traffic_ahead(motion_state, goal, radius, nearby_units):
+		# Keep forward/braking choices, but offer a real lateral pass even when
+		# both ships have stopped and relative-velocity CPA cannot detect approach.
+		# Prefer starboard on ties; port remains available if shore blocks it.
+		for side in [1.0, -1.0]:
+			var slot := 4 if side > 0.0 else 5
+			templates[slot] = {"controls":_turn_then_straight_controls(wrapf(desired_angle + side * PI * 0.25, -PI, PI), float(motion_state.get("turn_rate_limit", 0.0)), 0.45), "tag":"traffic_pass_starboard" if side > 0.0 else "traffic_pass_port"}
+	elif following < 1.0:
 		# Apply the speed request BEFORE simulation; Domain executes the same
 		# controls that passed the full six-second safety validation.
 		for template in templates:
@@ -108,6 +128,13 @@ func plan_normal(motion_state: Dictionary, goal: Vector2, radius: float, movemen
 		# Replace, never add to, the six ordinary candidates.
 		templates[4] = _constant_template(0.45, 1.0, "traffic_starboard")
 		templates[5] = _constant_template(0.0, 1.0, "traffic_yield")
+	if not recovery_fallback.is_empty() and drift.length_squared() > 0.0001:
+		# A rejoin attempt must retain a validated way to keep departing. Replace
+		# two candidates rather than spending a second six-candidate budget.
+		# Without drift, retain the full ordinary turning/traffic alternatives.
+		var reverse_angle := angle_difference(float(motion_state.get("heading", 0.0)), (recovery_fallback["direction"] as Vector2).angle() + PI)
+		templates[4] = _recovery_pulse(-1.0, 0.0, "recovery_reverse_straight")
+		templates[5] = {"controls":_turn_then_straight_controls(reverse_angle, float(motion_state.get("turn_rate_limit", 0.0)), -1.0), "tag":"recovery_reverse_align"}
 	return _select_plan(templates.slice(0, NORMAL_CANDIDATE_LIMIT), motion_state, goal, NORMAL_HORIZON, radius, movement_tags, terrain_query, terrain_context, nearby_units, [], false, use_arrival_control, next_goals, prioritize_direct_player_motion)
 
 
@@ -133,6 +160,7 @@ func _following_thrust_limit(motion: Dictionary, goal: Vector2, radius: float, n
 		var lateral_extent := absf(other_forward.dot(forward.orthogonal())) * other_extents.x + absf(other_forward.dot(forward)) * other_extents.y
 		if absf(offset.dot(forward.orthogonal())) > extents.y + lateral_extent + 12.0: continue
 		var front_speed := maxf(0.0, ((other.get("velocity", Vector2.ZERO) as Vector2) - drift).dot(forward))
+		if front_speed < MIN_FOLLOW_SPEED: continue
 		var hull_gap := gap - extents.x - maxf(other_extents.x, other_extents.y) - 24.0
 		var headway := maxf(16.0, speed * NORMAL_INTERVAL)
 		var available := maxf(0.0, hull_gap - headway)
@@ -140,6 +168,25 @@ func _following_thrust_limit(motion: Dictionary, goal: Vector2, radius: float, n
 		var horizon_limit := maxf(0.0, front_speed + (hull_gap - headway) / NORMAL_HORIZON)
 		limit = minf(limit, minf(stopping_limit, horizon_limit) / maximum)
 	return clampf(limit, 0.0, 1.0)
+
+
+func _stationary_traffic_ahead(motion: Dictionary, goal: Vector2, radius: float, nearby: Array) -> bool:
+	var direction: Vector2 = (goal - (motion.position as Vector2)).normalized()
+	var extents: Vector2 = motion.get("collision_half_extents", Vector2.ONE * radius)
+	var forward := Vector2.RIGHT.rotated(float(motion.get("heading", 0.0)))
+	var width := absf(forward.cross(direction)) * extents.x + absf(forward.dot(direction)) * extents.y
+	for other in nearby:
+		if (other.get("velocity", Vector2.ZERO) as Vector2).length() >= MIN_FOLLOW_SPEED: continue
+		var offset: Vector2 = other.position - motion.position
+		var longitudinal := offset.dot(direction)
+		var other_extents: Vector2 = other.get("half_extents", Vector2.ONE * float(other.get("radius", 0.0)))
+		var other_forward := Vector2.RIGHT.rotated(float(other.get("heading", 0.0)))
+		var other_width := absf(other_forward.cross(direction)) * other_extents.x + absf(other_forward.dot(direction)) * other_extents.y
+		var envelope := maxf(extents.x, extents.y) + maxf(other_extents.x, other_extents.y) + 24.0
+		if longitudinal <= 0.0 or longitudinal > envelope + float(motion.get("maximum_speed", 0.0)) * NORMAL_HORIZON: continue
+		if longitudinal > (goal - (motion.position as Vector2)).length() + envelope: continue
+		if absf(offset.cross(direction)) <= width + other_width + 12.0: return true
+	return false
 
 
 func plan_berthing(motion_state: Dictionary, heading: float, radius: float, movement_tags: Array, terrain_query, terrain_context, nearby_units: Array) -> Dictionary:

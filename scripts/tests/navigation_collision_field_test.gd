@@ -144,6 +144,9 @@ func _test_contact_departure() -> void:
 	var outward: Dictionary = query.resolve_circle_motion(start, Vector2(-1,0), 30.0, ["Surface"])
 	_check(not outward["collided"] and outward["position"] == Vector2(389,400), "contact skin can depart outward without teleport or false collision")
 	_check(query.resolve_circle_motion(start, Vector2(1,0), 30.0, ["Surface"])["collided"], "contact skin cannot move into the bank")
+	var skin_hit: Dictionary = query.resolve_circle_motion(Vector2(389.998,400), Vector2(0.9,0), 30.0, ["Surface"])
+	_check(skin_hit["collided"] and str(skin_hit["hit"]["obstacle_id"]) == "bank", "occupancy skin reports the hard bank instead of a water-depth restriction")
+	_check((skin_hit["hit"]["normal"] as Vector2).dot(Vector2.LEFT) > 0.99, "occupancy skin retains the outward hard-bank normal")
 	_check(query.resolve_circle_motion(Vector2(395,400), Vector2(-10,0), 30.0, ["Surface"])["collided"], "deep overlap is not treated as numerical contact")
 	terrain["obstacles"].append({"id":"other_bank", "block_mask":["ShipMovement"], "polygon":[[100,250],[300,250],[300,550],[100,550]]})
 	query.configure(terrain)
@@ -152,6 +155,8 @@ func _test_contact_departure() -> void:
 	terrain["regions"] = [{"id":"reef", "region_type":"ReefOrSandbar", "priority":10, "polygon":[[350,250],[385,250],[385,550],[350,550]]}]
 	query.configure(terrain)
 	_check(query.resolve_circle_motion(start, Vector2(-10,0), 30.0, ["Surface"])["collided"], "outward contact exception still honors restricted water")
+	var water_hit: Dictionary = query.resolve_circle_motion(Vector2(340,600), Vector2(20,-100), 1.0, ["Surface"])
+	_check(water_hit["collided"] and str(water_hit["hit"]["obstacle_id"]) == "water_access", "a real reef restriction is not relabeled as a distant hard shore")
 
 
 func _test_region_restriction_masks() -> void:

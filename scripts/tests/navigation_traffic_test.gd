@@ -49,6 +49,9 @@ func run() -> void:
 	_test_water_rejection(registry)
 	_test_head_on(registry)
 	_test_occupied_endpoint(registry)
+	_test_stopped_leader()
+	_test_rejoin_turn()
+	_test_l02_stopped_pair()
 	if failures.is_empty():
 		print("PASS: %d navigation traffic checks" % checks)
 		quit()
@@ -74,6 +77,85 @@ func _test_dynamic_geometry() -> void:
 	check(planner._dynamic_candidate_units(samples, initial, 30.0, [other]).size() == 1, "swept broad phase retains a moving crossing")
 	other.position = Vector2(500, 500)
 	check(planner._dynamic_candidate_units(samples, initial, 30.0, [other]).is_empty(), "swept broad phase excludes disjoint motion envelopes")
+
+
+func _test_stopped_leader() -> void:
+	var planner = Planner.new()
+	var motion_service = preload("res://scripts/domain/services/ship_motion_service.gd")
+	for leader_speed in [0.0, 1.0, 20.0]:
+		var motion := {"position":Vector2(500,500), "heading":0.0, "speed":0.0, "maximum_speed":66.0, "reverse_speed":16.5, "acceleration":66.0, "braking":132.0, "turn_rate_limit":1.265, "current_vector":Vector2.ZERO, "collision_half_extents":Vector2(54,22.68)}
+		var other := {"id":"leader", "friendly":true, "navigating":true, "position":Vector2(675,500), "heading":0.0, "half_extents":Vector2(77.5,32.5), "radius":30.0, "velocity":Vector2(leader_speed,0)}
+		var goal := Vector2(1300,500)
+		var clear := true
+		var budget := true
+		for second in 60:
+			var plan: Dictionary = planner.plan_normal(motion, goal, 17.0, ["Surface"], null, null, [other], true)
+			budget = budget and int(plan.get("candidate_count",99)) <= 6
+			if not plan.get("ok",false):
+				clear = false
+				break
+			var samples: Array = motion_service.simulate_control_sequence(motion, plan.controls, 0.1, 1.0)
+			for sample in samples:
+				clear = clear and not planner._dynamic_pose_collision(sample, motion, 17.0, [other], {})
+			motion.merge(samples[-1], true)
+			other.position += other.velocity
+			if motion.position.distance_to(goal) < 18.0: break
+		check(clear, "leader speed %s: executed motion remains collision-free" % leader_speed)
+		print("LEADER speed=", leader_speed, " final_distance=", motion.position.distance_to(goal))
+		check(budget, "leader speed %s: at most six candidates" % leader_speed)
+		check(motion.position.distance_to(goal) < 18.0, "leader speed %s: reaches destination instead of asymptotic following" % leader_speed)
+
+
+func _test_rejoin_turn() -> void:
+	var planner = Planner.new()
+	var motion_service = preload("res://scripts/domain/services/ship_motion_service.gd")
+	# L-02's slow battleship faced away from its short rejoin target. A rolling
+	# plan must actually finish turning before the eight-second progress retry.
+	var motion := {"position":Vector2(3244.708,1707.292), "heading":0.62461995184, "speed":4.65, "maximum_speed":31.0, "reverse_speed":7.75, "acceleration":31.0, "braking":62.0, "turn_rate_limit":PI / 8.0, "current_vector":Vector2.ZERO, "collision_half_extents":Vector2(75,31.5)}
+	var goal := Vector2(3073.771,1735.304)
+	var initial_distance: float = motion.position.distance_to(goal)
+	var bounded := true
+	for second in 8:
+		var plan: Dictionary = planner.plan_normal(motion, goal, 30.0, ["Surface"], null, null, [], true, [], false, {"direction":Vector2.LEFT})
+		bounded = bounded and plan.get("ok",false) and int(plan.get("candidate_count",99)) <= 6
+		if not plan.get("ok",false): break
+		var samples: Array = motion_service.simulate_control_sequence(motion, plan.controls, 0.1, 1.0)
+		motion.merge(samples[-1], true)
+		# Model a changed tactical target during rejoin, without resetting pose.
+		if second == 2: goal += Vector2(0,-40)
+	print("REJOIN progress=", initial_distance - motion.position.distance_to(goal))
+	check(bounded, "rejoin and target refresh retain safe six-candidate plans")
+	check(initial_distance - motion.position.distance_to(goal) >= 18.0, "large rejoin turn and target refresh make effective progress within eight seconds")
+
+
+func _test_l02_stopped_pair() -> void:
+	var planner = Planner.new()
+	var motion_service = preload("res://scripts/domain/services/ship_motion_service.gd")
+	# Rounded pre-fix Tick 3078. Keep both stationary hulls: testing only the
+	# leader would miss the adjacent carrier constraining the passing side.
+	var motion := {"position":Vector2(2782.985,2887.197), "heading":9.44985289, "speed":0.77624766, "maximum_speed":66.0, "reverse_speed":16.5, "acceleration":66.0, "braking":132.0, "turn_rate_limit":1.2653637, "current_vector":Vector2.ZERO, "collision_half_extents":Vector2(54,22.68)}
+	var nearby := [
+		{"id":"argus", "friendly":true, "navigating":true, "position":Vector2(2666.492,2836.469), "heading":-0.3168572, "half_extents":Vector2(72.5,30.45), "radius":29.0, "velocity":Vector2.ZERO},
+		{"id":"hood", "friendly":true, "navigating":true, "position":Vector2(2606.970,2910.276), "heading":-9.3406888, "half_extents":Vector2(77.5,32.55), "radius":31.0, "velocity":Vector2.ZERO},
+	]
+	var goal := Vector2(2496,2880)
+	# This is an intermediate corridor gate (radius 63), not a final berth.
+	var gate_radius := 63.0
+	var safe := true
+	var bounded := true
+	for second in 60:
+		var plan: Dictionary = planner.plan_normal(motion, goal, 17.0, ["Surface"], null, null, nearby, false, [], false, {"direction":Vector2.RIGHT})
+		bounded = bounded and int(plan.get("candidate_count",99)) <= 6
+		if not plan.get("ok",false):
+			safe = false
+			break
+		var samples: Array = motion_service.simulate_control_sequence(motion, plan.controls, 0.1, 1.0)
+		for sample in samples: safe = safe and not planner._dynamic_pose_collision(sample, motion, 17.0, nearby, {})
+		motion.merge(samples[-1], true)
+		if motion.position.distance_to(goal) <= gate_radius: break
+	print("L02_STOPPED_PAIR final_distance=", motion.position.distance_to(goal))
+	check(safe and bounded, "L-02 stopped pair is passed with validated motion and six-candidate budget")
+	check(motion.position.distance_to(goal) <= gate_radius and motion.position.x < nearby[1].position.x, "L-02 follower reaches original westward gate past both stationary hulls")
 
 func _test_recorder() -> void:
 	var recorder = Recorder.new()

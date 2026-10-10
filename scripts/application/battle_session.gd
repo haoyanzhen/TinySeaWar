@@ -2054,22 +2054,16 @@ func _plan_normal_trajectory(unit: Dictionary) -> void:
 		_start_navigation_recovery(unit, "TERRAIN_CONTACT")
 	var recovery: Dictionary = navigation.get("recovery", {})
 	var radius := float(unit["stats"].get("collision_radius", 20.0))
+	var attempt_rejoin := not recovery.is_empty() and str(recovery.get("stage", "")) == "Rejoin"
 	if not recovery.is_empty() and str(recovery.get("stage", "Depart")) == "Depart":
 		motion_state["collision_recovery"] = {"normal":recovery["direction"]}
 		var origin: Vector2 = recovery["origin"]
 		var position: Vector2 = unit["position"]
 		if bool(recovery.get("departure_feasible", true)) and position.distance_to(origin) >= float(recovery.get("departure_distance", maxf(40.0, radius * 2.0))) and _recovery_position_clear(unit, radius + 4.0):
-			recovery["stage"] = "Rejoin"
-			recovery["rejoin_position"] = position
-			recovery["rejoin_goal"] = goal
-			recovery["rejoin_best_distance"] = position.distance_to(goal)
-			recovery["rejoin_progress"] = 0.0
-			recovery["rejoin_stage_progress"] = 0.0
-			recovery["stage_seconds"] = 0.0
-			motion_state.erase("collision_recovery")
+			attempt_rejoin = true
 	var movement_mode := str(movement.get("mode", ""))
 	var prioritize_direct_player_motion := movement_mode in ["PlayerMoveOrder", "PlayerWaypointRoute"]
-	var departing := not recovery.is_empty() and str(recovery.get("stage", "")) == "Depart"
+	var departing := not recovery.is_empty() and not attempt_rejoin
 	var nearby_units := _nearby_navigation_units(unit)
 	var column: Dictionary = navigation.get("column_guidance", {}) if recovery.is_empty() else {}
 	var final_approach := _current_corridor_goal_is_final(unit)
@@ -2084,7 +2078,25 @@ func _plan_normal_trajectory(unit: Dictionary) -> void:
 	elif departing:
 		result = trajectory_planner.plan_recovery(motion_state, recovery, radius, _movement_tags(unit), terrain_query, terrain_context_service, nearby_units)
 	else:
-		result = trajectory_planner.plan_normal(motion_state, goal, radius, _movement_tags(unit), terrain_query, terrain_context_service, nearby_units, final_approach, next_goals, prioritize_direct_player_motion)
+		result = trajectory_planner.plan_normal(motion_state, goal, radius, _movement_tags(unit), terrain_query, terrain_context_service, nearby_units, final_approach, next_goals, prioritize_direct_player_motion, recovery if attempt_rejoin else {})
+	if attempt_rejoin:
+		if bool(result.get("ok", false)) and not str(result.get("candidate_id", "")).begins_with("recovery_"):
+			if str(recovery.get("stage", "")) != "Rejoin":
+				recovery["stage"] = "Rejoin"
+				recovery["rejoin_position"] = unit["position"]
+				recovery["rejoin_goal"] = goal
+				recovery["rejoin_best_distance"] = (unit["position"] as Vector2).distance_to(goal)
+				recovery["rejoin_progress"] = 0.0
+				recovery["rejoin_stage_progress"] = 0.0
+				recovery["stage_seconds"] = 0.0
+		else:
+			# Keep the safe retreat selected in the SAME bounded search. Require
+			# fresh departure distance before another rejoin attempt. A totally
+			# failed Depart search must not renew its timeout indefinitely.
+			if bool(result.get("ok", false)) or str(recovery.get("stage", "")) == "Rejoin":
+				recovery["origin"] = unit["position"]
+				recovery["stage_seconds"] = 0.0
+			recovery["stage"] = "Depart"
 	var prediction_reuse := _prediction_reuse_diagnostic(unit, navigation.get("trajectory_plan", {}), result) if _performance_profile_enabled else {}
 	_profile_increment("trajectory_segments_simulated_per_tick", int(result.get("segments_simulated", 0)))
 	_profile_increment("trajectory_candidates_rejected_by_terrain_per_tick", int(result.get("candidates_rejected_by_terrain", 0)))

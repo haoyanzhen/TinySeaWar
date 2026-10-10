@@ -16,6 +16,11 @@ class PartialRoutePlanner extends RefCounted:
 		return {}
 
 
+class FailedRejoinPlanner extends "res://scripts/application/navigation/trajectory_planner.gd":
+	func plan_normal(_motion: Dictionary, _goal: Vector2, _radius: float, _tags: Array, _query, _context, _nearby: Array = [], _final: bool = false, _next: Array = [], _direct: bool = false, _fallback: Dictionary = {}) -> Dictionary:
+		return {"ok":false, "reason_code":"NO_SAFE_TRAJECTORY"}
+
+
 func _init() -> void:
 	call_deferred("_run")
 
@@ -34,6 +39,7 @@ func _run() -> void:
 	_test_recovery_checkpoint(registry)
 	_test_recovery_broker(registry)
 	_test_contact_exit(registry)
+	_test_failed_rejoin_timeout(registry)
 	if failures.is_empty():
 		print("PASS: %d navigation progress and recovery checks" % checks)
 		quit(0)
@@ -165,6 +171,24 @@ func _test_interruptions(registry) -> void:
 	unit["navigation_state"]["route_waiting"] = true
 	for _index in range(100): session._update_navigation_progress(unit, 0.1)
 	_check(unit["navigation_state"]["recovery"].is_empty(), "waiting for a route does not cause blind reverse")
+
+
+func _test_failed_rejoin_timeout(registry) -> void:
+	var fixture := _fixture(registry)
+	var session = fixture["session"]
+	var unit: Dictionary = fixture["unit"]
+	unit["position"] = Vector2(380,400)
+	session._start_navigation_recovery(unit, "TEST")
+	var recovery: Dictionary = unit["navigation_state"]["recovery"]
+	recovery["origin"] = Vector2(480,400)
+	recovery["departure_feasible"] = true
+	recovery["departure_distance"] = 35.0
+	recovery["stage_seconds"] = 7.0
+	session.trajectory_planner = FailedRejoinPlanner.new()
+	session._plan_normal_trajectory(unit)
+	_check(str(recovery["stage"]) == "Depart" and is_equal_approx(float(recovery["stage_seconds"]), 7.0), "a wholly failed rejoin search cannot renew the departure timeout")
+	for _index in range(11): session._update_navigation_progress(unit, 0.1)
+	_check(int(recovery["attempts"]) == 2, "failed rejoin still reaches the bounded departure retry")
 
 
 func _test_no_safe_plan(registry) -> void:

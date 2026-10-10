@@ -17,6 +17,9 @@ camera.default_zoom
 camera.zoom_step
 camera.min_visible_size
 camera.max_map_visible_fraction
+battle_units.body_far_height
+battle_units.zoom_exponent
+battle_units.max_body_scale
 submarine_depth_visual.transition_easing
 submarine_depth_visual.surface.body_tint
 submarine_depth_visual.surface.rig_tint
@@ -32,6 +35,7 @@ submarine_depth_visual.submerged.heading_color
 
 - 所有尺寸为正；默认窗口必须包含在候选列表中。
 - `camera.zoom_step>1`；可见范围和地图比例必须保持合法。
+- `battle_units` 为纯表现尺寸预算：三个值必须为有限正数，`max_body_scale>=1`。人物高度按 `clamp(body_far_height * pow(zoom/far_zoom, zoom_exponent), body_far_height, body_far_height*max_body_scale)` 计算，单位为窗口逻辑像素；当前值由 `data/settings/presentation_settings.json` 拥有。它不修改碰撞或世界坐标。
 - `submarine_depth_visual` 只控制可见潜艇的角色本体、舰装、脚下阴影、碰撞轮廓和航向线表现，不改变侦查、碰撞、攻击合法性或接触残影。
 - `surface/submerged` 的颜色字段均为 `[r,g,b,a]`，四个分量必须在 `[0,1]`；角色本体与舰装分层调制，血条、名称、选中、锁定和旗舰标记不受其透明度影响。
 - `transition_easing` 取 `Linear` 或 `SmoothStep`；转换进度读取快照的 `depth_transition.duration/remaining`，不得在表现配置中另存规则时长。稳定状态直接取对应端点，沉没表现优先于深度色调。
@@ -48,7 +52,8 @@ clear_glint_texture, weather_cloud_texture, foam_texture
 rain_line_texture, rain_ripple_texture, storm_shadow_texture
 lightning_mask_texture, snow_flake_texture, snow_haze_texture
 deep_color, surface_color, shallow_color, highlight_color
-cloud_color, warm_reflection_color
+cloud_color, warm_reflection_color, water_highlight_color?
+depth_variation, ripple_strength
 wave_strength, sparkle_strength, cloud_opacity
 warm_reflection_strength, animation_speed, ai_texture_strength
 foam_strength, rain_strength, mist_strength, lightning_strength
@@ -56,8 +61,12 @@ cloud_scale, cloud_cutoff, cloud_softness
 wave_scale, foam_coverage
 rain_angle, rain_density, rain_line_strength, rain_ripple_strength
 squall_strength, snow_strength, snow_haze_strength
+atmosphere_strength?, weather_detail_scale?
 ```
 
+- `depth_variation` 与 `ripple_strength` 是海水大尺度色阶和断续水纹的纯表现强度（0–1）；缺省分别0.32/0.12。`water_highlight_color` 可选，仅覆盖海面高光，缺省回退 `highlight_color`，不改变天气叠层用色。
+- `atmosphere_strength` 为0–1候选天气层混合权重，缺省0保留旧表现；同步衰减海面内重复云雨与闪电，避免双层叠加。`weather_detail_scale` 为0–1细节密度倍率，缺省1；只影响新天气路径的雨线/落点密度，不改变规则天气。当前采用范围与验收见00。
+- 候选天气局部降噪读取非全知快照中的存活单位和玩家准心，最多24个位置；半径保持逻辑像素尺度，只削弱细碎雨线/落点/白沫，不为隐藏接触生成空间提示。公开投射物数量平滑压低全局细节；参数不写入BattleState。
 - palette ID 与 `docs/22_scene_environment_data_schema.md` 的战斗条件语义一一对应。
 - 贴图字段保存 `res://` 资源路径；路径存在性和资产目录约束由 `docs/45_art_asset_interface_design.md` 拥有。
 - 颜色和强度范围由加载校验约束；缺少某天气层时使用显式默认值，不改变战斗条件。
@@ -196,3 +205,7 @@ GameFlow 本机 ConfigFile 新增 `battle.skill_cutin_mode = full | simple | off
 当前Presentation映射：`level.tutorial.*`优先watchful_route/gentle_companions，`level.challenge.l05`优先finale_distant_decisive，其余使用排除finale的五首battle曲；专用资源缺失回退常规池，多候选排除上一局曲目。ID均为catalog中的稳定ID；资源加载失败跳过候选，胜负类别不能互相替代。
 
 每次成功创建场景战斗开始新音乐会话，公开快照phase/result驱动暂停及结算；结果复用BattleResultPresentation分类且每局一次。战斗暂停不停止音乐，线性音量平滑降至0.35；标题暂停与标题播放模式不影响局内。无验收区段时battle按完整时长循环，result播完后安静；human_loop_status/human_mix_status保持pending，不将完整循环视为主体或余韵验收。无图形仅显式advance推进测试时钟，不加载流或创建声部。
+
+## 远景战斗部件配置 FarBattleConfig
+
+`processed/config/{id}_far_battle_config.json` 是远景战斗独立修订：`schema_version=1`、`character_id`、`body_basis=upright`、`rig_heading_degrees=0`、正有限 `rig_width`、`roles.body/rig`、`anchors`、`animation=procedural_far_view`。每个role包含资源路径、SHA256、完整PNG尺寸和`alpha_rect=[x,y,w,h]`；边界必须为非负起点及正宽高的有限数，读取贴图时必须落在图内。`anchors` 为名称到归一化二维坐标的映射，各分量有限且绝对值不超过0.5，按舰装宽度缩放后随航向旋转。文件存在而不合法时报告加载错误；未提供时保留旧角色表现兼容。资源语义见45。

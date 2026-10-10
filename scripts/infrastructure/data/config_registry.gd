@@ -733,6 +733,13 @@ func _validate_settings(settings: Dictionary) -> void:
 		errors.append("Camera zoom_step must be greater than 1 in %s" % settings_id)
 	if float(camera.get("default_zoom", 0.0)) <= 0.0:
 		errors.append("Camera default_zoom must be positive in %s" % settings_id)
+	var battle_units: Dictionary = settings.get("battle_units", {})
+	for key in ["body_far_height", "zoom_exponent", "max_body_scale"]:
+		var value := float(battle_units.get(key, 0.0))
+		if not is_finite(value) or value <= 0.0:
+			errors.append("Invalid battle_units.%s in %s" % [key, settings_id])
+	if float(battle_units.get("max_body_scale", 0)) < 1.0:
+		errors.append("battle_units.max_body_scale must be >= 1 in %s" % settings_id)
 	_validate_submarine_depth_visual(settings.get("submarine_depth_visual", {}), settings_id)
 
 

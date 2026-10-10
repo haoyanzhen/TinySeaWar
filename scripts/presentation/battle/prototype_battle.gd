@@ -44,6 +44,8 @@ enum OperationMode { NORMAL, AIMING_PRIMARY, TARGETING_SKILL, PLACING_ROUTE }
 @onready var battle_camera: Camera2D = $BattleCamera
 @onready var battle_hud: Control = $HUD/BattleHud
 
+var ship_wakes = preload("res://scripts/presentation/battle/ship_wake_layer.gd").new()
+
 var sound_director = BattleSoundDirector.new()
 var audio_public_signals = AudioPublicSignals.new()
 var command_feedback = PlayerCommandFeedback.new()
@@ -229,9 +231,13 @@ func _draw_mine_deployment_overlay(snapshot: Dictionary) -> void:
 
 
 func _create_presentation_layers() -> void:
+	ship_wakes.name = "ShipWakes"
+	ship_wakes.z_index = -30
+	add_child(ship_wakes)
 	projectile_layer = Node2D.new()
 	projectile_layer.name = "ProjectileLayer"
 	unit_layer = Node2D.new()
+	unit_layer.y_sort_enabled = true
 	unit_layer.name = "UnitLayer"
 	vfx_layer = Node2D.new()
 	vfx_layer.name = "VfxLayer"
@@ -866,13 +872,7 @@ func _select_slot(slot: int) -> void:
 
 
 func _select_at(world_position: Vector2, snapshot: Dictionary, additive: bool = false) -> void:
-	var nearest: Dictionary = {}
-	var nearest_distance := INF
-	for unit in snapshot["units"].values():
-		var distance := CollisionGeometryService.normalized_distance(world_position, unit["position"], float(unit["heading"]), CollisionGeometryService.half_extents(unit), 8.0)
-		if distance <= 1.0 and distance < nearest_distance:
-			nearest = unit
-			nearest_distance = distance
+	var nearest: Dictionary = _unit_at(world_position, snapshot)
 	if nearest.is_empty():
 		var facility: Dictionary = _facility_at(world_position, snapshot)
 		if not facility.is_empty():
@@ -1150,9 +1150,18 @@ func _queue_primary_auto_suspend(suspended: bool) -> void:
 func _unit_at(world_position: Vector2, snapshot: Dictionary) -> Dictionary:
 	var nearest: Dictionary = {}
 	var nearest_distance := INF
-	for unit in snapshot["units"].values():
-		var distance := CollisionGeometryService.normalized_distance(world_position, unit["position"], float(unit["heading"]), CollisionGeometryService.half_extents(unit), 8.0)
-		if distance <= 1.0 and distance < nearest_distance:
+	var ids: Array = snapshot.get("units", {}).keys()
+	ids.sort()
+	for id in ids:
+		var unit: Dictionary = snapshot.units[id]
+		var distance := INF
+		var view = effect_director.unit_views.get(id) if effect_director != null else null
+		if view != null and view.has_method("hit_score"):
+			distance = view.hit_score(world_position)
+		else:
+			var normalized := CollisionGeometryService.normalized_distance(world_position, unit.position, float(unit.heading), CollisionGeometryService.half_extents(unit), 8.0)
+			if normalized <= 1.0: distance = 1.0 + normalized
+		if distance < nearest_distance:
 			nearest = unit
 			nearest_distance = distance
 	return nearest
@@ -1230,6 +1239,7 @@ func _push_message(message: String) -> void:
 
 
 func _start_battle(new_level_id: String) -> void:
+	ship_wakes.clear()
 	audio_public_signals.own_missions.clear()
 	SoundManager.clear_battle()
 	if battle_hud.weather_details != null: battle_hud.weather_details.hide()
@@ -1304,10 +1314,16 @@ func _sync_visuals() -> void:
 		return
 	var snapshot: Dictionary = session.snapshot("player", terrain_debug_overlay.visible)
 	var sound_view: Dictionary = session.snapshot("player", false) if terrain_debug_overlay.visible else snapshot
+	ship_wakes.sync_snapshot(sound_view, battle_camera.zoom.x)
+	weather_overlay.sync_readability(sound_view, battle_camera.zoom.x, operation_mode in [OperationMode.AIMING_PRIMARY, OperationMode.TARGETING_SKILL], get_global_mouse_position())
+	terrain_view.set_animation_time(ocean_surface.animation_time)
 	MusicManager.sync_battle(str(sound_view.get("phase", "")), sound_view.get("result", {}))
 	sound_director.update(sound_view, battle_camera.position, selected_unit_id, _sound_near_coast())
 	_sync_environment_visuals(snapshot.get("global_environment", {}))
 	effect_director.sync_snapshot(snapshot, selected_unit_id, focused_target_id, _selected_live_ids())
+	for view in effect_director.unit_views.values():
+		if view.has_method("set_view_context"):
+			view.set_view_context(battle_camera.zoom.x, camera_zoom_min, str(snapshot.get("phase", "")) != "Running", get_global_mouse_position(), battle_hud.battle_rect().has_point(get_viewport().get_mouse_position()))
 	if skill_cutin != null: skill_cutin.cache_units(snapshot.get("units", {}))
 	terrain_view.sync_dynamic(snapshot.get("environment_zones", []), snapshot.get("facilities", {}), snapshot.get("minefields", {}), snapshot.get("support_effects", {}))
 	terrain_debug_overlay.sync_runtime(snapshot.get("terrain_contexts", {}), snapshot.get("facilities", {}), selected_unit_id, snapshot.get("contacts", {}))

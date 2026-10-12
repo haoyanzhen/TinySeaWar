@@ -1,6 +1,6 @@
 # 音乐生成与人工评审工具
 
-从仓库根目录使用 `uv run --locked python tools/music/music.py …`。仅用 Python 标准库；服务器执行使用部署的 `.venv`，无需向仓库添加 GPU 依赖。设计真源见 [50](../../docs/50_music_playback_and_asset_design.md)。
+从仓库根目录使用 `uv run --locked python tools/music/music.py …`。仅用 Python 标准库；服务器执行使用部署的 `.venv`，无需向仓库添加 GPU 依赖。设计真源见 [50](../../docs/presentation/50_music_playback_and_asset_design.md)。
 
 ## 输入与运行
 

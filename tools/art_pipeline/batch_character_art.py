@@ -290,7 +290,7 @@ def write_reports(mode: str, results: list[dict[str, Any]], phase: str = "phase1
         f"Mode: `{mode}`",
         f"Required gate: `{payload['required_gate']}`; passed: `{payload['gate_passed']}`.",
         "",
-        "Roster source: `docs/41_character_art_design.md`.",
+        "Roster source: `docs/presentation/41_character_art_design.md`.",
         "",
         "| Character | Prototype | Source route | Sources | Four-frame | Source blockers | Configured | Contract | Technical ready | Visual review | Delivery ready | Run status |",
         "| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |",
@@ -337,7 +337,7 @@ def batch_exit_code(results: list[dict[str, Any]], require_delivery: bool = Fals
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Validate or run TinySeaWar character-art batches.")
-    parser.add_argument("character_ids", nargs="*", help="Defaults to all characters in docs/41_character_art_design.md.")
+    parser.add_argument("character_ids", nargs="*", help="Defaults to all characters in docs/presentation/41_character_art_design.md.")
     parser.add_argument("--process", action="store_true", help="Run postprocess instead of dry-run inspection.")
     parser.add_argument("--preview", action="store_true", help="Build per-character embedded QA previews.")
     parser.add_argument("--phase", choices=("phase1", "phase2", "all"), default="phase1")

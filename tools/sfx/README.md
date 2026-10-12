@@ -1,6 +1,6 @@
 # 音效候选制作
 
-设计见 [52](../../docs/52_sound_effect_design_and_production.md)。本目录是制作工具，不是运行时音频系统。
+声音标准见[52](../../docs/presentation/52_sound_effect_design.md)，生产与交付契约见[53](../../docs/production/53_sound_effect_production_pipeline.md)。本目录是制作工具，不是运行时音频系统。
 
 ```sh
 uv sync --locked

@@ -104,7 +104,7 @@ def main() -> int:
         if not trial_path.exists():
             trial_path.write_text(
                 f"# {entry.character_id} Phase 2 Trial Log\n\n"
-                "- Source: docs/41_character_art_design.md phase 2.\n"
+                "- Source: docs/presentation/41_character_art_design.md phase 2.\n"
                 "- Generator: GPT Image 2.5 through the native-alpha TinySeaWar art pipeline.\n"
                 "- Current status: style anchor pending.\n"
                 "- Derivative generation is blocked until the faction anchor gate is accepted.\n",

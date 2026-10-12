@@ -2,7 +2,7 @@
 
 ## 2026-09-14 production result
 
-- Source of truth: `docs/40_art_direction_design.md`, `docs/41_character_art_design.md`, `docs/46_character_art_asset_pipeline.md`, `docs/91_character_phase2_historical_validation.md`, runtime ship/weapon data, and `assets/characters/jervis/postprocess_plan.json`.
+- Source of truth: `docs/presentation/40_art_direction_design.md`, `docs/presentation/41_character_art_design.md`, `docs/production/46_character_art_asset_pipeline.md`, `docs/history/91_character_phase2_historical_validation.md`, runtime ship/weapon data, and `assets/characters/jervis/postprocess_plan.json`.
 - Generation route: TinySeaWar art-pipeline skill plus the built-in image-generation tool. The tool did not expose its backend model identifier, so the actual model is recorded as `tool-managed/unknown`; this run does not claim a verified GPT Image 2.5 model ID.
 - Accepted source format: PNG on reserved flat `#00FF00` background, followed by deterministic project-side alpha removal and role splitting. Native-alpha attempts were not used because transparency behavior was inconsistent.
 - Final status: `complete`; `batch_ready=true`; `postprocess_ready=true`; contract missing roles `0`, invalid files `0`, data issues `0`.

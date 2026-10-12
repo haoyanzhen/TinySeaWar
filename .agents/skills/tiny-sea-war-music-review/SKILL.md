@@ -5,7 +5,7 @@ description: Generate TinySeaWar music on the configured ACE-Step GPU server, re
 
 # TinySeaWar Music Generation and Review
 
-Use the repository's deterministic tools in `tools/music`; keep prompt design and artistic decisions in the agent workflow. Read `docs/50_music_playback_and_asset_design.md` for playback/asset requirements and `tools/music/README.md` for commands, manifest format, recovery and capacity policy. Run from the repository root with `uv run --locked python`; use `uv sync --locked` if the environment is missing or lock changed. Do not create per-task copies of generation or review scripts.
+Use the repository's deterministic tools in `tools/music`; keep prompt design and artistic decisions in the agent workflow. Read `docs/presentation/50_music_playback_and_asset_design.md` for playback/asset requirements and `tools/music/README.md` for commands, manifest format, recovery and capacity policy. Run from the repository root with `uv run --locked python`; use `uv sync --locked` if the environment is missing or lock changed. Do not create per-task copies of generation or review scripts.
 
 ## Prepare and check capacity
 

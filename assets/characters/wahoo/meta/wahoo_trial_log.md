@@ -1,6 +1,6 @@
 # wahoo Phase 2 Trial Log
 
-- Source: docs/41_character_art_design.md phase 2.
+- Source: docs/presentation/41_character_art_design.md phase 2.
 - Generator: gpt-image-2 through the TinySeaWar art pipeline skill.
 - Current status: `blocked_animation_regen`; corrected anchor and non-animation MVP derivatives accepted, but animation master must be regenerated with the Q-version battlefield-unit prompt before production import.
 - Style anchor generated on reserved green: low submarine silhouette, six bow and four stern torpedo ports, sonar/periscope pieces, shark-cape identity and blue-orange oxygen indicator. Automatic review: pass for faction-gate review.

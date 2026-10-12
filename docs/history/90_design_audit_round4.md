@@ -35,7 +35,7 @@
 
 **结论：需要修复。优先级 P0。**
 
-`20_data_schema_design.md` 的装备底座虽然包含 `projectile_speed` 和表现资源引用，但尚不能完整描述炮弹、鱼雷和技能投射物。至少需要独立的投射物配置，定义：
+`docs/contracts/20_data_schema_design.md` 的装备底座虽然包含 `projectile_speed` 和表现资源引用，但尚不能完整描述炮弹、鱼雷和技能投射物。至少需要独立的投射物配置，定义：
 
 - `id`
 - `movement_type`：直线、抛物线、追踪或区域落点
@@ -69,7 +69,7 @@ MVP 建议采用自动模式：同一冷却组一次只能执行一种攻击；�
 
 **结论：需要修复。优先级 P0。**
 
-`20_data_schema_design.md` 仍同时推荐 Godot Resource、JSON、CSV 或表格。角色和武器配置即将进入批量生产，必须确定单一运行时真源。
+`docs/contracts/20_data_schema_design.md` 仍同时推荐 Godot Resource、JSON、CSV 或表格。角色和武器配置即将进入批量生产，必须确定单一运行时真源。
 
 建议采用：
 
@@ -91,7 +91,7 @@ MVP 应删除三个兼容字段，以 `weapon_mounts` 作为唯一武器入口�
 
 **结论：需要修复范围定义，但不需要删除现有角色。优先级 P0。**
 
-当前共有 24 名角色。角色设计可作为完整内容储备保留，但 `41_character_art_design.md` 中所有角色都使用“MVP 舰种”和“MVP 资产重点”的措辞，容易被理解为全部需要首版交付。
+当前共有 24 名角色。角色设计可作为完整内容储备保留，但 `docs/presentation/41_character_art_design.md` 中所有角色都使用“MVP 舰种”和“MVP 资产重点”的措辞，容易被理解为全部需要首版交付。
 
 建议把角色分为：
 
@@ -103,7 +103,7 @@ MVP 应删除三个兼容字段，以 `weapon_mounts` 作为唯一武器入口�
 
 ### 2.6 核心交互边界未确定
 
-**结论：已由 `docs/11_game_operation_design.md` 修复。原优先级 P0。**
+**结论：已由 `docs/gameplay/11_game_operation_design.md` 修复。原优先级 P0。**
 
 当前同时列出拖动路径、阵型、自动操作、暂停、技能选目标和主要武器控制，但没有定义输入方式和暂停时是否允许下令。这会直接决定游戏是自动战斗、半即时战术还是可暂停 RTT。
 
@@ -245,7 +245,7 @@ MVP 建议使用固定伤害加每对单位独立冷却，不引入质量和动�
 
 **结论：当前不存在文档冲突，需实机验证。**
 
-`10_game_core_mechanics.md` 的“大船约 90 秒”位于 `13_balance_baseline.md` 的“60-120 秒”范围内。无需把基线强行改成 60-90 秒。真正需要的是记录 1v1、3v3、5v5 的中位战斗时长和首次击沉时间，再决定是否收窄范围。
+`docs/gameplay/10_game_core_mechanics.md` 的“大船约 90 秒”位于 `docs/gameplay/13_balance_baseline.md` 的“60-120 秒”范围内。无需把基线强行改成 60-90 秒。真正需要的是记录 1v1、3v3、5v5 的中位战斗时长和首次击沉时间，再决定是否收窄范围。
 
 ---
 
@@ -265,11 +265,11 @@ MVP 建议使用固定伤害加每对单位独立冷却，不引入质量和动�
 
 ### 5.4 Codex Computer Use 缺少部署说明
 
-`46_character_art_asset_pipeline.md` 已定义相对路径预览和 data URI 稳定 QA 两种方式，当前工具也已生成 QA 页面和报告。这属于工具运行手册完善项，不是游戏设计问题，不应列入战斗设计优先级。
+`docs/production/46_character_art_asset_pipeline.md` 已定义相对路径预览和 data URI 稳定 QA 两种方式，当前工具也已生成 QA 页面和报告。这属于工具运行手册完善项，不是游戏设计问题，不应列入战斗设计优先级。
 
-### 5.5 `46_character_art_asset_pipeline.md` 未被技术文档引用（已解决）
+### 5.5 `docs/production/46_character_art_asset_pipeline.md` 未被技术文档引用（已解决）
 
-原建议仅涉及文档导航，不影响设计正确性。当前已在 `docs/30_technical_architecture.md` 和 `docs/34_implementation_map.md` 补充交叉引用。
+原建议仅涉及文档导航，不影响设计正确性。当前已在 `docs/architecture/30_technical_architecture.md` 和 `docs/34_implementation_map.md` 补充交叉引用。
 
 ### 5.6 阵营色板缺少 hex 值
 

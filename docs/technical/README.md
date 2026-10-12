@@ -1,6 +1,6 @@
 # 技术解决方案
 
-本目录记录跨系统、可实施、可验证的技术解决方案。这里不替代 `docs/30-39` 的架构与 Domain 契约，也不替代玩法设计；它用于描述已确认问题的工程治理方案、迁移步骤、性能预算和验收方法。
+本目录记录跨系统、可实施、可验证的技术解决方案。这里不替代architecture的架构与Domain契约，也不替代gameplay规则或validation实验方法；它用于描述已确认问题的工程治理方案、迁移步骤、性能预算和验收方法。数字是稳定ID，不作为目录分类规则。
 
 ## 命名规则
 
@@ -15,5 +15,7 @@
 
 - [t00_coastal_ai_performance_solution.md](t00_coastal_ai_performance_solution.md)：有岸与大编队战斗的 AI 调度、导航、空间查询、Tick 阶段及单位侦查性能治理方案。
 - [t01_inertial_navigation_and_emergency_avoidance.md](t01_inertial_navigation_and_emergency_avoidance.md)：`3-5s` 战略走廊、`1.0s` 常规动力学航迹与 `0.1s` 高威胁紧急避险状态机。
-- [t02_level_objective_reinforcement_progress_solution.md](t02_level_objective_reinforcement_progress_solution.md)：23 个教学/挑战关的声明式目标、接替增援与幂等进度存档契约；第 2.2 节明确 M/L 主任务字段映射及已接入的分组精通与接替增援边界。
-- [t10_carrier_combat_presentation_solution.md](t10_carrier_combat_presentation_solution.md)：航空过程投影、新旧事件接管、全圈防空与实体投雷的分阶段方案；A默认表现与B显式真实规则已接入；自动/画面证据见00，人工、GPU与后续平衡待验收。
+- [t02_level_objective_reinforcement_progress_solution.md](t02_level_objective_reinforcement_progress_solution.md)：声明式目标适配、接替增援原子提交与幂等进度事务；逐关玩法与正式字段分别见15/23。
+- [t10_carrier_combat_presentation_solution.md](t10_carrier_combat_presentation_solution.md)：航空过程投影、新旧事件唯一消费、防空/投雷适配与分阶段验收。
+
+全部方案的当前完成度与用户验收只见[00](../00_project_status.md)。技术方案拥有工程职责、迁移和验收设计，历史实现成绩不在此维护；t00测量与t10接入记录分别见[性能历史](../history/t00_coastal_ai_performance_iterations.md)、[航空历史](../history/t10_carrier_presentation_iterations.md)。

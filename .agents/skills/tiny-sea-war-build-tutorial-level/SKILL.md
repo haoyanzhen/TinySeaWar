@@ -12,18 +12,19 @@ Turn one teaching concept into a truthful runtime lesson: the player performs ob
 1. Run `git status --short` and preserve unrelated work.
 2. Read these sources before editing:
    - `docs/00_project_status.md`
-   - the target T-row and sections 2, 3, 4.2, and 5 of `docs/15_battle_level_design.md`
+   - common mode, deployment, progress and settlement rules in `docs/gameplay/15_battle_level_design.md`
+   - the target T-row, teaching sequence, deployment, rewards and acceptance in `docs/gameplay/15-3_tutorial_level_design.md`
    - `docs/technical/t02_level_objective_reinforcement_progress_solution.md`
-   - the level/objective contract in `docs/23_level_progress_data_schema.md`
-   - the simulation contract in `docs/26_simulation_data_schema.md`
-   - `docs/11_game_operation_design.md` for any taught input or toggle
+   - the level/objective contract in `docs/contracts/23_level_progress_data_schema.md`
+   - the simulation contract in `docs/contracts/26_simulation_data_schema.md`
+   - `docs/gameplay/11_game_operation_design.md` for any taught input or toggle
    - `docs/34_implementation_map.md`
-   - `docs/36_balance_testing_design.md`
+   - `docs/validation/36_balance_testing_design.md`
 3. Inspect the closest existing lesson as the runtime reference. `T-01` remains the
    navigation/selection vertical slice; `T-02`--`T-04` cover command-triggered
    unlocks and first-contact staging; `T-05`--`T-08` cover combat-event facts,
    shared contact, and multi-unit focus orders:
-   - `data/levels/formal_level_01.json`
+   - `data/levels/prototype_levels.json` for T-01
    - `data/levels/formal_tutorial_levels_02_04.json` and
      `data/levels/formal_tutorial_levels_05_08.json`
    - `data/objectives/level_objectives.json`
@@ -90,9 +91,9 @@ to unrelated post-action combat randomness.
    - completion or cancellation feedback.
 6. Register the level in `scripts/presentation/menu/main_menu.gd`, `scripts/presentation/ui_text.gd`, and any data-driven selection path. A multi-unit teaching command must be expressible through normal player input as well as through the deterministic policy.
 7. Register the reward in `scripts/application/game_flow.gd`; verify `progress_save_store.gd` remains idempotent and never stores an in-battle snapshot.
-8. Update `docs/23_level_progress_data_schema.md` when the level/objective contract
-   changes and `docs/26_simulation_data_schema.md` when the experiment contract
-   changes. Update `docs/20_data_schema_design.md` only for a new data category or
+8. Update `docs/contracts/23_level_progress_data_schema.md` when the level/objective contract
+   changes and `docs/contracts/26_simulation_data_schema.md` when the experiment contract
+   changes. Update `docs/contracts/20_data_schema_design.md` only for a new data category or
    a changed public convention.
 
 Treat a formal level's ordinary `time_limit` as a technical guard unless the tutorial explicitly teaches a time limit. A technical guard result is an invalid sample, not a winner chosen by remaining HP.
@@ -186,7 +187,7 @@ existing executions and requires all three to be rerun.
 
 ## Report Completion Truthfully
 
-Update `docs/15_battle_level_design.md`, `docs/00_project_status.md`, `docs/23_level_progress_data_schema.md` (when the objective contract changes), and `docs/34_implementation_map.md` with separate status for:
+Update tutorial content in `docs/gameplay/15-3_tutorial_level_design.md`, common rules in `docs/gameplay/15_battle_level_design.md` only when changed, `docs/contracts/23_level_progress_data_schema.md` when fields change, and locations in `docs/34_implementation_map.md`. Record current status only in `docs/00_project_status.md`, separating:
 
 - formal data and load validation;
 - runtime objective and terminal result;

@@ -1,8 +1,10 @@
 # 当前实现位置速查
 
-> **功能与边界**：本文只回答“当前代码、数据、场景、工具和测试在哪里”。规则归 `10–19`，字段契约归 `20–26`，架构与 Domain 边界归 `30/32/33/35/37/38`，完成状态只见 `00_project_status.md`。路径变化时更新本文，不在此复制公式、数值或验收结论。
+> **功能与边界**：本文只回答“当前代码、数据、场景、工具和测试在哪里”。规则归gameplay，字段与资产语义归contracts，架构与Domain归architecture，实验方法归validation，完成状态只见 `docs/00_project_status.md`。路径变化时更新本文，不在此复制公式、数值或验收结论。
 
 ## 1. 启动与主流程
+
+文档任务入口为`docs/README.md`；文档审计工具位于`.agents/skills/tiny-sea-war-audit-design-docs/scripts/`：`audit_design_docs.sh`递归盘点现行专题，`validate_design_docs.py`检查本地链接、章节锚点和字面文档路径。Python入口使用`uv run --locked python`，可追加相关技能目录扩大检查范围。
 
 | 入口 | 当前文件 |
 |---|---|
@@ -30,7 +32,7 @@
 | 公式配置 | `data/formulas/combat_formulas.json` |
 | 数据目录说明 | `data/README.md` |
 
-新增或改字段前先查 `docs/20_data_schema_design.md`，再进入对应的 `21–26` 子契约和加载校验。
+新增或改字段前先查 `docs/contracts/20_data_schema_design.md`，再进入对应的 `21–26` 子契约和加载校验。
 
 ## 3. 核心战斗数据
 
@@ -46,10 +48,11 @@
 
 | 职责 | 当前文件/目录 |
 |---|---|
-| 原型与海岸验证关卡 | `data/levels/prototype_levels.json` |
+| T-01、原型与海岸验证关卡 | `data/levels/prototype_levels.json` |
 | S-01 至 S-05 正式挑战关 | `data/levels/formal_level_01.json` |
 | T-02 至 T-04 正式关卡 | `data/levels/formal_tutorial_levels_02_04.json` |
 | T-05 至 T-08 正式关卡 | `data/levels/formal_tutorial_levels_05_08.json` |
+| M-01 至 M-05 / L-01 至 L-05 正式关卡 | `data/levels/formal_challenge_m_levels.json`、`formal_challenge_l_levels.json`（同目录） |
 | 声明式目标定义 | `data/objectives/level_objectives.json` |
 | T-05 至 T-08 三轮设计路线实验 | `data/simulations/experiments/level_t05_win_rate_20.json` 至 `level_t08_route_round3_20.json` |
 | T-08当前编队路线审计复现工具与证据索引 | `reports/levels/20261001-t08-audit/validation.md`、`probe.gd`、`group_probe.gd`、`manifest.json` |
@@ -130,7 +133,7 @@
 | 作者数据测试 | `scripts/tests/terrain_authoring_test.gd` |
 | 海岸 5v5/11v11 映射负载 | `scripts/tests/ai_navigation_performance_test.gd --map-level=...` |
 
-地形、环境、设施三类规则已分别由 `docs/35_scene_combat_domain_design.md`、`37_environment_runtime_domain_design.md`、`38_facility_combat_domain_design.md` 定义。
+地形、环境、设施三类规则已分别由 `docs/architecture/35_scene_combat_domain_design.md`、`docs/architecture/37_environment_runtime_domain_design.md`、`docs/architecture/38_facility_combat_domain_design.md` 定义。
 
 ## 8. 环境运行时
 
@@ -226,14 +229,15 @@
 | 核心规则/结算 | `10`、`12`、`32` | `battle_session.gd`、`scripts/domain/services/`、`test_runner.gd` |
 | 操作与 HUD | `11`、`33`、`44` | `prototype_battle.gd`、`battle_hud.gd` |
 | 角色/武器/技能 | `13`、`14`、`21` | `data/ships|weapons|skills/`、`config_registry.gd` |
-| 关卡目标/进度 | `15`、`23`、`technical/t02` | `data/levels|objectives/`、`level_objective_service.gd`、`progress_save_store.gd` |
+| 关卡目标/进度 | `15`公共、`15-3`教学、`15-4`挑战、`23`字段、`technical/t02` | `data/levels|objectives/`、`level_objective_service.gd`、`progress_save_store.gd` |
 | AI 决策 | `16`、`24` | `scripts/application/ai/`、`data/ai/` |
 | 导航与战斗 Tick 性能 | `technical/t00`、`technical/t01` | `battle_session.gd`、`scripts/application/navigation/`、`ship_motion_service.gd`、`ai_navigation_performance_test.gd` |
 | 硬地形 | `35`、`22` | `data/terrain/`、`terrain_query_service.gd`、`tools/terrain/` |
 | 天气/局部环境 | `18`、`37`、`22` | `data/environments/`、`terrain_context_service.gd` |
 | 设施/水雷 | `18`、`38`、`22` | `data/facilities/`、`facility_service.gd`、`minefield_service.gd` |
 | 表现资产 | `33`、`40–47`、`25` | `scripts/presentation/`、`data/visuals/`、`assets/` |
-| 音乐生成与人工评审 | `50` | `tools/music/`、`.agents/skills/tiny-sea-war-music-review/` |
+| 音乐生成与人工评审 | `50`标准、`51`生产 | `tools/music/`、`.agents/skills/tiny-sea-war-music-review/` |
+| 音效素材生产与交付 | `52`标准、`53`生产 | `tools/sfx/`、`assets/audio/sfx/source/` |
 | 模拟实验 | `19`、`26`、`36` | `data/simulations/`、`scripts/*/simulation/`、`tools/simulation/` |
 
 路径不存在或职责已移动时，应先修正本文，再更新引用；不要为了符合旧路引恢复过期目录。
@@ -253,7 +257,7 @@
 - Application：`aviation_presentation_projection.gd`（逐波时间线）、`battle_presentation_filter.gd`（事件脱敏）；`battle_session.gd` 接入排程、观察、固定Tick、防空及公共投雷。
 - Domain：`scripts/domain/services/aviation_service.gd`（波次HP、位置、全圈防空、投放预算）。
 - Presentation：`aircraft_squadron_view.gd`、`aviation_payload_view.gd`，由战斗导演同步并复用；HUD与小地图共用航空快照。
-- 验证：`aviation_equivalence_test.gd`（388条排程事实）、`aviation_tick_equivalence_test.gd` 与 `fixtures/aviation_abstract_baseline.json`（旧版完整Tick指纹）、`aviation_runtime_test.gd`、`aviation_presentation_test.gd`、`aviation_performance_test.gd`、`aviation_domain_performance_test.gd`、`aviation_ai_smoke_test.gd`、`render_aviation_qa.gd`，均位于 `scripts/tests/`。
+- 验证：`aviation_equivalence_test.gd`（排程事实差分）、`aviation_tick_equivalence_test.gd` 与 `fixtures/aviation_abstract_baseline.json`（旧版完整Tick指纹）、`aviation_runtime_test.gd`、`aviation_presentation_test.gd`、`aviation_performance_test.gd`、`aviation_domain_performance_test.gd`、`aviation_ai_smoke_test.gd`、`render_aviation_qa.gd`，均位于 `scripts/tests/`。
 - 可操作纵切：`godot --path . res://scenes/battle/prototype_battle.tscn -- --aviation-demo`；追加 `--aviation-physical` 可在创建时选择真实规则；演示模式不写入胜利奖励。普通主菜单/关卡默认仍由 `settings.combat.aviation_rules_mode` 决定。
 
 ## 音效素材与制作工具
@@ -286,7 +290,7 @@
 - `scripts/tests/combat_tuning_test.gd`：全武器类别、自动/手动/技能/岸炮、A/B航空、机场准备与飞行段、瞄准及非法倍率验证。
 
 
-## 音效运行时（2026-10-01）
+## 音效运行时
 
 - `data/audio/sfx_manifest.json`：60素材、134武器、48角色/48技能的声音/静默引用和混音初值。
 - `assets/audio/sfx/runtime/`、`tools/sfx/build_runtime.py`：派生PCM16交付与可重建工具，原采用包不变。
@@ -300,7 +304,7 @@
 
 - `data/audio/music_manifest.json`：五首标题曲、主题ID、响度/哈希、完整曲目循环及恢复点元数据。
 - `assets/audio/music/runtime/`：48kHz双声道Ogg；原采用源包仍在 `source/` 且受 `.gdignore` 隔离。
-- `tools/music/build_runtime.py`：`uv run tools/music/build_runtime.py` 构建；`python3 tools/music/build_runtime.py --check` 只读核验源与派生哈希。
+- `tools/music/build_runtime.py`：`uv run --locked python tools/music/build_runtime.py` 构建；`uv run --locked python tools/music/build_runtime.py --check` 只读核验源与派生哈希。
 - `scripts/presentation/audio/music_manager.gd`：Presentation autoload，硬切、独立轮播、标题暂停/循环与场景淡化；`main_menu.gd` 提供曲名和播放控件，SoundManager共用Music设置。
 - `scripts/tests/music_runtime_test.gd`、`music_modes_test.gd`、`music_device_test.gd`：无图形契约、模式持久化/设置同步与真实设备验证；画面复用 `render_menu_qa.gd`。本轮证据和设备限制见 `reports/audio/title_runtime_20261001/validation.md`。
 

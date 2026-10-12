@@ -109,7 +109,8 @@ Preserve rationale when it explains a non-obvious tradeoff, guards against a kno
 | Family | Owns | Must delegate |
 |---|---|---|
 | `00` | Current completion, gaps, latest verification, priorities | Full rules, schemas, implementation design |
-| `10–19` | Gameplay intent, formulas, balance budgets, level/AI/experience/environment/simulator semantics | Exact schema tables, code paths, current completion |
+| `gameplay/` (10–18 and supplements) | Gameplay intent, formulas, balance budgets, level/AI/experience/environment semantics | Exact schema tables, code paths, current completion |
+| `architecture/19` | Simulation platform execution, isolation, determinism, recording and recovery | Experiment samples, statistical gates, current completion |
 | `20` | Schema index and common data conventions | Detailed category fields |
 | `21–26` | Field names, types, required/default, enum, reference, loading validation | Gameplay rationale, Domain state machines, code paths, status |
 | `30` | Architecture layers, dependencies, topology, technical principles | Gameplay rules, schema tables, current paths/status |
@@ -121,7 +122,9 @@ Preserve rationale when it explains a non-obvious tradeoff, guards against a kno
 | `37` | Environment runtime state and context composition | Effect values, hard geometry, facility lifecycle |
 | `38` | Facility/mine state, ownership, tasks, commands, events | Effect values, hard geometry, art/UI |
 | `technical/` | One cross-system implementation solution and its acceptance plan | Replacement of architecture/Domain truth |
-| `40–49` | Art direction, presentation specifications, asset interfaces/pipeline | Combat rule calculation and current completion |
+| `presentation/` (40–44/50/52) | Visual/audio standards and feedback semantics | Combat rule calculation, production records and current completion |
+| `contracts/45` | Stable asset semantics, paths and binding interfaces | Production procedures, visual defaults and current completion |
+| `production/` (46/47/51/53) | Generation, postprocessing, provenance, review and delivery | Rules, runtime lifecycle and current completion |
 | `90–99`, `history/` | Historical evidence and superseded decisions | Current truth |
 
 If the repository later changes this map, update `AGENTS.md` first and adapt the audit; do not freeze obsolete ownership in this reference.
@@ -196,10 +199,10 @@ Before finishing, confirm:
 | Changed concept | Required synchronization |
 |---|---|
 | Current completion or validation | `00`, concise `AGENTS.md` summary |
-| Gameplay rule | Owning `10–19`, formula/data/Domain/operation dependents as applicable |
+| Gameplay rule | Owning `gameplay/` source, formula/data/Domain/operation dependents as applicable |
 | Field/schema | Owning `21–26`, loader, tests, data; `20` only if index/common rule changes |
 | Domain responsibility | `30/32/35/37/38`, affected schemas and technical solutions |
-| Presentation responsibility | `33`, `25`, `40–49`, implementation map |
+| Presentation responsibility | `architecture/33`, `contracts/25/45`, owning `presentation/` or `production/` source, implementation map |
 | File move/split/archive/delete | All inbound references, `AGENTS.md`, `docs/README.md`, `34` when locations change |
 | Code/data correction | Relevant tests and actual validation result in `00` |
 | Historical-only conclusion | Audit/history route, not current summary |

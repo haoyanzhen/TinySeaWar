@@ -1,6 +1,6 @@
 # 第一阶段程序设计参考说明（历史存档）
 
-> 存档说明：本文记录第一阶段 3v3 原型的早期实施范围，已不再作为当前架构、实现状态或代码位置的权威来源。当前技术边界见 `docs/30_technical_architecture.md`、`docs/32_domain_design_phase1.md` 与 `docs/33_domain_design_phase2.md`；当前代码位置见 `docs/34_implementation_map.md`；完成状态只见 `docs/00_project_status.md`。
+> 存档说明：本文记录第一阶段 3v3 原型的早期实施范围，已不再作为当前架构、实现状态或代码位置的权威来源。当前技术边界见 `docs/architecture/30_technical_architecture.md`、`docs/architecture/32_combat_domain_design.md` 与 `docs/architecture/33_battle_presentation_architecture.md`；当前代码位置见 `docs/34_implementation_map.md`；完成状态只见 `docs/00_project_status.md`。
 
 ## 1. 文档目的
 
@@ -18,16 +18,16 @@
 
 相关设计依据：
 
-- `docs/32_domain_design_phase1.md`
-- `docs/11_game_operation_design.md`
-- `docs/30_technical_architecture.md`
-- `docs/10_game_core_mechanics.md`
-- `docs/20_data_schema_design.md`（数据契约索引）
-- `docs/21_combat_data_schema.md`
-- `docs/23_level_progress_data_schema.md`
-- `docs/24_ai_data_schema.md`
-- `docs/12_combat_formula_design.md`
-- `docs/13_balance_baseline.md`
+- `docs/architecture/32_combat_domain_design.md`
+- `docs/gameplay/11_game_operation_design.md`
+- `docs/architecture/30_technical_architecture.md`
+- `docs/gameplay/10_game_core_mechanics.md`
+- `docs/contracts/20_data_schema_design.md`（数据契约索引）
+- `docs/contracts/21_combat_data_schema.md`
+- `docs/contracts/23_level_progress_data_schema.md`
+- `docs/contracts/24_ai_data_schema.md`
+- `docs/gameplay/12_combat_formula_design.md`
+- `docs/gameplay/13_balance_baseline.md`
 - `docs/history/90_design_audit_round4.md`
 
 ---
@@ -301,7 +301,7 @@ ShipUnitView (Node2D)
   VfxRoot
 ```
 
-`ShipUnitView` 只维护 `entity_id`、资产装配和表现状态，通过 `BattleSnapshot` 同步位置、航向、生命和可见性。移动、生命、侦查、武器、技能、状态和 AI 的真状态属于 Domain，详细规则见 `docs/32_domain_design_phase1.md`。
+`ShipUnitView` 只维护 `entity_id`、资产装配和表现状态，通过 `BattleSnapshot` 同步位置、航向、生命和可见性。移动、生命、侦查、武器、技能、状态和 AI 的真状态属于 Domain，详细规则见 `docs/architecture/32_combat_domain_design.md`。
 
 UI 和场景节点不得直接修改领域字段。玩家输入转换为命令，经 Application 校验后修改 Domain；领域事件再驱动炮口火光、伤害数字、技能 cut-in 和沉没动画。
 
@@ -321,7 +321,7 @@ UI 和场景节点不得直接修改领域字段。玩家输入转换为命令�
 - `flagship_sunk`
 - `battle_finished`
 
-事件用于表现、UI 和统计记录。高频位置、航向、生命和装填显示通过只读 `BattleSnapshot` 更新，不经过全局事件总线。事件的完整字段、顺序和状态所有权见 `docs/32_domain_design_phase1.md`。
+事件用于表现、UI 和统计记录。高频位置、航向、生命和装填显示通过只读 `BattleSnapshot` 更新，不经过全局事件总线。事件的完整字段、顺序和状态所有权见 `docs/architecture/32_combat_domain_design.md`。
 
 ---
 
@@ -397,7 +397,7 @@ RecoverTarget
 
 武器只提交攻击请求，不自行扣除目标生命。
 
-每名角色最多一个 `ManualPrimary` 武器组。玩家按 `E` 进入鼠标准心瞄准，左键确认后提交主要武器命令；未被指定为主要武器的副炮、防空、反潜和其他武器维持自动开火。`Q` 只切换配置指定炮组的 HE/AP，不重置装填。完整规则见 `docs/11_game_operation_design.md`。
+每名角色最多一个 `ManualPrimary` 武器组。玩家按 `E` 进入鼠标准心瞄准，左键确认后提交主要武器命令；未被指定为主要武器的副炮、防空、反潜和其他武器维持自动开火。`Q` 只切换配置指定炮组的 HE/AP，不重置装填。完整规则见 `docs/gameplay/11_game_operation_design.md`。
 
 ### 6.5 投射物
 
@@ -413,7 +413,7 @@ RecoverTarget
 
 ### 6.6 伤害结算
 
-统一由 `DamageResolver` 按 `12_combat_formula_design.md` 执行：
+统一由 `DamageResolver` 按 `docs/gameplay/12_combat_formula_design.md` 执行：
 
 1. 验证攻击和目标状态。
 2. 执行命中或碰撞结果。
@@ -544,7 +544,7 @@ RecoverTarget
 - 玩家指令是否明显改变战局，而不是只做形式操作。
 - 角色、舰装、弹道和 UI 在缩放后的战场中是否清楚。
 
-暂不锁死最终目标值。首轮测试完成后，再根据实测分布修订 `13_balance_baseline.md`。
+暂不锁死最终目标值。首轮测试完成后，再根据实测分布修订 `docs/gameplay/13_balance_baseline.md`。
 
 ---
 

@@ -12,7 +12,7 @@
 
 [正式采用素材包](../assets/audio/sfx/source/selected_20261001_v1/README.md)保留60份采用版、60份原始生成版及来源/评审记录，约119.69 MB音频；120份WAV哈希核验通过。105项需求中57项有效、43项取消、5项静默/暂缓，详见包内manifest。文件数量与需求数量不同。9项循环、14项原目标时长复查、5项源浮点峰值记录仍保留，采用版过采样峰值警告0。
 
-声音设计与源包标准见[52](../docs/52_sound_effect_design_and_production.md)。下方§1–10为原审计依据与逐项触发说明，ID旁已标注当前需求状态；不据历史优先级恢复取消项。§11–12按当前有效范围执行。K01–K09全部取消，技能仍保留视觉/文字和实际武器事实反馈。历史候选不删除、不复制进采用包。
+声音设计与源包标准见[52](../docs/presentation/52_sound_effect_design.md)。下方§1–10为原审计依据与逐项触发说明，ID旁已标注当前需求状态；不据历史优先级恢复取消项。§11–12按当前有效范围执行。K01–K09全部取消，技能仍保留视觉/文字和实际武器事实反馈。历史候选不删除、不复制进采用包。
 
 ## 1. 审计基线与结论
 
@@ -28,15 +28,15 @@
 
 | 审计对象 | 依据 / 实现证据 |
 | --- | --- |
-| 玩法、输入、环境 | [10](../docs/10_game_core_mechanics.md)、[11](../docs/11_game_operation_design.md)、[18](../docs/18_facility_weather_effect_design.md) |
-| 角色、武器、技能 | [ships](../data/ships/)、[weapons](../data/weapons/)、[skills](../data/skills/) 三组 JSON 定义 |
+| 玩法、输入、环境 | [10](../docs/gameplay/10_game_core_mechanics.md)、[11](../docs/gameplay/11_game_operation_design.md)、[18](../docs/gameplay/18_facility_weather_effect_design.md) |
+| 角色、武器、技能 | [ships](../data/ships)、[weapons](../data/weapons)、[skills](../data/skills) 三组 JSON 定义 |
 | 战斗、侦查、深度、增援事件 | [battle_session.gd](../scripts/application/battle_session.gd) 的 `_emit` 调用 |
 | 合法表现输入与航空 A/B | [表现过滤器](../scripts/application/battle_presentation_filter.gd)、[航空投影](../scripts/application/aviation_presentation_projection.gd)、[航空服务](../scripts/domain/services/aviation_service.gd)、[t10](../docs/technical/t10_carrier_combat_presentation_solution.md) |
 | 开火、落点、命中表现 | [battle_effect_director.gd](../scripts/presentation/battle/battle_effect_director.gd) |
 | 设施、水雷、目标 | [facility_service.gd](../scripts/domain/services/facility_service.gd)、[minefield_service.gd](../scripts/domain/services/minefield_service.gd)、[level_objective_service.gd](../scripts/domain/services/level_objective_service.gd) |
 | 天气、潮汐与闪电 | [环境数据](../data/environments/ocean_battle_condition_definitions.json)、[terrain_context_service.gd](../scripts/domain/services/terrain_context_service.gd)、[weather_overlay.gd](../scripts/presentation/battle/weather_overlay.gd) |
 | 玩家反馈、菜单、结算 | [player_command_feedback.gd](../scripts/presentation/battle/player_command_feedback.gd)、[battle_hud.gd](../scripts/presentation/battle/battle_hud.gd)、[prototype_battle.gd](../scripts/presentation/battle/prototype_battle.gd)、[main_menu.gd](../scripts/presentation/menu/main_menu.gd)、[game_flow.gd](../scripts/application/game_flow.gd) |
-| 音频边界 | [33 表现架构](../docs/33_domain_design_phase2.md)、[25 表现契约](../docs/25_presentation_data_schema.md)、[45 资产接口](../docs/45_art_asset_interface_design.md)、[50 音乐方案](../docs/50_music_playback_and_asset_design.md) |
+| 音频边界 | [33 表现架构](../docs/architecture/33_battle_presentation_architecture.md)、[25 表现契约](../docs/contracts/25_presentation_data_schema.md)、[45 资产接口](../docs/contracts/45_art_asset_interface_design.md)、[50 音乐方案](../docs/presentation/50_music_playback_and_asset_design.md) |
 
 ### 1.3 接入缺口
 
@@ -308,7 +308,7 @@
 
 ### 2026-09-30 分类与三候选生产准备
 
-用户本轮要求分类设计和批量生成，每条三个候选，覆盖本工单原审计轮次“不生成音频”的范围描述。已新增 [52 音效设计](../docs/52_sound_effect_design_and_production.md)、[制作源表](../tools/sfx/catalog_source.tsv)与 [批次清单](../tools/sfx/batch_20260930.json)：105 项映射到 122 个独立条目，共 366 个候选参数；五项静默/暂缓有明确原因。
+用户本轮要求分类设计和批量生成，每条三个候选，覆盖本工单原审计轮次“不生成音频”的范围描述。已新增 [52 音效设计](../docs/presentation/52_sound_effect_design.md)、[制作源表](../tools/sfx/catalog_source.tsv)与 [批次清单](../tools/sfx/batch_20260930.json)：105 项映射到 122 个独立条目，共 366 个候选参数；五项静默/暂缓有明确原因。
 
 本轮用户明确选择 GPU 音效模型。已完成服务器和初选模型核查；TangoFlux 因许可用途限制撤回且未生成音频。Stable Audio 3 Small SFX 权重访问 403，等待账户本人完成访问授权及服务器登录。当前 **0/366 音频**，AUD-04/AUD-06 仍待制作与试听；工具代码与设计不能代替生成成功。AUD-01 的逐舰/武器/技能运行时绑定及 AUD-02/03/05/07 仍未关闭。
 

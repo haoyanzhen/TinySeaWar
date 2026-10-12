@@ -1,7 +1,7 @@
 # TinySeaWar MVP UI Art
 
 This package contains the generated and postprocessed MVP UI art defined by
-`docs/44_ui_art_design.md`.
+`docs/presentation/44_ui_art_design.md`.
 
 ## Layout
 

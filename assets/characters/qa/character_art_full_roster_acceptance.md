@@ -4,10 +4,10 @@ Date: `2026-06-22`
 
 Sources of truth:
 
-- `docs/40_art_direction_design.md` section 6
-- `docs/41_character_art_design.md`
-- `docs/45_art_asset_interface_design.md`
-- `docs/46_character_art_asset_pipeline.md`
+- `docs/presentation/40_art_direction_design.md` section 6
+- `docs/presentation/41_character_art_design.md`
+- `docs/contracts/45_art_asset_interface_design.md`
+- `docs/production/46_character_art_asset_pipeline.md`
 
 ## Result
 

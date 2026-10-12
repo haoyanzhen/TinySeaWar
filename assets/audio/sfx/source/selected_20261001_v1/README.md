@@ -10,6 +10,6 @@
 
 本包约119.69MB音频，采用版统一48kHz PCM24。9项循环尚需接缝实听；14项超过旧目标时长、5项源浮点峰值超范围记录保留，采用版过采样峰值警告0。人工选材已完成，这些制作记录不自动否定采用，也不代表循环/混音验收完成。
 
-`.gdignore`隔离制作源，manifest不是游戏运行时API。运行时应另建派生资源和正式绑定，不引用reports或该源包。完整规范见[52](../../../../../docs/52_sound_effect_design_and_production.md)。
+`.gdignore`隔离制作源，manifest不是游戏运行时API。运行时应另建派生资源和正式绑定，不引用reports或该源包。声音标准见[52](../../../../../docs/presentation/52_sound_effect_design.md)，源包与派生交付见[53](../../../../../docs/production/53_sound_effect_production_pipeline.md)。
 
 历史未采用及取消候选仍在原reports/audio批次保留，未删除或恢复排产。来源目录仅为追溯信息，本包播放无需原服务器。重建入口：`uv run --locked python tools/sfx/package_selected.py`；源包内容不一致时失败，不覆盖已归档版本。

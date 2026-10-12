@@ -35,17 +35,17 @@ Never treat a review-only request as authorization to mutate files. Never delete
   docs/<first>.md docs/<second>.md
 ```
 
-With no file arguments, the helper inventories all active top-level numbered design documents. Treat its output as leads, not automatic verdicts.
+With no file arguments, the helper recursively inventories active numbered documents, topic supplements and tNN solutions, excluding docs/history. Directories define responsibilities; numbers remain stable IDs. Treat its output as leads, not automatic verdicts.
 
 ## Apply the Authority Order
 
 Resolve conflicts by the kind of claim:
 
 1. **Current completion and latest verification**: `docs/00_project_status.md`, supported by repository evidence.
-2. **Intended gameplay and numerical rules**: the designated `10–19` source document.
+2. **Intended gameplay and numerical rules**: designated sources in `docs/gameplay/` (10–18 and supplements; 19 is simulator architecture).
 3. **Current exact runtime configuration**: `data/`, with its owning `21–26` schema contract.
-4. **Domain and architecture contracts**: `30–38`.
-5. **Current code and asset location**: `34_implementation_map.md`, verified against the filesystem.
+4. **Domain and architecture contracts**: `docs/architecture/` (19/30/32/33/35/37/38); experiment methodology is `docs/validation/36_balance_testing_design.md`.
+5. **Current code and asset location**: `docs/34_implementation_map.md`, verified against the filesystem.
 6. **Technical solution detail**: `docs/technical/`, subordinate to active architecture and Domain documents.
 7. **Historical audit or validation reports**: `90–99` and `docs/history/`; evidence only, never the newest runtime truth.
 
@@ -96,11 +96,11 @@ Classify each file as `Keep`, `Tighten`, `Split`, `Merge`, `Archive`, or `Delete
 After individual review, re-read the edited set in dependency order:
 
 1. `00` current state
-2. `10–19` gameplay and numerical intent
-3. `20–26` data shape
-4. `30–38` architecture, Domain, implementation map, and test method
+2. `gameplay/` gameplay and numerical intent, including level supplements
+3. `contracts/` data shape (20–26) and asset semantics (45)
+4. `architecture/`, root 34 implementation map, and `validation/` methods
 5. `technical/` solutions
-6. `40–49` presentation and assets
+6. `presentation/` standards and `production/` workflows (46/47/51/53)
 7. `90–99` and `history/`
 
 Confirm that upstream rules flow downward without being redefined.
@@ -194,13 +194,13 @@ Always inspect these after a rename, split, merge, archive, deletion, ownership 
 
 ### `docs/README.md`
 
-- Maintain active numeric reading order.
+- Maintain task-based reading routes and a complete directory-based index; numbers are stable IDs, not directory ownership.
 - Place archived material under History, not Technology or Gameplay.
 - Add technical solution routes when they are part of the maintained reading order.
 
 ### Other routes
 
-- Update `34_implementation_map.md` only for current locations, never for status or rules.
+- Update `docs/34_implementation_map.md` only for current locations, never for status or rules.
 - Update schema indexes, technical solution references, workorders, tests, or comments that contain old paths or ownership.
 - Search for the old filename and old responsibility wording until only intentional history remains.
 
@@ -216,6 +216,7 @@ rg -n '<old filename|old term|contradictory value>' AGENTS.md docs data scripts
 
 Also:
 
+- run `uv run --locked python .agents/skills/tiny-sea-war-audit-design-docs/scripts/validate_design_docs.py .agents/skills` for local Markdown targets, heading anchors and literal docs paths; add affected personal skill folders as arguments;
 - validate every active Markdown link and referenced local path affected by the change;
 - parse JSON when data changed;
 - run the smallest relevant Godot tests when code, data, IDs, or runtime claims changed;

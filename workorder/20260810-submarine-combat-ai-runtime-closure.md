@@ -189,16 +189,16 @@ TorpedoFlank | ReconAvoid | DisengageRegroup
 
 ### 4.1 设计与数据真源
 
-- `docs/10_game_core_mechanics.md`：潜艇职责、上下潜、深度侦查倍率、火炮/反潜交互和普通/特殊潜射边界。
-- `docs/11_game_operation_design.md`：方向型主要武器、逐座首尾鱼雷发射与玩家 `C` 深度操作。
-- `docs/12_combat_formula_design.md`：首尾射界、目标类型和氧气结算。
-- `docs/13_balance_baseline.md`：潜艇公共属性与节奏范围；运行时正确性关闭前不调整公共伤害预算。
-- `docs/14_character_balance_design.md`：海狮、U-47 及第二期潜艇的角色定位与武器映射。
-- `docs/16_enemy_ai_behavior_design.md`：潜艇六阶段战斗循环、公共目标/窗口复用、深度任务、首尾雷击解、机会哨兵、开火纪律、脱离补氧与专项验收。
-- `docs/21_combat_data_schema.md`：舰船、武器、目标类型和状态字段。
-- `docs/24_ai_data_schema.md`：AI Profile 与运行时记忆边界。
-- `docs/32_domain_design_phase1.md`：命令、状态所有权和权威 Tick 顺序。
-- `docs/36_balance_testing_design.md`：固定种子、异常分类和正式平衡结论边界。
+- `docs/gameplay/10_game_core_mechanics.md`：潜艇职责、上下潜、深度侦查倍率、火炮/反潜交互和普通/特殊潜射边界。
+- `docs/gameplay/11_game_operation_design.md`：方向型主要武器、逐座首尾鱼雷发射与玩家 `C` 深度操作。
+- `docs/gameplay/12_combat_formula_design.md`：首尾射界、目标类型和氧气结算。
+- `docs/gameplay/13_balance_baseline.md`：潜艇公共属性与节奏范围；运行时正确性关闭前不调整公共伤害预算。
+- `docs/gameplay/14_character_balance_design.md`：海狮、U-47 及第二期潜艇的角色定位与武器映射。
+- `docs/gameplay/16_enemy_ai_behavior_design.md`：潜艇六阶段战斗循环、公共目标/窗口复用、深度任务、首尾雷击解、机会哨兵、开火纪律、脱离补氧与专项验收。
+- `docs/contracts/21_combat_data_schema.md`：舰船、武器、目标类型和状态字段。
+- `docs/contracts/24_ai_data_schema.md`：AI Profile 与运行时记忆边界。
+- `docs/architecture/32_combat_domain_design.md`：命令、状态所有权和权威 Tick 顺序。
+- `docs/validation/36_balance_testing_design.md`：固定种子、异常分类和正式平衡结论边界。
 
 ### 4.2 当前实现与测试入口
 
@@ -310,7 +310,7 @@ TorpedoFlank | ReconAvoid | DisengageRegroup
 
 - **优先级 / 状态**：P1 / 已完成（设计、运行时、测试、状态与长期报告契约已同步）
 - 规则或操作发生决策后，更新 `10/11/12/13/14/16/21/24/32` 中各自唯一真源；基础规则、角色数据、加载校验、玩家 HUD/帮助、潜艇战斗 AI 设计、AIState 边界和基础专项测试已于 2026-08-11 同步。
-- 新增模拟输出字段时更新 `docs/26_simulation_data_schema.md`，实现位置变化时更新 `docs/34_implementation_map.md`。
+- 新增模拟输出字段时更新 `docs/contracts/26_simulation_data_schema.md`，实现位置变化时更新 `docs/34_implementation_map.md`。
 - 更新 `docs/00_project_status.md` 与 `AGENTS.md`，继续把潜艇战斗标为“部分完成”，直到正式复验通过。
 - **关闭条件**：旧字段、旧命令或冲突描述经 `rg` 检查无残留；状态文档只记录真实完成度。
 

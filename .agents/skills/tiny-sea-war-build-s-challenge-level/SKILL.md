@@ -12,13 +12,14 @@ Turn one S-row into a complete 3v3 challenge whose mission is the only victory c
 1. Run `git status --short` and preserve unrelated work.
 2. Read these sources before editing:
    - `docs/00_project_status.md`
-   - sections 2, 3, 4, and 6 of `docs/15_battle_level_design.md`
+   - common mode, deployment, progress and settlement rules in `docs/gameplay/15_battle_level_design.md`
+   - the target S-row, map, mission, reinforcement and reward in `docs/gameplay/15-4_challenge_level_design.md`
    - `docs/technical/t02_level_objective_reinforcement_progress_solution.md`
-   - `docs/14_character_balance_design.md` for Cost and roles
-   - `docs/16_enemy_ai_behavior_design.md` for legal AI behavior
-   - the level/objective and simulation sections of `docs/20_data_schema_design.md`
+   - `docs/gameplay/14_character_balance_design.md` for Cost and roles
+   - `docs/gameplay/16_enemy_ai_behavior_design.md` for legal AI behavior
+   - level/objective fields in `docs/contracts/23_level_progress_data_schema.md` and simulation fields in `docs/contracts/26_simulation_data_schema.md`; 20 is the common index
    - `docs/34_implementation_map.md`
-   - `docs/36_balance_testing_design.md`
+   - `docs/validation/36_balance_testing_design.md`
 3. Inspect S-01 as the current vertical-slice reference:
    - `data/levels/formal_level_01.json`
    - `data/objectives/level_objectives.json`
@@ -81,7 +82,7 @@ Never tune a challenge by modifying shared HP, damage, reload, range, detection,
 6. Register the S row in `scripts/presentation/menu/main_menu.gd` and `scripts/presentation/ui_text.gd`.
 7. Register chapter order and first-clear reward in `scripts/application/game_flow.gd` and validate `scripts/infrastructure/persistence/progress_save_store.gd`.
 8. Unlock the next S level only after a trusted formal challenge victory. Keep failure, simulation, test, debug, custom battle, and override sessions unable to write progress.
-9. Update `docs/20_data_schema_design.md` for every data-contract change.
+9. Update `docs/contracts/20_data_schema_design.md` for every data-contract change.
 
 ## Tune With Controlled Evidence
 
@@ -152,6 +153,6 @@ Manually verify that:
 
 ## Report Completion Truthfully
 
-Update `docs/15_battle_level_design.md`, `docs/00_project_status.md`, and `docs/34_implementation_map.md` with separate status for data, runtime, reinforcement, menu/progress, automated checks, 20-battle reports, and manual play.
+Update challenge content in `docs/gameplay/15-4_challenge_level_design.md`, common rules in `docs/gameplay/15_battle_level_design.md` only when changed, and locations in `docs/34_implementation_map.md`. Record current status only in `docs/00_project_status.md`, separately for data, runtime, reinforcement, menu/progress, automated checks, 20-battle reports, and manual play.
 
 State any zero-contribution role, spawn sensitivity, AI anomaly, technical sample, missing reinforcement runtime, or missing manual review. A passing target win rate alone does not make an S level complete.

@@ -43,7 +43,7 @@
 
 `source/.gdignore` 隔离制作源包，避免 Godot 自动导入和导出。源音频不因归档而重编码或归一化。五首运行时 Ogg 已派生至 `runtime/`，播放清单为 `data/audio/music_manifest.json`；冷启动《迎风启航》，随后默认不重复随机轮播；设置可选择顺序轮播／随机轮播／单曲循环，选择保存本机。编码采用恒定增益，约 −20 LUFS，源包不修改。重建：`uv run tools/music/build_runtime.py`；只读核验：`python3 tools/music/build_runtime.py --check`。完整曲目重复和硬切已接入；三轮循环、曲池混音、乐句恢复点与模型使用条款仍待人工验收。当前主机 CoreAudio 输出启动失败，真实设备录音尚未取得；证据见 `reports/audio/title_runtime_20261001/validation.md`。
 
-历史候选与试听页保留在 `reports/audio/<batch_id>/`，服务器备份按原批次 ID 保存；长期台账及反馈归档位于 [tools/music/reviews](../../../tools/music/reviews/README.md)。设计要求见 [50](../../../docs/50_music_playback_and_asset_design.md)，生产流程见 [51](../../../docs/51_music_generation_and_review_pipeline.md)。
+历史候选与试听页保留在 `reports/audio/<batch_id>/`，服务器备份按原批次 ID 保存；长期台账及反馈归档位于 [tools/music/reviews](../../../tools/music/reviews/README.md)。设计要求见 [50](../../../docs/presentation/50_music_playback_and_asset_design.md)，生产流程见 [51](../../../docs/production/51_music_generation_and_review_pipeline.md)。
 
 ### 战斗运行时（2026-10-02）
 

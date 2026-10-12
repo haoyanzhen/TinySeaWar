@@ -1,8 +1,8 @@
-> 历史归档：2026-10-01素材整理时保存。以下仅记录历轮制作与评审，旧数量、待办和设计不再生效。当前设计见[52](../52_sound_effect_design_and_production.md)，当前状态见[00](../00_project_status.md)。
+> 历史归档：2026-10-01素材整理时保存。以下仅记录历轮制作与评审，旧数量、待办和设计不再生效。当前设计见[52](../presentation/52_sound_effect_design.md)，当前状态见[00](../00_project_status.md)。
 
 # 音效分类设计与候选制作
 
-> 本文负责声音分类、音色、独立素材拆分与候选生产。需求、合法触发、聚合及 11v11 收紧规则沿用[音效工单](../../workorder/20260929-sound-effects-inventory-and-integration.md)。音乐归 [50](../50_music_playback_and_asset_design.md)，当前交付状态归 [00](../00_project_status.md)。制作清单不是运行时 manifest，生成成功不代表接入或听感验收。
+> 本文负责声音分类、音色、独立素材拆分与候选生产。需求、合法触发、聚合及 11v11 收紧规则沿用[音效工单](../../workorder/20260929-sound-effects-inventory-and-integration.md)。音乐归 [50](../presentation/50_music_playback_and_asset_design.md)，当前交付状态归 [00](../00_project_status.md)。制作清单不是运行时 manifest，生成成功不代表接入或听感验收。
 
 ## 1. 声音方向
 

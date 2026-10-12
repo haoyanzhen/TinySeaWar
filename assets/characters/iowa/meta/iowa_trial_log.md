@@ -1,6 +1,6 @@
 # Iowa Trial Log
 
-Character source: `docs/41_character_art_design.md`
+Character source: `docs/presentation/41_character_art_design.md`
 
 ## Generation Summary
 
@@ -22,7 +22,7 @@ Character source: `docs/41_character_art_design.md`
 - Current MVP-polish notes:
   - The officer cap emblem is more concrete than ideal; replace with a more abstract compass/star ornament in a final art pass.
   - Battle body is a compact chibi-style simplification, acceptable for tactical-scale MVP but should be checked in-engine.
-  - VFX sheet includes character-specific references only; public projectile and impact assets should still come from `docs/42_combat_art_design.md`.
+  - VFX sheet includes character-specific references only; public projectile and impact assets should still come from `docs/presentation/42_combat_art_design.md`.
 
 ## Accepted Pipeline Learnings
 

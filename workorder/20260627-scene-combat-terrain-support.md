@@ -15,7 +15,7 @@
 - 地形生产门禁与 9 个负例通过；核心规则 1327 项、场景表现 116 项、第二期配置 285 项通过。
 - 五个关卡各批量模拟 6 局，港湾入口 6/6 正常结束；1920 x 1080、3840 x 2160、海雾、飑线和 F9 全知调试图已人工检查。
 
-本工单承接 `docs/17_play_design.md` 与 `docs/35_scene_combat_domain_design.md`，只记录当前设计落地所需的美术资产和制作/调试工具。
+本工单承接 `docs/gameplay/17_play_design.md` 与 `docs/architecture/35_scene_combat_domain_design.md`，只记录当前设计落地所需的美术资产和制作/调试工具。
 
 状态标记：
 
@@ -220,4 +220,4 @@ environment_strong_current_streak_tile.png
 - 不让 AI 使用不同于玩家的地形、导航、视线或隐藏设施信息。
 - 不把环境 Shader 参数当成软地形规则来源。
 - 不让 QA 图、源图、候选边缘或编辑器缓存进入运行时引用。
-- 不在设施、天气和水雷规则尚未完成时用临时特判绕过 `docs/35_scene_combat_domain_design.md`。
+- 不在设施、天气和水雷规则尚未完成时用临时特判绕过 `docs/architecture/35_scene_combat_domain_design.md`。

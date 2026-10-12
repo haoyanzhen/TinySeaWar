@@ -9,8 +9,8 @@ description: Create, adjust, export, and review TinySeaWar ocean scene art varia
 
 1. Start in the TinySeaWar repository and check `git status --short` to protect unrelated work.
 2. Read the current scene art sources as needed:
-   - `docs/43_scene_art_design.md` for style, weather/time design, and acceptance rules.
-   - `docs/48_scene_art_mvp_implementation.md` for current runtime scene implementation.
+   - `docs/presentation/43_scene_art_design.md` for style, weather/time design, and acceptance rules.
+   - `docs/34_implementation_map.md` for current scene implementation locations and `docs/00_project_status.md` for completion; scene production follows `docs/production/47_scene_art_asset_pipeline.md`.
    - `data/environments/ocean_palettes.json` for palette assets.
    - `assets/environments/ocean/common/ocean_surface.gdshader` and `scripts/presentation/battle/ocean_surface.gd` for scene-layered implementation.
 3. Keep the implementation parameterized. Prefer one ocean Shader plus palette JSON values over separate full-screen background images, but do not rely on color changes alone.

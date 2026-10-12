@@ -18,7 +18,7 @@ if (($# > 0)); then
 else
   while IFS= read -r candidate; do
     files+=("$candidate")
-  done < <(find docs -maxdepth 1 -type f -name '[0-9][0-9]_*.md' | LC_ALL=C sort)
+  done < <(find docs -path 'docs/history' -prune -o -type f \( -name '[0-9][0-9]_*.md' -o -name '[0-9][0-9]-[0-9]*_*.md' -o -name 't[0-9][0-9]_*.md' \) -print | LC_ALL=C sort)
 fi
 
 if ((${#files[@]} == 0)); then
@@ -83,7 +83,7 @@ fi
 printf '\n## File references and inbound consumers\n\n'
 for file in "${files[@]}"; do
   base=$(basename "$file")
-  consumers=$({ rg -l --fixed-strings "$base" AGENTS.md docs data scripts tools workorder 2>/dev/null || true; } \
+  consumers=$({ rg --hidden -l --fixed-strings "$base" AGENTS.md docs data scripts tools workorder assets .agents 2>/dev/null || true; } \
     | LC_ALL=C sort \
     | tr '\n' ' ')
   if [[ -z "$consumers" ]]; then

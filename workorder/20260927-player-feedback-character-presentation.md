@@ -10,7 +10,7 @@
 
 ## 1. 范围与依据
 
-规则与计算由 `10/12/18/32/37` 拥有，操作由 `11` 拥有；表现架构见 [33](../docs/33_domain_design_phase2.md)，角色方向见 [40](../docs/40_art_direction_design.md)，战斗特效见 [42](../docs/42_combat_art_design.md)，环境视觉见 [43](../docs/43_scene_art_design.md)，HUD 与可读性见 [44](../docs/44_ui_art_design.md)，语义接口见 [45](../docs/45_art_asset_interface_design.md)，角色生产与交付见 [46](../docs/46_character_art_asset_pipeline.md)。代码位置总入口见 [34](../docs/34_implementation_map.md)。
+规则与计算由 `10/12/18/32/37` 拥有，操作由 `11` 拥有；表现架构见 [33](../docs/architecture/33_battle_presentation_architecture.md)，角色方向见 [40](../docs/presentation/40_art_direction_design.md)，战斗特效见 [42](../docs/presentation/42_combat_art_design.md)，环境视觉见 [43](../docs/presentation/43_scene_art_design.md)，HUD 与可读性见 [44](../docs/presentation/44_ui_art_design.md)，语义接口见 [45](../docs/contracts/45_art_asset_interface_design.md)，角色生产与交付见 [46](../docs/production/46_character_art_asset_pipeline.md)。代码位置总入口见 [34](../docs/34_implementation_map.md)。
 
 本次证据来自仓库文档及实际函数链路静态检查。下列“证据”是建单时快照，“建议”是待实施方案，不表示已验证的玩家效果。未运行新平衡实验，未以素材齐备推断演出完成。
 

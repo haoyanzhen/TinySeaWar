@@ -1,0 +1,334 @@
+# 场景、环境与设施数据契约
+
+## 1. 文档功能与边界
+
+本文是地图、地形、静态碰撞场、导航引用、天气时段、局部环境、设施、支援任务和水雷的数据形状真源。玩法效果见 `docs/gameplay/18_facility_weather_effect_design.md`；硬地形、环境运行时和设施 Domain 分别见 `docs/architecture/35_scene_combat_domain_design.md`、`docs/architecture/37_environment_runtime_domain_design.md`、`docs/architecture/38_facility_combat_domain_design.md`；导航技术预算见 `docs/technical/t00_coastal_ai_performance_solution.md`、`docs/technical/t01_inertial_navigation_and_emergency_avoidance.md`。
+
+本文不定义 Shader、贴图路径、资产生产或当前地图完成度；对应真源见 `docs/presentation/43_scene_art_design.md`、`docs/contracts/45_art_asset_interface_design.md`、`docs/00_project_status.md`。
+
+## 2. LevelMap
+
+关卡内嵌地图字段：
+
+```text
+width, height, ocean_palette
+terrain_definition_id?
+navigation_definition_id?
+environment_zone_set_id?
+environment_timeline_id?
+facility_layout_id?
+```
+
+- `width/height>0`。
+- `ocean_palette` 必须解析为正式 `{weather}_{time}` ID，或通过显式兼容别名迁移。
+- 可选引用省略时不附加对应定义；非空时必须引用匹配类别。时间线引用另须满足第 3.1 节的首阶段一致性校验。
+- LevelMap 不保存 Shader 参数、AI 私有路径或运行时设施状态。
+
+## 3. OceanConditionDefinition
+
+表现 palette 与战斗条件共享同一语义 ID，但属于不同数据对象，不能互读字段。
+
+```text
+WeatherBattleProfile
+  weather
+  context.base_sea_state
+  context.wind_speed
+  context.wind_heading
+  context.optical_visibility_multiplier
+  context.weapon_accuracy_modifier
+  context.aviation_delay_multiplier
+  context.aviation_condition
+
+TimeBattleProfile
+  time_of_day
+  context.optical_visibility_multiplier
+  context.weapon_accuracy_modifier
+  context.aviation_delay_multiplier
+
+OceanConditionRules
+  minimum_optical_visibility_multiplier
+  torpedo_sigma_reference_sea_state
+  torpedo_sigma_sea_state_step
+  torpedo_sigma_wind_threshold
+  torpedo_sigma_wind_step
+  torpedo_sigma_multiplier_max
+  sea_state_rules[]
+
+OceanConditionAliases
+  aliases
+```
+
+- `weather`：`clear | cloudy | overcast | rain | thunderstorm`。
+- `time_of_day`：`day | dawn | dusk | night`。
+- `aviation_condition`：`Normal | Restricted | Severe | Grounded`。
+- 倍率为非负值；`minimum_optical_visibility_multiplier` 在 `(0,1]`；海况规则按 `minimum_sea_state` 唯一排序。
+- 兼容别名只用于旧数据迁移，新配置必须写正式 ID。
+
+### 3.1 EnvironmentTimeline
+
+时间线归入现有环境定义类别，字段：
+
+```text
+id, definition_type # EnvironmentTimeline
+display_name
+forecast_seconds # 缺省 10
+loop_seconds? # 省略表示结束后保持最后阶段
+stages[]
+  start_seconds
+  ocean_palette
+```
+
+- 阶段非空，首项从 `0` 开始，时间严格递增；所有时间为有限非负数并对齐 `0.1s` 固定 Tick。
+- 阶段 palette 必须是正式天气／时段 ID，不使用兼容别名；循环周期必须严格大于最后阶段时间。
+- `LevelMap.environment_timeline_id` 可选，非空时引用本类型，且 `map.ocean_palette` 必须等于首阶段。省略时整局固定环境。
+- 运行时公开全局快照增加 `environment_revision`、`timeline_id`、`stage_index`（从 0 起）、`cycle`、`global_effects` 和 `forecast`。`global_effects` 是不叠加局部区域、已应用海况档位的只读环境上下文；`forecast` 在预告窗口内包含 `ocean_palette`、`remaining_seconds`、`at_usec`，窗口外为空。
+- 变化事件 `GlobalEnvironmentChanged` 包含前后 palette、环境版本、阶段、循环及来源；`GlobalEnvironmentForecast` 包含目标 palette、剩余秒数和绝对环境微秒时点。事件再由会话附加 Tick 与事件 ID。
+
+## 4. TerrainAssetTemplate
+
+```text
+id, definition_type # TerrainAssetTemplate
+display_name, asset_id, texture
+origin, local_size, review_status
+obstacles[], regions[], visual_regions[], facility_anchors[]
+```
+
+- `obstacles` 保存审核多边形与 `block_mask`；合法阻挡语义为 `ShipMovement | TorpedoTravel | ShellTravel | SurfaceOpticalLineOfSight`。
+- `regions` 使用 `DeepWater | CoastalWater | ShallowWater | ReefOrSandbar | NavigationChannel`，并声明通行标签与成本。
+- `visual_regions` 只保存 `asset_semantic`、多边形、透明度和层级，不参与碰撞、视线或通行。
+- `facility_anchors` 使用模板局部坐标并具有唯一 ID。
+- 图片 alpha、候选碰撞边缘和生产 QA 不进入运行时模板契约。
+
+## 5. TerrainMap
+
+```text
+id, definition_type # TerrainMap
+display_name, map_size
+obstacles[], regions[], visual_regions[], visual_instances[]
+facility_anchors[], spawn_points[]
+navigation_definition_id, navigation_revision, collision_field_id
+environment_zone_set_id?, facility_layout_id?
+geometry_epsilon, source_document
+```
+
+`spawn_points[]`：
+
+```text
+id, faction_id, position, heading, radius, movement_tags[]
+```
+
+- 近岸地图保存 `player_1..player_11` 与 `enemy_1..enemy_11` 的确定性槽位。
+- 槽位必须位于边界内，不与硬地形或非法水域相交，同阵营不重叠，并能通过相应导航 Profile 接入接敌区域。
+- 初始成员按规模引用前缀槽位，具体部署语义见 [15](../gameplay/15_battle_level_design.md)，出生空间校验见 [35](../architecture/35_scene_combat_domain_design.md)。
+- `collision_field_id` 必须引用与本 TerrainMap、`navigation_revision`、`map_size` 和规则源摘要完全一致的当前碰撞场。
+- 烘焙元数据只用于可追溯性，不得改变运行时几何。
+
+## 6. TerrainCollisionField
+
+```text
+id, definition_type # TerrainCollisionField
+schema_version, algorithm_version
+terrain_definition_id, navigation_revision
+map_size, cell_size, grid_size
+path
+source_checksum, payload_checksum, file_checksum
+occupancy_bytes, distance_bytes, restriction_bytes
+```
+
+- 当前 Schema/算法版本均为 `2`，当前格长为 `8 × 8` 世界单位；版本、尺寸或 payload 布局未知时必须拒绝加载。
+- `source_checksum` 覆盖 TerrainMap 中声明 `ShipMovement` 的权威障碍多边形、`ShallowWater | ReefOrSandbar` 限制区域、地图边界、地图尺寸和 navigation revision；视觉 PNG、alpha、参考 Mask、`visual_regions` 和小地图不得进入规则摘要。
+- `occupancy_bytes` 是保守占用 BitMask；`distance_bytes` 是到占用或地图外部的 `uint16` 世界距离下界；`restriction_bytes` 为每格一字节的保守限制水域位掩码，当前位语义为浅水与礁区。距离下界或限制位缺失只能证明“不确定”，重叠片段必须进入对应的权威岸线扫掠或区域多边形判定。
+- manifest、二进制头、payload 和整文件 checksum 必须同时匹配。缺失、损坏、过期或引用不一致时，整场确定性回退到精确多边形查询，并记录一次稳定原因码。
+- 碰撞场只加速静态岸线、边界以及静态浅水/礁区的“确定不相交”判断；吃水标签和精确区域边界仍由 TerrainQueryService 解释，潮汐、环境区、动态舰船、鱼雷和雷区继续使用各自规则状态。
+
+## 7. NavigationDefinition
+
+```text
+id, definition_type # NavigationDefinition
+terrain_definition_id, navigation_revision
+profiles[]
+  id, radius, movement_tags[], cell_size
+  nodes[]
+    id, position, neighbors[]
+```
+
+- 地形引用必须存在，所有节点和边必须位于对应地图合法区域。
+- 当前审核 Profile 为 `small_shallow`（20，Surface/ShallowDraft）、`standard_shallow`（32，Surface/ShallowDraft）、`large_deep`（46，Surface）、`standard_deep`（32，Surface），ID 均带 `navigation.profile.` 前缀。按半径与吃水权限分别匹配，不得因缺少标准深吃水档而将所有深吃水舰一律按大型舰处理。
+- 玩家与 AI 读取同一 Profile；难度配置不得提供私有候选数、隐藏节点或绕过统一 Broker 的路线入口。
+- 门间距、接入候选、常规/紧急航迹候选与请求预算不在本 Schema 配置，统一由 t00/t01 的共享技术设置拥有。
+
+## 8. EnvironmentEffect 与 EnvironmentZoneSet
+
+`EnvironmentEffect`：
+
+```text
+id, definition_type # EnvironmentEffect
+zone_type, priority, stack_rule, context
+```
+
+- `zone_type`：`SeaFog | RainSquall | HighSea | LeeWater | MoonlitLane | StrongCurrent | TidalWater`。
+- `stack_rule`：`Highest | Override | VectorAdd`；`context` 只允许公共环境上下文字段。
+
+`EnvironmentZoneSet`：
+
+```text
+id, definition_type # EnvironmentZoneSet
+global_environment
+zones[]
+  id, effect_id, polygon
+  position, heading, drift_speed, drift_path[]?
+  intensity, phase, duration, active?
+  public_trend
+```
+
+- `effect_id` 必须引用合法环境效果；`polygon` 至少包含三个点。
+- `drift_path` 有值时按折线推进；无路径才使用 `heading`。
+- 环境区保存规则空间和公开趋势，不保存 Shader 参数或未来精确位置。
+
+## 9. FacilityDefinition
+
+```text
+id, display_name, asset_semantic
+capabilities[], operation_modes[]
+initial_state_profiles
+area_control?
+berthing_service?
+remote_command?
+automatic_operation?
+observation_rules?
+activation_rules?
+radar_rules?
+combat_disposition?
+max_hp?, armor?, armor_thickness?
+durability_reference_id?
+weapon_mount_reference?
+suppression_damage_threshold?, suppression_duration?
+target_radius?
+```
+
+`operation_modes` 只允许：
+
+```text
+AreaControl | BerthingService | RemoteCommand | AutomaticOperation | CombatDisposition
+```
+
+声明某模式时必须同时提供对应对象。
+
+### 9.1 area_control
+
+```text
+enabled, capturable, duration
+```
+
+### 9.2 berthing_service
+
+```text
+service_type # Supply | Repair
+duration, berth_count, max_entry_speed, heading_tolerance_degrees
+berth_state, dock_position_policy?, hold_while_docked?
+interrupt_on_leave, interrupt_on_move_order?
+interrupt_on_heavy_damage_ratio?
+interrupt_on_facility_damage
+interrupt_on_facility_unavailable?, interrupt_on_sink?, interrupt_on_undock?
+progress_on_interrupt # Reset
+weapon_reload_recovery_ratio?, skill_cooldown_recovery?
+hp_restore_ratio?, repair_cap_ratio?
+```
+
+- `Repair` 必须使用 `berth_state=Docked`、`dock_position_policy=EntryPosition`、`hold_while_docked=true`，并显式声明移动、重击、设施失效、沉没和离泊中断。
+- 单泊位由单场 `service_state` 独占；Definition 不保存占用舰或进度。
+
+### 9.3 remote_command
+
+```text
+command_type, mission_ids[]?
+control_radius, area_side_length?, duration?
+mine_count?, cooldown, charges
+random_seed_policy?
+mine_trigger_radius?
+detection_reference?
+damage_reference?
+in_progress_facility_policy?
+deployed_mine_controller_policy?
+```
+
+- `MineDeployment` 使用 `detection_reference={ship_id, full_length_multiplier}` 与 `damage_reference={ship_id, weapon_id}`；旧 `mine_damage`、`detection_distance` 不得进入新配置。
+- 引用舰船与武器必须存在，且武器实际挂载于引用舰船。
+- `in_progress_facility_policy` 的合法结果为 `Cancel | Continue`；已布设水雷使用 `Independent` 时不随控制站失效清除。
+
+### 9.4 observation_rules 与 radar_rules
+
+- 光学观察必须声明天气、时段、局部能见度和视线是否影响。
+- 雷达必须使用独立 `radar_rules`，声明接触类型、范围、精度与隐身破除策略，不能继承光学默认值。
+
+### 9.5 combat_disposition
+
+```text
+suppressible, destroyable, silentable, damage_floor_ratio
+```
+
+可摧毁设施 `damage_floor_ratio=0`；不可摧毁设施使用 `(0,1)`。武器设施通过 `durability_reference_id`、`weapon_mount_reference` 复用合法舰船与武器 Definition。
+
+## 10. FacilityLayout
+
+```text
+id, terrain_definition_id
+placements[]
+  id, definition_id, anchor_id, faction_id
+  operation_state, initial_state_profile
+  requires_all_active[]?, requires_any_active[]?
+  dependency_rules.requires_matching_faction?
+activation_events[]?
+  at_seconds, facility_id, event_id
+system_handover_rules[]?
+  event_id, control_facility_id, facility_ids[], trigger? # Manual | ControlCompleted
+```
+
+- `activation_events` 为本布局的单次公开时间事件：非负有限战斗秒数、已放置设施、与目标 `activation_rules` 匹配的事件 ID；同设施不得重复排程。暂停不推进，重开重建；失效设施不被复活。
+- `trigger` 缺省 `Manual`；显式 `ControlCompleted` 才由指定控制设施的占领完成触发整套易手，未声明布局仍保持普通占领只改自身。
+- 放置 ID、锚点和设施引用唯一且存在。
+- 依赖与整套易手必须显式列出，不允许通过通信站占领隐式转移全部设施。
+
+## 11. SupportMissionDefinition
+
+```text
+id, definition_type # SupportMissionDefinition
+display_name, mission_type, target_type
+cooldown, charges
+launch_time, arrival_time
+max_range, effect_radius, effect_duration
+blocked_aviation_conditions[]
+enemy_aviation_accuracy_modifier?
+salvo_count?, weapon_id?
+facility_state_policy
+  Preparing # Cancel | Continue
+  EnRoute # Cancel | Continue
+```
+
+`launch_time` 必须早于 `arrival_time`；攻击任务引用合法 WeaponDefinition。准备和飞行段计算见 [12](../gameplay/12_combat_formula_design.md)，任务阶段与取消顺序见 [38](../architecture/38_facility_combat_domain_design.md)。
+
+## 12. MinefieldDefinition
+
+```text
+id, definition_type # MinefieldDefinition
+display_name, terrain_definition_id
+polygon, safe_channels[]
+controller_facility_id?
+owner_faction_id, operation_state
+known_by_faction[]
+detection_reference
+damage_reference
+controller_rules?
+```
+
+- 多边形和安全航道通过地形校验。
+- 阵营快照只返回该阵营已知或拥有的雷区；全量边界只进入全知调试。
+- 水雷触发复用第 9.3 节的引用规则，不保存独立易漂移伤害副本。
+
+### 航空支援运行关联
+
+设施 `support_missions` 的 `mission_id/facility_id/faction_id/launch_at_time/resolve_at_time/target_position/state` 同时作为岸基航空投影来源。Physical 的空袭编队使用 `support.<mission_id>` 稳定关联；可选 `aircraft_hp > 0` 缺省350。侦察/巡逻区域仍按既有 `support_effects` 发布，不新增机体或击杀字段。
+
+### 挑战地图派生约定
+
+挑战地图的接替入口与初始槽位均须通过唯一 ID、位置、半径和吃水校验。派生实例具有独立 ID 与引用；碰撞场的源摘要必须匹配该实例。具体关卡部署与地图复用意图见 [15](../gameplay/15_battle_level_design.md)，派生编排见 [t02](../technical/t02_level_objective_reinforcement_progress_solution.md)。

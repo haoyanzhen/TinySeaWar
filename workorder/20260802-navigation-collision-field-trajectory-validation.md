@@ -63,13 +63,13 @@
 
 ### 1.1 必须保持一致的设计真源
 
-- `docs/30_technical_architecture.md`：四层依赖、固定 Tick 与 Domain 权威边界。
-- `docs/32_domain_design_phase1.md`：战斗状态所有权、命令与权威 Tick 顺序。
-- `docs/35_scene_combat_domain_design.md`：硬地形、舰体几何、连续扫掠、确定性与规则几何真源。
-- `docs/22_scene_environment_data_schema.md`：地形定义、区域、导航引用及新增碰撞场引用的字段契约。
+- `docs/architecture/30_technical_architecture.md`：四层依赖、固定 Tick 与 Domain 权威边界。
+- `docs/architecture/32_combat_domain_design.md`：战斗状态所有权、命令与权威 Tick 顺序。
+- `docs/architecture/35_scene_combat_domain_design.md`：硬地形、舰体几何、连续扫掠、确定性与规则几何真源。
+- `docs/contracts/22_scene_environment_data_schema.md`：地形定义、区域、导航引用及新增碰撞场引用的字段契约。
 - `docs/technical/t00_coastal_ai_performance_solution.md`：空间查询、路线预算、错峰调度与性能门禁。
 - `docs/technical/t01_inertial_navigation_and_emergency_avoidance.md`：战略走廊、常规/紧急动力学航迹、SafetyHold 与移动恢复。
-- `docs/47_scene_art_asset_pipeline.md`：视觉海岸与规则几何的同源变换边界；美术 Alpha 不得反向成为规则真相。
+- `docs/production/47_scene_art_asset_pipeline.md`：视觉海岸与规则几何的同源变换边界；美术 Alpha 不得反向成为规则真相。
 
 ### 1.2 当前实现入口
 
@@ -739,10 +739,10 @@ terrain_collisions_after_clear_plan
 
 ### 阶段 F：文档与状态同步
 
-- [x] 按实际实现更新 `docs/35_scene_combat_domain_design.md` 的共享碰撞场加速边界。
+- [x] 按实际实现更新 `docs/architecture/35_scene_combat_domain_design.md` 的共享碰撞场加速边界。
 - [x] 更新 `docs/technical/t00_coastal_ai_performance_solution.md` 的查询预算与指标。
 - [x] 更新 `docs/technical/t01_inertial_navigation_and_emergency_avoidance.md` 的同 Tick 轨迹、净空评分和恢复流程。
-- [x] 更新 `docs/22_scene_environment_data_schema.md`、加载校验与负例。
+- [x] 更新 `docs/contracts/22_scene_environment_data_schema.md`、加载校验与负例。
 - [x] 更新 `docs/34_implementation_map.md`、`docs/00_project_status.md` 和 `AGENTS.md`；只按已有自动/人工证据标记完成度。
 
 ## 17. 回滚与降级

@@ -12,7 +12,7 @@ RTS 玩家主要在最远视角观察、选择和下达指令。最远视角是�
 
 本轮先制作厌战、雪风、企业三名样本，覆盖战列、驱逐、航母；建立独立评审入口、同快照 A/B 与密集阵形压力样张，验证缩放、选择和信息权限。候选资产保存在 reports/art/20261009-far-view，不覆盖正式 processed，不批量替换其他45名角色。正式地图、碰撞、射程、侦查、战斗规则和进度均不改变。
 
-依赖：角色方向见 ../docs/40_art_direction_design.md，身份见 ../docs/41_character_art_design.md，场景见 ../docs/43_scene_art_design.md，UI见 ../docs/44_ui_art_design.md，接口/生产见 ../docs/45_art_asset_interface_design.md 与 ../docs/46_character_art_asset_pipeline.md。此文件只定义候选试验，不替代主设计真源。用户采用后再同步正式契约。
+依赖：角色方向见 ../docs/presentation/40_art_direction_design.md，身份见 ../docs/presentation/41_character_art_design.md，场景见 ../docs/presentation/43_scene_art_design.md，UI见 ../docs/presentation/44_ui_art_design.md，接口/生产见 ../docs/contracts/45_art_asset_interface_design.md 与 ../docs/production/46_character_art_asset_pipeline.md。此文件只定义候选试验，不替代主设计真源。用户采用后再同步正式契约。
 
 ## 2. 发现与设计假设
 

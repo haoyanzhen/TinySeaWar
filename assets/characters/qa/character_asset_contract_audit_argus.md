@@ -1,7 +1,7 @@
 # Character Asset Contract Audit
 
-Contract source: `docs/40_art_direction_design.md` section 6.
-Roster source: `docs/41_character_art_design.md`.
+Contract source: `docs/presentation/40_art_direction_design.md` section 6.
+Roster source: `docs/presentation/41_character_art_design.md`.
 
 | Character | Prototype | Ship class | Status | Missing required roles | Data issues |
 | --- | --- | --- | --- | --- | --- |

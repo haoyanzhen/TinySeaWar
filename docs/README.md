@@ -1,109 +1,122 @@
-# Tiny Sea War Design Docs
+# Tiny Sea War 文档入口
 
-This folder uses numeric prefixes so design files stay grouped in a useful reading order.
+先读[00当前状态](00_project_status.md)，按任务选择设计真源；实现位置查[34](34_implementation_map.md)。[01结构与旧名映射](01_documentation_structure_plan.md)记录本次结构决策，实际迁移证据见[重组记录](history/96_documentation_restructure_20261012.md)。
 
-## Naming Rules
+## 开始工作
 
-- `00-09`: project status, roadmap, and repository-wide guides.
-- `10-19`: gameplay, operations, formulas, and balance.
-- `20-29`: data contracts and schema.
-- `30-39`: technical architecture and implementation notes.
-- `40-49`: art direction, asset contracts, and art pipeline notes.
-- `50-59`: music and audio design, playback policies, and audio asset standards.
-- `90-99`: audits, reviews, and historical reports.
+- 项目约束与工作规则见[AGENTS](../AGENTS.md)，本文维护完整设计目录。
+- 目录表达职责，编号保留为稳定ID；19属于架构，36属于验证，45属于资产契约。
+- 规则、字段、状态所有权、表现标准、生产流程、工程方案与验收方法分别维护。当前完成度只在00，精确运行值以data为准。
+- 工单索引见[workorder状态清单](../workorder/00_workorder_status.md)；历史记录不作为当前待办。
 
-Use lowercase English file names with underscores:
+## 按任务选读
 
-`NN_domain_topic_kind.md`
+| 任务 | 阅读路线（编号可在下方完整目录检索） |
+|---|---|
+| 理解项目 | 00 → 17 → 10 → 30；实现时读34 |
+| 战斗规则/结算 | 00 → 10/12 → 21 → 32；环境与设施再读18/22/35/37/38 |
+| 角色/武器/技能 | 00 → 13/14 → 21 → 12/32；AI影响读16/24 |
+| 教学/挑战 | 00 → 15 → 15-3或15-4 → 23 → t02；正式实验再读19/26/36 |
+| 自定义/特别行动 | 00 → 15 → 15-1或15-2 → 23/24；新增能力再读对应架构 |
+| AI与导航 | 00 → 16/24 → 32/35 → t00/t01 |
+| 角色美术 | 00 → 40/41 → 45 → 46；接入读25/33 |
+| 场景美术 | 00 → 43 → 45/47；几何读22/35，玩法读18 |
+| 操作与HUD | 00 → 11/44 → 25/33；武器表现读42 |
+| 音乐/音效 | 00 → 50或52 → 51或53 → 45；接入读25/33 |
+| 实验与平衡 | 00 → 受测专题 → 36 → 26/19；入口查34 |
 
-同一主题的独立分册可使用 `NN-N_topic_kind.md`，放在对应主文档之后；分册必须明确职责边界并由主文档链接。`15-1` 为自定义敌方阵容池分册，`15-2` 为特别行动设计分册，两者均不占用 `16` 的 AI 决策设计职责。
+## 按职责查文件
 
-## Reading Order
+### 根目录入口
 
-### Project Status
+- [00 当前状态](00_project_status.md)
+- [01 文档结构与迁移映射](01_documentation_structure_plan.md)
+- [34 实现位置速查](34_implementation_map.md)
 
-- [00_project_status.md](00_project_status.md)
-- [工单状态跟踪清单](../workorder/00_workorder_status.md)：全部日期工单的逐份审计、完成证据和关闭记录；2026-10-10用户确认W09/W10已验收并关闭后，现有14份全部原范围完成或验收关闭，未关闭0份，项目完成度仍以00为准。
+### 玩法与内容（gameplay）
 
-### Gameplay And Balance
+- [10_game_core_mechanics：舰娘核心机制设定](gameplay/10_game_core_mechanics.md)
+- [11_game_operation_design：战斗操作设计](gameplay/11_game_operation_design.md)
+- [12_combat_formula_design：战斗公式设计](gameplay/12_combat_formula_design.md)
+- [13_balance_baseline：初始平衡基线](gameplay/13_balance_baseline.md)
+- [14_character_balance_design：角色数值设计](gameplay/14_character_balance_design.md)
+- [15_battle_level_design：公共关卡规则与内容导航](gameplay/15_battle_level_design.md)
+- [15-1_custom_battle_roster_design：自定义战斗：敌方阵容池与 Cost 区间抽取](gameplay/15-1_custom_battle_roster_design.md)
+- [15-2_special_operations_design：特别行动：海军战术难题与关卡设计](gameplay/15-2_special_operations_design.md)
+- [15-3_tutorial_level_design：教学关卡设计：T-01～T-08](gameplay/15-3_tutorial_level_design.md)
+- [15-4_challenge_level_design：挑战关卡设计：S/M/L小型、中型与大型海战](gameplay/15-4_challenge_level_design.md)
+- [16_enemy_ai_behavior_design：战斗 AI 行为、玩家辅助控制、量化与验证设计](gameplay/16_enemy_ai_behavior_design.md)
+- [17_play_design：玩法趣味设计](gameplay/17_play_design.md)
+- [18_facility_weather_effect_design：设施与天气效果策划](gameplay/18_facility_weather_effect_design.md)
 
-- [10_game_core_mechanics.md](10_game_core_mechanics.md)
-- [11_game_operation_design.md](11_game_operation_design.md)：键鼠、设施、暂停计划与菜单/GUI输入的操作真源；说明界面视觉归44。
-- [12_combat_formula_design.md](12_combat_formula_design.md)
-- [13_balance_baseline.md](13_balance_baseline.md)
-- [14_character_balance_design.md](14_character_balance_design.md)
-- [15_battle_level_design.md](15_battle_level_design.md)：教学与三规模挑战真源；中型 M-01～M-05、大型 L-01～L-05 的逐关战术设计见第 7、8 节，地图制作与实施门禁见第 3.7、10.3 节。
-- [15-1_custom_battle_roster_design.md](15-1_custom_battle_roster_design.md)：自定义敌方完整阵容、玩家Cost与三档难度区间、随机抽取/预览/重开和实施交接；运行时已接入，真人/平衡验收见00。
-- [15-2_special_operations_design.md](15-2_special_operations_design.md)：特别行动的规则化战术难题、六个关卡候选与用户试玩迭代；难度依据人的反馈，不采用程序代打调平。
-- [16_enemy_ai_behavior_design.md](16_enemy_ai_behavior_design.md)
-- [17_play_design.md](17_play_design.md)
-- [18_facility_weather_effect_design.md](18_facility_weather_effect_design.md)
-- [19_battle_simulator_design.md](19_battle_simulator_design.md)
+### 数据与资产契约（contracts）
 
-### Data
+- [20_data_schema_design：数据契约索引与公共约定](contracts/20_data_schema_design.md)
+- [21_combat_data_schema：战斗单位与结算数据契约](contracts/21_combat_data_schema.md)
+- [22_scene_environment_data_schema：场景、环境与设施数据契约](contracts/22_scene_environment_data_schema.md)
+- [23_level_progress_data_schema：关卡、目标与进度数据契约](contracts/23_level_progress_data_schema.md)
+- [24_ai_data_schema：AI 配置数据契约](contracts/24_ai_data_schema.md)
+- [25_presentation_data_schema：表现配置数据契约](contracts/25_presentation_data_schema.md)
+- [26_simulation_data_schema：战斗模拟实验数据契约](contracts/26_simulation_data_schema.md)
+- [45_art_asset_interface_design：程序-美术资产接口设计](contracts/45_art_asset_interface_design.md)
 
-- [20_data_schema_design.md](20_data_schema_design.md)：数据契约索引与公共约定。
-- [21_combat_data_schema.md](21_combat_data_schema.md)：战斗单位与结算输入。
-- [22_scene_environment_data_schema.md](22_scene_environment_data_schema.md)：场景、环境与设施。
-- [23_level_progress_data_schema.md](23_level_progress_data_schema.md)：关卡、目标与进度。
-- [24_ai_data_schema.md](24_ai_data_schema.md)：AI 配置。
-- [25_presentation_data_schema.md](25_presentation_data_schema.md)：纯表现配置。
-- [26_simulation_data_schema.md](26_simulation_data_schema.md)：模拟实验清单。
+### 架构与Domain（architecture）
 
-### Technology
+- [19_battle_simulator_design：战斗模拟器设计](architecture/19_battle_simulator_design.md)
+- [30_technical_architecture：Tiny Sea War 技术架构](architecture/30_technical_architecture.md)
+- [32_combat_domain_design：战斗核心 Domain 设计](architecture/32_combat_domain_design.md)
+- [33_battle_presentation_architecture：战斗表现架构设计](architecture/33_battle_presentation_architecture.md)
+- [35_scene_combat_domain_design：硬地形与场景空间 Domain 设计](architecture/35_scene_combat_domain_design.md)
+- [37_environment_runtime_domain_design：环境运行时 Domain 设计](architecture/37_environment_runtime_domain_design.md)
+- [38_facility_combat_domain_design：设施战斗 Domain 设计](architecture/38_facility_combat_domain_design.md)
 
-- [30_technical_architecture.md](30_technical_architecture.md)
-- [32_domain_design_phase1.md](32_domain_design_phase1.md)
-- [33_domain_design_phase2.md](33_domain_design_phase2.md)
-- [34_implementation_map.md](34_implementation_map.md)
-- [35_scene_combat_domain_design.md](35_scene_combat_domain_design.md)
-- [36_balance_testing_design.md](36_balance_testing_design.md)
-- [37_environment_runtime_domain_design.md](37_environment_runtime_domain_design.md)
-- [38_facility_combat_domain_design.md](38_facility_combat_domain_design.md)
+### 视觉与声音标准（presentation）
 
-### Technical Solutions
+- [40_art_direction_design：角色美术方向与通用资产契约](presentation/40_art_direction_design.md)
+- [41_character_art_design：角色美术设计](presentation/41_character_art_design.md)
+- [42_combat_art_design：战斗美术设计文档](presentation/42_combat_art_design.md)
+- [43_scene_art_design：场景美术设计文档](presentation/43_scene_art_design.md)
+- [44_ui_art_design：UI 美术设计文档](presentation/44_ui_art_design.md)
+- [50_music_playback_and_asset_design：音乐播放策略与资产标准](presentation/50_music_playback_and_asset_design.md)
+- [52_sound_effect_design：音效声音设计与听感标准](presentation/52_sound_effect_design.md)
 
-- [technical/README.md](technical/README.md)
-- [technical/t00_coastal_ai_performance_solution.md](technical/t00_coastal_ai_performance_solution.md)：有岸与大编队战斗的 AI、导航、空间查询、Tick 拆分和单位侦查性能治理。
-- [technical/t01_inertial_navigation_and_emergency_avoidance.md](technical/t01_inertial_navigation_and_emergency_avoidance.md)：战略走廊、常规动力学航迹与高威胁紧急避险。
-- [technical/t02_level_objective_reinforcement_progress_solution.md](technical/t02_level_objective_reinforcement_progress_solution.md)：声明式关卡目标、接替增援、结算与进度实现。
-- [technical/t10_carrier_combat_presentation_solution.md](technical/t10_carrier_combat_presentation_solution.md)：航空表现投影、事件接管、A默认表现与B显式规则闭环及分阶段验收；当前证据见00，不替代规则和公式真源。
+### 资产生产与评审（production）
 
-### Art
+- [46_character_art_asset_pipeline：角色美术资产生产与验收管线](production/46_character_art_asset_pipeline.md)
+- [47_scene_art_asset_pipeline：场景美术资产生产与验收管线](production/47_scene_art_asset_pipeline.md)
+- [51_music_generation_and_review_pipeline：音乐生成与人工评审流程](production/51_music_generation_and_review_pipeline.md)
+- [53_sound_effect_production_pipeline：音效素材生产与交付管线](production/53_sound_effect_production_pipeline.md)
 
-美术目录入口：[assets/README.md](../assets/README.md)；统一路径、命名与兼容例外由 `45` 维护。
+### 跨系统技术方案（technical）
 
-- [40_art_direction_design.md](40_art_direction_design.md)
-- [41_character_art_design.md](41_character_art_design.md)：全48角色的个体视觉方向、56px战斗身份特征与舰装简化重点。
-- [42_combat_art_design.md](42_combat_art_design.md)
-- [43_scene_art_design.md](43_scene_art_design.md)
-- [44_ui_art_design.md](44_ui_art_design.md)
-- [45_art_asset_interface_design.md](45_art_asset_interface_design.md)
-- [46_character_art_asset_pipeline.md](46_character_art_asset_pipeline.md)
-- [47_scene_art_asset_pipeline.md](47_scene_art_asset_pipeline.md)
+方案命名与边界见[technical/README](technical/README.md)。
 
-### Music And Audio
+- [t00_coastal_ai_performance_solution：有岸地图 AI 决策性能解决方案](technical/t00_coastal_ai_performance_solution.md)
+- [t01_inertial_navigation_and_emergency_avoidance：航行走廊、短时动力学轨迹与紧急规避解决方案](technical/t01_inertial_navigation_and_emergency_avoidance.md)
+- [t02_level_objective_reinforcement_progress_solution：关卡目标、接替增援与进度存档技术契约](technical/t02_level_objective_reinforcement_progress_solution.md)
+- [t10_carrier_combat_presentation_solution：航母作战战斗画面实施方案](technical/t10_carrier_combat_presentation_solution.md)
 
-- [50_music_playback_and_asset_design.md](50_music_playback_and_asset_design.md)：标题与出击曲池、胜负结算音乐、播放切换和音乐资产验收；运行时字段见25、入口见34、完成度见00，不负责战斗音效与语音。
-- [51_music_generation_and_review_pipeline.md](51_music_generation_and_review_pipeline.md)：服务器音乐生成路径、确定性工具、端到端 skill 与人工评审交付入口。
+### 实验与验证方法（validation）
 
-- [52_sound_effect_design_and_production.md](52_sound_effect_design_and_production.md)：音效声音语言、有效范围、制作与采用源包标准；运行时任务见音效工单。
+- [36_balance_testing_design：平衡性测试设计](validation/36_balance_testing_design.md)
 
-### Audit
+## 历史与证据
 
-- [实际关卡慢恢复调研与实施](../workorder/20260930-slow-recovery-investigation.md)：S-03/S-04逐Tick原因、分舰站位/动态椭圆/恢复修复及CPU前后测量；剩余慢例、无安全航迹与潜艇循环仍待关闭。
-- [潜艇战斗 AI 闭环工单](../workorder/20260810-submarine-combat-ai-runtime-closure.md)：2026-10-10按用户确认关闭W07，保留实现与旧验证历史。
-- [玩家战斗反馈与角色表现工单](../workorder/20260927-player-feedback-character-presentation.md)：2026-10-10按用户确认关闭W08，保留原调研与方案历史；W09/W14独立跟踪。
-- [91_character_phase2_historical_validation.md](91_character_phase2_historical_validation.md)
-- [92_character_phase2_static_balance_review.md](92_character_phase2_static_balance_review.md)
+历史保留原日期、原始失败和限制；现行结论以00及对应主设计为准。工单仍在workorder，报告和实验产物不因文档重组搬迁。
 
-### History
+- [00_project_status_through_20261010：项目状态历史记录（截至2026-10-10）](history/00_project_status_through_20261010.md)
+- [31_program_design_phase1：第一阶段程序设计参考说明（历史存档）](history/31_program_design_phase1.md)
+- [52_sound_effect_production_iterations：音效生产与评审历史](history/52_sound_effect_production_iterations.md)
+- [90_design_audit_round4：独立设计审计报告（第四轮复核）](history/90_design_audit_round4.md)
+- [91_character_phase2_historical_validation：第二期角色历史考据验证](history/91_character_phase2_historical_validation.md)
+- [92_character_phase2_static_balance_review：第二期角色静态纸面数值审查](history/92_character_phase2_static_balance_review.md)
+- [95_design_document_boundary_audit_20261012：全设计文档职责与冗余审计（2026-10-12）](history/95_design_document_boundary_audit_20261012.md)
+- [96_documentation_restructure_20261012：文档重组实施与内容保全记录](history/96_documentation_restructure_20261012.md)
+- [t00_coastal_ai_performance_iterations：有岸 AI 性能实施与测量历史](history/t00_coastal_ai_performance_iterations.md)
+- [t10_carrier_presentation_iterations：航空方案设计审计与实施历史](history/t10_carrier_presentation_iterations.md)
 
-- [history/31_program_design_phase1.md](history/31_program_design_phase1.md)：第一阶段 3v3 原型实施范围的历史存档，不再作为当前真源。
-- [history/90_design_audit_round4.md](history/90_design_audit_round4.md)：2026-06-14 第四轮设计复核的历史存档；当前未闭环项见 `../workorder/20260717-design-audit-round4-unclosed-items.md`。
+## 命名与维护
 
-- [history/52_sound_effect_production_iterations.md](history/52_sound_effect_production_iterations.md)：音效选材历轮记录；当前规范见52。
+文件使用小写英文、下划线和稳定编号：`NN_topic_kind.md`；同主题分册使用`NN-N_topic_kind.md`，跨系统方案沿用`tNN_topic_solution.md`。编号不决定目录所有权，也不因阶段结束重新分配；新文件先确认职责及可用编号，再加入本索引。
 
-## 临时设计试验
-
-- [最远视角美术临时设计](../workorder/20261009-far-view-art-design.md)：三角色试验及56px全48角色战斗修订记录；W14于2026-10-10按用户指令关闭，原证据边界留档。
+每份主文档开头说明职责、不负责事项及权威依赖。引用优先使用当前相对链接和语义章节锚点。迁移、改名或拆分时同时更新AGENTS、本文、34相关入口、工单、工具与技能消费者；不要保留两份可编辑正文或长期旧路径占位副本。资产总入口见[assets/README](../assets/README.md)，路径规范由contracts/45维护。

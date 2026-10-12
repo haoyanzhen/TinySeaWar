@@ -1,6 +1,6 @@
 # cleveland Phase 2 Trial Log
 
-- Source: docs/41_character_art_design.md phase 2.
+- Source: docs/presentation/41_character_art_design.md phase 2.
 - Generator: gpt-image-2 through the TinySeaWar art pipeline skill.
 - Current status: `blocked_animation_regen`; anchor and non-animation MVP derivatives accepted, but animation master must be regenerated with the Q-version battlefield-unit prompt before production import.
 - Style anchor generated on reserved green: four triple main-gun groups, layered anti-air/radar silhouette, no torpedo equipment and no readable text. Automatic review: pass for faction-gate review.

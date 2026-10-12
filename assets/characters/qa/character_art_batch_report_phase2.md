@@ -2,7 +2,7 @@
 
 Mode: `dry-run`
 
-Roster source: `docs/41_character_art_design.md`.
+Roster source: `docs/presentation/41_character_art_design.md`.
 
 | Character | Prototype | Source route | Sources | Four-frame | Source blockers | Configured | Contract | Technical ready | Visual review | Delivery ready | Run status |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |

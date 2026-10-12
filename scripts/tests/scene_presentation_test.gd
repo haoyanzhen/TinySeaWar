@@ -59,7 +59,14 @@ func _run() -> void:
 	_check(root.content_scale_mode == Window.CONTENT_SCALE_MODE_CANVAS_ITEMS and root.content_scale_aspect == Window.CONTENT_SCALE_ASPECT_KEEP, "root window scales canvas items while preserving aspect ratio")
 	_check(menu.size == Vector2(1920.0, 1080.0), "main menu retains its full logical layout instead of being cropped to the physical window")
 	menu._show_settings()
-	_check(_descendants_of_type(menu.content, "OptionButton").size() == 1, "main menu retains window settings after the entry redesign")
+	var settings_selectors := _descendants_of_type(menu.content, "OptionButton")
+	var window_selectors := settings_selectors.filter(func(selector): return selector != menu.music_mode_selector)
+	var window_options: Array[Vector2i] = flow.window_size_options()
+	var window_settings_ready: bool = window_selectors.size() == 1 and window_selectors[0].item_count == window_options.size()
+	if window_settings_ready:
+		for index in range(window_options.size()):
+			window_settings_ready = window_settings_ready and window_selectors[0].get_item_text(index) == "%d × %d" % [window_options[index].x, window_options[index].y]
+	_check(settings_selectors.size() == 2 and settings_selectors.has(menu.music_mode_selector) and menu.music_mode_selector.item_count == 3 and window_settings_ready, "main menu exposes window sizes alongside the three music playback modes")
 	menu._show_help()
 	_check(_descendants_of_type(menu.content, "Label").size() >= 2, "main menu operation guide remains available")
 	menu.queue_free()
